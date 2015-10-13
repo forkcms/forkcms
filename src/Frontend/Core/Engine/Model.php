@@ -130,6 +130,43 @@ class Model extends \Common\Core\Model
     }
 
     /**
+     * Gets module config instance and stores it into the container
+     *
+     * @param $module
+     * @return object
+     * @throws Exception
+     */
+    public static function getModuleConfig($module)
+    {
+        // make sure that $module is camelCase
+        $module = \SpoonFilter::toCamelCase($module);
+
+        // lets get service id, $module is converted into snake_case
+        $id = 'services.' . ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', $module)), '_') . '.config';
+
+        // if we do not have config stored we should create and store it
+        if (!self::getContainer()->has($id)) {
+            // generation of a class name
+            $configClass = 'Frontend\\Modules\\' . $module . '\\Config';
+            if ($module == 'Core') {
+                $configClass = 'Frontend\\Core\\Config';
+            }
+
+            // validate if class exists (aka has correct name)
+            if (!class_exists($configClass)) {
+                throw new \Exception(
+                    'The config file is present, but the class name should be: ' . $configClass . '.'
+                );
+            }
+
+            // create config-object, the constructor will do some magic
+            self::getContainer()->set($id, new $configClass(self::get('kernel'), $module));
+        }
+
+        return self::getContainer()->get($id);
+    }
+
+    /**
      * Get a module setting
      *
      * @deprecated

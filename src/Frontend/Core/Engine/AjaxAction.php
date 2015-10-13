@@ -57,7 +57,7 @@ class AjaxAction extends FrontendBaseAJAXAction
         $this->setAction($action);
 
         // load the config file for the required module
-        $this->loadConfig();
+        $this->config = Model::getModuleConfig($module);
     }
 
     /**
@@ -142,14 +142,12 @@ class AjaxAction extends FrontendBaseAJAXAction
     public function loadConfig()
     {
         $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
-        if ($this->getModule() == 'Core') {
-            $configClass = 'Frontend\\Core\\Config';
-        }
+        if($this->getModule() == 'Core') $configClass = 'Frontend\\Core\\Config';
 
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
             throw new Exception(
-                'The config file ' . $configClass . ' could not be found.'
+                'The config file is present, but the class name should be: ' . $configClass . '.'
             );
         }
 

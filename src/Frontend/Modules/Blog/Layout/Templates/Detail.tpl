@@ -57,12 +57,12 @@
 				<ul class="pageNavigation">
 					{option:navigation.previous}
 						<li class="previousLink">
-							<a href="{$navigation.previous.url}" rel="prev">{$lblPreviousArticle|ucfirst}: {$navigation.previous.title}</a>
+							<a href="{$navigation.previous.full_url}" rel="prev">{$lblPreviousArticle|ucfirst}: {$navigation.previous.title}</a>
 						</li>
 					{/option:navigation.previous}
 					{option:navigation.next}
 						<li class="nextLink">
-							<a href="{$navigation.next.url}" rel="next">{$lblNextArticle|ucfirst}: {$navigation.next.title}</a>
+							<a href="{$navigation.next.full_url}" rel="next">{$lblNextArticle|ucfirst}: {$navigation.next.title}</a>
 						</li>
 					{/option:navigation.next}
 				</ul>

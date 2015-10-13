@@ -11,7 +11,13 @@ namespace Frontend\Core\Engine\Base;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Routing\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\Route;
+
+use Frontend\Core\Engine\Language as FL;
 
 /**
  * This is the base-object for config-files.
@@ -50,6 +56,13 @@ class Config extends \KernelLoader
     protected $module;
 
     /**
+     * Module router
+     *
+     * @var Router
+     */
+    protected $router;
+
+    /**
      * All the possible actions
      *
      * @var    array
@@ -75,6 +88,9 @@ class Config extends \KernelLoader
 
         // read the possible actions based on the files
         $this->setPossibleActions();
+
+        // lets load specific module router
+        $this->loadRouter();
     }
 
     /**
@@ -150,6 +166,49 @@ class Config extends \KernelLoader
                 if (!in_array($action, $this->disabledAJAXActions)) {
                     $this->possibleAJAXActions[$file->getBasename()] = $action;
                 }
+            }
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRouter()
+    {
+        return null !== $this->router;
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
+    /**
+     * Load module router
+     */
+    public function loadRouter()
+    {
+        $file = FRONTEND_MODULES_PATH . '/' . $this->module . '/Resources/config/routing.yml';
+        $fs = new Filesystem();
+
+        // if there is no routing file we have nothing to set
+        if ($fs->exists($file)) {
+            $actions = FL::getActions();
+            $this->router = new Router(new YamlFileLoader(new FileLocator()), $file);
+
+            /**
+             * set a requirement for translated _action parameter
+             *
+             * @var Route $route
+             */
+            foreach ($this->router->getRouteCollection()->getIterator() as $routeName => $route) {
+                $action = \SpoonFilter::toCamelCase($route->getDefault('_action'));
+                $actionLocale = isset($actions[$action]) ? $actions[$action] : $action;
+                $actionLocale = ltrim(strtolower(preg_replace('/[A-Z]/', '-$0', $actionLocale)), '-');
+                $route->setRequirement('_action', $actionLocale);
             }
         }
     }

@@ -94,14 +94,18 @@ class Archive extends FrontendBaseBlock
 
         // redirect /2010/6 to /2010/06 to avoid duplicate content
         if ($this->month !== null && mb_strlen($this->month) != 2) {
-            $queryString = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
-            $this->redirect(
-                FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $this->year . '/' . str_pad(
+            $queryString = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
+            $parameters = array(
+                'year' => $this->year,
+                'month' => str_pad(
                     $this->month,
                     2,
                     '0',
                     STR_PAD_LEFT
-                ) . $queryString,
+                )
+            );
+            $this->redirect(
+                FrontendNavigation::getURLForBlock('Blog', 'Archive', null, $parameters) . $queryString,
                 301
             );
         }
@@ -124,13 +128,13 @@ class Archive extends FrontendBaseBlock
         $requestedPage = $this->URL->getParameter('page', 'int', 1);
 
         // rebuild url
-        $url = $this->year;
+        $parameters = array('year' => $this->year);
 
         // build timestamp
         if ($this->month !== null) {
             $this->startDate = gmmktime(00, 00, 00, $this->month, 01, $this->year);
             $this->endDate = gmmktime(23, 59, 59, $this->month, gmdate('t', $this->startDate), $this->year);
-            $url .= '/' . str_pad($this->month, 2, '0', STR_PAD_LEFT);
+            $parameters['month'] = str_pad($this->month, 2, '0', STR_PAD_LEFT);
         } else {
             // year
             $this->startDate = gmmktime(00, 00, 00, 01, 01, $this->year);
@@ -138,7 +142,7 @@ class Archive extends FrontendBaseBlock
         }
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $url;
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Archive', null, $parameters);
         $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination

@@ -40,12 +40,11 @@ class Categories extends FrontendBaseWidget
 
         // any categories?
         if (!empty($categories)) {
-            // build link
-            $link = FrontendNavigation::getURLForBlock('Blog', 'Category');
-
             // loop and reset url
             foreach ($categories as &$row) {
-                $row['url'] = $link . '/' . $row['url'];
+                $row['url'] = FrontendNavigation::getURLForBlock(
+                    'Blog', 'Category', null, array('category' => $row['url'])
+                );;
             }
         }
 

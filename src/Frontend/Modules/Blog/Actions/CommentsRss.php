@@ -56,7 +56,6 @@ class CommentsRss extends FrontendBaseBlock
         // get vars
         $title = \SpoonFilter::ucfirst(FL::msg('BlogAllComments'));
         $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog');
-        $detailLink = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail');
         $description = null;
 
         // create new rss instance
@@ -66,7 +65,12 @@ class CommentsRss extends FrontendBaseBlock
         foreach ($this->items as $item) {
             // init vars
             $title = $item['author'] . ' ' . FL::lbl('On') . ' ' . $item['post_title'];
-            $link = $detailLink . '/' . $item['post_url'] . '/#comment-' . $item['id'];
+            $link =
+                SITE_URL
+                . FrontendNavigation::getURLForBlock(
+                    'Blog', 'Detail', null, array('category' => $item['category_url'], 'detail' => $item['post_url'])
+                )
+                . '/#comment-' . $item['id'];
             $description = $item['text'];
 
             // create new instance

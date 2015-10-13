@@ -75,10 +75,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addEditor('introduction');
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
         $this->frm->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
-        $this->frm->addDropdown('category_id', $categories, \SpoonFilter::getGetValue('category', null, null, 'int'));
-        if (count($categories) != 2) {
-            $this->frm->getField('category_id')->setDefaultElement('');
-        }
+        $this->frm->addDropdown('category_id', $categories, \SpoonFilter::getGetValue('category', null, key($categories), 'int'));
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
         $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
         $this->frm->addDate('publish_on_date');
@@ -99,8 +96,16 @@ class Add extends BackendBaseActionAdd
         parent::parse();
         $this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
 
+        // we need category info for generation of url
+        $category = BackendBlogModel::getCategory((int)$this->frm->getField('category_id')->getSelected());
+
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+        $url = BackendModel::getURLForBlock(
+            $this->URL->getModule(),
+            'category',
+            null,
+            array('category' => isset($category['url'])?$category['url']:'')
+        );
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables

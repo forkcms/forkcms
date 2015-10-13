@@ -1,0 +1,30 @@
+index:
+    path: /
+    defaults: { _action: 'index' }
+
+archive:
+    path: /{_action}/{year}/{month}
+    defaults: { _action: 'archive', month: null }
+    requirements:
+        year: \d+
+        month: null|\d+
+
+article_comments_rss:
+    path: /{_action}/{detail}
+    defaults: { _action: 'article_comments_rss' }
+
+comments_rss:
+    path: /{_action}
+    defaults: { _action: 'comments_rss' }
+
+rss:
+    path: /{_action}
+    defaults: { _action: 'rss' }
+
+detail:
+    path: /{category}/{detail}
+    defaults: { _action: 'detail' }
+
+category:
+    path: /{category}
+    defaults: { _action: 'category' }

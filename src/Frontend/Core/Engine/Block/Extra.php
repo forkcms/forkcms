@@ -11,6 +11,7 @@ namespace Frontend\Core\Engine\Block;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
@@ -102,7 +103,7 @@ class Extra extends FrontendBaseObject
         }
 
         // load the config file for the required module
-        $this->loadConfig();
+        $this->config = FrontendModel::getModuleConfig($module);
 
         // is the requested action possible? If not we throw an exception.
         // We don't redirect because that could trigger a redirect loop
@@ -167,19 +168,32 @@ class Extra extends FrontendBaseObject
             // get first parameter
             $actionParameter = $this->URL->getParameter(0);
 
-            // unknown action and not provided in URL
-            if ($actionParameter === null) {
-                $this->setAction($this->config->getDefaultAction());
-            } else {
+            // set default action
+            $this->setAction($this->config->getDefaultAction());
+
+            // if we have module routing lets check it first and set action parameter
+            if ($this->config->hasRouter()) {
+                try {
+                    $parameters = $this->config->getRouter()->match('/' . implode('/', $this->URL->getParameters(false)));
+                } catch (\Exception $e) {
+                    $parameters = array();
+                }
+
+                $actionParameter = isset($parameters['_action']) ? $parameters['_action'] : null;
+            }
+
+            // if we were able to parse action parameter we can actually set an action
+            if ($actionParameter !== null)  {
                 // action provided in the URL
-                // loop possible actions
                 $actionParameter = \SpoonFilter::toCamelCase($actionParameter);
+
+                // loop possible actions
                 foreach ($this->config->getPossibleActions() as $actionName) {
                     // get action that should be passed as parameter
                     $actionURL = \SpoonFilter::toCamelCase(urlencode(FL::act(\SpoonFilter::toCamelCase($actionName))));
 
                     // the action is the requested one
-                    if ($actionURL == $actionParameter) {
+                    if (in_array($actionParameter, array($actionURL, $actionName))) {
                         // set action
                         $this->setAction($actionName);
 
@@ -287,7 +301,7 @@ class Extra extends FrontendBaseObject
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
             throw new FrontendException(
-                'The config file ' . $configClass . ' could not be found.'
+                'The config file is present, but the class name should be: ' . $configClass . '.'
             );
         }
 
