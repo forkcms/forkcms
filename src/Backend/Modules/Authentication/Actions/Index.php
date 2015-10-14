@@ -10,7 +10,6 @@ namespace Backend\Modules\Authentication\Actions;
  */
 
 use Symfony\Component\Finder\Finder;
-
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -286,7 +285,7 @@ class Index extends BackendBaseActionIndex
      */
     private function getAllowedAction($module)
     {
-        if(BackendAuthentication::isAllowedAction('Index', $module)) {
+        if (BackendAuthentication::isAllowedAction('Index', $module)) {
             return 'Index';
         }
         $allowedAction = false;
@@ -300,7 +299,7 @@ class Index extends BackendBaseActionIndex
                 $groupsRightsAction['action'],
                 $module
             );
-            if($isAllowedAction) {
+            if ($isAllowedAction) {
                 $allowedAction = $groupsRightsAction['action'];
                 break;
             }

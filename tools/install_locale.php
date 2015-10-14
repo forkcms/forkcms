@@ -23,20 +23,17 @@ $shortOptions = 'f:o';
 $options = getopt($shortOptions);
 
 // No file was given
-if(!isset($options['f']))
-{
-	throw new Exception('We need a file to load our data from.');
+if (!isset($options['f'])) {
+    throw new Exception('We need a file to load our data from.');
 }
 
 // File given, check if it exists
-else
-{
-	$baseFile = $options['f'];
+else {
+    $baseFile = $options['f'];
 
-	if(!file_exists($baseFile))
-	{
-		throw new Exception('The given file(' . $baseFile . ') does not exist.');
-	}
+    if (!file_exists($baseFile)) {
+        throw new Exception('The given file(' . $baseFile . ') does not exist.');
+    }
 }
 
 // bootstrap Fork
@@ -64,9 +61,8 @@ $baseDir = getcwd() . '/..';
 $xmlData = @simplexml_load_file($baseFile);
 
 // this is an invalid xml file
-if($xmlData === false)
-{
-	throw new Exception('Invalid locale.xml file.');
+if ($xmlData === false) {
+    throw new Exception('Invalid locale.xml file.');
 }
 
 // Everything ok, let's install the locale
