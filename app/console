@@ -14,6 +14,7 @@ require_once __DIR__ . '/BaseModel.php';
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
+use Backend\Init as BackendInit;
 
 $input = new ArgvInput();
 $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
@@ -33,7 +34,12 @@ $kernel = new AppKernel($env, $debug);
 
 // make our container available statically. This is needed to make our static models work
 $kernel->boot();
+$kernel->defineForkConstants();
 BaseModel::setContainer($kernel->getContainer());
+
+define('APPLICATION', 'Console');
+$backend = new BackendInit($kernel);
+$backend->initialize('BackendCronjob');
 
 $application = new Application($kernel);
 $application->run($input);
