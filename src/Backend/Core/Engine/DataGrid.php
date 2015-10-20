@@ -117,43 +117,15 @@ class DataGrid extends \SpoonDataGrid
         $image = null,
         $sequence = null
     ) {
-        $icon = $this->decideGlyphIcon($name);
+        // we want to know what action group this name has.
+        $group = $this->decideActionGroup($name);
+
+        // lets decide what icon we should use
+        $icon = $this->decideActionIcon($name);
 
         // known actions that should have a button
         if (in_array(
-            $name,
-            array('add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install')
-        )
-        ) {
-            // rebuild value, it should have special markup
-            $value =
-                '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
-                ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
-                $value .
-                '</a>';
-
-            // reset URL
-            $URL = null;
-        }
-
-        if (in_array($name, array('use_revision', 'use_draft'))) {
-            // rebuild value, it should have special markup
-            $value =
-                '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
-                ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
-                $value .
-                '</a>';
-
-            // reset URL
-            $URL = null;
-        }
-
-        // add the column
-        parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
-
-        // known actions
-        if (in_array(
-            $name,
+            $group,
             array(
                 'add',
                 'edit',
@@ -166,11 +138,26 @@ class DataGrid extends \SpoonDataGrid
                 'use_revision',
                 'use_draft'
             )
-        )
-        ) {
+        )) {
+            // rebuild value, it should have special markup
+            $value =
+                '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
+                ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
+                $value .
+                '</a>';
+
             // add special attributes for actions we know
-            $this->setColumnAttributes($name, array('class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name)));
+            $this->setColumnAttributes(
+                $name,
+                array('class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name))
+            );
+
+            // reset URL
+            $URL = null;
         }
+
+        // add the column
+        parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
 
         // set header attributes
         $this->setColumnHeaderAttributes($name, array('class' => $name));
@@ -601,24 +588,48 @@ class DataGrid extends \SpoonDataGrid
     }
 
     /**
+     * Decides what group our name has.
+     * For example.: $name is "edit_post" or "edit_image" we decide that this button is within "edit" buttons group
+     * This method should be more advanced, but currently it solves a problem.
+     *
+     * @param $name
+     * @return string
+     */
+    private function decideActionGroup($name)
+    {
+        $group = substr($name, 0, strpos($name, '_'));
+
+        if (in_array(
+            $group,
+            array(
+                'add',
+                'edit',
+                'delete',
+                'detail',
+                'details',
+                'approve',
+                'mark_as_spam',
+                'install',
+                'use_revision',
+                'use_draft'
+            )
+        )) {
+            return $group;
+        }
+
+        return $name;
+    }
+
+    /**
      * Decides what glyph icon to use by given name
      *
      * @param $name
      * @return null|string
      */
-    private function decideGlyphIcon($name)
+    private function decideActionIcon($group)
     {
-        // Lets retrieve button group we will take that first word before "_" is our button group
-        $group = substr($name, 0, strpos($name, '_'));
-
-        // First of all we check if our button meets any group
         if (isset($this->mapGlyphIcons[$group])) {
             return $this->mapGlyphIcons[$group];
-        }
-
-        // If group have not been found lets check if can detect icon by full name
-        if (isset($this->mapGlyphIcons[$name])) {
-            return $this->mapGlyphIcons[$name];
         }
 
         return null;
