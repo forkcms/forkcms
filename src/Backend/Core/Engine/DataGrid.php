@@ -608,12 +608,19 @@ class DataGrid extends \SpoonDataGrid
      */
     private function decideGlyphIcon($name)
     {
-        $icon = null;
+        // Lets retrieve button group we will take that first word before "_" is our button group
+        $group = substr($name, 0, strpos($name, '_'));
 
-        if (isset($this->mapGlyphIcons[$name])) {
-            $icon = $this->mapGlyphIcons[$name];
+        // First of all we check if our button meets any group
+        if (isset($this->mapGlyphIcons[$group])) {
+            return $this->mapGlyphIcons[$group];
         }
 
-        return $icon;
+        // If group have not been found lets check if can detect icon by full name
+        if (isset($this->mapGlyphIcons[$name])) {
+            return $this->mapGlyphIcons[$name];
+        }
+
+        return null;
     }
 }
