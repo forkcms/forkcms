@@ -123,8 +123,8 @@ class DataGrid extends \SpoonDataGrid
         // lets decide what icon we should use
         $icon = $this->decideActionIcon($name);
 
-        // known actions that should have a button
-        if (in_array(
+        // is action known?
+        $isKnownAction = in_array(
             $group,
             array(
                 'add',
@@ -138,7 +138,9 @@ class DataGrid extends \SpoonDataGrid
                 'use_revision',
                 'use_draft'
             )
-        )) {
+        );
+
+        if ($isKnownAction) {
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
@@ -146,18 +148,20 @@ class DataGrid extends \SpoonDataGrid
                 $value .
                 '</a>';
 
-            // add special attributes for actions we know
-            $this->setColumnAttributes(
-                $name,
-                array('class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name))
-            );
-
             // reset URL
             $URL = null;
         }
 
         // add the column
         parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
+
+        if ($isKnownAction) {
+            // add special attributes for actions we know
+            $this->setColumnAttributes(
+                $name,
+                array('class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name))
+            );
+        }
 
         // set header attributes
         $this->setColumnHeaderAttributes($name, array('class' => $name));
