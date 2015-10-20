@@ -311,8 +311,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.eot?1441346580);
-  src: url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.eot?&1441346580#iefix) format("embedded-opentype"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.woff2?1441346580) format("woff2"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.woff?1441346580) format("woff"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.ttf?1441346580) format("truetype"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.svg?1441346580#glyphicons_halflingsregular) format("svg");
+  src: url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.eot?1445331503);
+  src: url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.eot?&1445331503#iefix) format("embedded-opentype"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.woff2?1445331504) format("woff2"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.woff?1445331504) format("woff"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.ttf?1445331504) format("truetype"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.svg?1445331504#glyphicons_halflingsregular) format("svg");
 }
 .glyphicon {
   position: relative;
