@@ -10,7 +10,6 @@ namespace Backend\Modules\Users\Actions;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -330,7 +329,7 @@ class Edit extends BackendBaseActionEdit
                 }
                 if ($this->authenticatedUser->getUserId() != $this->record['id']
                 ) {
-                    $user['active'] = ($fields['active']->isChecked()) ? 'Y' : 'N';
+                    $user['active'] = $fields['active']->getActualValue();
                 }
 
                 // user is now de-activated, we now remove all sessions for this user so he is logged out immediately

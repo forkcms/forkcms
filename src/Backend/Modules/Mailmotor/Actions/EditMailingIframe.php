@@ -10,7 +10,6 @@ namespace Backend\Modules\Mailmotor\Actions;
  */
 
 use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
-
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BackendLanguage;

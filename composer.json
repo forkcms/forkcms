@@ -9,6 +9,7 @@
         "tijsverkoyen/akismet": "1.1.*",
         "tijsverkoyen/css-to-inline-styles": "1.5.*",
         "matthiasmullie/minify": "~1.3",
+        "matthiasmullie/scrapbook": "~1.0",
         "symfony/symfony": "2.3.*",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",

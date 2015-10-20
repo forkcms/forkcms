@@ -216,11 +216,12 @@ class UploadModule extends BackendBaseActionAdd
      * @param $file
      * @return string
      */
-    private function extractPrefix($file) {
+    private function extractPrefix($file)
+    {
         $name = explode(PATH_SEPARATOR, $file['name']);
         $prefix = array();
 
-        foreach($name as $element) {
+        foreach ($name as $element) {
             if ($element == 'src' || $element == 'library') {
                 return join(PATH_SEPARATOR, $prefix);
             } else {

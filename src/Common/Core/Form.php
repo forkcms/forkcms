@@ -40,7 +40,7 @@ class Form extends \SpoonForm
      * @param bool   $checked    Should the checkbox be checked?
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
-     * @return \SpoonFormCheckbox
+     * @return CommonFormCheckbox
      */
     public function addCheckbox($name, $checked = false, $class = null, $classError = null)
     {
@@ -50,7 +50,10 @@ class Form extends \SpoonForm
         $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a checkbox
-        return parent::addCheckbox($name, $checked, $class, $classError);
+        $this->add(new CommonFormCheckbox($name, $checked, $class, $classError));
+
+        // return element
+        return $this->getField($name);
     }
 
     /**
@@ -226,5 +229,25 @@ class Form extends \SpoonForm
 
         // create and return a time field
         return parent::addTime($name, $value, $class, $classError);
+    }
+}
+
+/**
+ * This is our extended version of \SpoonFormCheckbox
+ *
+ * @author Jelmer Prins <jelmer@sumocoders.be>
+ */
+class CommonFormCheckbox extends \SpoonFormCheckbox
+{
+    /**
+     * Returns the value corresponding with the state of the checkbox
+     *
+     * @param mixed $checked the return value when checked
+     * @param mixed $notChecked the return value when not checked
+     * @return string
+     */
+    public function getActualValue($checked = 'Y', $notChecked = 'N')
+    {
+        return $this->isChecked() ? $checked : $notChecked;
     }
 }

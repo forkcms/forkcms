@@ -627,7 +627,7 @@ class Edit extends BackendBaseActionEdit
                 $page['type'] = $this->record['type'];
                 $page['title'] = $this->frm->getField('title')->getValue();
                 $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();
-                $page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
+                $page['navigation_title_overwrite'] = $this->frm->getField('navigation_title_overwrite')->getActualValue();
                 $page['hidden'] = $this->frm->getField('hidden')->getValue();
                 $page['status'] = $status;
                 $page['publish_on'] = BackendModel::getUTCDate(null, $this->record['publish_on']);

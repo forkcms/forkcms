@@ -345,6 +345,15 @@ class Template extends \SpoonTemplate
                 '/src/Frontend/Themes/' . Model::get('fork.settings')->get('Core', 'theme', 'default')
             );
         }
+
+        $this->assign(
+            'siteStartOfBodyScripts',
+            Model::get('fork.settings')->get(
+                'Core',
+                'site_start_of_body_scripts',
+                null
+            ) !== null ? Model::get('fork.settings')->get('Core', 'site_start_of_body_scripts', null) : ''
+        );
     }
 
     /**

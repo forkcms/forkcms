@@ -225,7 +225,7 @@ class SaveField extends BackendBaseAJAXAction
                         if ($type == 'datetime') {
                             $settings['input_type'] = $inputType;
 
-                            if($inputType == 'date') {
+                            if ($inputType == 'date') {
                                 $settings['value_amount'] = $valueAmount;
                                 $settings['value_type'] = $valueType;
                             }
