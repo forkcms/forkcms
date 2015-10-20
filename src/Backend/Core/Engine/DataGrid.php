@@ -121,7 +121,7 @@ class DataGrid extends \SpoonDataGrid
         $group = $this->decideActionGroup($name);
 
         // lets decide what icon we should use
-        $icon = $this->decideActionIcon($name);
+        $icon = $this->decideActionIcon($group);
 
         // is action known?
         $isKnownAction = in_array(
