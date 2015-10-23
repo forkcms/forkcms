@@ -1503,4 +1503,25 @@ class Model
             self::insertBlocks($blocksContent);
         }
     }
+
+    /**
+     * Get encoded redirect URL
+     *
+     * @param string $redirectURL
+     *
+     * @return string
+     */
+    public static function getEncodedRedirectURL($redirectURL)
+    {
+        preg_match('!(http[s]?)://(.*)!i', $redirectURL, $matches);
+        $URLChunks = explode('/', $matches[2]);
+        if (!empty($URLChunks)) {
+            foreach ($URLChunks as &$URLChunk) {
+                $URLChunk = urlencode($URLChunk);
+            }
+            $redirectURL = $matches[1] . '://' . implode('/', $URLChunks);
+        }
+
+        return $redirectURL;
+    }
 }
