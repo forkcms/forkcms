@@ -192,7 +192,11 @@ class DataGrid extends \SpoonDataGrid
         // reserve var for attributes
         $attributes = '';
 
-        $icon = $this->decideGlyphIcon($name);
+        // we want to know what action group this name has.
+        $group = $this->decideActionGroup($name);
+
+        // lets decide what icon we should use
+        $icon = $this->decideActionIcon($group);
 
         // no anchorAttributes set means we set the default class attribute for the anchor
         if (empty($anchorAttributes)) {
