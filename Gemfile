@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'compass'
-gem 'bootstrap-sass', '~> 3.3.x'
+gem 'bootstrap-sass', '3.3.5'
 gem 'font-awesome-sass', '~> 4.2.0'
 gem 'compass_sumo'
 gem 'foreman'
