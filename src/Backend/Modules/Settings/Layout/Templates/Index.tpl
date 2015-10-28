@@ -231,7 +231,7 @@
 		<div class="options">
 			<p>{$msgHelpCookies}</p>
 			<ul class="inputList pb0">
-				<li>{$chkShowCookieBar} <label for="showCookieBar">{$msgShowCookieBar}</label></li>
+				<li>{$chkShowCookieBar} <label for="showCookieBar">{$msgShowCookieBar|ucfirst}</label></li>
 			</ul>
 		</div>
 	</div>
