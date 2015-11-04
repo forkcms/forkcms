@@ -10,7 +10,6 @@ namespace Backend\Modules\Blog\Actions;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model as BackendModel;

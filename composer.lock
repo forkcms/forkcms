@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ffdddc283a85aa68f744e473e14a37cb",
+    "hash": "41419b6fafba7e1b738d1c0487cb1909",
+    "content-hash": "b963d7346b9f435d6ab8ab1e0c209e15",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -675,6 +676,86 @@
             "time": "2015-02-21 12:51:32"
         },
         {
+            "name": "matthiasmullie/scrapbook",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/scrapbook.git",
+                "reference": "02de8d10c11a4963b3381b4c8eb5c4fc52c7a608"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/02de8d10c11a4963b3381b4c8eb5c4fc52c7a608",
+                "reference": "02de8d10c11a4963b3381b4c8eb5c4fc52c7a608",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "provide": {
+                "psr/cache-implementation": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.3.*",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "suggest": {
+                "ext-apc": ">=3.1.1",
+                "ext-couchbase": ">=2.0.0",
+                "ext-memcached": ">=2.0.0",
+                "ext-pdo": ">=0.1.0",
+                "ext-redis": ">=2.2.0 || 0.0.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MatthiasMullie\\Scrapbook\\": "src/",
+                    "MatthiasMullie\\Scrapbook\\Tests\\": "tests/",
+                    "Psr\\Cache\\": "src/Psr6/Psr/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "email": "scrapbook@mullie.eu",
+                    "homepage": "http://www.mullie.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Scrapbook is a caching environment for PHP, with adapters for e.g. Memcached, Redis, Couchbase, APC, SQL and additional capabilities (e.g. transactions) built on top.",
+            "homepage": "http://scrapbook.cash",
+            "keywords": [
+                "Buffer",
+                "apc",
+                "buffered",
+                "cache",
+                "caching",
+                "commit",
+                "couchbase",
+                "filesystem",
+                "key",
+                "memcached",
+                "mysql",
+                "postgresql",
+                "psr-6",
+                "psr-cache",
+                "psr6",
+                "redis",
+                "rollback",
+                "sql",
+                "sqlite",
+                "store",
+                "transaction",
+                "transactional",
+                "value"
+            ],
+            "time": "2015-09-04 07:31:20"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.12.0",
             "source": {
@@ -786,16 +867,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "2.0.1",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "cd6d1feb426036d680260a8443a6b7844f203d74"
+                "reference": "e585bb2d58c7b57f3bd20421e19340e23c29705f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/cd6d1feb426036d680260a8443a6b7844f203d74",
-                "reference": "cd6d1feb426036d680260a8443a6b7844f203d74",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/e585bb2d58c7b57f3bd20421e19340e23c29705f",
+                "reference": "e585bb2d58c7b57f3bd20421e19340e23c29705f",
                 "shasum": ""
             },
             "require": {
@@ -817,7 +898,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2015-06-23 09:21:13"
+            "time": "2015-10-16 07:34:50"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -876,12 +957,12 @@
             "version": "v2.6.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/AsseticBundle.git",
+                "url": "https://github.com/symfony/assetic-bundle.git",
                 "reference": "422b0add2110f0cf9bc7a873a386ea053f4a89f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/422b0add2110f0cf9bc7a873a386ea053f4a89f0",
+                "url": "https://api.github.com/repos/symfony/assetic-bundle/zipball/422b0add2110f0cf9bc7a873a386ea053f4a89f0",
                 "reference": "422b0add2110f0cf9bc7a873a386ea053f4a89f0",
                 "shasum": ""
             },
@@ -942,12 +1023,12 @@
             "target-dir": "Symfony/Bundle/MonologBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/MonologBundle.git",
+                "url": "https://github.com/symfony/monolog-bundle.git",
                 "reference": "03ed73bc11367b3156cc21f22ac37c7f70fcd10a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/03ed73bc11367b3156cc21f22ac37c7f70fcd10a",
+                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/03ed73bc11367b3156cc21f22ac37c7f70fcd10a",
                 "reference": "03ed73bc11367b3156cc21f22ac37c7f70fcd10a",
                 "shasum": ""
             },
@@ -1001,12 +1082,12 @@
             "version": "v2.3.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/SwiftmailerBundle.git",
+                "url": "https://github.com/symfony/swiftmailer-bundle.git",
                 "reference": "970b13d01871207e81d17b17ddda025e7e21e797"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/970b13d01871207e81d17b17ddda025e7e21e797",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/970b13d01871207e81d17b17ddda025e7e21e797",
                 "reference": "970b13d01871207e81d17b17ddda025e7e21e797",
                 "shasum": ""
             },

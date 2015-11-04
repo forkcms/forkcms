@@ -12,7 +12,6 @@ namespace Backend\Core\Engine\Base;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Exception;
 use Common\Exception\RedirectException;

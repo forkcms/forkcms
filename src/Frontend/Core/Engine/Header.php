@@ -11,11 +11,8 @@ namespace Frontend\Core\Engine;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
-
 use MatthiasMullie\Minify;
-
 use Common\Cookie as CommonCookie;
-
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 
 /**
