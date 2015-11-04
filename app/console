@@ -39,7 +39,7 @@ BaseModel::setContainer($kernel->getContainer());
 
 define('APPLICATION', 'Console');
 $backend = new BackendInit($kernel);
-$backend->initialize('BackendCronjob');
+$backend->initialize('Console');
 
 $application = new Application($kernel);
 $application->run($input);
