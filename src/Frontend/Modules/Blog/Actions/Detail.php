@@ -10,7 +10,6 @@ namespace Frontend\Modules\Blog\Actions;
  */
 
 use Common\Cookie as CommonCookie;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;

@@ -11,13 +11,10 @@ namespace Backend\Modules\Locale\Engine;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-
 use Common\Uri as CommonUri;
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-
 use Frontend\Core\Engine\Language as FL;
 
 /**
@@ -54,7 +51,9 @@ class Model
     public static function buildURLQueryByFilter($filter)
     {
         $query = http_build_query($filter);
-        if ($query != '') $query = '&' . $query;
+        if ($query != '') {
+            $query = '&' . $query;
+        }
 
         return $query;
     }
@@ -130,7 +129,9 @@ class Model
     public static function delete(array $ids)
     {
         // loop and cast to integers
-        foreach ($ids as &$id) $id = (int) $id;
+        foreach ($ids as &$id) {
+            $id = (int) $id;
+        }
 
         // create an array with an equal amount of questionmarks as ids provided
         $idPlaceHolders = array_fill(0, count($ids), '?');
@@ -188,13 +189,15 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // return
-        if ($id !== null) return (bool) $db->getVar(
-            'SELECT 1
-             FROM locale
-             WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?
-             LIMIT 1',
-            array($name, $type, $module, $language, $application, $id)
-        );
+        if ($id !== null) {
+            return (bool) $db->getVar(
+                'SELECT 1
+                 FROM locale
+                 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?
+                 LIMIT 1',
+                array($name, $type, $module, $language, $application, $id)
+            );
+        }
 
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -220,7 +223,9 @@ class Model
         );
 
         // actions are urlencoded
-        if ($record['type'] == 'act') $record['value'] = urldecode($record['value']);
+        if ($record['type'] == 'act') {
+            $record['value'] = urldecode($record['value']);
+        }
 
         return $record;
     }
@@ -273,7 +278,9 @@ class Model
         $aLanguages = BL::getWorkingLanguages();
 
         // add the interface languages if needed
-        if ($includeInterfaceLanguages) $aLanguages = array_merge($aLanguages, BL::getInterfaceLanguages());
+        if ($includeInterfaceLanguages) {
+            $aLanguages = array_merge($aLanguages, BL::getInterfaceLanguages());
+        }
 
         // create a new array to redefine the languages for the multicheckbox
         $languages = array();
@@ -469,7 +476,9 @@ class Model
         $labels = $types;
 
         // loop and build labels
-        foreach ($labels as &$row) $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
+        foreach ($labels as &$row) {
+            $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
+        }
 
         // build array
         return array_combine($types, $labels);
@@ -489,7 +498,9 @@ class Model
         $labels = $aTypes;
 
         // loop and build labels
-        foreach ($labels as &$row) $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
+        foreach ($labels as &$row) {
+            $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
+        }
 
         // build array
         $aTypes = array_combine($aTypes, $labels);
@@ -536,10 +547,18 @@ class Model
         // set defaults if necessary
         // we can't simply use these right away, because this function is also calls by the installer,
         // which does not have Backend-functions
-        if ($frontendLanguages === null) $frontendLanguages = array_keys(BL::getWorkingLanguages());
-        if ($backendLanguages === null) $backendLanguages = array_keys(BL::getInterfaceLanguages());
-        if ($userId === null) $userId = BackendAuthentication::getUser()->getUserId();
-        if ($date === null) $date = BackendModel::getUTCDate();
+        if ($frontendLanguages === null) {
+            $frontendLanguages = array_keys(BL::getWorkingLanguages());
+        }
+        if ($backendLanguages === null) {
+            $backendLanguages = array_keys(BL::getInterfaceLanguages());
+        }
+        if ($userId === null) {
+            $userId = BackendAuthentication::getUser()->getUserId();
+        }
+        if ($date === null) {
+            $date = BackendModel::getUTCDate();
+        }
 
         // get database instance
         $db = BackendModel::getContainer()->get('database');
@@ -550,7 +569,9 @@ class Model
 
         // types
         $typesShort = (array) $db->getEnumValues('locale', 'type');
-        foreach ($typesShort as $type) $possibleTypes[$type] = self::getTypeName($type);
+        foreach ($typesShort as $type) {
+            $possibleTypes[$type] = self::getTypeName($type);
+        }
 
         // install English translations anyhow, they're fallback
         $possibleLanguages = array(
@@ -567,12 +588,16 @@ class Model
         // applications
         foreach ($xml as $application => $modules) {
             // application does not exist
-            if (!in_array($application, $possibleApplications)) continue;
+            if (!in_array($application, $possibleApplications)) {
+                continue;
+            }
 
             // modules
             foreach ($modules as $module => $items) {
                 // module does not exist
-                if (!in_array($module, $possibleModules)) continue;
+                if (!in_array($module, $possibleModules)) {
+                    continue;
+                }
 
                 // items
                 foreach ($items as $item) {
@@ -582,7 +607,9 @@ class Model
                     $name = \SpoonFilter::getValue($attributes['name'], null, '');
 
                     // missing attributes
-                    if ($type == '' || $name == '') continue;
+                    if ($type == '' || $name == '') {
+                        continue;
+                    }
 
                     // real type (shortened)
                     $type = array_search($type, $possibleTypes);
@@ -601,7 +628,9 @@ class Model
                         );
 
                         // language does not exist
-                        if ($language == '') continue;
+                        if ($language == '') {
+                            continue;
+                        }
 
                         // the actual translation
                         $translation = (string) $translation;
@@ -651,7 +680,9 @@ class Model
 
         // rebuild cache
         foreach ($possibleApplications as $application) {
-            foreach ($possibleLanguages[$application] as $language) self::buildCache($language, $application);
+            foreach ($possibleLanguages[$application] as $language) {
+                self::buildCache($language, $application);
+            }
         }
 
         return $statistics;
@@ -666,9 +697,11 @@ class Model
     public static function insert(array $item)
     {
         // actions should be urlized
-        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl(
-            $item['value']
-        );
+        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {
+            $item['value'] = CommonUri::getUrl(
+                $item['value']
+            );
+        }
 
         // insert item
         $item['id'] = (int) BackendModel::getContainer()->get('database')->insert('locale', $item);
@@ -688,9 +721,11 @@ class Model
     public static function update(array $item)
     {
         // actions should be urlized
-        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl(
-            $item['value']
-        );
+        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {
+            $item['value'] = CommonUri::getUrl(
+                $item['value']
+            );
+        }
 
         // update category
         $updated = BackendModel::getContainer()->get('database')->update('locale', $item, 'id = ?', array($item['id']));

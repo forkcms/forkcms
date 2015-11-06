@@ -10,7 +10,6 @@ namespace Backend\Modules\Mailmotor;
  */
 
 use \Symfony\Component\HttpKernel\KernelInterface;
-
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;

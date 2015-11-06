@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Frontend\Core\Engine\Template;
 use Frontend\Core\Engine\Url;
 
