@@ -77,8 +77,8 @@ class Analyse extends BackendBaseActionIndex
         /*
          * Frontend datagrid
          */
-        $getNonExistingFrontendLocale = BackendLocaleModel::getNonExistingFrontendLocale(BL::getWorkingLanguage());
-        $this->dgFrontend = new BackendDataGridArray($getNonExistingFrontendLocale);
+        $nonExistingFrontendLocale = BackendLocaleModel::getNonExistingFrontendLocale(BL::getWorkingLanguage());
+        $this->dgFrontend = new BackendDataGridArray($nonExistingFrontendLocale);
 
         // overrule default URL
         $this->dgFrontend->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));

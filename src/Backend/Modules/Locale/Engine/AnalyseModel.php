@@ -39,7 +39,7 @@ class AnalyseModel extends Model
     {
         $matches = array();
         preg_match_all("@$start([a-zA-Z0-9_]*)$end@", $str, $matches);
-        return (isset($matches[1]))? current($matches[1]): '';
+        return (isset($matches[1])) ? current($matches[1]) :'';
     }
 
     /**
@@ -83,7 +83,6 @@ class AnalyseModel extends Model
         $nonExisting = array();
         foreach ($locale as $moduleName => &$module) {
             foreach ($module as $filename => &$file) {
-
                 if (isset($oldLocale[$moduleName])) {
                     $file['locale'] = array_diff_key($file['locale'], $oldLocale[$moduleName]);
                 }
@@ -156,7 +155,6 @@ class AnalyseModel extends Model
         $nonExisting = array();
         foreach ($locale as $moduleName => &$module) {
             foreach ($module as $filename => &$file) {
-
                 // extra filter for Core
                 $file['locale'] = array_diff_key($file['locale'], $oldLocale['Core']);
 
@@ -211,13 +209,11 @@ class AnalyseModel extends Model
     {
         $locale = array();
         foreach ($module as $filename => $file) {
-
             $matches = array();
             $extension = $file->getExtension();
             $fileContent = $file->getContents();
 
             switch ($extension) {
-
                 // PHP file
                 case 'js':
                     preg_match_all('/\{\$(act|err|lbl|msg)(.*)(\|.*)?\}/iU', $fileContent, $matches);

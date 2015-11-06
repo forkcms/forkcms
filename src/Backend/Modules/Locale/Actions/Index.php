@@ -80,7 +80,7 @@ class Index extends BackendBaseActionIndex
         $langWidth = (60 / count($this->filter['language']));
 
         // if nothing is submitted
-        // we don't to fetch all the locale
+        // we don't need to fetch all the locale
         $this->hasSubmissions =
         (
             '' !== $this->filter['application'].$this->filter['module'].
@@ -307,7 +307,8 @@ class Index extends BackendBaseActionIndex
         );
 
         $this->tpl->assign(
-            'hasSubmissions', $this->hasSubmissions
+            'hasSubmissions',
+            $this->hasSubmissions
         );
 
         // parse the add URL
