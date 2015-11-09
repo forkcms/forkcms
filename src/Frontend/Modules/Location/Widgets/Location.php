@@ -37,7 +37,7 @@ class Location extends FrontendBaseWidget
      */
     public function execute()
     {
-        $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+        $this->addJS('https://maps.google.com/maps/api/js?sensor=true', true, false);
 
         parent::execute();
 
