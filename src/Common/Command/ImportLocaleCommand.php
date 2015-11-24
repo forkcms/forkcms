@@ -26,8 +26,8 @@ class ImportLocaleCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('locale:install')
-             ->setDescription('Install locale translations')
+        $this->setName('locale:import')
+             ->setDescription('Import locale translations')
              ->addOption('overwrite', 'o', InputOption::VALUE_OPTIONAL, 'Overwrite the existing locale', true)
              ->addOption('file', 'f', InputOption::VALUE_OPTIONAL, 'Path to the locale file')
              ->addOption('module', 'm', InputOption::VALUE_OPTIONAL, 'Name of the module that contains the locale');
@@ -65,7 +65,7 @@ class ImportLocaleCommand extends Command
 
         // Import locale
         $output->writeln('<info>Importing locale....</info>');
-        $this->installLocale($localePath, $overwriteOption, $output);
+        $this->importLocale($localePath, $overwriteOption, $output);
     }
 
     /**
@@ -91,7 +91,7 @@ class ImportLocaleCommand extends Command
      * @param OutputInterFace $output
      * @throws Exception
      */
-    private function installLocale($localePath, $overwrite, OutputInterface $output)
+    private function importLocale($localePath, $overwrite, OutputInterface $output)
     {
         // Load the xml from the file
         $xmlData = @simplexml_load_file($localePath);
@@ -101,7 +101,7 @@ class ImportLocaleCommand extends Command
             throw new Exception('Invalid locale.xml file.');
         }
 
-        // Everything ok, let's install the locale
+        // Everything ok, let's import the locale
         $results = BackendLocaleModel::importXML($xmlData, $overwrite, null, null, 1);
 
         if (!$results['total'] > 0) {
