@@ -104,7 +104,7 @@ class ImportLocaleCommand extends Command
         // Everything ok, let's import the locale
         $results = BackendLocaleModel::importXML($xmlData, $overwrite, null, null, 1);
 
-        if (!$results['total'] > 0) {
+        if ($results['total'] < 0) {
             $output->writeln('<error>Something went wrong during import.</error>');
             return;
         }
