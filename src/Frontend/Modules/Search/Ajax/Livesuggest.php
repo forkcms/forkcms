@@ -199,7 +199,7 @@ class Livesuggest extends FrontendBaseAJAXAction
 
         // error if the request page doesn't exist
         if ($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) {
-            return $this->output(self::BAD_REQUEST, null, 'the request page doesn\'t exist');
+            throw new FrontendException('the request page doesn\'t exist');
         }
 
         // debug mode = no cache
