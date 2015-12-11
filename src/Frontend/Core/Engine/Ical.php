@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Uri as CommonUri;
-
 use Frontend\Core\Engine\Model as FrontendModel;
 
 /**

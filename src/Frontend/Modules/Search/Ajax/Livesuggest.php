@@ -10,7 +10,6 @@ namespace Frontend\Modules\Search\Ajax;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;

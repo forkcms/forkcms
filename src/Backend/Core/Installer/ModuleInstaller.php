@@ -11,9 +11,7 @@ namespace Backend\Core\Installer;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-
 use Common\Uri as CommonUri;
-
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 

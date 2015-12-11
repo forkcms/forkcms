@@ -10,7 +10,6 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 
 /**

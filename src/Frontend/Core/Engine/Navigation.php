@@ -32,20 +32,6 @@ class Navigation extends FrontendBaseObject
     private static $excludedPageIds = array();
 
     /**
-     * The keys an structural data for pages
-     *
-     * @var    array
-     */
-    private static $keys = array();
-
-    /**
-     * The keys an structural data for pages
-     *
-     * @var    array
-     */
-    private static $navigation = array();
-
-    /**
      * The selected pageIds
      *
      * @var    array
@@ -196,35 +182,7 @@ class Navigation extends FrontendBaseObject
     public static function getKeys($language = null)
     {
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-
-        // does the keys exists in the cache?
-        if (!isset(self::$keys[$language]) || empty(self::$keys[$language])) {
-            // validate file
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php')) {
-                // generate the cache
-                BackendPagesModel::buildCache($language);
-
-                // recall
-                return self::getKeys($language);
-            }
-
-            // init var
-            $keys = array();
-
-            // require file
-            require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php';
-
-            // validate keys
-            if (empty($keys)) {
-                throw new Exception('No pages for ' . $language . '.');
-            }
-
-            // store
-            self::$keys[$language] = $keys;
-        }
-
-        // return from cache
-        return self::$keys[$language];
+        return BackendPagesModel::getCacheBuilder()->getKeys($language);
     }
 
     /**
@@ -236,28 +194,8 @@ class Navigation extends FrontendBaseObject
      */
     public static function getNavigation($language = null)
     {
-        // redefine
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-
-        // do the keys exists in the cache?
-        if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
-            // validate file @later: the file should be regenerated
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
-                throw new Exception('No navigation-file (navigation_' . $language . '.php) found.');
-            }
-
-            // init var
-            $navigation = array();
-
-            // require file
-            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
-
-            // store
-            self::$navigation[$language] = $navigation;
-        }
-
-        // return from cache
-        return self::$navigation[$language];
+        return BackendPagesModel::getCacheBuilder()->getNavigation($language);
     }
 
     /**
@@ -548,8 +486,8 @@ class Navigation extends FrontendBaseObject
             foreach ($level as $pages) {
                 // loop pages
                 foreach ($pages as $pageId => $properties) {
-                    // only process pages with extra_blocks
-                    if (!isset($properties['extra_blocks'])) {
+                    // only process pages with extra_blocks that are visible
+                    if (!isset($properties['extra_blocks']) || $properties['hidden']) {
                         continue;
                     }
 
