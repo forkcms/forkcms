@@ -208,7 +208,7 @@ class SaveField extends BackendBaseAJAXAction
                         if ($defaultValues != '') {
                             $settings['default_values'] = $defaultValues;
                         }
-                        if($placeholder != '') {
+                        if ($placeholder != '') {
                             $settings['placeholder'] = \SpoonFilter::htmlspecialchars($placeholder);
                         }
 
@@ -221,7 +221,7 @@ class SaveField extends BackendBaseAJAXAction
                         if ($type == 'datetime') {
                             $settings['input_type'] = $inputType;
 
-                            if($inputType == 'date') {
+                            if ($inputType == 'date') {
                                 $settings['value_amount'] = $valueAmount;
                                 $settings['value_type'] = $valueType;
                             }

@@ -11,7 +11,6 @@ namespace Backend\Modules\Mailmotor\Engine;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Core\Engine\Language as BL;

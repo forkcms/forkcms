@@ -12,7 +12,6 @@ namespace Frontend\Core\Engine;
 use Common\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Common\Cookie as CommonCookie;
 
 /**

@@ -65,7 +65,9 @@ class Delete extends BackendBaseActionDelete
         }
 
         // something went wrong
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        else {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
     }
 
     /**

@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 
 /**

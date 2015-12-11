@@ -70,9 +70,14 @@ class Settings extends BackendBaseActionEdit
                 $width = (int) $this->frm->getField('width_widget')->getValue();
                 $height = (int) $this->frm->getField('height_widget')->getValue();
 
-                if ($width > 800) $width = 800;
-                elseif ($width < 300) $width = $this->get('fork.settings')->get('Location', 'width_widget');
-                if ($height < 150) $height = $this->get('fork.settings')->get('Location', 'height_widget');
+                if ($width > 800) {
+                    $width = 800;
+                } elseif ($width < 300) {
+                    $width = $this->get('fork.settings')->get('Location', 'width_widget');
+                }
+                if ($height < 150) {
+                    $height = $this->get('fork.settings')->get('Location', 'height_widget');
+                }
 
                 // set our settings (widgets)
                 $this->get('fork.settings')->set($this->URL->getModule(), 'zoom_level_widget', (string) $this->frm->getField('zoom_level_widget')->getValue());

@@ -17,7 +17,6 @@ namespace Backend;
  */
 class Init extends \Common\Core\Init
 {
-
     /**
      * @inheritdoc
      */
