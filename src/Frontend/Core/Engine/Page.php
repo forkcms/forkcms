@@ -102,9 +102,8 @@ class Page extends FrontendBaseObject
         // set tracking cookie
         Model::getVisitorId();
 
-        // get page content
+        // get page content from pageId of the requested URL
         $this->record = $this->getPageContent(
-            // get pageId for requested URL
             Navigation::getPageId(implode('/', $this->URL->getPages()))
         );
 
@@ -225,6 +224,8 @@ class Page extends FrontendBaseObject
 
     /**
      * Get page content
+     *
+     * @return array
      */
     protected function getPageContent($pageId)
     {
