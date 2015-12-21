@@ -102,8 +102,13 @@ class Page extends FrontendBaseObject
         // set tracking cookie
         Model::getVisitorId();
 
-        // get pageId for requested URL
-        $this->pageId = Navigation::getPageId(implode('/', $this->URL->getPages()));
+        // get page content from pageId of the requested URL
+        $this->record = $this->getPageContent(
+            Navigation::getPageId(implode('/', $this->URL->getPages()))
+        );
+
+        // we need to set the correct id
+        $this->pageId = (int) $this->record['id'];
 
         // set headers if this is a 404 page
         if ($this->pageId == 404) {
@@ -122,9 +127,6 @@ class Page extends FrontendBaseObject
 
         // new footer instance
         $this->footer = new Footer($this->getKernel());
-
-        // get page content
-        $this->getPageContent();
 
         // process page
         $this->processPage();
@@ -222,37 +224,28 @@ class Page extends FrontendBaseObject
 
     /**
      * Get page content
+     *
+     * @return array
      */
-    protected function getPageContent()
+    protected function getPageContent($pageId)
     {
         // load revision
         if ($this->URL->getParameter('page_revision', 'int') != 0) {
             // get data
-            $this->record = Model::getPageRevision($this->URL->getParameter('page_revision', 'int'));
+            $record = Model::getPageRevision($this->URL->getParameter('page_revision', 'int'));
 
             // add no-index to meta-custom, so the draft won't get accidentally indexed
             $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
         } else {
             // get page record
-            $this->record = (array) Model::getPage($this->pageId);
-        }
-
-        // empty record (pageId doesn't exists, hope this line is never used)
-        if (empty($this->record) && $this->pageId != 404) {
-            throw new RedirectException(
-                'Redirect',
-                new RedirectResponse(
-                    Navigation::getURL(404),
-                    404
-                )
-            );
+            $record = (array) Model::getPage($pageId);
         }
 
         // init var
         $redirect = true;
 
         // loop blocks, if all are empty we should redirect to the first child
-        foreach ($this->record['positions'] as $blocks) {
+        foreach ($record['positions'] as $blocks) {
             // loop blocks in position
             foreach ($blocks as $block) {
                 // HTML provided?
@@ -275,7 +268,7 @@ class Page extends FrontendBaseObject
         // should we redirect?
         if ($redirect) {
             // get first child
-            $firstChildId = Navigation::getFirstChildId($this->record['id']);
+            $firstChildId = Navigation::getFirstChildId($record['id']);
 
             // validate the child
             if ($firstChildId !== false) {
@@ -292,6 +285,8 @@ class Page extends FrontendBaseObject
                 );
             }
         }
+
+        return $record;
     }
 
     /**
