@@ -109,7 +109,6 @@ class Header extends FrontendBaseObject
         $this->getContainer()->set('header', $this);
 
         // add some default CSS files
-        $this->addCSS('/src/Frontend/Core/Layout/Css/jquery_ui/jquery_ui.css', false);
         $this->addCSS('/src/Frontend/Core/Layout/Css/screen.css');
 
         // debug stylesheet
@@ -119,7 +118,6 @@ class Header extends FrontendBaseObject
 
         // add default javascript-files
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false, null, self::PRIORITY_GROUP_GLOBAL);
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/utils.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/frontend.js', false, null, self::PRIORITY_GROUP_GLOBAL);
