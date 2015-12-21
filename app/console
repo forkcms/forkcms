@@ -30,4 +30,5 @@ if ($debug) {
 
 $kernel = new AppKernel($env, $debug);
 $application = new Application($kernel);
+$application->add(new \Common\Command\ImportLocaleCommand());
 $application->run($input);
