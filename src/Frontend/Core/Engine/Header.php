@@ -841,6 +841,10 @@ class Header extends FrontendBaseObject
         $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         if ($queryString == $language) {
             $this->canonical = rtrim(SITE_URL, '/');
+
+            if ($this->getContainer()->getParameter('site.multilanguage')) {
+                $this->canonical .= '/' . $language;
+            }
         }
 
         // any canonical URL provided?
