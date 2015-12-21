@@ -3,6 +3,7 @@ services:
         class: Backend\Modules\Analytics\GoogleClient\ClientFactory
         arguments:
             - @fork.settings
+            - %kernel.cache_dir%
 
     analytics.google_analytics_service:
         class: Google_Service_Analytics
@@ -13,14 +14,9 @@ services:
         factory_service: analytics.client_factory
         factory_method: createClient
 
-    analytics.cache:
-        class: Common\Cache\FileCache
-        arguments:
-            - %kernel.cache_dir%/Analytics
-
     analytics.connector:
         class: Backend\Modules\Analytics\GoogleClient\Connector
         arguments:
             - @analytics.google_analytics_service
-            - @analytics.cache
+            - @cache.pool
             - @fork.settings

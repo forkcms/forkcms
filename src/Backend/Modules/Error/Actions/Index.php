@@ -45,11 +45,11 @@ class Index extends BackendBaseActionIndex
         switch ($errorType) {
             case 'module-not-allowed':
             case 'action-not-allowed':
-                \SpoonHTTP::setHeadersByCode(403);
+                header('HTTP/1.1 403 Forbidden');
                 break;
 
             case 'not-found':
-                \SpoonHTTP::setHeadersByCode(404);
+                header('HTTP/1.1 404 Not Found');
                 break;
         }
 
@@ -64,7 +64,7 @@ class Index extends BackendBaseActionIndex
             // if the file has an extension it is a non-existing-file
             if ($extension != '' && $extension != $chunks[0]) {
                 // set correct headers
-                \SpoonHTTP::setHeadersByCode(404);
+                header('HTTP/1.1 404 Not Found');
 
                 // give a nice error, so we can detect which file is missing
                 echo 'Requested file (' . htmlspecialchars($this->getParameter('querystring')) . ') not found.';

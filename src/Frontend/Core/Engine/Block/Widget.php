@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine\Block;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
@@ -103,8 +102,7 @@ class Widget extends FrontendBaseObject
         // validate if class exists (aka has correct name)
         if (!class_exists($actionClass)) {
             throw new FrontendException(
-                'The action file is present, but the class name should be: ' .
-                $actionClass . '.'
+                'The action file ' . $actionClass . ' could not be found.'
             );
         }
         // create action-object
@@ -203,7 +201,7 @@ class Widget extends FrontendBaseObject
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
             throw new FrontendException(
-                'The config file is present, but the class name should be: ' . $configClass . '.'
+                'The config file ' . $configClass . ' could not be found.'
             );
         }
 

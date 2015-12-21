@@ -1,6 +1,7 @@
 {include:Core/Layout/Templates/Head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
+	{$siteStartOfBodyScripts}
 	{include:Core/Layout/Templates/Cookies.tpl}
 
 	<div id="topWrapper">

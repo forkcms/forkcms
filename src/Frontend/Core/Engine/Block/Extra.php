@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine\Block;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
@@ -287,7 +286,7 @@ class Extra extends FrontendBaseObject
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
             throw new FrontendException(
-                'The config file is present, but the class name should be: ' . $configClass . '.'
+                'The config file ' . $configClass . ' could not be found.'
             );
         }
 

@@ -30,12 +30,8 @@
             {$msgCertificateHelp}
           </p>
           {$fileCertificate} {$fileCertificateError}
-        </div>
-        <div class="form-group">
-          <label for="clientId">{$lblClientId|ucfirst}</label>
-          {$txtClientId} {$txtClientIdError}
-        </div>
-        <div class="form-group">
+        </p>
+        <p>
           <label for="email">{$lblEmail|ucfirst}</label>
           {$txtEmail} {$txtEmailError}
         </div>
@@ -116,15 +112,34 @@
   </div>
 </div>
 {/option:ddmProfile}
-<div class="row fork-module-actions">
-  <div class="col-md-12">
-    <div class="btn-toolbar">
-      <div class="btn-group pull-right" role="group">
-        <button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+
+  {option:noAccounts}
+    <div class="generalMessage infoMessage content">
+      <p><strong>{$msgNoAccounts|sprintf:{$email}}</strong></p>
+    </div>
+  {/option:noAccounts}
+
+  {option:profile}
+    <div class="box">
+      <div class="heading">
+        <h3>{$lblLinkedProfile|ucfirst}</h3>
+      </div>
+      <div class="options">
+        <p>
+          <strong>{$web_property_id}</strong>{option:profile}: ga:{$profile}{/option:profile}
+        </p>
+        {option:showAnalyticsReset}<a href="{$var|geturl:'reset'}">{$msgRemoveAccountLink|ucfirst}</a>{/option:showAnalyticsReset}
       </div>
     </div>
-  </div>
-</div>
+  {/option:profile}
+
+  {option:!profile}
+    <div class="fullwidthOptions">
+      <div class="buttonHolderRight">
+        <input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+      </div>
+    </div>
+  {/option:!profile}
 {/form:settings}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

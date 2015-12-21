@@ -10,7 +10,6 @@ namespace Backend\Core\Ajax;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Base\AjaxAction;
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -46,7 +45,7 @@ class Templates extends AjaxAction
         }
 
         // set headers
-        \SpoonHTTP::setHeaders('Content-type: text/javascript');
+        header('Content-type: text/javascript');
 
         // output the templates
         if (!empty($templates)) {

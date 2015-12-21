@@ -10,7 +10,6 @@ namespace Backend\Modules\Blog\Actions;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model as BackendModel;
@@ -303,7 +302,7 @@ class ImportWordpress extends BackendBaseActionEdit
         try {
             $this->fs->dumpFile(
                 $imagesPath . '/' . $destinationFile,
-                \SpoonHttp::getContent($file)
+                file_get_contents($file)
             );
         } catch (Exception $e) {
             // Ignore

@@ -19,9 +19,15 @@ class ClientFactory
      */
     private $settings;
 
-    public function __construct(ModulesSettings $modulesSettings)
+    /**
+     * @var string
+     */
+    private $cacheDir;
+
+    public function __construct(ModulesSettings $modulesSettings, $cacheDir)
     {
         $this->settings = $modulesSettings;
+        $this->cacheDir = $cacheDir;
     }
 
     /**
@@ -31,7 +37,13 @@ class ClientFactory
      */
     public function createClient()
     {
-        $client = new \Google_Client();
+        $config = new \Google_Config();
+        $config->setClassConfig(
+            'Google_Cache_File',
+            array('directory' => $this->cacheDir)
+        );
+
+        $client = new \Google_Client($config);
 
         // set assertion credentials
         $client->setAssertionCredentials(
@@ -42,8 +54,6 @@ class ClientFactory
             )
         );
 
-        // other settings
-        $client->setClientId($this->settings->get('Analytics', 'client_id'));
         $client->setAccessType('offline_access');
 
         return $client;

@@ -143,7 +143,7 @@ class Model
         $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=false';
 
         // define result
-        $geocodes = json_decode(\SpoonHTTP::getContent($url), true);
+        $geocodes = json_decode(file_get_contents($url), true);
 
         // return coordinates latitude/longitude
         return array(
@@ -168,7 +168,9 @@ class Model
             array((int) $mapId, (string) $name)
         );
 
-        if ($serializedData != null) return unserialize($serializedData);
+        if ($serializedData != null) {
+            return unserialize($serializedData);
+        }
         return false;
     }
 
@@ -187,7 +189,9 @@ class Model
             array((int) $mapId)
         );
 
-        foreach ($mapSettings as $key => $value) $mapSettings[$key] = unserialize($value);
+        foreach ($mapSettings as $key => $value) {
+            $mapSettings[$key] = unserialize($value);
+        }
 
         return $mapSettings;
     }

@@ -10,9 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use MatthiasMullie\Minify;
-
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 

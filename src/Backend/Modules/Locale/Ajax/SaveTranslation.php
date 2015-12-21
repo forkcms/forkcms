@@ -10,7 +10,6 @@ namespace Backend\Modules\Locale\Ajax;
  */
 
 use Common\Uri as CommonUri;
-
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
@@ -34,8 +33,11 @@ class SaveTranslation extends BackendBaseAJAXAction
         $isGod = BackendAuthentication::getUser()->isGod();
 
         // get possible languages
-        if ($isGod) $possibleLanguages = array_unique(array_merge(BL::getWorkingLanguages(), BL::getInterfaceLanguages()));
-        else $possibleLanguages = BL::getWorkingLanguages();
+        if ($isGod) {
+            $possibleLanguages = array_unique(array_merge(BL::getWorkingLanguages(), BL::getInterfaceLanguages()));
+        } else {
+            $possibleLanguages = BL::getWorkingLanguages();
+        }
 
         // get parameters
         $language = \SpoonFilter::getPostValue('language', array_keys($possibleLanguages), null, 'string');
@@ -46,10 +48,16 @@ class SaveTranslation extends BackendBaseAJAXAction
         $value = \SpoonFilter::getPostValue('value', null, null, 'string');
 
         // validate values
-        if (trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'Frontend' && $module != 'Core')) $error = BL::err('InvalidValue');
+        if (trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'Frontend' && $module != 'Core')) {
+            $error = BL::err('InvalidValue');
+        }
 
         // in case this is a 'act' type, there are special rules concerning possible values
-        if ($type == 'act' && !isset($error)) if (urlencode($value) != CommonUri::getUrl($value)) $error = BL::err('InvalidActionValue', $this->getModule());
+        if ($type == 'act' && !isset($error)) {
+            if (urlencode($value) != CommonUri::getUrl($value)) {
+                $error = BL::err('InvalidActionValue', $this->getModule());
+            }
+        }
 
         // no error?
         if (!isset($error)) {
@@ -83,6 +91,8 @@ class SaveTranslation extends BackendBaseAJAXAction
         }
 
         // output the error
-        else $this->output(self::ERROR, null, $error);
+        else {
+            $this->output(self::ERROR, null, $error);
+        }
     }
 }

@@ -10,7 +10,6 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Backend\Core\Engine\Header;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;

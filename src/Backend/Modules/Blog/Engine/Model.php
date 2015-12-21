@@ -673,7 +673,6 @@ class Model
                 array(BL::getWorkingLanguage(), $URL, $id)
             )
             ) {
-
                 $URL = BackendModel::addNumber($URL);
 
                 return self::getURL($URL, $id);
@@ -1194,5 +1193,19 @@ class Model
                 BackendModel::invalidateFrontendCache('Blog', $language);
             }
         }
+    }
+
+    /**
+     * Update a page revision without generating a new revision.
+     * Needed to add an image to a page.
+     */
+    public static function updateRevision($revision_id, $item)
+    {
+        BackendModel::getContainer()->get('database')->update(
+            'blog_posts',
+            $item,
+            'revision_id = ?',
+            array($revision_id)
+        );
     }
 }

@@ -10,7 +10,6 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 
 /**
@@ -69,12 +68,8 @@ class Action extends Base\Object
             $actionClass = 'Backend\\Core\\Actions\\' . $this->getAction();
         }
 
-        // validate if class exists (aka has correct name)
-        if (!class_exists(
-            $actionClass
-        )
-        ) {
-            throw new Exception('The actionfile is present, but the classname should be: ' . $actionClass . '.');
+        if (!class_exists($actionClass)) {
+            throw new Exception('The class ' . $actionClass . ' could not be found.');
         }
 
         // get working languages
@@ -119,11 +114,8 @@ class Action extends Base\Object
         }
 
         // validate if class exists (aka has correct name)
-        if (!class_exists(
-            $configClass
-        )
-        ) {
-            throw new Exception('The config file is present, but the classname should be: ' . $configClass . '.');
+        if (!class_exists($configClass)) {
+            throw new Exception('The config file ' . $configClass . ' could not be found.');
         }
 
         // create config-object, the constructor will do some magic

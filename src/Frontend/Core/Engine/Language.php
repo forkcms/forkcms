@@ -12,7 +12,6 @@ namespace Frontend\Core\Engine;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Modules\Locale\Engine\CacheBuilder;
 
-
 /**
  * This class will store the language-dependant content for the frontend.
  *

@@ -27,14 +27,6 @@ use Frontend\Core\Engine\Language as FrontendLanguage;
 class Model extends \Common\Core\Model
 {
     /**
-     * The keys and structural data for pages
-     *
-     * @var    array
-     */
-    private static $keys = array();
-    private static $navigation = array();
-
-    /**
      * Allowed module extras types
      *
      * @var    array
@@ -198,18 +190,24 @@ class Model extends \Common\Core\Model
 
         // loop found extras
         foreach ($extras as $extra) {
+            $deleteExtra = true;
+
             // match by parameters
             if ($data !== null && $extra['data'] !== null) {
                 $extraData = (array) unserialize($extra['data']);
 
-                // skip extra if parameters do not match
-                if (count(array_intersect($data, $extraData)) !== count($data)) {
-                    continue;
+                // do not delete extra if parameters do not match
+                foreach ($data as $dataKey => $dataValue) {
+                    if (isset($extraData[$dataKey]) && $dataValue != $extraData[$dataKey]) {
+                        $deleteExtra = false;
+                    }
                 }
             }
 
             // delete extra
-            self::deleteExtraById($extra['id']);
+            if ($deleteExtra) {
+                self::deleteExtraById($extra['id']);
+            }
         }
     }
 
@@ -481,18 +479,8 @@ class Model extends \Common\Core\Model
     {
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
-        // does the keys exists in the cache?
-        if (!isset(self::$keys[$language]) || empty(self::$keys[$language])) {
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php')) {
-                BackendPagesModel::buildCache($language);
-            }
-
-            $keys = array();
-            require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php';
-            self::$keys[$language] = $keys;
-        }
-
-        return self::$keys[$language];
+        $cacheBuilder = BackendPagesModel::getCacheBuilder();
+        return $cacheBuilder->getKeys($language);
     }
 
     /**
@@ -583,21 +571,10 @@ class Model extends \Common\Core\Model
      */
     public static function getNavigation($language = null)
     {
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
-        // does the keys exists in the cache?
-        if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
-                BackendPagesModel::buildCache($language);
-            }
-
-            $navigation = array();
-            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
-
-            self::$navigation[$language] = $navigation;
-        }
-
-        return self::$navigation[$language];
+        $cacheBuilder = BackendPagesModel::getCacheBuilder();
+        return $cacheBuilder->getNavigation($language);
     }
 
     /**
@@ -704,7 +681,7 @@ class Model extends \Common\Core\Model
             foreach ($level as $pages) {
                 foreach ($pages as $pageId => $properties) {
                     // only process pages with extra_blocks
-                    if (!isset($properties['extra_blocks'])) {
+                    if (!isset($properties['extra_blocks']) || $properties['hidden']) {
                         continue;
                     }
 

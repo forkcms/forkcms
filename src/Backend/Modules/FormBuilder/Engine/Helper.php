@@ -70,13 +70,13 @@ class Helper
                 $fieldHTML = $ddm->parse();
             } elseif ($field['type'] == 'datetime') {
                 // create element
-                if($field['settings']['input_type'] == 'date') {
+                if ($field['settings']['input_type'] == 'date') {
                     // calculate default value
                     $amount = $field['settings']['value_amount'];
                     $type = $field['settings']['value_type'];
 
-                    if($type != '') {
-                        switch($type) {
+                    if ($type != '') {
+                        switch ($type) {
                             case 'today':
                                 $defaultValues = date('d/m/Y');
                                 break;
@@ -84,7 +84,9 @@ class Helper
                             case 'week':
                             case 'month':
                             case 'year':
-                                if($amount != '') $defaultValues = date('d/m/Y', strtotime('+' . $amount . ' ' . $type));
+                                if ($amount != '') {
+                                    $defaultValues = date('d/m/Y', strtotime('+' . $amount . ' ' . $type));
+                                }
                                 break;
                         }
                     }

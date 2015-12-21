@@ -281,6 +281,21 @@
       </div>
     </div>
   </div>
+
+  <div class="box horizontal">
+    <div class="heading">
+      <h3>Twitter</h3>
+    </div>
+    <div class="options labelWidthLong">
+      <p>
+      <label for="twitterSiteName">{$lblTwitterSiteName|ucfirst}</label>
+      <span style="float: left;">
+        @ {$txtTwitterSiteName} {$txtTwitterSiteNameError}
+      </span>
+      </p>
+    </div>
+  </div>
+  </div>
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
@@ -290,6 +305,7 @@
       </div>
     </div>
   </div>
+
 {/form:settingsIndex}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

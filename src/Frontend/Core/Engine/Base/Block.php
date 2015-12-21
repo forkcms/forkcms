@@ -11,7 +11,6 @@ namespace Frontend\Core\Engine\Base;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;

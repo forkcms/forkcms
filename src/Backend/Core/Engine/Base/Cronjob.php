@@ -10,7 +10,6 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -86,7 +85,7 @@ class Cronjob extends Object
 
         // check if file exists
         if (!is_file($path . '/' . $action . '.php')) {
-            \SpoonHTTP::setHeadersByCode(403);
+            header('HTTP/1.1 403 Forbidden');
             throw new BackendException('Action not allowed.');
         }
 
@@ -159,7 +158,7 @@ class Cronjob extends Object
         $modules = BackendModel::getModulesOnFilesystem();
         if (!in_array($module, $modules)) {
             // set correct headers
-            \SpoonHTTP::setHeadersByCode(403);
+            header('HTTP/1.1 403 Forbidden');
 
             // throw exception
             throw new BackendException('Module not allowed.');

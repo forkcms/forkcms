@@ -5,7 +5,6 @@ namespace ForkCMS\Bundle\InstallerBundle\Service;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\DependencyInjection\Container;
-
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;

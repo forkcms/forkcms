@@ -3,10 +3,11 @@
 namespace Backend\Modules\Analytics\Tests\GoogleClient;
 
 use Backend\Modules\Analytics\GoogleClient\Connector;
-use Common\Cache\InMemoryCache;
 use Common\ModulesSettings;
 use Google_Client;
 use Google_Service_Analytics;
+use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
+use MatthiasMullie\Scrapbook\Psr6\Pool;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -18,7 +19,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -35,7 +36,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -52,7 +53,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -69,7 +70,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -86,7 +87,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -103,7 +104,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -122,7 +123,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
 
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -150,7 +151,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -166,6 +167,32 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
                 ),
             ),
             $connector->getSourceGraphData(
+                strtotime('-1 day', mktime(0, 0, 0)),
+                mktime(0, 0, 0)
+            )
+        );
+    }
+
+    public function testGetMostVisitedPagesData()
+    {
+        $connector = new Connector(
+            $this->getAnalyticsServiceMock(),
+            new Pool(new MemoryStore()),
+            $this->getModulesSettingsMock()
+        );
+
+        $this->assertEquals(
+            array(
+                array(
+                    'ga_pagePath' => '/en',
+                    'ga_pageviews' => '15',
+                ),
+                array(
+                    'ga_pagePath' => '/en/blog',
+                    'ga_pageviews' => '8',
+                ),
+            ),
+            $connector->getMostVisitedPagesData(
                 strtotime('-1 day', mktime(0, 0, 0)),
                 mktime(0, 0, 0)
             )
@@ -223,10 +250,22 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             )
         );
 
+        $pageViewsDataMock = array(
+            'rows' => array(
+                array('/en', '15'),
+                array('/en/blog', '8'),
+            ),
+            'columnHeaders' => array(
+                array('name' => 'ga:pagePath'),
+                array('name' => 'ga:pageviews'),
+            )
+        );
+
         $dataGateway->method('get')
             ->will($this->onConsecutiveCalls(
                 $metricsReturnMock,
                 $visitGraphDataMock,
+                $pageViewsDataMock,
                 $sourceGraphDataMock
             ))
         ;

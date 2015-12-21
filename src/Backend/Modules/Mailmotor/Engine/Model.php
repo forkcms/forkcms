@@ -11,7 +11,6 @@ namespace Backend\Modules\Mailmotor\Engine;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Core\Engine\Language as BL;
@@ -505,12 +504,8 @@ class Model
         $filename = 'statistics-' . \SpoonDate::getDate('YmdHi') . '.csv';
 
         // set headers for download
-        $headers = array();
-        $headers[] = 'Content-type: application/octet-stream';
-        $headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
-
-        // overwrite the headers
-        \SpoonHTTP::setHeaders($headers);
+        header('Content-type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
 
         // output the CSV string
         echo $csv;
@@ -575,17 +570,10 @@ class Model
         }
 
         // set headers for download
-        $headers = array();
-        $headers[] = 'Content-type: application/octet-stream';
-        $headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
+        header('Content-type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
 
-        // overwrite the headers
-        \SpoonHTTP::setHeaders($headers);
-
-        // output the CSV string
         echo $csv;
-
-        // exit here
         exit;
     }
 

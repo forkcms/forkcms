@@ -105,12 +105,9 @@ class Addresses extends BackendBaseActionIndex
         $filename = end($explodedFilename);
 
         // set headers for download
-        $headers[] = 'Content-type: application/csv; charset=' . $charset;
-        $headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
-        $headers[] = 'Pragma: no-cache';
-
-        // overwrite the headers
-        \SpoonHTTP::setHeaders($headers);
+        header('Content-type: application/csv; charset=' . $charset);
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Pragma: no-cache');
 
         // get the file contents
         $content = file_get_contents($path);

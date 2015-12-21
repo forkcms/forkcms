@@ -11,7 +11,6 @@ namespace Backend\Modules\Dashboard\Actions;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -86,7 +85,7 @@ class Index extends BackendBaseActionIndex
                     }
 
                     if (!class_exists($className)) {
-                        throw new BackendException('The widgetfile is present, but the classname should be: ' . $className . '.');
+                        throw new BackendException('The widgetfile ' . $className . ' could not be found.');
                     }
 
                     // present?

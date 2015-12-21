@@ -3,9 +3,9 @@
 namespace Backend\Modules\Analytics\GoogleClient;
 
 use Backend\Core\Engine\Model;
-use Common\Cache\Cache;
 use Common\ModulesSettings;
 use Google_Service_Analytics;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * The class that will do query's on the google analytics API
@@ -20,7 +20,7 @@ final class Connector
     private $analytics;
 
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
     private $cache;
 
@@ -31,7 +31,7 @@ final class Connector
 
     public function __construct(
         Google_Service_Analytics $analytics,
-        Cache $cache,
+        CacheItemPoolInterface $cache,
         ModulesSettings $settings
     ) {
         $this->analytics = $analytics;
@@ -152,6 +152,20 @@ final class Connector
     }
 
     /**
+     * Returns the source graph data
+     *
+     * @param  int $startDate
+     * @param  int $endDate
+     * @return array
+     */
+    public function getMostVisitedPagesData($startDate, $endDate)
+    {
+        $results = $this->getData($startDate, $endDate);
+
+        return $results['pageViews'];
+    }
+
+    /**
      * Fetches all the needed data and caches it in our statistics array
      *
      * @param  int $startDate
@@ -162,20 +176,22 @@ final class Connector
     {
         $dateRange = $startDate . '-' . $endDate;
 
-        if (!$this->cache->isCached($dateRange)) {
-            $this->cache->cache(
-                $dateRange,
-                json_encode(
-                    array(
-                        'metrics' => $this->getMetrics($startDate, $endDate),
-                        'visitGraphData' => $this->collectVisitGraphData($startDate, $endDate),
-                        'sourceGraphData' => $this->collectSourceGraphData($startDate, $endDate),
-                    )
-                )
-            );
+        $item = $this->cache->getItem('analytics-' . $dateRange);
+        if ($item->exists()) {
+            return $item->get();
         }
 
-        return json_decode($this->cache->getFromCache($dateRange), true);
+        $data = array(
+            'metrics' => $this->getMetrics($startDate, $endDate),
+            'visitGraphData' => $this->collectVisitGraphData($startDate, $endDate),
+            'pageViews' => $this->collectMostVisitedPagesData($startDate, $endDate),
+            'sourceGraphData' => $this->collectSourceGraphData($startDate, $endDate),
+        );
+
+        $item->set($data);
+        $this->cache->save($item);
+
+        return $data;
     }
 
     /**
@@ -211,7 +227,7 @@ final class Connector
             'ga:pageviews,ga:users',
             array(
                 'dimensions' => 'ga:date',
-                'sort' =>'ga:date',
+                'sort' => 'ga:date',
             )
         );
 
@@ -249,7 +265,41 @@ final class Connector
             'ga:pageviews',
             array(
                 'dimensions' => 'ga:medium',
-                'sort' =>'-ga:pageviews',
+                'sort' => '-ga:pageviews',
+            )
+        );
+
+        // make sure our column headers are the metric names, not just numbers
+        $namedRows = array();
+        foreach ($sourceGraphData['rows'] as $dataRow) {
+            $namedRow = array();
+            foreach ($dataRow as $key => $value) {
+                $headerName = $sourceGraphData['columnHeaders'][$key]['name'];
+                $namedRow[str_replace(':', '_', $headerName)] = $value;
+            }
+            $namedRows[] = $namedRow;
+        }
+
+        return $namedRows;
+    }
+
+    /**
+     * Fetches the data needed to build the list with most visited pages
+     *
+     * @param  int $startDate
+     * @param  int $endDate
+     * @return array
+     */
+    private function collectMostVisitedPagesData($startDate, $endDate)
+    {
+        $sourceGraphData = $this->getAnalyticsData(
+            $startDate,
+            $endDate,
+            'ga:pageviews',
+            array(
+                'dimensions' => 'ga:pagePath',
+                'sort' => '-ga:pageviews',
+                'max-results' => 20,
             )
         );
 

@@ -10,7 +10,6 @@ namespace Backend\Core\Cronjobs;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Base\Cronjob;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model as BackendModel;
@@ -72,7 +71,7 @@ class ProcessQueuedHooks extends Cronjob
                 if (!is_callable($item['callback'])) {
                     // in debug mode we want to know if there are errors
                     if ($this->getContainer()->getParameter('kernel.debug')) {
-                        throw new Exception('Invalid callback!');
+                        throw new Exception('The given callback is not a valid callable!');
                     }
 
                     // set to error state

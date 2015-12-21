@@ -76,6 +76,28 @@
         <translation language="sv"><![CDATA[Välj en Analytics webbplats profil...]]></translation>
         <translation language="el"><![CDATA[Επιλογή ενός προφίλ Analytics...]]></translation>
       </item>
+      <item type="label" name="GaPagePath">
+        <translation language="nl"><![CDATA[pagina]]></translation>
+        <translation language="en"><![CDATA[page]]></translation>
+        <translation language="it"><![CDATA[pagina]]></translation>
+        <translation language="ru"><![CDATA[страниц]]></translation>
+        <translation language="fr"><![CDATA[page]]></translation>
+        <translation language="es"><![CDATA[páginas]]></translation>
+      </item>
+      <item type="label" name="GaPageviews">
+        <translation language="nl"><![CDATA[paginaweergaves]]></translation>
+        <translation language="en"><![CDATA[pageviews]]></translation>
+        <translation language="it"><![CDATA[visualizzazioni di pagina]]></translation>
+        <translation language="ru"><![CDATA[Просмотров страниц]]></translation>
+        <translation language="zh"><![CDATA[页面访问量]]></translation>
+        <translation language="de"><![CDATA[Seitenaufrufe]]></translation>
+        <translation language="hu"><![CDATA[oldalmegtekintés]]></translation>
+        <translation language="fr"><![CDATA[vues de page]]></translation>
+        <translation language="es"><![CDATA[vista de páginas]]></translation>
+        <translation language="uk"><![CDATA[Пекреглядів сторінок]]></translation>
+        <translation language="sv"><![CDATA[sidvisningar]]></translation>
+        <translation language="el"><![CDATA[Εμφανίσεις σελίδας]]></translation>
+      </item>
       <item type="label" name="LinkedProfile">
         <translation language="nl"><![CDATA[gekoppeld profiel]]></translation>
         <translation language="en"><![CDATA[linked profile]]></translation>
@@ -132,27 +154,9 @@
         <translation language="sv"><![CDATA[sidvisningar]]></translation>
         <translation language="el"><![CDATA[Εμφανίσεις σελίδας]]></translation>
       </item>
-      <item type="label" name="PageviewsByTrafficSources">
-        <translation language="nl"><![CDATA[paginaweergaves per verkeersbron]]></translation>
-        <translation language="en"><![CDATA[pageviews per traffic source]]></translation>
-        <translation language="it"><![CDATA[visualizzazioni di pagine per sorgenti di traffico]]></translation>
-        <translation language="ru"><![CDATA[Просмотров за одно посещение]]></translation>
-        <translation language="zh"><![CDATA[每个来源的访问量]]></translation>
-        <translation language="hu"><![CDATA[oldalmegtekintés per forgalom forrás]]></translation>
-        <translation language="fr"><![CDATA[vues de page par source de traffic]]></translation>
-        <translation language="de"><![CDATA[Seitenaufrufe nach Traffic-Quelle]]></translation>
-        <translation language="es"><![CDATA[vista de páginas por origen de tráfico]]></translation>
-        <translation language="uk"><![CDATA[Переглядів за один візит]]></translation>
-        <translation language="sv"><![CDATA[sidvisningar per trafikkälla]]></translation>
-        <translation language="el"><![CDATA[Εμφανίσεις σελίδας ανά πηγή κυκλοφορίας]]></translation>
-      </item>
       <item type="label" name="Certificate">
         <translation language="nl"><![CDATA[certificaat (.p12 bestand)]]></translation>
         <translation language="en"><![CDATA[certificate (.p12 file)]]></translation>
-      </item>
-      <item type="label" name="ClientId">
-        <translation language="nl"><![CDATA[client id]]></translation>
-        <translation language="en"><![CDATA[client id]]></translation>
       </item>
       <item type="error" name="P12Only">
         <translation language="nl"><![CDATA[Enkel p12 bestanden zijn toegelaten.]]></translation>
@@ -178,6 +182,7 @@
           <p>
             <ol>
               <li>Ga naar de <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
+              <li>Zorg dat je aangemeld bent met een Google account die toegang heeft op de gewenste analytics account.</li>
               <li>Kies een project of maak een nieuw aan.</li>
               <li>Klik in de zijbalk op <strong>APIs &amp; auth</strong>. Kies daaronder <strong>APIs</strong>. Kies <strong>Enabled APIs</strong> om te zien welke API's er ingeschakeld zijn. Controleer of the Analytics API tussen de ingeschakelde API's staat. Indien de Analytics API niet aanwezig is, klik dan op de <strong>Enable API</strong> knop voor deze API.</li>
             </ol>
@@ -200,6 +205,7 @@
           <p>
             <ol>
               <li>Go to the <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
+              <li>Make sure you're logged in with a Google account that has access to the wanted Analytics account.</li>
               <li>Select a project, or create a new one.</li>
               <li>In the sidebar on the left, expand <strong>APIs &amp; auth</strong>. Next, click <strong>APIs</strong>. Select the <strong>Enabled APIs</strong> link in the API section to see a list of all your enabled APIs. Make sure that the Google Analytics API is on the list of enabled APIs. If you have not enabled it, select the API from the list of APIs, then select the <strong>Enable API</strong> button for the API.</li>
             </ol>
@@ -221,6 +227,35 @@
         <translation language="nl"><![CDATA[Er zijn geen analytics accounts gekoppeld aan het opgegeven emailadres. Zorg dat het emailaddres %1$s zeker toegevoegd is aan de gewenste account. Het kan even duren voor de koppeling voltooid is.]]></translation>
         <translation language="en"><![CDATA[There are no analytics accounts coupled to the given emailadres. Make sure you added the emailaddress %1$s to the wanted account. It can take a while before the coupling is completed.]]></translation>
       </item>
+      <item type="message" name="RemoveAccountLink">
+        <translation language="nl"><![CDATA[Verwijder de koppeling met uw Google account]]></translation>
+        <translation language="en"><![CDATA[Remove the link with your Google account]]></translation>
+        <translation language="it"><![CDATA[Rimuovi il collegamento con il tuo account Google]]></translation>
+        <translation language="ru"><![CDATA[Удалить соединением с профилем  Google.]]></translation>
+        <translation language="zh"><![CDATA[移除与Google帐户的连接]]></translation>
+        <translation language="hu"><![CDATA[Kapcsolat törlése a Google fiókoddal]]></translation>
+        <translation language="fr"><![CDATA[Retirer le lien avec votre compte Google]]></translation>
+        <translation language="de"><![CDATA[Entferne die Verbindung zu deinem Google-Konto.]]></translation>
+        <translation language="es"><![CDATA[Eliminar el vinculo con tu cuenta Google]]></translation>
+        <translation language="sv"><![CDATA[Ta bort länken med ditt Google konto]]></translation>
+        <translation language="el"><![CDATA[Αφαιρέσατε το σύνδεσμο προς το λογαριασμό σας στο Google]]></translation>
+      </item>
     </Analytics>
+    <Core>
+      <item type="label" name="PageviewsByTrafficSources">
+        <translation language="nl"><![CDATA[paginaweergaves per verkeersbron]]></translation>
+        <translation language="en"><![CDATA[pageviews per traffic source]]></translation>
+        <translation language="it"><![CDATA[visualizzazioni di pagine per sorgenti di traffico]]></translation>
+        <translation language="ru"><![CDATA[Просмотров за одно посещение]]></translation>
+        <translation language="zh"><![CDATA[每个来源的访问量]]></translation>
+        <translation language="hu"><![CDATA[oldalmegtekintés per forgalom forrás]]></translation>
+        <translation language="fr"><![CDATA[vues de page par source de traffic]]></translation>
+        <translation language="de"><![CDATA[Seitenaufrufe nach Traffic-Quelle]]></translation>
+        <translation language="es"><![CDATA[vista de páginas por origen de tráfico]]></translation>
+        <translation language="uk"><![CDATA[Переглядів за один візит]]></translation>
+        <translation language="sv"><![CDATA[sidvisningar per trafikkälla]]></translation>
+        <translation language="el"><![CDATA[Εμφανίσεις σελίδας ανά πηγή κυκλοφορίας]]></translation>
+      </item>
+    </Core>
   </Backend>
 </locale>

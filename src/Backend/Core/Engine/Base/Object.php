@@ -12,7 +12,6 @@ namespace Backend\Core\Engine\Base;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Exception;
 use Common\Exception\RedirectException;
@@ -89,7 +88,7 @@ class Object extends \KernelLoader
         // is this action allowed?
         if (!Authentication::isAllowedAction($action, $this->getModule())) {
             // set correct headers
-            \SpoonHTTP::setHeadersByCode(403);
+            header('HTTP/1.1 403 Forbidden');
 
             // throw exception
             throw new Exception('Action not allowed.');
@@ -110,7 +109,7 @@ class Object extends \KernelLoader
         // is this module allowed?
         if (!Authentication::isAllowedModule($module)) {
             // set correct headers
-            \SpoonHTTP::setHeadersByCode(403);
+            header('HTTP/1.1 403 Forbidden');
 
             // throw exception
             throw new Exception('Module not allowed.');

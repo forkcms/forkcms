@@ -9,7 +9,6 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Backend\Init as BackendInit;
 use Frontend\Init as FrontendInit;
 use Common\Exception\RedirectException;
@@ -187,7 +186,7 @@ class ApplicationRouting extends Controller
 
         // validate
         if (!class_exists($apiClass)) {
-            throw new Exception('This version of the API does not exists.');
+            throw new Exception('This version of the API does not exist.');
         }
 
         $init = new $apiClass($this->container->get('kernel'));
