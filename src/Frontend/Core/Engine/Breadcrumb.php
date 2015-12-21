@@ -145,23 +145,7 @@ class Breadcrumb extends FrontendBaseObject
      */
     public function parse()
     {
-        // init vars
-        $items = array();
-        $numItems = count($this->items);
-
-        // loop items and add the separator
-        foreach ($this->items as $i => $row) {
-            // remove URL from last element
-            if ($i >= $numItems - 1) {
-                // remove URL for last object
-                $row['url'] = null;
-            }
-
-            // add item
-            $items[] = $row;
-        }
-
         // assign
-        $this->tpl->assign('breadcrumb', $items);
+        $this->tpl->assign('breadcrumb', $this->items);
     }
 }
