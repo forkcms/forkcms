@@ -72,19 +72,20 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
      */
     public function initialize()
     {
+        $request = $this->getContainer()->get('request');
+
         // get vars
-        $module = isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '';
-        if ($module == '' && isset($_GET['module'])) {
-            $module = $_GET['module'];
+        if ($request->request->has('fork')) {
+            $post = $request->request->get('fork');
+            $module = isset($post['module']) ? $post['module'] : '';
+            $action = isset($post['action']) ? $post['action'] : '';
+            $language = isset($post['language']) ? $post['language'] : '';
+        } else {
+            $module = $request->query->get('module');
+            $action = $request->query->get('action');
+            $language = $request->query->get('language');
         }
-        $action = isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '';
-        if ($action == '' && isset($_GET['action'])) {
-            $action = $_GET['action'];
-        }
-        $language = isset($_POST['fork']['language']) ? $_POST['fork']['language'] : '';
-        if ($language == '' && isset($_GET['language'])) {
-            $language = $_GET['language'];
-        }
+
         if ($language == '') {
             $language = SITE_DEFAULT_LANGUAGE;
         }
