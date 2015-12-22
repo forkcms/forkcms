@@ -43,9 +43,6 @@ class ImportLocaleCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Bootstrap fork
-        $this->bootstrapFork();
-
         // Get input values
         $fileOption = $input->getOption('file');
         $moduleOption = $input->getOption('module');
@@ -66,23 +63,6 @@ class ImportLocaleCommand extends Command
         // Import locale
         $output->writeln('<info>Importing locale....</info>');
         $this->importLocale($localePath, $overwriteOption, $output);
-    }
-
-    /**
-     * Bootstrap the app
-     */
-    private function bootstrapFork()
-    {
-        define('APPLICATION', 'Backend');
-        $kernel = new AppKernel('prod', false);
-        $kernel->boot();
-        $kernel->defineForkConstants();
-        if (!defined('PATH_WWW')) {
-            define('PATH_WWW', __DIR__ . '/..');
-        }
-        $loader = new BackendInit($kernel);
-        $loader->initialize('Backend');
-        $loader->passContainerToModels();
     }
 
     /**
