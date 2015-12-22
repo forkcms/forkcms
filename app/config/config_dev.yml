@@ -11,6 +11,6 @@ services:
     database_collector:
         class: Common\DataCollector\DatabaseDataCollector
         arguments:
-            - @database
+            - "@database"
         tags:
             - { name: data_collector, template: "database_data_collector.html.twig", id: "database" }
