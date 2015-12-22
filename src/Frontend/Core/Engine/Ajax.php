@@ -12,6 +12,7 @@ namespace Frontend\Core\Engine;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use InvalidArgumentException;
 
 /**
  * FrontendAJAX
@@ -99,6 +100,12 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
 
             $this->ajaxAction = new AjaxAction($this->getKernel(), $this->getAction(), $this->getModule());
             $this->output = $this->ajaxAction->execute();
+        } catch (InvalidArgumentException $e) {
+            $message = Model::getContainer()->getParameter('fork.debug_message');
+
+            $this->ajaxAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
+            $this->ajaxAction->output(FrontendBaseAJAXAction::ERROR, null, $message);
+            $this->output = $this->ajaxAction->execute();
         } catch (Exception $e) {
             if (Model::getContainer()->getParameter('kernel.debug')) {
                 $message = $e->getMessage();
@@ -155,8 +162,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
 
         // validate
         if (count($finder->files()) != 1) {
-            $fakeAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
-            $fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Action not correct.');
+            throw new Exception('Action not correct.');
         }
 
         // set property
@@ -210,11 +216,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
 
         // validate
         if (!in_array($value, $possibleModules)) {
-            // create fake action
-            $fakeAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
-
-            // output error
-            $fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Module not correct.');
+            throw new Exception('Module not correct');
         }
 
         // set property
