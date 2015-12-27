@@ -51,6 +51,13 @@ class Index extends BackendBaseActionIndex
     private $isGod;
 
     /**
+     * Has Submissions?
+     *
+     * @var bool
+     */
+    private $hasSubmissions;
+
+    /**
      * Execute the action
      */
     public function execute()
@@ -72,15 +79,25 @@ class Index extends BackendBaseActionIndex
         // init vars
         $langWidth = (60 / count($this->filter['language']));
 
-        // get all the translations for the selected languages
-        $translations = BackendLocaleModel::getTranslations(
-            $this->filter['application'],
-            $this->filter['module'],
-            $this->filter['type'],
-            $this->filter['language'],
-            $this->filter['name'],
-            $this->filter['value']
+        // if nothing is submitted
+        // we don't need to fetch all the locale
+        $this->hasSubmissions =
+        (
+            '' !== $this->filter['application'].$this->filter['module'].
+            $this->filter['name'].$this->filter['value']
         );
+
+        if ($this->hasSubmissions) {
+            // get all the translations for the selected languages
+            $translations = BackendLocaleModel::getTranslations(
+                $this->filter['application'],
+                $this->filter['module'],
+                $this->filter['type'],
+                $this->filter['language'],
+                $this->filter['name'],
+                $this->filter['value']
+            );
+        }
 
         // create datagrids
         $this->dgLabels = new BackendDataGridArray(isset($translations['lbl']) ? $translations['lbl'] : array());
@@ -141,7 +158,10 @@ class Index extends BackendBaseActionIndex
 
                 // escape the double quotes
                 $dataGrid->setColumnFunction(
-                    array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true
+                    array('SpoonFilter', 'htmlentities'),
+                    array('[' . $lang . ']', null, ENT_QUOTES),
+                    $lang,
+                    true
                 );
                 if ($type == 'act') {
                     $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
@@ -165,7 +185,9 @@ class Index extends BackendBaseActionIndex
                     if (BackendAuthentication::isAllowedAction('Edit')) {
                         // add edit button
                         $dataGrid->addColumn(
-                            'edit', null, BL::lbl('Edit'),
+                            'edit',
+                            null,
+                            BL::lbl('Edit'),
                             BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
@@ -174,7 +196,9 @@ class Index extends BackendBaseActionIndex
                     if (BackendAuthentication::isAllowedAction('Add')) {
                         // add copy button
                         $dataGrid->addColumnAction(
-                            'copy', null, BL::lbl('Copy'),
+                            'copy',
+                            null,
+                            BL::lbl('Copy'),
                             BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
@@ -280,6 +304,11 @@ class Index extends BackendBaseActionIndex
             $this->dgMessages->getNumResults() == 0 &&
             $this->dgErrors->getNumResults() == 0 &&
             $this->dgActions->getNumResults() == 0
+        );
+
+        $this->tpl->assign(
+            'hasSubmissions',
+            $this->hasSubmissions
         );
 
         // parse the add URL

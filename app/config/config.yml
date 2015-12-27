@@ -61,8 +61,8 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
         arguments:
-            - @fork.settings
-            - @service_container
+            - "@fork.settings"
+            - "@service_container"
 
     cache.filesystem.adapter:
         class: League\Flysystem\Adapter\Local
@@ -71,25 +71,25 @@ services:
     cache.filesystem.filesystem:
         class: League\Flysystem\Filesystem
         arguments:
-            - @cache.filesystem.adapter
+            - "@cache.filesystem.adapter"
     cache.adapter:
         class: MatthiasMullie\Scrapbook\Adapters\Flysystem
         arguments:
-            - @cache.filesystem.filesystem
+            - "@cache.filesystem.filesystem"
     cache.buffer:
         class: MatthiasMullie\Scrapbook\Buffered\BufferedStore
         arguments:
-            - @cache.adapter
+            - "@cache.adapter"
     cache.pool:
         class: MatthiasMullie\Scrapbook\Psr6\Pool
         arguments:
-            - @cache.buffer
+            - "@cache.buffer"
 
     fork.settings:
         class: Common\ModulesSettings
         arguments:
-            - @database
-            - @cache.pool
+            - "@database"
+            - "@cache.pool"
 
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
