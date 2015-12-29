@@ -160,6 +160,7 @@
   </div>
 </div>
 {/option:dgActions}
+{option:hasSubmissions}
 {option:noItems}
 <div class="row fork-module-content">
   <div class="col-md-12">
@@ -171,5 +172,17 @@
   </div>
 </div>
 {/option:noItems}
+{/option:hasSubmissions}
+{option:!hasSubmissions}
+<div class="row fork-module-content">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<p>{$msgStartSearch}</p>
+			</div>
+		</div>
+	</div>
+</div>
+{/option:!hasSubmissions}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

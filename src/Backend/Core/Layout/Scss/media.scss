@@ -9,34 +9,34 @@
 }
 
 @media (max-width: 991px) {
-    body {
-        padding-top: 0px;
-    }
+  body {
+    padding-top: 0px;
+  }
 
-    .navbar-fixed-top,
-    .navbar-fixed-bottom {
-        position: relative;
-    }
+  .navbar-fixed-top,
+  .navbar-fixed-bottom {
+    position: relative;
+  }
 }
 
 /* Bootstrap medium (md) screen */
 @media (min-width: 992px) and (max-width: 1199px) {
-    body {
-        padding-top: 70px;
-    }
+  body {
+    padding-top: 70px;
+  }
 
-    body#installer {
-        padding-top: 0px;
-    }
+  body#installer {
+    padding-top: 0px;
+  }
 }
 
 /* Bootstrap large (lg) screen */
 @media (min-width: 1200px) {
-    body {
-        padding-top: 70px;
-    }
+  body {
+    padding-top: 70px;
+  }
 
-    body#installer {
-        padding-top: 0px;
-    }
+  body#installer {
+    padding-top: 0px;
+  }
 }

@@ -1,5 +1,6 @@
 .project
 .cache
+.sass-cache
 .buildpath
 .settings
 .*.swp

@@ -45,10 +45,38 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
+        <div class="btn-group pull-left" role="group">
+          {option:showLocaleDelete}
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+            <span class="glyphicon glyphicon-trash"></span>&nbsp;
+            {$lblDelete|ucfirst}
+          </button>
+          {/option:showLocaleDelete}
+        </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">{$lblSave|ucfirst}</button>
         </div>
       </div>
+      {option:showLocaleDelete}
+      <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title h4">{$lblDelete|ucfirst}</span>
+            </div>
+            <div class="modal-body">
+              <p>{$msgConfirmDelete}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+              <a href="{$var|geturl:'delete'}&amp;id={$id}{$filterQuery}" class="btn btn-primary">
+                {$lblOK|ucfirst}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/option:showLocaleDelete}
     </div>
   </div>
 {/form:edit}

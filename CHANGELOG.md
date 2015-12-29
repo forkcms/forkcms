@@ -1,3 +1,42 @@
+3.9.6 (2015-12-22)
+--
+Improvements:
+
+* Core: Adds a function to get checkbox enum values easier.
+* Core: use mod gzip on json files.
+* Settings: add start of body scripts.
+* Profiles: add missing labels.
+* Locale: speed up index and analyse actions.
+* Core: use PSR-6 compatible caching (with an external package: scrapbook).
+* Core: use Flysystem as the cache backend.
+* Core: replace jquery ui with typeahead & bloodhound.
+* Console: make the Symfony container available.
+* Core: update Spoon Library.
+* Analytics: improve coupling your analytics account.
+* Core: make the url of the last breadcrumb item available.
+* Installer: only load installer when Fork is not installed (and in test environment).
+* Location: use https for Google maps by default.
+* Locale: create a Symfony command to install locale.
+* Locale: allow us to install locale for a module.
+* Core: add the language to the canonical url.
+* Core: upgrade Symfony to version 2.8.
+* Core: bump the minimum php version to 5.5 and allow php 7 too.
+* Ajax: add testcases for invalid ajax requests.
+
+Bugfixes:
+
+* Pages: Don't get hidden pages with getUrlForBlock.
+* Pages: Fix 500 error when accessing hidden pages.
+* Console: use constants correctly.
+* MailMotor: avoid catching redirect exceptions.
+* Pages: fix array to string conversion.
+* Profiles: fix the import action.
+* Core: don't allow access to the .git folder.
+* Ajax: fix exceptions that should be handled.
+* Core: fix case mismatch in DataGrid classes.
+* FormBuilder: fix default value containing a space.
+
+
 3.9.5 (2015-08-31)
 --
 Improvements:

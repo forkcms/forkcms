@@ -109,7 +109,6 @@ class Header extends FrontendBaseObject
         $this->getContainer()->set('header', $this);
 
         // add some default CSS files
-        $this->addCSS('/src/Frontend/Core/Layout/Css/jquery_ui/jquery_ui.css', false);
         $this->addCSS('/src/Frontend/Core/Layout/Css/screen.css');
 
         // debug stylesheet
@@ -118,8 +117,8 @@ class Header extends FrontendBaseObject
         }
 
         // add default javascript-files
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false, null, self::PRIORITY_GROUP_GLOBAL);
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/bower_components/jquery/dist/jquery.min.js', false, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/bower_components/jquery-migrate/jquery-migrate.min.js', false, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/utils.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/frontend.js', false, null, self::PRIORITY_GROUP_GLOBAL);
@@ -772,8 +771,7 @@ class Header extends FrontendBaseObject
         if (!empty($existingJSFiles)) {
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
-                '/src/Frontend/Core/Js/Jquery/jquery.js',
-                '/src/Frontend/Core/Js/Jquery/jquery.ui.js'
+                '/bower_components/jquery/dist/jquery.min.js'
             );
 
             foreach ($existingJSFiles as $file) {
@@ -843,6 +841,10 @@ class Header extends FrontendBaseObject
         $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         if ($queryString == $language) {
             $this->canonical = rtrim(SITE_URL, '/');
+
+            if ($this->getContainer()->getParameter('site.multilanguage')) {
+                $this->canonical .= '/' . $language;
+            }
         }
 
         // any canonical URL provided?

@@ -1,0 +1,93 @@
+html {
+  min-height: 100%;
+  background-color: #EBF3F9;
+}
+
+body {
+  overflow-y: scroll;
+  background-color: transparent;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 70px;
+  }
+}
+
+#content {
+  padding-bottom: 50px;
+}
+
+h1, h2, h3, h4 {
+  display: inline-block;
+}
+
+h1 + *,
+h2 + *,
+h3 + *,
+h3 + * {
+  clear: both;
+}
+
+h1 + .btn-toolbar,
+h2 + .btn-toolbar,
+h3 + .btn-toolbar,
+h4 + .btn-toolbar {
+  clear: none;
+  float: right;
+
+  & + * {
+    clear: both;
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+.page-header {
+  margin: 20px 0px 20px 0px;
+}
+
+.clickToEdit {
+  position: absolute;
+  width: 100%;
+  height: 0px;
+  margin: 10px 0px 10px 0px;
+  text-align: center;
+  top: 50%;
+}
+
+.clickToEdit span {
+  background: #666;
+  background: rgba(0,0,0,0.6);
+  color: #FFF;
+  display: block;
+  margin: 0 auto;
+  width: 100px;
+  padding: 4px 9px;
+  line-height: 1;
+  font-size: 12px;
+  font-weight: 700;
+
+  /* @inc .rc */
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.inlineEditTooltip {
+  margin-left: 7px;
+  padding: 2px 6px;
+  font-size: 10px;
+  color: #FFF;
+  background: #005292;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+iframe {
+  border: 1px solid #CCCCCC;
+  border-radius: 4px 4px 4px 4px;
+}

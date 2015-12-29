@@ -193,6 +193,9 @@ class SaveField extends BackendBaseAJAXAction
                                     'label' => $postedValue
                                 );
                             }
+                            if ($defaultValues != '') {
+                                $defaultValues = CommonUri::getUrl($defaultValues);
+                            }
                         }
 
                         /**

@@ -2,21 +2,19 @@ services:
     analytics.client_factory:
         class: Backend\Modules\Analytics\GoogleClient\ClientFactory
         arguments:
-            - @fork.settings
+            - "@fork.settings"
             - %kernel.cache_dir%
 
     analytics.google_analytics_service:
         class: Google_Service_Analytics
-        factory_service: analytics.client_factory
-        factory_method: createAnalyticsService
+        factory: ["@analytics.client_factory",createAnalyticsService]
     analytics.google_client:
         class: Google_Client
-        factory_service: analytics.client_factory
-        factory_method: createClient
+        factory: ["@analytics.client_factory",createClient]
 
     analytics.connector:
         class: Backend\Modules\Analytics\GoogleClient\Connector
         arguments:
-            - @analytics.google_analytics_service
-            - @cache.pool
-            - @fork.settings
+            - "@analytics.google_analytics_service"
+            - "@cache.pool"
+            - "@fork.settings"

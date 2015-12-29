@@ -1098,24 +1098,22 @@
 			// build replace html
 			var html =	'<div class="multipleSelectWrapper">' +
 						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' +
-						'	<div class="oneLiner">' +
-						'		<p>' +
-						'			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
+						'	<div class="input-group">' +
+                    '			<select class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
 
 			for(var i = 0; i < possibleOptions.length; i++)
 			{
 				html +=	'				<option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
 			}
 
-			html +=		'			</select>' +
-						'		</p>' +
-						'		<div class="buttonHolder">' +
-						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd';
+        html +=		'			</select>' +
+						'		<div class="input-group-btn">' +
+						'			<a href="#" id="addButton-' + id + '" class="btn btn-success';
 
 			if(options.showIconOnly) html += ' iconOnly';
 
 			html += 	'">' +
-						'				<span>' + options.addLabel + '</span>' +
+						'				<span class="glyphicon glyphicon-plus"></span>&nbsp;' + options.addLabel +
 						'			</a>' +
 						'		</div>' +
 						'	</div>' +
@@ -1209,18 +1207,16 @@
 				else
 				{
 					// start html
-					html = '<ul>';
+					html = '<ul class="list-unstyled">';
 
 					// loop elements
 					for(var i in elements)
 					{
 						html += '	<li class="oneLiner">' +
-								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' +
-								'		<div class="buttonHolder">' +
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
-								'				<span>' + options.removeLabel + '</span></a>' +
-								'			</a>' +
-								'		</div>' +
+								'		<span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span>' +
+                            '			<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+                            '				<span class="glyphicon glyphicon-trash"></span>' +
+                            '           </a>' +
 								'	</li>';
 
 						// remove from dropdown
