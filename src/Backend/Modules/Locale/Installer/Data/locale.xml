@@ -389,6 +389,10 @@
         <translation language="uk"><![CDATA[Немає значень для цього фільтра. <a href="%1$s">Додати</a>.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη μεταφράσεις γιά αυτό το φίλτρο. <a href="%1$s">Προσθέστε την πρώτη μετάφραση</a>.]]></translation>
       </item>
+      <item type="message" name="StartSearch">
+        <translation language="nl"><![CDATA[Start uw zoekopdracht.]]></translation>
+        <translation language="en"><![CDATA[Make a search result.]]></translation>
+      </item>
       <item type="message" name="OverwriteConflicts">
         <translation language="nl"><![CDATA[Overschrijf indien de vertaling bestaat.]]></translation>
         <translation language="en"><![CDATA[Overwrite if the translation exists.]]></translation>
