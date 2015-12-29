@@ -24,7 +24,7 @@ To install the dependencies, you can run the command below in the document-root:
 ## Bugs
 
 If you encounter any bugs, please create an issue on [Github](https://github.com/forkcms/forkcms/issues).
-If you're stuck or would like to discuss Fork CMS, check out the [forum](http://forum.fork-cms.com)!
+If you're stuck or would like to discuss Fork CMS, check out the [forum](http://www.fork-cms.com/community/forum)!
 
 ## Running the tests
 

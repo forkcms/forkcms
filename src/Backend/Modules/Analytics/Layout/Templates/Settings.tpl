@@ -32,10 +32,6 @@
             {$fileCertificate} {$fileCertificateError}
           </div>
           <div class="form-group">
-            <label for="clientId">{$lblClientId|ucfirst}</label>
-            {$txtClientId} {$txtClientIdError}
-          </div>
-          <div class="form-group">
             <label for="email">{$lblEmail|ucfirst}</label>
             {$txtEmail} {$txtEmailError}
           </div>

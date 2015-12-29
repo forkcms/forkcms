@@ -67,10 +67,18 @@ services:
             - @fork.settings
             - @service_container
 
-    cache.adapter:
-        class: MatthiasMullie\Scrapbook\Adapters\Filesystem
+    cache.filesystem.adapter:
+        class: League\Flysystem\Adapter\Local
         arguments:
             - %kernel.cache_dir%
+    cache.filesystem.filesystem:
+        class: League\Flysystem\Filesystem
+        arguments:
+            - @cache.filesystem.adapter
+    cache.adapter:
+        class: MatthiasMullie\Scrapbook\Adapters\Flysystem
+        arguments:
+            - @cache.filesystem.filesystem
     cache.buffer:
         class: MatthiasMullie\Scrapbook\Buffered\BufferedStore
         arguments:

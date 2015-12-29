@@ -188,19 +188,7 @@ class DataGridFunctions
             if ($allowed) {
                 $html .= '</a>' . "\n";
             }
-            $html .= '  <p>';
-            if ($allowed) {
-                $html .= '<a href="' .
-                BackendModel::createURLForAction(
-                    'Edit',
-                    'Users'
-                ) . '&amp;id=' . $id . '">';
-            }
-            $html .= $nickname;
-            if ($allowed) {
-                $html .= '</a>';
-            }
-            $html .= '</p>' . "\n" . '</div>';
+            $html .= '</div>';
 
             self::$dataGridUsers[$id] = $html;
         }
