@@ -18,8 +18,27 @@ body {
   padding-bottom: 50px;
 }
 
-h2, h3 {
-  float: left;
+h1, h2, h3, h4 {
+  display: inline-block;
+}
+
+h1 + *,
+h2 + *,
+h3 + *,
+h3 + * {
+  clear: both;
+}
+
+h1 + .btn-toolbar,
+h2 + .btn-toolbar,
+h3 + .btn-toolbar,
+h4 + .btn-toolbar {
+  clear: none;
+  float: right;
+
+  & + * {
+    clear: both;
+  }
 }
 
 textarea {

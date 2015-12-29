@@ -311,8 +311,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.eot?1445331503);
-  src: url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.eot?&1445331503#iefix) format("embedded-opentype"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.woff2?1445331504) format("woff2"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.woff?1445331504) format("woff"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.ttf?1445331504) format("truetype"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.svg?1445331504#glyphicons_halflingsregular) format("svg");
+  src: url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.eot?1451372684);
+  src: url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.eot?&1451372684#iefix) format("embedded-opentype"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.woff2?1451372684) format("woff2"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.woff?1451372684) format("woff"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.ttf?1451372684) format("truetype"), url(/src/Backend/Core/Layout/fonts/bootstrap/glyphicons-halflings-regular.svg?1451372684#glyphicons_halflingsregular) format("svg");
 }
 .glyphicon {
   position: relative;
@@ -7382,8 +7382,29 @@ body {
   padding-bottom: 50px;
 }
 
-h2, h3 {
-  float: left;
+h1, h2, h3, h4 {
+  display: inline-block;
+}
+
+h1 + *,
+h2 + *,
+h3 + *,
+h3 + * {
+  clear: both;
+}
+
+h1 + .btn-toolbar,
+h2 + .btn-toolbar,
+h3 + .btn-toolbar,
+h4 + .btn-toolbar {
+  clear: none;
+  float: right;
+}
+h1 + .btn-toolbar + *,
+h2 + .btn-toolbar + *,
+h3 + .btn-toolbar + *,
+h4 + .btn-toolbar + * {
+  clear: both;
 }
 
 textarea {
@@ -7677,5 +7698,3 @@ h3 + .btn-toolbar {
 .form-group.optionsRTE {
   position: relative;
 }
-
-/*# sourceMappingURL=screen.css.map */
