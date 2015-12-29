@@ -139,7 +139,7 @@ class ModulesSettings
     private function getSettings()
     {
         $item = $this->cache->getItem('settings');
-        if ($item->exists()) {
+        if ($item->isHit()) {
             return $item->get();
         }
 
