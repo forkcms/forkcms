@@ -32,7 +32,7 @@ class EditTest extends WebTestCase
     public function testWeCanGoToEditFromTheIndexPage()
     {
         $client = static::createClient();
-        $this->login($client);
+        $this->login();
 
         $crawler = $client->request('GET', '/private/en/blog/index');
         $this->assertContains(

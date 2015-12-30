@@ -246,10 +246,8 @@ abstract class WebTestCase extends BaseWebTestCase
      * this is a lot faster than submitting forms and following redirects
      *
      * Logging in using the forms is tested in the Authentication module
-     *
-     * @param Client $client
      */
-    protected function login(Client $client)
+    protected function login()
     {
         Authentication::tearDown();
         Authentication::loginUser('noreply@fork-cms.com', 'fork');

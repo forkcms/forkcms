@@ -33,7 +33,7 @@ class IndexTest extends WebTestCase
     public function testIndexContainsBlogPosts()
     {
         $client = static::createClient();
-        $this->login($client);
+        $this->login();
 
         $client->request('GET', '/private/en/blog/index');
         $this->assertContains(
