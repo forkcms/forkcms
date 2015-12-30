@@ -271,4 +271,12 @@ abstract class WebTestCase extends BaseWebTestCase
         Authentication::tearDown();
         Authentication::loginUser('noreply@fork-cms.com', 'fork');
     }
+
+    /**
+     * Log out a user
+     */
+    protected function logout()
+    {
+        Authentication::tearDown();
+    }
 }

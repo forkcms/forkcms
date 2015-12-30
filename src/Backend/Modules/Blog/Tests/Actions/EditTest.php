@@ -3,13 +3,12 @@
 namespace Backend\Modules\Blog\Tests\Action;
 
 use Common\WebTestCase;
-use Backend\Core\Engine\Authentication;
 
 class EditTest extends WebTestCase
 {
     public function testAuthenticationIsNeeded()
     {
-        Authentication::tearDown();
+        $this->logout();
         $client = static::createClient();
         $this->loadFixtures(
             $client,
