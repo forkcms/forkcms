@@ -8,6 +8,7 @@ use Symfony\Component\FileSystem\FileSystem;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\DomCrawler\Crawler;
+use Backend\Core\Engine\Authentication;
 
 /**
  * WebTestCase is the base class for functional tests.
@@ -238,5 +239,19 @@ abstract class WebTestCase extends BaseWebTestCase
                 unset($_GET[$key]);
             }
         }
+    }
+
+    /**
+     * Logs in a user. We do this directly in the authentication class because
+     * this is a lot faster than submitting forms and following redirects
+     *
+     * Logging in using the forms is tested in the Authentication module
+     *
+     * @param Client $client
+     */
+    protected function login(Client $client)
+    {
+        Authentication::tearDown();
+        Authentication::loginUser('noreply@fork-cms.com', 'fork');
     }
 }
