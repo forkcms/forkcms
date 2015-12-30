@@ -85,4 +85,53 @@ class EditTest extends WebTestCase
             $client->getResponse()->getContent()
         );
     }
+
+    public function testSubmittingInvalidData()
+    {
+        $client = static::createClient();
+        $this->login();
+
+        $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
+
+        $form = $crawler->selectButton('Publish')->form();
+        $this->submitEditForm($client, $form, array(
+            'title' => '',
+        ));
+
+        // we should get a 200 and be redirected to the index page
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains(
+            '/private/en/blog/edit',
+            $client->getHistory()->current()->getUri()
+        );
+
+        // our page shows an overal error message and a specific one
+        $this->assertContains(
+            'Something went wrong',
+            $client->getResponse()->getContent()
+        );
+        $this->assertContains(
+            'Provide a title.',
+            $client->getResponse()->getContent()
+        );
+    }
+
+    public function testInvalidIdShouldShowAnError()
+    {
+        $client = static::createClient();
+        $this->login();
+
+        $client->request('GET', '/private/en/blog/edit?id=12345678');
+        $client->followRedirect();
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains(
+            '/private/en/blog/index',
+            $client->getHistory()->current()->getUri()
+        );
+        $this->assertContains(
+            'error=non-existing',
+            $client->getHistory()->current()->getUri()
+        );
+    }
 }
