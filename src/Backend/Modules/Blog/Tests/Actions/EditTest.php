@@ -49,4 +49,40 @@ class EditTest extends WebTestCase
             $client->getHistory()->current()->getUri()
         );
     }
+
+    public function testEditingOurBlogPost()
+    {
+        $client = static::createClient();
+        $this->login();
+
+        $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
+        $this->assertContains(
+            'Blog: edit article "Blogpost for functional tests"',
+            $client->getResponse()->getContent()
+        );
+
+        $form = $crawler->selectButton('Publish')->form();
+
+        $client->setMaxRedirects(1);
+        $this->submitEditForm($client, $form, array(
+            'title' => 'Edited blogpost for functional tests',
+        ));
+
+        // we should get a 200 and be redirected to the index page
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains(
+            '/private/en/blog/index',
+            $client->getHistory()->current()->getUri()
+        );
+
+        // our url and our page should contain the new title of our blogpost
+        $this->assertContains(
+            '&report=edited&var=Edited+blogpost+for+functional+tests&id=1',
+            $client->getHistory()->current()->getUri()
+        );
+        $this->assertContains(
+            'Edited blogpost for functional tests',
+            $client->getResponse()->getContent()
+        );
+    }
 }

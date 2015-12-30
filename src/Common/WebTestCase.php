@@ -194,6 +194,25 @@ abstract class WebTestCase extends BaseWebTestCase
     }
 
     /**
+     * Edits the data of a form
+     *
+     * @param  Client $client
+     * @param  Form   $form
+     * @param  array  $data
+     */
+    protected function submitEditForm(Client $client, Form $form, array $data = array())
+    {
+        $originalData = array();
+        foreach ($form->all() as $fieldName => $formField) {
+            $originalData[$fieldName] = $formField->getValue();
+        }
+
+        $data = array_merge($originalData, $data);
+
+        $this->submitForm($client, $form, $data);
+    }
+
+    /**
      * Do a request with the given GET parameters
      *
      * @param Client $client
