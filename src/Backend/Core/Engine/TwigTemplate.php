@@ -57,7 +57,6 @@ class TwigTemplate
      * @var array
      */
     private $variables = array();
-
     /**
      * Base file location.
      *
