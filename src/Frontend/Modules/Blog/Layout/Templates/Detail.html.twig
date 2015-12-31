@@ -38,7 +38,7 @@
 						<li>
 							{% if not comments %}<a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNoComments'|trans|capitalize }}</a>{% endif %}
 							{% if comments %}
-								{% if blogCommentsMultiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msgBlogNumberOfComments'|trans|sprintf(commentsCount) }}</a>{% endif %}
+								{% if blogCommentsMultiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|sprintf(commentsCount) }}</a>{% endif %}
 								{% if not blogCommentsMultiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
 							{% endif %}
 						</li>
