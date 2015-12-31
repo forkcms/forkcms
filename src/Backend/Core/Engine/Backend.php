@@ -42,7 +42,12 @@ class Backend extends \KernelLoader implements \ApplicationInterface
     public function initialize()
     {
         $URL = new Url($this->getKernel());
-        new Template();
+        $templateType = $this->getContainer()->getParameter('fork.template');
+
+        // choose your destiny!
+        ($templateType == 'twig') ? new TwigTemplate() : new Template();
+
+        //new Template();
         new Navigation($this->getKernel());
         new Header($this->getKernel());
 
