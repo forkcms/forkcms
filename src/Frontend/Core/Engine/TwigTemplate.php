@@ -401,6 +401,9 @@ Class TwigTemplate
      */
     public static function trans($string)
     {
+        if (strpos($string, '.') === false) {
+            throw new Exception("Error Processing Request : ".$string);
+        }
         list($action, $string) = explode('.', $string);
         return FL::$action($string);
     }
