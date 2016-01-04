@@ -148,10 +148,18 @@
                   <table id="passwordStrengthMeter" class="passwordStrength" data-id="newPassword">
                     <tr>
                       <td class="strength" id="passwordStrength">
-                        <p class="strength none text-muted">{$lblNone|ucfirst}</p>
-                        <p class="strength weak text-danger">{$lblWeak|ucfirst}</p>
-                        <p class="strength average text-warning">{$lblAverage|ucfirst}</p>
-                        <p class="strength strong text-success">{$lblStrong|ucfirst}</p>
+                        <p class="strength none">
+                          <span class="label label-default">None</span>
+                        </p>
+                        <p class="strength weak">
+                          <span class="label label-danger">Weak</span>
+                        </p>
+                        <p class="strength average">
+                          <span class="label label-warning">Average</span>
+                        </p>
+                        <p class="strength strong">
+                          <span class="label label-success">Strong</span>
+                        </p>
                       </td>
                       <td>
                         <p class="text-info">&nbsp;{$msgHelpStrongPassword}</p>
