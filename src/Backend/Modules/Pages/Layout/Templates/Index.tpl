@@ -21,13 +21,13 @@
 <div class="row fork-module-content">
   <div class="col-md-12">
     {option:dgDrafts}
-    {$dgDrafts}
+      {$dgDrafts}
     {/option:dgDrafts}
     {option:dgRecentlyEdited}
-    {$dgRecentlyEdited}
+      {$dgRecentlyEdited}
     {/option:dgRecentlyEdited}
     {option:!dgRecentlyEdited}
-    <p>{$msgNoItems}</p>
+      <p>{$msgNoItems}</p>
     {/option:!dgRecentlyEdited}
   </div>
 </div>
