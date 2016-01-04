@@ -85,7 +85,7 @@
 {* Dialog to select another template. Do not change the ID! *}
 <div class="modal fade" id="changeTemplate" tabindex="-1" role="dialog"
      aria-labelledby="{$lblChooseATemplate|ucfirst}" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -94,25 +94,26 @@
             <div class="modal-body">
                 <div class="alert alert-warning">{$msgTemplateChangeWarning}</div>
                 <div id="templateList">
-                    <ul class="list-unstyled">
+                    <div class="row">
                         {iteration:templates}
-                        {option:templates.break}
-                    </ul>
-                    <ul class="list-unstyled lastChild">
-                        {/option:templates.break}
-                        <li{option:templates.disabled} class="disabled"{/option:templates.disabled}>
-                            <label for="template{$templates.id}" class="radio">
-                                <input type="radio" id="template{$templates.id}" value="{$templates.id}"
-                                       name="template_id_chooser"
-                                       class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked}{option:templates.disabled} disabled="disabled"{/option:templates.disabled} />{$templates.label}
-                            </label>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="radio">
+                                        <label for="template{$templates.id}">
+                                            <input type="radio" id="template{$templates.id}" value="{$templates.id}"
+                                              name="template_id_chooser"
+                                              class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked}{option:templates.disabled} disabled="disabled"{/option:templates.disabled} />{$templates.label}
+                                        </label>
+                                    </div>
 
-                            <div class="templateVisual current">
-                                {$templates.html}
+                                    <div class="templateVisual current">
+                                        {$templates.html}
+                                    </div>
+                                </div>
                             </div>
-                        </li>
+                        {cycle:'':'</div><div class="row">'}
                         {/iteration:templates}
-                    </ul>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
