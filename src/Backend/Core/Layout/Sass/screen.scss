@@ -1,0 +1,30 @@
+@charset 'UTF-8';
+
+// Bootstrap
+@import '../../../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables';
+@import 'bootstrap-variables';
+@import 'bootstrap-imports';
+
+// Base
+@import 'base/base';
+@import 'base/typography';
+
+// Plugins
+@import 'plugins/jquery_ui';
+
+// Components
+// Insert components here. Put all components in the components/ directory
+// eg. @import 'components/footer';
+@import "components/forms";
+@import "components/loader";
+@import "components/nav-tabs";
+@import "components/tables";
+
+// Layout
+@import 'layouts/sidebar';
+@import 'layouts/fork';
+@import 'layouts/core-modules';
+
+// Custom page styling
+// Insert custom page styling here. Put all page styles in the pages/ directory
+// eg. @import 'pages/footer';

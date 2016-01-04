@@ -1,0 +1,7 @@
+html {
+  min-height: 100%;
+}
+
+body {
+  padding-top: $navbar-height + ($padding-base-horizontal * 2);
+}
