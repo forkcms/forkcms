@@ -40,7 +40,7 @@ class EditTest extends WebTestCase
         );
 
         $link = $crawler->selectLink('Blogpost for functional tests')->link();
-        $crawler = $client->click($link);
+        $client->click($link);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains(
