@@ -127,7 +127,7 @@ class DataGrid extends \SpoonDataGrid
         ) {
             // rebuild value, it should have special markup
             $value =
-                '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
+                '<a href="' . $URL . '" class="btn btn-default btn-xs pull-right">' .
                 ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
                 $value .
                 '</a>';
