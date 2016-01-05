@@ -182,17 +182,6 @@ class Index extends BackendBaseActionIndex
                     $dataGrid->setColumnHidden('translation_id');
 
                     // check if this action is allowed
-                    if (BackendAuthentication::isAllowedAction('Edit')) {
-                        // add edit button
-                        $dataGrid->addColumn(
-                            'edit',
-                            null,
-                            BL::lbl('Edit'),
-                            BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
-                        );
-                    }
-
-                    // check if this action is allowed
                     if (BackendAuthentication::isAllowedAction('Add')) {
                         // add copy button
                         $dataGrid->addColumnAction(
@@ -200,6 +189,15 @@ class Index extends BackendBaseActionIndex
                             null,
                             BL::lbl('Copy'),
                             BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
+                        );
+                    }
+
+                    // check if this action is allowed
+                    if (BackendAuthentication::isAllowedAction('Edit')) {
+                        // add edit button
+                        $dataGrid->addColumn(
+                            'edit', null, BL::lbl('Edit'),
+                            BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
                 } else {
