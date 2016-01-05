@@ -326,7 +326,6 @@ class Header extends Base\Object
                 '/bower_components/jquery-ui/jquery-ui.min.js',
                 '/bower_components/bootstrap/dist/js/bootstrap.min.js',
                 '/src/Backend/Core/Js/jquery/jquery.ui.dialog.patch.js',
-                '/src/Backend/Core/Js/jquery/jquery.tools.js',
                 '/src/Backend/Core/Js/jquery/jquery.backend.js',
                 '/src/Backend/Core/Js/ckeditor/ckeditor.js',
                 '/src/Backend/Core/Js/ckeditor/adapters/jquery.js',
