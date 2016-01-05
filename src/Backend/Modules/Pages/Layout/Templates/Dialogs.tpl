@@ -143,8 +143,8 @@
 </div>
 
 {* Text editor block *}
-<div class="modal fork-modal-ckeditor fade" id="blockHtml" role="dialog" aria-labelledby="{$lblEditor|ucfirst}" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="blockHtml" role="dialog" aria-labelledby="{$lblEditor|ucfirst}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
