@@ -7580,6 +7580,24 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 #locale.localeAnalyse td.used_in li code {
   font-size: 11px; }
 
+html, body {
+  height: 100%; }
+
+#root {
+  clear: both;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: -80px; }
+
+#root-footer {
+  height: 80px; }
+
+#footer {
+  clear: both;
+  position: relative;
+  height: 80px; }
+
 .logo-footer {
   width: 50px;
   margin: 0 auto 20px auto; }

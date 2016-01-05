@@ -351,6 +351,12 @@ $container-large-desktop:      (1140px + $grid-gutter-width);
 //** For `$screen-lg-min` and up.
 $container-lg:                 $container-large-desktop;
 
+//== Footer
+//
+//##
+
+//** Footer height for sticky footer
+$footer-height: 80px;
 
 //== Navbar
 //
