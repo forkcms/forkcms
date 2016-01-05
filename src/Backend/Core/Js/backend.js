@@ -1711,10 +1711,11 @@ jsBackend.tooltip =
     // init, something like a constructor
     init: function () {
         // variables
-        $help = $('.help');
 
-        if ($help.length > 0) {
-            $help.tooltip({effect: 'fade', relative: true}).dynamic();
+        var $tooltip = $('[data-toggle="tooltip"]');
+
+        if ($tooltip.length > 0) {
+            $tooltip.tooltip();
         }
     }
 };
