@@ -145,11 +145,11 @@ class DataGridFunctions
         // get the time ago as a string
         $timeAgo = \SpoonDate::getTimeAgo($timestamp, Language::getInterfaceLanguage(), $format);
 
-        return '<abbr title="' . \SpoonDate::getDate(
+        return '<time data-toggle="tooltip" datetime="' . \SpoonDate::getDate('Y-m-d H:i:s', $timestamp) . '" title="' . \SpoonDate::getDate(
             $format,
             $timestamp,
             Language::getInterfaceLanguage()
-        ) . '">' . $timeAgo . '</abbr>';
+        ) . '">' . $timeAgo . '</time>';
     }
 
     /**
