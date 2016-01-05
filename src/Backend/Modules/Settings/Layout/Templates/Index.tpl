@@ -443,7 +443,13 @@
           <div class="form-group">
             <label for="twitterSiteName">{$lblTwitterSiteName|ucfirst}</label>
             <div class="form-inline">
-              @ <div class="form-group">{$txtTwitterSiteName} {$txtTwitterSiteNameError}</div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">@</div>
+                  {$txtTwitterSiteName}
+                </div>
+                {$txtTwitterSiteNameError}
+              </div>
             </div>
           </div>
         </div>
@@ -470,24 +476,15 @@
     </div>
   </div>
 
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblCookies|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<p>{$msgHelpCookies}</p>
-			<ul class="inputList pb0">
-				<li>{$chkShowCookieBar} <label for="showCookieBar">{$msgShowCookieBar|ucfirst}</label></li>
-			</ul>
-		</div>
-	</div>
-
-
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
-		</div>
-	</div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {/form:settingsIndex}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
