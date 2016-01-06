@@ -860,10 +860,10 @@ class Model
              LEFT OUTER JOIN pages AS p ON p.parent_id = i.id AND p.status = "active" AND p.hidden = "N"
              AND p.language = i.language
              WHERE i.parent_id IN (' . implode(', ', $ids) . ')
-                 AND i.status = ? AND i.language = ? AND b.visible = ?
+                 AND i.status = ? AND i.language = ?
              GROUP BY i.revision_id
              ORDER BY i.sequence ASC',
-            array('block', 'active', $language, 'Y'),
+            array('block', 'active', $language),
             'id'
         );
 
