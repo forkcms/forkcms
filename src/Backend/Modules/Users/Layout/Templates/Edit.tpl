@@ -82,28 +82,28 @@
                 <div class="form-group">
                   <label for="email">
                     {$lblEmail|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtEmail} {$txtEmailError}
                 </div>
                 <div class="form-group">
                   <label for="name">
                     {$lblName|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtName} {$txtNameError}
                 </div>
                 <div class="form-group">
                   <label for="surname">
                     {$lblSurname|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtSurname} {$txtSurnameError}
                 </div>
                 <div class="form-group">
                   <label for="nickname">
                     {$lblNickname|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   <p class="text-info">{$msgHelpNickname}</p>
                   {$txtNickname} {$txtNicknameError}
@@ -143,7 +143,7 @@
                 <div class="form-group">
                   <label for="newPassword">
                     {$lblPassword|ucfirst}&nbsp;
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   <table id="passwordStrengthMeter" class="passwordStrength" data-id="newPassword">
                     <tr>
@@ -175,7 +175,7 @@
                 <div class="form-group">
                   <label for="confirmPassword">
                     {$lblConfirmPassword|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   <div class="form-group form-inline">
                     <div class="form-group">
@@ -275,14 +275,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showUsersDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showUsersDelete}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+            <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
       </div>

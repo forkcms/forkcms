@@ -58,14 +58,14 @@
                     <div class="form-group">
                       <label for="fromName">
                         {$lblName|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                       </label>
                       {$txtFromName} {$txtFromNameError}
                     </div>
                     <div class="form-group">
                       <label for="fromEmail">
                         {$lblEmailAddress|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                       </label>
                       {$txtFromEmail} {$txtFromEmailError}
                     </div>
@@ -85,7 +85,7 @@
                     <div class="form-group">
                       <label for="replyToEmail">
                         {$lblEmailAddress|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                       </label>
                       {$txtReplyToEmail} {$txtReplyToEmailError}
                     </div>
@@ -128,7 +128,7 @@
                     <div class="form-group">
                       <label for="pricePerEmail">
                         {$lblPerSentMailing|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                       </label>
                       <p class="text-info">{$msgHelpPrice}</p>
                       <div class="form-inline">
@@ -138,7 +138,7 @@
                     <div class="form-group">
                       <label for="pricePerEmail">
                         {$lblPerCampaign|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                       </label>
                       <p class="text-info">{$msgHelpPrice}</p>
                       <div class="form-inline">
@@ -155,7 +155,7 @@
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right" role="group">
                     <button id="save" type="submit" name="save" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                      <span class="fa fa-floppy-o"></span>&nbsp;
                       {$lblSave|ucfirst}
                     </button>
                   </div>
@@ -176,7 +176,7 @@
                 <div class="form-group">
                   <label for="url">
                     {$lblURL|uppercase}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   <p class="text-info">{$msgHelpCMURL}</p>
                   {$txtUrl} {$txtUrlError}
@@ -184,14 +184,14 @@
                 <div class="form-group">
                   <label for="username">
                     {$lblUsername|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtUsername} {$txtUsernameError}
                 </div>
                 <div class="form-group">
                   <label for="password">
                     {$lblPassword|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtPassword} {$txtPasswordError}
                 </div>
@@ -203,7 +203,7 @@
                   <div class="btn-group pull-left" role="group">
                     {option:account}
                     <a id="unlinkAccount" href="#" class="btn btn-danger">
-                      <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                      <span class="fa fa-unlink"></span>&nbsp;
                       {$msgUnlinkCMAccount}
                     </a>
                     {/option:account}
@@ -211,14 +211,14 @@
                   <div class="btn-group pull-right" role="group">
                     {option:!account}
                     <a id="linkAccount" href="#" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-log-in"></span>&nbsp;
+                      <span class="fa fa-link"></span>&nbsp;
                       {$msgLinkCMAccount}
                     </a>
                     {/option:!account}
                     {option:account}
                     {option:clientId}
                     <a href="{$var|geturl:'index'}" class="btn btn-default">
-                      <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+                      <span class="fa fa-list"></span>&nbsp;
                       {$msgViewMailings}
                     </a>
                     {/option:clientId}
@@ -249,7 +249,7 @@
                 <div class="form-group">
                   <label for="companyName">
                     {$lblCompanyName|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtCompanyName} {$txtCompanyNameError}
                 </div>
@@ -268,7 +268,7 @@
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right" role="group">
                     <button id="save" type="submit" name="save" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                      <span class="fa fa-floppy-o"></span>&nbsp;
                       {$lblSave|ucfirst}
                     </button>
                   </div>

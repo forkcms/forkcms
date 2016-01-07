@@ -36,7 +36,7 @@
                   <label for="position{$positions.i}">
                     <span>{$lblPosition|ucfirst}</span>
                     <a href="#" class="btn text-danger jsDeletePosition" title="{$lblDeletePosition|ucfirst}">
-                      <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                      <span class="fa fa-trash-o"></span>&nbsp;
                     </a>
                   </label>
                 </div>
@@ -61,7 +61,7 @@
                   </div>
                   {* Button to remove block from this position *}
                   <a href="#" class="btn text-danger jsDeleteBlock" title="{$lblDeleteBlock|ucfirst}">
-                    <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                    <span class="fa fa-trash-o"></span>&nbsp;
                   </a>
                 </div>
               </div>
@@ -72,7 +72,7 @@
                   <div class="btn-group" role="group">
                     {* Button to add new default block to this position *}
                     <a href="#" class="btn btn-default jsAddBlock">
-                      <span class="glyphicon glyphicon-plus"></span>&nbsp;
+                      <span class="fa fa-plus"></span>&nbsp;
                       <span>{$lblAddBlock|ucfirst}</span>
                     </a>
                   </div>
@@ -85,7 +85,7 @@
           <div class="btn-toolbar">
             <div class="btn-group" role="group">
               <a href="#" class="btn btn-primary jsAddPosition">
-                <span class="glyphicon glyphicon-plus"></span>&nbsp;
+                <span class="fa fa-plus"></span>&nbsp;
                 <span>{$lblAddPosition|ucfirst}</span>
               </a>
             </div>
@@ -143,8 +143,8 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" name="add" class="btn btn-primary" type="submit">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-            {$lblSave|ucfirst}
+            <span class="fa fa-plus"></span>&nbsp;
+            {$lblAdd|ucfirst}
           </button>
         </div>
       </div>

@@ -7,7 +7,7 @@
         <div class="btn-toolbar pull-right">
             <div class="btn-group" role="group">
                 <a href="{$var|geturl:'index'}" class="btn btn-default" title="{$lblOverview|ucfirst}">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="fa fa-list"></span>
                     {$lblOverview|ucfirst}
                 </a>
             </div>
@@ -60,7 +60,7 @@
                                 <div class="btn-toolbar pull-right">
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn" data-toggle="modal" data-target="#changeTemplate">
-                                            <span class="glyphicon glyphicon-th"></span>
+                                            <span class="fa fa-th"></span>
                                             {$lblChangeTemplate|ucfirst}
                                         </button>
                                     </div>
@@ -193,11 +193,11 @@
             <div class="btn-toolbar">
                 <div class="btn-group pull-right" role="group">
                     <a href="#" id="saveAsDraft" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-save"></span>&nbsp;
+                        <span class="fa fa-file-o"></span>&nbsp;
                         {$lblSaveDraft|ucfirst}
                     </a>
                     <button id="addButton" type="submit" name="add" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-plus"></span>&nbsp;
+                        <span class="fa fa-plus"></span>&nbsp;
                         {$lblAdd|ucfirst}
                     </button>
                 </div>

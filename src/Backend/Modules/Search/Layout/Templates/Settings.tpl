@@ -45,7 +45,7 @@
               <li class="checkbox">
                 <label for="useSitelinksSearchBox">
                   {$chkUseSitelinksSearchBoxError} {$chkUseSitelinksSearchBox|ucfirst} {$lblUseSitelinksSearchBox|ucfirst}
-                  <abbr class="glyphicon glyphicon-question-sign" title="{$msgHelpSitelinksSearchBox}"></abbr>
+                  <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{$msgHelpSitelinksSearchBox}"></abbr>
                 </label>
               </li>
             </ul>
@@ -70,7 +70,7 @@
               <th>{$lblModule|ucfirst}</th>
               <th>
                 {$lblWeight|ucfirst}
-                <abbr class="glyphicon glyphicon-question-sign" title="{$msgHelpWeight}"></abbr>
+                <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{$msgHelpWeight}"></abbr>
               </th>
             </tr>
             {iteration:modules}

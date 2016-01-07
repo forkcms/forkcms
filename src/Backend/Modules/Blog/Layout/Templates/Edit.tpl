@@ -6,7 +6,7 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$detailURL}/{$item.url}{option:item.revision_id}?revision={$item.revision_id}{/option:item.revision_id}" class="btn btn-default" target="_blank">
-          <span class="glyphicon glyphicon-search"></span>
+          <span class="fa fa-eye"></span>
           <span>{$lblView|ucfirst}</span>
         </a>
       </div>
@@ -57,7 +57,7 @@
                 <div class="form-group">
                   <label for="text">
                     {$lblMainContent|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtText} {$txtTextError}
                 </div>
@@ -81,7 +81,7 @@
                 <div class="form-group">
                   <label for="introduction">
                     {$lblSummary|ucfirst}
-                    <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpSummary}"></abbr>
+                    <abbr data-toggle="tooltip" class="fa fa-info-circle" title="{$msgHelpSummary}"></abbr>
                   </label>
                   {$txtIntroduction} {$txtIntroductionError}
                 </div>
@@ -146,7 +146,7 @@
                   <div class="panel-heading">
                     <h3 class="panel-title">
                       {$lblDrafts|ucfirst}
-                      <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpDrafts}"></abbr>
+                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpDrafts}"></abbr>
                     </h3>
                   </div>
                   {$drafts}
@@ -156,7 +156,7 @@
                   <div class="panel-heading">
                     <h3 class="panel-title">
                       {$lblPreviousVersions|ucfirst}
-                      <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpRevisions}"></abbr>
+                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpRevisions}"></abbr>
                     </h3>
                   </div>
                   {option:revisions}
@@ -202,17 +202,18 @@
         <div class="btn-group pull-left" role="group">
           {option:showContentBlocksDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showContentBlocksDelete}
         </div>
         <div class="btn-group pull-right" role="group">
           <a href="#" id="saveAsDraft" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;
+            <span class="fa fa-file-o"></span>&nbsp;
             {$lblSaveDraft|ucfirst}
           </a>
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+            <span class="fa fa-check"></span>
             {$lblPublish|ucfirst}
           </button>
         </div>

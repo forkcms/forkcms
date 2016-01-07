@@ -22,35 +22,35 @@
           <div class="form-group">
             <label for="street">
               {$lblStreet|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtStreet} {$txtStreetError}
           </div>
           <div class="form-group">
             <label for="number">
               {$lblNumber|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtNumber} {$txtNumberError}
           </div>
           <div class="form-group">
             <label for="zip">
               {$lblZip|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtZip} {$txtZipError}
           </div>
           <div class="form-group">
             <label for="city">
               {$lblCity|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtCity} {$txtCityError}
           </div>
           <div class="form-group">
             <label for="country">
               {$lblCountry|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$ddmCountry} {$ddmCountryError}
           </div>
@@ -125,7 +125,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
               <a href="#" id="saveLiveData" class="btn btn-primary">
-                <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+                <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
               </a>
             </div>
           </div>
@@ -139,14 +139,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showLocationDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showLocationDelete}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="saveLiveData" type="button" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+            <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
       </div>

@@ -40,7 +40,7 @@
               <div class="form-group">
                 <label for="name">
                   {$lblName|ucfirst}
-                  <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
                 <p class="text-info">{$msgNameInternalUseOnly}</p>
                 {$txtName} {$txtNameError}
@@ -49,7 +49,7 @@
               <div class="form-group">
                 <label for="campaign">
                   {$lblCampaign|ucfirst}
-                  <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
                 {$ddmCampaign} {$ddmCampaignError}
               </div>
@@ -70,14 +70,14 @@
               <div class="form-group">
                 <label for="fromName">
                   {$lblName|ucfirst}
-                  <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
                 {$txtFromName} {$txtFromNameError}
               </div>
               <div class="form-group">
                 <label for="fromEmail">
                   {$lblEmailAddress|ucfirst}
-                  <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
                 {$txtFromEmail} {$txtFromEmailError}
               </div>
@@ -97,7 +97,7 @@
               <div class="form-group">
                 <label for="replyToEmail">
                   {$lblEmailAddress|ucfirst}
-                  <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
                 {$txtReplyToEmail} {$txtReplyToEmailError}
               </div>
@@ -169,7 +169,7 @@
             <div class="btn-group pull-right" role="group">
               <button id="toStep2" type="submit" name="to_step_2" class="btn btn-primary">
                 {$lblToStep|ucfirst}
-                &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                &nbsp;<span class="fa fa-chevron-right"></span>
               </button>
             </div>
           </div>
@@ -221,7 +221,7 @@
             <div class="btn-group pull-right" role="group">
               <button id="toStep3" type="submit" name="to_step_3" class="btn btn-primary">
                 {$lblToStep|ucfirst} 3
-                &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                &nbsp;<span class="fa fa-chevron-right"></span>
               </button>
             </div>
           </div>
@@ -236,14 +236,14 @@
           <div class="form-group">
             <label for="subject">
               {$lblSubject|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtSubject} {$txtSubjectError}
           </div>
           <div class="form-group">
             <label for="content">
               {$lblContent|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             <div id="iframeBox">
               <iframe id="contentBox" src="{$var|geturl:'edit_mailing_iframe'}&amp;id={$mailing.id}" height="100%" width="100%"></iframe>
@@ -265,7 +265,7 @@
             <div class="btn-group pull-right" role="group">
               <button id="sendContent" type="submit" name="to_step_4" class="btn btn-primary">
                 {$lblToStep|ucfirst} 4
-                &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                &nbsp;<span class="fa fa-chevron-right"></span>
               </button>
             </div>
           </div>
@@ -316,7 +316,7 @@
               <div class="btn-toolbar">
                 <div class="btn-group pull-right">
                   <button id="sendPreview" type="submit" class="btn btn-default" name="send_preview">
-                    <span class="glyphicon glyphicon-search"></span>&nbsp;
+                    <span class="fa fa-chevron-right"></span>&nbsp;
                     {$lblSendPreview|ucfirst}
                   </button>
                 </div>
@@ -347,7 +347,7 @@
               <div class="btn-toolbar">
                 <div class="btn-group pull-right">
                   <a id="sendMailing" href="#" class="btn btn-primary" title="{$lblSendMailing|ucfirst}">
-                    <span class="glyphicon glyphicon-envelope"></span>&nbsp;
+                    <span class="fa fa-send-o"></span>&nbsp;
                     {$lblSendMailing|ucfirst}
                   </a>
                 </div>

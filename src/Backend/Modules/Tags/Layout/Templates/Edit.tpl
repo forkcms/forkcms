@@ -11,7 +11,7 @@
       <div class="form-group">
         <label for="name">
           {$lblName|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtName} {$txtNameError}
       </div>

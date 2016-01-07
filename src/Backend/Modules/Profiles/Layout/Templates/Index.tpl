@@ -6,12 +6,12 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAdd|ucfirst}
         </a>
         {option:showProfilesImport}
         <a href="{$var|geturl:'import'}" class="btn btn-default" title="{$lblImport|ucfirst}">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           {$lblImport|ucfirst}
         </a>
         {/option:showProfilesImport}
@@ -51,7 +51,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span class="fa fa-refresh"></span>&nbsp;
                 {$lblUpdateFilter|ucfirst}
               </button>
             </div>

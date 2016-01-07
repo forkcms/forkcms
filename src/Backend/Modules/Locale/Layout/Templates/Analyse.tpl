@@ -7,7 +7,7 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$var|geturl:'ExportAnalyse'}&amp;language={$language}" class="btn btn-default" title="{$lblExport|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>
+          <span class="fa fa-upload"></span>
           {$lblExport|ucfirst}
         </a>
       </div>

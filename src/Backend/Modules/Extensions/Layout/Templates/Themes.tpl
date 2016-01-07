@@ -7,12 +7,12 @@
       <div class="btn-group" role="group">
         {option:showExtensionsUploadTheme}
         <a href="{$var|geturl:'upload_theme'}" class="btn btn-default">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-upload"></span>&nbsp;
           <span>{$lblUploadTheme|ucfirst}</span>
         </a>
         {/option:showExtensionsUploadTheme}
         <a href="http://www.fork-cms.com/extensions/themes" target="_blank" class="btn btn-default">
-          <span class="glyphicon glyphicon-search"></span>&nbsp;
+          <span class="fa fa-search"></span>&nbsp;
           <span>{$lblFindThemes|ucfirst}</span>
         </a>
       </div>
@@ -49,13 +49,13 @@
                     <div class="btn-group pull-right" role="group">
                       {option:showExtensionsInstallTheme}
                       <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmInstall{$installableThemes.value|ucfirst}">
-                        <span class="glyphicon glyphicon-save"></span>&nbsp;
+                        <span class="fa fa-download"></span>&nbsp;
                         {$lblInstall|ucfirst}
                       </button>
                       {/option:showExtensionsInstallTheme}
                       {option:showExtensionsDetailTheme}
                       <a href="{$var|geturl:'detail_theme'}&theme={$installableThemes.value}" class="btn btn-default" role="button" title="{$installableThemes.label|ucfirst}">
-                        <span class="glyphicon glyphicon-search"></span>&nbsp;
+                        <span class="fa fa-search"></span>&nbsp;
                         <span>{$lblDetails|ucfirst}</span>
                       </a>
                       {/option:showExtensionsDetailTheme}
@@ -98,7 +98,7 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             {$lblInstalledThemes|ucfirst}&nbsp;
-            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
           </h3>
         </div>
         <div class="panel-body">
@@ -124,7 +124,7 @@
                   <div class="btn-toolbar">
                     <div class="btn-group pull-right" role="group">
                       <a href="{$var|geturl:'detail_theme'}&theme={$installedThemes.value}" class="btn btn-default" role="button"  title="{$installedThemes.label|ucfirst}">
-                        <span class="glyphicon glyphicon-search"></span>&nbsp;
+                        <span class="fa fa-search"></span>&nbsp;
                         <span>{$lblDetails|ucfirst}</span>
                       </a>
                     </div>
@@ -144,7 +144,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+            <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
       </div>

@@ -2,12 +2,12 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
   <div class="col-md-12">
-    <h2>{$lblCustomFields|ucfirst} {$lblFor} {$lblGroup} &ldquo;{$group.name}&rdquo; <abbr class="glyphicon glyphicon-question-sign" title="{$msgHelpCustomFields}"></abbr></h2>
+    <h2>{$lblCustomFields|ucfirst} {$lblFor} {$lblGroup} &ldquo;{$group.name}&rdquo; <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{$msgHelpCustomFields}"></abbr></h2>
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showMailmotorAddCustomField}
         <a href="{$var|geturl:'add_custom_field'}&amp;group_id={$group.id}" class="btn btn-default" title="{$lblAddCustomField|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAddCustomField|ucfirst}
         </a>
         {/option:showMailmotorAddCustomField}

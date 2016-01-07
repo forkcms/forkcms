@@ -101,7 +101,7 @@
     <div class="btn-toolbar">
       <div class="btn-group pull-right" role="group">
         <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmInstall">
-          <span class="glyphicon glyphicon-save"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           {$lblInstall|ucfirst}
         </button>
       </div>

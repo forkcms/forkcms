@@ -30,7 +30,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="name">{$lblName|ucfirst}&nbsp;<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr></label>
+                  <label for="name">{$lblName|ucfirst}&nbsp;<abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr></label>
                   {$txtName} {$txtNameError}
                 </div>
               </div>
@@ -93,7 +93,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>
         </div>

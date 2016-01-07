@@ -518,7 +518,7 @@
 				'	<div class="form-group input-group">' +
 				'		<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
                 '	    <a href="#" id="addButton-' + id + '" class="btn btn-primary input-group-addon">' +
-                '           <span class="glyphicon glyphicon-plus"></span>' +
+                '           <span class="fa fa-plus"></span>' +
                 (options.showIconOnly?'':'	        <span>' + options.addLabel + '</span>') +
                 '	    </a>' +
 				'   </div>' +
@@ -817,7 +817,7 @@
 						'	<div class="form-group input-group">' +
                         '       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
                         '       <a href="#" id="addButton-' + id + '" class="btn btn-success btn-xs input-group-addon">' +
-                        '           <span class="glyphicon glyphicon-plus"></span>' +
+                        '           <span class="fa fa-plus"></span>' +
                             (options.showIconOnly?'':'          <span>' + options.addLabel + '</span>') +
                         '       </a>' +
                         '   </div>' +
@@ -999,7 +999,7 @@
                         var value = utils.string.stripForTag(elements[i]);
                         
 						html += '	<li class="list-group-item">' +
-								'		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="glyphicon glyphicon-trash"></span></a></span>' +
+								'		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash"></span></a></span>' +
 								'       <span><strong>' + value + '</strong>' +
 								'	</li>';
 					}
@@ -1339,7 +1339,7 @@
 				'	<div class="form-group input-group">' +
 				'       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
                 '		<a href="#" id="addButton-' + id + '" class="btn btn-success input-group-addon">' +
-                '           <span class="glyphicon glyphicon-plus"></span>' +
+                '           <span class="fa fa-plus"></span>' +
                 (options.showIconOnly?'':'          <span>' + options.addLabel + '</span>') +
                 '		</a>' +
 				'	</div>' +
@@ -1544,7 +1544,7 @@
 						html += '	<li class="form-group input-group">' +
 								'	    <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
                                 '		<a href="#" class="btn btn-danger input-group-addon deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
-                                '           <span class="glyphicon glyphicon-trash"></span>' +
+                                '           <span class="fa fa-plus"></span>' +
                                 '			<span>' + options.removeLabel + '</span>' +
                                 '		</a>' +
 								'	</li>';

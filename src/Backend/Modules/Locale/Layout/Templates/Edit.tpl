@@ -11,7 +11,7 @@
       <div class="form-group">
         <label for="name">
           {$lblReferenceCode|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         <p class="text-info">{$msgHelpAddName}</p>
         {$txtName} {$txtNameError}
@@ -19,7 +19,7 @@
       <div class="form-group">
         <label for="value">
           {$lblTranslation|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         <p class="text-info">{$msgHelpAddValue}</p>
         {$txtValue} {$txtValueError}

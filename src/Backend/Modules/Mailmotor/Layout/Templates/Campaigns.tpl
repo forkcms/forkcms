@@ -7,7 +7,7 @@
       <div class="btn-group" role="group">
         {option:showMailmotorAddCampaign}
         <a href="{$var|geturl:'add_campaign'}" class="btn btn-default" title="{$lblAddCampaign|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAddCampaign|ucfirst}
         </a>
         {/option:showMailmotorAddCampaign}

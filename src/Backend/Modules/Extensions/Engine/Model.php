@@ -151,7 +151,7 @@ class Model
                                     <div class="text-center" role="toolbar">
                                         <div class="btn-group" role="group">
                                             <a href="#addBlock" class="btn btn-primary btn-xs addBlock">
-                                                <span class="glyphicon glyphicon-th-large"></span>
+                                                <span class="fa fa-th-large"></span>
                                                 ' . \SpoonFilter::ucfirst(BL::lbl('AddBlock')) . '
                                             </a>
                                         </div>

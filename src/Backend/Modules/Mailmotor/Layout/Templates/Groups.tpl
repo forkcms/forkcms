@@ -7,13 +7,13 @@
       <div class="btn-group" role="group">
         {option:showMailmotorImportGroups}
         <a href="{$var|geturl:'import_groups'}" class="btn btn-default" title="{$lblImportGroups|ucfirst}">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           {$lblImportGroups|ucfirst}
         </a>
         {/option:showMailmotorImportGroups}
         {option:showMailmotorAddGroup}
         <a href="{$var|geturl:'add_group'}" class="btn btn-default" title="{$lblAddGroup|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAddGroup|ucfirst}
         </a>
         {/option:showMailmotorAddGroup}

@@ -29,14 +29,14 @@
                 <div class="form-group">
                   <label for="email">
                     {$lblEmail|ucfirst}&nbsp;
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtEmail} {$txtEmailError}
                 </div>
                 <div class="form-group">
                   <label for="password">
                     {$lblPassword|ucfirst}&nbsp;
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   <table id="passwordStrengthMeter" class="passwordStrength" data-id="password">
                     <tr>
@@ -68,7 +68,7 @@
                 <div class="form-group">
                   <label for="confirmPassword">
                     {$lblConfirmPassword|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   <div class="form-group form-inline">
                     <div class="form-group">
@@ -88,21 +88,21 @@
                 <div class="form-group">
                   <label for="name">
                     {$lblName|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtName} {$txtNameError}
                 </div>
                 <div class="form-group">
                   <label for="surname">
                     {$lblSurname|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtSurname} {$txtSurnameError}
                 </div>
                 <div class="form-group">
                   <label for="nickname">
                     {$lblNickname|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   <p class="text-info">{$msgHelpNickname}</p>
                   {$txtNickname} {$txtNicknameError}
@@ -198,7 +198,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>
         </div>

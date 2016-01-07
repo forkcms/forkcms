@@ -39,14 +39,14 @@
           <div class="form-group">
             <label for="mailerFromName">
               {$lblName|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtMailerFromName} {$txtMailerFromNameError}
           </div>
           <div class="form-group">
             <label for="mailerFromEmail">
               {$lblEmail|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtMailerFromEmail} {$txtMailerFromEmailError}
           </div>
@@ -57,14 +57,14 @@
           <div class="form-group">
             <label for="mailerToName">
               {$lblName|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtMailerToName} {$txtMailerToNameError}
           </div>
           <div class="form-group">
             <label for="mailerToEmail">
               {$lblEmail|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtMailerToEmail} {$txtMailerToEmailError}
           </div>
@@ -74,14 +74,14 @@
           <div class="form-group">
             <label for="mailerReplyToName">
               {$lblName|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtMailerReplyToName} {$txtMailerReplyToNameError}
           </div>
           <div class="form-group">
             <label for="mailerReplyToEmail">
               {$lblEmail|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtMailerReplyToEmail} {$txtMailerReplyToEmailError}
           </div>

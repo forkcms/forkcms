@@ -7,7 +7,7 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$var|geturl:'add_group'}" class="btn btn-default" title="{$lblAddGroup|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAddGroup|ucfirst}
         </a>
       </div>
@@ -33,7 +33,7 @@
         <div class="btn-toolbar">
           <div class="btn-group pull-right">
             <button id="search" type="submit" class="btn btn-primary" name="search">
-              <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+              <span class="fa fa-refresh"></span>&nbsp;
               {$lblUpdateFilter|ucfirst}
             </button>
           </div>

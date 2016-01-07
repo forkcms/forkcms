@@ -6,7 +6,7 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$SITE_URL}{$itemURL}" class="btn btn-default" target="_blank">
-          <span class="glyphicon glyphicon-search"></span>
+          <span class="fa fa-eye"></span>
           <span>{$lblView|ucfirst}</span>
         </a>
       </div>
@@ -19,14 +19,14 @@
       <div class="form-group">
         <label for="author">
           {$lblAuthor|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtAuthor} {$txtAuthorError}
       </div>
       <div class="form-group">
         <label for="email">
           {$lblEmail|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtEmail} {$txtEmailError}
       </div>
@@ -37,7 +37,7 @@
       <div class="form-group">
         <label for="text">
           {$lblText|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtText} {$txtTextError}
       </div>

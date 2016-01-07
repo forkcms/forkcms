@@ -7,13 +7,13 @@
       <div class="btn-group" role="group">
         {option:showFormBuilderIndex}
         <a href="{$var|geturl:'index'}" class="btn btn-default">
-          <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+          <span class="fa fa-list"></span>&nbsp;
           {$lblOverview|ucfirst}
         </a>
         {/option:showFormBuilderIndex}
         {option:showFormBuilderExportData}
         <a href="{$var|geturl:'export_data'}&id={$id}&amp;start_date={$start_date}&amp;end_date={$end_date}" class="btn btn-default">
-          <span class="glyphicon glyphicon-export"></span>&nbsp;
+          <span class="fa fa-upload"></span>&nbsp;
           {$lblExport|ucfirst}
         </a>
         {/option:showFormBuilderExportData}
@@ -45,7 +45,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span class="fa fa-refresh"></span>&nbsp;
                 {$lblUpdateFilter|ucfirst}
               </button>
             </div>

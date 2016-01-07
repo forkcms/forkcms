@@ -30,7 +30,7 @@
                                 <div class="form-group">
                                     <label for="textboxLabel">
                                         {$lblLabel|ucfirst}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                        <abbr data-toggle="tooltop" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
                                     <p id="textboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtTextboxLabel}
@@ -55,7 +55,7 @@
                                         <li class="checkbox">
                                             <label for="textboxReplyTo">
                                                 {$chkTextboxReplyTo} {$lblReplyTo|ucfirst}
-                                                <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpReplyTo}"></abbr>
+                                                <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpReplyTo}"></abbr>
                                             </label>
                                         </li>
                                     </ul>
@@ -71,7 +71,7 @@
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                                         <label for="textboxRequiredErrorMessage">
                                             {$lblErrorMessage|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         <p id="textboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtTextboxRequiredErrorMessage}
@@ -86,14 +86,14 @@
                                     <div class="form-group jsValidationParameter" style="display: none;">
                                         <label for="textboxValidationParameter">
                                             {$lblParameter|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         {$txtTextboxValidationParameter}
                                     </div>
                                     <div class="form-group jsValidationErrorMessage" style="display: none;">
                                         <label for="textareaErrorMessage">
                                             {$lblErrorMessage|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         <p id="textboxErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtTextboxErrorMessage}
@@ -163,7 +163,7 @@
                                 <div class="form-group">
                                     <label for="textareaLabel">
                                         {$lblLabel|ucfirst}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
                                     <p id="textareaLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtTextareaLabel}
@@ -194,7 +194,7 @@
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                                         <label for="textareaRequiredErrorMessage">
                                             {$lblErrorMessage|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         <p id="textareaRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtTextareaRequiredErrorMessage}
@@ -208,14 +208,14 @@
                                     <div class="form-group jsValidationParameter" style="display: none;">
                                         <label for="textareaValidationParameter">
                                             {$lblParameter|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         {$txtTextareaValidationParameter}
                                     </div>
                                     <div class="form-group jsValidationErrorMessage" style="display: none;">
                                         <label for="textareaErrorMessage">
                                             {$lblErrorMessage|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         <p id="textareaErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtTextareaErrorMessage}
@@ -285,7 +285,7 @@
                                 <div class="form-group">
                                     <label for="datetimeLabel">
                                         {$lblLabel|ucfirst}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
                                     <p id="datetimeLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtDatetimeLabel}
@@ -318,7 +318,7 @@
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                                         <label for="datetimeRequiredErrorMessage">
                                             {$lblErrorMessage|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         <p id="datetimeRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtDatetimeRequiredErrorMessage}
@@ -338,7 +338,7 @@
                                     <div class="form-group jsValidationErrorMessage" style="display: none;">
                                         <label for="datetimeErrorMessage">
                                             {$lblErrorMessage|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         <p id="datetimeErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtDatetimeErrorMessage}
@@ -404,7 +404,7 @@
                                 <div class="form-group">
                                     <label for="dropdownLabel">
                                         {$lblLabel|ucfirst}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
                                     <p id="dropdownLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtDropdownLabel}
@@ -440,7 +440,7 @@
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                                         <label for="dropdownRequiredErrorMessage">
                                             {$lblErrorMessage|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         <p id="dropdownRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtDropdownRequiredErrorMessage}
@@ -506,7 +506,7 @@
                                 <div class="form-group">
                                     <label for="radiobuttonLabel">
                                         {$lblLabel|ucfirst}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
                                     <p id="radiobuttonLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtRadiobuttonLabel}
@@ -541,7 +541,7 @@
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                                         <label for="checkboxRequiredErrorMessage">
                                             {$lblErrorMessage|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         <p id="radiobuttonRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtRadiobuttonRequiredErrorMessage}
@@ -607,7 +607,7 @@
                                 <div class="form-group">
                                     <label for="checkboxLabel">
                                         {$lblLabel|ucfirst}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
                                     <p id="checkboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtCheckboxLabel}
@@ -642,7 +642,7 @@
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                                         <label for="checkboxRequiredErrorMessage">
                                             {$lblErrorMessage|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         <p id="checkboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtCheckboxRequiredErrorMessage}
@@ -688,7 +688,7 @@
                 <div class="form-group">
                     <label for="submit">
                         {$lblContent|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                     </label>
                     <p id="submitError" class="text-danger jsFieldError" style="display: none;"></p>
                     {$txtSubmit}
@@ -713,7 +713,7 @@
                 <div class="form-group">
                     <label for="heading">
                         {$lblContent|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                     </label>
                     <p id="headingError" class="text-danger jsFieldError" style="display: none;"></p>
                     {$txtHeading}

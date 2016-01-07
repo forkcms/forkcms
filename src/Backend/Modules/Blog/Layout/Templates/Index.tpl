@@ -19,7 +19,7 @@
         {option:!filterCategory}
         <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
         {/option:!filterCategory}
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAdd|ucfirst}
         </a>
         {/option:showBlogAdd}
@@ -43,7 +43,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right">
           <button id="search" type="submit" class="btn btn-primary" name="search">
-            <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+            <span class="fa fa-refresh"></span>&nbsp;
             {$lblUpdateFilter|ucfirst}
           </button>
         </div>

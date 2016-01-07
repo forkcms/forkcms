@@ -11,7 +11,7 @@
       <div class="form-group">
         <label for="title">
           {$lblTitle|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtTitle} {$txtTitleError}
       </div>
@@ -44,7 +44,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAddCategory|ucfirst}
           </button>
         </div>

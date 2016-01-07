@@ -29,28 +29,28 @@
                 <div class="form-group">
                   <label for="name">
                     {$lblName|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtName} {$txtNameError}
                 </div>
                 <div class="form-group">
                   <label for="method">
                     {$lblMethod|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$ddmMethod} {$ddmMethodError}
                 </div>
                 <div class="form-group">
                   <label for="email">
                     {$lblRecipient|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtEmail} {$txtEmailError}
                 </div>
                 <div class="form-group">
                   <label for="successMessage">
                     {$lblSuccessMessage|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtSuccessMessage} {$txtSuccessMessageError}
                 </div>
@@ -67,7 +67,7 @@
               <div class="col-md-12">
                 <label for="identifier">
                   {$lblIdentifier|ucfirst}
-                  <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpIdentifier}"></abbr>
+                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpIdentifier}"></abbr>
                 </label>
                 {$txtIdentifier} {$txtIdentifierError}
               </div>
@@ -82,7 +82,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>
         </div>

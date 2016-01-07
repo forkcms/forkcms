@@ -33,7 +33,7 @@
                 <div class="form-group">
                   <label for="text">
                     {$lblContent|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtText} {$txtTextError}
                 </div>
@@ -54,7 +54,7 @@
               <div class="col-md-12">
                 <h3>
                   {$lblPreviousVersions|ucfirst}
-                  <abbr class="glyphicon glyphicon-question-sign" title="{$msgHelpRevisions}"></abbr>
+                  <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{$msgHelpRevisions}"></abbr>
                 </h3>
               </div>
             </div>
@@ -79,14 +79,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showContentBlocksDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showContentBlocksDelete}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+            <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
       </div>

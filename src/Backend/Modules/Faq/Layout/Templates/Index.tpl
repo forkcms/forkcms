@@ -7,7 +7,7 @@
       <div class="btn-group" role="group">
         {option:showFaqAdd}
         <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAdd|ucfirst}
         </a>
         {/option:showFaqAdd}

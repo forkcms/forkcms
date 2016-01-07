@@ -40,7 +40,7 @@
                             <div class="form-group">
                                 <label for="name">
                                     {$lblName|ucfirst}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                 </label>
                                 <p class="text-info">{$msgNameInternalUseOnly}</p>
                                 {$txtName} {$txtNameError}
@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 <label for="campaign">
                                     {$lblCampaign|ucfirst}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                 </label>
                                 {$ddmCampaign} {$ddmCampaignError}
                             </div>
@@ -70,14 +70,14 @@
                             <div class="form-group">
                                 <label for="fromName">
                                     {$lblName|ucfirst}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                 </label>
                                 {$txtFromName} {$txtFromNameError}
                             </div>
                             <div class="form-group">
                                 <label for="fromEmail">
                                     {$lblEmailAddress|ucfirst}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                 </label>
                                 {$txtFromEmail} {$txtFromEmailError}
                             </div>
@@ -97,7 +97,7 @@
                             <div class="form-group">
                                 <label for="replyToEmail">
                                     {$lblEmailAddress|ucfirst}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                 </label>
                                 {$txtReplyToEmail} {$txtReplyToEmailError}
                             </div>
@@ -169,7 +169,7 @@
                         <div class="btn-group pull-right" role="group">
                             <button id="toStep2" type="submit" name="to_step_2" class="btn btn-primary">
                                 {$lblToStep|ucfirst} 2
-                                &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                                &nbsp;<span class="fa fa-chevron-right"></span>
                             </button>
                         </div>
                     </div>

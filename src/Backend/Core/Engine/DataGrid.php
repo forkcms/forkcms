@@ -275,7 +275,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnHidden('sequence');
 
         // add a column for the handle, so users have something to hold while dragging
-        $this->addColumn('dragAndDropHandle', null, '<span class="glyphicon glyphicon-sort"></span>');
+        $this->addColumn('dragAndDropHandle', null, '<span class="fa fa-reorder"></span>');
 
         // make sure the column with the handler is the first one
         $this->setColumnsSequence('dragAndDropHandle');

@@ -7,12 +7,12 @@
       <div class="btn-group" role="group">
         {option:showProfilesIndex}
         <a href="{$var|geturl:'index'}" class="btn btn-default" title="{$lblCancel|ucfirst}">
-          <span class="glyphicon glyphicon-remove"></span>&nbsp;
+          <span class="fa fa-times"></span>&nbsp;
           {$lblCancel|ucfirst}
         </a>
         {/option:showProfilesIndex}
         <a href="{$var|geturl:'export_template'}" class="btn btn-default" title="{$lblExportTemplate|ucfirst}">
-          <span class="glyphicon glyphicon-export"></span>&nbsp;
+          <span class="fa fa-upload"></span>&nbsp;
           {$lblExportTemplate|ucfirst}
         </a>
       </div>
@@ -29,7 +29,7 @@
       <div class="form-group">
         <label for="file">
           {$lblFile|ucfirst}&nbsp;
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$fileFile} {$fileFileError}
       </div>

@@ -44,28 +44,28 @@
                 <div class="form-group">
                   <label for="name">
                     {$lblName|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtName} {$txtNameError}
                 </div>
                 <div class="form-group">
                   <label for="method">
                     {$lblMethod|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$ddmMethod} {$ddmMethodError}
                 </div>
                 <div class="form-group">
                   <label for="email">
                     {$lblRecipient|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtEmail} {$txtEmailError}
                 </div>
                 <div class="form-group">
                   <label for="successMessage">
                     {$lblSuccessMessage|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtSuccessMessage} {$txtSuccessMessageError}
                 </div>
@@ -110,7 +110,7 @@
                       </div>
                       <div class="btn-group pull-right" role="group">
                         <a href="#edit-{$submitId}" class="btn btn-default jsFieldEdit" rel="{$submitId}" title="{$lblEdit}">
-                          <span class="glyphicon glyphicon-pencil"></span>
+                          <span class="fa fa-pencil"></span>
                         </a>
                       </div>
                     </div>
@@ -186,7 +186,7 @@
               <div class="col-md-12">
                 <label for="identifier">
                   {$lblIdentifier|ucfirst}
-                  <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpIdentifier}"></abbr>
+                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpIdentifier}"></abbr>
                 </label>
                 {$txtIdentifier} {$txtIdentifierError}
               </div>
@@ -202,14 +202,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showFormBuilderDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showFormBuilderDelete}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+            <span class="fa fa-floppy-o"></span>&nbsp;
             {$lblSave|ucfirst}
           </button>
         </div>

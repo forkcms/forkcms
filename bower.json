@@ -19,6 +19,7 @@
     "jquery": "1.11.*",
     "jquery-migrate": "1.2.*",
     "jquery-ui": "1.11.*",
-    "bootstrap-sass": "~3.3.6"
+    "bootstrap-sass": "~3.3.6",
+    "fontawesome": "~4.5.0"
   }
 }

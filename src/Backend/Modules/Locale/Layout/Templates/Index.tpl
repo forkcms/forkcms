@@ -7,19 +7,19 @@
       <div class="btn-group" role="group">
         {option:showLocaleAdd}
         <a href="{$var|geturl:'add'}{$filter}" class="btn btn-default jsButtonAdd">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           <span>{$lblAdd|ucfirst}</span>
         </a>
         {/option:showLocaleAdd}
         {option:showLocaleExport}
         <a href="{$var|geturl:'export'}{$filter}" class="btn btn-default jsButtonExport">
-          <span class="glyphicon glyphicon-export"></span>&nbsp;
+          <span class="fa fa-upload"></span>&nbsp;
           <span>{$lblExport|ucfirst}</span>
         </a>
         {/option:showLocaleExport}
         {option:showLocaleImport}
         <a href="{$var|geturl:'import'}{$filter}" class="btn btn-default jsButtonImport">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           <span>{$lblImport|ucfirst}</span>
         </a>
         {/option:showLocaleImport}
@@ -76,14 +76,14 @@
               <div class="form-group">
                 <label for="name">
                   {$lblReferenceCode|ucfirst}&nbsp;
-                  <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpName}"></abbr>
+                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpName}"></abbr>
                 </label>
                 {$txtName} {$txtNameError}
               </div>
               <div class="form-group">
                 <label for="value">
                   {$lblValue|ucfirst}&nbsp;
-                  <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpValue}"></abbr>
+                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpValue}"></abbr>
                 </label>
                 {$txtValue} {$txtValueError}
               </div>
@@ -94,7 +94,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               <button id="search" class="btn btn-primary" type="submit" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span class="fa fa-refresh"></span>&nbsp;
                 {$lblUpdateFilter|ucfirst}
               </button>
             </div>
@@ -153,7 +153,7 @@
       <div class="panel-heading">
         <h3 class="panel-title">
           {$lblActions|ucfirst}&nbsp;
-          <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpActionValue}"></abbr>
+          <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpActionValue}"></abbr>
         </h3>
       </div>
       {$dgActions}

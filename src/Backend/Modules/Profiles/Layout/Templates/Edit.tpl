@@ -43,7 +43,7 @@
                     <div class="form-group">
                       <label for="displayName">
                         {$lblDisplayName|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                       </label>
                       {$txtDisplayName} {$txtDisplayNameError}
                     </div>
@@ -115,7 +115,7 @@
                 <div class="btn-toolbar pull-right">
                   <div class="btn-group" role="group">
                     <a href="{$var|geturl:'add_profile_group'}&amp;id={$profile.id}" class="btn btn-primary" title="{$lblAddGroup|ucfirst}">
-                      <span class="glyphicon glyphicon-plus"></span>&nbsp;
+                      <span class="fa fa-plus"></span>&nbsp;
                       {$lblAddGroup|ucfirst}
                     </a>
                   </div>
@@ -145,13 +145,13 @@
           {option:showProfilesDelete}
           {option:deleted}
           <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmUndelete">
-            <span class="glyphicon glyphicon-ok"></span>
+            <span class="fa fa-check"></span>
             {$lblUndelete|ucfirst}
           </button>
           {/option:deleted}
           {option:!deleted}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:!deleted}
@@ -159,13 +159,13 @@
           {option:showProfilesBlock}
           {option:blocked}
           <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmUnblock">
-            <span class="glyphicon glyphicon-ok"></span>
+            <span class="fa fa-check"></span>
             {$lblUnblock|ucfirst}
           </button>
           {/option:blocked}
           {option:!blocked}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmBlock">
-            <span class="glyphicon glyphicon-ban-circle"></span>
+            <span class="fa fa-ban"></span>
             {$lblBlock|ucfirst}
           </button>
           {/option:!blocked}
@@ -173,7 +173,7 @@
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="saveButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+            <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
       </div>

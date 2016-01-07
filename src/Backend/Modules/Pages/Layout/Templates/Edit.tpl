@@ -7,19 +7,19 @@
       <div class="btn-group" role="group">
         {option:showPagesAdd}
         <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           <span>{$lblAdd|ucfirst}</span>
         </a>
         {/option:showPagesAdd}
         {option:!item.is_hidden}
         <a href="{$SITE_URL}{$item.full_url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" class="btn btn-default" target="_blank">
-          <span class="glyphicon glyphicon-search"></span>&nbsp;
+          <span class="fa fa-eye"></span>&nbsp;
           <span>{$lblView|ucfirst}</span>
         </a>
         {/option:!item.is_hidden}
         {option:showPagesIndex}
         <a href="{$var|geturl:'index'}" class="btn btn-default" title="{$lblOverview|ucfirst}">
-          <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+          <span class="fa fa-list"></span>&nbsp;
           {$lblOverview|ucfirst}
         </a>
         {/option:showPagesIndex}
@@ -75,7 +75,7 @@
                 <div class="btn-toolbar pull-right">
                   <div class="btn-group" role="group">
                     <button type="button" class="btn" data-toggle="modal" data-target="#changeTemplate">
-                      <span class="glyphicon glyphicon-th"></span>
+                      <span class="fa fa-th"></span>
                       {$lblChangeTemplate|ucfirst}
                     </button>
                   </div>
@@ -118,7 +118,7 @@
             {option:drafts}
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblDrafts|ucfirst} <abbr title="{$msgHelpDrafts}"><span class="glyphicon glyphicon-info-sign"></span></abbr></h3>
+                <h3>{$lblDrafts|ucfirst} <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpDrafts}"></abbr></h3>
               </div>
             </div>
             <div class="row">
@@ -129,7 +129,7 @@
             {/option:drafts}
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblPreviousVersions|ucfirst} <abbr title="{$msgHelpRevisions}"><span class="glyphicon glyphicon-info-sign"></span></abbr></h3>
+                <h3>{$lblPreviousVersions|ucfirst} <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpRevisions}"></abbr></h3>
               </div>
             </div>
             <div class="row">
@@ -239,18 +239,18 @@
         <div class="btn-group pull-left" role="group">
           {option:showPagesDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showPagesDelete}
         </div>
         <div class="btn-group pull-right" role="group">
           <a href="#" id="saveAsDraft" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;
+            <span class="fa fa-file-o"></span>&nbsp;
             {$lblSaveDraft|ucfirst}
           </a>
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+            <span class="fa fa-floppy-o"></span>&nbsp;
             {$lblSave|ucfirst}
           </button>
         </div>

@@ -19,7 +19,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="saveButton" type="submit" name="save" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+            <span class="fa fa-floppy-o"></span>&nbsp;
             {$lblSave|ucfirst}
           </button>
         </div>

@@ -159,7 +159,7 @@
           <div class="form-group">
             <label for="rssTitle">
               {$lblTitle|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             <p class="text-info">{$msgHelpRSSTitle}</p>
             {$txtRssTitle} {$txtRssTitleError}

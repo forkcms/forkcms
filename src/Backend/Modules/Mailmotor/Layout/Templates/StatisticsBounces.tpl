@@ -7,13 +7,13 @@
       <div class="btn-group" role="group">
         {option:showMailmotorStatistics}
         <a href="{$var|geturl:'statistics'}&amp;id={$mailing.id}" class="btn btn-default" title="{$lblStatistics|ucfirst}">
-          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="fa fa-bar-chart-o"></span>
           {$msgBackToStatistics|sprintf:{$mailing.name}}
         </a>
         {/option:showMailmotorStatistics}
         {option:showMailmotorDeleteBounces}
         <a href="{$var|geturl:'delete_bounces'}&amp;mailing_id={$mailing.id}" class="btn btn-danger" title="{$msgDeleteBounces|ucfirst}">
-          <span class="glyphicon glyphicon-trash"></span>
+          <span class="fa fa-trash-o"></span>
           {$msgDeleteBounces|ucfirst}
         </a>
         {/option:showMailmotorDeleteBounces}

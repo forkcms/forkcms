@@ -7,7 +7,7 @@
       <div class="btn-group" role="group">
         {option:showMailmotorStatistics}
         <a href="{$var|geturl:'statistics'}&amp;id={$mailing.id}" class="btn btn-default" title="{$msgBackToStatistics|sprintf:{$mailing.name}}">
-          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="fa fa-link"></span>
           {$msgBackToStatistics|sprintf:{$mailing.name}}
         </a>
         {/option:showMailmotorStatistics}
@@ -33,7 +33,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span class="fa fa-refresh"></span>&nbsp;
                 {$lblUpdateFilter|ucfirst}
               </button>
             </div>

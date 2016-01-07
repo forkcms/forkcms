@@ -324,7 +324,7 @@ class Header extends Base\Object
                 '/bower_components/jquery/dist/jquery.min.js',
                 '/bower_components/jquery-migrate/jquery-migrate.min.js',
                 '/bower_components/jquery-ui/jquery-ui.min.js',
-                '/bower_components/bootstrap/dist/js/bootstrap.min.js',
+                '/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
                 '/src/Backend/Core/Js/jquery/jquery.ui.dialog.patch.js',
                 '/src/Backend/Core/Js/jquery/jquery.backend.js',
                 '/src/Backend/Core/Js/ckeditor/ckeditor.js',

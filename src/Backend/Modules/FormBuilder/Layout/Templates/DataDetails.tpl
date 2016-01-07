@@ -7,7 +7,7 @@
       <div class="btn-group" role="group">
         {option:showFormBuilderData}
         <a href="{$var|geturl:'data'}&amp;id={$formId}&amp;start_date={$filter.start_date}&amp;end_date={$filter.end_date}" class="btn btn-default">
-          <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+          <span class="fa fa-chevron-left"></span>&nbsp;
           {$lblBackToData|ucfirst}
         </a>
         {/option:showFormBuilderData}
@@ -57,7 +57,7 @@
       <div class="btn-group pull-left" role="group">
         {option:showFormBuilderMassDataAction}
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-          <span class="glyphicon glyphicon-trash"></span>
+          <span class="fa fa-trash-o"></span>
           {$lblDelete|ucfirst}
         </button>
         {/option:showFormBuilderMassDataAction}
