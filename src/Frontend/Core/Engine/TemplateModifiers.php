@@ -233,7 +233,7 @@ class TemplateModifiers
         $startDepth = 1,
         $endDepth = null,
         $excludeIds = null,
-        $tpl = '/Core/Layout/Templates/Navigation.tpl'
+        $tpl = '/Core/Layout/Templates/Navigation.html.twig'
     ) {
         // build excludeIds
         if ($excludeIds !== null) {
