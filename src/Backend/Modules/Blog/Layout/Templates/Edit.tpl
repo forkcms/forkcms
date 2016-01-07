@@ -81,7 +81,7 @@
                 <div class="form-group">
                   <label for="introduction">
                     {$lblSummary|ucfirst}
-                    <abbr data-toggle="tooltip" class="fa fa-info-circle" title="{$msgHelpSummary}"></abbr>
+                    <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpSummary}"></abbr>
                   </label>
                   {$txtIntroduction} {$txtIntroductionError}
                 </div>
