@@ -528,14 +528,14 @@ jsBackend.pages.extras =
 		checkbox.attr('checked', visible);
 
 		// remove current visibility indicators
-		$(this).find('.glyphicon').removeClass('glyphicon-eye-open glyphicon-eye-close');
+		$(this).find('.fa').removeClass('fa-eye fa-eye-slash');
 		$(this).parent().parent().removeClass('templateDisabled');
 
 		// toggle visibility indicators
-		if(visible) $(this).find('.glyphicon').addClass('glyphicon-eye-open');
+		if(visible) $(this).find('.fa').addClass('fa-eye');
 		else
 		{
-			$(this).find('.glyphicon').addClass('glyphicon-eye-close');
+			$(this).find('.fa').addClass('fa-eye-slash');
 			$(this).closest('*[data-block-id]').addClass('templateDisabled');
 		}
 	},
