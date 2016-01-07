@@ -143,12 +143,6 @@
             </div>
             <h3>PHP ini-settings</h3>
             <div class="list-group">
-              <div class="list-group-item list-group-item-{{ checker.errors.settingsSafeMode }}">
-                <h4 class="list-group-item-heading">Safe Mode</h4>
-                <p class="list-group-item-text">
-                  <strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compatibility we highly recommend you to disable Safe Mode.
-                </p>
-              </div>
               <div class="list-group-item list-group-item-{{ checker.errors.settingsOpenBasedir }}">
                 <h4 class="list-group-item-heading">Open Basedir</h4>
                 <p class="list-group-item-text">
@@ -291,7 +285,7 @@
               </div>
             </div>
           </div>
-        {% endif %}
+        </div>
         <div class="panel-footer">
           {% if checker.hasWarnings and not checker.hasErrors %}
           <div class="btn-toolbar">
