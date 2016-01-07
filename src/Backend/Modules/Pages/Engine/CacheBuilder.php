@@ -70,7 +70,7 @@ class CacheBuilder
     public function getKeys($language)
     {
         $item = $this->cache->getItem('keys_' . $language);
-        if ($item->exists()) {
+        if ($item->isHit()) {
             return $item->get();
         }
 
@@ -88,7 +88,7 @@ class CacheBuilder
     public function getNavigation($language)
     {
         $item = $this->cache->getItem('navigation_' . $language);
-        if ($item->exists()) {
+        if ($item->isHit()) {
             return $item->get();
         }
 

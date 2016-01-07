@@ -12,7 +12,7 @@ namespace Backend\Modules\Locale\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 
 /**
  * This is the export-action, it will create a XML with missing locale items.

@@ -73,35 +73,13 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-{/option:ddmWebPropertyId}
-{option:web_property_id}
-<div class="row fork-module-content">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          {$lblLinkedProfile|ucfirst}
-        </h3>
-      </div>
-      <div class="panel-body">
-        <div class="form-group">
-          <strong>{$web_property_id}</strong>{option:profile}: ga:{$profile}{/option:profile}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-{/option:web_property_id}
-{option:ddmProfile}
-<div class="row fork-module-content">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          {$lblChooseWebsiteProfile|ucfirst}
-        </h3>
+  {/option:ddmWebPropertyId}
+
+
+  {option:ddmProfile}
+    <div class="box">
+      <div class="heading">
+        <h3><label for="account">{$lblChooseWebsiteProfile|ucfirst}</label></h3>
       </div>
       <div class="panel-body">
         <div class="form-group">
@@ -132,6 +110,15 @@
       </div>
     </div>
   {/option:profile}
+
+  {option:!profile}
+    <div class="fullwidthOptions">
+      <div class="buttonHolderRight">
+        <input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+      </div>
+    </div>
+  {/option:!profile}
+{/form:settings}
 
   {option:!profile}
     <div class="fullwidthOptions">
