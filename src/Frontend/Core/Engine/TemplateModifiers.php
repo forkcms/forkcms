@@ -148,7 +148,7 @@ class TemplateModifiers
         $parentId = 0,
         $depth = null,
         $excludeIds = null,
-        $tpl = '/Core/Layout/Templates/Navigation.tpl'
+        $tpl = '/Core/Layout/Templates/Navigation.html.twig'
     ) {
         // build excludeIds
         if ($excludeIds !== null) {

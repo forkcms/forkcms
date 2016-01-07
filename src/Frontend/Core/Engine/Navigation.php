@@ -214,7 +214,7 @@ class Navigation extends FrontendBaseObject
         $parentId = 0,
         $depth = null,
         $excludeIds = array(),
-        $tpl = '/Core/Layout/Templates/Navigation.tpl',
+        $tpl = '/Core/Layout/Templates/Navigation.html.twig',
         $depthCounter = 1
     ) {
         // get navigation
@@ -353,13 +353,13 @@ class Navigation extends FrontendBaseObject
         }
 
         // create template
-        $navigationTpl = new Template(false);
+        $navigationTpl = new TwigTemplate(false);
 
         // assign navigation to template
         $navigationTpl->assign('navigation', $navigation[$type][$parentId]);
 
         // return parsed content
-        return $navigationTpl->getContent(FRONTEND_PATH . (string) $tpl, true, true);
+        return $navigationTpl->render(FRONTEND_PATH . (string) $tpl, true, true);
     }
 
     /**
