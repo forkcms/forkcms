@@ -33,8 +33,8 @@
           <li role="presentation">
             <a href="#tabFeedback" aria-controls="feedback" role="tab" data-toggle="tab">
               {$lblFeedback|ucfirst}
-              <span class="badge positiveFeedback">{$item.num_usefull_yes}</span>
-              <span class="badge negativeFeedback">{$item.num_usefull_no}</span>
+              <span class="label label-success">{$item.num_usefull_yes}</span>
+              <span class="label label-danger">{$item.num_usefull_no}</span>
             </a>
           </li>
         </ul>

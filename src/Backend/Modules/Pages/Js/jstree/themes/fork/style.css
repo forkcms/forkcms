@@ -102,11 +102,11 @@
 	background: url(/src/Backend/Core/Layout/images/sprites/fork_icons.png) 0 -3px no-repeat;
 }
 
-/* BACKGROUND DOTS */ 
+/* BACKGROUND DOTS */
 .tree li li { overflow: hidden; }
 .tree > .ltr > li { display:table; } 
 
-/* ICONS */ 
+/* ICONS */
 .tree ul ins {
 	display:inline-block;
 	text-decoration:none;

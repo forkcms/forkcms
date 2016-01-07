@@ -104,16 +104,22 @@
                     </div>
 
                     {* Submit button is always here. Cannot be deleted or moved. *}
-                    <div class="btn-toolbar">
-                      <div class="btn-group pull-left" role="group">
-                        {$btnSubmitField}
-                      </div>
-                      <div class="btn-group pull-right" role="group">
-                        <a href="#edit-{$submitId}" class="btn btn-default jsFieldEdit" rel="{$submitId}" title="{$lblEdit}">
-                          <span class="fa fa-pencil"></span>
-                        </a>
+                  <div class="row">
+                    <div class="col-md-5 col-md-offset-4">
+                      <div class="btn-toolbar">
+                        <div class="btn-group pull-right" role="group">
+                          {$btnSubmitField}
+                        </div>
                       </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="btn-group pull-right" role="group">
+                          <a href="#edit-{$submitId}" class="btn btn-default jsFieldEdit" rel="{$submitId}" title="{$lblEdit}">
+                            <span class="fa fa-pencil"></span>
+                          </a>
+                        </div>
+                    </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -129,32 +135,34 @@
                     <ul class="list-group">
                       <li id="textboxSelector" class="list-group-item">
                         <a href="#textbox" rel="textboxDialog" class="jsFieldDialogTrigger">
+                          <span class="fa fa-square-o fa-fw"></span>
                           {$lblTextbox|ucfirst}
                         </a>
                       </li>
                       <li id="textareaSelector" class="list-group-item">
                         <a href="#textarea" rel="textareaDialog" class="jsFieldDialogTrigger">
+                          <span class="fa fa-square-o fa-fw"></span>
                           {$lblTextarea|ucfirst}
                         </a>
                       </li>
                       <li id="datetimeSelector" class="list-group-item">
                         <a href="#datetime" rel="datetimeDialog" class="jsFieldDialogTrigger">
-                          {$lblDatetime|ucfirst}
+                          <span class="fa fa-calendar-o fa-fw"></span> {$lblDatetime|ucfirst}
                         </a>
                       </li>
                       <li id="dropdownSelector" class="list-group-item">
                         <a href="#dropdown" rel="dropdownDialog" class="jsFieldDialogTrigger">
-                          {$lblDropdown|ucfirst}
+                          <span class="fa fa-list-alt fa-fw"></span> {$lblDropdown|ucfirst}
                         </a>
                       </li>
                       <li id="checkboxSelector" class="list-group-item">
                         <a href="#checkbox" rel="checkboxDialog" class="jsFieldDialogTrigger">
-                          {$lblCheckbox|ucfirst}
+                          <span class="fa fa-check-square-o fa-fw"></span> {$lblCheckbox|ucfirst}
                         </a>
                       </li>
                       <li id="radiobuttonSelector" class="list-group-item">
                         <a href="#radiobutton" rel="radiobuttonDialog" class="jsFieldDialogTrigger">
-                          {$lblRadiobutton|ucfirst}
+                          <span class="fa fa-dot-circle-o fa-fw"></span> {$lblRadiobutton|ucfirst}
                         </a>
                       </li>
                     </ul>
@@ -162,12 +170,12 @@
                     <ul class="list-group">
                       <li id="headingSelector" class="list-group-item">
                         <a href="#heading" rel="headingDialog" class="jsFieldDialogTrigger">
-                          {$lblHeading|ucfirst}
+                          <span class="fa fa-header fa-fw"></span> {$lblHeading|ucfirst}
                         </a>
                       </li>
                       <li id="paragraphSelector" class="list-group-item">
                         <a href="#paragraph" rel="paragraphDialog" class="jsFieldDialogTrigger">
-                          {$lblParagraph|ucfirst}
+                          <span class="fa fa-align-left fa-fw"></span> {$lblParagraph|ucfirst}
                         </a>
                       </li>
                     </ul>
