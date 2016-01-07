@@ -56,7 +56,7 @@ class EditTest extends WebTestCase
 
         $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
         $this->assertContains(
-            'Blog: edit article "Blogpost for functional tests"',
+            'Edit article "Blogpost for functional tests"',
             $client->getResponse()->getContent()
         );
 
