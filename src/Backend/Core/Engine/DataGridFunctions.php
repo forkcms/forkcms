@@ -181,7 +181,7 @@ class DataGridFunctions
                         'Users'
                     ) . '&amp;id=' . $id . '">' . "\n";
             }
-            $html .= '          <img class="img-rounded" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
+            $html .= '          <img class="img-circle" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
                 $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
 
             $html .= '<span>' . $nickname . '</span>';
@@ -252,7 +252,7 @@ class DataGridFunctions
         $image = (string) $image;
         $title = (string) $title;
 
-        return '<img class="img-rounded" src="' . $path . '/' . $image . '" alt="' . $title . '" />';
+        return '<img class="img-circle" src="' . $path . '/' . $image . '" alt="' . $title . '" />';
     }
 
     /**

@@ -12,7 +12,7 @@
         <tr>
           <td rowspan="6" class="text-center align-middle">
             {option:record.settings.avatar}
-            <img src="{$FRONTEND_FILES_URL}/backend_users/avatars/source/{$record.settings.avatar}" alt="" />
+            <img class="img-circle" src="{$FRONTEND_FILES_URL}/backend_users/avatars/source/{$record.settings.avatar}" alt="" />
             {/option:record.settings.avatar}
           </td>
           <th>{$lblName|ucfirst}:</th>
