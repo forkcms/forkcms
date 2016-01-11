@@ -106,12 +106,20 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
-            <p class="help-block">{$msgHelpTemplateFormat}</p>
-            {$txtFormat} {$txtFormatError}
-          </div>
-          <div>
-            {$msgHelpPositionsLayout}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                {$txtFormat} {$txtFormatError}
+              </div>
+              <div>
+                {$msgHelpPositionsLayoutText}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div>
+                {$msgHelpPositionsLayoutExample}
+              </div>
+            </div>
           </div>
         </div>
       </div>
