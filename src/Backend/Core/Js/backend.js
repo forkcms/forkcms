@@ -1086,6 +1086,7 @@ jsBackend.effects =
     // init, something like a constructor
     init: function () {
         jsBackend.effects.bindHighlight();
+        jsBackend.effects.panels();
     },
 
     // if a var highlight exists in the url it will be highlighted
@@ -1114,6 +1115,24 @@ jsBackend.effects =
                 $(selector).effect("highlight", {}, 5000);
             }
         }
+    },
+
+    // Adds classes to collapsible panels
+    panels: function () {
+
+        $('.panel .collapse').on({
+            'show.bs.collapse': function () {
+                // Remove open class from other panels
+                $(this).parents('.panel-group').find('.panel').removeClass('open');
+
+                // Add open class to active panel
+                $(this).parent('.panel').addClass('open');
+            },
+            'hide.bs.collapse': function () {
+                // Remove open class from closed panel
+                $(this).parent('.panel').removeClass('open');
+            }
+        });
     }
 };
 

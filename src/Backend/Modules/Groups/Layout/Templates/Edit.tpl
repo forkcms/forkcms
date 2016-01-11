@@ -72,12 +72,12 @@
               <div class="col-md-12">
                 <div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
                   {iteration:permissions}
-                  <div class="panel panel-default jsGroupsPermissionsModule">
+                  <div class="panel panel-transparent jsGroupsPermissionsModule">
                     <div class="panel-heading" role="tab" id="permissions-heading-{$permissions.id}">
                       <h4 class="panel-title">
                         {$permissions.chk}
                         <a data-toggle="collapse" data-parent="#permissions" href="#permissions-list-{$permissions.id}" aria-expanded="false" aria-controls="collapseOne">
-                          <label for="{$permissions.id}">{$permissions.label}</label>
+                          <label for="{$permissions.id}"><span class="fa fa-caret-right fa-fw"></span> {$permissions.label}</label>
                         </a>
                       </h4>
                     </div>

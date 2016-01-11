@@ -760,7 +760,7 @@
 .fa-money:before {
   content: ""; }
 
-.fa-caret-down:before {
+.fa-caret-down:before, .panel.open .fa-caret-right:before {
   content: ""; }
 
 .fa-caret-up:before {
@@ -8139,6 +8139,12 @@ h3 + .btn-toolbar {
     -ms-transition: top 250ms;
     -o-transition: top 250ms;
     transition: top 250ms; }
+
+.panel-transparent {
+  border-color: #ddd; }
+  .panel-transparent .panel-heading {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: -1px; }
 
 /* Navigation */
 .fork-nav-sidebar li li.active > a {
