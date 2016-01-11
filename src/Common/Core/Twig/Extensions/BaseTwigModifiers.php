@@ -136,34 +136,6 @@ class BaseTwigModifiers
     }
 
     /**
-     * Formats a timestamp as a string that indicates the time ago
-     *    syntax: {$var|timeago}.
-     *
-     * @param string $var A UNIX-timestamp that will be formatted as a time-ago-string.
-     *
-     * @return string
-     */
-    public static function timeAgo($var = null)
-    {
-        $var = (int) $var;
-
-        // invalid timestamp
-        if ($var == 0) {
-            return '';
-        }
-
-        // return
-        return '<abbr title="'.\SpoonDate::getDate(
-            Model::get('fork.settings')->get('Core', 'date_format_long').', '.Model::get('fork.settings')->get(
-                'Core',
-                'time_format'
-            ),
-            $var,
-            FRONTEND_LANGUAGE
-        ).'">'.\SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE).'</abbr>';
-    }
-
-    /**
      * Truncate a string
      *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}.
      *

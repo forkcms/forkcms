@@ -47,7 +47,7 @@ class TemplateModifiers extends BaseTwigModifiers
         $var = (float) $var;
 
         // get setting
-        $format = Model::get('fork.settings')->get('Core', 'number_format');
+        $format = FrontendModel::get('fork.settings')->get('Core', 'number_format');
 
         // get amount of decimals
         $decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);
@@ -64,9 +64,8 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Get the navigation html
-     *    syntax: {$var|getnavigation[:type[:parentId[:depth[:excludeIds-splitted-by-dash[:tpl]]]]}
+     *    syntax: {{ getnavigation($type, $parentId, $depth, $excludeIds-splitted-by-dash, $tpl) }}
      *
-     * @param string $var        The variable.
      * @param string $type       The type of navigation, possible values are: page, footer.
      * @param int    $parentId   The parent wherefore the navigation should be build.
      * @param int    $depth      The maximum depth that has to be build.
@@ -75,7 +74,6 @@ class TemplateModifiers extends BaseTwigModifiers
      * @return string
      */
     public static function getNavigation(
-        $var = null,
         $type = 'page',
         $parentId = 0,
         $depth = null,
@@ -96,7 +94,35 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // fallback
-        return $var;
+        return null;
+    }
+
+    /**
+     * Formats a timestamp as a string that indicates the time ago
+     *    syntax: {$var|timeago}.
+     *
+     * @param string $var A UNIX-timestamp that will be formatted as a time-ago-string.
+     *
+     * @return string
+     */
+    public static function timeAgo($var = null)
+    {
+        $var = (int) $var;
+
+        // invalid timestamp
+        if ($var == 0) {
+            return '';
+        }
+
+        // return
+        return '<abbr title="'.\SpoonDate::getDate(
+            FrontendModel::get('fork.settings')->get('Core', 'date_format_long').', '.FrontendModel::get('fork.settings')->get(
+                'Core',
+                'time_format'
+            ),
+            $var,
+            FRONTEND_LANGUAGE
+        ).'">'.\SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE).'</abbr>';
     }
 
     /**

@@ -24,7 +24,7 @@
 										{% for months in archive.months %}
 											<li>
 												{% if months.url %}<a href="{{ months.url }}">{% endif %}
-													{{ months.label|spoon_date('F', LANGUAGE) }}
+													{{ months.label|spoondate('F', LANGUAGE) }}
 													{% if months.url %}({{ months.total }}){% endif %}
 												{% if months.url %}</a>{% endif %}
 											</li>
