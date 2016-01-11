@@ -65,7 +65,7 @@ class TwigFilters
         $twig->addFilter(new Twig_SimpleFilter('timeago', $app.'::timeAgo'));
         $twig->addFilter(new Twig_SimpleFilter('formatdatetime', $app.'::formatDateTime'));
 
-        // Filters with raw html output
+        // Functions
 
         $twig->addFunction(new Twig_SimpleFunction(
             'getmainnavigation',
@@ -76,10 +76,9 @@ class TwigFilters
             $app.'::getURL'
         ));
 
-        $twig->addFilter(new Twig_SimpleFilter(
+        $twig->addFunction(new Twig_SimpleFunction(
             'getnavigation',
-            $app.'::getNavigation',
-            array('is_safe' => array('html'))
+            $app.'::getNavigation'
         ));
         $twig->addFilter(new Twig_SimpleFilter(
             'getsubnavigation',
