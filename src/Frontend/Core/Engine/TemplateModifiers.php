@@ -435,4 +435,38 @@ class TemplateModifiers extends BaseTwigModifiers
 
         return Language::$action($string);
     }
+
+    /**
+     * Formats plain text as HTML, links will be detected, paragraphs will be inserted
+     *    syntax: {$var|cleanupPlainText}.
+     *
+     * @param string $var The text to cleanup.
+     *
+     * @return string
+     */
+    public static function cleanupPlainText($var)
+    {
+        // redefine
+        $var = (string) $var;
+
+        // detect links
+        $var = \SpoonFilter::replaceURLsWithAnchors(
+            $var,
+            FrontendModel::get('fork.settings')->get('Core', 'seo_nofollow_in_comments', false)
+        );
+
+        // replace newlines
+        $var = str_replace("\r", '', $var);
+        $var = preg_replace('/(?<!.)(\r\n|\r|\n){3,}$/m', '', $var);
+
+        // replace br's into p's
+        $var = '<p>'.str_replace("\n", '</p><p>', $var).'</p>';
+
+        // cleanup
+        $var = str_replace("\n", '', $var);
+        $var = str_replace('<p></p>', '', $var);
+
+        // return
+        return $var;
+    }
 }
