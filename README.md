@@ -42,6 +42,8 @@ Running only the unit tests or the functional tests
     ./bin/phpunit --testsuite=unit
 
 ## Discussion
+
+- Slack: <https://fork-cms.herokuapp.com/>
 - IRC: irc.freenode.org #forkcms
 - E-mail: <info@fork-cms.com> for any questions or remarks.
 
