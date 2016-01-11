@@ -83,7 +83,7 @@
                 <label for="spamfilter">
                   {$chkSpamfilter} {$lblFilterCommentsForSpam|ucfirst}
                 </label>
-                <p class="text-info">
+                <p class="help-block">
                   {$msgHelpSpamFilter}
                   {option:noAkismetKey}
                   <br />

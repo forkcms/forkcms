@@ -16,7 +16,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <p class="text-info">{$msgHelpMetaNavigation}</p>
+            <p class="help-block">{$msgHelpMetaNavigation}</p>
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="metaNavigation">{$chkMetaNavigation} {$msgMetaNavigation|ucfirst}</label>

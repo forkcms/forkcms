@@ -13,7 +13,7 @@
           {$lblReferenceCode|ucfirst}
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
-        <p class="text-info">{$msgHelpAddName}</p>
+        <p class="help-block">{$msgHelpAddName}</p>
         {$txtName} {$txtNameError}
       </div>
       <div class="form-group">
@@ -21,7 +21,7 @@
           {$lblTranslation|ucfirst}
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
-        <p class="text-info">{$msgHelpAddValue}</p>
+        <p class="help-block">{$msgHelpAddValue}</p>
         {$txtValue} {$txtValueError}
       </div>
       <div class="form-group">

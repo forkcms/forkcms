@@ -32,7 +32,7 @@
           </h3>
         </div>
         <div class="panel-body">
-          <p class="text-info">{$msgHelpInstallableThemes}</p>
+          <p class="help-block">{$msgHelpInstallableThemes}</p>
           <ul id="installableThemes" class="selectThumbList list-unstyled list-inline">
             {iteration:installableThemes}
             <li>
@@ -104,7 +104,7 @@
           </h3>
         </div>
         <div class="panel-body">
-          <p class="text-info">{$msgHelpThemes}</p>
+          <p class="help-block">{$msgHelpThemes}</p>
           {option:rbtInstalledThemesError}
           <p class="text-danger">{$rbtThemesError}</p>
           {/option:rbtInstalledThemesError}

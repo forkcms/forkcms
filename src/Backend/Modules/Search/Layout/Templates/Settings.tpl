@@ -63,7 +63,7 @@
           </h3>
         </div>
         <div id="searchModules" class="panel-body">
-          <p class="text-info">{$msgHelpWeightGeneral}</p>
+          <p class="help-block">{$msgHelpWeightGeneral}</p>
           <table class="table table-hover table-striped jsDataGrid">
             <tr>
               <th>{$msgIncludeInSearch}</th>

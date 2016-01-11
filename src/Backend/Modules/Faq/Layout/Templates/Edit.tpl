@@ -103,7 +103,7 @@
             <div class="row">
               <div class="col-md-12">
                 {option:feedback}
-                <p class="text-info">{$msgFeedbackInfo}</p>
+                <p class="help-block">{$msgFeedbackInfo}</p>
                 <div class="panel-group" id="feedback" role="tablist" aria-multiselectable="false">
                   {iteration:feedback}
                   <div class="panel panel-default">

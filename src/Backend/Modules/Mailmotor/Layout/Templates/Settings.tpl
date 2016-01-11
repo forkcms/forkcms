@@ -130,7 +130,7 @@
                         {$lblPerSentMailing|ucfirst}
                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                       </label>
-                      <p class="text-info">{$msgHelpPrice}</p>
+                      <p class="help-block">{$msgHelpPrice}</p>
                       <div class="form-inline">
                         € {$txtPricePerEmail} {$txtPricePerEmailError}
                       </div>
@@ -140,7 +140,7 @@
                         {$lblPerCampaign|ucfirst}
                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                       </label>
-                      <p class="text-info">{$msgHelpPrice}</p>
+                      <p class="help-block">{$msgHelpPrice}</p>
                       <div class="form-inline">
                         € {$txtPricePerCampaign} {$txtPricePerCampaignError}
                       </div>
@@ -178,7 +178,7 @@
                     {$lblURL|uppercase}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
-                  <p class="text-info">{$msgHelpCMURL}</p>
+                  <p class="help-block">{$msgHelpCMURL}</p>
                   {$txtUrl} {$txtUrlError}
                 </div>
                 <div class="form-group">

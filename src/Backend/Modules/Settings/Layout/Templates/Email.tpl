@@ -17,7 +17,7 @@
         {option:isGod}
         <div class="panel-body">
           <h4>{$lblSendingEmails|ucfirst}</h4>
-          <p class="text-info">{$msgHelpSendingEmails}</p>
+          <p class="help-block">{$msgHelpSendingEmails}</p>
           <div class="form-inline">
             <div class="form-group">
               {$ddmMailerType} {$ddmMailerTypeError}
@@ -102,7 +102,7 @@
           <div class="form-group">
             <label for="smtpServer" style="float: left;">{$lblServer|ucfirst}</label>
             <label for="smtpPort">&#160;&amp; {$lblPort}</label>
-            <p class="text-info">{$msgHelpSMTPServer}</p>
+            <p class="help-block">{$msgHelpSMTPServer}</p>
             <div class="form-inline">
               <div class="form-group">
                 {$txtSmtpServer}

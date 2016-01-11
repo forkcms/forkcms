@@ -199,12 +199,12 @@
                       <label for="{$redirect.id}">{$redirect.rbtRedirect} {$redirect.label}</label>
                       {option:redirect.isInternal}
                       <label for="internalRedirect" class="hidden">{$redirect.label}</label>
-                      <p class="text-info">{$msgHelpInternalRedirect}</p>
+                      <p class="help-block">{$msgHelpInternalRedirect}</p>
                       {$ddmInternalRedirect} {$ddmInternalRedirectError}
                       {/option:redirect.isInternal}
                       {option:redirect.isExternal}
                       <label for="externalRedirect" class="hidden">{$redirect.label}</label>
-                      <p class="text-info">{$msgHelpExternalRedirect}</p>
+                      <p class="help-block">{$msgHelpExternalRedirect}</p>
                       {$txtExternalRedirect} {$txtExternalRedirectError}
                       {/option:redirect.isExternal}
                     </li>

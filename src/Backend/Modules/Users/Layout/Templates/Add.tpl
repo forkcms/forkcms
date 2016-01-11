@@ -55,7 +55,7 @@
                         </p>
                       </td>
                       <td>
-                        <p class="text-info">&nbsp;{$msgHelpStrongPassword}</p>
+                        <p class="help-block">&nbsp;{$msgHelpStrongPassword}</p>
                       </td>
                     </tr>
                   </table>
@@ -104,12 +104,12 @@
                     {$lblNickname|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
-                  <p class="text-info">{$msgHelpNickname}</p>
+                  <p class="help-block">{$msgHelpNickname}</p>
                   {$txtNickname} {$txtNicknameError}
                 </div>
                 <div class="form-group">
                   <label for="avatar">{$lblAvatar|ucfirst}</label>
-                  <p class="text-info">{$msgHelpAvatar}</p>
+                  <p class="help-block">{$msgHelpAvatar}</p>
                   {$fileAvatar} {$fileAvatarError}
                 </div>
               </div>

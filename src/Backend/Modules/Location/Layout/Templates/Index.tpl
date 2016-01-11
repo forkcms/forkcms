@@ -47,12 +47,12 @@
         </div>
         <div class="form-group"{option:!godUser} style="display:none;"{/option:!godUser}>
           <label for="width">{$lblWidth|ucfirst}</label>
-          <p class="text-info">{$msgWidthHelp|sprintf:300:800}</p>
+          <p class="help-block">{$msgWidthHelp|sprintf:300:800}</p>
           {$txtWidth} {$txtWidthError}
         </div>
         <div class="form-group"{option:!godUser} style="display:none;"{/option:!godUser}>
           <label for="height">{$lblHeight|ucfirst}</label>
-          <p class="text-info">{$msgHeightHelp|sprintf:150}</p>
+          <p class="help-block">{$msgHeightHelp|sprintf:150}</p>
           {$txtHeight} {$txtHeightError}
         </div>
         <div class="form-group">

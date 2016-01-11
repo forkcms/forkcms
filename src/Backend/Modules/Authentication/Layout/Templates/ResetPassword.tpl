@@ -15,7 +15,7 @@
         {form:authenticationResetPassword}
           <div class="panel panel-default">
             <div class="panel-body">
-              <p class="text-info">{$msgHelpResetPassword}</p>
+              <p class=help-block>{$msgHelpResetPassword}</p>
               <div class="form-group">
                 <label for="backendNewPassword">{$lblNewPassword|ucfirst}</label>
                 {$txtBackendNewPassword} {$txtBackendNewPasswordError}

@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-inline form-group">
-        <p class="text-info">{$msgHelpTemplateLocation}</p>
+        <p class="help-block">{$msgHelpTemplateLocation}</p>
         <label for="file">{$msgPathToTemplate|ucfirst}</label>
         <label for="theme" class="hide">{$lblTheme|ucfirst}</label>
         {$ddmTheme}<small><code>/Core/Layout/Templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
@@ -107,7 +107,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <p class="text-info">{$msgHelpTemplateFormat}</p>
+            <p class="help-block">{$msgHelpTemplateFormat}</p>
             {$txtFormat} {$txtFormatError}
           </div>
           <div>

@@ -42,7 +42,7 @@
                   {$lblName|ucfirst}
                   <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
-                <p class="text-info">{$msgNameInternalUseOnly}</p>
+                <p class="help-block">{$msgNameInternalUseOnly}</p>
                 {$txtName} {$txtNameError}
               </div>
               {option:ddmCampaign}
@@ -189,7 +189,7 @@
             </div>
             <div class="panel-body">
               <div class="form-group">
-                <p class="text-info">{$msgHelpTemplates}</p>
+                <p class="help-block">{$msgHelpTemplates}</p>
                 {option:rbtTemplatesError}
                 <p class="text-danger">{$rbtTemplatesError}</p>
                 {/option:rbtTemplatesError}

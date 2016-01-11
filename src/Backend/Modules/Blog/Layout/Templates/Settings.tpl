@@ -56,7 +56,7 @@
                 <label for="spamfilter">
                   {$chkSpamfilter} {$lblFilterCommentsForSpam|ucfirst}
                 </label>
-                <p class="text-info">
+                <p class="help-block">
                   {$msgHelpSpamFilter}
                   {option:noAkismetKey}
                   <br />
@@ -67,7 +67,7 @@
                 </p>
               </li>
             </ul>
-            <p class="text-info">{$msgFollowAllCommentsInRSS|sprintf:{$commentsRSSURL}}</p>
+            <p class="help-block">{$msgFollowAllCommentsInRSS|sprintf:{$commentsRSSURL}}</p>
           </div>
         </div>
       </div>
@@ -161,12 +161,12 @@
               {$lblTitle|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
-            <p class="text-info">{$msgHelpRSSTitle}</p>
+            <p class="help-block">{$msgHelpRSSTitle}</p>
             {$txtRssTitle} {$txtRssTitleError}
           </div>
           <div class="form-group">
             <label for="rssDescription">{$lblDescription|ucfirst}</label>
-            <p class="text-info">{$msgHelpRSSDescription}</p>
+            <p class="help-block">{$msgHelpRSSDescription}</p>
             {$txtRssDescription} {$txtRssDescriptionError}
           </div>
           <div class="form-group">

@@ -26,7 +26,7 @@
       </div>
       <div class="panel-body">
         <div class="form-group">
-          <p class="text-info">
+          <p class="help-block">
             {$msgCertificateHelp}
           </p>
           {$fileCertificate} {$fileCertificateError}

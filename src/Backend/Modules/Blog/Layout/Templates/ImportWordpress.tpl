@@ -10,12 +10,12 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="wordpress">{$lblFile|ucfirst}</label>
-        <p class="text-info">{$msgHelpWordpress}</p>
+        <p class="help-block">{$msgHelpWordpress}</p>
         {$fileWordpress} {$fileWordpressError}
       </div>
       <div class="form-group">
         <label for="filter">{$lblWordpressFilter|ucfirst}</label>
-        <p class="text-info">{$msgHelpWordpressFilter}</p>
+        <p class="help-block">{$msgHelpWordpressFilter}</p>
         {$txtFilter} {$txtFilterError}
       </div>
     </div>

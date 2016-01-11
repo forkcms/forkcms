@@ -16,7 +16,7 @@
         {$txtName} {$txtNameError}
       </div>
       <div class="form-group">
-        <p class="text-info">{$msgDefaultGroup|ucfirst}</p>
+        <p class="help-block">{$msgDefaultGroup|ucfirst}</p>
         <ul class="list-unstyled">
           {iteration:default}
           <li class="radio">

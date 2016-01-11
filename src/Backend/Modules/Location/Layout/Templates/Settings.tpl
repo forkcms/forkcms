@@ -21,12 +21,12 @@
           </div>
           <div class="form-group">
             <label for="widthWidget">{$lblWidth|ucfirst}</label>
-            <p class="text-info">{$msgWidthHelp|sprintf:300:800}</p>
+            <p class="help-block">{$msgWidthHelp|sprintf:300:800}</p>
             {$txtWidthWidget} {$txtWidthWidgetError}
           </div>
           <div class="form-group">
             <label for="heightWidget">{$lblHeight|ucfirst}</label>
-            <p class="text-info">{$msgHeightHelp|sprintf:150}</p>
+            <p class="help-block">{$msgHeightHelp|sprintf:150}</p>
             {$txtHeightWidget} {$txtHeightWidgetError}
           </div>
           <div class="form-group">
