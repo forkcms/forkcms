@@ -28,7 +28,7 @@
         </a>
       {/option:detailURL}
       {option:!detailURL}
-      <p class="text-warning">{$errNoModuleLinked}</p>
+      <p class="text-warning"><span class="fa fa-warning"></span> {$errNoModuleLinked}</p>
       {/option:!detailURL}
     </div>
   </div>

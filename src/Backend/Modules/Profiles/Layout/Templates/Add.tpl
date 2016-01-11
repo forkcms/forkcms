@@ -7,7 +7,7 @@
 </div>
 {form:add}
   {option:notifyProfile}
-  <p class="text-warning">{$lblNewProfileWillBeNotified|ucfirst}</p>
+  <p class="text-warning"><span class="fa fa-warning"></span> {$lblNewProfileWillBeNotified|ucfirst}</p>
   {/option:notifyProfile}
   <div class="row fork-module-content">
     <div class="col-md-12">

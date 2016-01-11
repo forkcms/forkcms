@@ -88,7 +88,7 @@
                   {option:noAkismetKey}
                   <br />
                   <span class="text-warning">
-                    {$msgNoAkismetKey|sprintf:{$var|geturl:'index':'settings'}}
+                    <span class="fa fa-warning"></span> {$msgNoAkismetKey|sprintf:{$var|geturl:'index':'settings'}}
                   </span>
                   {/option:noAkismetKey}
                 </p>

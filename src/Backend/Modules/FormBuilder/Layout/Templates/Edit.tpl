@@ -80,7 +80,7 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <p class="text-warning">{$msgImportantImmediateUpdate}</p>
+                <p class="text-warning"><span class="fa fa-warning"></span> {$msgImportantImmediateUpdate}</p>
               </div>
             </div>
             <div class="row">
