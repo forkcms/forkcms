@@ -36,11 +36,6 @@
           <div role="tabpanel" class="tab-pane active" id="tabGeneral">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblGeneral|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <label for="name">
                     {$lblName|ucfirst}
@@ -73,11 +68,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabFields">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblFields|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <p class="text-warning"><span class="fa fa-warning"></span> {$msgImportantImmediateUpdate}</p>
@@ -185,11 +175,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabExtra">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblExtra|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <label for="identifier">

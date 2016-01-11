@@ -52,11 +52,6 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblContent|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-md-8">
                 <div class="form-group">
                   <label for="text">
@@ -140,11 +135,6 @@
           <div role="tabpanel" class="tab-pane" id="tabVersions">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblVersions|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 {option:drafts}
                 <div class="panel panel-default">
                   <div class="panel-heading">
@@ -176,11 +166,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabComments">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblComments|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">

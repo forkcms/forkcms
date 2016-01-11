@@ -21,11 +21,6 @@
           <div role="tabpanel" class="tab-pane active" id="tabProfile">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblLoginDetails|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <label for="email">
                     {$lblEmail|ucfirst}&nbsp;
@@ -158,11 +153,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblAccountManagement|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">

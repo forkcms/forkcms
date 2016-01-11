@@ -1,10 +1,5 @@
 <div class="row">
   <div class="col-md-12">
-    <h3>{$lblSEO|ucfirst}</h3>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
     <h4>{$lblTitles|ucfirst}</h4>
     <div class="form-group">
       <ul class="list-unstyled checkboxTextFieldCombo">

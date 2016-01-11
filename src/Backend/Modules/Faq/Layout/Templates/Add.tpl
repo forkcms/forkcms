@@ -36,11 +36,6 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblContent|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-md-8">
                 <div class="form-group optionsRTE">
                   <label for="answer">{$lblAnswer|ucfirst}

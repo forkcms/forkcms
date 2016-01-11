@@ -21,11 +21,6 @@
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblContent|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <label for="title">{$lblTitle|ucfirst}</label>
                   {$txtTitle} {$txtTitleError}

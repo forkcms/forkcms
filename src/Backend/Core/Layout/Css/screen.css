@@ -8146,6 +8146,12 @@ h3 + .btn-toolbar {
     border-bottom: 1px solid #ddd;
     margin-bottom: -1px; }
 
+.nav-tabs {
+  margin-bottom: 20px; }
+
+.nav.nav-tabs-xs > li > a {
+  padding: 3px 5px; }
+
 /* Navigation */
 .fork-nav-sidebar li li.active > a {
   text-decoration: none;

@@ -6,7 +6,7 @@
   </div>
   <div class="panel-body">
     <div class="fork-tabs" role="tabpanel">
-      <ul class="nav nav-tabs" role="tablist">
+      <ul class="nav nav-tabs nav-tabs-xs" role="tablist">
         <li role="presentation" class="active">
           <a href="#tabMailmotorSubscriptions" aria-controls="home" role="tab" data-toggle="tab">{$lblSubscriptions|ucfirst}</a>
         </li>

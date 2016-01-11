@@ -24,11 +24,6 @@
           <div role="tabpanel" class="tab-pane active" id="tabName">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblName|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <label for="name">{$lblName|ucfirst}&nbsp;<abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr></label>
                   {$txtName} {$txtNameError}
@@ -37,11 +32,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabDashboard">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblDashboard|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -57,11 +47,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblModules|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">

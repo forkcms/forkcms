@@ -53,10 +53,11 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="tabContent">
                         <div id="editTemplate" class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 {* Do not change the ID! *}
                                 <h3>{$lblTemplate|ucfirst}: <span id="tabTemplateLabel">&nbsp;</span></h3>
-
+                            </div>
+                            <div class="col-md-6">
                                 <div class="btn-toolbar pull-right">
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn" data-toggle="modal" data-target="#changeTemplate">
@@ -101,11 +102,6 @@
                     <div role="tabpanel" class="tab-pane" id="tabSettings">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblSettings|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <ul class="list-unstyled">
                                         {iteration:hidden}
@@ -139,11 +135,6 @@
                     <div role="tabpanel" class="tab-pane" id="tabRedirect">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblRedirect|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 {option:rbtRedirectError}
                                 <div class="alert alert-danger">{$rbtRedirectError}</div>
                                 {/option:rbtRedirectError}
@@ -170,11 +161,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabTags">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblTags|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 {$txtTags} {$txtTagsError}

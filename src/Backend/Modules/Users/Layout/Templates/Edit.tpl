@@ -74,11 +74,6 @@
           <div role="tabpanel" class="tab-pane active" id="tabProfile">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblPersonalInformation|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <label for="email">
                     {$lblEmail|ucfirst}
@@ -121,7 +116,7 @@
             {option:showPasswordStrength}
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblCurrentPassword|ucfirst}</h3>
+                <h4>{$lblCurrentPassword|ucfirst}</h4>
               </div>
             </div>
             <div class="row">
@@ -135,7 +130,7 @@
             {/option:showPasswordStrength}
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblChangePassword|ucfirst}</h3>
+                <h4>{$lblChangePassword|ucfirst}</h4>
               </div>
             </div>
             <div class="row">
@@ -190,11 +185,6 @@
           <div role="tabpanel" class="tab-pane" id="tabSettings">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblInterfacePreferences|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <label for="interfaceLanguage">{$lblLanguage|ucfirst}</label>
                   {$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
@@ -233,11 +223,6 @@
           </div>
           {option:allowUserRights}
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblAccountManagement|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">

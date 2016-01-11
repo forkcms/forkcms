@@ -21,11 +21,6 @@
           <div role="tabpanel" class="tab-pane active" id="tabGeneral">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblGeneral|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <label for="name">
                     {$lblName|ucfirst}
@@ -58,11 +53,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabExtra">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblExtra|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <label for="identifier">

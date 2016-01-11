@@ -27,11 +27,6 @@
           <div role="tabpanel" class="tab-pane active" id="tabName">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblName|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <label for="name">
                     {$lblName|ucfirst}&nbsp;
@@ -43,11 +38,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabDashboard">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblDashboard|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group jsGroupsWidgets">
@@ -63,11 +53,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblModules|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
@@ -91,11 +76,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabUsers">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblUsers|ucfirst} in {$groupName|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 {option:dataGridUsers}

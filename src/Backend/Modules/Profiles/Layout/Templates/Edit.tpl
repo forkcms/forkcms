@@ -24,11 +24,6 @@
           <div role="tabpanel" class="tab-pane active" id="tabGeneral">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblGeneral|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h3 class="panel-title">{$lblProfile|ucfirst}</h3>
@@ -109,8 +104,10 @@
           </div>
           <div role="tabpanel" class="tab-pane" id="tabGroups">
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <h3>{$lblGroups|ucfirst}</h3>
+              </div>
+              <div class="col-md-6">
                 {option:showProfilesAddProfileGroup}
                 <div class="btn-toolbar pull-right">
                   <div class="btn-group" role="group">

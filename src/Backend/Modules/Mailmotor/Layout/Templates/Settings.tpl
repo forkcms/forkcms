@@ -43,11 +43,6 @@
           {form:settingsGeneral}
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblGeneral|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
@@ -168,11 +163,6 @@
           {form:settingsAccount}
             <div class="row">
               <div class="col-md-12">
-                <h3>CampaignMonitor - {$lblAccountSettings|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <label for="url">
                     {$lblURL|uppercase}
@@ -232,11 +222,6 @@
         {option:account}
         <div role="tabpanel" class="tab-pane" id="tabClient">
           {form:settingsClient}
-            <div class="row">
-              <div class="col-md-12">
-                <h3>CampaignMonitor - {$lblClientSettings|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">

@@ -22,11 +22,6 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextboxBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblBasic|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="textboxLabel">
                                         {$lblLabel|ucfirst}
@@ -39,11 +34,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabTextboxProperties">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblProperties|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -105,11 +95,6 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextboxAdvanced">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblAdvanced|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="textboxPlaceholder">{$lblPlaceholder|ucfirst}</label>
                                     {$txtTextboxPlaceholder}
@@ -155,11 +140,6 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextareaBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblBasic|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="textareaLabel">
                                         {$lblLabel|ucfirst}
@@ -172,11 +152,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabTextareaProperties">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblProperties|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -227,11 +202,6 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextareaAdvanced">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblAdvanced|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
                                     {$txtTextareaPlaceholder}
@@ -277,11 +247,6 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDatetimeBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblBasic|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="datetimeLabel">
                                         {$lblLabel|ucfirst}
@@ -294,11 +259,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabDatetimeProperties">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblProperties|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group jsDefaultValue">
@@ -350,11 +310,6 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDatetimeAdvanced">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblAdvanced|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="datetimeClassname">{$lblClassname|ucfirst}</label>
                                     {$txtDatetimeClassname}
@@ -396,11 +351,6 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDropdownBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblBasic|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="dropdownLabel">
                                         {$lblLabel|ucfirst}
@@ -418,11 +368,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabDropdownProperties">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblProperties|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -450,11 +395,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDropdownAdvanced">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblAdvanced|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -498,11 +438,6 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabRadiobuttonBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblBasic|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="radiobuttonLabel">
                                         {$lblLabel|ucfirst}
@@ -519,11 +454,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabRadiobuttonProperties">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblProperties|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -551,11 +481,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabRadiobuttonAdvanced">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblAdvanced|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -599,11 +524,6 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabCheckboxBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblBasic|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="checkboxLabel">
                                         {$lblLabel|ucfirst}
@@ -620,11 +540,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabCheckboxProperties">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblProperties|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -652,11 +567,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabCheckboxAdvanced">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblAdvanced|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
