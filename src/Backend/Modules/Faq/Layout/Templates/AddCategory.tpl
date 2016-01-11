@@ -8,33 +8,34 @@
 {form:addCategory}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="title">
-          {$lblTitle|ucfirst}
-          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
-        </label>
-        {$txtTitle} {$txtTitleError}
-      </div>
-      {option:detailURL}
-        <a href="{$detailURL}">
-          <small>{$detailURL}/<span id="generatedUrl"></span></small>
-        </a>
-      {/option:detailURL}
-      {option:!detailURL}
-      <p class="text-warning">{$errNoModuleLinked}</p>
-      {/option:!detailURL}
-    </div>
-  </div>
-  <div class="row fork-module-content">
-    <div class="col-md-12">
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
+            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{$lblContent|ucfirst}</a>
+          </li>
+          <li role="presentation">
             <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{$lblSEO|ucfirst}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabSEO">
+          <div role="tabpanel" class="tab-pane active" id="tabContent">
+            <div class="form-group">
+              <label for="title">
+                {$lblTitle|ucfirst}
+                <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+              </label>
+              {$txtTitle} {$txtTitleError}
+            </div>
+            {option:detailURL}
+            <a href="{$detailURL}">
+              <small>{$detailURL}/<span id="generatedUrl"></span></small>
+            </a>
+            {/option:detailURL}
+            {option:!detailURL}
+            <p class="text-warning">{$errNoModuleLinked}</p>
+            {/option:!detailURL}
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabSEO">
             {include:{$BACKEND_CORE_PATH}/Layout/Templates/Seo.tpl}
           </div>
         </div>
