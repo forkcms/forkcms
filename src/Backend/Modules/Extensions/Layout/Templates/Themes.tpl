@@ -108,10 +108,10 @@
           {option:rbtInstalledThemesError}
           <p class="text-danger">{$rbtThemesError}</p>
           {/option:rbtInstalledThemesError}
-          <ul id="installedThemes" class="selectThumbList list-unstyled list-inline">
+          <div id="installedThemes" class="selectThumbList row">
             {iteration:installedThemes}
-            <li class="{option:installedThemes.selected}active{/option:installedThemes.selected}">
-              <div class="panel panel-default">
+            <div class="col-md-4 theme">
+              <div class="panel {option:!installedThemes.selected}panel-default{/option:!installedThemes.selected}{option:installedThemes.selected}panel-primary{/option:installedThemes.selected}">
                 <div class="panel-heading">
                   <label for="{$installedThemes.id}" class="panel-title">
                     {$installedThemes.rbtInstalledThemes}
@@ -119,7 +119,7 @@
                   </label>
                 </div>
                 <div class="panel-body">
-                  <img src="{$installedThemes.thumbnail}" width="172" height="129" class="img-thumbnail" alt="{$installedThemes.label|ucfirst}" />
+                  <img src="{$installedThemes.thumbnail}" class="img-thumbnail" alt="{$installedThemes.label|ucfirst}" />
                 </div>
                 <div class="panel-footer">
                   {option:showExtensionsDetailTheme}
@@ -134,9 +134,9 @@
                   {/option:showExtensionsDetailTheme}
                 </div>
               </div>
-            </li>
+            </div>
             {/iteration:installedThemes}
-          </ul>
+          </div>
         </div>
       </div>
     </div>

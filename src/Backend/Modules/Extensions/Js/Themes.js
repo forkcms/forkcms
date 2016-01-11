@@ -16,7 +16,7 @@ jsBackend.extensions.themeSelection =
 	init: function()
 	{
 		// store the list items
-		var listItems = $('#installedThemes li');
+		var listItems = $('#installedThemes .theme');
 
 		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
 		listItems.on('click', function(e)
@@ -31,10 +31,10 @@ jsBackend.extensions.themeSelection =
 			if(radiobutton.is(':checked'))
 			{
 				// remove the selected state from all other templates
-				listItems.removeClass('active');
+				listItems.find('.panel').removeClass('panel-primary').addClass('panel-default');
 
 				// add a selected state to the parent
-				radiobutton.closest('li').addClass('active');
+				radiobutton.closest('.panel').addClass('panel-primary');
 			}
 		});
 	}
