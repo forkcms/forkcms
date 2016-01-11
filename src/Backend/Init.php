@@ -20,7 +20,7 @@ class Init extends \Common\Core\Init
     /**
      * @inheritdoc
      */
-    protected $allowedTypes = array('Backend', 'BackendAjax', 'BackendCronjob');
+    protected $allowedTypes = array('Backend', 'BackendAjax', 'BackendCronjob', 'Console');
 
     /**
      * @inheritdoc

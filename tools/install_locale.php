@@ -19,17 +19,26 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
  * f: => file (argument required)
  * o => overwrite the locale or not? (no argument required)
  */
-$shortOptions = 'f:o';
+$shortOptions = 'f:m:o::';
 $options = getopt($shortOptions);
 
 // No file was given
-if (!isset($options['f'])) {
-    throw new Exception('We need a file to load our data from.');
+if (!isset($options['f']) && !isset($options['m'])) {
+    throw new Exception('We need a file or module to load our data from.');
 }
 
 // File given, check if it exists
-else {
+elseif (isset($options['f'])) {
     $baseFile = $options['f'];
+
+    if (!file_exists($baseFile)) {
+        throw new Exception('The given file(' . $baseFile . ') does not exist.');
+    }
+}
+
+// Module name given, check if it exists
+else {
+    $baseFile = __DIR__ . '/..' . '/src/Backend/Modules/' . ucfirst($options['m']) . '/Installer/Data/locale.xml';
 
     if (!file_exists($baseFile)) {
         throw new Exception('The given file(' . $baseFile . ') does not exist.');
@@ -66,4 +75,18 @@ if ($xmlData === false) {
 }
 
 // Everything ok, let's install the locale
-BackendLocaleModel::importXML($xmlData, $overwrite, null, null, 1);
+$results = BackendLocaleModel::importXML($xmlData, $overwrite, null, null, 1);
+
+if (!$results['total'] > 0) {
+    throw new Exception('Something went wrong during import.');
+} else {
+    if ($results['imported'] > 0) {
+        echo 'Locale installed successfully' . "\n";
+        return;
+    }
+
+    if ($results['imported'] == 0) {
+        echo 'No locale was installed. Try adding the overwrite (-o) option.' . "\n";
+        return;
+    }
+}

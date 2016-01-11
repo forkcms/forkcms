@@ -27,81 +27,141 @@
     </div>
   </div>
 </div>
-<div class="row fork-module-content">
-  <div class="col-md-12">
-    {form:filter}
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="application">{$lblApplication|ucfirst}</label>
-                {$ddmApplication} {$ddmApplicationError}
-              </div>
-              <div class="form-group">
-                <label for="module">{$lblModule|ucfirst}</label>
-                {$ddmModule} {$ddmModuleError}
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>{$lblTypes|ucfirst}</label>
-                {option:type}
-                  <ul class="list-unstyled">
-                    {iteration:type}
-                      <li class="checkbox">
-                        <label for="{$type.id}">{$type.chkType} {$type.label|ucfirst}</label>
-                      </li>
-                    {/iteration:type}
-                  </ul>
-                {/option:type}
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>{$lblLanguages|ucfirst}</label>
-                {option:language}
-                  <ul class="list-unstyled">
-                    {iteration:language}
-                      <li class="checkbox">
-                        <label for="{$language.id}">{$language.chkLanguage} {$language.label|ucfirst}</label>
-                      </li>
-                    {/iteration:language}
-                  </ul>
-                {/option:language}
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="name">
-                  {$lblReferenceCode|ucfirst}&nbsp;
-                  <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpName}"></abbr>
-                </label>
-                {$txtName} {$txtNameError}
-              </div>
-              <div class="form-group">
-                <label for="value">
-                  {$lblValue|ucfirst}&nbsp;
-                  <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpValue}"></abbr>
-                </label>
-                {$txtValue} {$txtValueError}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="panel-footer">
-          <div class="btn-toolbar">
-            <div class="btn-group pull-right">
-              <button id="search" class="btn btn-primary" type="submit" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
-                {$lblUpdateFilter|ucfirst}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    {/form:filter}
-  </div>
+
+<div class="dataGridHolder">
+	{form:filter}
+		<div class="dataFilter">
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							<div class="options">
+								<p>
+									<label for="application">{$lblApplication|ucfirst}</label>
+									{$ddmApplication} {$ddmApplicationError}
+								</p>
+								<p>
+									<label for="module">{$lblModule|ucfirst}</label>
+									{$ddmModule} {$ddmModuleError}
+								</p>
+							</div>
+						</td>
+						<td>
+							<div class="options">
+								<label>{$lblTypes|ucfirst}</label>
+								{option:type}
+									<ul>
+										{iteration:type}<li>{$type.chkType} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
+									</ul>
+								{/option:type}
+							</div>
+						</td>
+						<td>
+							<div class="options">
+								<label>{$lblLanguages|ucfirst}</label>
+								{option:language}
+									<ul>
+										{iteration:language}<li>{$language.chkLanguage} <label for="{$language.id}">{$language.label|ucfirst}</label></li>{/iteration:language}
+									</ul>
+								{/option:language}
+							</div>
+						</td>
+						<td>
+							<div class="options">
+								<div class="oneLiner">
+									<p>
+										<label for="name">{$lblReferenceCode|ucfirst}</label>
+									</p>
+									<p>
+										<abbr class="help">(?)</abbr>
+										<span class="tooltip" style="display: none;">
+											{$msgHelpName}
+										</span>
+									</p>
+								</div>
+								{$txtName} {$txtNameError}
+
+								<div class="oneLiner">
+									<p>
+										<label for="value">{$lblValue|ucfirst}</label>
+									</p>
+									<p>
+										<abbr class="help">(?)</abbr>
+										<span class="tooltip" style="display: none;">
+											{$msgHelpValue}
+										</span>
+									</p>
+								</div>
+								{$txtValue} {$txtValueError}
+
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="99">
+							<div class="options">
+								<div class="buttonHolder">
+									<input id="search" class="inputButton button mainButton" type="submit" name="search" value="{$lblUpdateFilter|ucfirst}" />
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	{/form:filter}
+
+
+	{option:dgLabels}
+	<div class="dataGridHolder">
+		<div class="tableHeading">
+			<h3>{$lblLabels|ucfirst}</h3>
+		</div>
+		{$dgLabels}
+	</div>
+	{/option:dgLabels}
+
+	{option:dgMessages}
+	<div class="dataGridHolder">
+		<div class="tableHeading">
+			<h3>{$lblMessages|ucfirst}</h3>
+		</div>
+		{$dgMessages}
+	</div>
+	{/option:dgMessages}
+
+	{option:dgErrors}
+	<div class="dataGridHolder">
+		<div class="tableHeading">
+			<h3>{$lblErrors|ucfirst}</h3>
+		</div>
+		{$dgErrors}
+	</div>
+	{/option:dgErrors}
+
+	{option:dgActions}
+	<div class="dataGridHolder">
+		<div class="tableHeading oneLiner">
+			<h3>{$lblActions|ucfirst} </h3>
+				<abbr class="help">(?)</abbr>
+				<span class="tooltip" style="display: none;">
+					{$msgHelpActionValue}
+				</span>
+		</div>
+		{$dgActions}
+	</div>
+	{/option:dgActions}
+
+	{option:hasSubmissions}
+	{option:noItems}
+		<p>{$msgNoItemsFilter|sprintf:{$addURL}}</p>
+	{/option:noItems}
+	{/option:hasSubmissions}
+	{option:!hasSubmissions}
+		<p>{$msgStartSearch}</p>
+	{/option:!hasSubmissions}
 </div>
 {option:dgLabels}
 <div class="row fork-module-content">

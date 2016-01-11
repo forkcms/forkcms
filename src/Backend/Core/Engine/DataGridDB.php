@@ -30,7 +30,7 @@ class DataGridDB extends DataGrid
         $results = ($resultsQuery !== null) ? array($resultsQuery, $resultsParameters) : null;
 
         // create a new source-object
-        $source = new \SpoonDataGridSourceDB(BackendModel::get('database'), array(
+        $source = new \SpoonDatagridSourceDB(BackendModel::get('database'), array(
             $query,
             (array) $parameters
         ), $results);

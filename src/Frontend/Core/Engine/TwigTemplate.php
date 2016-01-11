@@ -273,13 +273,14 @@ Class TwigTemplate
      *
      * @param  string $template path to render
      */
-    private function render()
+    public function render($template = null)
     {
         \Twig_Autoloader::register();
         $loader = new \Twig_Loader_Filesystem(array(
             $this->themePath,
             FRONTEND_MODULES_PATH,
-            FRONTEND_PATH
+            FRONTEND_PATH,
+            '/'
         ));
 
         $twig = new \Twig_Environment($loader, array(
@@ -305,10 +306,17 @@ Class TwigTemplate
         $this->startGlobals($twig);
 
         // set the positions array
-        $twig->addGlobal('positions', $this->setPositions($this->positions));
+        if (!empty($this->positions)) {
+            $twig->addGlobal('positions', $this->setPositions($this->positions));
+        }
 
         // template
-        $template = $twig->loadTemplate($this->baseFile);
+        if ($template === null) {
+            $template = $twig->loadTemplate($this->baseFile);
+        } else {
+            $template = $twig->loadTemplate($template);
+        }
+
         return $template->render($this->variables);
     }
 
