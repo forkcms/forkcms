@@ -1,8 +1,10 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblCategories|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     {option:showFaqAddCategory}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">

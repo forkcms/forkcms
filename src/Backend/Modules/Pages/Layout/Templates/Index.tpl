@@ -1,11 +1,13 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureStart.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>
       {option:dgDrafts}{$lblDrafts|ucfirst}{/option:dgDrafts}
       {option:!dgDrafts}{$lblRecentlyEdited|ucfirst}{/option:!dgDrafts}
     </h2>
+  </div>
+  <div class="col-md-6">
     {option:showPagesAdd}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">

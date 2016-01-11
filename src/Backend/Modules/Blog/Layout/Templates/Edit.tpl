@@ -1,8 +1,10 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$msgEditArticle|sprintf:{$item.title}|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$detailURL}/{$item.url}{option:item.revision_id}?revision={$item.revision_id}{/option:item.revision_id}" class="btn btn-default" target="_blank">
