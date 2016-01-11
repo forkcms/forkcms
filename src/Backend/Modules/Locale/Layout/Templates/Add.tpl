@@ -24,21 +24,31 @@
         <p class="help-block">{$msgHelpAddValue}</p>
         {$txtValue} {$txtValueError}
       </div>
-      <div class="form-group">
-        <label for="language">{$lblLanguage|ucfirst}</label>
-        {$ddmLanguage} {$ddmLanguageError}
-      </div>
-      <div class="form-group">
-        <label for="application">{$lblApplication|ucfirst}</label>
-        {$ddmApplication} {$ddmApplicationError}
-      </div>
-      <div class="form-group">
-        <label for="module">{$lblModule|ucfirst}</label>
-        {$ddmModule} {$ddmModuleError}
-      </div>
-      <div class="form-group">
-        <label for="type">{$lblType|ucfirst}</label>
-        {$ddmType} {$ddmTypeError}
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="language">{$lblLanguage|ucfirst}</label>
+            {$ddmLanguage} {$ddmLanguageError}
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="application">{$lblApplication|ucfirst}</label>
+            {$ddmApplication} {$ddmApplicationError}
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="module">{$lblModule|ucfirst}</label>
+            {$ddmModule} {$ddmModuleError}
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="type">{$lblType|ucfirst}</label>
+            {$ddmType} {$ddmTypeError}
+          </div>
+        </div>
       </div>
     </div>
   </div>
