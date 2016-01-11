@@ -92,6 +92,13 @@ class Index extends BackendBaseActionIndex
             true
         );
         $this->frm->addTextarea(
+            'site_start_of_body_scripts',
+            $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null),
+            'textarea code',
+            'textareaError code',
+            true
+        );
+        $this->frm->addTextarea(
             'site_html_footer',
             $this->get('fork.settings')->get('Core', 'site_html_footer', null),
             'form-control code',

@@ -2,6 +2,6 @@
 	{{ 'lbl.YouAreHere'|trans|capitalize }}:
 	{% for breadcrumb in breadcrumb %}
 		{% if breadcrumb.url %}<a href="{{ breadcrumb.url }}" title="{{ breadcrumb.title }}">{% endif %}{{ breadcrumb.title }}{% if breadcrumb.url %}</a>{% endif %}
-		{% if not breadcrumb.last %} › {% endif %}
+		{% if not loop.last %} › {% endif %}
 	{% endfor %}
 </p>

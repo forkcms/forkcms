@@ -10,8 +10,7 @@ parameters:
 
     fork.debug_email:       <debug-email>
     fork.debug_message:     'Internal error.'
-    fork.version:           '3.9.5'
-    fork.template:          twig
+    fork.version:           '3.9.6'
 
     site.protocol:          <site-protocol>
     site.domain:            <site-domain>

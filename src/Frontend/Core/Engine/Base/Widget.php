@@ -76,11 +76,6 @@ class Widget extends Object
     {
         parent::__construct($kernel);
 
-        // spoon needs a new template Object
-        if ($this->tpl->getTemplateType() == 'spoon') {
-            $this->tpl = new FrontendTemplate(false);
-        }
-
         // get objects from the reference so they are accessible
         $this->header = $this->getContainer()->get('header');
         $this->URL = $this->getContainer()->get('url');
@@ -222,7 +217,7 @@ class Widget extends Object
             $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
             // build template path
-            $path = $frontendModulePath . '/Layout/Widgets/' . $this->getAction() . '.tpl';
+            $path = $frontendModulePath . '/Layout/Widgets/' . $this->getAction() . '.html.twig';
         } else {
             // redefine
             $path = (string) $path;

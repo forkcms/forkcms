@@ -199,14 +199,9 @@ class Livesuggest extends FrontendBaseAJAXAction
             $this->pagination['num_pages'] = 1;
         }
 
-        // redirect if the request page doesn't exist
+        // error if the request page doesn't exist
         if ($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) {
-            throw new RedirectException(
-                'Redirect',
-                new RedirectResponse(
-                    FrontendNavigation::getURL(404)
-                )
-            );
+            throw new FrontendException('the request page doesn\'t exist');
         }
 
         // debug mode = no cache
@@ -264,23 +259,28 @@ class Livesuggest extends FrontendBaseAJAXAction
         $useQuestionMark = true;
 
         // validate pagination array
-        if (!isset($this->pagination['limit'])) {
-            throw new FrontendException('no limit in the pagination-property.');
-        }
-        if (!isset($this->pagination['offset'])) {
-            throw new FrontendException('no offset in the pagination-property.');
-        }
-        if (!isset($this->pagination['requested_page'])) {
-            throw new FrontendException('no requested_page available in the pagination-property.');
-        }
-        if (!isset($this->pagination['num_items'])) {
-            throw new FrontendException('no num_items available in the pagination-property.');
-        }
-        if (!isset($this->pagination['num_pages'])) {
-            throw new FrontendException('no num_pages available in the pagination-property.');
-        }
-        if (!isset($this->pagination['url'])) {
-            throw new FrontendException('no URL available in the pagination-property.');
+        switch (true) {
+            case (!isset($this->pagination['limit'])):
+                throw new FrontendException('no limit in the pagination-property.');
+                break;
+            case (!isset($this->pagination['offset'])):
+                throw new FrontendException('no offset in the pagination-property.');
+                break;
+            case (!isset($this->pagination['requested_page'])):
+                throw new FrontendException('no requested_page available in the pagination-property.');
+                break;
+            case (!isset($this->pagination['num_items'])):
+                throw new FrontendException('no num_items available in the pagination-property.');
+                break;
+            case (!isset($this->pagination['num_pages'])):
+                throw new FrontendException('no num_pages available in the pagination-property.');
+                break;
+            case (!isset($this->pagination['url'])):
+                throw new FrontendException('no URL available in the pagination-property.');
+                break;
+            // default:
+            //     # code...
+            //     break;
         }
 
         // should we use a questionmark or an ampersand

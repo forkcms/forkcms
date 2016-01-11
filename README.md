@@ -7,10 +7,11 @@
 
 ## Installation
 
-1. Run `composer create-project forkcms/forkcms .` in your document root.
-2. Browse to your website
-3. Follow the steps on-screen
-4. Have fun!
+1. Make sure your have [bower](http://bower.io/) and [composer](https://getcomposer.org/) installed.
+2. Run `composer create-project forkcms/forkcms .` in your document root.
+3. Browse to your website
+4. Follow the steps on-screen
+5. Have fun!
 
 ### Dependencies
 
@@ -42,6 +43,7 @@ Running only the unit tests or the functional tests
     ./bin/phpunit --testsuite=unit
 
 ## Discussion
+
 - IRC: irc.freenode.org #forkcms
 - E-mail: <info@fork-cms.com> for any questions or remarks.
 
