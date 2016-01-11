@@ -116,16 +116,7 @@ class Index extends BackendBaseActionIndex
         // loop the datagrids (as references)
         foreach ($dataGrids as $type => &$dataGrid) {
             /** @var $dataGrid BackendDataGridArray */
-            $dataGrid->setSortingColumns(array('module', 'name', 'edited_on', 'application'), 'name');
-
-            $dataGrid->setColumnFunction(
-                array(new BackendDataGridFunctions(), 'getTimeAgo'),
-                array('[edited_on]'),
-                'edited_on',
-                true
-            );
-
-            $dataGrid->setHeaderLabels(array('edited_on' => \SpoonFilter::ucfirst(BL::lbl('Edited'))));
+            $dataGrid->setSortingColumns(array('module', 'name', 'application'), 'name');
 
             // disable paging
             $dataGrid->setPaging(false);
@@ -133,13 +124,13 @@ class Index extends BackendBaseActionIndex
             // set header label for reference code
             $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
-            // add the multi checkbox column
-            $dataGrid->setMassActionCheckboxes('check', '[name]');
-
             // hide the application when only one application is shown
             if ($this->filter['application'] != '') {
                 $dataGrid->setColumnHidden('application');
             }
+
+            // hide edite_on
+            $dataGrid->setColumnHidden('edited_on');
 
             // set column attributes for each language
             foreach ($this->filter['language'] as $lang) {
