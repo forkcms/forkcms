@@ -1623,24 +1623,26 @@ jsBackend.messages =
     // hide a message
     hide: function (element) {
         // fade out
-        element.fadeOut();
+        element.removeClass('active');
     },
 
     // add a new message into the que
     add: function (type, content) {
         var uniqueId = 'e' + new Date().getTime().toString();
-        var html = '<div id="' + uniqueId + '" class="alert alert-' + type + ' alert-dismissible formMessage ' + type + 'Message" style="display: none;">' +
-            content +
+        var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' alert-dismissible formMessage ' + type + 'Message">' +
+            '<div class="container">' +
+               content +
             '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
             '    <span aria-hidden="true">&times;</span>' +
             '  </button>'
+            '</div>' +
         '</div>';
 
         // prepend
         $('#messaging').prepend(html);
 
         // show
-        $('#' + uniqueId).fadeIn();
+        $('#' + uniqueId).addClass('active');
 
         // timeout
         if (type == 'notice') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);

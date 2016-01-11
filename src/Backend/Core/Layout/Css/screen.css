@@ -7080,7 +7080,7 @@ html {
   min-height: 100%; }
 
 body {
-  padding-top: 74px; }
+  padding-top: 84px; }
 
 .inline-block {
   display: inline-block !important;
@@ -8118,6 +8118,28 @@ h3 + .btn-toolbar {
   display: table-cell;
   vertical-align: middle !important; }
 
+.alert-main {
+  position: fixed;
+  top: -50px;
+  left: 0;
+  right: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  -webkit-transition: top 250ms;
+  -moz-transition: top 250ms;
+  -ms-transition: top 250ms;
+  -o-transition: top 250ms;
+  transition: top 250ms; }
+  .alert-main.active {
+    top: 51px;
+    -webkit-transition: top 250ms;
+    -moz-transition: top 250ms;
+    -ms-transition: top 250ms;
+    -o-transition: top 250ms;
+    transition: top 250ms; }
+
 /* Navigation */
 .fork-nav-sidebar li li.active > a {
   text-decoration: none;
@@ -8136,6 +8158,10 @@ h3 + .btn-toolbar {
 .fork-module-messages,
 .fork-module-content {
   margin-bottom: 20px; }
+  .fork-module-heading h2,
+  .fork-module-messages h2,
+  .fork-module-content h2 {
+    margin-top: 0; }
 
 .fork-module-actions {
   margin-bottom: 40px; }
