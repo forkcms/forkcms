@@ -23,7 +23,9 @@
         {$txtTitle} {$txtTitleError}
       </div>
       {option:detailURL}
-      <p><a href="{$detailURL}/{$item.url}">{$detailURL}/<span id="generatedUrl">{$item.url}</span></a></p>
+        <a href="{$detailURL}/{$item.url}">
+          <small>{$detailURL}/<span id="generatedUrl">{$item.url}</span></small>
+        </a>
       {/option:detailURL}
       {option:!detailURL}
       <p class="text-warning">{$errNoModuleLinked}</p>

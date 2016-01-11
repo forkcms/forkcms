@@ -37,11 +37,9 @@
         <label for="title">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
-      <p>
-        <a data-url="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">
-          {$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span>
-        </a>
-      </p>
+      <a data-url="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">
+        <small>{$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span></small>
+      </a>
     </div>
   </div>
   <div class="row fork-module-content">

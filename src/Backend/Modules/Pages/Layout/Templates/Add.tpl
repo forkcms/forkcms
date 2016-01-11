@@ -25,11 +25,9 @@
                 <label for="title">{$lblTitle|ucfirst}</label>
                 {$txtTitle} {$txtTitleError}
             </div>
-            <p>
-              <a href="{$detailURL}">
-                {$SITE_URL}{$prefixURL}/<span id="generatedUrl"></span>
-              </a>
-            </p>
+            <a href="{$detailURL}">
+                <small>{$SITE_URL}{$prefixURL}/<span id="generatedUrl"></span></small>
+            </a>
         </div>
     </div>
     <div class="row fork-module-content">
