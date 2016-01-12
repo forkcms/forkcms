@@ -225,7 +225,7 @@ class Model
     {
         $templates = array();
         $finder = new Finder();
-        $finder->name('*.tpl');
+        $finder->name('*.html.twig');
         $finder->in(FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets');
 
         // if there is a custom theme we should include the templates there also
