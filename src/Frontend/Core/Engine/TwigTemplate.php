@@ -138,7 +138,7 @@ Class TwigTemplate extends BaseTwigTemplate
                         $block['include_path'] = $this->getPath(
                             FRONTEND_MODULES_PATH .
                             '/' . $block['extra_module'] .
-                            '/Layout/Widgets/' . $block['extra_action'] . '.tpl'
+                            '/Layout/Widgets/' . $block['extra_action'] . '.html.twig'
                         );
                     }
 
@@ -158,7 +158,7 @@ Class TwigTemplate extends BaseTwigTemplate
     */
     protected function convertExtension($template)
     {
-        return str_replace('.tpl', self::EXTENSION, $template);
+        return str_replace('.html.twig', self::EXTENSION, $template);
     }
 
     /**
@@ -246,8 +246,10 @@ Class TwigTemplate extends BaseTwigTemplate
                 // using assign to pass the form as global
                 $twig->addGlobal('form_' . $form->getName(), $form);
             }
-            new FormExtension($twig);
         }
+
+        // init Form extension
+        new FormExtension($twig);
 
         // start the filters / globals
         TwigFilters::getFilters($twig, 'Frontend');
