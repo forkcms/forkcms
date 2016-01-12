@@ -10,7 +10,7 @@
 			{% if tags %}
 				<ul>
 					{% for tags in tags %}
-						<li><a href="{{ var|geturlforblock('Tags', 'Detail') }}/{{ tags.url }}">{{ tags.name }}</a></li>
+						<li><a href="{{ geturlforblock('Tags', 'Detail') }}/{{ tags.url }}">{{ tags.name }}</a></li>
 					{% endfor %}
 				</ul>
 			{% endif %}
