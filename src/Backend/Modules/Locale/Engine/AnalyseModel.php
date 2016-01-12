@@ -58,7 +58,7 @@ class AnalyseModel extends Model
         $finder = new Finder();
         $finder
             ->name('*.php')
-            ->name('*.tpl')
+            ->name('*.html.twig')
             ->name('*.js');
 
         // collect all files
@@ -129,7 +129,7 @@ class AnalyseModel extends Model
         $finder = new Finder();
         $finder->notPath('Cache')
             ->name('*.php')
-            ->name('*.tpl')
+            ->name('*.html.twig')
             ->name('*.js');
 
         // collect all files

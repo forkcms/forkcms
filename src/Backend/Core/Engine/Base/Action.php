@@ -128,7 +128,7 @@ class Action extends Object
          * based on the name of the current action
          */
         if ($template === null) {
-            $template = $this->getBackendModulePath() . '/Layout/Templates/' . $this->URL->getAction() . '.tpl';
+            $template = '/'. $this->getModule() . '/Layout/Templates/' . $this->URL->getAction() . '.html.twig';
         }
 
         $this->content = $this->tpl->getContent($template);

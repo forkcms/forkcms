@@ -338,8 +338,11 @@ class Index extends BackendBaseActionIndex
         // get categories
         $categories = BackendBlogModel::getCategories(true);
 
+        $hasMultipleCategories = (count($categories) > 1);
+        $this->tpl->assign('hasMultipleCategories', $hasMultipleCategories);
+
         // multiple categories?
-        if (count($categories) > 1) {
+        if ($hasMultipleCategories) {
             // create form
             $frm = new BackendForm('filter', null, 'get', false);
 
