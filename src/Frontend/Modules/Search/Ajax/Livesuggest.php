@@ -107,7 +107,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         // output
         $this->output(
             self::OK,
-            $this->tpl->getContent(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.tpl', false, true)
+            $this->tpl->getContent(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig', false, true)
         );
     }
 
