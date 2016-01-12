@@ -28,9 +28,7 @@ class TwigFilters
      */
     public static function getFilters(&$twig, $app)
     {
-        $app .= '\Core\Engine\TemplateModifiers';
-        $twig->addFilter(new Twig_SimpleFilter('geturlforblock', $app.'::getURLForBlock'));
-        $twig->addFilter(new Twig_SimpleFilter('geturlforextraid', $app.'::getURLForExtraId'));
+        $app = $app.'\Core\Engine\TemplateModifiers';
         $twig->addFilter(new Twig_SimpleFilter('getpageinfo', $app.'::getPageInfo'));
         $twig->addFilter(new Twig_SimpleFilter('highlight', $app.'::highlightCode'));
         $twig->addFilter(new Twig_SimpleFilter('profilesetting', $app.'::profileSetting'));
@@ -48,14 +46,56 @@ class TwigFilters
         $twig->addFilter(new Twig_SimpleFilter('tolabel', $app.'::toLabel'));
         $twig->addFilter(new Twig_SimpleFilter('cleanupplaintext', $app.'::cleanupPlainText'));
 
-        // PHP exposed functions
+        // exposed PHP functions
 
         $twig->addFilter(new Twig_SimpleFilter('urlencode', 'urlencode'));
         $twig->addFilter(new Twig_SimpleFilter('striptags', 'strip_tags'));
-        $twig->addFilter(new Twig_SimpleFilter('sprintf', 'sprintf'));
         $twig->addFilter(new Twig_SimpleFilter('addslashes', 'addslashes'));
         $twig->addFilter(new Twig_SimpleFilter('count', 'count'));
         $twig->addFilter(new Twig_SimpleFilter('is_array', 'is_array'));
+        $twig->addFilter(new Twig_SimpleFilter(
+            'sprintf',
+            'sprintf',
+            array('is_safe' => array('html'))
+        ));
+
+        // Functions navigation
+
+        $twig->addFunction(new Twig_SimpleFunction(
+            'getmainnavigation',
+            $app.'::getMainNavigation',
+            array('is_safe' => array('html'))
+        ));
+        $twig->addFunction(new Twig_SimpleFunction(
+            'getnavigation',
+            $app.'::getNavigation',
+            array('is_safe' => array('html'))
+        ));
+        $twig->addFunction(new Twig_SimpleFunction(
+            'getsubnavigation',
+            $app.'::getSubNavigation',
+            array('is_safe' => array('html'))
+        ));
+        $twig->addFunction(new Twig_SimpleFunction(
+            'parsewidget',
+            $app.'::parseWidget',
+            array('is_safe' => array('html'))
+        ));
+
+        // Function URL
+
+        $twig->addFunction(new Twig_SimpleFunction(
+            'geturl',
+            $app.'::getURL'
+        ));
+        $twig->addFunction(new Twig_SimpleFunction(
+            'geturlforextraid',
+            $app.'::getURLForExtraId'
+        ));
+        $twig->addFunction(new Twig_SimpleFunction(
+            'geturlforblock',
+            $app.'::getURLForBlock'
+        ));
 
         // Deprecated functions
 
@@ -64,31 +104,5 @@ class TwigFilters
         $twig->addFilter(new Twig_SimpleFilter('formattime', $app.'::formatTime'));
         $twig->addFilter(new Twig_SimpleFilter('timeago', $app.'::timeAgo'));
         $twig->addFilter(new Twig_SimpleFilter('formatdatetime', $app.'::formatDateTime'));
-
-        // Functions
-
-        $twig->addFunction(new Twig_SimpleFunction(
-            'getmainnavigation',
-            $app.'::getMainNavigation'
-        ));
-        $twig->addFunction(new Twig_SimpleFunction(
-            'geturl',
-            $app.'::getURL'
-        ));
-
-        $twig->addFunction(new Twig_SimpleFunction(
-            'getnavigation',
-            $app.'::getNavigation'
-        ));
-        $twig->addFilter(new Twig_SimpleFilter(
-            'getsubnavigation',
-            $app.'::getSubNavigation',
-            array('is_safe' => array('html'))
-        ));
-        $twig->addFilter(new Twig_SimpleFilter(
-            'parsewidget',
-            $app.'::parseWidget',
-            array('is_safe' => array('html'))
-        ));
     }
 }

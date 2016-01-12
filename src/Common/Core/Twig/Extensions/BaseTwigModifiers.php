@@ -20,15 +20,15 @@ class BaseTwigModifiers
 {
     /**
      * Format a number as currency
-     *    syntax: {$var|formatcurrency[:currency[:decimals]]}.
+     *    syntax: {{ $string|formatcurrency($currency, $decimals) }}.
      *
-     * @param string $var      The string to form.
+     * @param string $string   The string to form.
      * @param string $currency The currency to will be used to format the number.
      * @param int    $decimals The number of decimals to show.
      *
      * @return string
      */
-    public static function formatCurrency($var, $currency = 'EUR', $decimals = null)
+    public static function formatCurrency($string, $currency = 'EUR', $decimals = null)
     {
         $decimals = ($decimals === null) ? 2 : (int) $decimals;
 
@@ -40,43 +40,43 @@ class BaseTwigModifiers
             default:
         }
 
-        return $currency.' '.number_format((float) $var, $decimals, ',', ' ');
+        return $currency.' '.number_format((float) $string, $decimals, ',', ' ');
     }
 
     /**
      * Highlights all strings in <code> tags.
-     *    syntax: {$var|highlight}.
+     *    syntax: {{ $string|highlight }}.
      *
-     * @param string $var The string passed from the template.
+     * @param string $string The string passed from the template.
      *
      * @return string
      */
-    public static function highlightCode($var)
+    public static function highlightCode($string)
     {
         // regex pattern
         $pattern = '/<code>.*?<\/code>/is';
 
         // find matches
-        if (preg_match_all($pattern, $var, $matches)) {
+        if (preg_match_all($pattern, $string, $matches)) {
             // loop matches
             foreach ($matches[0] as $match) {
                 // encase content in highlight_string
-                $var = str_replace($match, highlight_string($match, true), $var);
+                $string = str_replace($match, highlight_string($match, true), $string);
 
                 // replace highlighted code tags in match
-                $var = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $var);
+                $string = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $string);
             }
         }
 
-        return $var;
+        return $string;
     }
 
     /**
      * Get a random var between a min and max
-     *    syntax: { rand(min:max) }
+     *    syntax: {{ rand($min, $max) }}.
      *
-     * @param int    $min The minimum random number.
-     * @param int    $max The maximum random number.
+     * @param int $min The minimum random number.
+     * @param int $max The maximum random number.
      *
      * @return int
      */
@@ -90,68 +90,20 @@ class BaseTwigModifiers
 
     /**
      * Convert a multi line string into a string without newlines so it can be handles by JS
-     * syntax: {$var|stripnewlines}.
+     * 		syntax: {{ $string|stripnewlines }}.
      *
-     * @param string $var The variable that should be processed.
-     *
-     * @return string
-     */
-    public static function stripNewlines($var)
-    {
-        return str_replace(array("\r\n", "\n", "\r"), ' ', $var);
-    }
-
-    /**
-     * Truncate a string
-     *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}.
-     *
-     * @param string $var         The string passed from the template.
-     * @param int    $length      The maximum length of the truncated string.
-     * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
-     * @param bool   $closestWord Truncate on exact length or on closest word?
+     * @param string $string The variable that should be processed.
      *
      * @return string
      */
-    public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
+    public static function stripNewlines($string)
     {
-        // init vars
-        $charset = Model::getContainer()->getParameter('kernel.charset');
-
-        // remove special chars, all of them, also the ones that shouldn't be there.
-        $var = \SpoonFilter::htmlentitiesDecode($var, null, ENT_QUOTES);
-
-        // remove HTML
-        $var = strip_tags($var);
-
-        // less characters
-        if (mb_strlen($var) <= $length) {
-            return \SpoonFilter::htmlspecialchars($var);
-        } else {
-            // more characters
-            // hellip is seen as 1 char, so remove it from length
-            if ($useHellip) {
-                $length = $length - 1;
-            }
-
-            // truncate
-            if ($closestWord) {
-                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), $charset);
-            } else {
-                $var = mb_substr($var, 0, $length, $charset);
-            }
-
-            // add hellip
-            if ($useHellip) {
-                $var .= '…';
-            }
-
-            // return
-            return \SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
-        }
+        return str_replace(array("\r\n", "\n", "\r"), ' ', $string);
     }
 
     /**
      * Transform the string to uppercase.
+     * 		syntax: {{ $string|uppercase }}.
      *
      * @param string $string The string that you want to apply this method on.
      *
@@ -164,6 +116,7 @@ class BaseTwigModifiers
 
     /**
      * Makes this string lowercase.
+     * 		syntax: {{ $string|lowercase }}.
      *
      * @return string The string, completely lowercased.
      *
@@ -176,6 +129,7 @@ class BaseTwigModifiers
 
     /**
      * snakeCase Converter.
+     * 		syntax: {{ $string|snakecase }}.
      *
      * @internal Untested, Needs testing
      *
@@ -190,6 +144,7 @@ class BaseTwigModifiers
 
     /**
      * CamelCase Converter.
+     * 		syntax: {{ $string|camelcase }}.
      *
      * @internal Untested, Needs testing
      *
@@ -212,6 +167,7 @@ class BaseTwigModifiers
 
     /**
      * Formats a language specific date.
+     * 		syntax: {{ spoondate($timestamp, $format, $language) }}.
      *
      * @param mixed            $timestamp The timestamp or date that you want to apply the format to.
      * @param string[optional] $format    The optional format that you want to apply on the provided timestamp.
@@ -231,6 +187,7 @@ class BaseTwigModifiers
 
     /**
      * Shows a v or x to indicate the boolean state (Y|N, j|n, true|false).
+     * 		syntax: {{ showbool($status, $reverse) }}.
      *
      * @param string|bool $status
      * @param bool        $reverse show the opposite of the status

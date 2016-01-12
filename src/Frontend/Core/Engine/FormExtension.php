@@ -1,4 +1,5 @@
 <?php
+
 namespace Frontend\Core\Engine;
 
 use Twig_Extension;

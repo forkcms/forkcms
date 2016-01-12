@@ -82,7 +82,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Format a UNIX-timestamp as a date
-     * syntax: {$var|formatdate}
+     * syntax: {{ $var|formatdate }}
      *
      * @param int $var The UNIX-timestamp to format.
      * @return string
@@ -100,7 +100,6 @@ class TemplateModifiers extends BaseTwigModifiers
      * Convert a var into main-navigation-html
      *  syntax: {{ getmainnavigation($class) }}
      *
-     * @param string $var A placeholder var, will be replaced with the generated HTML.
      * @param string $class Class attribute of ul list
      *
      * @return string
@@ -112,15 +111,14 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Convert a var into navigation-html
-     * syntax: {$var|getnavigation:startdepth[:maximumdepth]}
+     * syntax: {{ getnavigation(startdepth, maximumdepth) }}
      *
-     * @param string $var        A placeholder var, will be replaced with the generated HTML.
      * @param int    $startDepth The start depth of the navigation to get.
      * @param int    $endDepth   The ending depth of the navigation to get.
      * @param string $class Class attribute of ul list
      * @return string
      */
-    public static function getNavigation($var = null, $startDepth = null, $endDepth = null, $class = null)
+    public static function getNavigation($startDepth = null, $endDepth = null, $class = null)
     {
         $startDepth = ($startDepth !== null) ? (int) $startDepth : 2;
         $endDepth = ($endDepth !== null) ? (int) $endDepth : null;

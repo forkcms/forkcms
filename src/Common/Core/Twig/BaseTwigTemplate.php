@@ -68,6 +68,13 @@ class BaseTwigTemplate
      */
     public function assign($key, $values = null)
     {
+        if (is_array($key)) {
+            foreach ($key as $keyVal) {
+                $this->variables[$keyVal] = $values;
+            }
+            return;
+        }
+
         // in all other cases
         $this->variables[$key] = $values;
     }
@@ -79,7 +86,7 @@ class BaseTwigTemplate
      */
     protected function convertExtension($template)
     {
-        return str_replace('.tpl', self::EXTENSION, $template);
+        return str_replace('.html.twig', self::EXTENSION, $template);
     }
 
     /**
@@ -238,7 +245,7 @@ class BaseTwigTemplate
     public function compile()
     {
     }
-    public function display()
+    public function display($templatePath)
     {
     }
 }
