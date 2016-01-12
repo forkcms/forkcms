@@ -76,8 +76,9 @@ class TwigTemplate extends BaseTwigTemplate
             foreach ($this->forms as $form) {
                 $twig->addGlobal('form_'.$form->getName(), $form);
             }
-            new FormExtension($twig);
         }
+        // should always be included
+        new FormExtension($twig);
 
         // start the filters / globals
         TwigFilters::getFilters($twig, 'Backend');
@@ -90,4 +91,26 @@ class TwigTemplate extends BaseTwigTemplate
         // return template content
         return ob_get_clean();
     }
+
+    /**
+	 * Retrieves the already assigned value.
+	 *
+	 * @return	mixed				Returns an array, string, int or null
+	 * @param	string $variable	The name of the variable that you want to retrieve the already assigned value from.
+	 */
+	public function getAssignedValue($variable)
+	{
+		if(isset($this->variables[(string) $variable])) return $this->variables[(string) $variable];
+		return null;
+	}
+
+    /**
+	 * Set the compile directory.
+	 *
+	 * @param	string $path	The location of the directory where you want to store your compiled templates.
+	 */
+	public function setCompileDirectory($path)
+	{
+		$this->compileDirectory = (string) $path;
+	}
 }
