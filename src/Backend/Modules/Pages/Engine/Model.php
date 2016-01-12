@@ -1516,10 +1516,12 @@ class Model
         preg_match('!(http[s]?)://(.*)!i', $redirectURL, $matches);
         $URLChunks = explode('/', $matches[2]);
         if (!empty($URLChunks)) {
+            // skip domain name
+            $domain = array_shift($URLChunks);
             foreach ($URLChunks as &$URLChunk) {
                 $URLChunk = urlencode($URLChunk);
             }
-            $redirectURL = $matches[1] . '://' . implode('/', $URLChunks);
+            $redirectURL = $matches[1] . '://' . $domain . '/' . implode('/', $URLChunks);
         }
 
         return $redirectURL;

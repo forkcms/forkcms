@@ -20,5 +20,9 @@ class ModelTest extends \PHPUnit_Framework_TestCase
             'http://www.google.be/Quote%27HelloWorld%27',
             Model::getEncodedRedirectURL("http://www.google.be/Quote'HelloWorld'")
         );
+        $this->assertEquals(
+            'http://cédé.be/Quote%22HelloWorld%22',
+            Model::getEncodedRedirectURL('http://cédé.be/Quote"HelloWorld"')
+        );
     }
 }
