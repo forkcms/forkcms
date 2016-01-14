@@ -1708,13 +1708,10 @@ jsBackend.tabs =
             }
         });
 
-        // select tab
-        if ($('.tabSelect').length > 0) {
-            $(document).on('click', '.tabSelect', function (e) {
-                // prevent default
-                e.preventDefault();
-                $('.tabs').tabs('select', $(this).attr('href'));
-            });
+        // Show tab if the hash is in the url
+        var hash = window.location.hash;
+        if ($(hash).length > 0 && $(hash).hasClass('tab-pane')) {
+            $('a[href="' + hash + '"]').tab('show');
         }
     }
 };
