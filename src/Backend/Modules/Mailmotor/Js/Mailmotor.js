@@ -249,7 +249,7 @@ jsBackend.mailmotor.linkAccount =
 					if(data.data.field)
 					{
 						// add error to the field respective field
-						$('#'+ data.data.field).after('<span class="formError">'+ data.message +'</span>');
+						$('#'+ data.data.field).after('<span class="formError text-danger">'+ data.message +'</span>');
 					}
 				}
 			}
