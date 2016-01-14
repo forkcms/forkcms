@@ -1683,7 +1683,6 @@ jsBackend.tabs =
 
             $('.tab-content .tab-pane').each(function () {
                 if ($(this).find('.formError').length > 0) {
-                    console.log($(this).attr('id') );
                     $($('.nav-tabs a[href="#' + $(this).attr('id') + '"]').parent()).addClass('has-error');
                 }
             });
