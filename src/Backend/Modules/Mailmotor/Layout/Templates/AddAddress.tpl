@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
-        <label for="email">{$lblEmailAddress|ucfirst}</label>
+        <label for="email" class="control-label">{$lblEmailAddress|ucfirst}</label>
         {$txtEmail} {$txtEmailError}
       </div>
       <div class="form-group">

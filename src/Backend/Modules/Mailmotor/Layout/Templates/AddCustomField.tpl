@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
-        <label for="name">{$lblName|ucfirst}</label>
+        <label for="name" class="control-label">{$lblName|ucfirst}</label>
         {$txtName} {$txtNameError}
       </div>
     </div>

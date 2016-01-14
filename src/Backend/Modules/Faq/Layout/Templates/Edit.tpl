@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
-        <label for="title">{$lblQuestion|ucfirst}</label>
+        <label for="title" class="control-label">{$lblQuestion|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
       {option:detailURL}
@@ -45,7 +45,7 @@
             <div class="row">
               <div class="col-md-8">
                 <div class="form-group optionsRTE{option:txtAnswerError} has-error{/option:txtAnswerError}">
-                  <label for="answer">{$lblAnswer|ucfirst}
+                  <label for="answer" class="control-label">{$lblAnswer|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtAnswer} {$txtAnswerError}
@@ -74,11 +74,11 @@
                   </div>
                   <div class="panel-body">
                     <div class="form-group{option:ddmCategoryIdError} has-error{/option:ddmCategoryIdError}">
-                      <label for="categoryId">{$lblCategory|ucfirst}</label>
+                      <label for="categoryId" class="control-label">{$lblCategory|ucfirst}</label>
                       {$ddmCategoryId} {$ddmCategoryIdError}
                     </div>
                     <div class="form-group{option:txtTagsError} has-error{/option:txtTagsError}">
-                      <label for="tags">{$lblTags|ucfirst}</label>
+                      <label for="tags" class="control-label">{$lblTags|ucfirst}</label>
                       {$txtTags} {$txtTagsError}
                     </div>
                   </div>

@@ -25,7 +25,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
-                  <label for="name">{$lblName|ucfirst}&nbsp;<abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr></label>
+                  <label for="name">{$lblName|ucfirst}&nbsp;<abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}" class="control-label">*</abbr></label>
                   {$txtName} {$txtNameError}
                 </div>
               </div>
@@ -35,7 +35,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="toggleChecksWidgets">{$lblDisplayWidgets|ucfirst}</label>
+                  <label for="toggleChecksWidgets" class="control-label">{$lblDisplayWidgets|ucfirst}</label>
                   {option:widgets}
                   {$widgets}
                   {/option:widgets}
@@ -56,7 +56,7 @@
                       <h4 class="panel-title">
                         {$permissions.chk}
                         <a data-toggle="collapse" data-parent="#permissions" href="#permissions-list-{$permissions.id}" aria-expanded="false" aria-controls="collapseOne">
-                          <label for="{$permissions.id}">{$permissions.label}</label>
+                          <label for="{$permissions.id}" class="control-label">{$permissions.label}</label>
                         </a>
                       </h4>
                     </div>

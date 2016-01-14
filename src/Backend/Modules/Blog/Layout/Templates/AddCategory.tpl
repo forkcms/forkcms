@@ -20,7 +20,7 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="form-group{option:xtTitleError} has-error{/option:xtTitleError}">
-              <label for="title">
+              <label for="title" class="control-label">
                 {$lblTitle|ucfirst}
                 <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
               </label>

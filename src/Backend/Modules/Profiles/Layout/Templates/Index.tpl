@@ -29,20 +29,20 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
-                <label for="email">{$lblEmail|ucfirst}</label>
+                <label for="email" class="control-label">{$lblEmail|ucfirst}</label>
                 {$txtEmail} {$txtEmailError}
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group{option:ddmStatusError} has-error{/option:ddmStatusError}">
-                <label for="status">{$lblStatus|ucfirst}</label>
+                <label for="status" class="control-label">{$lblStatus|ucfirst}</label>
                 {$ddmStatus} {$ddmStatusError}
               </div>
             </div>
             <div class="col-md-4">
               {option:ddmGroup}
               <div class="form-group{option:ddmGroupError} has-error{/option:ddmGroupError}">
-                <label for="group">{$lblGroup|ucfirst}</label>
+                <label for="group" class="control-label">{$lblGroup|ucfirst}</label>
                 {$ddmGroup} {$ddmGroupError}
               </div>
               {/option:ddmGroup}

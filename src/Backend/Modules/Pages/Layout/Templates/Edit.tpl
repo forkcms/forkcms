@@ -34,7 +34,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
-        <label for="title">{$lblTitle|ucfirst}</label>
+        <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
       <a data-url="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">

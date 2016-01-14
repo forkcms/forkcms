@@ -41,7 +41,7 @@
             <div class="row">
               <div class="col-md-8">
                 <div class="form-group{option:txtTextError} has-error{/option:txtTextError}">
-                  <label for="text">
+                  <label for="text" class="control-label">
                     {$lblMainContent|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
@@ -49,12 +49,12 @@
                 </div>
                 {option:imageIsAllowed}
                 <div class="form-group{option:fileImageError} has-error{/option:fileImageError}">
-                  <label for="image">{$lblImage|ucfirst}</label>
+                  <label for="image" class="control-label">{$lblImage|ucfirst}</label>
                   {$fileImage} {$fileImageError}
                 </div>
                 {/option:imageIsAllowed}
                 <div class="form-group{option:txtIntroductionError} has-error{/option:txtIntroductionError}">
-                  <label for="introduction">
+                  <label for="introduction" class="control-label">
                     {$lblSummary|ucfirst}
                     <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpSummary}"></abbr>
                   </label>
@@ -77,11 +77,11 @@
                       </ul>
                     </div>
                     <div class="form-group{option:txtPublishOnDateError} has-error{/option:txtPublishOnDateError}">
-                      <label for="publishOnDate">{$lblPublishOn|ucfirst}</label>
+                      <label for="publishOnDate" class="control-label">{$lblPublishOn|ucfirst}</label>
                       {$txtPublishOnDate} {$txtPublishOnDateError}
                     </div>
                     <div class="form-group{option:txtPublishOnTimeError} has-error{/option:txtPublishOnTimeError}">
-                      <label for="publishOnTime">{$lblAt}</label>
+                      <label for="publishOnTime" class="control-label">{$lblAt}</label>
                       {$txtPublishOnTime} {$txtPublishOnTimeError}
                     </div>
                   </div>
@@ -92,16 +92,16 @@
                   </div>
                   <div class="panel-body">
                     <div class="form-group{option:ddmCategoryIdError} has-error{/option:ddmCategoryIdError}">
-                      <label for="categoryId">{$lblCategory|ucfirst}</label>
+                      <label for="categoryId" class="control-label">{$lblCategory|ucfirst}</label>
                       {$ddmCategoryId} {$ddmCategoryIdError}
                     </div>
                     <div class="form-group{option:ddmUserIdError} has-error{/option:ddmUserIdError}">
-                      <label for="userId">{$lblAuthor|ucfirst}</label>
+                      <label for="userId" class="control-label">{$lblAuthor|ucfirst}</label>
                       {$ddmUserId} {$ddmUserIdError}
                     </div>
                     {option:showTagsIndex}
                     <div class="form-group{option:txtTagsError} has-error{/option:txtTagsError}">
-                      <label for="tags">{$lblTags|ucfirst}</label>
+                      <label for="tags" class="control-label">{$lblTags|ucfirst}</label>
                       {$txtTags} {$txtTagsError}
                     </div>
                     {/option:showTagsIndex}
@@ -154,7 +154,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="categoryTitle">
+            <label for="categoryTitle" class="control-label">
               {$lblTitle|ucfirst}
               <abbr title="{$lblRequiredField|ucfirst}"></abbr>
             </label>

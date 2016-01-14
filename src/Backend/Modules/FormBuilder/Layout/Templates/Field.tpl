@@ -12,7 +12,7 @@
     {/option:plaintext}
     {option:simple}
     <div class="col-md-3">
-      <label for="field{$id}">
+      <label for="field{$id}" class="control-label">
         {$label}
         {option:required}
         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -25,7 +25,7 @@
     {/option:simple}
     {option:multiple}
     <div class="col-md-3">
-      <label for="field{$id}">
+      <label for="field{$id}" class="control-label">
         {$label}
         {option:required}
         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>

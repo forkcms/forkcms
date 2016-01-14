@@ -37,28 +37,28 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
-                  <label for="name">
+                  <label for="name" class="control-label">
                     {$lblName|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtName} {$txtNameError}
                 </div>
                 <div class="form-group{option:ddmMethodError} has-error{/option:ddmMethodError}">
-                  <label for="method">
+                  <label for="method" class="control-label">
                     {$lblMethod|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$ddmMethod} {$ddmMethodError}
                 </div>
                 <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
-                  <label for="email">
+                  <label for="email" class="control-label">
                     {$lblRecipient|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtEmail} {$txtEmailError}
                 </div>
                 <div class="form-group{option:txtSuccessMessageError} has-error{/option:txtSuccessMessageError}">
-                  <label for="successMessage">
+                  <label for="successMessage" class="control-label">
                     {$lblSuccessMessage|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
@@ -177,7 +177,7 @@
           <div role="tabpanel" class="tab-pane" id="tabExtra">
             <div class="row">
               <div class="col-md-12">
-                <label for="identifier">
+                <label for="identifier" class="control-label">
                   {$lblIdentifier|ucfirst}
                   <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpIdentifier}"></abbr>
                 </label>

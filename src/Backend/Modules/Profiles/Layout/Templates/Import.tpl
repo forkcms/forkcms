@@ -25,11 +25,11 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:ddmGroupError} has-error{/option:ddmGroupError}">
-        <label for="group">{$lblGroup|ucfirst}</label>
+        <label for="group" class="control-label">{$lblGroup|ucfirst}</label>
         {$ddmGroup} {$ddmGroupError}
       </div>
       <div class="form-group{option:fileFileError} has-error{/option:fileFileError}">
-        <label for="file">
+        <label for="file" class="control-label">
           {$lblFile|ucfirst}&nbsp;
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>

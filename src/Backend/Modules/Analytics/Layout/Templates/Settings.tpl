@@ -32,7 +32,7 @@
           {$fileCertificate} {$fileCertificateError}
         </div>
         <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
-          <label for="email">{$lblEmail|ucfirst}</label>
+          <label for="email" class="control-label">{$lblEmail|ucfirst}</label>
           {$txtEmail} {$txtEmailError}
         </div>
       </div>

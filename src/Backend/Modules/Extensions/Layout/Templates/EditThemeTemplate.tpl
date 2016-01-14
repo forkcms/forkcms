@@ -10,12 +10,12 @@
     <div class="col-md-12">
       <div class="form-inline form-group{option:ddmThemeError} has-error{/option:ddmThemeError}{option:txtFileError} has-error{/option:txtFileError}">
         <p class="help-block">{$msgHelpTemplateLocation}</p>
-        <label for="file">{$msgPathToTemplate|ucfirst}</label>
-        <label for="theme" class="hide">{$lblTheme|ucfirst}</label>
+        <label for="file" class="control-label">{$msgPathToTemplate|ucfirst}</label>
+        <label for="theme" class="hide" class="control-label">{$lblTheme|ucfirst}</label>
         {$ddmTheme}<small><code>/Core/Layout/Templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
       </div>
       <div class="form-group{option:txtLabelError} has-error{/option:txtLabelError}">
-        <label for="label">{$lblLabel|ucfirst}</label>
+        <label for="label" class="control-label">{$lblLabel|ucfirst}</label>
         {$txtLabel} {$txtLabelError}
       </div>
     </div>
@@ -33,7 +33,7 @@
               {* Title & button to delete this position *}
               <div class="col-md-2">
                 <div class="form-group">
-                  <label for="position{$positions.i}">
+                  <label for="position{$positions.i}" class="control-label">
                     <span>{$lblPosition|ucfirst}</span>
                     <a href="#" class="btn text-danger jsDeletePosition" title="{$lblDeletePosition|ucfirst}">
                       <span class="fa fa-trash-o"></span>&nbsp;
@@ -102,7 +102,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <label for="format">{$lblLayout|ucfirst}</label>
+            <label for="format" class="control-label">{$lblLayout|ucfirst}</label>
           </h3>
         </div>
         <div class="panel-body">

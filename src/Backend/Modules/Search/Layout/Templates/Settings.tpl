@@ -16,15 +16,15 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:ddmOverviewNumItemsError} has-error{/option:ddmOverviewNumItemsError}">
-            <label for="overviewNumItems">{$lblItemsPerPage|ucfirst}</label>
+            <label for="overviewNumItems" class="control-label">{$lblItemsPerPage|ucfirst}</label>
             {$ddmOverviewNumItems} {$ddmOverviewNumItemsError}
           </div>
           <div class="form-group{option:ddmAutocompleteNumItemsError} has-error{/option:ddmAutocompleteNumItemsError}">
-            <label for="autocompleteNumItems">{$lblItemsForAutocomplete|ucfirst}</label>
+            <label for="autocompleteNumItems" class="control-label">{$lblItemsForAutocomplete|ucfirst}</label>
             {$ddmAutocompleteNumItems} {$ddmAutocompleteNumItemsError}
           </div>
           <div class="form-group{option:ddmAutosuggestNumItemsError} has-error{/option:ddmAutosuggestNumItemsError}">
-            <label for="autosuggestNumItems">{$lblItemsForAutosuggest|ucfirst}</label>
+            <label for="autosuggestNumItems" class="control-label">{$lblItemsForAutosuggest|ucfirst}</label>
             {$ddmAutosuggestNumItems} {$ddmAutosuggestNumItemsError}
           </div>
         </div>
@@ -43,7 +43,7 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="useSitelinksSearchBox">
+                <label for="useSitelinksSearchBox" class="control-label">
                   {$chkUseSitelinksSearchBoxError} {$chkUseSitelinksSearchBox|ucfirst} {$lblUseSitelinksSearchBox|ucfirst}
                   <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{$msgHelpSitelinksSearchBox}"></abbr>
                 </label>
@@ -76,9 +76,9 @@
             {iteration:modules}
             <tr class="{cycle:odd:even}">
               <td>{$modules.chk}</td>
-              <td><label for="{$modules.id}">{$modules.label}</label></td>
+              <td><label for="{$modules.id}" class="control-label">{$modules.label}</label></td>
               <td>
-                <label for="{$modules.id}Weight" class="visuallyHidden">{$lblWeight|ucfirst}</label>
+                <label for="{$modules.id}Weight" class="visuallyHidden" class="control-label">{$lblWeight|ucfirst}</label>
                 {$modules.txt}
                 {option:modules.txtError}
                 <p class="text-danger">{$modules.txtError}</p>

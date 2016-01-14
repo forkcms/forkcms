@@ -9,12 +9,12 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:fileWordpressError} has-error{/option:fileWordpressError}">
-        <label for="wordpress">{$lblFile|ucfirst}</label>
+        <label for="wordpress" class="control-label">{$lblFile|ucfirst}</label>
         <p class="help-block">{$msgHelpWordpress}</p>
         {$fileWordpress} {$fileWordpressError}
       </div>
       <div class="form-group{option:txtFilterError} has-error{/option:txtFilterError}">
-        <label for="filter">{$lblWordpressFilter|ucfirst}</label>
+        <label for="filter" class="control-label">{$lblWordpressFilter|ucfirst}</label>
         <p class="help-block">{$msgHelpWordpressFilter}</p>
         {$txtFilter} {$txtFilterError}
       </div>

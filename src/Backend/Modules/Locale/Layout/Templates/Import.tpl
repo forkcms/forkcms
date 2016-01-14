@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:fileFileError} has-error{/option:fileFileError}">
-        <label for="file">
+        <label for="file" class="control-label">
           {$lblFile|ucfirst}&nbsp;
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>

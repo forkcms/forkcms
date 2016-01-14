@@ -37,14 +37,14 @@
           <h4>{$lblFrom|ucfirst}</h4>
           <p>{$msgHelpEmailFrom}</p>
           <div class="form-group{option:txtMailerFromNameError} has-error{/option:txtMailerFromNameError}">
-            <label for="mailerFromName">
+            <label for="mailerFromName" class="control-label">
               {$lblName|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtMailerFromName} {$txtMailerFromNameError}
           </div>
           <div class="form-group{option:txtMailerFromEmailError} has-error{/option:txtMailerFromEmailError}">
-            <label for="mailerFromEmail">
+            <label for="mailerFromEmail" class="control-label">
               {$lblEmail|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
@@ -55,14 +55,14 @@
           <h4>{$lblTo|ucfirst}</h4>
           <p>{$msgHelpEmailTo}</p>
           <div class="form-group{option:txtMailerToNameError} has-error{option:txtMailerToNameError}">
-            <label for="mailerToName">
+            <label for="mailerToName" class="control-label">
               {$lblName|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtMailerToName} {$txtMailerToNameError}
           </div>
           <div class="form-group{option:txtMailerToEmailError} has-error{/option:txtMailerToEmailError}">
-            <label for="mailerToEmail">
+            <label for="mailerToEmail" class="control-label">
               {$lblEmail|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
@@ -72,14 +72,14 @@
         <div class="panel-body">
           <h4>{$lblReplyTo|ucfirst}</h4>
           <div class="form-group{option:txtMailerReplyToNameError} has-error{/option:txtMailerReplyToNameError}">
-            <label for="mailerReplyToName">
+            <label for="mailerReplyToName" class="control-label">
               {$lblName|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtMailerReplyToName} {$txtMailerReplyToNameError}
           </div>
           <div class="form-group{option:txtMailerReplyToEmailError} has-error{/option:txtMailerReplyToEmailError}">
-            <label for="mailerReplyToEmail">
+            <label for="mailerReplyToEmail" class="control-label">
               {$lblEmail|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
@@ -100,8 +100,8 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:txtSmtpServerError} has-error{/option:txtSmtpServerError}{option:txtSmtpPortError} has-error{/option:txtSmtpPortError}">
-            <label for="smtpServer" style="float: left;">{$lblServer|ucfirst}</label>
-            <label for="smtpPort">&#160;&amp; {$lblPort}</label>
+            <label for="smtpServer" style="float: left;" class="control-label">{$lblServer|ucfirst}</label>
+            <label for="smtpPort" class="control-label">&#160;&amp; {$lblPort}</label>
             <p class="help-block">{$msgHelpSMTPServer}</p>
             <div class="form-inline">
               <div class="form-group">
@@ -117,15 +117,15 @@
             </div>
           </div>
           <div class="form-group{option:txtSmtpUsernameError} has-error{/option:txtSmtpUsernameError}">
-            <label for="smtpUsername">{$lblUsername|ucfirst}</label>
+            <label for="smtpUsername" class="control-label">{$lblUsername|ucfirst}</label>
             {$txtSmtpUsername} {$txtSmtpUsernameError}
           </div>
           <div class="form-group{option:txtSmtpPasswordError} has-error{/option:txtSmtpPasswordError}">
-            <label for="smtpPassword">{$lblPassword|ucfirst}</label>
+            <label for="smtpPassword" class="control-label">{$lblPassword|ucfirst}</label>
             {$txtSmtpPassword} {$txtSmtpPasswordError}
           </div>
           <div class="form-group">
-            <label for="smtpSecureLayer">{$lblSmtpSecureLayer|ucfirst}</label>
+            <label for="smtpSecureLayer" class="control-label">{$lblSmtpSecureLayer|ucfirst}</label>
              {$ddmSmtpSecureLayer}
           </div>
         </div>

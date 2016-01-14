@@ -19,25 +19,25 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:txtAuthorError} has-error{/option:txtAuthorError}">
-        <label for="author">
+        <label for="author" class="control-label">
           {$lblAuthor|ucfirst}
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtAuthor} {$txtAuthorError}
       </div>
       <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
-        <label for="email">
+        <label for="email" class="control-label">
           {$lblEmail|ucfirst}
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtEmail} {$txtEmailError}
       </div>
       <div class="form-group{option:txtWebsiteError} has-error{/option:txtWebsiteError}">
-        <label for="website">{$lblWebsite|ucfirst}</label>
+        <label for="website" class="control-label">{$lblWebsite|ucfirst}</label>
         {$txtWebsite} {$txtWebsiteError}
       </div>
       <div class="form-group{option:txtTextError} has-error{/option:txtTextError}">
-        <label for="text">
+        <label for="text" class="control-label">
           {$lblText|ucfirst}
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>

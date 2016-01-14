@@ -22,11 +22,11 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
-                  <label for="title">{$lblTitle|ucfirst}</label>
+                  <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
                   {$txtTitle} {$txtTitleError}
                 </div>
                 <div class="form-group{option:txtTextError} has-error{/option:txtTextError}">
-                  <label for="text">
+                  <label for="text" class="control-label">
                     {$lblContent|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
@@ -34,7 +34,7 @@
                 </div>
                 {option:ddmTemplate}
                 <div class="form-group{option:ddmTemplateError} has-error{/option:ddmTemplateError}">
-                  <label for="template">{$lblTemplate|ucfirst}</label>
+                  <label for="template" class="control-label">{$lblTemplate|ucfirst}</label>
                   {$ddmTemplate} {$ddmTemplateError}
                 </div>
                 {/option:ddmTemplate}

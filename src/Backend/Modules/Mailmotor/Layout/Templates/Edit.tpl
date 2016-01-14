@@ -38,7 +38,7 @@
             </div>
             <div class="panel-body">
               <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
-                <label for="name">
+                <label for="name" class="control-label">
                   {$lblName|ucfirst}
                   <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
@@ -47,7 +47,7 @@
               </div>
               {option:ddmCampaign}
               <div class="form-group{option:ddmCampaignError} has-error{/option:ddmCampaignError}">
-                <label for="campaign">
+                <label for="campaign" class="control-label">
                   {$lblCampaign|ucfirst}
                   <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
@@ -68,14 +68,14 @@
             </div>
             <div class="panel-body">
               <div class="form-group{option:txtFromNameError} has-error{/option:txtFromNameError}">
-                <label for="fromName">
+                <label for="fromName" class="control-label">
                   {$lblName|ucfirst}
                   <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
                 {$txtFromName} {$txtFromNameError}
               </div>
               <div class="form-group{option:txtFromEmailError} has-error{/option:txtFromEmailError}">
-                <label for="fromEmail">
+                <label for="fromEmail" class="control-label">
                   {$lblEmailAddress|ucfirst}
                   <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
@@ -95,7 +95,7 @@
             </div>
             <div class="panel-body">
               <div class="form-group{option:txtReplyToEmailError} has-error{/option:txtReplyToEmailError}">
-                <label for="replyToEmail">
+                <label for="replyToEmail" class="control-label">
                   {$lblEmailAddress|ucfirst}
                   <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
@@ -121,7 +121,7 @@
                 <ul class="list-unstyled">
                   {iteration:groups}
                   <li class="checkbox">
-                    <label for="{$groups.id}">
+                    <label for="{$groups.id}" class="control-label">
                       {$groups.chkGroups}
                       <attr title="{$msgGroupsNumberOfRecipients|sprintf:{$groups.recipients}}">
                         {$groups.label|ucfirst}
@@ -234,14 +234,14 @@
       <div class="row">
         <div class="col-md-12">
           <div class="form-group{option:txtSubjectError} has-error{/option:txtSubjectError}">
-            <label for="subject">
+            <label for="subject" class="control-label">
               {$lblSubject|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtSubject} {$txtSubjectError}
           </div>
           <div class="form-group">
-            <label for="content">
+            <label for="content" class="control-label">
               {$lblContent|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
@@ -251,7 +251,7 @@
           </div>
           {option:txtContentPlain}
           <div class="form-group{option:txtContentPlainError} has-error{/option:txtContentPlainError}">
-            <label for="subject">
+            <label for="subject" class="control-label">
               {$lblPlainTextVersion|ucfirst}
             </label>
             {$txtContentPlain} {$txtContentPlainError}
@@ -308,7 +308,7 @@
             </div>
             <div class="panel-body">
               <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
-                <label for="email">{$lblEmailAddress|ucfirst}</label>
+                <label for="email" class="control-label">{$lblEmailAddress|ucfirst}</label>
                 {$txtEmail} {$txtEmailError}
               </div>
             </div>
@@ -335,11 +335,11 @@
             </div>
             <div class="panel-body">
               <div class="form-group">
-                <label for="sendOnDate">{$lblSendDate|ucfirst}</label>
+                <label for="sendOnDate" class="control-label">{$lblSendDate|ucfirst}</label>
                 {$txtSendOnDate}
               </div>
               <div class="form-group">
-                <label for="sendOnTime">{$lblAt}</label>
+                <label for="sendOnTime" class="control-label">{$lblAt}</label>
                 {$txtSendOnTime}
               </div>
             </div>

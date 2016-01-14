@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:txtTermError} has-error{/option:txtTermError}">
-        <label for="term">
+        <label for="term" class="control-label">
           {$lblTerm|ucfirst}
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
@@ -17,7 +17,7 @@
       </div>
       <div class="form-group{option:txtSynonymError} has-error{/option:txtSynonymError}">
         <div class="fakeP">
-          <label for="addValue-synonym">
+          <label for="addValue-synonym" class="control-label">
             {$lblSynonyms|ucfirst}
             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
           </label>

@@ -38,11 +38,11 @@
           <div class="row">
             <div class="col-md-3">
               <div class="form-group{option:ddmApplicationError} has-error{/option:ddmApplicationError}">
-                <label for="application">{$lblApplication|ucfirst}</label>
+                <label for="application" class="control-label">{$lblApplication|ucfirst}</label>
                 {$ddmApplication} {$ddmApplicationError}
               </div>
               <div class="form-group{option:ddmModuleError} has-error{/option:ddmModuleError}">
-                <label for="module">{$lblModule|ucfirst}</label>
+                <label for="module" class="control-label">{$lblModule|ucfirst}</label>
                 {$ddmModule} {$ddmModuleError}
               </div>
             </div>
@@ -76,14 +76,14 @@
             </div>
             <div class="col-md-5">
               <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
-                <label for="name">
+                <label for="name" class="control-label">
                   {$lblReferenceCode|ucfirst}&nbsp;
                   <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpName}"></abbr>
                 </label>
                 {$txtName} {$txtNameError}
               </div>
               <div class="form-group{option:txtValueError} has-error{/option:txtValueError}">
-                <label for="value">
+                <label for="value" class="control-label">
                   {$lblValue|ucfirst}&nbsp;
                   <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpValue}"></abbr>
                 </label>

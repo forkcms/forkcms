@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
-        <label for="title">{$lblTitle|ucfirst}</label>
+        <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
       <div class="panel panel-default">
@@ -20,35 +20,35 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:txtStreetError} has-error{/option:txtStreetError}">
-            <label for="street">
+            <label for="street" class="control-label">
               {$lblStreet|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtStreet} {$txtStreetError}
           </div>
           <div class="form-group{option:txtNumberError} has-error{/option:txtNumberError}">
-            <label for="number">
+            <label for="number" class="control-label">
               {$lblNumber|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtNumber} {$txtNumberError}
           </div>
           <div class="form-group{option:txtZipError} has-error{/option:txtZipError}">
-            <label for="zip">
+            <label for="zip" class="control-label">
               {$lblZip|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtZip} {$txtZipError}
           </div>
           <div class="form-group{option:txtCityError} has-error{/option:txtCityError}">
-            <label for="city">
+            <label for="city" class="control-label">
               {$lblCity|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtCity} {$txtCityError}
           </div>
           <div class="form-group{option:ddmCountryError} has-error{/option:ddmCountryError}">
-            <label for="country">
+            <label for="country" class="control-label">
               {$lblCountry|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
@@ -92,21 +92,21 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:ddmZoomLevelError} has-error{/option:ddmZoomLevelError}">
-            <label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
+            <label for="zoomLevel" class="control-label">{$lblZoomLevel|ucfirst}</label>
             {$ddmZoomLevel} {$ddmZoomLevelError}
           </div>
           <div class="form-group{option:txtWidthError} has-error{/option:txtWidthError}"{option:!godUser} style="display:none;"{/option:!godUser}>
-            <label for="width">{$lblWidth|ucfirst}</label>
+            <label for="width" class="control-label">{$lblWidth|ucfirst}</label>
             <p class="help-block">{$msgWidthHelp|sprintf:300:800}</p>
             {$txtWidth} {$txtWidthError}
           </div>
           <div class="form-group{option:txtHeightError} has-error{/option:txtHeightError}"{option:!godUser} style="display:none;"{/option:!godUser}>
-            <label for="height">{$lblHeight|ucfirst}</label>
+            <label for="height" class="control-label">{$lblHeight|ucfirst}</label>
             <p class="help-block">{$msgHeightHelp|sprintf:150}</p>
             {$txtHeight} {$txtHeightError}
           </div>
           <div class="form-group{option:ddmMapTypeError} has-error{/option:ddmMapTypeError}">
-            <label for="mapType">{$lblMapType|ucfirst}</label>
+            <label for="mapType" class="control-label">{$lblMapType|ucfirst}</label>
             {$ddmMapType} {$ddmMapTypeError}
           </div>
           <div class="form-group">

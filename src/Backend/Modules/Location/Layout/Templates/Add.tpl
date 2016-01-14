@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
-        <label for="title">{$lblTitle|ucfirst}</label>
+        <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
       <div class="panel panel-default">
@@ -20,35 +20,35 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:txtStreetError} has-error{/option:txtStreetError}">
-            <label for="street">
+            <label for="street" class="control-label">
               {$lblStreet|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtStreet} {$txtStreetError}
           </div>
           <div class="form-group{option:txtNumberError} has-error{/option:txtNumberError}">
-            <label for="number">
+            <label for="number" class="control-label">
               {$lblNumber|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtNumber} {$txtNumberError}
           </div>
           <div class="form-group{option:txtZipError} has-error{/option:txtZipError}">
-            <label for="zip">
+            <label for="zip" class="control-label">
               {$lblZip|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtZip} {$txtZipError}
           </div>
           <div class="form-group{option:txtCityError} has-error{/option:txtCityError}">
-            <label for="city">
+            <label for="city" class="control-label">
               {$lblCity|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtCity} {$txtCityError}
           </div>
           <div class="form-group{option:ddmCountryError} has-error{/option:ddmCountryError}">
-            <label for="country">
+            <label for="country" class="control-label">
               {$lblCountry|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>

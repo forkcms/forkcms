@@ -19,7 +19,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
-        <label for="title">{$lblTitle|ucfirst}</label>
+        <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
       {option:detailURL}
@@ -54,7 +54,7 @@
             <div class="row">
               <div class="col-md-8">
                 <div class="form-group{option:txtTextError} has-error{/option:txtTextError}">
-                  <label for="text">
+                  <label for="text" class="control-label">
                     {$lblMainContent|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
@@ -62,7 +62,7 @@
                 </div>
                 {option:imageIsAllowed}
                 <div class="form-group{option:chkDeleteImageError} has-error{/option:chkDeleteImageError}">
-                  <label for="image">{$lblImage|ucfirst}</label>
+                  <label for="image" class="control-label">{$lblImage|ucfirst}</label>
                   {option:item.image}
                   <div>
                     <img src="{$FRONTEND_FILES_URL}/blog/images/128x128/{$item.image}" class="img-thumbnail" width="128" height="128" alt="{$lblImage|ucfirst}" />
@@ -78,7 +78,7 @@
                 </div>
                 {/option:imageIsAllowed}
                 <div class="form-group">
-                  <label for="introduction">
+                  <label for="introduction" class="control-label">
                     {$lblSummary|ucfirst}
                     <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpSummary}"></abbr>
                   </label>
@@ -101,11 +101,11 @@
                       </ul>
                     </div>
                     <div class="form-group{option:txtPublishOnDateError} has-error{/option:txtPublishOnDateError}">
-                      <label for="publishOnDate">{$lblPublishOn|ucfirst}</label>
+                      <label for="publishOnDate" class="control-label">{$lblPublishOn|ucfirst}</label>
                       {$txtPublishOnDate} {$txtPublishOnDateError}
                     </div>
                     <div class="form-group{option:txtPublishOnTimeError} has-error{/option:txtPublishOnTimeError}">
-                      <label for="publishOnTime">{$lblAt}</label>
+                      <label for="publishOnTime" class="control-label">{$lblAt}</label>
                       {$txtPublishOnTime} {$txtPublishOnTimeError}
                     </div>
                   </div>
@@ -116,16 +116,16 @@
                   </div>
                   <div class="panel-body">
                     <div class="form-group{option:ddmCategoryIdError} has-error{/option:ddmCategoryIdError}">
-                      <label for="categoryId">{$lblCategory|ucfirst}</label>
+                      <label for="categoryId" class="control-label">{$lblCategory|ucfirst}</label>
                       {$ddmCategoryId} {$ddmCategoryIdError}
                     </div>
                     <div class="form-group{option:ddmUserIdError} has-error{/option:ddmUserIdError}">
-                      <label for="userId">{$lblAuthor|ucfirst}</label>
+                      <label for="userId" class="control-label">{$lblAuthor|ucfirst}</label>
                       {$ddmUserId} {$ddmUserIdError}
                     </div>
                     {option:showTagsIndex}
                     <div class="form-group{option:txtTagsError} has-error{/option:txtTagsError}">
-                      <label for="tags">{$lblTags|ucfirst}</label>
+                      <label for="tags" class="control-label">{$lblTags|ucfirst}</label>
                       {$txtTags} {$txtTagsError}
                     </div>
                     {/option:showTagsIndex}
@@ -239,7 +239,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="categoryTitle">
+            <label for="categoryTitle" class="control-label">
               {$lblTitle|ucfirst}
               <abbr title="{$lblRequiredField|ucfirst}"></abbr>
             </label>

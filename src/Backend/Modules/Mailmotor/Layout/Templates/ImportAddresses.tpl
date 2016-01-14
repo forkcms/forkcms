@@ -17,7 +17,7 @@
         <div class="panel-body">
           <div class="form-group{option:fileCsvError} has-error{/option:fileCsvError}">
             {option:showMailmotorImportAddresses}
-            <label for="download">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1">{$lblExampleFile}</a>.</label>
+            <label for="download">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1" class="control-label">{$lblExampleFile}</a>.</label>
             {/option:showMailmotorImportAddresses}
             {$fileCsv} {$fileCsvError}
           </div>

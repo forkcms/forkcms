@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{otpion:txtEmailError} has-error{/option:txtEmailError}">
-        <label for="email">{$lblEmailAddress|ucfirst}</label>
+        <label for="email" class="control-label">{$lblEmailAddress|ucfirst}</label>
         {$txtEmail} {$txtEmailError}
       </div>
       <div class="form-group">
@@ -39,7 +39,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:ddmSubscriptionsError} has-error{/option:ddmSubscriptionsError}">
-            <label for="subscriptions">{$lblGroup|ucfirst}</label>
+            <label for="subscriptions" class="control-label">{$lblGroup|ucfirst}</label>
             {$ddmSubscriptions} {$ddmSubscriptionsError}
           </div>
         </div>
@@ -47,7 +47,7 @@
         <div class="panel-body">
           {iteration:fields}
           <div class="form-group{option:fields.txtFieldError} has-error{/option:fields.txtFieldError}">
-            <label for="{$fields.name}">[{$fields.label}]</label>
+            <label for="{$fields.name}" class="control-label">[{$fields.label}]</label>
             {$fields.txtField} {$fields.txtFieldError}
           </div>
           {/iteration:fields}

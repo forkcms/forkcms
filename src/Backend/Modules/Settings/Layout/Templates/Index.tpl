@@ -45,7 +45,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:txtSiteHtmlHeaderError} has-error{/option:txtSiteHtmlHeaderError}">
-            <label for="siteHtmlHeader"><code>&lt;head&gt;</code> script(s)</label>
+            <label for="siteHtmlHeader" class="control-label"><code>&lt;head&gt;</code> script(s)</label>
             {$txtSiteHtmlHeader} {$txtSiteHtmlHeaderError}
             <span class="help-block">{$msgHelpScriptsHead}</span>
           </div>
@@ -59,7 +59,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:txtSiteHtmlFooterError} has-error{/option:txtSiteHtmlFooterError}">
-            <label for="siteHtmlFooter">End of <code>&lt;body&gt;</code> script(s)</label>
+            <label for="siteHtmlFooter" class="control-label">End of <code>&lt;body&gt;</code> script(s)</label>
             {$txtSiteHtmlFooter} {$txtSiteHtmlFooterError}
             <span class="help-block">{$msgHelpScriptsFoot}</span>
           </div>
@@ -79,7 +79,7 @@
             <ul id="activeLanguages" class="list-unstyled">
               {iteration:activeLanguages}
               <li class="checkbox">
-                <label for="{$activeLanguages.id}">
+                <label for="{$activeLanguages.id}" class="control-label">
                   {$activeLanguages.chkActiveLanguages} {$activeLanguages.label|ucfirst}{option:activeLanguages.default} ({$lblDefault}){/option:activeLanguages.default}
                 </label>
               </li>
@@ -93,7 +93,7 @@
             <ul id="redirectLanguages" class="list-unstyled">
               {iteration:redirectLanguages}
               <li class="checkbox">
-                <label for="{$redirectLanguages.id}">
+                <label for="{$redirectLanguages.id}" class="control-label">
                   {$redirectLanguages.chkRedirectLanguages} {$redirectLanguages.label|ucfirst}{option:redirectLanguages.default} ({$lblDefault}){/option:redirectLanguages.default}
                 </label>
               </li>
@@ -112,17 +112,17 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:ddmTimeFormatError} has-error{/option:ddmTimeFormatError}">
-            <label for="timeFormat">{$lblTimeFormat|ucfirst}</label>
+            <label for="timeFormat" class="control-label">{$lblTimeFormat|ucfirst}</label>
             {$ddmTimeFormat} {$ddmTimeFormatError}
             <span class="help-block">{$msgHelpTimeFormat}</span>
           </div>
           <div class="form-group{option:ddmDateFormatShortError} has-error{/option:ddmDateFormatShortError}">
-            <label for="dateFormatShort">{$lblShortDateFormat|ucfirst}</label>
+            <label for="dateFormatShort" class="control-label">{$lblShortDateFormat|ucfirst}</label>
             {$ddmDateFormatShort} {$ddmDateFormatShortError}
             <span class="help-block">{$msgHelpDateFormatShort}</span>
           </div>
           <div class="form-group{option:ddmDateFormatLongError} has-error{/option:ddmDateFormatLongError}">
-            <label for="dateFormatLong">{$lblLongDateFormat|ucfirst}</label>
+            <label for="dateFormatLong" class="control-label">{$lblLongDateFormat|ucfirst}</label>
             {$ddmDateFormatLong} {$ddmDateFormatLongError}
             <span class="help-block">{$msgHelpDateFormatLong}</span>
           </div>
@@ -138,7 +138,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:ddmNumberFormatError} has-error{/option:ddmNumberFormatError}">
-            <label for="numberFormat">{$lblNumberFormat|ucfirst}</label>
+            <label for="numberFormat" class="control-label">{$lblNumberFormat|ucfirst}</label>
             {$ddmNumberFormat} {$ddmNumberFormatError}
             <span class="help-block">{$msgHelpNumberFormat}</span>
           </div>
@@ -164,19 +164,19 @@
             </thead>
             <tbody>
               <tr>
-                <th><label for="forkApiPublicKey">Fork public key</label></td>
+                <th><label for="forkApiPublicKey" class="control-label">Fork public key</label></td>
                 <td>{$txtForkApiPublicKey} {$txtForkApiPublicKeyError}</td>
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <th><label for="forkApiPrivateKey">Fork private key</label></td>
+                <th><label for="forkApiPrivateKey" class="control-label">Fork private key</label></td>
                 <td>{$txtForkApiPrivateKey} {$txtForkApiPrivateKeyError}</td>
                 <td>&nbsp;</td>
               </tr>
               {option:needsGoogleMaps}
               <tr>
                 <th>
-                  <label for="googleMapsKey">
+                  <label for="googleMapsKey" class="control-label">
                     Google maps key<abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                 </td>
@@ -186,7 +186,7 @@
               {/option:needsGoogleMaps}
               {option:needsAkismet}
               <tr>
-                <th><label for="akismetKey">Akismet key</label></td>
+                <th><label for="akismetKey" class="control-label">Akismet key</label></td>
                 <td>{$txtAkismetKey} {$txtAkismetKeyError}</td>
                 <td><a href="http://akismet.com/personal">http://akismet.com/personal</a></td>
               </tr>
@@ -205,20 +205,20 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:txtCkfinderLicenseNameError} has-error{/option:txtCkfinderLicenseNameError}">
-            <label for="ckfinderLicenseName">{$lblLicenseName|ucfirst}</label>
+            <label for="ckfinderLicenseName" class="control-label">{$lblLicenseName|ucfirst}</label>
             {$txtCkfinderLicenseName} {$txtCkfinderLicenseNameError}
           </div>
           <div class="form-group{option:txtCkfinderLicenseKeyError} has-error{/option:txtCkfinderLicenseKeyError}">
-            <label for="ckfinderLicenseKey">{$lblLicenseKey|ucfirst}</label>
+            <label for="ckfinderLicenseKey" class="control-label">{$lblLicenseKey|ucfirst}</label>
             {$txtCkfinderLicenseKey} {$txtCkfinderLicenseKeyError}
           </div>
           <div class="form-group{option:txtCkfinderImageMaxWidthError} has-error{/option:txtCkfinderImageMaxWidthError}">
-            <label for="ckfinderImageMaxWidth">{$lblMaximumWidth|ucfirst}</label>
+            <label for="ckfinderImageMaxWidth" class="control-label">{$lblMaximumWidth|ucfirst}</label>
             {$txtCkfinderImageMaxWidth} {$txtCkfinderImageMaxWidthError}
             <span class="help-block">{$msgHelpCkfinderMaximumWidth}</span>
           </div>
           <div class="form-group{option:txtCkfinderImageMaxHeightError} has-error{/option:txtCkfinderImageMaxHeightError}">
-            <label for="ckfinderImageMaxHeight">{$lblMaximumHeight|ucfirst}</label>
+            <label for="ckfinderImageMaxHeight" class="control-label">{$lblMaximumHeight|ucfirst}</label>
             {$txtCkfinderImageMaxHeight} {$txtCkfinderImageMaxHeightError}
             <span class="help-block">{$msgHelpCkfinderMaximumHeight}</span>
           </div>
@@ -234,17 +234,17 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:txtFacebookAdminIdsError} has-error{/option:txtFacebookAdminIdsError}">
-            <label for="addValue-facebookAdminIds">{$lblAdminIds|ucfirst}</label>
+            <label for="addValue-facebookAdminIds" class="control-label">{$lblAdminIds|ucfirst}</label>
             {$txtFacebookAdminIds} {$txtFacebookAdminIdsError}
             <span class="help-block">{$msgHelpFacebookAdminIds}</span>
           </div>
           <div class="form-group{option:txtFacebookApplicationIdError} has-error{/option:txtFacebookApplicationIdError}">
-            <label for="facebookApplicationId">{$lblApplicationId|ucfirst}</label>
+            <label for="facebookApplicationId" class="control-label">{$lblApplicationId|ucfirst}</label>
             {$txtFacebookApplicationId} {$txtFacebookApplicationIdError}
             <span class="help-block">{$msgHelpFacebookApplicationId}</span>
           </div>
           <div class="form-group{option:txtFacebookApplicationSecretError} has-error{option:txtFacebookApplicationSecretError}">
-            <label for="facebookApplicationSecret">{$lblApplicationSecret|ucfirst}</label>
+            <label for="facebookApplicationSecret" class="control-label">{$lblApplicationSecret|ucfirst}</label>
             {$txtFacebookApplicationSecret} {$txtFacebookApplicationSecretError}
             <span class="help-block">{$msgHelpFacebookApplicationSecret}</span>
           </div>
@@ -260,7 +260,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:txtTwitterSiteNameError} has-error{/option:txtTwitterSiteNameError}">
-            <label for="twitterSiteName">{$lblTwitterSiteName|ucfirst}</label>
+            <label for="twitterSiteName" class="control-label">{$lblTwitterSiteName|ucfirst}</label>
             <div class="form-inline">
               <div class="form-group">
                 <div class="input-group">

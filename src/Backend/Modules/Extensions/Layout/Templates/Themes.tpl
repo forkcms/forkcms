@@ -38,7 +38,7 @@
             <li>
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <label for="{$installedThemes.id}" class="panel-title">
+                  <label for="{$installedThemes.id}" class="panel-title" class="control-label">
                     <span>{$installableThemes.label|ucfirst}</span>
                   </label>
                 </div>

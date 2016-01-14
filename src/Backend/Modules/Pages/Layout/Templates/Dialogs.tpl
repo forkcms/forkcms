@@ -58,17 +58,17 @@
                 <div id="extraWarningAlreadyBlock" class="alert alert-warning">{$msgModuleBlockAlreadyLinked}</div>
                 <div id="extraWarningHomeNoBlock" class="alert alert-warning">{$msgHomeNoBlock}</div>
                 <div class="form-group">
-                    <label for="extraType">{$lblType|ucfirst}</label>
+                    <label for="extraType" class="control-label">{$lblType|ucfirst}</label>
                     {$ddmExtraType}
                 </div>
                 <div id="extraModuleHolder" class="form-group" style="display: none;">
-                    <label for="extraModule">{$lblWhichModule|ucfirst}</label>
+                    <label for="extraModule" class="control-label">{$lblWhichModule|ucfirst}</label>
                     <select id="extraModule" class="form-control">
                         <option value="-1">-</option>
                     </select>
                 </div>
                 <div id="extraExtraIdHolder" class="form-group" style="display: none;">
-                    <label for="extraExtraId">{$lblWhichWidget|ucfirst}</label>
+                    <label for="extraExtraId" class="control-label">{$lblWhichWidget|ucfirst}</label>
                     <select id="extraExtraId" class="form-control">
                         <option value="-1">-</option>
                     </select>
@@ -99,7 +99,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <div class="radio">
-                                        <label for="template{$templates.id}">
+                                        <label for="template{$templates.id}" class="control-label">
                                             <input type="radio" id="template{$templates.id}" value="{$templates.id}"
                                               name="template_id_chooser"
                                               class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked}{option:templates.disabled} disabled="disabled"{/option:templates.disabled} />{$templates.label}

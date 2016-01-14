@@ -25,7 +25,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group{option:txtGroupError} has-error{/option:txtGroupError}">
-                <label for="group">{$lblGroup|ucfirst}</label>
+                <label for="group" class="control-label">{$lblGroup|ucfirst}</label>
                 {$txtGroup} {$txtGroupError}
               </div>
             </div>

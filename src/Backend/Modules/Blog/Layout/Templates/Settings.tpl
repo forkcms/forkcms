@@ -16,15 +16,15 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:ddmOverviewNumberOfItemsError} has-error{/option:ddmOverviewNumberOfItemsError}">
-            <label for="overviewNumberOfItems">{$lblItemsPerPage|ucfirst}</label>
+            <label for="overviewNumberOfItems" class="control-label">{$lblItemsPerPage|ucfirst}</label>
             {$ddmOverviewNumberOfItems} {$ddmOverviewNumberOfItemsError}
           </div>
           <div class="form-group{option:ddmRecentArticlesFullNumberOfItemsError} has-error{/option:ddmRecentArticlesFullNumberOfItemsError}">
-            <label for="recentArticlesFullNumberOfItems">{$msgNumItemsInRecentArticlesFull|ucfirst}</label>
+            <label for="recentArticlesFullNumberOfItems" class="control-label">{$msgNumItemsInRecentArticlesFull|ucfirst}</label>
             {$ddmRecentArticlesFullNumberOfItems} {$ddmRecentArticlesFullNumberOfItemsError}
           </div>
           <div class="form-group{option:ddmRecentArticlesListNumberOfItemsError} has-error{/option:ddmRecentArticlesListNumberOfItemsError}">
-            <label for="recentArticlesListNumberOfItems">{$msgNumItemsInRecentArticlesList|ucfirst}</label>
+            <label for="recentArticlesListNumberOfItems" class="control-label">{$msgNumItemsInRecentArticlesList|ucfirst}</label>
             {$ddmRecentArticlesListNumberOfItems} {$ddmRecentArticlesListNumberOfItemsError}
           </div>
         </div>
@@ -157,7 +157,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:txtRssTitleError} has-error{/option:txtRssTitleError}">
-            <label for="rssTitle">
+            <label for="rssTitle" class="control-label">
               {$lblTitle|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
@@ -165,7 +165,7 @@
             {$txtRssTitle} {$txtRssTitleError}
           </div>
           <div class="form-group{option:txtRssDescriptionError} has-error{/option:txtRssDescriptionError}">
-            <label for="rssDescription">{$lblDescription|ucfirst}</label>
+            <label for="rssDescription" class="control-label">{$lblDescription|ucfirst}</label>
             <p class="help-block">{$msgHelpRSSDescription}</p>
             {$txtRssDescription} {$txtRssDescriptionError}
           </div>

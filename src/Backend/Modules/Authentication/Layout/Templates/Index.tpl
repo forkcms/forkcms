@@ -31,11 +31,11 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <div class="form-group{option:txtBackendEmailError} has-error{/option:txtBackendEmailError}">
-                <label for="backendEmail">{$lblEmail|ucfirst}</label>
+                <label for="backendEmail" class="control-label">{$lblEmail|ucfirst}</label>
                 {$txtBackendEmail} {$txtBackendEmailError}
               </div>
               <div class="form-group{option:txtBackendPasswordError} has-error{/option:txtBackendPasswordError}">
-                <label for="backendPassword">{$lblPassword|ucfirst}</label>
+                <label for="backendPassword" class="control-label">{$lblPassword|ucfirst}</label>
                 {$txtBackendPassword} {$txtBackendPasswordError}
               </div>
               <div class="form-group">
@@ -63,7 +63,7 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
-                    <label for="backendEmailForgot">{$lblEmail|ucfirst}</label>
+                    <label for="backendEmailForgot" class="control-label">{$lblEmail|ucfirst}</label>
                     {$txtBackendEmailForgot}
                   </div>
                 </div>

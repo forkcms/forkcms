@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textboxLabel">
+                                    <label for="textboxLabel" class="control-label">
                                         {$lblLabel|ucfirst}
                                         <abbr data-toggle="tooltop" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
@@ -37,7 +37,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textboxValue">{$lblDefaultValue|ucfirst}</label>
+                                    <label for="textboxValue" class="control-label">{$lblDefaultValue|ucfirst}</label>
                                     {$txtTextboxValue}
                                 </div>
                                 <div class="form-group">
@@ -59,7 +59,7 @@
                                         </li>
                                     </ul>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="textboxRequiredErrorMessage">
+                                        <label for="textboxRequiredErrorMessage" class="control-label">
                                             {$lblErrorMessage|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
@@ -69,19 +69,19 @@
                                 </div>
                                 <div class="jsValidation">
                                     <div class="form-group">
-                                        <label for="textboxValidation">{$lblValidation|ucfirst}</label>
+                                        <label for="textboxValidation" class="control-label">{$lblValidation|ucfirst}</label>
                                         {$ddmTextboxValidation}
                                     </div>
                                     <p id="textboxReplyToErrorMessageError" class="text-danger" style="display: none;"></p>
                                     <div class="form-group jsValidationParameter" style="display: none;">
-                                        <label for="textboxValidationParameter">
+                                        <label for="textboxValidationParameter" class="control-label">
                                             {$lblParameter|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         {$txtTextboxValidationParameter}
                                     </div>
                                     <div class="form-group jsValidationErrorMessage" style="display: none;">
-                                        <label for="textareaErrorMessage">
+                                        <label for="textareaErrorMessage" class="control-label">
                                             {$lblErrorMessage|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
@@ -96,11 +96,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textboxPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                                    <label for="textboxPlaceholder" class="control-label">{$lblPlaceholder|ucfirst}</label>
                                     {$txtTextboxPlaceholder}
                                 </div>
                                 <div class="form-group">
-                                    <label for="textboxClassname">{$lblClassname|ucfirst}</label>
+                                    <label for="textboxClassname" class="control-label">{$lblClassname|ucfirst}</label>
                                     {$txtTextboxClassname}
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textareaLabel">
+                                    <label for="textareaLabel" class="control-label">
                                         {$lblLabel|ucfirst}
                                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
@@ -155,7 +155,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textareaValue">{$lblDefaultValue|ucfirst}</label>
+                                    <label for="textareaValue" class="control-label">{$lblDefaultValue|ucfirst}</label>
                                     {$txtTextareaValue}
                                 </div>
                                 <div class="jsValidation">
@@ -167,7 +167,7 @@
                                         </ul>
                                     </div>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="textareaRequiredErrorMessage">
+                                        <label for="textareaRequiredErrorMessage" class="control-label">
                                             {$lblErrorMessage|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
@@ -177,18 +177,18 @@
                                 </div>
                                 <div class="jsValidation" style="display: none;">
                                     <div class="form-group">
-                                        <label for="textareaValidation">{$lblValidation|ucfirst}</label>
+                                        <label for="textareaValidation" class="control-label">{$lblValidation|ucfirst}</label>
                                         {$ddmTextareaValidation}
                                     </div>
                                     <div class="form-group jsValidationParameter" style="display: none;">
-                                        <label for="textareaValidationParameter">
+                                        <label for="textareaValidationParameter" class="control-label">
                                             {$lblParameter|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
                                         {$txtTextareaValidationParameter}
                                     </div>
                                     <div class="form-group jsValidationErrorMessage" style="display: none;">
-                                        <label for="textareaErrorMessage">
+                                        <label for="textareaErrorMessage" class="control-label">
                                             {$lblErrorMessage|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
@@ -203,11 +203,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                                    <label for="textareaPlaceholder" class="control-label">{$lblPlaceholder|ucfirst}</label>
                                     {$txtTextareaPlaceholder}
                                 </div>
                                 <div class="form-group">
-                                    <label for="textareaClassname">{$lblClassname|ucfirst}</label>
+                                    <label for="textareaClassname" class="control-label">{$lblClassname|ucfirst}</label>
                                     {$txtTextareaClassname}
                                 </div>
                             </div>
@@ -248,7 +248,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="datetimeLabel">
+                                    <label for="datetimeLabel" class="control-label">
                                         {$lblLabel|ucfirst}
                                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
@@ -262,7 +262,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group jsDefaultValue">
-                                    <label for="datetimeValue">{$lblDefaultValue|ucfirst}</label>
+                                    <label for="datetimeValue" class="control-label">{$lblDefaultValue|ucfirst}</label>
                                     <div class="form-inline">
                                         {$ddmDatetimeValueAmount} {$ddmDatetimeValueType}
                                     </div>
@@ -276,7 +276,7 @@
                                         </ul>
                                     </div>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="datetimeRequiredErrorMessage">
+                                        <label for="datetimeRequiredErrorMessage" class="control-label">
                                             {$lblErrorMessage|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
@@ -286,17 +286,17 @@
                                 </div>
                                 <div>
                                     <div class="form-group">
-                                        <label for="datetimeType">{$lblType|ucfirst}</label>
+                                        <label for="datetimeType" class="control-label">{$lblType|ucfirst}</label>
                                         {$ddmDatetimeType}
                                     </div>
                                 </div>
                                 <div class="jsValidation" style="display: none;">
                                     <div class="form-group">
-                                        <label for="datetimeValidation">{$lblValidation|ucfirst}</label>
+                                        <label for="datetimeValidation" class="control-label">{$lblValidation|ucfirst}</label>
                                         {$ddmDatetimeValidation}
                                     </div>
                                     <div class="form-group jsValidationErrorMessage" style="display: none;">
-                                        <label for="datetimeErrorMessage">
+                                        <label for="datetimeErrorMessage" class="control-label">
                                             {$lblErrorMessage|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
@@ -311,7 +311,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="datetimeClassname">{$lblClassname|ucfirst}</label>
+                                    <label for="datetimeClassname" class="control-label">{$lblClassname|ucfirst}</label>
                                     {$txtDatetimeClassname}
                                 </div>
                             </div>
@@ -352,7 +352,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="dropdownLabel">
+                                    <label for="dropdownLabel" class="control-label">
                                         {$lblLabel|ucfirst}
                                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
@@ -360,7 +360,7 @@
                                     {$txtDropdownLabel}
                                 </div>
                                 <div class="form-group">
-                                    <label for="checkboxValues">{$lblValues|ucfirst}</label>
+                                    <label for="checkboxValues" class="control-label">{$lblValues|ucfirst}</label>
                                     <p id="dropdownValuesError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtDropdownValues} {$txtDropdownValuesError}
                                 </div>
@@ -371,7 +371,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="dropdownDefaultValue">{$lblDefaultValue|ucfirst}</label>
+                                    <label for="dropdownDefaultValue" class="control-label">{$lblDefaultValue|ucfirst}</label>
                                     {$ddmDropdownDefaultValue}
                                 </div>
                                 <div class="jsValidation">
@@ -383,7 +383,7 @@
                                         </ul>
                                     </div>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="dropdownRequiredErrorMessage">
+                                        <label for="dropdownRequiredErrorMessage" class="control-label">
                                             {$lblErrorMessage|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
@@ -398,7 +398,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="dropdownClassname">{$lblClassname|ucfirst}</label>
+                                    <label for="dropdownClassname" class="control-label">{$lblClassname|ucfirst}</label>
                                     {$txtDropdownClassname}
                                 </div>
                             </div>
@@ -439,7 +439,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="radiobuttonLabel">
+                                    <label for="radiobuttonLabel" class="control-label">
                                         {$lblLabel|ucfirst}
                                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
@@ -447,7 +447,7 @@
                                     {$txtRadiobuttonLabel}
                                 </div>
                                 <div class="form-group">
-                                    <label for="checkboxValues">{$lblValues|ucfirst}</label>
+                                    <label for="checkboxValues" class="control-label">{$lblValues|ucfirst}</label>
                                     {$txtRadiobuttonValues} {$txtRadiobuttonValuesError}
                                 </div>
                             </div>
@@ -457,7 +457,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="checkboxDefaultValue">{$lblDefaultValue|ucfirst}</label>
+                                    <label for="checkboxDefaultValue" class="control-label">{$lblDefaultValue|ucfirst}</label>
                                     {$ddmRadiobuttonDefaultValue}
                                 </div>
                                 <div class="jsValidation">
@@ -469,7 +469,7 @@
                                         </ul>
                                     </div>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="checkboxRequiredErrorMessage">
+                                        <label for="checkboxRequiredErrorMessage" class="control-label">
                                             {$lblErrorMessage|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
@@ -484,7 +484,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="radiobuttonClassname">{$lblClassname|ucfirst}</label>
+                                    <label for="radiobuttonClassname" class="control-label">{$lblClassname|ucfirst}</label>
                                     {$txtRadiobuttonClassname}
                                 </div>
                             </div>
@@ -525,7 +525,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="checkboxLabel">
+                                    <label for="checkboxLabel" class="control-label">
                                         {$lblLabel|ucfirst}
                                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                     </label>
@@ -533,7 +533,7 @@
                                     {$txtCheckboxLabel}
                                 </div>
                                 <div class="form-group">
-                                    <label for="checkboxValues">{$lblValues|ucfirst}</label>
+                                    <label for="checkboxValues" class="control-label">{$lblValues|ucfirst}</label>
                                     {$txtCheckboxValues} {$txtCheckboxValuesError}
                                 </div>
                             </div>
@@ -543,7 +543,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="checkboxDefaultValue">{$lblDefaultValue|ucfirst}</label>
+                                    <label for="checkboxDefaultValue" class="control-label">{$lblDefaultValue|ucfirst}</label>
                                     {$ddmCheckboxDefaultValue}
                                 </div>
                                 <div class="jsValidation">
@@ -555,7 +555,7 @@
                                         </ul>
                                     </div>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="checkboxRequiredErrorMessage">
+                                        <label for="checkboxRequiredErrorMessage" class="control-label">
                                             {$lblErrorMessage|ucfirst}
                                             <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                         </label>
@@ -570,7 +570,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="checkboxClassname">{$lblClassname|ucfirst}</label>
+                                    <label for="checkboxClassname" class="control-label">{$lblClassname|ucfirst}</label>
                                     {$txtCheckboxClassname}
                                 </div>
                             </div>
@@ -596,7 +596,7 @@
             <div class="modal-body">
                 <input type="hidden" name="submit_id" id="submitId" value="" />
                 <div class="form-group">
-                    <label for="submit">
+                    <label for="submit" class="control-label">
                         {$lblContent|ucfirst}
                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                     </label>
@@ -621,7 +621,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="heading">
+                    <label for="heading" class="control-label">
                         {$lblContent|ucfirst}
                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                     </label>

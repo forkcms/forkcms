@@ -9,11 +9,11 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group{option:ddmGroupError} has-error{/option:ddmGroupError}">
-        <label for="group">{$lblGroup|ucfirst}</label>
+        <label for="group" class="control-label">{$lblGroup|ucfirst}</label>
         {$ddmGroup} {$ddmGroupError}
       </div>
       <div class="form-group">
-        <label for="expirationDate">{$lblExpiresOn|ucfirst}:</label>
+        <label for="expirationDate" class="control-label">{$lblExpiresOn|ucfirst}:</label>
         <div class="form-inline">
           <div class="form-group{option:txtExpirationDateError} has-error{/option:txtExpirationDateError}">
             {$txtExpirationDate} {$txtExpirationDateError}
