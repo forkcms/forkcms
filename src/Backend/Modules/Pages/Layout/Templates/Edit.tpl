@@ -82,7 +82,7 @@
                   </div>
                 </div>
                 {option:formErrors}
-                <span class="formError">{$formErrors}</span>
+                <span class="formError text-danger">{$formErrors}</span>
                 {/option:formErrors}
               </div>
               <div class="col-md-12">

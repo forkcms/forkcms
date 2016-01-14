@@ -66,7 +66,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                {option:formErrors}<span class="formError">{$formErrors}</span>{/option:formErrors}
+                                {option:formErrors}<span class="formError text-danger">{$formErrors}</span>{/option:formErrors}
                             </div>
                             <div class="col-md-12">
                                 <div class="panel panel-default">

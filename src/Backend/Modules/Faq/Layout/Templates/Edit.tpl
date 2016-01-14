@@ -100,7 +100,7 @@
                     <div class="panel-heading" role="tab" id="feedback-heading-{$feedback.id}">
                       <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#feedback" href="#feedback-collapse-{$feedback.id}" aria-expanded="true" aria-controls="feedback-collapse-{$feedback.id}">
-                          {$feedback.text|truncate:150}
+                          <span class="fa fa-caret-right fa-fw"></span> {$feedback.text|truncate:150}
                         </a>
                       </h4>
                     </div>
