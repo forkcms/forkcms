@@ -2567,11 +2567,12 @@ a.text-warning:hover,
 a.text-warning:focus {
   color: #66512c; }
 
-.text-danger {
+.text-danger, .formError {
   color: #a94442; }
 
-a.text-danger:hover,
-a.text-danger:focus {
+a.text-danger:hover, a.formError:hover,
+a.text-danger:focus,
+a.formError:focus {
   color: #843534; }
 
 .bg-primary {

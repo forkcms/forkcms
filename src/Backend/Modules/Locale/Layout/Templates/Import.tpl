@@ -8,7 +8,7 @@
 {form:import}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
+      <div class="form-group{option:fileFileError} has-error{/option:fileFileError}">
         <label for="file">
           {$lblFile|ucfirst}&nbsp;
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>

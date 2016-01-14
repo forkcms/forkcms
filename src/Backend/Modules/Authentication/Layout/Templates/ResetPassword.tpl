@@ -16,11 +16,11 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <p class=help-block>{$msgHelpResetPassword}</p>
-              <div class="form-group">
+              <div class="form-group{option:txtBackendNewPasswordError} has-error{/option:txtBackendNewPasswordError}">
                 <label for="backendNewPassword">{$lblNewPassword|ucfirst}</label>
                 {$txtBackendNewPassword} {$txtBackendNewPasswordError}
               </div>
-              <div class="form-group">
+              <div class="form-group{option:txtBackendNewPasswordRepeatedError} has-error{/option:txtBackendNewPasswordRepeatedError}">
                 <label for="backendNewPasswordRepeated">{$lblRepeatPassword|ucfirst}</label>
                 {$txtBackendNewPasswordRepeated} {$txtBackendNewPasswordRepeatedError}
               </div>

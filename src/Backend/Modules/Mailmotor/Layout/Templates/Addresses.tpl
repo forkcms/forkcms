@@ -51,7 +51,7 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-4">
-              <div class="form-group">
+              <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
                 <label for="email">{$lblEmailAddress|ucfirst}</label>
                 {$txtEmail} {$txtEmailError}
               </div>

@@ -15,7 +15,7 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:fileCsvError} has-error{/option:fileCsvError}">
             {option:showMailmotorImportAddresses}
             <label for="download">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1">{$lblExampleFile}</a>.</label>
             {/option:showMailmotorImportAddresses}
@@ -36,7 +36,7 @@
         <div class="panel-body">
           <div class="form-group">
             {option:chkGroupsError}
-            <p class="text-danger">{$chkGroupsError}</p>
+              <p class="text-danger">{$chkGroupsError}</p>
             {/option:chkGroupsError}
             <ul class="list-unstyled">
               {iteration:groups}

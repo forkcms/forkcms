@@ -8,7 +8,7 @@
 {form:add}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
+      <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
         <label for="name">
           {$lblReferenceCode|ucfirst}
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -16,7 +16,7 @@
         <p class="help-block">{$msgHelpAddName}</p>
         {$txtName} {$txtNameError}
       </div>
-      <div class="form-group">
+      <div class="form-group{option:txtValueError} has-error{/option:txtValueError}">
         <label for="value">
           {$lblTranslation|ucfirst}
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -26,25 +26,25 @@
       </div>
       <div class="row">
         <div class="col-md-3">
-          <div class="form-group">
+          <div class="form-group{option:ddmLanguageError} has-error{/option:ddmLanguageError}">
             <label for="language">{$lblLanguage|ucfirst}</label>
             {$ddmLanguage} {$ddmLanguageError}
           </div>
         </div>
         <div class="col-md-3">
-          <div class="form-group">
+          <div class="form-group{option:ddmApplicationError} has-error{/option:ddmApplicationError}">
             <label for="application">{$lblApplication|ucfirst}</label>
             {$ddmApplication} {$ddmApplicationError}
           </div>
         </div>
         <div class="col-md-3">
-          <div class="form-group">
+          <div class="form-group{option:ddmModuleError} has-error{/option:ddmModuleError}">
             <label for="module">{$lblModule|ucfirst}</label>
             {$ddmModule} {$ddmModuleError}
           </div>
         </div>
         <div class="col-md-3">
-          <div class="form-group">
+          <div class="form-group{option:ddmTypeError} has-error{/option:ddmTypeError}">
             <label for="type">{$lblType|ucfirst}</label>
             {$ddmType} {$ddmTypeError}
           </div>

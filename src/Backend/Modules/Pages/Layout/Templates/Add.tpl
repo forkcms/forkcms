@@ -21,7 +21,7 @@
     {$hidTemplateId}
     <div class="row fork-module-content">
         <div class="col-md-12">
-            <div class="form-group">
+            <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
                 <label for="title">{$lblTitle|ucfirst}</label>
                 {$txtTitle} {$txtTitleError}
             </div>
@@ -138,7 +138,7 @@
                                 {option:rbtRedirectError}
                                 <div class="alert alert-danger">{$rbtRedirectError}</div>
                                 {/option:rbtRedirectError}
-                                <div class="form-group">
+                                <div class="form-group{option:ddmInternalRedirectError} has-error{/option:ddmInternalRedirectError}{option:txtExternalRedirectError} has-error{/option:txtExternalRedirectError}">
                                     <ul class="list-unstyled radiobuttonFieldCombo">
                                         {iteration:redirect}
                                         <li class="radio">

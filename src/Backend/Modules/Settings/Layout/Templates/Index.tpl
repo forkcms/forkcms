@@ -44,21 +44,21 @@
           <h3 class="panel-title">{$lblScripts|ucfirst}</h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:txtSiteHtmlHeaderError} has-error{/option:txtSiteHtmlHeaderError}">
             <label for="siteHtmlHeader"><code>&lt;head&gt;</code> script(s)</label>
             {$txtSiteHtmlHeader} {$txtSiteHtmlHeaderError}
             <span class="help-block">{$msgHelpScriptsHead}</span>
           </div>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:txtSiteStartOfBodyScriptsError} has-error{/option:txtSiteStartOfBodyScriptsError}">
             <label for="siteStartOfBodyScripts">{$msgHelpScriptsStartOfBodyLabel}</label>
             {$txtSiteStartOfBodyScripts} {$txtSiteStartOfBodyScriptsError}
             <span class="help-block">{$msgHelpScriptsStartOfBody}</span>
           </div>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:txtSiteHtmlFooterError} has-error{/option:txtSiteHtmlFooterError}">
             <label for="siteHtmlFooter">End of <code>&lt;body&gt;</code> script(s)</label>
             {$txtSiteHtmlFooter} {$txtSiteHtmlFooterError}
             <span class="help-block">{$msgHelpScriptsFoot}</span>
@@ -111,17 +111,17 @@
           <h3 class="panel-title">{$lblDateAndTime|ucfirst}</h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:ddmTimeFormatError} has-error{/option:ddmTimeFormatError}">
             <label for="timeFormat">{$lblTimeFormat|ucfirst}</label>
             {$ddmTimeFormat} {$ddmTimeFormatError}
             <span class="help-block">{$msgHelpTimeFormat}</span>
           </div>
-          <div class="form-group">
+          <div class="form-group{option:ddmDateFormatShortError} has-error{/option:ddmDateFormatShortError}">
             <label for="dateFormatShort">{$lblShortDateFormat|ucfirst}</label>
             {$ddmDateFormatShort} {$ddmDateFormatShortError}
             <span class="help-block">{$msgHelpDateFormatShort}</span>
           </div>
-          <div class="form-group">
+          <div class="form-group{option:ddmDateFormatLongError} has-error{/option:ddmDateFormatLongError}">
             <label for="dateFormatLong">{$lblLongDateFormat|ucfirst}</label>
             {$ddmDateFormatLong} {$ddmDateFormatLongError}
             <span class="help-block">{$msgHelpDateFormatLong}</span>
@@ -137,7 +137,7 @@
           <h3 class="panel-title">{$lblNumbers|ucfirst}</h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:ddmNumberFormatError} has-error{/option:ddmNumberFormatError}">
             <label for="numberFormat">{$lblNumberFormat|ucfirst}</label>
             {$ddmNumberFormat} {$ddmNumberFormatError}
             <span class="help-block">{$msgHelpNumberFormat}</span>
@@ -204,20 +204,20 @@
           <h3 class="panel-title">CKFinder</h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:txtCkfinderLicenseNameError} has-error{/option:txtCkfinderLicenseNameError}">
             <label for="ckfinderLicenseName">{$lblLicenseName|ucfirst}</label>
             {$txtCkfinderLicenseName} {$txtCkfinderLicenseNameError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtCkfinderLicenseKeyError} has-error{/option:txtCkfinderLicenseKeyError}">
             <label for="ckfinderLicenseKey">{$lblLicenseKey|ucfirst}</label>
             {$txtCkfinderLicenseKey} {$txtCkfinderLicenseKeyError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtCkfinderImageMaxWidthError} has-error{/option:txtCkfinderImageMaxWidthError}">
             <label for="ckfinderImageMaxWidth">{$lblMaximumWidth|ucfirst}</label>
             {$txtCkfinderImageMaxWidth} {$txtCkfinderImageMaxWidthError}
             <span class="help-block">{$msgHelpCkfinderMaximumWidth}</span>
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtCkfinderImageMaxHeightError} has-error{/option:txtCkfinderImageMaxHeightError}">
             <label for="ckfinderImageMaxHeight">{$lblMaximumHeight|ucfirst}</label>
             {$txtCkfinderImageMaxHeight} {$txtCkfinderImageMaxHeightError}
             <span class="help-block">{$msgHelpCkfinderMaximumHeight}</span>
@@ -233,17 +233,17 @@
           <h3 class="panel-title">Facebook</h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:txtFacebookAdminIdsError} has-error{/option:txtFacebookAdminIdsError}">
             <label for="addValue-facebookAdminIds">{$lblAdminIds|ucfirst}</label>
             {$txtFacebookAdminIds} {$txtFacebookAdminIdsError}
             <span class="help-block">{$msgHelpFacebookAdminIds}</span>
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtFacebookApplicationIdError} has-error{/option:txtFacebookApplicationIdError}">
             <label for="facebookApplicationId">{$lblApplicationId|ucfirst}</label>
             {$txtFacebookApplicationId} {$txtFacebookApplicationIdError}
             <span class="help-block">{$msgHelpFacebookApplicationId}</span>
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtFacebookApplicationSecretError} has-error{option:txtFacebookApplicationSecretError}">
             <label for="facebookApplicationSecret">{$lblApplicationSecret|ucfirst}</label>
             {$txtFacebookApplicationSecret} {$txtFacebookApplicationSecretError}
             <span class="help-block">{$msgHelpFacebookApplicationSecret}</span>
@@ -259,7 +259,7 @@
           <h3 class="panel-title">Twitter</h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:txtTwitterSiteNameError} has-error{/option:txtTwitterSiteNameError}">
             <label for="twitterSiteName">{$lblTwitterSiteName|ucfirst}</label>
             <div class="form-inline">
               <div class="form-group">

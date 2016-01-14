@@ -15,15 +15,15 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:ddmOverviewNumItemsError} has-error{/option:ddmOverviewNumItemsError}">
             <label for="overviewNumItems">{$lblItemsPerPage|ucfirst}</label>
             {$ddmOverviewNumItems} {$ddmOverviewNumItemsError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:ddmAutocompleteNumItemsError} has-error{/option:ddmAutocompleteNumItemsError}">
             <label for="autocompleteNumItems">{$lblItemsForAutocomplete|ucfirst}</label>
             {$ddmAutocompleteNumItems} {$ddmAutocompleteNumItemsError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:ddmAutosuggestNumItemsError} has-error{/option:ddmAutosuggestNumItemsError}">
             <label for="autosuggestNumItems">{$lblItemsForAutosuggest|ucfirst}</label>
             {$ddmAutosuggestNumItems} {$ddmAutosuggestNumItemsError}
           </div>

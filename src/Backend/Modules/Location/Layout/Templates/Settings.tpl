@@ -15,21 +15,21 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:ddmZoomLevelWidgetError} has-error{/option:ddmZoomLevelWidgetError}">
             <label for="zoomLevelWidget">{$lblZoomLevel|ucfirst}</label>
             {$ddmZoomLevelWidget} {$ddmZoomLevelWidgetError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtWidthWidgetError} has-error{/option:txtWidthWidgetError}">
             <label for="widthWidget">{$lblWidth|ucfirst}</label>
             <p class="help-block">{$msgWidthHelp|sprintf:300:800}</p>
             {$txtWidthWidget} {$txtWidthWidgetError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtHeightWidgetError} has-error{/option:txtHeightWidgetError}">
             <label for="heightWidget">{$lblHeight|ucfirst}</label>
             <p class="help-block">{$msgHeightHelp|sprintf:150}</p>
             {$txtHeightWidget} {$txtHeightWidgetError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:ddmMapTypeWidgetError} has-error{/option:ddmMapTypeWidgetError}">
             <label for="mapTypeWidget">{$lblMapType|ucfirst}</label>
             {$ddmMapTypeWidget} {$ddmMapTypeWidgetError}
           </div>

@@ -8,7 +8,7 @@
 {form:editGroup}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
+      <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
         <label for="name">
           {$lblName|ucfirst}
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>

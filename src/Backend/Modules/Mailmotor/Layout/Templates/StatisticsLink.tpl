@@ -24,7 +24,7 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-4">
-              <div class="form-group">
+              <div class="form-group{option:txtGroupError} has-error{/option:txtGroupError}">
                 <label for="group">{$lblGroup|ucfirst}</label>
                 {$txtGroup} {$txtGroupError}
               </div>

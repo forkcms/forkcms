@@ -8,14 +8,14 @@
 {form:edit}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
+      <div class="form-group{otpion:txtEmailError} has-error{/option:txtEmailError}">
         <label for="email">{$lblEmailAddress|ucfirst}</label>
         {$txtEmail} {$txtEmailError}
       </div>
       <div class="form-group">
         {option:groups}
         {option:chkGroupsError}
-        <p class="text-danger">{$chkGroupsError}</p>
+          <p class="text-danger">{$chkGroupsError}</p>
         {/option:chkGroupsError}
         <ul class="list-unstyled">
           {iteration:groups}
@@ -38,7 +38,7 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:ddmSubscriptionsError} has-error{/option:ddmSubscriptionsError}">
             <label for="subscriptions">{$lblGroup|ucfirst}</label>
             {$ddmSubscriptions} {$ddmSubscriptionsError}
           </div>
@@ -46,7 +46,7 @@
         {option:fields}
         <div class="panel-body">
           {iteration:fields}
-          <div class="form-group">
+          <div class="form-group{option:fields.txtFieldError} has-error{/option:fields.txtFieldError}">
             <label for="{$fields.name}">[{$fields.label}]</label>
             {$fields.txtField} {$fields.txtFieldError}
           </div>

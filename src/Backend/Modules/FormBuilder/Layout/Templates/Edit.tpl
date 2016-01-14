@@ -36,28 +36,28 @@
           <div role="tabpanel" class="tab-pane active" id="tabGeneral">
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
                   <label for="name">
                     {$lblName|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtName} {$txtNameError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:ddmMethodError} has-error{/option:ddmMethodError}">
                   <label for="method">
                     {$lblMethod|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$ddmMethod} {$ddmMethodError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
                   <label for="email">
                     {$lblRecipient|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtEmail} {$txtEmailError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:txtSuccessMessageError} has-error{/option:txtSuccessMessageError}">
                   <label for="successMessage">
                     {$lblSuccessMessage|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>

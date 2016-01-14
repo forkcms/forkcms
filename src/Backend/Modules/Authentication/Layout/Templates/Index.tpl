@@ -30,11 +30,11 @@
         {form:authenticationIndex}
           <div class="panel panel-default">
             <div class="panel-body">
-              <div class="form-group">
+              <div class="form-group{option:txtBackendEmailError} has-error{/option:txtBackendEmailError}">
                 <label for="backendEmail">{$lblEmail|ucfirst}</label>
                 {$txtBackendEmail} {$txtBackendEmailError}
               </div>
-              <div class="form-group">
+              <div class="form-group{option:txtBackendPasswordError} has-error{/option:txtBackendPasswordError}">
                 <label for="backendPassword">{$lblPassword|ucfirst}</label>
                 {$txtBackendPassword} {$txtBackendPasswordError}
               </div>

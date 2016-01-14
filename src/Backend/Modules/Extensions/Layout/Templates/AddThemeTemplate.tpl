@@ -8,13 +8,13 @@
 {form:add}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-inline form-group">
+      <div class="form-inline form-group{option:ddmThemeError} has-error{/option:ddmThemeError}{option:txtFileError} has-error{/option:txtFileError}">
         <p class="help-block">{$msgHelpTemplateLocation}</p>
         <label for="file">{$msgPathToTemplate|ucfirst}</label>
         <label for="theme" class="hide">{$lblTheme|ucfirst}</label>
         {$ddmTheme}<small><code>/Core/Layout/Templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
       </div>
-      <div class="form-group">
+      <div class="form-group{option:txtLabelError} has-error{/option:txtLabelError}">
         <label for="label">{$lblLabel|ucfirst}</label>
         {$txtLabel} {$txtLabelError}
       </div>
@@ -108,7 +108,7 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-6">
-              <div class="form-group">
+              <div class="form-group{option:txtFormatError} has-error{/option:txtFormatError}">
                 {$txtFormat} {$txtFormatError}
               </div>
               <div>
@@ -132,7 +132,7 @@
           <h3 class="panel-title">{$lblStatus|ucfirst}</h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:chkActiveError} has-error{/option:chkActiveError}{option:chkDefaultError} has-error{/option:chkDefaultError}">
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="active">{$chkActive} {$lblActive|ucfirst}</label> {$chkActiveError}

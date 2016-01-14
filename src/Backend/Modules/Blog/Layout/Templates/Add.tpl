@@ -8,8 +8,8 @@
 {form:add}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="title">{$lblTitle|ucfirst}</label>
+      <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
+        <label class="control-label" for="title">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
       {option:detailURL}
@@ -40,7 +40,7 @@
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
               <div class="col-md-8">
-                <div class="form-group">
+                <div class="form-group{option:txtTextError} has-error{/option:txtTextError}">
                   <label for="text">
                     {$lblMainContent|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -48,12 +48,12 @@
                   {$txtText} {$txtTextError}
                 </div>
                 {option:imageIsAllowed}
-                <div class="form-group">
+                <div class="form-group{option:fileImageError} has-error{/option:fileImageError}">
                   <label for="image">{$lblImage|ucfirst}</label>
                   {$fileImage} {$fileImageError}
                 </div>
                 {/option:imageIsAllowed}
-                <div class="form-group">
+                <div class="form-group{option:txtIntroductionError} has-error{/option:txtIntroductionError}">
                   <label for="introduction">
                     {$lblSummary|ucfirst}
                     <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpSummary}"></abbr>
@@ -76,9 +76,11 @@
                         {/iteration:hidden}
                       </ul>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{option:txtPublishOnDateError} has-error{/option:txtPublishOnDateError}">
                       <label for="publishOnDate">{$lblPublishOn|ucfirst}</label>
                       {$txtPublishOnDate} {$txtPublishOnDateError}
+                    </div>
+                    <div class="form-group{option:txtPublishOnTimeError} has-error{/option:txtPublishOnTimeError}">
                       <label for="publishOnTime">{$lblAt}</label>
                       {$txtPublishOnTime} {$txtPublishOnTimeError}
                     </div>
@@ -89,16 +91,16 @@
                     <h3 class="panel-title">{$lblMetaData|ucfirst}</h3>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group">
+                    <div class="form-group{option:ddmCategoryIdError} has-error{/option:ddmCategoryIdError}">
                       <label for="categoryId">{$lblCategory|ucfirst}</label>
                       {$ddmCategoryId} {$ddmCategoryIdError}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{option:ddmUserIdError} has-error{/option:ddmUserIdError}">
                       <label for="userId">{$lblAuthor|ucfirst}</label>
                       {$ddmUserId} {$ddmUserIdError}
                     </div>
                     {option:showTagsIndex}
-                    <div class="form-group">
+                    <div class="form-group{option:txtTagsError} has-error{/option:txtTagsError}">
                       <label for="tags">{$lblTags|ucfirst}</label>
                       {$txtTags} {$txtTagsError}
                     </div>

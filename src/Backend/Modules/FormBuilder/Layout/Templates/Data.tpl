@@ -30,13 +30,13 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-4">
-              <div class="form-group">
+              <div class="form-group{option:txtStartDateError} has-error{/option:txtStartDateError}">
                 <label for="startDate">{$lblStartDate|ucfirst}</label>
                 {$txtStartDate} {$txtStartDateError}
               </div>
             </div>
             <div class="col-md-4">
-              <div class="form-group">
+              <div class="form-group{option:txtEndDateError} has-error{/option:txtEndDateError}">
                 <label for="endDate">{$lblEndDate|ucfirst}</label>
                 {$txtEndDate} {$txtEndDateError}
               </div>

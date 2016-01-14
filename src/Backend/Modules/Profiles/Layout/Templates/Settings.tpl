@@ -17,7 +17,7 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:txtProfileNotificationEmailError} has-error{/option:txtProfileNotificationEmailError}">
             <ul class="list-unstyled">
               <li class="checkbox"><label for="sendNewProfileAdminMail">{$chkSendNewProfileAdminMail} {$lblSendNewProfileAdminMail|ucfirst}</label></li>
               <li class="checkbox" id="overwriteProfileNotificationEmailBox"><label for="overwriteProfileNotificationEmail">{$chkOverwriteProfileNotificationEmail} {$lblOverwriteProfileNotificationEmail|ucfirst}</label><br/>

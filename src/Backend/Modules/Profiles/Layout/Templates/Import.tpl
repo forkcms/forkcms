@@ -24,11 +24,11 @@
 {form:import}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
+      <div class="form-group{option:ddmGroupError} has-error{/option:ddmGroupError}">
         <label for="group">{$lblGroup|ucfirst}</label>
         {$ddmGroup} {$ddmGroupError}
       </div>
-      <div class="form-group">
+      <div class="form-group{option:fileFileError} has-error{/option:fileFileError}">
         <label for="file">
           {$lblFile|ucfirst}&nbsp;
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>

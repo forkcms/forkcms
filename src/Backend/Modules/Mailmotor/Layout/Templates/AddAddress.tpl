@@ -8,14 +8,14 @@
 {form:add}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
+      <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
         <label for="email">{$lblEmailAddress|ucfirst}</label>
         {$txtEmail} {$txtEmailError}
       </div>
       <div class="form-group">
         {option:groups}
         {option:chkGroupsError}
-        <p class="text-danger">{$chkGroupsError}</p>
+          <p class="text-danger">{$chkGroupsError}</p>
         {/option:chkGroupsError}
         <ul class="list-unstyled">
           {iteration:groups}

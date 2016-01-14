@@ -8,17 +8,17 @@
 {form:addProfileGroup}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
+      <div class="form-group{option:ddmGroupError} has-error{/option:ddmGroupError}">
         <label for="group">{$lblGroup|ucfirst}</label>
         {$ddmGroup} {$ddmGroupError}
       </div>
       <div class="form-group">
         <label for="expirationDate">{$lblExpiresOn|ucfirst}:</label>
         <div class="form-inline">
-          <div class="form-group">
+          <div class="form-group{option:txtExpirationDateError} has-error{/option:txtExpirationDateError}">
             {$txtExpirationDate} {$txtExpirationDateError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtExpirationTimeError} has-error{/option:txtExpirationTimeError}">
             {$txtExpirationTime} {$txtExpirationTimeError}
           </div>
         </div>

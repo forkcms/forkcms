@@ -50,7 +50,7 @@
                     </h4>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group">
+                    <div class="form-group{option:txtFromNameError} has-error{/option:txtFromNameError}">
                       <label for="fromName">
                         {$lblName|ucfirst}
                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -77,7 +77,7 @@
                     </h4>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group">
+                    <div class="form-group{option:txtReplyToEmailError} has-error{/option:txtReplyToEmailError}">
                       <label for="replyToEmail">
                         {$lblEmailAddress|ucfirst}
                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -120,7 +120,7 @@
                     </h4>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group">
+                    <div class="form-group{option:txtPricePerEmailError} has-error{/option:txtPricePerEmailError}">
                       <label for="pricePerEmail">
                         {$lblPerSentMailing|ucfirst}
                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -130,7 +130,7 @@
                         € {$txtPricePerEmail} {$txtPricePerEmailError}
                       </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group{option:txtPricePerCampaignError} has-error{/option:txtPricePerCampaignError}">
                       <label for="pricePerEmail">
                         {$lblPerCampaign|ucfirst}
                         <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -163,7 +163,7 @@
           {form:settingsAccount}
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group{option:txtUrlError} has-error{/option:txtUrlError}">
                   <label for="url">
                     {$lblURL|uppercase}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -171,14 +171,14 @@
                   <p class="help-block">{$msgHelpCMURL}</p>
                   {$txtUrl} {$txtUrlError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:txtUsernameError} has-error{/option:txtUsernameError}">
                   <label for="username">
                     {$lblUsername|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtUsername} {$txtUsernameError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:txtPasswordError} has-error{/option:txtPasswordError}">
                   <label for="password">
                     {$lblPassword|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -231,18 +231,18 @@
                   {/option:!clientId}
                   {$ddmClientId}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:txtCompanyNameError} has-error{/option:txtCompanyNameError}">
                   <label for="companyName">
                     {$lblCompanyName|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtCompanyName} {$txtCompanyNameError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:ddmCountriesError} has-error{/option:ddmCountriesError}">
                   <label for="countries">{$lblCountry|ucfirst}</label>
                   {$ddmCountries} {$ddmCountriesError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:ddmTimezonesError} has-error{/option:ddmTimezonesError}">
                   <label for="timezones">{$lblTimezone|ucfirst}</label>
                   {$ddmTimezones} {$ddmTimezonesError}
                 </div>

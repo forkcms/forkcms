@@ -8,14 +8,14 @@
 {form:editItem}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
+      <div class="form-group{option:txtTermError} has-error{/option:txtTermError}">
         <label for="term">
           {$lblTerm|ucfirst}
           <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtTerm} {$txtTermError}
       </div>
-      <div class="form-group">
+      <div class="form-group{option:txtSynonymError} has-error{/option:txtSynonymError}">
         <div class="fakeP">
           <label for="addValue-synonym">
             {$lblSynonyms|ucfirst}

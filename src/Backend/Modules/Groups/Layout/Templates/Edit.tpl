@@ -27,7 +27,7 @@
           <div role="tabpanel" class="tab-pane active" id="tabName">
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
                   <label for="name">
                     {$lblName|ucfirst}&nbsp;
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>

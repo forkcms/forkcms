@@ -1,3 +1,9 @@
+// Fixes height of selects with size attribute
 select[size="1"] {
   height: $input-height-base;
+}
+
+// Style formError classes
+.formError {
+  @extend .text-danger;
 }

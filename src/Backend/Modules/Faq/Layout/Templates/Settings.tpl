@@ -15,15 +15,15 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:ddmOverviewNumberOfItemsPerCategoryError} has-error{/option:ddmOverviewNumberOfItemsPerCategoryError}">
             <label for="overviewNumberOfItemsPerCategory">{$lblItemsPerCategory|ucfirst}</label>
             {$ddmOverviewNumberOfItemsPerCategory} {$ddmOverviewNumberOfItemsPerCategoryError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:ddmMostReadNumberOfItemsError} has-error{/option:ddmMostReadNumberOfItemsError}">
             <label for="mostReadNumberOfItems">{$msgNumMostReadItems}</label>
             {$ddmMostReadNumberOfItems} {$ddmMostReadNumberOfItemsError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:ddmRelatedNumberOfItemsError} has-error{/option:ddmRelatedNumberOfItemsError}">
             <label for="relatedNumberOfItems">{$msgNumRelatedItems}</label>
             {$ddmRelatedNumberOfItems} {$ddmRelatedNumberOfItemsError}
           </div>

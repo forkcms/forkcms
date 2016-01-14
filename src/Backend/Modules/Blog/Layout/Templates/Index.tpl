@@ -34,7 +34,7 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-md-4">
-          <div class="form-group">
+          <div class="form-group{option:ddmCategoryError} has-error{/option:ddmCategoryError}">
             <label for="category">{$msgShowOnlyItemsInCategory}</label>
             {$ddmCategory} {$ddmCategoryError}
           </div>

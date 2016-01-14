@@ -25,13 +25,13 @@
         </h3>
       </div>
       <div class="panel-body">
-        <div class="form-group">
+        <div class="form-group{option:fileCertificateError} has-error{/option:fileCertificateError}">
           <p class="help-block">
             {$msgCertificateHelp}
           </p>
           {$fileCertificate} {$fileCertificateError}
-        </p>
-        <p>
+        </div>
+        <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
           <label for="email">{$lblEmail|ucfirst}</label>
           {$txtEmail} {$txtEmailError}
         </div>

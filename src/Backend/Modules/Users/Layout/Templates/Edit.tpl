@@ -74,28 +74,28 @@
           <div role="tabpanel" class="tab-pane active" id="tabProfile">
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
                   <label for="email">
                     {$lblEmail|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtEmail} {$txtEmailError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
                   <label for="name">
                     {$lblName|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtName} {$txtNameError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:txtSurnameError} has-error{/option:txtSurnameError}">
                   <label for="surname">
                     {$lblSurname|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtSurname} {$txtSurnameError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:txtNicknameError} has-error{/option:txtNicknameError}">
                   <label for="nickname">
                     {$lblNickname|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
@@ -103,7 +103,7 @@
                   <p class="help-block">{$msgHelpNickname}</p>
                   {$txtNickname} {$txtNicknameError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:fileAvatarError} has-error{/option:fileAvatarError}">
                   <label for="avatar">{$lblAvatar|ucfirst}</label>
                   <p class="help-block">{$msgHelpAvatar}</p>
                   {$fileAvatar} {$fileAvatarError}
@@ -161,7 +161,7 @@
                       </td>
                     </tr>
                   </table>
-                  <div class="form-group form-inline">
+                  <div class="form-group form-inline{option:txtNewPasswordError} has-error{/option:txtNewPasswordError}">
                     <div class="form-group">
                       {$txtNewPassword} {$txtNewPasswordError}
                     </div>
@@ -172,7 +172,7 @@
                     {$lblConfirmPassword|ucfirst}
                     <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
-                  <div class="form-group form-inline">
+                  <div class="form-group form-inline{option:txtConfirmPasswordError} has-error{/option:txtConfirmPasswordError}">
                     <div class="form-group">
                       {$txtConfirmPassword} {$txtConfirmPasswordError}
                     </div>
@@ -185,19 +185,19 @@
           <div role="tabpanel" class="tab-pane" id="tabSettings">
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group{option:ddmInterfaceLanguageError} has-error{/option:ddmInterfaceLanguageError}">
                   <label for="interfaceLanguage">{$lblLanguage|ucfirst}</label>
                   {$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:ddmDateFormatError} has-error{/option:ddmDateFormatError}">
                   <label for="dateFormat">{$lblDateFormat|ucfirst}</label>
                   {$ddmDateFormat} {$ddmDateFormatError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:ddmTimeFormatError} has-error{/option:ddmTimeFormatError}">
                   <label for="timeFormat">{$lblTimeFormat|ucfirst}</label>
                   {$ddmTimeFormat} {$ddmTimeFormatError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:ddmNumberFormatError} has-error{/option:ddmNumberFormatError}">
                   <label for="numberFormat">{$lblNumberFormat|ucfirst}</label>
                   {$ddmNumberFormat} {$ddmNumberFormatError}
                 </div>
@@ -210,11 +210,11 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group{option:ddmCsvSplitCharacterError} has-error{/option:ddmCsvSplitCharacterError}">
                   <label for="csvSplitCharacter">{$lblSplitCharacter|ucfirst}</label>
                   {$ddmCsvSplitCharacter} {$ddmCsvSplitCharacterError}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:ddmCsvLineEndingError} has-error{/option:ddmCsvLineEndingError}">
                   <label for="csvLineEnding">{$lblLineEnding|ucfirst}</label>
                   {$ddmCsvLineEnding} {$ddmCsvLineEndingError}
                 </div>
@@ -225,7 +225,7 @@
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group{option:chkActiveError} has-error{/option:chkActiveError}{option:chkApiAccessError} has-error{/option:chkApiAccessError}">
                   <ul class="list-unstyled">
                     <li class="checkbox">
                       <label for="active">{$chkActive} {$msgHelpActive}</label> {$chkActiveError}
@@ -235,7 +235,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:chkGroupsError} has-error{/option:chkGroupsError}">
                   <p>{$lblGroups|ucfirst}</p>
                   <ul id="groupList" class="list-unstyled">
                     {iteration:groups}

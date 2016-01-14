@@ -16,21 +16,21 @@
           <h3 class="panel-title">{$lblProfile|ucfirst}</h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
             <label for="email">
               {$lblEmail|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtEmail} {$txtEmailError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtDisplayNameError} has-error{/option:txtDisplayNameError}">
             <label for="displayName">
               {$lblDisplayName|ucfirst}
               <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtDisplayName} {$txtDisplayNameError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtPasswordError} has-error{/option:txtPasswordError}">
             <label for="password">
               {$lblPassword|ucfirst}
               {option:!notifyProfile}<abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>{/option:!notifyProfile}
@@ -49,19 +49,19 @@
           <h3 class="panel-title">{$lblSettings|ucfirst}</h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:txtFirstNameError} has-error{/option:txtFirstNameError}">
             <label for="firstName">{$lblFirstName|ucfirst}</label>
             {$txtFirstName} {$txtFirstNameError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtLastNameError} has-error{/option:txtLastNameError}">
             <label for="lastName">{$lblLastName|ucfirst}</label>
             {$txtLastName} {$txtLastNameError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:ddmGenderError} has-error{/option:ddmGenderError}">
             <label for="gender">{$lblGender|ucfirst}</label>
             {$ddmGender} {$ddmGenderError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:ddmYearError} has-error{/option:ddmYearError}">
             <label for="day">{$lblBirthDate|ucfirst}</label>
             <div class="form-inline">
               <div class="form-group">{$ddmDay}</div>
@@ -70,11 +70,11 @@
               {$ddmYearError}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtCityError} has-error{/option:txtCityError}">
             <label for="city">{$lblCity|ucfirst}</label>
             {$txtCity} {$txtCityError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:ddmCountryError} has-error{/option:ddmCountryError}">
             <label for="country">{$lblCountry|ucfirst}</label>
             {$ddmCountry} {$ddmCountryError}
           </div>

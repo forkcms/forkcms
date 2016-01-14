@@ -156,7 +156,7 @@
                 <div class="alert alert-warning">
                     {$msgContentSaveWarning}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:txtHtmlError} has-error{/option:txtHtmlError}">
                     {$txtHtml}
                     {$txtHtmlError}
                 </div>

@@ -41,21 +41,21 @@
         </h3>
       </div>
       <div class="panel-body">
-        <div class="form-group">
+        <div class="form-group{option:ddmZoomLevelError} has-error{/option:ddmZoomLevelError}">
           <label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
           {$ddmZoomLevel} {$ddmZoomLevelError}
         </div>
-        <div class="form-group"{option:!godUser} style="display:none;"{/option:!godUser}>
+        <div class="form-group{option:txtWidthError} has-error{/option:txtWidthError}"{option:!godUser} style="display:none;"{/option:!godUser}>
           <label for="width">{$lblWidth|ucfirst}</label>
           <p class="help-block">{$msgWidthHelp|sprintf:300:800}</p>
           {$txtWidth} {$txtWidthError}
         </div>
-        <div class="form-group"{option:!godUser} style="display:none;"{/option:!godUser}>
+        <div class="form-group{option:txtHeightError} has-error{/option:txtHeightError}"{option:!godUser} style="display:none;"{/option:!godUser}>
           <label for="height">{$lblHeight|ucfirst}</label>
           <p class="help-block">{$msgHeightHelp|sprintf:150}</p>
           {$txtHeight} {$txtHeightError}
         </div>
-        <div class="form-group">
+        <div class="form-group{option:ddmMapTypeError} has-error{/option:ddmMapTypeError}">
           <label for="mapType">{$lblMapType|ucfirst}</label>
           {$ddmMapType} {$ddmMapTypeError}
         </div>
