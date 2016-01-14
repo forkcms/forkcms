@@ -1677,17 +1677,19 @@ jsBackend.tabs =
 {
     // init, something like a constructor
     init: function () {
-        if ($('.tabs').length > 0) {
-            $('.tabs').tabs();
 
-            $('.tabs .ui-tabs-panel').each(function () {
+        if ($('.nav-tabs').length > 0) {
+            $('.nav-tabs').tab();
+
+            $('.tab-content .tab-pane').each(function () {
                 if ($(this).find('.formError').length > 0) {
-                    $($('.ui-tabs-nav a[href="#' + $(this).attr('id') + '"]').parent()).addClass('ui-state-error');
+                    console.log($(this).attr('id') );
+                    $($('.nav-tabs a[href="#' + $(this).attr('id') + '"]').parent()).addClass('has-error');
                 }
             });
         }
 
-        $('.ui-tabs-nav a').click(function (e) {
+        $('.nav-tabs a').click(function (e) {
             // if the browser supports history.pushState(), use it to update the URL with the fragment identifier, without triggering a scroll/jump
             if (window.history && window.history.pushState) {
                 // an empty state object for now — either we implement a proper pop state handler ourselves, or wait for jQuery UI upstream
