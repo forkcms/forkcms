@@ -8140,6 +8140,13 @@ h3 + .btn-toolbar {
     -o-transition: top 250ms;
     transition: top 250ms; }
 
+.panel-title a {
+  border: none;
+  text-decoration: none; }
+  .panel-title a:hover {
+    border: none;
+    text-decoration: none; }
+
 .panel-transparent {
   border-color: #ddd; }
   .panel-transparent .panel-heading {
@@ -8151,6 +8158,11 @@ h3 + .btn-toolbar {
 
 .nav.nav-tabs-xs > li > a {
   padding: 3px 5px; }
+
+.nav-tabs > .has-error > a,
+.nav-tabs > .active.has-error > a {
+  background: #f2dede;
+  color: #d9534f; }
 
 /* Navigation */
 .fork-nav-sidebar li li.active > a {
