@@ -48,7 +48,9 @@ The backend uses [Bootstrap](http://www.getbootstrap.com) in combination with Sa
 apply your styles in /src/Backend/Core/Layout/Css/screen.css or use Sass.
 
 To use Sass, you first need to install it on your system, more info can be found here: [http://sass-lang.com/install](http://sass-lang.com/install).
-If you use the command line, you can run the following command in your document root: `sass --watch src/Backend/Core/Layout/Sass:src/Backend/Core/Layout/Css`.
+If you use the command line, you can run the following command in your document root:
+
+    sass --watch src/Backend/Core/Layout/Sass:src/Backend/Core/Layout/Css
 
 ## Discussion
 
