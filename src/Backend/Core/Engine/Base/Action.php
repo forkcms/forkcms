@@ -82,7 +82,7 @@ class Action extends Object
     public function checkToken()
     {
         $fromSession = (\SpoonSession::exists('csrf_token')) ? \SpoonSession::get('csrf_token') : '';
-        $fromGet = \SpoonFilter::getGetValue('token', null, '');
+        $fromGet = $this->getContainer()->get('request')->query->get('token');
 
         if ($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) {
             return;
