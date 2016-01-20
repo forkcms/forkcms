@@ -117,8 +117,13 @@ class Meta
      */
     public function generateURL($URL)
     {
+        $class = $this->callback['class'];
+        if (BackendModel::getContainer()->has($class)) {
+            $class = BackendModel::getContainer()->get($class);
+        }
+
         // validate (check if the function exists)
-        if (!is_callable(array($this->callback['class'], $this->callback['method']))) {
+        if (!is_callable(array($class, $this->callback['method']))) {
             throw new Exception('The callback-method doesn\'t exist.');
         }
 
@@ -137,7 +142,7 @@ class Meta
         }
 
         // get the real url
-        return call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
+        return call_user_func_array(array($class, $this->callback['method']), $parameters);
     }
 
     /**
