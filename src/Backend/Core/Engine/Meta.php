@@ -435,6 +435,8 @@ class Meta
      */
     public function save($update = false)
     {
+        $this->validate();
+
         $update = (bool) $update;
 
         // get meta keywords
@@ -476,39 +478,16 @@ class Meta
         }
 
         // build meta
-        $meta['keywords'] = $keywords;
-        $meta['keywords_overwrite'] = $this->frm->getField('meta_keywords_overwrite')->getActualValue();
-        $meta['description'] = $description;
-        $meta['description_overwrite'] = $this->frm->getField('meta_description_overwrite')->getActualValue();
-        $meta['title'] = $title;
-        $meta['title_overwrite'] = $this->frm->getField('page_title_overwrite')->getActualValue();
-        $meta['url'] = $URL;
-        $meta['url_overwrite'] = $this->frm->getField('url_overwrite')->getActualValue();
-        $meta['custom'] = $custom;
-        $meta['data'] = null;
-        if ($this->frm->getField('seo_index')->getValue() != 'none') {
-            $meta['data']['seo_index'] = $this->frm->getField('seo_index')->getValue();
-        }
-        if ($this->frm->getField('seo_follow')->getValue() != 'none') {
-            $meta['data']['seo_follow'] = $this->frm->getField('seo_follow')->getValue();
-        }
-        if (isset($meta['data'])) {
-            $meta['data'] = serialize($meta['data']);
-        }
-
         $db = BackendModel::getContainer()->get('database');
 
-        if ($update) {
-            if ($this->id === null) {
-                throw new Exception('No metaID specified.');
-            }
-            $db->update('meta', $meta, 'id = ?', array($this->id));
+        if ($this->id !== null && $update === true) {
+            $db->update('meta', $this->data, 'id = ?', array($this->id));
 
             return $this->id;
         } else {
-            $id = (int) $db->insert('meta', $meta);
+            unset($this->data['id']);
 
-            return $id;
+            return (int) $db->insert('meta', $this->data);
         }
     }
 
