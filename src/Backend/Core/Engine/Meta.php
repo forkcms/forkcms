@@ -99,7 +99,7 @@ class Meta
         }
 
         // set default callback
-        $this->setUrlCallback(
+        $this->setURLCallback(
             'Backend\\Modules\\' . $this->URL->getModule() . '\\Engine\\Model',
             'getURL'
         );
