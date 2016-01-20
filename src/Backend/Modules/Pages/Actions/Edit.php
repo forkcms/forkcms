@@ -403,7 +403,7 @@ class Edit extends BackendBaseActionEdit
         );
         $this->frm->addText(
             'external_redirect',
-            ($redirectValue == 'external') ? $this->record['data']['external_redirect']['url'] : null,
+            ($redirectValue == 'external') ? urldecode($this->record['data']['external_redirect']['url']) : null,
             null,
             null,
             null,
@@ -612,7 +612,9 @@ class Edit extends BackendBaseActionEdit
                 }
                 if ($redirectValue == 'external') {
                     $data['external_redirect'] = array(
-                        'url' => $this->frm->getField('external_redirect')->getValue(),
+                        'url' => BackendPagesModel::getEncodedRedirectURL(
+                            $this->frm->getField('external_redirect')->getValue()
+                        ),
                         'code' => '301'
                     );
                 }
