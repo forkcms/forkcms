@@ -381,3 +381,4 @@ input[type="submit"] {
 .placeholder { color: #AAA !important; }
 
 .forkForms .imageHolder { float: left; margin-right: 12px; padding: 0; }
+.forkForms .imageHolder img { display: block; max-width: 100%; }
