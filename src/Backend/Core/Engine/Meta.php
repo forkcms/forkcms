@@ -606,4 +606,12 @@ class Meta
             }
         }
     }
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
 }
