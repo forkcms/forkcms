@@ -30,11 +30,9 @@ class FormEndTokenParser extends \Twig_TokenParser
                 $token->getLine(),
                 $this->parser->getFilename()
             );
+        } else {
+            FormState::$current = null;
         }
-        //else {
-            // disabled for now as it seems extended forms don't are orphaned
-            // FormState::$current = null;
-        //}
 
         return new FormEndNode($token->getLine(), $this->getTag());
     }

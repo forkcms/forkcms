@@ -29,7 +29,7 @@
           <p>{{ msg.LoginFormForgotPasswordSuccess }}</p>
         </div>
         {% endif %}
-        {% form authentication_index %}
+        {% form authenticationIndex %}
           <div class="panel panel-default">
             <div class="panel-body">
               <div class="form-group">
@@ -58,7 +58,7 @@
         <div class="modal fade" id="forgotPasswordHolder" tabindex="-1" role="dialog" aria-labelledby="{{ msg.HelpForgotPassword }}" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              {% form forgot_password %}
+              {% form forgotPassword %}
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   <h4 class="modal-title" id="myModalLabel">{{ msg.ForgotPassword }}</h4>
