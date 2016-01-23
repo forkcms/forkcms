@@ -18,13 +18,14 @@ class FormFieldErrorTokenParser extends \Twig_TokenParser
         $stream = $this->parser->getStream();
         $field = $stream->expect(\Twig_Token::NAME_TYPE)->getValue();
         $stream->expect(\Twig_Token::BLOCK_END_TYPE);
-        // if(FormState::$current === null) {
-        //     throw new \Twig_Error_Syntax(
-        //         sprintf('Cannot render form field error [%s] outside a form element', $field),
-        //         $token->getLine(),
-        //         $this->parser->getFilename()
-        //     );
-        // }
+        if(FormState::$current === null) {
+            throw new \Twig_Error_Syntax(
+                sprintf('Cannot render form field error [%s] outside a form element', $field),
+                $token->getLine(),
+                $this->parser->getFilename()
+            );
+        }
+
         return new FormFieldErrorNode(
             FormState::$current, $field, $token->getLine(), $this->getTag()
         );
