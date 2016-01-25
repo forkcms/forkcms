@@ -74,34 +74,48 @@
           <div role="tabpanel" class="tab-pane active" id="tabProfile">
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
-                  <label for="email" class="control-label">
-                    {$lblEmail|ucfirst}
-                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
-                  </label>
-                  {$txtEmail} {$txtEmailError}
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
+                      <label for="email" class="control-label">
+                        {$lblEmail|ucfirst}
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                      </label>
+                      {$txtEmail} {$txtEmailError}
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
-                  <label for="name" class="control-label">
-                    {$lblName|ucfirst}
-                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
-                  </label>
-                  {$txtName} {$txtNameError}
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
+                      <label for="name" class="control-label">
+                        {$lblName|ucfirst}
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                      </label>
+                      {$txtName} {$txtNameError}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group{option:txtSurnameError} has-error{/option:txtSurnameError}">
+                      <label for="surname" class="control-label">
+                        {$lblSurname|ucfirst}
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                      </label>
+                      {$txtSurname} {$txtSurnameError}
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group{option:txtSurnameError} has-error{/option:txtSurnameError}">
-                  <label for="surname" class="control-label">
-                    {$lblSurname|ucfirst}
-                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
-                  </label>
-                  {$txtSurname} {$txtSurnameError}
-                </div>
-                <div class="form-group{option:txtNicknameError} has-error{/option:txtNicknameError}">
-                  <label for="nickname" class="control-label">
-                    {$lblNickname|ucfirst}
-                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
-                  </label>
-                  <p class="help-block">{$msgHelpNickname}</p>
-                  {$txtNickname} {$txtNicknameError}
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group{option:txtNicknameError} has-error{/option:txtNicknameError}">
+                      <label for="nickname" class="control-label">
+                        {$lblNickname|ucfirst}
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                      </label>
+                      <p class="help-block">{$msgHelpNickname}</p>
+                      {$txtNickname} {$txtNicknameError}
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group{option:fileAvatarError} has-error{/option:fileAvatarError}">
                   <label for="avatar" class="control-label">{$lblAvatar|ucfirst}</label>
@@ -185,21 +199,31 @@
           <div role="tabpanel" class="tab-pane" id="tabSettings">
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group{option:ddmInterfaceLanguageError} has-error{/option:ddmInterfaceLanguageError}">
-                  <label for="interfaceLanguage" class="control-label">{$lblLanguage|ucfirst}</label>
-                  {$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
-                </div>
-                <div class="form-group{option:ddmDateFormatError} has-error{/option:ddmDateFormatError}">
-                  <label for="dateFormat" class="control-label">{$lblDateFormat|ucfirst}</label>
-                  {$ddmDateFormat} {$ddmDateFormatError}
-                </div>
-                <div class="form-group{option:ddmTimeFormatError} has-error{/option:ddmTimeFormatError}">
-                  <label for="timeFormat" class="control-label">{$lblTimeFormat|ucfirst}</label>
-                  {$ddmTimeFormat} {$ddmTimeFormatError}
-                </div>
-                <div class="form-group{option:ddmNumberFormatError} has-error{/option:ddmNumberFormatError}">
-                  <label for="numberFormat" class="control-label">{$lblNumberFormat|ucfirst}</label>
-                  {$ddmNumberFormat} {$ddmNumberFormatError}
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmInterfaceLanguageError} has-error{/option:ddmInterfaceLanguageError}">
+                      <label for="interfaceLanguage" class="control-label">{$lblLanguage|ucfirst}</label>
+                      {$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmDateFormatError} has-error{/option:ddmDateFormatError}">
+                      <label for="dateFormat" class="control-label">{$lblDateFormat|ucfirst}</label>
+                      {$ddmDateFormat} {$ddmDateFormatError}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmTimeFormatError} has-error{/option:ddmTimeFormatError}">
+                      <label for="timeFormat" class="control-label">{$lblTimeFormat|ucfirst}</label>
+                      {$ddmTimeFormat} {$ddmTimeFormatError}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmNumberFormatError} has-error{/option:ddmNumberFormatError}">
+                      <label for="numberFormat" class="control-label">{$lblNumberFormat|ucfirst}</label>
+                      {$ddmNumberFormat} {$ddmNumberFormatError}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -210,13 +234,19 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group{option:ddmCsvSplitCharacterError} has-error{/option:ddmCsvSplitCharacterError}">
-                  <label for="csvSplitCharacter" class="control-label">{$lblSplitCharacter|ucfirst}</label>
-                  {$ddmCsvSplitCharacter} {$ddmCsvSplitCharacterError}
-                </div>
-                <div class="form-group{option:ddmCsvLineEndingError} has-error{/option:ddmCsvLineEndingError}">
-                  <label for="csvLineEnding" class="control-label">{$lblLineEnding|ucfirst}</label>
-                  {$ddmCsvLineEnding} {$ddmCsvLineEndingError}
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmCsvSplitCharacterError} has-error{/option:ddmCsvSplitCharacterError}">
+                      <label for="csvSplitCharacter" class="control-label">{$lblSplitCharacter|ucfirst}</label>
+                      {$ddmCsvSplitCharacter} {$ddmCsvSplitCharacterError}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmCsvLineEndingError} has-error{/option:ddmCsvLineEndingError}">
+                      <label for="csvLineEnding" class="control-label">{$lblLineEnding|ucfirst}</label>
+                      {$ddmCsvLineEnding} {$ddmCsvLineEndingError}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
