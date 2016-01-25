@@ -10000,6 +10000,10 @@
         <translation language="sv"><![CDATA[E-post som skickas från CMS använder dessa inställningar.]]></translation>
         <translation language="el"><![CDATA[Τα email που αποστέλλονται από το CMS χρησιμοποιούν αυτές τις ρυθμίσεις.]]></translation>
       </item>
+      <item type="message" name="HelpEmailReplyTo">
+        <translation language="nl"><![CDATA[Antwoorden op e-mails verzonden vanuit het CMS worden naar dit e-mailadres gestuurd.]]></translation>
+        <translation language="en"><![CDATA[Answers on e-mails sent from the CMS will be sent to this e-mailaddress.]]></translation>
+      </item>
       <item type="message" name="HelpEmailTo">
         <translation language="nl"><![CDATA[Notificaties van het CMS worden hiernaar verstuurd.]]></translation>
         <translation language="en"><![CDATA[Notifications from the CMS are sent here.]]></translation>
