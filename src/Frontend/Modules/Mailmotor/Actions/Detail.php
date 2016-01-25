@@ -49,7 +49,7 @@ class Detail extends FrontendBaseBlock
 
         // overwrite the template path
         $this->setOverwrite(true);
-        $this->setTemplatePath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Templates/Detail.tpl');
+        $this->setTemplatePath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Templates/Detail.html.twig');
 
         $this->loadData();
         $this->parse();

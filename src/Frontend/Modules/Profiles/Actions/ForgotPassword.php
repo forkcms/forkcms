@@ -129,7 +129,7 @@ class ForgotPassword extends FrontendBaseBlock
                     ->setTo(array($txtEmail->getValue() => ''))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/ForgotPassword.tpl',
+                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
                         $mailValues,
                         true
                     )

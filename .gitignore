@@ -10,6 +10,7 @@
 /app/sessions/*
 /components/
 /backend/cache/navigation/
+/src/Backend/Cache/CachedTemplates/
 /vendor/
 /app/config/parameters.yml
 /bin/

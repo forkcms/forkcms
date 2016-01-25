@@ -235,7 +235,7 @@ class Index extends BackendBaseActionIndex
                     ->setTo(array($email))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        BACKEND_MODULES_PATH . '/Authentication/Layout/Templates/Mails/ResetPassword.tpl',
+                         '/Authentication/Layout/Templates/Mails/ResetPassword.html.twig',
                         $variables
                     )
                 ;

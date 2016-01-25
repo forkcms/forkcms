@@ -42,8 +42,8 @@ class Subpages extends FrontendBaseWidget
         try {
             $template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
         } catch (FrontendException $e) {
-            // template does not exist; assume subpages_default.tpl
-            $template = FrontendTheme::getPath($widgetTemplatesPath . '/SubpagesDefault.tpl');
+            // template does not exist; assume subpages_default.html.twig
+            $template = FrontendTheme::getPath($widgetTemplatesPath . '/SubpagesDefault.html.twig');
         }
 
         $this->loadTemplate($template);

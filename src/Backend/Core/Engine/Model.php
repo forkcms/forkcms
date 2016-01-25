@@ -830,15 +830,15 @@ class Model extends \Common\Core\Model
             // build regular expression
             if ($module !== null) {
                 if ($language === null) {
-                    $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
+                    $regexp = '/' . '(.*)' . $module . '(.*)_cache\.html.twig/i';
                 } else {
-                    $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
+                    $regexp = '/' . $language . '_' . $module . '(.*)_cache\.html.twig/i';
                 }
             } else {
                 if ($language === null) {
-                    $regexp = '/(.*)_cache\.tpl/i';
+                    $regexp = '/(.*)_cache\.html.twig/i';
                 } else {
-                    $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
+                    $regexp = '/' . $language . '_(.*)_cache\.html.twig/i';
                 }
             }
 

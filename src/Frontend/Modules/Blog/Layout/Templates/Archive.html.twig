@@ -31,7 +31,7 @@
 					<tbody>
 						{% for item in items %}
 							<tr>
-								<td class="date">{{ item.publish_on|spoon_date(dateFormatShort, LANGUAGE) }}</td>
+								<td class="date">{{ item.publish_on|spoondate(dateFormatShort, LANGUAGE) }}</td>
 								<td class="title"><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></td>
 								{% if item.allow_comments %}
 									<td class="comments">

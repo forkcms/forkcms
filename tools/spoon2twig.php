@@ -48,14 +48,21 @@ class Spoon2Twig
         $force = (isset($argv[2]) && $argv[2] === '-f');
         $this->type['module'] = (isset($argv[2]) && $argv[2] === '-m');
         $this->type['theme'] = (isset($argv[2]) && $argv[2] === '-t');
+        $this->type['backend'] = (isset($argv[2]) && $argv[2] === '-b');
         $input = (string) $argv[1];
         $source = $this->getCorrectSourceVersion();
 
-        $path['templates'] = array('/Layout/Templates', '/Layout/Widgets', '/Core/Layout/Templates');
+        $path['templates'] = array('/Layout/Templates', '/Layout/Widgets');
 
         if ($input === '-all') {
             $path['base'] = array('Frontend/Themes', 'Backend/Modules', 'Frontend/Modules', 'Frontend');
             $this->convertAllFiles($force, $path);
+            return;
+        }
+
+        if ($input === '-backend') {
+            $path['base'] = array('Backend/Modules');
+            $this->convertAllFiles($force, $path, $input);
             return;
         }
 
@@ -86,7 +93,7 @@ class Spoon2Twig
             return;
         }
 
-        if (!file_exists(str_replace('.tpl', $this->extension, $input))) {
+        if (!file_exists(str_replace('.html.twig', $this->extension, $input))) {
             $this->write($input, $this->ruleParser($this->getFile($input)));
             return;
         }
@@ -172,8 +179,21 @@ class Spoon2Twig
                 $tpls = array_diff(scandir($this->webroot . $possiblePath), $excludes);
             }
 
-            foreach ($tpls as $tpl) {
+            // core tpl
+            $coreTplPath = $this->webroot .$possiblePath .'/../Core/Layout/Templates';
+            if (is_dir($coreTplPath)) {
+                $coreTpls = array_diff(scandir($coreTplPath), $excludes);
+                if (!empty($coreTpls)) {
+                    // append full path
+                    foreach ($coreTpls as $coreTpl) {
+                        if (strpos($coreTpl, '.html.twig') !== false) {
+                            $templatePaths[] = $possiblePath .'/../Core/Layout/Templates/' . $coreTpl;
+                        }
+                    }
+                }
+            }
 
+            foreach ($tpls as $tpl) {
                 // theme exception
                 if ($BPath === 'Frontend/Themes') {
                     $themeModule = $possiblePath . '/' . $tpl . '/Modules';
@@ -194,11 +214,13 @@ class Spoon2Twig
                         if (!empty($tplsz)) {
                             // append full path
                             foreach ($tplsz as $tpl_Z) {
-                                if (strpos($tpl_Z, '.tpl') !== false) {
+                                if (strpos($tpl_Z, '.html.twig') !== false) {
                                     $templatePaths[] = $possibletpl . '/' . $tpl_Z;
                                 }
                             }
                         }
+                    } else {
+                        var_dump($this->webroot . $possibletpl);
                     }
                 }
             }
@@ -219,7 +241,7 @@ class Spoon2Twig
             if ($force === true) {
                 $this->write($templatePath, $this->ruleParser($this->getFile($templatePath)));
             } else {
-                if (!file_exists(str_replace('.tpl', $this->extension, $templatePath))) {
+                if (!file_exists(str_replace('.html.twig', $this->extension, $templatePath))) {
                     $this->write($templatePath, $this->ruleParser($this->getFile($templatePath)));
                 } else {
                     $excluded[] = $templatePath;
@@ -268,7 +290,7 @@ class Spoon2Twig
     {
         if (empty($this->errors)) {
             // OUR OUTPUT CODE
-            $input = str_replace('.tpl', $this->extension, $input);
+            $input = str_replace('.html.twig', $this->extension, $input);
             $file = $this->webroot . $input;
             $inputPath = pathinfo($input);
 
@@ -446,7 +468,7 @@ class Spoon2Twig
         $filedata = str_replace('*}', '#}', $filedata); // comments
         $filedata = str_replace('{*', '{#', $filedata); // comments
         $filedata = str_replace('|ucfirst', '|capitalize', $filedata);
-        $filedata = str_replace('.tpl', $this->extension, $filedata);
+        $filedata = str_replace('.html.twig', $this->extension, $filedata);
         $filedata = str_replace("\t", "  ", $filedata);
 
         // raw converter
