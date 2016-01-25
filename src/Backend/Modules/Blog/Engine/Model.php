@@ -1053,6 +1053,14 @@ class Model
              LIMIT ?',
             array($item['id'], $archiveType, BL::getWorkingLanguage(), $rowsToKeep)
         );
+        
+        // get meta-ids that will be deleted
+        $metasIdsToRemove = (array) $db->getColumn(
+            'SELECT i.meta_id
+             FROM blog_posts AS i
+             WHERE i.id = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
+            array($item['id'])
+        );
 
         // delete other revisions
         if (!empty($revisionIdsToKeep)) {
@@ -1081,6 +1089,11 @@ class Model
                 'blog_posts',
                 'id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
                 array($item['id'], $archiveType)
+            );
+            
+            $db->delete(
+                'meta',
+                'id IN (' . implode(', ', $metasIdsToRemove) . ')'
             );
         }
 
