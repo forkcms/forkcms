@@ -231,7 +231,7 @@
           {/option:showPagesDelete}
         </div>
         <div class="btn-group pull-right" role="group">
-          <a href="#" id="saveAsDraft" class="btn btn-primary">
+          <a href="#" id="saveAsDraft" class="btn btn-default">
             <span class="fa fa-file-o"></span>&nbsp;
             {$lblSaveDraft|ucfirst}
           </a>
