@@ -15,17 +15,25 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group{option:ddmOverviewNumberOfItemsPerCategoryError} has-error{/option:ddmOverviewNumberOfItemsPerCategoryError}">
-            <label for="overviewNumberOfItemsPerCategory" class="control-label">{$lblItemsPerCategory|ucfirst}</label>
-            {$ddmOverviewNumberOfItemsPerCategory} {$ddmOverviewNumberOfItemsPerCategoryError}
-          </div>
-          <div class="form-group{option:ddmMostReadNumberOfItemsError} has-error{/option:ddmMostReadNumberOfItemsError}">
-            <label for="mostReadNumberOfItems" class="control-label">{$msgNumMostReadItems}</label>
-            {$ddmMostReadNumberOfItems} {$ddmMostReadNumberOfItemsError}
-          </div>
-          <div class="form-group{option:ddmRelatedNumberOfItemsError} has-error{/option:ddmRelatedNumberOfItemsError}">
-            <label for="relatedNumberOfItems" class="control-label">{$msgNumRelatedItems}</label>
-            {$ddmRelatedNumberOfItems} {$ddmRelatedNumberOfItemsError}
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group{option:ddmOverviewNumberOfItemsPerCategoryError} has-error{/option:ddmOverviewNumberOfItemsPerCategoryError}">
+                <label for="overviewNumberOfItemsPerCategory" class="control-label">{$lblItemsPerCategory|ucfirst}</label>
+                {$ddmOverviewNumberOfItemsPerCategory} {$ddmOverviewNumberOfItemsPerCategoryError}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group{option:ddmMostReadNumberOfItemsError} has-error{/option:ddmMostReadNumberOfItemsError}">
+                <label for="mostReadNumberOfItems" class="control-label">{$msgNumMostReadItems}</label>
+                {$ddmMostReadNumberOfItems} {$ddmMostReadNumberOfItemsError}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group{option:ddmRelatedNumberOfItemsError} has-error{/option:ddmRelatedNumberOfItemsError}">
+                <label for="relatedNumberOfItems" class="control-label">{$msgNumRelatedItems}</label>
+                {$ddmRelatedNumberOfItems} {$ddmRelatedNumberOfItemsError}
+              </div>
+            </div>
           </div>
         </div>
       </div>
