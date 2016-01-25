@@ -15,17 +15,27 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group{option:ddmOverviewNumberOfItemsError} has-error{/option:ddmOverviewNumberOfItemsError}">
-            <label for="overviewNumberOfItems" class="control-label">{$lblItemsPerPage|ucfirst}</label>
-            {$ddmOverviewNumberOfItems} {$ddmOverviewNumberOfItemsError}
-          </div>
-          <div class="form-group{option:ddmRecentArticlesFullNumberOfItemsError} has-error{/option:ddmRecentArticlesFullNumberOfItemsError}">
-            <label for="recentArticlesFullNumberOfItems" class="control-label">{$msgNumItemsInRecentArticlesFull|ucfirst}</label>
-            {$ddmRecentArticlesFullNumberOfItems} {$ddmRecentArticlesFullNumberOfItemsError}
-          </div>
-          <div class="form-group{option:ddmRecentArticlesListNumberOfItemsError} has-error{/option:ddmRecentArticlesListNumberOfItemsError}">
-            <label for="recentArticlesListNumberOfItems" class="control-label">{$msgNumItemsInRecentArticlesList|ucfirst}</label>
-            {$ddmRecentArticlesListNumberOfItems} {$ddmRecentArticlesListNumberOfItemsError}
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group{option:ddmOverviewNumberOfItemsError} has-error{/option:ddmOverviewNumberOfItemsError}">
+                <label for="overviewNumberOfItems" class="control-label">{$lblItemsPerPage|ucfirst}</label>
+                <br>
+                <br>
+                {$ddmOverviewNumberOfItems} {$ddmOverviewNumberOfItemsError}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group{option:ddmRecentArticlesFullNumberOfItemsError} has-error{/option:ddmRecentArticlesFullNumberOfItemsError}">
+                <label for="recentArticlesFullNumberOfItems" class="control-label">{$msgNumItemsInRecentArticlesFull|ucfirst}</label>
+                {$ddmRecentArticlesFullNumberOfItems} {$ddmRecentArticlesFullNumberOfItemsError}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group{option:ddmRecentArticlesListNumberOfItemsError} has-error{/option:ddmRecentArticlesListNumberOfItemsError}">
+                <label for="recentArticlesListNumberOfItems" class="control-label">{$msgNumItemsInRecentArticlesList|ucfirst}</label>
+                {$ddmRecentArticlesListNumberOfItems} {$ddmRecentArticlesListNumberOfItemsError}
+              </div>
+            </div>
           </div>
         </div>
       </div>
