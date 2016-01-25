@@ -15,23 +15,33 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group{option:ddmZoomLevelWidgetError} has-error{/option:ddmZoomLevelWidgetError}">
-            <label for="zoomLevelWidget" class="control-label">{$lblZoomLevel|ucfirst}</label>
-            {$ddmZoomLevelWidget} {$ddmZoomLevelWidgetError}
-          </div>
-          <div class="form-group{option:txtWidthWidgetError} has-error{/option:txtWidthWidgetError}">
-            <label for="widthWidget" class="control-label">{$lblWidth|ucfirst}</label>
-            <p class="help-block">{$msgWidthHelp|sprintf:300:800}</p>
-            {$txtWidthWidget} {$txtWidthWidgetError}
-          </div>
-          <div class="form-group{option:txtHeightWidgetError} has-error{/option:txtHeightWidgetError}">
-            <label for="heightWidget" class="control-label">{$lblHeight|ucfirst}</label>
-            <p class="help-block">{$msgHeightHelp|sprintf:150}</p>
-            {$txtHeightWidget} {$txtHeightWidgetError}
-          </div>
-          <div class="form-group{option:ddmMapTypeWidgetError} has-error{/option:ddmMapTypeWidgetError}">
-            <label for="mapTypeWidget" class="control-label">{$lblMapType|ucfirst}</label>
-            {$ddmMapTypeWidget} {$ddmMapTypeWidgetError}
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group{option:ddmZoomLevelWidgetError} has-error{/option:ddmZoomLevelWidgetError}">
+                <label for="zoomLevelWidget" class="control-label">{$lblZoomLevel|ucfirst}</label>
+                {$ddmZoomLevelWidget} {$ddmZoomLevelWidgetError}
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group{option:txtWidthWidgetError} has-error{/option:txtWidthWidgetError}">
+                <label for="widthWidget" class="control-label">{$lblWidth|ucfirst}</label>
+                {$txtWidthWidget} {$txtWidthWidgetError}
+                <p class="help-block">{$msgWidthHelp|sprintf:300:800}</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group{option:txtHeightWidgetError} has-error{/option:txtHeightWidgetError}">
+                <label for="heightWidget" class="control-label">{$lblHeight|ucfirst}</label>
+                {$txtHeightWidget} {$txtHeightWidgetError}
+                <p class="help-block">{$msgHeightHelp|sprintf:150}</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group{option:ddmMapTypeWidgetError} has-error{/option:ddmMapTypeWidgetError}">
+                <label for="mapTypeWidget" class="control-label">{$lblMapType|ucfirst}</label>
+                {$ddmMapTypeWidget} {$ddmMapTypeWidgetError}
+              </div>
+            </div>
           </div>
         </div>
       </div>
