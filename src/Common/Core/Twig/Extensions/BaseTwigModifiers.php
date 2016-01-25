@@ -221,4 +221,50 @@ class BaseTwigModifiers
 
         return $status;
     }
+
+    /**
+     * Truncate a string
+     *    syntax: {{ $string|truncate($max-length, $append-hellip, $closest-word) }}.
+     *
+     * @param string $string      The string passed from the template.
+     * @param int    $length      The maximum length of the truncated string.
+     * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
+     * @param bool   $closestWord Truncate on exact length or on closest word?
+     *
+     * @return string
+     */
+    public static function truncate($string = null, $length, $useHellip = true, $closestWord = false)
+    {
+        // remove special chars, all of them, also the ones that shouldn't be there.
+        $string = \SpoonFilter::htmlentitiesDecode($string, null, ENT_QUOTES);
+
+        // remove HTML
+        $string = strip_tags($string);
+
+        // less characters
+        if (mb_strlen($string) <= $length) {
+            return \SpoonFilter::htmlspecialchars($string);
+        } else {
+            // more characters
+            // hellip is seen as 1 char, so remove it from length
+            if ($useHellip) {
+                $length = $length - 1;
+            }
+
+            // truncate
+            if ($closestWord) {
+                $string = mb_substr($string, 0, strrpos(substr($string, 0, $length + 1), ' '), 'UTF-8');
+            } else {
+                $string = mb_substr($string, 0, $length, 'UT8');
+            }
+
+            // add hellip
+            if ($useHellip) {
+                $string .= '…';
+            }
+
+            // return
+            return \SpoonFilter::htmlspecialchars($string, ENT_QUOTES);
+        }
+    }
 }

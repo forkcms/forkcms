@@ -42,6 +42,7 @@ class LoadBlogPosts
                 'publish_on' => '2015-02-23 00:00:00',
                 'created_on' => '2015-02-23 00:00:00',
                 'edited_on' => '2015-02-23 00:00:00',
+                'num_comments' => 0,
             )
         );
 

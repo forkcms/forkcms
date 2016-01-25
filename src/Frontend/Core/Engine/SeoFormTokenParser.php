@@ -1,17 +1,15 @@
 <?php
-
 namespace Frontend\Core\Engine;
 
 /**
- * Twig token parser for form closing tag.
+ * Twig token parser for form fields.
  *
- * @author <per@wijs.be>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
-class FormEndTokenParser extends \Twig_TokenParser
+class SeoFormTokenParser extends \Twig_TokenParser
 {
     /**
-     * @param Twig_Token $token Token consumed by the lexer.
-     *
+     * @param Twig_Token $token consumed token by the lexer.
      * @return Twig_Node
      * @throw Twig_Error_Syntax
      */
@@ -26,15 +24,13 @@ class FormEndTokenParser extends \Twig_TokenParser
 
         if (FormState::$current === null) {
             throw new \Twig_Error_Syntax(
-                'Trying to close a form tag, while none opened',
+                sprintf('Cannot render seo outside a form element'),
                 $token->getLine(),
                 $this->parser->getFilename()
             );
-        } else {
-            FormState::$current = null;
         }
 
-        return new FormEndNode($token->getLine(), $this->getTag());
+        return new SeoFormNode(FormState::$current, $token->getLine(), $this->getTag());
     }
 
     /**
@@ -42,6 +38,6 @@ class FormEndTokenParser extends \Twig_TokenParser
      */
     public function getTag()
     {
-        return 'endform';
+        return 'seo';
     }
 }
