@@ -15,17 +15,27 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group{option:ddmOverviewNumItemsError} has-error{/option:ddmOverviewNumItemsError}">
-            <label for="overviewNumItems" class="control-label">{$lblItemsPerPage|ucfirst}</label>
-            {$ddmOverviewNumItems} {$ddmOverviewNumItemsError}
-          </div>
-          <div class="form-group{option:ddmAutocompleteNumItemsError} has-error{/option:ddmAutocompleteNumItemsError}">
-            <label for="autocompleteNumItems" class="control-label">{$lblItemsForAutocomplete|ucfirst}</label>
-            {$ddmAutocompleteNumItems} {$ddmAutocompleteNumItemsError}
-          </div>
-          <div class="form-group{option:ddmAutosuggestNumItemsError} has-error{/option:ddmAutosuggestNumItemsError}">
-            <label for="autosuggestNumItems" class="control-label">{$lblItemsForAutosuggest|ucfirst}</label>
-            {$ddmAutosuggestNumItems} {$ddmAutosuggestNumItemsError}
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group{option:ddmOverviewNumItemsError} has-error{/option:ddmOverviewNumItemsError}">
+                <label for="overviewNumItems" class="control-label">{$lblItemsPerPage|ucfirst}</label>
+                <br>
+                <br>
+                {$ddmOverviewNumItems} {$ddmOverviewNumItemsError}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group{option:ddmAutocompleteNumItemsError} has-error{/option:ddmAutocompleteNumItemsError}">
+                <label for="autocompleteNumItems" class="control-label">{$lblItemsForAutocomplete|ucfirst}</label>
+                {$ddmAutocompleteNumItems} {$ddmAutocompleteNumItemsError}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group{option:ddmAutosuggestNumItemsError} has-error{/option:ddmAutosuggestNumItemsError}">
+                <label for="autosuggestNumItems" class="control-label">{$lblItemsForAutosuggest|ucfirst}</label>
+                {$ddmAutosuggestNumItems} {$ddmAutosuggestNumItemsError}
+              </div>
+            </div>
           </div>
         </div>
       </div>
