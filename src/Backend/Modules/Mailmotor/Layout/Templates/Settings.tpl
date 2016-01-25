@@ -50,19 +50,25 @@
                     </h4>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group{option:txtFromNameError} has-error{/option:txtFromNameError}">
-                      <label for="fromName" class="control-label">
-                        {$lblName|ucfirst}
-                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
-                      </label>
-                      {$txtFromName} {$txtFromNameError}
-                    </div>
-                    <div class="form-group">
-                      <label for="fromEmail" class="control-label">
-                        {$lblEmailAddress|ucfirst}
-                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
-                      </label>
-                      {$txtFromEmail} {$txtFromEmailError}
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group{option:txtFromNameError} has-error{/option:txtFromNameError}">
+                          <label for="fromName" class="control-label">
+                            {$lblName|ucfirst}
+                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                          </label>
+                          {$txtFromName} {$txtFromNameError}
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="fromEmail" class="control-label">
+                            {$lblEmailAddress|ucfirst}
+                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                          </label>
+                          {$txtFromEmail} {$txtFromEmailError}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -77,12 +83,16 @@
                     </h4>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group{option:txtReplyToEmailError} has-error{/option:txtReplyToEmailError}">
-                      <label for="replyToEmail" class="control-label">
-                        {$lblEmailAddress|ucfirst}
-                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
-                      </label>
-                      {$txtReplyToEmail} {$txtReplyToEmailError}
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group{option:txtReplyToEmailError} has-error{/option:txtReplyToEmailError}">
+                          <label for="replyToEmail" class="control-label">
+                            {$lblEmailAddress|ucfirst}
+                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                          </label>
+                          {$txtReplyToEmail} {$txtReplyToEmailError}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -120,24 +130,32 @@
                     </h4>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group{option:txtPricePerEmailError} has-error{/option:txtPricePerEmailError}">
-                      <label for="pricePerEmail" class="control-label">
-                        {$lblPerSentMailing|ucfirst}
-                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
-                      </label>
-                      <p class="help-block">{$msgHelpPrice}</p>
-                      <div class="form-inline">
-                        € {$txtPricePerEmail} {$txtPricePerEmailError}
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group{option:txtPricePerEmailError} has-error{/option:txtPricePerEmailError}">
+                          <label for="pricePerEmail" class="control-label">
+                            {$lblPerSentMailing|ucfirst}
+                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                          </label>
+                          <p class="help-block">{$msgHelpPrice}</p>
+                          <div class="input-group">
+                            <span class="input-group-addon">&euro;</span>
+                            {$txtPricePerEmail} {$txtPricePerEmailError}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group{option:txtPricePerCampaignError} has-error{/option:txtPricePerCampaignError}">
-                      <label for="pricePerEmail" class="control-label">
-                        {$lblPerCampaign|ucfirst}
-                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
-                      </label>
-                      <p class="help-block">{$msgHelpPrice}</p>
-                      <div class="form-inline">
-                        € {$txtPricePerCampaign} {$txtPricePerCampaignError}
+                      <div class="col-md-3">
+                        <div class="form-group{option:txtPricePerCampaignError} has-error{/option:txtPricePerCampaignError}">
+                          <label for="pricePerEmail" class="control-label">
+                            {$lblPerCampaign|ucfirst}
+                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                          </label>
+                          <p class="help-block">{$msgHelpPrice}</p>
+                          <div class="input-group">
+                            <span class="input-group-addon">&euro;</span>
+                            {$txtPricePerCampaign} {$txtPricePerCampaignError}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
