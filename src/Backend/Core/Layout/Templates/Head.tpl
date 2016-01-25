@@ -8,6 +8,8 @@
   <title>{option:page_title}{$page_title|ucfirst} - {/option:page_title}{$SITE_TITLE} - Fork CMS</title>
   <link rel="shortcut icon" href="/src/Backend/favicon.ico" />
 
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
+
   {iteration:cssFiles}
   <link rel="stylesheet" href="{$cssFiles.file}" />{$CRLF}{$TAB}
   {/iteration:cssFiles}
