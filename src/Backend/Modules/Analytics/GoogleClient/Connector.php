@@ -177,7 +177,7 @@ final class Connector
         $dateRange = $startDate . '-' . $endDate;
 
         $item = $this->cache->getItem('analytics-' . $dateRange);
-        if ($item->isHit()) {
+        if ($item->isHit()) 
             return $item->get();
         }
 

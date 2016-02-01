@@ -1,3 +1,10 @@
+3.9.7 (xxxx-xx-xx)
+--
+Improvements:
+
+* FormBuilder: redirect to anchor when validating form.
+
+
 3.9.6 (2015-12-22)
 --
 Improvements:
