@@ -494,34 +494,49 @@ jsFrontend.locale =
  * Google analytics related javascript
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author  Jeroen Desloovere <jeroen@siesqo.be>
  */
 jsFrontend.statistics =
 {
 	// init, something like a constructor
 	init: function()
 	{
-		jsFrontend.statistics.trackOutboundLinks();
+		jsFrontend.statistics.trackLinks();
 	},
 
-	// track all outbound links
-	trackOutboundLinks: function()
+	// track all links
+	trackLinks: function()
 	{
 		// check if Google Analytics is available
-		if(typeof _gaq === 'object' || typeof ga === 'object')
+		if(typeof _gaq === 'object' || typeof ga === 'object' || typeof ga === 'function')
 		{
-			// create a new selector
+			// create a new selector which selects all external links
 			$.expr[':'].external = function(obj) {
 				return (typeof obj.href != 'undefined') && !obj.href.match(/^mailto:/) && (obj.hostname != location.hostname);
 			};
 
+			// create a new selector which selects all internal anchor and mailto links
+			$.expr[':'].internal = function(obj) {
+				var sameHostname = (obj.hostname == location.hostname);
+				var exists = (typeof obj.href != 'undefined');
+				var hasAnchor = false;
+
+				if (exists && $(obj).attr('href').match(/^#/)) {
+					hasAnchor = true;
+				}
+
+				return (exists) && ((sameHostname && hasAnchor) || (!sameHostname && obj.href.match(/^mailto:/)));
+			};
+
 			// bind on all links that don't have the class noTracking
-			$(document).on('click', 'a:external:not(.noTracking)', function(e)
+			$(document).on('click', 'a:external:not(.noTracking), a:internal:not(.noTracking)', function(e)
 			{
 				// only simulate direct links
 				var hasTarget = (typeof $(this).attr('target') != 'undefined');
 				if(!hasTarget) e.preventDefault();
 
 				var link = $(this).attr('href');
+				var currentUrl = window.location.pathname;
 
 				// outbound link by default
 				var type = 'Outbound Links';
@@ -531,14 +546,14 @@ jsFrontend.statistics =
 				if(link.match(/^mailto:/))
 				{
 					type = 'Mailto';
-					pageView = '/Mailto/' + link.substring(7);
+					pageView = currentUrl + '/Mailto/' + link.substring(7);
 				}
 
 				// set anchor
 				if(link.match(/^#/))
 				{
 					type = 'Anchors';
-					pageView = '/Anchor/' + link.substring(1);
+					pageView = currentUrl + '/Anchor/' + link.substring(1);
 				}
 
 				// track in Google Analytics

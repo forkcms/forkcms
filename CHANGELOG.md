@@ -1,3 +1,10 @@
+3.9.7 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Analytics: frontend "ga" is a function, not an object.
+
+
 3.9.6 (2015-12-22)
 --
 Improvements:
