@@ -106,6 +106,14 @@
 					</p>
 				</div>
 
+				{* Map style *}
+				<div class="options">
+					<p>
+						<label for="mapType">{$lblMapStyle|ucfirst}</label>
+						{$ddmMapStyle} {$ddmMapStyleError}
+					</p>
+				</div>
+
 				{* Show the full url link or not *}
 				<div class="options">
 					<p>
