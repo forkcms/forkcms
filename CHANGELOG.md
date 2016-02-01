@@ -4,6 +4,9 @@ Bugfixes:
 
 * Analytics: frontend "ga" is a function, not an object.
 
+Improvements:
+* Analytics: internal "anchors" and "mailto"-links are now being tracked.
+
 
 3.9.6 (2015-12-22)
 --
