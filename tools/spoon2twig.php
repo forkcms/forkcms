@@ -14,7 +14,7 @@
  * @author <thijs@wijs.be>
  */
 
-class Spoon2Twig
+class spoon2twig
 {
     private $interationNr = 0;
     private $previousTimeStamp = 0;
@@ -25,7 +25,7 @@ class Spoon2Twig
     private $errors;
     private $type;
 
-    function __construct()
+    public function __construct()
     {
         $this->startTime = microtime(true);
         $this->webroot = __DIR__.'/../';
@@ -117,10 +117,8 @@ class Spoon2Twig
      */
     public function displayErrors()
     {
-        if ($this->errors)
-        {
-            foreach ($this->errors as $error)
-            {
+        if ($this->errors) {
+            foreach ($this->errors as $error) {
                 echo $error .  PHP_EOL;
             }
         }
@@ -170,12 +168,10 @@ class Spoon2Twig
         $possiblePath = $source . $BPath;
 
         if (is_dir($this->webroot . $possiblePath)) {
-
             // single module or theme?
             if ($this->type['theme'] || $this->type['module']) {
                 $tpls[] = $input;
-            }
-            else {
+            } else {
                 $tpls = array_diff(scandir($this->webroot . $possiblePath), $excludes);
             }
 
@@ -263,8 +259,7 @@ class Spoon2Twig
     {
         // checking what version
         $version = $this->getFile('VERSION.md');
-        switch (true)
-        {
+        switch (true) {
             case (strpos($version, '3.9.') !== false):
                 $source = 'src/';
                 break;
@@ -354,13 +349,12 @@ class Spoon2Twig
             foreach ($match[1] as $value) {
                 if ($extra === 'snakeCase') {
                     $value = $this->fromCamelToSnake($value);
-                }
-                elseif($extra === 'comma') {
+                } elseif ($extra === 'comma') {
                     $value = $this->comma($value);
                 }
                 $values[] = sprintf($format, $value);
             }
-            return str_replace($match[0], $values , $filedata);
+            return str_replace($match[0], $values, $filedata);
         }
         $this->error('no match found on the ' . $regex . ' line');
     }
@@ -426,8 +420,8 @@ class Spoon2Twig
                 $new_val = $this->dePluralize($value);
 
                 $prev_match = $match[0];
-                $match[0] = str_replace('{iteration:'.$value.'}','{% for '. $new_val . ' in ' . $value . '_ %}', $match[0]);
-                $match[0] = str_replace('{/iteration:'.$value.'}','{% endfor %}', $match[0]);
+                $match[0] = str_replace('{iteration:'.$value.'}', '{% for '. $new_val . ' in ' . $value . '_ %}', $match[0]);
+                $match[0] = str_replace('{/iteration:'.$value.'}', '{% endfor %}', $match[0]);
                 $match[0] = str_replace($value, $new_val, $match[0]);
                 $match[0] = str_replace($new_val.'_', $value, $match[0]);
                 $filedata = str_replace($prev_match, $match[0], $filedata);
@@ -515,6 +509,6 @@ class Spoon2Twig
     }
 }
 
-$converter = New Spoon2Twig();
+$converter = new spoon2twig();
 $converter->start($argv);
 $converter->displayErrors();

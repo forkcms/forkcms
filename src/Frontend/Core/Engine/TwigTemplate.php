@@ -3,7 +3,6 @@
 namespace Frontend\Core\Engine;
 
 use Frontend\Core\Engine\Language as FL;
-
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
 
@@ -21,7 +20,7 @@ use Common\Core\Twig\Extensions\TwigFilters;
  * @author <thijs@wijs.be>
  */
 
-Class TwigTemplate extends BaseTwigTemplate
+class TwigTemplate extends BaseTwigTemplate
 {
     /** the extension TwigTemplate uses */
     const EXTENSION = '.html.twig';
@@ -66,7 +65,7 @@ Class TwigTemplate extends BaseTwigTemplate
      *
      * @param bool $addToReference Should the instance be added into the reference.
      */
-    function __construct($addToReference = true)
+    public function __construct($addToReference = true)
     {
         if ($addToReference) {
             Model::getContainer()->set('template', $this);
@@ -119,18 +118,17 @@ Class TwigTemplate extends BaseTwigTemplate
      */
     private function setPositions(array $positions)
     {
-        foreach ($positions as &$blocks)
-        {
-            foreach ($blocks as &$block)
-            {
+        foreach ($positions as &$blocks) {
+            foreach ($blocks as &$block) {
                 // skip html
-                if (!empty($block['html'])) continue;
+                if (!empty($block['html'])) {
+                    continue;
+                }
 
                 $block['extra_data'] = @unserialize($block['extra_data']);
 
                 // legacy search the correct module path
                 if ($block['extra_type'] === 'widget' && $block['extra_action']) {
-
                     if (isset($block['extra_data']['template'])) {
                         $tpl = substr($block['extra_data']['template'], 0, -4);
                         $block['include_path'] = $this->widgets[$tpl];
@@ -204,7 +202,6 @@ Class TwigTemplate extends BaseTwigTemplate
 
         // only baseFile can start the render
         if ($this->baseSpoonFile === $template) {
-
             // turn on output buffering
             ob_start();
 
