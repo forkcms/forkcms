@@ -76,9 +76,9 @@
             <p>{$msgConfirmDeleteData}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-            <a href="{$var|geturl:'mass_data_action'}&amp;action=delete&amp;form_id={$formId}&amp;id={$id}" class="btn btn-primary">
-              {$lblOK|ucfirst}
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+            <a href="{$var|geturl:'mass_data_action'}&amp;action=delete&amp;form_id={$formId}&amp;id={$id}" class="btn btn-danger">
+              <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
             </a>
           </div>
         </div>

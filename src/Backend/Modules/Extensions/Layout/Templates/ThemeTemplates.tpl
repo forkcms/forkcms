@@ -8,13 +8,13 @@
     {option:showExtensionsAddThemeTemplate}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
-        <a href="{$var|geturl:'add_theme_template'}{option:selectedTheme}&amp;theme={$selectedTheme}{/option:selectedTheme}" class="btn btn-primary">
-          <span class="fa fa-plus"></span>&nbsp;
-          <span>{$lblAddTemplate|ucfirst}</span>
-        </a>
         <a href="{$var|geturl:'export_theme_templates'}{option:selectedTheme}&amp;theme={$selectedTheme}{/option:selectedTheme}" class="btn btn-default">
           <span class="fa fa-upload"></span>&nbsp;
           <span>{$lblExport|ucfirst}</span>
+        </a>
+        <a href="{$var|geturl:'add_theme_template'}{option:selectedTheme}&amp;theme={$selectedTheme}{/option:selectedTheme}" class="btn btn-primary">
+          <span class="fa fa-plus"></span>&nbsp;
+          <span>{$lblAddTemplate|ucfirst}</span>
         </a>
       </div>
     </div>

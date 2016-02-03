@@ -115,9 +115,9 @@
             <p>{$msgConfirmThemeInstall|sprintf:{$name}}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-            <a href="{$var|geturl:'install_theme'}&amp;theme={$name}" class="btn btn-primary">
-              {$lblOK|ucfirst}
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+            <a href="{$var|geturl:'install_theme'}&amp;theme={$name}" class="btn btn-success">
+              <span class="fa fa-check"></span> {$lblOK|ucfirst}
             </a>
           </div>
         </div>

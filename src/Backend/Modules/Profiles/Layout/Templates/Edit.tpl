@@ -167,7 +167,7 @@
         <div class="btn-group pull-left" role="group">
           {option:showProfilesDelete}
           {option:deleted}
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmUndelete">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmUndelete">
             <span class="fa fa-check"></span>
             {$lblUndelete|ucfirst}
           </button>
@@ -181,13 +181,13 @@
           {/option:showProfilesDelete}
           {option:showProfilesBlock}
           {option:blocked}
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmUnblock">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmUnblock">
             <span class="fa fa-check"></span>
             {$lblUnblock|ucfirst}
           </button>
           {/option:blocked}
           {option:!blocked}
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmBlock">
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#confirmBlock">
             <span class="fa fa-ban"></span>
             {$lblBlock|ucfirst}
           </button>
@@ -195,7 +195,7 @@
           {/option:showProfilesBlock}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="saveButton" type="submit" name="edit" class="btn btn-primary">
+          <button id="saveButton" type="submit" name="edit" class="btn btn-success">
             <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
@@ -221,15 +221,15 @@
               {/option:!deleted}
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
               {option:deleted}
-              <a href="{$var|geturl:'delete'}&amp;id={$profile.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <a href="{$var|geturl:'delete'}&amp;id={$profile.id}" class="btn btn-success">
+                <span class="fa fa-check"></span> {$lblUndelete|ucfirst}
               </a>
               {/option:deleted}
               {option:!deleted}
-              <a href="{$var|geturl:'delete'}&amp;id={$profile.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <a href="{$var|geturl:'delete'}&amp;id={$profile.id}" class="btn btn-danger">
+                <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
               </a>
               {/option:!deleted}
             </div>
@@ -260,13 +260,13 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
               {option:blocked}
-              <a href="{$var|geturl:'block'}&amp;id={$profile.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <a href="{$var|geturl:'block'}&amp;id={$profile.id}" class="btn btn-success">
+                <span class="fa fa-check"></span> {$lblUnblock|ucfirst}
               </a>
               {/option:blocked}
               {option:!blocked}
-              <a href="{$var|geturl:'block'}&amp;id={$profile.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <a href="{$var|geturl:'block'}&amp;id={$profile.id}" class="btn btn-warning">
+                <span class="fa fa-ban"></span> {$lblBlock|ucfirst}
               </a>
               {/option:!blocked}
             </div>

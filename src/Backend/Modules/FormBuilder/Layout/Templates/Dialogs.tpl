@@ -109,8 +109,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="textboxDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="textboxDialogSubmit" type="button" class="btn btn-success jsFieldDialogSubmit"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -216,8 +216,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="textareaDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="textareaDialogSubmit" type="button" class="btn btn-success jsFieldDialogSubmit"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -320,8 +320,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="textareaDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa-fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="textareaDialogSubmit" type="button" class="btn btn-success jsFieldDialogSubmit"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -407,8 +407,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="dropdownDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="dropdownDialogSubmit" type="button" class="btn btn-success jsFieldDialogSubmit"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -493,8 +493,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="radiobuttonDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="radiobuttonDialogSubmit" type="button" class="btn btn-success jsFieldDialogSubmit"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -579,8 +579,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="checkboxDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="checkboxDialogSubmit" type="button" class="btn btn-success jsFieldDialogSubmit"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -605,8 +605,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="submitDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="submitDialogSubmit" type="button" class="btn btn-success jsFieldDialogSubmit"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -630,8 +630,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="headingDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="headingDialogSubmit" type="button" class="btn btn-success jsFieldDialogSubmit"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -651,8 +651,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="paragraphDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="paragraphDialogSubmit" type="button" class="btn btn-success jsFieldDialogSubmit"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -672,9 +672,9 @@
                 <p>{$msgConfirmDelete|sprintf:{$name}}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <a href="{$var|geturl:'delete'}&amp;id={$id}" class="btn btn-primary">
-                    {$lblOK|ucfirst}
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <a href="{$var|geturl:'delete'}&amp;id={$id}" class="btn btn-danger">
+                    <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
                 </a>
             </div>
         </div>

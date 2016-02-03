@@ -167,7 +167,7 @@
               <div class="col-md-12">
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right" role="group">
-                    <button id="save" type="submit" name="save" class="btn btn-primary">
+                    <button id="save" type="submit" name="save" class="btn btn-success">
                       <span class="fa fa-floppy-o"></span>&nbsp;
                       {$lblSave|ucfirst}
                     </button>
@@ -218,7 +218,7 @@
                   </div>
                   <div class="btn-group pull-right" role="group">
                     {option:!account}
-                    <a id="linkAccount" href="#" class="btn btn-primary">
+                    <a id="linkAccount" href="#" class="btn btn-success">
                       <span class="fa fa-link"></span>&nbsp;
                       {$msgLinkCMAccount}
                     </a>
@@ -270,7 +270,7 @@
               <div class="col-md-12">
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right" role="group">
-                    <button id="save" type="submit" name="save" class="btn btn-primary">
+                    <button id="save" type="submit" name="save" class="btn btn-success">
                       <span class="fa fa-floppy-o"></span>&nbsp;
                       {$lblSave|ucfirst}
                     </button>

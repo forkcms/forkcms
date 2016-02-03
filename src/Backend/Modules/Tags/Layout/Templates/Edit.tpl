@@ -34,7 +34,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">{$lblSave|ucfirst}</button>
+          <button id="editButton" type="submit" name="edit" class="btn btn-success"><span class="fa fa-floppy-o"></span> {$lblSave|ucfirst}</button>
         </div>
       </div>
     </div>

@@ -86,8 +86,8 @@
               <p>{$msgConfirmMassDelete}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <button type="submit" class="btn btn-danger"><span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}</button>
             </div>
           </div>
         </div>
@@ -105,8 +105,8 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
           </div>
         </div>

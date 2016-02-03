@@ -167,7 +167,7 @@
                 <div class="col-md-12">
                     <div class="btn-toolbar">
                         <div class="btn-group pull-right" role="group">
-                            <button id="toStep2" type="submit" name="to_step_2" class="btn btn-primary">
+                            <button id="toStep2" type="submit" name="to_step_2" class="btn btn-success">
                                 {$lblToStep|ucfirst} 2
                                 &nbsp;<span class="fa fa-chevron-right"></span>
                             </button>

@@ -71,7 +71,7 @@
                   <button type="button" class="btn btn-default" data-dismiss="modal">
                     {$lblCancel|ucfirst}
                   </button>
-                  <button id="send" name="send" type="submit" class="btn btn-primary">
+                  <button id="send" name="send" type="submit" class="btn btn-success">
                     {$lblSend|ucfirst}
                   </button>
                 </div>

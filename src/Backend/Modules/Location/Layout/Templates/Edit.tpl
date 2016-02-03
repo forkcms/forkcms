@@ -64,7 +64,7 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-group pull-right" role="group">
-        <button id="editButton" type="submit" name="edit" class="btn btn-primary">{$lblUpdateMap|ucfirst}</button>
+        <button id="editButton" type="submit" name="edit" class="btn btn-success">{$lblUpdateMap|ucfirst}</button>
       </div>
     </div>
   </div>
@@ -124,7 +124,7 @@
           </div>
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
-              <a href="#" id="saveLiveData" class="btn btn-primary">
+              <a href="#" id="saveLiveData" class="btn btn-success">
                 <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
               </a>
             </div>
@@ -145,7 +145,7 @@
           {/option:showLocationDelete}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="saveLiveData" type="button" name="edit" class="btn btn-primary">
+          <button id="saveLiveData" type="button" name="edit" class="btn btn-success">
             <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
@@ -161,9 +161,9 @@
               <p>{$msgConfirmDelete|sprintf:{$item.title}}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-success">
+                <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
               </a>
             </div>
           </div>

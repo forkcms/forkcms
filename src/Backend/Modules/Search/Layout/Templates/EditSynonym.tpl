@@ -40,7 +40,7 @@
           {/option:showSearchDeleteSynonym}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
+          <button id="addButton" type="submit" name="add" class="btn btn-success">
             <span class="fa fa-plus"></span>&nbsp;
             {$lblAddSynonym|ucfirst}
           </button>
@@ -57,9 +57,9 @@
               <p>{$msgConfirmDeleteSynonym|sprintf:{$term}}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a href="{$var|geturl:'delete_synonym'}&amp;id={$record.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <a href="{$var|geturl:'delete_synonym'}&amp;id={$record.id}" class="btn btn-danger">
+                <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
               </a>
             </div>
           </div>

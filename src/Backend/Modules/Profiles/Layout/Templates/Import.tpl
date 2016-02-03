@@ -14,7 +14,7 @@
         </a>
         {/option:showProfilesIndex}
         <a href="{$var|geturl:'export_template'}" class="btn btn-default" title="{$lblExportTemplate|ucfirst}">
-          <span class="fa fa-upload"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           {$lblExportTemplate|ucfirst}
         </a>
       </div>
@@ -48,7 +48,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="importButton" type="submit" name="add" class="btn btn-primary">{$lblImport|ucfirst}</button>
+          <button id="importButton" type="submit" name="add" class="btn btn-success"><span class="fa fa-download"></span> {$lblImport|ucfirst}</button>
         </div>
       </div>
     </div>

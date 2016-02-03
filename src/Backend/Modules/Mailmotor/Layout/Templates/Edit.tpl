@@ -167,7 +167,7 @@
         <div class="col-md-12">
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
-              <button id="toStep2" type="submit" name="to_step_2" class="btn btn-primary">
+              <button id="toStep2" type="submit" name="to_step_2" class="btn btn-success">
                 {$lblToStep|ucfirst}
                 &nbsp;<span class="fa fa-chevron-right"></span>
               </button>
@@ -219,7 +219,7 @@
         <div class="col-md-12">
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
-              <button id="toStep3" type="submit" name="to_step_3" class="btn btn-primary">
+              <button id="toStep3" type="submit" name="to_step_3" class="btn btn-success">
                 {$lblToStep|ucfirst} 3
                 &nbsp;<span class="fa fa-chevron-right"></span>
               </button>
@@ -263,7 +263,7 @@
         <div class="col-md-12">
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
-              <button id="sendContent" type="submit" name="to_step_4" class="btn btn-primary">
+              <button id="sendContent" type="submit" name="to_step_4" class="btn btn-success">
                 {$lblToStep|ucfirst} 4
                 &nbsp;<span class="fa fa-chevron-right"></span>
               </button>
@@ -346,7 +346,7 @@
             <div class="panel-footer">
               <div class="btn-toolbar">
                 <div class="btn-group pull-right">
-                  <a id="sendMailing" href="#" class="btn btn-primary" title="{$lblSendMailing|ucfirst}">
+                  <a id="sendMailing" href="#" class="btn btn-success" title="{$lblSendMailing|ucfirst}">
                     <span class="fa fa-send-o"></span>&nbsp;
                     {$lblSendMailing|ucfirst}
                   </a>
@@ -380,9 +380,9 @@
               </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a id="sendMailingConfirmationSubmit" href="#" class="btn btn-primary">
-                {$lblSendMailing|ucfirst}
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <a id="sendMailingConfirmationSubmit" href="#" class="btn btn-success">
+                <span class="fa fa-send-o"></span> {$lblSendMailing|ucfirst}
               </a>
             </div>
           </div>

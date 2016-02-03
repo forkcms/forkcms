@@ -138,7 +138,7 @@
             <span class="fa fa-file-o"></span>&nbsp;
             {$lblSaveDraft|ucfirst}
           </a>
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
+          <button id="addButton" type="submit" name="add" class="btn btn-success">
             <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>
@@ -163,8 +163,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-          <button id="addCategorySubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+          <button id="addCategorySubmit" type="button" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
         </div>
       </div>
     </div>

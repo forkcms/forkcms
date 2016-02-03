@@ -61,7 +61,7 @@
         </div>
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
-            <a href="#" id="saveLiveData" class="btn btn-primary">{$lblSave|ucfirst}</a>
+            <a href="#" id="saveLiveData" class="btn btn-success"><span class="fa fa-floppy-o"></span> {$lblSave|ucfirst}</a>
           </div>
         </div>
       </div>

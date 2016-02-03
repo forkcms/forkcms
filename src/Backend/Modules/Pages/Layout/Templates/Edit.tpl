@@ -235,7 +235,7 @@
             <span class="fa fa-file-o"></span>&nbsp;
             {$lblSaveDraft|ucfirst}
           </a>
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+          <button id="editButton" type="submit" name="edit" class="btn btn-success">
             <span class="fa fa-floppy-o"></span>&nbsp;
             {$lblSave|ucfirst}
           </button>

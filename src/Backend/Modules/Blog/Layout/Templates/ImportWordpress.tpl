@@ -24,7 +24,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="importButton" type="submit" name="save" class="btn btn-primary">{$lblImport|ucfirst}</button>
+          <button id="importButton" type="submit" name="save" class="btn btn-success">{$lblImport|ucfirst}</button>
         </div>
       </div>
     </div>

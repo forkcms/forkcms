@@ -150,7 +150,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" name="add" class="btn btn-primary" type="submit">
+          <button id="addButton" name="add" class="btn btn-success" type="submit">
             <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>

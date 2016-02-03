@@ -182,7 +182,7 @@
                         <span class="fa fa-file-o"></span>&nbsp;
                         {$lblSaveDraft|ucfirst}
                     </a>
-                    <button id="addButton" type="submit" name="add" class="btn btn-primary">
+                    <button id="addButton" type="submit" name="add" class="btn btn-success">
                         <span class="fa fa-plus"></span>&nbsp;
                         {$lblAdd|ucfirst}
                     </button>

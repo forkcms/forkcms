@@ -116,8 +116,8 @@
       <div class="col-md-12">
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
-            <button id="save" type="submit" name="save" class="btn btn-primary">
-              {$lblSave|ucfirst}
+            <button id="save" type="submit" name="save" class="btn btn-success">
+              <span class="fa fa-floppy-o"></span> {$lblSave|ucfirst}
             </button>
           </div>
         </div>

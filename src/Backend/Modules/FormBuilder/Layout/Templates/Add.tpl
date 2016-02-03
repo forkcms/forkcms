@@ -71,7 +71,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
+          <button id="addButton" type="submit" name="add" class="btn btn-success">
             <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>

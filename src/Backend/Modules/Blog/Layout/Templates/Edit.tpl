@@ -203,7 +203,7 @@
             <span class="fa fa-file-o"></span>&nbsp;
             {$lblSaveDraft|ucfirst}
           </a>
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+          <button id="editButton" type="submit" name="edit" class="btn btn-success">
             <span class="fa fa-check"></span>
             {$lblPublish|ucfirst}
           </button>
@@ -222,9 +222,9 @@
           <p>{$msgConfirmDelete|sprintf:{$item.title}}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-          <a href="{$var|geturl:'delete'}&amp;id={$item.id}{option:categoryId}&amp;category={$categoryId}{/option:categoryId}" class="btn btn-primary">
-            {$lblOK|ucfirst}
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+          <a href="{$var|geturl:'delete'}&amp;id={$item.id}{option:categoryId}&amp;category={$categoryId}{/option:categoryId}" class="btn btn-danger">
+            <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
           </a>
         </div>
       </div>
@@ -248,8 +248,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-          <button id="addCategorySubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+          <button id="addCategorySubmit" type="button" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
         </div>
       </div>
     </div>
