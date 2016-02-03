@@ -84,7 +84,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->startGlobals($twig);
 
         // template
-        $template = $twig->loadTemplate($this->convertExtension($template));
+        $template = $twig->loadTemplate($template);
         echo $template->render($this->variables);
 
         // return template content

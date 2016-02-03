@@ -22,9 +22,6 @@ use Common\Core\Twig\Extensions\TwigFilters;
 
 class TwigTemplate extends BaseTwigTemplate
 {
-    /** the extension TwigTemplate uses */
-    const EXTENSION = '.html.twig';
-
     /**
      * List of passed templates
      *
@@ -93,7 +90,7 @@ class TwigTemplate extends BaseTwigTemplate
     {
         // page hook, last call
         if ($key === 'page') {
-            $this->baseFile = $this->convertExtension($values['template_path']);
+            $this->baseFile = $values['template_path'];
             $this->baseSpoonFile = FRONTEND_PATH . '/' . $values['template_path'];
             $this->positions = $values['positions'];
         }
@@ -149,19 +146,9 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @param string template
     */
-    protected function convertExtension($template)
-    {
-        return str_replace('.html.twig', self::EXTENSION, $template);
-    }
-
-    /**
-     * Convert a filename extension
-     *
-     * @param string template
-    */
     public function getPath($template)
     {
-        $template = Theme::getPath($this->convertExtension($template));
+        $template = Theme::getPath($template);
         if (strpos($template, FRONTEND_MODULES_PATH) !== false) {
             return str_replace(FRONTEND_MODULES_PATH . '/', '', $template);
         }

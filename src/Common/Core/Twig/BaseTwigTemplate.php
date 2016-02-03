@@ -19,9 +19,6 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
  */
 abstract class BaseTwigTemplate extends TwigEngine
 {
-    /** the extension TwigTemplate uses */
-    const EXTENSION = '.html.twig';
-
     /**
      * Language.
      *
@@ -79,16 +76,6 @@ abstract class BaseTwigTemplate extends TwigEngine
 
         // in all other cases
         $this->variables[$key] = $values;
-    }
-
-    /**
-     * Convert a filename extension.
-     *
-     * @param string template
-     */
-    protected function convertExtension($template)
-    {
-        return str_replace('.html.twig', self::EXTENSION, $template);
     }
 
     /**
