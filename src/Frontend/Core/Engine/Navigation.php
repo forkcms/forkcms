@@ -353,13 +353,13 @@ class Navigation extends FrontendBaseObject
         }
 
         // create template
-        $navigationTpl = new TwigTemplate(false);
+        $navigationTpl = Model::get('templating');
 
         // assign navigation to template
         $navigationTpl->assign('navigation', $navigation[$type][$parentId]);
 
         // return parsed content
-        return $navigationTpl->render(FRONTEND_PATH . (string) $tpl, true, true);
+        return $navigationTpl->renderTemplate(FRONTEND_PATH . (string) $tpl, true, true);
     }
 
     /**

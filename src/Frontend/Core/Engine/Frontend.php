@@ -43,7 +43,6 @@ class Frontend extends \KernelLoader implements \ApplicationInterface
     public function initialize()
     {
         new Url($this->getKernel());
-        new TwigTemplate();
 
         // Load the rest of the page.
         $this->page = new Page($this->getKernel());

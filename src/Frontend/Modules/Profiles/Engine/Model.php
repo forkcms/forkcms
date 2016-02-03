@@ -367,7 +367,7 @@ class Model
     public static function parse()
     {
         // get the template
-        $tpl = FrontendModel::getContainer()->get('template');
+        $tpl = FrontendModel::getContainer()->get('templating');
 
         // logged in
         if (FrontendProfilesAuthentication::isLoggedIn()) {

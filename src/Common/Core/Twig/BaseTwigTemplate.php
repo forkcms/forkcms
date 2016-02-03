@@ -2,6 +2,8 @@
 
 namespace Common\Core\Twig;
 
+use Symfony\Bundle\TwigBundle\TwigEngine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -15,7 +17,7 @@ namespace Common\Core\Twig;
  *
  * @author <thijs@wijs.be>
  */
-class BaseTwigTemplate
+abstract class BaseTwigTemplate extends TwigEngine
 {
     /** the extension TwigTemplate uses */
     const EXTENSION = '.html.twig';

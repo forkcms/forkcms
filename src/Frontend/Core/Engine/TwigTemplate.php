@@ -62,15 +62,10 @@ class TwigTemplate extends BaseTwigTemplate
 
     /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
-     *
-     * @param bool $addToReference Should the instance be added into the reference.
      */
-    public function __construct($addToReference = true)
+    public function __construct()
     {
-        if ($addToReference) {
-            Model::getContainer()->set('template', $this);
-        }
-
+        parent::__construct(func_get_arg(0), func_get_arg(1), func_get_arg(2));
         $this->forkSettings = Model::get('fork.settings');
         $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
@@ -206,7 +201,7 @@ class TwigTemplate extends BaseTwigTemplate
             ob_start();
 
             // render the compiled File
-            echo $this->render();
+            echo $this->renderTemplate();
 
             // return template content
             return ob_get_clean();
@@ -218,7 +213,7 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @param  string $template path to render
      */
-    public function render($template = null)
+    public function renderTemplate($template = null)
     {
         \Twig_Autoloader::register();
         $loader = new \Twig_Loader_Filesystem(array(

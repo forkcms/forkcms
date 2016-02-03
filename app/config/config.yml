@@ -26,7 +26,6 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
-
 monolog:
     handlers:
         main:
@@ -98,3 +97,10 @@ services:
         class: Common\EventListener\ResponseSecurer
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    templating:
+        class: Frontend\Core\Engine\TwigTemplate
+        arguments:
+            - @twig
+            - @templating.name_parser
+            - @templating.locator
