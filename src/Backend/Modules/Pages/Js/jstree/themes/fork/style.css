@@ -20,6 +20,7 @@
 	background-position: 10px 1px;
 	background-repeat: repeat-y;
 	min-height: 16px;
+	max-width: 100%;
 }
 .tree li {
 	display: block;
@@ -28,6 +29,7 @@
 	padding: 0 0 0 21px;
 	/* Background fix */
 	clear: both;
+	max-width: 100%;
 }
 
 .tree li ul {
@@ -47,6 +49,9 @@
 	margin: 0;
 	border: none !important;
 	outline: 0 !important;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .tree li a:focus {
@@ -121,7 +126,7 @@
 /* DOTS */
 .tree-fork li {
 	display: block !important;
-	font-size: 11px;
+	font-size: 13px;
 }
 
 .tree-fork li {
