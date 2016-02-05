@@ -35,8 +35,6 @@ abstract class Kernel extends BaseKernel implements KernelInterface
     {
         parent::__construct($environment, $debug);
         $this->boot();
-        // define Fork constants
-        $this->defineForkConstants();
     }
 
     /**
@@ -46,7 +44,25 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      */
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
+        // boot if it hasn't booted yet
+        $this->boot();
+
         return $this->getHttpKernel()->handle($request, $type, $catch);
+    }
+
+    /**
+     * Boot and define the Fork Constants.
+     */
+    public function boot()
+    {
+        if ($this->booted) {
+            return;
+        }
+
+        parent::boot();
+
+        // define Fork constants
+        $this->defineForkConstants();
     }
 
     /**
