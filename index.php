@@ -71,7 +71,7 @@ $sumo = new SumoCoders\SumoForkClass\SumoForkClass();
 $sumo->setContainer($kernel->getContainer());
 $sumo->init();
 
-$response = $kernel->handle($request);
+$response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
 if ($response->getCharset() === null && $kernel->getContainer() != null) {
     $response->setCharset(
         $kernel->getContainer()->getParameter('kernel.charset')
