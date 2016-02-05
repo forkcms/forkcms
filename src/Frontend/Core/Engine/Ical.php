@@ -65,7 +65,7 @@ class FrontendIcal extends \SpoonICal
     {
         // set headers
         if ((bool) $headers) {
-            \SpoonHTTP::setHeaders(
+            header(
                 'Content-Disposition: inline; filename=' . CommonUri::getUrl($this->getTitle()) . '.ics'
             );
         }

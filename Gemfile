@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'compass'
-gem 'bootstrap-sass', '~> 3.3.x'
+gem 'bootstrap-sass', '3.3.5'
 gem 'font-awesome-sass', '~> 4.2.0'
 gem 'compass_sumo'
 gem 'foreman'
 gem 'capistrano', '~> 2.15'
 gem 'sumodev_deploy', '~> 0.7'
 gem 'forkcms_deploy', '>= 2.7.0'
-gem 'sumodev', '~> 0.13.1'
+gem 'sumodev', '~> 1.2.0'

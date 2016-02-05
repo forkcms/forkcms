@@ -81,12 +81,8 @@ class ExportThemeTemplates extends ActionEdit
         $xml = Model::createTemplateXmlForExport($this->selectedTheme);
 
         $filename = 'templates_' . BackendModel::getUTCDate('d-m-Y') . '.xml';
-        $headers = array(
-            'Content-type: text/xml',
-            'Content-disposition: attachment; filename="' . $filename . '"',
-        );
-
-        \SpoonHTTP::setHeaders($headers);
+        header('Content-type: text/xml');
+        header('Content-disposition: attachment; filename="' . $filename . '"');
 
         echo $xml;
         exit;

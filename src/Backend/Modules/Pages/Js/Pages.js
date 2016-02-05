@@ -107,13 +107,10 @@ jsBackend.pages.extras =
 		var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible, selectedExtraType);
 
 		// block/widget = don't show editor
-		if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') $('.blockContentHTML', block).hide();
+		if(selectedExtraType !== 'usertemplate' && typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') $('.blockContentHTML', block).hide();
 
 		// editor or user template
 		else $('.blockContentHTML', block).show();
-
-		// reset block indexes
-		jsBackend.pages.extras.resetIndexes();
 
 		return addedVisual ? index : false;
 	},
@@ -122,11 +119,11 @@ jsBackend.pages.extras =
 	addBlockVisual: function(position, index, extraId, visible, extraType)
 	{
 		// check if the extra is valid
-		if(extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
+		if(extraType != 'usertemplate' && extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
 
 		// block
 		var editLink, title, description;
-		if(extraId != 0)
+		if(extraType != 'usertemplate' && extraId != 0)
 		{
 			// link to edit this block/widget
 			editLink = '';
@@ -166,12 +163,14 @@ jsBackend.pages.extras =
 			linkClass = 'showEditor ';
 		}
 
+		var showEditLink = (extraType === 'usertemplate' || (extraId != 0 && editLink));
+
 		// create html to be appended in template-view
 		var blockHTML = '<div class="templatePositionCurrentType' + (visible ? ' ' : ' templateDisabled') + '" data-block-id="' + index + '">' +
 							'<span class="templateTitle">' + title + '</span>' +
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="buttonHolder">' +
-								'<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'button icon iconOnly iconEdit' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span>' + utils.string.ucfirst(jsBackend.locale.lbl('Edit')) + '</span></a>' +
+								'<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'button icon iconOnly iconEdit' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span>' + utils.string.ucfirst(jsBackend.locale.lbl('Edit')) + '</span></a>' +
 								'<a href="#" class="button icon iconOnly ' + (visible ? 'iconVisible ' : 'iconInvisible ') + 'toggleVisibility"><span>&nbsp;</span></a>' +
 								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>' + utils.string.ucfirst(jsBackend.locale.lbl('DeleteBlock')) + '</span></a>' +
 							'</div>' +

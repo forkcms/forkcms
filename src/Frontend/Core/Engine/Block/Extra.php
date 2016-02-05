@@ -287,7 +287,7 @@ class Extra extends FrontendBaseObject
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
             throw new FrontendException(
-                'The config file is present, but the class name should be: ' . $configClass . '.'
+                'The config file ' . $configClass . ' could not be found.'
             );
         }
 

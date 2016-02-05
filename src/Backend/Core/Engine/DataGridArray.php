@@ -21,7 +21,7 @@ class DataGridArray extends DataGrid
      */
     public function __construct(array $array)
     {
-        $source = new \SpoonDataGridSourceArray($array);
+        $source = new \SpoonDatagridSourceArray($array);
         parent::__construct($source);
     }
 }

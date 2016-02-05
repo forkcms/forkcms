@@ -22,10 +22,10 @@ We accept contributions via Pull Requests on [Github](https://github.com/forkcms
 
 ``` bash
 # run all tests
-bin/phpunit -c app
+bin/phpunit
 
 # only run unit tests (requires no db setup)
-bin/phpunit -c app --testsuite=unit
+bin/phpunit --testsuite=unit
 ```
 
 ## How to submit pull requests

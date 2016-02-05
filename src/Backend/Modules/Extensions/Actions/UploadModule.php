@@ -105,8 +105,8 @@ class UploadModule extends BackendBaseActionAdd
             $file = $zip->statIndex($i);
             $fileName = $file['name'];
 
-            if ($i === 0 && $fileName !== 'src/' && $fileName !== 'library/') {
-                $prefix = $fileName;
+            if ($i === 0) {
+                $prefix = $this->extractPrefix($file);
             }
 
             // check if the file is in one of the valid directories
@@ -207,6 +207,30 @@ class UploadModule extends BackendBaseActionAdd
 
         // return the files
         return $moduleName;
+    }
+
+    /**
+     * Try to extract a prefix if a module has been zipped with unexpected
+     * paths.
+     *
+     * @param $file
+     * @return string
+     */
+    private function extractPrefix($file) {
+        $name = explode(PATH_SEPARATOR, $file['name']);
+        $prefix = array();
+
+        foreach($name as $element) {
+            if ($element == 'src' || $element == 'library') {
+                return join(PATH_SEPARATOR, $prefix);
+            } else {
+                $prefix[] = $element;
+            }
+        }
+
+        // If the zip has a top-level single directory, eg
+        // /myModuleName/, then we should just assume that is the prefix.
+        return $file['name'];
     }
 
     /**

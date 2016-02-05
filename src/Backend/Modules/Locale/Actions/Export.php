@@ -122,12 +122,9 @@ class Export extends BackendBaseActionIndex
         $xmlOutput = BackendLocaleModel::createXMLForExport($this->locale);
 
         // xml headers
-        $headers[] = 'Content-Disposition: attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"';
-        $headers[] = 'Content-Type: application/octet-stream;charset=' . $charset;
-        $headers[] = 'Content-Length: ' . strlen($xmlOutput);
-
-        // set headers
-        \SpoonHTTP::setHeaders($headers);
+        header('Content-Disposition: attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"');
+        header('Content-Type: application/octet-stream;charset=' . $charset);
+        header('Content-Length: ' . strlen($xmlOutput));
 
         // output XML
         echo $xmlOutput;

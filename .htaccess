@@ -13,9 +13,11 @@ FileETag MTime Size
 	RewriteBase /
 
 	# forbidden folders
+	RewriteRule .git - [F]
 	RewriteRule .*\.gitignore - [F]
 	RewriteRule composer\.json - [F]
 	RewriteRule composer\.lock - [F]
+	RewriteRule phpunit\.xml\.dist - [F]
 	RewriteRule .*\.md - [F]
 	RewriteRule app/logs - [F]
 	RewriteRule app/config - [F]

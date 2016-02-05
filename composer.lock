@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c6f576302bc013702bbf02f128682352",
+    "hash": "ffdddc283a85aa68f744e473e14a37cb",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -819,16 +819,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "2.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "9a75960cc4d98686f6022d5ba33fbd6a12c93315"
+                "reference": "cd6d1feb426036d680260a8443a6b7844f203d74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/9a75960cc4d98686f6022d5ba33fbd6a12c93315",
-                "reference": "9a75960cc4d98686f6022d5ba33fbd6a12c93315",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/cd6d1feb426036d680260a8443a6b7844f203d74",
+                "reference": "cd6d1feb426036d680260a8443a6b7844f203d74",
                 "shasum": ""
             },
             "require": {
@@ -850,7 +850,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2015-05-19 13:42:32"
+            "time": "2015-06-23 09:21:13"
         },
         {
             "name": "sumocoders/sumo-fork-class",

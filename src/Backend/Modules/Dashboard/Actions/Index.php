@@ -86,7 +86,7 @@ class Index extends BackendBaseActionIndex
                     }
 
                     if (!class_exists($className)) {
-                        throw new BackendException('The widgetfile is present, but the classname should be: ' . $className . '.');
+                        throw new BackendException('The widgetfile ' . $className . ' could not be found.');
                     }
 
                     // present?

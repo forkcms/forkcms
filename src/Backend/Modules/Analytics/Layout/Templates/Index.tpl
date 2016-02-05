@@ -110,6 +110,11 @@
       </div>
     </div>
   </div>
+  <div class="options content">
+    <div class="dataGridHolder">
+      {$dataGridMostViewedPages}
+    </div>
+  </div>
 </div>
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}

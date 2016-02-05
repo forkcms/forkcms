@@ -31,7 +31,7 @@
 											{$fields.label}{option:fields.required}<abbr title="{$lblRequiredField}">*</abbr>{/option:fields.required}
 										</label>
 										{$fields.html}
-										{option:fields.error}<span class="formError help-inline">{$fields.error}</span>{/option:fields.error}
+										{option:fields.error}<span class="text-danger help-inline">{$fields.error}</span>{/option:fields.error}
 									</div>
 								{/option:fields.simple}
 
@@ -47,7 +47,7 @@
 													{$fields.html.field} {$fields.html.label}
 												</label>
 											{/iteration:fields.html}
-											{option:fields.error}<span class="formError help-inline">{$fields.error}</span>{/option:fields.error}
+											{option:fields.error}<span class="text-danger help-inline">{$fields.error}</span>{/option:fields.error}
 										</div>
 									</div>
 								{/option:fields.multiple}

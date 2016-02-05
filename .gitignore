@@ -15,4 +15,4 @@
 /css/
 
 # @remark: custom for Sumocoders
-/node_modules
+/node_modules/*

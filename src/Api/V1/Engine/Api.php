@@ -461,8 +461,8 @@ class Api extends \KernelLoader implements \ApplicationInterface
         }
 
         // set correct headers
-        \SpoonHTTP::setHeadersByCode($statusCode);
-        \SpoonHTTP::setHeaders('content-type: application/json;charset=' . $charset);
+        header('HTTP/1.1 ' . self::getHeaderMessage($statusCode));
+        header('content-type: application/json;charset=' . $charset);
 
         // output JSON
         self::$content = json_encode($JSON);
@@ -509,10 +509,25 @@ class Api extends \KernelLoader implements \ApplicationInterface
         array_walk($data, array(__CLASS__, 'arrayToXML'), $root);
 
         // set correct headers
-        \SpoonHTTP::setHeadersByCode($statusCode);
-        \SpoonHTTP::setHeaders('content-type: text/xml;charset=' . $charset);
+        header('HTTP/1.1 ' . self::getHeaderMessage($statusCode));
+        header('content-type: text/xml;charset=' . $charset);
 
         // output XML
         self::$content = $XML->saveXML();
+    }
+
+    /**
+     * Get the relevant HTTP status message
+     *
+     * @param $statusCode
+     * @return string
+     */
+    private static function getHeaderMessage($statusCode)
+    {
+        if (!isset(Response::$statusTexts[$statusCode])) {
+            $statusCode = 500;
+        }
+
+        return $statusCode . ' ' . Response::$statusTexts[$statusCode];
     }
 }

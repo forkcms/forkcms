@@ -129,6 +129,10 @@
 
 /* Settings page */
 
+input#email {
+    width: 600px;
+}
+
 .box .box .dataGrid {
     border-top: 0;
 }

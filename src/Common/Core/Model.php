@@ -394,6 +394,90 @@ class Model extends \BaseModel
     }
 
     /**
+     * Start processing the hooks
+     */
+    public static function startProcessingHooks()
+    {
+        $fs = new Filesystem();
+        // is the queue already running?
+        if ($fs->exists(BACKEND_CACHE_PATH . '/Hooks/pid')) {
+            // get the pid
+            $pid = trim(file_get_contents(BACKEND_CACHE_PATH . '/Hooks/pid'));
+
+            // running on windows?
+            if (strtolower(substr(php_uname('s'), 0, 3)) == 'win') {
+                // get output
+                $output = @shell_exec('tasklist.exe /FO LIST /FI "PID eq ' . $pid . '"');
+
+                // validate output
+                if ($output == '' || $output === false) {
+                    // delete the pid file
+                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                } else {
+                    // already running
+                    return true;
+                }
+            } elseif (strtolower(substr(php_uname('s'), 0, 6)) == 'darwin') {
+                // darwin == Mac
+                // get output
+                $output = @posix_getsid($pid);
+
+                // validate output
+                if ($output === false) {
+                    // delete the pid file
+                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                } else {
+                    // already running
+                    return true;
+                }
+            } else {
+                // UNIX
+                // check if the process is still running, by checking the proc folder
+                if (!$fs->exists('/proc/' . $pid)) {
+                    // delete the pid file
+                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                } else {
+                    // already running
+                    return true;
+                }
+            }
+        }
+
+        // init var
+        $parts = parse_url(SITE_URL);
+        $errNo = '';
+        $errStr = '';
+        $defaultPort = 80;
+        if ($parts['scheme'] == 'https') {
+            $defaultPort = 433;
+        }
+
+        // open the socket
+        $socket = fsockopen(
+            $parts['host'],
+            (isset($parts['port'])) ? $parts['port'] : $defaultPort,
+            $errNo,
+            $errStr,
+            1
+        );
+
+        // build the request
+        $request = 'GET /backend/cronjob?module=Core&action=ProcessQueuedHooks HTTP/1.1' . "\r\n";
+        $request .= 'Host: ' . $parts['host'] . "\r\n";
+        $request .= 'Content-Length: 0' . "\r\n\r\n";
+        $request .= 'Connection: Close' . "\r\n\r\n";
+
+        // send the request
+        fwrite($socket, $request);
+
+        // close the socket
+        fclose($socket);
+
+        // return
+        return true;
+    }
+
+    /**
      * Unsubscribe from an event
      *
      * @param string $eventModule The module that triggers the event.

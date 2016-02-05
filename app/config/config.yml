@@ -31,7 +31,7 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  %site.path_www%/app/logs/logs.log
+            path:  %site.path_www%/app/logs/%kernel.environment%.log
             level: debug
         # swift:
         #     type:       swift_mailer

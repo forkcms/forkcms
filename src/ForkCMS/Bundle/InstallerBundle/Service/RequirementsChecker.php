@@ -110,13 +110,17 @@ class RequirementsChecker
     }
 
     /*
-     * At first we're going to check to see if the PHP version meets the minimum requirements
-     * for Fork CMS. We require at least PHP 5.3.3, but not 5.3.16, because Symfony won't work properly
+     * At first we're going to check to see if the PHP version meets the minimum
+     * requirements for Fork CMS. We require at least PHP 5.4.0, because we don't
+     * want to be responsible for security issues in PHP itself.
      */
     protected function checkPhpVersion()
     {
-        $this->checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.3.3-whatever', '>='), self::STATUS_ERROR);
-        $this->checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.3.16', '!='), self::STATUS_ERROR);
+        $this->checkRequirement(
+            'phpVersion',
+            version_compare(PHP_VERSION, '5.4.0', '>='),
+            self::STATUS_ERROR
+        );
     }
 
     /**
@@ -154,7 +158,6 @@ class RequirementsChecker
      */
     protected function checkPhpIniSettings()
     {
-        $this->checkRequirement('settingsSafeMode', ini_get('safe_mode') == '', self::STATUS_WARNING);
         $this->checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', self::STATUS_WARNING);
         $this->checkRequirement(
             'settingsDateTimezone',

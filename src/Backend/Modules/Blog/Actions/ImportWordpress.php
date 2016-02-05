@@ -303,7 +303,7 @@ class ImportWordpress extends BackendBaseActionEdit
         try {
             $this->fs->dumpFile(
                 $imagesPath . '/' . $destinationFile,
-                \SpoonHttp::getContent($file)
+                file_get_contents($file)
             );
         } catch (Exception $e) {
             // Ignore

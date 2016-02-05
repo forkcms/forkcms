@@ -92,7 +92,7 @@ class ModulesSettings
             'module = :module and name = :name',
             array(
                 'module' => $module,
-                'key' => $key,
+                'name' => $key,
             )
         );
 

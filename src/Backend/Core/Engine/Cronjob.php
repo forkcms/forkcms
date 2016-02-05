@@ -66,10 +66,10 @@ class Cronjob extends Object implements \ApplicationInterface
         // validate if class exists (aka has correct name)
         if (!class_exists($actionClass)) {
             // set correct headers
-            \SpoonHTTP::setHeadersByCode(500);
+            header('HTTP/1.1 500 Internal Server Error');
 
             // throw exception
-            throw new Exception('The cronjobfile is present, but the classname should be: ' . $actionClass . '.');
+            throw new Exception('The cronjobfile ' . $actionClass . ' could not be found.');
         }
 
         // create action-object
@@ -173,7 +173,7 @@ class Cronjob extends Object implements \ApplicationInterface
 
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
-            throw new Exception('The config file is present, but the classname should be: ' . $configClass . '.');
+            throw new Exception('The config file ' . $configClass . ' could not be found.');
         }
 
         // create config-object, the constructor will do some magic
@@ -245,7 +245,7 @@ class Cronjob extends Object implements \ApplicationInterface
         $modules = BackendModel::getModulesOnFilesystem();
         if (!in_array($module, $modules)) {
             // set correct headers
-            \SpoonHTTP::setHeadersByCode(403);
+            header('HTTP/1.1 403 Forbidden');
 
             // throw exception
             throw new Exception('Module not allowed.');

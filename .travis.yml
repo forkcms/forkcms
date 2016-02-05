@@ -9,11 +9,12 @@ matrix:
         - php: 7
         - php: hhvm
     allow_failures:
+        - php: 5.3
         - php: 7
         - php: hhvm
 
 script:
-    - phpunit -c app/ --coverage-clover=coverage.clover
+    - phpunit --coverage-clover=coverage.clover
 
 before_script:
     - composer install
@@ -24,3 +25,5 @@ before_script:
 after_success:
   - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
   - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7" ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+
+sudo: false

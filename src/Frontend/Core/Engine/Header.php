@@ -151,18 +151,14 @@ class Header extends FrontendBaseObject
             $file = $this->minifyCSS($file);
         }
 
-        $inArray = false;
-        foreach ($this->cssFiles as $row) {
-            if ($row['file'] == $file) {
-                $inArray = true;
-            }
-        }
+        $cssFile = array(
+            'file' => $file,
+            'add_timestamp' => $addTimestamp,
+        );
 
-        // add to array if it isn't there already
-        if (!$inArray) {
-            $temp['file'] = (string) $file;
-            $temp['add_timestamp'] = $addTimestamp;
-            $this->cssFiles[] = $temp;
+        // only add when not already in array
+        if (!isset($this->cssFiles[$file])) {
+            $this->cssFiles[$file] = $cssFile;
         }
     }
 
@@ -196,12 +192,12 @@ class Header extends FrontendBaseObject
         $jsFile = array(
             'file' => $file,
             'add_timestamp' => $addTimestamp,
-            'priority_group' => $priorityGroup
+            'priority_group' => $priorityGroup,
         );
 
-        // already in array?
-        if (!in_array($jsFile, $this->jsFiles)) {
-            $this->jsFiles[] = $jsFile;
+        // only add when not already in array
+        if (!isset($this->jsFiles[$file])) {
+            $this->jsFiles[$file] = $jsFile;
         }
     }
 
@@ -594,6 +590,20 @@ class Header extends FrontendBaseObject
 
         // in debug mode we don't want our pages to be indexed.
         if ($this->getContainer()->getParameter('kernel.debug')) {
+            $this->addMetaData(
+                array('name' => 'robots', 'content' => 'noindex, nofollow'),
+                true
+            );
+        }
+
+        /**
+         * @remark only for SumoCoders
+         *
+         * Because ENV variables are not passed to CGI due to suExec.
+         * See http://wiki.dreamhost.com/Suexec#Apache_module_mod_env for more
+         * information.
+         */
+        if (isset($_SERVER['HTTP_HOST']) && substr_count($_SERVER['HTTP_HOST'], '.sumocoders.eu') >= 1) {
             $this->addMetaData(
                 array('name' => 'robots', 'content' => 'noindex, nofollow'),
                 true

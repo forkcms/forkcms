@@ -301,7 +301,7 @@ class Profile
      *
      * @param int $value Id of the profile.
      */
-    public function setId($value)
+    private function setId($value)
     {
         $this->id = (int) $value;
     }

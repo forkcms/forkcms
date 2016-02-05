@@ -30,7 +30,6 @@ class Init extends \Common\Core\Init
     {
         parent::initialize($type);
 
-        $this->requireFrontendClasses();
         \SpoonFilter::disableMagicQuotes();
     }
 
@@ -55,19 +54,5 @@ class Init extends \Common\Core\Init
         defined('FRONTEND_CORE_URL') || define('FRONTEND_CORE_URL', '/src/' . APPLICATION . '/Core');
         defined('FRONTEND_CACHE_URL') || define('FRONTEND_CACHE_URL', '/src/' . APPLICATION . '/Cache');
         defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/' . APPLICATION . '/Files');
-    }
-
-    /**
-     * Require all needed classes
-     */
-    private function requireFrontendClasses()
-    {
-        switch ($this->type) {
-            case 'Frontend':
-            case 'FrontendAjax':
-                require_once FRONTEND_CORE_PATH . '/Engine/TemplateCustom.php';
-                require_once FRONTEND_PATH . '/Modules/Tags/Engine/Model.php';
-                break;
-        }
     }
 }

@@ -241,7 +241,7 @@ class Form extends \Common\Core\Form
      * @param string $name       The name of the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
-     * @return \SpoonFormImage
+     * @return FrontendFormImage
      */
     public function addImage($name, $class = null, $classError = null)
     {
