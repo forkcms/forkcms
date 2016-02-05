@@ -23,6 +23,7 @@ require_once __DIR__ . '/autoload.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 // get environment and debug mode from environment variables
 $env = getenv('FORK_ENV') ? : 'prod';
@@ -71,7 +72,7 @@ $sumo = new SumoCoders\SumoForkClass\SumoForkClass();
 $sumo->setContainer($kernel->getContainer());
 $sumo->init();
 
-$response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
+$response = $kernel->handle($request, HttpKernelInterface::MASTER_REQUEST, false);
 if ($response->getCharset() === null && $kernel->getContainer() != null) {
     $response->setCharset(
         $kernel->getContainer()->getParameter('kernel.charset')
