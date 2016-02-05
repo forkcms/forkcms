@@ -24,19 +24,28 @@ use Symfony\Component\HttpKernel\KernelInterface;
 abstract class Kernel extends BaseKernel implements KernelInterface
 {
     /**
+     * Constructor.
+     *
+     * @param string $environment The environment
+     * @param bool   $debug       Whether to enable debugging or not
+     *
+     * @api
+     */
+    public function __construct($environment, $debug)
+    {
+        parent::__construct($environment, $debug);
+        $this->boot();
+        // define Fork constants
+        $this->defineForkConstants();
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api
      */
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
-        if (false === $this->booted) {
-            $this->boot();
-
-            // define Fork constants
-            $this->defineForkConstants();
-        }
-
         return $this->getHttpKernel()->handle($request, $type, $catch);
     }
 
