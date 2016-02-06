@@ -107,7 +107,16 @@ class Form extends \Common\Core\Form
         $classError = null
     ) {
         $name = (string) $name;
-        $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
+        if (!empty($value)) {
+            $value = (int) $value;
+        } else {
+            $postValue = \SpoonFilter::getPostValue(
+                $name,
+                null,
+                null
+            );
+            $value = (empty($postValue) ? strtotime('now') : strtotime($postValue));
+        }
         $type = \SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
@@ -136,9 +145,10 @@ class Form extends \Common\Core\Form
             $mask
         );
         $attributes['data-firstday'] = $firstDay;
-        $attributes['year'] = date('Y', $value);
-        $attributes['month'] = date('n', $value);
-        $attributes['day'] = date('j', $value);
+        $attributes['data-year'] = date('Y', $value);
+        // javascript months start with 0
+        $attributes['data-month'] = date('n', $value) - 1;
+        $attributes['data-day'] = date('j', $value);
 
         // add extra classes based on type
         switch ($type) {
