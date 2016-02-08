@@ -125,6 +125,12 @@ class Index extends BackendBaseActionIndex
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule())
         );
+        $mapStyles = array(
+            'standard' => BL::lbl('Default', $this->getModule()),
+            'custom' => BL::lbl('Custom', $this->getModule()),
+            'gray' => BL::lbl('Gray', $this->getModule()),
+            'blue' => BL::lbl('Blue', $this->getModule()),
+        );
 
         $zoomLevels = array_combine(
             array_merge(array('auto'), range(3, 18)),
@@ -139,6 +145,7 @@ class Index extends BackendBaseActionIndex
         $this->form->addText('width', $this->settings['width']);
         $this->form->addText('height', $this->settings['height']);
         $this->form->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
+        $this->form->addDropdown('map_style', $mapStyles, $this->settings['map_style']);
     }
 
     /**

@@ -77,6 +77,14 @@
 						</p>
 					</div>
 
+					{* Map style *}
+					<div class="options">
+						<p>
+							<label for="mapStyle">{$lblMapStyle|ucfirst}</label>
+							{$ddmMapStyle} {$ddmMapStyleError}
+						</p>
+					</div>
+
 					{* Save button *}
 					<div class="options">
 						<div class="buttonHolderRight">

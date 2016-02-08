@@ -109,7 +109,7 @@
 				{* Map style *}
 				<div class="options">
 					<p>
-						<label for="mapType">{$lblMapStyle|ucfirst}</label>
+						<label for="mapStyle">{$lblMapStyle|ucfirst}</label>
 						{$ddmMapStyle} {$ddmMapStyleError}
 					</p>
 				</div>
