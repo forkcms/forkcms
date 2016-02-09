@@ -7980,6 +7980,10 @@ div.tabs ul li.selected {
   background: linear-gradient(top, #5c93d5 0%, #1a57ad 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c93d5', endColorstr='#1a57ad',GradientType=0 ); }
 
+@media (min-width: 1440px) {
+  .container {
+    width: 1410px; } }
+
 select[size="1"] {
   height: 34px; }
 
