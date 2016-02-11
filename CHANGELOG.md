@@ -1,5 +1,8 @@
 3.9.7 (xxxx-xx-xx)
 --
+Improvements:
+* Location: added zoom-level 1 and 2.
+
 Bugfixes:
 * Pages: removed single quotes converter in CacheBuilder. This fixes page titles with single quotes.
 
