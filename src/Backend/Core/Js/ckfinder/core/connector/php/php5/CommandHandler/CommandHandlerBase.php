@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://cksource.com/ckfinder
- * Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2015, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -93,6 +93,15 @@ class CKFinder_Connector_CommandHandler_CommandHandlerBase
      */
     protected function checkRequest()
     {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
+            /* @var $_config CKFinder_Connector_Core_Config */
+            $_config =& CKFinder_Connector_Core_Factory::getInstance("Core_Config");
+
+            if ($_config->getEnableCsrfProtection() && !$this->checkCsrfToken()) {
+                $this->_errorHandler->throwError(CKFINDER_CONNECTOR_ERROR_INVALID_REQUEST);
+            }
+        }
+
         if (preg_match(CKFINDER_REGEX_INVALID_PATH, $this->_currentFolder->getClientPath())) {
             $this->_errorHandler->throwError(CKFINDER_CONNECTOR_ERROR_INVALID_NAME);
         }
@@ -125,5 +134,29 @@ class CKFinder_Connector_CommandHandler_CommandHandlerBase
                 $this->_errorHandler->throwError(CKFINDER_CONNECTOR_ERROR_FOLDER_NOT_FOUND);
             }
         }
+    }
+
+    /**
+     * Checks if the request contains a valid token that matches the value sent in the cookie.
+     * @see https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet#Double_Submit_Cookies
+     *
+     * @access protected
+     *
+     * @param string $tokenParamName
+     * @param string $tokenCookieName
+     * @param int    $minTokenLength
+     *
+     * @return bool true if token is valid, false otherwise
+     */
+    protected function checkCsrfToken($tokenParamName = 'ckCsrfToken', $tokenCookieName = 'ckCsrfToken', $minTokenLength = 32)
+    {
+        $paramToken = isset($_POST[$tokenParamName]) ? trim((string) $_POST[$tokenParamName]) : '';
+        $cookieToken = isset($_COOKIE[$tokenCookieName]) ? trim((string) $_COOKIE[$tokenCookieName]) : '';
+
+        if (strlen($paramToken) >= $minTokenLength && strlen($cookieToken) >= $minTokenLength) {
+            return $paramToken === $cookieToken;
+        }
+
+        return false;
     }
 }

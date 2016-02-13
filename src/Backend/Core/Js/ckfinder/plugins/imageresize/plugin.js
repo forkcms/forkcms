@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see license.txt or http://cksource.com/ckfinder/license
  *
  * The software, this file and its contents are subject to the CKFinder
@@ -336,7 +336,6 @@ CKFinder.addPlugin( 'imageresize', {
 						api.openMsgDialog( '', str.replace( '%size', imageDimension.width + 'x' + imageDimension.height ) );
 						return false;
 					}
-
 					if ( ( width && height ) || small || medium || large )
 					{
 						if ( !createNew )
@@ -427,7 +426,7 @@ CKFinder.addPlugin( 'imageresize', {
 												'}' +
 												'</style>' +
 
-												'<div style="height:110px;padding:7px">' +
+												'<div style="height:140px;padding:7px">' +
 												'<img id="previewImage" src="" style="margin-bottom:4px; max-width: 100px; max-height: 100px;" /><br />' +
 												'<span style="font-size:9px;" id="imageSize"></span>' +
 												'</div>'

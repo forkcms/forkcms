@@ -1,7 +1,36 @@
 CKFinder Changelog
 ==================
 http://cksource.com/ckfinder
-Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
+Copyright (C) 2007-2015, CKSource - Frederico Knabben. All rights reserved.
+
+### Version 2.6
+Security release:
+- Fixed DOM XSS and reflected XSS vulnerabilities.
+- Introduced built-in CSRF protection.
+
+- A new Bootstrap skin has been added.
+- The flash upload component used to handle multiple file uploads in old version of Internet Explorer (IE9 and IE8) has been removed.
+  As a result, the file upload feature will now fallback to a single file upload on browsers without HTML5 File API support.
+- Fixed: Using up arrow key in List View to move between files did not work.
+
+### Version 2.5.1
+- Fixed: CKFinder shows a blank window when opened in a popup on Safari 8+.
+[PHP] - Security release, updating is highly recommended. Authenticated users could manipulate files located in folders configured as “hidden”, on web servers hosted on Windows platforms.
+- Removed obsolete integration samples for FCKeditor and CKEditor 3.x.
+- Reworked CKEditor 4.x integration sample - added an example on how to support drag&drop file uploads and pasting images from clipboard.
+
+### Version 2.5.0.1
+
+### Version 2.5
+- Fixed: Opening settings panel after opening/closing flashupload panel caused exception being thrown.
+- Fixed: Selection issues when double-clicking the file.
+- Fixed: getSelectedfiles no longer returns duplicated entries.
+- Added the possibility to access in selectActionFunction custom attributes passed in <File> elements returned by the GetFiles command.
+- Added the possibility to define custom plugins that provide additional toolbar buttons.
+- Added the possibility to pass extra parameters to popup methods with config.popupFeatures and config.popupTitle.
+- Added changes required by CKEditor 4.5.0.
+
+### Version 2.4.3
 
 ### Version 2.4.2
 - Updated syntax highlighting component used in the fileeditor plugin. Added languages support: markdown, restructured text, java, less, sass, scss, perl, python, ruby and sql.
