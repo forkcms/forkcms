@@ -230,7 +230,7 @@ jsBackend.ckeditor =
 		],
 
 		// skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
-		skin: 'BootstrapCK-Skin',
+		skin: 'moonocolor',
 
 		toolbar: 'Full',
 		toolbarStartupExpanded: false,
@@ -241,10 +241,10 @@ jsBackend.ckeditor =
 		entities_latin: false,
 
 		// load some extra plugins
-		extraPlugins: 'stylesheetparser,MediaEmbed',
+		extraPlugins: 'stylesheetparser,videodetector',
 
 		// remove useless plugins
-		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
+		removePlugins: 'a11yhelp,about,autogrow,bbcode,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
 
 		// templates
 		templates_files: [],
