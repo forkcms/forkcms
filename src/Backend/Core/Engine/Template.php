@@ -127,6 +127,9 @@ class Template extends \SpoonTemplate
 
         // label (locale)
         $this->mapModifier('tolabel', array('Backend\Core\Engine\TemplateModifiers', 'toLabel'));
+
+        // array
+        $this->mapModifier('count', array('Backend\Core\Engine\TemplateModifiers', 'count'));
     }
 
     /**

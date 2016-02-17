@@ -307,4 +307,16 @@ class TemplateModifiers
 
         return $status;
     }
+
+    /**
+     * Returns the count of the count of the array.
+     *
+     * @param array $data
+     *
+     * @return int
+     */
+    public static function count(array $data)
+    {
+        return count($data);
+    }
 }
