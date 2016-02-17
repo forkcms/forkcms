@@ -404,5 +404,12 @@ class TwigTemplate extends BaseTwigTemplate
             // assign
             $this->assign('bodyClass', $bodyClass);
         }
+
+        foreach ($this->forms as $form) {
+            if ($form->isSubmitted() && !$form->isCorrect()) {
+                $this->assign('form_error', true);
+                break;
+            }
+        }
     }
 }
