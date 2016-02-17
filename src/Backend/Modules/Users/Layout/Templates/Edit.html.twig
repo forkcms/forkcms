@@ -4,7 +4,7 @@
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
   <div class="col-md-12">
-    <h2>{{ 'msg.EditUser'|trans|sprintf(record.settings.nickname|capitalize ) }}</h2>
+    <h2>{{ 'msg.EditUser'|trans|capitalize|sprintf(record.settings.nickname) }}</h2>
   </div>
 </div>
 {% form edit %}
@@ -31,20 +31,20 @@
         <tr>
           <th>{{ 'lbl.LastLogin'|trans|capitalize }}:</th>
           <td>
-            {% if record.settings.last_login %}{{ record.settings.last_login|spoondate('{$authenticatedUserDateFormat ) }} {{ authenticatedUserTimeFormat }}':INTERFACE_LANGUAGE}{% endif %}
+              {% if record.settings.last_login %}{{ record.settings.last_login|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
             {% if not record.settings.last_login %}{{ lbl.NoPreviousLogin }}{% endif %}
           </td>
         </tr>
         {% if record.settings.last_failed_login_attempt %}
         <tr>
           <th>{{ 'lbl.LastFailedLoginAttempt'|trans|capitalize }}:</th>
-          <td>{{ record.settings.last_failed_login_attempt|spoondate('{$authenticatedUserDateFormat ) }} {{ authenticatedUserTimeFormat }}':INTERFACE_LANGUAGE}</td>
+          <td>{{ record.settings.last_failed_login_attempt|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}</td>
         </tr>
         {% endif %}
         <tr>
           <th>{{ 'lbl.LastPasswordChange'|trans|capitalize }}:</th>
           <td>
-            {% if record.settings.last_password_change %}{{ record.settings.last_password_change|spoondate('{$authenticatedUserDateFormat ) }} {{ authenticatedUserTimeFormat }}':INTERFACE_LANGUAGE}{% endif %}
+              {% if record.settings.last_password_change %}{{ record.settings.last_password_change|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
             {% if not record.settings.last_password_change %}{{ lbl.Never }}{% endif %}
           </td>
         </tr>
@@ -215,7 +215,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="csvSplitChar'act.r">{{ 'lbl.SplitCharacter''|trans|trans|capitalize }}</label>
+                  <label for="csvSplitCharacter">{{ 'lbl.SplitCharacter'|trans|capitalize }}</label>
                   {% form_field_error csv_split_character %} {% form_field csv_split_character %}
                 </div>
                 <div class="form-group">
@@ -288,11 +288,11 @@
               <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
             </div>
             <div class="modal-body">
-              <p>{{ 'msg.ConfirmDelete'|trans|sprintf(record.settings.nickname ) }}</p>
+              <p>{{ 'msg.ConfirmDelete'|trans|sprintf(record.settings.nickname) }}</p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-              <a href="{{ geturl('delete' ) }}&amp;id={{ record.id }}" class="btn btn-primary">
+              <a href="{{ geturl('delete') }}&amp;id={{ record.id }}" class="btn btn-primary">
                 {{ 'lbl.OK'|trans|capitalize }}
               </a>
             </div>

@@ -11,22 +11,22 @@
       <div class="col-md-6 col-md-offset-3">
         {% if hasError %}
         <div class="alert alert-danger">
-          <p>{{ err.InvalidEmailPasswordCombination }}</p>
+          <p>{{ 'err.InvalidEmailPasswordCombination'|trans|raw }}</p>
         </div>
         {% endif %}
         {% if hasTooManyAttemps %}
         <div class="alert alert-danger">
-          <p>{{ err.TooManyLoginAttempts }}</p>
+          <p>{{ 'err.TooManyLoginAttempts'|trans|raw }}</p>
         </div>
         {% endif %}
         {% if txt.BackendEmailForgotError %}
         <div class="alert alert-danger">
-          <p>{{ txt.BackendEmailForgotError }}</p>
+          <p>{{ 'txt.BackendEmailForgotError'|trans|raw }}</p>
         </div>
         {% endif %}
         {% if isForgotPasswordSuccess %}
         <div class="alert alert-success">
-          <p>{{ msg.LoginFormForgotPasswordSuccess }}</p>
+          <p>{{ 'msg.LoginFormForgotPasswordSuccess'|trans|raw }}</p>
         </div>
         {% endif %}
         {% form authenticationIndex %}

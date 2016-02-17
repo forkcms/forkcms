@@ -4,7 +4,7 @@
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
   <div class="col-md-12">
-    <h2>{{ 'msg.EditArticle'|trans|sprintf(item.title|capitalize) }}</h2>
+    <h2>{{ 'msg.EditArticle'|trans|capitalize|sprintf(item.title) }}</h2>
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{{ detailURL }}/{{ item.url }}{% if item.revision_id %}?revision={{ item.revision_id }}{% endif %}" class="btn btn-default" target="_blank">
