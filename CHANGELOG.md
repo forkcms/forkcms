@@ -1,8 +1,8 @@
 3.9.7 (xxxx-xx-xx)
 --
 Bugfixes:
-* Pages: removed single quotes converter in CacheBuilder. This fixes page titles with single quotes.
 * Backend: Core fix when using extra-params in a datagrid sequence reorder ajax call.
+* Pages: removed single quotes converter in CacheBuilder. This fixes page titles with single quotes.
 
 3.9.6 (2015-12-22)
 --
