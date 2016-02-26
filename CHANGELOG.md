@@ -1,6 +1,7 @@
 3.9.7 (xxxx-xx-xx)
 --
 Bugfixes:
+* Pages: viewing ?page_revision=x was not possible.
 * Faq: fixes faq-category sequence reordering not being saved.
 * Pages: removed single quotes converter in CacheBuilder. This fixes page titles with single quotes.
 

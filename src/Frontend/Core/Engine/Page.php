@@ -102,6 +102,12 @@ class Page extends FrontendBaseObject
         // set tracking cookie
         Model::getVisitorId();
 
+        // create header instance
+        $this->header = new Header($this->getKernel());
+
+        // new footer instance
+        $this->footer = new Footer($this->getKernel());
+
         // get page content from pageId of the requested URL
         $this->record = $this->getPageContent(
             Navigation::getPageId(implode('/', $this->URL->getPages()))
@@ -121,12 +127,6 @@ class Page extends FrontendBaseObject
 
         // create breadcrumb instance
         $this->breadcrumb = new Breadcrumb($this->getKernel());
-
-        // create header instance
-        $this->header = new Header($this->getKernel());
-
-        // new footer instance
-        $this->footer = new Footer($this->getKernel());
 
         // process page
         $this->processPage();
