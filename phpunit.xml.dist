@@ -23,6 +23,8 @@
             <exclude>src/Frontend/Modules/Faq/Tests/Actions</exclude>
             <exclude>src/Frontend/Modules/Search/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Authentication/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Blog/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Pages/Tests/Actions</exclude>
             <exclude>src/Api/*/Tests/Actions</exclude>
             <exclude>src/Frontend/Core/Tests/AjaxTest.php</exclude>
         </testsuite>

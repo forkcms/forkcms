@@ -10,6 +10,8 @@ namespace Backend\Modules\Authentication\Actions;
  */
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -107,9 +109,7 @@ class Index extends BackendBaseActionIndex
             // invalid form-token?
             if ($this->frm->getToken() != $this->frm->getField('form_token')->getValue()) {
                 // set a correct header, so bots understand they can't mess with us.
-                if (!headers_sent()) {
-                    header('400 Bad Request', true, 400);
-                }
+                throw new BadRequestHttpException();
             }
 
             // get the user's id
@@ -156,9 +156,7 @@ class Index extends BackendBaseActionIndex
                     sleep($timeout);
 
                     // set a correct header, so bots understand they can't mess with us.
-                    if (!headers_sent()) {
-                        header('503 Service Unavailable', true, 503);
-                    }
+                    throw new ServiceUnavailableHttpException();
                 } else {
                     // increment and store
                     \SpoonSession::set('backend_last_attempt', time());

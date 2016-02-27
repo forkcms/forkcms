@@ -8,6 +8,7 @@ use Symfony\Component\FileSystem\FileSystem;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\DomCrawler\Crawler;
+use Backend\Core\Engine\Authentication;
 
 /**
  * WebTestCase is the base class for functional tests.
@@ -193,6 +194,25 @@ abstract class WebTestCase extends BaseWebTestCase
     }
 
     /**
+     * Edits the data of a form
+     *
+     * @param  Client $client
+     * @param  Form   $form
+     * @param  array  $data
+     */
+    protected function submitEditForm(Client $client, Form $form, array $data = array())
+    {
+        $originalData = array();
+        foreach ($form->all() as $fieldName => $formField) {
+            $originalData[$fieldName] = $formField->getValue();
+        }
+
+        $data = array_merge($originalData, $data);
+
+        $this->submitForm($client, $form, $data);
+    }
+
+    /**
      * Do a request with the given GET parameters
      *
      * @param Client $client
@@ -238,5 +258,25 @@ abstract class WebTestCase extends BaseWebTestCase
                 unset($_GET[$key]);
             }
         }
+    }
+
+    /**
+     * Logs in a user. We do this directly in the authentication class because
+     * this is a lot faster than submitting forms and following redirects
+     *
+     * Logging in using the forms is tested in the Authentication module
+     */
+    protected function login()
+    {
+        Authentication::tearDown();
+        Authentication::loginUser('noreply@fork-cms.com', 'fork');
+    }
+
+    /**
+     * Log out a user
+     */
+    protected function logout()
+    {
+        Authentication::tearDown();
     }
 }
