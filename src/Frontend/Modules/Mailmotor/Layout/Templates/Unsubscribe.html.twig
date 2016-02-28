@@ -1,18 +1,21 @@
-<section id="unsubscribeIndex" class="mod">
+<section id="mailMotorUnsubscribeForm" class="mod">
 	<div class="inner">
+		<div class="hd">
+			<h3>{{ 'lbl.UnsubscribeFromNewsletter'|trans|capitalize }}</h3>
+		</div>
 		<div class="bd">
-			{% if unsubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>{% endif %}
-			{% if unsubscribeHasError %}<div class="message error"><p>{{ 'err.UnsubscribeFailed'|trans }}</p></div>{% endif %}
-			{% if unsubscribeIsSuccess %}<div class="message success"><p>{{ 'msg.UnsubscribeSuccess'|trans }}</p></div>{% endif %}
+			{% if mailMotorUnsubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>{% endif %}
+			{% if mailMotorUnsubscribeHasError %}<div class="message error"><p>{{ 'err.UnsubscribeFailed'|trans }}</p></div>{% endif %}
+			{% if mailMotorUnsubscribeIsSuccess %}<div class="message success"><p>{{ 'msg.UnsubscribeSuccess'|trans }}</p></div>{% endif %}
 
-			{% if not unsubscribeHideForm %}
-				{% form unsubscribe %}
-					<p{% if txtEmailError %} class="errorArea"{% endif %}>
-						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-						{% form_field_error Email %} {% form_field Email %}
+			{% if not mailMotorUnsubscribeHideForm %}
+				{% form mailMotorUnsubscribeForm %}
+					<p{option:txtEmailError} class="errorArea"{/option:txtEmailError}>
+						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+						{% form_field_error email %} {% form_field email %}
 					</p>
 					<p>
-						<input id="send" class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Send'|trans|capitalize }}" />
+						<input id="send" class="inputSubmit btn" type="submit" name="send" value="{{ 'lbl.Unsubscribe'|trans|capitalize }}" />
 					</p>
 				{% endform %}
 			{% endif %}

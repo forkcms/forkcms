@@ -1,21 +1,33 @@
-<section id="subscribeIndex" class="mod">
-	<div class="inner">
-		<div class="bd">
-			{% if subscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>{% endif %}
-			{% if subscribeHasError %}<div class="message error"><p>{{ 'err.SubscribeFailed'|trans }}</p></div>{% endif %}
-			{% if subscribeIsSuccess %}<div class="message success"><p>{{ 'msg.SubscribeSuccess'|trans }}</p></div>{% endif %}
+{#
+	The variables that are available to use:
+	- $mailMotorSubscribeHasFormError
+	- $mailMotorSubscribeHasError
+	- $mailMotorSubscribeIsSuccess
+	- $mailMotorSubscribeHideForm
+	- $mailMotorSubscribe
+#}
 
-			{% if not subscribeHideForm %}
-				{% form subscribe %}
-					<p{% if txtEmailError %} class="errorArea"{% endif %}>
-						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-						{% form_field_error Email %} {% form_field Email %}
+<div id="mailMotorSubscribeForm" class="mod">
+	<div class="inner">
+		<div class="hd">
+			<h3>{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
+		</div>
+		<div class="bd">
+			{% if mailMotorSubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>{% endif %}
+			{% if mailMotorSubscribeHasError %}<div class="message error"><p>{{ 'err.SubscribeFailed'|trans }}</p></div>{% endif %}
+			{% if mailMotorSubscribeIsSuccess %}<div class="message success"><p>{{ 'msg.SubscribeSuccess'|trans }}</p></div>{% endif %}
+
+			{% if not mailMotorSubscribeHideForm %}
+				{% form mailMotorSubscribeForm %}
+					<p{option:txtEmailError} class="errorArea"{/option:txtEmailError}>
+						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+						{% form_field_error email %} {% form_field email %}
 					</p>
 					<p>
-						<input id="send" class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Send'|trans|capitalize }}" />
+						<input id="send" class="inputSubmit btn" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans|capitalize }}" />
 					</p>
 				{% endform %}
 			{% endif %}
 		</div>
 	</div>
-</section>
+</div>

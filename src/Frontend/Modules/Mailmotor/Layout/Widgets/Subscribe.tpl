@@ -1,16 +1,19 @@
-<section id="subscribeFormWidget" class="mod">
+<section id="mailMotorSubscribeFormWidget" class="mod">
 	<div class="inner">
+		<div class="hd">
+			<h3 class="title">{$lblSubscribeToNewsletter|ucfirst}</h3>
+		</div>
 		<div class="bd">
-			{form:subscribe}
-				<input type="hidden" name="form_token" id="formToken" value="{$formToken}" />
+			<form action="{$var|geturlforblock:'MailMotor':'Subscribe'}" method="post">
+				<input type="hidden" name="form" value="mailMotorSubscribe" />
 				<p>
 					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtEmail} {$txtEmailError}
+					<input type="text" value="" id="email" name="email" class="inputText" placeholder="{$lblYourEmail|ucfirst}" />
 				</p>
 				<p>
-					<input id="send" class="inputSubmit" type="submit" name="send" value="{$lblSubscribe|ucfirst}" />
+					<input id="send" class="inputSubmit btn" type="submit" name="send" value="{$lblSubscribe|ucfirst}" />
 				</p>
-			{/form:subscribe}
+			</form>
 		</div>
 	</div>
 </section>
