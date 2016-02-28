@@ -1,3 +1,10 @@
+3.10 (xxxx-xx-xx)
+--
+Improvements:
+
+* MailMotor: new MailMotor added.
+
+
 3.9.6 (2015-12-22)
 --
 Improvements:
