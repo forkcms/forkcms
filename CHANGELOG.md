@@ -3,6 +3,8 @@
 Bugfixes:
 * Faq: fixes faq-category sequence reordering not being saved.
 * Pages: removed single quotes converter in CacheBuilder. This fixes page titles with single quotes.
+* Pages: Fixes "Notice: Undefined index: parent_id" when viewing a page revision where the page is located in the root of the pages tree.
+* Pages: Fixes "Error: Call to a member function addMetaData() on null" when viewing an existing revision page.
 
 3.9.6 (2015-12-22)
 --
