@@ -136,9 +136,9 @@ class Form extends \Common\Core\Form
             $mask
         );
         $attributes['data-firstday'] = $firstDay;
-        $attributes['year'] = date('Y', $value);
-        $attributes['month'] = date('n', $value);
-        $attributes['day'] = date('j', $value);
+        $attributes['data-year'] = date('Y', $value);
+        $attributes['data-month'] = date('n', $value);
+        $attributes['data-day'] = date('j', $value);
 
         // add extra classes based on type
         switch ($type) {
