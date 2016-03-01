@@ -137,7 +137,8 @@ class Form extends \Common\Core\Form
         );
         $attributes['data-firstday'] = $firstDay;
         $attributes['data-year'] = date('Y', $value);
-        $attributes['data-month'] = date('n', $value);
+        // -1 because javascript starts at 0
+        $attributes['data-month'] = date('n', $value) - 1;
         $attributes['data-day'] = date('j', $value);
 
         // add extra classes based on type
