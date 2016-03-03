@@ -1,4 +1,5 @@
-var fs = require('fs'),
+var autoprefixer = require('gulp-autoprefixer'),
+    fs = require('fs'),
     gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     sass = require('gulp-sass'),
@@ -18,6 +19,7 @@ gulp.task('sass', function() {
     .pipe(sass({
       includePaths: ['./node_modules/bootstrap-sass/assets/stylesheets']
     }).on('error', sass.logError))
+    .pipe(autoprefixer())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.core + '/Layout/Css'))
     .pipe(livereload())
@@ -29,6 +31,7 @@ gulp.task('sass:build', function() {
       outputStyle: 'compressed',
       includePaths: ['./node_modules/bootstrap-sass/assets/stylesheets']
     }).on('error', sass.logError))
+    .pipe(autoprefixer())
     .pipe(gulp.dest(paths.core + '/Layout/Css'))
 })
 
