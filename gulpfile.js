@@ -1,26 +1,29 @@
-var gulp = require('gulp'),
+var fs = require('fs'),
+    gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     webpack = require('webpack-stream')
 
+var theme = JSON.parse(fs.readFileSync('./package.json')).theme;
+var paths = {
+  src:  './src/Frontend/Themes/' + theme + '/src',
+  core: './src/Frontend/Themes/' + theme + '/Core',
+}
+
 gulp.task('sass', function() {
-  return gulp.src('./src/Frontend/Themes/Bootstrap/src/Layout/Sass/*.scss')
+  return gulp.src(paths.src + '/Layout/Sass/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({
       includePaths: ['./node_modules/bootstrap-sass/assets/stylesheets']
     }).on('error', sass.logError))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./src/Frontend/Themes/Bootstrap/Core/Layout/Css'))
+    .pipe(gulp.dest(paths.core + '/Layout/Css'))
     .pipe(livereload())
 })
 
-gulp.task('sass:watch', function() {
-  gulp.watch('./src/Frontend/Themes/Bootstrap/src/Layout/Sass/*.scss', ['sass']);
-})
-
 gulp.task('webpack', function() {
-  return gulp.src('./src/Frontend/Themes/Bootstrap/src/Js/index.js')
+  return gulp.src(paths.src + '/Js/index.js')
     .pipe(webpack({
       watch: true,
       output: {
@@ -34,12 +37,12 @@ gulp.task('webpack', function() {
         }]
       }
     }))
-    .pipe(gulp.dest('./src/Frontend/Themes/Bootstrap/Core/Js'))
+    .pipe(gulp.dest(paths.core + '/Js'))
     .pipe(livereload())
 })
 
 gulp.task('default', function() {
   livereload.listen()
-  gulp.watch('./src/Frontend/Themes/Bootstrap/src/Js/*.js', ['webpack'])
-  gulp.watch('./src/Frontend/Themes/Bootstrap/src/Layout/Sass/*.scss', ['sass']);
+  gulp.watch(paths.src + '/Js/*.js', ['webpack'])
+  gulp.watch(paths.src + '/Layout/Sass/*.scss', ['sass']);
 })
