@@ -352,14 +352,11 @@ class Navigation extends FrontendBaseObject
             break;
         }
 
-        // create template
-        $navigationTpl = Model::get('templating');
-
-        // assign navigation to template
-        $navigationTpl->assign('navigation', $navigation[$type][$parentId]);
-
         // return parsed content
-        return $navigationTpl->renderTemplate(FRONTEND_PATH . (string) $tpl, true, true);
+        return Model::get('templating')->render(
+            FRONTEND_PATH . (string) $tpl,
+            array('navigation' => $navigation[$type][$parentId])
+        );
     }
 
     /**
