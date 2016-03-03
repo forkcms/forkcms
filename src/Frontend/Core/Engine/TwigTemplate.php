@@ -63,10 +63,12 @@ class TwigTemplate extends BaseTwigTemplate
     public function __construct()
     {
         parent::__construct(func_get_arg(0), func_get_arg(1), func_get_arg(2));
-        $this->forkSettings = Model::get('fork.settings');
-        $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
-        $this->language = FRONTEND_LANGUAGE;
+
+        $this->forkSettings = Model::get('fork.settings');
+        if ($this->forkSettings) {
+            $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
+        }
     }
 
     /**

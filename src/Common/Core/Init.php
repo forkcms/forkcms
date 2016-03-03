@@ -59,25 +59,7 @@ abstract class Init extends \KernelLoader
         // define as a constant
         defined('LAST_MODIFIED_TIME') || define('LAST_MODIFIED_TIME', $lastModifiedTime);
 
-        $this->definePaths();
-        $this->defineURLs();
         $this->setDebugging();
-    }
-
-    /**
-     * Define paths
-     */
-    protected function definePaths()
-    {
-        // To be implemented in inherited classes
-    }
-
-    /**
-     * Define URLs
-     */
-    protected function defineURLs()
-    {
-        // To be implemented in inherited classes
     }
 
     /**

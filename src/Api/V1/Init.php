@@ -41,29 +41,10 @@ class Init extends \Common\Core\Init
             date_default_timezone_set('Europe/Brussels');
         }
 
-        $this->definePaths();
         $this->setDebugging();
 
         \SpoonFilter::disableMagicQuotes();
         $this->initSession();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function definePaths()
-    {
-        defined('API_CORE_PATH') || define('API_CORE_PATH', PATH_WWW . '/' . APPLICATION);
-        defined('BACKEND_PATH') || define('BACKEND_PATH', PATH_WWW . '/src/Backend');
-        defined('BACKEND_CACHE_PATH') || define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
-        defined('BACKEND_CORE_PATH') || define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
-        defined('BACKEND_MODULES_PATH') || define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
-
-        defined('FRONTEND_PATH') || define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
-        defined('FRONTEND_CACHE_PATH') || define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
-        defined('FRONTEND_CORE_PATH') || define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
-        defined('FRONTEND_MODULES_PATH') || define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
-        defined('FRONTEND_FILES_PATH') || define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
     }
 
     /**

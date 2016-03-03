@@ -132,6 +132,9 @@ abstract class WebTestCase extends BaseWebTestCase
                 $kernelDir . '/config/parameters.yml~backup'
             );
         }
+        if ($fs->exists($kernelDir . '/cache/test')) {
+            $fs->remove($kernelDir . '/cache/test');
+        }
     }
 
     /**
@@ -149,6 +152,9 @@ abstract class WebTestCase extends BaseWebTestCase
                 true
             );
             $fs->remove($kernelDir . '/config/parameters.yml~backup');
+        }
+        if ($fs->exists($kernelDir . '/cache/test')) {
+            $fs->remove($kernelDir . '/cache/test');
         }
     }
 
