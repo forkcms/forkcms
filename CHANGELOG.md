@@ -1,6 +1,7 @@
 3.9.7 (xxxx-xx-xx)
 --
 Bugfixes:
+* Core: Fixed when deploying, that /src/Frontend/Cache/Navigation/editor_link_list_x.js is now created if not exists. 
 * Faq: fixes faq-category sequence reordering not being saved.
 * Pages: removed single quotes converter in CacheBuilder. This fixes page titles with single quotes.
 * Pages: Fixes "Notice: Undefined index: parent_id" when viewing a page revision where the page is located in the root of the pages tree.
