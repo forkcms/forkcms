@@ -58,8 +58,6 @@ class TwigTemplate extends BaseTwigTemplate
         $this->parseVars();
 
         $template = str_replace(BACKEND_MODULES_PATH, "", $template);
-        // turn on output buffering
-        ob_start();
 
         // render the compiled File
         \Twig_Autoloader::register();
@@ -91,12 +89,7 @@ class TwigTemplate extends BaseTwigTemplate
         TwigFilters::getFilters($twig, 'Backend');
         $this->startGlobals($twig);
 
-        // template
-        $template = $twig->loadTemplate($template);
-        echo $template->render($this->variables);
-
-        // return template content
-        return ob_get_clean();
+        return $twig->render($template, $this->variables);
     }
 
     /**
