@@ -84,12 +84,20 @@ gulp.task('webpack:build', function() {
     .pipe(gulp.dest(paths.core + '/Js'))
 })
 
+gulp.task('copy:templates', function() {
+  return gulp
+    .src(paths.src + '/Layout/Templates/*')
+    .pipe(gulp.dest(paths.core + '/Layout/Templates'))
+    .pipe(livereload())
+})
+
 gulp.task('default', function() {
   livereload.listen()
   gulp.watch(paths.src + '/Js/*.js', ['webpack'])
   gulp.watch(paths.src + '/Layout/Sass/*.scss', ['sass']);
+  gulp.watch(paths.src + '/Layout/Templates/*', ['copy:templates'])
 })
 
 gulp.task('build', function() {
-  gulp.start('sass:build', 'webpack:build')
+  gulp.start('sass:build', 'webpack:build', 'copy:templates')
 })
