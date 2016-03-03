@@ -13,6 +13,7 @@ script:
     - phpunit --coverage-clover=coverage.clover
 
 before_script:
+    - php -i
     - npm install -g bower
     - composer install
     - mysql -e 'create database fork_test'
