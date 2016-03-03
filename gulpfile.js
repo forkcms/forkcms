@@ -3,7 +3,8 @@ var fs = require('fs'),
     livereload = require('gulp-livereload'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
-    webpack = require('webpack-stream')
+    gulpWebpack = require('webpack-stream'),
+    webpack = require('webpack')
 
 var theme = JSON.parse(fs.readFileSync('./package.json')).theme;
 var paths = {
@@ -22,27 +23,73 @@ gulp.task('sass', function() {
     .pipe(livereload())
 })
 
+gulp.task('sass:build', function() {
+  return gulp.src(paths.src + '/Layout/Sass/*.scss')
+    .pipe(sass({
+      outputStyle: 'compressed',
+      includePaths: ['./node_modules/bootstrap-sass/assets/stylesheets']
+    }).on('error', sass.logError))
+    .pipe(gulp.dest(paths.core + '/Layout/Css'))
+})
+
+var commonWebpackConfig = {
+  output: {
+    filename: 'bundle.js',
+  },
+  module: {
+    loaders: [{
+      test: /.js?$/,
+      loader: 'babel',
+      exclude: /node_modules/,
+    }]
+  }
+}
+
+var commonWebpackConfig = {
+  output: {
+    filename: 'bundle.js'
+  },
+  module: {
+    loaders: [{
+      test: /.js?$/,
+      loader: 'babel',
+      exclude: /node_modules/,
+    }]
+  },
+}
+
 gulp.task('webpack', function() {
   return gulp.src(paths.src + '/Js/index.js')
-    .pipe(webpack({
+    .pipe(gulpWebpack(Object.assign({}, commonWebpackConfig, {
       watch: true,
-      output: {
-        filename: 'bundle.js'
-      },
-      module: {
-        loaders: [{
-          test: /.js?$/,
-          loader: 'babel',
-          exclude: /node_modules/,
-        }]
-      }
-    }))
+    })))
     .pipe(gulp.dest(paths.core + '/Js'))
     .pipe(livereload())
+})
+
+gulp.task('webpack:build', function() {
+  return gulp.src(paths.src + '/Js/index.js')
+    .pipe(gulpWebpack(Object.assign({}, commonWebpackConfig, {
+      plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+          compress: {
+            warnings: false
+          }
+        }),
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': '"production"'
+        })
+      ]
+    }, webpack)))
+    .pipe(gulp.dest(paths.core + '/Js'))
 })
 
 gulp.task('default', function() {
   livereload.listen()
   gulp.watch(paths.src + '/Js/*.js', ['webpack'])
   gulp.watch(paths.src + '/Layout/Sass/*.scss', ['sass']);
+})
+
+gulp.task('build', function() {
+  gulp.start('sass:build', 'webpack:build')
 })
