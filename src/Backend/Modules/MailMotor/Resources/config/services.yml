@@ -1,0 +1,14 @@
+services:
+    # factory
+    mailmotor.factory:
+        class: Backend\Modules\MailMotor\Factory\MailMotorFactory
+        arguments:
+            - "@service_container"
+            - "%mailmotor.mail_engine%"
+
+    # gateways
+    mailmotor.subscriber:
+        class: MailMotor\Bundle\MailMotorBundle\Component\Subscriber
+        arguments:
+            - "@=service('mailmotor.factory').getSubscriberGateway()"
+            - "@event_dispatcher"
