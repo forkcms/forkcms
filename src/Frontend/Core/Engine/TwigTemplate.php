@@ -186,14 +186,7 @@ class TwigTemplate extends BaseTwigTemplate
 
         // only baseFile can start the render
         if ($this->baseSpoonFile === $template) {
-            // turn on output buffering
-            ob_start();
-
-            // render the compiled File
-            echo $this->renderTemplate();
-
-            // return template content
-            return ob_get_clean();
+            return $this->renderTemplate();
         }
     }
 
