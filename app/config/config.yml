@@ -101,6 +101,6 @@ services:
     templating:
         class: Frontend\Core\Engine\TwigTemplate
         arguments:
-            - @twig
-            - @templating.name_parser
-            - @templating.locator
+            - "@twig"
+            - "@templating.name_parser"
+            - "@templating.locator"
