@@ -304,13 +304,11 @@ utils.string =
 	 */
 	stripTags: function(value)
 	{
-		if(typeof value === 'undefined') return '';
-		else
-		{
-			value = value.replace(/<[^>]*>/ig, '');
+		if (typeof value === 'undefined') {
+		    return '';
 		}
 
-		return value;
+		return value.replace(/<[^>]*>/ig, '');
 	},
 
 	/**
