@@ -40,6 +40,6 @@ gulp.task('webpack', function() {
 
 gulp.task('default', function() {
   livereload.listen()
-  gulp.start('webpack')
+  gulp.watch('./src/Frontend/Themes/Bootstrap/src/Js/*.js', ['webpack'])
   gulp.watch('./src/Frontend/Themes/Bootstrap/src/Layout/Sass/*.scss', ['sass']);
 })
