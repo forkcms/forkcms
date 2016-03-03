@@ -1,6 +1,7 @@
 var autoprefixer = require('gulp-autoprefixer'),
     fs = require('fs'),
     gulp = require('gulp'),
+    imagemin = require('gulp-imagemin'),
     livereload = require('gulp-livereload'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -9,8 +10,8 @@ var autoprefixer = require('gulp-autoprefixer'),
 
 var theme = JSON.parse(fs.readFileSync('./package.json')).theme;
 var paths = {
-  src:  './src/Frontend/Themes/' + theme + '/src',
-  core: './src/Frontend/Themes/' + theme + '/Core',
+  src:  'src/Frontend/Themes/' + theme + '/src',
+  core: 'src/Frontend/Themes/' + theme + '/Core',
 }
 
 gulp.task('sass', function() {
@@ -88,9 +89,15 @@ gulp.task('webpack:build', function() {
 })
 
 gulp.task('copy:templates', function() {
-  return gulp
-    .src(paths.src + '/Layout/Templates/*')
+  return gulp.src(paths.src + '/Layout/Templates/*')
     .pipe(gulp.dest(paths.core + '/Layout/Templates'))
+    .pipe(livereload())
+})
+
+gulp.task('imagemin', function() {
+  return gulp.src(paths.src + '/Layout/Images/*')
+    .pipe(imagemin())
+    .pipe(gulp.dest(paths.core + '/Layout/Images'))
     .pipe(livereload())
 })
 
@@ -99,8 +106,9 @@ gulp.task('default', function() {
   gulp.watch(paths.src + '/Js/*.js', ['webpack'])
   gulp.watch(paths.src + '/Layout/Sass/*.scss', ['sass']);
   gulp.watch(paths.src + '/Layout/Templates/*', ['copy:templates'])
+  gulp.watch(paths.src + '/Layout/Images/*', ['imagemin'])
 })
 
 gulp.task('build', function() {
-  gulp.start('sass:build', 'webpack:build', 'copy:templates')
+  gulp.start('sass:build', 'webpack:build', 'copy:templates', 'imagemin')
 })

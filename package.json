@@ -28,6 +28,7 @@
     "grunt-webfont": "^1.1.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-imagemin": "^2.4.0",
     "gulp-livereload": "^3.8.1",
     "gulp-sass": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",
