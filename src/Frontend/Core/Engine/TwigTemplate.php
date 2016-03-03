@@ -68,7 +68,27 @@ class TwigTemplate extends BaseTwigTemplate
         $this->forkSettings = Model::get('fork.settings');
         if ($this->forkSettings) {
             $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
+            $loader = $this->environment->getLoader();
+            $loader = new \Twig_Loader_Chain(array(
+                $loader,
+                new \Twig_Loader_Filesystem(array(
+                    $this->themePath,
+                    FRONTEND_MODULES_PATH,
+                    FRONTEND_PATH,
+                    '/'
+                ))
+            ));
+            $this->environment->setLoader($loader);
         }
+
+        $this->environment->disableStrictVariables();
+
+        // init Form extension
+        new FormExtension($this->environment);
+
+        // start the filters / globals
+        TwigFilters::getFilters($this->environment, 'Frontend');
+        $this->startGlobals($this->environment);
     }
 
     /**
@@ -197,50 +217,23 @@ class TwigTemplate extends BaseTwigTemplate
      */
     public function renderTemplate($template = null)
     {
-        \Twig_Autoloader::register();
-        $loader = new \Twig_Loader_Filesystem(array(
-            $this->themePath,
-            FRONTEND_MODULES_PATH,
-            FRONTEND_PATH,
-            '/'
-        ));
-
-        $twig = new \Twig_Environment($loader, array(
-            'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig_' . ($this->debugMode ? 'dev/': 'prod/'),
-            'debug' => $this->debugMode
-        ));
-
-        // debug options
-        if ($this->debugMode === true) {
-            $twig->addExtension(new \Twig_Extension_Debug());
-        }
-
         if (!empty($this->forms)) {
             foreach ($this->forms as $form) {
                 // using assign to pass the form as global
-                $twig->addGlobal('form_' . $form->getName(), $form);
+                $this->environment->addGlobal('form_' . $form->getName(), $form);
             }
         }
 
-        // init Form extension
-        new FormExtension($twig);
-
-        // start the filters / globals
-        TwigFilters::getFilters($twig, 'Frontend');
-        $this->startGlobals($twig);
-
         // set the positions array
         if (!empty($this->positions)) {
-            $twig->addGlobal('positions', $this->setPositions($this->positions));
+            $this->environment->addGlobal('positions', $this->setPositions($this->positions));
         }
 
         // template
         if ($template === null) {
-            $template = $twig->loadTemplate($this->baseFile);
-        } else {
-            $template = $twig->loadTemplate($template);
+            $template = $this->baseFile;
         }
 
-        return $template->render($this->variables);
+        return $this->environment->render($template, $this->variables);
     }
 }

@@ -136,18 +136,6 @@ abstract class BaseTwigTemplate extends TwigEngine
         $twig->addGlobal('debug', $this->debugMode);
 
         $twig->addGlobal('timestamp', time());
-        $twig->addGlobal('timeFormat', $this->forkSettings->get('Core', 'time_format'));
-        $twig->addGlobal('dateFormatShort', $this->forkSettings->get('Core', 'date_format_short'));
-        $twig->addGlobal('dateFormatLong', $this->forkSettings->get('Core', 'date_format_long'));
-
-        // old theme checker
-        if ($this->forkSettings->get('Core', 'theme') !== null) {
-            $twig->addGlobal('THEME', $this->forkSettings->get('Core', 'theme', 'default'));
-            $twig->addGlobal(
-                'THEME_URL',
-                '/src/Backend/Themes/'.$this->forkSettings->get('Core', 'theme', 'default')
-            );
-        }
 
         // constants that should be protected from usage in the template
         $notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
@@ -171,8 +159,24 @@ abstract class BaseTwigTemplate extends TwigEngine
         }
 
         /* Setup Backend for the Twig environment. */
+        if (!$this->forkSettings) {
+            return;
+        }
 
-       // settings
+        $twig->addGlobal('timeFormat', $this->forkSettings->get('Core', 'time_format'));
+        $twig->addGlobal('dateFormatShort', $this->forkSettings->get('Core', 'date_format_short'));
+        $twig->addGlobal('dateFormatLong', $this->forkSettings->get('Core', 'date_format_long'));
+
+        // old theme checker
+        if ($this->forkSettings->get('Core', 'theme') !== null) {
+            $twig->addGlobal('THEME', $this->forkSettings->get('Core', 'theme', 'default'));
+            $twig->addGlobal(
+                'THEME_URL',
+                '/src/Backend/Themes/'.$this->forkSettings->get('Core', 'theme', 'default')
+            );
+        }
+
+        // settings
         $twig->addGlobal(
             'SITE_TITLE',
             $this->forkSettings->get('Core', 'site_title_'.$this->language, SITE_DEFAULT_TITLE)
