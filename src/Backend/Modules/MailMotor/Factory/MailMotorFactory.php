@@ -48,7 +48,7 @@ class MailMotorFactory
      *
      * @param string $mailEngine
      */
-    public function setMailEngine($mailEngine)
+    protected function setMailEngine($mailEngine)
     {
         if ($mailEngine == null) {
             $mailEngine = 'not_implemented';
