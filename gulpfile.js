@@ -25,6 +25,13 @@ gulp.task('webpack', function() {
       watch: true,
       output: {
         filename: 'bundle.js'
+      },
+      module: {
+        loaders: [{
+          test: /.js?$/,
+          loader: 'babel',
+          exclude: /node_modules/,
+        }]
       }
     }))
     .pipe(gulp.dest('./src/Frontend/Themes/Bootstrap/Core/Js'))
