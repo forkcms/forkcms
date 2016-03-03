@@ -1,6 +1,7 @@
 3.9.7 (xxxx-xx-xx)
 --
 Bugfixes:
+* Core: fixes utils.string.stripTags which throws errors in Windows 7 + IE10.
 * Faq: fixes faq-category sequence reordering not being saved.
 * Pages: removed single quotes converter in CacheBuilder. This fixes page titles with single quotes.
 * Pages: Fixes "Notice: Undefined index: parent_id" when viewing a page revision where the page is located in the root of the pages tree.

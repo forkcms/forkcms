@@ -166,6 +166,7 @@ utils.form =
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  * @author	Matthias Mullie <forkcms@mullie.eu>
+ * @author	Jeroen Desloovere <info@jeroendesloovere.be>
  */
 utils.string =
 {
@@ -303,7 +304,13 @@ utils.string =
 	 */
 	stripTags: function(value)
 	{
-		return value.replace(/<[^>]*>/ig, '');
+		if(typeof value === 'undefined') return '';
+		else
+		{
+			value = value.replace(/<[^>]*>/ig, '');
+		}
+
+		return value;
 	},
 
 	/**
