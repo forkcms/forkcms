@@ -56,7 +56,8 @@ gulp.task('fontgen', function() {
         stylesheet: false
       },
       dest: paths.core + '/Layout/Fonts/'
-    }));
+    }))
+    .pipe(livereload());
 });
 
 gulp.task('iconfont', function() {
@@ -75,7 +76,8 @@ gulp.task('iconfont', function() {
         .pipe(rename({basename: '_icons'}))
         .pipe(gulp.dest(paths.src + '/Layout/Sass'));
     })
-    .pipe(gulp.dest(paths.core + '/Layout/Fonts'));
+    .pipe(gulp.dest(paths.core + '/Layout/Fonts'))
+    .pipe(livereload());
 });
 
 var commonWebpackConfig = {
