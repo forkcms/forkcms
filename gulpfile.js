@@ -1,5 +1,6 @@
 var autoprefixer = require('gulp-autoprefixer'),
     consolidate = require('gulp-consolidate'),
+    fontgen = require('gulp-fontgen'),
     fs = require('fs'),
     gulp = require('gulp'),
     iconfont = require('gulp-iconfont'),
@@ -37,6 +38,16 @@ gulp.task('sass:build', function() {
     }).on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(gulp.dest(paths.core + '/Layout/Css'));
+});
+
+gulp.task('fontgen', function() {
+  return gulp.src(paths.src + '/Layout/Fonts/**/*.{ttf,otf}')
+    .pipe(fontgen({
+      options: {
+        stylesheet: false
+      },
+      dest: paths.core + '/Layout/Fonts/'
+    }));
 });
 
 gulp.task('iconfont', function() {
@@ -117,7 +128,7 @@ gulp.task('copy:templates', function() {
 });
 
 gulp.task('imagemin', function() {
-  return gulp.src(paths.src + '/Layout/Images/*')
+  return gulp.src(paths.src + '/Layout/Images/**/*')
     .pipe(imagemin())
     .pipe(gulp.dest(paths.core + '/Layout/Images'))
     .pipe(livereload());
@@ -130,8 +141,9 @@ gulp.task('default', function() {
   gulp.watch(paths.src + '/Layout/Templates/*', ['copy:templates']);
   gulp.watch(paths.src + '/Layout/Images/*', ['imagemin']);
   gulp.watch(paths.src + '/Layout/icon-sources/*', ['iconfont']);
+  gulp.watch(paths.src + '/Layout/Fonts/*', ['fontgen']);
 });
 
 gulp.task('build', function() {
-  gulp.start('iconfont', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin');
+  gulp.start('iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin');
 });
