@@ -25,9 +25,7 @@
   <script src="{$jsFiles.file}"></script>
 {/iteration:jsFiles}
 
-<!-- build:js /Core/Js/lib.js -->
 <script src="/src/Js/lib/bootstrap.js"></script>
-<!-- endbuild -->
 <script src="{$THEME_URL}/Core/Js/theme.js?t={$LAST_MODIFIED_TIME}"></script>
 
 {* @todo Remove when needed *}
