@@ -1,8 +1,11 @@
 var autoprefixer = require('gulp-autoprefixer'),
+    consolidate = require('gulp-consolidate'),
     fs = require('fs'),
     gulp = require('gulp'),
+    iconfont = require('gulp-iconfont'),
     imagemin = require('gulp-imagemin'),
     livereload = require('gulp-livereload'),
+    rename = require('gulp-rename'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     gulpWebpack = require('webpack-stream'),
@@ -34,6 +37,25 @@ gulp.task('sass:build', function() {
     }).on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(gulp.dest(paths.core + '/Layout/Css'))
+})
+
+gulp.task('iconfont', function() {
+  return gulp.src(paths.src + '/Layout/icon-sources/*.svg')
+    .pipe(iconfont({fontName: 'icons'}))
+    .on('glyphs', function(glyphs) {
+      var options = {
+        glyphs: glyphs,
+        fontName: 'icons',
+        fontPath: '../Fonts/',
+        className: 'icon'
+      }
+
+      gulp.src(paths.src + '/Layout/Sass/_icons-template.scss')
+        .pipe(consolidate('lodash', options))
+        .pipe(rename({basename: '_icons'}))
+        .pipe(gulp.dest(paths.src + '/Layout/Sass'))
+    })
+    .pipe(gulp.dest(paths.core + '/Layout/Fonts'))
 })
 
 var commonWebpackConfig = {
@@ -107,8 +129,9 @@ gulp.task('default', function() {
   gulp.watch(paths.src + '/Layout/Sass/*.scss', ['sass']);
   gulp.watch(paths.src + '/Layout/Templates/*', ['copy:templates'])
   gulp.watch(paths.src + '/Layout/Images/*', ['imagemin'])
+  gulp.watch(paths.src + '/Layout/icon-sources/*', ['iconfont'])
 })
 
 gulp.task('build', function() {
-  gulp.start('sass:build', 'webpack:build', 'copy:templates', 'imagemin')
+  gulp.start('iconfont', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin')
 })
