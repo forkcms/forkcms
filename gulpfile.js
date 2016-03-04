@@ -155,6 +155,10 @@ gulp.task('default', function() {
   gulp.watch(paths.src + '/Layout/Fonts/*', ['fontgen']);
 });
 
+gulp.task('serve', function() {
+  gulp.start('default');
+});
+
 gulp.task('build', function() {
   gulp.start('clean', 'iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin');
 });
