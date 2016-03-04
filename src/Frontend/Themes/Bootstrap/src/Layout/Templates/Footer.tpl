@@ -1,6 +1,6 @@
 <footer id="footer" role="contentinfo">
   <div class="container">
-    <p class="pull-right"><a class="backToTop" href="#">Back to top</a></p>
+    <p class="pull-right"><a class="backToTop" data-scroll href="#">Back to top</a></p>
     <nav>
       <ul class="nav nav-pills" role="navigation">
         <li class="disabled"><a>© <span itemprop="copyrightYear">{$now|date:'Y'}</span> {$siteTitle}</a></li>
