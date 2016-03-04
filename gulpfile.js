@@ -1,4 +1,5 @@
 var autoprefixer = require('gulp-autoprefixer'),
+    clean = require('gulp-clean'),
     consolidate = require('gulp-consolidate'),
     fontgen = require('gulp-fontgen'),
     fs = require('fs'),
@@ -17,6 +18,14 @@ var paths = {
   src:  'src/Frontend/Themes/' + theme + '/src',
   core: 'src/Frontend/Themes/' + theme + '/Core',
 };
+
+gulp.task('clean', function() {
+  return gulp.src([
+    paths.core + '/Layout/Fonts/*',
+    paths.core + '/Layout/Images/*',
+    paths.core + '/Layout/Templates/*'
+  ]).pipe(clean());
+});
 
 gulp.task('sass', function() {
   return gulp.src(paths.src + '/Layout/Sass/*.scss')
@@ -145,5 +154,5 @@ gulp.task('default', function() {
 });
 
 gulp.task('build', function() {
-  gulp.start('iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin');
+  gulp.start('clean', 'iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin');
 });
