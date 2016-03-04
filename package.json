@@ -2,6 +2,10 @@
   "name": "forkcms",
   "version": "3.6.6",
   "theme": "Bootstrap",
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp build"
+  },
   "devDependencies": {
     "babel-core": "^6.6.4",
     "babel-loader": "^6.2.4",
