@@ -25,8 +25,7 @@
   <script src="{$jsFiles.file}"></script>
 {/iteration:jsFiles}
 
-<script src="/src/Js/lib/bootstrap.js"></script>
-<script src="{$THEME_URL}/Core/Js/theme.js?t={$LAST_MODIFIED_TIME}"></script>
+<script src="{$THEME_URL}/Core/Js/bundle.js?t={$LAST_MODIFIED_TIME}"></script>
 
 {* @todo Remove when needed *}
 <div id="fb-root"></div>
