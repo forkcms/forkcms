@@ -16,7 +16,7 @@ var autoprefixer = require('gulp-autoprefixer'),
 var theme = JSON.parse(fs.readFileSync('./package.json')).theme;
 var paths = {
   src:  'src/Frontend/Themes/' + theme + '/src',
-  core: 'src/Frontend/Themes/' + theme + '/Core',
+  core: 'src/Frontend/Themes/' + theme + '/Core'
 };
 
 gulp.task('clean', function() {
