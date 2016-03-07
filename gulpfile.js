@@ -7,6 +7,7 @@ var autoprefixer = require('gulp-autoprefixer'),
     iconfont = require('gulp-iconfont'),
     imagemin = require('gulp-imagemin'),
     livereload = require('gulp-livereload'),
+    plumber = require('gulp-plumber'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -19,6 +20,11 @@ var paths = {
   core: 'src/Frontend/Themes/' + theme + '/Core'
 };
 
+gulp.plumbedSrc = function(){
+  return gulp.src.apply(gulp, arguments)
+    .pipe(plumber());
+};
+
 gulp.task('clean', function() {
   return gulp.src([
     paths.core + '/Layout/Fonts/*',
@@ -28,7 +34,7 @@ gulp.task('clean', function() {
 });
 
 gulp.task('sass', function() {
-  return gulp.src(paths.src + '/Layout/Sass/*.scss')
+  return gulp.plumbedSrc(paths.src + '/Layout/Sass/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({
       includePaths: ['./node_modules/bootstrap-sass/assets/stylesheets']
@@ -50,7 +56,7 @@ gulp.task('sass:build', function() {
 });
 
 gulp.task('fontgen', function() {
-  return gulp.src(paths.src + '/Layout/Fonts/**/*.{ttf,otf}')
+  return gulp.plumbedSrc(paths.src + '/Layout/Fonts/**/*.{ttf,otf}')
     .pipe(fontgen({
       options: {
         stylesheet: false
@@ -61,7 +67,7 @@ gulp.task('fontgen', function() {
 });
 
 gulp.task('iconfont', function() {
-  return gulp.src(paths.src + '/Layout/icon-sources/*.svg')
+  return gulp.plumbedSrc(paths.src + '/Layout/icon-sources/*.svg')
     .pipe(iconfont({fontName: 'icons'}))
     .on('glyphs', function(glyphs) {
       var options = {
@@ -94,7 +100,7 @@ var commonWebpackConfig = {
 };
 
 gulp.task('webpack', function() {
-  return gulp.src(paths.src + '/Js/index.js')
+  return gulp.plumbedSrc(paths.src + '/Js/index.js')
     .pipe(gulpWebpack(Object.assign({}, commonWebpackConfig, {
       watch: true,
     })))
@@ -120,13 +126,13 @@ gulp.task('webpack:build', function() {
 });
 
 gulp.task('copy:templates', function() {
-  return gulp.src(paths.src + '/Layout/Templates/*')
+  return gulp.plumbedSrc(paths.src + '/Layout/Templates/*')
     .pipe(gulp.dest(paths.core + '/Layout/Templates'))
     .pipe(livereload());
 });
 
 gulp.task('imagemin', function() {
-  return gulp.src(paths.src + '/Layout/Images/**/*')
+  return gulp.plumbedSrc(paths.src + '/Layout/Images/**/*')
     .pipe(imagemin())
     .pipe(gulp.dest(paths.core + '/Layout/Images'))
     .pipe(livereload());
