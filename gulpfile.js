@@ -93,19 +93,6 @@ var commonWebpackConfig = {
   }
 };
 
-var commonWebpackConfig = {
-  output: {
-    filename: 'bundle.js'
-  },
-  module: {
-    loaders: [{
-      test: /.js?$/,
-      loader: 'babel',
-      exclude: /node_modules/,
-    }]
-  },
-};
-
 gulp.task('webpack', function() {
   return gulp.src(paths.src + '/Js/index.js')
     .pipe(gulpWebpack(Object.assign({}, commonWebpackConfig, {
