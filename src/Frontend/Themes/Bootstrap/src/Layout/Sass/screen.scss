@@ -10,20 +10,14 @@
 @import 'icons';
 
 // Plugin styling
-// @import 'plugins/bxslider';
-// @import 'plugins/fancybox';
+// eg. @import 'plugins/fancybox';
 
 // Base styles
 @import 'base/base';
 
 // Components
-// Insert components here. Put all components in the components/ directory
-// eg. @import 'components/footer';
-
-// Layout
-@import 'layouts/cookiebar';
-@import 'layouts/navbar';
+@import 'components/cookiebar';
+@import 'components/navbar';
 
 // Custom page styling
-// Insert custom page styling here. Put all page styles in the pages/ directory
 // eg. @import 'pages/footer';
