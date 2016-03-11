@@ -37,7 +37,8 @@ class Index extends FrontendBaseBlock
      */
     public function execute()
     {
-        $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+        $apiKey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+        $this->addJS('http://maps.google.com/maps/api/js?key=' . $apiKey, true, false);
 
         parent::execute();
 
