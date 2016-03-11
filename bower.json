@@ -21,7 +21,9 @@
     "bootstrap-sass": "~3.3.6",
     "fontawesome": "~4.5.0",
     "bootstrap-tagsinput": "^0.7.1",
-    "typeahead.js": "^0.11.1",
-    "bootstrap3-typeahead": "^4.0.0"
+    "typeahead.js": "^0.11.1"
+  },
+  "resolutions": {
+    "jquery": "2.2.*"
   }
 }
