@@ -1149,7 +1149,7 @@ jsBackend.forms =
         jsBackend.forms.focusFirstField();
         jsBackend.forms.datefields();
         jsBackend.forms.submitWithLinks();
-        jsBackend.forms.tagBoxes();
+        jsBackend.forms.tagsInput();
     },
 
     datefields: function () {
@@ -1358,18 +1358,37 @@ jsBackend.forms =
         }
     },
 
-    // add tag box to the correct input fields
-    tagBoxes: function () {
-        if ($('.jsTagsBox').length > 0) {
-            $('.jsTagsBox').tagsBox(
-                {
-                    emptyMessage: jsBackend.locale.msg('NoTags'),
-                    errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
-                    addLabel: utils.string.ucfirst(jsBackend.locale.lbl('AddTag')),
-                    removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
-                    params: {fork: {module: 'Tags', action: 'Autocomplete'}},
-                    showIconOnly: true
-                });
+    // add tagsinput to the correct input fields
+    tagsInput: function() {
+
+        if ($('.js-tags-input').length > 0) {
+            var allTags = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: {
+                    url: '/backend/ajax',
+                    prepare: function(settings) {
+                        settings.type = 'POST';
+                        settings.data = {fork: {module: 'Tags', action: 'GetAllTags'}};
+                        return settings;
+                    },
+                    cache: false,
+                    filter: function(list) {
+                        list = list.data;
+                        return list;
+                    }
+                }
+            });
+
+            allTags.initialize();
+            $('.js-tags-input').tagsinput({
+                typeaheadjs: {
+                    name: 'Tags',
+                    displayKey: 'name',
+                    valueKey: 'name',
+                    source: allTags.ttAdapter()
+                }
+            });
         }
     },
 

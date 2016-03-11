@@ -63,7 +63,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addEditor('answer');
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
         $this->frm->addDropdown('category_id', $categories);
-        $this->frm->addText('tags', null, null, 'form-control jsTagsBox', 'form-control danger jsTagsBox');
+        $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
 
         // meta
         $this->meta = new BackendMeta($this->frm, null, 'title', true);

@@ -419,8 +419,8 @@ class Edit extends BackendBaseActionEdit
             'tags',
             BackendTagsModel::getTags($this->URL->getModule(), $this->id),
             null,
-            'form-control jsTagsBox',
-            'error jsTagsBox'
+            'form-control js-tags-input',
+            'error js-tags-input'
         );
 
         // a specific action
