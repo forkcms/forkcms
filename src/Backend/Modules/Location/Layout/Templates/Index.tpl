@@ -1,13 +1,15 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblLocation|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     {option:showLocationAdd}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>
+          <span class="fa fa-plus"></span>
           {$lblAdd|ucfirst}
         </a>
       </div>
@@ -39,27 +41,27 @@
         </h3>
       </div>
       <div class="panel-body">
-        <div class="form-group">
-          <label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
+        <div class="form-group{option:ddmZoomLevelError} has-error{/option:ddmZoomLevelError}">
+          <label for="zoomLevel" class="control-label">{$lblZoomLevel|ucfirst}</label>
           {$ddmZoomLevel} {$ddmZoomLevelError}
         </div>
-        <div class="form-group"{option:!godUser} style="display:none;"{/option:!godUser}>
-          <label for="width">{$lblWidth|ucfirst}</label>
-          <p class="text-info">{$msgWidthHelp|sprintf:300:800}</p>
+        <div class="form-group{option:txtWidthError} has-error{/option:txtWidthError}"{option:!godUser} style="display:none;"{/option:!godUser}>
+          <label for="width" class="control-label">{$lblWidth|ucfirst}</label>
+          <p class="help-block">{$msgWidthHelp|sprintf:300:800}</p>
           {$txtWidth} {$txtWidthError}
         </div>
-        <div class="form-group"{option:!godUser} style="display:none;"{/option:!godUser}>
-          <label for="height">{$lblHeight|ucfirst}</label>
-          <p class="text-info">{$msgHeightHelp|sprintf:150}</p>
+        <div class="form-group{option:txtHeightError} has-error{/option:txtHeightError}"{option:!godUser} style="display:none;"{/option:!godUser}>
+          <label for="height" class="control-label">{$lblHeight|ucfirst}</label>
+          <p class="help-block">{$msgHeightHelp|sprintf:150}</p>
           {$txtHeight} {$txtHeightError}
         </div>
-        <div class="form-group">
-          <label for="mapType">{$lblMapType|ucfirst}</label>
+        <div class="form-group{option:ddmMapTypeError} has-error{/option:ddmMapTypeError}">
+          <label for="mapType" class="control-label">{$lblMapType|ucfirst}</label>
           {$ddmMapType} {$ddmMapTypeError}
         </div>
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
-            <a href="#" id="saveLiveData" class="btn btn-primary">{$lblSave|ucfirst}</a>
+            <a href="#" id="saveLiveData" class="btn btn-success"><span class="fa fa-floppy-o"></span> {$lblSave|ucfirst}</a>
           </div>
         </div>
       </div>

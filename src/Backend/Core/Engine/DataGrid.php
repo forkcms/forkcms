@@ -26,26 +26,26 @@ use Backend\Core\Engine\Model as BackendModel;
 class DataGrid extends \SpoonDataGrid
 {
     /**
-     * Map of glyph icons by given action name
+     * Map of icons by given action name
      * @todo this map is not full
      *
      * @var array
      */
-    private $mapGlyphIcons = array(
-        'add' => 'glyphicon-plus',
-        'copy' => 'glyphicon-plus',
-        'edit' => 'glyphicon-pencil',
-        'import' => 'glyphicon-import',
-        'export' => 'glyphicon-export',
-        'delete' => 'glyphicon-trash',
-        'detail' => 'glyphicon-cog',
-        'details' => 'glyphicon-cog',
-        'approve' => 'glyphicon-ok',
-        'mark_as_spam' => 'glyphicon-ban-circle',
-        'install' => 'glyphicon-save',
-        'use_revision' => 'glyphicon-open',
-        'use_draft' => 'glyphicon-open',
-        'custom_fields' => 'glyphicon-blackboard'
+    private $mapIcons = array(
+        'add' => 'fa-plus',
+        'copy' => 'fa-copy',
+        'edit' => 'fa-pencil',
+        'import' => 'fa-download',
+        'export' => 'fa-upload',
+        'delete' => 'fa-trash-o',
+        'detail' => 'fa-eye',
+        'details' => 'fa-eye',
+        'approve' => 'fa-thumbs-o-up',
+        'mark_as_spam' => 'fa-ban',
+        'install' => 'fa-download',
+        'use_revision' => 'fa-file-o',
+        'use_draft' => 'fa-file-o',
+        'custom_fields' => 'fa-tasks'
     );
 
     /**
@@ -117,7 +117,7 @@ class DataGrid extends \SpoonDataGrid
         $image = null,
         $sequence = null
     ) {
-        $icon = $this->decideGlyphIcon($name);
+        $icon = $this->decideIcon($name);
 
         // known actions that should have a button
         if (in_array(
@@ -127,8 +127,8 @@ class DataGrid extends \SpoonDataGrid
         ) {
             // rebuild value, it should have special markup
             $value =
-                '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
-                ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
+                '<a href="' . $URL . '" class="btn btn-default btn-xs pull-right">' .
+                ($icon?'<span class="fa ' . $icon . '"></span>&nbsp;':'') .
                 $value .
                 '</a>';
 
@@ -140,7 +140,7 @@ class DataGrid extends \SpoonDataGrid
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
-                ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
+                ($icon?'<span class="fa ' . $icon . '"></span>&nbsp;':'') .
                 $value .
                 '</a>';
 
@@ -201,7 +201,7 @@ class DataGrid extends \SpoonDataGrid
         // reserve var for attributes
         $attributes = '';
 
-        $icon = $this->decideGlyphIcon($name);
+        $icon = $this->decideIcon($name);
 
         // no anchorAttributes set means we set the default class attribute for the anchor
         if (empty($anchorAttributes)) {
@@ -216,7 +216,7 @@ class DataGrid extends \SpoonDataGrid
         // rebuild value
         $value =
             '<a href="' . $URL . '"' . $attributes . '>' .
-            ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
+            ($icon?'<span class="fa ' . $icon . '"></span>&nbsp;':'') .
             $value .
             '</a>';
 
@@ -275,7 +275,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnHidden('sequence');
 
         // add a column for the handle, so users have something to hold while dragging
-        $this->addColumn('dragAndDropHandle', null, '<span class="glyphicon glyphicon-sort"></span>');
+        $this->addColumn('dragAndDropHandle', null, '<span class="fa fa-reorder"></span>');
 
         // make sure the column with the handler is the first one
         $this->setColumnsSequence('dragAndDropHandle');
@@ -601,17 +601,17 @@ class DataGrid extends \SpoonDataGrid
     }
 
     /**
-     * Decides what glyph icon to use by given name
+     * Decides what icon to use by given name
      *
      * @param $name
      * @return null|string
      */
-    private function decideGlyphIcon($name)
+    private function decideIcon($name)
     {
         $icon = null;
 
-        if (isset($this->mapGlyphIcons[$name])) {
-            $icon = $this->mapGlyphIcons[$name];
+        if (isset($this->mapIcons[$name])) {
+            $icon = $this->mapIcons[$name];
         }
 
         return $icon;

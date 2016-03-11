@@ -8,31 +8,34 @@
 {form:editCategory}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="title">
-          {$lblTitle|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-        </label>
-        {$txtTitle} {$txtTitleError}
-      </div>
-      {option:detailURL}
-      <p><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></p>
-      {/option:detailURL}
-      {option:!detailURL}
-      <p class="text-warning">{$errNoModuleLinked}</p>
-      {/option:!detailURL}
-    </div>
-  </div>
-  <div class="row fork-module-content">
-    <div class="col-md-12">
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
+            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{$lblContent|ucfirst}</a>
+          </li>
+          <li role="presentation">
             <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{$lblSEO|ucfirst}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabSEO">
+          <div role="tabpanel" class="tab-pane active" id="tabContent">
+            <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
+              <label for="title" class="control-label">
+                {$lblTitle|ucfirst}
+                <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+              </label>
+              {$txtTitle} {$txtTitleError}
+            </div>
+            {option:detailURL}
+            <a href="{$detailURL}">
+              <small>{$detailURL}/<span id="generatedUrl"></span></small>
+            </a>
+            {/option:detailURL}
+            {option:!detailURL}
+            <p class="text-warning"><span class="fa fa-warning"></span> {$errNoModuleLinked}</p>
+            {/option:!detailURL}
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabSEO">
             {include:{$BACKEND_CORE_PATH}/Layout/Templates/Seo.tpl}
           </div>
         </div>
@@ -45,14 +48,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showBlogDeleteCategory}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showBlogDeleteCategory}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblPublish|ucfirst}
+          <button id="editButton" type="submit" name="edit" class="btn btn-success">
+            <span class="fa fa-check"></span>&nbsp;{$lblPublish|ucfirst}
           </button>
         </div>
       </div>
@@ -67,9 +70,9 @@
               <p>{$msgConfirmDeleteCategory|sprintf:{$item.title}}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a href="{$var|geturl:'delete_category'}&amp;id={$item.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <a href="{$var|geturl:'delete_category'}&amp;id={$item.id}" class="btn btn-danger">
+                <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
               </a>
             </div>
           </div>

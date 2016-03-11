@@ -37,19 +37,19 @@
               </h4>
             </div>
             <div class="panel-body">
-              <div class="form-group">
-                <label for="name">
+              <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
+                <label for="name" class="control-label">
                   {$lblName|ucfirst}
-                  <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
-                <p class="text-info">{$msgNameInternalUseOnly}</p>
+                <p class="help-block">{$msgNameInternalUseOnly}</p>
                 {$txtName} {$txtNameError}
               </div>
               {option:ddmCampaign}
-              <div class="form-group">
-                <label for="campaign">
+              <div class="form-group{option:ddmCampaignError} has-error{/option:ddmCampaignError}">
+                <label for="campaign" class="control-label">
                   {$lblCampaign|ucfirst}
-                  <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
                 {$ddmCampaign} {$ddmCampaignError}
               </div>
@@ -67,17 +67,17 @@
               </h4>
             </div>
             <div class="panel-body">
-              <div class="form-group">
-                <label for="fromName">
+              <div class="form-group{option:txtFromNameError} has-error{/option:txtFromNameError}">
+                <label for="fromName" class="control-label">
                   {$lblName|ucfirst}
-                  <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
                 {$txtFromName} {$txtFromNameError}
               </div>
-              <div class="form-group">
-                <label for="fromEmail">
+              <div class="form-group{option:txtFromEmailError} has-error{/option:txtFromEmailError}">
+                <label for="fromEmail" class="control-label">
                   {$lblEmailAddress|ucfirst}
-                  <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
                 {$txtFromEmail} {$txtFromEmailError}
               </div>
@@ -94,10 +94,10 @@
               </h4>
             </div>
             <div class="panel-body">
-              <div class="form-group">
-                <label for="replyToEmail">
+              <div class="form-group{option:txtReplyToEmailError} has-error{/option:txtReplyToEmailError}">
+                <label for="replyToEmail" class="control-label">
                   {$lblEmailAddress|ucfirst}
-                  <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                 </label>
                 {$txtReplyToEmail} {$txtReplyToEmailError}
               </div>
@@ -116,12 +116,12 @@
             <div class="panel-body">
               <div class="form-group">
                 {option:chkGroupsError}
-                <p class="text-danger">{$chkGroupsError}</p>
+                  <p class="text-danger">{$chkGroupsError}</p>
                 {/option:chkGroupsError}
                 <ul class="list-unstyled">
                   {iteration:groups}
                   <li class="checkbox">
-                    <label for="{$groups.id}">
+                    <label for="{$groups.id}" class="control-label">
                       {$groups.chkGroups}
                       <attr title="{$msgGroupsNumberOfRecipients|sprintf:{$groups.recipients}}">
                         {$groups.label|ucfirst}
@@ -147,7 +147,7 @@
             <div class="panel-body">
               <div class="form-group">
                 {option:rbtLanguagesError}
-                <p class="text-danger">{$rbtLanguagesError}</p>
+                  <p class="text-danger">{$rbtLanguagesError}</p>
                 {/option:rbtLanguagesError}
                 <ul class="list-unstyled">
                   {iteration:languages}
@@ -167,9 +167,9 @@
         <div class="col-md-12">
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
-              <button id="toStep2" type="submit" name="to_step_2" class="btn btn-primary">
+              <button id="toStep2" type="submit" name="to_step_2" class="btn btn-success">
                 {$lblToStep|ucfirst}
-                &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                &nbsp;<span class="fa fa-chevron-right"></span>
               </button>
             </div>
           </div>
@@ -189,9 +189,9 @@
             </div>
             <div class="panel-body">
               <div class="form-group">
-                <p class="text-info">{$msgHelpTemplates}</p>
+                <p class="help-block">{$msgHelpTemplates}</p>
                 {option:rbtTemplatesError}
-                <p class="text-danger">{$rbtTemplatesError}</p>
+                  <p class="text-danger">{$rbtTemplatesError}</p>
                 {/option:rbtTemplatesError}
                 <ul id="templateSelection" class="selectThumbList list-unstyled list-inline">
                   {iteration:templates}
@@ -219,9 +219,9 @@
         <div class="col-md-12">
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
-              <button id="toStep3" type="submit" name="to_step_3" class="btn btn-primary">
+              <button id="toStep3" type="submit" name="to_step_3" class="btn btn-success">
                 {$lblToStep|ucfirst} 3
-                &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                &nbsp;<span class="fa fa-chevron-right"></span>
               </button>
             </div>
           </div>
@@ -233,25 +233,25 @@
     {form:step3}
       <div class="row">
         <div class="col-md-12">
-          <div class="form-group">
-            <label for="subject">
+          <div class="form-group{option:txtSubjectError} has-error{/option:txtSubjectError}">
+            <label for="subject" class="control-label">
               {$lblSubject|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtSubject} {$txtSubjectError}
           </div>
           <div class="form-group">
-            <label for="content">
+            <label for="content" class="control-label">
               {$lblContent|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             <div id="iframeBox">
               <iframe id="contentBox" src="{$var|geturl:'edit_mailing_iframe'}&amp;id={$mailing.id}" height="100%" width="100%"></iframe>
             </div>
           </div>
           {option:txtContentPlain}
-          <div class="form-group">
-            <label for="subject">
+          <div class="form-group{option:txtContentPlainError} has-error{/option:txtContentPlainError}">
+            <label for="subject" class="control-label">
               {$lblPlainTextVersion|ucfirst}
             </label>
             {$txtContentPlain} {$txtContentPlainError}
@@ -263,9 +263,9 @@
         <div class="col-md-12">
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
-              <button id="sendContent" type="submit" name="to_step_4" class="btn btn-primary">
+              <button id="sendContent" type="submit" name="to_step_4" class="btn btn-success">
                 {$lblToStep|ucfirst} 4
-                &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                &nbsp;<span class="fa fa-chevron-right"></span>
               </button>
             </div>
           </div>
@@ -307,8 +307,8 @@
               </h4>
             </div>
             <div class="panel-body">
-              <div class="form-group">
-                <label for="email">{$lblEmailAddress|ucfirst}</label>
+              <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
+                <label for="email" class="control-label">{$lblEmailAddress|ucfirst}</label>
                 {$txtEmail} {$txtEmailError}
               </div>
             </div>
@@ -316,7 +316,7 @@
               <div class="btn-toolbar">
                 <div class="btn-group pull-right">
                   <button id="sendPreview" type="submit" class="btn btn-default" name="send_preview">
-                    <span class="glyphicon glyphicon-search"></span>&nbsp;
+                    <span class="fa fa-chevron-right"></span>&nbsp;
                     {$lblSendPreview|ucfirst}
                   </button>
                 </div>
@@ -335,19 +335,19 @@
             </div>
             <div class="panel-body">
               <div class="form-group">
-                <label for="sendOnDate">{$lblSendDate|ucfirst}</label>
+                <label for="sendOnDate" class="control-label">{$lblSendDate|ucfirst}</label>
                 {$txtSendOnDate}
               </div>
               <div class="form-group">
-                <label for="sendOnTime">{$lblAt}</label>
+                <label for="sendOnTime" class="control-label">{$lblAt}</label>
                 {$txtSendOnTime}
               </div>
             </div>
             <div class="panel-footer">
               <div class="btn-toolbar">
                 <div class="btn-group pull-right">
-                  <a id="sendMailing" href="#" class="btn btn-primary" title="{$lblSendMailing|ucfirst}">
-                    <span class="glyphicon glyphicon-envelope"></span>&nbsp;
+                  <a id="sendMailing" href="#" class="btn btn-success" title="{$lblSendMailing|ucfirst}">
+                    <span class="fa fa-send-o"></span>&nbsp;
                     {$lblSendMailing|ucfirst}
                   </a>
                 </div>
@@ -380,9 +380,9 @@
               </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a id="sendMailingConfirmationSubmit" href="#" class="btn btn-primary">
-                {$lblSendMailing|ucfirst}
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <a id="sendMailingConfirmationSubmit" href="#" class="btn btn-success">
+                <span class="fa fa-send-o"></span> {$lblSendMailing|ucfirst}
               </a>
             </div>
           </div>

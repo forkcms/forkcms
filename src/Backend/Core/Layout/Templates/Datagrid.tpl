@@ -8,13 +8,20 @@
       <th{$headers.attributes}>
         {option:headers.sorting}
         {option:headers.sorted}
-        <a href="{$headers.sortingURL}" title="{$headers.sortingLabel}" class="sortable sorted{option:headers.sortedAsc} sortedAsc{/option:headers.sortedAsc}{option:headers.sortedDesc} sortedDesc{/option:headers.sortedDesc}">
-          {$headers.label}
-        </a>
+        {option:headers.sortedAsc}
+          <a href="{$headers.sortingURL}" title="{$headers.sortingLabel}" class="sortable sorted">
+            {$headers.label} <span class="fa fa-sort-asc"></span>
+          </a>
+        {/option:headers.sortedAsc}
+        {option:headers.sortedDesc}
+          <a href="{$headers.sortingURL}" title="{$headers.sortingLabel}" class="sortable sorted">
+            {$headers.label} <span class="fa fa-sort-desc"></span>
+          </a>
+        {/option:headers.sortedDesc}
         {/option:headers.sorted}
         {option:headers.notSorted}
         <a href="{$headers.sortingURL}" title="{$headers.sortingLabel}" class="sortable">
-          {$headers.label}
+          {$headers.label} <span class="fa fa-sort"></span>
         </a>
         {/option:headers.notSorted}
         {/option:headers.sorting}

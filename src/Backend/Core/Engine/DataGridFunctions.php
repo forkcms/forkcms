@@ -145,11 +145,11 @@ class DataGridFunctions
         // get the time ago as a string
         $timeAgo = \SpoonDate::getTimeAgo($timestamp, Language::getInterfaceLanguage(), $format);
 
-        return '<abbr title="' . \SpoonDate::getDate(
+        return '<time data-toggle="tooltip" datetime="' . \SpoonDate::getDate('Y-m-d H:i:s', $timestamp) . '" title="' . \SpoonDate::getDate(
             $format,
             $timestamp,
             Language::getInterfaceLanguage()
-        ) . '">' . $timeAgo . '</abbr>';
+        ) . '">' . $timeAgo . '</time>';
     }
 
     /**
@@ -181,7 +181,7 @@ class DataGridFunctions
                         'Users'
                     ) . '&amp;id=' . $id . '">' . "\n";
             }
-            $html .= '          <img class="img-rounded" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
+            $html .= '          <img class="img-circle" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
                 $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
 
             $html .= '<span>' . $nickname . '</span>';
@@ -189,19 +189,6 @@ class DataGridFunctions
                 $html .= '</a>' . "\n";
             }
             $html .= '  </div>';
-            $html .= '  <p>';
-            if ($allowed) {
-                $html .= '<a href="' .
-                BackendModel::createURLForAction(
-                    'Edit',
-                    'Users'
-                ) . '&amp;id=' . $id . '">';
-            }
-            $html .= $nickname;
-            if ($allowed) {
-                $html .= '</a>';
-            }
-            $html .= '</p>' . "\n" . '</div>';
 
             self::$dataGridUsers[$id] = $html;
         }
@@ -265,7 +252,7 @@ class DataGridFunctions
         $image = (string) $image;
         $title = (string) $title;
 
-        return '<img class="img-rounded" src="' . $path . '/' . $image . '" alt="' . $title . '" />';
+        return '<img class="img-circle" src="' . $path . '/' . $image . '" alt="' . $title . '" />';
     }
 
     /**

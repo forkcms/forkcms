@@ -24,13 +24,8 @@
           <div role="tabpanel" class="tab-pane active" id="tabName">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblName|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="name">{$lblName|ucfirst}&nbsp;<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr></label>
+                <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
+                  <label for="name">{$lblName|ucfirst}&nbsp;<abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}" class="control-label">*</abbr></label>
                   {$txtName} {$txtNameError}
                 </div>
               </div>
@@ -39,13 +34,8 @@
           <div role="tabpanel" class="tab-pane" id="tabDashboard">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblDashboard|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
-                  <label for="toggleChecksWidgets">{$lblDisplayWidgets|ucfirst}</label>
+                  <label for="toggleChecksWidgets" class="control-label">{$lblDisplayWidgets|ucfirst}</label>
                   {option:widgets}
                   {$widgets}
                   {/option:widgets}
@@ -59,11 +49,6 @@
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblModules|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
                   {iteration:permissions}
                   <div class="panel panel-default">
@@ -71,7 +56,7 @@
                       <h4 class="panel-title">
                         {$permissions.chk}
                         <a data-toggle="collapse" data-parent="#permissions" href="#permissions-list-{$permissions.id}" aria-expanded="false" aria-controls="collapseOne">
-                          <label for="{$permissions.id}">{$permissions.label}</label>
+                          <label for="{$permissions.id}" class="control-label">{$permissions.label}</label>
                         </a>
                       </h4>
                     </div>
@@ -92,8 +77,8 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <button id="addButton" type="submit" name="add" class="btn btn-success">
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>
         </div>

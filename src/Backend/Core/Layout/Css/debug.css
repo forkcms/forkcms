@@ -10,11 +10,10 @@
 	@since        2.0
 
 */
-
 /*
 	Display broken image indicator in Firefox
 */
-
 img {
-	-moz-force-broken-image-icon: 1;
-}
+  -moz-force-broken-image-icon: 1; }
+
+/*# sourceMappingURL=debug.css.map */

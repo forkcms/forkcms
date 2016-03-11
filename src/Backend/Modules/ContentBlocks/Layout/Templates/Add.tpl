@@ -8,20 +8,20 @@
 {form:add}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="title">{$lblTitle|ucfirst}</label>
+      <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
+        <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
-      <div class="form-group">
-        <label for="text">
+      <div class="form-group{option:txtTextError} has-error{/option:txtTextError}">
+        <label for="text" class="control-label">
           {$lblContent|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtText} {$txtTextError}
       </div>
       {option:ddmTemplate}
-        <div class="form-group">
-          <label for="template">{$lblTemplate|ucfirst}</label>
+        <div class="form-group{option:ddmTemplateError} has-error{/option:ddmTemplateError}">
+          <label for="template" class="control-label">{$lblTemplate|ucfirst}</label>
           {$ddmTemplate} {$ddmTemplateError}
         </div>
       {/option:ddmTemplate}
@@ -34,8 +34,8 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <button id="addButton" type="submit" name="add" class="btn btn-success">
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>
         </div>

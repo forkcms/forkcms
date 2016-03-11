@@ -37,19 +37,19 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <div class="form-group">
-                                <label for="name">
+                            <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
+                                <label for="name" class="control-label">
                                     {$lblName|ucfirst}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                 </label>
-                                <p class="text-info">{$msgNameInternalUseOnly}</p>
+                                <p class="help-block">{$msgNameInternalUseOnly}</p>
                                 {$txtName} {$txtNameError}
                             </div>
                             {option:ddmCampaign}
-                            <div class="form-group">
-                                <label for="campaign">
+                            <div class="form-group{option:ddmCampaignError} has-error{/option:ddmCampaignError}">
+                                <label for="campaign" class="control-label">
                                     {$lblCampaign|ucfirst}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                 </label>
                                 {$ddmCampaign} {$ddmCampaignError}
                             </div>
@@ -67,17 +67,17 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <div class="form-group">
-                                <label for="fromName">
+                            <div class="form-group{option:txtFromNameError} has-error{/option:txtFromNameError}">
+                                <label for="fromName" class="control-label">
                                     {$lblName|ucfirst}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                 </label>
                                 {$txtFromName} {$txtFromNameError}
                             </div>
-                            <div class="form-group">
-                                <label for="fromEmail">
+                            <div class="form-group{option:txtFromEmailError} has-error{/option:txtFromEmailError}">
+                                <label for="fromEmail" class="control-label">
                                     {$lblEmailAddress|ucfirst}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                 </label>
                                 {$txtFromEmail} {$txtFromEmailError}
                             </div>
@@ -94,10 +94,10 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <div class="form-group">
-                                <label for="replyToEmail">
+                            <div class="form-group{option:txtReplyToEmailError} has-error{/option:txtReplyToEmailError}">
+                                <label for="replyToEmail" class="control-label">
                                     {$lblEmailAddress|ucfirst}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                                 </label>
                                 {$txtReplyToEmail} {$txtReplyToEmailError}
                             </div>
@@ -116,12 +116,12 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 {option:chkGroupsError}
-                                <p class="text-danger">{$chkGroupsError}</p>
+                                    <p class="text-danger">{$chkGroupsError}</p>
                                 {/option:chkGroupsError}
                                 <ul class="list-unstyled">
                                     {iteration:groups}
                                     <li class="checkbox">
-                                        <label for="{$groups.id}">
+                                        <label for="{$groups.id}" class="control-label">
                                             {$groups.chkGroups}
                                             <attr title="{$msgGroupsNumberOfRecipients|sprintf:{$groups.recipients}}">
                                                 {$groups.label|ucfirst}
@@ -147,12 +147,12 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 {option:rbtLanguagesError}
-                                <p class="text-danger">{$rbtLanguagesError}</p>
+                                    <p class="text-danger">{$rbtLanguagesError}</p>
                                 {/option:rbtLanguagesError}
                                 <ul class="list-unstyled">
                                     {iteration:languages}
                                     <li class="checkbox">
-                                        <label for="{$languages.id}">
+                                        <label for="{$languages.id}" class="control-label">
                                             {$languages.rbtLanguages} {$languages.label|ucfirst}
                                         </label>
                                     </li>
@@ -167,9 +167,9 @@
                 <div class="col-md-12">
                     <div class="btn-toolbar">
                         <div class="btn-group pull-right" role="group">
-                            <button id="toStep2" type="submit" name="to_step_2" class="btn btn-primary">
+                            <button id="toStep2" type="submit" name="to_step_2" class="btn btn-success">
                                 {$lblToStep|ucfirst} 2
-                                &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                                &nbsp;<span class="fa fa-chevron-right"></span>
                             </button>
                         </div>
                     </div>

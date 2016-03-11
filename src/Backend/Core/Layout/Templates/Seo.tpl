@@ -1,16 +1,11 @@
 <div class="row">
   <div class="col-md-12">
-    <h3>{$lblSEO|ucfirst}</h3>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
     <h4>{$lblTitles|ucfirst}</h4>
     <div class="form-group">
       <ul class="list-unstyled checkboxTextFieldCombo">
         <li class="checkbox">
           <label for="pageTitleOverwrite" class="visuallyHidden">{$chkPageTitleOverwrite} <b>{$lblPageTitle|ucfirst}</b></label>
-          <p class="text-info">{$msgHelpPageTitle}</p>
+          <p class="help-block">{$msgHelpPageTitle}</p>
           {$txtPageTitle} {$txtPageTitleError}
         </li>
       </ul>
@@ -20,7 +15,7 @@
       <ul class="list-unstyled checkboxTextFieldCombo">
         <li class="checkbox">
           <label for="navigationTitleOverwrite" class="visuallyHidden">{$chkNavigationTitleOverwrite} <b>{$lblNavigationTitle|ucfirst}</b></label>
-          <p class="text-info">{$msgHelpNavigationTitle}</p>
+          <p class="help-block">{$msgHelpNavigationTitle}</p>
           {$txtNavigationTitle} {$txtNavigationTitleError}
         </li>
       </ul>
@@ -35,7 +30,7 @@
       <ul class="list-unstyled checkboxTextFieldCombo">
         <li class="checkbox">
           <label for="metaDescriptionOverwrite" class="visuallyHidden">{$chkMetaDescriptionOverwrite} <b>{$lblDescription|ucfirst}</b></label>
-          <p class="text-info">{$msgHelpMetaDescription}</p>
+          <p class="help-block">{$msgHelpMetaDescription}</p>
           {$txtMetaDescription} {$txtMetaDescriptionError}
         </li>
       </ul>
@@ -44,14 +39,14 @@
       <ul class="list-unstyled checkboxTextFieldCombo">
         <li class="checkbox">
           <label for="metaDescriptionOverwrite" class="visuallyHidden">{$chkMetaKeywordsOverwrite} <b>{$lblKeywords|ucfirst}</b></label>
-          <p class="text-info">{$msgHelpMetaKeywords}</p>
+          <p class="help-block">{$msgHelpMetaKeywords}</p>
           {$txtMetaKeywords} {$txtMetaKeywordsError}
         </li>
       </ul>
     </div>
     <div class="form-group">
       <label for="metaDescriptionOverwrite" class="visuallyHidden">{$lblExtraMetaTags|ucfirst}</label>
-      <p class="text-info">{$msgHelpMetaCustom}</p>
+      <p class="help-block">{$msgHelpMetaCustom}</p>
       {$txtMetaCustom} {$txtMetaCustomError}
     </div>
   </div>
@@ -63,7 +58,7 @@
       <ul class="list-unstyled checkboxTextFieldCombo">
         <li class="checkbox">
           <label for="urlOverwrite" class="visuallyHidden">{$chkUrlOverwrite} <b>{$lblCustomURL|ucfirst}</b></label>
-          <p class="text-info">{$msgHelpMetaURL}</p>
+          <p class="help-block">{$msgHelpMetaURL}</p>
           <div class="form-inline">
             <span id="urlFirstPart">
               {option:detailUrl}{$detailUrl}{/option:detailUrl}

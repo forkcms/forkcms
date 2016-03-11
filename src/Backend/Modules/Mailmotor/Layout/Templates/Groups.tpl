@@ -1,19 +1,21 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblGroups|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showMailmotorImportGroups}
         <a href="{$var|geturl:'import_groups'}" class="btn btn-default" title="{$lblImportGroups|ucfirst}">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           {$lblImportGroups|ucfirst}
         </a>
         {/option:showMailmotorImportGroups}
         {option:showMailmotorAddGroup}
         <a href="{$var|geturl:'add_group'}" class="btn btn-default" title="{$lblAddGroup|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAddGroup|ucfirst}
         </a>
         {/option:showMailmotorAddGroup}

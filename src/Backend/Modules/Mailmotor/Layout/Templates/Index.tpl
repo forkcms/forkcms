@@ -2,18 +2,20 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <form action="{$var|geturl:'mass_mailing_action'}" method="get" class="forkForms submitWithLink" id="mailings">
   <div class="row fork-module-heading">
-    <div class="col-md-12">
+    <div class="col-md-6">
       {option:dgUnsentMailings}
       <h2>{$lblUnsentMailings|ucfirst}{option:name} {$lblIn} {$lblCampaign} &ldquo;{$name}&rdquo;{/option:name}</h2>
       {/option:dgUnsentMailings}
       {option:!dgUnsentMailings}
       <h2>{$lblNewsletters|ucfirst}</h2>
       {/option:!dgUnsentMailings}
+    </div>
+    <div class="col-md-6">
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
           {option:showMailmotorAdd}
           <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAddNewMailing|ucfirst}">
-            <span class="glyphicon glyphicon-envelope"></span>&nbsp;
+            <span class="fa fa-envelope-o"></span>&nbsp;
             {$lblAddNewMailing|ucfirst}
           </a>
           {/option:showMailmotorAdd}

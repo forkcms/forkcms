@@ -1,17 +1,19 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblProfiles|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAdd|ucfirst}
         </a>
         {option:showProfilesImport}
         <a href="{$var|geturl:'import'}" class="btn btn-default" title="{$lblImport|ucfirst}">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           {$lblImport|ucfirst}
         </a>
         {/option:showProfilesImport}
@@ -26,21 +28,21 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-4">
-              <div class="form-group">
-                <label for="email">{$lblEmail|ucfirst}</label>
+              <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
+                <label for="email" class="control-label">{$lblEmail|ucfirst}</label>
                 {$txtEmail} {$txtEmailError}
               </div>
             </div>
             <div class="col-md-4">
-              <div class="form-group">
-                <label for="status">{$lblStatus|ucfirst}</label>
+              <div class="form-group{option:ddmStatusError} has-error{/option:ddmStatusError}">
+                <label for="status" class="control-label">{$lblStatus|ucfirst}</label>
                 {$ddmStatus} {$ddmStatusError}
               </div>
             </div>
             <div class="col-md-4">
               {option:ddmGroup}
-              <div class="form-group">
-                <label for="group">{$lblGroup|ucfirst}</label>
+              <div class="form-group{option:ddmGroupError} has-error{/option:ddmGroupError}">
+                <label for="group" class="control-label">{$lblGroup|ucfirst}</label>
                 {$ddmGroup} {$ddmGroupError}
               </div>
               {/option:ddmGroup}
@@ -51,7 +53,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span class="fa fa-refresh"></span>&nbsp;
                 {$lblUpdateFilter|ucfirst}
               </button>
             </div>
@@ -84,8 +86,8 @@
               <p>{$msgConfirmMassDelete}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <button type="submit" class="btn btn-danger"><span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}</button>
             </div>
           </div>
         </div>
@@ -103,8 +105,8 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
           </div>
         </div>

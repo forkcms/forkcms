@@ -43,11 +43,6 @@
           {form:settingsGeneral}
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblGeneral|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
@@ -55,19 +50,25 @@
                     </h4>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group">
-                      <label for="fromName">
-                        {$lblName|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                      </label>
-                      {$txtFromName} {$txtFromNameError}
-                    </div>
-                    <div class="form-group">
-                      <label for="fromEmail">
-                        {$lblEmailAddress|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                      </label>
-                      {$txtFromEmail} {$txtFromEmailError}
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group{option:txtFromNameError} has-error{/option:txtFromNameError}">
+                          <label for="fromName" class="control-label">
+                            {$lblName|ucfirst}
+                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                          </label>
+                          {$txtFromName} {$txtFromNameError}
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="fromEmail" class="control-label">
+                            {$lblEmailAddress|ucfirst}
+                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                          </label>
+                          {$txtFromEmail} {$txtFromEmailError}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -82,12 +83,16 @@
                     </h4>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group">
-                      <label for="replyToEmail">
-                        {$lblEmailAddress|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                      </label>
-                      {$txtReplyToEmail} {$txtReplyToEmailError}
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group{option:txtReplyToEmailError} has-error{/option:txtReplyToEmailError}">
+                          <label for="replyToEmail" class="control-label">
+                            {$lblEmailAddress|ucfirst}
+                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                          </label>
+                          {$txtReplyToEmail} {$txtReplyToEmailError}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -105,7 +110,7 @@
                     <div class="form-group">
                       <ul class="list-unstyled">
                         <li class="checkbox">
-                          <label for="plainTextEditable">
+                          <label for="plainTextEditable" class="control-label">
                             {$chkPlainTextEditable} {$msgPlainTextEditable|ucfirst}
                           </label>
                         </li>
@@ -125,24 +130,32 @@
                     </h4>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group">
-                      <label for="pricePerEmail">
-                        {$lblPerSentMailing|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                      </label>
-                      <p class="text-info">{$msgHelpPrice}</p>
-                      <div class="form-inline">
-                        € {$txtPricePerEmail} {$txtPricePerEmailError}
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group{option:txtPricePerEmailError} has-error{/option:txtPricePerEmailError}">
+                          <label for="pricePerEmail" class="control-label">
+                            {$lblPerSentMailing|ucfirst}
+                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                          </label>
+                          <p class="help-block">{$msgHelpPrice}</p>
+                          <div class="input-group">
+                            <span class="input-group-addon">&euro;</span>
+                            {$txtPricePerEmail} {$txtPricePerEmailError}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="pricePerEmail">
-                        {$lblPerCampaign|ucfirst}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                      </label>
-                      <p class="text-info">{$msgHelpPrice}</p>
-                      <div class="form-inline">
-                        € {$txtPricePerCampaign} {$txtPricePerCampaignError}
+                      <div class="col-md-3">
+                        <div class="form-group{option:txtPricePerCampaignError} has-error{/option:txtPricePerCampaignError}">
+                          <label for="pricePerEmail" class="control-label">
+                            {$lblPerCampaign|ucfirst}
+                            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                          </label>
+                          <p class="help-block">{$msgHelpPrice}</p>
+                          <div class="input-group">
+                            <span class="input-group-addon">&euro;</span>
+                            {$txtPricePerCampaign} {$txtPricePerCampaignError}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -154,8 +167,8 @@
               <div class="col-md-12">
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right" role="group">
-                    <button id="save" type="submit" name="save" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                    <button id="save" type="submit" name="save" class="btn btn-success">
+                      <span class="fa fa-floppy-o"></span>&nbsp;
                       {$lblSave|ucfirst}
                     </button>
                   </div>
@@ -168,30 +181,25 @@
           {form:settingsAccount}
             <div class="row">
               <div class="col-md-12">
-                <h3>CampaignMonitor - {$lblAccountSettings|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="url">
+                <div class="form-group{option:txtUrlError} has-error{/option:txtUrlError}">
+                  <label for="url" class="control-label">
                     {$lblURL|uppercase}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
-                  <p class="text-info">{$msgHelpCMURL}</p>
+                  <p class="help-block">{$msgHelpCMURL}</p>
                   {$txtUrl} {$txtUrlError}
                 </div>
-                <div class="form-group">
-                  <label for="username">
+                <div class="form-group{option:txtUsernameError} has-error{/option:txtUsernameError}">
+                  <label for="username" class="control-label">
                     {$lblUsername|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtUsername} {$txtUsernameError}
                 </div>
-                <div class="form-group">
-                  <label for="password">
+                <div class="form-group{option:txtPasswordError} has-error{/option:txtPasswordError}">
+                  <label for="password" class="control-label">
                     {$lblPassword|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtPassword} {$txtPasswordError}
                 </div>
@@ -203,22 +211,22 @@
                   <div class="btn-group pull-left" role="group">
                     {option:account}
                     <a id="unlinkAccount" href="#" class="btn btn-danger">
-                      <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                      <span class="fa fa-unlink"></span>&nbsp;
                       {$msgUnlinkCMAccount}
                     </a>
                     {/option:account}
                   </div>
                   <div class="btn-group pull-right" role="group">
                     {option:!account}
-                    <a id="linkAccount" href="#" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-log-in"></span>&nbsp;
+                    <a id="linkAccount" href="#" class="btn btn-success">
+                      <span class="fa fa-link"></span>&nbsp;
                       {$msgLinkCMAccount}
                     </a>
                     {/option:!account}
                     {option:account}
                     {option:clientId}
                     <a href="{$var|geturl:'index'}" class="btn btn-default">
-                      <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+                      <span class="fa fa-list"></span>&nbsp;
                       {$msgViewMailings}
                     </a>
                     {/option:clientId}
@@ -234,31 +242,26 @@
           {form:settingsClient}
             <div class="row">
               <div class="col-md-12">
-                <h3>CampaignMonitor - {$lblClientSettings|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
-                  <label for="clientId">{$lblClient|ucfirst}</label>
+                  <label for="clientId" class="control-label">{$lblClient|ucfirst}</label>
                   {option:!clientId}
                   <p class="text-danger"><strong>{$msgNoClientID}</strong></p>
                   {/option:!clientId}
                   {$ddmClientId}
                 </div>
-                <div class="form-group">
-                  <label for="companyName">
+                <div class="form-group{option:txtCompanyNameError} has-error{/option:txtCompanyNameError}">
+                  <label for="companyName" class="control-label">
                     {$lblCompanyName|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtCompanyName} {$txtCompanyNameError}
                 </div>
-                <div class="form-group">
-                  <label for="countries">{$lblCountry|ucfirst}</label>
+                <div class="form-group{option:ddmCountriesError} has-error{/option:ddmCountriesError}">
+                  <label for="countries" class="control-label">{$lblCountry|ucfirst}</label>
                   {$ddmCountries} {$ddmCountriesError}
                 </div>
-                <div class="form-group">
-                  <label for="timezones">{$lblTimezone|ucfirst}</label>
+                <div class="form-group{option:ddmTimezonesError} has-error{/option:ddmTimezonesError}">
+                  <label for="timezones" class="control-label">{$lblTimezone|ucfirst}</label>
                   {$ddmTimezones} {$ddmTimezonesError}
                 </div>
               </div>
@@ -267,8 +270,8 @@
               <div class="col-md-12">
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right" role="group">
-                    <button id="save" type="submit" name="save" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                    <button id="save" type="submit" name="save" class="btn btn-success">
+                      <span class="fa fa-floppy-o"></span>&nbsp;
                       {$lblSave|ucfirst}
                     </button>
                   </div>

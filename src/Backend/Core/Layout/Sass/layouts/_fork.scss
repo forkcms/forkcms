@@ -1,0 +1,66 @@
+/* General */
+.fork-module-heading,
+.fork-module-messages,
+.fork-module-content {
+  margin-bottom: 20px;
+
+  h2 {
+    margin-top: 0;
+  }
+}
+
+.fork-module-actions {
+  margin-bottom: 40px;
+}
+
+.fork-tabs .nav-tabs {
+  margin-bottom: 15px;
+}
+
+.fork-dashboard-column {
+  min-height: 200px;
+  line-height: 0;
+}
+
+.fork-widget {
+  position: relative;
+  line-height: normal;
+}
+
+.fork-widget > .close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+/* Data grid */
+.fork-data-grid {
+
+}
+
+.fork-data-grid-sortable {
+  text-align: center;
+  cursor: move;
+}
+
+.fork-data-grid-avatar {
+  display: inline-block;
+  line-height: 0px;
+  padding: 0px 5px 0px 5px;
+}
+
+.fork-data-grid-avatar > a {
+  display: block;
+  height: 24px;
+}
+
+.fork-data-grid-avatar > a > img {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.fork-data-grid-avatar > a > span {
+  display: inline-block;
+  line-height: 24px;
+}

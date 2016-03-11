@@ -16,7 +16,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <p class="text-info">{$msgHelpMetaNavigation}</p>
+            <p class="help-block">{$msgHelpMetaNavigation}</p>
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="metaNavigation">{$chkMetaNavigation} {$msgMetaNavigation|ucfirst}</label>
@@ -31,7 +31,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+          <button id="save" type="submit" name="save" class="btn btn-success"><span class="fa fa-floppy-o"></span> {$lblSave|ucfirst}</button>
         </div>
       </div>
     </div>

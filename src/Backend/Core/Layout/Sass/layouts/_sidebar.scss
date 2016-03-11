@@ -1,0 +1,15 @@
+/* Navigation */
+.fork-nav-sidebar li li.active > a {
+  text-decoration: none;
+  background-color: #EEE;
+}
+
+.fork-nav-sidebar li li {
+  margin-top: 2px;
+  margin-left: 0px;
+}
+
+.fork-nav-sidebar li > ul {
+  padding-bottom: 2px;
+  padding-left: 15px;
+}

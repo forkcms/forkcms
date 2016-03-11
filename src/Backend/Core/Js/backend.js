@@ -205,16 +205,13 @@ jsBackend.ckeditor =
 
         // buttons
         toolbar_Full: [
-            { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', 'Templates' ] },
+            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
             { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Undo', 'Redo' ] },
-            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll' ] },
-            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Blockquote' ] },
             { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
-            { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ] },
-            { name: 'styles', items: [ 'Format', 'Font', 'FontSize' ] },
-            { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-            { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] }
+            { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', 'Templates' ] },
+            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar', 'Iframe' ] },
+            { name: 'styles', items: [ 'Format', 'Styles' ] }
         ],
 
         // buttons specific for the newsletter
@@ -1086,6 +1083,7 @@ jsBackend.effects =
     // init, something like a constructor
     init: function () {
         jsBackend.effects.bindHighlight();
+        jsBackend.effects.panels();
     },
 
     // if a var highlight exists in the url it will be highlighted
@@ -1114,6 +1112,24 @@ jsBackend.effects =
                 $(selector).effect("highlight", {}, 5000);
             }
         }
+    },
+
+    // Adds classes to collapsible panels
+    panels: function () {
+
+        $('.panel .collapse').on({
+            'show.bs.collapse': function () {
+                // Remove open class from other panels
+                $(this).parents('.panel-group').find('.panel').removeClass('open');
+
+                // Add open class to active panel
+                $(this).parent('.panel').addClass('open');
+            },
+            'hide.bs.collapse': function () {
+                // Remove open class from closed panel
+                $(this).parent('.panel').removeClass('open');
+            }
+        });
     }
 };
 
@@ -1133,7 +1149,7 @@ jsBackend.forms =
         jsBackend.forms.focusFirstField();
         jsBackend.forms.datefields();
         jsBackend.forms.submitWithLinks();
-        jsBackend.forms.tagBoxes();
+        jsBackend.forms.tagsInput();
     },
 
     datefields: function () {
@@ -1342,18 +1358,37 @@ jsBackend.forms =
         }
     },
 
-    // add tag box to the correct input fields
-    tagBoxes: function () {
-        if ($('.jsTagsBox').length > 0) {
-            $('.jsTagsBox').tagsBox(
-                {
-                    emptyMessage: jsBackend.locale.msg('NoTags'),
-                    errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
-                    addLabel: utils.string.ucfirst(jsBackend.locale.lbl('AddTag')),
-                    removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
-                    params: {fork: {module: 'Tags', action: 'Autocomplete'}},
-                    showIconOnly: true
-                });
+    // add tagsinput to the correct input fields
+    tagsInput: function() {
+
+        if ($('.js-tags-input').length > 0) {
+            var allTags = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: {
+                    url: '/backend/ajax',
+                    prepare: function(settings) {
+                        settings.type = 'POST';
+                        settings.data = {fork: {module: 'Tags', action: 'GetAllTags'}};
+                        return settings;
+                    },
+                    cache: false,
+                    filter: function(list) {
+                        list = list.data;
+                        return list;
+                    }
+                }
+            });
+
+            allTags.initialize();
+            $('.js-tags-input').tagsinput({
+                typeaheadjs: {
+                    name: 'Tags',
+                    displayKey: 'name',
+                    valueKey: 'name',
+                    source: allTags.ttAdapter()
+                }
+            });
         }
     },
 
@@ -1623,24 +1658,26 @@ jsBackend.messages =
     // hide a message
     hide: function (element) {
         // fade out
-        element.fadeOut();
+        element.removeClass('active');
     },
 
     // add a new message into the que
     add: function (type, content) {
         var uniqueId = 'e' + new Date().getTime().toString();
-        var html = '<div id="' + uniqueId + '" class="alert alert-' + type + ' alert-dismissible formMessage ' + type + 'Message" style="display: none;">' +
-            content +
+        var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' alert-dismissible formMessage ' + type + 'Message">' +
+            '<div class="container">' +
+               content +
             '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
             '    <span aria-hidden="true">&times;</span>' +
             '  </button>'
+            '</div>' +
         '</div>';
 
         // prepend
         $('#messaging').prepend(html);
 
         // show
-        $('#' + uniqueId).fadeIn();
+        $('#' + uniqueId).addClass('active');
 
         // timeout
         if (type == 'notice') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
@@ -1659,17 +1696,18 @@ jsBackend.tabs =
 {
     // init, something like a constructor
     init: function () {
-        if ($('.tabs').length > 0) {
-            $('.tabs').tabs();
 
-            $('.tabs .ui-tabs-panel').each(function () {
+        if ($('.nav-tabs').length > 0) {
+            $('.nav-tabs').tab();
+
+            $('.tab-content .tab-pane').each(function () {
                 if ($(this).find('.formError').length > 0) {
-                    $($('.ui-tabs-nav a[href="#' + $(this).attr('id') + '"]').parent()).addClass('ui-state-error');
+                    $($('.nav-tabs a[href="#' + $(this).attr('id') + '"]').parent()).addClass('has-error');
                 }
             });
         }
 
-        $('.ui-tabs-nav a').click(function (e) {
+        $('.nav-tabs a').click(function (e) {
             // if the browser supports history.pushState(), use it to update the URL with the fragment identifier, without triggering a scroll/jump
             if (window.history && window.history.pushState) {
                 // an empty state object for now — either we implement a proper pop state handler ourselves, or wait for jQuery UI upstream
@@ -1689,13 +1727,10 @@ jsBackend.tabs =
             }
         });
 
-        // select tab
-        if ($('.tabSelect').length > 0) {
-            $(document).on('click', '.tabSelect', function (e) {
-                // prevent default
-                e.preventDefault();
-                $('.tabs').tabs('select', $(this).attr('href'));
-            });
+        // Show tab if the hash is in the url
+        var hash = window.location.hash;
+        if ($(hash).length > 0 && $(hash).hasClass('tab-pane')) {
+            $('a[href="' + hash + '"]').tab('show');
         }
     }
 };
@@ -1711,10 +1746,11 @@ jsBackend.tooltip =
     // init, something like a constructor
     init: function () {
         // variables
-        $help = $('.help');
 
-        if ($help.length > 0) {
-            $help.tooltip({effect: 'fade', relative: true}).dynamic();
+        var $tooltip = $('[data-toggle="tooltip"]');
+
+        if ($tooltip.length > 0) {
+            $tooltip.tooltip();
         }
     }
 };

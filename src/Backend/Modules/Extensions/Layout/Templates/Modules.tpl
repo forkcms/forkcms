@@ -1,18 +1,20 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblModules|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showExtensionsUploadModule}
         <a href="{$var|geturl:'upload_module'}" class="btn btn-default">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-upload"></span>&nbsp;
           <span>{$lblUploadModule|ucfirst}</span>
         </a>
         {/option:showExtensionsUploadModule}
         <a href="http://www.fork-cms.com/extensions/apps" target="_blank" class="btn btn-default">
-          <span class="glyphicon glyphicon-search"></span>&nbsp;
+          <span class="fa fa-search"></span>&nbsp;
           <span>{$lblFindModules|ucfirst}</span>
         </a>
       </div>

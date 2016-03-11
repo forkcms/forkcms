@@ -21,11 +21,6 @@
       </ul>
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="tabPublished">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>{$lblPublished|ucfirst}</h3>
-            </div>
-          </div>
           {option:dgPublished}
           <form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsPublished">
             <input type="hidden" name="from" value="published" />
@@ -40,8 +35,8 @@
                     <p>{$msgConfirmMassSpam}</p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                    <button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                    <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
                   </div>
                 </div>
               </div>
@@ -56,8 +51,8 @@
                     <p>{$msgConfirmMassDelete}</p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                    <button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                    <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
                   </div>
                 </div>
               </div>
@@ -69,11 +64,6 @@
           {/option:!dgPublished}
         </div>
         <div role="tabpanel" class="tab-pane" id="tabModeration">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>{$lblWaitingForModeration|ucfirst}</h3>
-            </div>
-          </div>
           {option:dgModeration}
           <form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsModeration">
             <input type="hidden" name="from" value="moderation" />
@@ -88,8 +78,8 @@
                     <p>{$msgConfirmMassSpam}</p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                    <button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                    <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
                   </div>
                 </div>
               </div>
@@ -104,8 +94,8 @@
                     <p>{$msgConfirmMassDelete}</p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                    <button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                    <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
                   </div>
                 </div>
               </div>
@@ -117,11 +107,6 @@
           {/option:!dgModeration}
         </div>
         <div role="tabpanel" class="tab-pane" id="tabSpam">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>{$lblSpam|ucfirst}</h3>
-            </div>
-          </div>
           {option:dgSpam}
           <form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsSpam">
             <input type="hidden" name="from" value="spam" />
@@ -140,8 +125,8 @@
                     <p>{$msgConfirmMassDelete}</p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                    <button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                    <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
                   </div>
                 </div>
               </div>

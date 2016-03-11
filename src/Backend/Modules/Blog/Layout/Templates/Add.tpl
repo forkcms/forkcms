@@ -8,15 +8,17 @@
 {form:add}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="title">{$lblTitle|ucfirst}</label>
+      <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
+        <label class="control-label" for="title">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
       {option:detailURL}
-      <p><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></p>
+        <a href="{$detailURL}">
+          <small>{$detailURL}/<span id="generatedUrl"></span></small>
+        </a>
       {/option:detailURL}
       {option:!detailURL}
-      <p class="text-warning">{$errNoModuleLinked}</p>
+      <p class="text-warning"><span class="fa fa-warning"></span> {$errNoModuleLinked}</p>
       {/option:!detailURL}
     </div>
   </div>
@@ -37,29 +39,24 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblContent|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-md-8">
-                <div class="form-group">
-                  <label for="text">
+                <div class="form-group{option:txtTextError} has-error{/option:txtTextError}">
+                  <label for="text" class="control-label">
                     {$lblMainContent|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtText} {$txtTextError}
                 </div>
                 {option:imageIsAllowed}
-                <div class="form-group">
-                  <label for="image">{$lblImage|ucfirst}</label>
+                <div class="form-group{option:fileImageError} has-error{/option:fileImageError}">
+                  <label for="image" class="control-label">{$lblImage|ucfirst}</label>
                   {$fileImage} {$fileImageError}
                 </div>
                 {/option:imageIsAllowed}
-                <div class="form-group">
-                  <label for="introduction">
+                <div class="form-group{option:txtIntroductionError} has-error{/option:txtIntroductionError}">
+                  <label for="introduction" class="control-label">
                     {$lblSummary|ucfirst}
-                    <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpSummary}"></abbr>
+                    <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpSummary}"></abbr>
                   </label>
                   {$txtIntroduction} {$txtIntroductionError}
                 </div>
@@ -79,10 +76,12 @@
                         {/iteration:hidden}
                       </ul>
                     </div>
-                    <div class="form-group">
-                      <label for="publishOnDate">{$lblPublishOn|ucfirst}</label>
+                    <div class="form-group{option:txtPublishOnDateError} has-error{/option:txtPublishOnDateError}">
+                      <label for="publishOnDate" class="control-label">{$lblPublishOn|ucfirst}</label>
                       {$txtPublishOnDate} {$txtPublishOnDateError}
-                      <label for="publishOnTime">{$lblAt}</label>
+                    </div>
+                    <div class="form-group{option:txtPublishOnTimeError} has-error{/option:txtPublishOnTimeError}">
+                      <label for="publishOnTime" class="control-label">{$lblAt}</label>
                       {$txtPublishOnTime} {$txtPublishOnTimeError}
                     </div>
                   </div>
@@ -92,17 +91,17 @@
                     <h3 class="panel-title">{$lblMetaData|ucfirst}</h3>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group">
-                      <label for="categoryId">{$lblCategory|ucfirst}</label>
+                    <div class="form-group{option:ddmCategoryIdError} has-error{/option:ddmCategoryIdError}">
+                      <label for="categoryId" class="control-label">{$lblCategory|ucfirst}</label>
                       {$ddmCategoryId} {$ddmCategoryIdError}
                     </div>
-                    <div class="form-group">
-                      <label for="userId">{$lblAuthor|ucfirst}</label>
+                    <div class="form-group{option:ddmUserIdError} has-error{/option:ddmUserIdError}">
+                      <label for="userId" class="control-label">{$lblAuthor|ucfirst}</label>
                       {$ddmUserId} {$ddmUserIdError}
                     </div>
                     {option:showTagsIndex}
-                    <div class="form-group">
-                      <label for="tags">{$lblTags|ucfirst}</label>
+                    <div class="form-group{option:txtTagsError} has-error{/option:txtTagsError}">
+                      <label for="tags" class="control-label">{$lblTags|ucfirst}</label>
                       {$txtTags} {$txtTagsError}
                     </div>
                     {/option:showTagsIndex}
@@ -112,11 +111,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabComments">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblComments|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -140,12 +134,12 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <a href="#" id="saveAsDraft" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;
+          <a href="#" id="saveAsDraft" class="btn btn-default">
+            <span class="fa fa-file-o"></span>&nbsp;
             {$lblSaveDraft|ucfirst}
           </a>
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <button id="addButton" type="submit" name="add" class="btn btn-success">
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>
         </div>
@@ -160,7 +154,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="categoryTitle">
+            <label for="categoryTitle" class="control-label">
               {$lblTitle|ucfirst}
               <abbr title="{$lblRequiredField|ucfirst}"></abbr>
             </label>
@@ -169,8 +163,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-          <button id="addCategorySubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+          <button id="addCategorySubmit" type="button" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
         </div>
       </div>
     </div>

@@ -19,7 +19,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class Autocomplete extends BackendBaseAJAXAction
+class GetAllTags extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -28,18 +28,32 @@ class Autocomplete extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        // get parameters
-        $term = \SpoonFilter::getPostValue('term', null, '');
-
         // validate
-        if ($term == '') {
+        /*if ($term == '') {
             $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
         } else {
             // get tags
-            $tags = BackendTagsModel::getStartsWith($term);
 
             // output
             $this->output(self::OK, $tags);
-        }
+        }*/
+        $tags = BackendTagsModel::getAll();
+        $data = [ "Kortrijk",
+                  "London",
+                  "Paris",
+                  "Washington",
+                  "New York",
+                  "Los Angeles",
+                  "Sydney",
+                  "Melbourne",
+                  "Canberra",
+                  "Beijing",
+                  "New Delhi",
+                  "Kathmandu",
+                  "Cairo",
+                  "Cape Town",
+                  "Kinshasa"
+                ];
+        $this->output(self::OK, $tags);
     }
 }

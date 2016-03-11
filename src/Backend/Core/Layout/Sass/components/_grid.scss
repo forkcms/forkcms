@@ -1,0 +1,5 @@
+.container {
+  @media (min-width: $screen-xl-min) {
+    width: $container-xl;
+  }
+}

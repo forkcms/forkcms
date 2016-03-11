@@ -1,19 +1,21 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblFormData|sprintf:{$name}|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showFormBuilderIndex}
         <a href="{$var|geturl:'index'}" class="btn btn-default">
-          <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+          <span class="fa fa-list"></span>&nbsp;
           {$lblOverview|ucfirst}
         </a>
         {/option:showFormBuilderIndex}
         {option:showFormBuilderExportData}
         <a href="{$var|geturl:'export_data'}&id={$id}&amp;start_date={$start_date}&amp;end_date={$end_date}" class="btn btn-default">
-          <span class="glyphicon glyphicon-export"></span>&nbsp;
+          <span class="fa fa-upload"></span>&nbsp;
           {$lblExport|ucfirst}
         </a>
         {/option:showFormBuilderExportData}
@@ -28,14 +30,14 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-4">
-              <div class="form-group">
-                <label for="startDate">{$lblStartDate|ucfirst}</label>
+              <div class="form-group{option:txtStartDateError} has-error{/option:txtStartDateError}">
+                <label for="startDate" class="control-label">{$lblStartDate|ucfirst}</label>
                 {$txtStartDate} {$txtStartDateError}
               </div>
             </div>
             <div class="col-md-4">
-              <div class="form-group">
-                <label for="endDate">{$lblEndDate|ucfirst}</label>
+              <div class="form-group{option:txtEndDateError} has-error{/option:txtEndDateError}">
+                <label for="endDate" class="control-label">{$lblEndDate|ucfirst}</label>
                 {$txtEndDate} {$txtEndDateError}
               </div>
             </div>
@@ -45,7 +47,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span class="fa fa-refresh"></span>&nbsp;
                 {$lblUpdateFilter|ucfirst}
               </button>
             </div>
@@ -70,8 +72,8 @@
               <p>{$msgConfirmMassDelete}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <button type="submit" class="btn btn-danger"><span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}</button>
             </div>
           </div>
         </div>

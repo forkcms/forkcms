@@ -34,8 +34,8 @@
                 {/iteration:positions}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="editContentSubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="editContentSubmit" type="button" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -58,25 +58,25 @@
                 <div id="extraWarningAlreadyBlock" class="alert alert-warning">{$msgModuleBlockAlreadyLinked}</div>
                 <div id="extraWarningHomeNoBlock" class="alert alert-warning">{$msgHomeNoBlock}</div>
                 <div class="form-group">
-                    <label for="extraType">{$lblType|ucfirst}</label>
+                    <label for="extraType" class="control-label">{$lblType|ucfirst}</label>
                     {$ddmExtraType}
                 </div>
                 <div id="extraModuleHolder" class="form-group" style="display: none;">
-                    <label for="extraModule">{$lblWhichModule|ucfirst}</label>
+                    <label for="extraModule" class="control-label">{$lblWhichModule|ucfirst}</label>
                     <select id="extraModule" class="form-control">
                         <option value="-1">-</option>
                     </select>
                 </div>
                 <div id="extraExtraIdHolder" class="form-group" style="display: none;">
-                    <label for="extraExtraId">{$lblWhichWidget|ucfirst}</label>
+                    <label for="extraExtraId" class="control-label">{$lblWhichWidget|ucfirst}</label>
                     <select id="extraExtraId" class="form-control">
                         <option value="-1">-</option>
                     </select>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="addBlockSubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="addBlockSubmit" type="button" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@
 {* Dialog to select another template. Do not change the ID! *}
 <div class="modal fade" id="changeTemplate" tabindex="-1" role="dialog"
      aria-labelledby="{$lblChooseATemplate|ucfirst}" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -94,30 +94,31 @@
             <div class="modal-body">
                 <div class="alert alert-warning">{$msgTemplateChangeWarning}</div>
                 <div id="templateList">
-                    <ul class="list-unstyled">
+                    <div class="row">
                         {iteration:templates}
-                        {option:templates.break}
-                    </ul>
-                    <ul class="list-unstyled lastChild">
-                        {/option:templates.break}
-                        <li{option:templates.disabled} class="disabled"{/option:templates.disabled}>
-                            <label for="template{$templates.id}" class="radio">
-                                <input type="radio" id="template{$templates.id}" value="{$templates.id}"
-                                       name="template_id_chooser"
-                                       class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked}{option:templates.disabled} disabled="disabled"{/option:templates.disabled} />{$templates.label}
-                            </label>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="radio">
+                                        <label for="template{$templates.id}" class="control-label">
+                                            <input type="radio" id="template{$templates.id}" value="{$templates.id}"
+                                              name="template_id_chooser"
+                                              class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked}{option:templates.disabled} disabled="disabled"{/option:templates.disabled} />{$templates.label}
+                                        </label>
+                                    </div>
 
-                            <div class="templateVisual current">
-                                {$templates.html}
+                                    <div class="templateVisual current">
+                                        {$templates.html}
+                                    </div>
+                                </div>
                             </div>
-                        </li>
+                        {cycle:'':'</div><div class="row">'}
                         {/iteration:templates}
-                    </ul>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="changeTemplateSubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="changeTemplateSubmit" type="button" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -134,16 +135,16 @@
                 <p>{$msgConfirmDeleteBlock}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="confirmDeleteBlockSubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="confirmDeleteBlockSubmit" type="button" class="btn btn-danger"><span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}</button>
             </div>
         </div>
     </div>
 </div>
 
 {* Text editor block *}
-<div class="modal fork-modal-ckeditor fade" id="blockHtml" role="dialog" aria-labelledby="{$lblEditor|ucfirst}" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="blockHtml" role="dialog" aria-labelledby="{$lblEditor|ucfirst}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -155,14 +156,14 @@
                 <div class="alert alert-warning">
                     {$msgContentSaveWarning}
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:txtHtmlError} has-error{/option:txtHtmlError}">
                     {$txtHtml}
                     {$txtHtmlError}
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="blockHtmlCancel" type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="blockHtmlSubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+                <button id="blockHtmlCancel" type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <button id="blockHtmlSubmit" type="button" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
@@ -180,9 +181,9 @@
                 <p>{$msgConfirmDelete|sprintf:{$item.title}}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-primary">
-                    {$lblOK|ucfirst}
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+                <a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-danger">
+                    <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
                 </a>
             </div>
         </div>

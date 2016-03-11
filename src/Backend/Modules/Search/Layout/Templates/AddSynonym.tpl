@@ -8,18 +8,18 @@
 {form:addItem}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="term">
+      <div class="form-group{option:txtTermError} has-error{/option:txtTermError}">
+        <label for="term" class="control-label">
           {$lblTerm|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtTerm} {$txtTermError}
       </div>
-      <div class="form-group">
+      <div class="form-group{option:txtSynonymError} has-error{/option:txtSynonymError}">
         <div class="fakeP">
-          <label for="addValue-synonym">
+          <label for="addValue-synonym" class="control-label">
             {$lblSynonyms|ucfirst}
-            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+            <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
           </label>
           <div class="itemAdder">
             {$txtSynonym} {$txtSynonymError}
@@ -32,8 +32,8 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <button id="addButton" type="submit" name="add" class="btn btn-success">
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAddSynonym|ucfirst}
           </button>
         </div>

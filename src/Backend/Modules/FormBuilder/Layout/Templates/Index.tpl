@@ -1,13 +1,15 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblFormBuilder|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showFormBuilderAdd}
         <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAdd|ucfirst}
         </a>
         {/option:showFormBuilderAdd}

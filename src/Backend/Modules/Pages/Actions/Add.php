@@ -269,7 +269,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addText('navigation_title');
 
         // tags
-        $this->frm->addText('tags', null, null, 'form-control jsTagsBox', 'form-control danger jsTagsBox');
+        $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
 
         // a specific action
         $this->frm->addCheckbox('is_action', false);

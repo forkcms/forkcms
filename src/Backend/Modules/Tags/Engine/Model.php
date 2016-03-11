@@ -95,6 +95,25 @@ class Model
     }
 
     /**
+     * Get all tags.
+     *
+     * @return array
+     */
+    public static function getAll($language = null)
+    {
+        $language = ($language != null)
+            ? (string) $language
+            : BL::getWorkingLanguage();
+
+        return (array) BackendModel::getContainer()->get('database')->getRecords(
+            'SELECT i.tag AS name
+             FROM tags AS i
+             WHERE i.language = ?',
+            array($language)
+        );
+    }
+
+    /**
      * Get tags that start with the given string
      *
      * @param string $term            The searchstring.

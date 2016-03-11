@@ -8,14 +8,14 @@
 {form:edit}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="email">{$lblEmailAddress|ucfirst}</label>
+      <div class="form-group{otpion:txtEmailError} has-error{/option:txtEmailError}">
+        <label for="email" class="control-label">{$lblEmailAddress|ucfirst}</label>
         {$txtEmail} {$txtEmailError}
       </div>
       <div class="form-group">
         {option:groups}
         {option:chkGroupsError}
-        <p class="text-danger">{$chkGroupsError}</p>
+          <p class="text-danger">{$chkGroupsError}</p>
         {/option:chkGroupsError}
         <ul class="list-unstyled">
           {iteration:groups}
@@ -38,16 +38,16 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
-            <label for="subscriptions">{$lblGroup|ucfirst}</label>
+          <div class="form-group{option:ddmSubscriptionsError} has-error{/option:ddmSubscriptionsError}">
+            <label for="subscriptions" class="control-label">{$lblGroup|ucfirst}</label>
             {$ddmSubscriptions} {$ddmSubscriptionsError}
           </div>
         </div>
         {option:fields}
         <div class="panel-body">
           {iteration:fields}
-          <div class="form-group">
-            <label for="{$fields.name}">[{$fields.label}]</label>
+          <div class="form-group{option:fields.txtFieldError} has-error{/option:fields.txtFieldError}">
+            <label for="{$fields.name}" class="control-label">[{$fields.label}]</label>
             {$fields.txtField} {$fields.txtFieldError}
           </div>
           {/iteration:fields}
@@ -61,8 +61,8 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="saveButton" type="submit" name="save" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+          <button id="saveButton" type="submit" name="save" class="btn btn-success">
+            <span class="fa fa-floppy-o"></span>&nbsp;
             {$lblSave|ucfirst}
           </button>
         </div>

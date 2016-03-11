@@ -8,8 +8,8 @@
 {form:edit}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="title">{$lblTitle|ucfirst}</label>
+      <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
+        <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
       <div class="panel panel-default">
@@ -19,38 +19,38 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
-            <label for="street">
+          <div class="form-group{option:txtStreetError} has-error{/option:txtStreetError}">
+            <label for="street" class="control-label">
               {$lblStreet|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtStreet} {$txtStreetError}
           </div>
-          <div class="form-group">
-            <label for="number">
+          <div class="form-group{option:txtNumberError} has-error{/option:txtNumberError}">
+            <label for="number" class="control-label">
               {$lblNumber|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtNumber} {$txtNumberError}
           </div>
-          <div class="form-group">
-            <label for="zip">
+          <div class="form-group{option:txtZipError} has-error{/option:txtZipError}">
+            <label for="zip" class="control-label">
               {$lblZip|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtZip} {$txtZipError}
           </div>
-          <div class="form-group">
-            <label for="city">
+          <div class="form-group{option:txtCityError} has-error{/option:txtCityError}">
+            <label for="city" class="control-label">
               {$lblCity|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtCity} {$txtCityError}
           </div>
-          <div class="form-group">
-            <label for="country">
+          <div class="form-group{option:ddmCountryError} has-error{/option:ddmCountryError}">
+            <label for="country" class="control-label">
               {$lblCountry|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$ddmCountry} {$ddmCountryError}
           </div>
@@ -64,7 +64,7 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-group pull-right" role="group">
-        <button id="editButton" type="submit" name="edit" class="btn btn-primary">{$lblUpdateMap|ucfirst}</button>
+        <button id="editButton" type="submit" name="edit" class="btn btn-success">{$lblUpdateMap|ucfirst}</button>
       </div>
     </div>
   </div>
@@ -91,22 +91,22 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
-            <label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
+          <div class="form-group{option:ddmZoomLevelError} has-error{/option:ddmZoomLevelError}">
+            <label for="zoomLevel" class="control-label">{$lblZoomLevel|ucfirst}</label>
             {$ddmZoomLevel} {$ddmZoomLevelError}
           </div>
-          <div class="form-group"{option:!godUser} style="display:none;"{/option:!godUser}>
-            <label for="width">{$lblWidth|ucfirst}</label>
-            <p class="text-info">{$msgWidthHelp|sprintf:300:800}</p>
+          <div class="form-group{option:txtWidthError} has-error{/option:txtWidthError}"{option:!godUser} style="display:none;"{/option:!godUser}>
+            <label for="width" class="control-label">{$lblWidth|ucfirst}</label>
+            <p class="help-block">{$msgWidthHelp|sprintf:300:800}</p>
             {$txtWidth} {$txtWidthError}
           </div>
-          <div class="form-group"{option:!godUser} style="display:none;"{/option:!godUser}>
-            <label for="height">{$lblHeight|ucfirst}</label>
-            <p class="text-info">{$msgHeightHelp|sprintf:150}</p>
+          <div class="form-group{option:txtHeightError} has-error{/option:txtHeightError}"{option:!godUser} style="display:none;"{/option:!godUser}>
+            <label for="height" class="control-label">{$lblHeight|ucfirst}</label>
+            <p class="help-block">{$msgHeightHelp|sprintf:150}</p>
             {$txtHeight} {$txtHeightError}
           </div>
-          <div class="form-group">
-            <label for="mapType">{$lblMapType|ucfirst}</label>
+          <div class="form-group{option:ddmMapTypeError} has-error{/option:ddmMapTypeError}">
+            <label for="mapType" class="control-label">{$lblMapType|ucfirst}</label>
             {$ddmMapType} {$ddmMapTypeError}
           </div>
           <div class="form-group">
@@ -124,8 +124,8 @@
           </div>
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
-              <a href="#" id="saveLiveData" class="btn btn-primary">
-                <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+              <a href="#" id="saveLiveData" class="btn btn-success">
+                <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
               </a>
             </div>
           </div>
@@ -139,14 +139,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showLocationDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showLocationDelete}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="saveLiveData" type="button" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+          <button id="saveLiveData" type="button" name="edit" class="btn btn-success">
+            <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
       </div>
@@ -161,9 +161,9 @@
               <p>{$msgConfirmDelete|sprintf:{$item.title}}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-success">
+                <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
               </a>
             </div>
           </div>

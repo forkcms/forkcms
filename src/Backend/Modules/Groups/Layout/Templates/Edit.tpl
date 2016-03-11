@@ -27,15 +27,10 @@
           <div role="tabpanel" class="tab-pane active" id="tabName">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblName|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="name">
+                <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
+                  <label for="name" class="control-label">
                     {$lblName|ucfirst}&nbsp;
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtName} {$txtNameError}
                 </div>
@@ -45,13 +40,8 @@
           <div role="tabpanel" class="tab-pane" id="tabDashboard">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblDashboard|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group jsGroupsWidgets">
-                  <label for="toggleChecksWidgets">{$lblDisplayWidgets|ucfirst}</label>
+                  <label for="toggleChecksWidgets" class="control-label">{$lblDisplayWidgets|ucfirst}</label>
                   {option:widgets}
                   {$widgets}
                   {/option:widgets}
@@ -65,19 +55,14 @@
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblModules|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
                   {iteration:permissions}
-                  <div class="panel panel-default jsGroupsPermissionsModule">
+                  <div class="panel panel-transparent jsGroupsPermissionsModule">
                     <div class="panel-heading" role="tab" id="permissions-heading-{$permissions.id}">
                       <h4 class="panel-title">
                         {$permissions.chk}
                         <a data-toggle="collapse" data-parent="#permissions" href="#permissions-list-{$permissions.id}" aria-expanded="false" aria-controls="collapseOne">
-                          <label for="{$permissions.id}">{$permissions.label}</label>
+                          <label for="{$permissions.id}"><span class="fa fa-caret-right fa-fw" class="control-label"></span> {$permissions.label}</label>
                         </a>
                       </h4>
                     </div>
@@ -91,11 +76,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabUsers">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblUsers|ucfirst} in {$groupName|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 {option:dataGridUsers}
@@ -117,14 +97,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showGroupsDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>&nbsp;
+            <span class="fa fa-trash-o"></span>&nbsp;
             {$lblDelete|ucfirst}
           </button>
           {/option:showGroupsDelete}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+          <button id="editButton" type="submit" name="edit" class="btn btn-success">
+            <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
       </div>
@@ -139,9 +119,9 @@
               <p>{$msgConfirmDelete|sprintf:{$item.name}}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-danger">
+                <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
               </a>
             </div>
           </div>

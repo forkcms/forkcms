@@ -27,10 +27,10 @@
 {form:upload}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="file">
+      <div class="form-group{option:fileFileError} has-error{/option:fileFileError}">
+        <label for="file" class="control-label">
           {$lblFile|ucfirst}&nbsp;
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$fileFile} {$fileFileError}
       </div>
@@ -40,7 +40,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="importButton" type="submit" name="add" class="btn btn-primary">{$lblInstall|ucfirst}</button>
+          <button id="importButton" type="submit" name="add" class="btn btn-success"><span class="fa fa-download"></span> {$lblInstall|ucfirst}</button>
         </div>
       </div>
     </div>

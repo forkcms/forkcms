@@ -1,19 +1,21 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblStatistics|ucfirst} {$lblFor} &ldquo;{$mailing.name}&rdquo;</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showMailmotorIndex}
         <a href="{$var|geturl:'index'}" class="btn btn-default" title="{$lblNewsletters|ucfirst}">
-          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="fa fa-list"></span>
           {$msgBackToMailings|sprintf:{$mailing.name}}
         </a>
         {/option:showMailmotorIndex}
         {option:showMailmotorExportStatistics}
         <a href="{$var|geturl:'export_statistics'}&amp;id={$mailing.id}" class="btn btn-default" title="{$lblExportStatistics|ucfirst}">
-          <span class="glyphicon glyphicon-export"></span>
+          <span class="fa fa-upload"></span>
           {$lblExportStatistics|ucfirst}
         </a>
         {/option:showMailmotorExportStatistics}

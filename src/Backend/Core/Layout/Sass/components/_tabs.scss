@@ -1,0 +1,13 @@
+.nav-tabs {
+  margin-bottom: 20px;
+}
+
+.nav.nav-tabs-xs > li > a {
+  padding: 3px 5px;
+}
+
+.nav-tabs > .has-error > a,
+.nav-tabs > .active.has-error > a {
+  background: $alert-danger-bg;
+  color: $brand-danger;
+}

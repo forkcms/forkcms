@@ -8,10 +8,10 @@
 {form:edit}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="name">
+      <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
+        <label for="name" class="control-label">
           {$lblName|ucfirst}
-          <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+          <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
         </label>
         {$txtName} {$txtNameError}
       </div>
@@ -34,7 +34,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">{$lblSave|ucfirst}</button>
+          <button id="editButton" type="submit" name="edit" class="btn btn-success"><span class="fa fa-floppy-o"></span> {$lblSave|ucfirst}</button>
         </div>
       </div>
     </div>

@@ -25,14 +25,14 @@
         </h3>
       </div>
       <div class="panel-body">
-        <div class="form-group">
-          <p class="text-info">
+        <div class="form-group{option:fileCertificateError} has-error{/option:fileCertificateError}">
+          <p class="help-block">
             {$msgCertificateHelp}
           </p>
           {$fileCertificate} {$fileCertificateError}
-        </p>
-        <p>
-          <label for="email">{$lblEmail|ucfirst}</label>
+        </div>
+        <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
+          <label for="email" class="control-label">{$lblEmail|ucfirst}</label>
           {$txtEmail} {$txtEmailError}
         </div>
       </div>
@@ -112,9 +112,15 @@
   {/option:profile}
 
   {option:!profile}
-    <div class="fullwidthOptions">
-      <div class="buttonHolderRight">
-        <input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+    <div class="row fork-module-actions">
+      <div class="col-md-12">
+        <div class="btn-toolbar">
+          <div class="btn-group pull-right" role="group">
+            <button id="save" type="submit" name="save" class="btn btn-success">
+              <span class="fa fa-floppy-o"></span> {$lblSave|ucfirst}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   {/option:!profile}

@@ -12,7 +12,7 @@
         <tr>
           <td rowspan="6" class="text-center align-middle">
             {option:record.settings.avatar}
-            <img src="{$FRONTEND_FILES_URL}/backend_users/avatars/source/{$record.settings.avatar}" alt="" />
+            <img class="img-circle" src="{$FRONTEND_FILES_URL}/backend_users/avatars/source/{$record.settings.avatar}" alt="" />
             {/option:record.settings.avatar}
           </td>
           <th>{$lblName|ucfirst}:</th>
@@ -74,43 +74,52 @@
           <div role="tabpanel" class="tab-pane active" id="tabProfile">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblPersonalInformation|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="email">
-                    {$lblEmail|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                  </label>
-                  {$txtEmail} {$txtEmailError}
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
+                      <label for="email" class="control-label">
+                        {$lblEmail|ucfirst}
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                      </label>
+                      {$txtEmail} {$txtEmailError}
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="name">
-                    {$lblName|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                  </label>
-                  {$txtName} {$txtNameError}
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
+                      <label for="name" class="control-label">
+                        {$lblName|ucfirst}
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                      </label>
+                      {$txtName} {$txtNameError}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group{option:txtSurnameError} has-error{/option:txtSurnameError}">
+                      <label for="surname" class="control-label">
+                        {$lblSurname|ucfirst}
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                      </label>
+                      {$txtSurname} {$txtSurnameError}
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="surname">
-                    {$lblSurname|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                  </label>
-                  {$txtSurname} {$txtSurnameError}
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group{option:txtNicknameError} has-error{/option:txtNicknameError}">
+                      <label for="nickname" class="control-label">
+                        {$lblNickname|ucfirst}
+                        <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
+                      </label>
+                      <p class="help-block">{$msgHelpNickname}</p>
+                      {$txtNickname} {$txtNicknameError}
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="nickname">
-                    {$lblNickname|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                  </label>
-                  <p class="text-info">{$msgHelpNickname}</p>
-                  {$txtNickname} {$txtNicknameError}
-                </div>
-                <div class="form-group">
-                  <label for="avatar">{$lblAvatar|ucfirst}</label>
-                  <p class="text-info">{$msgHelpAvatar}</p>
+                <div class="form-group{option:fileAvatarError} has-error{/option:fileAvatarError}">
+                  <label for="avatar" class="control-label">{$lblAvatar|ucfirst}</label>
+                  <p class="help-block">{$msgHelpAvatar}</p>
                   {$fileAvatar} {$fileAvatarError}
                 </div>
               </div>
@@ -121,7 +130,7 @@
             {option:showPasswordStrength}
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblCurrentPassword|ucfirst}</h3>
+                <h4>{$lblCurrentPassword|ucfirst}</h4>
               </div>
             </div>
             <div class="row">
@@ -135,41 +144,49 @@
             {/option:showPasswordStrength}
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblChangePassword|ucfirst}</h3>
+                <h4>{$lblChangePassword|ucfirst}</h4>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="newPassword">
+                  <label for="newPassword" class="control-label">
                     {$lblPassword|ucfirst}&nbsp;
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   <table id="passwordStrengthMeter" class="passwordStrength" data-id="newPassword">
                     <tr>
                       <td class="strength" id="passwordStrength">
-                        <p class="strength none text-muted">{$lblNone|ucfirst}</p>
-                        <p class="strength weak text-danger">{$lblWeak|ucfirst}</p>
-                        <p class="strength average text-warning">{$lblAverage|ucfirst}</p>
-                        <p class="strength strong text-success">{$lblStrong|ucfirst}</p>
+                        <p class="strength none">
+                          <span class="label label-default">None</span>
+                        </p>
+                        <p class="strength weak">
+                          <span class="label label-danger">Weak</span>
+                        </p>
+                        <p class="strength average">
+                          <span class="label label-warning">Average</span>
+                        </p>
+                        <p class="strength strong">
+                          <span class="label label-success">Strong</span>
+                        </p>
                       </td>
                       <td>
-                        <p class="text-info">&nbsp;{$msgHelpStrongPassword}</p>
+                        <p class="help-block">&nbsp;{$msgHelpStrongPassword}</p>
                       </td>
                     </tr>
                   </table>
-                  <div class="form-group form-inline">
+                  <div class="form-group form-inline{option:txtNewPasswordError} has-error{/option:txtNewPasswordError}">
                     <div class="form-group">
                       {$txtNewPassword} {$txtNewPasswordError}
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="confirmPassword">
+                  <label for="confirmPassword" class="control-label">
                     {$lblConfirmPassword|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
-                  <div class="form-group form-inline">
+                  <div class="form-group form-inline{option:txtConfirmPasswordError} has-error{/option:txtConfirmPasswordError}">
                     <div class="form-group">
                       {$txtConfirmPassword} {$txtConfirmPasswordError}
                     </div>
@@ -182,26 +199,31 @@
           <div role="tabpanel" class="tab-pane" id="tabSettings">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblInterfacePreferences|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="interfaceLanguage">{$lblLanguage|ucfirst}</label>
-                  {$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
-                </div>
-                <div class="form-group">
-                  <label for="dateFormat">{$lblDateFormat|ucfirst}</label>
-                  {$ddmDateFormat} {$ddmDateFormatError}
-                </div>
-                <div class="form-group">
-                  <label for="timeFormat">{$lblTimeFormat|ucfirst}</label>
-                  {$ddmTimeFormat} {$ddmTimeFormatError}
-                </div>
-                <div class="form-group">
-                  <label for="numberFormat">{$lblNumberFormat|ucfirst}</label>
-                  {$ddmNumberFormat} {$ddmNumberFormatError}
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmInterfaceLanguageError} has-error{/option:ddmInterfaceLanguageError}">
+                      <label for="interfaceLanguage" class="control-label">{$lblLanguage|ucfirst}</label>
+                      {$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmDateFormatError} has-error{/option:ddmDateFormatError}">
+                      <label for="dateFormat" class="control-label">{$lblDateFormat|ucfirst}</label>
+                      {$ddmDateFormat} {$ddmDateFormatError}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmTimeFormatError} has-error{/option:ddmTimeFormatError}">
+                      <label for="timeFormat" class="control-label">{$lblTimeFormat|ucfirst}</label>
+                      {$ddmTimeFormat} {$ddmTimeFormatError}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmNumberFormatError} has-error{/option:ddmNumberFormatError}">
+                      <label for="numberFormat" class="control-label">{$lblNumberFormat|ucfirst}</label>
+                      {$ddmNumberFormat} {$ddmNumberFormatError}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -212,13 +234,19 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
-                  <label for="csvSplitCharacter">{$lblSplitCharacter|ucfirst}</label>
-                  {$ddmCsvSplitCharacter} {$ddmCsvSplitCharacterError}
-                </div>
-                <div class="form-group">
-                  <label for="csvLineEnding">{$lblLineEnding|ucfirst}</label>
-                  {$ddmCsvLineEnding} {$ddmCsvLineEndingError}
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmCsvSplitCharacterError} has-error{/option:ddmCsvSplitCharacterError}">
+                      <label for="csvSplitCharacter" class="control-label">{$lblSplitCharacter|ucfirst}</label>
+                      {$ddmCsvSplitCharacter} {$ddmCsvSplitCharacterError}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group{option:ddmCsvLineEndingError} has-error{/option:ddmCsvLineEndingError}">
+                      <label for="csvLineEnding" class="control-label">{$lblLineEnding|ucfirst}</label>
+                      {$ddmCsvLineEnding} {$ddmCsvLineEndingError}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -227,12 +255,7 @@
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblAccountManagement|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group{option:chkActiveError} has-error{/option:chkActiveError}{option:chkApiAccessError} has-error{/option:chkApiAccessError}">
                   <ul class="list-unstyled">
                     <li class="checkbox">
                       <label for="active">{$chkActive} {$msgHelpActive}</label> {$chkActiveError}
@@ -242,7 +265,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class="form-group">
+                <div class="form-group{option:chkGroupsError} has-error{/option:chkGroupsError}">
                   <p>{$lblGroups|ucfirst}</p>
                   <ul id="groupList" class="list-unstyled">
                     {iteration:groups}
@@ -267,14 +290,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showUsersDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showUsersDelete}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+          <button id="editButton" type="submit" name="edit" class="btn btn-success">
+            <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
       </div>
@@ -289,9 +312,9 @@
               <p>{$msgConfirmDelete|sprintf:{$record.settings.nickname}}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a href="{$var|geturl:'delete'}&amp;id={$record.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <a href="{$var|geturl:'delete'}&amp;id={$record.id}" class="btn btn-danger">
+                <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
               </a>
             </div>
           </div>

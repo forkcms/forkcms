@@ -1,7 +1,7 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>
       {option:!filterCategory}
       {$lblArticles|ucfirst}
@@ -10,6 +10,8 @@
       {$msgArticlesFor|sprintf:{$filterCategory.title}|ucfirst}
       {/option:filterCategory}
     </h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showBlogAdd}
@@ -19,7 +21,7 @@
         {option:!filterCategory}
         <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
         {/option:!filterCategory}
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAdd|ucfirst}
         </a>
         {/option:showBlogAdd}
@@ -32,8 +34,8 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-md-4">
-          <div class="form-group">
-            <label for="category">{$msgShowOnlyItemsInCategory}</label>
+          <div class="form-group{option:ddmCategoryError} has-error{/option:ddmCategoryError}">
+            <label for="category" class="control-label">{$msgShowOnlyItemsInCategory}</label>
             {$ddmCategory} {$ddmCategoryError}
           </div>
         </div>
@@ -43,7 +45,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right">
           <button id="search" type="submit" class="btn btn-primary" name="search">
-            <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+            <span class="fa fa-refresh"></span>&nbsp;
             {$lblUpdateFilter|ucfirst}
           </button>
         </div>

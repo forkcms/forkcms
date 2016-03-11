@@ -36,36 +36,31 @@
           <div role="tabpanel" class="tab-pane active" id="tabGeneral">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblGeneral|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="name">
+                <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
+                  <label for="name" class="control-label">
                     {$lblName|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtName} {$txtNameError}
                 </div>
-                <div class="form-group">
-                  <label for="method">
+                <div class="form-group{option:ddmMethodError} has-error{/option:ddmMethodError}">
+                  <label for="method" class="control-label">
                     {$lblMethod|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$ddmMethod} {$ddmMethodError}
                 </div>
-                <div class="form-group">
-                  <label for="email">
+                <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
+                  <label for="email" class="control-label">
                     {$lblRecipient|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtEmail} {$txtEmailError}
                 </div>
-                <div class="form-group">
-                  <label for="successMessage">
+                <div class="form-group{option:txtSuccessMessageError} has-error{/option:txtSuccessMessageError}">
+                  <label for="successMessage" class="control-label">
                     {$lblSuccessMessage|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtSuccessMessage} {$txtSuccessMessageError}
                 </div>
@@ -75,12 +70,7 @@
           <div role="tabpanel" class="tab-pane" id="tabFields">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblFields|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <p class="text-warning">{$msgImportantImmediateUpdate}</p>
+                <p class="text-warning"><span class="fa fa-warning"></span> {$msgImportantImmediateUpdate}</p>
               </div>
             </div>
             <div class="row">
@@ -104,16 +94,22 @@
                     </div>
 
                     {* Submit button is always here. Cannot be deleted or moved. *}
-                    <div class="btn-toolbar">
-                      <div class="btn-group pull-left" role="group">
-                        {$btnSubmitField}
-                      </div>
-                      <div class="btn-group pull-right" role="group">
-                        <a href="#edit-{$submitId}" class="btn btn-default jsFieldEdit" rel="{$submitId}" title="{$lblEdit}">
-                          <span class="glyphicon glyphicon-pencil"></span>
-                        </a>
+                  <div class="row">
+                    <div class="col-md-5 col-md-offset-4">
+                      <div class="btn-toolbar">
+                        <div class="btn-group pull-right" role="group">
+                          {$btnSubmitField}
+                        </div>
                       </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="btn-group pull-right" role="group">
+                          <a href="#edit-{$submitId}" class="btn btn-default jsFieldEdit" rel="{$submitId}" title="{$lblEdit}">
+                            <span class="fa fa-pencil"></span>
+                          </a>
+                        </div>
+                    </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -129,32 +125,34 @@
                     <ul class="list-group">
                       <li id="textboxSelector" class="list-group-item">
                         <a href="#textbox" rel="textboxDialog" class="jsFieldDialogTrigger">
+                          <span class="fa fa-square-o fa-fw"></span>
                           {$lblTextbox|ucfirst}
                         </a>
                       </li>
                       <li id="textareaSelector" class="list-group-item">
                         <a href="#textarea" rel="textareaDialog" class="jsFieldDialogTrigger">
+                          <span class="fa fa-square-o fa-fw"></span>
                           {$lblTextarea|ucfirst}
                         </a>
                       </li>
                       <li id="datetimeSelector" class="list-group-item">
                         <a href="#datetime" rel="datetimeDialog" class="jsFieldDialogTrigger">
-                          {$lblDatetime|ucfirst}
+                          <span class="fa fa-calendar-o fa-fw"></span> {$lblDatetime|ucfirst}
                         </a>
                       </li>
                       <li id="dropdownSelector" class="list-group-item">
                         <a href="#dropdown" rel="dropdownDialog" class="jsFieldDialogTrigger">
-                          {$lblDropdown|ucfirst}
+                          <span class="fa fa-list-alt fa-fw"></span> {$lblDropdown|ucfirst}
                         </a>
                       </li>
                       <li id="checkboxSelector" class="list-group-item">
                         <a href="#checkbox" rel="checkboxDialog" class="jsFieldDialogTrigger">
-                          {$lblCheckbox|ucfirst}
+                          <span class="fa fa-check-square-o fa-fw"></span> {$lblCheckbox|ucfirst}
                         </a>
                       </li>
                       <li id="radiobuttonSelector" class="list-group-item">
                         <a href="#radiobutton" rel="radiobuttonDialog" class="jsFieldDialogTrigger">
-                          {$lblRadiobutton|ucfirst}
+                          <span class="fa fa-dot-circle-o fa-fw"></span> {$lblRadiobutton|ucfirst}
                         </a>
                       </li>
                     </ul>
@@ -162,12 +160,12 @@
                     <ul class="list-group">
                       <li id="headingSelector" class="list-group-item">
                         <a href="#heading" rel="headingDialog" class="jsFieldDialogTrigger">
-                          {$lblHeading|ucfirst}
+                          <span class="fa fa-header fa-fw"></span> {$lblHeading|ucfirst}
                         </a>
                       </li>
                       <li id="paragraphSelector" class="list-group-item">
                         <a href="#paragraph" rel="paragraphDialog" class="jsFieldDialogTrigger">
-                          {$lblParagraph|ucfirst}
+                          <span class="fa fa-align-left fa-fw"></span> {$lblParagraph|ucfirst}
                         </a>
                       </li>
                     </ul>
@@ -179,14 +177,9 @@
           <div role="tabpanel" class="tab-pane" id="tabExtra">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblExtra|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label for="identifier">
+                <label for="identifier" class="control-label">
                   {$lblIdentifier|ucfirst}
-                  <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpIdentifier}"></abbr>
+                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpIdentifier}"></abbr>
                 </label>
                 {$txtIdentifier} {$txtIdentifierError}
               </div>
@@ -202,14 +195,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showFormBuilderDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showFormBuilderDelete}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+          <button id="editButton" type="submit" name="edit" class="btn btn-success">
+            <span class="fa fa-floppy-o"></span>&nbsp;
             {$lblSave|ucfirst}
           </button>
         </div>

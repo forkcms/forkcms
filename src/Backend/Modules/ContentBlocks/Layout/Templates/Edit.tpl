@@ -21,25 +21,20 @@
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblContent|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="title">{$lblTitle|ucfirst}</label>
+                <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
+                  <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
                   {$txtTitle} {$txtTitleError}
                 </div>
-                <div class="form-group">
-                  <label for="text">
+                <div class="form-group{option:txtTextError} has-error{/option:txtTextError}">
+                  <label for="text" class="control-label">
                     {$lblContent|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtText} {$txtTextError}
                 </div>
                 {option:ddmTemplate}
-                <div class="form-group">
-                  <label for="template">{$lblTemplate|ucfirst}</label>
+                <div class="form-group{option:ddmTemplateError} has-error{/option:ddmTemplateError}">
+                  <label for="template" class="control-label">{$lblTemplate|ucfirst}</label>
                   {$ddmTemplate} {$ddmTemplateError}
                 </div>
                 {/option:ddmTemplate}
@@ -54,7 +49,7 @@
               <div class="col-md-12">
                 <h3>
                   {$lblPreviousVersions|ucfirst}
-                  <abbr class="glyphicon glyphicon-question-sign" title="{$msgHelpRevisions}"></abbr>
+                  <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{$msgHelpRevisions}"></abbr>
                 </h3>
               </div>
             </div>
@@ -79,14 +74,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showContentBlocksDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showContentBlocksDelete}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+          <button id="editButton" type="submit" name="edit" class="btn btn-success">
+            <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
       </div>
@@ -101,9 +96,9 @@
               <p>{$msgConfirmDelete|sprintf:{$title}}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a href="{$var|geturl:'delete'}&amp;id={$id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <a href="{$var|geturl:'delete'}&amp;id={$id}" class="btn btn-danger">
+                <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
               </a>
             </div>
           </div>

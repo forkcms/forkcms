@@ -8,14 +8,14 @@
 {form:add}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="email">{$lblEmailAddress|ucfirst}</label>
+      <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
+        <label for="email" class="control-label">{$lblEmailAddress|ucfirst}</label>
         {$txtEmail} {$txtEmailError}
       </div>
       <div class="form-group">
         {option:groups}
         {option:chkGroupsError}
-        <p class="text-danger">{$chkGroupsError}</p>
+          <p class="text-danger">{$chkGroupsError}</p>
         {/option:chkGroupsError}
         <ul class="list-unstyled">
           {iteration:groups}
@@ -32,8 +32,8 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <button id="addButton" type="submit" name="add" class="btn btn-success">
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>
         </div>

@@ -1,16 +1,18 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureStart.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>
       {option:dgDrafts}{$lblDrafts|ucfirst}{/option:dgDrafts}
       {option:!dgDrafts}{$lblRecentlyEdited|ucfirst}{/option:!dgDrafts}
     </h2>
+  </div>
+  <div class="col-md-6">
     {option:showPagesAdd}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>
+          <span class="fa fa-plus"></span>
           {$lblAdd|ucfirst}
         </a>
       </div>
@@ -21,13 +23,13 @@
 <div class="row fork-module-content">
   <div class="col-md-12">
     {option:dgDrafts}
-    {$dgDrafts}
+      {$dgDrafts}
     {/option:dgDrafts}
     {option:dgRecentlyEdited}
-    {$dgRecentlyEdited}
+      {$dgRecentlyEdited}
     {/option:dgRecentlyEdited}
     {option:!dgRecentlyEdited}
-    <p>{$msgNoItems}</p>
+      <p>{$msgNoItems}</p>
     {/option:!dgRecentlyEdited}
   </div>
 </div>

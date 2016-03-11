@@ -1,0 +1,26 @@
+.panel-title a {
+  border: none;
+  text-decoration: none;
+
+  &:hover {
+    border: none;
+    text-decoration: none;
+  }
+}
+
+.panel-transparent {
+  border-color: #ddd;
+
+  .panel-heading {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: -1px;
+  }
+}
+
+// Panel caret behavior
+.panel.open {
+
+  .fa-caret-right {
+    @extend .fa-caret-down;
+  }
+}

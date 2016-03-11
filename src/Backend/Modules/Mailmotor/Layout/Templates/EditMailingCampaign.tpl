@@ -8,8 +8,8 @@
 {form:edit}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="campaigns">{$lblCampaign|ucfirst}</label>
+      <div class="form-group{option:ddmCampaignsError} has-error{/option:ddmCampaignsError}">
+        <label for="campaigns" class="control-label">{$lblCampaign|ucfirst}</label>
         {$ddmCampaigns} {$ddmCampaignsError}
       </div>
     </div>
@@ -18,8 +18,8 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="saveButton" type="submit" name="save" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+          <button id="saveButton" type="submit" name="save" class="btn btn-success">
+            <span class="fa fa-floppy-o"></span>&nbsp;
             {$lblSave|ucfirst}
           </button>
         </div>

@@ -21,36 +21,31 @@
           <div role="tabpanel" class="tab-pane active" id="tabGeneral">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblGeneral|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="name">
+                <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
+                  <label for="name" class="control-label">
                     {$lblName|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtName} {$txtNameError}
                 </div>
-                <div class="form-group">
-                  <label for="method">
+                <div class="form-group{option:ddmMethodError} has-error{/option:ddmMethodError}">
+                  <label for="method" class="control-label">
                     {$lblMethod|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$ddmMethod} {$ddmMethodError}
                 </div>
-                <div class="form-group">
-                  <label for="email">
+                <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
+                  <label for="email" class="control-label">
                     {$lblRecipient|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtEmail} {$txtEmailError}
                 </div>
-                <div class="form-group">
-                  <label for="successMessage">
+                <div class="form-group{option:txtSuccessMessageError} has-error{/option:txtSuccessMessageError}">
+                  <label for="successMessage" class="control-label">
                     {$lblSuccessMessage|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtSuccessMessage} {$txtSuccessMessageError}
                 </div>
@@ -60,14 +55,9 @@
           <div role="tabpanel" class="tab-pane" id="tabExtra">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblExtra|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label for="identifier">
+                <label for="identifier" class="control-label">
                   {$lblIdentifier|ucfirst}
-                  <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpIdentifier}"></abbr>
+                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpIdentifier}"></abbr>
                 </label>
                 {$txtIdentifier} {$txtIdentifierError}
               </div>
@@ -81,8 +71,8 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <button id="addButton" type="submit" name="add" class="btn btn-success">
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAdd|ucfirst}
           </button>
         </div>

@@ -1,13 +1,15 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblEmailAddresses|ucfirst}{option:group} {$lblFor} {$lblGroup} &ldquo;{$group.name}&rdquo;{/option:group}</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showMailmotorImportAddresses}
         <a href="{$var|geturl:'import_addresses'}{option:group}&amp;group_id={$group.id}{/option:group}" class="btn btn-default" title="{$lblImportAddresses|ucfirst}">
-          <span class="glyphicon glyphicon-import"></span>
+          <span class="fa fa-upload"></span>
           {option:!group}
           &nbsp;{$lblImportAddresses|ucfirst}
           {/option:!group}
@@ -15,7 +17,7 @@
         {/option:showMailmotorImportAddresses}
         {option:showMailmotorExportAddresses}
         <a href="{$var|geturl:'export_addresses'}&amp;id={option:!group}all{/option:!group}{option:group}{$group.id}{/option:group}" class="btn btn-default" title="{$lblExportAddresses|ucfirst}">
-          <span class="glyphicon glyphicon-export"></span>
+          <span class="fa fa-download"></span>
           {option:!group}
           &nbsp;{$lblExportAddresses|ucfirst}
           {/option:!group}
@@ -23,7 +25,7 @@
         {/option:showMailmotorExportAddresses}
         {option:showMailmotorAddAddress}
         <a href="{$var|geturl:'add_address'}{option:group}&amp;group_id={$group.id}{/option:group}" class="btn btn-default">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {$lblAddEmail|ucfirst}
         </a>
         {/option:showMailmotorAddAddress}
@@ -49,8 +51,8 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-4">
-              <div class="form-group">
-                <label for="email">{$lblEmailAddress|ucfirst}</label>
+              <div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
+                <label for="email" class="control-label">{$lblEmailAddress|ucfirst}</label>
                 {$txtEmail} {$txtEmailError}
               </div>
             </div>
@@ -60,7 +62,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span class="fa fa-refresh"></span>&nbsp;
                 {$lblUpdateFilter|ucfirst}
               </button>
             </div>

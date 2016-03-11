@@ -1,13 +1,15 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblSynonyms|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     {option:showSearchAddSynonym}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$var|geturl:'add_synonym'}" class="btn btn-default" title="{$lblAddSynonym|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>
+          <span class="fa fa-plus"></span>
           {$lblAddSynonym|ucfirst}
         </a>
       </div>

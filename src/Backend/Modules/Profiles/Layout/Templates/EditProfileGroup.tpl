@@ -8,17 +8,17 @@
 {form:editProfileGroup}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="group">{$lblGroup|ucfirst}</label>
+      <div class="form-group{option:ddmGroupError} has-error{/option:ddmGroupError}">
+        <label for="group" class="control-label">{$lblGroup|ucfirst}</label>
         {$ddmGroup} {$ddmGroupError}
       </div>
       <div class="form-group">
-        <label for="expirationDate">{$lblExpiresOn|ucfirst}:</label>
+        <label for="expirationDate" class="control-label">{$lblExpiresOn|ucfirst}:</label>
         <div class="form-inline">
-          <div class="form-group">
+          <div class="form-group{option:txtExpirationDateError} has-error{/option:txtExpirationDateError}">
             {$txtExpirationDate} {$txtExpirationDateError}
           </div>
-          <div class="form-group">
+          <div class="form-group{option:txtExpirationTimeError} has-error{/option:txtExpirationTimeError}">
             {$txtExpirationTime} {$txtExpirationTimeError}
           </div>
         </div>
@@ -31,14 +31,14 @@
         <div class="btn-group pull-left" role="group">
           {option:showProfilesDeleteProfileGroup}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showProfilesDeleteProfileGroup}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="saveButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}
+          <button id="saveButton" type="submit" name="edit" class="btn btn-success">
+            <span class="fa fa-floppy-o"></span>&nbsp;{$lblSave|ucfirst}
           </button>
         </div>
       </div>
@@ -53,9 +53,9 @@
               <p>{$msgConfirmProfileGroupDelete|sprintf:{$profileGroup.name}}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a href="{$var|geturl:'delete_profile_group'}&amp;id={$profileGroup.id}" class="btn btn-primary">
-                {$lblOK|ucfirst}
+              <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+              <a href="{$var|geturl:'delete_profile_group'}&amp;id={$profileGroup.id}" class="btn btn-danger">
+                <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
               </a>
             </div>
           </div>

@@ -13,11 +13,11 @@
   <div class="footer oneLiner">
     {form:dates}
       <p>
-        <label for="startDate">{$lblStartDate|ucfirst}</label>
+        <label for="startDate" class="control-label">{$lblStartDate|ucfirst}</label>
         {$txtStartDate}
       </p>
       <p>
-        <label for="endDate">{$lblEndDate|ucfirst}</label>
+        <label for="endDate" class="control-label">{$lblEndDate|ucfirst}</label>
         {$txtEndDate}
       </p>
       <p>

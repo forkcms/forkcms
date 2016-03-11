@@ -8,8 +8,8 @@
 {form:add}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="title">{$lblTitle|ucfirst}</label>
+      <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
+        <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
       <div class="panel panel-default">
@@ -19,38 +19,38 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
-            <label for="street">
+          <div class="form-group{option:txtStreetError} has-error{/option:txtStreetError}">
+            <label for="street" class="control-label">
               {$lblStreet|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtStreet} {$txtStreetError}
           </div>
-          <div class="form-group">
-            <label for="number">
+          <div class="form-group{option:txtNumberError} has-error{/option:txtNumberError}">
+            <label for="number" class="control-label">
               {$lblNumber|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtNumber} {$txtNumberError}
           </div>
-          <div class="form-group">
-            <label for="zip">
+          <div class="form-group{option:txtZipError} has-error{/option:txtZipError}">
+            <label for="zip" class="control-label">
               {$lblZip|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtZip} {$txtZipError}
           </div>
-          <div class="form-group">
-            <label for="city">
+          <div class="form-group{option:txtCityError} has-error{/option:txtCityError}">
+            <label for="city" class="control-label">
               {$lblCity|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$txtCity} {$txtCityError}
           </div>
-          <div class="form-group">
-            <label for="country">
+          <div class="form-group{option:ddmCountryError} has-error{/option:ddmCountryError}">
+            <label for="country" class="control-label">
               {$lblCountry|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
             {$ddmCountry} {$ddmCountryError}
           </div>
@@ -62,8 +62,8 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <button id="addButton" type="submit" name="add" class="btn btn-success">
+            <span class="fa fa-plus"></span>&nbsp;
             {$lblAddToMap|ucfirst}
           </button>
         </div>

@@ -1,25 +1,27 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureStart.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblEdit|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showPagesAdd}
         <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           <span>{$lblAdd|ucfirst}</span>
         </a>
         {/option:showPagesAdd}
         {option:!item.is_hidden}
         <a href="{$SITE_URL}{$item.full_url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" class="btn btn-default" target="_blank">
-          <span class="glyphicon glyphicon-search"></span>&nbsp;
+          <span class="fa fa-eye"></span>&nbsp;
           <span>{$lblView|ucfirst}</span>
         </a>
         {/option:!item.is_hidden}
         {option:showPagesIndex}
         <a href="{$var|geturl:'index'}" class="btn btn-default" title="{$lblOverview|ucfirst}">
-          <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+          <span class="fa fa-list"></span>&nbsp;
           {$lblOverview|ucfirst}
         </a>
         {/option:showPagesIndex}
@@ -31,15 +33,13 @@
   {$hidTemplateId}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="title">{$lblTitle|ucfirst}</label>
+      <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
+        <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
-      <p>
-        <a data-url="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">
-          {$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span>
-        </a>
-      </p>
+      <a data-url="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">
+        <small>{$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span></small>
+      </a>
     </div>
   </div>
   <div class="row fork-module-content">
@@ -68,20 +68,21 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div id="editTemplate" class="row">
-              <div class="col-md-12">
+              <div class="col-md-6">
                 {* Do not change the ID! *}
                 <h3>{$lblTemplate|ucfirst}: <span id="tabTemplateLabel">&nbsp;</span></h3>
-
+              </div>
+              <div class="col-md-6">
                 <div class="btn-toolbar pull-right">
                   <div class="btn-group" role="group">
                     <button type="button" class="btn" data-toggle="modal" data-target="#changeTemplate">
-                      <span class="glyphicon glyphicon-th"></span>
+                      <span class="fa fa-th"></span>
                       {$lblChangeTemplate|ucfirst}
                     </button>
                   </div>
                 </div>
                 {option:formErrors}
-                <span class="formError">{$formErrors}</span>
+                <span class="formError text-danger">{$formErrors}</span>
                 {/option:formErrors}
               </div>
               <div class="col-md-12">
@@ -118,7 +119,7 @@
             {option:drafts}
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblDrafts|ucfirst} <abbr title="{$msgHelpDrafts}"><span class="glyphicon glyphicon-info-sign"></span></abbr></h3>
+                <h4>{$lblDrafts|ucfirst} <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpDrafts}"></abbr></h4>
               </div>
             </div>
             <div class="row">
@@ -129,7 +130,7 @@
             {/option:drafts}
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblPreviousVersions|ucfirst} <abbr title="{$msgHelpRevisions}"><span class="glyphicon glyphicon-info-sign"></span></abbr></h3>
+                <h4>{$lblPreviousVersions|ucfirst} <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpRevisions}"></abbr></h4>
               </div>
             </div>
             <div class="row">
@@ -144,11 +145,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabSettings">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblSettings|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -184,27 +180,22 @@
           <div role="tabpanel" class="tab-pane" id="tabRedirect">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblRedirect|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 {option:rbtRedirectError}
                 <div class="alert alert-danger">{$rbtRedirectError}</div>
                 {/option:rbtRedirectError}
-                <div class="form-group">
+                <div class="form-group{option:ddmInternalRedirectError} has-error{/option:ddmInternalRedirectError}{option:txtExternalRedirectError} has-error{/option:txtExternalRedirectError}">
                   <ul class="list-unstyled radiobuttonFieldCombo">
                     {iteration:redirect}
                     <li class="radio">
                       <label for="{$redirect.id}">{$redirect.rbtRedirect} {$redirect.label}</label>
                       {option:redirect.isInternal}
                       <label for="internalRedirect" class="hidden">{$redirect.label}</label>
-                      <p class="text-info">{$msgHelpInternalRedirect}</p>
+                      <p class="help-block">{$msgHelpInternalRedirect}</p>
                       {$ddmInternalRedirect} {$ddmInternalRedirectError}
                       {/option:redirect.isInternal}
                       {option:redirect.isExternal}
                       <label for="externalRedirect" class="hidden">{$redirect.label}</label>
-                      <p class="text-info">{$msgHelpExternalRedirect}</p>
+                      <p class="help-block">{$msgHelpExternalRedirect}</p>
                       {$txtExternalRedirect} {$txtExternalRedirectError}
                       {/option:redirect.isExternal}
                     </li>
@@ -215,11 +206,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabTags">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblTags|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 {$txtTags} {$txtTagsError}
@@ -239,18 +225,18 @@
         <div class="btn-group pull-left" role="group">
           {option:showPagesDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showPagesDelete}
         </div>
         <div class="btn-group pull-right" role="group">
-          <a href="#" id="saveAsDraft" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;
+          <a href="#" id="saveAsDraft" class="btn btn-default">
+            <span class="fa fa-file-o"></span>&nbsp;
             {$lblSaveDraft|ucfirst}
           </a>
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+          <button id="editButton" type="submit" name="edit" class="btn btn-success">
+            <span class="fa fa-floppy-o"></span>&nbsp;
             {$lblSave|ucfirst}
           </button>
         </div>

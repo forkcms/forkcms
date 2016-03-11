@@ -8,14 +8,14 @@
 {form:add}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-inline form-group">
-        <p class="text-info">{$msgHelpTemplateLocation}</p>
-        <label for="file">{$msgPathToTemplate|ucfirst}</label>
-        <label for="theme" class="hide">{$lblTheme|ucfirst}</label>
+      <div class="form-inline form-group{option:ddmThemeError} has-error{/option:ddmThemeError}{option:txtFileError} has-error{/option:txtFileError}">
+        <p class="help-block">{$msgHelpTemplateLocation}</p>
+        <label for="file" class="control-label">{$msgPathToTemplate|ucfirst}</label>
+        <label for="theme" class="hide" class="control-label">{$lblTheme|ucfirst}</label>
         {$ddmTheme}<small><code>/Core/Layout/Templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
       </div>
-      <div class="form-group">
-        <label for="label">{$lblLabel|ucfirst}</label>
+      <div class="form-group{option:txtLabelError} has-error{/option:txtLabelError}">
+        <label for="label" class="control-label">{$lblLabel|ucfirst}</label>
         {$txtLabel} {$txtLabelError}
       </div>
     </div>
@@ -33,10 +33,10 @@
               {* Title & button to delete this position *}
               <div class="col-md-2">
                 <div class="form-group">
-                  <label for="position{$positions.i}">
+                  <label for="position{$positions.i}" class="control-label">
                     <span>{$lblPosition|ucfirst}</span>
                     <a href="#" class="btn text-danger jsDeletePosition" title="{$lblDeletePosition|ucfirst}">
-                      <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                      <span class="fa fa-trash-o"></span>&nbsp;
                     </a>
                   </label>
                 </div>
@@ -61,7 +61,7 @@
                   </div>
                   {* Button to remove block from this position *}
                   <a href="#" class="btn text-danger jsDeleteBlock" title="{$lblDeleteBlock|ucfirst}">
-                    <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                    <span class="fa fa-trash-o"></span>&nbsp;
                   </a>
                 </div>
               </div>
@@ -72,7 +72,7 @@
                   <div class="btn-group" role="group">
                     {* Button to add new default block to this position *}
                     <a href="#" class="btn btn-default jsAddBlock">
-                      <span class="glyphicon glyphicon-plus"></span>&nbsp;
+                      <span class="fa fa-plus"></span>&nbsp;
                       <span>{$lblAddBlock|ucfirst}</span>
                     </a>
                   </div>
@@ -85,7 +85,7 @@
           <div class="btn-toolbar">
             <div class="btn-group" role="group">
               <a href="#" class="btn btn-primary jsAddPosition">
-                <span class="glyphicon glyphicon-plus"></span>&nbsp;
+                <span class="fa fa-plus"></span>&nbsp;
                 <span>{$lblAddPosition|ucfirst}</span>
               </a>
             </div>
@@ -102,16 +102,24 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <label for="format">{$lblLayout|ucfirst}</label>
+            <label for="format" class="control-label">{$lblLayout|ucfirst}</label>
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
-            <p class="text-info">{$msgHelpTemplateFormat}</p>
-            {$txtFormat} {$txtFormatError}
-          </div>
-          <div>
-            {$msgHelpPositionsLayout}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group{option:txtFormatError} has-error{/option:txtFormatError}">
+                {$txtFormat} {$txtFormatError}
+              </div>
+              <div>
+                {$msgHelpPositionsLayoutText}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div>
+                {$msgHelpPositionsLayoutExample}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -124,7 +132,7 @@
           <h3 class="panel-title">{$lblStatus|ucfirst}</h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:chkActiveError} has-error{/option:chkActiveError}{option:chkDefaultError} has-error{/option:chkDefaultError}">
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="active">{$chkActive} {$lblActive|ucfirst}</label> {$chkActiveError}
@@ -142,9 +150,9 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" name="add" class="btn btn-primary" type="submit">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-            {$lblSave|ucfirst}
+          <button id="addButton" name="add" class="btn btn-success" type="submit">
+            <span class="fa fa-plus"></span>&nbsp;
+            {$lblAdd|ucfirst}
           </button>
         </div>
       </div>

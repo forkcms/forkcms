@@ -1,13 +1,15 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureStart.tpl}
 <div class="row fork-module-heading">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <h2>{$lblAdd|ucfirst}</h2>
+    </div>
+    <div class="col-md-6">
         {option:showPagesIndex}
         <div class="btn-toolbar pull-right">
             <div class="btn-group" role="group">
                 <a href="{$var|geturl:'index'}" class="btn btn-default" title="{$lblOverview|ucfirst}">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="fa fa-list"></span>
                     {$lblOverview|ucfirst}
                 </a>
             </div>
@@ -19,15 +21,13 @@
     {$hidTemplateId}
     <div class="row fork-module-content">
         <div class="col-md-12">
-            <div class="form-group">
-                <label for="title">{$lblTitle|ucfirst}</label>
+            <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
+                <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
                 {$txtTitle} {$txtTitleError}
             </div>
-            <p>
-              <a href="{$detailURL}">
-                {$SITE_URL}{$prefixURL}/<span id="generatedUrl"></span>
-              </a>
-            </p>
+            <a href="{$detailURL}">
+                <small>{$SITE_URL}{$prefixURL}/<span id="generatedUrl"></span></small>
+            </a>
         </div>
     </div>
     <div class="row fork-module-content">
@@ -53,19 +53,20 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="tabContent">
                         <div id="editTemplate" class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 {* Do not change the ID! *}
                                 <h3>{$lblTemplate|ucfirst}: <span id="tabTemplateLabel">&nbsp;</span></h3>
-
+                            </div>
+                            <div class="col-md-6">
                                 <div class="btn-toolbar pull-right">
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn" data-toggle="modal" data-target="#changeTemplate">
-                                            <span class="glyphicon glyphicon-th"></span>
+                                            <span class="fa fa-th"></span>
                                             {$lblChangeTemplate|ucfirst}
                                         </button>
                                     </div>
                                 </div>
-                                {option:formErrors}<span class="formError">{$formErrors}</span>{/option:formErrors}
+                                {option:formErrors}<span class="formError text-danger">{$formErrors}</span>{/option:formErrors}
                             </div>
                             <div class="col-md-12">
                                 <div class="panel panel-default">
@@ -101,11 +102,6 @@
                     <div role="tabpanel" class="tab-pane" id="tabSettings">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblSettings|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <ul class="list-unstyled">
                                         {iteration:hidden}
@@ -139,27 +135,22 @@
                     <div role="tabpanel" class="tab-pane" id="tabRedirect">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{$lblRedirect|ucfirst}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 {option:rbtRedirectError}
                                 <div class="alert alert-danger">{$rbtRedirectError}</div>
                                 {/option:rbtRedirectError}
-                                <div class="form-group">
+                                <div class="form-group{option:ddmInternalRedirectError} has-error{/option:ddmInternalRedirectError}{option:txtExternalRedirectError} has-error{/option:txtExternalRedirectError}">
                                     <ul class="list-unstyled radiobuttonFieldCombo">
                                         {iteration:redirect}
                                         <li class="radio">
                                             <label for="{$redirect.id}">{$redirect.rbtRedirect} {$redirect.label}</label>
                                             {option:redirect.isInternal}
                                             <label for="internalRedirect" class="hidden">{$redirect.label}</label>
-                                            <p class="text-info">{$msgHelpInternalRedirect}</p>
+                                            <p class="help-block">{$msgHelpInternalRedirect}</p>
                                             {$ddmInternalRedirect} {$ddmInternalRedirectError}
                                             {/option:redirect.isInternal}
                                             {option:redirect.isExternal}
                                             <label for="externalRedirect" class="hidden">{$redirect.label}</label>
-                                            <p class="text-info">{$msgHelpExternalRedirect}</p>
+                                            <p class="help-block">{$msgHelpExternalRedirect}</p>
                                             {$txtExternalRedirect} {$txtExternalRedirectError}
                                             {/option:redirect.isExternal}
                                         </li>
@@ -170,11 +161,6 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabTags">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>{$lblTags|ucfirst}</h3>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 {$txtTags} {$txtTagsError}
@@ -192,12 +178,12 @@
         <div class="col-md-12">
             <div class="btn-toolbar">
                 <div class="btn-group pull-right" role="group">
-                    <a href="#" id="saveAsDraft" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-save"></span>&nbsp;
+                    <a href="#" id="saveAsDraft" class="btn btn-default">
+                        <span class="fa fa-file-o"></span>&nbsp;
                         {$lblSaveDraft|ucfirst}
                     </a>
-                    <button id="addButton" type="submit" name="add" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-plus"></span>&nbsp;
+                    <button id="addButton" type="submit" name="add" class="btn btn-success">
+                        <span class="fa fa-plus"></span>&nbsp;
                         {$lblAdd|ucfirst}
                     </button>
                 </div>

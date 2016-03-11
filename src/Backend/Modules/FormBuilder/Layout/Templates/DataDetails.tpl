@@ -1,13 +1,15 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblFormData|sprintf:{$name}|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showFormBuilderData}
         <a href="{$var|geturl:'data'}&amp;id={$formId}&amp;start_date={$filter.start_date}&amp;end_date={$filter.end_date}" class="btn btn-default">
-          <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+          <span class="fa fa-chevron-left"></span>&nbsp;
           {$lblBackToData|ucfirst}
         </a>
         {/option:showFormBuilderData}
@@ -57,7 +59,7 @@
       <div class="btn-group pull-left" role="group">
         {option:showFormBuilderMassDataAction}
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-          <span class="glyphicon glyphicon-trash"></span>
+          <span class="fa fa-trash-o"></span>
           {$lblDelete|ucfirst}
         </button>
         {/option:showFormBuilderMassDataAction}
@@ -74,9 +76,9 @@
             <p>{$msgConfirmDeleteData}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-            <a href="{$var|geturl:'mass_data_action'}&amp;action=delete&amp;form_id={$formId}&amp;id={$id}" class="btn btn-primary">
-              {$lblOK|ucfirst}
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+            <a href="{$var|geturl:'mass_data_action'}&amp;action=delete&amp;form_id={$formId}&amp;id={$id}" class="btn btn-danger">
+              <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
             </a>
           </div>
         </div>

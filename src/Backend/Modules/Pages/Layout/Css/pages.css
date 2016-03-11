@@ -140,11 +140,9 @@
 
 /* Button holder */
 
-#templateVisualLarge .buttonAddHolder,
-#templateVisualFallback .buttonAddHolder {
-    padding: 0 12px 12px;
-    width: 90px;
-    margin: auto auto;
+#templateVisualLarge .btn-group,
+#templateVisualFallback .btn-group {
+    padding: 12px 0;
 }
 
 /* Block */

@@ -15,9 +15,9 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group{option:fileCsvError} has-error{/option:fileCsvError}">
             {option:showMailmotorImportAddresses}
-            <label for="download">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1">{$lblExampleFile}</a>.</label>
+            <label for="download">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1" class="control-label">{$lblExampleFile}</a>.</label>
             {/option:showMailmotorImportAddresses}
             {$fileCsv} {$fileCsvError}
           </div>
@@ -36,7 +36,7 @@
         <div class="panel-body">
           <div class="form-group">
             {option:chkGroupsError}
-            <p class="text-danger">{$chkGroupsError}</p>
+              <p class="text-danger">{$chkGroupsError}</p>
             {/option:chkGroupsError}
             <ul class="list-unstyled">
               {iteration:groups}
@@ -54,7 +54,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="importButton" type="submit" name="add" class="btn btn-primary">{$lblImport|ucfirst}</button>
+          <button id="importButton" type="submit" name="add" class="btn btn-success"><span class="fa fa-download"></span> {$lblImport|ucfirst}</button>
         </div>
       </div>
     </div>

@@ -15,17 +15,27 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
-            <label for="overviewNumberOfItems">{$lblItemsPerPage|ucfirst}</label>
-            {$ddmOverviewNumberOfItems} {$ddmOverviewNumberOfItemsError}
-          </div>
-          <div class="form-group">
-            <label for="recentArticlesFullNumberOfItems">{$msgNumItemsInRecentArticlesFull|ucfirst}</label>
-            {$ddmRecentArticlesFullNumberOfItems} {$ddmRecentArticlesFullNumberOfItemsError}
-          </div>
-          <div class="form-group">
-            <label for="recentArticlesListNumberOfItems">{$msgNumItemsInRecentArticlesList|ucfirst}</label>
-            {$ddmRecentArticlesListNumberOfItems} {$ddmRecentArticlesListNumberOfItemsError}
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group{option:ddmOverviewNumberOfItemsError} has-error{/option:ddmOverviewNumberOfItemsError}">
+                <label for="overviewNumberOfItems" class="control-label">{$lblItemsPerPage|ucfirst}</label>
+                <br>
+                <br>
+                {$ddmOverviewNumberOfItems} {$ddmOverviewNumberOfItemsError}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group{option:ddmRecentArticlesFullNumberOfItemsError} has-error{/option:ddmRecentArticlesFullNumberOfItemsError}">
+                <label for="recentArticlesFullNumberOfItems" class="control-label">{$msgNumItemsInRecentArticlesFull|ucfirst}</label>
+                {$ddmRecentArticlesFullNumberOfItems} {$ddmRecentArticlesFullNumberOfItemsError}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group{option:ddmRecentArticlesListNumberOfItemsError} has-error{/option:ddmRecentArticlesListNumberOfItemsError}">
+                <label for="recentArticlesListNumberOfItems" class="control-label">{$msgNumItemsInRecentArticlesList|ucfirst}</label>
+                {$ddmRecentArticlesListNumberOfItems} {$ddmRecentArticlesListNumberOfItemsError}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -56,18 +66,18 @@
                 <label for="spamfilter">
                   {$chkSpamfilter} {$lblFilterCommentsForSpam|ucfirst}
                 </label>
-                <p class="text-info">
+                <p class="help-block">
                   {$msgHelpSpamFilter}
                   {option:noAkismetKey}
                   <br />
                   <span class="text-warning">
-                    {$msgNoAkismetKey|sprintf:{$var|geturl:'index':'settings'}}
+                    <span class="fa fa-warning"></span> {$msgNoAkismetKey|sprintf:{$var|geturl:'index':'settings'}}
                   </span>
                   {/option:noAkismetKey}
                 </p>
               </li>
             </ul>
-            <p class="text-info">{$msgFollowAllCommentsInRSS|sprintf:{$commentsRSSURL}}</p>
+            <p class="help-block">{$msgFollowAllCommentsInRSS|sprintf:{$commentsRSSURL}}</p>
           </div>
         </div>
       </div>
@@ -156,17 +166,17 @@
           </h3>
         </div>
         <div class="panel-body">
-          <div class="form-group">
-            <label for="rssTitle">
+          <div class="form-group{option:txtRssTitleError} has-error{/option:txtRssTitleError}">
+            <label for="rssTitle" class="control-label">
               {$lblTitle|ucfirst}
-              <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+              <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
             </label>
-            <p class="text-info">{$msgHelpRSSTitle}</p>
+            <p class="help-block">{$msgHelpRSSTitle}</p>
             {$txtRssTitle} {$txtRssTitleError}
           </div>
-          <div class="form-group">
-            <label for="rssDescription">{$lblDescription|ucfirst}</label>
-            <p class="text-info">{$msgHelpRSSDescription}</p>
+          <div class="form-group{option:txtRssDescriptionError} has-error{/option:txtRssDescriptionError}">
+            <label for="rssDescription" class="control-label">{$lblDescription|ucfirst}</label>
+            <p class="help-block">{$msgHelpRSSDescription}</p>
             {$txtRssDescription} {$txtRssDescriptionError}
           </div>
           <div class="form-group">
@@ -185,7 +195,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+          <button id="save" type="submit" name="save" class="btn btn-success"><span class="fa fa-floppy-o"></span> {$lblSave|ucfirst}</button>
         </div>
       </div>
     </div>

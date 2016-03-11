@@ -1,12 +1,14 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$msgEditArticle|sprintf:{$item.title}|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{$detailURL}/{$item.url}{option:item.revision_id}?revision={$item.revision_id}{/option:item.revision_id}" class="btn btn-default" target="_blank">
-          <span class="glyphicon glyphicon-search"></span>
+          <span class="fa fa-eye"></span>
           <span>{$lblView|ucfirst}</span>
         </a>
       </div>
@@ -16,15 +18,17 @@
 {form:edit}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="title">{$lblTitle|ucfirst}</label>
+      <div class="form-group{option:txtTitleError} has-error{/option:txtTitleError}">
+        <label for="title" class="control-label">{$lblTitle|ucfirst}</label>
         {$txtTitle} {$txtTitleError}
       </div>
       {option:detailURL}
-      <p><a href="{$detailURL}/{$item.url}">{$detailURL}/<span id="generatedUrl">{$item.url}</span></a></p>
+        <a href="{$detailURL}/{$item.url}">
+          <small>{$detailURL}/<span id="generatedUrl">{$item.url}</span></small>
+        </a>
       {/option:detailURL}
       {option:!detailURL}
-      <p class="text-warning">{$errNoModuleLinked}</p>
+      <p class="text-warning"><span class="fa fa-warning"></span> {$errNoModuleLinked}</p>
       {/option:!detailURL}
     </div>
   </div>
@@ -48,22 +52,17 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblContent|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-md-8">
-                <div class="form-group">
-                  <label for="text">
+                <div class="form-group{option:txtTextError} has-error{/option:txtTextError}">
+                  <label for="text" class="control-label">
                     {$lblMainContent|ucfirst}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                    <abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}">*</abbr>
                   </label>
                   {$txtText} {$txtTextError}
                 </div>
                 {option:imageIsAllowed}
-                <div class="form-group">
-                  <label for="image">{$lblImage|ucfirst}</label>
+                <div class="form-group{option:chkDeleteImageError} has-error{/option:chkDeleteImageError}">
+                  <label for="image" class="control-label">{$lblImage|ucfirst}</label>
                   {option:item.image}
                   <div>
                     <img src="{$FRONTEND_FILES_URL}/blog/images/128x128/{$item.image}" class="img-thumbnail" width="128" height="128" alt="{$lblImage|ucfirst}" />
@@ -79,9 +78,9 @@
                 </div>
                 {/option:imageIsAllowed}
                 <div class="form-group">
-                  <label for="introduction">
+                  <label for="introduction" class="control-label">
                     {$lblSummary|ucfirst}
-                    <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpSummary}"></abbr>
+                    <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpSummary}"></abbr>
                   </label>
                   {$txtIntroduction} {$txtIntroductionError}
                 </div>
@@ -101,10 +100,12 @@
                         {/iteration:hidden}
                       </ul>
                     </div>
-                    <div class="form-group">
-                      <label for="publishOnDate">{$lblPublishOn|ucfirst}</label>
+                    <div class="form-group{option:txtPublishOnDateError} has-error{/option:txtPublishOnDateError}">
+                      <label for="publishOnDate" class="control-label">{$lblPublishOn|ucfirst}</label>
                       {$txtPublishOnDate} {$txtPublishOnDateError}
-                      <label for="publishOnTime">{$lblAt}</label>
+                    </div>
+                    <div class="form-group{option:txtPublishOnTimeError} has-error{/option:txtPublishOnTimeError}">
+                      <label for="publishOnTime" class="control-label">{$lblAt}</label>
                       {$txtPublishOnTime} {$txtPublishOnTimeError}
                     </div>
                   </div>
@@ -114,17 +115,17 @@
                     <h3 class="panel-title">{$lblMetaData|ucfirst}</h3>
                   </div>
                   <div class="panel-body">
-                    <div class="form-group">
-                      <label for="categoryId">{$lblCategory|ucfirst}</label>
+                    <div class="form-group{option:ddmCategoryIdError} has-error{/option:ddmCategoryIdError}">
+                      <label for="categoryId" class="control-label">{$lblCategory|ucfirst}</label>
                       {$ddmCategoryId} {$ddmCategoryIdError}
                     </div>
-                    <div class="form-group">
-                      <label for="userId">{$lblAuthor|ucfirst}</label>
+                    <div class="form-group{option:ddmUserIdError} has-error{/option:ddmUserIdError}">
+                      <label for="userId" class="control-label">{$lblAuthor|ucfirst}</label>
                       {$ddmUserId} {$ddmUserIdError}
                     </div>
                     {option:showTagsIndex}
-                    <div class="form-group">
-                      <label for="tags">{$lblTags|ucfirst}</label>
+                    <div class="form-group{option:txtTagsError} has-error{/option:txtTagsError}">
+                      <label for="tags" class="control-label">{$lblTags|ucfirst}</label>
                       {$txtTags} {$txtTagsError}
                     </div>
                     {/option:showTagsIndex}
@@ -136,17 +137,12 @@
           <div role="tabpanel" class="tab-pane" id="tabVersions">
             <div class="row">
               <div class="col-md-12">
-                <h3>{$lblVersions|ucfirst}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 {option:drafts}
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h3 class="panel-title">
                       {$lblDrafts|ucfirst}
-                      <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpDrafts}"></abbr>
+                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpDrafts}"></abbr>
                     </h3>
                   </div>
                   {$drafts}
@@ -156,7 +152,7 @@
                   <div class="panel-heading">
                     <h3 class="panel-title">
                       {$lblPreviousVersions|ucfirst}
-                      <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpRevisions}"></abbr>
+                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpRevisions}"></abbr>
                     </h3>
                   </div>
                   {option:revisions}
@@ -172,11 +168,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabComments">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblComments|ucfirst}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -202,17 +193,18 @@
         <div class="btn-group pull-left" role="group">
           {option:showContentBlocksDelete}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {$lblDelete|ucfirst}
           </button>
           {/option:showContentBlocksDelete}
         </div>
         <div class="btn-group pull-right" role="group">
-          <a href="#" id="saveAsDraft" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;
+          <a href="#" id="saveAsDraft" class="btn btn-default">
+            <span class="fa fa-file-o"></span>&nbsp;
             {$lblSaveDraft|ucfirst}
           </a>
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+          <button id="editButton" type="submit" name="edit" class="btn btn-success">
+            <span class="fa fa-check"></span>
             {$lblPublish|ucfirst}
           </button>
         </div>
@@ -230,9 +222,9 @@
           <p>{$msgConfirmDelete|sprintf:{$item.title}}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-          <a href="{$var|geturl:'delete'}&amp;id={$item.id}{option:categoryId}&amp;category={$categoryId}{/option:categoryId}" class="btn btn-primary">
-            {$lblOK|ucfirst}
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+          <a href="{$var|geturl:'delete'}&amp;id={$item.id}{option:categoryId}&amp;category={$categoryId}{/option:categoryId}" class="btn btn-danger">
+            <span class="fa fa-trash-o"></span> {$lblDelete|ucfirst}
           </a>
         </div>
       </div>
@@ -247,7 +239,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="categoryTitle">
+            <label for="categoryTitle" class="control-label">
               {$lblTitle|ucfirst}
               <abbr title="{$lblRequiredField|ucfirst}"></abbr>
             </label>
@@ -256,8 +248,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-          <button id="addCategorySubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+          <button id="addCategorySubmit" type="button" class="btn btn-success"><span class="fa fa-check"></span> {$lblOK|ucfirst}</button>
         </div>
       </div>
     </div>

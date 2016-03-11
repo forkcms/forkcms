@@ -141,9 +141,9 @@ jsBackend.pages.extras =
 							'<span class="templateTitle">' + title + '</span>' +
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="btn-group buttonHolder">' +
-								'<a href="#" class="btn btn-default btn-xs toggleVisibility"><span class="glyphicon glyphicon-' + (visible ? 'eye-open' : 'eye-close') + '"></span></a>' +
-								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'btn btn-primary btn-xs' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="glyphicon glyphicon-pencil"></span></a>' +
-								'<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>' +
+								'<a href="#" class="btn btn-default btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
+								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'btn btn-primary btn-xs' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
+								'<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="fa fa-trash-o"></span></a>' +
 							'</div>' +
 						'</div>';
 
@@ -528,14 +528,14 @@ jsBackend.pages.extras =
 		checkbox.attr('checked', visible);
 
 		// remove current visibility indicators
-		$(this).find('.glyphicon').removeClass('glyphicon-eye-open glyphicon-eye-close');
+		$(this).find('.fa').removeClass('fa-eye fa-eye-slash');
 		$(this).parent().parent().removeClass('templateDisabled');
 
 		// toggle visibility indicators
-		if(visible) $(this).find('.glyphicon').addClass('glyphicon-eye-open');
+		if(visible) $(this).find('.fa').addClass('fa-eye');
 		else
 		{
-			$(this).find('.glyphicon').addClass('glyphicon-eye-close');
+			$(this).find('.fa').addClass('fa-eye-slash');
 			$(this).closest('*[data-block-id]').addClass('templateDisabled');
 		}
 	},

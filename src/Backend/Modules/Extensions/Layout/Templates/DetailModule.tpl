@@ -101,7 +101,7 @@
     <div class="btn-toolbar">
       <div class="btn-group pull-right" role="group">
         <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmInstall">
-          <span class="glyphicon glyphicon-save"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           {$lblInstall|ucfirst}
         </button>
       </div>
@@ -116,9 +116,9 @@
             <p>{$msgConfirmModuleInstall|sprintf:{$name}}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-            <a href="{$var|geturl:'install_module'}&amp;theme={$name}" class="btn btn-primary">
-              {$lblOK|ucfirst}
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-times"></span> {$lblCancel|ucfirst}</button>
+            <a href="{$var|geturl:'install_module'}&amp;theme={$name}" class="btn btn-success">
+              <span class="fa fa-check"></span> {$lblOK|ucfirst}
             </a>
           </div>
         </div>

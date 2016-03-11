@@ -19,11 +19,11 @@
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="seoNoodp">{$chkSeoNoodp} NOODP</label>
-                <p class="text-info">{$msgHelpSEONoodp}</p>
+                <p class="help-block">{$msgHelpSEONoodp}</p>
               </li>
               <li class="checkbox">
                 <label for="seoNoydir">{$chkSeoNoydir} NOYDIR</label>
-                <p class="text-info">{$msgHelpSEONoydir}</p>
+                <p class="help-block">{$msgHelpSEONoydir}</p>
               </li>
               <li class="checkbox">
                 <label for="seoNofollowInComments">{$chkSeoNofollowInComments} {$msgSEONoFollowInComments}</label>
@@ -38,7 +38,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+          <button id="save" type="submit" name="save" class="btn btn-success"><span class="fa fa-floppy-o"></span> {$lblSave|ucfirst}</button>
         </div>
       </div>
     </div>
