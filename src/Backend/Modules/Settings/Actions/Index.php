@@ -87,15 +87,8 @@ class Index extends BackendBaseActionIndex
         $this->frm->addTextarea(
             'site_start_of_body_scripts',
             $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null),
-            'textarea code',
-            'textareaError code',
-            true
-        );
-        $this->frm->addTextarea(
-            'site_start_of_body_scripts',
-            $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null),
-            'textarea code',
-            'textareaError code',
+            'form-control code',
+            'form-control danger code',
             true
         );
         $this->frm->addTextarea(
