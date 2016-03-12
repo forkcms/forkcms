@@ -80,7 +80,7 @@
                                                     <tbody>
                                                     <tr>
                                                         <td data-position="fallback" id="templatePosition-fallback"
-                                                            colspan="1" class="box">
+                                                            colspan="1">
                                                             <div class="heading linkedBlocksTitle">
                                                                 <h4>{$lblFallback|ucfirst}</h4></div>
                                                             <div class="linkedBlocks">
