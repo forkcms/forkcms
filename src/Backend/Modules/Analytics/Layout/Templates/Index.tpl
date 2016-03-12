@@ -15,21 +15,21 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-4">
-              <div class="form-group">
+              <div class="form-group{option:txtStartDateError} has-error{/option:txtStartDateError}">
                 <label for="startDate">{$lblStartDate|ucfirst}</label>
-                {option:txtStartDateError}
-                <p class="text-danger">{$txtStartDateError}</p>
-                {/option:txtStartDateError}
                 {$txtStartDate}
+                {option:txtStartDateError}
+                <span class="help-block">{$txtStartDateError}</span>
+                {/option:txtStartDateError}
               </div>
             </div>
             <div class="col-md-4">
-              <div class="form-group">
+              <div class="form-group{option:txtEndDateError} has-error{/option:txtEndDateError}">
                 <label for="endDate">{$lblEndDate|ucfirst}</label>
-                {option:txtEndDateError}
-                <p class="text-danger">{$txtEndDateError}</p>
-                {/option:txtEndDateError}
                 {$txtEndDate}
+                {option:txtEndDateError}
+                <span class="help-block">{$txtEndDateError}</span>
+                {/option:txtEndDateError}
               </div>
             </div>
           </div>
