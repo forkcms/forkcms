@@ -38,7 +38,7 @@ class DeleteTest extends WebTestCase
             $client->getResponse()->getContent()
         );
 
-        $link = $crawler->filter('a:contains("Delete")')->link();
+        $link = $crawler->filter('a:contains("Ok")')->link();
         $client->click($link);
 
         // we're now on the delete page of the blogpost with id 1
