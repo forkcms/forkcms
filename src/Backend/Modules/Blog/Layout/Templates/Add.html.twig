@@ -20,7 +20,7 @@
       {% if detailURL %}
       <a href="{{ detailURL }}"><small>{{ detailURL }}/<span id="generatedUrl"></span></small></a>      {% endif %}
       {% if not detailURL %}
-      <p class="text-warning"><span class="fa fa-warning"></span> {{ err.NoModuleLinked }}</p>
+      <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
       {% endif %}
     </div>
   </div>
@@ -73,7 +73,7 @@
                       <ul class="list-unstyled">
                         {% for _itr_4 in hidden %}
                         <li class="radio">
-                          <label for="{{ _itr_4.id }}">{{ _itr_4.rbtHidden }} {{ _itr_4.label }}</label>
+                          <label for="{{ _itr_4.id }}">{{ _itr_4.rbtHidden|raw }} {{ _itr_4.label }}</label>
                         </li>
                         {% endfor %}
                       </ul>
@@ -159,7 +159,7 @@
               <abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
             </label>
             <input type="text" name="categoryTitle" id="categoryTitle" class="form-control" maxlength="255" />
-            <p class="text-danger" id="categoryTitle'err.r" style="display: none;">{{ err.FieldIsRequired'|trans|capitalize }}</p>
+            <p class="text-danger" id="categoryTitle'err.r" style="display: none;">{{ 'err.FieldIsRequired'|trans|capitalize }}</p>
           </div>
         </div>
         <div class="modal-footer">

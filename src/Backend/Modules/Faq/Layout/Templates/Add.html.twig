@@ -20,7 +20,7 @@
       {% if detailURL %}
       <a href="{{ detailURL }}"><small>{{ detailURL }}/<span id="generatedUrl"></span></small></a>      {% endif %}
       {% if not detailURL %}
-      <p class="text-warning"><span class="fa fa-warning"></span> {{ err.NoModuleLinked }}</p>
+      <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
       {% endif %}
     </div>
   </div>
