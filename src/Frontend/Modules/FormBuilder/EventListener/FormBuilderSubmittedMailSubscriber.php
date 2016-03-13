@@ -41,7 +41,7 @@ final class FormBuilderSubmittedMailSubscriber
                     $form['name']
                 ))
                 ->parseHtml(
-                    FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.tpl',
+                    FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.html.twig',
                     array(
                         'sentOn' => time(),
                         'name' => $form['name'],

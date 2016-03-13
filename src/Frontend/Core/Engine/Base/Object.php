@@ -44,7 +44,7 @@ class Object extends \KernelLoader
     {
         parent::__construct($kernel);
 
-        $this->tpl = $this->getContainer()->get('template');
+        $this->tpl = $this->getContainer()->get('templating');
         $this->URL = $this->getContainer()->get('url');
     }
 }

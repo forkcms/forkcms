@@ -835,7 +835,7 @@ class Model
         $toDisplayName = null
     ) {
         if (empty($templatePath)) {
-            $templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
+            $templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.html.twig';
         }
 
         // define variables

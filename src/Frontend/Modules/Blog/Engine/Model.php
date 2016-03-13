@@ -961,7 +961,7 @@ class Model implements FrontendTagsInterface
                 ->setTo(array($to['email'] => $to['name']))
                 ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                 ->parseHtml(
-                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
+                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.html.twig',
                     $variables,
                     true
                 )
@@ -983,7 +983,7 @@ class Model implements FrontendTagsInterface
                 ->setTo(array($to['email'] => $to['name']))
                 ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                 ->parseHtml(
-                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
+                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.html.twig',
                     $variables,
                     true
                 )

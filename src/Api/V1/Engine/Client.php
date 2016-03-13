@@ -49,7 +49,7 @@ class Client extends Api
      */
     public function display()
     {
-        $content = $this->tpl->getContent(__DIR__ . '/../Client/Layout/Templates/Index.tpl');
+        $content = $this->tpl->getContent(__DIR__ . '/../Client/Layout/Templates/Index.html.twig');
 
         return new Response($content, 200);
     }

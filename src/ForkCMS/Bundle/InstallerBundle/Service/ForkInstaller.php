@@ -72,7 +72,6 @@ class ForkInstaller
 
         $this->createYAMLConfig($data);
 
-        $this->definePaths();
         $this->deleteCachedData();
 
         $this->buildDatabase($data);
@@ -118,25 +117,6 @@ class ForkInstaller
             'Dashboard',
             'Error',
         );
-    }
-
-    /**
-     * Define paths also used in frontend/backend, to be used in installer.
-     * @deprecated This is done in different places in Fork. This should be centralized
-     */
-    private function definePaths()
-    {
-        // general paths
-        define('BACKEND_PATH', $this->rootDir . 'src/Backend');
-        define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
-        define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
-        define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
-
-        define('FRONTEND_PATH', $this->rootDir . 'src/Frontend');
-        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
-        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
-        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
-        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
     }
 
     /**
@@ -220,7 +200,6 @@ class ForkInstaller
 
             // install exists
             if (class_exists($class)) {
-
                 // create installer
                 /** @var $install ModuleInstaller */
                 $installer = new $class(

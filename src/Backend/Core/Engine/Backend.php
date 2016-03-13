@@ -42,7 +42,8 @@ class Backend extends \KernelLoader implements \ApplicationInterface
     public function initialize()
     {
         $URL = new Url($this->getKernel());
-        new Template();
+
+        new TwigTemplate();
         new Navigation($this->getKernel());
         new Header($this->getKernel());
 
