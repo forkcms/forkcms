@@ -102,7 +102,7 @@
           </div>
           <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
             <label for="width" class="control-label">{{ 'lbl.Width'|trans|capitalize }}</label>
-            <p class="help-block">{{ 'msg.WidthHelp'|trans|sprintf(300:800 ) }}</p>
+            <p class="help-block">{{ 'msg.WidthHelp'|trans|sprintf(300,800 ) }}</p>
             {% form_field_error width %} {% form_field width %}
           </div>
           <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
