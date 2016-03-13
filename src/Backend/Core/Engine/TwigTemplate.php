@@ -60,7 +60,6 @@ class TwigTemplate extends BaseTwigTemplate
         $template = str_replace(BACKEND_MODULES_PATH, "", $template);
 
         // render the compiled File
-        \Twig_Autoloader::register();
         $loader = new \Twig_Loader_Filesystem(array(
             BACKEND_MODULES_PATH,
             BACKEND_CORE_PATH,
