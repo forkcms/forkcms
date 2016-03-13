@@ -9,11 +9,11 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{{ geturl('add_theme_template' ) }}{% if selectedTheme %}&amp;theme={{ selectedTheme }}{% endif %}" class="btn btn-primary">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           <span>{{ 'lbl.AddTemplate'|trans|capitalize }}</span>
         </a>
         <a href="{{ geturl('export_theme_templates' ) }}{% if selectedTheme %}&amp;theme={{ selectedTheme }}{% endif %}" class="btn btn-default">
-          <span class="glyphicon glyphicon-export"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           <span>{{ 'lbl.Export'|trans|capitalize }}</span>
         </a>
       </div>

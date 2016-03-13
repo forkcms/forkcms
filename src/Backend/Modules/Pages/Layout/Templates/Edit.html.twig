@@ -3,25 +3,28 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Pages/Layout/Templates/StructureStart.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Edit'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showPagesAdd %}
         <a href="{{ geturl('add' ) }}" class="btn btn-default" title="{{ 'lbl.Add'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           <span>{{ 'lbl.Add'|trans|capitalize }}</span>
         </a>
         {% endif %}
         {% if not item.is_hidden %}
         <a href="{{ SITE_URL }}{{ item.full_url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" class="btn btn-default" target="_blank">
-          <span class="glyphicon glyphicon-search"></span>&nbsp;
+          <span class="fa fa-eye"></span>&nbsp;
           <span>{{ 'lbl.View'|trans|capitalize }}</span>
         </a>
         {% endif %}
         {% if showPagesIndex %}
         <a href="{{ geturl('index' ) }}" class="btn btn-default" title="{{ 'lbl.Overview'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+          <span class="fa fa-list"></span>&nbsp;
           {{ 'lbl.Overview'|trans|capitalize }}
         </a>
         {% endif %}
@@ -34,14 +37,12 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="title">{{ 'lbl.Title'|trans|capitalize }}</label>
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|capitalize }}</label>
         {% form_field_error title %} {% form_field title %}
       </div>
-      <p>
-        <a data-url="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" href="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}">
-          {{ SITE_URL }}{{ prefixURL }}/<span id="generatedUrl">{{ item.url }}</span>
-        </a>
-      </p>
+      <a data-url="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" href="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}">
+        <small>{{ SITE_URL }}{{ prefixURL }}/<span id="generatedUrl">{{ item.url }}</span></small>
+      </a>
     </div>
   </div>
   <div class="row fork-module-content">
@@ -77,13 +78,13 @@
                 <div class="btn-toolbar pull-right">
                   <div class="btn-group" role="group">
                     <button type="button" class="btn" data-toggle="modal" data-target="#changeTemplate">
-                      <span class="glyphicon glyphicon-th"></span>
+                      <span class="fa fa-th"></span>
                       {{ 'lbl.ChangeTemplate'|trans|capitalize }}
                     </button>
                   </div>
                 </div>
                 {% if formErrors %}
-                <span class="formError">{{ formErrors }}</span>
+                <span class="formError text-danger">{{ formErrors }}</span>
                 {% endif %}
               </div>
               <div class="col-md-12">
@@ -120,7 +121,7 @@
             {% if drafts %}
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Drafts'|trans|capitalize }} <abbr title="{{ msg.HelpDrafts }}"><span class="glyphicon glyphicon-info-sign"></span></abbr></h3>
+                <h3>{{ 'lbl.Drafts'|trans|capitalize }} <abbr title="{{ msg.HelpDrafts }}"><span class="fa fa-info-circle" data-toggle="tooltip"></span></abbr></h3>
               </div>
             </div>
             <div class="row">
@@ -131,7 +132,7 @@
             {% endif %}
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.PreviousVersions'|trans|capitalize }} <abbr title="{{ msg.HelpRevisions }}"><span class="glyphicon glyphicon-info-sign"></span></abbr></h3>
+                <h3>{{ 'lbl.PreviousVersions'|trans|capitalize }} <abbr title="{{ msg.HelpRevisions }}"><span class="fa fa-info-circle" data-toggle="tooltip"></span></abbr></h3>
               </div>
             </div>
             <div class="row">
@@ -148,11 +149,6 @@
           <div role="tabpanel" class="tab-pane" id="tabSettings">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Settings'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <ul class="list-unstyled">
                     {% for _itr_22 in hidden %}
@@ -165,7 +161,7 @@
                 <div class="form-group">
                   <ul class="list-unstyled">
                     <li class="checkbox">
-                      <label for="isAction">{% form_field is_action %} {{ msg.IsAction }}</label>
+                      <label for="isAction" class="control-label">{% form_field is_action %} {{ msg.IsAction }}</label>
                     </li>
                   </ul>
                 </div>
@@ -186,11 +182,6 @@
           <div role="tabpanel" class="tab-pane" id="tabRedirect">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Redirect'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 {% if rbtRedirectError %}
                 <div class="alert alert-danger">{{ rbtRedirectError }}</div>
                 {% endif %}
@@ -201,12 +192,12 @@
                       <label for="{{ _itr_24.id }}">{{ _itr_24.rbtRedirect }} {{ _itr_24.label }}</label>
                       {% if _itr_24.isInternal %}
                       <label for="internalRedirect" class="_itr_22">{{ _itr_24.label }}</label>
-                      <p class="text-info">{{ msg.HelpInternalRedirect }}</p>
+                      <p class="help-block">{{ msg.HelpInternalRedirect }}</p>
                       {% form_field_error internal_redirect %} {% form_field internal_redirect %}
                       {% endif %}
                       {% if _itr_24.isExternal %}
                       <label for="externalRedirect" class="_itr_22">{{ _itr_24.label }}</label>
-                      <p class="text-info">{{ msg.HelpExternalRedirect }}</p>
+                      <p class="help-block">{{ msg.HelpExternalRedirect }}</p>
                       {% form_field_error external_redirect %} {% form_field external_redirect %}
                       {% endif %}
                     </li>
@@ -217,11 +208,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabTags">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{{ 'lbl.Tags'|trans|capitalize }}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 {% form_field_error tags %} {% form_field tags %}
@@ -241,18 +227,18 @@
         <div class="btn-group pull-left" role="group">
           {% if showPagesDelete %}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {{ 'lbl.Delete'|trans|capitalize }}
           </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <a href="#" id="saveAsDraft" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;
+            <span class="fa fa-file-o"></span>&nbsp;
             {{ 'lbl.SaveDraft'|trans|capitalize }}
           </a>
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+            <span class="fa fa-check"></span>&nbsp;
             {{ 'lbl.Save'|trans|capitalize }}
           </button>
         </div>

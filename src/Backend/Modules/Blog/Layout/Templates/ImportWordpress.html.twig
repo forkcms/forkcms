@@ -3,21 +3,24 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Import'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form import %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="wordpress">{{ 'lbl.File'|trans|capitalize }}</label>
-        <p class="text-info">{{ msg.HelpWordpress }}</p>
+        <label for="wordpress" class="control-label">{{ 'lbl.File'|trans|capitalize }}</label>
+        <p class="help-block">{{ msg.HelpWordpress }}</p>
         {% form_field_error wordpress %} {% form_field wordpress %}
       </div>
       <div class="form-group">
-        <label for="filter">{{ 'lbl.WordpressFilter'|trans|capitalize }}</label>
-        <p class="text-info">{{ msg.HelpWordpressFilter }}</p>
+        <label for="filter" class="control-label">{{ 'lbl.WordpressFilter'|trans|capitalize }}</label>
+        <p class="help-block">{{ msg.HelpWordpressFilter }}</p>
         {% form_field_error filter %} {% form_field filter %}
       </div>
     </div>

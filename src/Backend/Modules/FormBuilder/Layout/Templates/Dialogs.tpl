@@ -43,7 +43,7 @@
                                 <div class="form-group">
                                     <ul class="list-unstyled">
                                         <li class="checkbox">
-                                            <label for="textboxReplyTo">
+                                            <label for="textboxReplyTo" class="control-label">
                                                 {$chkTextboxReplyTo} {$lblReplyTo|ucfirst}
                                                 <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{$msgHelpReplyTo}"></abbr>
                                             </label>
@@ -53,7 +53,7 @@
                                 <div class="jsValidation">
                                     <ul class="list-unstyled">
                                         <li class="checkbox">
-                                            <label for="textboxRequired">
+                                            <label for="textboxRequired" class="control-label">
                                                 {$chkTextboxRequired} {$lblRequiredField|ucfirst}
                                             </label>
                                         </li>
@@ -162,7 +162,7 @@
                                     <div class="form-group">
                                         <ul class="list-unstyled">
                                             <li class="checkbox">
-                                                <label for="textareaRequired">{$chkTextareaRequired} {$lblRequiredField|ucfirst}</label>
+                                                <label for="textareaRequired" class="control-label">{$chkTextareaRequired} {$lblRequiredField|ucfirst}</label>
                                             </li>
                                         </ul>
                                     </div>
@@ -271,7 +271,7 @@
                                     <div class="form-group">
                                         <ul class="list-unstyled">
                                             <li class="checkbox">
-                                                <label for="datetimeRequired">{$chkDatetimeRequired} {$lblRequiredField|ucfirst}</label>
+                                                <label for="datetimeRequired" class="control-label">{$chkDatetimeRequired} {$lblRequiredField|ucfirst}</label>
                                             </li>
                                         </ul>
                                     </div>
@@ -378,7 +378,7 @@
                                     <div class="form-group">
                                         <ul class="list-unstyled">
                                             <li class="checkbox">
-                                                <label for="dropdownRequired">{$chkDropdownRequired} {$lblRequiredField|ucfirst}</label>
+                                                <label for="dropdownRequired" class="control-label">{$chkDropdownRequired} {$lblRequiredField|ucfirst}</label>
                                             </li>
                                         </ul>
                                     </div>
@@ -464,7 +464,7 @@
                                     <div class="form-group">
                                         <ul class="list-unstyled">
                                             <li class="checkbox">
-                                                <label for="checkboxRequired">{$chkRadiobuttonRequired} {$lblRequiredField|ucfirst}</label>
+                                                <label for="checkboxRequired" class="control-label">{$chkRadiobuttonRequired} {$lblRequiredField|ucfirst}</label>
                                             </li>
                                         </ul>
                                     </div>
@@ -550,7 +550,7 @@
                                     <div class="form-group">
                                         <ul class="list-unstyled">
                                             <li class="checkbox">
-                                                <label for="checkboxRequired">{$chkCheckboxRequired} {$lblRequiredField|ucfirst}</label>
+                                                <label for="checkboxRequired" class="control-label">{$chkCheckboxRequired} {$lblRequiredField|ucfirst}</label>
                                             </li>
                                         </ul>
                                     </div>

@@ -15,7 +15,7 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{{ geturl('add') }}" class="btn btn-default" title="{{ 'lbl.Add'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-plus"></span>
+          <span class="fa fa-plus"></span>
           {{ 'lbl.Add'|trans|capitalize }}
         </a>
       </div>
@@ -26,13 +26,13 @@
 <div class="row fork-module-content">
   <div class="col-md-12">
     {% if dgDrafts %}
-    {{ dgDrafts|raw }}
+      {{ dgDrafts|raw }}
     {% endif %}
     {% if dgRecentlyEdited %}
-    {{ dgRecentlyEdited|raw }}
+      {{ dgRecentlyEdited|raw }}
     {% endif %}
     {% if not dgRecentlyEdited %}
-    <p>{{ 'msg.NoItems'|trans|capitalize }}</p>
+      <p>{{ 'msg.NoItems'|trans|capitalize }}</p>
     {% endif %}
   </div>
 </div>

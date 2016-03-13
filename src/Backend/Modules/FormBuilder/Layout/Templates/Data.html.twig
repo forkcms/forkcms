@@ -3,19 +3,22 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.FormData'|trans|sprintf(name|capitalize ) }}</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showFormBuilderIndex %}
         <a href="{{ geturl('index' ) }}" class="btn btn-default">
-          <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+          <span class="fa fa-list"></span>&nbsp;
           {{ 'lbl.Overview'|trans|capitalize }}
         </a>
         {% endif %}
         {% if showFormBuilderExportData %}
         <a href="{{ geturl('export_data' ) }}&id={{ id }}&amp;start_date={{ start_date }}&amp;end_date={{ end_date }}" class="btn btn-default">
-          <span class="glyphicon glyphicon-export"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           {{ 'lbl.Export'|trans|capitalize }}
         </a>
         {% endif %}
@@ -31,13 +34,13 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="startDate">{{ 'lbl.StartDate'|trans|capitalize }}</label>
+                <label for="startDate" class="control-label">{{ 'lbl.StartDate'|trans|capitalize }}</label>
                 {% form_field_error start_date %} {% form_field start_date %}
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="endDate">{{ 'lbl.EndDate'|trans|capitalize }}</label>
+                <label for="endDate" class="control-label">{{ 'lbl.EndDate'|trans|capitalize }}</label>
                 {% form_field_error end_date %} {% form_field end_date %}
               </div>
             </div>
@@ -47,7 +50,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span class="fa fa-refresh"></span>&nbsp;
                 {{ 'lbl.UpdateFilter'|trans|capitalize }}
               </button>
             </div>

@@ -3,13 +3,16 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Location'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
     {% if showLocationAdd %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{{ geturl('add' ) }}" class="btn btn-default" title="{{ 'lbl.Add'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-plus"></span>
+          <span class="fa fa-plus"></span>
           {{ 'lbl.Add'|trans|capitalize }}
         </a>
       </div>
@@ -42,21 +45,21 @@
       </div>
       <div class="panel-body">
         <div class="form-group">
-          <label for="zoomLevel">{{ 'lbl.ZoomLevel'|trans|capitalize }}</label>
+          <label for="zoomLevel" class="control-label">{{ 'lbl.ZoomLevel'|trans|capitalize }}</label>
           {% form_field_error zoom_level %} {% form_field zoom_level %}
         </div>
         <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
-          <label for="width">{{ 'lbl.Width'|trans|capitalize }}</label>
-          <p class="text-info">{{ 'msg.WidthHelp'|trans|sprintf(300:800 ) }}</p>
+          <label for="width" class="control-label">{{ 'lbl.Width'|trans|capitalize }}</label>
+          <p class="help-block">{{ 'msg.WidthHelp'|trans|sprintf(300:800 ) }}</p>
           {% form_field_error width %} {% form_field width %}
         </div>
         <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
-          <label for="height">{{ 'lbl.Height'|trans|capitalize }}</label>
-          <p class="text-info">{{ 'msg.HeightHelp'|trans|sprintf(150 ) }}</p>
+          <label for="height" class="control-label">{{ 'lbl.Height'|trans|capitalize }}</label>
+          <p class="help-block">{{ 'msg.HeightHelp'|trans|sprintf(150 ) }}</p>
           {% form_field_error height %} {% form_field height %}
         </div>
         <div class="form-group">
-          <label for="mapType">{{ 'lbl.MapType'|trans|capitalize }}</label>
+          <label for="mapType" class="control-label">{{ 'lbl.MapType'|trans|capitalize }}</label>
           {% form_field_error map_type %} {% form_field map_type %}
         </div>
         <div class="btn-toolbar">

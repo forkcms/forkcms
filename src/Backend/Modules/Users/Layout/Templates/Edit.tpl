@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$msgEditUser|sprintf:{$record.settings.nickname}|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:edit}
@@ -258,10 +261,10 @@
                 <div class="form-group{option:chkActiveError} has-error{/option:chkActiveError}{option:chkApiAccessError} has-error{/option:chkApiAccessError}">
                   <ul class="list-unstyled">
                     <li class="checkbox">
-                      <label for="active">{$chkActive} {$msgHelpActive}</label> {$chkActiveError}
+                      <label for="active" class="control-label">{$chkActive} {$msgHelpActive}</label> {$chkActiveError}
                     </li>
                     <li class="checkbox">
-                      <label for="apiAccess">{$chkApiAccess} {$msgHelpAPIAccess}</label> {$chkApiAccessError}
+                      <label for="apiAccess" class="control-label">{$chkApiAccess} {$msgHelpAPIAccess}</label> {$chkApiAccessError}
                     </li>
                   </ul>
                 </div>

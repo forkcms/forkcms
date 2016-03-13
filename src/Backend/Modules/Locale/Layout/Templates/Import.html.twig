@@ -3,24 +3,27 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Import'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form import %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="file">
+        <label for="file" class="control-label">
           {{ 'lbl.File'|trans|capitalize }}&nbsp;
-          <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
         </label>
         {% form_field_error file %} {% form_field file %}
       </div>
       <div class="form-group">
         <ul class="list-unstyled">
           <li class="checkbox">
-            <label for="overwrite">{% form_field overwrite %} {{ msg.OverwriteConflicts }}</label>
+            <label for="overwrite" class="control-label">{% form_field overwrite %} {{ msg.OverwriteConflicts }}</label>
           </li>
         </ul>
       </div>

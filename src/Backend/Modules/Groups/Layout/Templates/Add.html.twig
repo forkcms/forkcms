@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Add'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form add %}
@@ -26,13 +29,8 @@
           <div role="tabpanel" class="tab-pane active" id="tabName">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Name'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
-                  <label for="name">{{ 'lbl.Name'|trans|capitalize }}&nbsp;<abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr></label>
+                  <label for="name" class="control-label">{{ 'lbl.Name'|trans|capitalize }}&nbsp;<abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
                   {% form_field_error name %} {% form_field name %}
                 </div>
               </div>
@@ -41,13 +39,8 @@
           <div role="tabpanel" class="tab-pane" id="tabDashboard">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Dashboard'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
-                  <label for="toggleChecksWidgets">{{ 'lbl.DisplayWidgets'|trans|capitalize }}</label>
+                  <label for="toggleChecksWidgets" class="control-label">{{ 'lbl.DisplayWidgets'|trans|capitalize }}</label>
                   {% if widgets %}
                   {{ widgets }}
                   {% endif %}
@@ -59,11 +52,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{{ 'lbl.Modules'|trans|capitalize }}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
@@ -95,7 +83,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+            <span class="fa fa-plus"></span>&nbsp;
             {{ 'lbl.Add'|trans|capitalize }}
           </button>
         </div>

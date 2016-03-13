@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'msg.EditContentBlock'|trans|sprintf(title|capitalize ) }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form edit %}
@@ -23,30 +26,25 @@
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Content'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
-                  <label for="title">{{ 'lbl.Title'|trans|capitalize }}</label>
+                  <label for="title" class="control-label">{{ 'lbl.Title'|trans|capitalize }}</label>
                   {% form_field_error title %} {% form_field title %}
                 </div>
                 <div class="form-group">
-                  <label for="text">
+                  <label for="text" class="control-label">
                     {{ 'lbl.Content'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error text %} {% form_field text %}
                 </div>
                 {% if ddmTemplate %}
                 <div class="form-group">
-                  <label for="template">{{ 'lbl.Template'|trans|capitalize }}</label>
+                  <label for="template" class="control-label">{{ 'lbl.Template'|trans|capitalize }}</label>
                   {% form_field_error template %} {% form_field template %}
                 </div>
                 {% endif %}
                 <div class="form-group">
-                  <label for="hidden">{% form_field_'err.r hidden %} {% form_field hidden %} {{ 'lbl.VisibleOnSite''|trans|trans|capitalize }}</label>
+                  <label for="hidden" class="control-label">{% form_field_'err.r hidden %} {% form_field hidden %} {{ 'lbl.VisibleOnSite''|trans|trans|capitalize }}</label>
                 </div>
               </div>
             </div>
@@ -56,7 +54,7 @@
               <div class="col-md-12">
                 <h3>
                   {{ 'lbl.PreviousVersions'|trans|capitalize }}
-                  <abbr class="glyphicon glyphicon-question-sign" title="{{ msg.HelpRevisions }}"></abbr>
+                  <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{{ msg.HelpRevisions }}"></abbr>
                 </h3>
               </div>
             </div>
@@ -81,14 +79,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showContentBlocksDelete %}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {{ 'lbl.Delete'|trans|capitalize }}
           </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
+            <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
           </button>
         </div>
       </div>

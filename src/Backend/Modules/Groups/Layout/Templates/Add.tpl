@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblAdd|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:add}
@@ -25,7 +28,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
-                  <label for="name">{$lblName|ucfirst}&nbsp;<abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}" class="control-label">*</abbr></label>
+                  <label for="name" class="control-label">{$lblName|ucfirst}&nbsp;<abbr data-toggle="tooltip" title="{$lblRequiredField|ucfirst}" class="control-label">*</abbr></label>
                   {$txtName} {$txtNameError}
                 </div>
               </div>

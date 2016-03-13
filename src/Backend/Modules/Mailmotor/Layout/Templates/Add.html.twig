@@ -40,18 +40,18 @@
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="name">
+                                <label for="name" class="control-label">
                                     {{ 'lbl.Name'|trans|capitalize }}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                 </label>
-                                <p class="text-info">{{ msg.NameInternalUseOnly }}</p>
+                                <p class="help-block">{{ msg.NameInternalUseOnly }}</p>
                                 {% form_field_error name %} {% form_field name %}
                             </div>
                             {% if ddmCampaign %}
                             <div class="form-group">
-                                <label for="campaign">
+                                <label for="campaign" class="control-label">
                                     {{ 'lbl.Campaign'|trans|capitalize }}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                 </label>
                                 {% form_field_error campaign %} {% form_field campaign %}
                             </div>
@@ -70,16 +70,16 @@
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="fromName">
+                                <label for="fromName" class="control-label">
                                     {{ 'lbl.Name'|trans|capitalize }}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                 </label>
                                 {% form_field_error from_name %} {% form_field from_name %}
                             </div>
                             <div class="form-group">
-                                <label for="fromEmail">
+                                <label for="fromEmail" class="control-label">
                                     {{ 'lbl.EmailAddress'|trans|capitalize }}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                 </label>
                                 {% form_field_error from_email %} {% form_field from_email %}
                             </div>
@@ -97,9 +97,9 @@
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="replyToEmail">
+                                <label for="replyToEmail" class="control-label">
                                     {{ 'lbl.EmailAddress'|trans|capitalize }}
-                                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                 </label>
                                 {% form_field_error reply_to_email %} {% form_field reply_to_email %}
                             </div>
@@ -171,7 +171,7 @@
                         <div class="btn-group pull-right" role="group">
                             <button id="toStep2" type="submit" name="to_step_2" class="btn btn-primary">
                                 {{ 'lbl.ToStep'|trans|capitalize }} 2
-                                &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                                &nbsp;<span class="fa fa-chevron-right"></span>
                             </button>
                         </div>
                     </div>

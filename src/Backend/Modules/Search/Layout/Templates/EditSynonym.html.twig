@@ -3,25 +3,28 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.EditSynonym'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form editItem %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="term">
+        <label for="term" class="control-label">
           {{ 'lbl.Term'|trans|capitalize }}
-          <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
         </label>
         {% form_field_error term %} {% form_field term %}
       </div>
       <div class="form-group">
         <div class="fakeP">
-          <label for="addValue-synonym">
+          <label for="addValue-synonym" class="control-label">
             {{ 'lbl.Synonyms'|trans|capitalize }}
-            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
           </label>
           <div class="itemAdder">
             {% form_field_error synonym %} {% form_field synonym %}
@@ -36,14 +39,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showSearchDeleteSynonym %}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {{ 'lbl.Delete'|trans|capitalize }}
           </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+            <span class="fa fa-plus"></span>&nbsp;
             {{ 'lbl.AddSynonym'|trans|capitalize }}
           </button>
         </div>

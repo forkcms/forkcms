@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblSettings|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:settings}
@@ -19,7 +22,7 @@
             <p class="help-block">{$msgHelpMetaNavigation}</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="metaNavigation">{$chkMetaNavigation} {$msgMetaNavigation|ucfirst}</label>
+                <label for="metaNavigation" class="control-label">{$chkMetaNavigation} {$msgMetaNavigation|ucfirst}</label>
               </li>
             </ul>
           </div>

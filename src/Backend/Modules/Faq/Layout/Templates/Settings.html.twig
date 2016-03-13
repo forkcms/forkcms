@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Settings'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form settings %}
@@ -18,15 +21,15 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="overviewNumberOfItemsPerCategory">{{ 'lbl.ItemsPerCategory'|trans|capitalize }}</label>
+            <label for="overviewNumberOfItemsPerCategory" class="control-label">{{ 'lbl.ItemsPerCategory'|trans|capitalize }}</label>
             {% form_field_error overview_number_of_items_per_category %} {% form_field overview_number_of_items_per_category %}
           </div>
           <div class="form-group">
-            <label for="mostReadNumberOfItems">{{ msg.NumMostReadItems }}</label>
+            <label for="mostReadNumberOfItems" class="control-label">{{ msg.NumMostReadItems }}</label>
             {% form_field_error most_read_number_of_items %} {% form_field most_read_number_of_items %}
           </div>
           <div class="form-group">
-            <label for="relatedNumberOfItems">{{ msg.NumRelatedItems }}</label>
+            <label for="relatedNumberOfItems" class="control-label">{{ msg.NumRelatedItems }}</label>
             {% form_field_error related_number_of_items %} {% form_field related_number_of_items %}
           </div>
         </div>
@@ -45,7 +48,7 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="allowMultipleCategories">
+                <label for="allowMultipleCategories" class="control-label">
                   {% form_field allow_multiple_categories %} {{ 'lbl.AllowMultipleCategories'|trans|capitalize }}
                 </label>
               </li>
@@ -67,25 +70,25 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="allowFeedback">
+                <label for="allowFeedback" class="control-label">
                   {% form_field allow_feedback %} {{ 'lbl.AllowFeedback'|trans|capitalize }}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="allowOwnQuestion">
+                <label for="allowOwnQuestion" class="control-label">
                   {% form_field allow_own_question %} {{ 'lbl.AllowOwnQuestion'|trans|capitalize }}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="sendEmailOnNewFeedback">
+                <label for="sendEmailOnNewFeedback" class="control-label">
                   {% form_field send_email_on_new_feedback %} {{ 'lbl.SendEmailOnNewFeedback'|trans|capitalize }}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="spamfilter">
+                <label for="spamfilter" class="control-label">
                   {% form_field spamfilter %} {{ 'lbl.FilterCommentsForSpam'|trans|capitalize }}
                 </label>
-                <p class="text-info">
+                <p class="help-block">
                   {{ msg.HelpSpamFilter }}
                   {% if noAkismetKey %}
                   <br />

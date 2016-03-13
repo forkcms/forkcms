@@ -3,13 +3,16 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Translations'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
     {% if showLocaleExportAnalyse %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{{ geturl('ExportAnalyse' ) }}&amp;language={{ language }}" class="btn btn-default" title="{{ 'lbl.Export'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-plus"></span>
+          <span class="fa fa-plus"></span>
           {{ 'lbl.Export'|trans|capitalize }}
         </a>
       </div>

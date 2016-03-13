@@ -114,7 +114,7 @@
                                 <div class="form-group">
                                     <ul class="list-unstyled">
                                         <li class="checkbox">
-                                            <label for="isAction">{$chkIsAction} {$msgIsAction}</label>
+                                            <label for="isAction" class="control-label">{$chkIsAction} {$msgIsAction}</label>
                                         </li>
                                     </ul>
                                 </div>

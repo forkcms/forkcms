@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblEdit|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:edit}
@@ -112,13 +115,13 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="fullUrl">{$chkFullUrl} {$msgShowMapUrl}</label>
+                <label for="fullUrl" class="control-label">{$chkFullUrl} {$msgShowMapUrl}</label>
               </li>
               <li class="checkbox">
-                <label for="directions">{$chkDirections} {$msgShowDirections}</label>
+                <label for="directions" class="control-label">{$chkDirections} {$msgShowDirections}</label>
               </li>
               <li class="checkbox">
-                <label for="markerOverview">{$chkMarkerOverview} {$msgShowMarkerOverview}</label>
+                <label for="markerOverview" class="control-label">{$chkMarkerOverview} {$msgShowMarkerOverview}</label>
               </li>
             </ul>
           </div>

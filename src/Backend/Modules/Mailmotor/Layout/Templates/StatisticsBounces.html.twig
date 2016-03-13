@@ -3,19 +3,22 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Bounces'|trans|capitalize }} {{ lbl.For }} &ldquo;{{ mailing.name }}&rdquo;</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showMailmotorStatistics %}
         <a href="{{ geturl('statistics' ) }}&amp;id={{ mailing.id }}" class="btn btn-default" title="{{ 'lbl.Statistics'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="fa fa-list"></span>
           {{ 'msg.BackToStatistics'|trans|sprintf(mailing.name ) }}
         </a>
         {% endif %}
         {% if showMailmotorDeleteBounces %}
         <a href="{{ geturl('delete_bounces' ) }}&amp;mailing_id={{ mailing.id }}" class="btn btn-danger" title="{{ 'msg.DeleteBounces'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-trash"></span>
+          <span class="fa fa-trash-o"></span>
           {{ 'msg.DeleteBounces'|trans|capitalize }}
         </a>
         {% endif %}

@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Settings'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form settings %}
@@ -18,15 +21,15 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="overviewNumberOfItems">{{ 'lbl.ItemsPerPage'|trans|capitalize }}</label>
+            <label for="overviewNumberOfItems" class="control-label">{{ 'lbl.ItemsPerPage'|trans|capitalize }}</label>
             {% form_field_error overview_number_of_items %} {% form_field overview_number_of_items %}
           </div>
           <div class="form-group">
-            <label for="recentArticlesFullNumberOfItems">{{ 'msg.NumItemsInRecentArticlesFull'|trans|capitalize }}</label>
+            <label for="recentArticlesFullNumberOfItems" class="control-label">{{ 'msg.NumItemsInRecentArticlesFull'|trans|capitalize }}</label>
             {% form_field_error recent_articles_full_number_of_items %} {% form_field recent_articles_full_number_of_items %}
           </div>
           <div class="form-group">
-            <label for="recentArticlesListNumberOfItems">{{ 'msg.NumItemsInRecentArticlesList'|trans|capitalize }}</label>
+            <label for="recentArticlesListNumberOfItems" class="control-label">{{ 'msg.NumItemsInRecentArticlesList'|trans|capitalize }}</label>
             {% form_field_error recent_articles_list_number_of_items %} {% form_field recent_articles_list_number_of_items %}
           </div>
         </div>
@@ -45,20 +48,20 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="allowComments">
+                <label for="allowComments" class="control-label">
                   {% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|capitalize }}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="moderation">
+                <label for="moderation" class="control-label">
                   {% form_field moderation %} {{ 'lbl.EnableModeration'|trans|capitalize }}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="spamfilter">
+                <label for="spamfilter" class="control-label">
                   {% form_field spamfilter %} {{ 'lbl.FilterCommentsForSpam'|trans|capitalize }}
                 </label>
-                <p class="text-info">
+                <p class="help-block">
                   {{ msg.HelpSpamFilter }}
                   {% if noAkismetKey %}
                   <br />
@@ -69,7 +72,7 @@
                 </p>
               </li>
             </ul>
-            <p class="text-info">{{ 'msg.FollowAllCommentsInRSS'|trans|sprintf(commentsRSSURL ) }}</p>
+            <p class="help-block">{{ 'msg.FollowAllCommentsInRSS'|trans|sprintf(commentsRSSURL ) }}</p>
           </div>
         </div>
       </div>
@@ -88,7 +91,7 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="showImageForm">
+                <label for="showImageForm" class="control-label">
                   {% form_field show_image_form %} {{ msg.ShowImageForm }}
                 </label>
               </li>
@@ -111,12 +114,12 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="notifyByEmailOnNewCommentToModerate">
+                <label for="notifyByEmailOnNewCommentToModerate" class="control-label">
                   {% form_field notify_by_email_on_new_comment_to_moderate %} {{ 'msg.NotifyByEmailOnNewCommentToModerate'|trans|capitalize }}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="notifyByEmailOnNewComment">
+                <label for="notifyByEmailOnNewComment" class="control-label">
                   {% form_field notify_by_email_on_new_comment %} {{ 'msg.NotifyByEmailOnNewComment'|trans|capitalize }}
                 </label>
               </li>
@@ -139,7 +142,7 @@
             <p>{{ msg.HelpPingServices }}:</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="pingServices">
+                <label for="pingServices" class="control-label">
                   {% form_field ping_services %} {{ 'lbl.PingBlogServices'|trans|capitalize }}
                 </label>
               </li>
@@ -159,23 +162,23 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="rssTitle">
+            <label for="rssTitle" class="control-label">
               {{ 'lbl.Title'|trans|capitalize }}
-              <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
             </label>
-            <p class="text-info">{{ msg.HelpRSSTitle }}</p>
+            <p class="help-block">{{ msg.HelpRSSTitle }}</p>
             {% form_field_error rss_title %} {% form_field rss_title %}
           </div>
           <div class="form-group">
-            <label for="rssDescription">{{ 'lbl.Description'|trans|capitalize }}</label>
-            <p class="text-info">{{ msg.HelpRSSDescription }}</p>
+            <label for="rssDescription" class="control-label">{{ 'lbl.Description'|trans|capitalize }}</label>
+            <p class="help-block">{{ msg.HelpRSSDescription }}</p>
             {% form_field_error rss_description %} {% form_field rss_description %}
           </div>
           <div class="form-group">
             <p>{{ msg.HelpMeta }}:</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="rssMeta">{% form_field rss_meta %} {{ 'lbl.MetaInformation'|trans|capitalize }}</label>
+                <label for="rssMeta" class="control-label">{% form_field rss_meta %} {{ 'lbl.MetaInformation'|trans|capitalize }}</label>
               </li>
             </ul>
           </div>

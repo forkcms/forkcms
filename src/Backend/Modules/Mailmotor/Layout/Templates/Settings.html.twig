@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Settings'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% if not clientId %}
@@ -45,11 +48,6 @@
           {% form settingsGeneral %}
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.General'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
@@ -58,16 +56,16 @@
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
-                      <label for="fromName">
+                      <label for="fromName" class="control-label">
                         {{ 'lbl.Name'|trans|capitalize }}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                       </label>
                       {% form_field_error from_name %} {% form_field from_name %}
                     </div>
                     <div class="form-group">
-                      <label for="fromEmail">
+                      <label for="fromEmail" class="control-label">
                         {{ 'lbl.EmailAddress'|trans|capitalize }}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                       </label>
                       {% form_field_error from_email %} {% form_field from_email %}
                     </div>
@@ -85,9 +83,9 @@
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
-                      <label for="replyToEmail">
+                      <label for="replyToEmail" class="control-label">
                         {{ 'lbl.EmailAddress'|trans|capitalize }}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                       </label>
                       {% form_field_error reply_to_email %} {% form_field reply_to_email %}
                     </div>
@@ -107,7 +105,7 @@
                     <div class="form-group">
                       <ul class="list-unstyled">
                         <li class="checkbox">
-                          <label for="plainTextEditable">
+                          <label for="plainTextEditable" class="control-label">
                             {% form_field plain_text_editable %} {{ 'msg.PlainTextEditable'|trans|capitalize }}
                           </label>
                         </li>
@@ -128,21 +126,21 @@
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
-                      <label for="pricePerEmail">
+                      <label for="pricePerEmail" class="control-label">
                         {{ 'lbl.PerSentMailing'|trans|capitalize }}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                       </label>
-                      <p class="text-info">{{ msg.HelpPrice }}</p>
+                      <p class="help-block">{{ msg.HelpPrice }}</p>
                       <div class="form-inline">
                         € {% form_field_error price_per_email %} {% form_field price_per_email %}
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="pricePerEmail">
+                      <label for="pricePerEmail" class="control-label">
                         {{ 'lbl.PerCampaign'|trans|capitalize }}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                       </label>
-                      <p class="text-info">{{ msg.HelpPrice }}</p>
+                      <p class="help-block">{{ msg.HelpPrice }}</p>
                       <div class="form-inline">
                         € {% form_field_error price_per_campaign %} {% form_field price_per_campaign %}
                       </div>
@@ -157,7 +155,7 @@
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right" role="group">
                     <button id="save" type="submit" name="save" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                      <span class="fa fa-check"></span>&nbsp;
                       {{ 'lbl.Save'|trans|capitalize }}
                     </button>
                   </div>
@@ -170,30 +168,25 @@
           {% form settingsAccount %}
             <div class="row">
               <div class="col-md-12">
-                <h3>CampaignMonitor - {{ 'lbl.AccountSettings'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
-                  <label for="url">
+                  <label for="url" class="control-label">
                     {{ 'lbl.URL'|trans|uppercase }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
-                  <p class="text-info">{{ msg.HelpCMURL }}</p>
+                  <p class="help-block">{{ msg.HelpCMURL }}</p>
                   {% form_field_error url %} {% form_field url %}
                 </div>
                 <div class="form-group">
-                  <label for="username">
+                  <label for="username" class="control-label">
                     {{ 'lbl.Username'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error username %} {% form_field username %}
                 </div>
                 <div class="form-group">
-                  <label for="password">
+                  <label for="password" class="control-label">
                     {{ 'lbl.Password'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error password %} {% form_field password %}
                 </div>
@@ -205,7 +198,7 @@
                   <div class="btn-group pull-left" role="group">
                     {% if account %}
                     <a id="unlinkAccount" href="#" class="btn btn-danger">
-                      <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                      <span class="fa fa-unlink"></span>&nbsp;
                       {{ msg.UnlinkCMAccount }}
                     </a>
                     {% endif %}
@@ -213,14 +206,14 @@
                   <div class="btn-group pull-right" role="group">
                     {% if not account %}
                     <a id="linkAccount" href="#" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-log-in"></span>&nbsp;
+                      <span class="fa fa-link"></span>&nbsp;
                       {{ msg.LinkCMAccount }}
                     </a>
                     {% endif %}
                     {% if account %}
                     {% if clientId %}
                     <a href="{{ geturl('index' ) }}" class="btn btn-default">
-                      <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+                      <span class="fa fa-list"></span>&nbsp;
                       {{ msg.ViewMailings }}
                     </a>
                     {% endif %}
@@ -236,31 +229,26 @@
           {% form settingsClient %}
             <div class="row">
               <div class="col-md-12">
-                <h3>CampaignMonitor - {{ 'lbl.ClientSettings'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
-                  <label for="clientId">{{ 'lbl.Client'|trans|capitalize }}</label>
+                  <label for="clientId" class="control-label">{{ 'lbl.Client'|trans|capitalize }}</label>
                   {% if not clientId %}
                   <p class="text-danger"><strong>{{ msg.NoClientID }}</strong></p>
                   {% endif %}
                   {% form_field client_id %}
                 </div>
                 <div class="form-group">
-                  <label for="companyName">
+                  <label for="companyName" class="control-label">
                     {{ 'lbl.CompanyName'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error company_name %} {% form_field company_name %}
                 </div>
                 <div class="form-group">
-                  <label for="countries">{{ 'lbl.Country'|trans|capitalize }}</label>
+                  <label for="countries" class="control-label">{{ 'lbl.Country'|trans|capitalize }}</label>
                   {% form_field_error countries %} {% form_field countries %}
                 </div>
                 <div class="form-group">
-                  <label for="timezones">{{ 'lbl.Timezone'|trans|capitalize }}</label>
+                  <label for="timezones" class="control-label">{{ 'lbl.Timezone'|trans|capitalize }}</label>
                   {% form_field_error timezones %} {% form_field timezones %}
                 </div>
               </div>
@@ -270,7 +258,7 @@
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right" role="group">
                     <button id="save" type="submit" name="save" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                      <span class="fa fa-check"></span>&nbsp;
                       {{ 'lbl.Save'|trans|capitalize }}
                     </button>
                   </div>

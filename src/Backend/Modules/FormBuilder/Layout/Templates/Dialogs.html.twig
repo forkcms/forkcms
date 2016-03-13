@@ -24,15 +24,10 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextboxBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Basic'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textboxLabel">
+                                    <label for="textboxLabel" class="control-label">
                                         {{ 'lbl.Label'|trans|capitalize }}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                     </label>
                                     <p id="textboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {% form_field textbox_label %}
@@ -43,21 +38,16 @@
                     <div role="tabpanel" class="tab-pane" id="tabTextboxProperties">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Properties'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textboxValue">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
+                                    <label for="textboxValue" class="control-label">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
                                     {% form_field textbox_value %}
                                 </div>
                                 <div class="form-group">
                                     <ul class="list-unstyled">
                                         <li class="checkbox">
-                                            <label for="textboxReplyTo">
+                                            <label for="textboxReplyTo" class="control-label">
                                                 {% form_field textbox_reply_to %} {{ 'lbl.ReplyTo'|trans|capitalize }}
-                                                <abbr class="glyphicon glyphicon-info-sign" title="{{ msg.HelpReplyTo }}"></abbr>
+                                                <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ msg.HelpReplyTo }}"></abbr>
                                             </label>
                                         </li>
                                     </ul>
@@ -65,15 +55,15 @@
                                 <div class="jsValidation">
                                     <ul class="list-unstyled">
                                         <li class="checkbox">
-                                            <label for="textboxRequired">
+                                            <label for="textboxRequired" class="control-label">
                                                 {% form_field textbox_required %} {{ 'lbl.RequiredField'|trans|capitalize }}
                                             </label>
                                         </li>
                                     </ul>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="textboxRequiredErrorMessage">
+                                        <label for="textboxRequiredErrorMessage" class="control-label">
                                             {{ 'lbl.'err.rMessage''|trans|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         <p id="textboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {% form_field_error textbox_required_message %}
@@ -81,21 +71,21 @@
                                 </div>
                                 <div class="jsValidation">
                                     <div class="form-group">
-                                        <label for="textboxValidation">{{ 'lbl.Validation'|trans|capitalize }}</label>
+                                        <label for="textboxValidation" class="control-label">{{ 'lbl.Validation'|trans|capitalize }}</label>
                                         {% form_field textbox_validation %}
                                     </div>
                                     <p id="textboxReplyToErrorMessageError" class="text-danger" style="display: none;"></p>
                                     <div class="form-group jsValidationParameter" style="display: none;">
-                                        <label for="textboxValidationParameter">
+                                        <label for="textboxValidationParameter" class="control-label">
                                             {{ 'lbl.Parameter'|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         {% form_field textbox_validation_parameter %}
                                     </div>
                                     <div class="form-group jsValidationErrorMessage" style="display: none;">
-                                        <label for="textareaErrorMessage">
+                                        <label for="textareaErrorMessage" class="control-label">
                                             {{ 'lbl.'err.rMessage''|trans|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         <p id="textboxErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {% form_field_error textbox_message %}
@@ -107,17 +97,12 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextboxAdvanced">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Advanced'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textboxPlaceholder">{{ 'lbl.Placeholder'|trans|capitalize }}</label>
+                                    <label for="textboxPlaceholder" class="control-label">{{ 'lbl.Placeholder'|trans|capitalize }}</label>
                                     {% form_field textbox_placeholder %}
                                 </div>
                                 <div class="form-group">
-                                    <label for="textboxClassname">{{ 'lbl.Classname'|trans|capitalize }}</label>
+                                    <label for="textboxClassname" class="control-label">{{ 'lbl.Classname'|trans|capitalize }}</label>
                                     {% form_field textbox_classname %}
                                 </div>
                             </div>
@@ -157,15 +142,10 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextareaBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Basic'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textareaLabel">
+                                    <label for="textareaLabel" class="control-label">
                                         {{ 'lbl.Label'|trans|capitalize }}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                     </label>
                                     <p id="textareaLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {% form_field textarea_label %}
@@ -176,27 +156,22 @@
                     <div role="tabpanel" class="tab-pane" id="tabTextareaProperties">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Properties'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textareaValue">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
+                                    <label for="textareaValue" class="control-label">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
                                     {% form_field textarea_value %}
                                 </div>
                                 <div class="jsValidation">
                                     <div class="form-group">
                                         <ul class="list-unstyled">
                                             <li class="checkbox">
-                                                <label for="textareaRequired">{% form_field textarea_required %} {{ 'lbl.RequiredField'|trans|capitalize }}</label>
+                                                <label for="textareaRequired" class="control-label">{% form_field textarea_required %} {{ 'lbl.RequiredField'|trans|capitalize }}</label>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="textareaRequiredErrorMessage">
+                                        <label for="textareaRequiredErrorMessage" class="control-label">
                                             {{ 'lbl.'err.rMessage''|trans|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         <p id="textareaRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {% form_field_error textarea_required_message %}
@@ -204,20 +179,20 @@
                                 </div>
                                 <div class="jsValidation" style="display: none;">
                                     <div class="form-group">
-                                        <label for="textareaValidation">{{ 'lbl.Validation'|trans|capitalize }}</label>
+                                        <label for="textareaValidation" class="control-label">{{ 'lbl.Validation'|trans|capitalize }}</label>
                                         {% form_field textarea_validation %}
                                     </div>
                                     <div class="form-group jsValidationParameter" style="display: none;">
-                                        <label for="textareaValidationParameter">
+                                        <label for="textareaValidationParameter" class="control-label">
                                             {{ 'lbl.Parameter'|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         {% form_field textarea_validation_parameter %}
                                     </div>
                                     <div class="form-group jsValidationErrorMessage" style="display: none;">
-                                        <label for="textareaErrorMessage">
+                                        <label for="textareaErrorMessage" class="control-label">
                                             {{ 'lbl.'err.rMessage''|trans|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         <p id="textareaErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {% form_field_error textarea_message %}
@@ -229,17 +204,12 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextareaAdvanced">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Advanced'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textareaPlaceholder">{{ 'lbl.Placeholder'|trans|capitalize }}</label>
+                                    <label for="textareaPlaceholder" class="control-label">{{ 'lbl.Placeholder'|trans|capitalize }}</label>
                                     {% form_field textarea_placeholder %}
                                 </div>
                                 <div class="form-group">
-                                    <label for="textareaClassname">{{ 'lbl.Classname'|trans|capitalize }}</label>
+                                    <label for="textareaClassname" class="control-label">{{ 'lbl.Classname'|trans|capitalize }}</label>
                                     {% form_field textarea_classname %}
                                 </div>
                             </div>
@@ -279,15 +249,10 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDatetimeBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Basic'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="datetimeLabel">
+                                    <label for="datetimeLabel" class="control-label">
                                         {{ 'lbl.Label'|trans|capitalize }}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                     </label>
                                     <p id="datetimeLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {% form_field datetime_label %}
@@ -298,13 +263,8 @@
                     <div role="tabpanel" class="tab-pane" id="tabDatetimeProperties">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Properties'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group jsDefaultValue">
-                                    <label for="datetimeValue">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
+                                    <label for="datetimeValue" class="control-label">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
                                     <div class="form-inline">
                                         {% form_field datetime_value_amount %} {% form_field datetime_value_type %}
                                     </div>
@@ -313,14 +273,14 @@
                                     <div class="form-group">
                                         <ul class="list-unstyled">
                                             <li class="checkbox">
-                                                <label for="datetimeRequired">{% form_field datetime_required %} {{ 'lbl.RequiredField'|trans|capitalize }}</label>
+                                                <label for="datetimeRequired" class="control-label">{% form_field datetime_required %} {{ 'lbl.RequiredField'|trans|capitalize }}</label>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="datetimeRequiredErrorMessage">
+                                        <label for="datetimeRequiredErrorMessage" class="control-label">
                                             {{ 'lbl.'err.rMessage''|trans|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         <p id="datetimeRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {% form_field_error datetime_required_message %}
@@ -328,19 +288,19 @@
                                 </div>
                                 <div>
                                     <div class="form-group">
-                                        <label for="datetimeType">{{ 'lbl.Type'|trans|capitalize }}</label>
+                                        <label for="datetimeType" class="control-label">{{ 'lbl.Type'|trans|capitalize }}</label>
                                         {% form_field datetime_type %}
                                     </div>
                                 </div>
                                 <div class="jsValidation" style="display: none;">
                                     <div class="form-group">
-                                        <label for="datetimeValidation">{{ 'lbl.Validation'|trans|capitalize }}</label>
+                                        <label for="datetimeValidation" class="control-label">{{ 'lbl.Validation'|trans|capitalize }}</label>
                                         {% form_field datetime_validation %}
                                     </div>
                                     <div class="form-group jsValidationErrorMessage" style="display: none;">
-                                        <label for="datetimeErrorMessage">
+                                        <label for="datetimeErrorMessage" class="control-label">
                                             {{ 'lbl.'err.rMessage''|trans|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         <p id="datetimeErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {% form_field_error datetime_message %}
@@ -352,13 +312,8 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDatetimeAdvanced">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Advanced'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="datetimeClassname">{{ 'lbl.Classname'|trans|capitalize }}</label>
+                                    <label for="datetimeClassname" class="control-label">{{ 'lbl.Classname'|trans|capitalize }}</label>
                                     {% form_field datetime_classname %}
                                 </div>
                             </div>
@@ -398,21 +353,16 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDropdownBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Basic'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="dropdownLabel">
+                                    <label for="dropdownLabel" class="control-label">
                                         {{ 'lbl.Label'|trans|capitalize }}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                     </label>
                                     <p id="dropdownLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {% form_field dropdown_label %}
                                 </div>
                                 <div class="form-group">
-                                    <label for="checkboxValues">{{ 'lbl.Values'|trans|capitalize }}</label>
+                                    <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|capitalize }}</label>
                                     <p id="dropdownValuesError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {% form_field_error dropdown_values %} {% form_field dropdown_values %}
                                 </div>
@@ -422,27 +372,22 @@
                     <div role="tabpanel" class="tab-pane" id="tabDropdownProperties">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Properties'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="dropdownDefaultValue">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
+                                    <label for="dropdownDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
                                     {% form_field dropdown_default_value %}
                                 </div>
                                 <div class="jsValidation">
                                     <div class="form-group">
                                         <ul class="list-unstyled">
                                             <li class="checkbox">
-                                                <label for="dropdownRequired">{% form_field dropdown_required %} {{ 'lbl.RequiredField'|trans|capitalize }}</label>
+                                                <label for="dropdownRequired" class="control-label">{% form_field dropdown_required %} {{ 'lbl.RequiredField'|trans|capitalize }}</label>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="dropdownRequiredErrorMessage">
+                                        <label for="dropdownRequiredErrorMessage" class="control-label">
                                             {{ 'lbl.'err.rMessage''|trans|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         <p id="dropdownRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {% form_field_error dropdown_required_message %}
@@ -454,13 +399,8 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDropdownAdvanced">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Advanced'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="dropdownClassname">{{ 'lbl.Classname'|trans|capitalize }}</label>
+                                    <label for="dropdownClassname" class="control-label">{{ 'lbl.Classname'|trans|capitalize }}</label>
                                     {% form_field dropdown_classname %}
                                 </div>
                             </div>
@@ -500,21 +440,16 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabRadiobuttonBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Basic'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="radiobuttonLabel">
+                                    <label for="radiobuttonLabel" class="control-label">
                                         {{ 'lbl.Label'|trans|capitalize }}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                     </label>
                                     <p id="radiobuttonLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {% form_field radiobutton_label %}
                                 </div>
                                 <div class="form-group">
-                                    <label for="checkboxValues">{{ 'lbl.Values'|trans|capitalize }}</label>
+                                    <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|capitalize }}</label>
                                     {% form_field_error radiobutton_values %} {% form_field radiobutton_values %}
                                 </div>
                             </div>
@@ -523,27 +458,22 @@
                     <div role="tabpanel" class="tab-pane" id="tabRadiobuttonProperties">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Properties'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="checkboxDefaultValue">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
+                                    <label for="checkboxDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
                                     {% form_field radiobutton_default_value %}
                                 </div>
                                 <div class="jsValidation">
                                     <div class="form-group">
                                         <ul class="list-unstyled">
                                             <li class="checkbox">
-                                                <label for="checkboxRequired">{% form_field radiobutton_required %} {{ 'lbl.RequiredField'|trans|capitalize }}</label>
+                                                <label for="checkboxRequired" class="control-label">{% form_field radiobutton_required %} {{ 'lbl.RequiredField'|trans|capitalize }}</label>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="checkboxRequiredErrorMessage">
+                                        <label for="checkboxRequiredErrorMessage" class="control-label">
                                             {{ 'lbl.'err.rMessage''|trans|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         <p id="radiobuttonRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {% form_field_error radiobutton_required_message %}
@@ -555,13 +485,8 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabRadiobuttonAdvanced">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Advanced'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="radiobuttonClassname">{{ 'lbl.Classname'|trans|capitalize }}</label>
+                                    <label for="radiobuttonClassname" class="control-label">{{ 'lbl.Classname'|trans|capitalize }}</label>
                                     {% form_field radiobutton_classname %}
                                 </div>
                             </div>
@@ -601,21 +526,16 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabCheckboxBasic">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Basic'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="checkboxLabel">
+                                    <label for="checkboxLabel" class="control-label">
                                         {{ 'lbl.Label'|trans|capitalize }}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                     </label>
                                     <p id="checkboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {% form_field checkbox_label %}
                                 </div>
                                 <div class="form-group">
-                                    <label for="checkboxValues">{{ 'lbl.Values'|trans|capitalize }}</label>
+                                    <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|capitalize }}</label>
                                     {% form_field_error checkbox_values %} {% form_field checkbox_values %}
                                 </div>
                             </div>
@@ -624,27 +544,22 @@
                     <div role="tabpanel" class="tab-pane" id="tabCheckboxProperties">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Properties'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="checkboxDefaultValue">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
+                                    <label for="checkboxDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|capitalize }}</label>
                                     {% form_field checkbox_default_value %}
                                 </div>
                                 <div class="jsValidation">
                                     <div class="form-group">
                                         <ul class="list-unstyled">
                                             <li class="checkbox">
-                                                <label for="checkboxRequired">{% form_field checkbox_required %} {{ 'lbl.RequiredField'|trans|capitalize }}</label>
+                                                <label for="checkboxRequired" class="control-label">{% form_field checkbox_required %} {{ 'lbl.RequiredField'|trans|capitalize }}</label>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                                        <label for="checkboxRequiredErrorMessage">
+                                        <label for="checkboxRequiredErrorMessage" class="control-label">
                                             {{ 'lbl.'err.rMessage''|trans|trans|capitalize }}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                                            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                         </label>
                                         <p id="checkboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {% form_field_error checkbox_required_message %}
@@ -656,13 +571,8 @@
                     <div role="tabpanel" class="tab-pane jsFieldTab" id="tabCheckboxAdvanced">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>{{ 'lbl.Advanced'|trans|capitalize }}</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="checkboxClassname">{{ 'lbl.Classname'|trans|capitalize }}</label>
+                                    <label for="checkboxClassname" class="control-label">{{ 'lbl.Classname'|trans|capitalize }}</label>
                                     {% form_field checkbox_classname %}
                                 </div>
                             </div>
@@ -688,9 +598,9 @@
             <div class="modal-body">
                 <input type="hidden" name="submit_id" id="submitId" value="" />
                 <div class="form-group">
-                    <label for="submit">
+                    <label for="submit" class="control-label">
                         {{ 'lbl.Content'|trans|capitalize }}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                     </label>
                     <p id="submitError" class="text-danger jsFieldError" style="display: none;"></p>
                     {% form_field submit %}
@@ -713,9 +623,9 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="heading">
+                    <label for="heading" class="control-label">
                         {{ 'lbl.Content'|trans|capitalize }}
-                        <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                     </label>
                     <p id="headingError" class="text-danger jsFieldError" style="display: none;"></p>
                     {% form_field heading %}

@@ -3,15 +3,18 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Edit'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form edit %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="title">{{ 'lbl.Title'|trans|capitalize }}</label>
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|capitalize }}</label>
         {% form_field_error title %} {% form_field title %}
       </div>
       <div class="panel panel-default">
@@ -22,37 +25,37 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="street">
+            <label for="street" class="control-label">
               {{ 'lbl.Street'|trans|capitalize }}
-              <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
             </label>
             {% form_field_error street %} {% form_field street %}
           </div>
           <div class="form-group">
-            <label for="number">
+            <label for="number" class="control-label">
               {{ 'lbl.Number'|trans|capitalize }}
-              <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
             </label>
             {% form_field_error number %} {% form_field number %}
           </div>
           <div class="form-group">
-            <label for="zip">
+            <label for="zip" class="control-label">
               {{ 'lbl.Zip'|trans|capitalize }}
-              <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
             </label>
             {% form_field_error zip %} {% form_field zip %}
           </div>
           <div class="form-group">
-            <label for="city">
+            <label for="city" class="control-label">
               {{ 'lbl.City'|trans|capitalize }}
-              <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
             </label>
             {% form_field_error city %} {% form_field city %}
           </div>
           <div class="form-group">
-            <label for="country">
+            <label for="country" class="control-label">
               {{ 'lbl.Country'|trans|capitalize }}
-              <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
             </label>
             {% form_field_error country %} {% form_field country %}
           </div>
@@ -94,40 +97,40 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="zoomLevel">{{ 'lbl.ZoomLevel'|trans|capitalize }}</label>
+            <label for="zoomLevel" class="control-label">{{ 'lbl.ZoomLevel'|trans|capitalize }}</label>
             {% form_field_error zoom_level %} {% form_field zoom_level %}
           </div>
           <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
-            <label for="width">{{ 'lbl.Width'|trans|capitalize }}</label>
-            <p class="text-info">{{ 'msg.WidthHelp'|trans|sprintf(300:800 ) }}</p>
+            <label for="width" class="control-label">{{ 'lbl.Width'|trans|capitalize }}</label>
+            <p class="help-block">{{ 'msg.WidthHelp'|trans|sprintf(300:800 ) }}</p>
             {% form_field_error width %} {% form_field width %}
           </div>
           <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
-            <label for="height">{{ 'lbl.Height'|trans|capitalize }}</label>
-            <p class="text-info">{{ 'msg.HeightHelp'|trans|sprintf(150 ) }}</p>
+            <label for="height" class="control-label">{{ 'lbl.Height'|trans|capitalize }}</label>
+            <p class="help-block">{{ 'msg.HeightHelp'|trans|sprintf(150 ) }}</p>
             {% form_field_error height %} {% form_field height %}
           </div>
           <div class="form-group">
-            <label for="mapType">{{ 'lbl.MapType'|trans|capitalize }}</label>
+            <label for="mapType" class="control-label">{{ 'lbl.MapType'|trans|capitalize }}</label>
             {% form_field_error map_type %} {% form_field map_type %}
           </div>
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="fullUrl">{% form_field full_url %} {{ msg.ShowMapUrl }}</label>
+                <label for="fullUrl" class="control-label">{% form_field full_url %} {{ msg.ShowMapUrl }}</label>
               </li>
               <li class="checkbox">
-                <label for="directions">{% form_field directions %} {{ msg.ShowDirections }}</label>
+                <label for="directions" class="control-label">{% form_field directions %} {{ msg.ShowDirections }}</label>
               </li>
               <li class="checkbox">
-                <label for="markerOverview">{% form_field marker_overview %} {{ msg.ShowMarkerOverview }}</label>
+                <label for="markerOverview" class="control-label">{% form_field marker_overview %} {{ msg.ShowMarkerOverview }}</label>
               </li>
             </ul>
           </div>
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
               <a href="#" id="saveLiveData" class="btn btn-primary">
-                <span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
+                <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
               </a>
             </div>
           </div>
@@ -141,14 +144,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showLocationDelete %}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {{ 'lbl.Delete'|trans|capitalize }}
           </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="saveLiveData" type="button" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
+            <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
           </button>
         </div>
       </div>

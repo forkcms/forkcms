@@ -3,19 +3,22 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Statistics'|trans|capitalize }} {{ lbl.For }} &ldquo;{{ campaign.name }}&rdquo;</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showMailmotorCampaigns %}
         <a href="{{ geturl('campaigns' ) }}" class="btn btn-default" title="{{ 'lbl.Campaigns'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="fa fa-list"></span>
           {{ 'msg.BackToCampaigns'|trans|sprintf(campaign.name ) }}
         </a>
         {% endif %}
         {% if showMailmotorExportStatisticsCampaign %}
         <a href="{{ geturl('export_statistics_campaign' ) }}&amp;id={{ campaign.id }}" class="btn btn-default" title="{{ 'lbl.ExportStatistics'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-export"></span>
+          <span class="fa fa-download"></span>
           {{ 'lbl.ExportStatistics'|trans|capitalize }}
         </a>
         {% endif %}

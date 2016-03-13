@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Edit'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form edit %}
@@ -29,15 +32,10 @@
           <div role="tabpanel" class="tab-pane active" id="tabName">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Name'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
-                  <label for="name">
+                  <label for="name" class="control-label">
                     {{ 'lbl.Name'|trans|capitalize }}&nbsp;
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error name %} {% form_field name %}
                 </div>
@@ -47,13 +45,8 @@
           <div role="tabpanel" class="tab-pane" id="tabDashboard">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Dashboard'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group jsGroupsWidgets">
-                  <label for="toggleChecksWidgets">{{ 'lbl.DisplayWidgets'|trans|capitalize }}</label>
+                  <label for="toggleChecksWidgets" class="control-label">{{ 'lbl.DisplayWidgets'|trans|capitalize }}</label>
                   {% if widgets %}
                   {{ widgets }}
                   {% endif %}
@@ -67,19 +60,14 @@
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Modules'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
                   {% for permission in permissions %}
-                  <div class="panel panel-default jsGroupsPermissionsModule">
+                  <div class="panel panel-transparent jsGroupsPermissionsModule">
                     <div class="panel-heading" role="tab" id="permission-heading-{{ permission.id }}">
                       <h4 class="panel-title">
                         {{ permission.chk }}
                         <a data-toggle="collapse" data-parent="#permission" href="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="collapseOne">
-                          <label for="{{ permission.id }}">{{ permission.label }}</label>
+                          <label for="{{ permission.id }}"><span class="fa fa-caret-right fa-fw"></span> {{ permission.label }}</label>
                         </a>
                       </h4>
                     </div>
@@ -93,11 +81,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabUsers">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{{ 'lbl.Users'|trans|capitalize }} in {{ groupName|capitalize }}</h3>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-12">
                 {% if dataGridUsers %}
@@ -119,14 +102,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showGroupsDelete %}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>&nbsp;
+            <span class="fa fa-trash-o"></span>&nbsp;
             {{ 'lbl.Delete'|trans|capitalize }}
           </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
+            <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
           </button>
         </div>
       </div>

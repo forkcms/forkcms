@@ -3,18 +3,21 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Modules'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showExtensionsUploadModule %}
         <a href="{{ geturl('upload_module' ) }}" class="btn btn-default">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-upload"></span>&nbsp;
           <span>{{ 'lbl.UploadModule'|trans|capitalize }}</span>
         </a>
         {% endif %}
         <a href="http://www.fork-cms.com/extensions/apps" target="_blank" class="btn btn-default">
-          <span class="glyphicon glyphicon-search"></span>&nbsp;
+          <span class="fa fa-eye"></span>&nbsp;
           <span>{{ 'lbl.FindModules'|trans|capitalize }}</span>
         </a>
       </div>

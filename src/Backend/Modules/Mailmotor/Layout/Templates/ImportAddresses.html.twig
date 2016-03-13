@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.ImportAddresses'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form import %}
@@ -19,7 +22,7 @@
         <div class="panel-body">
           <div class="form-group">
             {% if showMailmotorImportAddresses %}
-            <label for="download">Download <a href="{{ geturl('import_addresses' ) }}&amp;example=1">{{ lbl.ExampleFile }}</a>.</label>
+            <label for="download" class="control-label">Download <a href="{{ geturl('import_addresses' ) }}&amp;example=1">{{ lbl.ExampleFile }}</a>.</label>
             {% endif %}
             {% form_field_error csv %} {% form_field csv %}
           </div>

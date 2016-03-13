@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Add'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form add %}
@@ -23,36 +26,31 @@
           <div role="tabpanel" class="tab-pane active" id="tabGeneral">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.General'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
-                  <label for="name">
+                  <label for="name" class="control-label">
                     {{ 'lbl.Name'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error name %} {% form_field name %}
                 </div>
                 <div class="form-group">
-                  <label for="method">
+                  <label for="method" class="control-label">
                     {{ 'lbl.Method'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error method %} {% form_field method %}
                 </div>
                 <div class="form-group">
-                  <label for="email">
+                  <label for="email" class="control-label">
                     {{ 'lbl.Recipient'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error email %} {% form_field email %}
                 </div>
                 <div class="form-group">
-                  <label for="successMessage">
+                  <label for="successMessage" class="control-label">
                     {{ 'lbl.SuccessMessage'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error success_message %} {% form_field success_message %}
                 </div>
@@ -62,14 +60,9 @@
           <div role="tabpanel" class="tab-pane" id="tabExtra">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Extra'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label for="identifier">
+                <label for="identifier" class="control-label">
                   {{ 'lbl.Identifier'|trans|capitalize }}
-                  <abbr class="glyphicon glyphicon-info-sign" title="{{ msg.HelpIdentifier }}"></abbr>
+                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ msg.HelpIdentifier }}"></abbr>
                 </label>
                 {% form_field_error identifier %} {% form_field identifier %}
               </div>
@@ -84,7 +77,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+            <span class="fa fa-plus"></span>&nbsp;
             {{ 'lbl.Add'|trans|capitalize }}
           </button>
         </div>

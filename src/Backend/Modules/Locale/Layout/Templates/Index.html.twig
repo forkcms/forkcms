@@ -3,25 +3,28 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Translations'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showLocaleAdd %}
         <a href="{{ geturl('add' ) }}{{ filter }}" class="btn btn-default jsButtonAdd">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           <span>{{ 'lbl.Add'|trans|capitalize }}</span>
         </a>
         {% endif %}
         {% if showLocaleExport %}
         <a href="{{ geturl('export' ) }}{{ filter }}" class="btn btn-default jsButtonExport">
-          <span class="glyphicon glyphicon-export"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           <span>{{ 'lbl.Export'|trans|capitalize }}</span>
         </a>
         {% endif %}
         {% if showLocaleImport %}
         <a href="{{ geturl('import' ) }}{{ filter }}" class="btn btn-default jsButtonImport">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-upload"></span>&nbsp;
           <span>{{ 'lbl.Import'|trans|capitalize }}</span>
         </a>
         {% endif %}
@@ -37,11 +40,11 @@
           <div class="row">
             <div class="col-md-3">
               <div class="form-group">
-                <label for="application">{{ 'lbl.Application'|trans|capitalize }}</label>
+                <label for="application" class="control-label">{{ 'lbl.Application'|trans|capitalize }}</label>
                 {% form_field_error application %} {% form_field application %}
               </div>
               <div class="form-group">
-                <label for="module">{{ 'lbl.Module'|trans|capitalize }}</label>
+                <label for="module" class="control-label">{{ 'lbl.Module'|trans|capitalize }}</label>
                 {% form_field_error module %} {% form_field module %}
               </div>
             </div>
@@ -50,9 +53,9 @@
                 <label>{{ 'lbl.Types'|trans|capitalize }}</label>
                 {% if type %}
                   <ul class="list-unstyled">
-                    {% for _itr_14 in type %}
+                    {% for item in type %}
                       <li class="checkbox">
-                        <label for="{{ _itr_14.id }}">{{ _itr_14.chkType }} {{ _itr_14.label|capitalize }}</label>
+                        <label for="{{ item.id }}">{{ item.chkType | raw }} {{ item.label|capitalize }}</label>
                       </li>
                     {% endfor %}
                   </ul>
@@ -64,9 +67,9 @@
                 <label>{{ 'lbl.Languages'|trans|capitalize }}</label>
                 {% if language %}
                   <ul class="list-unstyled">
-                    {% for _itr_15 in language %}
+                    {% for item in language %}
                       <li class="checkbox">
-                        <label for="{{ _itr_15.id }}">{{ _itr_15.chkLanguage }} {{ _itr_15.label|capitalize }}</label>
+                        <label for="{{ item.id }}">{{ item.chkLanguage | raw }} {{ item.label|capitalize }}</label>
                       </li>
                     {% endfor %}
                   </ul>
@@ -75,16 +78,16 @@
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label for="name">
+                <label for="name" class="control-label">
                   {{ 'lbl.ReferenceCode'|trans|capitalize }}&nbsp;
-                  <abbr class="glyphicon glyphicon-info-sign" title="{{ msg.HelpName }}"></abbr>
+                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ msg.HelpName }}"></abbr>
                 </label>
                 {% form_field_error name %} {% form_field name %}
               </div>
               <div class="form-group">
-                <label for="value">
+                <label for="value" class="control-label">
                   {{ 'lbl.Value'|trans|capitalize }}&nbsp;
-                  <abbr class="glyphicon glyphicon-info-sign" title="{{ msg.HelpValue }}"></abbr>
+                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ msg.HelpValue }}"></abbr>
                 </label>
                 {% form_field_error value %} {% form_field value %}
               </div>
@@ -95,7 +98,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               <button id="search" class="btn btn-primary" type="submit" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span class="fa fa-refresh"></span>&nbsp;
                 {{ 'lbl.UpdateFilter'|trans|capitalize }}
               </button>
             </div>
@@ -114,7 +117,7 @@
           {{ 'lbl.Labels'|trans|capitalize }}
         </h3>
       </div>
-      {{ dgLabels }}
+      {{ dgLabels | raw}}
     </div>
   </div>
 </div>
@@ -128,7 +131,7 @@
           {{ 'lbl.Messages'|trans|capitalize }}
         </h3>
       </div>
-      {{ dgMessages }}
+      {{ dgMessages | raw}}
     </div>
   </div>
 </div>
@@ -139,10 +142,10 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          {{ 'lbl.'err.rs''|trans|trans|capitalize }}
+          {{ 'lbl.errors'|trans|capitalize }}
         </h3>
       </div>
-      {{ dgErrors }}
+      {{ dgErrors | raw }}
     </div>
   </div>
 </div>
@@ -153,11 +156,11 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          {{ 'lbl.'act.ons''|trans|trans|capitalize }}&nbsp;
-          <abbr class="glyphicon glyphicon-info-sign" title="{{ msg.HelpActionValue }}"></abbr>
+          {{ 'lbl.actions'|trans|capitalize }}&nbsp;
+          <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ msg.HelpActionValue }}"></abbr>
         </h3>
       </div>
-      {{ dgActions }}
+      {{ dgActions | raw }}
     </div>
   </div>
 </div>

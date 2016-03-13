@@ -3,13 +3,16 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.FormData'|trans|sprintf(name|capitalize ) }}</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showFormBuilderData %}
         <a href="{{ geturl('data' ) }}&amp;id={{ formId }}&amp;start_date={{ filter.start_date }}&amp;end_date={{ filter.end_date }}" class="btn btn-default">
-          <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+          <span class="fa fa-list"></span>&nbsp;
           {{ 'lbl.BackToData'|trans|capitalize }}
         </a>
         {% endif %}
@@ -59,7 +62,7 @@
       <div class="btn-group pull-left" role="group">
         {% if showFormBuilderMassDataAction %}
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-          <span class="glyphicon glyphicon-trash"></span>
+          <span class="fa fa-trash-o"></span>
           {{ 'lbl.Delete'|trans|capitalize }}
         </button>
         {% endif %}

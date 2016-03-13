@@ -3,18 +3,21 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Import'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showProfilesIndex %}
         <a href="{{ geturl('index' ) }}" class="btn btn-default" title="{{ 'lbl.Cancel'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-remove"></span>&nbsp;
+          <span class="fa fa-times"></span>&nbsp;
           {{ 'lbl.Cancel'|trans|capitalize }}
         </a>
         {% endif %}
         <a href="{{ geturl('export_template' ) }}" class="btn btn-default" title="{{ 'lbl.ExportTemplate'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-export"></span>&nbsp;
+          <span class="fa fa-download"></span>&nbsp;
           {{ 'lbl.ExportTemplate'|trans|capitalize }}
         </a>
       </div>
@@ -25,13 +28,13 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="group">{{ 'lbl.Group'|trans|capitalize }}</label>
+        <label for="group" class="control-label">{{ 'lbl.Group'|trans|capitalize }}</label>
         {% form_field_error group %} {% form_field group %}
       </div>
       <div class="form-group">
-        <label for="file">
+        <label for="file" class="control-label">
           {{ 'lbl.File'|trans|capitalize }}&nbsp;
-          <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
         </label>
         {% form_field_error file %} {% form_field file %}
       </div>

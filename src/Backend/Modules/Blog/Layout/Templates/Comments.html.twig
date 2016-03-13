@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Comments'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 <div class="row fork-module-content">
@@ -23,11 +26,6 @@
       </ul>
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="tabPublished">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>{{ 'lbl.Published'|trans|capitalize }}</h3>
-            </div>
-          </div>
           {% if dgPublished %}
           <form act.on="{{  geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsPublished">
             <input type="hidden" name="from" value="published" />
@@ -71,11 +69,6 @@
           {% endif %}
         </div>
         <div role="tabpanel" class="tab-pane" id="tabModeration">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>{{ 'lbl.WaitingForModeration'|trans|capitalize }}</h3>
-            </div>
-          </div>
           {% if dgModeration %}
           <form act.on="{{  geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsModeration">
             <input type="hidden" name="from" value="moderation" />
@@ -119,11 +112,6 @@
           {% endif %}
         </div>
         <div role="tabpanel" class="tab-pane" id="tabSpam">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>{{ 'lbl.Spam'|trans|capitalize }}</h3>
-            </div>
-          </div>
           {% if dgSpam %}
           <form act.on="{{  geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsSpam">
             <input type="hidden" name="from" value="spam" />

@@ -3,19 +3,22 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Groups'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showMailmotorImportGroups %}
         <a href="{{ geturl('import_groups' ) }}" class="btn btn-default" title="{{ 'lbl.ImportGroups'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-upload"></span>&nbsp;
           {{ 'lbl.ImportGroups'|trans|capitalize }}
         </a>
         {% endif %}
         {% if showMailmotorAddGroup %}
         <a href="{{ geturl('add_group' ) }}" class="btn btn-default" title="{{ 'lbl.AddGroup'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {{ 'lbl.AddGroup'|trans|capitalize }}
         </a>
         {% endif %}

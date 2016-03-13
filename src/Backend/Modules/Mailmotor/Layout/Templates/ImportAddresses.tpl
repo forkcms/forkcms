@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblImportAddresses|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:import}
@@ -17,7 +20,7 @@
         <div class="panel-body">
           <div class="form-group{option:fileCsvError} has-error{/option:fileCsvError}">
             {option:showMailmotorImportAddresses}
-            <label for="download">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1" class="control-label">{$lblExampleFile}</a>.</label>
+            <label for="download" class="control-label">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1" class="control-label">{$lblExampleFile}</a>.</label>
             {/option:showMailmotorImportAddresses}
             {$fileCsv} {$fileCsvError}
           </div>

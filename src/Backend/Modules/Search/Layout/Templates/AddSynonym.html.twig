@@ -3,25 +3,28 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.AddSynonym'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form addItem %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="term">
+        <label for="term" class="control-label">
           {{ 'lbl.Term'|trans|capitalize }}
-          <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
         </label>
         {% form_field_error term %} {% form_field term %}
       </div>
       <div class="form-group">
         <div class="fakeP">
-          <label for="addValue-synonym">
+          <label for="addValue-synonym" class="control-label">
             {{ 'lbl.Synonyms'|trans|capitalize }}
-            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
           </label>
           <div class="itemAdder">
             {% form_field_error synonym %} {% form_field synonym %}
@@ -35,7 +38,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+            <span class="fa fa-plus"></span>&nbsp;
             {{ 'lbl.AddSynonym'|trans|capitalize }}
           </button>
         </div>

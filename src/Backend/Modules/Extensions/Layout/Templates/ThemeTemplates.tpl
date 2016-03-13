@@ -34,7 +34,7 @@
 </div>
 	<div class="pageTitle">
 		<h2>
-			{$lblExtensions|ucfirst}: <label for="theme">{$lblTemplates} {$lblFor}</label> {$ddmTheme}
+			{$lblExtensions|ucfirst}: <label for="theme" class="control-label">{$lblTemplates} {$lblFor}</label> {$ddmTheme}
 		</h2>
 
 		{option:showExtensionsAddThemeTemplate}

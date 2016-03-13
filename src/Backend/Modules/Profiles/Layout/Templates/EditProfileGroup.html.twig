@@ -3,19 +3,22 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.EditGroup'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form editProfileGroup %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="group">{{ 'lbl.Group'|trans|capitalize }}</label>
+        <label for="group" class="control-label">{{ 'lbl.Group'|trans|capitalize }}</label>
         {% form_field_error group %} {% form_field group %}
       </div>
       <div class="form-group">
-        <label for="expirationDate">{{ 'lbl.ExpiresOn'|trans|capitalize }}:</label>
+        <label for="expirationDate" class="control-label">{{ 'lbl.ExpiresOn'|trans|capitalize }}:</label>
         <div class="form-inline">
           <div class="form-group">
             {% form_field_error expiration_date %} {% form_field expiration_date %}
@@ -33,14 +36,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showProfilesDeleteProfileGroup %}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {{ 'lbl.Delete'|trans|capitalize }}
           </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="saveButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
+            <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
           </button>
         </div>
       </div>

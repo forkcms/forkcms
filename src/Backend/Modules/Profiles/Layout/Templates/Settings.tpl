@@ -2,8 +2,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblModuleSettings|ucfirst}: {$lblProfiles}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 
@@ -19,8 +22,8 @@
         <div class="panel-body">
           <div class="form-group{option:txtProfileNotificationEmailError} has-error{/option:txtProfileNotificationEmailError}">
             <ul class="list-unstyled">
-              <li class="checkbox"><label for="sendNewProfileAdminMail">{$chkSendNewProfileAdminMail} {$lblSendNewProfileAdminMail|ucfirst}</label></li>
-              <li class="checkbox" id="overwriteProfileNotificationEmailBox"><label for="overwriteProfileNotificationEmail">{$chkOverwriteProfileNotificationEmail} {$lblOverwriteProfileNotificationEmail|ucfirst}</label><br/>
+              <li class="checkbox"><label for="sendNewProfileAdminMail" class="control-label">{$chkSendNewProfileAdminMail} {$lblSendNewProfileAdminMail|ucfirst}</label></li>
+              <li class="checkbox" id="overwriteProfileNotificationEmailBox"><label for="overwriteProfileNotificationEmail" class="control-label">{$chkOverwriteProfileNotificationEmail} {$lblOverwriteProfileNotificationEmail|ucfirst}</label><br/>
                   <span id="profileNotificationEmailBox">
                       {$txtProfileNotificationEmail}<abbr title="{$lblRequiredField|ucfirst}">*</abbr> {$txtProfileNotificationEmailError}
                   </span>
@@ -29,7 +32,7 @@
           </div>
           <div class="form-group">
             <ul class="list-unstyled">
-              <li class="checkbox"><label for="sendNewProfileMail">{$chkSendNewProfileMail} {$lblSendNewProfileMail|ucfirst}</label></li>
+              <li class="checkbox"><label for="sendNewProfileMail" class="control-label">{$chkSendNewProfileMail} {$lblSendNewProfileMail|ucfirst}</label></li>
             </ul>
           </div>
         </div>

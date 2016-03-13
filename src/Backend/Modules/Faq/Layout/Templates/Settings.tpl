@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblSettings|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:settings}
@@ -51,7 +54,7 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="allowMultipleCategories">
+                <label for="allowMultipleCategories" class="control-label">
                   {$chkAllowMultipleCategories} {$lblAllowMultipleCategories|ucfirst}
                 </label>
               </li>
@@ -73,22 +76,22 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="allowFeedback">
+                <label for="allowFeedback" class="control-label">
                   {$chkAllowFeedback} {$lblAllowFeedback|ucfirst}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="allowOwnQuestion">
+                <label for="allowOwnQuestion" class="control-label">
                   {$chkAllowOwnQuestion} {$lblAllowOwnQuestion|ucfirst}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="sendEmailOnNewFeedback">
+                <label for="sendEmailOnNewFeedback" class="control-label">
                   {$chkSendEmailOnNewFeedback} {$lblSendEmailOnNewFeedback|ucfirst}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="spamfilter">
+                <label for="spamfilter" class="control-label">
                   {$chkSpamfilter} {$lblFilterCommentsForSpam|ucfirst}
                 </label>
                 <p class="help-block">

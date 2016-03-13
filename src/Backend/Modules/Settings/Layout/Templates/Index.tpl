@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblGeneralSettings|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:settingsIndex}
@@ -52,7 +55,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group{option:txtSiteStartOfBodyScriptsError} has-error{/option:txtSiteStartOfBodyScriptsError}">
-            <label for="siteStartOfBodyScripts">{$msgHelpScriptsStartOfBodyLabel}</label>
+            <label for="siteStartOfBodyScripts" class="control-label">{$msgHelpScriptsStartOfBodyLabel}</label>
             {$txtSiteStartOfBodyScripts} {$txtSiteStartOfBodyScriptsError}
             <span class="help-block">{$msgHelpScriptsStartOfBody}</span>
           </div>
@@ -319,7 +322,7 @@
             <p>{$msgHelpCookies}</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="showCookieBar">{$chkShowCookieBar} {$msgShowCookieBar}</label>
+                <label for="showCookieBar" class="control-label">{$chkShowCookieBar} {$msgShowCookieBar}</label>
               </li>
             </ul>
           </div>

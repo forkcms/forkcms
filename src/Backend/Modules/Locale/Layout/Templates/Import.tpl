@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblImport|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:import}
@@ -18,7 +21,7 @@
       <div class="form-group">
         <ul class="list-unstyled">
           <li class="checkbox">
-            <label for="overwrite">{$chkOverwrite} {$msgOverwriteConflicts}</label>
+            <label for="overwrite" class="control-label">{$chkOverwrite} {$msgOverwriteConflicts}</label>
           </li>
         </ul>
       </div>

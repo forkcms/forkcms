@@ -3,18 +3,21 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Themes'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showExtensionsUploadTheme %}
         <a href="{{ geturl('upload_theme' ) }}" class="btn btn-default">
-          <span class="glyphicon glyphicon-import"></span>&nbsp;
+          <span class="fa fa-upload"></span>&nbsp;
           <span>{{ 'lbl.UploadTheme'|trans|capitalize }}</span>
         </a>
         {% endif %}
         <a href="http://www.fork-cms.com/extensions/themes" target="_blank" class="btn btn-default">
-          <span class="glyphicon glyphicon-search"></span>&nbsp;
+          <span class="fa fa-eye"></span>&nbsp;
           <span>{{ 'lbl.FindThemes'|trans|capitalize }}</span>
         </a>
       </div>
@@ -32,8 +35,8 @@
           </h3>
         </div>
         <div class="panel-body">
-          <p class="text-info">{{ msg.HelpInstallableThemes }}</p>
-          <ul id="installableThemes" class="selectThumbList list-unstyled list-inline">
+          <p class="help-block">{{ msg.HelpInstallableThemes }}</p>
+          <div id="installedThemes" class="selectThumbList row">
             {% for installableThem in installableThemes %}
             <li>
               <div class="panel panel-default">
@@ -51,13 +54,13 @@
                     <div class="btn-group pull-right" role="group">
                       {% if showExtensionsInstallTheme %}
                       <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmInstall{{ installableThem.value|capitalize }}">
-                        <span class="glyphicon glyphicon-save"></span>&nbsp;
+                        <span class="fa fa-file-o"></span>&nbsp;
                         {{ 'lbl.Install'|trans|capitalize }}
                       </button>
                       {% endif %}
                       {% if showExtensionsDetailTheme %}
                       <a href="{{ geturl('detail_theme' ) }}&theme={{ installableThem.value }}" class="btn btn-default" role="button" title="{{ installableThem.label|capitalize }}">
-                        <span class="glyphicon glyphicon-search"></span>&nbsp;
+                        <span class="fa fa-eye"></span>&nbsp;
                         <span>{{ 'lbl.Details'|trans|capitalize }}</span>
                       </a>
                       {% endif %}
@@ -88,7 +91,7 @@
               </div>
             </li>
             {% endfor %}
-          </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -100,18 +103,18 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             {{ 'lbl.InstalledThemes'|trans|capitalize }}&nbsp;
-            <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
           </h3>
         </div>
         <div class="panel-body">
-          <p class="text-info">{{ msg.HelpThemes }}</p>
+          <p class="help-block">{{ msg.HelpThemes }}</p>
           {% if rbtInstalledThemesError %}
           <p class="text-danger">{{ rbtThemesError }}</p>
           {% endif %}
           <ul id="installedThemes" class="selectThumbList list-unstyled list-inline">
             {% for installedThem in installedThemes %}
-            <li class="{% if installedThem.selected %}active{% endif %}">
-              <div class="panel panel-default">
+            <div class="col-md-4 theme">
+                <div class="panel {% if installedThem.selected %}panel-primary{% else %}panel-default{% endif %}">
                 <div class="panel-heading">
                   <label for="{{ installedThem.id }}" class="panel-title">
                     {{ installedThem.rbtInstalledThemes }}
@@ -119,14 +122,14 @@
                   </label>
                 </div>
                 <div class="panel-body">
-                  <img src="{{ installedThem.thumbnail }}" width="172" height="129" class="img-thumbnail" alt="{{ installedThem.label|capitalize }}" />
+                  <img src="{{ installedThem.thumbnail }}" class="img-thumbnail" alt="{{ installedThem.label|capitalize }}" />
                 </div>
                 <div class="panel-footer">
                   {% if showExtensionsDetailTheme %}
                   <div class="btn-toolbar">
                     <div class="btn-group pull-right" role="group">
                       <a href="{{ geturl('detail_theme' ) }}&theme={{ installedThem.value }}" class="btn btn-default" role="button"  title="{{ installedThem.label|capitalize }}">
-                        <span class="glyphicon glyphicon-search"></span>&nbsp;
+                        <span class="fa fa-eye"></span>&nbsp;
                         <span>{{ 'lbl.Details'|trans|capitalize }}</span>
                       </a>
                     </div>
@@ -134,7 +137,7 @@
                   {% endif %}
                 </div>
               </div>
-            </li>
+            </div>
             {% endfor %}
           </ul>
         </div>
@@ -146,7 +149,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
+            <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
           </button>
         </div>
       </div>

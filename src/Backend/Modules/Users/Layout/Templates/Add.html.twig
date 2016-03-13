@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Add'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form add %}
@@ -23,33 +26,36 @@
           <div role="tabpanel" class="tab-pane active" id="tabProfile">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.LoginDetails'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
-                  <label for="email">
+                  <label for="email" class="control-label">
                     {{ 'lbl.Email'|trans|capitalize }}&nbsp;
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error email %} {% form_field email %}
                 </div>
                 <div class="form-group">
-                  <label for="password">
+                  <label for="password" class="control-label">
                     {{ 'lbl.Password'|trans|capitalize }}&nbsp;
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   <table id="passwordStrengthMeter" class="passwordStrength" data-id="password">
                     <tr>
                       <td class="strength" id="passwordStrength">
-                        <p class="strength none text-muted">{{ 'lbl.None'|trans|capitalize }}</p>
-                        <p class="strength weak text-danger">{{ 'lbl.Weak'|trans|capitalize }}</p>
-                        <p class="strength average text-warning">{{ 'lbl.Average'|trans|capitalize }}</p>
-                        <p class="strength strong text-success">{{ 'lbl.Strong'|trans|capitalize }}</p>
+                        <p class="strength none">
+                          <span class="label label-default">None</span>
+                        </p>
+                        <p class="strength weak">
+                          <span class="label label-danger">Weak</span>
+                        </p>
+                        <p class="strength average">
+                          <span class="label label-warning">Average</span>
+                        </p>
+                        <p class="strength strong">
+                          <span class="label label-success">Strong</span>
+                        </p>
                       </td>
                       <td>
-                        <p class="text-info">&nbsp;{{ msg.HelpStrongPassword }}</p>
+                        <p class="help-block">&nbsp;{{ msg.HelpStrongPassword }}</p>
                       </td>
                     </tr>
                   </table>
@@ -60,9 +66,9 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="confirmPassword">
+                  <label for="confirmPassword" class="control-label">
                     {{ 'lbl.ConfirmPassword'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   <div class="form-group form-inline">
                     <div class="form-group">
@@ -80,30 +86,30 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="name">
+                  <label for="name" class="control-label">
                     {{ 'lbl.Name'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error name %} {% form_field name %}
                 </div>
                 <div class="form-group">
-                  <label for="surname">
+                  <label for="surname" class="control-label">
                     {{ 'lbl.Surname'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error surname %} {% form_field surname %}
                 </div>
                 <div class="form-group">
-                  <label for="nickname">
+                  <label for="nickname" class="control-label">
                     {{ 'lbl.Nickname'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
-                  <p class="text-info">{{ msg.HelpNickname }}</p>
+                  <p class="help-block">{{ msg.HelpNickname }}</p>
                   {% form_field_error nickname %} {% form_field nickname %}
                 </div>
                 <div class="form-group">
-                  <label for="avatar">{{ 'lbl.Avatar'|trans|capitalize }}</label>
-                  <p class="text-info">{{ msg.HelpAvatar }}</p>
+                  <label for="avatar" class="control-label">{{ 'lbl.Avatar'|trans|capitalize }}</label>
+                  <p class="help-block">{{ msg.HelpAvatar }}</p>
                   {% form_field_error avatar %} {% form_field avatar %}
                 </div>
               </div>
@@ -116,19 +122,19 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="interfaceLanguage">{{ 'lbl.Language'|trans|capitalize }}</label>
+                  <label for="interfaceLanguage" class="control-label">{{ 'lbl.Language'|trans|capitalize }}</label>
                   {% form_field_error interface_language %} {% form_field interface_language %}
                 </div>
                 <div class="form-group">
-                  <label for="dateFormat">{{ 'lbl.DateFormat'|trans|capitalize }}</label>
+                  <label for="dateFormat" class="control-label">{{ 'lbl.DateFormat'|trans|capitalize }}</label>
                   {% form_field_error date_format %} {% form_field date_format %}
                 </div>
                 <div class="form-group">
-                  <label for="timeFormat">{{ 'lbl.TimeFormat'|trans|capitalize }}</label>
+                  <label for="timeFormat" class="control-label">{{ 'lbl.TimeFormat'|trans|capitalize }}</label>
                   {% form_field_error time_format %} {% form_field time_format %}
                 </div>
                 <div class="form-group">
-                  <label for="numberFormat">{{ 'lbl.NumberFormat'|trans|capitalize }}</label>
+                  <label for="numberFormat" class="control-label">{{ 'lbl.NumberFormat'|trans|capitalize }}</label>
                   {% form_field_error number_format %} {% form_field number_format %}
                 </div>
               </div>
@@ -145,7 +151,7 @@
                   {% form_field_error csv_split_character %} {% form_field csv_split_character %}
                 </div>
                 <div class="form-group">
-                  <label for="csvLineEnding">{{ 'lbl.LineEnding'|trans|capitalize }}</label>
+                  <label for="csvLineEnding" class="control-label">{{ 'lbl.LineEnding'|trans|capitalize }}</label>
                   {% form_field_error csv_line_ending %} {% form_field csv_line_ending %}
                 </div>
               </div>
@@ -154,18 +160,13 @@
           <div role="tabpanel" class="tab-pane" id="tabPermissions">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.AccountManagement'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <ul class="list-unstyled">
                     <li class="checkbox">
-                      <label for="active">{% form_field_error active %} {{ msg.HelpActive }}</label> {% form_field active %}
+                      <label for="active" class="control-label">{% form_field_error active %} {{ msg.HelpActive }}</label> {% form_field active %}
                     </li>
                     <li class="checkbox">
-                      <label for="apiAccess">{% form_field_error api_access %} {{ msg.HelpAPIAccess }}</label> {% form_field api_access %}
+                      <label for="apiAccess" class="control-label">{% form_field_error api_access %} {{ msg.HelpAPIAccess }}</label> {% form_field api_access %}
                     </li>
                   </ul>
                 </div>
@@ -192,7 +193,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+            <span class="fa fa-plus"></span>&nbsp;
             {{ 'lbl.Add'|trans|capitalize }}
           </button>
         </div>

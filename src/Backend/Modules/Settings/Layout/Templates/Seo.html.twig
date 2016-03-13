@@ -3,8 +3,11 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.SEOSettings'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form settingsSeo %}
@@ -20,15 +23,15 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="seoNoodp">{% form_field seo_noodp %} NOODP</label>
-                <p class="text-info">{{ msg.HelpSEONoodp }}</p>
+                <label for="seoNoodp" class="control-label">{% form_field seo_noodp %} NOODP</label>
+                <p class="help-block">{{ msg.HelpSEONoodp }}</p>
               </li>
               <li class="checkbox">
-                <label for="seoNoydir">{% form_field seo_noydir %} NOYDIR</label>
-                <p class="text-info">{{ msg.HelpSEONoydir }}</p>
+                <label for="seoNoydir" class="control-label">{% form_field seo_noydir %} NOYDIR</label>
+                <p class="help-block">{{ msg.HelpSEONoydir }}</p>
               </li>
               <li class="checkbox">
-                <label for="seoNofollowInComments">{% form_field seo_nofollow_in_comments %} {{ msg.SEONoFollowInComments }}</label>
+                <label for="seoNofollowInComments" class="control-label">{% form_field seo_nofollow_in_comments %} {{ msg.SEONoFollowInComments }}</label>
               </li>
             </ul>
           </div>

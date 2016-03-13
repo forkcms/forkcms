@@ -3,7 +3,7 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>
       {% if not filterCategory %}
       {{ 'lbl.Articles'|trans|capitalize }}
@@ -12,6 +12,8 @@
       {{ 'msg.ArticlesFor'|trans|sprintf(filterCategory.title|capitalize) }}
       {% endif %}
     </h2>
+  </div>
+  <div class="col-md-6">
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showBlogAdd %}
@@ -21,7 +23,7 @@
         {% if not filterCategory %}
         <a href="{{ geturl('add') }}" class="btn btn-default" title="{{ 'lbl.Add'|trans|capitalize }}">
         {% endif %}
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {{ 'lbl.Add'|trans|capitalize }}
         </a>
         {% endif %}
@@ -37,7 +39,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="category">{{ 'msg.ShowOnlyItemsInCategory'|trans }}</label>
+                <label for="category" class="control-label">{{ 'msg.ShowOnlyItemsInCategory'|trans }}</label>
                 {% form_field_error category %} {% form_field category %}
               </div>
             </div>
@@ -47,7 +49,7 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
-                <span class="glyphicon glyphicon-refresh"></span>&nbsp;
+                <span class="fa fa-refresh"></span>&nbsp;
                 {{ 'lbl.UpdateFilter'|trans|capitalize }}
               </button>
             </div>

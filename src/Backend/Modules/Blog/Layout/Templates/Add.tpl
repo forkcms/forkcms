@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblAdd|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:add}
@@ -116,7 +119,7 @@
                 <div class="form-group">
                   <ul class="list-unstyled">
                     <li class="checkbox">
-                      <label for="allowComments">{$chkAllowComments} {$lblAllowComments|ucfirst}</label>
+                      <label for="allowComments" class="control-label">{$chkAllowComments} {$lblAllowComments|ucfirst}</label>
                     </li>
                   </ul>
                 </div>

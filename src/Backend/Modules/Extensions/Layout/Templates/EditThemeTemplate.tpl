@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblEditTemplate|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:edit}
@@ -135,10 +138,10 @@
           <div class="form-group{option:chkActiveError} has-error{/option:chkActiveError}{option:chkDefaultError} has-error{/option:chkDefaultError}">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="active">{$chkActive} {$lblActive|ucfirst}</label> {$chkActiveError}
+                <label for="active" class="control-label">{$chkActive} {$lblActive|ucfirst}</label> {$chkActiveError}
               </li>
               <li class="checkbox">
-                <label for="default">{$chkDefault} {$lblDefault|ucfirst}</label> {$chkDefaultError}
+                <label for="default" class="control-label">{$chkDefault} {$lblDefault|ucfirst}</label> {$chkDefaultError}
               </li>
             </ul>
           </div>
@@ -157,7 +160,7 @@
             <p class="help-block">{$msgHelpOverwrite}</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="overwrite">{$chkOverwrite} {$lblOverwrite|ucfirst}</label> {$chkOverwriteError}
+                <label for="overwrite" class="control-label">{$chkOverwrite} {$lblOverwrite|ucfirst}</label> {$chkOverwriteError}
               </li>
             </ul>
           </div>

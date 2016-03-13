@@ -15,7 +15,7 @@
         <div class="btn-group" role="group">
           {option:showMailmotorAdd}
           <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAddNewMailing|ucfirst}">
-            <span class="fa fa-envelope-o"></span>&nbsp;
+            <span class="fa fa-fa fa-send-o-o"></span>&nbsp;
             {$lblAddNewMailing|ucfirst}
           </a>
           {/option:showMailmotorAdd}

@@ -3,7 +3,7 @@
 {# This is the HTML content, hidden #}
 <div class="modal fade" id="editContent" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Editor'|trans|capitalize }}"
      aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -60,17 +60,17 @@
                 <div id="extraWarningAlreadyBlock" class="alert alert-warning">{{ msg.ModuleBlockAlreadyLinked }}</div>
                 <div id="extraWarningHomeNoBlock" class="alert alert-warning">{{ msg.HomeNoBlock }}</div>
                 <div class="form-group">
-                    <label for="extraType">{{ 'lbl.Type'|trans|capitalize }}</label>
+                    <label for="extraType" class="control-label">{{ 'lbl.Type'|trans|capitalize }}</label>
                     {% form_field extra_type %}
                 </div>
                 <div id="extraModuleHolder" class="form-group" style="display: none;">
-                    <label for="extraModule">{{ 'lbl.WhichModule'|trans|capitalize }}</label>
+                    <label for="extraModule" class="control-label">{{ 'lbl.WhichModule'|trans|capitalize }}</label>
                     <select id="extraModule" class="form-control">
                         <option value="-1">-</option>
                     </select>
                 </div>
                 <div id="extraExtraIdHolder" class="form-group" style="display: none;">
-                    <label for="extraExtraId">{{ 'lbl.WhichWidget'|trans|capitalize }}</label>
+                    <label for="extraExtraId" class="control-label">{{ 'lbl.WhichWidget'|trans|capitalize }}</label>
                     <select id="extraExtraId" class="form-control">
                         <option value="-1">-</option>
                     </select>
@@ -96,25 +96,26 @@
             <div class="modal-body">
                 <div class="alert alert-warning">{{ msg.TemplateChangeWarning }}</div>
                 <div id="templateList">
-                    <ul class="list-unstyled">
-                        {% for templat in templates %}
-                        {% if templat.break %}
-                    </ul>
-                    <ul class="list-unstyled lastChild">
-                        {% endif %}
-                        <li{% if templat.disabled %} class="disabled"{% endif %}>
-                            <label for="template{{ templat.id }}" class="radio">
-                                <input type="radio" id="template{{ templat.id }}" value="{{ templat.id }}"
-                                       name="template_id_chooser"
-                                       class="inputRadio"{% if templat.checked %} checked="checked"{% endif %}{% if templat.disabled %} disabled="disabled"{% endif %} />{{ templat.label }}
-                            </label>
+                    <div class="row">
+                        {% for template in templates %}
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="radio">
+                                        <label for="template{{ template.id }}">
+                                            <input type="radio" id="template{{ template.id }}" value="{{ template.id }}"
+                                                   name="template_id_chooser"
+                                                   class="inputRadio"{% if template.checked %} checked="checked"{% endif %}{% if template.disabled %} disabled="disabled"{% endif %} />{{ template.label }}
+                                        </label>
+                                    </div>
 
-                            <div class="templateVisual current">
-                                {{ templat.html }}
+                                    <div class="templateVisual current">
+                                        {{ template.html }}
+                                    </div>
+                                </div>
                             </div>
-                        </li>
+                        {cycle:'':'</div><div class="row">'}
                         {% endfor %}
-                    </ul>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -144,8 +145,8 @@
 </div>
 
 {# Text editor block #}
-<div class="modal fork-modal-ckeditor fade" id="blockHtml" role="dialog" aria-labelledby="{{ 'lbl.Editor'|trans|capitalize }}" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="blockHtml" role="dialog" aria-labelledby="{{ 'lbl.Editor'|trans|capitalize }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

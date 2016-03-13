@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblSettings|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {option:noAccounts}
@@ -79,7 +82,7 @@
   {option:ddmProfile}
     <div class="box">
       <div class="heading">
-        <h3><label for="account">{$lblChooseWebsiteProfile|ucfirst}</label></h3>
+        <h3><label for="account" class="control-label">{$lblChooseWebsiteProfile|ucfirst}</label></h3>
       </div>
       <div class="panel-body">
         <div class="form-group">

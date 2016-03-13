@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblSettings|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:settings}
@@ -53,17 +56,17 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="allowComments">
+                <label for="allowComments" class="control-label">
                   {$chkAllowComments} {$lblAllowComments|ucfirst}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="moderation">
+                <label for="moderation" class="control-label">
                   {$chkModeration} {$lblEnableModeration|ucfirst}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="spamfilter">
+                <label for="spamfilter" class="control-label">
                   {$chkSpamfilter} {$lblFilterCommentsForSpam|ucfirst}
                 </label>
                 <p class="help-block">
@@ -96,7 +99,7 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="showImageForm">
+                <label for="showImageForm" class="control-label">
                   {$chkShowImageForm} {$msgShowImageForm}
                 </label>
               </li>
@@ -119,12 +122,12 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="notifyByEmailOnNewCommentToModerate">
+                <label for="notifyByEmailOnNewCommentToModerate" class="control-label">
                   {$chkNotifyByEmailOnNewCommentToModerate} {$msgNotifyByEmailOnNewCommentToModerate|ucfirst}
                 </label>
               </li>
               <li class="checkbox">
-                <label for="notifyByEmailOnNewComment">
+                <label for="notifyByEmailOnNewComment" class="control-label">
                   {$chkNotifyByEmailOnNewComment} {$msgNotifyByEmailOnNewComment|ucfirst}
                 </label>
               </li>
@@ -147,7 +150,7 @@
             <p>{$msgHelpPingServices}:</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="pingServices">
+                <label for="pingServices" class="control-label">
                   {$chkPingServices} {$lblPingBlogServices|ucfirst}
                 </label>
               </li>
@@ -183,7 +186,7 @@
             <p>{$msgHelpMeta}:</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="rssMeta">{$chkRssMeta} {$lblMetaInformation|ucfirst}</label>
+                <label for="rssMeta" class="control-label">{$chkRssMeta} {$lblMetaInformation|ucfirst}</label>
               </li>
             </ul>
           </div>

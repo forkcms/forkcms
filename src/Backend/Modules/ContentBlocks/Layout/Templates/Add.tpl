@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{$lblAdd|ucfirst}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {form:add}
@@ -26,7 +29,7 @@
         </div>
       {/option:ddmTemplate}
       <div class="form-group">
-        <label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label>
+        <label for="hidden" class="control-label">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label>
       </div>
     </div>
   </div>

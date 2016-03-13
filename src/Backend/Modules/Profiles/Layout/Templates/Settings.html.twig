@@ -4,8 +4,11 @@
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.ModuleSettings'|trans|capitalize }}: {{ lbl.Profiles }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 
@@ -21,8 +24,8 @@
         <div class="panel-body">
           <div class="form-group">
             <ul class="list-unstyled">
-              <li class="checkbox"><label for="sendNewProfileAdminMail">{% form_field send_new_profile_admin_mail %} {{ 'lbl.SendNewProfileAdminMail'|trans|capitalize }}</label></li>
-              <li class="checkbox" id="overwriteProfileNotificationEmailBox"><label for="overwriteProfileNotificationEmail">{% form_field overwrite_profile_notification_email %} {{ 'lbl.OverwriteProfileNotificationEmail'|trans|capitalize }}</label><br/>
+              <li class="checkbox"><label for="sendNewProfileAdminMail" class="control-label">{% form_field send_new_profile_admin_mail %} {{ 'lbl.SendNewProfileAdminMail'|trans|capitalize }}</label></li>
+              <li class="checkbox" id="overwriteProfileNotificationEmailBox"><label for="overwriteProfileNotificationEmail" class="control-label">{% form_field overwrite_profile_notification_email %} {{ 'lbl.OverwriteProfileNotificationEmail'|trans|capitalize }}</label><br/>
                   <span id="profileNotificationEmailBox">
                       {% form_field_'err.r profile_notification_email %}<abbr title="{{ 'lbl.RequiredField''|trans|trans|capitalize }}">*</abbr> {% form_field profile_notification_email %}
                   </span>
@@ -31,7 +34,7 @@
           </div>
           <div class="form-group">
             <ul class="list-unstyled">
-              <li class="checkbox"><label for="sendNewProfileMail">{% form_field send_new_profile_mail %} {{ 'lbl.SendNewProfileMail'|trans|capitalize }}</label></li>
+              <li class="checkbox"><label for="sendNewProfileMail" class="control-label">{% form_field send_new_profile_mail %} {{ 'lbl.SendNewProfileMail'|trans|capitalize }}</label></li>
             </ul>
           </div>
         </div>

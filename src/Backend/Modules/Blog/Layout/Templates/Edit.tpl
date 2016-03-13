@@ -69,7 +69,7 @@
                   </div>
                   <ul class="list-unstyled">
                     <li class="checkbox">
-                      <label for="deleteImage">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
+                      <label for="deleteImage" class="control-label">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
                       {$chkDeleteImageError}
                     </li>
                   </ul>
@@ -173,7 +173,7 @@
                 <div class="form-group">
                   <ul class="list-unstyled">
                     <li class="checkbox">
-                      <label for="allowComments">{$chkAllowComments} {$lblAllowComments|ucfirst}</label>
+                      <label for="allowComments" class="control-label">{$chkAllowComments} {$lblAllowComments|ucfirst}</label>
                     </li>
                   </ul>
                 </div>

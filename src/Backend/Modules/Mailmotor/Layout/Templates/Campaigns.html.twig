@@ -3,13 +3,16 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Campaigns'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showMailmotorAddCampaign %}
         <a href="{{ geturl('add_campaign') }}" class="btn btn-default" title="{{ 'lbl.AddCampaign'|trans|capitalize }}">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;
+          <span class="fa fa-plus"></span>&nbsp;
           {{ 'lbl.AddCampaign'|trans|capitalize }}
         </a>
         {% endif %}

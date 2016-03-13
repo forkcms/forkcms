@@ -3,32 +3,35 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'lbl.Add'|trans|capitalize }}</h2>
+  </div>
+  <div class="col-md-6">
+
   </div>
 </div>
 {% form add %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="title">{{ 'lbl.Title'|trans|capitalize }}</label>
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|capitalize }}</label>
         {% form_field_error title %} {% form_field title %}
       </div>
       <div class="form-group">
-        <label for="text">
+        <label for="text" class="control-label">
           {{ 'lbl.Content'|trans|capitalize }}
-          <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
         </label>
         {% form_field_error text %} {% form_field text %}
       </div>
       {% if ddmTemplate %}
         <div class="form-group">
-          <label for="template">{{ 'lbl.Template'|trans|capitalize }}</label>
+          <label for="template" class="control-label">{{ 'lbl.Template'|trans|capitalize }}</label>
           {% form_field_error template %} {% form_field template %}
         </div>
       {% endif %}
       <div class="form-group">
-        <label for="hidden">{% form_field_'err.r hidden %} {% form_field hidden %} {{ 'lbl.VisibleOnSite''|trans|trans|capitalize }}</label>
+        <label for="hidden" class="control-label">{% form_field_error hidden %} {% form_field hidden %} {{ 'lbl.VisibleOnSite'|trans|capitalize }}</label>
       </div>
     </div>
   </div>
@@ -37,7 +40,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;
+            <span class="fa fa-plus"></span>&nbsp;
             {{ 'lbl.Add'|trans|capitalize }}
           </button>
         </div>

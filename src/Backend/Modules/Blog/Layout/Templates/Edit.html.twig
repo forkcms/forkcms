@@ -3,12 +3,15 @@
 {% include "/Layout/Templates/Head.html.twig" %}
 {% include "/Layout/Templates/StructureStartModule.html.twig" %}
 <div class="row fork-module-heading">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <h2>{{ 'msg.EditArticle'|trans|capitalize|sprintf(item.title) }}</h2>
+  </div>
+  <div class="col-md-6">
+
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         <a href="{{ detailURL }}/{{ item.url }}{% if item.revision_id %}?revision={{ item.revision_id }}{% endif %}" class="btn btn-default" target="_blank">
-          <span class="glyphicon glyphicon-search"></span>
+          <span class="fa fa-eye"></span>
           <span>{{ 'lbl.View'|trans|capitalize }}</span>
         </a>
       </div>
@@ -19,14 +22,14 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="title">{{ 'lbl.Title'|trans|capitalize }}</label>
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|capitalize }}</label>
         {% form_field_error title %} {% form_field title %}
       </div>
       {% if detailURL %}
-      <p><a href="{{ detailURL }}/{{ item.url }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a></p>
+      <a href="{{ detailURL }}/{{ item.url }}"><small>{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></small></a>
       {% endif %}
       {% if not detailURL %}
-      <p class="text-warning">{{ err.NoModuleLinked }}</p>
+      <p class="text-warning"><span class="fa fa-warning"></span> {{ err.NoModuleLinked }}</p>
       {% endif %}
     </div>
   </div>
@@ -50,29 +53,24 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
-              <div class="col-md-12">
-                <h3>{{ 'lbl.Content'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-md-8">
                 <div class="form-group">
-                  <label for="text">
+                  <label for="text" class="control-label">
                     {{ 'lbl.MainContent'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-asterisk" title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
                   {% form_field_error text %} {% form_field text %}
                 </div>
                 {% if imageIsAllowed %}
                 <div class="form-group">
-                  <label for="image">{{ 'lbl.Image'|trans|capitalize }}</label>
+                  <label for="image" class="control-label">{{ 'lbl.Image'|trans|capitalize }}</label>
                   {% if item.image %}
                   <div>
                     <img src="{{ FRONTEND_FILES_URL }}/blog/images/128x128/{{ item.image }}" class="img-thumbnail" width="128" height="128" alt="{{ 'lbl.Image'|trans|capitalize }}" />
                   </div>
                   <ul class="list-unstyled">
                     <li class="checkbox">
-                      <label for="deleteImage">{% form_field delete_image %} {{ 'lbl.Delete'|trans|capitalize }}</label>
+                      <label for="deleteImage" class="control-label">{% form_field delete_image %} {{ 'lbl.Delete'|trans|capitalize }}</label>
                       {% form_field_error delete_image %}
                     </li>
                   </ul>
@@ -81,9 +79,9 @@
                 </div>
                 {% endif %}
                 <div class="form-group">
-                  <label for="introduction">
+                  <label for="introduction" class="control-label">
                     {{ 'lbl.Summary'|trans|capitalize }}
-                    <abbr class="glyphicon glyphicon-info-sign" title="{{ msg.HelpSummary }}"></abbr>
+                    <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ msg.HelpSummary }}"></abbr>
                   </label>
                   {% form_field_error introduction %} {% form_field introduction %}
                 </div>
@@ -104,9 +102,9 @@
                       </ul>
                     </div>
                     <div class="form-group">
-                      <label for="publishOnDate">{{ 'lbl.PublishOn'|trans|capitalize }}</label>
+                      <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|capitalize }}</label>
                       {% form_field_error publish_on_date %} {% form_field publish_on_date %}
-                      <label for="publishOnTime">{{ lbl.At }}</label>
+                      <label for="publishOnTime" class="control-label">{{ lbl.At }}</label>
                       {% form_field_error publish_on_time %} {% form_field publish_on_time %}
                     </div>
                   </div>
@@ -117,16 +115,16 @@
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
-                      <label for="categoryId">{{ 'lbl.Category'|trans|capitalize }}</label>
+                      <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|capitalize }}</label>
                       {% form_field_error category_id %} {% form_field category_id %}
                     </div>
                     <div class="form-group">
-                      <label for="userId">{{ 'lbl.Author'|trans|capitalize }}</label>
+                      <label for="userId" class="control-label">{{ 'lbl.Author'|trans|capitalize }}</label>
                       {% form_field_error user_id %} {% form_field user_id %}
                     </div>
                     {% if showTagsIndex %}
                     <div class="form-group">
-                      <label for="tags">{{ 'lbl.Tags'|trans|capitalize }}</label>
+                      <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|capitalize }}</label>
                       {% form_field_error tags %} {% form_field tags %}
                     </div>
                     {% endif %}
@@ -138,17 +136,12 @@
           <div role="tabpanel" class="tab-pane" id="tabVersions">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Versions'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 {% if drafts %}
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h3 class="panel-title">
                       {{ 'lbl.Drafts'|trans|capitalize }}
-                      <abbr class="glyphicon glyphicon-info-sign" title="{{ 'msg.HelpDrafts'|trans|capitalize }}"></abbr>
+                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpDrafts'|trans|capitalize }}"></abbr>
                     </h3>
                   </div>
                   {{ drafts|raw }}
@@ -158,7 +151,7 @@
                   <div class="panel-heading">
                     <h3 class="panel-title">
                       {{ 'lbl.PreviousVersions'|trans|capitalize }}
-                      <abbr class="glyphicon glyphicon-info-sign" title="{{ 'msg.HelpRevisions'|trans|capitalize }}"></abbr>
+                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans|capitalize }}"></abbr>
                     </h3>
                   </div>
                   {% if revisions %}
@@ -176,15 +169,10 @@
           <div role="tabpanel" class="tab-pane" id="tabComments">
             <div class="row">
               <div class="col-md-12">
-                <h3>{{ 'lbl.Comments'|trans|capitalize }}</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
                 <div class="form-group">
                   <ul class="list-unstyled">
                     <li class="checkbox">
-                      <label for="allowComments">{% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|capitalize }}</label>
+                      <label for="allowComments" class="control-label">{% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|capitalize }}</label>
                     </li>
                   </ul>
                 </div>
@@ -204,14 +192,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showContentBlocksDelete %}
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="fa fa-trash-o"></span>
             {{ 'lbl.Delete'|trans|capitalize }}
           </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <a href="#" id="saveAsDraft" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;
+            <span class="fa fa-file-o"></span>&nbsp;
             {{ 'lbl.SaveDraft'|trans|capitalize }}
           </a>
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
@@ -249,7 +237,7 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="categoryTitle">
+            <label for="categoryTitle" class="control-label">
               {{ 'lbl.Title'|trans|capitalize }}
               <abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}"></abbr>
             </label>
