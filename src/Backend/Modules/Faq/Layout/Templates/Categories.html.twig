@@ -23,10 +23,10 @@
 <div class="row fork-module-content">
   <div class="col-md-12">
     {% if dataGrid %}
-    {{ dataGrid }}
+      {{ dataGrid|raw }}
     {% endif %}
     {% if not dataGrid %}
-    <p>{{ msg.NoCategories }}</p>
+      <p>{{ msg.NoCategories }}</p>
     {% endif %}
   </div>
 </div>

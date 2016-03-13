@@ -64,7 +64,7 @@
                       <ul class="list-unstyled">
                         {% for _itr_10 in hidden %}
                         <li class="radio">
-                          <label for="{{ _itr_10.id }}">{{ _itr_10.rbtHidden }} {{ _itr_10.label }}</label>
+                          <label for="{{ _itr_10.id }}">{{ _itr_10.rbtHidden | raw }} {{ _itr_10.label }}</label>
                         </li>
                         {% endfor %}
                       </ul>

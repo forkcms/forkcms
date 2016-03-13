@@ -23,26 +23,26 @@
 <div class="row fork-module-content">
   <div class="col-md-12">
     {% if dataGrids %}
-    {% for dataGrid in dataGrids %}
-    <div id="dataGrid-{{ dataGrid.id }}" class="panel panel-default jsDataGridQuestionsHolder">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{ dataGrid.title }}</h3>
-      </div>
-      {% if dataGrid.content %}
-      {{ dataGrid.content }}
-      {% endif %}
-      {% if not dataGrid.content %}
-      <div class="panel-body">
-        {{ emptyDatagrid }}
-      </div>
-      {% endif %}
-    </div>
-    {% endfor %}
+      {% for dataGrid in dataGrids %}
+        <div id="dataGrid-{{ dataGrid.id }}" class="panel panel-default jsDataGridQuestionsHolder">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ dataGrid.title }}</h3>
+          </div>
+          {% if dataGrid.content %}
+            {{ dataGrid.content | raw }}
+          {% endif %}
+          {% if not dataGrid.content %}
+            <div class="panel-body">
+              {{ emptyDatagrid | raw }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
     {% endif %}
     {% if not dataGrids %}
-    <div class="panel-body">
-      <p>{{ msg.NoItems }}</p>
-    </div>
+      <div class="panel-body">
+        <p>{{ msg.NoItems }}</p>
+      </div>
     {% endif %}
   </div>
 </div>
