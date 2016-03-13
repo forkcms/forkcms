@@ -8,7 +8,7 @@
   <div class="panel-body">
     <ul>
       {% for warning in warnings %}
-      <li>{{ warning.message }}</li>
+      <li>{{ warning.message | raw }}</li>
       {% endfor %}
     </ul>
   </div>
