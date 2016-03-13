@@ -54,7 +54,7 @@
         <h3 class="panel-title">{{ 'lbl.InstalledModules'|trans|capitalize }}</h3>
       </div>
       {% if dataGridInstalledModules %}
-      {{ dataGridInstalledModules }}
+      {{ dataGridInstalledModules|raw }}
       {% endif %}
       {% if not dataGridInstalledModules %}
       <div class="panel-body">

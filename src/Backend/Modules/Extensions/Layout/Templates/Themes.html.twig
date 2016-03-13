@@ -117,7 +117,7 @@
                 <div class="panel {% if installedThem.selected %}panel-primary{% else %}panel-default{% endif %}">
                 <div class="panel-heading">
                   <label for="{{ installedThem.id }}" class="panel-title">
-                    {{ installedThem.rbtInstalledThemes }}
+                    {{ installedThem.rbtInstalledThemes|raw }}
                     <span>{{ installedThem.label|capitalize }}</span>
                   </label>
                 </div>
