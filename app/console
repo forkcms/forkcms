@@ -33,8 +33,6 @@ if ($debug) {
 $kernel = new AppKernel($env, $debug);
 
 // make our container available statically. This is needed to make our static models work
-$kernel->boot();
-$kernel->defineForkConstants();
 BaseModel::setContainer($kernel->getContainer());
 
 define('APPLICATION', 'Console');
