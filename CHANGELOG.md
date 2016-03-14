@@ -1,6 +1,7 @@
 3.9.7 (xxxx-xx-xx)
 --
 Bugfixes:
+* Faq: Fixed frontend JS which did not found if "yes" is checked.
 * Core: Fixed when deploying, that /src/Frontend/Cache/Navigation/editor_link_list_x.js is now created if not exists. 
 * Faq: fixes faq-category sequence reordering not being saved.
 * Pages: removed single quotes converter in CacheBuilder. This fixes page titles with single quotes.
