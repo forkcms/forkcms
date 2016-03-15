@@ -16,8 +16,8 @@
             <ul class="data">
               {% for _itr_2 in visitors_graph_data %}
               <li>
-                <span class="fulldate">{{ _itr_2.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|ucwords ) }}</span>
-                <span class="date">{{ _itr_2.ga_date|spoondate('d M',INTERFACE_LANGUAGE|ucwords ) }}</span>
+                <span class="fulldate">{{ _itr_2.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|capitalize ) }}</span>
+                <span class="date">{{ _itr_2.ga_date|spoondate('d M',INTERFACE_LANGUAGE|capitalize ) }}</span>
                 <span class="value">{{ _itr_2.ga_pageviews }}</span>
               </li>
               {% endfor %}
@@ -28,8 +28,8 @@
             <ul class="data">
               {% for _itr_2 in visitors_graph_data %}
               <li>
-                <span class="fulldate">{{ _itr_2.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|ucwords ) }}</span>
-                <span class="date">{{ _itr_2.ga_date|spoondate('d M',INTERFACE_LANGUAGE|ucwords ) }}</span>
+                <span class="fulldate">{{ _itr_2.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|capitalize ) }}</span>
+                <span class="date">{{ _itr_2.ga_date|spoondate('d M',INTERFACE_LANGUAGE|capitalize ) }}</span>
                 <span class="value">{{ _itr_2.ga_users }}</span>
               </li>
               {% endfor %}
