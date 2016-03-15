@@ -93,7 +93,7 @@
               <ul class="list-unstyled">
                 <li class="checkbox">
                   <label for="showImageForm" class="control-label">
-                    {% form_field show_image_form %} {{ msg.ShowImageForm }}
+                    {% form_field show_image_form %} {{ 'msg.ShowImageForm'|trans|capitalize }}
                   </label>
                 </li>
               </ul>
@@ -140,7 +140,7 @@
           </div>
           <div class="panel-body">
             <div class="form-group">
-              <p>{{ msg.HelpPingServices }}:</p>
+              <p>{{ 'msg.HelpPingServices'|trans|capitalize }}:</p>
               <ul class="list-unstyled">
                 <li class="checkbox">
                   <label for="pingServices" class="control-label">
@@ -172,11 +172,11 @@
             </div>
             <div class="form-group">
               <label for="rssDescription" class="control-label">{{ 'lbl.Description'|trans|capitalize }}</label>
-              <p class="help-block">{{ msg.HelpRSSDescription }}</p>
+              <p class="help-block">{{ 'msg.HelpRSSDescription'|trans|capitalize }}</p>
               {% form_field_error rss_description %} {% form_field rss_description %}
             </div>
             <div class="form-group">
-              <p>{{ msg.HelpMeta }}:</p>
+              <p>{{ 'msg.HelpMeta'|trans|capitalize }}:</p>
               <ul class="list-unstyled">
                 <li class="checkbox">
                   <label for="rssMeta" class="control-label">{% form_field rss_meta %} {{ 'lbl.MetaInformation'|trans|capitalize }}</label>

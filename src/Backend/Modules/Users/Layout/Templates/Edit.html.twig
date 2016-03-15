@@ -235,10 +235,10 @@
                   <div class="form-group">
                     <ul class="list-unstyled">
                       <li class="checkbox">
-                        <label for="active" class="control-label">{% form_field_error active %} {{ msg.HelpActive }}</label> {% form_field active %}
+                        <label for="active" class="control-label">{% form_field active %} {% form_field_error active %} {{ 'msg.HelpActive'|trans|capitalize }}</label>
                       </li>
                       <li class="checkbox">
-                        <label for="apiAccess" class="control-label">{% form_field_error api_access %} {{ msg.HelpAPIAccess }}</label> {% form_field api_access %}
+                        <label for="apiAccess" class="control-label">{% form_field api_access %} {% form_field_error api_access %} {{ 'msg.HelpAPIAccess'|trans|capitalize }}</label>
                       </li>
                     </ul>
                   </div>
@@ -247,7 +247,7 @@
                     <ul id="groupList" class="list-unstyled">
                       {% for group in groups %}
                       <li class="checkbox">
-                        <label for="{{ group.id }}">{{ group.chkGroups }} {{ group.label }}</label>
+                        <label for="{{ group.id }}">{{ group.chkGroups|raw }} {{ group.label }}</label>
                       </li>
                       {% endfor %}
                     </ul>

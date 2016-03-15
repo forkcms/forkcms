@@ -118,13 +118,13 @@
             <div class="form-group">
               <ul class="list-unstyled">
                 <li class="checkbox">
-                  <label for="fullUrl" class="control-label">{% form_field full_url %} {{ msg.ShowMapUrl }}</label>
+                  <label for="fullUrl" class="control-label">{% form_field full_url %} {{ 'msg.ShowMapUrl'|trans|capitalize }}</label>
                 </li>
                 <li class="checkbox">
-                  <label for="directions" class="control-label">{% form_field directions %} {{ msg.ShowDirections }}</label>
+                  <label for="directions" class="control-label">{% form_field directions %} {{ 'msg.ShowDirections'|trans|capitalize }}</label>
                 </li>
                 <li class="checkbox">
-                  <label for="markerOverview" class="control-label">{% form_field marker_overview %} {{ msg.ShowMarkerOverview }}</label>
+                  <label for="markerOverview" class="control-label">{% form_field marker_overview %} {{ 'msg.ShowMarkerOverview'|trans|capitalize }}</label>
                 </li>
               </ul>
             </div>

@@ -58,7 +58,7 @@
           <input type="hidden" name="order" value="{{ order }}" />
           <input type="hidden" name="sort" value="{{ sort }}" />
         </div>
-        {{ dgGroups }}
+        {{ dgGroups|raw }}
       </form>
       {% endif %}
       {% if not dgGroups %}

@@ -11,7 +11,7 @@ namespace Backend\Modules\FormBuilder\Engine;
 
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Template as BackendTemplate;
+use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 
 /**
  * Helper class for the form_builder module.

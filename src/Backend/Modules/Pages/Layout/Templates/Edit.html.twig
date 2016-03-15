@@ -139,7 +139,7 @@
               <div class="row">
                 <div class="col-md-12">
                   {% if revisions %}
-                  {{ revisions }}
+                  {{ revisions|raw }}
                   {% endif %}
                   {% if not revisions %}
                   <p>{{ msg.NoRevisions }}</p>
@@ -162,7 +162,7 @@
                   <div class="form-group">
                     <ul class="list-unstyled">
                       <li class="checkbox">
-                        <label for="isAction" class="control-label">{% form_field is_action %} {{ msg.IsAction }}</label>
+                        <label for="isAction" class="control-label">{% form_field is_action %} {{ 'msg.IsAction'|trans|capitalize }}</label>
                       </li>
                     </ul>
                   </div>
@@ -193,12 +193,12 @@
                         <label for="{{ _itr_24.id }}">{{ _itr_24.rbtRedirect|raw }} {{ _itr_24.label }}</label>
                         {% if _itr_24.isInternal %}
                         <label for="internalRedirect" class="_itr_22">{{ _itr_24.label }}</label>
-                        <p class="help-block">{{ msg.HelpInternalRedirect }}</p>
+                        <p class="help-block">{{ 'msg.HelpInternalRedirect'|trans|capitalize }}</p>
                         {% form_field_error internal_redirect %} {% form_field internal_redirect %}
                         {% endif %}
                         {% if _itr_24.isExternal %}
                         <label for="externalRedirect" class="_itr_22">{{ _itr_24.label }}</label>
-                        <p class="help-block">{{ msg.HelpExternalRedirect }}</p>
+                        <p class="help-block">{{ 'msg.HelpExternalRedirect'|trans|capitalize }}</p>
                         {% form_field_error external_redirect %} {% form_field external_redirect %}
                         {% endif %}
                       </li>

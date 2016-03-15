@@ -55,14 +55,14 @@
                 <div class="col-md-12">
                   <h3>
                     {{ 'lbl.PreviousVersions'|trans|capitalize }}
-                    <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{{ msg.HelpRevisions }}"></abbr>
+                    <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans|capitalize }}"></abbr>
                   </h3>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   {% if revisions %}
-                  {{ revisions }}
+                  {{ revisions|raw }}
                   {% endif %}
                   {% if not revisions %}
                   <p>{{ msg.NoRevisions }}</p>

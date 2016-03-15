@@ -26,7 +26,7 @@
             <label class="panel-title">{{ 'lbl.UsedIn'|trans|capitalize }}</label>
           </div>
           {% if usage %}
-          {{ usage }}
+          {{ usage|raw }}
           {% endif %}
           {% if not usage %}
           <div class="panel-body">

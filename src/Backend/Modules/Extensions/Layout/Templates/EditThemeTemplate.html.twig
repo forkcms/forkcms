@@ -50,8 +50,7 @@
                 {# Position name #}
                 <div class="col-md-10">
                   <div class="form-group">
-                    {{ position.txtPosition }}
-                    {{ position.txtPositionError }}
+                    {{ position.formElements.txtPosition.parse()|raw }}
                   </div>
                 </div>
               </div>
@@ -139,10 +138,10 @@
             <div class="form-group">
               <ul class="list-unstyled">
                 <li class="checkbox">
-                  <label for="active">{% form_field_error active %} {{ 'lbl.Active'|trans|capitalize }}</label> {% form_field active %}
+                  <label for="active">{% form_field active %} {% form_field_error active %} {{ 'lbl.Active'|trans|capitalize }}</label>
                 </li>
                 <li class="checkbox">
-                  <label for="default" class="control-label">{% form_field_error default %} {{ 'lbl.Default'|trans|capitalize }}</label> {% form_field default %}
+                  <label for="default" class="control-label">{% form_field default %} {% form_field_error default %} {{ 'lbl.Default'|trans|capitalize }}</label>
                 </li>
               </ul>
             </div>
@@ -161,7 +160,7 @@
               <p class="help-block">{{ msg.HelpOverwrite }}</p>
               <ul class="list-unstyled">
                 <li class="checkbox">
-                  <label for="overwrite" class="control-label">{% form_field_error overwrite %} {{ 'lbl.Overwrite'|trans|capitalize }}</label> {% form_field overwrite %}
+                  <label for="overwrite" class="control-label">{% form_field overwrite %} {% form_field_error overwrite %} {{ 'lbl.Overwrite'|trans|capitalize }}</label>
                 </li>
               </ul>
             </div>

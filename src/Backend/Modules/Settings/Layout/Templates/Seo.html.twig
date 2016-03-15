@@ -25,14 +25,14 @@
               <ul class="list-unstyled">
                 <li class="checkbox">
                   <label for="seoNoodp" class="control-label">{% form_field seo_noodp %} NOODP</label>
-                  <p class="help-block">{{ msg.HelpSEONoodp }}</p>
+                  <p class="help-block">{{ 'msg.HelpSEONoodp'|trans|capitalize }}</p>
                 </li>
                 <li class="checkbox">
                   <label for="seoNoydir" class="control-label">{% form_field seo_noydir %} NOYDIR</label>
-                  <p class="help-block">{{ msg.HelpSEONoydir }}</p>
+                  <p class="help-block">{{ 'msg.HelpSEONoydir'|trans|capitalize }}</p>
                 </li>
                 <li class="checkbox">
-                  <label for="seoNofollowInComments" class="control-label">{% form_field seo_nofollow_in_comments %} {{ msg.SEONoFollowInComments }}</label>
+                  <label for="seoNofollowInComments" class="control-label">{% form_field seo_nofollow_in_comments %} {{ 'msg.SEONoFollowInComments'|trans|capitalize }}</label>
                 </li>
               </ul>
             </div>

@@ -90,7 +90,7 @@
                     <div id="fieldsHolder" class="panel-body sequenceByDragAndDrop">
                       {% if fields %}
                       {% for field in fields %}
-                      {{ field.field }}
+                      {{ field.field|raw }}
                       {% endfor %}
                       {% endif %}
 
@@ -104,7 +104,7 @@
                         <div class="col-md-5 col-md-offset-4">
                           <div class="btn-toolbar">
                             <div class="btn-group pull-right" role="group">
-                              {{ btnSubmitField }}
+                              {{ btnSubmitFiel|raw }}
                             </div>
                           </div>
                         </div>
@@ -280,7 +280,7 @@
                           <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                         </label>
                         <p id="textboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                        {% form_field_error textbox_required_error_message %}
+                        {% form_field textbox_required_error_message %}
                       </div>
                     </div>
                     <div class="jsValidation">
@@ -302,7 +302,7 @@
                           <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                         </label>
                         <p id="textboxErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                        {% form_field_error textbox_error_message %}
+                        {% form_field textbox_error_message %}
                       </div>
                     </div>
                   </div>
