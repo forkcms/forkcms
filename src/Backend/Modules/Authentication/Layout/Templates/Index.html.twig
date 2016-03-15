@@ -4,8 +4,31 @@
 
 {% block content %}
   <body id="login">
-    {% include "/Authentication/Layout/Templates/Ie6.html.twig" %}
-    <div class="page-header text-center">
+    <!--[if lte IE 6]>
+    <style type="text/css" media="screen">
+      #debugnotify, #loginBox {
+        display: none
+      }
+      #browserSupport {
+        padding: 20px;
+        border: 1px solid #DDD;
+        width: 400px;
+        margin: 40px auto
+      }
+      #browserSupport h2 {
+        padding: 0 0 12px;
+      }
+      body {
+        background: #FFF !important;
+      }
+    </style>
+    <div id="browserSupport" class="content">
+      <h2>{{ 'lbl.BrowserNotSupported'|trans|capitalize }}</h2>
+      {{ err.BrowserNotSupported }}
+    </div>
+    <![endif]-->
+
+  <div class="page-header text-center">
       <h1>{{ SITE_TITLE }}</h1>
     </div>
     <div class="container">
