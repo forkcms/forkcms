@@ -24,18 +24,16 @@ jsFrontend.faq.feedback =
 		$('#usefulY, #usefulN').on('click', function()
 		{
 			// init useful status
-			var useful = false;
-
-			if ($(this).attr('id') == 'usefulY') {
-				// get useful status
-				useful = ($("#faqFeedbackForm input[type='radio']:checked").val() === 'Y');
-			}
+			var useful = $("#faqFeedbackForm input[type='radio']:checked").val() === 'Y';
 
 			// show or hide the form
-			if (useful) {
+			if(useful)
+			{
 				$('#message').prop('required', false);
 				$('form#feedback').submit();
-			} else {
+			}
+			else
+			{
 				$('#feedbackNoInfo').show();
 				$('#message').prop('required', true);
 			}
