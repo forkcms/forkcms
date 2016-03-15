@@ -68,8 +68,8 @@ abstract class BaseTwigTemplate extends TwigEngine
     public function assign($key, $values = null)
     {
         if (is_array($key)) {
-            foreach ($key as $keyVal) {
-                $this->variables[$keyVal] = $values;
+            foreach ($key as $i => $value) {
+                $this->variables[$i] = $value;
             }
             return;
         }
