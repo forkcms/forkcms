@@ -2,6 +2,59 @@ html {
   min-height: 100%;
 }
 
-body {
-  padding-top: $navbar-height + ($padding-base-horizontal * 2) + 10px;
+.sidebar {
+  width: 100%;
+}
+
+.main-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.content-wrapper {
+  position: relative;
+}
+
+
+@media screen and (min-width: $screen-sm) {
+
+  .sidebar {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 50px;
+  }
+
+  .main-wrapper {
+    padding-left: 50px;
+  }
+
+  .content-sidebar {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 190px;
+  }
+
+  .content-main {
+    padding-left: 190px;
+    width: 100%;
+
+    &.content-main-dashboard {
+      padding-left: 0;
+    }
+  }
+}
+
+@media screen and (min-width: $screen-md) {
+
+  .sidebar {
+    width: 240px;
+  }
+
+  .main-wrapper {
+    padding-left: 240px;
+  }
 }

@@ -7080,9 +7080,45 @@ button.close {
 html {
   min-height: 100%; }
 
-body {
-  padding-top: 84px; }
+.sidebar {
+  width: 100%; }
 
+.main-wrapper {
+  position: relative;
+  width: 100%; }
+
+.content-wrapper {
+  position: relative; }
+
+@media screen and (min-width: 768px) {
+  .sidebar {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 50px; }
+
+  .main-wrapper {
+    padding-left: 50px; }
+
+  .content-sidebar {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 190px; }
+
+  .content-main {
+    padding-left: 190px;
+    width: 100%; }
+    .content-main.content-main-dashboard {
+      padding-left: 0; } }
+@media screen and (min-width: 992px) {
+  .sidebar {
+    width: 240px; }
+
+  .main-wrapper {
+    padding-left: 240px; } }
 .inline-block {
   display: inline-block !important;
   float: none !important; }
@@ -8123,6 +8159,14 @@ h3 + .btn-toolbar {
 .form-group.optionsRTE {
   position: relative; }
 
+.navbar-nav {
+  width: 100%; }
+  .navbar-nav li {
+    float: none; }
+
+.navbar-user li {
+  float: left; }
+
 .align-middle {
   display: table-cell;
   vertical-align: middle !important; }
@@ -8173,6 +8217,18 @@ h3 + .btn-toolbar {
   background: #f2dede;
   color: #d4443f; }
 
+.header {
+  padding: 15px; }
+
+.header-right li {
+  float: right; }
+
+@media screen and (min-width: 768px) {
+  .header-left {
+    float: left; }
+
+  .header-right {
+    float: right; } }
 /* Navigation */
 .fork-nav-sidebar li li.active > a {
   text-decoration: none;

@@ -1,0 +1,21 @@
+.header {
+  padding: 15px;
+}
+
+.header-right {
+
+  li {
+    float: right;
+  }
+}
+
+@media screen and (min-width: $screen-sm){
+
+  .header-left {
+    float: left;
+  }
+
+  .header-right {
+    float: right;
+  }
+}
