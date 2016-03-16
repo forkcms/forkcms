@@ -1,21 +1,43 @@
 .header {
-  padding: 15px;
+  padding: 12px 25px 12px 13px;
+  border-bottom: 3px solid $gray-lighter;
+
+  .site-title {
+    margin: 0;
+    padding: 2px 0 0;
+    font-weight: 600;
+  }
+
+  .site-url {
+    color: $gray-light;
+    border-bottom: 1px solid $gray-light;
+    font-size: $font-size-small;
+
+    &:hover {
+      color: $gray-base;
+      border-color: $gray-base;
+      text-decoration: none;
+    }
+  }
+
+  .site-text {
+    float: left;
+  }
+
+  .site-icon {
+    float: left;
+    margin-right: 10px;
+    width: 54px;
+  }
 }
 
-.header-right {
-
-  li {
-    float: right;
-  }
+.site-info {
+  float: left;
 }
 
 @media screen and (min-width: $screen-sm){
 
-  .header-left {
+  .site-info {
     float: left;
-  }
-
-  .header-right {
-    float: right;
   }
 }

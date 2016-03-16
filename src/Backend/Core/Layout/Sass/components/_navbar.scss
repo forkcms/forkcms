@@ -4,11 +4,93 @@
   li {
     float: none;
   }
+
+  .dropdown {
+
+    .dropdown-toggle {
+      color: $gray-base;
+
+      &:hover,
+      &:focus {
+        background: transparent;
+      }
+    }
+
+    .fa-angle-right {
+      transform: rotate(0deg);
+      transition: all 250ms ;
+    }
+
+    .dropdown-menu {
+      background: $white;
+      min-width: auto;
+      position: absolute;
+
+      li {
+        width: 100%;
+      }
+
+       a.active,
+       a:hover {
+         background: $brand-primary;
+         color: $white;
+       }
+    }
+
+    &.open {
+
+      .fa-angle-right {
+        transform: rotate(90deg);
+        transition: all 250ms ;
+      }
+
+      .dropdown-toggle {
+        color: $gray-base;
+
+        &:hover,
+        &:focus {
+          background: transparent;
+        }
+      }
+    }
+  }
 }
 
 .navbar-user {
+  margin-right: 0;
+  width: auto;
 
   li {
     float: left;
+
+    .dropdown-toggle {
+
+      img {
+        height: 25px;
+        width: 25px;
+      }
+    }
+  }
+
+  .user-name {
+    margin: 0 5px;
+  }
+}
+
+.navbar-languages {
+  margin-left: 0;
+  margin-right: 0;
+  float: left;
+  width: auto;
+
+  .dropdown {
+    display: inline-block;
+  }
+}
+
+@media screen and (min-width: $screen-sm) {
+
+  .navbar-languages {
+    margin-left: 50px;
   }
 }
