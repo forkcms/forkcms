@@ -2,15 +2,15 @@
 
 {% extends '/Layout/Templates/base.html.twig' %}
 
-{% block content %}
+{% block actionbar %}
   <div class="row fork-module-heading">
     <div class="col-md-6">
       <h2>
         {% if not filterCategory %}
-        {{ 'lbl.Articles'|trans|capitalize }}
+          {{ 'lbl.Articles'|trans|capitalize }}
         {% endif %}
         {% if filterCategory %}
-        {{ 'msg.ArticlesFor'|trans|sprintf(filterCategory.title|capitalize) }}
+          {{ 'msg.ArticlesFor'|trans|sprintf(filterCategory.title|capitalize) }}
         {% endif %}
       </h2>
     </div>
@@ -20,18 +20,21 @@
           {% if showBlogAdd %}
           {% if filterCategory %}
           <a href="{{ geturl('add', null, '&category=#{filterCategory.id}') }}" class="btn btn-default" title="{{ 'lbl.Add'|trans|capitalize }}">
-          {% endif %}
-          {% if not filterCategory %}
-          <a href="{{ geturl('add') }}" class="btn btn-default" title="{{ 'lbl.Add'|trans|capitalize }}">
-          {% endif %}
-            <span class="fa fa-plus"></span>&nbsp;
-            {{ 'lbl.Add'|trans|capitalize }}
-          </a>
-          {% endif %}
+            {% endif %}
+            {% if not filterCategory %}
+            <a href="{{ geturl('add') }}" class="btn btn-default" title="{{ 'lbl.Add'|trans|capitalize }}">
+              {% endif %}
+              <span class="fa fa-plus"></span>&nbsp;
+              {{ 'lbl.Add'|trans|capitalize }}
+            </a>
+            {% endif %}
         </div>
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block content %}
 
   {% if hasMultipleCategories %}
       {% form filter %}

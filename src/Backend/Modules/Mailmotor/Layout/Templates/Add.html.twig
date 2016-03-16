@@ -2,12 +2,15 @@
 
 {% extends '/Layout/Templates/base.html.twig' %}
 
-{% block content %}
-<div class="row fork-module-heading">
-    <div class="col-md-12">
-        <h2>{{ 'lbl.AddNewMailing'|trans|capitalize }}</h2>
+{% block actionbar %}
+    <div class="row fork-module-heading">
+        <div class="col-md-12">
+            <h2>{{ 'lbl.AddNewMailing'|trans|capitalize }}</h2>
+        </div>
     </div>
-</div>
+{% endblock %}
+
+{% block content %}
 <div class="row fork-module-heading">
     <div class="col-md-12">
         <nav class="navbar navbar-default" role="navigation">
@@ -125,7 +128,7 @@
                                     {% for group in groups %}
                                     <li class="checkbox">
                                         <label for="{{ group.id }}">
-                                            {{ group.chkGroups }}
+                                            {{ group.chkGroups|raw }}
                                             <attr title="{{ 'msg.GroupsNumberOfRecipients'|trans|sprintf(group.recipients ) }}">
                                                 {{ group.label|capitalize }}
                                                 ({% if group.recipients %}{{ group.recipients }}{% endif %}{% if not group.recipients %}{{ lbl.QuantityNo }}{% endif %} {% if group.single %}{{ lbl.EmailAddress }}{% endif %}{% if not group.single %}{{ lbl.EmailAddresses }}{% endif %})
@@ -156,7 +159,7 @@
                                     {% for languag in languages %}
                                     <li class="checkbox">
                                         <label for="{{ languag.id }}">
-                                            {{ languag.rbtLanguages }} {{ languag.label|capitalize }}
+                                            {{ languag.rbtLanguages|raw }} {{ languag.label|capitalize }}
                                         </label>
                                     </li>
                                     {% endfor %}

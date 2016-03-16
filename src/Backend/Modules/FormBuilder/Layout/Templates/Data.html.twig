@@ -2,7 +2,7 @@
 
 {% extends '/Layout/Templates/base.html.twig' %}
 
-{% block content %}
+{% block actionbar %}
   <div class="row fork-module-heading">
     <div class="col-md-6">
       <h2>{{ 'lbl.FormData'|trans|sprintf(name|capitalize ) }}</h2>
@@ -12,21 +12,24 @@
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
           {% if showFormBuilderIndex %}
-          <a href="{{ geturl('index' ) }}" class="btn btn-default">
-            <span class="fa fa-list"></span>&nbsp;
-            {{ 'lbl.Overview'|trans|capitalize }}
-          </a>
+            <a href="{{ geturl('index' ) }}" class="btn btn-default">
+              <span class="fa fa-list"></span>&nbsp;
+              {{ 'lbl.Overview'|trans|capitalize }}
+            </a>
           {% endif %}
           {% if showFormBuilderExportData %}
-          <a href="{{ geturl('export_data' ) }}&id={{ id }}&amp;start_date={{ start_date }}&amp;end_date={{ end_date }}" class="btn btn-default">
-            <span class="fa fa-download"></span>&nbsp;
-            {{ 'lbl.Export'|trans|capitalize }}
-          </a>
+            <a href="{{ geturl('export_data' ) }}&id={{ id }}&amp;start_date={{ start_date }}&amp;end_date={{ end_date }}" class="btn btn-default">
+              <span class="fa fa-download"></span>&nbsp;
+              {{ 'lbl.Export'|trans|capitalize }}
+            </a>
           {% endif %}
         </div>
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block content %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% form filter %}

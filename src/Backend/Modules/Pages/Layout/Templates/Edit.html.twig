@@ -2,7 +2,7 @@
 
 {% extends '/Layout/Templates/pages.html.twig' %}
 
-{% block content %}
+{% block actionbar %}
   <div class="row fork-module-heading">
     <div class="col-md-6">
       <h2>{{ 'lbl.Edit'|trans|capitalize }}</h2>
@@ -33,6 +33,9 @@
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block content %}
   {% form edit %}
     {{ hidTemplateId|raw }}
     <div class="row fork-module-content">

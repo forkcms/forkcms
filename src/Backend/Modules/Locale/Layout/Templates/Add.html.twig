@@ -2,12 +2,15 @@
 
 {% extends '/Layout/Templates/base.html.twig' %}
 
-{% block content %}
+{% block actionbar %}
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <h2>{{ 'lbl.Add'|trans|capitalize }}</h2>
     </div>
   </div>
+{% endblock %}
+
+{% block content %}
   {% form add %}
     <div class="row fork-module-content">
       <div class="col-md-12">

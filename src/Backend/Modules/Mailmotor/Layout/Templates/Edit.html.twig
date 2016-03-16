@@ -2,7 +2,7 @@
 
 {% extends '/Layout/Templates/base.html.twig' %}
 
-{% block content %}
+{% block actionbar %}
   <div class="row fork-module-heading">
     <div class="col-md-6">
       <h2>{{ 'lbl.AddNewMailing'|trans|capitalize }}</h2>
@@ -11,6 +11,9 @@
 
     </div>
   </div>
+{% endblock %}
+
+{% block content %}
   <div class="row fork-module-heading">
     <div class="col-md-12">
       <nav class="navbar navbar-default" role="navigation">
@@ -195,7 +198,7 @@
               </div>
               <div class="panel-body">
                 <div class="form-group">
-                  <p class="help-block">{{ msg.HelpTemplates }}</p>
+                  <p class="help-block">{{ 'msg.HelpTemplates'|trans|capitalize }}</p>
                   {% if rbtTemplatesError %}
                   <p class="text-danger">{{ rbtTemplatesError }}</p>
                   {% endif %}
@@ -205,7 +208,7 @@
                       <div class="panel panel-default">
                         <div class="panel-heading">
                           <label for="{{ templat.id }}" class="panel-title">
-                            {{ templat.rbtTemplates }}
+                            {{ templat.rbtTemplates|raw }}
                             <span>{{ templat.label|capitalize }}</span>
                           </label>
                         </div>
