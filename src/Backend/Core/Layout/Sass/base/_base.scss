@@ -57,6 +57,10 @@ html {
     left: 0;
     top: 0;
     width: 190px;
+
+    &.content-sidebar-tree {
+      width: 240px;
+    }
   }
 
   .content-main {
@@ -65,6 +69,10 @@ html {
 
     &.content-main-dashboard {
       padding-left: 0;
+    }
+
+    &.content-main-tree {
+      padding-left: 240px;
     }
   }
 }

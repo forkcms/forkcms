@@ -7127,12 +7127,16 @@ html {
     left: 0;
     top: 0;
     width: 190px; }
+    .content-sidebar.content-sidebar-tree {
+      width: 240px; }
 
   .content-main {
     padding-left: 190px;
     width: 100%; }
     .content-main.content-main-dashboard {
-      padding-left: 0; } }
+      padding-left: 0; }
+    .content-main.content-main-tree {
+      padding-left: 240px; } }
 @media screen and (min-width: 992px) {
   .sidebar {
     width: 240px; }
@@ -8423,9 +8427,15 @@ h3 + .btn-toolbar {
   border-top: 1px solid #E5E5E5;
   background: #FAFAFA; }
 
+.pages-tree {
+  padding: 20px 25px; }
+
 .content {
   border-top: 1px solid #E5E5E5;
   background: #FAFAFA; }
+
+.pages-tree {
+  padding: 20px 25px; }
 
 /* General */
 .fork-module-heading,

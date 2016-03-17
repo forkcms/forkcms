@@ -108,20 +108,16 @@
 
         <div id="content" class="content-wrapper">
 
-            <div class="content-sidebar">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div id="tree">
-                            {{ tree|raw }}
-                        </div>
-                    </div>
+            <div class="content-sidebar content-sidebar-tree">
+                <div id="tree" class="pages-tree">
+                    {{ tree|raw }}
                 </div>
                 <div id="fullwidthSwitch">
                     <a href="#close">&nbsp;</a>
                 </div>
             </div>
 
-            <div class="content-main">
+            <div class="content-main content-main-tree">
                 <div class="content-action-bar">
                     <div class="container-fluid">
                         {% block actionbar %}
