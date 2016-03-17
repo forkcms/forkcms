@@ -8190,6 +8190,11 @@ h3 + .btn-toolbar {
   .navbar-default .navbar-header .site-icon {
     margin: 7px 10px 0 20px;
     width: 35px; }
+  .navbar-default .navbar-header .site-url {
+    color: #fff;
+    padding: 15px 25px; }
+  .navbar-default .navbar-header .navbar-brand {
+    padding-left: 0; }
   .navbar-default .navbar-toggle {
     border-color: #fff; }
     .navbar-default .navbar-toggle .icon-bar {
