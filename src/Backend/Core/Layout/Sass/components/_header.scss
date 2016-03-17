@@ -1,6 +1,8 @@
 .header {
+  background: $white;
   padding: 12px 25px 12px 13px;
   border-bottom: 3px solid $gray-lighter;
+  z-index: 2;
 
   .site-title {
     margin: 0;

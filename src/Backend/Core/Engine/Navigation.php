@@ -144,13 +144,16 @@ class Navigation extends Base\Object
             // que? let's call this piece magic
             if ($currentDepth >= $startDepth - 1) {
                 // start li
+                $HTML .= '<li class="nav-item';
                 if ($selected) {
-                    $HTML .= '<li class="active">' . "\n";
-                } else {
-                    $HTML .= '<li>' . "\n";
+                    $HTML .= ' active ';
                 }
+                if ($currentDepth === 0) {
+                    $HTML .= ' nav-item-' . strtolower($value['label']);
+                }
+                $HTML .= '">' . "\n";
                 $HTML .= '	<a href="/' . NAMED_APPLICATION . '/' .
-                         Language::getWorkingLanguage() . '/' . $url . '">' . $label . '</a>' . "\n";
+                         Language::getWorkingLanguage() . '/' . $url . '"><span class="nav-item-text">' . $label . '</span></a>' . "\n";
             }
 
             // children?

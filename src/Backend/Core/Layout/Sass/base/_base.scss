@@ -3,6 +3,7 @@ html {
 }
 
 .sidebar {
+  background: $brand-primary-dark;
   width: 100%;
 }
 
@@ -19,15 +20,31 @@ html {
 @media screen and (min-width: $screen-sm) {
 
   .sidebar {
+    bottom: 0;
+    height: auto;
+    left: 0;
+    overflow-y: hidden;
+    position: absolute;
+    top: 82px;
+    width: 50px;
+    z-index: 2;
+  }
+
+  .sidebar-bg {
+    background: $brand-primary-dark;
     height: 100%;
     left: 0;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 50px;
+    z-index: -1;
   }
 
   .main-wrapper {
+    height: 100%;
     padding-left: 50px;
+    margin-top: -82px;
+    padding-top: 82px;
   }
 
   .content-sidebar {
@@ -51,6 +68,10 @@ html {
 @media screen and (min-width: $screen-md) {
 
   .sidebar {
+    width: 240px;
+  }
+
+  .sidebar-bg {
     width: 240px;
   }
 

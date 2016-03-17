@@ -1,4 +1,39 @@
+.navbar-default {
+  border: none;
+  margin-bottom: 0;
+
+  .navbar-collapse {
+    padding: 0;
+  }
+
+  .navbar-header {
+
+    .site-url {
+      color: $white;
+      padding: 15px 25px;
+    }
+  }
+
+  .navbar-toggle {
+    border-color: $white;
+    
+    .icon-bar {
+      background: $white;
+    }
+
+    &:hover,
+    &:focus {
+      background: $white;
+
+      .icon-bar {
+        background: $brand-primary-dark;
+      }
+    }
+  }
+}
+
 .navbar-nav {
+  margin: 0;
   width: 100%;
 
   li {
@@ -54,6 +89,75 @@
       }
     }
   }
+
+  .nav-item {
+    line-height: 20px;
+
+    a {
+      border-bottom: 1px solid $brand-primary-darker;
+      color: $white;
+      padding: 15px 50px;
+
+      &:before {
+        color: $brand-primary;
+        position: absolute;
+        font-family: FontAwesome;
+        font-size: $font-size-btn;
+        left: 20px;
+      }
+    }
+
+    &.active a,
+    a:hover,
+    a:focus {
+
+      &:before {
+        color: $white;
+      }
+    }
+  }
+}
+
+.nav-item-dashboard {
+
+  a:before {
+    content: '\f0e4';
+  }
+}
+
+.nav-item-pages {
+
+  a:before {
+    content: "\f0c5";
+  }
+}
+
+.nav-item-modules {
+
+  a:before {
+    content: "\f1b2";
+  }
+}
+
+.nav-item-marketing {
+
+  a:before {
+    content: "\f1fe";
+  }
+}
+
+.nav-item-mailmotor {
+
+  a:before {
+    content: "\f0e0";;
+  }
+}
+
+.nav-item-settings {
+
+  a:before {
+    content: "\f013";
+  }
 }
 
 .navbar-user {
@@ -92,5 +196,46 @@
 
   .navbar-languages {
     margin-left: 50px;
+  }
+
+  .navbar-nav {
+
+    .nav-item a:before {
+      left: 16px;
+    }
+  }
+
+  .navbar-default {
+
+    .navbar-nav li a {
+      height: 50px;
+      padding: 15px;
+    }
+
+    .nav-item-text {
+      display: none;
+    }
+  }
+}
+
+@media screen and (min-width: $screen-md) {
+
+  .navbar-nav {
+
+    .nav-item a:before {
+      left: 20px;
+    }
+  }
+
+  .navbar-default {
+
+    .navbar-nav li a {
+      height: auto;
+      padding: 15px 50px;
+    }
+
+    .nav-item-text {
+      display: block;
+    }
   }
 }
