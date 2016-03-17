@@ -8,9 +8,9 @@
 
   .navbar-header {
 
-    .site-url {
-      color: $white;
-      padding: 15px 25px;
+    .site-icon {
+      margin: 7px 10px 0 20px;
+      width: 35px;
     }
   }
 
@@ -116,6 +116,59 @@
       }
     }
   }
+
+  &.navbar-sidebar {
+    margin-bottom: 20px;
+
+    .nav-item {
+
+      a {
+        color: $gray;
+        background: $white;
+        border-color: $gray-lighter;
+        padding: 12px 20px;
+
+        &:hover,
+        &:focus {
+          background: $brand-primary;
+          color: $white;
+        }
+      }
+
+      &.active a {
+        background: $brand-primary;
+        color: $white;
+      }
+    }
+
+    .subnav {
+      padding: 0;
+      border-bottom: 1px solid $gray-lighter;
+
+      .nav-item {
+
+        a {
+          background: $gray-lightest;
+          color: $gray;
+          border: none;
+          padding: 7px 25px;
+          font-size: $font-size-small;
+
+          &:hover,
+          &:focus {
+            background: $brand-primary;
+            color: $white;
+          }
+        }
+
+        &.active a {
+          background: $brand-primary;
+          color: $white;
+        }
+      }
+    }
+
+  }
 }
 
 .nav-item-dashboard {
@@ -202,6 +255,10 @@
 
     .nav-item a:before {
       left: 16px;
+    }
+
+    &.navbar-sidebar {
+      margin: 0;
     }
   }
 

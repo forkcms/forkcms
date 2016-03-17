@@ -162,7 +162,7 @@ class Navigation extends Base\Object
                 if ($endDepth === null || $currentDepth < $endDepth) {
                     // start ul if needed
                     if ($currentDepth != 0) {
-                        $HTML .= '<ul class="nav">' . "\n";
+                        $HTML .= '<ul class="nav subnav">' . "\n";
                     }
 
                     // loop children

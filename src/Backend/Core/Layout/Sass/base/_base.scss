@@ -14,6 +14,7 @@ html {
 
 .content-wrapper {
   position: relative;
+  height: 100%;
 }
 
 
@@ -48,6 +49,9 @@ html {
   }
 
   .content-sidebar {
+    bottom: 0;
+    border-right: 1px solid $gray-lighter;
+    background: $white;
     position: absolute;
     height: 100%;
     left: 0;

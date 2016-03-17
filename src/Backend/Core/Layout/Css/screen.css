@@ -2339,7 +2339,7 @@ body {
   font-size: 14px;
   line-height: 1.42857;
   color: #4a4a4a;
-  background-color: #fff; }
+  background-color: #FAFAFA; }
 
 input,
 button,
@@ -2377,7 +2377,7 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.42857;
-  background-color: #fff;
+  background-color: #FAFAFA;
   border: 1px solid #ddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
@@ -3487,7 +3487,7 @@ th {
   .table > tbody + tbody {
     border-top: 2px solid #e5e5e5; }
   .table .table {
-    background-color: #fff; }
+    background-color: #FAFAFA; }
 
 .table-condensed > thead > tr > th,
 .table-condensed > thead > tr > td,
@@ -4935,7 +4935,7 @@ tbody.collapse.in {
     .nav-tabs.nav-justified > .active > a:hover,
     .nav-tabs-justified > .active > a:focus,
     .nav-tabs.nav-justified > .active > a:focus {
-      border-bottom-color: #fff; } }
+      border-bottom-color: #FAFAFA; } }
 
 .tab-content > .tab-pane {
   display: none; }
@@ -5598,7 +5598,7 @@ a.badge:hover, a.badge:focus {
   padding: 4px;
   margin-bottom: 20px;
   line-height: 1.42857;
-  background-color: #fff;
+  background-color: #FAFAFA;
   border: 1px solid #ddd;
   border-radius: 4px;
   -webkit-transition: border 0.2s ease-in-out;
@@ -7089,7 +7089,8 @@ html {
   width: 100%; }
 
 .content-wrapper {
-  position: relative; }
+  position: relative;
+  height: 100%; }
 
 @media screen and (min-width: 768px) {
   .sidebar {
@@ -7118,6 +7119,9 @@ html {
     padding-top: 82px; }
 
   .content-sidebar {
+    bottom: 0;
+    border-right: 1px solid #E5E5E5;
+    background: #fff;
     position: absolute;
     height: 100%;
     left: 0;
@@ -8183,9 +8187,9 @@ h3 + .btn-toolbar {
   margin-bottom: 0; }
   .navbar-default .navbar-collapse {
     padding: 0; }
-  .navbar-default .navbar-header .site-url {
-    color: #fff;
-    padding: 15px 25px; }
+  .navbar-default .navbar-header .site-icon {
+    margin: 7px 10px 0 20px;
+    width: 35px; }
   .navbar-default .navbar-toggle {
     border-color: #fff; }
     .navbar-default .navbar-toggle .icon-bar {
@@ -8240,6 +8244,34 @@ h3 + .btn-toolbar {
     .navbar-nav .nav-item a:hover:before,
     .navbar-nav .nav-item a:focus:before {
       color: #fff; }
+  .navbar-nav.navbar-sidebar {
+    margin-bottom: 20px; }
+    .navbar-nav.navbar-sidebar .nav-item a {
+      color: #4a4a4a;
+      background: #fff;
+      border-color: #E5E5E5;
+      padding: 12px 20px; }
+      .navbar-nav.navbar-sidebar .nav-item a:hover, .navbar-nav.navbar-sidebar .nav-item a:focus {
+        background: #2f77d1;
+        color: #fff; }
+    .navbar-nav.navbar-sidebar .nav-item.active a {
+      background: #2f77d1;
+      color: #fff; }
+    .navbar-nav.navbar-sidebar .subnav {
+      padding: 0;
+      border-bottom: 1px solid #E5E5E5; }
+      .navbar-nav.navbar-sidebar .subnav .nav-item a {
+        background: #f1f1f1;
+        color: #4a4a4a;
+        border: none;
+        padding: 7px 25px;
+        font-size: 12px; }
+        .navbar-nav.navbar-sidebar .subnav .nav-item a:hover, .navbar-nav.navbar-sidebar .subnav .nav-item a:focus {
+          background: #2f77d1;
+          color: #fff; }
+      .navbar-nav.navbar-sidebar .subnav .nav-item.active a {
+        background: #2f77d1;
+        color: #fff; }
 
 .nav-item-dashboard a:before {
   content: '\f0e4'; }
@@ -8284,6 +8316,8 @@ h3 + .btn-toolbar {
 
   .navbar-nav .nav-item a:before {
     left: 16px; }
+  .navbar-nav.navbar-sidebar {
+    margin: 0; }
 
   .navbar-default .navbar-nav li a {
     height: 50px;
@@ -8368,10 +8402,11 @@ h3 + .btn-toolbar {
       text-decoration: none; }
   .header .site-text {
     float: left; }
-  .header .site-icon {
-    float: left;
-    margin-right: 10px;
-    width: 54px; }
+
+.site-icon {
+  float: left;
+  margin-right: 10px;
+  width: 54px; }
 
 .site-info {
   float: left; }
@@ -8381,20 +8416,11 @@ h3 + .btn-toolbar {
     float: left; } }
 .content {
   border-top: 1px solid #E5E5E5;
-  background: #fafafa; }
+  background: #FAFAFA; }
 
-/* Navigation */
-.fork-nav-sidebar li li.active > a {
-  text-decoration: none;
-  background-color: #EEE; }
-
-.fork-nav-sidebar li li {
-  margin-top: 2px;
-  margin-left: 0px; }
-
-.fork-nav-sidebar li > ul {
-  padding-bottom: 2px;
-  padding-left: 15px; }
+.content {
+  border-top: 1px solid #E5E5E5;
+  background: #FAFAFA; }
 
 /* General */
 .fork-module-heading,
