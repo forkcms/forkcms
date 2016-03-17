@@ -1,7 +1,16 @@
 /* General */
-.fork-module-heading,
-.fork-module-messages,
-.fork-module-content {
+.fork-module-heading {
+  background: $white;
+  padding: 10px 0;
+
+  h2 {
+    font-size: $font-size-base;
+    margin: 9px 0;
+  }
+}
+
+
+.fork-module-messages {
   margin-bottom: 20px;
 
   h2 {

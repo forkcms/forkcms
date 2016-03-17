@@ -8424,27 +8424,36 @@ h3 + .btn-toolbar {
   .site-info {
     float: left; } }
 .content {
+  padding: 25px 0;
   border-top: 1px solid #E5E5E5;
   background: #FAFAFA; }
 
 .pages-tree {
   padding: 20px 25px; }
 
-.content {
-  border-top: 1px solid #E5E5E5;
-  background: #FAFAFA; }
+.btn {
+  border-radius: 3px;
+  padding: 9px 12px 10px; }
+  .btn .fa {
+    padding-right: 4px; }
 
-.pages-tree {
-  padding: 20px 25px; }
+.btn-group .btn + .btn {
+  margin-left: 6px; }
+.btn-group .btn:first-child:not(:last-child):not(.dropdown-toggle),
+.btn-group .btn:last-child:not(:first-child) {
+  border-radius: 3px; }
 
 /* General */
-.fork-module-heading,
-.fork-module-messages,
-.fork-module-content {
+.fork-module-heading {
+  background: #fff;
+  padding: 10px 0; }
+  .fork-module-heading h2 {
+    font-size: 14px;
+    margin: 9px 0; }
+
+.fork-module-messages {
   margin-bottom: 20px; }
-  .fork-module-heading h2,
-  .fork-module-messages h2,
-  .fork-module-content h2 {
+  .fork-module-messages h2 {
     margin-top: 0; }
 
 .fork-module-actions {
