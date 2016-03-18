@@ -267,4 +267,15 @@ class BaseTwigModifiers
             return \SpoonFilter::htmlspecialchars($string, ENT_QUOTES);
         }
     }
+
+    /**
+     * Uppercase the first character of each word in a string
+     *
+     * @param $string
+     * @return string
+     */
+    public static function ucwords($string)
+    {
+        return ucwords($string);
+    }
 }

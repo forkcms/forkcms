@@ -4,6 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/forkcms/forkcms/v/stable.svg)](https://packagist.org/packages/forkcms/forkcms)
 [![License](https://poser.pugx.org/forkcms/forkcms/license.svg)](https://packagist.org/packages/forkcms/forkcms)
 [![Code Coverage](https://scrutinizer-ci.com/g/forkcms/forkcms/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/forkcms/forkcms/?branch=master)
+[![Slack Status](https://fork-cms.herokuapp.com/badge.svg)](https://fork-cms.herokuapp.com/)
 
 ## Installation
 
@@ -54,6 +55,7 @@ If you use the command line, you can run the following command in your document 
 
 ## Discussion
 
+- Slack: <https://fork-cms.herokuapp.com/>
 - IRC: irc.freenode.org #forkcms
 - E-mail: <info@fork-cms.com> for any questions or remarks.
 

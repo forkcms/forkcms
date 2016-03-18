@@ -442,4 +442,16 @@ class TemplateModifiers extends BaseTwigModifiers
         // return
         return $string;
     }
+
+    /**
+     * Returns the count of the count of the array.
+     *
+     * @param array $data
+     *
+     * @return int
+     */
+    public static function count(array $data)
+    {
+        return count($data);
+    }
 }

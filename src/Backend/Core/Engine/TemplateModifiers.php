@@ -180,4 +180,16 @@ class TemplateModifiers extends BaseTwigModifiers
     {
         return \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
     }
+
+    /**
+     * Returns the count of the count of the array.
+     *
+     * @param array $data
+     *
+     * @return int
+     */
+    public static function count(array $data)
+    {
+        return count($data);
+    }
 }
