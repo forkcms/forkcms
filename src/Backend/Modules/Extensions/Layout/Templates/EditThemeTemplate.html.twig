@@ -49,8 +49,8 @@
               {# Position name #}
               <div class="col-md-10">
                 <div class="form-group">
-                  {{ position.txtPosition }}
-                  {{ position.txtPositionError }}
+                  {{ position.formElements.txtPosition|raw }}
+                  {{ position.formElements.txtPositionError|raw }}
                 </div>
               </div>
             </div>
@@ -61,8 +61,8 @@
               <div class="col-md-10 col-md-offset-2 jsBlock">
                 <div class="form-inline form-group">
                   <div class="form-group">
-                    {{ block.ddmType }}
-                    {{ block.ddmTypeError }}
+                    {{ block.formElements.ddmType|raw }}
+                    {{ block.formElements.ddmTypeError|raw }}
                   </div>
                   {# Button to remove block from this position #}
                   <a href="#" class="btn text-danger jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|capitalize }}">
@@ -138,10 +138,14 @@
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="'act.ve">{% form_field_'err.r active %} {{ 'lbl.Active'''|trans|trans|trans|capitalize }}</label> {% form_field active %}
+                <label for="active">
+                    {% form_field active %} {% form_field_error active %} {{ 'lbl.Active'|trans|capitalize }}
+                </label>
               </li>
               <li class="checkbox">
-                <label for="default" class="control-label">{% form_field_'err.r default %} {{ 'lbl.Default''|trans|trans|capitalize }}</label> {% form_field default %}
+                <label for="default" class="control-label">
+                    {% form_field default %} {% form_field_error default %} {{ 'lbl.Default'|trans|capitalize }}
+                </label>
               </li>
             </ul>
           </div>
@@ -160,7 +164,9 @@
             <p class="help-block">{{ msg.HelpOverwrite }}</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="overwrite" class="control-label">{% form_field_'err.r overwrite %} {{ 'lbl.Overwrite''|trans|trans|capitalize }}</label> {% form_field overwrite %}
+                <label for="overwrite" class="control-label">
+                    {% form_field overwrite %} {% form_field_error overwrite %} {{ 'lbl.Overwrite'|trans|capitalize }}
+                </label>
               </li>
             </ul>
           </div>
