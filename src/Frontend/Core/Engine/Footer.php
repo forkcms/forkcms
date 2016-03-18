@@ -151,8 +151,8 @@ class Footer extends FrontendBaseObject
         $siteLinksCode .= '    "url": "' . SITE_URL . '",' . "\n";
         $siteLinksCode .= '    "potentialAction": {' . "\n";
         $siteLinksCode .= '        "@type": "SearchAction",' . "\n";
-        $siteLinksCode .= '        "target": "' . SITE_URL . $searchUrl . '?form=search&q={search_term_string}",' . "\n";
-        $siteLinksCode .= '        "query-input": "required name=search_term_string"' . "\n";
+        $siteLinksCode .= '        "target": "' . SITE_URL . $searchUrl . '?form=search&q_widget={q_widget}",' . "\n";
+        $siteLinksCode .= '        "query-input": "name=q_widget"' . "\n";
         $siteLinksCode .= '    }' . "\n";
         $siteLinksCode .= '}' . "\n";
         $siteLinksCode .= '</script>';

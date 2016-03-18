@@ -98,7 +98,7 @@ jsBackend.faq =
 						},
 						success: function(data, textStatus)
 						{
-							// not a success so revert the changes
+							// successfully saved reordering sequence
 							if(data.code == 200)
 							{
 								// change count in title (if any)
@@ -121,7 +121,11 @@ jsBackend.faq =
 
 								// change count in title (if any)
 								$('div#dataGrid-' + toCategoryId + ' h3').html($('div#dataGrid-' + toCategoryId + ' h3').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + toCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
+
+								// show message
+								jsBackend.messages.add('success', data.message);
 							}
+							// not a success so revert the changes
 							else
 							{
 								// revert
