@@ -39,6 +39,15 @@
       }
     }
   }
+
+  .navbar-nav li a {
+    height: 50px;
+    padding: 15px;
+  }
+
+  .nav-item-text {
+    display: none;
+  }
 }
 
 .navbar-nav {
@@ -67,6 +76,7 @@
 
     .dropdown-menu {
       background: $white;
+      float: right;
       min-width: auto;
       position: absolute;
 
@@ -223,6 +233,7 @@
 }
 
 .navbar-user {
+  float: right;
   margin-right: 0;
   width: auto;
 
@@ -268,18 +279,6 @@
 
     &.navbar-sidebar {
       margin: 0;
-    }
-  }
-
-  .navbar-default {
-
-    .navbar-nav li a {
-      height: 50px;
-      padding: 15px;
-    }
-
-    .nav-item-text {
-      display: none;
     }
   }
 }

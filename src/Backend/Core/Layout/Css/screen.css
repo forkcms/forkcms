@@ -8209,6 +8209,11 @@ h3 + .btn-toolbar {
       background: #fff; }
       .navbar-default .navbar-toggle:hover .icon-bar, .navbar-default .navbar-toggle:focus .icon-bar {
         background: #01417b; }
+  .navbar-default .navbar-nav li a {
+    height: 50px;
+    padding: 15px; }
+  .navbar-default .nav-item-text {
+    display: none; }
 
 .navbar-nav {
   margin: 0;
@@ -8224,6 +8229,7 @@ h3 + .btn-toolbar {
     transition: all 250ms; }
   .navbar-nav .dropdown .dropdown-menu {
     background: #fff;
+    float: right;
     min-width: auto;
     position: absolute; }
     .navbar-nav .dropdown .dropdown-menu li {
@@ -8303,6 +8309,7 @@ h3 + .btn-toolbar {
   content: "\f013"; }
 
 .navbar-user {
+  float: right;
   margin-right: 0;
   width: auto; }
   .navbar-user li {
@@ -8328,13 +8335,7 @@ h3 + .btn-toolbar {
   .navbar-nav .nav-item a:before {
     left: 16px; }
   .navbar-nav.navbar-sidebar {
-    margin: 0; }
-
-  .navbar-default .navbar-nav li a {
-    height: 50px;
-    padding: 15px; }
-  .navbar-default .nav-item-text {
-    display: none; } }
+    margin: 0; } }
 @media screen and (min-width: 992px) {
   .navbar-nav .nav-item a:before {
     left: 20px; }
