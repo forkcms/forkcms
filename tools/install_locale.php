@@ -48,8 +48,7 @@ else {
 // bootstrap Fork
 define('APPLICATION', 'Backend');
 $kernel = new AppKernel('prod', false);
-$kernel->boot();
-$kernel->defineForkConstants();
+
 if (!defined('PATH_WWW')) {
     define('PATH_WWW', __DIR__ . '/..');
 }

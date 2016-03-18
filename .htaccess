@@ -13,7 +13,7 @@ FileETag MTime Size
 	RewriteBase /
 
 	# forbidden folders
-	RewriteRule .git - [F]
+	RewriteRule \.git - [F]
 	RewriteRule .*\.gitignore - [F]
 	RewriteRule composer\.json - [F]
 	RewriteRule composer\.lock - [F]
