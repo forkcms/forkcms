@@ -1,10 +1,15 @@
 // Sticky footer
 
+.logo-footer {
+  width: 50px;
+  margin: 0 auto 20px auto;
+}
 
 @media screen and (min-width: $screen-sm) {
 
   html, body {
     height: 100%;
+    min-height: 100%;
   }
 
   #root {
@@ -19,13 +24,20 @@
   }
 
   #footer {
+    bottom: 0;
     clear: both;
-    position: relative;
+    position: absolute;
     height: $footer-height;
+    margin-left: -240px;
+    padding-left: 240px;
+    width: 100%;
   }
+}
 
-  .logo-footer {
-    width: 50px;
-    margin: 0 auto 20px auto;
+@media screen and (min-width: $screen-md) {
+
+  #footer {
+    margin-left: -430px;
+    padding-left: 430px;
   }
 }
