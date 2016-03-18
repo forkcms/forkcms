@@ -107,7 +107,7 @@ class Themes extends BackendBaseActionIndex
         }
 
         // templates
-        $this->frm->addRadiobutton('installedThemes', $themes, $selected);
+        $this->frm->addRadiobutton('installedThemes', $themes, $selected, 'hidden');
     }
 
     /**
