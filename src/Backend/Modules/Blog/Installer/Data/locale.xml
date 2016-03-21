@@ -341,12 +341,6 @@
         <translation language="sv"><![CDATA[Visa endast artiklar för:]]></translation>
         <translation language="el"><![CDATA[Εμφάνισε άρθρα μόνον γιά:]]></translation>
       </item>
-      <item type="message" name="MovePagesNotPossible">
-        <translation language="nl"><![CDATA[Het verplaatsen van pagina's is niet mogelijk op touch-apparaten.]]></translation>
-        <translation language="en"><![CDATA[Moving pages on touch devices is not possible.]]></translation>
-        <translation language="it"><![CDATA[Spostare pagine su dispositivi touch non è possibile.]]></translation>
-        <translation language="de"><![CDATA[Verschieben von Seiten auf Touch-Geräten ist nicht möglich.]]></translation>
-      </item>
       <item type="error" name="DeleteCategoryNotAllowed">
         <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
         <translation language="en"><![CDATA[It is not allowed to delete the category "%1$s".]]></translation>
