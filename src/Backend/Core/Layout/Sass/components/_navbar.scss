@@ -96,6 +96,7 @@
     position: relative;
 
     .nav-item {
+      float: left;
       text-align: center;
       width: 85px;
 
@@ -187,7 +188,6 @@
   }
 
   .nav-item {
-    float: left;
     line-height: 20px;
 
     a {
@@ -380,6 +380,7 @@
 
       .nav-item {
         display: block;
+        float: none;
         text-align: left;
         width: auto;
 

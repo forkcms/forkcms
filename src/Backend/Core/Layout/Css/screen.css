@@ -8252,6 +8252,7 @@ h3 + .btn-toolbar {
     left: 0;
     position: relative; }
     .navbar-default .navbar-nav .nav-item {
+      float: left;
       text-align: center;
       width: 85px; }
       .navbar-default .navbar-nav .nav-item a {
@@ -8305,7 +8306,6 @@ h3 + .btn-toolbar {
     .navbar-nav .dropdown.open .dropdown-toggle:hover, .navbar-nav .dropdown.open .dropdown-toggle:focus {
       background: transparent; }
   .navbar-nav .nav-item {
-    float: left;
     line-height: 20px; }
     .navbar-nav .nav-item a {
       border-bottom: 1px solid #021b45;
@@ -8410,6 +8410,7 @@ h3 + .btn-toolbar {
     width: 100% !important; }
     .navbar-default .navbar-nav .nav-item {
       display: block;
+      float: none;
       text-align: left;
       width: auto; }
       .navbar-default .navbar-nav .nav-item a {
