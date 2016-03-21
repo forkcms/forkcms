@@ -1,19 +1,7 @@
 <div class="main-navigation">
     <nav class="navbar navbar-default">
-        <div class="navbar-header visible-xs">
-            <img class="site-icon" src="/apple-touch-icon.png" alt="apple touch icon">
-            <a class="navbar-brand" href="/{% if SITE_MULTILANGUAGE %}{{ LANGUAGE }}{% endif %}" title="{{ 'lbl.VisitWebsite'|trans|capitalize }}">
-                {{ SITE_TITLE }}
-            </a>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-collapse">
-            {{ getmainnavigation('nav navbar-nav') }}
-        </div>
+        {{ getmainnavigation('nav navbar-nav') }}
     </nav>
+    <a href="#" class="arrow-right js-nav-next"></a>
+    <a href="#" class="arrow-left js-nav-prev"></a>
 </div>

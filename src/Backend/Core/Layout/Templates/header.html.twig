@@ -7,26 +7,6 @@
                 {{ SITE_URL }}{{ prefixURL }}/<span id="generatedUrl">{{ item.url }}</span>
             </a>
         </div>
-        <ul class="nav navbar-nav navbar-languages hidden-xs">
-            {% if SITE_MULTILANGUAGE %}
-                {% if workingLanguages %}
-                    <label for="workingLanguages">{{ 'msg.NowEditing'|trans|capitalize }}</label>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ LANGUAGE|uppercase }}">
-                            {{ ('lbl.'~LANGUAGE|uppercase)|trans|capitalize }}
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            {% for workingLanguage in workingLanguages %}
-                                <li{% if workingLanguage.selected %} class="active"{% endif %}>
-                                    <a href="{{ geturl(null,null,null,workingLanguage.abbr) }}" title="{{ workingLanguage.label|capitalize }}">{{ ('lbl.'~workingLanguage.abbr|uppercase)|trans|capitalize }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endif %}
-            {% endif %}
-        </ul>
     </div>
 
     <ul class="nav navbar-nav navbar-right navbar-user">
@@ -43,5 +23,25 @@
                 <li><a href="{{ geturl('logout','authentication') }}">{{ 'lbl.SignOut'|trans|capitalize }}</a></li>
             </ul>
         </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right navbar-languages">
+        {% if SITE_MULTILANGUAGE %}
+            {% if workingLanguages %}
+                <label class="hidden-xs" for="workingLanguages">{{ 'msg.NowEditing'|trans|capitalize }}</label>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ LANGUAGE|uppercase }}">
+                        {{ ('lbl.'~LANGUAGE|uppercase)|trans|capitalize }}
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        {% for workingLanguage in workingLanguages %}
+                            <li{% if workingLanguage.selected %} class="active"{% endif %}>
+                                <a href="{{ geturl(null,null,null,workingLanguage.abbr) }}" title="{{ workingLanguage.label|capitalize }}">{{ ('lbl.'~workingLanguage.abbr|uppercase)|trans|capitalize }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+        {% endif %}
     </ul>
 </div>

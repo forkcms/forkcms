@@ -46,6 +46,8 @@ var jsBackend =
         jsBackend.tooltip.init();
         jsBackend.tableSequenceByDragAndDrop.init();
         jsBackend.ckeditor.init();
+        jsBackend.resizeFunctions.init();
+        jsBackend.navigationControls.init();
 
         // IE fixes
         jsBackend.selectors.init();
@@ -102,6 +104,79 @@ var jsBackend =
         $(document).ajaxStop(function () {
             $ajaxSpinner.hide();
         });
+    }
+};
+
+/**
+ * Navigation controls
+ *
+ * @author    Katrien Vanhaute <katrien@sumocoders.be>
+ * @author    Daan De Deckere <daan@sumocoders.be>
+ */
+
+jsBackend.navigationControls =
+{
+    init: function(){
+
+        var navbarWidth = this.calculations()[2];
+        var $navbarNav = this.calculations()[0];
+
+        $('.navbar-default .navbar-nav').css('width', navbarWidth);
+
+        $('.js-nav-prev').on('click', function(e) {
+            e.preventDefault();
+            $navbarNav.animate({'left':'+=85px'});
+            this.setControls(85);
+
+        }.bind(this));
+
+        $('.js-nav-next').on('click', function(e) {
+            e.preventDefault();
+            $navbarNav.animate({'left':'-=85px'});
+            this.setControls(-85);
+
+        }.bind(this));
+    },
+
+    resize: function() {
+
+        var $navbarNav = this.calculations()[0];
+        var navbarWidth = this.calculations()[2];
+        var windowWidth = this.calculations()[3];
+
+        if (navbarWidth < windowWidth) {
+            $navbarNav.css('left', '0');
+            $('.js-nav-next').hide();
+        }
+        this.setControls(0);
+
+    },
+
+    setControls: function(offset) {
+        var $navbarNav = this.calculations(offset)[0];
+        var rightOffset = this.calculations(offset)[1];
+
+        if((parseInt($navbarNav.css('left')) + offset) >= 0) {
+            $('.js-nav-prev').hide();
+        } else {
+            $('.js-nav-prev').show();
+        }
+
+        if(rightOffset < 0) {
+            $('.js-nav-next').show();
+        } else {
+            $('.js-nav-next').hide();
+        }
+    },
+
+    calculations: function(offset) {
+        var $navItem = $('.navbar-default .nav-item');
+        var windowWidth = $(window).width();
+        var $navbarNav = $('.navbar-default .navbar-nav');
+        var navbarWidth = $navItem.width() * $navItem.length;
+        var rightOffset = windowWidth - navbarWidth - parseInt($navbarNav.css('left')) - offset;
+
+        return [$navbarNav, rightOffset, navbarWidth, windowWidth];
     }
 };
 
@@ -1890,4 +1965,45 @@ jsBackend.tableSequenceByDragAndDrop =
     }
 };
 
+window.requestAnimationFrame = (function() {
+    var lastTime;
+    lastTime = 0;
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback, element) {
+            var curTime, id, timeToCall;
+            curTime = new Date().getTime();
+            timeToCall = Math.max(0, 16 - (curTime - lastTime));
+            id = window.setTimeout(function() {
+                return callback(curTime + timeToCall);
+            }, timeToCall);
+            lastTime = curTime + timeToCall;
+            return id;
+        };
+})();
+
+jsBackend.resizeFunctions = {
+
+    init: function() {
+        var calculate, tick, ticking;
+        ticking = false;
+        calculate = (function(_this) {
+            return function() {
+                jsBackend.navigationControls.resize();
+                return ticking = false;
+            };
+        })(this);
+        tick = function() {
+            if (!ticking) {
+                this.requestAnimationFrame(calculate);
+                return ticking = true;
+            }
+        };
+        tick();
+        return $(window).on('load resize', function() {
+            return tick();
+        });
+    }
+};
+
 $(jsBackend.init);
+
+
