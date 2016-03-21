@@ -1,5 +1,4 @@
 User-agent: *
-Disallow: /private
 Disallow: /api
 Disallow: /backend/ajax
 Disallow: /backend/cronjob
