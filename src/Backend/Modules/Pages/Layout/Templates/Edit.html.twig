@@ -2,6 +2,22 @@
 
 {% extends '/Layout/Templates/pages.html.twig' %}
 
+{% block pagesTree %}
+  <div class="sub-navigation hidden-xs">
+    <div class="pages-tree">
+      <div class="alert alert-warning visible-sm">
+        <p>{{ 'msg.movePagesNotPossible'|trans|capitalize }}</p>
+      </div>
+      <div id="tree">
+        {{ tree|raw }}
+      </div>
+    </div>
+    <div id="fullwidthSwitch">
+      <a href="#close">&nbsp;</a>
+    </div>
+  </div>
+{% endblock %}
+
 {% block actionbar %}
   <div class="row fork-module-heading">
     <div class="col-md-6">

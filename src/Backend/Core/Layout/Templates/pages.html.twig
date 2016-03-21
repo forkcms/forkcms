@@ -11,14 +11,8 @@
 <div class="main-wrapper main-wrapper-pages">
     <div class="sidebar">
         {% include "/Layout/Templates/navigation.html.twig" %}
-        <div class="sub-navigation">
-            <div id="tree" class="pages-tree">
-                {{ tree|raw }}
-            </div>
-            <div id="fullwidthSwitch">
-                <a href="#close">&nbsp;</a>
-            </div>
-        </div>
+        {%  block pagesTree %}
+        {% endblock %}
     </div>
     <div id="root">
         <div id="content" class="content-wrapper">
