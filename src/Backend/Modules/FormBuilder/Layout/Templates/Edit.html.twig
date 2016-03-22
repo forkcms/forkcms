@@ -21,7 +21,7 @@
         var defaultErrorMessages = {};
         {% if errors %}
         {% for error in errors %}
-        defaultErrorMessages.{{ err.or.type }} = '{{ err.or.message }}';
+        defaultErrorMessages.{{ error.type }} = '{{ error.message }}';
         {% endfor %}
         {% endif %}
       //]]>
@@ -79,7 +79,7 @@
             <div role="tabpanel" class="tab-pane" id="tabFields">
               <div class="row">
                 <div class="col-md-12">
-                  <p class="text-warning"><span class="fa fa-warning"></span> {{ msg.ImportantImmediateUpdate }}</p>
+                  <p class="text-warning"><span class="fa fa-warning"></span> {{ 'msg.ImportantImmediateUpdate'|trans|raw }}</p>
                 </div>
               </div>
               <div class="row">
@@ -186,7 +186,7 @@
                 <div class="col-md-12">
                   <label for="identifier" class="control-label">
                     {{ 'lbl.Identifier'|trans|capitalize }}
-                    <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ msg.HelpIdentifier }}"></abbr>
+                    <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpIdentifier'|trans|capitalize }}"></abbr>
                   </label>
                   {% form_field_error identifier %} {% form_field identifier %}
                 </div>
