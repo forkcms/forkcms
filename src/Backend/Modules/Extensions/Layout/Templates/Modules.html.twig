@@ -33,7 +33,7 @@
     <div class="col-md-12">
       <div class="panel panel-warning">
         <div class="panel-heading">
-          <span class="panel-title">{{ msg.ModulesWarnings }}</span>
+          <span class="panel-title">{{ 'msg.ModulesWarnings'|trans|capitalize }}</span>
         </div>
         <div class="panel-body">
           <ul>
@@ -62,7 +62,7 @@
         {% endif %}
         {% if not dataGridInstalledModules %}
         <div class="panel-body">
-          <p>{{ msg.NoModulesInstalled }}</p>
+          <p>{{ 'msg.NoModulesInstalled'|trans|capitalize }}</p>
         </div>
         {% endif %}
       </div>
@@ -75,7 +75,7 @@
         <div class="panel-heading">
           <h3 class="panel-title">{{ 'lbl.InstallableModules'|trans|capitalize }}</h3>
         </div>
-        {{ dataGridInstallableModules }}
+        {{ dataGridInstallableModules|raw }}
       </div>
     </div>
   </div>
