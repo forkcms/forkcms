@@ -272,21 +272,21 @@
                   {{ 'msg.ContentSaveWarning'|trans }}
                 </div>
                 <div class="box contentBlock" style="margin: 0;">
-                  <div class="blockContent|rawHTML optionsRTE">
+                  <div class="blockContent HTML optionsRTE">
                     <fieldset>
-                      {{ block.txtHTML }}
-                      {{ block.txtHTMLError }}
+                      {{ block.formElements.txtHTML.parse() | raw }}
+                      {{ block.formElements.txtHTMLError.parse() | raw }}
                     </fieldset>
                   </div>
 
                   {# this will store the selected extra #}
-                  {{ block.hidExtraId }}
+                  {{ block.formElements.hidExtraId.parse() | raw }}
 
                   {# this will store the selected position #}
-                  {{ block.hidPosition }}
+                  {{ block.formElements.hidPosition.parse() | raw }}
 
                   {# this will store the visible/hidden state #}
-                  <div style="display: none">{{ block.chkVisible }}</div>
+                  <div style="display: none">{{ block.formElements.chkVisible.parse() | raw }}</div>
                 </div>
               {% endfor %}
             {% endfor %}
