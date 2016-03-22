@@ -36,7 +36,7 @@
         <div class="panel-body">
           <div class="form-group">
             <p class="help-block">
-              {{ msg.CertificateHelp }}
+              {{ 'msg.CertificateHelp'|trans|raw }}
             </p>
             {% form_field_error certificate %} {% form_field certificate %}
           </p>
