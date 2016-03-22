@@ -19,12 +19,12 @@
       <div class="col-md-12">
         <div class="form-group">
           <label for="wordpress" class="control-label">{{ 'lbl.File'|trans|capitalize }}</label>
-          <p class="help-block">{{ msg.HelpWordpress }}</p>
+          <p class="help-block">{{ 'msg.HelpWordpress'|trans|capitalize }}</p>
           {% form_field_error wordpress %} {% form_field wordpress %}
         </div>
         <div class="form-group">
           <label for="filter" class="control-label">{{ 'lbl.WordpressFilter'|trans|capitalize }}</label>
-          <p class="help-block">{{ msg.HelpWordpressFilter }}</p>
+          <p class="help-block">{{ 'msg.HelpWordpressFilter'|capitalize }}</p>
           {% form_field_error filter %} {% form_field filter %}
         </div>
       </div>

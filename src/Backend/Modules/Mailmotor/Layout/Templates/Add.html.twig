@@ -44,7 +44,7 @@
                                     {{ 'lbl.Name'|trans|capitalize }}
                                     <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                                 </label>
-                                <p class="help-block">{{ msg.NameInternalUseOnly }}</p>
+                                <p class="help-block">{{ 'msg.NameInternalUseOnly'|trans }}</p>
                                 {% form_field_error name %} {% form_field name %}
                             </div>
                             {% if ddmCampaign %}

@@ -11,7 +11,7 @@
 <div class="row fork-module-messages">
   <div class="col-md-12">
     <div class="alert alert-warning" role="alert">
-      <p><strong>{{ msg.ConfigurationError }}</strong></p>
+      <p><strong>{{ 'msg.ConfigurationError'|trans }}</strong></p>
       <ul>
         {% if not account %}
         <li>{{ err.NoCMAccount }}</li>
@@ -127,7 +127,7 @@
                         {{ 'lbl.PerSentMailing'|trans|capitalize }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                       </label>
-                      <p class="help-block">{{ msg.HelpPrice }}</p>
+                      <p class="help-block">{{ 'msg.HelpPrice'|trans }}</p>
                       <div class="form-inline">
                         € {% form_field_error price_per_email %} {% form_field price_per_email %}
                       </div>
@@ -137,7 +137,7 @@
                         {{ 'lbl.PerCampaign'|trans|capitalize }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                       </label>
-                      <p class="help-block">{{ msg.HelpPrice }}</p>
+                      <p class="help-block">{{ 'msg.HelpPrice'|trans }}</p>
                       <div class="form-inline">
                         € {% form_field_error price_per_campaign %} {% form_field price_per_campaign %}
                       </div>
@@ -170,7 +170,7 @@
                     {{ 'lbl.URL'|trans|uppercase }}
                     <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
-                  <p class="help-block">{{ msg.HelpCMURL }}</p>
+                  <p class="help-block">{{ 'msg.HelpCMURL'|trans }}</p>
                   {% form_field_error url %} {% form_field url %}
                 </div>
                 <div class="form-group">
@@ -196,7 +196,7 @@
                     {% if account %}
                     <a id="unlinkAccount" href="#" class="btn btn-danger">
                       <span class="fa fa-unlink"></span>&nbsp;
-                      {{ msg.UnlinkCMAccount }}
+                      {{ 'msg.UnlinkCMAccount'|trans }}
                     </a>
                     {% endif %}
                   </div>
@@ -204,14 +204,14 @@
                     {% if not account %}
                     <a id="linkAccount" href="#" class="btn btn-primary">
                       <span class="fa fa-link"></span>&nbsp;
-                      {{ msg.LinkCMAccount }}
+                      {{ 'msg.LinkCMAccount'|trans }}
                     </a>
                     {% endif %}
                     {% if account %}
                     {% if clientId %}
                     <a href="{{ geturl('index' ) }}" class="btn btn-default">
                       <span class="fa fa-list"></span>&nbsp;
-                      {{ msg.ViewMailings }}
+                      {{ 'msg.ViewMailings'|trans }}
                     </a>
                     {% endif %}
                     {% endif %}
@@ -229,7 +229,7 @@
                 <div class="form-group">
                   <label for="clientId" class="control-label">{{ 'lbl.Client'|trans|capitalize }}</label>
                   {% if not clientId %}
-                  <p class="text-danger"><strong>{{ msg.NoClientID }}</strong></p>
+                  <p class="text-danger"><strong>{{ 'msg.NoClientID'|trans }}</strong></p>
                   {% endif %}
                   {% form_field client_id %}
                 </div>

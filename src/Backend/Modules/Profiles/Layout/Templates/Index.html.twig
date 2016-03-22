@@ -76,7 +76,7 @@
                 <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
               </div>
               <div class="modal-body">
-                <p>{{ msg.ConfirmMassDelete }}</p>
+                <p>{{ 'msg.ConfirmMassDelete'|trans }}</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
@@ -92,7 +92,7 @@
                 <span class="modal-title h4">{{ 'lbl.AddToGroup'|trans|capitalize }}</span>
               </div>
               <div class="modal-body">
-                <p>{{ msg.ConfirmMassAddToGroup }}</p>
+                <p>{{ 'msg.ConfirmMassAddToGroup'|trans }}</p>
                 <div class="form-group">
                   <div class="jsMassActionAddToGroupSelectGroup"></div>
                 </div>
@@ -107,7 +107,7 @@
       </form>
       {% endif %}
       {% if not dgProfiles %}
-      <p>{{ msg.NoItems }}</p>
+      <p>{{ 'msg.NoItems'|trans }}</p>
       {% endif %}
     </div>
   </div>

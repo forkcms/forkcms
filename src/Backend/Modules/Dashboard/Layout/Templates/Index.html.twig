@@ -6,7 +6,7 @@
 <div id="dashboardWidgets" class="row fork-dashboard">
   <div class="col-md-12">
     <div id="editDashboardMessage" class="alert alert-info" role="alert" style="display:none;">
-      {{ msg.HelpEditDashboard }}
+      {{ 'msg.HelpEditDashboard'|trans }}
       <a href="#" id="doneEditingDashboard">{{ 'lbl.Done'|trans|capitalize }}</a>
     </div>
   </div>
@@ -20,7 +20,7 @@
           <h2 class="panel-title">{{ left.title }}</h2>
         </div>
         <div class="panel-body" style="display: none;">
-          {{ msg.WillBeEnabledOnSave }}
+          {{ 'msg.WillBeEnabledOnSave'|trans }}
         </div>
       </div>
       {% endif %}
@@ -41,7 +41,7 @@
           <h2 class="panel-title">{{ middel.title }}</h2>
         </div>
         <div class="panel-body" style="display: none;">
-          {{ msg.WillBeEnabledOnSave }}
+          {{ 'msg.WillBeEnabledOnSave'|trans }}
         </div>
       </div>
       {% endif %}
@@ -62,7 +62,7 @@
           <h2 class="panel-title">{{ right.title }}</h2>
         </div>
         <div class="panel-body" style="display: none;">
-          {{ msg.WillBeEnabledOnSave }}
+          {{ 'msg.WillBeEnabledOnSave'|trans }}
         </div>
       </div>
       {% endif %}
@@ -77,7 +77,7 @@
 <div class="row fork-dashboard-actions">
   <div class="col-md-4 col-md-offset-4 text-center">
     <a href="#" id="editDashboard">
-      {{ msg.EditYourDashboard }}
+      {{ 'msg.EditYourDashboard'|trans }}
     </a>
   </div>
 </div>

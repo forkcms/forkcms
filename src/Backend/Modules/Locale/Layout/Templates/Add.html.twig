@@ -15,7 +15,7 @@
             {{ 'lbl.ReferenceCode'|trans|capitalize }}
             <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
           </label>
-          <p class="help-block">{{ msg.HelpAddName }}</p>
+          <p class="help-block">{{ 'msg.HelpAddName'|trans }}</p>
           {% form_field_error name %} {% form_field name %}
         </div>
         <div class="form-group">
@@ -23,7 +23,7 @@
             {{ 'lbl.Translation'|trans|capitalize }}
             <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
           </label>
-          <p class="help-block">{{ msg.HelpAddValue }}</p>
+          <p class="help-block">{{ 'msg.HelpAddValue'|trans }}</p>
           {% form_field_error value %} {% form_field value %}
         </div>
         <div class="row">

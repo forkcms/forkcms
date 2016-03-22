@@ -18,11 +18,11 @@
       {% if dataGrid %}
       <form 'act.on="{{  geturl('mass_custom_field_action' ) }}" method="get" class="forkForms submitWithLink" id="massCustomFieldAction">
         <input type="hidden" name="group_id" value="{{ group.id }}" />
-        {{ dataGrid }}
+        {{ dataGrid|raw }}
       </form>
       {% endif %}
       {% if not dataGrid %}
-      <p>{{ msg.NoItems }}</p>
+      <p>{{ 'msg.NoItems'|trans|capitalize }}</p>
       {% endif %}
     </div>
   </div>

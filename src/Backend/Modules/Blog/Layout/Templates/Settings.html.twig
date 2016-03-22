@@ -59,7 +59,7 @@
                     {% form_field spamfilter %} {{ 'lbl.FilterCommentsForSpam'|trans|capitalize }}
                   </label>
                   <p class="help-block">
-                    {{ msg.HelpSpamFilter }}
+                    {{ 'msg.HelpSpamFilter'|trans|capitalize }}
                     {% if noAkismetKey %}
                     <br />
                     <span class="text-warning">
@@ -163,7 +163,7 @@
                 {{ 'lbl.Title'|trans|capitalize }}
                 <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
               </label>
-              <p class="help-block">{{ msg.HelpRSSTitle }}</p>
+              <p class="help-block">{{ 'msg.HelpRSSTitle'|trans|capitalize }}</p>
               {% form_field_error rss_title %} {% form_field rss_title %}
             </div>
             <div class="form-group">

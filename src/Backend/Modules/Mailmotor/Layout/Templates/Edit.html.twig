@@ -44,7 +44,7 @@
                     {{ 'lbl.Name'|trans|capitalize }}
                     <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                   </label>
-                  <p class="help-block">{{ msg.NameInternalUseOnly }}</p>
+                  <p class="help-block">{{ 'msg.NameInternalUseOnly'|trans|capitalize }}</p>
                   {% form_field_error name %} {% form_field name %}
                 </div>
                 {% if ddmCampaign %}
@@ -124,7 +124,7 @@
                     {% for group in groups %}
                     <li class="checkbox">
                       <label for="{{ group.id }}">
-                        {{ group.chkGroups }}
+                        {{ group.chkGroups|raw }}
                         <attr title="{{ 'msg.GroupsNumberOfRecipients'|trans|sprintf(group.recipients ) }}">
                           {{ group.label|capitalize }}
                           ({% if group.recipients %}{{ group.recipients }}{% endif %}{% if not group.recipients %}{{ lbl.QuantityNo }}{% endif %} {% if group.single %}{{ lbl.EmailAddress }}{% endif %}{% if not group.single %}{{ lbl.EmailAddresses }}{% endif %})
@@ -155,7 +155,7 @@
                     {% for languag in languages %}
                     <li class="checkbox">
                       <label for="{{ languag.id }}">
-                        {{ languag.rbtLanguages }} {{ languag.label|capitalize }}
+                        {{ languag.rbtLanguages|raw }} {{ languag.label|capitalize }}
                       </label>
                     </li>
                     {% endfor %}
@@ -365,8 +365,8 @@
                 <span class="modal-title h4">{{ 'msg.MailingConfirmSend'|trans|capitalize }}</span>
               </div>
               <div class="modal-body">
-                <p>{{ recipientStatistics }} <span id="sendOn" style="display: none;">{{ msg.SendOn }}</span></p>
-                <p>{{ msg.PeopleGroups }}</p>
+                <p>{{ recipientStatistics }} <span id="sendOn" style="display: none;">{{ 'msg.SendOn'|trans|capitalize }}</span></p>
+                <p>{{ 'msg.PeopleGroups'|trans|capitalize }}</p>
                 <p>
                   {% for group in groups %}{{ group.name }} {% if group.comma %}, {% endif %}{% endfor %}
                 </p>

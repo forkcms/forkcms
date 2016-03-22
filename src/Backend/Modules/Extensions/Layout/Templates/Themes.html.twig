@@ -25,7 +25,7 @@
             </h3>
           </div>
           <div class="panel-body">
-            <p class="help-block">{{ msg.HelpInstallableThemes }}</p>
+            <p class="help-block">{{ 'msg.HelpInstallableThemes'|trans }}</p>
             <div id="installedThemes" class="selectThumbList row">
               {% for installableThem in installableThemes %}
               <li>
@@ -64,7 +64,7 @@
                             <span class="modal-title h4">{{ 'lbl.Install'|trans|capitalize }}</span>
                           </div>
                           <div class="modal-body">
-                            <p>{{ msg.ConfirmThemeInstall }}</p>
+                            <p>{{ 'msg.ConfirmThemeInstall'|trans }}</p>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
@@ -97,7 +97,7 @@
             </h3>
           </div>
           <div class="panel-body">
-            <p class="help-block">{{ msg.HelpThemes }}</p>
+            <p class="help-block">{{ 'msg.HelpThemes'|trans }}</p>
             {% if rbtInstalledThemesError %}
             <p class="text-danger">{{ rbtThemesError }}</p>
             {% endif %}

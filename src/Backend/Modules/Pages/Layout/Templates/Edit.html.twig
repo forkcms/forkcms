@@ -104,7 +104,7 @@
                       <div id="templateVisualFallback" style="display: none">
                         <div id="fallback" class="generalMessage singleMessage infoMessage">
                           <div id="fallbackInfo">
-                            {{ msg.FallbackInfo }}
+                            {{ 'msg.FallbackInfo'|trans }}
                           </div>
                           <table cellspacing="2">
                             <tbody>
@@ -132,7 +132,7 @@
               {% if drafts %}
               <div class="row">
                 <div class="col-md-12">
-                  <h3>{{ 'lbl.Drafts'|trans|capitalize }} <abbr title="{{ msg.HelpDrafts }}"><span class="fa fa-info-circle" data-toggle="tooltip"></span></abbr></h3>
+                  <h3>{{ 'lbl.Drafts'|trans|capitalize }} <abbr title="{{ 'msg.HelpDrafts'|trans }}"><span class="fa fa-info-circle" data-toggle="tooltip"></span></abbr></h3>
                 </div>
               </div>
               <div class="row">
@@ -143,7 +143,7 @@
               {% endif %}
               <div class="row">
                 <div class="col-md-12">
-                  <h3>{{ 'lbl.PreviousVersions'|trans|capitalize }} <abbr title="{{ msg.HelpRevisions }}"><span class="fa fa-info-circle" data-toggle="tooltip"></span></abbr></h3>
+                  <h3>{{ 'lbl.PreviousVersions'|trans|capitalize }} <abbr title="{{ 'msg.HelpRevisions'|trans }}"><span class="fa fa-info-circle" data-toggle="tooltip"></span></abbr></h3>
                 </div>
               </div>
               <div class="row">
@@ -152,7 +152,7 @@
                   {{ revisions|raw }}
                   {% endif %}
                   {% if not revisions %}
-                  <p>{{ msg.NoRevisions }}</p>
+                  <p>{{ 'msg.NoRevisions'|trans }}</p>
                   {% endif %}
                 </div>
               </div>
@@ -269,7 +269,7 @@
             {% for position in positions %}
               {% for block in position.blocks %}
                 <div class="alert alert-warning">
-                  {{ msg.ContentSaveWarning }}
+                  {{ 'msg.ContentSaveWarning'|trans }}
                 </div>
                 <div class="box contentBlock" style="margin: 0;">
                   <div class="blockContent|rawHTML optionsRTE">
@@ -311,10 +311,10 @@
           <div class="modal-body">
             <input type="hidden" id="extraForBlock" name="extraForBlock" value=""/>
 
-            <p>{{ msg.HelpBlockContent }}</p>
+            <p>{{ 'msg.HelpBlockContent'|trans }}</p>
 
-            <div id="extraWarningAlreadyBlock" class="alert alert-warning">{{ msg.ModuleBlockAlreadyLinked }}</div>
-            <div id="extraWarningHomeNoBlock" class="alert alert-warning">{{ msg.HomeNoBlock }}</div>
+            <div id="extraWarningAlreadyBlock" class="alert alert-warning">{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
+            <div id="extraWarningHomeNoBlock" class="alert alert-warning">{{ 'msg.HomeNoBlock'|trans }}</div>
             <div class="form-group">
               <label for="extraType" class="control-label">{{ 'lbl.Type'|trans|capitalize }}</label>
               {% form_field extra_type %}
@@ -350,7 +350,7 @@
             <span class="modal-title h4">{{ 'lbl.ChooseATemplate'|trans|capitalize }}</span>
           </div>
           <div class="modal-body">
-            <div class="alert alert-warning">{{ msg.TemplateChangeWarning }}</div>
+            <div class="alert alert-warning">{{ 'msg.TemplateChangeWarning'|trans }}</div>
             <div id="templateList">
               <div class="row">
                 {% for template in templates %}
@@ -390,7 +390,7 @@
             <span class="modal-title h4">{{ 'lbl.DeleteBlock'|trans|capitalize }}</span>
           </div>
           <div class="modal-body">
-            <p>{{ msg.ConfirmDeleteBlock }}</p>
+            <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
@@ -412,7 +412,7 @@
           </div>
           <div class="modal-body">
             <div class="alert alert-warning">
-              {{ msg.ContentSaveWarning }}
+              {{ 'msg.ContentSaveWarning'|trans }}
             </div>
             <div class="form-group">
               {% form_field html %}

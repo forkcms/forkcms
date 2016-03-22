@@ -11,7 +11,7 @@
     <div class="row fork-module-content">
       <div class="col-md-12">
         <div class="form-inline form-group">
-          <p class="help-block">{{ msg.HelpTemplateLocation }}</p>
+          <p class="help-block">{{ 'msg.HelpTemplateLocation'|trans|raw }}</p>
           <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|capitalize }}</label>
           <label for="theme" class="hide">{{ 'lbl.Theme'|trans|capitalize }}</label>
           {% form_field_error theme %}<small><code>/Core/Layout/Templates/</code></small>{% form_field file %} {% form_field theme %} {% form_field_error file %}
@@ -111,13 +111,13 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <p class="help-block">{{ msg.HelpTemplateFormat }}</p>
+                  <p class="help-block">{{ 'msg.HelpTemplateFormat'|trans }}</p>
                   {% form_field_error format %} {% form_field format %}
                 </div>
               </div>
               <div class="col-md-6">
                 <div>
-                  {{ msg.HelpPositionsLayout }}
+                  {{ 'msg.HelpPositionsLayout'|trans }}
                 </div>
               </div>
             </div>
@@ -135,10 +135,10 @@
             <div class="form-group">
               <ul class="list-unstyled">
                 <li class="checkbox">
-                  <label for="active">{% form_field_error active %} {{ 'lbl.Active'|trans|capitalize }}</label> {% form_field active %}
+                  <label for="active">{% form_field active %} {% form_field_error active %} {{ 'lbl.Active'|trans|capitalize }}</label>
                 </li>
                 <li class="checkbox">
-                  <label for="default" class="control-label">{% form_field_error default %} {{ 'lbl.Default'|trans|capitalize }}</label> {% form_field default %}
+                  <label for="default" class="control-label">{% form_field default %} {% form_field_error default %} {{ 'lbl.Default'|trans|capitalize }}</label>
                 </li>
               </ul>
             </div>

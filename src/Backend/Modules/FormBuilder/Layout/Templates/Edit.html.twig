@@ -92,7 +92,7 @@
 
                       {# This row always needs to be here. We show/hide it with javascript #}
                       <div id="noFields" class="alert alert-info"{% if fields %} style="display: none;"{% endif %}>
-                        {{ msg.NoFields }}
+                        {{ 'msg.NoFields'|trans }}
                       </div>
 
                       {# Submit button is always here. Cannot be deleted or moved. #}
@@ -257,7 +257,7 @@
                         <li class="checkbox">
                           <label for="textboxReplyTo" class="control-label">
                             {% form_field textbox_reply_to %} {{ 'lbl.ReplyTo'|trans|capitalize }}
-                            <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ msg.HelpReplyTo }}"></abbr>
+                            <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpReplyTo'|trans }}"></abbr>
                           </label>
                         </li>
                       </ul>

@@ -19,25 +19,25 @@
           {% if isGod %}
           <div class="panel-body">
             <h4>{{ 'lbl.SendingEmails'|trans|capitalize }}</h4>
-            <p class="help-block">{{ msg.HelpSendingEmails }}</p>
+            <p class="help-block">{{ 'msg.HelpSendingEmails'|trans }}</p>
             <div class="form-inline">
               <div class="form-group">
                 {% form_field_error mailer_type %} {% form_field mailer_type %}
               </div>
               <small>
-                <a id="testEmailConnection" href="#">{{ msg.SendTestMail }}</a>
+                <a id="testEmailConnection" href="#">{{ 'msg.SendTestMail'|trans }}</a>
                 <span id="testEmailConnectionSpinner" style="display: none;">
                   <img style="margin-top: 3px;" src="/src/Backend/Core/Layout/images/spinner.gif" width="12px" height="12px" alt="loading" />
                 </span>
                 <span id="testEmailConnectionError" style="display: none;" class="alert alert-danger">{{ err.ErrorWhileSendingEmail }}</span>
-                <span id="testEmailConnectionSuccess" style="display: none;" class="alert alert-success">{{ msg.TestWasSent }}</span>
+                <span id="testEmailConnectionSuccess" style="display: none;" class="alert alert-success">{{ 'msg.TestWasSent'|trans }}</span>
               </small>
             </div>
           </div>
           {% endif %}
           <div class="panel-body">
             <h4>{{ 'lbl.From'|trans|capitalize }}</h4>
-            <p>{{ msg.HelpEmailFrom }}</p>
+            <p>{{ 'msg.HelpEmailFrom'|trans }}</p>
             <div class="form-group">
               <label for="mailerFromName" class="control-label">
                 {{ 'lbl.Name'|trans|capitalize }}
@@ -55,7 +55,7 @@
           </div>
           <div class="panel-body">
             <h4>{{ 'lbl.To'|trans|capitalize }}</h4>
-            <p>{{ msg.HelpEmailTo }}</p>
+            <p>{{ 'msg.HelpEmailTo'|trans }}</p>
             <div class="form-group">
               <label for="mailerToName" class="control-label">
                 {{ 'lbl.Name'|trans|capitalize }}
@@ -104,7 +104,7 @@
             <div class="form-group">
               <label for="smtpServer" style="float: left;">{{ 'lbl.Server'|trans|capitalize }}</label>
               <label for="smtpPort" class="control-label">&#160;&amp; {{ lbl.Port }}</label>
-              <p class="help-block">{{ msg.HelpSMTPServer }}</p>
+              <p class="help-block">{{ 'msg.HelpSMTPServer'|trans }}</p>
               <div class="form-inline">
                 <div class="form-group">
                   {% form_field smtp_server %}

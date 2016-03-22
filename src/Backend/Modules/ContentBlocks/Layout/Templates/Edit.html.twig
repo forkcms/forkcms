@@ -61,7 +61,7 @@
                   {{ revisions|raw }}
                   {% endif %}
                   {% if not revisions %}
-                  <p>{{ msg.NoRevisions }}</p>
+                  <p>{{ 'msg.NoRevisions'|trans|capitalize }}</p>
                   {% endif %}
                 </div>
               </div>

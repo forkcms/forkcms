@@ -103,12 +103,12 @@
                       {{ 'lbl.Nickname'|trans|capitalize }}
                       <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                     </label>
-                    <p class="help-block">{{ msg.HelpNickname }}</p>
+                    <p class="help-block">{{ 'msg.HelpNickname'|trans }}</p>
                     {% form_field_error nickname %} {% form_field nickname %}
                   </div>
                   <div class="form-group">
                     <label for="avatar" class="control-label">{{ 'lbl.Avatar'|trans|capitalize }}</label>
-                    <p class="help-block">{{ msg.HelpAvatar }}</p>
+                    <p class="help-block">{{ 'msg.HelpAvatar'|trans }}</p>
                     {% form_field_error avatar %} {% form_field avatar %}
                   </div>
                 </div>
@@ -160,7 +160,7 @@
                           </p>
                         </td>
                         <td>
-                          <p class="help-block">&nbsp;{{ msg.HelpStrongPassword }}</p>
+                          <p class="help-block">&nbsp;{{ 'msg.HelpStrongPassword'|trans }}</p>
                         </td>
                       </tr>
                     </table>
