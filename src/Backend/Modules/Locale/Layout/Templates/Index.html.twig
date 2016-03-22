@@ -3,36 +3,19 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.Translations'|trans|capitalize }}</h2>
-    </div>
-    <div class="col-md-6">
-
-      <div class="btn-toolbar pull-right">
-        <div class="btn-group" role="group">
-          {% if showLocaleAdd %}
-            <a href="{{ geturl('add' ) }}{{ filter }}" class="btn btn-default jsButtonAdd">
-              <span class="fa fa-plus"></span>&nbsp;
-              <span>{{ 'lbl.Add'|trans|capitalize }}</span>
-            </a>
-          {% endif %}
-          {% if showLocaleExport %}
-            <a href="{{ geturl('export' ) }}{{ filter }}" class="btn btn-default jsButtonExport">
-              <span class="fa fa-download"></span>&nbsp;
-              <span>{{ 'lbl.Export'|trans|capitalize }}</span>
-            </a>
-          {% endif %}
-          {% if showLocaleImport %}
-            <a href="{{ geturl('import' ) }}{{ filter }}" class="btn btn-default jsButtonImport">
-              <span class="fa fa-upload"></span>&nbsp;
-              <span>{{ 'lbl.Import'|trans|capitalize }}</span>
-            </a>
-          {% endif %}
-        </div>
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group" role="group">
+        {% if showLocaleAdd %}
+          {{ macro.buttonIcon(geturl('add')  ~ filter, 'plus', 'lbl.Add'|trans|capitalize, 'btn-default jsButtonAdd' ) }}
+        {% endif %}
+        {% if showLocaleExport %}
+          {{ macro.buttonIcon(geturl('export' ) ~ filter, 'download', 'lbl.Export'|trans|capitalize, 'btn-default jsButtonExport' ) }}
+        {% endif %}
+        {% if showLocaleImport %}
+          {{ macro.buttonIcon(geturl('import' ) ~ filter, 'upload', 'lbl.Import'|trans|capitalize, 'btn-default jsButtonImport') }}
+        {% endif %}
       </div>
     </div>
-  </div>
 {% endblock %}
 
 {% block content %}

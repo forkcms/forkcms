@@ -4,25 +4,20 @@
 
 {% block actionbar %}
   {% form themes %}
-  <div class="row fork-module-heading">
-    <div class="col-md-12">
-      <h2 class="form-inline">{{ 'lbl.Templates'|trans|capitalize }} {{ lbl.For }} {% form_field theme %}</h2>
       {% if showExtensionsAddThemeTemplate %}
         <div class="btn-toolbar pull-right">
           <div class="btn-group" role="group">
-            <a href="{{ geturl('add_theme_template' ) }}{% if selectedTheme %}&amp;theme={{ selectedTheme }}{% endif %}" class="btn btn-primary">
-              <span class="fa fa-plus"></span>&nbsp;
-              <span>{{ 'lbl.AddTemplate'|trans|capitalize }}</span>
-            </a>
-            <a href="{{ geturl('export_theme_templates' ) }}{% if selectedTheme %}&amp;theme={{ selectedTheme }}{% endif %}" class="btn btn-default">
-              <span class="fa fa-download"></span>&nbsp;
-              <span>{{ 'lbl.Export'|trans|capitalize }}</span>
-            </a>
+            <h2 class="form-inline">{{ 'lbl.Templates'|trans|capitalize }} {{ lbl.For }} {% form_field theme %}</h2>
+            {% if selectedTheme %}
+              {% set url =  '&theme=' ~ selectedTheme %}
+            {% endif %}
+
+            {{ macro.buttonIcon( geturl('add_theme_template' ) ~ url, 'plus', 'lbl.AddTemplate'|trans|capitalize, 'btn-primary')  }}
+
+            {{ macro.buttonIcon( geturl('export_theme_templates') ~ url, 'download', 'lbl.Export'|trans|capitalize) }}
           </div>
         </div>
       {% endif %}
-    </div>
-  </div>
   {% endform %}
 {% endblock %}
 

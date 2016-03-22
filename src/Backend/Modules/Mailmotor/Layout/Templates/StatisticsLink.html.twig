@@ -3,22 +3,11 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ url }}</h2>
-    </div>
-    <div class="col-md-6">
-
-      <div class="btn-toolbar pull-right">
-        <div class="btn-group" role="group">
-          {% if showMailmotorStatistics %}
-          <a href="{{ geturl('statistics' ) }}&amp;id={{ mailing.id }}" class="btn btn-default" title="{{ 'msg.BackToStatistics'|trans|sprintf(mailing.name ) }}">
-            <span class="fa fa-list"></span>
-            {{ 'msg.BackToStatistics'|trans|sprintf(mailing.name ) }}
-          </a>
-          {% endif %}
-        </div>
-      </div>
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showMailmotorStatistics %}
+        {{ macro.buttonIcon(geturl('statistics') ~ '&id=' ~ mailing.id, 'list','msg.BackToStatistics'|trans|sprintf(mailing.name ) ) }}
+      {% endif %}
     </div>
   </div>
 {% endblock %}

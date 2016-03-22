@@ -3,24 +3,13 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.Translations'|trans|capitalize }}</h2>
-    </div>
-    <div class="col-md-6">
-
-      {% if showLocaleExportAnalyse %}
-        <div class="btn-toolbar pull-right">
-          <div class="btn-group" role="group">
-            <a href="{{ geturl('ExportAnalyse' ) }}&amp;language={{ language }}" class="btn btn-default" title="{{ 'lbl.Export'|trans|capitalize }}">
-              <span class="fa fa-plus"></span>
-              {{ 'lbl.Export'|trans|capitalize }}
-            </a>
-          </div>
+    {% if showLocaleExportAnalyse %}
+      <div class="btn-toolbar pull-right">
+        <div class="btn-group" role="group">
+          {{ macro.buttonIcon(geturl('ExportAnalyse' ) ~ '&language=' ~ language, 'plus', 'lbl.Export'|trans|capitalize ) }}
         </div>
-      {% endif %}
-    </div>
-  </div>
+      </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}

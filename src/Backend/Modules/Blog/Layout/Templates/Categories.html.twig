@@ -3,23 +3,13 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.Categories'|trans|capitalize }}</h2>
-    </div>
-    <div class="col-md-6">
       {% if showBlogAddCategory %}
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
-          <a href="{{ geturl('add_category') }}" class="btn btn-default" title="{{ 'lbl.AddCategory'|trans|capitalize }}">
-            <span class="fa fa-plus"></span>&nbsp;
-            {{ 'lbl.AddCategory'|trans|capitalize }}
-          </a>
+          {{ macro.buttonIcon( geturl('add_category'), 'plus', 'lbl.AddCategory'|trans|capitalize) }}
         </div>
       </div>
       {% endif %}
-    </div>
-  </div>
 {% endblock %}
 
 {% block content %}

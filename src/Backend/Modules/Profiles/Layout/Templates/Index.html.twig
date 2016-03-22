@@ -3,26 +3,12 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.Profiles'|trans|capitalize }}</h2>
-    </div>
-    <div class="col-md-6">
-
-      <div class="btn-toolbar pull-right">
-        <div class="btn-group" role="group">
-          <a href="{{ geturl('add' ) }}" class="btn btn-default" title="{{ 'lbl.Add'|trans|capitalize }}">
-            <span class="fa fa-plus"></span>&nbsp;
-            {{ 'lbl.Add'|trans|capitalize }}
-          </a>
-          {% if showProfilesImport %}
-          <a href="{{ geturl('import' ) }}" class="btn btn-default" title="{{ 'lbl.Import'|trans|capitalize }}">
-            <span class="fa fa-upload"></span>&nbsp;
-            {{ 'lbl.Import'|trans|capitalize }}
-          </a>
-          {% endif %}
-        </div>
-      </div>
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {{ macro.buttonIcon(geturl('add'), 'plus', 'lbl.Add'|trans|capitalize) }}
+      {% if showProfilesImport %}
+        {{ macro.buttonIcon(geturl('import'), 'upload', 'lbl.Import'|trans|capitalize) }}
+      {% endif %}
     </div>
   </div>
 {% endblock %}

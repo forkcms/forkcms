@@ -19,21 +19,13 @@
 {% endblock %}
 
 {% block actionbar %}
-    <div class="row fork-module-heading">
-        <div class="col-md-12">
-            <h2>{{ 'lbl.Add'|trans|capitalize }}</h2>
-            {% if showPagesIndex %}
-            <div class="btn-toolbar pull-right">
-                <div class="btn-group" role="group">
-                    <a href="{{ geturl('index' ) }}" class="btn btn-default" title="{{ 'lbl.Overview'|trans|capitalize }}">
-                        <span class="fa fa-list"></span>
-                        {{ 'lbl.Overview'|trans|capitalize }}
-                    </a>
-                </div>
-            </div>
-            {% endif %}
+    {% if showPagesIndex %}
+    <div class="btn-toolbar pull-right">
+        <div class="btn-group" role="group">
+            {{ macro.buttonIcon( geturl('index'), 'list', 'lbl.Overview'|trans|capitalize) }}
         </div>
     </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}

@@ -4,26 +4,13 @@
 
 {% block actionbar %}
   <form 'act.on="{{  geturl('mass_mailing_action' ) }}" method="get" class="forkForms submitWithLink" id="mailings">
-  <div class="row fork-module-heading">
-    <div class="col-md-12">
-      {% if dgUnsentMailings %}
-        <h2>{{ 'lbl.UnsentMailings'|trans|capitalize }}{% if name %} {{ lbl.In }} {{ lbl.Campaign }} &ldquo;{{ name }}&rdquo;{% endif %}</h2>
-      {% endif %}
-      {% if not dgUnsentMailings %}
-        <h2>{{ 'lbl.Newsletters'|trans|capitalize }}</h2>
-      {% endif %}
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
           {% if showMailmotorAdd %}
-            <a href="{{ geturl('add' ) }}" class="btn btn-default" title="{{ 'lbl.AddNewMailing'|trans|capitalize }}">
-              <span class="glyphicon glyphicon-fa fa-send-o"></span>&nbsp;
-              {{ 'lbl.AddNewMailing'|trans|capitalize }}
-            </a>
+            {{ macro.buttonIcon(geturl('add'), 'envelope', 'lbl.AddNewMailing'|trans|capitalize) }}
           {% endif %}
         </div>
       </div>
-    </div>
-  </div>
 {% endblock %}
 
 {% block content %}

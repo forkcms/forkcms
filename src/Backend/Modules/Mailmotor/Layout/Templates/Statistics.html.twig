@@ -3,28 +3,15 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.Statistics'|trans|capitalize }} {{ lbl.For }} &ldquo;{{ mailing.name }}&rdquo;</h2>
-    </div>
-    <div class="col-md-6">
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showMailmotorIndex %}
+        {{ macro.buttonIcon(geturl('index'), 'list', 'msg.BackToMailings'|trans|sprintf(mailing.name ) ) }}
+      {% endif %}
 
-      <div class="btn-toolbar pull-right">
-        <div class="btn-group" role="group">
-          {% if showMailmotorIndex %}
-          <a href="{{ geturl('index' ) }}" class="btn btn-default" title="{{ 'lbl.Newsletters'|trans|capitalize }}">
-            <span class="fa fa-list"></span>
-            {{ 'msg.BackToMailings'|trans|sprintf(mailing.name ) }}
-          </a>
-          {% endif %}
-          {% if showMailmotorExportStatistics %}
-          <a href="{{ geturl('export_statistics' ) }}&amp;id={{ mailing.id }}" class="btn btn-default" title="{{ 'lbl.ExportStatistics'|trans|capitalize }}">
-            <span class="fa fa-download"></span>
-            {{ 'lbl.ExportStatistics'|trans|capitalize }}
-          </a>
-          {% endif %}
-        </div>
-      </div>
+      {% if showMailmotorExportStatistics %}
+        {{ macro.buttonIcon(geturl('export_statistics' ) ~ '&id=' ~ mailing.id, 'download', ''lbl.ExportStatistics'|trans|capitalize') }}
+      {% endif %}
     </div>
   </div>
 {% endblock %}

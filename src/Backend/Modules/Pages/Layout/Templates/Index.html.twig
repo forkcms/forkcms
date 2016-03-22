@@ -18,27 +18,13 @@
 {% endblock %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-12">
-      <h2>
-        {% if dgDrafts %}
-          {{ 'lbl.Drafts'|trans|capitalize }}
-        {% else %}
-          {{ 'lbl.RecentlyEdited'|trans|capitalize }}
-        {% endif %}
-      </h2>
-      {% if showPagesAdd %}
-      <div class="btn-toolbar pull-right">
-        <div class="btn-group" role="group">
-          <a href="{{ geturl('add') }}" class="btn btn-default" title="{{ 'lbl.Add'|trans|capitalize }}">
-            <span class="fa fa-plus"></span>
-            {{ 'lbl.Add'|trans|capitalize }}
-          </a>
-        </div>
+    {% if showPagesAdd %}
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon( geturl('add'), 'plus', 'lbl.Add'|trans|capitalize) }}
       </div>
-      {% endif %}
     </div>
-  </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}

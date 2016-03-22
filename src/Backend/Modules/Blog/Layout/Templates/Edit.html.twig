@@ -3,22 +3,16 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'msg.EditArticle'|trans|capitalize|sprintf(item.title) }}</h2>
-    </div>
-    <div class="col-md-6">
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group" role="group">
+        {% set url = (SITE_URL ~ '/' ~ item.url) %}
+        {% if item.revision_id %}
+          {% set url = (url ~ '?revision=' ~ item.revision_id) %}
+        {% endif %}
 
-      <div class="btn-toolbar pull-right">
-        <div class="btn-group" role="group">
-          <a href="{{ detailURL }}/{{ item.url }}{% if item.revision_id %}?revision={{ item.revision_id }}{% endif %}" class="btn btn-default" target="_blank">
-            <span class="fa fa-eye"></span>
-            <span>{{ 'lbl.View'|trans|capitalize }}</span>
-          </a>
-        </div>
+        {{ macro.buttonIcon( url, 'eye', 'lbl.View'|trans|capitalize) }}
       </div>
     </div>
-  </div>
 {% endblock %}
 
 {% block content %}

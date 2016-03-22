@@ -3,38 +3,44 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.EmailAddresses'|trans|capitalize }}{% if group %} {{ lbl.For }} {{ lbl.Group }} &ldquo;{{ group.name }}&rdquo;{% endif %}</h2>
-    </div>
-    <div class="col-md-6">
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
 
-      <div class="btn-toolbar pull-right">
-        <div class="btn-group" role="group">
-          {% if showMailmotorImportAddresses %}
-          <a href="{{ geturl('import_addresses') }}{% if group %}&amp;group_id={{ group.id }}{% endif %}" class="btn btn-default" title="{{ 'lbl.ImportAddresses'|trans|capitalize }}">
-            <span class="fa fa-upload"></span>
-            {% if not group %}
-            &nbsp;{{ 'lbl.ImportAddresses'|trans|capitalize }}
-            {% endif %}
-          </a>
-          {% endif %}
-          {% if showMailmotorExportAddresses %}
-          <a href="{{ geturl('export_addresses') }}&amp;id={% if not group %}all{% endif %}{% if group %}{{ group.id }}{% endif %}" class="btn btn-default" title="{{ 'lbl.ExportAddresses'|trans|capitalize }}">
-            <span class="fa fa-download"></span>
-            {% if not group %}
-            &nbsp;{{ 'lbl.ExportAddresses'|trans|capitalize }}
-            {% endif %}
-          </a>
-          {% endif %}
-          {% if showMailmotorAddAddress %}
-          <a href="{{ geturl('add_address') }}{% if group %}&amp;group_id={{ group.id }}{% endif %}" class="btn btn-default">
-            <span class="fa fa-plus"></span>&nbsp;
-            {{ 'lbl.AddEmail'|trans|capitalize }}
-          </a>
-          {% endif %}
-        </div>
-      </div>
+      {% if showMailmotorImportAddresses %}
+
+        {% set url = geturl('import_addresses') %}
+        {% if group %}
+          {% set url = url ~ '&group_id=' ~ group.id %}
+        {% endif %}
+
+        {{ macro.buttonIcon(url, 'upload', 'lbl.ImportAddresses'|trans|capitalize) }}
+      {% endif %}
+
+      {% if showMailmotorExportAddresses %}
+
+        {% set url = geturl('export_addresses') ~ '}&id=' %}
+        {% if not group %}
+          {% set url = url ~ 'all' %}
+        {% endif %}
+        {% if group %}
+          {% set url = url ~ group.id %}
+        {% endif %}
+
+        {% set label = 'lbl.ExportAddresses'|trans|capitalize %}
+        {% if group %}
+          {% set label = ''  %}
+        {% endif %}
+
+        {{ macro.buttonIcon(url, 'download', label) }}
+      {% endif %}
+      {% if showMailmotorAddAddress %}
+        {% set url = geturl('add_address') %}
+        {% if group %}
+          {% set url = url ~ '&group_id=' ~ group.id %}
+        {% endif %}
+
+        {{ macro.buttonIcon(url, 'plus', 'lbl.AddEmail'|trans|capitalize ) }}
+      {% endif %}
     </div>
   </div>
 {% endblock %}

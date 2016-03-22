@@ -3,16 +3,8 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.ImportAddresses'|trans|capitalize }}</h2>
-    </div>
-    <div class="col-md-6">
 
-    </div>
-  </div>
 {% endblock %}
-
 
 {% block content %}
   {% form import %}
@@ -27,7 +19,7 @@
           <div class="panel-body">
             <div class="form-group">
               {% if showMailmotorImportAddresses %}
-              <label for="download" class="control-label">Download <a href="{{ geturl('import_addresses' ) }}&amp;example=1">{{ lbl.ExampleFile }}</a>.</label>
+              <label for="download" class="control-label">Download <a href="{{ geturl('import_addresses' ) }}&amp;example=1">{{ 'lbl.ExampleFile'|trans|capitalize }}</a>.</label>
               {% endif %}
               {% form_field_error csv %} {% form_field csv %}
             </div>
@@ -51,7 +43,7 @@
               <ul class="list-unstyled">
                 {% for group in groups %}
                 <li class="radio">
-                  <label for="{{ group.id }}">{{ group.rbtGroups }} {{ group.label|capitalize }}</label>
+                  <label for="{{ group.id }}">{{ group.rbtGroups|raw }} {{ group.label|capitalize }}</label>
                 </li>
                 {% endfor %}
               </ul>

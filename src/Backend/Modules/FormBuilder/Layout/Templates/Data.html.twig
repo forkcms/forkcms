@@ -3,30 +3,16 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.FormData'|trans|sprintf(name|capitalize ) }}</h2>
-    </div>
-    <div class="col-md-6">
-
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
           {% if showFormBuilderIndex %}
-            <a href="{{ geturl('index' ) }}" class="btn btn-default">
-              <span class="fa fa-list"></span>&nbsp;
-              {{ 'lbl.Overview'|trans|capitalize }}
-            </a>
+            {{ macro.buttonIcon( geturl('index'), 'list', 'lbl.Overview'|trans|capitalize) }}
           {% endif %}
           {% if showFormBuilderExportData %}
-            <a href="{{ geturl('export_data' ) }}&id={{ id }}&amp;start_date={{ start_date }}&amp;end_date={{ end_date }}" class="btn btn-default">
-              <span class="fa fa-download"></span>&nbsp;
-              {{ 'lbl.Export'|trans|capitalize }}
-            </a>
+            {{ macro.buttonIcon( geturl('export_data') ~ '&id=' ~ id  ~ '&start_date=' ~ start_date ~ '&end_date=' ~ end_date, 'download', 'lbl.Export'|trans|capitalize) }}
           {% endif %}
         </div>
       </div>
-    </div>
-  </div>
 {% endblock %}
 
 {% block content %}

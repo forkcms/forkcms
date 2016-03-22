@@ -19,36 +19,27 @@
 {% endblock %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.Edit'|trans|capitalize }}</h2>
-    </div>
-    <div class="col-md-6">
-
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
           {% if showPagesAdd %}
-          <a href="{{ geturl('add' ) }}" class="btn btn-default" title="{{ 'lbl.Add'|trans|capitalize }}">
-            <span class="fa fa-plus"></span>&nbsp;
-            <span>{{ 'lbl.Add'|trans|capitalize }}</span>
-          </a>
+          {{ macro.buttonIcon( geturl('add'), 'plus', 'lbl.Add'|trans|capitalize) }}
           {% endif %}
+
           {% if not item.is_hidden %}
-          <a href="{{ SITE_URL }}{{ item.full_url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" class="btn btn-default" target="_blank">
-            <span class="fa fa-eye"></span>&nbsp;
-            <span>{{ 'lbl.View'|trans|capitalize }}</span>
-          </a>
+
+            {% set url = (SITE_URL ~ item.full_url) %}
+            {% if appendRevision %}
+              {% set url = (url ~ '?page_revision=' ~ item.revision_id) %}
+            {% endif %}
+            {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|capitalize, '', "target=_blank") }}
+
           {% endif %}
+
           {% if showPagesIndex %}
-          <a href="{{ geturl('index' ) }}" class="btn btn-default" title="{{ 'lbl.Overview'|trans|capitalize }}">
-            <span class="fa fa-list"></span>&nbsp;
-            {{ 'lbl.Overview'|trans|capitalize }}
-          </a>
+            {{ macro.buttonIcon(geturl('index' ), 'list', 'lbl.Overview'|trans|capitalize) }}
           {% endif %}
         </div>
       </div>
-    </div>
-  </div>
 {% endblock %}
 
 {% block content %}

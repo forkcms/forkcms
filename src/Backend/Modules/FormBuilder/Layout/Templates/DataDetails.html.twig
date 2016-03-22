@@ -12,10 +12,7 @@
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
           {% if showFormBuilderData %}
-          <a href="{{ geturl('data' ) }}&amp;id={{ formId }}&amp;start_date={{ filter.start_date }}&amp;end_date={{ filter.end_date }}" class="btn btn-default">
-            <span class="fa fa-list"></span>&nbsp;
-            {{ 'lbl.BackToData'|trans|capitalize }}
-          </a>
+            {{ macro.buttonIcon( geturl('data') ~ '&id=' ~ formId ~ '&start_date=' ~ filter.start_date ~ '&end_date=' ~ filter.end_date, 'list', 'lbl.BackToData'|trans|capitalize) }}
           {% endif %}
         </div>
       </div>
