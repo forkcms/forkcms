@@ -29,7 +29,7 @@
           <ul class="list-unstyled">
             {% for _itr_16 in default %}
             <li class="radio">
-              <label for="{{ _itr_16.id }}">{{ _itr_16.rbtDefault }} {{ _itr_16.label }}</label>
+              <label for="{{ _itr_16.id }}">{{ _itr_16.rbtDefault|raw }} {{ _itr_16.label }}</label>
             </li>
             {% endfor %}
           </ul>
