@@ -6,7 +6,7 @@
     <div class="sub-navigation hidden-xs">
         <div class="pages-tree">
             <div class="alert alert-warning visible-sm">
-                <p>{{ 'msg.MovePagesNotPossible'|trans|capitalize }}</p>
+                <p>{{ 'msg.MovePagesNotPossible'|trans }}</p>
             </div>
             <div id="tree">
                 {{ tree|raw }}
@@ -295,10 +295,11 @@
                         <span class="modal-title h4">{{ 'lbl.ChooseATemplate'|trans|capitalize }}</span>
                     </div>
                     <div class="modal-body">
-                        <div class="alert alert-warning">{{ 'msg.TemplateChangeWarning'|trans }}</div>
+                        <div class="alert alert-warning">{{ 'msg.TemplateChangeWarning'|trans|raw }}</div>
                         <div id="templateList">
                             <div class="row">
                                 {% for template in templates %}
+                                {{ cycle(['', '', '</div><div class="row">'], loop.index0)|raw }}
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <div class="radio">
@@ -314,7 +315,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {cycle:'':'</div><div class="row">'}
                                 {% endfor %}
                             </div>
                         </div>
