@@ -1,7 +1,7 @@
 ## SpoonHTTP is deprecated
 
 As you all know Spoon isn't supported anymore, therefore we are trying to 
-replace all functionality that was provided by Spoon with SYmfony-functionality
+replace all functionality that was provided by Spoon with Symfony-functionality
 or native code. 
 
 With this upgrade we have replace all functionality provided with SpoonHTTP. 
