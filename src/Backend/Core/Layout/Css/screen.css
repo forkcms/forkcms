@@ -5343,16 +5343,16 @@ tbody.collapse.in {
   padding: 8px 15px;
   margin-bottom: 20px;
   list-style: none;
-  background-color: #f5f5f5;
+  background-color: transparent;
   border-radius: 4px; }
   .breadcrumb > li {
     display: inline-block; }
     .breadcrumb > li + li:before {
-      content: "/ ";
+      content: " ";
       padding: 0 5px;
-      color: #ccc; }
+      color: #999999; }
   .breadcrumb > .active {
-    color: #999999; }
+    color: #E5E5E5; }
 
 .pagination {
   display: inline-block;
@@ -8970,6 +8970,21 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 #templateVisualLarge .templatePositionCurrentType:hover .buttonHolder,
 #templateVisualFallback .templatePositionCurrentType:hover .buttonHolder {
   opacity: 1; }
+
+.breadcrumb {
+  margin-bottom: 0;
+  padding: 12px 15px 8px; }
+  .breadcrumb li + li:before {
+    content: "\f105";
+    font-family: FontAwesome;
+    font-size: 12px;
+    padding: 0 5px 0 2px; }
+  .breadcrumb li a {
+    color: #999999;
+    font-size: 14px; }
+    .breadcrumb li a:hover {
+      border-bottom: 1px solid #999999;
+      text-decoration: none; }
 
 /* General */
 .fork-module-heading {
