@@ -160,7 +160,7 @@ class IndexTest extends WebTestCase
         ));
 
         $this->assertContains(
-            'Edit user "Users User"',
+            'Edit profile',
             $client->getResponse()->getContent()
         );
 
