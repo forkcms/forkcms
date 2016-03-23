@@ -397,6 +397,11 @@ class TwigTemplate extends BaseTwigTemplate
             $this->assign('bodyClass', $bodyClass);
         }
 
+        $navigation = Model::get('navigation');
+        if ($navigation instanceof Navigation) {
+            $navigation->parse($this);
+        }
+
         foreach ($this->forms as $form) {
             if ($form->isSubmitted() && !$form->isCorrect()) {
                 $this->assign('form_error', true);

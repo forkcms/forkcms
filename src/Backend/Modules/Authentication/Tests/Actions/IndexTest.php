@@ -126,7 +126,7 @@ class IndexTest extends WebTestCase
         ));
 
         $this->assertContains(
-            'Recently edited',
+            'Now editing',
             $client->getResponse()->getContent()
         );
 
@@ -151,7 +151,7 @@ class IndexTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
 
-        $form = $crawler->selectButton('login')->form();
+        $form = $crawler->selectButton('Log in')->form();
         $this->submitForm($client, $form, array(
             'form' => 'authenticationIndex',
             'backend_email' => 'users-edit-user@fork-cms.com',
@@ -160,7 +160,7 @@ class IndexTest extends WebTestCase
         ));
 
         $this->assertContains(
-            'Edit user "Users User"',
+            'Edit profile',
             $client->getResponse()->getContent()
         );
 

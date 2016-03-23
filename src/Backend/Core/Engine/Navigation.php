@@ -61,6 +61,7 @@ class Navigation extends Base\Object
 
         // load it
         $this->navigation = (array) $navigation;
+        $this->navigation = $this->addActiveStateToNavigation($this->navigation);
 
         // cleanup navigation (not needed for god user)
         if (!Authentication::getUser()->isGod()) {
@@ -192,6 +193,28 @@ class Navigation extends Base\Object
         }
 
         return $HTML;
+    }
+
+    public function parse(TwigTemplate $template)
+    {
+        $template->assign('navigation', $this->navigation);
+    }
+
+    private function addActiveStateToNavigation($navigation, $depth = 0)
+    {
+        $selectedKeys = $this->getSelectedKeys();
+
+        foreach ($navigation as $key => &$item) {
+            if ($key == $selectedKeys[$depth]) {
+                $item['active'] = true;
+
+                if (!empty($item['children'])) {
+                    $item['children'] = $this->addActiveStateToNavigation($item['children'], $depth + 1);
+                }
+            }
+        }
+
+        return $navigation;
     }
 
     /**
