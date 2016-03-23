@@ -1,0 +1,15 @@
+<ol class="breadcrumb">
+    {% for topLevelItem in navigation if topLevelItem.active %}
+        <li><a href="{{ LANGUAGE }}/{{ topLevelItem.url }}">{{ topLevelItem.label }}</a></li>
+        {% if topLevelItem.children is not empty %}
+            {% for secondaryItem in topLevelItem.children if secondaryItem.active %}
+                <li><a href="{{ LANGUAGE }}/{{ secondaryItem.url }}">{{ secondaryItem.label }}</a></li>
+                {% if secondaryItem.children is not empty %}
+                    {% for tertiaryItem in secondaryItem.children if tertiaryItem.active %}
+                        <li><a href="{{ LANGUAGE }}/{{ tertiaryItem.url }}">{{ tertiaryItem.label }}</a></li>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</ol>
