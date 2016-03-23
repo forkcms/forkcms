@@ -755,19 +755,6 @@ jsBackend.pages.tree =
 				onselect: jsBackend.pages.tree.onSelect,
 				onmove: jsBackend.pages.tree.onMove
 			},
-			types:
-			{
-				'default': { renameable: false, deletable: false, creatable: false, icon: { image: '/src/Backend/Core/Layout/images/icons.gif' } },
-				'page': { icon: { position: '0 -80px' } },
-				'folder': { icon: { position: false } },
-				'hidden': { icon: { position: false } },
-				'home': { draggable: false, icon: { position: '0 -112px' } },
-				'pages': { icon: { position: false } },
-				'error': { draggable: false, max_children: 0, icon: { position: '0 -160px' } },
-				'sitemap': { max_children: 0, icon: { position: '0 -176px' } },
-				'redirect': { icon: { position: '0 -264px' } },
-				'direct_action': { max_children: 0, icon: { position: '0 -280px' } }
-			},
 			plugins:
 			{
 				cookie: { prefix: 'jstree_', types: { selected: false }, options: { path: '/' } }

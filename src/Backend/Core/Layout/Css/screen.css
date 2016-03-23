@@ -8554,6 +8554,10 @@ h3 + .btn-toolbar {
     @since        2.0
 
 */
+#tree h4 {
+  font-size: 14px;
+  font-weight: 600; }
+
 .tree {
   /* FOR DOTS */ }
   .tree ul {
@@ -8640,88 +8644,127 @@ h3 + .btn-toolbar {
     background: url("/src/Backend/Core/Layout/images/sprites/fork_icons.png") 0 -3px no-repeat; }
 
 /* DOTS */
-.tree-fork li {
-  display: block !important;
-  font-size: 13px;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  /* OPEN or CLOSED */
-  /* DEFAULT, HOVER, CLICKED, LOADING STATES */ }
-  .tree-fork li.leaf {
-    background: url("/src/Backend/Core/Layout/images/separate/leaf.gif") no-repeat 0 0; }
-  .tree-fork li.closed {
-    background: url("/src/Backend/Core/Layout/images/separate/closed.gif") no-repeat 0 0; }
-  .tree-fork li.open {
-    background: url("/src/Backend/Core/Layout/images/separate/open.gif") no-repeat 0 0; }
-  .tree-fork li.closed.last {
-    background: url("/src/Backend/Core/Layout/images/separate/closed_last.gif") no-repeat 0 0; }
-  .tree-fork li.open.last {
-    background: url("/src/Backend/Core/Layout/images/separate/open_last.gif") no-repeat 0 0; }
-  .tree-fork li.last {
-    background: url("/src/Backend/Core/Layout/images/separate/last.gif") no-repeat 0 0; }
-  .tree-fork li[rel="hidden"], .tree-fork li.treeHidden {
-    opacity: .5;
-    /* Standard: FF gt 1.5, Opera, Safari */
-    filter: alpha(opacity=50);
-    /* IE lt 8 */
-    -ms-filter: "alpha(opacity=50)";
-    /* IE 8 */
-    -khtml-opacity: .50;
-    /* Safari 1.x */
-    -moz-opacity: .50;
-    /* FF lt 1.5, Netscape */ }
-  .tree-fork li.dragged {
-    outline: none; }
-  .tree-fork li a:hover,
-  .tree-fork li a.active,
-  .tree-fork li a.focus {
-    background: #eee;
-    /* @inc .rc */
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px; }
-  .tree-fork li span, .tree-fork li.selected > a {
-    /* @inc .selectedBlue */
-    background: #1E83AD;
-    /* @inc .rc */
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
-    color: #FFF; }
-  .tree-fork li a.clicked,
-  .tree-fork li a.clicked:hover,
-  .tree-fork li span.clicked {
-    background: #AAA;
-    /* @inc .rc */
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
-    color: #FFF; }
-  .tree-fork li a ins.forbidden {
-    background-position: -16px -16px; }
-  .tree-fork li span ins {
-    background-position: -16px 0; }
-.tree-fork ins {
-  background: transparent url("/src/Backend/Core/Layout/images/icons.gif") no-repeat 0 -80px;
-  padding-right: 2px; }
-.tree-fork ul li a.loading ins {
-  background-image: url("/src/Backend/Core/Layout/images/throbber.gif") !important;
-  background-position: 0 0 !important; }
-.tree-fork .locked li a ins {
-  background-position: 0 -48px; }
+.tree-fork {
+  /* ins {
+     background: transparent url('/src/Backend/Core/Layout/images/sprites/icons.gif') no-repeat 0 -80px;
+     padding-right: 2px;
+   }*/ }
+  .tree-fork li {
+    display: block !important;
+    font-size: 12px;
+    position: relative;
+    background: url("/src/Backend/Core/Layout/images/separate/leaf.gif") no-repeat 3px 0;
+    /* OPEN or CLOSED */
+    /* DEFAULT, HOVER, CLICKED, LOADING STATES */ }
+    .tree-fork li:before {
+      background: #fff;
+      color: #021b45;
+      font-family: FontAwesome;
+      font-size: 12px;
+      left: 6px;
+      position: absolute;
+      top: 5px;
+      line-height: 12px;
+      height: 9px;
+      width: 9px; }
+    .tree-fork li.closed:before, .tree-fork li.closed.last:before {
+      content: '\f196'; }
+    .tree-fork li.open, .tree-fork li.open.last {
+      background: url("/src/Backend/Core/Layout/images/separate/leaf.gif") no-repeat 3px 0; }
+      .tree-fork li.open:before, .tree-fork li.open.last:before {
+        content: '\f147'; }
+    .tree-fork li[rel="page"] a, .tree-fork li[rel="home"] a, .tree-fork li[rel="error"] a, .tree-fork li[rel="hidden"] a, .tree-fork li[rel="sitemap"] a, .tree-fork li[rel="redirect"] a {
+      position: relative; }
+      .tree-fork li[rel="page"] a:before, .tree-fork li[rel="home"] a:before, .tree-fork li[rel="error"] a:before, .tree-fork li[rel="hidden"] a:before, .tree-fork li[rel="sitemap"] a:before, .tree-fork li[rel="redirect"] a:before {
+        color: #999999;
+        font-family: FontAwesome;
+        font-size: 12px;
+        position: absolute;
+        left: 4px; }
+    .tree-fork li[rel="page"] a:before, .tree-fork li[rel="home"] a:before, .tree-fork li[rel="hidden"] a:before {
+      content: "\f016"; }
+    .tree-fork li[rel="error"] a:before {
+      content: "\f071"; }
+    .tree-fork li[rel="sitemap"] a:before {
+      content: "\f0e8"; }
+    .tree-fork li[rel="redirect"] a:before {
+      content: "\f08e"; }
+    .tree-fork li[rel="hidden"], .tree-fork li.treeHidden {
+      opacity: .5;
+      /* Standard: FF gt 1.5, Opera, Safari */
+      filter: alpha(opacity=50);
+      /* IE lt 8 */
+      -ms-filter: "alpha(opacity=50)";
+      /* IE 8 */
+      -khtml-opacity: .50;
+      /* Safari 1.x */
+      -moz-opacity: .50;
+      /* FF lt 1.5, Netscape */ }
+    .tree-fork li.dragged {
+      outline: none; }
+    .tree-fork li a:hover,
+    .tree-fork li a.active,
+    .tree-fork li a.focus {
+      background: #2f77d1;
+      color: #fff;
+      /* @inc .rc */
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px; }
+      .tree-fork li a:hover:before,
+      .tree-fork li a.active:before,
+      .tree-fork li a.focus:before {
+        color: #fff; }
+    .tree-fork li span, .tree-fork li.selected > a {
+      /* @inc .selectedBlue */
+      background: #2f77d1;
+      /* @inc .rc */
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px;
+      color: #fff; }
+      .tree-fork li span:before, .tree-fork li.selected > a:before {
+        color: #fff; }
+    .tree-fork li a.clicked,
+    .tree-fork li a.clicked:hover,
+    .tree-fork li span.clicked {
+      background: #2f77d1;
+      /* @inc .rc */
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px;
+      color: #fff; }
+      .tree-fork li a.clicked:before,
+      .tree-fork li a.clicked:hover:before,
+      .tree-fork li span.clicked:before {
+        color: #fff; }
+    .tree-fork li a ins.forbidden {
+      background-position: -16px -16px; }
+    .tree-fork li span ins {
+      background-position: -16px 0; }
+  .tree-fork ul li a.loading ins {
+    background-image: url("/src/Backend/Core/Layout/images/throbber.gif") !important;
+    background-position: 0 0 !important; }
+  .tree-fork .locked li a ins {
+    background-position: 0 -48px; }
 
 #jstree-dragged {
-  border: 1px dotted #000;
-  background-color: #CCC; }
-  #jstree-dragged.tree-fork li li.open {
-    background-position: 0 -16px; }
-  #jstree-dragged.tree-fork ins {
-    background: url("/src/Backend/Core/Layout/images/sprites/fork_icons.png") 0 -610px no-repeat; }
-    #jstree-dragged.tree-fork insforbidden {
-      background: url("/src/Backend/Core/Layout/images/sprites/fork_icons.png") 0 -631px no-repeat; }
+  border: 1px dotted #4a4a4a;
+  background-color: #E5E5E5;
+  z-index: 20; }
+  #jstree-dragged.tree-fork {
+    /*ins {
+      background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -610px no-repeat;
+
+      &forbidden {
+        background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -631px no-repeat;
+      }
+    }*/ }
+    #jstree-dragged.tree-fork li li.open {
+      background-position: 0 -16px; }
 
 /* LOCKED */
 /*

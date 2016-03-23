@@ -10,6 +10,13 @@
     @since        2.0
 
 */
+#tree {
+
+  h4 {
+    font-size: $font-size-base;
+    font-weight: 600;
+  }
+}
 
 .tree {
 
@@ -55,7 +62,7 @@
       line-height: 17px;
       height: 20px;
       padding: 2px 4px 2px 2px;
-      color: #000;
+      color: $gray-base;
       white-space: nowrap;
       text-decoration: none;
       margin: 0;
@@ -137,18 +144,91 @@
 
   li {
     display: block !important;
-    font-size: 13px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
+    font-size: $font-size-small;
+    position: relative;
+    background: url('/src/Backend/Core/Layout/images/separate/leaf.gif') no-repeat 3px 0;
+
+    &:before {
+      background: $white;
+      color: $brand-primary-darker;
+      font-family: FontAwesome;
+      font-size: $font-size-small;
+      left: 6px;
+      position: absolute;
+      top: 5px;
+      line-height: 12px;
+      height: 9px;
+      width: 9px;
+    }
 
     /* OPEN or CLOSED */
 
-    &.leaf {        background: url('/src/Backend/Core/Layout/images/separate/leaf.gif') no-repeat 0 0; }
-    &.closed {      background: url('/src/Backend/Core/Layout/images/separate/closed.gif') no-repeat 0 0; }
-    &.open {        background: url('/src/Backend/Core/Layout/images/separate/open.gif') no-repeat 0 0; }
-    &.closed.last { background: url('/src/Backend/Core/Layout/images/separate/closed_last.gif') no-repeat 0 0; }
-    &.open.last {   background: url('/src/Backend/Core/Layout/images/separate/open_last.gif') no-repeat 0 0; }
-    &.last {        background: url('/src/Backend/Core/Layout/images/separate/last.gif') no-repeat 0 0; }
+    &.closed,
+    &.closed.last {
+
+      &:before {
+        content:'\f196';
+      }
+    }
+
+    &.open,
+    &.open.last {
+      background: url('/src/Backend/Core/Layout/images/separate/leaf.gif') no-repeat 3px 0;
+
+      &:before {
+        content: '\f147';
+      }
+    }
+
+    &[rel="page"],
+    &[rel="home"],
+    &[rel="error"],
+    &[rel="hidden"],
+    &[rel="sitemap"],
+    &[rel="redirect"]{
+
+      a {
+        position: relative;
+
+        &:before {
+          color: $gray-light;
+          font-family: FontAwesome;
+          font-size: $font-size-small;
+          position: absolute;
+          left: 4px;
+        }
+      }
+    }
+
+    &[rel="page"],
+    &[rel="home"],
+    &[rel="hidden"] {
+
+      a:before {
+        content: "\f016";
+      }
+    }
+
+    &[rel="error"] {
+
+      a:before {
+        content: "\f071";
+      }
+    }
+
+    &[rel="sitemap"] {
+
+      a:before {
+        content: "\f0e8";
+      }
+    }
+
+    &[rel="redirect"] {
+
+      a:before {
+        content: "\f08e";
+      }
+    }
 
     &[rel="hidden"],
     &.treeHidden {
@@ -167,36 +247,49 @@
     a:hover,
     a.active,
     a.focus {
-      background: #eee;
+      background: $brand-primary;
+      color: $white;
       /* @inc .rc */
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
       -o-border-radius: 4px;
-      border-radius: 4px
+      border-radius: 4px;
+
+      &:before {
+        color: $white;
+      }
     }
 
     span,
     &.selected > a {
       /* @inc .selectedBlue */
-      background: #1E83AD;
+      background: $brand-primary;
       /* @inc .rc */
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
       -o-border-radius: 4px;
       border-radius: 4px;
-      color: #FFF;
+      color: $white;
+
+      &:before {
+        color: $white;
+      }
     }
 
     a.clicked,
     a.clicked:hover,
     span.clicked {
-      background: #AAA;
+      background: $brand-primary;
       /* @inc .rc */
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
       -o-border-radius: 4px;
       border-radius: 4px;
-      color: #FFF;
+      color: $white;
+
+      &:before {
+        color: $white;
+      }
     }
 
     a ins.forbidden {
@@ -208,10 +301,10 @@
     }
   }
 
-  ins {
-    background: transparent url('/src/Backend/Core/Layout/images/icons.gif') no-repeat 0 -80px;
+ /* ins {
+    background: transparent url('/src/Backend/Core/Layout/images/sprites/icons.gif') no-repeat 0 -80px;
     padding-right: 2px;
-  }
+  }*/
 
   ul li a.loading ins {
     background-image: url('/src/Backend/Core/Layout/images/throbber.gif') !important;
@@ -224,8 +317,9 @@
 }
 
 #jstree-dragged {
-  border: 1px dotted #000;
-  background-color: #CCC;
+  border: 1px dotted $gray;
+  background-color: $gray-lighter;
+  z-index: 20;
 
   &.tree-fork {
 
@@ -233,13 +327,13 @@
       background-position: 0 -16px;
     }
 
-    ins {
+    /*ins {
       background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -610px no-repeat;
 
       &forbidden {
         background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -631px no-repeat;
       }
-    }
+    }*/
   }
 }
 
