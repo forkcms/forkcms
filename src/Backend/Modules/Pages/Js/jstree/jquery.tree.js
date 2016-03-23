@@ -514,9 +514,9 @@
 					this.container.css({ position : "relative" });
 					this.offset = this.container.offset();
 					var tmp = 0;
-					tmp = parseInt($.curCSS(this.container.get(0), "paddingTop", true),10);
+					tmp = parseInt($.css(this.container.get(0), "paddingTop", true),10);
 					if(tmp) this.offset.top += tmp;
-					tmp = parseInt($.curCSS(this.container.get(0), "borderTopWidth", true),10);
+					tmp = parseInt($.css(this.container.get(0), "borderTopWidth", true),10);
 					if(tmp) this.offset.top += tmp;
 					this.container.css({ position : "" });
 				}
@@ -1786,22 +1786,6 @@
 				document.getElementsByTagName("head")[0].appendChild(tmp);
 			}
 			return tmp.sheet || tmp.styleSheet;
-		}
-		if(opts.url) {
-			if(document.createStyleSheet) {
-				try { document.createStyleSheet(opts.url); } catch (e) { };
-			}
-			else {
-				var newSS	= document.createElement('link');
-				newSS.rel	= 'stylesheet';
-				newSS.type	= 'text/css';
-				newSS.media	= "all";
-				newSS.href	= opts.url;
-				// var styles	= "@import url(' " + url + " ');";
-				// newSS.href	='data:text/css,'+escape(styles);
-				document.getElementsByTagName("head")[0].appendChild(newSS);
-				return newSS.styleSheet;
-			}
 		}
 	};
 	$(function () {

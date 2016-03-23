@@ -757,7 +757,7 @@ jsBackend.pages.tree =
 			},
 			types:
 			{
-				'default': { renameable: false, deletable: false, creatable: false, icon: { image: '/src/Backend/Modules/Pages/Js/jstree/themes/fork/icons.gif' } },
+				'default': { renameable: false, deletable: false, creatable: false, icon: { image: '/src/Backend/Core/Layout/images/icons.gif' } },
 				'page': { icon: { position: '0 -80px' } },
 				'folder': { icon: { position: false } },
 				'hidden': { icon: { position: false } },

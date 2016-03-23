@@ -1,0 +1,251 @@
+/*
+
+    Tree layout
+    Based on basic tree skin
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+
+.tree {
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type:none;
+    background: url('/src/Backend/Core/Layout/images/separate/decoded_base64.gif');
+    background-position: 10px 1px;
+    background-repeat: repeat-y;
+    min-height: 16px;
+    max-width: 100%;
+
+    ins {
+      display:inline-block;
+      text-decoration:none;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  li {
+    display: block;
+    min-height: 16px;
+    line-height: 16px;
+    padding: 0 0 0 21px;
+    /* Background fix */
+    clear: both;
+    max-width: 100%;
+
+    li {
+      overflow: hidden;
+    }
+
+    ul {
+      display: none;
+    }
+
+    a:link,
+    a:visited,
+    span {
+      display: inline-block;
+      line-height: 17px;
+      height: 20px;
+      padding: 2px 4px 2px 2px;
+      color: #000;
+      white-space: nowrap;
+      text-decoration: none;
+      margin: 0;
+      border: none !important;
+      outline: 0 !important;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    a:focus {
+      outline: none;
+    }
+
+    a input:not([class="xxx"]),
+    span input:not([class="xxx"]) {
+      padding: 1px 0;
+    }
+
+    /* OPEN OR CLOSE */
+    &.open ul {
+      display: block;
+    }
+
+    &.closed ul {
+      display:none !important;
+    }
+  }
+
+  /* FOR DOTS */
+  .ltr {
+
+    li.last {
+      float:left;
+    }
+
+    ins {
+      margin: 0 2px 0 0;
+    }
+  }
+
+  > .ltr > li {
+    display:table;
+  }
+
+  > ul li.last {
+    overflow:visible;
+  }
+}
+
+/* FOR DRAGGING */
+#jstree-dragged {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  margin: 0;
+  padding: 0;
+}
+
+#jstree-marker {
+  padding: 0;
+  margin: 0;
+  line-height: 5px;
+  font-size: 1px;
+  display: block;
+  position: absolute;
+  z-index: 2147483647;
+  width: 16px;
+  height: 16px;
+  background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -653px no-repeat;
+
+  &.marker_plus {
+    background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -3px no-repeat;
+  }
+}
+
+/* DOTS */
+.tree-fork {
+
+  li {
+    display: block !important;
+    font-size: 13px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+
+    /* OPEN or CLOSED */
+
+    &.leaf {        background: url('/src/Backend/Core/Layout/images/separate/leaf.gif') no-repeat 0 0; }
+    &.closed {      background: url('/src/Backend/Core/Layout/images/separate/closed.gif') no-repeat 0 0; }
+    &.open {        background: url('/src/Backend/Core/Layout/images/separate/open.gif') no-repeat 0 0; }
+    &.closed.last { background: url('/src/Backend/Core/Layout/images/separate/closed_last.gif') no-repeat 0 0; }
+    &.open.last {   background: url('/src/Backend/Core/Layout/images/separate/open_last.gif') no-repeat 0 0; }
+    &.last {        background: url('/src/Backend/Core/Layout/images/separate/last.gif') no-repeat 0 0; }
+
+    &[rel="hidden"],
+    &.treeHidden {
+      opacity: .5; /* Standard: FF gt 1.5, Opera, Safari */
+      filter: alpha(opacity=50); /* IE lt 8 */
+      -ms-filter: "alpha(opacity=50)"; /* IE 8 */
+      -khtml-opacity: .50; /* Safari 1.x */
+      -moz-opacity: .50; /* FF lt 1.5, Netscape */
+    }
+
+    &.dragged {
+      outline: none;
+    }
+
+    /* DEFAULT, HOVER, CLICKED, LOADING STATES */
+    a:hover,
+    a.active,
+    a.focus {
+      background: #eee;
+      /* @inc .rc */
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px
+    }
+
+    span,
+    &.selected > a {
+      /* @inc .selectedBlue */
+      background: #1E83AD;
+      /* @inc .rc */
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px;
+      color: #FFF;
+    }
+
+    a.clicked,
+    a.clicked:hover,
+    span.clicked {
+      background: #AAA;
+      /* @inc .rc */
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px;
+      color: #FFF;
+    }
+
+    a ins.forbidden {
+      background-position: -16px -16px;
+    }
+
+    span ins {
+      background-position: -16px 0;
+    }
+  }
+
+  ins {
+    background: transparent url('/src/Backend/Core/Layout/images/icons.gif') no-repeat 0 -80px;
+    padding-right: 2px;
+  }
+
+  ul li a.loading ins {
+    background-image: url('/src/Backend/Core/Layout/images/throbber.gif') !important;
+    background-position: 0 0 !important;
+  }
+
+  .locked li a ins {
+    background-position: 0 -48px;
+  }
+}
+
+#jstree-dragged {
+  border: 1px dotted #000;
+  background-color: #CCC;
+
+  &.tree-fork {
+
+    li li.open {
+      background-position: 0 -16px;
+    }
+
+    ins {
+      background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -610px no-repeat;
+
+      &forbidden {
+        background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -631px no-repeat;
+      }
+    }
+  }
+}
+
+/* LOCKED */
+/*
+.tree-fork .locked li a {
+	color: gray;
+}
+*/

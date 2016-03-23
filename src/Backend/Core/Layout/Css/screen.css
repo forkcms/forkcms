@@ -8542,6 +8542,392 @@ h3 + .btn-toolbar {
 .btn-group .btn:last-child:not(:first-child) {
   border-radius: 3px; }
 
+/*
+
+    Tree layout
+    Based on basic tree skin
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+.tree {
+  /* FOR DOTS */ }
+  .tree ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    background: url("/src/Backend/Core/Layout/images/separate/decoded_base64.gif");
+    background-position: 10px 1px;
+    background-repeat: repeat-y;
+    min-height: 16px;
+    max-width: 100%; }
+    .tree ul ins {
+      display: inline-block;
+      text-decoration: none;
+      width: 16px;
+      height: 16px; }
+  .tree li {
+    display: block;
+    min-height: 16px;
+    line-height: 16px;
+    padding: 0 0 0 21px;
+    /* Background fix */
+    clear: both;
+    max-width: 100%;
+    /* OPEN OR CLOSE */ }
+    .tree li li {
+      overflow: hidden; }
+    .tree li ul {
+      display: none; }
+    .tree li a:link,
+    .tree li a:visited,
+    .tree li span {
+      display: inline-block;
+      line-height: 17px;
+      height: 20px;
+      padding: 2px 4px 2px 2px;
+      color: #000;
+      white-space: nowrap;
+      text-decoration: none;
+      margin: 0;
+      border: none !important;
+      outline: 0 !important;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+    .tree li a:focus {
+      outline: none; }
+    .tree li a input:not([class="xxx"]),
+    .tree li span input:not([class="xxx"]) {
+      padding: 1px 0; }
+    .tree li.open ul {
+      display: block; }
+    .tree li.closed ul {
+      display: none !important; }
+  .tree .ltr li.last {
+    float: left; }
+  .tree .ltr ins {
+    margin: 0 2px 0 0; }
+  .tree > .ltr > li {
+    display: table; }
+  .tree > ul li.last {
+    overflow: visible; }
+
+/* FOR DRAGGING */
+#jstree-dragged {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  margin: 0;
+  padding: 0; }
+
+#jstree-marker {
+  padding: 0;
+  margin: 0;
+  line-height: 5px;
+  font-size: 1px;
+  display: block;
+  position: absolute;
+  z-index: 2147483647;
+  width: 16px;
+  height: 16px;
+  background: url("/src/Backend/Core/Layout/images/sprites/fork_icons.png") 0 -653px no-repeat; }
+  #jstree-marker.marker_plus {
+    background: url("/src/Backend/Core/Layout/images/sprites/fork_icons.png") 0 -3px no-repeat; }
+
+/* DOTS */
+.tree-fork li {
+  display: block !important;
+  font-size: 13px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  /* OPEN or CLOSED */
+  /* DEFAULT, HOVER, CLICKED, LOADING STATES */ }
+  .tree-fork li.leaf {
+    background: url("/src/Backend/Core/Layout/images/separate/leaf.gif") no-repeat 0 0; }
+  .tree-fork li.closed {
+    background: url("/src/Backend/Core/Layout/images/separate/closed.gif") no-repeat 0 0; }
+  .tree-fork li.open {
+    background: url("/src/Backend/Core/Layout/images/separate/open.gif") no-repeat 0 0; }
+  .tree-fork li.closed.last {
+    background: url("/src/Backend/Core/Layout/images/separate/closed_last.gif") no-repeat 0 0; }
+  .tree-fork li.open.last {
+    background: url("/src/Backend/Core/Layout/images/separate/open_last.gif") no-repeat 0 0; }
+  .tree-fork li.last {
+    background: url("/src/Backend/Core/Layout/images/separate/last.gif") no-repeat 0 0; }
+  .tree-fork li[rel="hidden"], .tree-fork li.treeHidden {
+    opacity: .5;
+    /* Standard: FF gt 1.5, Opera, Safari */
+    filter: alpha(opacity=50);
+    /* IE lt 8 */
+    -ms-filter: "alpha(opacity=50)";
+    /* IE 8 */
+    -khtml-opacity: .50;
+    /* Safari 1.x */
+    -moz-opacity: .50;
+    /* FF lt 1.5, Netscape */ }
+  .tree-fork li.dragged {
+    outline: none; }
+  .tree-fork li a:hover,
+  .tree-fork li a.active,
+  .tree-fork li a.focus {
+    background: #eee;
+    /* @inc .rc */
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px; }
+  .tree-fork li span, .tree-fork li.selected > a {
+    /* @inc .selectedBlue */
+    background: #1E83AD;
+    /* @inc .rc */
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    color: #FFF; }
+  .tree-fork li a.clicked,
+  .tree-fork li a.clicked:hover,
+  .tree-fork li span.clicked {
+    background: #AAA;
+    /* @inc .rc */
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    color: #FFF; }
+  .tree-fork li a ins.forbidden {
+    background-position: -16px -16px; }
+  .tree-fork li span ins {
+    background-position: -16px 0; }
+.tree-fork ins {
+  background: transparent url("/src/Backend/Core/Layout/images/icons.gif") no-repeat 0 -80px;
+  padding-right: 2px; }
+.tree-fork ul li a.loading ins {
+  background-image: url("/src/Backend/Core/Layout/images/throbber.gif") !important;
+  background-position: 0 0 !important; }
+.tree-fork .locked li a ins {
+  background-position: 0 -48px; }
+
+#jstree-dragged {
+  border: 1px dotted #000;
+  background-color: #CCC; }
+  #jstree-dragged.tree-fork li li.open {
+    background-position: 0 -16px; }
+  #jstree-dragged.tree-fork ins {
+    background: url("/src/Backend/Core/Layout/images/sprites/fork_icons.png") 0 -610px no-repeat; }
+    #jstree-dragged.tree-fork insforbidden {
+      background: url("/src/Backend/Core/Layout/images/sprites/fork_icons.png") 0 -631px no-repeat; }
+
+/* LOCKED */
+/*
+.tree-fork .locked li a {
+	color: gray;
+}
+*/
+/*
+	Template visual small
+*/
+.templateVisual td {
+  text-align: center;
+  border: 1px dotted #666;
+  background: #FFF;
+  vertical-align: middle; }
+  .templateVisual td:empty, .templateVisual td.empty {
+    background: #EEE url("/src/Backend/Core/Layout/images/na.png") repeat;
+    border: 1px solid #CCC; }
+.templateVisual table {
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 3px;
+  border-collapse: separate; }
+.templateVisual td {
+  padding: 4px 2px;
+  /* @inc .secondarycontent */
+  font-size: 10px;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif; }
+  .templateVisual td a {
+    color: #000; }
+
+.disabled .templateVisual td {
+  border-color: #CCC;
+  background: #FCFCFC; }
+  .disabled .templateVisual td a {
+    color: #999;
+    cursor: default; }
+
+/*
+	Template visual large
+*/
+/* Dirty padding fix */
+#tabContent.editTemplateTab {
+  padding: 10px 0 0 0; }
+  #tabContent.editTemplateTab .pageTitle {
+    margin: 0 10px; }
+
+/* General table layout */
+#templateVisualFallback {
+  display: none;
+  margin: 10px; }
+  #templateVisualFallback div#fallback {
+    float: right;
+    width: 100%; }
+  #templateVisualFallback div#fallbackInfo {
+    float: left;
+    width: 50%; }
+  #templateVisualFallback table {
+    width: 50%;
+    float: right; }
+
+#templateVisualLarge,
+#templateVisualFallback {
+  /* Title */
+  /* Blocks container */
+  /* Button holder */
+  /* Block */ }
+  #templateVisualLarge table,
+  #templateVisualFallback table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    /* If you change the value "10" change it in model.php of pages module too; for IE7 */
+    table-layout: fixed; }
+  #templateVisualLarge td,
+  #templateVisualFallback td {
+    text-align: center;
+    box-shadow: 0 0 0 1px #ddd inset;
+    background: #F4F4F4;
+    padding: 1%; }
+    #templateVisualLarge td.empty,
+    #templateVisualFallback td.empty {
+      background: #EEE url("/src/Backend/Core/Layout/images/na.png") repeat;
+      box-shadow: 0 0 0 1px #ddd inset;
+      padding: 10px; }
+  #templateVisualLarge .templatePositionTitle,
+  #templateVisualFallback .templatePositionTitle {
+    font-size: 11px;
+    color: #000;
+    background: #FFF;
+    border: 1px solid #BDBDBD;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 6px 12px;
+    box-shadow: 0 -1px 0 1px #FFF; }
+  #templateVisualLarge .linkedBlocks,
+  #templateVisualFallback .linkedBlocks {
+    margin: 0px;
+    border-top: 1px solid #DDD; }
+    #templateVisualLarge .linkedBlocks:empty,
+    #templateVisualFallback .linkedBlocks:empty {
+      padding-top: 12px;
+      margin: 0 12px;
+      border-top: 0; }
+  #templateVisualLarge .btn-group,
+  #templateVisualFallback .btn-group {
+    padding: 12px 0; }
+  #templateVisualLarge .templatePositionCurrentType,
+  #templateVisualFallback .templatePositionCurrentType {
+    border: 1px solid #DDD;
+    border-top: 0;
+    background: #FFF;
+    text-align: left;
+    position: relative;
+    cursor: move;
+    height: 54px;
+    overflow: hidden;
+    overflow: ellipsis; }
+    #templateVisualLarge .templatePositionCurrentType.ui-sortable-helper,
+    #templateVisualFallback .templatePositionCurrentType.ui-sortable-helper {
+      border-top: 1px solid #DDD; }
+    #templateVisualLarge .templatePositionCurrentType .templateTitle,
+    #templateVisualFallback .templatePositionCurrentType .templateTitle {
+      display: block;
+      color: #4a4a4a;
+      font-size: 11px;
+      font-weight: 700;
+      height: 15px;
+      overflow: hidden;
+      white-space: nowrap;
+      -webkit-transition: color 0.3s ease-in-out;
+      -moz-transition: color 0.3s ease-in-out;
+      -o-transition: color 0.3s ease-in-out;
+      transition: color 0.3s ease-in-out;
+      margin: 12px 12px 0; }
+    #templateVisualLarge .templatePositionCurrentType .templateDescription,
+    #templateVisualFallback .templatePositionCurrentType .templateDescription {
+      margin: 0 12px 12px;
+      display: block;
+      color: #808080;
+      font-size: 11px;
+      height: 15px;
+      overflow: hidden;
+      white-space: nowrap;
+      -webkit-transition: color 0.3s ease-in-out;
+      -moz-transition: color 0.3s ease-in-out;
+      -o-transition: color 0.3s ease-in-out;
+      transition: color 0.3s ease-in-out; }
+    #templateVisualLarge .templatePositionCurrentType:hover .templateDescription,
+    #templateVisualFallback .templatePositionCurrentType:hover .templateDescription {
+      color: #222; }
+    #templateVisualLarge .templatePositionCurrentType .buttonHolder,
+    #templateVisualFallback .templatePositionCurrentType .buttonHolder {
+      opacity: 0;
+      height: 24px;
+      padding: 15px 6px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      -webkit-transition: opacity 0.3s ease-in-out;
+      -moz-transition: opacity 0.3s ease-in-out;
+      -o-transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.3s ease-in-out;
+      z-index: 80; }
+    #templateVisualLarge .templatePositionCurrentType:after,
+    #templateVisualFallback .templatePositionCurrentType:after {
+      content: ".";
+      height: 54px;
+      width: 0;
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      text-indent: -9999px;
+      background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, white 20%, white 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(20%, white), color-stop(100%, white));
+      background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, white 20%, white 100%);
+      background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, white 20%, white 100%);
+      background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0%, white 20%, white 100%);
+      background: linear-gradient(left, rgba(255, 255, 255, 0) 0%, white 20%, white 100%);
+      -webkit-transition: width 0.3s ease-in-out;
+      -moz-transition: width 0.3s ease-in-out;
+      -o-transition: width 0.3s ease-in-out;
+      transition: width 0.3s ease-in-out; }
+    #templateVisualLarge .templatePositionCurrentType:hover:after,
+    #templateVisualFallback .templatePositionCurrentType:hover:after {
+      width: 110px; }
+  #templateVisualLarge:hover .templateTitle,
+  #templateVisualFallback:hover .templateTitle {
+    color: #000; }
+  #templateVisualLarge .templateDisabled .templateTitle,
+  #templateVisualFallback .templateDisabled .templateTitle {
+    color: #aaa; }
+  #templateVisualLarge .templateDisabled .templateDescription,
+  #templateVisualFallback .templateDisabled .templateDescription {
+    color: #bbb; }
+
+#templateVisualLarge {
+  clear: both; }
+
+body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder,
+body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonHolder,
+#templateVisualLarge .templatePositionCurrentType:hover .buttonHolder,
+#templateVisualFallback .templatePositionCurrentType:hover .buttonHolder {
+  opacity: 1; }
+
 /* General */
 .fork-module-heading {
   background: #fff;
