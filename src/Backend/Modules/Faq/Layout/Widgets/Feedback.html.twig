@@ -10,7 +10,7 @@
   <table class="table table-striped dataGrid">
     <tbody>
       {% for _itr_12 in faqFeedback %}
-      <tr class="{cycle:'odd':'even'}">
+      <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
         <td><a href="{{ _itr_12.full_url }}">{{ _itr_12.text|truncate(150 ) }}</a></td>
       </tr>
       {% endfor %}

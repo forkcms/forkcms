@@ -20,7 +20,7 @@
   <table class="table table-striped dataGrid">
     <tbody>
     {% for blogComment in blogComments %}
-      <tr class="{cycle:'odd':'even'}">
+      <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
         <td><a href="{{ blogComment.full_url }}">{{ blogComment.title }}</a></td>
         <td class="name">{{ blogComment.author }}</td>
       </tr>
