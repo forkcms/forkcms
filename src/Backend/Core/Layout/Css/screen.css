@@ -8539,7 +8539,8 @@ h3 + .btn-toolbar {
 .btn-group .btn + .btn {
   margin-left: 6px; }
 .btn-group .btn:first-child:not(:last-child):not(.dropdown-toggle),
-.btn-group .btn:last-child:not(:first-child) {
+.btn-group .btn:last-child:not(:first-child),
+.btn-group .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
   border-radius: 3px; }
 
 /*

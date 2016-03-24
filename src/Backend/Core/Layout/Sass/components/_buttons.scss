@@ -15,7 +15,8 @@
   }
 
   .btn:first-child:not(:last-child):not(.dropdown-toggle),
-  .btn:last-child:not(:first-child) {
+  .btn:last-child:not(:first-child),
+  .btn:not(:first-child):not(:last-child):not(.dropdown-toggle){
     border-radius: 3px;
   }
 }
