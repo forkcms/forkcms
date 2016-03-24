@@ -1,6 +1,12 @@
 <div class="main-navigation">
     <nav class="navbar navbar-default">
-        {{ getmainnavigation('nav navbar-nav') }}
+        <ul class="nav navbar-nav">
+            {% for item in navigation %}
+                <li class="nav-item nav-item-{{ item.label|lower }}{% if item.active %} active{% endif %}">
+                    <a href="/private/{{ LANGUAGE }}/{{ item.url }}">{{ item.label }}</a>
+                </li>
+            {% endfor %}
+        </ul>
     </nav>
     <a href="#" class="arrow-right js-nav-next"></a>
     <a href="#" class="arrow-left js-nav-prev"></a>

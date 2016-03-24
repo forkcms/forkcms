@@ -97,19 +97,6 @@ class TemplateModifiers extends BaseTwigModifiers
     }
 
     /**
-     * Convert a var into main-navigation-html
-     *  syntax: {{ getmainnavigation($class) }}
-     *
-     * @param string $class Class attribute of ul list
-     *
-     * @return string
-     */
-    public static function getMainNavigation($class = null)
-    {
-        return BackendModel::getContainer()->get('navigation')->getNavigation(1, 1, $class);
-    }
-
-    /**
      * Convert a var into navigation-html
      * syntax: {{ getnavigation(startdepth, maximumdepth) }}
      *
