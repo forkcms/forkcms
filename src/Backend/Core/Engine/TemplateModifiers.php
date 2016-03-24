@@ -97,24 +97,6 @@ class TemplateModifiers extends BaseTwigModifiers
     }
 
     /**
-     * Convert a var into navigation-html
-     * syntax: {{ getnavigation(startdepth, maximumdepth) }}
-     *
-     * @param int    $startDepth The start depth of the navigation to get.
-     * @param int    $endDepth   The ending depth of the navigation to get.
-     * @param string $class Class attribute of ul list
-     * @return string
-     */
-    public static function getNavigation($startDepth = null, $endDepth = null, $class = null)
-    {
-        $startDepth = ($startDepth !== null) ? (int) $startDepth : 2;
-        $endDepth = ($endDepth !== null) ? (int) $endDepth : null;
-
-        // return navigation
-        return BackendModel::getContainer()->get('navigation')->getNavigation($startDepth, $endDepth, $class);
-    }
-
-    /**
      * Convert a var into a URL
      * syntax: {{ geturl:<action>[:<module>] }}
      *

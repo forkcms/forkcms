@@ -108,93 +108,6 @@ class Navigation extends Base\Object
         );
     }
 
-    /**
-     * Build the HTML for a navigation item
-     *
-     * @param array  $value        The current value.
-     * @param string $key          The current key.
-     * @param array  $selectedKeys The keys that are selected.
-     * @param int    $startDepth   The depth to start from.
-     * @param int    $endDepth     The depth to end.
-     * @param int    $currentDepth The depth the method is currently on.
-     * @return string
-     */
-    public function buildHTML(
-        array $value,
-        $key,
-        array $selectedKeys = null,
-        $startDepth = 0,
-        $endDepth = null,
-        $currentDepth = 0
-    ) {
-        // return
-        if ($endDepth !== null && $currentDepth >= $endDepth) {
-            return '';
-        }
-
-        // needed elements are set?
-        if (isset($value['url']) && isset($value['label'])) {
-            // init some vars
-            $selected = (isset($selectedKeys[$currentDepth]) && $selectedKeys[$currentDepth] == $key);
-            $label = \SpoonFilter::ucfirst(Language::lbl($value['label']));
-            $url = $value['url'];
-
-            // start HTML
-            $HTML = '';
-
-            // que? let's call this piece magic
-            if ($currentDepth >= $startDepth - 1) {
-                // start li
-                $HTML .= '<li class="nav-item';
-                if ($selected) {
-                    $HTML .= ' active ';
-                }
-                if ($currentDepth === 0) {
-                    $HTML .= ' nav-item-' . strtolower($value['label']);
-                }
-                $HTML .= '">' . "\n";
-                $HTML .= '	<a href="/' . NAMED_APPLICATION . '/' .
-                         Language::getWorkingLanguage() . '/' . $url . '"><span class="nav-item-text">' . $label . '</span></a>' . "\n";
-            }
-
-            // children?
-            if ($selected && isset($value['children'])) {
-                // end depth not passed or isn't reached
-                if ($endDepth === null || $currentDepth < $endDepth) {
-                    // start ul if needed
-                    if ($currentDepth != 0) {
-                        $HTML .= '<ul class="nav subnav">' . "\n";
-                    }
-
-                    // loop children
-                    foreach ($value['children'] as $subKey => $row) {
-                        $HTML .= '	' .
-                                 $this->buildHTML(
-                                     $row,
-                                     $subKey,
-                                     $selectedKeys,
-                                     $startDepth,
-                                     $endDepth,
-                                     $currentDepth + 1
-                                 );
-                    }
-
-                    // end ul if needed
-                    if ($currentDepth != 0) {
-                        $HTML .= '</ul>' . "\n";
-                    }
-                }
-            }
-
-            // end
-            if ($currentDepth >= $startDepth - 1) {
-                $HTML .= '</li>' . "\n";
-            }
-        }
-
-        return $HTML;
-    }
-
     public function parse(TwigTemplate $template)
     {
         $template->assign('navigation', $this->navigation);
@@ -485,34 +398,6 @@ class Navigation extends Base\Object
                 }
             }
         }
-    }
-
-    /**
-     * Get the HTML for the navigation
-     *
-     * @param int $startDepth The start-depth.
-     * @param int $endDepth   The end-depth.
-     * @param string $class Class attribute of ul list
-     * @return string
-     */
-    public function getNavigation($startDepth = 0, $endDepth = null, $class = null)
-    {
-        // get selected
-        $selectedKeys = $this->getSelectedKeys();
-
-        // init html
-        $HTML = '<ul ' . ($class?'class="' . $class . '"':'') . '>' . "\n";
-
-        // loop the navigation elements
-        foreach ($this->navigation as $key => $value) {
-            // append the generated HTML
-            $HTML .= $this->buildHTML($value, $key, $selectedKeys, $startDepth, $endDepth);
-        }
-
-        // end ul
-        $HTML .= '</ul>';
-
-        return $HTML;
     }
 
     /**
