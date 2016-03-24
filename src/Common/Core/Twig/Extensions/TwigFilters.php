@@ -60,12 +60,6 @@ class TwigFilters
         ));
 
         // Functions navigation
-
-        $twig->addFunction(new Twig_SimpleFunction(
-            'getmainnavigation',
-            $app.'::getMainNavigation',
-            array('is_safe' => array('html'))
-        ));
         $twig->addFunction(new Twig_SimpleFunction(
             'getnavigation',
             $app.'::getNavigation',

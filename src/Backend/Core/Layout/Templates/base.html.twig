@@ -14,7 +14,7 @@
         {% include "/Layout/Templates/navigation.html.twig" %}
         <div class="sub-navigation">
             <nav id="content-subnavigation" class="fork-nav-sidebar">
-                {{ getnavigation(null,null,'nav navbar-nav navbar-sidebar') }}
+                {% include "/Layout/Templates/subnavigation.html.twig" with { 'navigation': navigation } %}
             </nav>
         </div>
     </div>
