@@ -1,0 +1,31 @@
+.content-action-bar {
+
+  .btn-toolbar {
+
+    .btn-text {
+      display: none;
+    }
+
+    .btn .fa {
+      padding: 0 4px;
+    }
+  }
+}
+
+
+@media screen and (min-width: $screen-md) {
+
+  .content-action-bar {
+
+    .btn-toolbar {
+
+      .btn-text {
+        display: inline-block;
+      }
+
+      .btn .fa {
+        padding: 0 4px 0 0;
+      }
+    }
+  }
+}

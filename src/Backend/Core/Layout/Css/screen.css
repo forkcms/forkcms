@@ -8973,7 +8973,7 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
 .breadcrumb {
   margin-bottom: 0;
-  padding: 12px 15px 8px; }
+  padding: 12px 0 8px; }
   .breadcrumb li + li:before {
     content: "\f105";
     font-family: FontAwesome;
@@ -8986,6 +8986,16 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
       border-bottom: 1px solid #999999;
       text-decoration: none; }
 
+.content-action-bar .btn-toolbar .btn-text {
+  display: none; }
+.content-action-bar .btn-toolbar .btn .fa {
+  padding: 0 4px; }
+
+@media screen and (min-width: 992px) {
+  .content-action-bar .btn-toolbar .btn-text {
+    display: inline-block; }
+  .content-action-bar .btn-toolbar .btn .fa {
+    padding: 0 4px 0 0; } }
 /* General */
 .fork-module-heading {
   background: #fff;
