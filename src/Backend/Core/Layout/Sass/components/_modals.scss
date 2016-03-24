@@ -1,0 +1,26 @@
+.modal-content {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-radius: $border-radius-small;
+
+  .modal-title {
+    font-size: $font-size-btn;
+  }
+}
+
+.modal-header {
+  margin-bottom: 5px;
+}
+
+.modal-body {
+  background: $white;
+  border-radius: $border-radius-small;
+  border: 1px solid $gray-lighter;
+  padding: 20px;
+  margin: 0 30px;
+}
+
+.modal-footer {
+  padding: 15px 30px 25px;
+}

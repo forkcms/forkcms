@@ -146,14 +146,20 @@ class Model
                     // large visual?
                     if ($large) {
                         $html .= ' id="templatePosition-' . $value . '" data-position="' . $value . '" class="box templatePosition">
-                                    <div class="heading linkedBlocksTitle"><h4>' . $title . '</h4></div>
-                                    <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
-                                    <div class="text-center" role="toolbar">
-                                        <div class="btn-group" role="group">
-                                            <a href="#addBlock" class="btn btn-primary btn-xs addBlock">
-                                                <span class="fa fa-th-large"></span>
-                                                ' . \SpoonFilter::ucfirst(BL::lbl('AddBlock')) . '
-                                            </a>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="heading linkedBlocksTitle"><p>' . $title . '</p></div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
+                                            <div class="text-center" role="toolbar">
+                                                <div class="btn-group" role="group">
+                                                    <a href="#addBlock" class="btn btn-primary btn-xs addBlock">
+                                                        <span class="fa fa-th-large"></span>
+                                                        ' . \SpoonFilter::ucfirst(BL::lbl('AddBlock')) . '
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>' . "\n";

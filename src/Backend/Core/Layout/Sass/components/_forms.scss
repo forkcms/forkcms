@@ -7,3 +7,39 @@ select[size="1"] {
 .formError {
   @extend .text-danger;
 }
+
+.form-control {
+  border-radius: $border-radius-small;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  &.title {
+    height: 46px;
+    font-size: $font-size-h4;
+  }
+
+  &:focus {
+    outline: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+}
+
+.help-block {
+  font-size: $font-size-small;
+}
+
+.form-inline .radio {
+
+  label {
+    padding-left: 20px;
+    padding-right: 8px;
+  }
+
+  input[type="radio"] {
+    position: absolute;
+    margin-left: -20px;
+  }
+}

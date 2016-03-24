@@ -36,10 +36,10 @@
                 <div class="form-group">
                     <label for="title" class="control-label">{{ 'lbl.Title'|trans|capitalize }}</label>
                     {% form_field_error title %} {% form_field title %}
+                    <a class="site-url" href="{{ detailURL }}">
+                      {{ SITE_URL }}{{ prefixURL }}/<span id="generatedUrl"></span>
+                    </a>
                 </div>
-                <a href="{{ detailURL }}">
-                  <small>{{ SITE_URL }}{{ prefixURL }}/<span id="generatedUrl"></span></small>
-                </a>
             </div>
         </div>
         <div class="row fork-module-content">
@@ -49,16 +49,16 @@
                         <li role="presentation" class="active">
                             <a href="#tabContent" aria-controls="home" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|capitalize }}</a>
                         </li>
-                        <li role="presentation">
+                        <li class="pull-right" role="presentation">
                             <a href="#tabSettings" aria-controls="profile" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|capitalize }}</a>
                         </li>
-                        <li role="presentation">
+                        <li class="pull-right" role="presentation">
                             <a href="#tabRedirect" aria-controls="messages" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|capitalize }}</a>
                         </li>
-                        <li role="presentation">
+                        <li class="pull-right" role="presentation">
                             <a href="#tabTags" aria-controls="settings" role="tab" data-toggle="tab">{{ 'lbl.Tags'|trans|capitalize }}</a>
                         </li>
-                        <li role="presentation">
+                        <li class="pull-right" role="presentation">
                             <a href="#tabSEO" aria-controls="settings" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|capitalize }}</a>
                         </li>
                     </ul>
@@ -67,45 +67,45 @@
                             <div id="editTemplate" class="row">
                                 <div class="col-md-12">
                                     {# Do not change the ID! #}
-                                    <h3>{{ 'lbl.Template'|trans|capitalize }}: <span id="tabTemplateLabel">&nbsp;</span></h3>
+                                    <p class="current-template">{{ 'lbl.Template'|trans|capitalize }}: <span id="tabTemplateLabel">&nbsp;</span>
+                                        <a data-toggle="modal" data-target="#changeTemplate">
+                                            {{ 'lbl.ChangeTemplate'|trans|capitalize }}
+                                        </a>
+                                    </p>
 
-                                    <div class="btn-toolbar pull-right">
-                                        <div class="btn-group" role="group">
-                                            <button type="button" class="btn" data-toggle="modal" data-target="#changeTemplate">
-                                                <span class="fa fa-th"></span>
-                                                {{ 'lbl.ChangeTemplate'|trans|capitalize }}
-                                            </button>
-                                        </div>
-                                    </div>
                                     {% if formErrors %}<span class="formError text-danger">{{ formErrors }}</span>{% endif %}
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <div id="templateVisualFallback" style="display: none">
-                                                <div id="fallback" class="generalMessage singleMessage infoMessage">
-                                                    <div id="fallbackInfo">
-                                                        {{ 'msg.FallbackInfo'|trans }}
-                                                    </div>
-                                                    <table cellspacing="2">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td data-position="fallback" id="templatePosition-fallback"
-                                                                colspan="1" class="box">
+                                    <div id="templateVisualFallback" style="display: none">
+                                        <div id="fallback" class="generalMessage singleMessage infoMessage">
+                                            <div id="fallbackInfo">
+                                                {{ 'msg.FallbackInfo'|trans }}
+                                            </div>
+                                            <table cellspacing="2">
+                                                <tbody>
+                                                <tr>
+                                                    <td data-position="fallback" id="templatePosition-fallback"
+                                                        colspan="1" class="box">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
                                                                 <div class="heading linkedBlocksTitle">
-                                                                    <h4>{{ 'lbl.Fallback'|trans|capitalize }}</h4></div>
+                                                                    <h4>{{ 'lbl.Fallback'|trans|capitalize }}</h4>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-body">
                                                                 <div class="linkedBlocks">
-                                                                    <!-- linked blocks will be added here --></div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div id="templateVisualLarge">
-                                                &nbsp;
-                                            </div>
+                                                                    <!-- linked blocks will be added here -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
+                                    </div>
+                                    <div id="templateVisualLarge">
+                                        &nbsp;
                                     </div>
                                 </div>
                             </div>
@@ -174,6 +174,7 @@
                         <div role="tabpanel" class="tab-pane" id="tabTags">
                             <div class="row">
                                 <div class="col-md-12">
+                                    <p class="tab-pane-title">{{ 'msg.AddTagsHere'|trans|capitalize }}</p>
                                     {% form_field_error tags %} {% form_field tags %}
                                 </div>
                             </div>
@@ -217,21 +218,21 @@
                                     {{ 'msg.ContentSaveWarning'|trans }}
                                 </div>
                                 <div class="box contentBlock" style="margin: 0;">
-                                    <div class="blockContent|rawHTML optionsRTE">
+                                    <div class="blockContent HTML optionsRTE">
                                         <fieldset>
-                                            {{ block.txtHTML }}
-                                            {{ block.txtHTMLError }}
+                                            {{ block.formElements.txtHTML.parse() | raw }}
+                                            {{ block.formElements.txtHTMLError.parse() | raw }}
                                         </fieldset>
                                     </div>
 
                                     {# this will store the selected extra #}
-                                    {{ block.hidExtraId }}
+                                    {{ block.formElements.hidExtraId.parse() | raw }}
 
                                     {# this will store the selected position #}
-                                    {{ block.hidPosition }}
+                                    {{ block.formElements.hidPosition.parse() | raw }}
 
                                     {# this will store the visible/hidden state #}
-                                    <div style="display: none">{{ block.chkVisible }}</div>
+                                    <div style="display: none">{{ block.formElements.chkVisible.parse() | raw }}</div>
                                 </div>
                             {% endfor %}
                         {% endfor %}
@@ -357,7 +358,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-warning">
-                            {{ 'msg.ContentSaveWarning'|trans }}
+                            {{ 'msg.ContentSaveWarning'|trans|raw }}
                         </div>
                         <div class="form-group">
                             {% form_field html %}
@@ -399,17 +400,17 @@
             //<![CDATA[
             // all the possible templates
             var templates = {};
-            {% for templat in templates %}templat[{{ templat.id }}] = {{ templat.json }};
+            {% for template in templates %}templates[{{ template.id }}] = {{ template.json|raw }};
             {% endfor %}
 
             // the data for the extra's
             var extrasData = {};
-            {% if extrasData %}extrasData = {{ extrasData }};
+            {% if extrasData %}extrasData = {{ extrasData|raw }};
             {% endif %}
 
             // the extra's, but in a way we can access them based on their ID
             var extrasById = {};
-            {% if extrasById %}extrasById = {{ extrasById }};
+            {% if extrasById %}extrasById = {{ extrasById|raw }};
             {% endif %}
 
             // indicator that the default blocks may be set on pageload

@@ -11,20 +11,20 @@
     font-weight: 600;
   }
 
-  .site-url {
-    color: $gray-light;
-    border-bottom: 1px solid $gray-light;
-    font-size: $font-size-small;
-
-    &:hover {
-      color: $gray-base;
-      border-color: $gray-base;
-      text-decoration: none;
-    }
-  }
-
   .site-text {
     float: left;
+  }
+}
+
+.site-url {
+  color: $gray-light;
+  border-bottom: 1px solid $gray-light;
+  font-size: $font-size-small;
+
+  &:hover {
+    color: $gray-base;
+    border-color: $gray-base;
+    text-decoration: none;
   }
 }
 

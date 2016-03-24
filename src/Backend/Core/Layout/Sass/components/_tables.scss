@@ -2,3 +2,53 @@
   display: table-cell;
   vertical-align: middle !important;
 }
+
+.table-striped {
+
+  border: 1px solid $table-border-color;
+
+  > tbody > tr:nth-of-type(even),
+  thead > tr {
+    background-color: $gray-lightest;
+
+  }
+}
+
+.table > thead > tr > th {
+  border-width: 1px;
+}
+
+.table {
+
+  .btn {
+    padding: 2px 8px;
+  }
+
+  tr {
+
+    td {
+      font-size: $font-size-small;
+
+      &.title {
+        
+        a {
+          font-weight: 600;
+        }
+      }
+      
+      a:hover {
+        text-decoration: none;
+      }
+    }
+
+    th {
+      color: $gray;
+      font-size: $font-size-small;
+      font-weight: normal;
+    }
+
+    th + th {
+      border-left: 1px solid $table-border-color;
+    }
+  }
+}

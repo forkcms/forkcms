@@ -6,21 +6,21 @@
 
   td {
     text-align: center;
-    border: 1px dotted #666;
-    background: #FFF;
+    border: 1px solid $panel-default-border;
+    background: $white;
     vertical-align: middle;
 
     &:empty,
     &.empty {
-      background: #EEE url('/src/Backend/Core/Layout/images/na.png') repeat;
-      border: 1px solid #CCC;
+      background: $white url('/src/Backend/Core/Layout/images/na.png') repeat;
+      border: 1px solid $panel-default-border;;
     }
   }
 
   table {
     width: 100%;
     table-layout: fixed;
-    border-spacing: 3px;
+    border-spacing: 2px;
     border-collapse: separate;
   }
 
@@ -33,6 +33,10 @@
     a {
       color: #000;
     }
+  }
+
+  .form-group {
+    margin-bottom: 0;
   }
 }
 
@@ -66,26 +70,6 @@
 
 /* General table layout */
 
-#templateVisualFallback {
-  display: none;
-  margin: 10px;
-
-  div#fallback {
-    float: right;
-    width: 100%;
-  }
-
-  div#fallbackInfo {
-    float: left;
-    width: 50%;
-  }
-
-  table {
-    width: 50%;
-    float: right;
-  }
-}
-
 #templateVisualLarge,
 #templateVisualFallback {
 
@@ -97,15 +81,22 @@
   }
 
   td {
-    text-align: center;
-    box-shadow: 0 0 0 1px #ddd inset;
-    background: #F4F4F4;
-    padding: 1%;
+    background: $gray-lightest;
+    border-radius: $border-radius-small;
+    border: 1px solid $panel-default-border;
+    vertical-align: top;
 
     &.empty {
-      background: #EEE url('/src/Backend/Core/Layout/images/na.png') repeat;
-      box-shadow: 0 0 0 1px #ddd inset;
+      background: $white url('/src/Backend/Core/Layout/images/na.png') repeat;
       padding: 10px;
+      border-radius: 3px;
+      border: 1px solid $panel-default-border;
+    }
+
+    p {
+      color: $gray-base;
+      font-weight: 600;
+      margin-bottom: 0;
     }
   }
 
@@ -138,21 +129,25 @@
   /* Button holder */
 
   .btn-group {
-    padding: 12px 0;
+    padding: 14px 0 0;
+
+    .btn {
+      padding: 6px 15px 7px;
+    }
   }
 
   /* Block */
 
   .templatePositionCurrentType {
-    border: 1px solid #DDD;
+    border: 1px solid $panel-default-border;
     border-top: 0;
-    background: #FFF;
-    text-align: left;
+    background: $white;
     position: relative;
     cursor: move;
-    height: 54px;
+    height: 61px;
     overflow: hidden;
     overflow: ellipsis;
+    padding: 12px 15px;
 
     &.ui-sortable-helper {
       border-top: 1px solid #DDD;
@@ -160,25 +155,21 @@
 
     .templateTitle {
       display: block;
-      color: #4a4a4a;
-      font-size: 11px;
-      font-weight: 700;
-      height: 15px;
+      color: $gray-base;
+      font-size: $font-size-small;
+      font-weight: 600;
       overflow: hidden;
       white-space: nowrap;
       -webkit-transition: color 0.3s ease-in-out;
       -moz-transition: color 0.3s ease-in-out;
       -o-transition: color 0.3s ease-in-out;
       transition: color 0.3s ease-in-out;
-      margin: 12px 12px 0;
     }
 
     .templateDescription {
-      margin: 0 12px 12px;
       display: block;
-      color: #808080;
-      font-size: 11px;
-      height: 15px;
+      color: $text-color;
+      font-size: $font-size-small;
       overflow: hidden;
       white-space: nowrap;
       -webkit-transition: color 0.3s ease-in-out;
@@ -188,21 +179,28 @@
     }
 
     &:hover .templateDescription {
-      color: #222;
+      color: $gray-base;
     }
 
     .buttonHolder {
       opacity: 0;
-      height: 24px;
-      padding: 15px 6px;
       position: absolute;
-      right: 0;
+      right: 15px;
       top: 0;
       -webkit-transition: opacity 0.3s ease-in-out;
       -moz-transition: opacity 0.3s ease-in-out;
       -o-transition: opacity 0.3s ease-in-out;
       transition: opacity 0.3s ease-in-out;
       z-index: 80;
+
+      .btn {
+        padding: 6px 10px;
+
+        .fa {
+          padding-right: 0;
+          font-size: $font-size-base;
+        }
+      }
     }
 
     &:after {
@@ -251,9 +249,54 @@
   clear: both;
 }
 
+#templateVisualFallback {
+  display: none;
+  margin: 10px;
+
+  div#fallback {
+    float: right;
+    width: 100%;
+  }
+
+  table {
+    border-spacing: 2px;
+  }
+}
+
 body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder,
 body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonHolder,
 #templateVisualLarge .templatePositionCurrentType:hover .buttonHolder,
 #templateVisualFallback .templatePositionCurrentType:hover .buttonHolder {
   opacity: 1;
+}
+
+
+.current-template {
+  font-size: $font-size-btn;
+  padding-left: 15px;
+  margin-bottom: 15px;
+
+  a {
+    border-bottom: 1px solid $brand-primary;
+    font-size: $font-size-small;
+    cursor: pointer;
+    margin-left: 5px;
+    
+    &:hover {
+      border-color: $brand-primary-dark;
+      color: $brand-primary-dark;
+      text-decoration: none;
+    }
+  }
+}
+
+
+@media screen and (min-width: $screen-md) {
+
+  #templateVisualLarge {
+
+    table {
+      border-spacing: 15px;
+    }
+  }
 }

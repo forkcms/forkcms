@@ -48,12 +48,11 @@
     <div class="row fork-module-content">
       <div class="col-md-12">
         <div class="form-group">
-          <label for="title" class="control-label">{{ 'lbl.Title'|trans|capitalize }}</label>
           {% form_field_error title %} {% form_field title %}
+          <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" href="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}">
+            {{ SITE_URL }}{{ prefixURL }}/<span id="generatedUrl">{{ item.url }}</span>
+          </a>
         </div>
-        <a data-url="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" href="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}">
-          <small>{{ SITE_URL }}{{ prefixURL }}/<span id="generatedUrl">{{ item.url }}</span></small>
-        </a>
       </div>
     </div>
     <div class="row fork-module-content">
@@ -63,20 +62,20 @@
             <li role="presentation" class="active">
               <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|capitalize }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|capitalize }}</a>
-            </li>
-            <li role="presentation">
+            <li class="pull-right" role="presentation">
               <a href="#tabSettings" aria-controls="settings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|capitalize }}</a>
             </li>
-            <li role="presentation">
+            <li class="pull-right" role="presentation">
               <a href="#tabRedirect" aria-controls="redirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|capitalize }}</a>
             </li>
-            <li role="presentation">
+            <li class="pull-right" role="presentation">
               <a href="#tabTags" aria-controls="tags" role="tab" data-toggle="tab">{{ 'lbl.Tags'|trans|capitalize }}</a>
             </li>
-            <li role="presentation">
+            <li class="pull-right" role="presentation">
               <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|capitalize }}</a>
+            </li>
+            <li class="pull-right" role="presentation">
+              <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|capitalize }}</a>
             </li>
           </ul>
           <div class="tab-content">
@@ -84,46 +83,53 @@
               <div id="editTemplate" class="row">
                 <div class="col-md-12">
                   {# Do not change the ID! #}
-                  <h3>{{ 'lbl.Template'|trans|capitalize }}: <span id="tabTemplateLabel">&nbsp;</span></h3>
+                  <p class="current-template">{{ 'lbl.Template'|trans|capitalize }}: <span id="tabTemplateLabel">&nbsp;</span>
+                    <a data-toggle="modal" data-target="#changeTemplate">
+                      {{ 'lbl.ChangeTemplate'|trans|capitalize }}
+                    </a>
+                  </p>
 
-                  <div class="btn-toolbar pull-right">
-                    <div class="btn-group" role="group">
-                      <button type="button" class="btn" data-toggle="modal" data-target="#changeTemplate">
-                        <span class="fa fa-th"></span>
-                        {{ 'lbl.ChangeTemplate'|trans|capitalize }}
-                      </button>
-                    </div>
-                  </div>
                   {% if formErrors %}
                   <span class="formError text-danger">{{ formErrors }}</span>
                   {% endif %}
                 </div>
                 <div class="col-md-12">
-                  <div class="panel panel-default">
-                    <div class="panel-body">
-                      <div id="templateVisualFallback" style="display: none">
-                        <div id="fallback" class="generalMessage singleMessage infoMessage">
+                  <div id="templateVisualFallback" style="display: none">
+                    <div id="fallback" class="generalMessage singleMessage infoMessage">
+                      <div class="row">
+                        <div class="col-md-6">
                           <div id="fallbackInfo">
-                            {{ 'msg.FallbackInfo'|trans }}
+                            <div class="alert alert-warning">
+                              {{ 'msg.FallbackInfo'|trans|raw }}
+                            </div>
                           </div>
+                        </div>
+                        <div class="col-md-6">
                           <table cellspacing="2">
                             <tbody>
                               <tr>
                                 <td data-position="fallback" id="templatePosition-fallback"
-                                  colspan="1" class="box">
-                                  <div class="heading linkedBlocksTitle">
-                                    <h4>{{ 'lbl.Fallback'|trans|capitalize }}</h4></div>
-                                  <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
+                                        colspan="1" class="box">
+                                  <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                      <div class="heading linkedBlocksTitle">
+                                        <h4>{{ 'lbl.Fallback'|trans|capitalize }}</h4>
+                                      </div>
+                                    </div>
+                                    <div class="panel-body">
+                                      <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
+                                    </div>
+                                  </div>
                                 </td>
                               </tr>
                             </tbody>
                           </table>
                         </div>
                       </div>
-                      <div id="templateVisualLarge">
-                        &nbsp;
-                      </div>
                     </div>
+                  </div>
+                  <div id="templateVisualLarge">
+                    &nbsp;
                   </div>
                 </div>
               </div>
@@ -132,18 +138,18 @@
               {% if drafts %}
               <div class="row">
                 <div class="col-md-12">
-                  <h3>{{ 'lbl.Drafts'|trans|capitalize }} <abbr title="{{ 'msg.HelpDrafts'|trans }}"><span class="fa fa-info-circle" data-toggle="tooltip"></span></abbr></h3>
+                  <p class="tab-pane-title">{{ 'lbl.Drafts'|trans|capitalize }} <abbr title="{{ 'msg.HelpDrafts'|trans }}"><span class="fa fa-info-circle" data-toggle="tooltip"></span></abbr></p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  {{ drafts }}
+                  {{ drafts|raw }}
                 </div>
               </div>
               {% endif %}
               <div class="row">
                 <div class="col-md-12">
-                  <h3>{{ 'lbl.PreviousVersions'|trans|capitalize }} <abbr title="{{ 'msg.HelpRevisions'|trans }}"><span class="fa fa-info-circle" data-toggle="tooltip"></span></abbr></h3>
+                  <p class="tab-pane-title">{{ 'lbl.PreviousVersions'|trans|capitalize }} <abbr title="{{ 'msg.HelpRevisions'|trans }}"><span class="fa fa-info-circle" data-toggle="tooltip"></span></abbr></p>
                 </div>
               </div>
               <div class="row">
@@ -221,6 +227,7 @@
             <div role="tabpanel" class="tab-pane" id="tabTags">
               <div class="row">
                 <div class="col-md-12">
+                  <p class="tab-pane-title">{{ 'msg.AddTagsHere'|trans|capitalize }}</p>
                   {% form_field_error tags %} {% form_field tags %}
                 </div>
               </div>
@@ -412,7 +419,7 @@
           </div>
           <div class="modal-body">
             <div class="alert alert-warning">
-              {{ 'msg.ContentSaveWarning'|trans }}
+              {{ 'msg.ContentSaveWarning'|trans|raw }}
             </div>
             <div class="form-group">
               {% form_field html %}

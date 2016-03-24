@@ -321,7 +321,7 @@ jsBackend.pages.extras =
 			blockExtraId.parent('.contentBlock').removeClass('reset');
 
 			// while we're at it, make sure the position is also correct
-			blockPosition.val($(this).parent().parent().attr('data-position'));
+			blockPosition.val($(this).closest('*[data-position]').attr('data-position'));
 		});
 
 		// mark all as having been reset
@@ -513,7 +513,7 @@ jsBackend.pages.extras =
 		jsBackend.pages.template.original = false;
 
 		// get index of block
-		var index = $(this).parent().parent().attr('data-block-id');
+		var index = $(this).closest('*[data-block-id]').attr('data-block-id');
 
 		// get visibility checbox
 		var checkbox = $('#blockVisible' + index);
@@ -529,7 +529,7 @@ jsBackend.pages.extras =
 
 		// remove current visibility indicators
 		$(this).find('.fa').removeClass('fa-eye fa-eye-slash');
-		$(this).parent().parent().removeClass('templateDisabled');
+		$(this).closest('*[data-block-id]').removeClass('templateDisabled');
 
 		// toggle visibility indicators
 		if(visible) $(this).find('.fa').addClass('fa-eye');

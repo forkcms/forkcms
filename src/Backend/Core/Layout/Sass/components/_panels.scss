@@ -1,3 +1,18 @@
+.panel-default {
+  border: none;
+}
+
+.panel {
+  margin-bottom: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  .panel-body {
+    border-spacing: 0;
+  }
+}
+
 .panel-title a {
   border: none;
   text-decoration: none;

@@ -63,7 +63,7 @@ $font-size-extra-small:   ceil(($font-size-base * 0.7));
 $font-size-h1:            floor(($font-size-base * 2.6)); // ~36px
 $font-size-h2:            floor(($font-size-base * 2.15)); // ~30px
 $font-size-h3:            ceil(($font-size-base * 1.7)); // ~24px
-$font-size-h4:            ceil(($font-size-base * 1.25)); // ~18px
+$font-size-h4:            ceil(($font-size-base * 1.4)); // ~20px
 $font-size-h5:            $font-size-base;
 $font-size-h6:            ceil(($font-size-base * 0.85)); // ~12px
 
@@ -143,7 +143,7 @@ $table-condensed-cell-padding:  5px;
 //** Default background color used for all tables.
 $table-bg:                      transparent;
 //** Background color used for `.table-striped`.
-$table-bg-accent:               $gray-lightest;
+$table-bg-accent:               $white;
 //** Background color used for `.table-hover`.
 $table-bg-hover:                #f5f5f5;
 $table-bg-active:               $table-bg-hover;
@@ -192,12 +192,12 @@ $btn-link-disabled-color:        $gray-light;
 //** `<input>` background color
 $input-bg:                       $white;
 //** `<input disabled>` background color
-$input-bg-disabled:              $gray-lighter;
+$input-bg-disabled:              $gray-lightest;
 
 //** Text color for `<input>`s
-$input-color:                    $gray;
+$input-color:                    $gray-base;
 //** `<input>` border color
-$input-border:                   #ccc;
+$input-border:                   $gray-lighter;
 
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 //** Default `.form-control` border radius
@@ -209,7 +209,7 @@ $input-border-radius-large:      $border-radius-large;
 $input-border-radius-small:      $border-radius-small;
 
 //** Border color for inputs on focus
-$input-border-focus:             #66afe9;
+$input-border-focus:             $brand-primary;
 
 //** Placeholder text color
 $input-color-placeholder:        #999;
@@ -222,7 +222,7 @@ $input-height-large:             (ceil($font-size-large * $line-height-large) + 
 $input-height-small:             (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2);
 
 //** `.form-group` margin
-$form-group-margin-bottom:       15px;
+$form-group-margin-bottom:       25px;
 
 $legend-color:                   $gray-dark;
 $legend-border-color:            #e5e5e5;
@@ -522,8 +522,8 @@ $state-warning-text:             #8a6d3b;
 $state-warning-bg:               #fcf8e3;
 $state-warning-border:           darken(adjust-hue($state-warning-bg, -10), 5%);
 
-$state-danger-text:              #a94442;
-$state-danger-bg:                #f2dede;
+$state-danger-text:              $white;
+$state-danger-bg:                #D4443F;
 $state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 5%);
 
 
@@ -610,9 +610,9 @@ $modal-title-padding:         30px 30px 0 30px;
 $modal-title-line-height:     $line-height-base;
 
 //** Background color of modal content area
-$modal-content-bg:                             $white;
+$modal-content-bg:                             $content-background;
 //** Modal content border color
-$modal-content-border-color:                   $white;
+$modal-content-border-color:                   $content-background;
 //** Modal content border color **for IE8**
 $modal-content-fallback-border-color:          #999;
 
@@ -716,19 +716,19 @@ $list-group-link-heading-color: #333;
 //
 //##
 
-$panel-bg:                    $white;
-$panel-body-padding:          15px;
-$panel-heading-padding:       10px 15px;
+$panel-bg:                    $gray-lightest;
+$panel-body-padding:          20px 25px 13px;
+$panel-heading-padding:       8px 15px 10px;
 $panel-footer-padding:        $panel-heading-padding;
-$panel-border-radius:         $border-radius-base;
+$panel-border-radius:         $border-radius-small;
 
 //** Border color for elements within panels
 $panel-inner-border:          #ddd;
 $panel-footer-bg:             #f5f5f5;
 
-$panel-default-text:          $gray-dark;
-$panel-default-border:        #ddd;
-$panel-default-heading-bg:    #f5f5f5;
+$panel-default-text:          $text-color;
+$panel-default-border:        #CCCCCC;
+$panel-default-heading-bg:    $gray-lightest;
 
 $panel-primary-text:          $white;
 $panel-primary-border:        $brand-primary;

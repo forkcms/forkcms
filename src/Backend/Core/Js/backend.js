@@ -1457,6 +1457,7 @@ jsBackend.forms =
 
             allTags.initialize();
             $('.js-tags-input').tagsinput({
+                tagClass: 'label label-primary',
                 typeaheadjs: {
                     name: 'Tags',
                     displayKey: 'name',
