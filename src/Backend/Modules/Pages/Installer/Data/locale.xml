@@ -549,7 +549,7 @@
         <translation language="es"><![CDATA[El widget <strong>%1$s</strong> is attached to this section.]]></translation>
         <translation language="el"><![CDATA[Η μικροεφαρμογή <strong>%1$s</strong> είναι συνημμένη σε αυτό το τμήμα.]]></translation>
       </item>
-      <item type="message" name="Addtagshere">
+      <item type="message" name="AddTagsHere">
         <translation language="nl"><![CDATA[Voeg tags toe.]]></translation>
         <translation language="en"><![CDATA[Add tags here.]]></translation>
         <translation language="it"><![CDATA[Spostare pagine su dispositivi touch non è possibile.]]></translation>
