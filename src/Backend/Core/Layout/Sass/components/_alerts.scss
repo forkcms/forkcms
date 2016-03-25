@@ -23,3 +23,17 @@
     transition: top 250ms;
   }
 }
+
+.alert {
+
+  a {
+    color: $white;
+    border-bottom: 1px solid $white;
+
+    &:hover {
+      color: $gray-lighter;
+      border-color: $gray-lighter;
+      text-decoration: none;
+    }
+  }
+}
