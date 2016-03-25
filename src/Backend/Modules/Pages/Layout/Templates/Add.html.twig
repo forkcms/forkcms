@@ -300,7 +300,6 @@
                         <div id="templateList">
                             <div class="row">
                                 {% for template in templates %}
-                                {{ cycle(['', '', '</div><div class="row">'], loop.index0)|raw }}
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <div class="radio">
@@ -316,6 +315,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{ cycle(['', '</div><div class="row">'], loop.index0)|raw }}
                                 {% endfor %}
                             </div>
                         </div>

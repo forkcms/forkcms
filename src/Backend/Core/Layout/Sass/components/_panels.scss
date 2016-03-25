@@ -1,7 +1,3 @@
-.panel-default {
-  border: none;
-}
-
 .panel {
   margin-bottom: 0;
   -webkit-box-shadow: none;
@@ -10,6 +6,15 @@
 
   .panel-body {
     border-spacing: 0;
+  }
+}
+
+.panel-default {
+  margin-bottom: 20px;
+
+  &.panel-pages-block {
+    border: none;
+    margin-bottom: 0;
   }
 }
 

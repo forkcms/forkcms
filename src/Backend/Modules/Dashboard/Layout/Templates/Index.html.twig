@@ -3,82 +3,40 @@
 {% extends '/Layout/Templates/dashboard.html.twig' %}
 
 {% block content %}
-<div id="dashboardWidgets" class="row fork-dashboard">
-  <div class="col-md-12">
-    <div id="editDashboardMessage" class="alert alert-info" role="alert" style="display:none;">
-      {{ 'msg.HelpEditDashboard'|trans }}
-      <a href="#" id="doneEditingDashboard">{{ 'lbl.Done'|trans|capitalize }}</a>
-    </div>
-  </div>
-  <div class="col-md-4 fork-dashboard-column column">
-    {% for left in leftColumn %}
-    <div class="fork-widget sortableWidget{% if left.hidden %} isRemoved{% endif %}" data-module="{{ left.module }}" data-widget="{{ left.widget }}" data-title="{{ left.title }}"{% if left.hidden %} style="display: none;"{% endif %}>
-      <a href="#" class="editDashboardClose close ui-dialog-titlebar-close ui-corner-all" style="display: none;">&times;</a>
-      {% if left.hidden %}
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ left.title }}</h2>
-        </div>
-        <div class="panel-body" style="display: none;">
-          {{ 'msg.WillBeEnabledOnSave'|trans }}
-        </div>
+<div id="dashboardWidgets" class="fork-dashboard">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="editDashboardMessage" class="alert alert-info" role="alert" style="display:none;">
+        {{ 'msg.HelpEditDashboard'|trans }}
+        <a href="#" id="doneEditingDashboard">{{ 'lbl.Done'|trans|capitalize }}</a>
       </div>
-      {% endif %}
-      {% if not left.hidden %}
-      {% include left.template %}
-      {% endif %}
     </div>
-    {% endfor %}
-    &#160;
   </div>
-  <div class="col-md-4 fork-dashboard-column column">
-    {% for middel in middleColumn %}
-    <div class="fork-widget sortableWidget{% if middel.hidden %} isRemoved{% endif %}" data-module="{{ middel.module }}" data-widget="{{ middel.widget }}" data-title="{{ middel.title }}"{% if middel.hidden %} style="display: none;"{% endif %}>
-      <a href="#" class="editDashboardClose close ui-dialog-titlebar-close ui-corner-all" style="display: none;">&times;</a>
-      {% if middel.hidden %}
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ middel.title }}</h2>
+  {% set columns = leftColumn |merge(middleColumn) %}
+  {% set columns = columns |merge(rightColumn) %}
+  <div class="row">
+    {% for column in columns %}
+      <div class="col-sm-12 col-md-4 fork-dashboard-column column">
+        <div class="fork-widget sortableWidget" data-module="{{ column.module }}" data-widget="{{ column.widget }}" data-title="{{ column.title }}"{% if column.hidden %} style="display: none;"{% endif %}>
+          <a href="#" class="editDashboardClose close ui-dialog-titlebar-close ui-corner-all" style="display: none;">&times;</a>
+          {% if column.hidden %}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h2 class="panel-title">{{ column.title }}</h2>
+              </div>
+              <div class="panel-body" style="display: none;">
+                {{ 'msg.WillBeEnabledOnSave'|trans }}
+              </div>
+            </div>
+          {% endif %}
+          {% if not column.hidden %}
+            {% include column.template %}
+          {% endif %}
         </div>
-        <div class="panel-body" style="display: none;">
-          {{ 'msg.WillBeEnabledOnSave'|trans }}
-        </div>
+        &#160;
       </div>
-      {% endif %}
-      {% if not middel.hidden %}
-      {% include middel.template %}
-      {% endif %}
-    </div>
+      {{ cycle(['', '', '</div><div class="row">'], loop.index0)|raw }}
     {% endfor %}
-    &#160;
-  </div>
-  <div class="col-md-4 fork-dashboard-column column">
-    {% for right in rightColumn %}
-    <div class="fork-widget sortableWidget{% if right.hidden %} isRemoved{% endif %}" data-module="{{ right.module }}" data-widget="{{ right.widget }}" data-title="{{ right.title }}"{% if right.hidden %} style="display: none;"{% endif %}>
-      <a href="#" class="editDashboardClose close ui-dialog-titlebar-close ui-corner-all" style="display: none;">&times;</a>
-      {% if right.hidden %}
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ right.title }}</h2>
-        </div>
-        <div class="panel-body" style="display: none;">
-          {{ 'msg.WillBeEnabledOnSave'|trans }}
-        </div>
-      </div>
-      {% endif %}
-      {% if not right.hidden %}
-      {% include right.template %}
-      {% endif %}
-    </div>
-    {% endfor %}
-    &#160;
-  </div>
-</div>
-<div class="row fork-dashboard-actions">
-  <div class="col-md-4 col-md-offset-4 text-center">
-    <a href="#" id="editDashboard">
-      {{ 'msg.EditYourDashboard'|trans }}
-    </a>
   </div>
 </div>
 {% endblock %}

@@ -69,11 +69,19 @@ html {
 
     &.main-wrapper-dashboard {
       padding-left: 50px;
+
+      .sidebar {
+        width: 240px;
+      }
     }
   }
 
   .content-main {
     width: 100%;
+
+    &.content-main-dashboard {
+      margin-top: 20px;
+    }
   }
 }
 

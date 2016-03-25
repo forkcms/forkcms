@@ -7128,9 +7128,13 @@ html {
           width: 240px; }
     .main-wrapper.main-wrapper-dashboard {
       padding-left: 50px; }
+      .main-wrapper.main-wrapper-dashboard .sidebar {
+        width: 240px; }
 
   .content-main {
-    width: 100%; } }
+    width: 100%; }
+    .content-main.content-main-dashboard {
+      margin-top: 20px; } }
 @media screen and (min-width: 992px) {
   .main-wrapper {
     padding-left: 430px; }
@@ -8530,9 +8534,6 @@ h3 + .btn-toolbar {
     -o-transition: top 250ms;
     transition: top 250ms; }
 
-.panel-default {
-  border: none; }
-
 .panel {
   margin-bottom: 0;
   -webkit-box-shadow: none;
@@ -8540,6 +8541,12 @@ h3 + .btn-toolbar {
   box-shadow: none; }
   .panel .panel-body {
     border-spacing: 0; }
+
+.panel-default {
+  margin-bottom: 20px; }
+  .panel-default.panel-pages-block {
+    border: none;
+    margin-bottom: 0; }
 
 .panel-title a {
   border: none;
@@ -9153,9 +9160,6 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
 .fork-module-actions {
   margin-bottom: 40px; }
-
-.fork-tabs .nav-tabs {
-  margin-bottom: 15px; }
 
 .fork-dashboard-column {
   min-height: 200px;

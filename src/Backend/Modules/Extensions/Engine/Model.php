@@ -146,7 +146,7 @@ class Model
                     // large visual?
                     if ($large) {
                         $html .= ' id="templatePosition-' . $value . '" data-position="' . $value . '" class="box templatePosition">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-default panel-pages-block">
                                         <div class="panel-heading">
                                             <div class="heading linkedBlocksTitle"><p>' . $title . '</p></div>
                                         </div>
