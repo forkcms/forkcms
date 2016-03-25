@@ -61,8 +61,14 @@ class Index extends BackendBaseActionIndex
     private function load()
     {
         $this->frm = new BackendForm(null, null, 'post', true, false);
-        $this->frm->addText('backend_email');
-        $this->frm->addPassword('backend_password');
+        $this->frm
+            ->addText('backend_email')
+            ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Email')))
+        ;
+        $this->frm
+            ->addPassword('backend_password')
+            ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Password')))
+        ;
 
         $this->frmForgotPassword = new BackendForm('forgotPassword');
         $this->frmForgotPassword->addText('backend_email_forgot');

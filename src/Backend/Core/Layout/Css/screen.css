@@ -8606,12 +8606,13 @@ h3 + .btn-toolbar {
   padding: 12px 25px 12px 13px;
   position: relative;
   z-index: 2; }
-  .header .site-title {
-    margin: 0;
-    padding: 2px 0 0;
-    font-weight: 600; }
   .header .site-text {
     float: left; }
+
+.site-title {
+  margin: 0;
+  padding: 2px 0 0;
+  font-weight: 600; }
 
 .site-url {
   color: #999999;
@@ -8623,6 +8624,8 @@ h3 + .btn-toolbar {
     text-decoration: none; }
 
 .site-icon {
+  border: 1px solid #E5E5E5;
+  border-radius: 3px;
   float: left;
   margin-right: 10px;
   width: 54px; }
@@ -9185,6 +9188,41 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 .analytics-charts {
   border-top: 1px solid #E5E5E5; }
 
+#login {
+  min-height: 100%; }
+
+.page-header-login {
+  border: none;
+  margin-bottom: 30px; }
+  .page-header-login .site-info {
+    float: none; }
+
+.login-form .form-group {
+  margin-bottom: 10px; }
+.login-form .form-control {
+  height: 46px; }
+.login-form .input-group-addon {
+  background: #fff; }
+  .login-form .input-group-addon .fa {
+    color: #999999; }
+.login-form .forgot-password {
+  color: #999999;
+  font-size: 14px; }
+  .login-form .forgot-password:hover {
+    color: #000;
+    text-decoration: none; }
+  .login-form .forgot-password:active, .login-form .forgot-password:focus {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    outline: none; }
+
+@media screen and (min-width: 768px) {
+  .login-block {
+    position: absolute;
+    margin-top: -270px;
+    top: 50%;
+    width: 100%; } }
 /* General */
 .fork-module-heading {
   background: #fff;
@@ -9253,6 +9291,10 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
   #root-footer {
     height: 80px; }
+
+  .footer-login #footer {
+    padding: 0;
+    margin: 0; }
 
   #footer {
     bottom: 0;

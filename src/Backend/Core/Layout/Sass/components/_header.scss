@@ -5,15 +5,15 @@
   position: relative;
   z-index: 2;
 
-  .site-title {
-    margin: 0;
-    padding: 2px 0 0;
-    font-weight: 600;
-  }
-
   .site-text {
     float: left;
   }
+}
+
+.site-title {
+  margin: 0;
+  padding: 2px 0 0;
+  font-weight: 600;
 }
 
 .site-url {
@@ -29,6 +29,8 @@
 }
 
 .site-icon {
+  border: 1px solid $gray-lighter;
+  border-radius: $border-radius-small;
   float: left;
   margin-right: 10px;
   width: 54px;

@@ -23,6 +23,14 @@
     height: $footer-height;
   }
 
+  .footer-login {
+
+    #footer {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
   #footer {
     bottom: 0;
     clear: both;
