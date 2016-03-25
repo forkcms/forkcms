@@ -8052,7 +8052,8 @@ div.tabs ul li.selected {
 
 .bootstrap-tagsinput {
   display: block;
-  padding: 4px 6px 7px; }
+  padding: 4px 6px 7px;
+  overflow: hidden; }
 
 @media (min-width: 1440px) {
   .container {
