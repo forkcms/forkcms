@@ -8904,7 +8904,7 @@ h3 + .btn-toolbar {
   background: #fff;
   vertical-align: middle; }
   .templateVisual td:empty, .templateVisual td.empty {
-    background: #fff url("/src/Backend/Core/Layout/images/na.png") repeat;
+    background: #fff url("/src/Backend/Core/Layout/images/na.svg") repeat;
     border: 1px solid #CCCCCC; }
 .templateVisual table {
   width: 100%;
@@ -8959,7 +8959,7 @@ h3 + .btn-toolbar {
     vertical-align: top; }
     #templateVisualLarge td.empty,
     #templateVisualFallback td.empty {
-      background: #fff url("/src/Backend/Core/Layout/images/na.png") repeat;
+      background: #fff url("/src/Backend/Core/Layout/images/na.svg") repeat;
       padding: 10px;
       border-radius: 3px;
       border: 1px solid #CCCCCC; }

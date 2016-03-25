@@ -12,7 +12,7 @@
 
     &:empty,
     &.empty {
-      background: $white url('/src/Backend/Core/Layout/images/na.png') repeat;
+      background: $white url('/src/Backend/Core/Layout/images/na.svg') repeat;
       border: 1px solid $panel-default-border;;
     }
   }
@@ -87,7 +87,7 @@
     vertical-align: top;
 
     &.empty {
-      background: $white url('/src/Backend/Core/Layout/images/na.png') repeat;
+      background: $white url('/src/Backend/Core/Layout/images/na.svg') repeat;
       padding: 10px;
       border-radius: 3px;
       border: 1px solid $panel-default-border;
