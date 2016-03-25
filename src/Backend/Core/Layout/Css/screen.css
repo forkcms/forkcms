@@ -7089,6 +7089,9 @@ html {
 .content-wrapper {
   height: 100%; }
 
+.content-main.content-main-dashboard {
+  margin-top: 20px; }
+
 @media screen and (min-width: 768px) {
   .main-wrapper {
     min-height: 100%;
@@ -7132,9 +7135,7 @@ html {
         width: 240px; }
 
   .content-main {
-    width: 100%; }
-    .content-main.content-main-dashboard {
-      margin-top: 20px; } }
+    width: 100%; } }
 @media screen and (min-width: 992px) {
   .main-wrapper {
     padding-left: 430px; }
@@ -9198,7 +9199,6 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
   margin-bottom: 40px; }
 
 .fork-dashboard-column {
-  min-height: 200px;
   line-height: 0; }
 
 .fork-widget {
