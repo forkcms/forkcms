@@ -8905,6 +8905,7 @@ h3 + .btn-toolbar {
   vertical-align: middle; }
   .templateVisual td:empty, .templateVisual td.empty {
     background: #fff url("/src/Backend/Core/Layout/images/na.svg") repeat;
+    background-size: 20px;
     border: 1px solid #CCCCCC; }
 .templateVisual table {
   width: 100%;
@@ -8960,6 +8961,7 @@ h3 + .btn-toolbar {
     #templateVisualLarge td.empty,
     #templateVisualFallback td.empty {
       background: #fff url("/src/Backend/Core/Layout/images/na.svg") repeat;
+      background-size: 20px;
       padding: 10px;
       border-radius: 3px;
       border: 1px solid #CCCCCC; }

@@ -13,6 +13,7 @@
     &:empty,
     &.empty {
       background: $white url('/src/Backend/Core/Layout/images/na.svg') repeat;
+      background-size: 20px;
       border: 1px solid $panel-default-border;;
     }
   }
@@ -88,6 +89,7 @@
 
     &.empty {
       background: $white url('/src/Backend/Core/Layout/images/na.svg') repeat;
+      background-size: 20px;
       padding: 10px;
       border-radius: 3px;
       border: 1px solid $panel-default-border;
