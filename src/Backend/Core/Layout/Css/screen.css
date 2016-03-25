@@ -8083,6 +8083,13 @@ select[size="1"] {
 .form-inline .radio input[type="radio"] {
   position: absolute;
   margin-left: -20px; }
+.form-inline .form-group {
+  margin-bottom: 20px; }
+  .form-inline .form-group .btn {
+    padding: 6px 12px 7px; }
+
+label {
+  font-weight: 600; }
 
 /* Loader */
 @keyframes spin {
@@ -8628,6 +8635,17 @@ h3 + .btn-toolbar {
   padding: 25px 0;
   border-top: 1px solid #E5E5E5;
   background: #FAFAFA; }
+  .content .content-title {
+    font-size: 16px;
+    margin-bottom: 20px; }
+    .content .content-title p {
+      margin: 0; }
+  .content .content-block.content-block-p {
+    padding: 40px 0; }
+  .content .content-block.content-block-pt {
+    padding: 40px 0 0; }
+  .content .content-block.content-block-pb {
+    padding: 0 0 40px; }
 
 .pages-tree {
   padding: 20px 25px; }
@@ -9144,6 +9162,24 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
 .modal-footer {
   padding: 15px 30px 25px; }
+
+/*
+
+    Analytics
+
+    @package      backend
+    @subpackage   analytics
+
+    @author       Yoni De Beule <yoni@netlash.com>
+
+*/
+/* DataGrid holders */
+.box .options .dataGridHolder:last-child, .box .content .dataGridHolder:last-child {
+  margin: 0; }
+
+.analytics-grid,
+.analytics-charts {
+  border-top: 1px solid #E5E5E5; }
 
 /* General */
 .fork-module-heading {

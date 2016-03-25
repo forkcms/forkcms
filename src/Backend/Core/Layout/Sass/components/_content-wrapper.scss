@@ -2,6 +2,30 @@
   padding: 25px 0;
   border-top: 1px solid $gray-lighter;
   background: $body-bg;
+
+  .content-title {
+    font-size: $font-size-btn;
+    margin-bottom: 20px;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .content-block {
+
+    &.content-block-p {
+      padding: 40px 0;
+    }
+
+    &.content-block-pt {
+      padding: 40px 0 0;
+    }
+
+    &.content-block-pb {
+      padding: 0 0 40px;
+    }
+  }
 }
 
 .pages-tree {

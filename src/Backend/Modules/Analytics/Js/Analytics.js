@@ -27,7 +27,6 @@ jsBackend.analytics.charts =
             {
                 colors: ['#2f77d1', '#021b45', '#ED561B', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
                 title: { text: '' },
-                backgroundColor: '#F1F1F1',
                 legend:
                 {
                     layout: 'vertical',
@@ -76,7 +75,7 @@ jsBackend.analytics.chartPieChart =
 
         jsBackend.analytics.chartPieChart.chart = new Highcharts.Chart(
         {
-            chart: { renderTo: 'chartPieChart', height: 200, width: containerWidth, margin: [0, 160, 0, 0], backgroundColor:'#F1F1F1' },
+            chart: { renderTo: 'chartPieChart', height: 200, width: containerWidth, margin: [0, 160, 0, 0], backgroundColor:'transparent' },
             credits: { enabled: false },
             plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
             tooltip:
@@ -168,7 +167,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 
         jsBackend.analytics.chartDoubleMetricPerDay.chart = new Highcharts.Chart(
         {
-            chart: { renderTo: 'chartDoubleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'line', backgroundColor:'#F1F1F1' },
+            chart: { renderTo: 'chartDoubleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'line', backgroundColor:'transparent' },
             xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
             yAxis: { min: 0, max: maxValue, tickInterval: tickInterval, title: { text: '' } },
             credits: { enabled: false },

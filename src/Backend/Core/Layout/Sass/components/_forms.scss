@@ -31,15 +31,30 @@ select[size="1"] {
   font-size: $font-size-small;
 }
 
-.form-inline .radio {
+.form-inline {
 
-  label {
-    padding-left: 20px;
-    padding-right: 8px;
+  .radio {
+
+    label {
+      padding-left: 20px;
+      padding-right: 8px;
+    }
+
+    input[type="radio"] {
+      position: absolute;
+      margin-left: -20px;
+    }
   }
 
-  input[type="radio"] {
-    position: absolute;
-    margin-left: -20px;
+  .form-group {
+    margin-bottom: 20px;
+
+    .btn {
+      padding: 6px 12px 7px;
+    }
   }
+}
+
+label {
+  font-weight: 600;
 }

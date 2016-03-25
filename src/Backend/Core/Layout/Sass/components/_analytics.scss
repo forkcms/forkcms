@@ -1,0 +1,25 @@
+/*
+
+    Analytics
+
+    @package      backend
+    @subpackage   analytics
+
+    @author       Yoni De Beule <yoni@netlash.com>
+
+*/
+
+
+
+
+/* DataGrid holders */
+
+
+.box .options .dataGridHolder:last-child, .box .content .dataGridHolder:last-child {
+  margin: 0;
+}
+
+.analytics-grid,
+.analytics-charts {
+  border-top: 1px solid $gray-lighter;
+}
