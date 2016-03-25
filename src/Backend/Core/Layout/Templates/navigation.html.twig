@@ -3,7 +3,8 @@
         <ul class="nav navbar-nav">
             {% for item in navigation %}
                 <li class="nav-item nav-item-{{ item.label|lower }}{% if item.active %} active{% endif %}">
-                    <a href="/private/{{ LANGUAGE }}/{{ item.url }}">{{ item.label }}</a>
+                    <a href="/private/{{ LANGUAGE }}/{{ item.url }}">
+                        <span class="nav-item-text">{{ item.label }}</span></a>
                 </li>
             {% endfor %}
         </ul>
