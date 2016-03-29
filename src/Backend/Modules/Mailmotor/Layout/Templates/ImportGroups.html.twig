@@ -11,7 +11,7 @@
     <div class="row fork-module-content">
       <div class="col-md-12">
         <div class="form-group">
-          <p>{{ msg.ImportGroups }}:</p>
+          <p>{{ 'msg.ImportGroups'|trans }}:</p>
           <ul>
             {% for group in groups %}
             <li><strong>{{ group.name }}</strong> ({{ group.subscribers_amount }} {{ lbl.EmailAddresses }})</li>
