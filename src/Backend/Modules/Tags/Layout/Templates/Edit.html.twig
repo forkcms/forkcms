@@ -17,9 +17,9 @@
           </label>
           {% form_field_error name %} {% form_field name %}
         </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <label class="panel-title">{{ 'lbl.UsedIn'|trans|capitalize }}</label>
+        <div class="content-block">
+          <div class="content-title">
+            <p>{{ 'lbl.UsedIn'|trans|capitalize }}</p>
           </div>
           {% if usage %}
           {{ usage|raw }}

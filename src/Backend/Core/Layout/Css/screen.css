@@ -9127,6 +9127,13 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 .modal-footer {
   padding: 15px 30px 25px; }
 
+#tagsForm .check {
+  width: 1%; }
+#tagsForm .tag {
+  width: 50%; }
+  #tagsForm .tag .label {
+    margin-left: 10px; }
+
 /*
 
     Analytics
