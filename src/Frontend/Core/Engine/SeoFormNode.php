@@ -159,7 +159,7 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'<div class="form-inline">\';')
-            ->write('echo \'<div class="form-group">\';')
+            ->write('echo \'<div class="form-group last">\';')
             ->write('echo "<p><b>' . $this->lbl('Follow') . '</b></p>";');
 
         $compiler

@@ -26,7 +26,7 @@
           <a class="site-url" href="{{ detailURL }}/{{ item.url }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
           {% endif %}
           {% if not detailURL %}
-          <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
+          <p class="alert alert-warning alert-xs"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
           {% endif %}
         </div>
       </div>
@@ -76,7 +76,7 @@
                     {% form_field_error image %} {% form_field image %}
                   </div>
                   {% endif %}
-                  <div class="form-group">
+                  <div class="form-group last">
                     <label for="introduction" class="control-label">
                       {{ 'lbl.Summary'|trans|capitalize }}
                       <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|capitalize }}"></abbr>
@@ -164,7 +164,7 @@
             <div role="tabpanel" class="tab-pane" id="tabComments">
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group">
+                  <div class="form-group last">
                     <ul class="list-unstyled">
                       <li class="checkbox">
                         <label for="allowComments" class="control-label">{% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|capitalize }}</label>
