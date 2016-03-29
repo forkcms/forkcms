@@ -15,24 +15,24 @@
             <li role="presentation" class="active">
               <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|capitalize }}</a>
             </li>
-            <li role="presentation">
+            <li class="pull-right" role="presentation">
               <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|capitalize }}</a>
             </li>
           </ul>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="tabContent">
-              <div class="form-group">
+              <div class="form-group last">
                 <label for="title" class="control-label">
                   {{ 'lbl.Title'|trans|capitalize }}
                   <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                 </label>
                 {% form_field_error title %} {% form_field title %}
-              </div>
               {% if detailURL %}
                 <a href="{{ detailURL }}"><small>{{ detailURL }}/<span id="generatedUrl"></span></small></a>      {% endif %}
               {% if not detailURL %}
-                <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
+                <p class="alert alert-warning alert-xs"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
               {% endif %}
+              </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="tabSEO">
               {% seo %}

@@ -102,7 +102,7 @@ jsBackend.faq =
 							if(data.code == 200)
 							{
 								// change count in title (if any)
-								$('div#dataGrid-' + fromCategoryId + ' h3').html($('div#dataGrid-' + fromCategoryId + ' h3').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
+								$('div#dataGrid-' + fromCategoryId + ' .content-title p').html($('div#dataGrid-' + fromCategoryId + ' .content-title p').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
 
 								// if there are no records -> show message
 								if($('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length == 1)
@@ -120,7 +120,7 @@ jsBackend.faq =
 								table.find('tr:odd').addClass('odd');
 
 								// change count in title (if any)
-								$('div#dataGrid-' + toCategoryId + ' h3').html($('div#dataGrid-' + toCategoryId + ' h3').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + toCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
+								$('div#dataGrid-' + toCategoryId + ' .content-title p').html($('div#dataGrid-' + toCategoryId + ' .content-title p').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + toCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
 							}
 							else
 							{
