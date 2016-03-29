@@ -22,13 +22,13 @@
         <div class="form-group">
           <label for="title" class="control-label">{{ 'lbl.Title'|trans|capitalize }}</label>
           {% form_field_error title %} {% form_field title %}
+          {% if detailURL %}
+          <a class="site-url" href="{{ detailURL }}/{{ item.url }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
+          {% endif %}
+          {% if not detailURL %}
+          <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
+          {% endif %}
         </div>
-        {% if detailURL %}
-        <a href="{{ detailURL }}/{{ item.url }}"><small>{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></small></a>
-        {% endif %}
-        {% if not detailURL %}
-        <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
-        {% endif %}
       </div>
     </div>
     <div class="row fork-module-content">
@@ -38,14 +38,14 @@
             <li role="presentation" class="active">
               <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|capitalize }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|capitalize }}</a>
+            <li class="pull-right" role="presentation">
+              <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|capitalize }}</a>
             </li>
-            <li role="presentation">
+            <li class="pull-right" role="presentation">
               <a href="#tabComments" aria-controls="comments" role="tab" data-toggle="tab">{{ 'lbl.Comments'|trans|capitalize }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|capitalize }}</a>
+            <li class="pull-right" role="presentation">
+              <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|capitalize }}</a>
             </li>
           </ul>
           <div class="tab-content">
@@ -135,30 +135,27 @@
               <div class="row">
                 <div class="col-md-12">
                   {% if drafts %}
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h3 class="panel-title">
-                        {{ 'lbl.Drafts'|trans|capitalize }}
-                        <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpDrafts'|trans|capitalize }}"></abbr>
-                      </h3>
+                    <div class="content-block">
+                      <div class="content-title">
+                        <p>{{ 'lbl.Drafts'|trans|capitalize }}
+                          <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpDrafts'|trans|capitalize }}"></abbr>
+                        </p>
+                      </div>
+                      {{ drafts|raw }}
                     </div>
-                    {{ drafts|raw }}
-                  </div>
                   {% endif %}
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h3 class="panel-title">
+                  <div class="content-block">
+                    <div class="content-title">
+                      <p>
                         {{ 'lbl.PreviousVersions'|trans|capitalize }}
                         <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans|capitalize }}"></abbr>
-                      </h3>
+                      </p>
                     </div>
                     {% if revisions %}
-                    {{ revisions|raw }}
+                      {{ revisions|raw }}
                     {% endif %}
                     {% if not revisions %}
-                    <div class="panel-body">
                       <p>{{ 'msg.NoRevisions'|trans|capitalize }}</p>
-                    </div>
                     {% endif %}
                   </div>
                 </div>

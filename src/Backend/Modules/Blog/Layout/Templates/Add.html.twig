@@ -14,12 +14,13 @@
         <div class="form-group">
           <label for="title" class="control-label">{{ 'lbl.Title'|trans|capitalize }}</label>
           {% form_field_error title %} {% form_field title %}
+          {% if detailURL %}
+          <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl"></span></a>
+          {% endif %}
+          {% if not detailURL %}
+          <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
+          {% endif %}
         </div>
-        {% if detailURL %}
-        <a href="{{ detailURL }}"><small>{{ detailURL }}/<span id="generatedUrl"></span></small></a>      {% endif %}
-        {% if not detailURL %}
-        <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
-        {% endif %}
       </div>
     </div>
     <div class="row fork-module-content">
@@ -29,11 +30,11 @@
             <li role="presentation" class="active">
               <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|capitalize }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabComments" aria-controls="comments" role="tab" data-toggle="tab">{{ 'lbl.Comments'|trans|capitalize }}</a>
-            </li>
-            <li role="presentation">
+            <li class="pull-right" role="presentation">
               <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|capitalize }}</a>
+            </li>
+            <li class="pull-right" role="presentation">
+              <a href="#tabComments" aria-controls="comments" role="tab" data-toggle="tab">{{ 'lbl.Comments'|trans|capitalize }}</a>
             </li>
           </ul>
           <div class="tab-content">

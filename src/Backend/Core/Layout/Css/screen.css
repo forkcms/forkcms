@@ -8519,11 +8519,26 @@ h3 + .btn-toolbar {
   font-weight: normal; }
 .table tr th + th {
   border-left: 1px solid #e5e5e5; }
+.table .form-group {
+  margin-bottom: 0; }
+
+.alert {
+  border: none;
+  margin: 10px 0 0; }
+  .alert a {
+    color: #fff;
+    border-bottom: 1px solid #fff; }
+    .alert a:hover {
+      color: #E5E5E5;
+      border-color: #E5E5E5;
+      text-decoration: none; }
+  .alert.alert-xs {
+    padding: 7px; }
 
 .alert-main {
   font-size: 16px;
   font-weight: normal;
-  margin-bottom: 0;
+  margin: 0;
   opacity: 0;
   padding: 27px 15px;
   position: fixed;
@@ -8548,14 +8563,6 @@ h3 + .btn-toolbar {
     -ms-transition: opacity 250ms;
     -o-transition: opacity 250ms;
     transition: opacity 250ms; }
-
-.alert a {
-  color: #fff;
-  border-bottom: 1px solid #fff; }
-  .alert a:hover {
-    color: #E5E5E5;
-    border-color: #E5E5E5;
-    text-decoration: none; }
 
 .alert-dismissible .close {
   float: none;
@@ -8670,15 +8677,14 @@ h3 + .btn-toolbar {
     margin-bottom: 20px; }
     .content .content-title p {
       margin: 0; }
+    .content .content-title abbr[title], .content .content-title abbr[data-original-title] {
+      border-bottom: none; }
   .content .content-block.content-block-p {
     padding: 40px 0; }
   .content .content-block.content-block-pt {
     padding: 40px 0 0; }
   .content .content-block.content-block-pb {
     padding: 0 0 40px; }
-
-.pages-tree {
-  padding: 20px 25px; }
 
 .btn {
   border-radius: 3px;
@@ -8705,6 +8711,9 @@ h3 + .btn-toolbar {
     @since        2.0
 
 */
+.pages-tree {
+  padding: 20px 25px; }
+
 #tree h4 {
   font-size: 14px;
   font-weight: 600; }

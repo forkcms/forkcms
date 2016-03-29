@@ -10,6 +10,10 @@
     p {
       margin: 0;
     }
+
+    abbr[title], abbr[data-original-title] {
+      border-bottom: none;
+    }
   }
 
   .content-block {
@@ -26,9 +30,5 @@
       padding: 0 0 40px;
     }
   }
-}
-
-.pages-tree {
-  padding: 20px 25px;
 }
 
