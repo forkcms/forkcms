@@ -15,7 +15,7 @@
             <li role="presentation" class="active">
               <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|capitalize }}</a>
             </li>
-            <li role="presentation">
+            <li class="pull-right" role="presentation">
               <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|capitalize }}</a>
             </li>
           </ul>
@@ -40,7 +40,7 @@
                     {% form_field_error template %} {% form_field template %}
                   </div>
                   {% endif %}
-                  <div class="form-group">
+                  <div class="form-group last">
                     <label for="hidden" class="control-label">{% form_field_error hidden %} {% form_field hidden %} {{ 'lbl.VisibleOnSite'|trans|capitalize }}</label>
                   </div>
                 </div>
