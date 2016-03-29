@@ -1717,6 +1717,7 @@ jsBackend.locale =
  *
  * @author    Tijs Verkoyen <tijs@sumocoders.be>
  * @author    Thomas Deceuninck <thomas@fronto.be>
+ * @author    Katrien Vanhaute <katrien@sumocoders.be>
  */
 jsBackend.messages =
 {
@@ -1738,14 +1739,34 @@ jsBackend.messages =
     },
 
     // add a new message into the que
-    add: function (type, content) {
+    add: function (type, content, optionalClass) {
         var uniqueId = 'e' + new Date().getTime().toString();
-        var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' alert-dismissible formMessage ' + type + 'Message">' +
+
+        // switch icon type
+        var icon;
+        switch (type)
+        {
+            case 'danger':
+                icon = 'times';
+                break;
+            case 'warning':
+                icon = 'exclamation-triangle';
+                break;
+            case 'success':
+                icon = 'check';
+                break;
+            case 'info':
+                icon = 'info';
+                break;
+        }
+
+        var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
             '<div class="container">' +
-               content +
-            '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-            '    <span aria-hidden="true">&times;</span>' +
-            '  </button>'
+                '<i class="fa fa-' + icon + '"></i>' + ' ' +
+                content +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true" class="fa fa-close"></span>' +
+                '</button>' +
             '</div>' +
         '</div>';
 
@@ -1756,8 +1777,10 @@ jsBackend.messages =
         $('#' + uniqueId).addClass('active');
 
         // timeout
-        if (type == 'notice') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
-        if (type == 'success') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
+        if (optionalClass == undefined || optionalClass ==! 'alert-static') {
+            if (type == 'info') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
+            if (type == 'success') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
+        }
     }
 };
 

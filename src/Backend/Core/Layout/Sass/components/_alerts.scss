@@ -1,26 +1,32 @@
 .alert-main {
+  font-size: $font-size-btn;
+  font-weight: normal;
+  margin-bottom: 0;
+  opacity: 0;
+  padding: 27px 15px;
   position: fixed;
-  top: 80px;
+  text-align: center;
+  top: 0;
   left: 0;
   right: 0;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   -o-border-radius: 0;
   border-radius: 0;
-  -webkit-transition: top 250ms;
-  -moz-transition: top 250ms;
-  -ms-transition: top 250ms;
-  -o-transition: top 250ms;
-  transition: top 250ms;
+  -webkit-transition: opacity 250ms;
+  -moz-transition: opacity 250ms;
+  -ms-transition: opacity 250ms;
+  -o-transition: opacity 250ms;
+  transition: opacity 250ms;
   z-index: 5;
 
   &.active {
-    top: 51px;
-    -webkit-transition: top 250ms;
-    -moz-transition: top 250ms;
-    -ms-transition: top 250ms;
-    -o-transition: top 250ms;
-    transition: top 250ms;
+    opacity: 1;
+    -webkit-transition: opacity 250ms;
+    -moz-transition: opacity 250ms;
+    -ms-transition: opacity 250ms;
+    -o-transition: opacity 250ms;
+    transition: opacity 250ms;
   }
 }
 
@@ -35,5 +41,22 @@
       border-color: $gray-lighter;
       text-decoration: none;
     }
+  }
+}
+
+.alert-dismissible {
+
+  .close {
+    float: none;
+    opacity: 1;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-shadow: none;
+  }
+
+  .fa {
+    color: $white;
+    font-size: $font-size-btn;
   }
 }
