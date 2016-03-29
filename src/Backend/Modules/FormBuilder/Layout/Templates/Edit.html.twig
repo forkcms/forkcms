@@ -85,14 +85,16 @@
                     </div>
                     <div id="fieldsHolder" class="panel-body sequenceByDragAndDrop">
                       {% if fields %}
-                      {% for field in fields %}
-                      {{ field.field|raw }}
-                      {% endfor %}
+                        {% for field in fields %}
+                          {{ field.field|raw }}
+                        {% endfor %}
                       {% endif %}
 
                       {# This row always needs to be here. We show/hide it with javascript #}
-                      <div id="noFields" class="alert alert-info"{% if fields %} style="display: none;"{% endif %}>
-                        {{ 'msg.NoFields'|trans }}
+                      <div class="form-group" {% if fields %} style="display: none;"{% endif %}>
+                        <div id="noFields" class="alert alert-info alert-xs">
+                          {{ 'msg.NoFields'|trans }}
+                        </div>
                       </div>
 
                       {# Submit button is always here. Cannot be deleted or moved. #}
@@ -384,7 +386,7 @@
                           <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                         </label>
                         <p id="textareaRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                        {% form_field_error textarea_required_error_message %}
+                        {% form_field textarea_required_error_message %}
                       </div>
                     </div>
                     <div class="jsValidation" style="display: none;">
@@ -440,7 +442,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <span class="modal-title h4">{{ 'lbl.Textarea'|trans|capitalize }}</span>
+            <span class="modal-title h4">{{ 'lbl.TimeAndDate'|trans|capitalize }}</span>
           </div>
           <div class="modal-body">
             <input type="hidden" name="datetime_id" id="datetimeId" value="" />
@@ -493,7 +495,7 @@
                           <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                         </label>
                         <p id="datetimeRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                        {% form_field_error datetime_required_error_message %}
+                        {% form_field datetime_required_error_message %}
                       </div>
                     </div>
                     <div>
@@ -600,7 +602,7 @@
                           <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                         </label>
                         <p id="dropdownRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                        {% form_field_error dropdown_required_error_message %}
+                        {% form_field dropdown_required_error_message %}
                       </div>
                     </div>
                   </div>
@@ -686,7 +688,7 @@
                           <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                         </label>
                         <p id="radiobuttonRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                        {% form_field_error radiobutton_required_error_message %}
+                        {% form_field radiobutton_required_error_message %}
                       </div>
                     </div>
                   </div>
@@ -772,7 +774,7 @@
                           <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
                         </label>
                         <p id="checkboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                        {% form_field_error checkbox_required_error_message %}
+                        {% form_field checkbox_required_error_message %}
                       </div>
                     </div>
                   </div>

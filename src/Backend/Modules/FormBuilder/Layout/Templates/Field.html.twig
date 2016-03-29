@@ -4,7 +4,7 @@
   <div class="row">
     {% if plaintext %}
     <div class="col-md-8">
-      {{ content }}
+      {{ content|raw }}
     </div>
     {% endif %}
     {% if simple %}
@@ -33,7 +33,7 @@
       <ul class="list-unstyled">
         {% for item in items %}
         <li class="checkbox">
-          <label for="{{ item.id }}">{{ item.field }} {{ item.label }}</label>
+          <label for="{{ item.id }}">{{ item.field|raw }} {{ item.label }}</label>
         </li>
         {% endfor %}
       </ul>

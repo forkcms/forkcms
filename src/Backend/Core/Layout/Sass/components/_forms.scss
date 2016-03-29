@@ -25,6 +25,10 @@ select[size="1"] {
     -moz-box-shadow: none;
     box-shadow: none;
   }
+
+  &.error {
+    border-color: $brand-danger;
+  }
 }
 
 .help-block {
@@ -59,6 +63,15 @@ label {
   font-weight: 600;
 }
 
+abbr[title], abbr[data-original-title] {
+  border-bottom: none;
+}
+
 .form-group.last {
   margin-bottom: 0;
+}
+
+.formError,
+.text-danger {
+  color: $brand-danger;
 }

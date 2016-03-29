@@ -46,5 +46,13 @@
          margin-right: 0;
        }
     }
+
+    &.danger {
+
+       a {
+         background: $brand-danger;
+         color: $white;
+       }
+    }
   }
 }

@@ -956,6 +956,13 @@
         <translation language="sv"><![CDATA[%1$s inskick]]></translation>
         <translation language="el"><![CDATA[%1$s υποβολές]]></translation>
       </item>
+      <item type="message" name="TimeAndDate">
+        <translation language="nl"><![CDATA[Tijd en datum]]></translation>
+        <translation language="en"><![CDATA[Time and date]]></translation>
+        <translation language="it"><![CDATA[ora e data]]></translation>
+        <translation language="fr"><![CDATA[heure et date]]></translation>
+        <translation language="de"><![CDATA[Zeit und Datum]]></translation>
+      </item>
       <item type="error" name="ErrorMessageIsRequired">
         <translation language="nl"><![CDATA[Gelieve een foutmelding in te geven.]]></translation>
         <translation language="en"><![CDATA[Please provide an error message.]]></translation>

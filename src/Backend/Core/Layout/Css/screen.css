@@ -8075,6 +8075,8 @@ select[size="1"] {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none; }
+  .form-control.error {
+    border-color: #d0021b; }
 
 .help-block {
   font-size: 12px; }
@@ -8093,8 +8095,16 @@ select[size="1"] {
 label {
   font-weight: 600; }
 
+abbr[title], abbr[data-original-title] {
+  border-bottom: none; }
+
 .form-group.last {
   margin-bottom: 0; }
+
+.formError,
+.text-danger,
+.formError {
+  color: #d0021b; }
 
 /* Loader */
 @keyframes spin {
@@ -8634,6 +8644,9 @@ h3 + .btn-toolbar {
 .nav-tabs li.pull-right a {
   margin-left: 5px;
   margin-right: 0; }
+.nav-tabs li.danger a {
+  background: #d0021b;
+  color: #fff; }
 
 .header {
   background: #fff;
@@ -8680,8 +8693,6 @@ h3 + .btn-toolbar {
     margin-bottom: 20px; }
     .content .content-title p {
       margin: 0; }
-    .content .content-title abbr[title], .content .content-title abbr[data-original-title] {
-      border-bottom: none; }
   .content .content-block.content-block-p {
     padding: 40px 0; }
   .content .content-block.content-block-pt {
@@ -9260,6 +9271,11 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
     margin-top: -270px;
     top: 50%;
     width: 100%; } }
+#fieldsHolder .btn-toolbar .btn {
+  padding: 6px 7px 7px; }
+#fieldsHolder .btn-toolbar .fa {
+  padding: 0 4px; }
+
 /* General */
 .fork-module-heading {
   background: #fff;
