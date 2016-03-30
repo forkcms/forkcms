@@ -127,6 +127,10 @@ class Index extends BackendBaseActionIndex
                     $templating = $this->get('template');
                     $content = trim($templating->getContent($templatePath));
 
+                    if (empty($content)) {
+                        continue;
+                    }
+
                     // build item
                     $item = array(
                         'content' => $content,
