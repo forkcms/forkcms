@@ -8260,21 +8260,6 @@ textarea {
     color: #000; }
     .navbar-nav .dropdown .dropdown-toggle:hover, .navbar-nav .dropdown .dropdown-toggle:focus {
       background: transparent; }
-  .navbar-nav .dropdown .fa-angle-right {
-    background: #2f77d1;
-    border-radius: 100%;
-    height: 15px;
-    margin: -3px 0;
-    position: relative;
-    transform: rotate(0deg);
-    transition: all 250ms;
-    width: 15px; }
-    .navbar-nav .dropdown .fa-angle-right:before {
-      color: #fff;
-      font-size: 12px;
-      position: absolute;
-      top: 1px;
-      left: 6px; }
   .navbar-nav .dropdown .dropdown-menu {
     background: #fff;
     float: right;
@@ -8286,9 +8271,6 @@ textarea {
     .navbar-nav .dropdown .dropdown-menu a:hover {
       background: #2f77d1;
       color: #fff; }
-  .navbar-nav .dropdown.open .fa-angle-right {
-    transform: rotate(90deg);
-    transition: all 250ms; }
   .navbar-nav .dropdown.open .dropdown-toggle {
     color: #000; }
     .navbar-nav .dropdown.open .dropdown-toggle:hover, .navbar-nav .dropdown.open .dropdown-toggle:focus {
@@ -8362,29 +8344,71 @@ textarea {
   width: auto; }
   .navbar-user li {
     float: left; }
-    .navbar-user li .dropdown-toggle img {
-      height: 23px;
-      width: 23px; }
+    .navbar-user li .dropdown-toggle {
+      padding: 3px 13px; }
+      .navbar-user li .dropdown-toggle img {
+        height: 45px;
+        width: 45px; }
   .navbar-user .user-name {
     margin: 0 5px; }
   .navbar-user .dropdown .fa-angle-right {
+    background: #2f77d1;
+    border-radius: 100%;
+    height: 20px;
+    margin: -3px 0;
     position: absolute;
-    top: 13px;
-    right: 6px; }
+    transform: rotate(0deg);
+    transition: all 250ms;
+    top: 17px;
+    right: 5px;
+    width: 20px; }
+    .navbar-user .dropdown .fa-angle-right:before {
+      color: #fff;
+      font-size: 16px;
+      position: absolute;
+      top: 2px;
+      left: 8px; }
+  .navbar-user .dropdown.open .fa-angle-right {
+    transform: rotate(90deg);
+    transition: all 250ms; }
 
 .navbar-languages {
+  float: none;
   margin-left: 0;
   margin-right: 0;
-  float: right;
   width: auto; }
   .navbar-languages .dropdown {
     display: inline-block;
     float: none; }
+    .navbar-languages .dropdown .dropdown-toggle {
+      border: 1px solid #E5E5E5;
+      border-radius: 3px;
+      color: #4a4a4a;
+      font-size: 12px;
+      padding: 0; }
+      .navbar-languages .dropdown .dropdown-toggle .dropdown-text {
+        border-right: 1px solid #E5E5E5;
+        padding: 2px 6px; }
+      .navbar-languages .dropdown .dropdown-toggle:focus, .navbar-languages .dropdown .dropdown-toggle:hover, .navbar-languages .dropdown .dropdown-toggle:active {
+        background: #fff;
+        border-color: #2f77d1; }
+        .navbar-languages .dropdown .dropdown-toggle:focus .dropdown-text, .navbar-languages .dropdown .dropdown-toggle:hover .dropdown-text, .navbar-languages .dropdown .dropdown-toggle:active .dropdown-text {
+          border-color: #2f77d1; }
+    .navbar-languages .dropdown .dropdown-angle {
+      padding: 0 5px 0 2px; }
+    .navbar-languages .dropdown .fa-angle-right {
+      transform: rotate(0deg);
+      transition: all 250ms; }
+    .navbar-languages .dropdown.open .fa-angle-right {
+      transform: rotate(90deg);
+      transition: all 250ms; }
+    .navbar-languages .dropdown.open .dropdown-toggle {
+      background: #fff;
+      border-color: #2f77d1; }
+      .navbar-languages .dropdown.open .dropdown-toggle .dropdown-text {
+        border-color: #2f77d1; }
 
 @media screen and (min-width: 768px) {
-  .navbar-languages {
-    margin-left: 50px; }
-
   .navbar-nav .nav-item {
     float: none;
     width: auto; }
@@ -8414,10 +8438,7 @@ textarea {
 
   .main-navigation .js-nav-prev,
   .main-navigation .js-nav-next {
-    display: none !important; }
-
-  .navbar-user .dropdown .fa-angle-right {
-    position: static; } }
+    display: none !important; } }
 @media screen and (min-width: 992px) {
   .navbar-nav .nav-item a:before {
     left: 20px; }
@@ -8589,13 +8610,23 @@ textarea {
   border-bottom: 3px solid #E5E5E5;
   padding: 12px 25px 12px 13px;
   position: relative;
-  z-index: 2; }
+  z-index: 3; }
   .header .site-text {
     float: left; }
+  .header .site-title {
+    margin-bottom: 10px; }
+  .header .working-language {
+    color: #999999;
+    font-size: 12px;
+    font-weight: normal; }
+  .header .site-url {
+    color: #2f77d1;
+    border-color: #2f77d1;
+    margin-left: 5px; }
 
 .site-title {
   margin: 0;
-  padding: 2px 0 0;
+  padding: 0;
   font-weight: 600; }
 
 .site-url {
@@ -8616,6 +8647,25 @@ textarea {
 
 .site-info {
   float: left; }
+
+.site-icon-block {
+  float: left;
+  height: 53px;
+  margin-right: 10px;
+  position: relative;
+  width: 53px; }
+  .site-icon-block .debug-mode {
+    background: #d0021b;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    bottom: 0;
+    color: #fff;
+    font-size: 10px;
+    left: 1px;
+    padding: 1px 0;
+    position: absolute;
+    right: 0;
+    text-align: center; }
 
 @media screen and (min-width: 768px) {
   .site-info {

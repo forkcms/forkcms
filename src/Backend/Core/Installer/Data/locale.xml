@@ -5054,18 +5054,18 @@
         <translation language="tr"><![CDATA[Sevgili]]></translation>
       </item>
       <item type="label" name="DebugMode">
-        <translation language="nl"><![CDATA[debug mode]]></translation>
-        <translation language="en"><![CDATA[debug mode]]></translation>
-        <translation language="hu"><![CDATA[fejlesztői mód]]></translation>
-        <translation language="it"><![CDATA[modalità debug]]></translation>
+        <translation language="nl"><![CDATA[debug]]></translation>
+        <translation language="en"><![CDATA[debug]]></translation>
+        <translation language="hu"><![CDATA[fejlesztői]]></translation>
+        <translation language="it"><![CDATA[debug]]></translation>
         <translation language="ru"><![CDATA[Режим Отладки]]></translation>
         <translation language="zh"><![CDATA[调试模式]]></translation>
-        <translation language="de"><![CDATA[Debug-Modus]]></translation>
-        <translation language="fr"><![CDATA[mode debug]]></translation>
-        <translation language="es"><![CDATA[modo debug]]></translation>
+        <translation language="de"><![CDATA[Debug]]></translation>
+        <translation language="fr"><![CDATA[Debug]]></translation>
+        <translation language="es"><![CDATA[Debug]]></translation>
         <translation language="lt"><![CDATA[testavimo aplinka]]></translation>
         <translation language="uk"><![CDATA[Режім відладки]]></translation>
-        <translation language="sv"><![CDATA[debug-läge]]></translation>
+        <translation language="sv"><![CDATA[debug]]></translation>
         <translation language="el"><![CDATA[κατάσταση λειτουργίας debug]]></translation>
         <translation language="tr"><![CDATA[Hata ayıklama modu]]></translation>
       </item>

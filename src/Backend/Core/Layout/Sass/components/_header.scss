@@ -3,16 +3,32 @@
   border-bottom: 3px solid $gray-lighter;
   padding: 12px 25px 12px 13px;
   position: relative;
-  z-index: 2;
+  z-index: 3;
 
   .site-text {
     float: left;
+  }
+
+  .site-title {
+    margin-bottom: 10px;
+  }
+
+  .working-language {
+    color: $gray-light;
+    font-size: $font-size-small;
+    font-weight: normal;
+  }
+
+  .site-url {
+    color: $brand-primary;
+    border-color: $brand-primary;
+    margin-left: 5px;
   }
 }
 
 .site-title {
   margin: 0;
-  padding: 2px 0 0;
+  padding: 0;
   font-weight: 600;
 }
 
@@ -38,6 +54,28 @@
 
 .site-info {
   float: left;
+}
+
+.site-icon-block {
+  float: left;
+  height: 53px;
+  margin-right: 10px;
+  position: relative;
+  width: 53px;
+
+  .debug-mode {
+    background: $brand-danger;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    bottom: 0;
+    color: $white;
+    font-size: $font-size-extra-small;
+    left: 1px;
+    padding: 1px 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+  }
 }
 
 @media screen and (min-width: $screen-sm){
