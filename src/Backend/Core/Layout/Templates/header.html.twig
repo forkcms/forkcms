@@ -3,8 +3,8 @@
         <img class="site-icon" src="/apple-touch-icon.png" alt="apple touch icon">
         <div class="site-text">
             <p class="site-title">{{ SITE_TITLE }}</p>
-            <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" href="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}">
-                {{ SITE_URL }}{{ prefixURL }}/<span id="generatedUrl">{{ item.url }}</span>
+            <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}" href="{{ SITE_URL }}{{ prefixURL }}">
+                {{ SITE_URL }}{{ prefixURL }}
             </a>
         </div>
     </div>
