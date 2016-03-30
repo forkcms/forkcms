@@ -8078,6 +8078,9 @@ select[size="1"] {
   .form-control.error {
     border-color: #d0021b; }
 
+.control-label {
+  font-size: 14px; }
+
 .help-block {
   font-size: 12px; }
 

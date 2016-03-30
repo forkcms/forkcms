@@ -31,6 +31,10 @@ select[size="1"] {
   }
 }
 
+.control-label {
+  font-size: $font-size-base;
+}
+
 .help-block {
   font-size: $font-size-small;
 }
