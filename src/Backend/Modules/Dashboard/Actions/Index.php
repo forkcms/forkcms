@@ -124,9 +124,12 @@ class Index extends BackendBaseActionIndex
                         $templatePath = '/' . $module . '/Layout/Widgets/' . $widgetName . '.html.twig';
                     }
 
+                    $templating = $this->get('template');
+                    $content = trim($templating->getContent($templatePath));
+
                     // build item
                     $item = array(
-                        'template' => $templatePath,
+                        'content' => $content,
                         'module' => $module,
                         'widget' => $widgetName,
                         'title' => $title,
