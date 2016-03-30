@@ -114,7 +114,6 @@ class Index extends BackendBaseActionIndex
                     }
 
                     // user sequence provided?
-                    $column = (isset($userSequence[$module][$widgetName]['column'])) ? $userSequence[$module][$widgetName]['column'] : $instance->getColumn();
                     $position = (isset($userSequence[$module][$widgetName]['position'])) ? $userSequence[$module][$widgetName]['position'] : $instance->getPosition();
                     $title = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($module))) . ': ' . BL::lbl(\SpoonFilter::toCamelCase($widgetName));
                     $templatePath = $instance->getTemplatePath();
@@ -127,6 +126,10 @@ class Index extends BackendBaseActionIndex
                     $templating = $this->get('template');
                     $content = trim($templating->getContent($templatePath));
 
+                    if (empty($content)) {
+                        continue;
+                    }
+
                     // build item
                     $item = array(
                         'content' => $content,
@@ -137,19 +140,14 @@ class Index extends BackendBaseActionIndex
                     );
 
                     // add on new position if no position is set or if the position is already used
-                    if ($position === null || isset($this->widgets[$column][$position])) {
-                        $this->widgets[$column][] = $item;
+                    if ($position === null || isset($this->widgets[$position])) {
+                        $this->widgets[] = $item;
                     } else {
                         // add on requested position
-                        $this->widgets[$column][$position] = $item;
+                        $this->widgets[$position] = $item;
                     }
                 }
             }
-        }
-
-        // sort the widgets
-        foreach ($this->widgets as &$column) {
-            ksort($column);
         }
     }
 
@@ -167,8 +165,6 @@ class Index extends BackendBaseActionIndex
         }
 
         // assign
-        $this->tpl->assign('leftColumn', $this->widgets['left']);
-        $this->tpl->assign('middleColumn', $this->widgets['middle']);
-        $this->tpl->assign('rightColumn', $this->widgets['right']);
+        $this->tpl->assign('widgets', $this->widgets);
     }
 }
