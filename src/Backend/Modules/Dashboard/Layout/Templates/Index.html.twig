@@ -13,23 +13,23 @@
     </div>
   </div>
   <div class="row">
-    {% for column in widgets %}
-      {% if column.content is not empty %}
+    {% for widget in widgets %}
+      {% if widget.content is not empty %}
         <div class="col-sm-12 col-md-4 fork-dashboard-column column">
-          <div class="fork-widget sortableWidget" data-module="{{ column.module }}" data-widget="{{ column.widget }}" data-title="{{ column.title }}"{% if column.hidden %} style="display: none;"{% endif %}>
+          <div class="fork-widget sortableWidget" data-module="{{ widget.module }}" data-widget="{{ widget.widget }}" data-title="{{ widget.title }}"{% if widget.hidden %} style="display: none;"{% endif %}>
             <a href="#" class="editDashboardClose close ui-dialog-titlebar-close ui-corner-all" style="display: none;">&times;</a>
-            {% if column.hidden %}
+            {% if widget.hidden %}
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h2 class="panel-title">{{ column.title }}</h2>
+                  <h2 class="panel-title">{{ widget.title }}</h2>
                 </div>
                 <div class="panel-body" style="display: none;">
                   {{ 'msg.WillBeEnabledOnSave'|trans }}
                 </div>
               </div>
             {% endif %}
-            {% if not column.hidden %}
-              {{ column.content|raw }}
+            {% if not widget.hidden %}
+              {{ widget.content|raw }}
             {% endif %}
           </div>
           &#160;
