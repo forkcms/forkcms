@@ -9361,10 +9361,18 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
     height: 80px;
     margin-left: -240px;
     padding-left: 240px;
-    width: 100%; } }
+    width: 100%; }
+
+  .footer-pages #footer {
+    margin-left: -290px;
+    padding-left: 290px; } }
 @media screen and (min-width: 992px) {
   #footer {
     margin-left: -430px;
-    padding-left: 430px; } }
+    padding-left: 430px; }
+
+  .footer-pages #footer {
+    margin-left: -480px;
+    padding-left: 480px; } }
 
 /*# sourceMappingURL=screen.css.map */

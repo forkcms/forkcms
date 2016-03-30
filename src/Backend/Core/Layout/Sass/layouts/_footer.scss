@@ -40,6 +40,14 @@
     padding-left: 240px;
     width: 100%;
   }
+
+  .footer-pages {
+
+    #footer {
+      margin-left: -290px;
+      padding-left: 290px;
+    }
+  }
 }
 
 @media screen and (min-width: $screen-md) {
@@ -47,5 +55,13 @@
   #footer {
     margin-left: -430px;
     padding-left: 430px;
+  }
+
+  .footer-pages {
+
+    #footer {
+      margin-left: -480px;
+      padding-left: 480px;
+    }
   }
 }
