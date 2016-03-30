@@ -8170,6 +8170,9 @@ abbr[title], abbr[data-original-title] {
   transform: rotate(-135deg);
   background: #bbb; }
 
+#ajaxSpinner {
+  z-index: 5; }
+
 .main-navigation .js-nav-prev,
 .main-navigation .js-nav-next {
   -webkit-box-shadow: -3px 0 4px 0 rgba(0, 0, 0, 0.3);
