@@ -2,7 +2,9 @@
     <div class="site-info">
         <div class="site-icon-block">
             <img class="site-icon" src="/apple-touch-icon.png" alt="apple touch icon">
-            <div class="debug-mode">{{ 'lbl.DebugMode'|trans|uppercase }}</div>
+            {% if debug %}
+                <div class="debug-mode">{{ 'lbl.DebugMode'|trans|uppercase }}</div>
+            {% endif %}
         </div>
         <div class="site-text">
             <p class="site-title">{{ SITE_TITLE }} <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}" href="{{ SITE_URL }}{{ prefixURL }}">{{ 'lbl.VisitWebsite'|trans|capitalize }}</a></p>
