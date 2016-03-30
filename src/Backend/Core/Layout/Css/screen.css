@@ -8113,6 +8113,9 @@ abbr[title], abbr[data-original-title] {
 .input-group .input-group-addon {
   padding: 8px 12px 9px; }
 
+textarea {
+  max-width: 100%; }
+
 /* Loader */
 @keyframes spin {
   to {
@@ -8545,6 +8548,9 @@ abbr[title], abbr[data-original-title] {
     .panel-group .panel-heading a:hover .panel-title, .panel-group .panel-heading a:focus .panel-title {
       color: #000; }
 
+.panel-select {
+  cursor: pointer; }
+
 .nav.nav-tabs-xs > li > a {
   padding: 3px 5px; }
 
@@ -8623,6 +8629,9 @@ abbr[title], abbr[data-original-title] {
     margin-bottom: 20px; }
     .content .content-title p {
       margin: 0; }
+    .content .content-title select {
+      display: inline-block;
+      width: auto; }
   .content .content-block.content-block-p {
     padding: 40px 0; }
   .content .content-block.content-block-pt {
@@ -8635,6 +8644,9 @@ abbr[title], abbr[data-original-title] {
   padding: 9px 12px 10px; }
   .btn .fa {
     padding-right: 4px; }
+
+.btn-icon-only .fa {
+  padding-right: 0; }
 
 .btn-group .btn + .btn {
   margin-left: 6px; }
@@ -9215,6 +9227,9 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
 #locale .translationValue {
   word-break: break-all; }
+
+.position .btn-icon-only {
+  padding: 5px 10px 6px; }
 
 /* General */
 .fork-module-heading {

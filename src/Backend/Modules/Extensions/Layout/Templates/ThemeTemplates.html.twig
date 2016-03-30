@@ -7,7 +7,6 @@
       {% if showExtensionsAddThemeTemplate %}
         <div class="btn-toolbar pull-right">
           <div class="btn-group" role="group">
-            <h2 class="form-inline">{{ 'lbl.Templates'|trans|capitalize }} {{ lbl.For }} {% form_field theme %}</h2>
             {% if selectedTheme %}
               {% set url =  '&theme=' ~ selectedTheme %}
             {% endif %}
@@ -25,6 +24,11 @@
   {% form themes %}
   <div class="row fork-module-content">
     <div class="col-md-12">
+      <div class="content-block">
+        <div class="content-title">
+          <p>{{ 'lbl.Templates'|trans|capitalize }} {{ 'lbl.For'|trans }} {% form_field theme %}</p>
+        </div>
+      </div>
       {% if dataGrid %}
       {{ dataGrid|raw }}
       {% endif %}

@@ -175,7 +175,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $position = array();
         $position['i'] = 0;
         $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'form-control positionName', 'form-control danger positionName');
-        $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'positionBlock', 'positionBlockError');
+        $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'form-control positionBlock', 'form-control positionBlockError');
         $positions[] = $position;
 
         // content has been submitted: re-create submitted content rather than the db-fetched content
@@ -242,7 +242,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
             if (isset($this->extras[$name])) {
                 foreach ($this->extras[$name] as $y => $extra) {
-                    $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . $y, $defaultExtras, $extra, false, 'positionBlock', 'positionBlockError');
+                    $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . $y, $defaultExtras, $extra, false, 'form-control positionBlock', 'form-control positionBlockError');
                 }
             }
 

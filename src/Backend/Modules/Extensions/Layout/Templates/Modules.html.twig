@@ -17,17 +17,17 @@
   {% if warnings %}
   <div class="row fork-module-messages">
     <div class="col-md-12">
-      <div class="panel panel-warning">
-        <div class="panel-heading">
-          <span class="panel-title">{{ 'msg.ModulesWarnings'|trans|capitalize }}</span>
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          <p>{{ 'msg.ModulesWarnings'|trans|capitalize }}</p>
         </div>
         <div class="panel-body">
           <ul>
             <li>
-              <strong>{{ warnings.module }}</strong>
+              <strong>{{ warnings.module|raw }}</strong>
               <ul>
                 {% for warning in warnings.warnings %}
-                  <li>- {{ warning.message }}</li>
+                  <li>- {{ warning.message|raw }}</li>
                 {% endfor %}
               </ul>
             </li>
@@ -39,17 +39,15 @@
   {% endif %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.InstalledModules'|trans|capitalize }}</h3>
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          <p>{{ 'lbl.InstalledModules'|trans|capitalize }}</p>
         </div>
         {% if dataGridInstalledModules %}
         {{ dataGridInstalledModules|raw }}
         {% endif %}
         {% if not dataGridInstalledModules %}
-        <div class="panel-body">
-          <p>{{ 'msg.NoModulesInstalled'|trans|capitalize }}</p>
-        </div>
+        <p>{{ 'msg.NoModulesInstalled'|trans|capitalize }}</p>
         {% endif %}
       </div>
     </div>
@@ -57,9 +55,9 @@
   {% if dataGridInstallableModules %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.InstallableModules'|trans|capitalize }}</h3>
+      <div class="content-block">
+        <div class="content-title">
+          <p>{{ 'lbl.InstallableModules'|trans|capitalize }}</p>
         </div>
         {{ dataGridInstallableModules|raw }}
       </div>

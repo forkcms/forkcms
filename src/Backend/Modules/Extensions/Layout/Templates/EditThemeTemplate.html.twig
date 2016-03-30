@@ -31,15 +31,15 @@
           </div>
           <div id="positions" class="panel-body">
             {% for position in positions %}
-            <div class="form-group jsPosition"{% if not position.i %} style="display: none"{% endif %}>
+            <div class="form-group position jsPosition"{% if not position.i %} style="display: none"{% endif %}>
               <div class="row">
                 {# Title & button to delete this position #}
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="position{{ position.i }}">
                       <span>{{ 'lbl.Position'|trans|capitalize }}</span>
-                      <a href="#" class="btn text-danger jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|capitalize }}">
-                        <span class="fa fa-trash-o"></span>&nbsp;
+                      <a href="#" class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|capitalize }}">
+                        <span class="fa fa-trash-o"></span>
                       </a>
                     </label>
                   </div>
@@ -56,15 +56,15 @@
                 {% if position.blocks %}
                 {% for block in position.blocks %}
                 <div class="col-md-10 col-md-offset-2 jsBlock">
-                  <div class="form-inline form-group">
-                    <div class="form-group">
-                      {{ block.ddmType }}
-                      {{ block.ddmTypeError }}
+                  <div class="form-group">
+                    <div class="form-inline">
+                      {{ block.formElements.ddmType.parse()|raw }}
+                      {{ block.formElements.ddmTypeError }}
+                      {# Button to remove block from this position #}
+                      <a href="#" class="btn btn-danger btn-icon-only jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|capitalize }}">
+                        <span class="fa fa-trash-o"></span>
+                      </a>
                     </div>
-                    {# Button to remove block from this position #}
-                    <a href="#" class="btn text-danger jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|capitalize }}">
-                      <span class="fa fa-trash-o"></span>&nbsp;
-                    </a>
                   </div>
                 </div>
                 {% endfor %}
@@ -116,8 +116,8 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div>
-                  {{ 'msg.HelpPositionsLayout'|trans }}
+                <div class="help-block">
+                  {{ 'msg.HelpPositionsLayoutText'|trans|raw }}
                 </div>
               </div>
             </div>
