@@ -8430,22 +8430,24 @@ abbr[title], abbr[data-original-title] {
 .table > thead > tr > th {
   border-width: 1px; }
 
-.table .btn {
-  padding: 2px 8px; }
-.table tr td {
-  font-size: 12px; }
-  .table tr td.title a {
-    font-weight: 600; }
-  .table tr td a:hover {
-    text-decoration: none; }
-.table tr th {
-  color: #4a4a4a;
-  font-size: 12px;
-  font-weight: normal; }
-.table tr th + th {
-  border-left: 1px solid #e5e5e5; }
-.table .form-group {
+.table {
   margin-bottom: 0; }
+  .table .btn {
+    padding: 2px 8px; }
+  .table tr td {
+    font-size: 12px; }
+    .table tr td.title a {
+      font-weight: 600; }
+    .table tr td a:hover {
+      text-decoration: none; }
+  .table tr th {
+    color: #4a4a4a;
+    font-size: 12px;
+    font-weight: normal; }
+  .table tr th + th {
+    border-left: 1px solid #e5e5e5; }
+  .table .form-group {
+    margin-bottom: 0; }
 
 .alert {
   border: none;
@@ -9194,6 +9196,9 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
   padding: 6px 7px 7px; }
 #fieldsHolder .btn-toolbar .fa {
   padding: 0 4px; }
+
+#locale .translationValue {
+  word-break: break-all; }
 
 /* General */
 .fork-module-heading {

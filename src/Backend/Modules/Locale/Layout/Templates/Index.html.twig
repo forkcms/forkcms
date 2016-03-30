@@ -25,7 +25,7 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-3 col-lg-4">
                 <div class="form-group">
                   <label for="application" class="control-label">{{ 'lbl.Application'|trans|capitalize }}</label>
                   {% form_field_error application %} {% form_field application %}
@@ -35,7 +35,7 @@
                   {% form_field_error module %} {% form_field module %}
                 </div>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-3 col-lg-2">
                 <div class="form-group">
                   <label>{{ 'lbl.Types'|trans|capitalize }}</label>
                   {% if type %}
@@ -49,7 +49,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-3 col-lg-2">
                 <div class="form-group">
                   <label>{{ 'lbl.Languages'|trans|capitalize }}</label>
                   {% if language %}
@@ -63,7 +63,7 @@
                   {% endif %}
                 </div>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-3 col-lg-4">
                 <div class="form-group">
                   <label for="name" class="control-label">
                     {{ 'lbl.ReferenceCode'|trans|capitalize }}&nbsp;
@@ -98,11 +98,11 @@
   {% if dgLabels %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          <p>
             {{ 'lbl.Labels'|trans|capitalize }}
-          </h3>
+          </p>
         </div>
         {{ dgLabels | raw}}
       </div>
@@ -112,11 +112,9 @@
   {% if dgMessages %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            {{ 'lbl.Messages'|trans|capitalize }}
-          </h3>
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          {{ 'lbl.Messages'|trans|capitalize }}
         </div>
         {{ dgMessages | raw}}
       </div>
@@ -126,11 +124,11 @@
   {% if dgErrors %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          <p>
             {{ 'lbl.errors'|trans|capitalize }}
-          </h3>
+          </p>
         </div>
         {{ dgErrors | raw }}
       </div>
@@ -140,12 +138,12 @@
   {% if dgActions %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          <p>
             {{ 'lbl.actions'|trans|capitalize }}&nbsp;
             <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpActionValue'|trans }}"></abbr>
-          </h3>
+          </p>
         </div>
         {{ dgActions | raw }}
       </div>

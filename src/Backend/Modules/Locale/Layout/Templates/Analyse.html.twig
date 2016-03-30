@@ -15,22 +15,28 @@
 {% block content %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      {% if dgFrontend %}
-      <h4>{{ 'lbl.Frontend'|trans|capitalize }}</h4>
-      {{ dgFrontend|raw }}
-      {% endif %}
-      {% if not dgFrontend %}
-      <h4>{{ 'lbl.Frontend'|trans|capitalize }}</h4>
-      <p>{{ 'msg.NoItemsAnalyse'|trans|capitalize }}</p>
-      {% endif %}
-      {% if dgBackend %}
-      <h4>{{ 'lbl.Backend'|trans|capitalize }}</h4>
-      {{ dgBackend|raw }}
-      {% endif %}
-      {% if not dgBackend %}
-      <h4>{{ 'lbl.Backend'|trans|capitalize }}</h4>
-      <p>{{ 'msg.NoItemsAnalyse'|trans|capitalize }}</p>
-      {% endif %}
+        <div class="content-block content-block-pb">
+          <div class="content-title">
+            <p>{{ 'lbl.Frontend'|trans|capitalize }}</p>
+          </div>
+          {% if dgFrontend %}
+            {{ dgFrontend|raw }}
+          {% endif %}
+          {% if not dgFrontend %}
+            <p>{{ 'msg.NoItemsAnalyse'|trans|capitalize }}</p>
+          {% endif %}
+        </div>
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          <p>{{ 'lbl.Backend'|trans|capitalize }}</p>
+        </div>
+        {% if dgBackend %}
+          {{ dgBackend|raw }}
+        {% endif %}
+        {% if not dgBackend %}
+          <p>{{ 'msg.NoItemsAnalyse'|trans|capitalize }}</p>
+        {% endif %}
+      </div>
     </div>
   </div>
 {% endblock %}
