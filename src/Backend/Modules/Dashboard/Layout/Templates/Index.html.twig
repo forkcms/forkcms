@@ -12,10 +12,8 @@
       </div>
     </div>
   </div>
-  {% set columns = leftColumn |merge(middleColumn) %}
-  {% set columns = columns |merge(rightColumn) %}
   <div class="row">
-    {% for column in columns %}
+    {% for column in widgets %}
       {% if column.content is not empty %}
         <div class="col-sm-12 col-md-4 fork-dashboard-column column">
           <div class="fork-widget sortableWidget" data-module="{{ column.module }}" data-widget="{{ column.widget }}" data-title="{{ column.title }}"{% if column.hidden %} style="display: none;"{% endif %}>
