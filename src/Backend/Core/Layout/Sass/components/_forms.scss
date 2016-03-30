@@ -33,6 +33,7 @@ select[size="1"] {
 
 .control-label {
   font-size: $font-size-base;
+  font-weight: normal;
 }
 
 .help-block {
@@ -78,4 +79,12 @@ abbr[title], abbr[data-original-title] {
 .formError,
 .text-danger {
   color: $brand-danger;
+}
+
+.input-group {
+
+  .input-group-addon {
+    padding: 8px 12px 9px;
+
+  }
 }

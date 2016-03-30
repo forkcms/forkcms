@@ -8079,7 +8079,8 @@ select[size="1"] {
     border-color: #d0021b; }
 
 .control-label {
-  font-size: 14px; }
+  font-size: 14px;
+  font-weight: normal; }
 
 .help-block {
   font-size: 12px; }
@@ -8108,6 +8109,9 @@ abbr[title], abbr[data-original-title] {
 .text-danger,
 .formError {
   color: #d0021b; }
+
+.input-group .input-group-addon {
+  padding: 8px 12px 9px; }
 
 /* Loader */
 @keyframes spin {
@@ -8603,7 +8607,7 @@ abbr[title], abbr[data-original-title] {
   border-top: 1px solid #E5E5E5;
   background: #FAFAFA; }
   .content .content-title {
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 20px; }
     .content .content-title p {
       margin: 0; }
