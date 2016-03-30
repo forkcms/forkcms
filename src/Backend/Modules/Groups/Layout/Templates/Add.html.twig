@@ -26,7 +26,7 @@
             <div role="tabpanel" class="tab-pane active" id="tabName">
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group">
+                  <div class="form-group last">
                     <label for="name" class="control-label">{{ 'lbl.Name'|trans|capitalize }}&nbsp;<abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
                     {% form_field_error name %} {% form_field name %}
                   </div>
@@ -36,10 +36,12 @@
             <div role="tabpanel" class="tab-pane" id="tabDashboard">
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="toggleChecksWidgets" class="control-label">{{ 'lbl.DisplayWidgets'|trans|capitalize }}</label>
+                  <div class="content-block">
+                    <div class="content-title">
+                      <label for="toggleChecksWidgets" class="control-label">{{ 'lbl.DisplayWidgets'|trans|capitalize }}</label>
+                    </div>
                     {% if widgets %}
-                    {{ widgets }}
+                    {{ widgets|raw }}
                     {% endif %}
                     {% if not widgets %}
                     {{ 'msg.NoWidgets'|trans|capitalize }}
@@ -55,15 +57,15 @@
                     {% for permission in permissions %}
                     <div class="panel panel-default">
                       <div class="panel-heading" role="tab" id="permission-heading-{{ permission.id }}">
-                        <h4 class="panel-title">
-                          {{ permission.chk }}
-                          <a data-toggle="collapse" data-parent="#permission" href="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="collapseOne">
-                            <label for="{{ permission.id }}">{{ permission.label }}</label>
-                          </a>
-                        </h4>
+                        <a data-toggle="collapse" data-parent="#permission" href="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="collapseOne">
+                          <h4 class="panel-title">
+                          {{ permission.chk|raw }}
+                            <label for="{{ permission.id }}"><span class="fa fa-caret-right fa-fw"></span> {{ permission.label }}</label>
+                          </h4>
+                        </a>
                       </div>
                       <div id="permission-list-{{ permission.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
-                        {{ permission.actions.dataGrid }}
+                        {{ permission.actions.dataGrid|raw }}
                       </div>
                     </div>
                     {% endfor %}

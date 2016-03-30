@@ -44,3 +44,26 @@
     @extend .fa-caret-down;
   }
 }
+
+.panel-group {
+  margin-bottom: 0;
+
+  .panel-heading {
+
+    a {
+
+      .panel-title {
+        color: $text-color;
+      }
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+
+        .panel-title {
+          color: $gray-base;
+        }
+      }
+    }
+  }
+}

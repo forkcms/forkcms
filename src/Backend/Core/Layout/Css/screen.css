@@ -8536,6 +8536,15 @@ abbr[title], abbr[data-original-title] {
     border-bottom: 1px solid #ddd;
     margin-bottom: -1px; }
 
+.panel-group {
+  margin-bottom: 0; }
+  .panel-group .panel-heading a .panel-title {
+    color: #4a4a4a; }
+  .panel-group .panel-heading a:hover, .panel-group .panel-heading a:focus {
+    text-decoration: none; }
+    .panel-group .panel-heading a:hover .panel-title, .panel-group .panel-heading a:focus .panel-title {
+      color: #000; }
+
 .nav.nav-tabs-xs > li > a {
   padding: 3px 5px; }
 
