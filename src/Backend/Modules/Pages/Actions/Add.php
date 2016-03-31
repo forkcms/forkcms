@@ -368,7 +368,9 @@ class Add extends BackendBaseActionAdd
                 }
                 if ($redirectValue == 'external') {
                     $data['external_redirect'] = array(
-                        'url' => $this->frm->getField('external_redirect')->getValue(),
+                        'url' => BackendPagesModel::getEncodedRedirectURL(
+                            $this->frm->getField('external_redirect')->getValue()
+                        ),
                         'code' => '301'
                     );
                 }

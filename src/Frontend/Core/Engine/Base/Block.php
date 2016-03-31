@@ -183,12 +183,12 @@ class Block extends Object
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, null, Header::PRIORITY_GROUP_MODULE);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, true, Header::PRIORITY_GROUP_MODULE);
         }
 
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, null, Header::PRIORITY_GROUP_MODULE);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true, Header::PRIORITY_GROUP_MODULE);
         }
     }
 
@@ -209,7 +209,7 @@ class Block extends Object
      */
     public function getContent()
     {
-        return $this->tpl->getContent($this->templatePath, false, true);
+        return $this->tpl->getContent($this->templatePath);
     }
 
     /**
@@ -264,11 +264,8 @@ class Block extends Object
 
         // no template given, so we should build the path
         if ($path === null) {
-            // build path to the module
-            $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-
             // build template path
-            $path = $frontendModulePath . '/Layout/Templates/' . $this->getAction() . '.html.twig';
+            $path = $this->getModule() . '/Layout/Templates/' . $this->getAction() . '.html.twig';
         } else {
             // redefine
             $path = (string) $path;

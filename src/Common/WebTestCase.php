@@ -63,8 +63,6 @@ abstract class WebTestCase extends BaseWebTestCase
         }
 
         static::$kernel = static::createKernel($options);
-        static::$kernel->boot();
-        static::$kernel->defineForkConstants();
 
         $client = static::$kernel->getContainer()->get('test.client');
         $client->setServerParameters($server);
