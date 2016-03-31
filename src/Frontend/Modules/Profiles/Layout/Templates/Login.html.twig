@@ -18,15 +18,15 @@
 				<fieldset>
 					<p{% if txtEmailError %} class="errorArea"{% endif %}>
 						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-						{% form_field_error Email %}{% form_field Email %}
+						{% form_field_error email %}{% form_field email %}
 					</p>
 					<p{% if txtPasswordError %} class="errorArea"{% endif %}>
 						<label for="password">{{ 'lbl.Password'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-						{% form_field_error Password %}{% form_field Password %}
+						{% form_field_error password %}{% form_field password %}
 					</p>
 					<p>
-						<label for="remember">{% form_field Remember %} {{ 'lbl.RememberMe'|trans|capitalize }}</label>
-						{% form_field_error Remember %}
+						<label for="remember">{% form_field remember %} {{ 'lbl.RememberMe'|trans|capitalize }}</label>
+						{% form_field_error remember %}
 					</p>
 					<p>
 						<input class="inputSubmit" type="submit" value="{{ 'lbl.Login'|trans|capitalize }}" />
@@ -36,7 +36,7 @@
 		</div>
 		<footer class="ft">
 			<p>
-				<a href="{{ var|geturlforblock:'Profiles':'ForgotPassword' }}" title="{{ 'msg.ForgotPassword'|trans }}">{{ 'msg.ForgotPassword'|trans }}</a>
+				<a href="{{ var|geturlforblock('Profiles', 'ForgotPassword') }}" title="{{ 'msg.ForgotPassword'|trans }}">{{ 'msg.ForgotPassword'|trans }}</a>
 			</p>
 		</footer>
 	</div>

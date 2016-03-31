@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /api
+Disallow: /backend/ajax
+Disallow: /backend/cronjob
+Disallow: /install
+Disallow: /frontend/ajax

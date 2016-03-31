@@ -61,7 +61,6 @@ abstract class Init extends \KernelLoader
 
         $this->definePaths();
         $this->defineURLs();
-        $this->setDebugging();
     }
 
     /**
@@ -129,33 +128,6 @@ abstract class Init extends \KernelLoader
     }
 
     /**
-     * This method will be called by the Spoon Exception handler
-     *
-     * @param object $exception The exception that was thrown.
-     * @param string $output    The output that should be mailed.
-     */
-    public static function exceptionHandler($exception, $output)
-    {
-        $output = (string) $output;
-
-        // mail it?
-        if (self::getContainer()->getParameter('fork.debug_email') != '') {
-            $headers = "MIME-Version: 1.0\n";
-            $headers .= "Content-type: text/html; charset=iso-8859-15\n";
-            $headers .= "X-Priority: 3\n";
-            $headers .= "X-MSMail-Priority: Normal\n";
-            $headers .= "X-Mailer: SpoonLibrary Webmail\n";
-            $headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
-
-            // send email
-            @mail(self::getContainer()->getParameter('fork.debug_email'), 'Exception Occurred (' . SITE_DOMAIN . ')', $output, $headers);
-        }
-
-        echo '<html><body>Something went wrong.</body></html>';
-        exit;
-    }
-
-    /**
      * @inheritdoc
      */
     protected function setDebugging()
@@ -168,13 +140,8 @@ abstract class Init extends \KernelLoader
             ini_set('display_errors', 'Off');
 
             // add callback for the spoon exceptionhandler
-            switch ($this->type) {
-                case 'BackendAjax':
-                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
-                    break;
-
-                default:
-                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
+            if ($this->type === 'BackendAjax') {
+                \Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
             }
         }
     }

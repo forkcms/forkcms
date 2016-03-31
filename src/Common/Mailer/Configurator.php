@@ -3,8 +3,8 @@
 namespace Common\Mailer;
 
 use PDOException;
+use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Common\ModulesSettings;
 
@@ -27,6 +27,16 @@ class Configurator
     }
 
     public function onKernelRequest(GetResponseEvent $event)
+    {
+        $this->configureMail();
+    }
+
+    public function onConsoleCommand(ConsoleCommandEvent $event)
+    {
+        $this->configureMail();
+    }
+
+    private function configureMail()
     {
         try {
             $transport = TransportFactory::create(
