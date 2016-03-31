@@ -31,11 +31,17 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="content-block content-block-pb">
+        <div class="content-title">
+          <p>{{ 'lbl.Drafts'|trans|capitalize }}</p>
+        </div>
         {% if dgDrafts %}
           {{ dgDrafts|raw }}
         {% endif %}
       </div>
       <div class="content-block content-block-pb">
+        <div class="content-title">
+          <p>{{ 'lbl.RecentlyEdited'|trans|capitalize }}</p>
+        </div>
         {% if dgRecentlyEdited %}
           {{ dgRecentlyEdited|raw }}
         {% endif %}

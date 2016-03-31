@@ -9177,6 +9177,9 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
       color: #01417b;
       text-decoration: none; }
 
+#templateList {
+  margin-top: 20px; }
+
 @media screen and (min-width: 992px) {
   #templateVisualLarge table {
     border-spacing: 15px; } }

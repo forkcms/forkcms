@@ -202,25 +202,26 @@
                   {% if rbtRedirectError %}
                   <div class="alert alert-danger">{{ rbtRedirectError }}</div>
                   {% endif %}
-                  <div class="form-group">
+
                     <ul class="list-unstyled radiobuttonFieldCombo">
                       {% for _itr_24 in redirect %}
                       <li class="radio">
-                        <label for="{{ _itr_24.id }}">{{ _itr_24.rbtRedirect|raw }} {{ _itr_24.label }}</label>
-                        {% if _itr_24.isInternal %}
-                        <label for="internalRedirect" class="_itr_22">{{ _itr_24.label }}</label>
-                        <p class="help-block">{{ 'msg.HelpInternalRedirect'|trans|capitalize }}</p>
-                        {% form_field_error internal_redirect %} {% form_field internal_redirect %}
-                        {% endif %}
-                        {% if _itr_24.isExternal %}
-                        <label for="externalRedirect" class="_itr_22">{{ _itr_24.label }}</label>
-                        <p class="help-block">{{ 'msg.HelpExternalRedirect'|trans|capitalize }}</p>
-                        {% form_field_error external_redirect %} {% form_field external_redirect %}
-                        {% endif %}
+                        <div class="form-group">
+                          <label for="{{ _itr_24.id }}">{{ _itr_24.rbtRedirect|raw }} {{ _itr_24.label }}</label>
+                          {% if _itr_24.isInternal %}
+                            <p class="help-block">{{ 'msg.HelpInternalRedirect'|trans|capitalize }}</p>
+                            {% form_field_error internal_redirect %} {% form_field internal_redirect %}
+                          {% endif %}
+                          {% if _itr_24.isExternal %}
+
+                            <p class="help-block">{{ 'msg.HelpExternalRedirect'|trans|capitalize }}</p>
+                            {% form_field_error external_redirect %} {% form_field external_redirect %}
+                          {% endif %}
+                        </div>
                       </li>
                       {% endfor %}
                     </ul>
-                  </div>
+
                 </div>
               </div>
             </div>
