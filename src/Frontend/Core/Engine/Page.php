@@ -474,7 +474,7 @@ class Page extends FrontendBaseObject
         $this->tpl->assign('page', $this->record);
 
         // set template path
-        $this->templatePath = FRONTEND_PATH . '/' . $this->record['template_path'];
+        $this->templatePath = $this->record['template_path'];
 
         // loop blocks
         foreach ($this->record['positions'] as $position => &$blocks) {

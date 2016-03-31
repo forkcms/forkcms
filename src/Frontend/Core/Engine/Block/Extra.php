@@ -343,6 +343,6 @@ class Extra extends FrontendBaseObject
      */
     private function setTemplatePath($path)
     {
-        $this->templatePath = FrontendTheme::getPath($path);
+        $this->templatePath = $path;
     }
 }

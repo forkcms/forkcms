@@ -129,7 +129,7 @@ Class TwigTemplate
         // page hook, last call
         if ($key === 'page') {
             $this->baseFile = $this->convertExtension($values['template_path']);
-            $this->baseSpoonFile = FRONTEND_PATH . '/' . $values['template_path'];
+            $this->baseSpoonFile = $values['template_path'];
             $this->positions = $values['positions'];
         }
 
@@ -165,9 +165,7 @@ Class TwigTemplate
                         $block['include_path'] = $this->widgets[$tpl];
                     } else {
                         $block['include_path'] = $this->getPath(
-                            FRONTEND_MODULES_PATH .
-                            '/' . $block['extra_module'] .
-                            '/Layout/Widgets/' . $block['extra_action'] . '.tpl'
+                            $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.tpl'
                         );
                     }
 
@@ -197,7 +195,7 @@ Class TwigTemplate
     */
     public function getPath($template)
     {
-        $template = Theme::getPath($this->convertExtension($template));
+        $template = $this->convertExtension($template);
         if (strpos($template, FRONTEND_MODULES_PATH) !== false) {
             return str_replace(FRONTEND_MODULES_PATH . '/', '', $template);
         }
@@ -250,7 +248,7 @@ Class TwigTemplate
         // collect the Widgets and Actions, we need them later
         if (strpos($path['dirname'], 'Widgets') !== false) {
             $this->widgets[$path['filename']] = $this->getPath($template);
-        } elseif (strpos($path['filename'], 'Default') === false) {
+        } elseif (strpos($path['dirname'], 'Core/Layout/Templates') === false) {
             $this->block = $this->getPath($template);
         }
 
@@ -278,6 +276,7 @@ Class TwigTemplate
         \Twig_Autoloader::register();
         $loader = new \Twig_Loader_Filesystem(array(
             $this->themePath,
+            $this->themePath.'/Modules',
             FRONTEND_MODULES_PATH,
             FRONTEND_PATH,
             '/'
