@@ -111,33 +111,29 @@ class Subscribe extends FrontendBaseBlock
             // build
             $mergeFields = array();
 
-            // define redirect link
-            $redirectLink =
-                FrontendNavigation::getURLForBlock(
-                    'MailMotor',
-                    'Subscribe'
-                )
-                . '?sent=true'
-                . '#mailMotorSubscribeForm'
-            ;
-
-            try {
-                // validate required fields
-                if ($email->isEmail(Language::err('EmailIsInvalid'))) {
+            // validate required fields
+            if ($email->isEmail(Language::err('EmailIsInvalid'))) {
+                try {
                     if (FrontendModel::get('mailmotor.subscriber')->isSubscribed($email->getValue())) {
                         $email->addError(Language::err('AlreadySubscribed'));
 
                         // do not remove this line, it is required to make the form show error messages properly
                         $this->frm->addError(Language::err('AlreadySubscribed'));
                     }
-                // we need to add this because the line below.
-                // $this->frm->getErrors() only checks if form errors are set, not if an element in the form has errors.
-                } else {
-                    $this->frm->addError(Language::err('EmailIsInvalid'));
+                // no mail-engine is chosen in the Backend,
+                // so we have this fallback to send a mail to the admin
+                } catch (NotImplementedException $e) {
+                    // do nothing
                 }
+            // we need to add this because the line below
+            // $this->frm->getErrors() only checks if form errors are set, not if an element in the form has errors.
+            } else {
+                $this->frm->addError(Language::err('EmailIsInvalid'));
+            }
 
-                // no errors
-                if (trim($this->frm->getErrors()) == '') {
+            // no errors
+            if (trim($this->frm->getErrors()) == '') {
+                try {
                     // subscribe the user to our default group
                     FrontendModel::get('mailmotor.subscriber')->subscribe(
                         $email->getValue(),
@@ -145,38 +141,28 @@ class Subscribe extends FrontendBaseBlock
                         $mergeFields,
                         FRONTEND_LANGUAGE
                     );
-
-                    // redirect
-                    $this->redirect($redirectLink);
-                // show errors
-                } else {
-                    $this->tpl->assign('mailMotorSubscribeHasFormError', true);
-                }
-            // no mail-engine is chosen in the Backend,
-            // so we have this fallback to send a mail to the admin
-            } catch (NotImplementedException $e) {
-                $email->isEmail(Language::err('EmailIsInvalid'));
-
-                // no errors
-                if (trim($this->frm->getErrors()) == '') {
+                // no mail-engine is chosen in the Backend,
+                // so we have this fallback to send a mail to the admin
+                } catch (NotImplementedException $e) {
                     // mail admin
                     FrontendMailMotorModel::mailAdminToSubscribeSubscriber(
                         $email->getValue(),
                         FRONTEND_LANGUAGE
                     );
-
-                    // redirect
-                    $this->redirect($redirectLink);
-                }
-            // other exceptions
-            } catch (\Exception $e) {
-                // when debugging we need to see the exceptions
-                if ($this->getContainer()->getParameter('kernel.debug')) {
-                    throw $e;
                 }
 
-                // show error
-                $this->tpl->assign('mailMotorSubscribeHasError', true);
+                // redirect
+                $this->redirect(
+                    FrontendNavigation::getURLForBlock(
+                        'MailMotor',
+                        'Subscribe'
+                    )
+                    . '?sent=true'
+                    . '#mailMotorSubscribeForm'
+                );
+            // show errors
+            } else {
+                $this->tpl->assign('mailMotorSubscribeHasFormError', true);
             }
         }
     }
