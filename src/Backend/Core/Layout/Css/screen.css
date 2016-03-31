@@ -8102,6 +8102,13 @@ label {
 abbr[title], abbr[data-original-title] {
   border-bottom: none; }
 
+textarea {
+  max-width: 100%; }
+
+select[size="1"] {
+  font-size: 14px;
+  padding: 5px; }
+
 .form-group.last {
   margin-bottom: 0; }
 
@@ -8112,9 +8119,6 @@ abbr[title], abbr[data-original-title] {
 
 .input-group .input-group-addon {
   padding: 8px 12px 9px; }
-
-textarea {
-  max-width: 100%; }
 
 /* Loader */
 @keyframes spin {
