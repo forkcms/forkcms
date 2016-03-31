@@ -8694,6 +8694,8 @@ textarea {
   padding: 9px 12px 10px; }
   .btn .fa {
     padding-right: 4px; }
+  .btn.ui-sortable-handle {
+    cursor: move; }
 
 .btn-icon-only .fa {
   padding-right: 0; }
@@ -9272,8 +9274,9 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
     width: 100%; } }
 #fieldsHolder .btn-toolbar .btn {
   padding: 6px 7px 7px; }
-#fieldsHolder .btn-toolbar .fa {
-  padding: 0 4px; }
+#fieldsHolder .field {
+  border-radius: 3px;
+  padding: 7px; }
 
 #locale .translationValue {
   word-break: break-all; }

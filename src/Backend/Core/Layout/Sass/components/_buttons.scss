@@ -5,6 +5,10 @@
   .fa {
     padding-right: 4px;
   }
+
+  &.ui-sortable-handle {
+    cursor: move;
+  }
 }
 
 .btn-icon-only {
