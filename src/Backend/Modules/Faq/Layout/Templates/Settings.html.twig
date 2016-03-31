@@ -88,10 +88,8 @@
                   <p class="help-block">
                     {{ 'msg.HelpSpamFilter'|trans }}
                     {% if noAkismetKey %}
-                    <br />
-                    <span class="text-warning">
-                      {{ 'msg.NoAkismetKey'|trans|sprintf(geturl('index','settings' ) ) }}
-                    </span>
+                      <br>
+                    {{ 'msg.NoAkismetKey'|trans|sprintf(geturl('index','settings' ) ) }}
                     {% endif %}
                   </p>
                 </li>

@@ -2561,11 +2561,11 @@ a.text-info:focus {
   color: #e6e6e6; }
 
 .text-warning {
-  color: #fff; }
+  color: #F5A623; }
 
 a.text-warning:hover,
 a.text-warning:focus {
-  color: #e6e6e6; }
+  color: #db8c0a; }
 
 .text-danger, .formError {
   color: #fff; }
@@ -4017,21 +4017,21 @@ select[multiple].input-lg,
 .has-warning .checkbox,
 .has-warning .radio-inline,
 .has-warning .checkbox-inline, .has-warning.radio label, .has-warning.checkbox label, .has-warning.radio-inline label, .has-warning.checkbox-inline label {
-  color: #fff; }
+  color: #F5A623; }
 .has-warning .form-control {
-  border-color: #fff;
+  border-color: #F5A623;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
   .has-warning .form-control:focus {
-    border-color: #e6e6e6;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px white;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px white; }
+    border-color: #db8c0a;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #f9cd85;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #f9cd85; }
 .has-warning .input-group-addon {
-  color: #fff;
-  border-color: #fff;
+  color: #F5A623;
+  border-color: #F5A623;
   background-color: rgba(245, 166, 35, 0.9); }
 .has-warning .form-control-feedback {
-  color: #fff; }
+  color: #F5A623; }
 
 .has-error .help-block,
 .has-error .control-label,
@@ -5910,27 +5910,27 @@ button.list-group-item-info {
     border-color: #fff; }
 
 .list-group-item-warning {
-  color: #fff;
+  color: #F5A623;
   background-color: rgba(245, 166, 35, 0.9); }
 
 a.list-group-item-warning,
 button.list-group-item-warning {
-  color: #fff; }
+  color: #F5A623; }
   a.list-group-item-warning .list-group-item-heading,
   button.list-group-item-warning .list-group-item-heading {
     color: inherit; }
   a.list-group-item-warning:hover, a.list-group-item-warning:focus,
   button.list-group-item-warning:hover,
   button.list-group-item-warning:focus {
-    color: #fff;
+    color: #F5A623;
     background-color: rgba(243, 156, 11, 0.9); }
   a.list-group-item-warning.active, a.list-group-item-warning.active:hover, a.list-group-item-warning.active:focus,
   button.list-group-item-warning.active,
   button.list-group-item-warning.active:hover,
   button.list-group-item-warning.active:focus {
     color: #fff;
-    background-color: #fff;
-    border-color: #fff; }
+    background-color: #F5A623;
+    border-color: #F5A623; }
 
 .list-group-item-danger {
   color: #fff;

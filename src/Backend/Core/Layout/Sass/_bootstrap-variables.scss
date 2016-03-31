@@ -517,7 +517,7 @@ $state-info-text:                $white;
 $state-info-bg:                  rgba($brand-primary, .9);
 $state-info-border:              darken(adjust-hue($state-info-bg, -10), 7%);
 
-$state-warning-text:             $white;
+$state-warning-text:             $brand-warning;
 $state-warning-bg:               rgba($brand-warning, .9);
 $state-warning-border:           darken(adjust-hue($state-warning-bg, -10), 5%);
 
@@ -646,7 +646,7 @@ $alert-info-text:             $state-info-text;
 $alert-info-border:           $state-info-border;
 
 $alert-warning-bg:            $state-warning-bg;
-$alert-warning-text:          $state-warning-text;
+$alert-warning-text:          $white;
 $alert-warning-border:        $state-warning-border;
 
 $alert-danger-bg:             $state-danger-bg;
@@ -741,7 +741,7 @@ $panel-info-text:             $state-info-text;
 $panel-info-border:           $state-info-border;
 $panel-info-heading-bg:       $state-info-bg;
 
-$panel-warning-text:          $state-warning-text;
+$panel-warning-text:          $white;
 $panel-warning-border:        $state-warning-border;
 $panel-warning-heading-bg:    $state-warning-bg;
 
