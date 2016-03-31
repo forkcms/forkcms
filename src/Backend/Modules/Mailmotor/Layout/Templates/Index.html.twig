@@ -19,7 +19,9 @@
     <div class="col-md-12">
       {% if dgUnsentMailings %}
       <div class="dataGridHolder">
-        {{ dgUnsentMailings|raw }}
+        <div class="table-responsive">
+          {{ dgUnsentMailings|raw }}
+        </div>
       </div>
       {% endif %}
       {% if not dgUnsentMailings %}
@@ -35,7 +37,9 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      {{ dgQueuedMailings|raw }}
+      <div class="table-responsive">
+        {{ dgQueuedMailings|raw }}
+      </div>
     </div>
   </div>
   {% endif %}
@@ -47,7 +51,9 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      {{ dgSentMailings|raw }}
+      <div class="table-responsive">
+        {{ dgSentMailings|raw }}
+      </div>
     </div>
   </div>
   {% endif %}

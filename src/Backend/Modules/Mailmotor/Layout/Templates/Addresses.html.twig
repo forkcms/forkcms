@@ -96,7 +96,9 @@
         {% if group %}
         <input type="hidden" name="group_id" value="{{ group.id }}" />
         {% endif %}
-        {{ dataGrid|raw }}
+        <div class="table-responsive">
+          {{ dataGrid|raw }}
+        </div>
       </form>
       {% endif %}
       {% if not dataGrid %}

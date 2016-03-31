@@ -51,7 +51,9 @@
       <div class="content-title">
         <p>{{ 'lbl.RecentlyEdited'|trans|capitalize }}</p>
       </div>
-        {{ dgRecent|raw }}
+        <div class="table-responsive">
+          {{ dgRecent|raw }}
+        </div>
       </div>
     </div>
   </div>
@@ -63,7 +65,9 @@
         <div class="content-title">
           <p>{{ 'lbl.Drafts'|trans|capitalize }}</p>
         </div>
-        {{ dgDrafts|raw }}
+        <div class="table-responsive">
+          {{ dgDrafts|raw }}
+        </div>
       </div>
     </div>
   </div>
@@ -75,7 +79,9 @@
           <div class="content-title">
             <h3 class="panel-title">{{ 'lbl.PublishedArticles'|trans|capitalize }}</h3>
           </div>
-          {{ dgPosts|raw }}
+          <div class="table-responsive">
+            {{ dgPosts|raw }}
+          </div>
         </div>
       {% endif %}
       {% if not dgPosts %}

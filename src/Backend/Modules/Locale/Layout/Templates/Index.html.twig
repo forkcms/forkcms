@@ -104,7 +104,9 @@
             {{ 'lbl.Labels'|trans|capitalize }}
           </p>
         </div>
-        {{ dgLabels | raw}}
+        <div class="table-responsive">
+          {{ dgLabels | raw}}
+        </div>
       </div>
     </div>
   </div>
@@ -116,7 +118,9 @@
         <div class="content-title">
           {{ 'lbl.Messages'|trans|capitalize }}
         </div>
-        {{ dgMessages | raw}}
+        <div class="table-responsive">
+          {{ dgMessages | raw}}
+        </div>
       </div>
     </div>
   </div>
@@ -130,7 +134,9 @@
             {{ 'lbl.errors'|trans|capitalize }}
           </p>
         </div>
-        {{ dgErrors | raw }}
+        <div class="table-responsive">
+          {{ dgErrors | raw }}
+        </div>
       </div>
     </div>
   </div>
@@ -145,7 +151,9 @@
             <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpActionValue'|trans }}"></abbr>
           </p>
         </div>
-        {{ dgActions | raw }}
+        <div class="table-responsive">
+          {{ dgActions | raw }}
+        </div>
       </div>
     </div>
   </div>

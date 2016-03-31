@@ -35,7 +35,9 @@
           <div class="content-title">
             <p>{{ 'lbl.Drafts'|trans|capitalize }}</p>
           </div>
-          {{ dgDrafts|raw }}
+          <div class="responsive-table">
+            {{ dgDrafts|raw }}
+          </div>
         {% endif %}
       </div>
       <div class="content-block content-block-pb">
@@ -43,7 +45,9 @@
           <div class="content-title">
             <p>{{ 'lbl.RecentlyEdited'|trans|capitalize }}</p>
           </div>
-          {{ dgRecentlyEdited|raw }}
+          <div class="resposive-table">
+            {{ dgRecentlyEdited|raw }}
+          </div>
         {% endif %}
       </div>
       {% if not dgRecentlyEdited %}

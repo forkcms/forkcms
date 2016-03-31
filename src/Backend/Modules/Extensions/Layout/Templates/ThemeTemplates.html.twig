@@ -30,7 +30,9 @@
         </div>
       </div>
       {% if dataGrid %}
-      {{ dataGrid|raw }}
+        <div class="table-responsive">
+          {{ dataGrid|raw }}
+        </div>
       {% endif %}
       {% if not dataGrid %}
       <p>{{ 'msg.NoItems'|trans }}</p>

@@ -22,10 +22,14 @@
               <p>{{ dataGrid.title }}</p>
             </div>
             {% if dataGrid.content %}
-              {{ dataGrid.content | raw }}
+              <div class="table-responsive">
+                {{ dataGrid.content | raw }}
+              </div>
             {% endif %}
             {% if not dataGrid.content %}
-              {{ emptyDatagrid | raw }}
+              <div class="table-responsive">
+                {{ emptyDatagrid | raw }}
+              </div>
             {% endif %}
           </div>
         {% endfor %}

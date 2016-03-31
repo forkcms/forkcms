@@ -44,7 +44,9 @@
           <p>{{ 'lbl.InstalledModules'|trans|capitalize }}</p>
         </div>
         {% if dataGridInstalledModules %}
-        {{ dataGridInstalledModules|raw }}
+          <div class="table-responsive">
+            {{ dataGridInstalledModules|raw }}
+          </div>
         {% endif %}
         {% if not dataGridInstalledModules %}
         <p>{{ 'msg.NoModulesInstalled'|trans|capitalize }}</p>
@@ -59,7 +61,9 @@
         <div class="content-title">
           <p>{{ 'lbl.InstallableModules'|trans|capitalize }}</p>
         </div>
-        {{ dataGridInstallableModules|raw }}
+        <div class="table-responsive">
+          {{ dataGridInstallableModules|raw }}
+        </div>
       </div>
     </div>
   </div>

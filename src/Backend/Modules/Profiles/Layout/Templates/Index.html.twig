@@ -68,7 +68,9 @@
           <input type="hidden" name="status" value="{{ status }}" />
           <input type="hidden" name="newGroup" value="" />
         </div>
-        {{ dgProfiles|raw }}
+        <div class="table-responsive">
+          {{ dgProfiles|raw }}
+        </div>
         <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">

@@ -26,7 +26,9 @@
             {% if dgPublished %}
             <form act.on="{{  geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsPublished">
               <input type="hidden" name="from" value="published" />
-              {{ dgPublished|raw }}
+              <div class="table-responsive">
+                {{ dgPublished|raw }}
+              </div>
               <div class="modal fade" id="confirmPublishedToSpam" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Spam'|trans|capitalize }}" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -69,7 +71,9 @@
             {% if dgModeration %}
             <form act.on="{{  geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsModeration">
               <input type="hidden" name="from" value="moderation" />
-              {{ dgModeration|raw }}
+              <div class="table-responsive">
+                {{ dgModeration|raw }}
+              </div>
               <div class="modal fade" id="confirmModerationToSpam" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Spam'|trans|capitalize }}" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -116,7 +120,9 @@
                 {{ 'msg.DeleteAllSpam'|trans|capitalize }}
                 <a href="{{ geturl('delete_spam' ) }}">{{ 'lbl.Delete'|trans|capitalize }}</a>
               </div>
-              {{ dgSpam|raw }}
+              <div class="table-responsive">
+                {{ dgSpam|raw }}
+              </div>
               <div class="modal fade" id="confirmDeleteSpam" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">

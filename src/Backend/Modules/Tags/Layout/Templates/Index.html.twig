@@ -11,7 +11,9 @@
   <div class="col-md-12">
     {% if dataGrid %}
     <form action="{{  geturl('mass_action') }}" method="get" class="forkForms submitWithLink" id="tagsForm">
-      {{ dataGrid|raw }}
+      <div class="table-responsive">
+        {{ dataGrid|raw }}
+      </div>
       <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
