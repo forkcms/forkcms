@@ -1761,7 +1761,7 @@ jsBackend.messages =
         }
 
         var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
-            '<div class="container">' +
+            '<div class="container-fluid">' +
                 '<i class="fa fa-' + icon + '"></i>' + ' ' +
                 content +
                 '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
@@ -1771,7 +1771,11 @@ jsBackend.messages =
         '</div>';
 
         // prepend
-        $('#messaging').prepend(html);
+        if (optionalClass == undefined || optionalClass ==! 'alert-static') {
+            $('#messaging').prepend(html);
+        }else {
+            $('.content').prepend(html);
+        }
 
         // show
         $('#' + uniqueId).addClass('active');

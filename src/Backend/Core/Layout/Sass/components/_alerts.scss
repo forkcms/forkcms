@@ -16,6 +16,10 @@
   &.alert-xs {
     padding: 7px;
   }
+
+  .fa {
+    margin-right: 5px;
+  }
 }
 
 .alert-main {
@@ -29,6 +33,7 @@
   top: 0;
   left: 0;
   right: 0;
+  z-index: 5;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   -o-border-radius: 0;
@@ -38,7 +43,7 @@
   -ms-transition: opacity 250ms;
   -o-transition: opacity 250ms;
   transition: opacity 250ms;
-  z-index: 5;
+  -webkit-font-smoothing: antialiased;
 
   &.active {
     opacity: 1;
@@ -65,4 +70,12 @@
     color: $white;
     font-size: $font-size-btn;
   }
+}
+
+.alert-static {
+  position: static;
+  margin: -25px 0 25px;
+  padding: 9px 0;
+  text-align: left;
+  width: 100%;
 }
