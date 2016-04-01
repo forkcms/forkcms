@@ -296,6 +296,11 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
   margin-top: 20px;
 }
 
+.dragAndDropPlaceholder {
+  background: $gray-lighter;
+  height: 61px;
+  margin: 5px 0;
+}
 
 @media screen and (min-width: $screen-md) {
 

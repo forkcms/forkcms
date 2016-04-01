@@ -9187,6 +9187,11 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 #templateList {
   margin-top: 20px; }
 
+.dragAndDropPlaceholder {
+  background: #E5E5E5;
+  height: 61px;
+  margin: 5px 0; }
+
 @media screen and (min-width: 992px) {
   #templateVisualLarge table {
     border-spacing: 15px; } }

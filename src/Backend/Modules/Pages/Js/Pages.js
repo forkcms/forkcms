@@ -543,7 +543,7 @@ jsBackend.pages.extras =
 	// display an effect on updated items
 	updatedBlock: function(element)
 	{
-		element.effect('highlight');
+		element.effect('highlight', {color: '#D9E5F3'});
 	}
 };
 
