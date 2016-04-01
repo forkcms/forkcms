@@ -9301,6 +9301,9 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 #fieldsHolder .field {
   border-radius: 3px;
   padding: 7px; }
+#fieldsHolder .form-control[disabled] {
+  background: #fff;
+  cursor: not-allowed; }
 
 #locale .translationValue {
   word-break: break-all; }

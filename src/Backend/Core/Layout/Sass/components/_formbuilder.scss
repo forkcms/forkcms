@@ -11,4 +11,9 @@
     border-radius: $border-radius-small;
     padding: 7px;
   }
+
+  .form-control[disabled] {
+    background: $white;
+    cursor: not-allowed;
+  }
 }
