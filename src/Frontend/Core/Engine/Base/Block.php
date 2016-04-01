@@ -209,7 +209,7 @@ class Block extends Object
      */
     public function getContent()
     {
-        return $this->tpl->getContent($this->templatePath, false, true);
+        return $this->tpl->getContent($this->templatePath);
     }
 
     /**
@@ -264,11 +264,7 @@ class Block extends Object
 
         // no template given, so we should build the path
         if ($path === null) {
-            // build path to the module
-            $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-
-            // build template path
-            $path = $frontendModulePath . '/Layout/Templates/' . $this->getAction() . '.html.twig';
+            $path = $this->getModule() . '/Layout/Templates/' . $this->getAction() . '.html.twig';
         } else {
             // redefine
             $path = (string) $path;

@@ -72,6 +72,7 @@ class TwigTemplate extends BaseTwigTemplate
             $loader = new \Twig_Loader_Chain(array(
                 $loader,
                 new \Twig_Loader_Filesystem(array(
+                    $this->themePath . '/Modules',
                     $this->themePath,
                     FRONTEND_MODULES_PATH,
                     FRONTEND_PATH,
@@ -113,7 +114,7 @@ class TwigTemplate extends BaseTwigTemplate
         // page hook, last call
         if ($key === 'page') {
             $this->baseFile = $values['template_path'];
-            $this->baseSpoonFile = FRONTEND_PATH . '/' . $values['template_path'];
+            $this->baseSpoonFile = $values['template_path'];
             $this->positions = $values['positions'];
         }
 
@@ -144,13 +145,11 @@ class TwigTemplate extends BaseTwigTemplate
                 // legacy search the correct module path
                 if ($block['extra_type'] === 'widget' && $block['extra_action']) {
                     if (isset($block['extra_data']['template'])) {
-                        $tpl = substr($block['extra_data']['template'], 0, -4);
+                        $tpl = substr($block['extra_data']['template'], 0, -5);
                         $block['include_path'] = $this->widgets[$tpl];
                     } else {
                         $block['include_path'] = $this->getPath(
-                            FRONTEND_MODULES_PATH .
-                            '/' . $block['extra_module'] .
-                            '/Layout/Widgets/' . $block['extra_action'] . '.html.twig'
+                            $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.html.twig'
                         );
                     }
 
@@ -170,7 +169,6 @@ class TwigTemplate extends BaseTwigTemplate
     */
     public function getPath($template)
     {
-        $template = Theme::getPath($template);
         if (strpos($template, FRONTEND_MODULES_PATH) !== false) {
             return str_replace(FRONTEND_MODULES_PATH . '/', '', $template);
         }
@@ -200,7 +198,7 @@ class TwigTemplate extends BaseTwigTemplate
         // collect the Widgets and Actions, we need them later
         if (strpos($path['dirname'], 'Widgets') !== false) {
             $this->widgets[$path['filename']] = $this->getPath($template);
-        } elseif (strpos($path['filename'], 'Default') === false) {
+        } elseif (strpos($path['dirname'], 'Core/Layout/Templates') === false) {
             $this->block = $this->getPath($template);
         }
 
