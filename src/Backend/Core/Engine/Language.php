@@ -103,8 +103,10 @@ class Language
             return Model::get('url')->getModule();
         }
 
-        if (isset($_GET['module']) && $_GET['module'] != '') {
-            return (string) $_GET['module'];
+        if (Model::getContainer()->has('request')
+            && Model::getContainer()->get('request')->query->has('module')
+        ) {
+            return Model::getContainer()->get('request')->query->get('module');
         }
 
         return 'Core';
