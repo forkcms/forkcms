@@ -264,7 +264,7 @@
       </div>
     </div>
     {# This is the HTML content, hidden #}
-    <div class="fade hidden" id="editContent" tabindex="-1">
+    <div class="hidden" id="editContent" tabindex="-1">
         {% for position in positions %}
           {% for block in position.blocks %}
             <div class="alert alert-warning">
@@ -285,7 +285,9 @@
               {{ block.formElements.hidPosition.parse() | raw }}
 
               {# this will store the visible/hidden state #}
-              <div style="display: none">{{ block.formElements.chkVisible.parse() | raw }}</div>
+              <div style="display: none">
+                {{ block.formElements.chkVisible.parse() | raw }}
+              </div>
             </div>
           {% endfor %}
         {% endfor %}

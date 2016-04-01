@@ -314,8 +314,13 @@
 			$this.hover(
 				function()
 				{
-					$this.addClass('inlineEditHover');
-					tooltip.show();
+					if (element.hasClass('inlineEditing')) {
+						$this.removeClass('inlineEditHover');
+						tooltip.hide();
+					}else {
+						$this.addClass('inlineEditHover');
+						tooltip.show();
+					}
 				},
 				function()
 				{
@@ -347,6 +352,10 @@
 
 				// add class
 				element.addClass('inlineEditing');
+
+				// hide label
+				$this.removeClass('inlineEditHover');
+				tooltip.hide();
 
 				// remove events
 				element.unbind('click').unbind('focus');

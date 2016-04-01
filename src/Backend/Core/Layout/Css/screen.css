@@ -8127,6 +8127,10 @@ select[size="1"] {
 .input-group .input-group-addon {
   padding: 8px 12px 9px; }
 
+.inlineEditing input {
+  min-width: 100%;
+  width: 100%; }
+
 /* Loader */
 @keyframes spin {
   to {
@@ -9319,6 +9323,8 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
 #locale .translationValue {
   word-break: break-all; }
+  #locale .translationValue .label {
+    margin-left: 10px; }
 
 .position .btn-icon-only {
   padding: 5px 10px 6px; }
