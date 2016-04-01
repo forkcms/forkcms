@@ -80,9 +80,11 @@
                     <p class="jsConfirmationMessage">{{ msg.Confirmation }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-                    <a href="#" class="btn btn-primary jsConfirmationSubmit">
-                        {{ 'lbl.OK'|trans|capitalize }}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                    </button>
+                    <a href="#" class="btn btn-success jsConfirmationSubmit">
+                        <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
                     </a>
                 </div>
             </div>

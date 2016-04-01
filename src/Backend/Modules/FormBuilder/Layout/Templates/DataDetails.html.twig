@@ -80,12 +80,14 @@
               <p>{{ 'msg.ConfirmDeleteData'|trans|capitalize }}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-              <a href="{{ geturl('mass_data_action' ) }}&amp;action=delete&amp;form_id={{ formId }}&amp;id={{ id }}" class="btn btn-primary">
-                {{ 'lbl.OK'|trans|capitalize }}
+              <button type="button" class="btn btn-default" data-dismiss="modal">
+                <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+              </button>
+              <a href="{{ geturl('mass_data_action' ) }}&amp;action=delete&amp;form_id={{ formId }}&amp;id={{ id }}" class="btn btn-succes">
+                <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
               </a>
             </div>
-          </div
+          </div>
         </div>
       </div>
       {% endif %}

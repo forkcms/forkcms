@@ -144,35 +144,31 @@
             {% if showProfilesDelete %}
             {% if deleted %}
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmUndelete">
-              <span class="fa fa-check"></span>
               {{ 'lbl.Undelete'|trans|capitalize }}
             </button>
             {% endif %}
             {% if not deleted %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
-              {{ 'lbl.Delete'|trans|capitalize }}
+              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
             </button>
             {% endif %}
             {% endif %}
             {% if showProfilesBlock %}
             {% if blocked %}
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmUnblock">
-              <span class="fa fa-check"></span>
-              {{ 'lbl.Unblock'|trans|capitalize }}
+              <span class="fa fa-check"></span>{{ 'lbl.Unblock'|trans|capitalize }}
             </button>
             {% endif %}
             {% if not blocked %}
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmBlock">
-              <span class="fa fa-ban"></span>
-              {{ 'lbl.Block'|trans|capitalize }}
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#confirmBlock">
+              <span class="fa fa-ban"></span>{{ 'lbl.Block'|trans|capitalize }}
             </button>
             {% endif %}
             {% endif %}
           </div>
           <div class="btn-group pull-right" role="group">
-            <button id="saveButton" type="submit" name="edit" class="btn btn-primary">
-              <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
+            <button id="saveButton" type="submit" name="edit" class="btn btn-success">
+              <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
             </button>
           </div>
         </div>
@@ -197,15 +193,17 @@
                 {% endif %}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                </button>
                 {% if deleted %}
-                <a href="{{ geturl('delete' ) }}&amp;id={{ profile.id }}" class="btn btn-primary">
-                  {{ 'lbl.OK'|trans|capitalize }}
+                <a href="{{ geturl('delete' ) }}&amp;id={{ profile.id }}" class="btn btn-success">
+                  {{ 'lbl.Undelete'|trans|capitalize }}
                 </a>
                 {% endif %}
                 {% if not deleted %}
-                <a href="{{ geturl('delete' ) }}&amp;id={{ profile.id }}" class="btn btn-primary">
-                  {{ 'lbl.OK'|trans|capitalize }}
+                <a href="{{ geturl('delete' ) }}&amp;id={{ profile.id }}" class="btn btn-danger">
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
                 </a>
                 {% endif %}
               </div>
@@ -234,15 +232,17 @@
                 {% endif %}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-                {% if blocked %}
-                <a href="{{ geturl('block' ) }}&amp;id={{ profile.id }}" class="btn btn-primary">
-                  {{ 'lbl.OK'|trans|capitalize }}
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                </button>
+                {% if not blocked %}
+                <a href="{{ geturl('block' ) }}&amp;id={{ profile.id }}" class="btn btn-warning">
+                  <span class="fa fa-ban"></span>{{ 'lbl.Block'|trans|capitalize }}
                 </a>
                 {% endif %}
-                {% if not blocked %}
-                <a href="{{ geturl('block' ) }}&amp;id={{ profile.id }}" class="btn btn-primary">
-                  {{ 'lbl.OK'|trans|capitalize }}
+                {% if blocked %}
+                <a href="{{ geturl('block' ) }}&amp;id={{ profile.id }}" class="btn btn-success">
+                  <span class="fa fa-check"></span>{{ 'lbl.Unblock'|trans|capitalize }}
                 </a>
                 {% endif %}
               </div>

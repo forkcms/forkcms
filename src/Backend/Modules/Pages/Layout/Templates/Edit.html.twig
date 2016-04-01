@@ -256,55 +256,39 @@
               <span class="fa fa-file-o"></span>&nbsp;
               {{ 'lbl.SaveDraft'|trans|capitalize }}
             </a>
-            <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-              <span class="fa fa-check"></span>&nbsp;
-              {{ 'lbl.Save'|trans|capitalize }}
+            <button id="editButton" type="submit" name="edit" class="btn btn-success">
+              <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
             </button>
           </div>
         </div>
       </div>
     </div>
     {# This is the HTML content, hidden #}
-    <div class="modal fade" id="editContent" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Editor'|trans|capitalize }}"
-            aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <span class="modal-title h4">{{ 'lbl.Editor'|trans|capitalize }}</span>
-          </div>
-          <div class="modal-body">
-            {% for position in positions %}
-              {% for block in position.blocks %}
-                <div class="alert alert-warning">
-                  {{ 'msg.ContentSaveWarning'|trans }}
-                </div>
-                <div class="box contentBlock" style="margin: 0;">
-                  <div class="blockContent HTML optionsRTE">
-                    <fieldset>
-                      {{ block.formElements.txtHTML.parse() | raw }}
-                      {{ block.formElements.txtHTMLError.parse() | raw }}
-                    </fieldset>
-                  </div>
+    <div class="fade hidden" id="editContent" tabindex="-1">
+        {% for position in positions %}
+          {% for block in position.blocks %}
+            <div class="alert alert-warning">
+              {{ 'msg.ContentSaveWarning'|trans }}
+            </div>
+            <div class="box contentBlock" style="margin: 0;">
+              <div class="blockContent HTML optionsRTE">
+                <fieldset>
+                  {{ block.formElements.txtHTML.parse() | raw }}
+                  {{ block.formElements.txtHTMLError.parse() | raw }}
+                </fieldset>
+              </div>
 
-                  {# this will store the selected extra #}
-                  {{ block.formElements.hidExtraId.parse() | raw }}
+              {# this will store the selected extra #}
+              {{ block.formElements.hidExtraId.parse() | raw }}
 
-                  {# this will store the selected position #}
-                  {{ block.formElements.hidPosition.parse() | raw }}
+              {# this will store the selected position #}
+              {{ block.formElements.hidPosition.parse() | raw }}
 
-                  {# this will store the visible/hidden state #}
-                  <div style="display: none">{{ block.formElements.chkVisible.parse() | raw }}</div>
-                </div>
-              {% endfor %}
-            {% endfor %}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-            <button id="editContentSubmit" type="button" class="btn btn-primary">{{ 'lbl.OK'|trans|capitalize }}</button>
-          </div>
-        </div>
-      </div>
+              {# this will store the visible/hidden state #}
+              <div style="display: none">{{ block.formElements.chkVisible.parse() | raw }}</div>
+            </div>
+          {% endfor %}
+        {% endfor %}
     </div>
 
     {# Dialog to select the content (editor, module or widget). Do not change the ID! #}
@@ -322,7 +306,7 @@
             <p>{{ 'msg.HelpBlockContent'|trans }}</p>
 
             <div id="extraWarningAlreadyBlock" class="alert alert-warning">{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
-            <div id="extraWarningHomeNoBlock" class="alert alert-warning">{{ 'msg.HomeNoBlock'|trans }}</div>
+            <div id="extraWarningHomeNoBlock" class="alert alert-warning">{{ 'msg.HomeNoBlock'|trans }}</div><br>
             <div class="form-group">
               <label for="extraType" class="control-label">{{ 'lbl.Type'|trans|capitalize }}</label>
               {% form_field extra_type %}
@@ -341,8 +325,12 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-            <button id="addBlockSubmit" type="button" class="btn btn-primary">{{ 'lbl.OK'|trans|capitalize }}</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+            </button>
+            <button id="addBlockSubmit" type="button" class="btn btn-success">
+              <span class="fa fa-plus"></span>{{ 'lbl.Add'|trans|capitalize }}
+            </button>
           </div>
         </div>
       </div>
@@ -383,8 +371,12 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-            <button id="changeTemplateSubmit" type="button" class="btn btn-primary">{{ 'lbl.OK'|trans|capitalize }}</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+            </button>
+            <button id="changeTemplateSubmit" type="button" class="btn btn-success">
+              <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
+            </button>
           </div>
         </div>
       </div>
@@ -401,8 +393,11 @@
             <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-            <button id="confirmDeleteBlockSubmit" type="button" class="btn btn-primary">{{ 'lbl.OK'|trans|capitalize }}</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}</button>
+            <button id="confirmDeleteBlockSubmit" type="button" class="btn btn-danger">
+              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+            </button>
           </div>
         </div>
       </div>
@@ -421,15 +416,19 @@
           <div class="modal-body">
             <div class="alert alert-warning">
               {{ 'msg.ContentSaveWarning'|trans|raw }}
-            </div>
+            </div><br>
             <div class="form-group">
               {% form_field html %}
               {% form_field_error html %}
             </div>
           </div>
           <div class="modal-footer">
-            <button id="blockHtmlCancel" type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-            <button id="blockHtmlSubmit" type="button" class="btn btn-primary">{{ 'lbl.OK'|trans|capitalize }}</button>
+            <button id="blockHtmlCancel" type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+            </button>
+            <button id="blockHtmlSubmit" type="button" class="btn btn-success">
+              <span class="fa fa-pluss"></span>{{ 'lbl.Add'|trans|capitalize }}
+            </button>
           </div>
         </div>
       </div>
@@ -447,9 +446,11 @@
               <p>{{ 'msg.ConfirmDelete'|trans|sprintf(item.title ) }}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-              <a href="{{ geturl('delete' ) }}&amp;id={{ item.id }}" class="btn btn-primary">
-                {{ 'lbl.OK'|trans|capitalize }}
+              <button type="button" class="btn btn-default" data-dismiss="modal">
+                <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+              </button>
+              <a href="{{ geturl('delete' ) }}&amp;id={{ item.id }}" class="btn btn-danger">
+                <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
               </a>
             </div>
           </div>

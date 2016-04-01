@@ -17,7 +17,7 @@
           </label>
           {% form_field_error name %} {% form_field name %}
         </div>
-        <div class="content-block">
+        <div class="content-block content-block-pb">
           <div class="content-title">
             <p>{{ 'lbl.UsedIn'|trans|capitalize }}</p>
           </div>
@@ -36,7 +36,9 @@
       <div class="col-md-12">
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
-            <button id="editButton" type="submit" name="edit" class="btn btn-primary">{{ 'lbl.Save'|trans|capitalize }}</button>
+            <button id="editButton" type="submit" name="edit" class="btn btn-success">
+              <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
+            </button>
           </div>
         </div>
       </div>

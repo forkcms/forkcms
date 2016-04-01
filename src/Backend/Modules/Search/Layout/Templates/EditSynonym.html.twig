@@ -42,9 +42,8 @@
             {% endif %}
           </div>
           <div class="btn-group pull-right" role="group">
-            <button id="addButton" type="submit" name="add" class="btn btn-primary">
-              <span class="fa fa-plus"></span>&nbsp;
-              {{ 'lbl.AddSynonym'|trans|capitalize }}
+            <button id="addButton" type="submit" name="add" class="btn btn-success">
+              <span class="fa fa-plus"></span>{{ 'lbl.AddSynonym'|trans|capitalize }}
             </button>
           </div>
         </div>
@@ -59,9 +58,11 @@
                 <p>{{ 'msg.ConfirmDeleteSynonym'|trans|sprintf(term ) }}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-                <a href="{{ geturl('delete_synonym' ) }}&amp;id={{ record.id }}" class="btn btn-primary">
-                  {{ 'lbl.OK'|trans|capitalize }}
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                </button>
+                <a href="{{ geturl('delete_synonym' ) }}&amp;id={{ record.id }}" class="btn btn-danger">
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
                 </a>
               </div>
             </div>

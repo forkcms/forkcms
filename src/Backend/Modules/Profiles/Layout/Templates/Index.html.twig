@@ -81,8 +81,12 @@
                 <p>{{ 'msg.ConfirmMassDelete'|trans }}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-                <button type="submit" class="btn btn-primary">{{ 'lbl.OK'|trans|capitalize }}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                </button>
+                <button type="submit" class="btn btn-danger">
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+                </button>
               </div>
             </div>
           </div>
@@ -100,8 +104,12 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-                <button type="submit" class="btn btn-primary">{{ 'lbl.OK'|trans|capitalize }}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                </button>
+                <button type="submit" class="btn btn-success">
+                  <span class="fa fa-plus"></span>{{ 'lbl.Add'|trans|capitalize }}
+                </button>
               </div>
             </div>
           </div>

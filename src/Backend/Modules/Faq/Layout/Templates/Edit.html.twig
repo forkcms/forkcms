@@ -151,8 +151,8 @@
             {% endif %}
           </div>
           <div class="btn-group pull-right" role="group">
-            <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-              <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Publish'|trans|capitalize }}
+            <button id="editButton" type="submit" name="edit" class="btn btn-success">
+              <span class="fa fa-check"></span>{{ 'lbl.Publish'|trans|capitalize }}
             </button>
           </div>
         </div>
@@ -167,9 +167,10 @@
                 <p>{{ 'msg.ConfirmDelete'|trans|sprintf(title ) }}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-                <a href="{{ geturl('delete' ) }}&amp;id={{ item.id }}" class="btn btn-primary">
-                  {{ 'lbl.OK'|trans|capitalize }}
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}</button>
+                <a href="{{ geturl('delete' ) }}&amp;id={{ item.id }}" class="btn btn-danger">
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
                 </a>
               </div>
             </div>

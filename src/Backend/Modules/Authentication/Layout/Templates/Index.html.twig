@@ -114,10 +114,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              {{ 'lbl.Cancel'|trans|capitalize }}
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
             </button>
-            <button id="send" name="send" type="submit" class="btn btn-primary">
-              {{ 'lbl.Send'|trans|capitalize }}
+            <button id="send" name="send" type="submit" class="btn btn-success">
+              <span class="fa fa-envelope"></span>{{ 'lbl.Send'|trans|capitalize }}
             </button>
           </div>
           {% endform %}

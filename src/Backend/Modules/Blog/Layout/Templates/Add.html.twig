@@ -134,12 +134,10 @@
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
             <a href="#" id="saveAsDraft" class="btn btn-primary">
-              <span class="fa fa-file-o"></span>&nbsp;
-              {{ 'lbl.SaveDraft'|trans|capitalize }}
+              <span class="fa fa-file-o"></span>{{ 'lbl.SaveDraft'|trans|capitalize }}
             </a>
-            <button id="addButton" type="submit" name="add" class="btn btn-primary">
-              <span class="fa fa-plus"></span>&nbsp;
-              {{ 'lbl.Add'|trans|capitalize }}
+            <button id="addButton" type="submit" name="add" class="btn btn-success">
+              <span class="fa fa-plus"></span>{{ 'lbl.Add'|trans|capitalize }}
             </button>
           </div>
         </div>
@@ -162,8 +160,10 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-            <button id="addCategorySubmit" type="button" class="btn btn-primary">{{ 'lbl.OK'|trans|capitalize }}</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+            </button>
+            <button id="addCategorySubmit" type="button" class="btn btn-success"><span class="fa fa-plus"></span>{{ 'lbl.AddCategory'|trans|capitalize }}</button>
           </div>
         </div>
       </div>

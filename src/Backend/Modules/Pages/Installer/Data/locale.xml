@@ -3,6 +3,20 @@
   <Backend>
     <Pages>
       <item type="label" name="Add">
+        <translation language="nl"><![CDATA[toevoegen]]></translation>
+        <translation language="en"><![CDATA[add]]></translation>
+        <translation language="it"><![CDATA[aggiungi]]></translation>
+        <translation language="ru"><![CDATA[Добавить]]></translation>
+        <translation language="zh"><![CDATA[添加页面]]></translation>
+        <translation language="de"><![CDATA[hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter]]></translation>
+        <translation language="hu"><![CDATA[hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar]]></translation>
+        <translation language="uk"><![CDATA[сторінку]]></translation>
+        <translation language="lt"><![CDATA[naujas]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη]]></translation>
+      </item>
+      <item type="label" name="AddPage">
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
         <translation language="en"><![CDATA[add page]]></translation>
         <translation language="it"><![CDATA[aggiungi pagina]]></translation>

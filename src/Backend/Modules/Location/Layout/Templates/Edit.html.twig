@@ -66,7 +66,7 @@
     <div class="row fork-module-actions">
       <div class="col-md-12">
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">{{ 'lbl.UpdateMap'|trans|capitalize }}</button>
+          <button id="editButton" type="submit" name="edit" class="btn btn-success">{{ 'lbl.UpdateMap'|trans|capitalize }}</button>
         </div>
       </div>
     </div>
@@ -126,8 +126,8 @@
             </div>
             <div class="btn-toolbar">
               <div class="btn-group pull-right" role="group">
-                <a href="#" id="saveLiveData" class="btn btn-primary">
-                  <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
+                <a href="#" id="saveLiveData" class="btn btn-success">
+                  <span class="fa fa-check"></span>{{ 'lbl.Save'|trans|capitalize }}
                 </a>
               </div>
             </div>
@@ -147,8 +147,8 @@
             {% endif %}
           </div>
           <div class="btn-group pull-right" role="group">
-            <button id="saveLiveData" type="button" name="edit" class="btn btn-primary">
-              <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Save'|trans|capitalize }}
+            <button id="saveLiveData" type="button" name="edit" class="btn btn-success">
+              <span class="fa fa-check"></span>{{ 'lbl.Save'|trans|capitalize }}
             </button>
           </div>
         </div>
@@ -163,9 +163,11 @@
                 <p>{{ 'msg.ConfirmDelete'|trans|sprintf(item.title ) }}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|capitalize }}</button>
-                <a href="{{ geturl('delete' ) }}&amp;id={{ item.id }}" class="btn btn-primary">
-                  {{ 'lbl.OK'|trans|capitalize }}
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                </button>
+                <a href="{{ geturl('delete' ) }}&amp;id={{ item.id }}" class="btn btn-danger">
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
                 </a>
               </div>
             </div>

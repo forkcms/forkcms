@@ -3,19 +3,19 @@
   <Backend>
     <FormBuilder>
       <item type="label" name="Add">
-        <translation language="nl"><![CDATA[formulier toevoegen]]></translation>
-        <translation language="en"><![CDATA[add form]]></translation>
-        <translation language="it"><![CDATA[aggiungi form]]></translation>
-        <translation language="ru"><![CDATA[Добавить форму]]></translation>
+        <translation language="nl"><![CDATA[toevoegen]]></translation>
+        <translation language="en"><![CDATA[add]]></translation>
+        <translation language="it"><![CDATA[aggiungi]]></translation>
+        <translation language="ru"><![CDATA[Добавить]]></translation>
         <translation language="zh"><![CDATA[添加表单]]></translation>
-        <translation language="de"><![CDATA[Formular hinzufügen]]></translation>
-        <translation language="fr"><![CDATA[ajouter un formulaire]]></translation>
-        <translation language="hu"><![CDATA[űrlap hozzáadása]]></translation>
-        <translation language="es"><![CDATA[agregar formulario]]></translation>
-        <translation language="uk"><![CDATA[Додати форму]]></translation>
-        <translation language="lt"><![CDATA[nauja forma]]></translation>
-        <translation language="sv"><![CDATA[lägg till formulär]]></translation>
-        <translation language="el"><![CDATA[Προσθήκη φόρμας]]></translation>
+        <translation language="de"><![CDATA[hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter]]></translation>
+        <translation language="hu"><![CDATA[hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar]]></translation>
+        <translation language="uk"><![CDATA[Додати]]></translation>
+        <translation language="lt"><![CDATA[nauja]]></translation>
+        <translation language="sv"><![CDATA[lägg]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη]]></translation>
       </item>
       <item type="label" name="AddFields">
         <translation language="nl"><![CDATA[velden toevoegen]]></translation>
