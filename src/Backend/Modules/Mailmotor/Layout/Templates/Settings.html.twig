@@ -14,10 +14,10 @@
       <p><strong>{{ 'msg.ConfigurationError'|trans }}</strong></p>
       <ul>
         {% if not account %}
-        <li>{{ err.NoCMAccount }}</li>
+        <li>{{ 'err.NoCMAccount'|trans }}</li>
         {% endif %}
         {% if account %}
-        <li>{{ err.NoCMClientID }}</li>
+        <li>{{ 'err.NoCMClientID'|trans }}</li>
         {% endif %}
       </ul>
     </div>
