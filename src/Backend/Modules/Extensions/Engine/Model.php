@@ -61,18 +61,15 @@ class Model
         // cleanup
         $table = self::templateSyntaxToArray($format);
 
-        // add start html
-        $html = '<table cellspacing="10">' . "\n";
-        $html .= '	<tbody>' . "\n";
-
         // init var
         $rows = count($table);
         $cells = count($table[0]);
 
+        $htmlContent = array();
+
         // loop rows
         for ($y = 0; $y < $rows; $y++) {
-            // start row
-            $html .= '		<tr>' . "\n";
+            $htmlContent[$y] = array();
 
             // loop cells
             for ($x = 0; $x < $cells; $x++) {
@@ -120,62 +117,20 @@ class Model
                     }
                 }
 
-                // decide state
-                $exists = $value != '/';
-
-                // set values
-                $title = \SpoonFilter::ucfirst($value);
-
-                // start cell
-                $html .= '<td';
-
-                // add rowspan if needed
-                if ($rowspan > 1) {
-                    $html .= ' rowspan="' . $rowspan . '"';
-                }
-
-                // add colspan if needed
-                if ($colspan > 1) {
-                    $html .= ' colspan="' . $colspan . '"';
-                }
-
-                // does the cell need content?
-                if (!$exists) {
-                    $html .= ' class="empty">&nbsp;</td>' . "\n";
-                } else {
-                    // large visual?
-                    if ($large) {
-                        $html .= ' id="templatePosition-' . $value . '" data-position="' . $value . '" class="box templatePosition">
-                                    <div class="panel panel-default panel-pages-block">
-                                        <div class="panel-heading">
-                                            <div class="heading linkedBlocksTitle"><p>' . $title . '</p></div>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
-                                            <div class="text-center" role="toolbar">
-                                                <div class="btn-group" role="group">
-                                                    <a href="#addBlock" class="btn btn-primary btn-xs addBlock">
-                                                        <span class="fa fa-plus"></span>
-                                                        <span class="button-text hidden-xs"> ' . \SpoonFilter::ucfirst(BL::lbl('AddBlock')) . ' </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>' . "\n";
-                    } else {
-                        $html .= '><a href="#position-' . $value . '" title="' . $title . '">' . $title . '</a></td>' . "\n";
-                    }
-                }
+                $htmlContent[$y][$x] = array(
+                    'title' => \SpoonFilter::ucfirst($value),
+                    'value' => $value,
+                    'exists' => $value != '/',
+                    'rowspan' => $rowspan,
+                    'colspan' => $colspan,
+                    'large' => $large,
+                );
             }
-
-            // end row
-            $html .= '		</tr>' . "\n";
         }
 
-        // end html
-        $html .= '	</tbody>' . "\n";
-        $html .= '</table>' . "\n";
+        $templating = BackendModel::get('template');
+        $templating->assign('table', $htmlContent);
+        $html = $templating->getContent('Extensions/Layout/Templates/Templates.html.twig');
 
         return $html;
     }
