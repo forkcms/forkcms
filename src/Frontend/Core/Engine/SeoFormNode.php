@@ -186,7 +186,6 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
-            ->write('echo \'</div>\';')
             ->write($this->getField('meta_id'))
             ->write($this->getField('base_field_name'))
             ->write($this->getField('custom'))
