@@ -723,7 +723,7 @@ $panel-border-radius:         $border-radius-small;
 
 //** Border color for elements within panels
 $panel-inner-border:          #ddd;
-$panel-footer-bg:             #f5f5f5;
+$panel-footer-bg:             $gray-lightest;
 
 $panel-default-text:          $text-color;
 $panel-default-border:        #CCCCCC;

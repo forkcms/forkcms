@@ -6001,7 +6001,7 @@ button.list-group-item-danger {
 
 .panel-footer {
   padding: 8px 15px 10px;
-  background-color: #f5f5f5;
+  background-color: #f1f1f1;
   border-top: 1px solid #ddd;
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px; }
@@ -8590,8 +8590,15 @@ select[size="1"] {
     .panel-group .panel-heading a:hover .panel-title, .panel-group .panel-heading a:focus .panel-title {
       color: #000; }
 
-.panel-select {
+.panel-select label {
   cursor: pointer; }
+
+.panel-primary label .panel-heading {
+  background: #2f77d1;
+  color: #fff; }
+
+.panel-default label .panel-heading {
+  border-bottom: 1px solid #E5E5E5; }
 
 .nav.nav-tabs-xs > li > a {
   padding: 3px 5px; }

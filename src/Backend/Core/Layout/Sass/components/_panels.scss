@@ -69,5 +69,29 @@
 }
 
 .panel-select {
-  cursor: pointer;
+
+  label {
+    cursor: pointer;
+  }
+}
+
+.panel-primary {
+
+  label {
+
+    .panel-heading {
+      background: $brand-primary;
+      color: $white;
+    }
+  }
+}
+
+.panel-default {
+
+  label {
+
+    .panel-heading {
+      border-bottom: 1px solid $gray-lighter;
+    }
+  }
 }
