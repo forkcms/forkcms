@@ -9398,6 +9398,9 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
   width: 50px;
   margin: 0 auto 20px auto; }
 
+.footer-inner {
+  margin-top: 20px; }
+
 @media screen and (min-width: 768px) {
   html, body {
     height: 100%;
@@ -9407,10 +9410,10 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
     clear: both;
     min-height: 100%;
     height: 100%;
-    margin-bottom: -80px; }
+    margin-bottom: -100px; }
 
   #root-footer {
-    height: 80px; }
+    height: 100px; }
 
   .footer-login #footer {
     padding: 0;
@@ -9420,7 +9423,7 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
     bottom: 0;
     clear: both;
     position: absolute;
-    height: 80px;
+    height: 100px;
     margin-left: -240px;
     padding-left: 240px;
     width: 100%; }
