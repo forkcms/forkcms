@@ -111,7 +111,6 @@ class SeoFormNode extends \Twig_Node
             ->write('echo "<label for=\"urlOverwrite\" class=\"visuallyHidden\">";')
             ->write($this->getField('url_overwrite'))
             ->write('echo "<p>' . $this->lbl('URL') . '</p></label>";')
-            ->write('echo "<p class=\"help-block\">' . $this->msg('HelpMetaURL') . '</p>";')
             ->write('echo \'<div class="form-inline">\';');
 
         $compiler
@@ -119,7 +118,7 @@ class SeoFormNode extends \Twig_Node
             ->write('if (' . $this->hasVariable('detailUrl') . ') {')
             ->write($this->getVariable('detailUrl'))
             ->write('} else {')
-            ->write('echo "' . SITE_URL . '";')
+            ->write('echo "' . SITE_URL . '/' . ' ' . '";')
             ->write('}')
             ->write('echo \'</span>\';');
 
@@ -127,6 +126,7 @@ class SeoFormNode extends \Twig_Node
             ->write($this->getError('url'))
             ->write($this->getField('url'))
             ->write('echo \'</div>\';')
+            ->write('echo "<p class=\"help-block\">' . $this->msg('HelpMetaURL') . '</p>";')
             ->write('echo \'</li>\';')
             ->write('echo \'</ul>\';')
             ->write('echo \'</div>\';')
@@ -135,6 +135,8 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'<div class="row">\';')
             ->write('echo \'<div class="col-md-12">\';')
             ->write('echo "<p class=\"tab-pane-title\">' . $this->lbl('SEO') . '</p>";')
+            ->write('echo \'</div>\';')
+            ->write('echo \'<div class="col-md-6">\';')
             ->write('echo \'<div class="form-inline">\';')
             ->write('echo \'<div class="form-group">\';')
             ->write('echo "<p><b>' . $this->lbl('Index') . '</b></p>";');
@@ -158,6 +160,8 @@ class SeoFormNode extends \Twig_Node
         $compiler
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
+            ->write('echo \'</div>\';')
+            ->write('echo \'<div class="col-md-6">\';')
             ->write('echo \'<div class="form-inline">\';')
             ->write('echo \'<div class="form-group last">\';')
             ->write('echo "<p><b>' . $this->lbl('Follow') . '</b></p>";');
@@ -179,6 +183,7 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</ul>\';');
 
         $compiler
+            ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
