@@ -12,45 +12,47 @@
     <div class="row fork-module-content">
       <div class="col-md-12">
         <div class="content-block content-block-pb">
-          <table class="table table-striped">
-            <tr>
-              <td rowspan="6" class="text-center align-middle">
-                {% if record.settings.avatar %}
-                  <img class="img-circle" src="{{ FRONTEND_FILES_URL }}/backend_users/avatars/source/{{ record.settings.avatar }}" alt="" />
-                {% endif %}
-              </td>
-              <th>{{ 'lbl.Name'|trans|capitalize }}:</th>
-              <td><strong>{{ record.settings.name }} {{ record.settings.surname }}</strong></td>
-            </tr>
-            <tr>
-              <th>{{ 'lbl.Nickname'|trans|capitalize }}:</th>
-              <td>{{ record.settings.nickname }}</td>
-            </tr>
-            <tr>
-              <th>{{ 'lbl.Email'|trans|capitalize }}:</th>
-              <td>{{ record.email }}</td>
-            </tr>
-            <tr>
-              <th>{{ 'lbl.LastLogin'|trans|capitalize }}:</th>
-              <td>
-                {% if record.settings.last_login %}{{ record.settings.last_login|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
-                {% if not record.settings.last_login %}{{ lbl.NoPreviousLogin }}{% endif %}
-              </td>
-            </tr>
-            {% if record.settings.last_failed_login_attempt %}
+          <div class="table-responsive">
+            <table class="table table-striped">
               <tr>
-                <th>{{ 'lbl.LastFailedLoginAttempt'|trans|capitalize }}:</th>
-                <td>{{ record.settings.last_failed_login_attempt|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}</td>
+                <td rowspan="6" class="text-center align-middle">
+                  {% if record.settings.avatar %}
+                    <img class="img-circle" src="{{ FRONTEND_FILES_URL }}/backend_users/avatars/source/{{ record.settings.avatar }}" alt="" />
+                  {% endif %}
+                </td>
+                <th>{{ 'lbl.Name'|trans|capitalize }}:</th>
+                <td><strong>{{ record.settings.name }} {{ record.settings.surname }}</strong></td>
               </tr>
-            {% endif %}
-            <tr>
-              <th>{{ 'lbl.LastPasswordChange'|trans|capitalize }}:</th>
-              <td>
-                {% if record.settings.last_password_change %}{{ record.settings.last_password_change|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
-                {% if not record.settings.last_password_change %}{{ lbl.Never }}{% endif %}
-              </td>
-            </tr>
-          </table>
+              <tr>
+                <th>{{ 'lbl.Nickname'|trans|capitalize }}:</th>
+                <td>{{ record.settings.nickname }}</td>
+              </tr>
+              <tr>
+                <th>{{ 'lbl.Email'|trans|capitalize }}:</th>
+                <td>{{ record.email }}</td>
+              </tr>
+              <tr>
+                <th>{{ 'lbl.LastLogin'|trans|capitalize }}:</th>
+                <td>
+                  {% if record.settings.last_login %}{{ record.settings.last_login|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
+                  {% if not record.settings.last_login %}{{ 'lbl.NoPreviousLogin'|trans|capitalize }}{% endif %}
+                </td>
+              </tr>
+              {% if record.settings.last_failed_login_attempt %}
+                <tr>
+                  <th>{{ 'lbl.LastFailedLoginAttempt'|trans|capitalize }}:</th>
+                  <td>{{ record.settings.last_failed_login_attempt|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}</td>
+                </tr>
+              {% endif %}
+              <tr>
+                <th>{{ 'lbl.LastPasswordChange'|trans|capitalize }}:</th>
+                <td>
+                  {% if record.settings.last_password_change %}{{ record.settings.last_password_change|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
+                  {% if not record.settings.last_password_change %}{{ 'lbl.Never'|trans|capitalize }}{% endif %}
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -129,7 +131,11 @@
                     </div>
                     <div class="form-group">
                       <label>{{ 'lbl.PasswordStrength'|trans|capitalize }}:</label>
-                      <span class="strength {{ record.settings.password_strength }}">{{ passwordStrengthLabel|capitalize }}</span>
+                      <span class="strength strength-{{ record.settings.password_strength }}">
+                        <span class="label">
+                          {{ passwordStrengthLabel|capitalize }}
+                        </span>
+                      </span>
                     </div>
                   </div>
 

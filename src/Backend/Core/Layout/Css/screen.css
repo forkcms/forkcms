@@ -9331,6 +9331,18 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 .position .btn-icon-only {
   padding: 5px 10px 6px; }
 
+.strength-none .label {
+  background: #999999; }
+
+.strength-weak .label {
+  background: #d0021b; }
+
+.strength-average .label {
+  background: #F5A623; }
+
+.strength-strong .label {
+  background: #2C9F42; }
+
 /* General */
 .fork-module-heading {
   background: #fff;
