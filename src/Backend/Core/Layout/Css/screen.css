@@ -8059,6 +8059,13 @@ div.tabs ul li.selected {
   .container {
     width: 1430px; } }
 
+.row-small {
+  margin-left: -10px;
+  margin-right: -10px; }
+
+.col-small {
+  padding: 0 10px; }
+
 select[size="1"] {
   height: 34px; }
 
