@@ -97,6 +97,19 @@ class Language
         return $results;
     }
 
+    public static function getCurrentModule()
+    {
+        if (Model::getContainer()->has('url')) {
+            return Model::get('url')->getModule();
+        }
+
+        if (isset($_GET['module']) && $_GET['module'] != '') {
+            return (string) $_GET['module'];
+        }
+
+        return 'Core';
+    }
+
     /**
      * Get an error from the language-file
      *
@@ -108,13 +121,7 @@ class Language
     {
         // do we know the module
         if ($module === null) {
-            if (Model::getContainer()->has('url')) {
-                $module = Model::get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
+            $module = self::getCurrentModule();
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -187,13 +194,7 @@ class Language
     {
         // do we know the module
         if ($module === null) {
-            if (Model::getContainer()->has('url')) {
-                $module = Model::get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
+            $module = self::getCurrentModule();
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);

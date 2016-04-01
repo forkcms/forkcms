@@ -251,13 +251,7 @@ class TwigTemplate extends BaseTwigTemplate
     private function parseLabels()
     {
         // grab the current module
-        if (Model::getContainer()->has('url')) {
-            $currentModule = Model::get('url')->getModule();
-        } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-            $currentModule = (string) $_GET['module'];
-        } else {
-            $currentModule = 'Core';
-        }
+        $currentModule = Language::getCurrentModule();
 
         $errors = Language::getErrors();
         $labels = Language::getLabels();
