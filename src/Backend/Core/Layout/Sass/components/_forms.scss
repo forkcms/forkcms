@@ -29,6 +29,10 @@ select[size="1"] {
   &.error {
     border-color: $brand-danger;
   }
+
+  &.code {
+    font-family: "Source Code Pro";
+  }
 }
 
 .control-label {
