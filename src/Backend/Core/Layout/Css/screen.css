@@ -9281,6 +9281,12 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
 #login {
   min-height: 100%; }
+  #login .forgot-password {
+    font-size: 12px;
+    padding: 10px 9px 11px; }
+
+#authenticationIndex {
+  margin-top: 20px; }
 
 .page-header-login {
   border: none;
