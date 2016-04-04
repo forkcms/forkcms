@@ -8719,6 +8719,8 @@ select[size="1"] {
     .content .content-title select {
       display: inline-block;
       width: auto; }
+    .content .content-title .fa {
+      font-size: 14px; }
   .content .content-block.content-block-p {
     padding: 40px 0; }
   .content .content-block.content-block-pt {
