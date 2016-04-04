@@ -8,14 +8,14 @@
 
 {% include "/Layout/Templates/header.html.twig" %}
 
-<div class="main-wrapper main-wrapper-dashboard">
+<div class="main-wrapper main-wrapper-dashboard navigation-expanded">
     <div class="sidebar">
         {% include "/Layout/Templates/navigation.html.twig" %}
     </div>
 
     <div id="root">
         <div id="content" class="content-wrapper">
-            <div class="content-main content-main-dashboard">
+            <div class="content-main content-main-dashboard{% if attribute(cookies, 'navigation-collapse') == 'true' %} navigation-collapsed{% endif %}">
                 <div class="container-fluid">
                     {% block content %}
                     {% endblock %}
@@ -24,7 +24,9 @@
             <div id="root-footer"></div>
         </div>
     </div>
-    {% include "/Layout/Templates/footer.html.twig" %}
+    <div class="footer-dashboard">
+        {% include "/Layout/Templates/footer.html.twig" %}
+    </div>
 </div>
 
 <div id="messaging">

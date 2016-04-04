@@ -404,5 +404,10 @@ class TwigTemplate extends BaseTwigTemplate
                 break;
             }
         }
+
+        $this->assign(
+            'cookies',
+            Model::get('request')->cookies->all()
+        );
     }
 }

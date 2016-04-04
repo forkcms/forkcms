@@ -10,7 +10,7 @@
 
 {% include "/Layout/Templates/header.html.twig" %}
 
-<div class="main-wrapper main-wrapper-pages">
+<div class="main-wrapper main-wrapper-pages{% if attribute(cookies, 'navigation-collapse') == 'true' %} navigation-collapsed{% endif %}">
     <div class="sidebar">
         {% include "/Layout/Templates/navigation.html.twig" %}
         {% block pagesTree %}

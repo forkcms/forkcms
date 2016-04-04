@@ -48,6 +48,7 @@ var jsBackend =
         jsBackend.ckeditor.init();
         jsBackend.resizeFunctions.init();
         jsBackend.navigationControls.init();
+        jsBackend.navigationToggleCollapse.init();
 
         // IE fixes
         jsBackend.selectors.init();
@@ -103,6 +104,29 @@ var jsBackend =
         });
         $(document).ajaxStop(function () {
             $ajaxSpinner.hide();
+        });
+    }
+};
+
+
+/**
+ * Navigation toggle collapse
+ *
+ * @author    Katrien Vanhaute <katrien@sumocoders.be>
+ */
+
+jsBackend.navigationToggleCollapse =
+{
+    init: function(){
+        var $wrapper = $('.main-wrapper');
+        var $navCollapse = $('.js-toggle-nav');
+        var collapsed = ($wrapper.hasClass('navigation-collapsed')) ? true : false;
+
+        $navCollapse.on('click', function(e) {
+            e.preventDefault();
+            $wrapper.toggleClass('navigation-collapsed');
+            collapsed = !collapsed;
+            utils.cookies.setCookie('navigation-collapse', collapsed);
         });
     }
 };

@@ -26,81 +26,31 @@ html {
 
   .main-wrapper {
     min-height: 100%;
-    padding-left: 240px;
     margin-top: -82px;
+    padding-left: 430px;
     padding-top: 82px;
     position: relative;
+    -webkit-transition: padding 250ms;
+    -moz-transition: padding 250ms;
+    -ms-transition: padding 250ms;
+    -o-transition: padding 250ms;
+    transition: padding 250ms;
 
-    .sidebar {
-      bottom: 0;
-      height: auto;
-      left: 0;
-      overflow-y: hidden;
-      position: absolute;
-      top: 82px;
-      width: 240px;
-      z-index: 2;
-
-      .main-navigation {
-        background: $brand-primary-dark;
-        min-height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 50px;
-      }
-
-      .sub-navigation {
-        background: $white;
-        border-right: 1px solid $gray-lighter;
-        min-height: 100%;
-        position: absolute;
-        top: 0;
-        left: 50px;
-        width: 190px;
-      }
-    }
-
-    &.main-wrapper-pages {
-      padding-left: 290px;
+    &.navigation-collapsed {
+      padding-left: 240px;
 
       .sidebar {
-        width: 290px;
+        width: 240px;
+
+
+        .main-navigation {
+          width: 50px;
+        }
 
         .sub-navigation {
-          width: 240px;
+          left: 50px;
+          width: 190px;
         }
-      }
-    }
-
-    &.main-wrapper-dashboard {
-      padding-left: 50px;
-
-      .sidebar {
-        width: 240px;
-      }
-    }
-  }
-
-  .content-main {
-    width: 100%;
-  }
-}
-
-@media screen and (min-width: $screen-md) {
-
-  .main-wrapper {
-    padding-left: 430px;
-
-    .sidebar {
-      width: 430px;
-
-      .main-navigation {
-        width: 240px;
-      }
-
-      .sub-navigation {
-        left: 240px;
       }
     }
 
@@ -114,10 +64,83 @@ html {
           width: 240px;
         }
       }
+
+      &.navigation-collapsed {
+        padding-left: 290px;
+
+        .sidebar {
+          width: 290px;
+
+          .sub-navigation {
+            width: 240px;
+          }
+        }
+      }
     }
 
     &.main-wrapper-dashboard {
       padding-left: 240px;
+
+      .sidebar {
+        width: 240px;
+      }
+
+      &.navigation-collapsed {
+        padding-left: 50px;
+
+        .sidebar {
+          width: 50px;
+        }
+      }
     }
+
+    .sidebar {
+      bottom: 0;
+      height: auto;
+      left: 0;
+      overflow-y: hidden;
+      position: absolute;
+      top: 82px;
+      width: 430px;
+      z-index: 2;
+      -webkit-transition: width 250ms;
+      -moz-transition: width 250ms;
+      -ms-transition: width 250ms;
+      -o-transition: width 250ms;
+      transition: width 250ms;
+
+      .main-navigation {
+        background: $brand-primary-dark;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 240px;
+        -webkit-transition: width 250ms;
+        -moz-transition: width 250ms;
+        -ms-transition: width 250ms;
+        -o-transition: width 250ms;
+        transition: width 250ms;
+      }
+
+      .sub-navigation {
+        background: $white;
+        border-right: 1px solid $gray-lighter;
+        min-height: 100%;
+        position: absolute;
+        left: 240px;
+        top: 0;
+        width: 190px;
+        -webkit-transition: width,left 250ms;
+        -moz-transition: width,left 250ms;
+        -ms-transition: width,left 250ms;
+        -o-transition: width,left 250ms;
+        transition: width,left 250ms;
+      }
+    }
+  }
+
+  .content-main {
+    width: 100%;
   }
 }

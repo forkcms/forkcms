@@ -39,25 +39,14 @@
     clear: both;
     position: absolute;
     height: $footer-height;
-    margin-left: -240px;
-    padding-left: 240px;
-    width: 100%;
-  }
-
-  .footer-pages {
-
-    #footer {
-      margin-left: -290px;
-      padding-left: 290px;
-    }
-  }
-}
-
-@media screen and (min-width: $screen-md) {
-
-  #footer {
     margin-left: -430px;
     padding-left: 430px;
+    width: 100%;
+    -webkit-transition: width 250ms;
+    -moz-transition: width 250ms;
+    -ms-transition: width 250ms;
+    -o-transition: width 250ms;
+    transition: width 250ms;
   }
 
   .footer-pages {
@@ -65,6 +54,43 @@
     #footer {
       margin-left: -480px;
       padding-left: 480px;
+    }
+  }
+
+  .footer-dashboard {
+
+    #footer {
+      margin-left: -240px;
+      padding-left: 240px;
+    }
+  }
+
+  .navigation-collapsed {
+
+    #footer {
+      margin-left: -240px;
+      padding-left: 240px;
+      -webkit-transition: width 250ms;
+      -moz-transition: width 250ms;
+      -ms-transition: width 250ms;
+      -o-transition: width 250ms;
+      transition: width 250ms;
+    }
+
+    .footer-pages {
+
+      #footer {
+        margin-left: -290px;
+        padding-left: 290px;
+      }
+    }
+
+    .footer-dashboard {
+
+      #footer {
+        margin-left: -50px;
+        padding-left: 50px;
+      }
     }
   }
 }
