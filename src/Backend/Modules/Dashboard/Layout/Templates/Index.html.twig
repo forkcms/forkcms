@@ -15,7 +15,7 @@
   <div class="row row-small">
     {% for widget in widgets %}
       {% if widget.content is not empty %}
-        <div class="col-sm-12 col-md-4 col-small fork-dashboard-column column">
+        <div class="col-sm-12 col-md-4 col-small fork-dashboard-column">
           <div class="fork-widget sortableWidget" data-module="{{ widget.module }}" data-widget="{{ widget.widget }}" data-title="{{ widget.title }}"{% if widget.hidden %} style="display: none;"{% endif %}>
             <a href="#" class="editDashboardClose close ui-dialog-titlebar-close ui-corner-all" style="display: none;">&times;</a>
             {% if widget.hidden %}

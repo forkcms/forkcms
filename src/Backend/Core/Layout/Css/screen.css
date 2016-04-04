@@ -8606,6 +8606,9 @@ select[size="1"] {
 .panel-default label .panel-heading {
   border-bottom: 1px solid #E5E5E5; }
 
+.fork-dashboard-column .panel-default .panel-body {
+  padding: 20px 15px 13px; }
+
 .nav.nav-tabs-xs > li > a {
   padding: 3px 5px; }
 
