@@ -78,10 +78,15 @@
 .panel-primary {
 
   label {
+    width: 100%;
 
     .panel-heading {
       background: $brand-primary;
       color: $white;
+    }
+
+    .panel-body {
+      padding: 20px 15px 13px;
     }
   }
 }
@@ -89,9 +94,14 @@
 .panel-default {
 
   label {
+    width: 100%;
 
     .panel-heading {
       border-bottom: 1px solid $gray-lighter;
+    }
+
+    .panel-body {
+      padding: 20px 15px 13px;
     }
   }
 }
