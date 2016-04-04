@@ -503,6 +503,7 @@ class Add extends BackendBaseActionAdd
 
             // create datagrid
             $actionGrid = new BackendDataGridArray($actionBoxes[$key]['actions']);
+            $actionGrid->setHeaderLabels(array('check' => ''));
 
             // disable paging
             $actionGrid->setPaging(false);
