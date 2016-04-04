@@ -6,7 +6,7 @@
     <div class="sub-navigation hidden-xs">
         <div class="pages-tree">
             <div class="alert alert-warning visible-sm">
-                <p>{{ 'msg.MovePagesNotPossible'|trans }}</p>
+                <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MovePagesNotPossible'|trans }}</p>
             </div>
             <div id="tree">
                 {{ tree|raw }}
@@ -204,7 +204,7 @@
             {% for position in positions %}
                 {% for block in position.blocks %}
                     <div class="alert alert-warning">
-                        {{ 'msg.ContentSaveWarning'|trans }}
+                        <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ContentSaveWarning'|trans }}
                     </div>
                     <div class="box contentBlock" style="margin: 0;">
                         <div class="blockContent HTML optionsRTE">
@@ -241,8 +241,8 @@
 
                         <p>{{ 'msg.HelpBlockContent'|trans }}</p>
 
-                        <div id="extraWarningAlreadyBlock" class="alert alert-warning">{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
-                        <div id="extraWarningHomeNoBlock" class="alert alert-warning">{{ 'msg.HomeNoBlock'|trans }}</div>
+                        <div id="extraWarningAlreadyBlock" class="alert alert-warning"><span class="fa fa-exclamation-triangle"></span>{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
+                        <div id="extraWarningHomeNoBlock" class="alert alert-warning"><span class="fa fa-exclamation-triangle"></span>{{ 'msg.HomeNoBlock'|trans }}</div>
                         <div class="form-group">
                             <label for="extraType" class="control-label">{{ 'lbl.Type'|trans|capitalize }}</label>
                             {% form_field extra_type %}
@@ -281,7 +281,7 @@
                         <span class="modal-title h4">{{ 'lbl.ChooseATemplate'|trans|capitalize }}</span>
                     </div>
                     <div class="modal-body">
-                        <div class="alert alert-warning">{{ 'msg.TemplateChangeWarning'|trans|raw }}</div>
+                        <div class="alert alert-warning"><span class="fa fa-exclamation-triangle"></span>{{ 'msg.TemplateChangeWarning'|trans|raw }}</div>
                         <div id="templateList">
                             <div class="row">
                                 {% for template in templates %}
@@ -351,7 +351,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-warning">
-                            {{ 'msg.ContentSaveWarning'|trans|raw }}
+                            <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ContentSaveWarning'|trans|raw }}
                         </div>
                         <div class="form-group">
                             {% form_field html %}

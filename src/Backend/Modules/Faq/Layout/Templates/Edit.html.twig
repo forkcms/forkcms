@@ -17,7 +17,7 @@
           <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
           {% endif %}
           {% if not detailURL %}
-          <p class="alert alert-warning alert-xs"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|capitalize }}</p>
+          <p class="alert alert-warning alert-xs"><span class="fa fa-exclamation-triangle"></span>{{ 'err.NoModuleLinked'|trans|capitalize }}</p>
           {% endif %}
         </div>
       </div>

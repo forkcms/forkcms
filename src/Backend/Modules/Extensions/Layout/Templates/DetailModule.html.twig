@@ -12,7 +12,7 @@
     <div class="col-md-12">
       {% for warning in warnings %}
       <div class="alert alert-warning" role="alert">
-        {{ warning.message|raw }}
+        <span class="fa fa-exclamation-triangle"></span>{{ warning.message|raw }}
       </div>
       {% endfor %}
     </div>
