@@ -9086,7 +9086,20 @@ select[size="1"] {
     padding: 14px 0 0; }
     #templateVisualLarge .btn-group .btn,
     #templateVisualFallback .btn-group .btn {
-      padding: 6px 15px 7px; }
+      padding: 6px 12px 6px; }
+      #templateVisualLarge .btn-group .btn .fa,
+      #templateVisualFallback .btn-group .btn .fa {
+        padding-right: 0; }
+  @media screen and (min-width: 768px) {
+    #templateVisualLarge .btn-group,
+    #templateVisualFallback .btn-group {
+      padding: 14px 0 0; }
+      #templateVisualLarge .btn-group .btn,
+      #templateVisualFallback .btn-group .btn {
+        padding: 6px 15px 7px; }
+        #templateVisualLarge .btn-group .btn .fa,
+        #templateVisualFallback .btn-group .btn .fa {
+          padding-right: 4px; } }
   #templateVisualLarge .templatePositionCurrentType,
   #templateVisualFallback .templatePositionCurrentType {
     border: 1px solid #CCCCCC;
