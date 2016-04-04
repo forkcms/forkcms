@@ -24,7 +24,7 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabPublished">
             {% if dgPublished %}
-            <form act.on="{{  geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsPublished">
+            <form action="{{  geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsPublished">
               <input type="hidden" name="from" value="published" />
               <div class="table-responsive">
                 {{ dgPublished|raw }}
