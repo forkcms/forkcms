@@ -9317,16 +9317,26 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
       border-bottom: 1px solid #999999;
       text-decoration: none; }
 
-.content-action-bar .btn-toolbar .btn-text {
-  display: none; }
-.content-action-bar .btn-toolbar .btn .fa {
-  padding: 0 4px; }
+.content-action-bar .btn-toolbar {
+  margin-top: 10px; }
+  .content-action-bar .btn-toolbar .btn-text {
+    display: block;
+    font-size: 10px; }
+  .content-action-bar .btn-toolbar .btn {
+    padding: 2px 6px 3px; }
+    .content-action-bar .btn-toolbar .btn .fa {
+      padding: 0 4px; }
 
 @media screen and (min-width: 992px) {
-  .content-action-bar .btn-toolbar .btn-text {
-    display: inline-block; }
-  .content-action-bar .btn-toolbar .btn .fa {
-    padding: 0 4px 0 0; } }
+  .content-action-bar .btn-toolbar {
+    margin-top: 0; }
+    .content-action-bar .btn-toolbar .btn-text {
+      display: inline-block;
+      font-size: 14px; }
+    .content-action-bar .btn-toolbar .btn {
+      padding: 9px 12px 10px; }
+      .content-action-bar .btn-toolbar .btn .fa {
+        padding: 0 4px 0 0; } }
 .modal-content {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;

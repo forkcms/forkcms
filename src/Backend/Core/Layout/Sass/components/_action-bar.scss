@@ -1,13 +1,19 @@
 .content-action-bar {
 
   .btn-toolbar {
+    margin-top: 10px;
 
     .btn-text {
-      display: none;
+      display: block;
+      font-size: $font-size-extra-small;
     }
 
-    .btn .fa {
-      padding: 0 4px;
+    .btn {
+      padding: 2px 6px 3px;
+
+      .fa {
+        padding: 0 4px;
+      }
     }
   }
 }
@@ -18,13 +24,19 @@
   .content-action-bar {
 
     .btn-toolbar {
+      margin-top: 0;
 
       .btn-text {
         display: inline-block;
+        font-size: $font-size-base;
       }
 
-      .btn .fa {
-        padding: 0 4px 0 0;
+      .btn {
+        padding: 9px 12px 10px;
+
+        .fa {
+          padding: 0 4px 0 0;
+        }
       }
     }
   }
