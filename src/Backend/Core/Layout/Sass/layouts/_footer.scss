@@ -42,11 +42,11 @@
     margin-left: -430px;
     padding-left: 430px;
     width: 100%;
-    -webkit-transition: width 250ms;
-    -moz-transition: width 250ms;
-    -ms-transition: width 250ms;
-    -o-transition: width 250ms;
-    transition: width 250ms;
+    -webkit-transition: padding, margin 250ms;
+    -moz-transition: padding, margin 250ms;
+    -ms-transition: padding, margin 250ms;
+    -o-transition: padding, margin 250ms;
+    transition: padding, margin 250ms;
   }
 
   .footer-pages {
@@ -70,11 +70,11 @@
     #footer {
       margin-left: -240px;
       padding-left: 240px;
-      -webkit-transition: width 250ms;
-      -moz-transition: width 250ms;
-      -ms-transition: width 250ms;
-      -o-transition: width 250ms;
-      transition: width 250ms;
+      -webkit-transition: padding, margin 250ms;
+      -moz-transition: padding, margin 250ms;
+      -ms-transition: padding, margin 250ms;
+      -o-transition: padding, margin 250ms;
+      transition: padding, margin 250ms;
     }
 
     .footer-pages {
