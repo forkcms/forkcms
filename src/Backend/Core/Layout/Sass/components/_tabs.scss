@@ -56,3 +56,20 @@
     }
   }
 }
+
+.fork-dashboard-column {
+
+  .nav-tabs {
+
+    li {
+
+       a {
+         background: $gray-lighter;
+       }
+
+      &.active a {
+        background: $white;
+      }
+    }
+  }
+}

@@ -8705,6 +8705,11 @@ select[size="1"] {
   background: #d0021b;
   color: #fff; }
 
+.fork-dashboard-column .nav-tabs li a {
+  background: #E5E5E5; }
+.fork-dashboard-column .nav-tabs li.active a {
+  background: #fff; }
+
 .header {
   background: #fff;
   border-bottom: 3px solid #E5E5E5;
