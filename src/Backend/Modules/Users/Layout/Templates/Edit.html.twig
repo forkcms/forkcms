@@ -15,7 +15,7 @@
           <div class="table-responsive">
             <table class="table table-striped">
               <tr>
-                <td rowspan="6" class="text-center align-middle">
+                <td rowspan="{% if not record.settings.last_failed_login_attempt %}5{% endif %}{% if record.settings.last_failed_login_attempt %}6{% endif %}" class="text-center align-middle">
                   {% if record.settings.avatar %}
                     <img class="img-circle" src="{{ FRONTEND_FILES_URL }}/backend_users/avatars/source/{{ record.settings.avatar }}" alt="" />
                   {% endif %}
