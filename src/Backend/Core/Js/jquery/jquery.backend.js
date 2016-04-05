@@ -1552,7 +1552,7 @@
 						html += '	<li class="form-group input-group">' +
 								'	    <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
                                 '		<a href="#" class="btn btn-danger input-group-addon deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
-                                '           <span class="fa fa-plus"></span>' +
+                                '           <span class="fa fa-trash"></span>' +
                                 '			<span>' + options.removeLabel + '</span>' +
                                 '		</a>' +
 								'	</li>';
