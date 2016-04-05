@@ -127,6 +127,10 @@ jsBackend.navigationToggleCollapse =
             $wrapper.toggleClass('navigation-collapsed');
             collapsed = !collapsed;
             utils.cookies.setCookie('navigation-collapse', collapsed);
+            setTimeout(function(){
+                jsBackend.resizeFunctions.init();
+            }, 250);
+
         });
     }
 };
@@ -2040,6 +2044,11 @@ jsBackend.resizeFunctions = {
         calculate = (function(_this) {
             return function() {
                 jsBackend.navigationControls.resize();
+                if (typeof jsBackend.analytics !== 'undefined'){
+                    jsBackend.analytics.charts.init();
+                    jsBackend.analytics.chartDoubleMetricPerDay.init();
+                    jsBackend.analytics.chartPieChart.init();
+                }
                 return ticking = false;
             };
         })(this);

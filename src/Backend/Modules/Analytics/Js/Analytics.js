@@ -10,10 +10,6 @@ jsBackend.analytics =
         // variables
         $chartPieChart = $('#chartPieChart');
         $chartDoubleMetricPerDay = $('#chartDoubleMetricPerDay');
-
-        jsBackend.analytics.charts.init();
-        jsBackend.analytics.chartDoubleMetricPerDay.init();
-        jsBackend.analytics.chartPieChart.init();
     }
 };
 
