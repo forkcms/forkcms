@@ -129,7 +129,10 @@
                       </label>
                       <p class="help-block">{{ 'msg.HelpPrice'|trans }}</p>
                       <div class="form-inline">
-                        € {% form_field_error price_per_email %} {% form_field price_per_email %}
+                        <div class="input-group">
+                          <div class="input-group-addon">€</div>
+                          {% form_field_error price_per_email %} {% form_field price_per_email %}
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
@@ -139,7 +142,10 @@
                       </label>
                       <p class="help-block">{{ 'msg.HelpPrice'|trans }}</p>
                       <div class="form-inline">
-                        € {% form_field_error price_per_campaign %} {% form_field price_per_campaign %}
+                        <div class="input-group">
+                          <div class="input-group-addon">€</div>
+                          {% form_field_error price_per_campaign %} {% form_field price_per_campaign %}
+                        </div>
                       </div>
                     </div>
                   </div>
