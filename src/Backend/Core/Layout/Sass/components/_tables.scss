@@ -58,3 +58,11 @@
     margin-bottom: 0;
   }
 }
+
+.fork-dashboard-column {
+
+  .table-striped > tbody > tr:nth-of-type(even) {
+    background: $gray-lighter;
+  }
+
+}

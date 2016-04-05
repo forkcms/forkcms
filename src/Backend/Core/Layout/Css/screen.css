@@ -8552,6 +8552,9 @@ select[size="1"] {
   .table .form-group {
     margin-bottom: 0; }
 
+.fork-dashboard-column .table-striped > tbody > tr:nth-of-type(even) {
+  background: #E5E5E5; }
+
 .alert {
   border: none;
   margin: 10px 0 0; }
