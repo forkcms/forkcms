@@ -118,12 +118,10 @@
   /* Blocks container */
 
   .linkedBlocks {
-    margin: 0px;
-    border-top: 1px solid #DDD;
+    padding: 20px 0;
 
     &:empty {
-      padding-top: 12px;
-      margin: 0 12px;
+      padding-top: 0;
       border-top: 0;
     }
   }
@@ -131,7 +129,6 @@
   /* Button holder */
 
   .btn-group {
-    padding: 14px 0 0;
 
     .btn {
       padding: 6px 12px 6px;
@@ -145,7 +142,6 @@
   @media screen and (min-width: $screen-sm) {
 
     .btn-group {
-      padding: 14px 0 0;
 
       .btn {
         padding: 6px 15px 7px;
@@ -161,12 +157,12 @@
 
   .templatePositionCurrentType {
     border: 1px solid $panel-default-border;
-    border-top: 0;
     background: $white;
     position: relative;
     cursor: move;
     height: 61px;
     overflow: hidden;
+    overflow: ellipsis;
     overflow: ellipsis;
     padding: 12px 15px;
 
@@ -207,7 +203,7 @@
       opacity: 0;
       position: absolute;
       right: 15px;
-      top: 0;
+      top: 14px;
       -webkit-transition: opacity 0.3s ease-in-out;
       -moz-transition: opacity 0.3s ease-in-out;
       -o-transition: opacity 0.3s ease-in-out;
@@ -295,7 +291,7 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 .current-template {
   font-size: $font-size-btn;
   padding-left: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 
   a {
     border-bottom: 1px solid $brand-primary;
@@ -317,6 +313,7 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
 .dragAndDropPlaceholder {
   background: $gray-lighter;
+  border: none;
   height: 61px;
   margin: 5px 0;
 }

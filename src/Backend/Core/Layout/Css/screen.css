@@ -8634,6 +8634,10 @@ select[size="1"] {
   .panel-default.panel-pages-block {
     border: none;
     margin-bottom: 0; }
+    .panel-default.panel-pages-block .panel-heading {
+      padding: 8px 20px 10px; }
+    .panel-default.panel-pages-block .panel-body {
+      padding: 0 20px 20px; }
 
 .panel-title a {
   border: none;
@@ -9142,41 +9146,33 @@ select[size="1"] {
     box-shadow: 0 -1px 0 1px #FFF; }
   #templateVisualLarge .linkedBlocks,
   #templateVisualFallback .linkedBlocks {
-    margin: 0px;
-    border-top: 1px solid #DDD; }
+    padding: 20px 0; }
     #templateVisualLarge .linkedBlocks:empty,
     #templateVisualFallback .linkedBlocks:empty {
-      padding-top: 12px;
-      margin: 0 12px;
+      padding-top: 0;
       border-top: 0; }
-  #templateVisualLarge .btn-group,
-  #templateVisualFallback .btn-group {
-    padding: 14px 0 0; }
+  #templateVisualLarge .btn-group .btn,
+  #templateVisualFallback .btn-group .btn {
+    padding: 6px 12px 6px; }
+    #templateVisualLarge .btn-group .btn .fa,
+    #templateVisualFallback .btn-group .btn .fa {
+      padding-right: 0; }
+  @media screen and (min-width: 768px) {
     #templateVisualLarge .btn-group .btn,
     #templateVisualFallback .btn-group .btn {
-      padding: 6px 12px 6px; }
+      padding: 6px 15px 7px; }
       #templateVisualLarge .btn-group .btn .fa,
       #templateVisualFallback .btn-group .btn .fa {
-        padding-right: 0; }
-  @media screen and (min-width: 768px) {
-    #templateVisualLarge .btn-group,
-    #templateVisualFallback .btn-group {
-      padding: 14px 0 0; }
-      #templateVisualLarge .btn-group .btn,
-      #templateVisualFallback .btn-group .btn {
-        padding: 6px 15px 7px; }
-        #templateVisualLarge .btn-group .btn .fa,
-        #templateVisualFallback .btn-group .btn .fa {
-          padding-right: 4px; } }
+        padding-right: 4px; } }
   #templateVisualLarge .templatePositionCurrentType,
   #templateVisualFallback .templatePositionCurrentType {
     border: 1px solid #CCCCCC;
-    border-top: 0;
     background: #fff;
     position: relative;
     cursor: move;
     height: 61px;
     overflow: hidden;
+    overflow: ellipsis;
     overflow: ellipsis;
     padding: 12px 15px; }
     #templateVisualLarge .templatePositionCurrentType.ui-sortable-helper,
@@ -9213,7 +9209,7 @@ select[size="1"] {
       opacity: 0;
       position: absolute;
       right: 15px;
-      top: 0;
+      top: 14px;
       -webkit-transition: opacity 0.3s ease-in-out;
       -moz-transition: opacity 0.3s ease-in-out;
       -o-transition: opacity 0.3s ease-in-out;
@@ -9280,7 +9276,7 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 .current-template {
   font-size: 16px;
   padding-left: 15px;
-  margin-bottom: 15px; }
+  margin-bottom: 5px; }
   .current-template a {
     border-bottom: 1px solid #2f77d1;
     font-size: 12px;
@@ -9296,6 +9292,7 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
 .dragAndDropPlaceholder {
   background: #E5E5E5;
+  border: none;
   height: 61px;
   margin: 5px 0; }
 

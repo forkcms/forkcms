@@ -15,6 +15,14 @@
   &.panel-pages-block {
     border: none;
     margin-bottom: 0;
+
+    .panel-heading {
+      padding: 8px 20px 10px;
+    }
+
+    .panel-body {
+      padding: 0 20px 20px;
+    }
   }
 }
 
