@@ -9397,6 +9397,8 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
   margin-bottom: 30px; }
   .page-header-login .site-info {
     float: none; }
+    .page-header-login .site-info .site-title {
+      font-size: 16px; }
 
 .login-form .form-group {
   margin-bottom: 10px; }

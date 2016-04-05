@@ -17,6 +17,10 @@
 
   .site-info {
     float: none;
+
+    .site-title {
+      font-size: $font-size-btn;
+    }
   }
 }
 
