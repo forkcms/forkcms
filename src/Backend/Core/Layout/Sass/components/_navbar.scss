@@ -503,6 +503,22 @@
     }
   }
 
+  .navigation-collapsed {
+
+    .navbar-default {
+
+      .navbar-nav {
+
+        .nav-item {
+
+          a {
+            padding: 15px 0 15px 50px;
+          }
+        }
+      }
+    }
+  }
+
   .main-navigation {
 
     .js-nav-prev,

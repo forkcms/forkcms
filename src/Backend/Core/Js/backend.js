@@ -47,8 +47,7 @@ var jsBackend =
         jsBackend.tableSequenceByDragAndDrop.init();
         jsBackend.ckeditor.init();
         jsBackend.resizeFunctions.init();
-        jsBackend.navigationControls.init();
-        jsBackend.navigationToggleCollapse.init();
+        jsBackend.navigation.init();
 
         // IE fixes
         jsBackend.selectors.init();
@@ -108,33 +107,6 @@ var jsBackend =
     }
 };
 
-
-/**
- * Navigation toggle collapse
- *
- * @author    Katrien Vanhaute <katrien@sumocoders.be>
- */
-
-jsBackend.navigationToggleCollapse =
-{
-    init: function(){
-        var $wrapper = $('.main-wrapper');
-        var $navCollapse = $('.js-toggle-nav');
-        var collapsed = ($wrapper.hasClass('navigation-collapsed')) ? true : false;
-
-        $navCollapse.on('click', function(e) {
-            e.preventDefault();
-            $wrapper.toggleClass('navigation-collapsed');
-            collapsed = !collapsed;
-            utils.cookies.setCookie('navigation-collapse', collapsed);
-            setTimeout(function(){
-                jsBackend.resizeFunctions.init();
-            }, 250);
-
-        });
-    }
-};
-
 /**
  * Navigation controls
  *
@@ -142,10 +114,15 @@ jsBackend.navigationToggleCollapse =
  * @author    Daan De Deckere <daan@sumocoders.be>
  */
 
-jsBackend.navigationControls =
+jsBackend.navigation =
 {
-    init: function(){
+    init: function() {
+        jsBackend.navigation.mobile();
+        jsBackend.navigation.toggleCollapse();
+        jsBackend.navigation.tooltip();
+    },
 
+    mobile: function() {
         var navbarWidth = this.calculations()[2];
         var $navbarNav = this.calculations()[0];
 
@@ -167,7 +144,6 @@ jsBackend.navigationControls =
     },
 
     resize: function() {
-
         var $navbarNav = this.calculations()[0];
         var navbarWidth = this.calculations()[2];
         var windowWidth = this.calculations()[3];
@@ -177,7 +153,44 @@ jsBackend.navigationControls =
             $('.js-nav-next').hide();
         }
         this.setControls(0);
+    },
 
+    toggleCollapse: function() {
+        var $wrapper = $('.main-wrapper');
+        var $navCollapse = $('.js-toggle-nav');
+        var collapsed = ($wrapper.hasClass('navigation-collapsed')) ? true : false;
+
+        $navCollapse.on('click', function(e) {
+            e.preventDefault();
+            $wrapper.toggleClass('navigation-collapsed');
+            collapsed = !collapsed;
+            utils.cookies.setCookie('navigation-collapse', collapsed);
+            setTimeout(function(){
+                jsBackend.resizeFunctions.init();
+            }, 250);
+
+        });
+    },
+
+    tooltip: function(){
+        var $tooltip = $('[data-toggle="tooltip-nav"]');
+        var $wrapper = $('.main-wrapper');
+
+        if ($tooltip.length > 0) {
+            $tooltip.tooltip({
+                trigger: 'manual'
+            });
+
+            $tooltip.on('mouseover', function(e){
+                if ($wrapper.hasClass('navigation-collapsed') && $(window).width() > 787){
+                    $target = $(e.target);
+                    $target.tooltip('show');
+                }
+            });
+            $tooltip.on('mouseout', function(e) {
+                $(e.target).tooltip('hide');
+            });
+        }
     },
 
     setControls: function(offset) {
@@ -2043,7 +2056,7 @@ jsBackend.resizeFunctions = {
         ticking = false;
         calculate = (function(_this) {
             return function() {
-                jsBackend.navigationControls.resize();
+                jsBackend.navigation.resize();
                 if (typeof jsBackend.analytics !== 'undefined'){
                     jsBackend.analytics.charts.init();
                     jsBackend.analytics.chartDoubleMetricPerDay.init();

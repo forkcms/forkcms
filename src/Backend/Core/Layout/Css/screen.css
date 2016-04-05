@@ -8511,6 +8511,9 @@ select[size="1"] {
   .navbar-default .nav-item-text {
     font-size: 14px; }
 
+  .navigation-collapsed .navbar-default .navbar-nav .nav-item a {
+    padding: 15px 0 15px 50px; }
+
   .main-navigation .js-nav-prev,
   .main-navigation .js-nav-next {
     display: none !important; } }
