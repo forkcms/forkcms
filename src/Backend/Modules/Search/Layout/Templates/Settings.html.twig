@@ -47,8 +47,10 @@
                 <li class="checkbox">
                   <label for="useSitelinksSearchBox" class="control-label">
                     {% form_field_error use_sitelinks_search_box %} {% form_field use_sitelinks_search_box %} {{ 'lbl.UseSitelinksSearchBox'|trans|capitalize }}
-                    <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{{ 'msg.HelpSitelinksSearchBox'|trans|capitalize }}"></abbr>
                   </label>
+                  <div class="help-block">
+                    {{ 'msg.HelpSitelinksSearchBox'|trans|raw }}
+                  </div>
                 </li>
               </ul>
             </div>
@@ -80,7 +82,6 @@
                 <td>{{ module.chk|raw }}</td>
                 <td><label for="{{ module.id }}">{{ module.label }}</label></td>
                 <td>
-                  <label for="{{ module.id }}Weight" class="visuallyHidden">{{ 'lbl.Weight'|trans|capitalize }}</label>
                   {{ module.txt|raw }}
                   {% if module.txtError %}
                   <p class="text-danger">{{ module.txtError }}</p>
