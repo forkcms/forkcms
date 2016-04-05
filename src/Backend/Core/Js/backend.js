@@ -1799,7 +1799,7 @@ jsBackend.messages =
         '</div>';
 
         // prepend
-        if (optionalClass == undefined || optionalClass ==! 'alert-static') {
+        if (optionalClass == undefined || optionalClass !=='alert-static') {
             $('#messaging').prepend(html);
         }else {
             $('.content').prepend(html);
@@ -1809,7 +1809,7 @@ jsBackend.messages =
         $('#' + uniqueId).addClass('active');
 
         // timeout
-        if (optionalClass == undefined || optionalClass ==! 'alert-static') {
+        if (optionalClass == undefined || optionalClass !== 'alert-static') {
             if (type == 'info') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
             if (type == 'success') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
         }
