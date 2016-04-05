@@ -20,7 +20,8 @@
   .has-error,
   .active.has-error {
 
-    a  {
+    a,
+    a:hover {
       -webkit-font-smoothing: antialiased;
       color: $white;
       background: $alert-danger-bg;

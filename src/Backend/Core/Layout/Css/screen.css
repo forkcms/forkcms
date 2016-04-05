@@ -8689,7 +8689,9 @@ select[size="1"] {
     font-size: 16px; }
 
 .nav-tabs .has-error a,
-.nav-tabs .active.has-error a {
+.nav-tabs .has-error a:hover,
+.nav-tabs .active.has-error a,
+.nav-tabs .active.has-error a:hover {
   -webkit-font-smoothing: antialiased;
   color: #fff;
   background: rgba(208, 2, 27, 0.9); }
