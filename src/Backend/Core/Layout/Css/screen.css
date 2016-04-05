@@ -8601,8 +8601,8 @@ select[size="1"] {
   float: none;
   opacity: 1;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
   text-shadow: none; }
 .alert-dismissible .fa {
   color: #fff;
