@@ -7,7 +7,7 @@
             {% endif %}
         </div>
         <div class="site-text">
-            <p class="site-title">{{ SITE_TITLE }} <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}" href="{{ SITE_URL }}{{ prefixURL }}">{{ 'lbl.VisitWebsite'|trans|capitalize }}</a></p>
+            <p class="site-title">{{ SITE_TITLE }} <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}" href="{{ SITE_URL }}{{ prefixURL }}" target="_blank">{{ 'lbl.VisitWebsite'|trans|capitalize }}</a></p>
             {% if SITE_MULTILANGUAGE %}
                 <ul class="nav navbar-nav navbar-languages">
                     {% if workingLanguages %}
