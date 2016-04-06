@@ -1,8 +1,3 @@
-// Fixes height of selects with size attribute
-select[size="1"] {
-  height: $input-height-base;
-}
-
 // Style formError classes
 .formError {
   @extend .text-danger;
@@ -81,8 +76,11 @@ textarea {
 }
 
 select[size="1"] {
+  display: inline-block;
   font-size: $font-size-base;
+  height: $input-height-base;
   padding: 5px;
+  width: auto;
 }
 
 

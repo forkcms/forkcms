@@ -8088,9 +8088,6 @@ div.tabs ul li.selected {
 .col-small {
   padding: 0 10px; }
 
-select[size="1"] {
-  height: 34px; }
-
 .form-control {
   border-radius: 3px;
   -webkit-box-shadow: none;
@@ -8137,8 +8134,11 @@ textarea {
   max-width: 100%; }
 
 select[size="1"] {
+  display: inline-block;
   font-size: 14px;
-  padding: 5px; }
+  height: 34px;
+  padding: 5px;
+  width: auto; }
 
 .form-group.last {
   margin-bottom: 0; }
