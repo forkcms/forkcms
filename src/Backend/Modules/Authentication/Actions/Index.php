@@ -64,6 +64,7 @@ class Index extends BackendBaseActionIndex
         $this->frm
             ->addText('backend_email')
             ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Email')))
+            ->setAttribute('type', 'email')
         ;
         $this->frm
             ->addPassword('backend_password')
