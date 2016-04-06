@@ -431,14 +431,14 @@
     }
 
     .fa-angle-right {
-      transform: rotate(0deg);
+      transform: rotate(90deg);
       transition: all 250ms ;
     }
 
     &.open {
 
       .fa-angle-right {
-        transform: rotate(90deg);
+        transform: rotate(-90deg);
         transition: all 250ms ;
       }
 
@@ -450,7 +450,6 @@
           border-color: $brand-primary;
         }
       }
-
     }
   }
 }

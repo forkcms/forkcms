@@ -8473,10 +8473,10 @@ select[size="1"] {
     .navbar-languages .dropdown .dropdown-angle {
       padding: 0 5px 0 2px; }
     .navbar-languages .dropdown .fa-angle-right {
-      transform: rotate(0deg);
+      transform: rotate(90deg);
       transition: all 250ms; }
     .navbar-languages .dropdown.open .fa-angle-right {
-      transform: rotate(90deg);
+      transform: rotate(-90deg);
       transition: all 250ms; }
     .navbar-languages .dropdown.open .dropdown-toggle {
       background: #fff;
