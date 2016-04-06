@@ -28,10 +28,9 @@
     margin: 0;
     padding: 0;
     list-style-type:none;
-    background: url('/src/Backend/Core/Layout/images/separate/decoded_base64.svg');
-    background-position: 3px 1px;
+    background: url('/src/Backend/Core/Layout/images/separate/decoded_base64.gif');
+    background-position: 11px 0;
     background-repeat: repeat-y;
-    background-size: 32px 15px;
     min-height: 16px;
     max-width: 100%;
 
@@ -151,8 +150,7 @@
     display: block !important;
     font-size: $font-size-small;
     position: relative;
-    background: url('/src/Backend/Core/Layout/images/separate/leaf.svg') no-repeat 3px 0;
-    background-size: 32px 15px;
+    background: url('/src/Backend/Core/Layout/images/separate/leaf.gif') no-repeat 11px 0;
 
     &:before {
       background: $white;
@@ -179,8 +177,7 @@
 
     &.open,
     &.open.last {
-      background: url('/src/Backend/Core/Layout/images/separate/leaf.svg') no-repeat 3px 0;
-      background-size: 32px 15px;
+      background: url('/src/Backend/Core/Layout/images/separate/leaf.gif') no-repeat 11px 0;
 
       &:before {
         content: '\f147';
