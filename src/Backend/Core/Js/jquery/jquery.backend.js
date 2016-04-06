@@ -1500,8 +1500,10 @@
 				value = $('<div />').text(value).html().replace('"', '&quot;');
 
 				// reset box
-				$('#addValue-' + id).val('').focus();
-				$('#addButton-' + id).addClass('disabledButton');
+				if ($('#addValue-' + id).val().length > 0) {
+					$('#addValue-' + id).val('').focus();
+					$('#addButton-' + id).addClass('disabledButton');
+				}
 
 				var values = value.split(options.splitChar);
 				for (var e in values) {
