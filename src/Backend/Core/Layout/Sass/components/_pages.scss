@@ -131,7 +131,15 @@
   .btn-group {
 
     .btn {
-      padding: 6px 12px 6px;
+      padding: 2px 6px 3px;
+
+      &.addBlock {
+
+        .btn-text {
+          font-size: $font-size-extra-small;
+          display: block;
+        }
+      }
 
       .fa {
         padding-right: 0;
@@ -145,6 +153,14 @@
 
       .btn {
         padding: 6px 15px 7px;
+
+        &.addBlock {
+
+          .btn-text {
+            font-size: $font-size-base;
+            display: inline-block;
+          }
+        }
 
         .fa {
           padding-right: 4px;
@@ -202,7 +218,7 @@
     .buttonHolder {
       opacity: 0;
       position: absolute;
-      right: 15px;
+      right: 5px;
       top: 14px;
       -webkit-transition: opacity 0.3s ease-in-out;
       -moz-transition: opacity 0.3s ease-in-out;
@@ -211,13 +227,29 @@
       z-index: 80;
 
       .btn {
-        padding: 6px 10px;
+        padding: 3px 6px;
 
         .fa {
           padding-right: 0;
-          font-size: $font-size-base;
+          font-size: $font-size-small;
         }
       }
+    }
+
+    @media screen and (min-width: $screen-sm) {
+
+      .buttonHolder {
+        right: 15px;
+
+        .btn {
+          padding: 6px 10px;
+
+          .fa {
+            font-size: $font-size-base;
+          }
+        }
+      }
+
     }
 
     &:after {

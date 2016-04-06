@@ -9160,7 +9160,11 @@ select[size="1"] {
       border-top: 0; }
   #templateVisualLarge .btn-group .btn,
   #templateVisualFallback .btn-group .btn {
-    padding: 6px 12px 6px; }
+    padding: 2px 6px 3px; }
+    #templateVisualLarge .btn-group .btn.addBlock .btn-text,
+    #templateVisualFallback .btn-group .btn.addBlock .btn-text {
+      font-size: 10px;
+      display: block; }
     #templateVisualLarge .btn-group .btn .fa,
     #templateVisualFallback .btn-group .btn .fa {
       padding-right: 0; }
@@ -9168,6 +9172,10 @@ select[size="1"] {
     #templateVisualLarge .btn-group .btn,
     #templateVisualFallback .btn-group .btn {
       padding: 6px 15px 7px; }
+      #templateVisualLarge .btn-group .btn.addBlock .btn-text,
+      #templateVisualFallback .btn-group .btn.addBlock .btn-text {
+        font-size: 14px;
+        display: inline-block; }
       #templateVisualLarge .btn-group .btn .fa,
       #templateVisualFallback .btn-group .btn .fa {
         padding-right: 4px; } }
@@ -9215,7 +9223,7 @@ select[size="1"] {
     #templateVisualFallback .templatePositionCurrentType .buttonHolder {
       opacity: 0;
       position: absolute;
-      right: 15px;
+      right: 5px;
       top: 14px;
       -webkit-transition: opacity 0.3s ease-in-out;
       -moz-transition: opacity 0.3s ease-in-out;
@@ -9224,11 +9232,21 @@ select[size="1"] {
       z-index: 80; }
       #templateVisualLarge .templatePositionCurrentType .buttonHolder .btn,
       #templateVisualFallback .templatePositionCurrentType .buttonHolder .btn {
-        padding: 6px 10px; }
+        padding: 3px 6px; }
         #templateVisualLarge .templatePositionCurrentType .buttonHolder .btn .fa,
         #templateVisualFallback .templatePositionCurrentType .buttonHolder .btn .fa {
           padding-right: 0;
-          font-size: 14px; }
+          font-size: 12px; }
+    @media screen and (min-width: 768px) {
+      #templateVisualLarge .templatePositionCurrentType .buttonHolder,
+      #templateVisualFallback .templatePositionCurrentType .buttonHolder {
+        right: 15px; }
+        #templateVisualLarge .templatePositionCurrentType .buttonHolder .btn,
+        #templateVisualFallback .templatePositionCurrentType .buttonHolder .btn {
+          padding: 6px 10px; }
+          #templateVisualLarge .templatePositionCurrentType .buttonHolder .btn .fa,
+          #templateVisualFallback .templatePositionCurrentType .buttonHolder .btn .fa {
+            font-size: 14px; } }
     #templateVisualLarge .templatePositionCurrentType:after,
     #templateVisualFallback .templatePositionCurrentType:after {
       content: ".";
