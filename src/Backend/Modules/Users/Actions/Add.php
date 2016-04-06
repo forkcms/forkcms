@@ -53,7 +53,10 @@ class Add extends BackendBaseActionAdd
 
         // create elements
         // profile
-        $this->frm->addText('email', null, 255);
+        $this->frm
+            ->addText('email', null, 255)
+            ->setAttribute('type', 'email')
+        ;
         $this->frm->addPassword(
             'password',
             null,

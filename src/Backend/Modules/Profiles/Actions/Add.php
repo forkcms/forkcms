@@ -90,7 +90,10 @@ class Add extends BackendBaseActionAdd
         $this->frm = new BackendForm('add');
 
         // create elements
-        $this->frm->addText('email');
+        $this->frm
+            ->addText('email')
+            ->setAttribute('type', 'email')
+        ;
         $this->frm->addPassword('password');
         $this->frm->addText('display_name');
         $this->frm->addText('first_name');
