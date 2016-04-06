@@ -1435,9 +1435,6 @@
 				else $('#addButton-' + id).removeClass('disabledButton');
 			});
 
-			// unblock the submit event when we lose focus
-			$('#addValue-' + id).bind('blur', function(e) { blockSubmit = false; add(); });
-
 			// bind click on add-button
 			$('#addButton-' + id).bind('click', function(e)
 			{
