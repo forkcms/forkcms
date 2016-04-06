@@ -61,15 +61,13 @@
                   <p class="help-block">
                     {{ 'msg.HelpSpamFilter'|trans|capitalize }}
                     {% if noAkismetKey %}
-                    <br />
-                    <span class="text-warning">
+                      <br />
                       {{ 'msg.NoAkismetKey'|trans|sprintf(geturl('index','settings' ) ) }}
-                    </span>
                     {% endif %}
                   </p>
                 </li>
               </ul>
-              <p class="help-block">{{ 'msg.FollowAllCommentsInRSS'|trans|sprintf(commentsRSSURL ) }}</p>
+              <p>{{ 'msg.FollowAllCommentsInRSS'|trans|sprintf(commentsRSSURL ) }}</p>
             </div>
           </div>
         </div>
