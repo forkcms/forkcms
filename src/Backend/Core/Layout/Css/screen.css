@@ -8433,7 +8433,7 @@ select[size="1"] {
     height: 20px;
     margin: -3px 0;
     position: absolute;
-    transform: rotate(0deg);
+    transform: rotate(90deg);
     transition: all 250ms;
     top: 17px;
     right: 5px;
@@ -8445,7 +8445,7 @@ select[size="1"] {
       top: 2px;
       left: 8px; }
   .navbar-user .dropdown.open .fa-angle-right {
-    transform: rotate(90deg);
+    transform: rotate(-90deg);
     transition: all 250ms; }
 
 .navbar-languages {
