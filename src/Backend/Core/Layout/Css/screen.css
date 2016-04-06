@@ -8734,7 +8734,7 @@ select[size="1"] {
   border-bottom: 3px solid #E5E5E5;
   padding: 12px 25px 12px 13px;
   position: relative;
-  z-index: 3; }
+  z-index: 11; }
   .header .site-text {
     float: left; }
   .header .site-title {
@@ -8858,9 +8858,10 @@ select[size="1"] {
     margin: 0;
     padding: 0;
     list-style-type: none;
-    background: url("/src/Backend/Core/Layout/images/separate/decoded_base64.gif");
-    background-position: 10px 1px;
+    background: url("/src/Backend/Core/Layout/images/separate/decoded_base64.svg");
+    background-position: 3px 1px;
     background-repeat: repeat-y;
+    background-size: 32px 15px;
     min-height: 16px;
     max-width: 100%; }
     .tree ul ins {
@@ -8947,7 +8948,8 @@ select[size="1"] {
     display: block !important;
     font-size: 12px;
     position: relative;
-    background: url("/src/Backend/Core/Layout/images/separate/leaf.gif") no-repeat 3px 0;
+    background: url("/src/Backend/Core/Layout/images/separate/leaf.svg") no-repeat 3px 0;
+    background-size: 32px 15px;
     /* OPEN or CLOSED */
     /* DEFAULT, HOVER, CLICKED, LOADING STATES */ }
     .tree-fork li:before {
@@ -8964,7 +8966,8 @@ select[size="1"] {
     .tree-fork li.closed:before, .tree-fork li.closed.last:before {
       content: '\f196'; }
     .tree-fork li.open, .tree-fork li.open.last {
-      background: url("/src/Backend/Core/Layout/images/separate/leaf.gif") no-repeat 3px 0; }
+      background: url("/src/Backend/Core/Layout/images/separate/leaf.svg") no-repeat 3px 0;
+      background-size: 32px 15px; }
       .tree-fork li.open:before, .tree-fork li.open.last:before {
         content: '\f147'; }
     .tree-fork li[rel="page"] a, .tree-fork li[rel="home"] a, .tree-fork li[rel="error"] a, .tree-fork li[rel="hidden"] a, .tree-fork li[rel="sitemap"] a, .tree-fork li[rel="redirect"] a {
