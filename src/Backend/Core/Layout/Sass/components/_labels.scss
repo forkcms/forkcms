@@ -1,30 +1,15 @@
-.strength-none {
-
-  .label {
-    background: $gray-light;
-  }
+.strength-none .label {
+  background-color: $gray-light;
 }
 
-.strength-weak {
-
-  .label {
-    background: $brand-danger;
-  }
+.strength-weak .label {
+  background-color: $brand-danger;
 }
 
-.strength-average {
-
-  .label {
-    background: $brand-warning;
-  }
+.strength-average .label {
+  background-color: $brand-warning;
 }
 
-.strength-strong {
-
-  .label {
-    background: $brand-success;
-  }
+.strength-strong .label {
+  background-color: $brand-success;
 }
-
-
-

@@ -1,42 +1,35 @@
-.content-action-bar {
+.content-action-bar .btn-toolbar {
+  margin-top: 10px;
 
-  .btn-toolbar {
-    margin-top: 10px;
+  .btn-text {
+    display: block;
+    font-size: $font-size-extra-small;
+  }
 
-    .btn-text {
-      display: block;
-      font-size: $font-size-extra-small;
-    }
+  .btn {
+    padding: 2px 6px 3px;
 
-    .btn {
-      padding: 2px 6px 3px;
-
-      .fa {
-        padding: 0 4px;
-      }
+    .fa {
+      padding: 0 4px;
     }
   }
 }
 
 
 @media screen and (min-width: $screen-md) {
+  .content-action-bar .btn-toolbar {
+    margin-top: 0;
 
-  .content-action-bar {
+    .btn-text {
+      display: inline-block;
+      font-size: $font-size-base;
+    }
 
-    .btn-toolbar {
-      margin-top: 0;
+    .btn {
+      padding: 9px 12px 10px;
 
-      .btn-text {
-        display: inline-block;
-        font-size: $font-size-base;
-      }
-
-      .btn {
-        padding: 9px 12px 10px;
-
-        .fa {
-          padding: 0 4px 0 0;
-        }
+      .fa {
+        padding: 0 4px 0 0;
       }
     }
   }

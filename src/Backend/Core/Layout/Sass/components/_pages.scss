@@ -5,31 +5,31 @@
 .templateVisual {
 
   td {
-    text-align: center;
+    background-color: $white;
     border: 1px solid $panel-default-border;
-    background: $white;
+    text-align: center;
     vertical-align: middle;
 
     &:empty,
     &.empty {
       background: $white url('/src/Backend/Core/Layout/images/na.svg') repeat;
       background-size: 20px;
-      border: 1px solid $panel-default-border;;
+      border: 1px solid $panel-default-border;
     }
   }
 
   table {
-    width: 100%;
-    table-layout: fixed;
-    border-spacing: 2px;
     border-collapse: separate;
+    border-spacing: 2px;
+    table-layout: fixed;
+    width: 100%;
   }
 
   td {
-    padding: 4px 2px;
     /* @inc .secondarycontent */
-    font-size: 10px;
     font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+    font-size: 10px;
+    padding: 4px 2px;
 
     a {
       color: #000;
@@ -42,16 +42,13 @@
 }
 
 
-.disabled {
+.disabled .templateVisual td {
+  background-color: #FCFCFC;
+  border-color: #CCC;
 
-  .templateVisual td {
-    border-color: #CCC;
-    background: #FCFCFC;
-
-    a {
-      color: #999;
-      cursor: default;
-    }
+  a {
+    color: #999;
+    cursor: default;
   }
 }
 
@@ -105,14 +102,14 @@
   /* Title */
 
   .templatePositionTitle {
-    font-size: 11px;
-    color: #000;
-    background: #FFF;
+    background-color: #FFF;
     border: 1px solid #BDBDBD;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    padding: 6px 12px;
     box-shadow: 0 -1px 0 1px #FFF;
+    color: #000;
+    font-size: 11px;
+    padding: 6px 12px;
   }
 
   /* Blocks container */
@@ -128,43 +125,31 @@
 
   /* Button holder */
 
-  .btn-group {
+  .btn-group .btn {
+    padding: 2px 6px 3px;
 
-    .btn {
-      padding: 2px 6px 3px;
+    &.addBlock .btn-text {
+      display: block;
+      font-size: $font-size-extra-small;
+    }
 
-      &.addBlock {
-
-        .btn-text {
-          font-size: $font-size-extra-small;
-          display: block;
-        }
-      }
-
-      .fa {
-        padding-right: 0;
-      }
+    .fa {
+      padding-right: 0;
     }
   }
 
   @media screen and (min-width: $screen-sm) {
 
-    .btn-group {
+    .btn-group .btn {
+      padding: 6px 15px 7px;
 
-      .btn {
-        padding: 6px 15px 7px;
+      &.addBlock .btn-text {
+        display: inline-block;
+        font-size: $font-size-base;
+      }
 
-        &.addBlock {
-
-          .btn-text {
-            font-size: $font-size-base;
-            display: inline-block;
-          }
-        }
-
-        .fa {
-          padding-right: 4px;
-        }
+      .fa {
+        padding-right: 4px;
       }
     }
   }
@@ -172,43 +157,41 @@
   /* Block */
 
   .templatePositionCurrentType {
-    border: 1px solid $panel-default-border;
     background: $white;
-    position: relative;
+    border: 1px solid $panel-default-border;
     cursor: move;
     height: 61px;
-    overflow: hidden;
-    overflow: ellipsis;
     overflow: ellipsis;
     padding: 12px 15px;
+    position: relative;
 
     &.ui-sortable-helper {
       border-top: 1px solid #DDD;
     }
 
     .templateTitle {
-      display: block;
       color: $gray-base;
+      display: block;
       font-size: $font-size-small;
       font-weight: 600;
       overflow: hidden;
-      white-space: nowrap;
       -webkit-transition: color 0.3s ease-in-out;
       -moz-transition: color 0.3s ease-in-out;
       -o-transition: color 0.3s ease-in-out;
       transition: color 0.3s ease-in-out;
+      white-space: nowrap;
     }
 
     .templateDescription {
-      display: block;
       color: $text-color;
+      display: block;
       font-size: $font-size-small;
       overflow: hidden;
-      white-space: nowrap;
       -webkit-transition: color 0.3s ease-in-out;
       -moz-transition: color 0.3s ease-in-out;
       -o-transition: color 0.3s ease-in-out;
       transition: color 0.3s ease-in-out;
+      white-space: nowrap;
     }
 
     &:hover .templateDescription {
@@ -253,32 +236,34 @@
     }
 
     &:after {
-      content: ".";
-      height: 54px;
-      width: 0;
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 0;
-      text-indent: -9999px;
       background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 100%);
       background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(20%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1)));
       background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
       background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
       background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
       background: linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
+      content: '.';
+      display: block;
+      height: 54px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      text-indent: -9999px;
       -webkit-transition: width 0.3s ease-in-out;
       -moz-transition: width 0.3s ease-in-out;
       -o-transition: width 0.3s ease-in-out;
       transition: width 0.3s ease-in-out;
+      width: 0;
     }
 
-    &:hover:after {
+    &:hover:after,
+    &:focus:after {
       width: 110px;
     }
   }
 
-  &:hover .templateTitle {
+  &:hover .templateTitle,
+  &:focus .templateTitle {
     color: #000;
   }
 
@@ -322,15 +307,15 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
 .current-template {
   font-size: $font-size-btn;
-  padding-left: 15px;
   margin-bottom: 5px;
+  padding-left: 15px;
 
   a {
     border-bottom: 1px solid $brand-primary;
-    font-size: $font-size-small;
     cursor: pointer;
+    font-size: $font-size-small;
     margin-left: 5px;
-    
+
     &:hover {
       border-color: $brand-primary-dark;
       color: $brand-primary-dark;
@@ -345,17 +330,13 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 
 .dragAndDropPlaceholder {
   background: $gray-lighter;
-  border: none;
+  border: 0;
   height: 61px;
   margin: 5px 0;
 }
 
 @media screen and (min-width: $screen-md) {
-
-  #templateVisualLarge {
-
-    table {
-      border-spacing: 15px;
-    }
+  #templateVisualLarge table {
+    border-spacing: 15px;
   }
 }

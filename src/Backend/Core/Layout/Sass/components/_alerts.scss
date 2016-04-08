@@ -1,14 +1,15 @@
 .alert {
-  border: none;
+  border: 0;
   margin: 10px 0 0;
 
   a {
-    color: $white;
     border-bottom: 1px solid $white;
+    color: $white;
 
-    &:hover {
-      color: $gray-lighter;
+    &:hover,
+    &:focus {
       border-color: $gray-lighter;
+      color: $gray-lighter;
       text-decoration: none;
     }
   }
@@ -56,14 +57,13 @@
 }
 
 .alert-dismissible {
-
   .close {
     float: none;
     opacity: 1;
     position: absolute;
-    top: 10px;
     right: 10px;
     text-shadow: none;
+    top: 10px;
   }
 
   .fa {
@@ -73,9 +73,9 @@
 }
 
 .alert-static {
-  position: static;
   margin: -25px 0 25px;
   padding: 9px 0;
+  position: static;
   text-align: left;
   width: 100%;
 }

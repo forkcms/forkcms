@@ -12,7 +12,7 @@
 }
 
 .page-header-login {
-  border: none;
+  border: 0;
   margin-bottom: 30px;
 
   .site-info {
@@ -64,8 +64,8 @@
 @media screen and (min-width: $screen-sm) {
 
   .login-block {
-    position: absolute;
     margin-top: -270px;
+    position: absolute;
     top: 50%;
     width: 100%;
   }

@@ -13,7 +13,7 @@
   margin-bottom: 20px;
 
   &.panel-pages-block {
-    border: none;
+    border: 0;
     margin-bottom: 0;
 
     .panel-heading {
@@ -27,11 +27,11 @@
 }
 
 .panel-title a {
-  border: none;
+  border: 0;
   text-decoration: none;
 
   &:hover {
-    border: none;
+    border: 0;
     text-decoration: none;
   }
 }
@@ -46,80 +46,58 @@
 }
 
 // Panel caret behavior
-.panel.open {
-
-  .fa-caret-right {
-    @extend .fa-caret-down;
-  }
+.panel.open .fa-caret-right {
+  @extend .fa-caret-down;
 }
 
 .panel-group {
   margin-bottom: 0;
 
-  .panel-heading {
+  .panel-heading a {
+    .panel-title {
+      color: $text-color;
+    }
 
-    a {
+    &:hover,
+    &:focus {
+      text-decoration: none;
 
       .panel-title {
-        color: $text-color;
-      }
-
-      &:hover,
-      &:focus {
-        text-decoration: none;
-
-        .panel-title {
-          color: $gray-base;
-        }
+        color: $gray-base;
       }
     }
   }
 }
 
-.panel-select {
+.panel-select label {
+  cursor: pointer;
+}
 
-  label {
-    cursor: pointer;
+.panel-primary label {
+  width: 100%;
+
+  .panel-heading {
+    background-color: $brand-primary;
+    color: $white;
+  }
+
+  .panel-body {
+    padding: 20px 15px 13px;
   }
 }
 
-.panel-primary {
+.panel-default label {
+  width: 100%;
 
-  label {
-    width: 100%;
+  .panel-heading {
+    border-bottom: 1px solid $gray-lighter;
+  }
 
-    .panel-heading {
-      background: $brand-primary;
-      color: $white;
-    }
-
-    .panel-body {
-      padding: 20px 15px 13px;
-    }
+  .panel-body {
+    padding: 20px 15px 13px;
   }
 }
 
-.panel-default {
-
-  label {
-    width: 100%;
-
-    .panel-heading {
-      border-bottom: 1px solid $gray-lighter;
-    }
-
-    .panel-body {
-      padding: 20px 15px 13px;
-    }
-  }
-}
-
-.fork-dashboard-column {
-
-  .panel-default {
-
-    .panel-body {
-      padding: 20px 15px 13px;
-    }
-  }
+.fork-dashboard-column .panel-default .panel-body {
+  padding: 20px 15px 13px;
 }

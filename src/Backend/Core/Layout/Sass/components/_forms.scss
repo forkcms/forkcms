@@ -10,15 +10,15 @@
   box-shadow: none;
 
   &.title {
-    height: 46px;
     font-size: $font-size-h4;
+    height: 46px;
   }
 
   &:focus {
-    outline: 0;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+    outline: 0;
   }
 
   &.error {
@@ -40,17 +40,15 @@
 }
 
 .form-inline {
-
   .radio {
-
     label {
       padding-left: 20px;
       padding-right: 8px;
     }
 
     input[type="radio"] {
-      position: absolute;
       margin-left: -20px;
+      position: absolute;
     }
   }
 
@@ -67,7 +65,8 @@ label {
   font-weight: 600;
 }
 
-abbr[title], abbr[data-original-title] {
+abbr[title],
+abbr[data-original-title] {
   border-bottom: none;
 }
 
@@ -83,7 +82,6 @@ select[size="1"] {
   width: auto;
 }
 
-
 .form-group.last {
   margin-bottom: 0;
 }
@@ -93,18 +91,11 @@ select[size="1"] {
   color: $brand-danger;
 }
 
-.input-group {
-
-  .input-group-addon {
-    padding: 8px 12px 9px;
-
-  }
+.input-group .input-group-addon {
+  padding: 8px 12px 9px;
 }
 
-.inlineEditing {
-
-  input {
-    min-width: 100%;
-    width: 100%;
-  }
+.inlineEditing input {
+  min-width: 100%;
+  width: 100%;
 }

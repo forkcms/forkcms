@@ -27,14 +27,14 @@
 }
 
 .fork-widget {
-  position: relative;
   line-height: normal;
+  position: relative;
 }
 
 .fork-widget > .close {
   position: absolute;
-  top: 5px;
   right: 10px;
+  top: 5px;
 }
 
 /* Data grid */
@@ -43,8 +43,8 @@
 }
 
 .fork-data-grid-sortable {
-  text-align: center;
   cursor: move;
+  text-align: center;
 }
 
 .fork-data-grid-avatar {
@@ -60,8 +60,8 @@
 
 .fork-data-grid-avatar > a > img {
   display: inline-block;
-  width: 24px;
   height: 24px;
+  width: 24px;
 }
 
 .fork-data-grid-avatar > a > span {

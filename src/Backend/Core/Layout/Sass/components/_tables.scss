@@ -10,7 +10,8 @@
   thead > tr {
     background-color: $gray-lightest;
 
-    &:hover {
+    &:hover,
+    &:focus {
       background: $table-bg-hover;
     }
 
@@ -23,7 +24,7 @@
 
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-  border: none;
+  border: 0;
 }
 
 .table {
@@ -38,14 +39,12 @@
     td {
       font-size: $font-size-small;
 
-      &.title {
-        
-        a {
-          font-weight: 600;
-        }
+      &.title a {
+        font-weight: 600;
       }
-      
-      a:hover {
+
+      a:hover,
+      a:focus {
         text-decoration: none;
       }
     }
@@ -61,16 +60,11 @@
     }
   }
 
-
   .form-group {
     margin-bottom: 0;
   }
 }
 
-.fork-dashboard-column {
-
-  .table-striped > tbody > tr:nth-of-type(even) {
-    background: $gray-lighter;
-  }
-
+.fork-dashboard-column .table-striped > tbody > tr:nth-of-type(even) {
+  background: $gray-lighter;
 }
