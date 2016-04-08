@@ -9099,10 +9099,10 @@ select[size="1"] {
   margin-bottom: 0; }
 
 .disabled .templateVisual td {
-  background-color: #FCFCFC;
+  background-color: #f1f1f1;
   border-color: #CCC; }
   .disabled .templateVisual td a {
-    color: #999;
+    color: #999999;
     cursor: default; }
 
 /*
@@ -9148,7 +9148,7 @@ select[size="1"] {
       margin-bottom: 0; }
   #templateVisualLarge .templatePositionTitle,
   #templateVisualFallback .templatePositionTitle {
-    background-color: #FFF;
+    background-color: #fff;
     border: 1px solid #BDBDBD;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;

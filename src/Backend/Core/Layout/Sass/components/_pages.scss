@@ -32,7 +32,7 @@
     padding: 4px 2px;
 
     a {
-      color: #000;
+      color: $gray-base;
     }
   }
 
@@ -43,11 +43,11 @@
 
 
 .disabled .templateVisual td {
-  background-color: #FCFCFC;
+  background-color: $gray-lightest;
   border-color: #CCC;
 
   a {
-    color: #999;
+    color: $gray-light;
     cursor: default;
   }
 }
@@ -102,12 +102,12 @@
   /* Title */
 
   .templatePositionTitle {
-    background-color: #FFF;
+    background-color: $white;
     border: 1px solid #BDBDBD;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     box-shadow: 0 -1px 0 1px #FFF;
-    color: #000;
+    color: $gray-base;
     font-size: 11px;
     padding: 6px 12px;
   }
@@ -264,7 +264,7 @@
 
   &:hover .templateTitle,
   &:focus .templateTitle {
-    color: #000;
+    color: $gray-base;
   }
 
   .templateDisabled {
