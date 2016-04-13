@@ -9480,6 +9480,22 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 .strength-strong .label {
   background-color: #2C9F42; }
 
+.panel .cke_chrome {
+  background-color: #fff;
+  border: 0;
+  border-radius: 0;
+  padding: 0; }
+.panel .cke_top,
+.panel .cke_bottom {
+  background-color: #fff;
+  padding: 3px 3px 0; }
+.panel .cke_contents {
+  border-width: 0;
+  border-top-width: 1px;
+  border-radius: 0; }
+.panel .cke_resizer_ltr {
+  margin-right: 0; }
+
 /* General */
 .fork-module-heading {
   background: #fff;
