@@ -123,8 +123,8 @@ jsBackend.navigation =
     },
 
     mobile: function() {
-        var navbarWidth = this.calculations()[2];
-        var $navbarNav = this.calculations()[0];
+        var navbarWidth = this.calculateNavbarWidth();
+        var $navbarNav = $('.navbar-default .navbar-nav');
 
         $('.navbar-default .navbar-nav').css('width', navbarWidth);
 
@@ -144,9 +144,9 @@ jsBackend.navigation =
     },
 
     resize: function() {
-        var $navbarNav = this.calculations()[0];
-        var navbarWidth = this.calculations()[2];
-        var windowWidth = this.calculations()[3];
+        var $navbarNav = $('.navbar-default .navbar-nav');
+        var navbarWidth = this.calculateNavbarWidth();
+        var windowWidth = this.calculateWindowWidth();
 
         if (navbarWidth < windowWidth) {
             $navbarNav.css('left', '0');
@@ -194,8 +194,8 @@ jsBackend.navigation =
     },
 
     setControls: function(offset) {
-        var $navbarNav = this.calculations(offset)[0];
-        var rightOffset = this.calculations(offset)[1];
+        var $navbarNav = $('.navbar-default .navbar-nav');
+        var rightOffset = this.calculateOffset(offset);
 
         if((parseInt($navbarNav.css('left')) + offset) >= 0) {
             $('.js-nav-prev').hide();
@@ -210,14 +210,18 @@ jsBackend.navigation =
         }
     },
 
-    calculations: function(offset) {
-        var $navItem = $('.navbar-default .nav-item');
-        var windowWidth = $(window).width();
-        var $navbarNav = $('.navbar-default .navbar-nav');
-        var navbarWidth = $navItem.width() * $navItem.length;
-        var rightOffset = windowWidth - navbarWidth - parseInt($navbarNav.css('left')) - offset;
+    calculateWindowWidth: function() {
+        return $(window).width();
+    },
 
-        return [$navbarNav, rightOffset, navbarWidth, windowWidth];
+    calculateNavbarWidth: function() {
+        var $navItem = $('.navbar-default .nav-item');
+        return $navItem.width() * $navItem.length;
+    },
+
+    calculateOffset: function(offset) {
+        var $navbarNav = $('.navbar-default .navbar-nav');
+        return this.calculateWindowWidth() - this.calculateNavbarWidth() - parseInt($navbarNav.css('left')) - offset;
     }
 };
 
