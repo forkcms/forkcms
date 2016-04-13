@@ -258,8 +258,8 @@ class DataGridFunctions
      * @param string $image   The filename of the image.
      * @param string $title   The title (will be used as alt).
      * @param string $url     The url
-     * @param string $width   The width for the <img element
-     * @param string $height  The height for the <img element
+     * @param integer $width   The width for the <img element
+     * @param integer $height  The height for the <img element
      * @return string
      */
     public static function showImage($path, $image, $title = '', $url = null, $width = null, $height = null)
