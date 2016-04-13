@@ -38,9 +38,6 @@
 }
 
 /* Data grid */
-.fork-data-grid {
-
-}
 
 .fork-data-grid-sortable {
   cursor: move;
@@ -49,8 +46,8 @@
 
 .fork-data-grid-avatar {
   display: inline-block;
-  line-height: 0px;
-  padding: 0px 5px 0px 5px;
+  line-height: 0;
+  padding: 0 5px 0 5px;
 }
 
 .fork-data-grid-avatar > a {

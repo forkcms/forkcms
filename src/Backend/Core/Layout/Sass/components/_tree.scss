@@ -305,11 +305,6 @@
     }
   }
 
- /* ins {
-    background: transparent url('/src/Backend/Core/Layout/images/sprites/icons.gif') no-repeat 0 -80px;
-    padding-right: 2px;
-  }*/
-
   ul li a.loading ins {
     background-image: url('/src/Backend/Core/Layout/images/throbber.gif') !important;
     background-position: 0 0 !important;
@@ -330,20 +325,5 @@
     li li.open {
       background-position: 0 -16px;
     }
-
-    /*ins {
-      background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -610px no-repeat;
-
-      &forbidden {
-        background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -631px no-repeat;
-      }
-    }*/
   }
 }
-
-/* LOCKED */
-/*
-.tree-fork .locked li a {
-	color: gray;
-}
-*/
