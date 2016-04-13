@@ -1818,7 +1818,7 @@ jsBackend.messages =
         // prepend
         if (optionalClass == undefined || optionalClass !=='alert-static') {
             $('#messaging').prepend(html);
-        }else {
+        } else {
             $('.content').prepend(html);
         }
 
