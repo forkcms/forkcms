@@ -6,7 +6,7 @@
 
   td {
     background-color: $white;
-    border: 1px solid $panel-default-border;
+    border: 1px solid $gray-border;
     text-align: center;
     vertical-align: middle;
 
@@ -14,7 +14,7 @@
     &.empty {
       background: $white url('/src/Backend/Core/Layout/images/na.png') repeat;
       background-size: 20px;
-      border: 1px solid $panel-default-border;
+      border: 1px solid $gray-border;
     }
   }
 
@@ -81,7 +81,7 @@
   td {
     background: $gray-lightest;
     border-radius: $border-radius-small;
-    border: 1px solid $panel-default-border;
+    border: 1px solid $gray-border;
     vertical-align: top;
 
     &.empty {
@@ -89,13 +89,7 @@
       background-size: 20px;
       padding: 10px;
       border-radius: 3px;
-      border: 1px solid $panel-default-border;
-    }
-
-    p {
-      color: $gray-base;
-      font-weight: 600;
-      margin-bottom: 0;
+      border: 1px solid $gray-border;
     }
   }
 
@@ -158,7 +152,7 @@
 
   .templatePositionCurrentType {
     background: $white;
-    border: 1px solid $panel-default-border;
+    border: 1px solid $gray-border;
     cursor: move;
     height: 61px;
     overflow: ellipsis;

@@ -7,22 +7,48 @@
   .panel-body {
     border-spacing: 0;
   }
+
+  &.last {
+    margin-bottom: 0;
+  }
 }
 
 .panel-default {
   margin-bottom: 20px;
+
+  .panel-heading {
+
+    p {
+      color: $gray-base;
+      font-weight: 600;
+      margin-bottom: 0;
+    }
+  }
+
+  .panel-body {
+    background-color: $white;
+  }
 
   &.panel-pages-block {
     border: 0;
     margin-bottom: 0;
 
     .panel-heading {
+      border-color: $gray-border;
       padding: 8px 20px 10px;
     }
 
     .panel-body {
+      background-color: $gray-lightest;
       padding: 0 20px 20px;
     }
+  }
+}
+
+.panel-editor {
+
+  .panel-body {
+    padding: 0;
   }
 }
 

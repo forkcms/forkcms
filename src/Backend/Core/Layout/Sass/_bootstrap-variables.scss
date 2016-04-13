@@ -14,6 +14,7 @@ $gray:                   #4a4a4a;
 $gray-light:             #999999;
 $gray-lighter:           #E5E5E5;
 $gray-lightest:          #f1f1f1;
+$gray-border:            #cccccc;
 $white:                  #fff;
 
 $brand-primary:         #2f77d1;
@@ -716,7 +717,7 @@ $list-group-link-heading-color: #333;
 //##
 
 $panel-bg:                    $gray-lightest;
-$panel-body-padding:          20px 25px 13px;
+$panel-body-padding:          20px 25px 25px;
 $panel-heading-padding:       8px 15px 10px;
 $panel-footer-padding:        $panel-heading-padding;
 $panel-border-radius:         $border-radius-small;
@@ -726,7 +727,7 @@ $panel-inner-border:          #ddd;
 $panel-footer-bg:             $gray-lightest;
 
 $panel-default-text:          $text-color;
-$panel-default-border:        #CCCCCC;
+$panel-default-border:        $gray-lighter;
 $panel-default-heading-bg:    $gray-lightest;
 
 $panel-primary-text:          $white;

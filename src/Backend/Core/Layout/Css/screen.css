@@ -5972,7 +5972,7 @@ button.list-group-item-danger {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); }
 
 .panel-body {
-  padding: 20px 25px 13px; }
+  padding: 20px 25px 25px; }
   .panel-body:before, .panel-body:after {
     content: " ";
     display: table; }
@@ -6040,8 +6040,8 @@ button.list-group-item-danger {
   .panel > .table caption,
   .panel > .table-responsive > .table caption,
   .panel > .panel-collapse > .table caption {
-    padding-left: 20px 25px 13px;
-    padding-right: 20px 25px 13px; }
+    padding-left: 20px 25px 25px;
+    padding-right: 20px 25px 25px; }
 .panel > .table:first-child,
 .panel > .table-responsive:first-child > .table:first-child {
   border-top-right-radius: 2px;
@@ -6175,18 +6175,18 @@ button.list-group-item-danger {
       border-bottom: 1px solid #ddd; }
 
 .panel-default {
-  border-color: #CCCCCC; }
+  border-color: #E5E5E5; }
   .panel-default > .panel-heading {
     color: #4a4a4a;
     background-color: #f1f1f1;
-    border-color: #CCCCCC; }
+    border-color: #E5E5E5; }
     .panel-default > .panel-heading + .panel-collapse > .panel-body {
-      border-top-color: #CCCCCC; }
+      border-top-color: #E5E5E5; }
     .panel-default > .panel-heading .badge {
       color: #f1f1f1;
       background-color: #4a4a4a; }
   .panel-default > .panel-footer + .panel-collapse > .panel-body {
-    border-bottom-color: #CCCCCC; }
+    border-bottom-color: #E5E5E5; }
 
 .panel-primary {
   border-color: #2f77d1; }
@@ -8110,6 +8110,9 @@ div.tabs ul li.selected {
   font-size: 14px;
   font-weight: normal; }
 
+.radio {
+  margin-top: 0; }
+
 .help-block {
   font-size: 12px; }
 
@@ -8638,16 +8641,29 @@ select[size="1"] {
   box-shadow: none; }
   .panel .panel-body {
     border-spacing: 0; }
+  .panel.last {
+    margin-bottom: 0; }
 
 .panel-default {
   margin-bottom: 20px; }
+  .panel-default .panel-heading p {
+    color: #000;
+    font-weight: 600;
+    margin-bottom: 0; }
+  .panel-default .panel-body {
+    background-color: #fff; }
   .panel-default.panel-pages-block {
     border: 0;
     margin-bottom: 0; }
     .panel-default.panel-pages-block .panel-heading {
+      border-color: #cccccc;
       padding: 8px 20px 10px; }
     .panel-default.panel-pages-block .panel-body {
+      background-color: #f1f1f1;
       padding: 0 20px 20px; }
+
+.panel-editor .panel-body {
+  padding: 0; }
 
 .panel-title a {
   border: 0;
@@ -9057,13 +9073,13 @@ select[size="1"] {
 */
 .templateVisual td {
   background-color: #fff;
-  border: 1px solid #CCCCCC;
+  border: 1px solid #cccccc;
   text-align: center;
   vertical-align: middle; }
   .templateVisual td:empty, .templateVisual td.empty {
     background: #fff url("/src/Backend/Core/Layout/images/na.png") repeat;
     background-size: 20px;
-    border: 1px solid #CCCCCC; }
+    border: 1px solid #cccccc; }
 .templateVisual table {
   border-collapse: separate;
   border-spacing: 2px;
@@ -9113,7 +9129,7 @@ select[size="1"] {
   #templateVisualFallback td {
     background: #f1f1f1;
     border-radius: 3px;
-    border: 1px solid #CCCCCC;
+    border: 1px solid #cccccc;
     vertical-align: top; }
     #templateVisualLarge td.empty,
     #templateVisualFallback td.empty {
@@ -9121,12 +9137,7 @@ select[size="1"] {
       background-size: 20px;
       padding: 10px;
       border-radius: 3px;
-      border: 1px solid #CCCCCC; }
-    #templateVisualLarge td p,
-    #templateVisualFallback td p {
-      color: #000;
-      font-weight: 600;
-      margin-bottom: 0; }
+      border: 1px solid #cccccc; }
   #templateVisualLarge .templatePositionTitle,
   #templateVisualFallback .templatePositionTitle {
     background-color: #fff;
@@ -9168,7 +9179,7 @@ select[size="1"] {
   #templateVisualLarge .templatePositionCurrentType,
   #templateVisualFallback .templatePositionCurrentType {
     background: #fff;
-    border: 1px solid #CCCCCC;
+    border: 1px solid #cccccc;
     cursor: move;
     height: 61px;
     overflow: ellipsis;
