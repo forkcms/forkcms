@@ -1,10 +1,6 @@
 #fieldsHolder {
-
-  .btn-toolbar {
-
-    .btn {
-      padding: 6px 7px 7px;
-    }
+  .btn-toolbar .btn {
+    padding: 6px 7px 7px;
   }
 
   .field {
@@ -13,7 +9,7 @@
   }
 
   .form-control[disabled] {
-    background: $white;
+    background-color: $white;
     cursor: not-allowed;
   }
 }

@@ -1,7 +1,7 @@
 .main-navigation {
-
   .js-nav-prev,
   .js-nav-next {
+    background-color: $brand-primary-darker;
     -webkit-box-shadow: -3px 0 4px 0 rgba($gray-base, .3);
     -moz-box-shadow: -3px 0 4px 0 rgba($gray-base, .3);
     box-shadow: -3px 0 4px 0 rgba($gray-base, .3);
@@ -9,18 +9,17 @@
     font-family: FontAwesome;
     height: 62px;
     position: absolute;
-    background: $brand-primary-darker;
-    z-index: 10;
-    width: 40px;
-    top: 0;
     right: 0;
+    top: 0;
+    width: 40px;
+    z-index: 10;
 
     &:after {
       color: $white;
       font-size: $font-size-extra-small;
+      margin-top: -7px;
       position: absolute;
       top: 50%;
-      margin-top: -7px;
     }
   }
 
@@ -31,74 +30,69 @@
     left: 0;
 
     &:after {
-      content: "\f053";
-      right: 50%;
+      content: '\f053';
       margin-right: -3.5px;
+      right: 50%;
     }
   }
 
   .js-nav-next:after {
-    content: "\f054";
+    content: '\f054';
     left: 50%;
     margin-left: -3.5px;
   }
 }
 
-.navigation-collapsed {
-
-  .toggle-nav-collapse {
-    width: 50px;
-    -webkit-transition: width 250ms;
-    -moz-transition: width 250ms;
-    -ms-transition: width 250ms;
-    -o-transition: width 250ms;
-    transition: width 250ms;
-
-    .js-toggle-nav {
-
-      .fa-chevron-left {
-        transform: rotate(180deg);
-        transition: all 250ms ;
-      }
-    }
-  }
-}
-
-.toggle-nav-collapse {
-  background: $brand-primary;
-  bottom: 0;
-  height: 54px;
-  left: 0;
-  position: fixed;
-  width: 240px;
+.navigation-collapsed .toggle-nav-collapse {
   -webkit-transition: width 250ms;
   -moz-transition: width 250ms;
   -ms-transition: width 250ms;
   -o-transition: width 250ms;
   transition: width 250ms;
+  width: 50px;
+
+  .js-toggle-nav .fa-chevron-left {
+    transform: rotate(180deg);
+    transition: all 250ms;
+  }
+}
+
+.toggle-nav-collapse {
+  background-color: $brand-primary;
+  bottom: 0;
+  height: 54px;
+  left: 0;
+  position: fixed;
+  -webkit-transition: width 250ms;
+  -moz-transition: width 250ms;
+  -ms-transition: width 250ms;
+  -o-transition: width 250ms;
+  transition: width 250ms;
+  width: 240px;
 
   .js-toggle-nav {
     display: block;
-    position: absolute;
     left: 50%;
     margin-left: -35px;
     padding: 10px 20px;
+    position: absolute;
 
     .fa-chevron-left {
       color: $white;
       padding: 10px;
       transform: rotate(0deg);
-      transition: all 250ms ;
+      transition: all 250ms;
     }
 
-    &:hover .fa-chevron-left {
+    &:hover .fa-chevron-left,
+    &:focus .fa-chevron-left {
       color: $brand-primary-dark;
     }
   }
 }
 
 .navbar-default {
-  border: none;
+  border: 0;
   margin-bottom: 0;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -109,7 +103,6 @@
   }
 
   .navbar-header {
-
     .site-icon {
       margin: 7px 10px 0 20px;
       width: 35px;
@@ -127,17 +120,17 @@
 
   .navbar-toggle {
     border-color: $white;
-    
+
     .icon-bar {
-      background: $white;
+      background-color: $white;
     }
 
     &:hover,
     &:focus {
-      background: $white;
+      background-color: $white;
 
       .icon-bar {
-        background: $brand-primary-dark;
+        background-color: $brand-primary-dark;
       }
     }
   }
@@ -157,9 +150,9 @@
         padding: 30px 10px 10px;
 
         &:before {
-          top: 10px;
           left: 50%;
           margin-left: -8px;
+          top: 10px;
         }
       }
     }
@@ -181,12 +174,12 @@
 
       &:hover,
       &:focus {
-        background: transparent;
+        background-color: transparent;
       }
     }
 
     .dropdown-menu {
-      background: $white;
+      background-color: $white;
       float: right;
       min-width: auto;
       position: absolute;
@@ -203,7 +196,6 @@
     }
 
     &.open {
-
       .dropdown-toggle {
         color: $gray-base;
 
@@ -246,48 +238,46 @@
     margin-bottom: 20px;
 
     .nav-item {
-
       a {
-        color: $gray;
-        background: $white;
+        background-color: $white;
         border-color: $gray-lighter;
+        color: $gray;
         padding: 12px 20px;
 
         &:hover,
         &:focus {
-          background: $brand-primary;
+          background-color: $brand-primary;
           color: $white;
         }
       }
 
       &.active a {
-        background: $brand-primary;
+        background-color: $brand-primary;
         color: $white;
       }
     }
 
     .subnav {
-      padding: 0;
       border-bottom: 1px solid $gray-lighter;
+      padding: 0;
 
       .nav-item {
-
         a {
-          background: $gray-lightest;
+          background-color: $gray-lightest;
+          border: 0;
           color: $gray;
-          border: none;
-          padding: 7px 32px;
           font-size: $font-size-small;
+          padding: 7px 32px;
 
           &:hover,
           &:focus {
-            background: $brand-primary;
+            background-color: $brand-primary;
             color: $white;
           }
         }
 
         &.active a {
-          background: $brand-primary;
+          background-color: $brand-primary;
           color: $white;
         }
       }
@@ -295,46 +285,28 @@
   }
 }
 
-.nav-item-dashboard {
-
-  a:before {
-    content: '\f0e4';
-  }
+.nav-item-dashboard a:before {
+  content: '\f0e4';
 }
 
-.nav-item-pages {
-
-  a:before {
-    content: "\f0c5";
-  }
+.nav-item-pages a:before {
+  content: '\f0c5';
 }
 
-.nav-item-modules {
-
-  a:before {
-    content: "\f1b2";
-  }
+.nav-item-modules a:before {
+  content: '\f1b2';
 }
 
-.nav-item-marketing {
-
-  a:before {
-    content: "\f1fe";
-  }
+.nav-item-marketing a:before {
+  content: '\f1fe';
 }
 
-.nav-item-mailmotor {
-
-  a:before {
-    content: "\f0e0";;
-  }
+.nav-item-mailmotor a:before {
+  content: '\f0e0';
 }
 
-.nav-item-settings {
-
-  a:before {
-    content: "\f013";
-  }
+.nav-item-settings a:before {
+  content: '\f013';
 }
 
 .navbar-user {
@@ -360,34 +332,30 @@
   }
 
   .dropdown {
-
     .fa-angle-right {
-      background: $brand-primary;
+      background-color: $brand-primary;
       border-radius: 100%;
       height: 20px;
       margin: -3px 0;
       position: absolute;
-      transform: rotate(90deg);
-      transition: all 250ms ;
-      top: 17px;
       right: 5px;
+      top: 17px;
+      transform: rotate(90deg);
+      transition: all 250ms;
       width: 20px;
 
       &:before {
         color: $white;
         font-size: $font-size-btn;
+        left: 8px;
         position: absolute;
         top: 2px;
-        left: 8px;
       }
     }
 
-    &.open {
-
-      .fa-angle-right {
-        transform: rotate(-90deg);
-        transition: all 250ms ;
-      }
+    &.open .fa-angle-right {
+      transform: rotate(-90deg);
+      transition: all 250ms;
     }
   }
 }
@@ -432,18 +400,17 @@
 
     .fa-angle-right {
       transform: rotate(90deg);
-      transition: all 250ms ;
+      transition: all 250ms;
     }
 
     &.open {
-
       .fa-angle-right {
         transform: rotate(-90deg);
         transition: all 250ms ;
       }
 
       .dropdown-toggle {
-        background: $white;
+        background-color: $white;
         border-color: $brand-primary;
 
         .dropdown-text {
@@ -455,9 +422,7 @@
 }
 
 @media screen and (min-width: $screen-sm) {
-
   .navbar-nav {
-
     .nav-item {
       float: none;
       width: auto;
@@ -473,7 +438,6 @@
   }
 
   .navbar-default {
-
     .navbar-nav {
       height: auto;
       width: 100% !important;
@@ -489,9 +453,9 @@
           padding: 15px 50px;
 
           &:before {
-            top: auto;
             left: 16px;
             margin-left: 0;
+            top: auto;
           }
         }
       }
@@ -502,24 +466,11 @@
     }
   }
 
-  .navigation-collapsed {
-
-    .navbar-default {
-
-      .navbar-nav {
-
-        .nav-item {
-
-          a {
-            padding: 15px 0 15px 50px;
-          }
-        }
-      }
-    }
+  .navigation-collapsed .navbar-default .navbar-nav .nav-item a {
+    padding: 15px 0 15px 50px;
   }
 
   .main-navigation {
-
     .js-nav-prev,
     .js-nav-next {
       display: none !important;
@@ -528,18 +479,11 @@
 }
 
 @media screen and (min-width: $screen-md) {
-
-  .navbar-nav {
-
-    .nav-item a:before {
-      left: 20px;
-    }
+  .navbar-nav .nav-item a:before {
+    left: 20px;
   }
 
-  .navbar-default {
-
-    .navbar-nav .nav-item a {
-      height: auto;
-    }
+  .navbar-default .navbar-nav .nav-item a {
+    height: auto;
   }
 }

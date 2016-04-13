@@ -1,7 +1,7 @@
 .content {
-  padding: 25px 0;
+  background-color: $body-bg;
   border-top: 1px solid $gray-lighter;
-  background: $body-bg;
+  padding: 25px 0;
 
   .content-title {
     font-size: $font-size-large;
@@ -22,7 +22,6 @@
   }
 
   .content-block {
-
     &.content-block-p {
       padding: 40px 0;
     }
@@ -36,4 +35,3 @@
     }
   }
 }
-

@@ -1,5 +1,5 @@
 .header {
-  background: $white;
+  background-color: $white;
   border-bottom: 3px solid $gray-lighter;
   padding: 12px 25px 12px 13px;
   position: relative;
@@ -20,26 +20,27 @@
   }
 
   .site-url {
-    color: $brand-primary;
     border-color: $brand-primary;
+    color: $brand-primary;
     margin-left: 5px;
   }
 }
 
 .site-title {
+  font-weight: 600;
   margin: 0;
   padding: 0;
-  font-weight: 600;
 }
 
 .site-url {
-  color: $gray-light;
   border-bottom: 1px solid $gray-light;
+  color: $gray-light;
   font-size: $font-size-small;
 
-  &:hover {
-    color: $gray-base;
+  &:hover,
+  &:focus {
     border-color: $gray-base;
+    color: $gray-base;
     text-decoration: none;
   }
 }
@@ -64,7 +65,7 @@
   width: 53px;
 
   .debug-mode {
-    background: $brand-danger;
+    background-color: $brand-danger;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     bottom: 0;
@@ -79,7 +80,6 @@
 }
 
 @media screen and (min-width: $screen-sm){
-
   .site-info {
     float: left;
   }
