@@ -8536,7 +8536,7 @@ select[size="1"] {
     .table-striped > tbody > tr:nth-of-type(even):hover, .table-striped > tbody > tr:nth-of-type(even):focus,
     .table-striped thead > tr:hover,
     .table-striped thead > tr:focus {
-      background: #E5E5E5; }
+      background-color: #E5E5E5; }
 
 .table > thead > tr > th {
   border-width: 1px; }
@@ -8566,7 +8566,7 @@ select[size="1"] {
     margin-bottom: 0; }
 
 .fork-dashboard-column .table-striped > tbody > tr:nth-of-type(even) {
-  background: #E5E5E5; }
+  background-color: #E5E5E5; }
 
 .alert {
   border: 0;

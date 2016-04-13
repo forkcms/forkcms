@@ -12,7 +12,7 @@
 
     &:hover,
     &:focus {
-      background: $table-bg-hover;
+      background-color: $table-bg-hover;
     }
 
   }
@@ -66,5 +66,5 @@
 }
 
 .fork-dashboard-column .table-striped > tbody > tr:nth-of-type(even) {
-  background: $gray-lighter;
+  background-color: $gray-lighter;
 }
