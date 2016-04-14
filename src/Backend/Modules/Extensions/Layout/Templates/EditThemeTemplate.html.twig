@@ -11,17 +11,25 @@
   {% form edit %}
     <div class="row fork-module-content">
       <div class="col-md-12">
-        <div class="form-inline form-group">
-          <p class="help-block">{{ 'msg.HelpTemplateLocation'|trans|raw }}</p>
-          <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|capitalize }}</label>
-          <label for="theme" class="hide">{{ 'lbl.Theme'|trans|capitalize }}</label>
-          {% form_field_error theme %}<small><code>/Core/Layout/Templates/</code></small>{% form_field file %} {% form_field theme %} {% form_field_error file %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <p>{{ 'lbl.Template'|trans|capitalize }}</p>
+          </div>
+          <div class="panel-body">
+            <div class="form-inline form-group">
+              <p class="help-block">{{ 'msg.HelpTemplateLocation'|trans|raw }}</p>
+              <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|capitalize }}</label>
+              <label for="theme" class="hide">{{ 'lbl.Theme'|trans|capitalize }}</label>
+              {% form_field_error theme %}<small><code>/Core/Layout/Templates/</code></small>{% form_field file %} {% form_field theme %} {% form_field_error file %}
+            </div>
+            <div class="form-group">
+              <label for="label" class="control-label">{{ 'lbl.Label'|trans|capitalize }}</label>
+              {% form_field_error label %} {% form_field label %}
+            </div>
+          </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="label" class="control-label">{{ 'lbl.Label'|trans|capitalize }}</label>
-          {% form_field_error label %} {% form_field label %}
-        </div>
-      </div>
+
     </div>
     <div class="row fork-module-content">
       <div class="col-md-12">

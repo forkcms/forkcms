@@ -78,11 +78,11 @@
               </div>
               <div class="row">
                 <div class="col-md-8">
-                  <div class="panel panel-default">
+                  <div class="panel panel-default panel-editor">
                     <div class="panel-heading">
-                      <h4 class="panel-title">
+                      <h3 class="panel-title">
                         {{ 'lbl.Preview'|trans|capitalize }}
-                      </h4>
+                      </h3>
                     </div>
                     <div id="fieldsHolder" class="panel-body sequenceByDragAndDrop">
                       {% if fields %}
@@ -99,19 +99,19 @@
                       </div>
 
                       {# Submit button is always here. Cannot be deleted or moved. #}
-                      <div class="row">
-                        <div class="col-md-5 col-md-offset-4">
-                          <div class="btn-toolbar">
-                            <div class="btn-group pull-right" role="group">
-                              {{ btnSubmitFiel|raw }}
+                      <div class="form-group field field-submit">
+                        <div class="row">
+                          <div class="col-md-5 col-md-offset-3">
+                            <div class="btn-group" role="group">
+                              {{ btnSubmitField|raw }}
                             </div>
                           </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="btn-group pull-right" role="group">
-                            <a href="#edit-{{ submitId }}" class="btn btn-default jsFieldEdit" rel="{{ submitId }}" title="{{ 'lbl.Edit'|trans|capitalize }}">
-                              <span class="fa fa-pencil"></span>
-                            </a>
+                          <div class="col-md-4">
+                            <div class="btn-group pull-right" role="group">
+                              <a href="#edit-{{ submitId }}" class="btn btn-default btn-icon-only jsFieldEdit" rel="{{ submitId }}" title="{{ 'lbl.Edit'|trans|capitalize }}">
+                                <span class="fa fa-pencil fa-fw"></span>
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -121,54 +121,54 @@
                 <div class="col-md-4">
                   <div id="formElements" class="panel panel-default">
                     <div class="panel-heading">
-                      <h4 class="panel-title">
+                      <h3 class="panel-title">
                         {{ 'lbl.AddFields'|trans|capitalize }}
-                      </h4>
+                      </h3>
                     </div>
                     <div class="panel-body">
-                      <h5>{{ 'lbl.FormElements'|trans|capitalize }}</h5>
-                      <ul class="list-group">
+                      <ul class="list-group first">
+                        <h5>{{ 'lbl.FormElements'|trans|capitalize }}</h5>
                         <li id="textboxSelector" class="list-group-item">
                           <a href="#textbox" rel="textboxDialog" class="jsFieldDialogTrigger">
-                            {{ 'lbl.Textbox'|trans|capitalize }}
+                            <i class="fa fa-i-cursor fa-fw" aria-hidden="true"></i>{{ 'lbl.Textbox'|trans|capitalize }}
                           </a>
                         </li>
                         <li id="textareaSelector" class="list-group-item">
                           <a href="#textarea" rel="textareaDialog" class="jsFieldDialogTrigger">
-                            {{ 'lbl.Textarea'|trans|capitalize }}
+                            <i class="fa fa-i-cursor fa-fw" aria-hidden="true"></i>{{ 'lbl.Textarea'|trans|capitalize }}
                           </a>
                         </li>
                         <li id="datetimeSelector" class="list-group-item">
                           <a href="#datetime" rel="datetimeDialog" class="jsFieldDialogTrigger">
-                            {{ 'lbl.Datetime'|trans|capitalize }}
+                            <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ 'lbl.Datetime'|trans|capitalize }}
                           </a>
                         </li>
                         <li id="dropdownSelector" class="list-group-item">
                           <a href="#dropdown" rel="dropdownDialog" class="jsFieldDialogTrigger">
-                            {{ 'lbl.Dropdown'|trans|capitalize }}
+                            <i class="fa fa-caret-square-o-down fa-fw" aria-hidden="true"></i>{{ 'lbl.Dropdown'|trans|capitalize }}
                           </a>
                         </li>
                         <li id="checkboxSelector" class="list-group-item">
                           <a href="#checkbox" rel="checkboxDialog" class="jsFieldDialogTrigger">
-                            {{ 'lbl.Checkbox'|trans|capitalize }}
+                            <i class="fa fa-check-square fa-fw" aria-hidden="true"></i>{{ 'lbl.Checkbox'|trans|capitalize }}
                           </a>
                         </li>
                         <li id="radiobuttonSelector" class="list-group-item">
                           <a href="#radiobutton" rel="radiobuttonDialog" class="jsFieldDialogTrigger">
-                            {{ 'lbl.Radiobutton'|trans|capitalize }}
+                            <i class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|capitalize }}
                           </a>
                         </li>
                       </ul>
-                      <h5>{{ 'lbl.TextElements'|trans|capitalize }}</h5>
                       <ul class="list-group">
+                        <h5>{{ 'lbl.TextElements'|trans|capitalize }}</h5>
                         <li id="headingSelector" class="list-group-item">
                           <a href="#heading" rel="headingDialog" class="jsFieldDialogTrigger">
-                            {{ 'lbl.Heading'|trans|capitalize }}
+                            <i class="fa fa-header fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|capitalize }}
                           </a>
                         </li>
                         <li id="paragraphSelector" class="list-group-item">
                           <a href="#paragraph" rel="paragraphDialog" class="jsFieldDialogTrigger">
-                            {{ 'lbl.Paragraph'|trans|capitalize }}
+                            <i class="fa fa-paragraph fa-fw" aria-hidden="true"></i>{{ 'lbl.Paragraph'|trans|capitalize }}
                           </a>
                         </li>
                       </ul>

@@ -52,42 +52,48 @@
             <div role="tabpanel" class="tab-pane active" id="tabContent">
               <div class="row">
                 <div class="col-md-8">
-                  <div class="form-group">
-                    <label for="text" class="control-label">
-                      {{ 'lbl.MainContent'|trans|capitalize }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
-                    </label>
-                    {% form_field_error text %} {% form_field text %}
+                  <div class="panel panel-default panel-editor">
+                    <div class="panel-heading">
+                      <p>{{ 'lbl.MainContent'|trans|capitalize }}<abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></p>
+                    </div>
+                    <div class="panel-body">
+                      {% form_field_error text %} {% form_field text %}
+                    </div>
                   </div>
                   {% if imageIsAllowed %}
-                  <div class="form-group">
-                    <label for="image" class="control-label">{{ 'lbl.Image'|trans|capitalize }}</label>
-                    {% if item.image %}
-                    <div>
-                      <img src="{{ FRONTEND_FILES_URL }}/blog/images/128x128/{{ item.image }}" class="img-thumbnail" width="128" height="128" alt="{{ 'lbl.Image'|trans|capitalize }}" />
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <p>{{ 'lbl.Image'|trans|capitalize }}</p>
                     </div>
-                    <ul class="list-unstyled">
-                      <li class="checkbox">
-                        <label for="deleteImage" class="control-label">{% form_field delete_image %} {{ 'lbl.Delete'|trans|capitalize }}</label>
-                        {% form_field_error delete_image %}
-                      </li>
-                    </ul>
-                    {% endif %}
-                    {% form_field_error image %} {% form_field image %}
+                    <div class="panel-body">
+                      {% if item.image %}
+                      <div>
+                        <img src="{{ FRONTEND_FILES_URL }}/blog/images/128x128/{{ item.image }}" class="img-thumbnail" width="128" height="128" alt="{{ 'lbl.Image'|trans|capitalize }}" />
+                      </div>
+                      <ul class="list-unstyled">
+                        <li class="checkbox">
+                          <label for="deleteImage" class="control-label">{% form_field delete_image %} {{ 'lbl.Delete'|trans|capitalize }}</label>
+                          {% form_field_error delete_image %}
+                        </li>
+                      </ul>
+                      {% endif %}
+                      {% form_field_error image %} {% form_field image %}
+                    </div>
                   </div>
                   {% endif %}
-                  <div class="form-group last">
-                    <label for="introduction" class="control-label">
-                      {{ 'lbl.Summary'|trans|capitalize }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|capitalize }}"></abbr>
-                    </label>
-                    {% form_field_error introduction %} {% form_field introduction %}
+                  <div class="panel panel-default panel-editor last">
+                    <div class="panel-heading">
+                      <p>{{ 'lbl.Summary'|trans|capitalize }} <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|capitalize }}"></abbr></p>
+                    </div>
+                    <div class="panel-body">
+                      {% form_field_error introduction %} {% form_field introduction %}
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <h3 class="panel-title">{{ 'lbl.Status'|trans|capitalize }}</h3>
+                      <p>{{ 'lbl.Status'|trans|capitalize }}</p>
                     </div>
                     <div class="panel-body">
                       <div class="form-group">
@@ -99,7 +105,7 @@
                           {% endfor %}
                         </ul>
                       </div>
-                      <div class="form-group">
+                      <div class="form-group last">
                         <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|capitalize }}</label>
                         {% form_field_error publish_on_date %} {% form_field publish_on_date %}
                         <label for="publishOnTime" class="control-label">{{ lbl.At }}</label>
@@ -109,7 +115,7 @@
                   </div>
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <h3 class="panel-title">{{ 'lbl.MetaData'|trans|capitalize }}</h3>
+                      <p>{{ 'lbl.MetaData'|trans|capitalize }}</p>
                     </div>
                     <div class="panel-body">
                       <div class="form-group">
@@ -121,7 +127,7 @@
                         {% form_field_error user_id %} {% form_field user_id %}
                       </div>
                       {% if showTagsIndex %}
-                      <div class="form-group">
+                      <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|capitalize }}</label>
                         {% form_field_error tags %} {% form_field tags %}
                       </div>

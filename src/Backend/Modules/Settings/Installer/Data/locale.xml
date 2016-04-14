@@ -115,6 +115,30 @@
         <translation language="zh"><![CDATA[安全]]></translation>
         <translation language="de"><![CDATA[Sicherheit]]></translation>
       </item>
+      <item type="label" name="Twitter">
+        <translation language="nl"><![CDATA[twitter]]></translation>
+        <translation language="en"><![CDATA[twitter]]></translation>
+        <translation language="de"><![CDATA[twitter]]></translation>
+        <translation language="fr"><![CDATA[twitter]]></translation>
+        <translation language="es"><![CDATA[twitter]]></translation>
+        <translation language="it"><![CDATA[twitter]]></translation>
+      </item>
+      <item type="label" name="Facebook">
+        <translation language="nl"><![CDATA[facebook]]></translation>
+        <translation language="en"><![CDATA[facebook]]></translation>
+        <translation language="de"><![CDATA[facebook]]></translation>
+        <translation language="fr"><![CDATA[facebook]]></translation>
+        <translation language="es"><![CDATA[facebook]]></translation>
+        <translation language="it"><![CDATA[facebook]]></translation>
+      </item>
+      <item type="label" name="CkFinder">
+        <translation language="nl"><![CDATA[ckfinder]]></translation>
+        <translation language="en"><![CDATA[ckfinder]]></translation>
+        <translation language="de"><![CDATA[ckfinder]]></translation>
+        <translation language="fr"><![CDATA[ckfinder]]></translation>
+        <translation language="es"><![CDATA[ckfinder]]></translation>
+        <translation language="it"><![CDATA[ckfinder]]></translation>
+      </item>
       <item type="message" name="ConfigurationError">
         <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
         <translation language="en"><![CDATA[Some settings are not yet configured.]]></translation>

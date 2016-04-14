@@ -36,11 +36,15 @@
             <div role="tabpanel" class="tab-pane active" id="tabContent">
               <div class="row">
                 <div class="col-md-8">
-                  <div class="form-group optionsRTE">
-                    <label for="answer" class="control-label">{{ 'lbl.Answer'|trans|capitalize }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
-                    </label>
-                    {% form_field_error answer %} {% form_field answer %}
+                  <div class="panel panel-default panel-editor optionsRTE">
+                    <div class="panel-heading">
+                      <label for="answer" class="control-label">{{ 'lbl.Answer'|trans|capitalize }}
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                      </label>
+                    </div>
+                    <div class="panel-body">
+                      {% form_field_error answer %} {% form_field answer %}
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -49,7 +53,7 @@
                       <h3 class="panel-title">{{ 'lbl.Status'|trans|capitalize }}</h3>
                     </div>
                     <div class="panel-body">
-                      <div class="form-group">
+                      <div class="form-group last">
                         <ul class="list-unstyled">
                           {% for _itr_9 in hidden %}
                           <li class="radio">
@@ -60,7 +64,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="panel panel-default">
+                  <div class="panel panel-default last">
                     <div class="panel-heading">
                       <h3 class="panel-title">{{ 'lbl.MetaData'|trans|capitalize }}</h3>
                     </div>
@@ -69,7 +73,7 @@
                         <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|capitalize }}</label>
                         {% form_field_error category_id %} {% form_field category_id %}
                       </div>
-                      <div class="form-group">
+                      <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|capitalize }}</label>
                         {% form_field_error tags %} {% form_field tags %}
                       </div>

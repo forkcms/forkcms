@@ -32,7 +32,7 @@
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <label for="{{ installedThemes.id }}" class="panel-title">
-                      <span>{{ installableThem.label|capitalize }}</span>
+                      {{ installableThem.label|capitalize }}
                     </label>
                   </div>
                   <div class="panel-body">
@@ -94,8 +94,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
-              {{ 'lbl.InstalledThemes'|trans|capitalize }}&nbsp;
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+              {{ 'lbl.InstalledThemes'|trans|capitalize }} <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
             </h3>
           </div>
           <div class="panel-body">
@@ -112,7 +111,7 @@
                         <span class="hidden">{{ installedThem.rbtInstalledThemes|raw }}</span>
 
                         <div class="panel-heading">
-                          <span class="panel-title">{{ installedThem.label|capitalize }}</span>
+                          <h3 class="panel-title">{{ installedThem.label|capitalize }}</h3>
                         </div>
                         <div class="panel-body">
                           <img src="{{ installedThem.thumbnail }}" class="img-thumbnail" alt="{{ installedThem.label|capitalize }}" />
