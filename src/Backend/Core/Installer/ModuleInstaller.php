@@ -526,7 +526,7 @@ class ModuleInstaller
             $query .= ' AND data IS NULL';
         }
 
-        // get id (if its already exists)
+        // get id (if it already exists)
         $extraId = (int) $this->getDB()->getVar($query, $parameters);
 
         // doesn't already exist

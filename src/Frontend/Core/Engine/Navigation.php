@@ -241,7 +241,7 @@ class Navigation extends FrontendBaseObject
             throw new Exception('The parent (' . $parentId . ') doesn\'t exists.');
         }
 
-        // special construction to merge home with it's immediate children
+        // special construction to merge home with its immediate children
         $mergedHome = false;
         while (true) {
             // loop elements
