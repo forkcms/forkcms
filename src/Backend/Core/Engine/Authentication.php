@@ -237,7 +237,7 @@ class Authentication
                 array(\SpoonSession::getSessionId(), \SpoonSession::get('backend_secret_key'))
             );
 
-            // add all actions and there level
+            // add all actions and their level
             foreach ($allowedActionsRows as $row) {
                 // add if the module is installed
                 if (in_array(
