@@ -19,8 +19,9 @@
   .panel-heading {
 
     p,
+    h3,
     .control-label,
-    h3 {
+    .panel-title {
       color: $gray-base;
       font-size: $font-size-base;
       font-weight: 600;

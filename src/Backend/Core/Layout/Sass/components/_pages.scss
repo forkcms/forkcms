@@ -149,6 +149,9 @@
   }
 
   /* Block */
+  .templatePositionCurrentType + .templatePositionCurrentType {
+    border-top: 0;
+  }
 
   .templatePositionCurrentType {
     background: $white;

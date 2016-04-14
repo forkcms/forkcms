@@ -8645,8 +8645,9 @@ select[size="1"] {
 .panel-default {
   margin-bottom: 20px; }
   .panel-default .panel-heading p,
+  .panel-default .panel-heading h3,
   .panel-default .panel-heading .control-label,
-  .panel-default .panel-heading h3 {
+  .panel-default .panel-heading .panel-title {
     color: #000;
     font-size: 14px;
     font-weight: 600;
@@ -9182,6 +9183,9 @@ select[size="1"] {
       #templateVisualLarge .btn-group .btn .fa,
       #templateVisualFallback .btn-group .btn .fa {
         padding-right: 4px; } }
+  #templateVisualLarge .templatePositionCurrentType + .templatePositionCurrentType,
+  #templateVisualFallback .templatePositionCurrentType + .templatePositionCurrentType {
+    border-top: 0; }
   #templateVisualLarge .templatePositionCurrentType,
   #templateVisualFallback .templatePositionCurrentType {
     background: #fff;
