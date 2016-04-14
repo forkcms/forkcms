@@ -401,9 +401,8 @@ class ModuleInstaller
      *
      * @param string $module
      * @param string $widget
-     * @param array $data
      */
-    protected function insertDashboardWidget($module, $widget, $data)
+    protected function insertDashboardWidget($module, $widget)
     {
         // get db
         $db = $this->getDB();
@@ -424,7 +423,7 @@ class ModuleInstaller
             $settings['value'] = unserialize($settings['value']);
 
             // add new widget
-            $settings['value'][$module][$widget] = $data;
+            $settings['value'][$module][] = $widget;
 
             // re-serialize value
             $settings['value'] = serialize($settings['value']);
@@ -444,7 +443,7 @@ class ModuleInstaller
             $settings['value'] = unserialize($settings['value']);
 
             // add new widget
-            $settings['value'][$module][$widget] = $data;
+            $settings['value'][$module][] = $widget;
 
             // re-serialize value
             $settings['value'] = serialize($settings['value']);
