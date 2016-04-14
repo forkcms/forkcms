@@ -205,7 +205,7 @@ class Navigation extends FrontendBaseObject
      * @param int    $parentId     The parentID to start of.
      * @param int    $depth        The maximum depth to parse.
      * @param array  $excludeIds   PageIDs to be excluded.
-     * @param string $tpl          The template that will be used.
+     * @param string $template     The template that will be used.
      * @param int    $depthCounter A counter that will hold the current depth.
      * @return string
      */
@@ -214,7 +214,7 @@ class Navigation extends FrontendBaseObject
         $parentId = 0,
         $depth = null,
         $excludeIds = array(),
-        $tpl = '/Core/Layout/Templates/Navigation.html.twig',
+        $template = '/Core/Layout/Templates/Navigation.html.twig',
         $depthCounter = 1
     ) {
         // get navigation
@@ -319,7 +319,7 @@ class Navigation extends FrontendBaseObject
                         $page['page_id'],
                         $depth,
                         $excludeIds,
-                        $tpl,
+                        $template,
                         $depthCounter + 1
                     );
                 } else {
@@ -354,7 +354,7 @@ class Navigation extends FrontendBaseObject
 
         // return parsed content
         return Model::get('templating')->render(
-            FRONTEND_PATH . (string) $tpl,
+            $template,
             array('navigation' => $navigation[$type][$parentId])
         );
     }
