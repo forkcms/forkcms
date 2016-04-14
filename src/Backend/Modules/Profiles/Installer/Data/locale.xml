@@ -649,6 +649,18 @@
         <translation language="es"><![CDATA[Esta dirección e-mail está en uso.]]></translation>
         <translation language="el"><![CDATA[Αυτή η διεύθυνση email είναι σε χρήση.]]></translation>
       </item>
+      <item type="error" name="EmailNotAllowed">
+        <translation language="nl"><![CDATA[E-mailadres is hier niet toegestaan.]]></translation>
+        <translation language="en"><![CDATA[E-mailaddress not allowed here.]]></translation>
+        <translation language="it"><![CDATA[L'indirizzo email non permesso qui.]]></translation>
+        <translation language="ru"><![CDATA[Адрес электронной почты здесь не допускается.]]></translation>
+        <translation language="zh"><![CDATA[电子邮件地址这里不允许]]></translation>
+        <translation language="de"><![CDATA[E-Mail-Adresse hier nicht erlaubt.]]></translation>
+        <translation language="fr"><![CDATA[Adresse e-mail non autorisé ici.]]></translation>
+        <translation language="hu"><![CDATA[E-mail cím nem engedélyezett.]]></translation>
+        <translation language="es"><![CDATA[Dirección de correo electrónico no permitida aquí.]]></translation>
+        <translation language="el"><![CDATA[διεύθυνση ηλεκτρονικού ταχυδρομείου δεν επιτρέπεται εδώ.]]></translation>
+      </item>
       <item type="error" name="GroupIsRequired">
         <translation language="nl"><![CDATA[Groep is een verplicht veld.]]></translation>
         <translation language="en"><![CDATA[Group is a required field.]]></translation>
