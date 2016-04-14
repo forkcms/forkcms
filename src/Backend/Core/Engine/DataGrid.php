@@ -234,8 +234,10 @@ class DataGrid extends \SpoonDataGrid
         // disable paging
         $this->setPaging(false);
 
-        // hide the sequence column
-        $this->setColumnHidden('sequence');
+        // hide the sequence column if present
+        if ($this->hasColumn('sequence')) {
+            $this->setColumnHidden('sequence');
+        }
 
         // add a column for the handle, so users have something to hold while dragging
         $this->addColumn('dragAndDropHandle', null, '<span>' . Language::lbl('Move') . '</span>');
