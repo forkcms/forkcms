@@ -251,6 +251,17 @@ class DataGrid extends \SpoonDataGrid
     }
 
     /**
+     * Checks wether a column is present in the datagrid
+     *
+     * @param string $column
+     * @return bool
+     */
+    public function hasColumn($column)
+    {
+        return in_array($column, $this->columns);
+    }
+
+    /**
      * Retrieve the parsed output.
      *
      * @return string
