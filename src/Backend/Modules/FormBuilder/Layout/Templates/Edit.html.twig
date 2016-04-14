@@ -130,12 +130,12 @@
                         <h5>{{ 'lbl.FormElements'|trans|capitalize }}</h5>
                         <li id="textboxSelector" class="list-group-item">
                           <a href="#textbox" rel="textboxDialog" class="jsFieldDialogTrigger">
-                            <i class="fa fa-i-cursor fa-fw" aria-hidden="true"></i>{{ 'lbl.Textbox'|trans|capitalize }}
+                            <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textbox.svg" alt="textbox">{{ 'lbl.Textbox'|trans|capitalize }}
                           </a>
                         </li>
                         <li id="textareaSelector" class="list-group-item">
                           <a href="#textarea" rel="textareaDialog" class="jsFieldDialogTrigger">
-                            <i class="fa fa-i-cursor fa-fw" aria-hidden="true"></i>{{ 'lbl.Textarea'|trans|capitalize }}
+                            <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textarea.svg" alt="textarea">{{ 'lbl.Textarea'|trans|capitalize }}
                           </a>
                         </li>
                         <li id="datetimeSelector" class="list-group-item">
@@ -145,7 +145,7 @@
                         </li>
                         <li id="dropdownSelector" class="list-group-item">
                           <a href="#dropdown" rel="dropdownDialog" class="jsFieldDialogTrigger">
-                            <i class="fa fa-caret-square-o-down fa-fw" aria-hidden="true"></i>{{ 'lbl.Dropdown'|trans|capitalize }}
+                            <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-dropdown.svg" alt="dropdown">{{ 'lbl.Dropdown'|trans|capitalize }}
                           </a>
                         </li>
                         <li id="checkboxSelector" class="list-group-item">
@@ -847,7 +847,7 @@
               <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
             </button>
             <button id="submitDialogSubmit" type="button" class="btn btn-success jsFieldDialogSubmit">
-              <span class="fa fa-plus"></span>{{ 'lbl.Add'|trans|capitalize }}
+              <span class="fa fa-check"></span>{{ 'lbl.Save'|trans|capitalize }}
             </button>
           </div>
         </div>

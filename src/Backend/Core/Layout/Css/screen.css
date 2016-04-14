@@ -9488,6 +9488,9 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
     #formElements .list-group .list-group-item .fa {
       color: #999999;
       margin-right: 5px; }
+    #formElements .list-group .list-group-item .icon {
+      margin-right: 9px;
+      width: 14px; }
   #formElements .list-group.first {
     border-bottom: 1px solid #E5E5E5; }
 
