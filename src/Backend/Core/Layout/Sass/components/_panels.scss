@@ -18,8 +18,11 @@
 
   .panel-heading {
 
-    p {
+    p,
+    .control-label,
+    h3 {
       color: $gray-base;
+      font-size: $font-size-base;
       font-weight: 600;
       margin-bottom: 0;
     }
@@ -97,32 +100,39 @@
 
 .panel-select label {
   cursor: pointer;
+  margin-bottom: 0;
 }
 
-.panel-primary label {
-  width: 100%;
-
-  .panel-heading {
-    background-color: $brand-primary;
-    color: $white;
-  }
-
-  .panel-body {
-    padding: 20px 15px 13px;
-  }
-}
-
+.panel-primary label,
 .panel-default label {
   width: 100%;
 
-  .panel-heading {
-    border-bottom: 1px solid $gray-lighter;
-  }
-
   .panel-body {
     padding: 20px 15px 13px;
   }
+
+  .panel-footer {
+    background-color: $white;
+    border-top: 0;
+  }
 }
+
+.panel-primary label {
+
+  .panel-heading {
+    background-color: $brand-primary;
+
+    h3 {
+      color: $white;
+    }
+  }
+}
+
+.panel-default label .panel-heading {
+  border-bottom: 1px solid $gray-lighter;
+}
+
+
 
 .fork-dashboard-column .panel-default .panel-body {
   padding: 20px 15px 13px;

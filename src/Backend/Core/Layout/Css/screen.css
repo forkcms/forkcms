@@ -8107,8 +8107,9 @@ div.tabs ul li.selected {
     font-family: "Source Code Pro"; }
 
 .control-label {
+  color: #000;
   font-size: 14px;
-  font-weight: normal; }
+  font-weight: 600; }
 
 .radio {
   margin-top: 0; }
@@ -8568,9 +8569,6 @@ select[size="1"] {
   .table .form-group {
     margin-bottom: 0; }
 
-.fork-dashboard-column .table-striped > tbody > tr:nth-of-type(even) {
-  background-color: #E5E5E5; }
-
 .alert {
   border: 0;
   margin: 10px 0 0; }
@@ -8646,8 +8644,11 @@ select[size="1"] {
 
 .panel-default {
   margin-bottom: 20px; }
-  .panel-default .panel-heading p {
+  .panel-default .panel-heading p,
+  .panel-default .panel-heading .control-label,
+  .panel-default .panel-heading h3 {
     color: #000;
+    font-size: 14px;
     font-weight: 600;
     margin-bottom: 0; }
   .panel-default .panel-body {
@@ -8688,22 +8689,27 @@ select[size="1"] {
       color: #000; }
 
 .panel-select label {
-  cursor: pointer; }
+  cursor: pointer;
+  margin-bottom: 0; }
 
-.panel-primary label {
-  width: 100%; }
-  .panel-primary label .panel-heading {
-    background-color: #2f77d1;
-    color: #fff; }
-  .panel-primary label .panel-body {
-    padding: 20px 15px 13px; }
-
+.panel-primary label,
 .panel-default label {
   width: 100%; }
-  .panel-default label .panel-heading {
-    border-bottom: 1px solid #E5E5E5; }
+  .panel-primary label .panel-body,
   .panel-default label .panel-body {
     padding: 20px 15px 13px; }
+  .panel-primary label .panel-footer,
+  .panel-default label .panel-footer {
+    background-color: #fff;
+    border-top: 0; }
+
+.panel-primary label .panel-heading {
+  background-color: #2f77d1; }
+  .panel-primary label .panel-heading h3 {
+    color: #fff; }
+
+.panel-default label .panel-heading {
+  border-bottom: 1px solid #E5E5E5; }
 
 .fork-dashboard-column .panel-default .panel-body {
   padding: 20px 15px 13px; }

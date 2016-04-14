@@ -31,8 +31,9 @@
 }
 
 .control-label {
+  color: $gray-base;
   font-size: $font-size-base;
-  font-weight: normal;
+  font-weight: 600;
 }
 
 .radio {
