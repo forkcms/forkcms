@@ -9455,11 +9455,37 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 #fieldsHolder .btn-toolbar .btn {
   padding: 6px 7px 7px; }
 #fieldsHolder .field {
+  border-bottom: 1px solid #E5E5E5;
   border-radius: 3px;
-  padding: 7px; }
+  padding: 25px;
+  margin: 0; }
+  #fieldsHolder .field.field-submit {
+    padding: 15px 25px; }
 #fieldsHolder .form-control[disabled] {
   background-color: #fff;
   cursor: not-allowed; }
+#fieldsHolder .btn[disabled] {
+  opacity: 1; }
+
+#formElements h5 {
+  color: #4a4a4a;
+  margin-top: 0; }
+#formElements .panel-body {
+  padding: 0; }
+#formElements .list-group {
+  padding: 20px 25px 15px;
+  margin: 0; }
+  #formElements .list-group .list-group-item {
+    border: 0;
+    border-top: 1px solid #f1f1f1;
+    padding: 11px 0 12px; }
+    #formElements .list-group .list-group-item a {
+      color: #4A90E2; }
+    #formElements .list-group .list-group-item .fa {
+      color: #999999;
+      margin-right: 5px; }
+  #formElements .list-group.first {
+    border-bottom: 1px solid #E5E5E5; }
 
 #locale .translationValue {
   word-break: break-all; }
