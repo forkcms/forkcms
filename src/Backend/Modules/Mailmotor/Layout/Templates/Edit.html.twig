@@ -195,23 +195,25 @@
                   {% if rbtTemplatesError %}
                   <p class="text-danger">{{ rbtTemplatesError }}</p>
                   {% endif %}
-                  <ul id="templateSelection" class="selectThumbList list-unstyled list-inline">
-                    {% for templat in templates %}
-                    <li{% if templat.selected %} class="active"{% endif %}>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <label for="{{ templat.id }}" class="panel-title">
-                            {{ templat.rbtTemplates|raw }}
-                            <span>{{ templat.label|capitalize }}</span>
-                          </label>
+                  <div id="templateSelection" class="selectThumbList">
+                    <div class="row">
+                      {% for templat in templates %}
+                        <div class="col-md-4 js-template">
+                          <div class="panel panel-select {% if templat.selected %}panel-primary {% endif %} panel-default">
+                            <label for="{{ templat.id }}" class="panel-title">
+                              <div class="panel-heading">
+                                  <span class="hidden">{{ templat.rbtTemplates|raw }}</span>
+                                  <span class="panel-title">{{ templat.label|capitalize }}</span>
+                              </div>
+                              <div class="panel-body">
+                                <img src="/src/Backend/Modules/Mailmotor/Templates/{{ templat.language }}/{{ templat.value }}/images/thumb.jpg" width="172" height="129" class="img-thumbnail" alt="{{ templat.label|capitalize }}" />
+                              </div>
+                            </label>
+                          </div>
                         </div>
-                        <div class="panel-body">
-                          <img src="/src/Backend/Modules/Mailmotor/Templates/{{ templat.language }}/{{ templat.value }}/images/thumb.jpg" width="172" height="129" class="img-thumbnail" alt="{{ templat.label|capitalize }}" />
-                        </div>
-                      </div>
-                    </li>
-                    {% endfor %}
-                  </ul>
+                      {% endfor %}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

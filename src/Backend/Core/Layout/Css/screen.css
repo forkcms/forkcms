@@ -8691,7 +8691,7 @@ select[size="1"] {
 
 .panel-select label {
   cursor: pointer;
-  margin-bottom: 0; }
+  margin-bottom: 1px; }
 
 .panel-primary label,
 .panel-default label {
@@ -8706,7 +8706,7 @@ select[size="1"] {
 
 .panel-primary label .panel-heading {
   background-color: #2f77d1; }
-  .panel-primary label .panel-heading h3 {
+  .panel-primary label .panel-heading .panel-title {
     color: #fff; }
 
 .panel-default label .panel-heading {

@@ -101,7 +101,7 @@
 
 .panel-select label {
   cursor: pointer;
-  margin-bottom: 0;
+  margin-bottom: 1px;
 }
 
 .panel-primary label,
@@ -123,7 +123,7 @@
   .panel-heading {
     background-color: $brand-primary;
 
-    h3 {
+    .panel-title {
       color: $white;
     }
   }
