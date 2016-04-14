@@ -185,7 +185,7 @@ class Register extends FrontendBaseBlock
                     $this->get('mailer')->send($message);
 
                     // redirect
-                    $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
+                    $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
                 } catch (\Exception $e) {
                     // make sure RedirectExceptions get thrown
                     if ($e instanceof RedirectException) {
