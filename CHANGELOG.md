@@ -6,6 +6,7 @@ Bugfixes:
 * Pages: removed single quotes converter in CacheBuilder. This fixes page titles with single quotes.
 * Pages: Fixes "Notice: Undefined index: parent_id" when viewing a page revision where the page is located in the root of the pages tree.
 * Pages: Fixes "Error: Call to a member function addMetaData() on null" when viewing an existing revision page.
+* Core: BackendDataGridFunctions::showImage updated with url, with and height.
 
 3.9.6 (2015-12-22)
 --
