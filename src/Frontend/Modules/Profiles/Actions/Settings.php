@@ -210,6 +210,11 @@ class Settings extends FrontendBaseBlock
                         // set error
                         $txtDisplayName->addError(FL::getError('DisplayNameExists'));
                     }
+
+                    // display name must not be email
+                    if ($txtDisplayName->isEmail()) {
+                        $txtDisplayName->setError(FL::getError('EmailNotAllowed'));
+                    }
                 }
             }
 

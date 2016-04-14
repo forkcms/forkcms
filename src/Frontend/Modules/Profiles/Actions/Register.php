@@ -100,6 +100,11 @@ class Register extends FrontendBaseBlock
             $txtEmail = $this->frm->getField('email');
             $txtPassword = $this->frm->getField('password');
 
+            // display name must not be email
+            if ($txtDisplayName->isEmail()) {
+                $txtDisplayName->setError(FL::getError('EmailNotAllowed'));
+            }
+
             // check email
             if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
                 // valid email?
