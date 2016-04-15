@@ -8143,7 +8143,7 @@ select[size="1"] {
   font-size: 14px;
   height: 34px;
   padding: 5px;
-  width: auto; }
+  width: 100%; }
 
 .form-group.last {
   margin-bottom: 0; }
