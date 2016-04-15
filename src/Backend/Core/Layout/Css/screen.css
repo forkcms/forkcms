@@ -9534,6 +9534,8 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
   border-radius: 0; }
 .panel .cke_resizer_ltr {
   margin-right: 0; }
+.panel .cke_combo_button {
+  margin-bottom: 3px; }
 
 /* General */
 .fork-module-heading {
