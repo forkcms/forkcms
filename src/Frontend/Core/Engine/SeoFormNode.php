@@ -34,7 +34,11 @@ class SeoFormNode extends \Twig_Node
             ->addDebugInfo($this)
             ->write('echo \'<div class="row">\';')
             ->write('echo \'<div class="col-md-12">\';')
+            ->write('echo \'<div class="panel panel-default">\';')
+            ->write('echo \'<div class="panel-heading">\';')
             ->write('echo "<p class=\"tab-pane-title\">' . $this->lbl('Titles') . '</p>";')
+            ->write('echo \'</div>\';')
+            ->write('echo \'<div class="panel-body">\';')
             ->write('echo \'<div class="form-group">\';')
             ->write('echo \'<ul class="list-unstyled checkboxTextFieldCombo">\';')
             ->write('echo \'<li class="checkbox">\';')
@@ -50,7 +54,7 @@ class SeoFormNode extends \Twig_Node
 
         $compiler
             ->write('if (' . $this->hasField('navigation_title_overwrite') . ') {')
-            ->write('echo \'<div class="form-group">\';')
+            ->write('echo \'<div class="form-group last">\';')
             ->write('echo \'<ul class="list-unstyled checkboxTextFieldCombo">\';')
             ->write('echo \'<li class="checkbox">\';')
             ->write('echo "<label for=\"navigationTitleOverwrite\" class=\"visuallyHidden\">";')
@@ -62,6 +66,8 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</li>\';')
             ->write('echo \'</ul>\';')
             ->write('echo \'</div>\';')
+            ->write('echo \'</div>\';')
+            ->write('echo \'</div>\';')
             ->write('}');
 
         $compiler
@@ -69,7 +75,11 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</div>\';')
             ->write('echo \'<div class="row">\';')
             ->write('echo \'<div class="col-md-12">\';')
+            ->write('echo \'<div class="panel panel-default">\';')
+            ->write('echo \'<div class="panel-heading">\';')
             ->write('echo "<p class=\"tab-pane-title\">' . $this->lbl('MetaInformation') . '</p>";')
+            ->write('echo \'</div>\';')
+            ->write('echo \'<div class="panel-body">\';')
             ->write('echo \'<div class="form-group">\';')
             ->write('echo \'<ul class="list-unstyled checkboxTextFieldCombo">\';')
             ->write('echo \'<li class="checkbox">\';')
@@ -94,7 +104,7 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</li>\';')
             ->write('echo \'</ul>\';')
             ->write('echo \'</div>\';')
-            ->write('echo \'<div class="form-group">\';')
+            ->write('echo \'<div class="form-group last">\';')
             ->write('echo "<label for=\"metaDescriptionOverwrite\" class=\"visuallyHidden\">' . $this->lbl('ExtraMetaTags') . '</label>";')
             ->write($this->getError('meta_custom'))
             ->write($this->getField('meta_custom'))
@@ -102,10 +112,16 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
+            ->write('echo \'</div>\';')
+            ->write('echo \'</div>\';')
             ->write('echo \'<div class="row">\';')
             ->write('echo \'<div class="col-md-12">\';')
+            ->write('echo \'<div class="panel panel-default">\';')
+            ->write('echo \'<div class="panel-heading">\';')
             ->write('echo "<p class=\"tab-pane-title\">' . $this->lbl('URL') . '</p>";')
-            ->write('echo \'<div class="form-group">\';')
+            ->write('echo \'</div>\';')
+            ->write('echo \'<div class="panel-body">\';')
+            ->write('echo \'<div class="form-group last">\';')
             ->write('echo \'<ul class="list-unstyled checkboxTextFieldCombo">\';')
             ->write('echo \'<li class="checkbox">\';')
             ->write('echo "<label for=\"urlOverwrite\" class=\"visuallyHidden\">";')
@@ -132,13 +148,18 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
+            ->write('echo \'</div>\';')
+            ->write('echo \'</div>\';')
             ->write('echo \'<div class="row">\';')
             ->write('echo \'<div class="col-md-12">\';')
+            ->write('echo \'<div class="panel panel-default">\';')
+            ->write('echo \'<div class="panel-heading">\';')
             ->write('echo "<p class=\"tab-pane-title\">' . $this->lbl('SEO') . '</p>";')
             ->write('echo \'</div>\';')
+            ->write('echo \'<div class="panel-body">\';')
             ->write('echo \'<div class="col-md-6">\';')
             ->write('echo \'<div class="form-inline">\';')
-            ->write('echo \'<div class="form-group">\';')
+            ->write('echo \'<div class="form-group last">\';')
             ->write('echo "<p><b>' . $this->lbl('Index') . '</b></p>";');
 
         $compiler
@@ -183,6 +204,8 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</ul>\';');
 
         $compiler
+            ->write('echo \'</div>\';')
+            ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
