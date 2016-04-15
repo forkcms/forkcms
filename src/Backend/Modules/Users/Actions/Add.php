@@ -210,9 +210,7 @@ class Add extends BackendBaseActionAdd
                         // loop through widgets inside a module
                         foreach ($module as $widgetKey => $widget) {
                             // if widget present set true
-                            if ($widget['present']) {
-                                $newSequence[$moduleKey][$widgetKey]['present'] = true;
-                            }
+                            $newSequence[$moduleKey][] = $widgetKey;
                         }
                     }
                 }
