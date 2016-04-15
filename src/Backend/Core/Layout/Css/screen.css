@@ -9413,10 +9413,6 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 .box .content .dataGridHolder:last-child {
   margin: 0; }
 
-.analytics-grid,
-.analytics-charts {
-  border-top: 1px solid #E5E5E5; }
-
 #login {
   min-height: 100%; }
   #login .forgot-password {
