@@ -29,9 +29,9 @@ class Index extends BackendBaseActionIndex
     /**
      * The widgets
      *
-     * @var	array
+     * @var array
      */
-    private $widgets = array('left' => array(), 'middle' => array(), 'right' => array());
+    private $widgets = array();
 
     /**
      * Execute the action
@@ -88,14 +88,6 @@ class Index extends BackendBaseActionIndex
                         throw new BackendException('The widgetfile ' . $className . ' could not be found.');
                     }
 
-                    // present?
-                    $present = (isset($userSequence[$module][$widgetName]['present'])) ? $userSequence[$module][$widgetName]['present'] : false;
-
-                    // if not present, continue
-                    if (!$present) {
-                        continue;
-                    }
-
                     // create instance
                     /** @var $instance BackendBaseWidget */
                     $instance = new $className($this->getKernel());
@@ -105,16 +97,9 @@ class Index extends BackendBaseActionIndex
                         continue;
                     }
 
-                    // hidden?
-                    $hidden = (isset($userSequence[$module][$widgetName]['hidden'])) ? $userSequence[$module][$widgetName]['hidden'] : false;
-
-                    // execute instance if it is not hidden
-                    if (!$hidden) {
-                        $instance->execute();
-                    }
+                    $instance->execute();
 
                     // user sequence provided?
-                    $position = (isset($userSequence[$module][$widgetName]['position'])) ? $userSequence[$module][$widgetName]['position'] : $instance->getPosition();
                     $title = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($module))) . ': ' . BL::lbl(\SpoonFilter::toCamelCase($widgetName));
                     $templatePath = $instance->getTemplatePath();
 
@@ -136,16 +121,10 @@ class Index extends BackendBaseActionIndex
                         'module' => $module,
                         'widget' => $widgetName,
                         'title' => $title,
-                        'hidden' => $hidden
                     );
 
                     // add on new position if no position is set or if the position is already used
-                    if ($position === null || isset($this->widgets[$position])) {
-                        $this->widgets[] = $item;
-                    } else {
-                        // add on requested position
-                        $this->widgets[$position] = $item;
-                    }
+                    $this->widgets[] = $item;
                 }
             }
         }
