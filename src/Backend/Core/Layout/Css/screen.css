@@ -9489,7 +9489,7 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
       color: #999999;
       margin-right: 5px; }
     #formElements .list-group .list-group-item .icon {
-      margin-right: 9px;
+      margin: 0 6px 0 3px;
       width: 14px; }
   #formElements .list-group.first {
     border-bottom: 1px solid #E5E5E5; }
