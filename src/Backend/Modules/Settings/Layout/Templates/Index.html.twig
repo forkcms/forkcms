@@ -252,13 +252,11 @@
           <div class="panel-body">
             <div class="form-group last">
               <label for="twitterSiteName" class="control-label">{{ 'lbl.TwitterSiteName'|trans|capitalize }}</label>
-              <div class="form-inline">
-                <div class="input-group">
-                  <div class="input-group-addon">@</div>
-                  {% form_field twitter_site_name %}
-                </div>
-                {% form_field_error twitter_site_name %}
+              <div class="input-group">
+                <div class="input-group-addon">@</div>
+                {% form_field twitter_site_name %}
               </div>
+              {% form_field_error twitter_site_name %}
             </div>
           </div>
         </div>
