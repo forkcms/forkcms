@@ -181,6 +181,41 @@ class Authentication
         return self::$user;
     }
 
+    public static function getAllowedActions()
+    {
+        // we will cache everything
+        if (!empty(self::$allowedActions)) {
+            return self::$allowedActions;
+        }
+
+        // get allowed actions
+        $allowedActionsRows = (array) BackendModel::get('database')->getRecords(
+            'SELECT gra.module, gra.action, MAX(gra.level) AS level
+            FROM users_sessions AS us
+            INNER JOIN users AS u ON us.user_id = u.id
+            INNER JOIN users_groups AS ug ON u.id = ug.user_id
+            INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
+            WHERE us.session_id = ? AND us.secret_key = ?
+            GROUP BY gra.module, gra.action',
+            array(\SpoonSession::getSessionId(), \SpoonSession::get('backend_secret_key'))
+        );
+
+        // add all actions and their level
+        $modules = BackendModel::getModules();
+        foreach ($allowedActionsRows as $row) {
+            // add if the module is installed
+            if (in_array(
+                $row['module'],
+                $modules
+            )
+            ) {
+                self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
+            }
+        }
+
+        return self::$allowedActions;
+    }
+
     /**
      * Is the given action allowed for the current user
      *
@@ -190,12 +225,7 @@ class Authentication
      */
     public static function isAllowedAction($action = null, $module = null)
     {
-        // always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
-        $alwaysAllowed = array(
-            'Core' => array('GenerateUrl' => 7, 'ContentCss' => 7, 'Templates' => 7),
-            'Error' => array('Index' => 7),
-            'Authentication' => array('Index' => 7, 'ResetPassword' => 7, 'Logout' => 7)
-        );
+        $alwaysAllowed = self::getAlwaysAllowed();
 
         // grab the URL from the reference
         $URL = BackendModel::get('url');
@@ -216,44 +246,12 @@ class Authentication
         // get modules
         $modules = BackendModel::getModules();
 
-        // we will cache everything
-        if (empty(self::$allowedActions)) {
-            // init var
-            $db = BackendModel::get('database');
-            // add always allowed
-            foreach ($alwaysAllowed as $allowedModule => $actions) {
-                $modules[] = $allowedModule;
-            }
-
-            // get allowed actions
-            $allowedActionsRows = (array) $db->getRecords(
-                'SELECT gra.module, gra.action, MAX(gra.level) AS level
-                 FROM users_sessions AS us
-                 INNER JOIN users AS u ON us.user_id = u.id
-                 INNER JOIN users_groups AS ug ON u.id = ug.user_id
-                 INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
-                 WHERE us.session_id = ? AND us.secret_key = ?
-                 GROUP BY gra.module, gra.action',
-                array(\SpoonSession::getSessionId(), \SpoonSession::get('backend_secret_key'))
-            );
-
-            // add all actions and there level
-            foreach ($allowedActionsRows as $row) {
-                // add if the module is installed
-                if (in_array(
-                    $row['module'],
-                    $modules
-                )
-                ) {
-                    self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
-                }
-            }
-        }
-
         // module exists and God user is enough to be allowed
         if (in_array($module, $modules) && self::getUser()->isGod()) {
             return true;
         }
+
+        $allowedActions = self::getAllowedActions();
 
         // do we know a level for this action
         if (isset(self::$allowedActions[$module][$action])) {
@@ -265,6 +263,16 @@ class Authentication
 
         // fallback
         return false;
+    }
+
+    private static function getAlwaysAllowed()
+    {
+        // always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
+        return array(
+            'Core' => array('GenerateUrl' => 7, 'ContentCss' => 7, 'Templates' => 7),
+            'Error' => array('Index' => 7),
+            'Authentication' => array('Index' => 7, 'ResetPassword' => 7, 'Logout' => 7)
+        );
     }
 
     /**

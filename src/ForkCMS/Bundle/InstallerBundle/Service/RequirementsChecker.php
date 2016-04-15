@@ -305,7 +305,7 @@ class RequirementsChecker
     }
 
     /**
-     * Check if a directory and it's sub-directories and it's subdirectories and ... are writable.
+     * Check if a directory and its sub-directories and its subdirectories and ... are writable.
      *
      * @param  string $path The path to check.
      * @return bool

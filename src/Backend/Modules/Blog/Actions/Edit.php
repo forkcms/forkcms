@@ -383,7 +383,7 @@ class Edit extends BackendBaseActionEdit
                     $fs->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
 
                     // If the image should be deleted, only the database entry is refreshed.
-                    // The revision should keep it's file.
+                    // The revision should keep its file.
                     if ($this->frm->getField('delete_image')->isChecked()) {
                         // reset the name
                         $item['image'] = null;

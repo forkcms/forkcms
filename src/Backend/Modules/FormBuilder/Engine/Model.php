@@ -92,7 +92,7 @@ class Model
         }
 
             // @todo refactor me...
-            // keep trying till its unique
+            // keep trying till it's unique
         while ((int) BackendModel::getContainer()->get('database')->getVar(
                 'SELECT 1
                  FROM forms AS i

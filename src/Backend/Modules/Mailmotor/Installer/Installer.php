@@ -107,7 +107,7 @@ class Installer extends ModuleInstaller
     }
 
     /**
-     * Install the module and it's actions
+     * Install the module and its actions
      */
     private function installModule()
     {
