@@ -9537,6 +9537,13 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 .panel .cke_combo_button {
   margin-bottom: 3px; }
 
+#installer h3 {
+  font-size: 14px;
+  font-weight: 600; }
+#installer .panel-footer {
+  border-top: 0;
+  background: #fff; }
+
 /* General */
 .fork-module-heading {
   background: #fff;

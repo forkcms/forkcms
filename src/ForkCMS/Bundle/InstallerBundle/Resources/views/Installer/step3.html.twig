@@ -28,7 +28,7 @@
           <p>If you are new to Fork CMS, you might prefer to have an example website with a default theme set up.</p>
           <ul class="list-unstyled">
             <li class="checkbox">
-              <p class="text-info">(The blog-module is required and will be installed)</p>
+              <p class="help-block">(The blog-module is required and will be installed)</p>
               {{ form_row(form.example_data) }}
             </li>
           </ul>
@@ -37,7 +37,7 @@
           <p>You can enable debug mode by adding "<code>SetEnv FORK_DEBUG 1</code>" in your virtualhosts file.</p>
           <ul class="list-unstyled">
             <li class="checkbox">
-              <p class="text-info">(Exception emails will be sent to this email address)</p>
+              <p class="help-block">(Exception emails will be sent to this email address)</p>
               {{ form_row(form.different_debug_email) }}
             </li>
             <li id="debugEmailHolder">
