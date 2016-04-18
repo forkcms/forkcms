@@ -749,7 +749,7 @@ jsBackend.controls =
 
     // bind confirm message
     bindConfirm: function () {
-        $('.jsConfirmationTrigger').on('click', function (e) {
+        $('.jsConfirmationTrigger').on('click', function (e) {;
             // prevent default
             e.preventDefault();
 

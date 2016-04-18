@@ -40,6 +40,17 @@
         <translation language="el"><![CDATA[Σίγουρα θέλετε να εγκαταστήσετε την ενότητα "%1$s";]]></translation>
         <translation language="zh"><![CDATA[你确定要删除模块“%1$s”吗？]]></translation>
       </item>
+      <item type="message" name="ConfirmModuleInstallDefault">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de module wil installeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to install the module?]]></translation>
+        <translation language="ru"><![CDATA[Вы действительно хотите установить модуль?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de instalar el módulo?]]></translation>
+        <translation language="de"><![CDATA[Möchtest du das Modul wirklich installieren?]]></translation>
+        <translation language="hu"><![CDATA[Biztos telepíted a(z) modult?]]></translation>
+        <translation language="sv"><![CDATA[Är du säker du vill installera modulen?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να εγκαταστήσετε την ενότητα;]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除模块吗？]]></translation>
+      </item>
       <item type="message" name="ConfirmThemeInstall">
         <translation language="nl"><![CDATA[Ben je zeker dat je dit thema wil installeren?]]></translation>
         <translation language="en"><![CDATA[Are you sure you want to install this theme?]]></translation>
