@@ -66,11 +66,11 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</li>\';')
             ->write('echo \'</ul>\';')
             ->write('echo \'</div>\';')
-            ->write('echo \'</div>\';')
-            ->write('echo \'</div>\';')
             ->write('}');
 
         $compiler
+            ->write('echo \'</div>\';')
+            ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'<div class="row">\';')
@@ -204,6 +204,7 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</ul>\';');
 
         $compiler
+            ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
             ->write('echo \'</div>\';')
