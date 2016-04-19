@@ -104,3 +104,7 @@ select[size="1"] {
   min-width: 100%;
   width: 100%;
 }
+
+.editorWarning {
+  color: $alert-warning-bg;
+}

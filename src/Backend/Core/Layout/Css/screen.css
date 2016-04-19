@@ -8164,6 +8164,9 @@ select[size="1"] {
   min-width: 100%;
   width: 100%; }
 
+.editorWarning {
+  color: rgba(245, 166, 35, 0.9); }
+
 /* Loader */
 @keyframes spin {
   to {
