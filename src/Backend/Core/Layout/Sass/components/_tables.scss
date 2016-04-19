@@ -50,6 +50,27 @@
       color: $gray;
       font-size: $font-size-small;
       font-weight: normal;
+
+      a {
+        color: $text-color;
+
+        &.sorted {
+          color: $brand-primary;
+          position: relative;
+
+          .fa:before {
+            position: absolute;
+          }
+
+          .fa-sort-desc:before {
+            top: 0;
+          }
+
+          .fa-sort-asc:before {
+            bottom: 0;
+          }
+        }
+      }
     }
 
     th + th {

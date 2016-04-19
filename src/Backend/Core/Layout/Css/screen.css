@@ -8567,6 +8567,17 @@ select[size="1"] {
     color: #4a4a4a;
     font-size: 12px;
     font-weight: normal; }
+    .table tr th a {
+      color: #4a4a4a; }
+      .table tr th a.sorted {
+        color: #2f77d1;
+        position: relative; }
+        .table tr th a.sorted .fa:before {
+          position: absolute; }
+        .table tr th a.sorted .fa-sort-desc:before {
+          top: 0; }
+        .table tr th a.sorted .fa-sort-asc:before {
+          bottom: 0; }
   .table tr th + th {
     border-left: 1px solid #e5e5e5; }
   .table .form-group {
