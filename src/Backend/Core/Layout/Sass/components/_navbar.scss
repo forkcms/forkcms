@@ -72,14 +72,17 @@
 
   .js-toggle-nav {
     display: block;
-    left: 50%;
-    margin-left: -35px;
-    padding: 10px 20px;
-    position: absolute;
+    height: 100%;
+    width:100%;
+
 
     .fa-chevron-left {
       color: $white;
+      left: 50%;
+      margin-left: -15px;
       padding: 10px;
+      position: absolute;
+      top: 10px;
       transform: rotate(0deg);
       transition: all 250ms;
     }
