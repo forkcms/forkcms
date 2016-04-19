@@ -526,7 +526,7 @@
 				'	<div class="form-group input-group">' +
 				'		<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
                 '	    <a href="#" id="addButton-' + id + '" class="btn btn-primary input-group-addon">' +
-                '           <span class="fa fa-plus"></span>' +
+                '           <span class="fa fa-plus-square"></span>' +
                 (options.showIconOnly?'':'	        <span>' + options.addLabel + '</span>') +
                 '	    </a>' +
 				'   </div>' +
@@ -825,7 +825,7 @@
 						'	<div class="form-group input-group">' +
                         '       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
                         '       <a href="#" id="addButton-' + id + '" class="btn btn-success btn-xs input-group-addon">' +
-                        '           <span class="fa fa-plus"></span>' +
+                        '           <span class="fa fa-plus-square"></span>' +
                             (options.showIconOnly?'':'          <span>' + options.addLabel + '</span>') +
                         '       </a>' +
                         '   </div>' +
@@ -1347,7 +1347,7 @@
 					'<div class="input-group">' +
 						'<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
 								'<a href="#" id="addButton-' + id + '" class="btn btn-success input-group-addon">' +
-                '<span class="fa fa-plus"></span>' +
+                '<span class="fa fa-plus-square"></span>' +
                 (options.showIconOnly?'':'<span>' + options.addLabel + '</span>') +
                 '</a>' +
 					'</div>' +

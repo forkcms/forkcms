@@ -22,7 +22,7 @@
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
           {% if showPagesAdd %}
-          {{ macro.buttonIcon( geturl('add'), 'plus', 'lbl.Add'|trans|capitalize) }}
+          {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize) }}
           {% endif %}
 
           {% if not item.is_hidden %}
@@ -335,7 +335,7 @@
               <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
             </button>
             <button id="addBlockSubmit" type="button" class="btn btn-success">
-              <span class="fa fa-plus"></span>{{ 'lbl.Add'|trans|capitalize }}
+              <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
             </button>
           </div>
         </div>
@@ -433,7 +433,7 @@
               <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
             </button>
             <button id="blockHtmlSubmit" type="button" class="btn btn-success">
-              <span class="fa fa-plus"></span>{{ 'lbl.Add'|trans|capitalize }}
+              <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
             </button>
           </div>
         </div>

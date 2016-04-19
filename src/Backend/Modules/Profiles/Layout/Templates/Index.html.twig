@@ -5,7 +5,7 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {{ macro.buttonIcon(geturl('add'), 'plus', 'lbl.Add'|trans|capitalize) }}
+      {{ macro.buttonIcon(geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize) }}
       {% if showProfilesImport %}
         {{ macro.buttonIcon(geturl('import'), 'upload', 'lbl.Import'|trans|capitalize) }}
       {% endif %}
@@ -108,7 +108,7 @@
                   <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
                 </button>
                 <button type="submit" class="btn btn-success">
-                  <span class="fa fa-plus"></span>{{ 'lbl.Add'|trans|capitalize }}
+                  <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
                 </button>
               </div>
             </div>

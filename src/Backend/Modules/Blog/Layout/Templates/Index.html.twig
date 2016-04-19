@@ -7,10 +7,10 @@
         <div class="btn-group" role="group">
           {% if showBlogAdd %}
             {% if filterCategory %}
-              {{ macro.buttonIcon( geturl('add', null, '&category=#{filterCategory.id}'), 'plus', 'lbl.Add'|trans|capitalize) }}
+              {{ macro.buttonIcon( geturl('add', null, '&category=#{filterCategory.id}'), 'plus-square', 'lbl.Add'|trans|capitalize) }}
             {% endif %}
             {% if not filterCategory %}
-                {{ macro.buttonIcon( geturl('add'), 'plus', 'lbl.Add'|trans|capitalize) }}
+                {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize) }}
             {% endif %}
           {% endif %}
         </div>

@@ -11,7 +11,7 @@
               {% set url =  '&theme=' ~ selectedTheme %}
             {% endif %}
 
-            {{ macro.buttonIcon( geturl('add_theme_template' ) ~ url, 'plus', 'lbl.AddTemplate'|trans|capitalize, 'btn-primary')  }}
+            {{ macro.buttonIcon( geturl('add_theme_template' ) ~ url, 'plus-square', 'lbl.AddTemplate'|trans|capitalize, 'btn-primary')  }}
 
             {{ macro.buttonIcon( geturl('export_theme_templates') ~ url, 'download', 'lbl.Export'|trans|capitalize) }}
           </div>

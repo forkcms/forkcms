@@ -6,7 +6,7 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if showLocaleAdd %}
-          {{ macro.buttonIcon(geturl('add')  ~ filter, 'plus', 'lbl.Add'|trans|capitalize, 'btn-default jsButtonAdd' ) }}
+          {{ macro.buttonIcon(geturl('add')  ~ filter, 'plus-square', 'lbl.Add'|trans|capitalize, 'btn-default jsButtonAdd' ) }}
         {% endif %}
         {% if showLocaleExport %}
           {{ macro.buttonIcon(geturl('export' ) ~ filter, 'download', 'lbl.Export'|trans|capitalize, 'btn-default jsButtonExport' ) }}
