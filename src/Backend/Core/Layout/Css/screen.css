@@ -8555,8 +8555,6 @@ select[size="1"] {
 
 .table {
   margin-bottom: 0; }
-  .table .btn {
-    padding: 2px 8px; }
   .table tr td {
     font-size: 12px; }
     .table tr td.title a {
@@ -8853,9 +8851,13 @@ select[size="1"] {
   border-radius: 3px;
   padding: 9px 12px 10px; }
   .btn .fa {
-    padding-right: 4px; }
+    padding-right: 6px; }
   .btn.ui-sortable-handle {
     cursor: move; }
+  .btn.btn-xs, .btn-group-xs > .btn {
+    padding: 2px 8px; }
+  .btn.btn-md {
+    padding: 4px 15px 5px; }
 
 .btn-icon-only .fa {
   padding-right: 0; }
@@ -9181,14 +9183,14 @@ select[size="1"] {
   @media screen and (min-width: 768px) {
     #templateVisualLarge .btn-group .btn,
     #templateVisualFallback .btn-group .btn {
-      padding: 6px 15px 7px; }
+      padding: 4px 15px 5px; }
       #templateVisualLarge .btn-group .btn.addBlock .btn-text,
       #templateVisualFallback .btn-group .btn.addBlock .btn-text {
         display: inline-block;
         font-size: 14px; }
       #templateVisualLarge .btn-group .btn .fa,
       #templateVisualFallback .btn-group .btn .fa {
-        padding-right: 4px; } }
+        padding-right: 6px; } }
   #templateVisualLarge .templatePositionCurrentType + .templatePositionCurrentType,
   #templateVisualFallback .templatePositionCurrentType + .templatePositionCurrentType {
     border-top: 0; }

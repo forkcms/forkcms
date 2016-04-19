@@ -3,11 +3,19 @@
   padding: 9px 12px 10px;
 
   .fa {
-    padding-right: 4px;
+    padding-right: 6px;
   }
 
   &.ui-sortable-handle {
     cursor: move;
+  }
+
+  &.btn-xs {
+    padding: 2px 8px;
+  }
+
+  &.btn-md {
+    padding: 4px 15px 5px;
   }
 }
 
