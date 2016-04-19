@@ -8400,16 +8400,17 @@ select[size="1"] {
       padding: 0; }
       .navbar-nav.navbar-sidebar .subnav .nav-item a {
         background-color: #f1f1f1;
-        border: 0;
+        border-bottom: 1px solid #E5E5E5;
         color: #4a4a4a;
         font-size: 12px;
         padding: 7px 32px; }
         .navbar-nav.navbar-sidebar .subnav .nav-item a:hover, .navbar-nav.navbar-sidebar .subnav .nav-item a:focus {
-          background-color: #2f77d1;
-          color: #fff; }
+          color: #2f77d1; }
       .navbar-nav.navbar-sidebar .subnav .nav-item.active a {
-        background-color: #2f77d1;
-        color: #fff; }
+        color: #2f77d1;
+        font-weight: 600; }
+      .navbar-nav.navbar-sidebar .subnav .nav-item:last-of-type a {
+        border-bottom: 0; }
 
 .nav-item-dashboard a:before {
   content: '\f0e4'; }

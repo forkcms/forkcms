@@ -268,21 +268,27 @@
       .nav-item {
         a {
           background-color: $gray-lightest;
-          border: 0;
+          border-bottom: 1px solid $gray-lighter;
           color: $gray;
           font-size: $font-size-small;
           padding: 7px 32px;
 
           &:hover,
           &:focus {
-            background-color: $brand-primary;
-            color: $white;
+            color: $brand-primary;
           }
         }
 
         &.active a {
-          background-color: $brand-primary;
-          color: $white;
+          color: $brand-primary;
+          font-weight: 600;
+        }
+
+        &:last-of-type {
+
+          a {
+            border-bottom: 0;
+          }
         }
       }
     }
