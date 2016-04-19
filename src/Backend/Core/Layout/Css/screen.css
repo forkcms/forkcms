@@ -8351,7 +8351,8 @@ select[size="1"] {
     background-color: #fff;
     float: right;
     min-width: auto;
-    position: absolute; }
+    position: absolute;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); }
     .navbar-nav .dropdown .dropdown-menu li {
       width: 100%; }
     .navbar-nav .dropdown .dropdown-menu a.active,
