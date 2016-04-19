@@ -8551,7 +8551,8 @@ select[size="1"] {
 
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-  border: 0; }
+  border: 0;
+  vertical-align: middle; }
 
 .table {
   margin-bottom: 0; }
