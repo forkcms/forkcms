@@ -28,6 +28,10 @@
   &.code {
     font-family: "Source Code Pro";
   }
+
+  &.disabled {
+    color: $gray-light; 
+  }
 }
 
 .control-label {

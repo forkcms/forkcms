@@ -8109,6 +8109,8 @@ div.tabs ul li.selected {
     border-color: #d0021b; }
   .form-control.code {
     font-family: "Source Code Pro"; }
+  .form-control.disabled {
+    color: #999999; }
 
 .control-label {
   color: #000;
