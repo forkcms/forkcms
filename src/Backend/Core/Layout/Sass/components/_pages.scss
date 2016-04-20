@@ -267,11 +267,11 @@
   .templateDisabled {
 
     .templateTitle {
-      color: #aaa;
+      color: $gray-base;
     }
 
     .templateDescription {
-      color: #bbb;
+      color: $gray-light;
     }
   }
 }
