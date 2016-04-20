@@ -74,11 +74,12 @@
                     <div class="panel-heading">
                       <label for="successMessage" class="control-label">
                         {{ 'lbl.SuccessMessage'|trans|capitalize }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr><br>
+                        {% form_field_error success_message %}
                       </label>
                     </div>
                     <div class="panel-body">
-                      {% form_field_error success_message %} {% form_field success_message %}
+                      {% form_field success_message %}
                     </div>
                   </div>
                 </div>

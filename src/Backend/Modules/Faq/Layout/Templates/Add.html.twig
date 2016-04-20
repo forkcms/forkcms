@@ -39,11 +39,12 @@
                   <div class="panel panel-default panel-editor optionsRTE">
                     <div class="panel-heading">
                       <label for="answer" class="control-label">{{ 'lbl.Answer'|trans|capitalize }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr><br>
+                        {% form_field_error answer %}
                       </label>
                     </div>
                     <div class="panel-body">
-                      {% form_field_error answer %} {% form_field answer %}
+                      {% form_field answer %}
                     </div>
                   </div>
                 </div>

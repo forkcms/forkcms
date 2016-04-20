@@ -44,9 +44,10 @@
                   <div class="panel panel-default panel-editor">
                     <div class="panel-heading">
                       <p>{{ 'lbl.MainContent'|trans|capitalize }}<abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></p>
+                      {% form_field_error text %}
                     </div>
                     <div class="panel-body">
-                      {% form_field_error text %} {% form_field text %}
+                       {% form_field text %}
                     </div>
                   </div>
                   {% if imageIsAllowed %}
@@ -63,11 +64,12 @@
                     <div class="panel-heading">
                       <p>
                         {{ 'lbl.Summary'|trans|capitalize }}
-                        <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|capitalize }}"></abbr>
+                        <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|capitalize }}"></abbr><br>
+                        {% form_field_error introduction %}
                       </p>
                     </div>
                     <div class="panel-body">
-                      {% form_field_error introduction %} {% form_field introduction %}
+                      {% form_field introduction %}
                     </div>
                   </div>
                 </div>

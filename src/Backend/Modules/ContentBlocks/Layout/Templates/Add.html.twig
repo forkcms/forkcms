@@ -21,11 +21,12 @@
           <div class="panel-heading">
             <label for="text" class="control-label">
               {{ 'lbl.Content'|trans|capitalize }}
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr><br>
+              {% form_field_error text %}
             </label>
           </div>
           <div class="panel-body">
-            {% form_field_error text %} {% form_field text %}
+             {% form_field text %}
           </div>
         </div>
         {% if ddmTemplate %}

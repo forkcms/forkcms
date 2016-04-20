@@ -8157,7 +8157,8 @@ select[size="1"] {
 .formError,
 .text-danger,
 .formError {
-  color: #d0021b; }
+  color: #d0021b;
+  font-weight: normal; }
 
 .input-group .input-group-addon {
   padding: 8px 12px 9px; }
