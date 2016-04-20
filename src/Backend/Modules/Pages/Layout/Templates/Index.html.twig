@@ -30,16 +30,16 @@
 {% block content %}
   <div class="row fork-module-content">
     <div class="col-md-12">
+      {% if dgDrafts %}
       <div class="content-block content-block-pb">
-        {% if dgDrafts %}
           <div class="content-title">
             <p>{{ 'lbl.Drafts'|trans|capitalize }}</p>
           </div>
           <div class="responsive-table">
             {{ dgDrafts|raw }}
           </div>
-        {% endif %}
       </div>
+      {% endif %}
       <div class="content-block content-block-pb">
         {% if dgRecentlyEdited %}
           <div class="content-title">
