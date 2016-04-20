@@ -8115,7 +8115,8 @@ div.tabs ul li.selected {
 .control-label {
   color: #000;
   font-size: 14px;
-  font-weight: 600; }
+  font-weight: 600;
+  width: 100%; }
 
 .radio {
   margin-top: 0; }

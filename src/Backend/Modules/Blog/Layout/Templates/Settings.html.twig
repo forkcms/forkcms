@@ -25,7 +25,7 @@
               <label for="recentArticlesFullNumberOfItems" class="control-label">{{ 'msg.NumItemsInRecentArticlesFull'|trans|capitalize }}</label>
               {% form_field_error recent_articles_full_number_of_items %} {% form_field recent_articles_full_number_of_items %}
             </div>
-            <div class="form-group">
+            <div class="form-group last">
               <label for="recentArticlesListNumberOfItems" class="control-label">{{ 'msg.NumItemsInRecentArticlesList'|trans|capitalize }}</label>
               {% form_field_error recent_articles_list_number_of_items %} {% form_field recent_articles_list_number_of_items %}
             </div>
@@ -42,7 +42,7 @@
             </h3>
           </div>
           <div class="panel-body">
-            <div class="form-group">
+            <div class="form-group last">
               <ul class="list-unstyled">
                 <li class="checkbox">
                   <label for="allowComments" class="control-label">
@@ -83,7 +83,7 @@
             </h3>
           </div>
           <div class="panel-body">
-            <div class="form-group">
+            <div class="form-group last">
               <ul class="list-unstyled">
                 <li class="checkbox">
                   <label for="showImageForm" class="control-label">
@@ -106,7 +106,7 @@
             </h3>
           </div>
           <div class="panel-body">
-            <div class="form-group">
+            <div class="form-group last">
               <ul class="list-unstyled">
                 <li class="checkbox">
                   <label for="notifyByEmailOnNewCommentToModerate" class="control-label">
@@ -133,7 +133,7 @@
             </h3>
           </div>
           <div class="panel-body">
-            <div class="form-group">
+            <div class="form-group last">
               <p>{{ 'msg.HelpPingServices'|trans|capitalize }}:</p>
               <ul class="list-unstyled">
                 <li class="checkbox">
@@ -169,7 +169,7 @@
               <p class="help-block">{{ 'msg.HelpRSSDescription'|trans|capitalize }}</p>
               {% form_field_error rss_description %} {% form_field rss_description %}
             </div>
-            <div class="form-group">
+            <div class="form-group last">
               <p>{{ 'msg.HelpMeta'|trans|capitalize }}:</p>
               <ul class="list-unstyled">
                 <li class="checkbox">
