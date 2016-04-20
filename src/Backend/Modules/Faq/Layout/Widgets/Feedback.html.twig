@@ -6,24 +6,24 @@
       <a href="{{ geturl('index','faq' ) }}">{{ 'lbl.Faq'|trans|capitalize }}: {{ 'lbl.Feedback'|trans|capitalize }}</a>
     </h2>
   </div>
-  <div class="panel-body">
     {% if faqFeedback %}
-    <table class="table table-striped dataGrid">
-      <tbody>
-        {% for _itr_12 in faqFeedback %}
-        <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-          <td><a href="{{ _itr_12.full_url }}">{{ _itr_12.text|truncate(150 ) }}</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="panel-body">
+      <table class="table table-striped dataGrid">
+        <tbody>
+          {% for _itr_12 in faqFeedback %}
+          <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+            <td><a href="{{ _itr_12.full_url }}">{{ _itr_12.text|truncate(150 ) }}</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
     {% endif %}
     {% if not faqFeedback %}
     <div class="panel-body">
       <p>{{ 'msg.NoFeedback'|trans }}</p>
     </div>
     {% endif %}
-  </div>
   <div class="panel-footer">
     <a href="{{ geturl('index','faq' ) }}"><span>{{ 'lbl.AllQuestions'|trans|capitalize }}</span></a>
   </div>
