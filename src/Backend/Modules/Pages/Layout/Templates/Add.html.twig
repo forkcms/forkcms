@@ -64,8 +64,8 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="tabContent">
-                            <div id="editTemplate" class="row">
-                                <div class="col-md-12">
+                            <div id="editTemplate">
+
                                     {# Do not change the ID! #}
                                     <p class="current-template">{{ 'lbl.Template'|trans|capitalize }}: <span id="tabTemplateLabel">&nbsp;</span>
                                         <a data-toggle="modal" data-target="#changeTemplate">
@@ -74,8 +74,7 @@
                                     </p>
 
                                     {% if formErrors %}<span class="formError text-danger">{{ formErrors }}</span>{% endif %}
-                                </div>
-                                <div class="col-md-12">
+
                                     <div id="templateVisualFallback" style="display: none">
                                         <div id="fallback" class="generalMessage singleMessage infoMessage">
                                             <div id="fallbackInfo">
@@ -107,7 +106,7 @@
                                     <div id="templateVisualLarge">
                                         &nbsp;
                                     </div>
-                                </div>
+
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="tabSettings">
