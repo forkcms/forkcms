@@ -24,3 +24,10 @@
 .modal-footer {
   padding: 15px 30px 25px;
 }
+
+@media screen and (min-width: $screen-sm) {
+
+  .modal-dialog {
+    margin: 80px auto;
+  }
+}

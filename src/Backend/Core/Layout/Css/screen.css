@@ -9419,6 +9419,9 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 .modal-footer {
   padding: 15px 30px 25px; }
 
+@media screen and (min-width: 768px) {
+  .modal-dialog {
+    margin: 80px auto; } }
 #tagsForm .check {
   width: 1%; }
 #tagsForm .tag {
