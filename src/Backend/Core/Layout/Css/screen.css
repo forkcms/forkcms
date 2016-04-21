@@ -9330,6 +9330,14 @@ select[size="1"] {
     width: 100%; }
   #templateVisualFallback table {
     border-spacing: 2px; }
+  #templateVisualFallback td {
+    background-color: #fff; }
+  #templateVisualFallback #fallback {
+    margin: 10px 0; }
+  #templateVisualFallback .alert {
+    margin-top: 0; }
+  #templateVisualFallback .panel-body {
+    padding: 0 20px; }
 
 body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder,
 body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonHolder,

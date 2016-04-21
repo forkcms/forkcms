@@ -292,6 +292,22 @@
   table {
     border-spacing: 2px;
   }
+
+  td {
+    background-color: $white;
+  }
+
+  #fallback {
+    margin: 10px 0;
+  }
+
+  .alert {
+    margin-top: 0;
+  }
+
+  .panel-body {
+    padding: 0 20px;
+  }
 }
 
 body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder,
