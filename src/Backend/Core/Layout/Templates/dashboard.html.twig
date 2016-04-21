@@ -8,7 +8,7 @@
 
 {% include "/Layout/Templates/header.html.twig" %}
 
-<div class="main-wrapper main-wrapper-dashboard navigation-expanded">
+<div class="main-wrapper main-wrapper-dashboard {% if attribute(cookies, 'navigation-collapse') == 'true' %} navigation-collapsed{% endif %}">
     <div class="sidebar">
         {% include "/Layout/Templates/navigation.html.twig" %}
     </div>
