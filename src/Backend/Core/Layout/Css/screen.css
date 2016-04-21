@@ -8609,6 +8609,8 @@ select[size="1"] {
     padding: 7px; }
   .alert .fa {
     margin-right: 5px; }
+  .alert p {
+    display: inline-block; }
 
 .alert-main {
   font-size: 16px;
