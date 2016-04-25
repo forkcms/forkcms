@@ -85,6 +85,11 @@ textarea {
 }
 
 select[size="1"] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: url('/src/Backend/Core/Layout/images/arrow.svg') no-repeat center right 10px;
+  background-size: 10px;
   display: inline-block;
   font-size: $font-size-base;
   height: $input-height-base;

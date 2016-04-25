@@ -8146,6 +8146,11 @@ textarea {
   max-width: 100%; }
 
 select[size="1"] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: url("/src/Backend/Core/Layout/images/arrow.svg") no-repeat center right 10px;
+  background-size: 10px;
   display: inline-block;
   font-size: 14px;
   height: 34px;
