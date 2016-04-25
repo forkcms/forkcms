@@ -15,9 +15,9 @@
   }
 
   &:focus {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+    -webkit-box-shadow: inset 0 1px 3px rgba($gray-base, .075);
+    -moz-box-shadow: inset 0 1px 3px rgba($gray-base, .075);
+    box-shadow: inset 0 1px 3px rgba($gray-base, .075);
     outline: 0;
   }
 
