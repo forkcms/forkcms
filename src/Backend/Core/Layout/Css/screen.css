@@ -8671,6 +8671,7 @@ select[size="1"] {
     margin-bottom: 0; }
 
 .panel-default {
+  background-color: #fff;
   margin-bottom: 20px; }
   .panel-default .panel-heading p,
   .panel-default .panel-heading h3,
@@ -8680,16 +8681,14 @@ select[size="1"] {
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 0; }
-  .panel-default .panel-body {
-    background-color: #fff; }
   .panel-default.panel-pages-block {
+    background-color: #f1f1f1;
     border: 0;
     margin-bottom: 0; }
     .panel-default.panel-pages-block .panel-heading {
       border-color: #cccccc;
       padding: 8px 20px 10px; }
     .panel-default.panel-pages-block .panel-body {
-      background-color: #f1f1f1;
       padding: 0 20px 20px; }
 
 .panel-editor .panel-body {
