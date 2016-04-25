@@ -8731,10 +8731,12 @@ select[size="1"] {
     background-color: #fff;
     border-top: 0; }
 
-.panel-primary label .panel-heading {
-  background-color: #2f77d1; }
-  .panel-primary label .panel-heading .panel-title {
-    color: #fff; }
+.panel-primary label {
+  background-color: #fff; }
+  .panel-primary label .panel-heading {
+    background-color: #2f77d1; }
+    .panel-primary label .panel-heading .panel-title {
+      color: #fff; }
 
 .panel-default label .panel-heading {
   border-bottom: 1px solid #E5E5E5; }
@@ -8893,6 +8895,16 @@ select[size="1"] {
 .btn-group .btn:last-child:not(:first-child),
 .btn-group .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
   border-radius: 3px; }
+
+.btn-second {
+  color: #2f77d1; }
+  .btn-second:hover, .btn-second:focus {
+    color: #2f77d1; }
+
+.input-group-addon {
+  color: #4a4a4a; }
+  .input-group-addon.btn {
+    color: #2f77d1; }
 
 /*
 

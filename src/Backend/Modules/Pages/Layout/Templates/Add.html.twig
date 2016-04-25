@@ -188,10 +188,10 @@
             <div class="col-md-12">
                 <div class="btn-toolbar">
                     <div class="btn-group pull-right" role="group">
-                        <a href="#" id="saveAsDraft" class="btn btn-primary">
+                        <a href="#" id="saveAsDraft" class="btn btn-default">
                             <span class="fa fa-file-o"></span>{{ 'lbl.SaveDraft'|trans|capitalize }}
                         </a>
-                        <button id="addButton" type="submit" name="add" class="btn btn-success">
+                        <button id="addButton" type="submit" name="add" class="btn btn-primary">
                             <span class="fa fa-plus-square"></span>{{ 'lbl.AddPage'|trans|capitalize }}
                         </button>
                     </div>
@@ -263,7 +263,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
                         </button>
-                        <button id="addBlockSubmit" type="button" class="btn btn-success">
+                        <button id="addBlockSubmit" type="button" class="btn btn-primary">
                             <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}</button>
                     </div>
                 </div>
@@ -308,7 +308,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
                         </button>
-                        <button id="changeTemplateSubmit" type="button" class="btn btn-success">
+                        <button id="changeTemplateSubmit" type="button" class="btn btn-primary">
                             <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
                         </button>
                     </div>
@@ -352,6 +352,7 @@
                         <div class="alert alert-warning">
                             <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ContentSaveWarning'|trans|raw }}
                         </div>
+                        <br>
                         <div class="form-group">
                             {% form_field html %}
                             {% form_field_error html %}
@@ -361,7 +362,7 @@
                         <button id="blockHtmlCancel" type="button" class="btn btn-default" data-dismiss="modal">
                             <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
                         </button>
-                        <button id="blockHtmlSubmit" type="button" class="btn btn-success">
+                        <button id="blockHtmlSubmit" type="button" class="btn btn-primary">
                             <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
                         </button>
                     </div>

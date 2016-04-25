@@ -36,3 +36,20 @@
     border-radius: 3px;
   }
 }
+
+.btn-second {
+  color: $brand-primary;
+
+  &:hover,
+  &:focus {
+    color: $brand-primary;
+  }
+}
+
+.input-group-addon {
+  color: $text-color;
+
+  &.btn {
+    color: $brand-primary;
+  }
+}

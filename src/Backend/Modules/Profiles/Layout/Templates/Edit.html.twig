@@ -143,7 +143,7 @@
           <div class="btn-group pull-left" role="group">
             {% if showProfilesDelete %}
             {% if deleted %}
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmUndelete">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmUndelete">
               {{ 'lbl.Undelete'|trans|capitalize }}
             </button>
             {% endif %}
@@ -155,7 +155,7 @@
             {% endif %}
             {% if showProfilesBlock %}
             {% if blocked %}
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmUnblock">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmUnblock">
               <span class="fa fa-check"></span>{{ 'lbl.Unblock'|trans|capitalize }}
             </button>
             {% endif %}
@@ -167,7 +167,7 @@
             {% endif %}
           </div>
           <div class="btn-group pull-right" role="group">
-            <button id="saveButton" type="submit" name="edit" class="btn btn-success">
+            <button id="saveButton" type="submit" name="edit" class="btn btn-primary">
               <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
             </button>
           </div>
@@ -197,7 +197,7 @@
                   <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
                 </button>
                 {% if deleted %}
-                <a href="{{ geturl('delete' ) }}&amp;id={{ profile.id }}" class="btn btn-success">
+                <a href="{{ geturl('delete' ) }}&amp;id={{ profile.id }}" class="btn btn-primary">
                   {{ 'lbl.Undelete'|trans|capitalize }}
                 </a>
                 {% endif %}
@@ -241,7 +241,7 @@
                 </a>
                 {% endif %}
                 {% if blocked %}
-                <a href="{{ geturl('block' ) }}&amp;id={{ profile.id }}" class="btn btn-success">
+                <a href="{{ geturl('block' ) }}&amp;id={{ profile.id }}" class="btn btn-primary">
                   <span class="fa fa-check"></span>{{ 'lbl.Unblock'|trans|capitalize }}
                 </a>
                 {% endif %}
