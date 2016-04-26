@@ -752,7 +752,7 @@ class Header extends FrontendBaseObject
             $this->addOpenGraphData('locale', $locale);
 
             // if a default image has been set for facebook, assign it
-            $this->addOpenGraphImage('/frontend/themes/' . Theme::getTheme() . '/facebook.png');
+            $this->addOpenGraphImage('/src/Frontend/Themes/' . Theme::getTheme() . '/facebook.png');
             $this->addOpenGraphImage('/facebook.png');
         }
     }
