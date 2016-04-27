@@ -477,7 +477,7 @@ class Meta
             $custom = null;
         }
 
-		//serialize data for save
+        //serialize data for save
         if (!empty($this->data['data'])) {
             $this->data['data'] = serialize($this->data['data']);
         }
