@@ -1,6 +1,6 @@
 <footer id="footer" role="contentinfo">
   <div class="container">
-    <p class="pull-right"><a class="backToTop" href="#">Back to top</a></p>
+    <p class="pull-right"><a class="backToTop" data-scroll href="#">Back to top</a></p>
     <nav>
       <ul class="nav nav-pills" role="navigation">
         <li class="disabled"><a>© <span itemprop="copyrightYear">{$now|date:'Y'}</span> {$siteTitle}</a></li>
@@ -25,10 +25,7 @@
   <script src="{$jsFiles.file}"></script>
 {/iteration:jsFiles}
 
-<!-- build:js /Core/Js/lib.js -->
-<script src="/src/Js/lib/bootstrap.js"></script>
-<!-- endbuild -->
-<script src="{$THEME_URL}/Core/Js/theme.js?t={$LAST_MODIFIED_TIME}"></script>
+<script src="{$THEME_URL}/Core/Js/bundle.js?t={$LAST_MODIFIED_TIME}"></script>
 
 {* @todo Remove when needed *}
 <div id="fb-root"></div>
