@@ -732,7 +732,7 @@ jsBackend.pages.extras =
 
 			html = '<div id="user-template-textarea-' + key + '" class="options">';
 			html += '<p class="p0"><label>' + label + '</label></p>';
-			html += '<textarea data-ft-label="' + label + '" cols="90" rows="15">' + text + '</textarea>';
+			html += '<textarea data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>';
 			html += '</div>';
 
 			$placeholder.append(html);
@@ -790,12 +790,36 @@ jsBackend.pages.extras =
 						}
 					});
 				}
-			})
+			});
 
 			// handle the "show image" checkbox
 			$('#user-template-image-' + key + ' input[type=checkbox]').on('click', function(e) {
 				$('#user-template-image-' + key + ' img').toggle($(this).is(':checked'));
 			});
+		}
+
+		// replace editor
+		if ($element.is('[data-ft-type="editor"]')) {
+			var text, label, html;
+
+			text = $element.text();
+			label = $element.data('ft-label');
+
+			html = '<div id="user-template-editor-' + key + '" class="optionsRTE">';
+			html += '<div class="heading"><h3>' + label + '</h3></div>';
+			html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="90" rows="15" class="inputEditor">' + text + '</textarea>';
+			html += '</div>';
+
+			$placeholder.append(html);
+
+			// Check if an instance already exists, if so, first destroy it before we re-enable it
+			var editor = CKEDITOR.instances['user-template-cke-' + key];
+			if (editor) {
+				editor.destroy(true);
+				jsBackend.ckeditor.load();
+			} else {
+				jsBackend.ckeditor.load();
+			}
 		}
 	},
 
@@ -810,7 +834,7 @@ jsBackend.pages.extras =
 		});
 	},
 
-    saveCustomField: function($element, key, $placeholder)
+	saveCustomField: function($element, key, $placeholder)
 	{
 		if ($element.is('[data-ft-type="link"]')) {
 			$labelField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-label]');
@@ -818,25 +842,25 @@ jsBackend.pages.extras =
 
 			$element.attr('href', $urlField.val());
 			$element.text($labelField.val());
-		};
+		}
 
 		if ($element.is('[data-ft-type="link-without-content"]')) {
 			$urlField = $placeholder.find('#user-template-link-without-content-' + key + ' input[data-ft-url]');
 
 			$element.attr('href', $urlField.val());
-		};
+		}
 
 		if ($element.is('[data-ft-type="text"]')) {
 			$labelField = $placeholder.find('#user-template-text-' + key + ' input[data-ft-label]');
 
 			$element.text($labelField.val());
-		};
+		}
 
 		if ($element.is('[data-ft-type="textarea"]')) {
 			$textarea = $placeholder.find('#user-template-textarea-' + key + ' textarea[data-ft-label]');
 
 			$element.text($textarea.val());
-		};
+		}
 
 		if ($element.is('[data-ft-type="image"]')) {
 			$img = $placeholder.find('#user-template-image-' + key + ' img');
@@ -848,7 +872,13 @@ jsBackend.pages.extras =
 			} else {
 				$element.attr('style', 'display: none;');
 			}
-		};
+		}
+
+		if ($element.is('[data-ft-type="editor"]')) {
+			$textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]');
+
+			$element.text($textarea.val());
+		}
 	},
 
 	// delete a block
