@@ -262,7 +262,7 @@ class DataGrid extends \SpoonDataGrid
     {
         if (in_array($column, $this->columns)) {
             return true;
-        } else if (key_exists($column, $this->columns)) {
+        } elseif (key_exists($column, $this->columns)) {
             return true;
         }
         return false;
