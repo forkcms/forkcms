@@ -16,6 +16,7 @@ use Backend\Core\Engine\Model as BackendModel;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class DataGridFunctions
 {
@@ -253,18 +254,37 @@ class DataGridFunctions
     /**
      * Returns an image tag
      *
-     * @param string $path  The path to the image.
-     * @param string $image The filename of the image.
-     * @param string $title The title (will be used as alt).
+     * @param string $path    The path to the image.
+     * @param string $image   The filename of the image.
+     * @param string $title   The title (will be used as alt).
+     * @param string $url     The url
+     * @param integer $width   The width for the <img element
+     * @param integer $height  The height for the <img element
      * @return string
      */
-    public static function showImage($path, $image, $title = '')
+    public static function showImage($path, $image, $title = '', $url = null, $width = null, $height = null)
     {
         $path = (string) $path;
         $image = (string) $image;
         $title = (string) $title;
 
-        return '<img src="' . $path . '/' . $image . '" alt="' . $title . '" />';
+        $html = '<img src="' . $path . '/' . $image . '" alt="' . $title . '"';
+
+        if ($width) {
+            $html .= ' width="' . $width . '"';
+        }
+
+        if ($height) {
+            $html .= ' height="' . $height . '"';
+        }
+
+        $html .= ' />';
+
+        if ($url) {
+            $html = '<a href="' . $url . '" title="' . $title . '">' . $html . '</a>';
+        }
+
+        return $html;
     }
 
     /**

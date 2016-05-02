@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2069564cc05d629a94af0d4fa225d12f",
-    "content-hash": "75a4ec4ca03ef663088e7e290f819ac3",
+    "hash": "33d9a7af622ca51715f5e4c2f76be762",
+    "content-hash": "783b51619535a9b7822b4cb03d48204a",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -693,16 +693,16 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.29",
+            "version": "1.3.34",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "58fa692aeffa9cbafacdd1e7b3c5b0e65cd76108"
+                "reference": "272e46113404f66ced256659552a0cc074a7810f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/58fa692aeffa9cbafacdd1e7b3c5b0e65cd76108",
-                "reference": "58fa692aeffa9cbafacdd1e7b3c5b0e65cd76108",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/272e46113404f66ced256659552a0cc074a7810f",
+                "reference": "272e46113404f66ced256659552a0cc074a7810f",
                 "shasum": ""
             },
             "require": {
@@ -712,8 +712,7 @@
             },
             "require-dev": {
                 "matthiasmullie/scrapbook": "~1.0",
-                "phpunit/phpunit": "~4.8",
-                "satooshi/php-coveralls": "dev-master"
+                "phpunit/phpunit": "~4.8"
             },
             "bin": [
                 "bin/minifycss",
@@ -746,7 +745,7 @@
                 "minifier",
                 "minify"
             ],
-            "time": "2015-12-17 21:38:16"
+            "time": "2016-03-01 08:00:27"
         },
         {
             "name": "matthiasmullie/path-converter",
@@ -1093,16 +1092,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "2.0.6",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "5f8b64acb69f5400d540b5491d220c8580d76477"
+                "reference": "6eb6865c3b47b67dfc18a81e959df7726c38c1b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/5f8b64acb69f5400d540b5491d220c8580d76477",
-                "reference": "5f8b64acb69f5400d540b5491d220c8580d76477",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/6eb6865c3b47b67dfc18a81e959df7726c38c1b5",
+                "reference": "6eb6865c3b47b67dfc18a81e959df7726c38c1b5",
                 "shasum": ""
             },
             "require": {
@@ -1124,7 +1123,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2015-10-29 17:04:46"
+            "time": "2016-04-13 14:03:11"
         },
         {
             "name": "swiftmailer/swiftmailer",

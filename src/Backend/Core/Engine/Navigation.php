@@ -12,6 +12,7 @@ namespace Backend\Core\Engine;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This class will be used to build the navigation
@@ -20,6 +21,7 @@ use Backend\Core\Engine\Model as BackendModel;
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Navigation extends Base\Object
 {
@@ -52,6 +54,11 @@ class Navigation extends Base\Object
         // check if navigation cache file exists
         if (!is_file(BACKEND_CACHE_PATH . '/Navigation/navigation.php')) {
             $this->buildCache();
+        }
+
+        // check if editor_link_list_LANGUAGE.js cache file exists
+        if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {
+            BackendPagesModel::buildCache(Language::getWorkingLanguage());
         }
 
         $navigation = array();

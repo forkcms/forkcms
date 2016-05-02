@@ -256,6 +256,9 @@ class Template extends \SpoonTemplate
 
         // profiles
         $this->mapModifier('profilesetting', array('Frontend\Core\Engine\TemplateModifiers', 'profileSetting'));
+
+        // array
+        $this->mapModifier('count', array('Frontend\Core\Engine\TemplateModifiers', 'count'));
     }
 
     /**

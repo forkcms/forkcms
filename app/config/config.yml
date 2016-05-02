@@ -10,9 +10,7 @@ framework:
     csrf_protection: ~
     templating:
         engines: ['twig']
-    session:
-        handler_id: session.handler.native_file
-        save_path: "%kernel.root_dir%/sessions"
+    session: ~
 
 # Assetic Configuration
 assetic:
@@ -60,6 +58,7 @@ services:
         class: Common\Mailer\Configurator
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
         arguments:
             - "@fork.settings"
             - "@service_container"
