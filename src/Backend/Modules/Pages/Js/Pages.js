@@ -877,7 +877,7 @@ jsBackend.pages.extras =
 		if ($element.is('[data-ft-type="editor"]')) {
 			$textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]');
 
-			$element.text($textarea.val());
+			$element.html($textarea.val());
 		}
 	},
 
