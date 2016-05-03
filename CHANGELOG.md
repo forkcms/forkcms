@@ -1,6 +1,7 @@
 3.9.7 (xxxx-xx-xx)
 --
 Bugfixes:
+* Blog: Fixed saving Blog articles as draft.
 * Core: Fix incorrect path for theme OpenGraphImage.
 * Core: Fixed when deploying, that /src/Frontend/Cache/Navigation/editor_link_list_x.js is now created if not exists.
 * Faq: fixes faq-category sequence reordering not being saved.
