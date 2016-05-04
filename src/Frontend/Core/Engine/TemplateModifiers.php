@@ -118,7 +118,7 @@ class TemplateModifiers
         $format = Model::get('fork.settings')->get('Core', 'number_format');
 
         // get amount of decimals
-        $decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);
+        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
 
         // get separators
         $separators = explode('_', $format);
@@ -522,7 +522,7 @@ class TemplateModifiers
 
             // truncate
             if ($closestWord) {
-                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), $charset);
+                $var = mb_substr($var, 0, mb_strrpos(mb_substr($var, 0, $length + 1), ' '), $charset);
             } else {
                 $var = mb_substr($var, 0, $length, $charset);
             }

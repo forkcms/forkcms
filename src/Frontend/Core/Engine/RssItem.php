@@ -144,7 +144,7 @@ class RssItem extends \SpoonFeedRSSItem
         $link = (string) $link;
 
         // if link doesn't start with http, we prepend the URL of the site
-        if (substr($link, 0, 7) != 'http://') {
+        if (mb_substr($link, 0, 7) != 'http://') {
             $link = SITE_URL . $link;
         }
 
@@ -164,7 +164,7 @@ class RssItem extends \SpoonFeedRSSItem
         $link = (string) $link;
 
         // if link doesn't start with http, we prepend the URL of the site
-        if (substr($link, 0, 7) != 'http://') {
+        if (mb_substr($link, 0, 7) != 'http://') {
             $link = SITE_URL . $link;
         }
 

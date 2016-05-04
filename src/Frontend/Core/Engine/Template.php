@@ -289,7 +289,7 @@ class Template extends \SpoonTemplate
 
         // aliases
         $this->assign('LANGUAGE', FRONTEND_LANGUAGE);
-        $this->assign('is' . strtoupper(FRONTEND_LANGUAGE), true);
+        $this->assign('is' . mb_strtoupper(FRONTEND_LANGUAGE), true);
 
         // settings
         $this->assign(

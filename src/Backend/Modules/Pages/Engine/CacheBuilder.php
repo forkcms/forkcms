@@ -197,7 +197,7 @@ class CacheBuilder
             $treeType = 'home';
         } elseif ($page['id'] == 404) {
             $treeType = 'error';
-        } elseif ($page['id'] < 404 && substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
+        } elseif ($page['id'] < 404 && mb_substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
             // get extras
             $extraIDs = explode(',', $page['extra_ids']);
 

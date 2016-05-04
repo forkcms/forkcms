@@ -355,7 +355,7 @@ class ForkInstaller
             '<database-password>' => addslashes($data->getDbPassword()),
             '<database-port>' => $data->getDbPort(),
             '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
-                (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
+                (mb_strpos(mb_strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
                 'http'
             ,
             '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',

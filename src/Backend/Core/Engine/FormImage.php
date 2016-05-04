@@ -116,17 +116,17 @@ class FormImage extends \SpoonFormImage
         }
 
         // reformat if specified in kB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'K') {
-            $uploadMaxFilesize = substr($uploadMaxFilesize, 0, -1) . 'kB';
+        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'K') {
+            $uploadMaxFilesize = mb_substr($uploadMaxFilesize, 0, -1) . 'kB';
         }
 
         // reformat if specified in MB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'M') {
+        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'M') {
             $uploadMaxFilesize .= 'B';
         }
 
         // reformat if specified in GB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'G') {
+        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'G') {
             $uploadMaxFilesize .= 'B';
         }
 

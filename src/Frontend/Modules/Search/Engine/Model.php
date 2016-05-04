@@ -39,7 +39,7 @@ class Model
             // current string encountered
             $terms[$i] = '>' . $terms[$i];
 
-            if (strpos($terms[$i], ' ') !== false) {
+            if (mb_strpos($terms[$i], ' ') !== false) {
                 // part of words encountered
                 $terms[$i] .= ' <(' .
                               implode(' ', $split) . ' ' . trim($last) . '*)';
@@ -93,7 +93,7 @@ class Model
 
                 // add query
                 $where[$queryNr] = '(' .
-                                   substr(
+                                   mb_substr(
                                        str_repeat(
                                            'MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) OR ',
                                            count($terms)
@@ -104,7 +104,7 @@ class Model
                                    '.language = ? AND i' . $queryNr . '.active = ? AND m' .
                                    $queryNr . '.searchable = ?';
                 $order[$queryNr] = '(' .
-                                   substr(
+                                   mb_substr(
                                        str_repeat(
                                            'MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) + ',
                                            count($terms)
@@ -143,7 +143,7 @@ class Model
             // prepare query and params
             $query =
                 'SELECT i.module, i.other_id, SUM(' .
-                substr(
+                mb_substr(
                     str_repeat(
                         'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) + ',
                         count($terms)
@@ -154,7 +154,7 @@ class Model
                  FROM search_index AS i
                  INNER JOIN search_modules AS m ON i.module = m.module
                  WHERE (' .
-                substr(
+                mb_substr(
                     str_repeat(
                         'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ',
                         count($terms)
@@ -303,7 +303,7 @@ class Model
 
                 // add query
                 $where[$queryNr] = '(' .
-                                   substr(
+                                   mb_substr(
                                        str_repeat(
                                            'MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) OR ',
                                            count($terms)
@@ -349,7 +349,7 @@ class Model
                      FROM search_index AS i
                      INNER JOIN search_modules AS m ON i.module = m.module
                      WHERE (' .
-                substr(
+                mb_substr(
                     str_repeat(
                         'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ',
                         count($terms)

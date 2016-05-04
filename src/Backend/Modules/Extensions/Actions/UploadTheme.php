@@ -147,7 +147,7 @@ class UploadTheme extends BackendBaseActionAdd
                                 $fileName = $file['name'];
 
                                 // yay, in a valid directory
-                                if (stripos($fileName, $themeName . '/') === 0) {
+                                if (mb_stripos($fileName, $themeName . '/') === 0) {
                                     // valid file, add to extraction-list
                                     $files[] = $fileName;
                                 }

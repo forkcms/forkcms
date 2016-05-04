@@ -517,7 +517,7 @@ class Form extends FrontendBaseWidget
 
                 // redirect
                 $redirect = SITE_URL . '/' . $this->URL->getQueryString();
-                $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
+                $redirect .= (mb_stripos($redirect, '?') === false) ? '?' : '&';
                 $redirect .= 'identifier=' . $this->item['identifier'];
 
                 throw new RedirectException(

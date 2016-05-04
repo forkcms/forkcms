@@ -119,7 +119,7 @@ class Statistics extends BackendBaseActionIndex
         );
 
         // set headers values
-        $headers['link'] = strtoupper(BL::lbl('URL'));
+        $headers['link'] = mb_strtoupper(BL::lbl('URL'));
         $headers['clicks'] = \SpoonFilter::ucfirst(BL::msg('ClicksAmount'));
 
         // set headers

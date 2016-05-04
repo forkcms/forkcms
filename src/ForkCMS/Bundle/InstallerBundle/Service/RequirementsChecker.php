@@ -195,7 +195,7 @@ class RequirementsChecker
         if (array_key_exists('REQUEST_URI', $_SERVER)) {
             $this->checkRequirement(
                 'subfolder',
-                (substr($_SERVER['REQUEST_URI'], 0, 8) == '/install'),
+                (mb_substr($_SERVER['REQUEST_URI'], 0, 8) == '/install'),
                 self::STATUS_ERROR
             );
         } else {
