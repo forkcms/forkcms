@@ -1054,16 +1054,16 @@ class Model
             array($item['id'], $archiveType, BL::getWorkingLanguage(), $rowsToKeep)
         );
         
-        // get meta-ids that will be deleted
-        $metasIdsToRemove = (array) $db->getColumn(
-            'SELECT i.meta_id
-             FROM blog_posts AS i
-             WHERE i.id = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
-            array($item['id'])
-        );
-        
         // delete other revisions
         if (!empty($revisionIdsToKeep)) {
+            // get meta-ids that will be deleted
+            $metasIdsToRemove = (array) $db->getColumn(
+                'SELECT i.meta_id
+                 FROM blog_posts AS i
+                 WHERE i.id = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                array($item['id'])
+            );
+
             // get all the images of the revisions that will NOT be deleted
             $imagesToKeep = $db->getColumn(
                 'SELECT image FROM blog_posts
