@@ -306,7 +306,7 @@ DROP TABLE IF EXISTS `groups_rights_actions`;
 CREATE TABLE `groups_rights_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'name of the module',
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the module',
   `action` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'name of the action',
   `level` double NOT NULL DEFAULT '1' COMMENT 'unix type levels 1, 3, 5 and 7',
   PRIMARY KEY (`id`)
@@ -505,7 +505,7 @@ DROP TABLE IF EXISTS `groups_rights_modules`;
 CREATE TABLE `groups_rights_modules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'name of the module',
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the module',
   PRIMARY KEY (`id`),
   KEY `idx_group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -541,7 +541,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `groups_settings`;
 CREATE TABLE `groups_settings` (
   `group_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'name of the setting',
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the setting',
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'serialized value',
   PRIMARY KEY (`group_id`,`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -559,7 +559,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `hooks_queue`;
 CREATE TABLE `hooks_queue` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
   `callback` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `data` text COLLATE utf8mb4_unicode_ci,
   `status` enum('busy','error','queued') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'queued',
@@ -569,9 +569,9 @@ CREATE TABLE `hooks_queue` (
 
 DROP TABLE IF EXISTS `hooks_subscriptions`;
 CREATE TABLE `hooks_subscriptions` (
-  `event_module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `event_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `event_module` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `event_name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
   `callback` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_on` datetime NOT NULL,
   UNIQUE KEY `event_module` (`event_module`(100),`event_name`(100),`module`(100))
@@ -583,7 +583,7 @@ CREATE TABLE `locale` (
   `user_id` int(11) NOT NULL,
   `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
   `type` enum('act','err','lbl','msg') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'lbl',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci,
@@ -2095,22 +2095,22 @@ CREATE TABLE `location` (
 DROP TABLE IF EXISTS `location_settings`;
 CREATE TABLE `location_settings` (
   `map_id` int(11) unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '',
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`map_id`,`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `mailmotor_addresses`;
 CREATE TABLE `mailmotor_addresses` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `source` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `source` varchar(255)  CHARACTER SET utf8 DEFAULT NULL,
   `created_on` datetime DEFAULT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `mailmotor_addresses_groups`;
 CREATE TABLE `mailmotor_addresses_groups` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 NOT NULL,
   `group_id` int(11) NOT NULL,
   `custom_fields` text COLLATE utf8mb4_unicode_ci,
   `status` enum('subscribed','unsubscribed','inserted') COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2227,7 +2227,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `modules`;
 CREATE TABLE `modules` (
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'unique module name',
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'unique module name',
   `installed_on` datetime NOT NULL,
   PRIMARY KEY (`name`),
   KEY `idx_name` (`name`)
@@ -2265,7 +2265,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `modules_extras`;
 CREATE TABLE `modules_extras` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the extra.',
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The name of the module this extra belongs to.',
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'The name of the module this extra belongs to.',
   `type` enum('homepage','block','widget') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The type of the block.',
   `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The label for this extra. It will be used for displaying purposes.',
   `action` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -2323,7 +2323,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `modules_settings`;
 CREATE TABLE `modules_settings` (
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'name of the module',
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the module',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'name of the setting',
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'serialized value',
   PRIMARY KEY (`module`(25),`name`(100))
@@ -2426,7 +2426,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `modules_tags`;
 CREATE TABLE `modules_tags` (
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
   `tag_id` int(11) NOT NULL,
   `other_id` int(11) NOT NULL,
   PRIMARY KEY (`module`,`tag_id`,`other_id`)
@@ -2594,7 +2594,7 @@ CREATE TABLE `profiles_groups_rights` (
 
 DROP TABLE IF EXISTS `profiles_sessions`;
 CREATE TABLE `profiles_sessions` (
-  `session_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `session_id` varchar(255) CHARACTER SET utf8 NOT NULL,
   `profile_id` int(11) NOT NULL,
   `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` datetime NOT NULL,
@@ -2605,7 +2605,7 @@ CREATE TABLE `profiles_sessions` (
 DROP TABLE IF EXISTS `profiles_settings`;
 CREATE TABLE `profiles_settings` (
   `profile_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`name`,`profile_id`),
   KEY `fk_profiles_settings_profiles1` (`profile_id`)
@@ -2613,11 +2613,11 @@ CREATE TABLE `profiles_settings` (
 
 DROP TABLE IF EXISTS `search_index`;
 CREATE TABLE `search_index` (
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
   `other_id` int(11) NOT NULL,
-  `field` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `field` varchar(64) CHARACTER SET utf8 NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `language` varchar(5) CHARACTER SET utf8 NOT NULL,
   `active` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
   PRIMARY KEY (`module`,`other_id`,`field`,`language`),
   FULLTEXT KEY `value` (`value`)
@@ -2644,7 +2644,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `search_modules`;
 CREATE TABLE `search_modules` (
-  `module` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
   `searchable` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL,
   `weight` int(11) NOT NULL,
   PRIMARY KEY (`module`)
@@ -2676,7 +2676,7 @@ CREATE TABLE `search_statistics` (
 DROP TABLE IF EXISTS `search_synonyms`;
 CREATE TABLE `search_synonyms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `term` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `term` varchar(245) COLLATE utf8mb4_unicode_ci NOT NULL,
   `synonym` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
@@ -2776,7 +2776,7 @@ CREATE TABLE `users_sessions` (
 DROP TABLE IF EXISTS `users_settings`;
 CREATE TABLE `users_settings` (
   `user_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'name of the setting',
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the setting',
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'serialized value',
   PRIMARY KEY (`user_id`,`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

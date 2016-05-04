@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `mailmotor_addresses` (
  `email` varchar(255) CHARACTER SET utf8 NOT NULL,
- `source` varchar(255) CHARACTER SET utf8 NOT NULL,
+ `source` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
  `created_on` datetime default NULL,
  PRIMARY KEY (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
