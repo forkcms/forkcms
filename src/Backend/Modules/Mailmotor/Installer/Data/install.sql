@@ -1,20 +1,20 @@
 CREATE TABLE IF NOT EXISTS `mailmotor_addresses` (
- `email` varchar(255) NOT NULL,
- `source` varchar(255) default NULL,
+ `email` varchar(255) CHARACTER SET utf8 NOT NULL,
+ `source` varchar(255) CHARACTER SET utf8 NOT NULL,
  `created_on` datetime default NULL,
  PRIMARY KEY (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `mailmotor_addresses_groups` (
- `email` varchar(255) NOT NULL,
+ `email` varchar(255) CHARACTER SET utf8 NOT NULL,
  `group_id` int(11) NOT NULL,
  `custom_fields` text,
  `status` enum('subscribed','unsubscribed','inserted') NOT NULL,
  `subscribed_on` datetime default NULL,
  `unsubscribed_on` datetime default NULL,
  PRIMARY KEY (`email`,`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `mailmotor_campaignmonitor_ids` (
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `mailmotor_campaignmonitor_ids` (
  `type` enum('campaign','list','template') NOT NULL,
  `other_id` int(11) NOT NULL,
  PRIMARY KEY (`type`,`cm_id`,`other_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `mailmotor_campaigns` (
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `mailmotor_campaigns` (
  `name` varchar(255) NOT NULL,
  `created_on` datetime default NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `mailmotor_groups` (
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `mailmotor_groups` (
  `is_default` enum('N','Y') NOT NULL default 'N',
  `created_on` datetime NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `mailmotor_mailings` (
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `mailmotor_mailings` (
  `created_on` datetime default NULL,
  `edited_on` datetime default NULL,
  PRIMARY KEY (`id`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `mailmotor_mailings_groups` (
@@ -71,4 +71,4 @@ CREATE TABLE IF NOT EXISTS `mailmotor_mailings_groups` (
  PRIMARY KEY (`mailing_id`,`group_id`),
  KEY `group_id` (`group_id`),
  KEY `mailing_id` (`mailing_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

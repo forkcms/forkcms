@@ -184,7 +184,7 @@ class ForkInstaller
         );
         $database->execute(
             'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
-            array('charset' => 'utf8')
+            array('charset' => 'utf8mb4')
         );
         $this->container->set('database', $database);
     }
