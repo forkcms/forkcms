@@ -807,7 +807,7 @@ jsBackend.pages.extras =
 
 			html = '<div id="user-template-editor-' + key + '" class="optionsRTE">';
 			html += '<div class="heading"><h3>' + label + '</h3></div>';
-			html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="90" rows="15" class="inputEditor">' + text + '</textarea>';
+			html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>';
 			html += '</div>';
 
 			$placeholder.append(html);
