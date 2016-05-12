@@ -58,8 +58,8 @@ class Action extends Base\Object
 
         // is the requested action possible? If not we throw an exception.
         // We don't redirect because that could trigger a redirect loop
-        if (!in_array($this->getAction(), $this->config->getPossibleActions())) {
-            throw new Exception('This is an invalid action (' . $this->getAction() . ').');
+        if (!$this->config->isActionPossible($this->action)) {
+            throw new Exception('This is an invalid action (' . $this->action . ').');
         }
 
         // build action-class
