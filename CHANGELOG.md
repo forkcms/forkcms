@@ -1,5 +1,8 @@
 3.9.7 (xxxx-xx-xx)
 --
+Improvements:
+* Location: added zoom-level 1 and 2.
+
 Bugfixes:
 * Blog: Fixed saving Blog articles as draft.
 * Core: Fix incorrect path for theme OpenGraphImage.
