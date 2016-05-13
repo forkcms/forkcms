@@ -56,10 +56,15 @@ class Action extends Base\Object
     {
         $this->loadConfig();
 
-        // is the requested action possible? If not we throw an exception.
-        // We don't redirect because that could trigger a redirect loop
+        // is the requested action possible? If not we redirect to the error page.
         if (!$this->config->isActionPossible($this->action)) {
-            throw new Exception('This is an invalid action (' . $this->action . ').');
+            // build the url
+            $errorUrl = '/' . NAMED_APPLICATION
+                . '/' . $this->get('request')->get('_locale')
+                . '/error?type=action-not-allowed';
+
+            // redirect to the error page
+            return $this->redirect($errorUrl, 307);
         }
 
         // build action-class
