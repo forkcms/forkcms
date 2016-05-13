@@ -88,7 +88,7 @@ class Config extends Object
     {
         trigger_error(
             '$config->getPossibleActions() is deprecated.
-             Use $config->isActionPossible($action) to determine if an action is available',
+             Use $config->isActionAvailable($action) to determine if an action is available',
             E_USER_DEPRECATED
         );
 
@@ -104,7 +104,7 @@ class Config extends Object
     {
         trigger_error(
             '$config->getPossibleAJAXActions() is deprecated.
-             Use $config->isActionPossible($action) to determine if an action is available',
+             Use $config->isActionAvailable($action) to determine if an action is available',
             E_USER_DEPRECATED
         );
 
@@ -151,7 +151,7 @@ class Config extends Object
      * @param string $action
      * @return bool
      */
-    public function isActionPossible($action)
+    public function isActionAvailable($action)
     {
         // Save our action
         $this->action = $action;
@@ -168,11 +168,11 @@ class Config extends Object
                 continue;
             }
 
-            // The action is not disabled and the file is preset, this is a possible action!
+            // The action is not disabled and the file is preset, this is an available action!
             return true;
         }
 
-        // If no types contain a possible action, the action is impossible
+        // If no types contain an available action, the action is unavailable
         return false;
     }
 

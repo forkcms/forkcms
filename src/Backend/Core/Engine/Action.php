@@ -56,8 +56,8 @@ class Action extends Base\Object
     {
         $this->loadConfig();
 
-        // is the requested action possible? If not we redirect to the error page.
-        if (!$this->config->isActionPossible($this->action)) {
+        // is the requested action available? If not we redirect to the error page.
+        if (!$this->config->isActionAvailable($this->action)) {
             // build the url
             $errorUrl = '/' . NAMED_APPLICATION
                 . '/' . $this->get('request')->get('_locale')
