@@ -139,8 +139,11 @@ class Model
         // define address
         $address = implode(' ', $item);
 
+        // define Google Maps API key
+        $apikey = BackendModel::get('fork.settings')->get('Core', 'google_maps_key');
+
         // define url
-        $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=false';
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=' . $apikey;
 
         // define result
         $geocodes = json_decode(file_get_contents($url), true);
