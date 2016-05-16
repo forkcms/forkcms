@@ -41,6 +41,7 @@ class Installer extends ModuleInstaller
         $this->setSetting('Location', 'width_widget', 400);
         $this->setSetting('Location', 'height_widget', 300);
         $this->setSetting('Location', 'map_type_widget', 'ROADMAP');
+        $this->setSetting('Location', 'requires_google_maps', true);
 
         // module rights
         $this->setModuleRights(1, 'Location');
