@@ -21,10 +21,6 @@
 {% block actionbar %}
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
-          {% if showPagesAdd %}
-          {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize) }}
-          {% endif %}
-
           {% if not item.is_hidden %}
 
             {% set url = (SITE_URL ~ item.full_url) %}
@@ -37,6 +33,10 @@
 
           {% if showPagesIndex %}
             {{ macro.buttonIcon(geturl('index' ), 'list', 'lbl.Overview'|trans|capitalize) }}
+          {% endif %}
+
+          {% if showPagesAdd %}
+            {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize) }}
           {% endif %}
         </div>
       </div>
