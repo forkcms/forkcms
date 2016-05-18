@@ -9685,11 +9685,11 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
     margin-left: -430px;
     padding-left: 430px;
     position: absolute;
-    -webkit-transition: padding, margin 250ms;
-    -moz-transition: padding, margin 250ms;
-    -ms-transition: padding, margin 250ms;
-    -o-transition: padding, margin 250ms;
-    transition: padding, margin 250ms;
+    -webkit-transition: padding 250ms, margin 250ms;
+    -moz-transition: padding 250ms, margin 250ms;
+    -ms-transition: padding 250ms, margin 250ms;
+    -o-transition: padding 250ms, margin 250ms;
+    transition: padding 250ms, margin 250ms;
     width: 100%; }
 
   .footer-pages #footer {
@@ -9703,11 +9703,11 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
   .navigation-collapsed #footer {
     margin-left: -240px;
     padding-left: 240px;
-    -webkit-transition: padding, margin 250ms;
-    -moz-transition: padding, margin 250ms;
-    -ms-transition: padding, margin 250ms;
-    -o-transition: padding, margin 250ms;
-    transition: padding, margin 250ms; }
+    -webkit-transition: padding 250ms, margin 250ms;
+    -moz-transition: padding 250ms, margin 250ms;
+    -ms-transition: padding 250ms, margin 250ms;
+    -o-transition: padding 250ms, margin 250ms;
+    transition: padding 250ms, margin 250ms; }
   .navigation-collapsed .footer-pages #footer {
     margin-left: -290px;
     padding-left: 290px; }
