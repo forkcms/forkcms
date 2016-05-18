@@ -168,7 +168,7 @@ class Config extends Object
                 continue;
             }
 
-            // The action is not disabled and the file is preset, this is an available action!
+            // The action is not disabled and the file is present, this is an available action!
             return true;
         }
 
