@@ -8695,6 +8695,8 @@ select[size="1"] {
       padding: 8px 20px 10px; }
     .panel-default.panel-pages-block .panel-body {
       padding: 0 20px 20px; }
+  .panel-default .panel-footer a {
+    text-decoration: underline; }
 
 .panel-editor .panel-body {
   padding: 0; }
