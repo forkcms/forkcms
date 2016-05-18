@@ -60,7 +60,7 @@ class Action extends Base\Object
         if (!$this->config->isActionAvailable($this->action)) {
             // build the url
             $errorUrl = '/' . NAMED_APPLICATION
-                . '/' . $this->get('request')->get('_locale')
+                . '/' . $this->get('request')->getLocale()
                 . '/error?type=action-not-allowed';
 
             // redirect to the error page
