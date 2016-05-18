@@ -8176,6 +8176,12 @@ select[size="1"] {
 .editorWarning {
   color: rgba(245, 166, 35, 0.9); }
 
+.input-group .bootstrap-tagsinput {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0; }
+.input-group .input-group-addon.btn .fa {
+  padding-right: 0; }
+
 /* Loader */
 @keyframes spin {
   to {
@@ -9456,6 +9462,9 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
   width: 50%; }
   #tagsForm .tag .label {
     margin-left: 10px; }
+
+.bootstrap-tagsinput {
+  overflow: visible; }
 
 /*
 

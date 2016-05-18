@@ -119,3 +119,15 @@ select[size="1"] {
 .editorWarning {
   color: $alert-warning-bg;
 }
+
+.input-group {
+
+  .bootstrap-tagsinput {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .input-group-addon.btn .fa {
+    padding-right: 0;
+  }
+}
