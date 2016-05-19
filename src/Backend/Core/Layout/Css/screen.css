@@ -8599,7 +8599,7 @@ select[size="1"] {
   .table tr th {
     color: #4a4a4a;
     font-size: 12px;
-    font-weight: normal; }
+    font-weight: 600; }
     .table tr th a {
       color: #4a4a4a; }
       .table tr th a.sorted {
