@@ -146,7 +146,7 @@ $table-bg:                      transparent;
 //** Background color used for `.table-striped`.
 $table-bg-accent:               $white;
 //** Background color used for `.table-hover`.
-$table-bg-hover:                $gray-lighter;
+$table-bg-hover:                lighten($gray-lighter, 7%);
 $table-bg-active:               $table-bg-hover;
 
 //** Border color for table and cell borders.
