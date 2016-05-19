@@ -9534,6 +9534,7 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 #fieldsHolder .field {
   border-bottom: 1px solid #E5E5E5;
   border-radius: 3px;
+  background-color: #fff;
   padding: 25px;
   margin: 0; }
   #fieldsHolder .field.field-submit {
@@ -9566,6 +9567,10 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
       width: 14px; }
   #formElements .list-group.first {
     border-bottom: 1px solid #E5E5E5; }
+
+#datetimeValueAmount,
+#datetimeValueType {
+  width: 25%; }
 
 #locale .translationValue {
   word-break: break-all; }

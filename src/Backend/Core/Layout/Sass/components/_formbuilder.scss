@@ -6,6 +6,7 @@
   .field {
     border-bottom: 1px solid $gray-lighter;
     border-radius: $border-radius-small;
+    background-color: $white;
     padding: 25px;
     margin: 0;
 
@@ -63,4 +64,9 @@
       border-bottom: 1px solid $gray-lighter;
     }
   }
+}
+
+#datetimeValueAmount,
+#datetimeValueType {
+  width: 25%;
 }
