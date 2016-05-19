@@ -131,3 +131,11 @@ select[size="1"] {
     padding-right: 0;
   }
 }
+
+.form-inline .form-group {
+  width: 100%;
+
+  select.form-control {
+    width: 25%;
+  }
+}

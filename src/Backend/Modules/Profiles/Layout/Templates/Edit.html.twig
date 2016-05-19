@@ -84,9 +84,11 @@
                       <div class="form-group last">
                         <label for="day" class="control-label">{{ 'lbl.BirthDate'|trans|capitalize }}</label>
                         <div class="form-inline">
-                          <div class="form-group">{% form_field day %}</div>
-                          <div class="form-group">{% form_field month %}</div>
-                          <div class="form-group">{% form_field year %}</div>
+                          <div class="form-group">
+                            {% form_field day %}
+                          {% form_field month %}
+                          {% form_field year %}
+                          </div>
                           {% form_field_error year %}
                         </div>
                       </div>
