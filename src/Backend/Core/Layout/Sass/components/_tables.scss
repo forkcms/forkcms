@@ -22,6 +22,12 @@
   border-width: 1px;
 }
 
+.table > tbody > tr > td.dragAndDropHandle,
+.table > tbody > tr > th.dragAndDropHandle,
+.table > thead > tr > th.dragAndDropHandle {
+  width: 5%;
+}
+
 .table > tbody > tr > td,
 .table > tbody > tr > th,
 .table > tfoot > tr > td {
