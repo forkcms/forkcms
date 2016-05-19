@@ -8928,6 +8928,8 @@ select[size="1"] {
   color: #4a4a4a; }
   .input-group-addon.btn {
     color: #2f77d1; }
+    .input-group-addon.btn:hover {
+      color: #fff; }
 
 /*
 
