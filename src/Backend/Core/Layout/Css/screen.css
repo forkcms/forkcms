@@ -9463,6 +9463,11 @@ body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonH
 .modal-footer {
   padding: 15px 30px 25px; }
 
+.modal.fade .modal-dialog {
+  -webkit-transition: transform 200ms ease-out;
+  -moz-transition: transform 200ms ease-out;
+  transition: transform 200ms ease-out; }
+
 @media screen and (min-width: 768px) {
   .modal-dialog {
     margin: 80px auto; } }
