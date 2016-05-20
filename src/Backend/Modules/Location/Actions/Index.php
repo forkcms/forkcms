@@ -145,7 +145,7 @@ class Index extends BackendBaseActionIndex
         $this->form->addText('width', $this->settings['width']);
         $this->form->addText('height', $this->settings['height']);
         $this->form->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
-        $this->form->addDropdown('map_style', $mapStyles, $this->settings['map_style']);
+        $this->form->addDropdown('map_style', $mapStyles, (isset($this->settings['map_style'])) ? $this->settings['map_style'] : null);
     }
 
     /**
