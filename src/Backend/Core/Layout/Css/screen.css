@@ -8179,8 +8179,6 @@ select[size="1"] {
 .input-group .bootstrap-tagsinput {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0; }
-.input-group .input-group-addon.btn .fa {
-  padding-right: 0; }
 
 .form-inline .form-group {
   width: 100%; }
