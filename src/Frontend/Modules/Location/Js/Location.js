@@ -2,6 +2,7 @@
  * Interaction for the location module
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 jsFrontend.location =
 {
