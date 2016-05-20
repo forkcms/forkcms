@@ -154,12 +154,12 @@ class Action extends Object
 
         // add module js
         if (is_file($this->getBackendModulePath() . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($this->getModule() . '.js', null, , true, false, true);
+            $this->header->addJS($this->getModule() . '.js', null, true, false, true);
         }
 
         // add action js
         if (is_file($this->getBackendModulePath() . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($this->getAction() . '.js', null, , true, false, true);
+            $this->header->addJS($this->getAction() . '.js', null, true, false, true);
         }
 
         // add core css files
