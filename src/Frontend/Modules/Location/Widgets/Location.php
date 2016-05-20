@@ -82,6 +82,7 @@ class Location extends FrontendBaseWidget
     {
         $this->addJSData('settings_' . $this->item['id'], $this->settings);
         $this->addJSData('items_' . $this->item['id'], array($this->item));
+        $this->addJSData('site_url', SITE_URL);
 
         $this->tpl->assign('widgetLocationItem', $this->item);
         $this->tpl->assign('widgetLocationSettings', $this->settings);
