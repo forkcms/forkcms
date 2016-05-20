@@ -8611,6 +8611,8 @@ select[size="1"] {
           top: 0; }
         .table tr th a.sorted .fa-sort-asc:before {
           bottom: 0; }
+  .table tr.grayedOut td {
+    opacity: .6; }
   .table tr th + th {
     border-left: 1px solid #e5e5e5; }
   .table .form-group {

@@ -79,6 +79,10 @@
       }
     }
 
+    &.grayedOut td {
+      opacity: .6;
+    }
+
     th + th {
       border-left: 1px solid $table-border-color;
     }
