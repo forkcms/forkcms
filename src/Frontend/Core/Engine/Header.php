@@ -21,6 +21,7 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Header extends FrontendBaseObject
 {
@@ -254,8 +255,9 @@ class Header extends FrontendBaseObject
      * @param array $attributes The attributes to parse.
      * @param bool  $overwrite  Should we overwrite the current value?
      * @param mixed $uniqueKeys Which keys can we use to decide if an item is unique.
+     * @param mixed $additionalKey This additional key helps you to create your own custom unique keys if required.
      */
-    public function addMetaData(array $attributes, $overwrite = false, $uniqueKeys = null)
+    public function addMetaData(array $attributes, $overwrite = false, $uniqueKeys = null, $additionalKey = null)
     {
         $overwrite = (bool) $overwrite;
         $uniqueKeys = (array) $uniqueKeys;
@@ -275,6 +277,12 @@ class Header extends FrontendBaseObject
             if (isset($attributes[$key])) {
                 $uniqueKey .= $attributes[$key] . '|';
             }
+        }
+
+        // Sometimes we want to add an extra key, because the uniqueKeys are not enough,
+        // f.e.: when using multiple og:image:width meta elements
+        if ($additionalKey !== null) {
+            $uniqueKey .= $additionalKey;
         }
 
         // is the metadata already available?
@@ -333,14 +341,21 @@ class Header extends FrontendBaseObject
         $this->addMetaData(array('property' => 'og:' . $key, 'content' => $value), $overwrite, 'property');
     }
 
+
     /**
      * Add Open Graph image
      *
      * @param string $image     The path to the image.
      * @param bool   $overwrite Should we overwrite the previous value?
+     * @param integer $width    The width of the image.
+     * @param integer $height   The height of the image.
      */
-    public function addOpenGraphImage($image, $overwrite = false)
+    public function addOpenGraphImage($image, $overwrite = false, $width = 0, $height = 0)
     {
+        // recast width and height
+        $width = (int) $width;
+        $height = (int) $height;
+
         // remove site url from path
         $image = str_replace(SITE_URL, '', $image);
 
@@ -363,6 +378,24 @@ class Header extends FrontendBaseObject
                 array('property' => 'og:image:secure_url', 'content' => $image),
                 $overwrite,
                 array('property', 'content')
+            );
+        }
+
+        if ($width !== 0) {
+            $this->addMetaData(
+                array('property' => 'og:image:width', 'content' => $width),
+                $overwrite,
+                array('property', 'content'),
+                $image
+            );
+        }
+
+        if ($height !== 0) {
+            $this->addMetaData(
+                array('property' => 'og:image:height', 'content' => $height),
+                $overwrite,
+                array('property', 'content'),
+                $image
             );
         }
     }
