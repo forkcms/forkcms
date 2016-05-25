@@ -8907,6 +8907,7 @@ select[size="1"] {
   .btn.btn-xs, .btn-group-xs > .btn {
     padding: 2px 8px; }
   .btn.btn-md {
+    font-size: 12px;
     padding: 4px 15px 5px; }
 
 .btn-icon-only .fa {
@@ -9249,7 +9250,7 @@ select[size="1"] {
       #templateVisualLarge .btn-group .btn.addBlock .btn-text,
       #templateVisualFallback .btn-group .btn.addBlock .btn-text {
         display: inline-block;
-        font-size: 14px; }
+        font-size: 12px; }
       #templateVisualLarge .btn-group .btn .fa,
       #templateVisualFallback .btn-group .btn .fa {
         padding-right: 6px; } }
