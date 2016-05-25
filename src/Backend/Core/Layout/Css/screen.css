@@ -7080,6 +7080,9 @@ button.close {
 html {
   min-height: 100%; }
 
+body {
+  -webkit-transform: translate3d(0, 0, 0); }
+
 .main-wrapper {
   position: relative;
   width: 100%; }
