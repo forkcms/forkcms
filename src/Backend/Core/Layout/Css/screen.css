@@ -3514,7 +3514,7 @@ th {
   background-color: #fff; }
 
 .table-hover > tbody > tr:hover {
-  background-color: #f7f7f7; }
+  background-color: #c1d7f1; }
 
 table col[class*="col-"] {
   position: static;
@@ -3537,11 +3537,11 @@ table th[class*="col-"] {
 .table > tfoot > tr > th.active,
 .table > tfoot > tr.active > td,
 .table > tfoot > tr.active > th {
-  background-color: #f7f7f7; }
+  background-color: #c1d7f1; }
 
 .table-hover > tbody > tr > td.active:hover,
 .table-hover > tbody > tr > th.active:hover, .table-hover > tbody > tr.active:hover > td, .table-hover > tbody > tr:hover > .active, .table-hover > tbody > tr.active:hover > th {
-  background-color: #eaeaea; }
+  background-color: #acc9ed; }
 
 .table > thead > tr > td.success,
 .table > thead > tr > th.success, .table > thead > tr.success > td, .table > thead > tr.success > th,
@@ -8572,7 +8572,7 @@ select[size="1"] {
     .table-striped > tbody > tr:nth-of-type(even):hover, .table-striped > tbody > tr:nth-of-type(even):focus,
     .table-striped thead > tr:hover,
     .table-striped thead > tr:focus {
-      background-color: #f7f7f7; }
+      background-color: #c1d7f1; }
 
 .table > thead > tr > th {
   border-width: 1px; }
