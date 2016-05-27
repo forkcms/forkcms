@@ -41,8 +41,6 @@ class Init extends \Common\Core\Init
             date_default_timezone_set('Europe/Brussels');
         }
 
-        $this->setDebugging();
-
         \SpoonFilter::disableMagicQuotes();
         $this->initSession();
     }
