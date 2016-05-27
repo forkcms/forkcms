@@ -261,24 +261,6 @@ class Model extends \Common\Core\Model
     }
 
     /**
-     * Deletes a module-setting from the DB and the cached array
-     *
-     * @deprecated
-     * @param string $module The module to set the setting for.
-     * @param string $key    The name of the setting.
-     */
-    public static function deleteModuleSetting($module, $key)
-    {
-        trigger_error(
-            'BackendModel::deleteModuleSetting is deprecated.
-             Use $container->get(\'fork.settings\')->delete instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->delete($module, $key);
-    }
-
-    /**
      * Delete thumbnails based on the folders in the path
      *
      * @param string $path      The path wherein the thumbnail-folders exist.
@@ -502,45 +484,6 @@ class Model extends \Common\Core\Model
         }
 
         return $return;
-    }
-
-    /**
-     * Get a certain module-setting
-     *
-     * @deprecated
-     * @param string $module       The module in which the setting is stored.
-     * @param string $key          The name of the setting.
-     * @param mixed  $defaultValue The value to return if the setting isn't present.
-     * @return mixed
-     */
-    public static function getModuleSetting($module, $key, $defaultValue = null)
-    {
-        trigger_error(
-            'BackendModel::getModuleSetting is deprecated.
-             Use $container->get(\'fork.settings\')->get instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->get($module, $key, $defaultValue);
-    }
-
-    /**
-     * Get all module settings at once
-     *
-     * @deprecated
-     * @param string $module You can get all settings for a module.
-     * @return array
-     * @throws Exception If the module settings were not saved in a correct format
-     */
-    public static function getModuleSettings($module = null)
-    {
-        trigger_error(
-            'BackendModel::getModuleSettings is deprecated.
-             Use $container->get(\'fork.settings\')->getForModule instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->getForModule($module);
     }
 
     /**
@@ -973,25 +916,6 @@ class Model extends \Common\Core\Model
         }
 
         return true;
-    }
-
-    /**
-     * Saves a module-setting into the DB and the cached array
-     *
-     * @deprecated
-     * @param string $module The module to set the setting for.
-     * @param string $key    The name of the setting.
-     * @param string $value  The value to store.
-     */
-    public static function setModuleSetting($module, $key, $value)
-    {
-        trigger_error(
-            'BackendModel::setModuleSetting is deprecated.
-             Use $container->get(\'fork.settings\')->set instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->set($module, $key, $value);
     }
 
     /**

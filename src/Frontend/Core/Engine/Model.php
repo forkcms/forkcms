@@ -130,44 +130,6 @@ class Model extends \Common\Core\Model
     }
 
     /**
-     * Get a module setting
-     *
-     * @deprecated
-     * @param string $module       The module wherefore a setting has to be retrieved.
-     * @param string $key          The key of the setting to be retrieved.
-     * @param mixed  $defaultValue A value that will be stored if the setting isn't present.
-     * @return mixed
-     */
-    public static function getModuleSetting($module, $key, $defaultValue = null)
-    {
-        trigger_error(
-            'FrontendModel::getModuleSetting is deprecated.
-             Use $container->get(\'fork.settings\')->get instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->get($module, $key, $defaultValue);
-    }
-
-    /**
-     * Get all module settings at once
-     *
-     * @deprecated
-     * @param string $module The module wherefore all settings has to be retrieved.
-     * @return array
-     */
-    public static function getModuleSettings($module)
-    {
-        trigger_error(
-            'FrontendModel::getModuleSettings is deprecated.
-             Use $container->get(\'fork.settings\')->getForModule instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->getForModule($module);
-    }
-
-    /**
      * Get all data for a page
      *
      * @param int $pageId The pageId wherefore the data will be retrieved.
@@ -509,24 +471,5 @@ class Model extends \Common\Core\Model
                 throw $e;
             }
         }
-    }
-
-    /**
-     * Store a module setting
-     *
-     * @deprecated
-     * @param string $module The module wherefore a setting has to be stored.
-     * @param string $key    The key of the setting.
-     * @param mixed  $value  The value (will be serialized so make sure the type is correct).
-     */
-    public static function setModuleSetting($module, $key, $value)
-    {
-        trigger_error(
-            'BackendModel::setModuleSetting is deprecated.
-             Use $container->get(\'fork.settings\')->set instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->set($module, $key, $value);
     }
 }
