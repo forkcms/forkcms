@@ -1,6 +1,15 @@
-3.9.7 (xxxx-xx-xx)
+4.0.0 (2016-05-27)
 --
+
+Improvements:
+
+* Core: Twig is now used everywhere
+* Core: Backend is now using bootstrap
+* Core: new backend device
+* ...
+
 Bugfixes:
+
 * Blog: Fixed saving Blog articles as draft.
 * Core: Fix incorrect path for theme OpenGraphImage.
 * Core: Fixed when deploying, that /src/Frontend/Cache/Navigation/editor_link_list_x.js is now created if not exists.
