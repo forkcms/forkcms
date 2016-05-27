@@ -9,7 +9,7 @@ use InvalidArgumentException;
  * This is useful for when you want to use the same code in the Back- and Frontend.
  * For instance in a trait.
  *
- * @author Jelmer Prins <jelmer@$sumocoders.be>
+ * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 final class Language
 {
