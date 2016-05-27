@@ -41,9 +41,9 @@ class TemplateCompiler extends \SpoonTemplateCompiler
                 $search = $match[0];
 
                 // inside a string
-                if (in_array(substr($match[1], 0, 1), array('\'', '"'))) {
+                if (in_array(mb_substr($match[1], 0, 1), array('\'', '"'))) {
                     // strip quotes
-                    $match[1] = substr($match[1], 1, -1);
+                    $match[1] = mb_substr($match[1], 1, -1);
                 }
 
                 $replace = '<?php $includes = array();

@@ -336,7 +336,7 @@ class Page extends FrontendBaseObject
                 $temp = array();
                 $temp['url'] = '/' . $language;
                 $temp['label'] = $language;
-                $temp['name'] = Language::msg(strtoupper($language));
+                $temp['name'] = Language::msg(mb_strtoupper($language));
                 $temp['current'] = (bool) ($language == FRONTEND_LANGUAGE);
 
                 // add

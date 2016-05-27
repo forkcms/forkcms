@@ -184,7 +184,7 @@ class ForkInstaller
         );
         $database->execute(
             'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
-            array('charset' => 'utf8')
+            array('charset' => 'utf8mb4')
         );
         $this->container->set('database', $database);
     }
@@ -355,7 +355,7 @@ class ForkInstaller
             '<database-password>' => addslashes($data->getDbPassword()),
             '<database-port>' => $data->getDbPort(),
             '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
-                (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
+                (mb_strpos(mb_strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
                 'http'
             ,
             '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',

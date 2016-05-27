@@ -221,13 +221,13 @@ class MailingBodyBuilder
         // loop the matches
         foreach ($matches[1] as $match) {
             // ignore #
-            if (strpos($match, '#') > -1) {
+            if (mb_strpos($match, '#') > -1) {
                 continue;
             }
 
             // add results to search/replace stack
             $search[] = 'href="' . $match . '"';
-            $replace[] = 'href="' . $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
+            $replace[] = 'href="' . $match . ((mb_strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
         }
 
         // replace the content HTML with the replace values

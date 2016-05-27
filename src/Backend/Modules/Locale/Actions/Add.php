@@ -135,7 +135,7 @@ class Add extends BackendBaseActionAdd
                 // allowed regex (a-z and 0-9)
                 if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
                     // first letter does not seem to be a capital one
-                    if (!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
+                    if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
                         $txtName->setError(BL::err('InvalidName'));
                     }
 

@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `forms` (
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `forms_data` (
   `id` int(11) unsigned NOT NULL auto_increment,
@@ -20,27 +20,27 @@ CREATE TABLE IF NOT EXISTS `forms_data` (
   `data` text COMMENT 'Serialized array with extra information.',
   PRIMARY KEY  (`id`),
   KEY `form_id` (`form_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `forms_data_fields` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `data_id` int(11) unsigned NOT NULL,
   `label` varchar(255) NOT NULL,
-  `value` text collate utf8_unicode_ci,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY  (`id`),
   KEY `data_id` (`data_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `forms_fields` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `form_id` int(11) unsigned NOT NULL,
   `type` enum('textbox','textarea', 'datetime', 'dropdown','checkbox','radiobutton','heading','paragraph','submit') NOT NULL,
-  `settings` text collate utf8_unicode_ci,
+  `settings` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `sequence` int(11) NULL,
   PRIMARY KEY  (`id`),
   KEY `sequence` (`sequence`),
   KEY `form_id` (`form_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `forms_fields_validation` (
   `id` int(11) unsigned NOT NULL auto_increment,
@@ -50,4 +50,4 @@ CREATE TABLE IF NOT EXISTS `forms_fields_validation` (
   `error_message` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `field_id` (`field_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -87,15 +87,15 @@ class Url extends Base\Object
         $queryString = $this->getQueryString();
 
         // find the position of ? (which separates real URL and GET-parameters)
-        $positionQuestionMark = strpos($queryString, '?');
+        $positionQuestionMark = mb_strpos($queryString, '?');
 
         // separate the GET-chunk from the parameters
         $getParameters = '';
         if ($positionQuestionMark === false) {
             $processedQueryString = $queryString;
         } else {
-            $processedQueryString = substr($queryString, 0, $positionQuestionMark);
-            $getParameters = substr($queryString, $positionQuestionMark);
+            $processedQueryString = mb_substr($queryString, 0, $positionQuestionMark);
+            $getParameters = mb_substr($queryString, $positionQuestionMark);
         }
 
         // split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
@@ -228,7 +228,7 @@ class Url extends Base\Object
                                     $finder = new Finder();
                                     $files = $finder->files()->name('*.php')->in(BACKEND_MODULES_PATH . '/' . \SpoonFilter::toCamelCase($module) . '/Actions');
                                     foreach ($files as $file) {
-                                        $moduleAction = substr($file->getFilename(), 0, -4);
+                                        $moduleAction = mb_substr($file->getFilename(), 0, -4);
                                         if (Authentication::isAllowedAction($moduleAction, $module)) {
                                             $this->redirect('/' . NAMED_APPLICATION . '/' . $language . '/' .
                                                 $module . '/' . $moduleAction);

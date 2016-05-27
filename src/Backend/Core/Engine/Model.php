@@ -117,8 +117,8 @@ class Model extends \Common\Core\Model
         }
 
         // lets create underscore cased module and action names
-        $module = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $module));
-        $action = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $action));
+        $module = mb_strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $module));
+        $action = mb_strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $action));
 
         // add offset, order & sort (only if not yet manually added)
         if (isset($_GET['offset']) && !isset($parameters['offset'])) {
@@ -338,7 +338,7 @@ class Model extends \Common\Core\Model
         // get random characters
         for ($i = 0; $i < $length; $i++) {
             // random index
-            $index = mt_rand(0, strlen($characters));
+            $index = mt_rand(0, mb_strlen($characters));
 
             // add character to salt
             $string .= mb_substr($characters, $index, 1, self::getContainer()->getParameter('kernel.charset'));
@@ -908,8 +908,8 @@ class Model extends \Common\Core\Model
                 $pingServices['date'] = time();
             } catch (Exception $e) {
                 // check if the error should not be ignored
-                if (strpos($e->getMessage(), 'Operation timed out') === false &&
-                    strpos($e->getMessage(), 'Invalid headers') === false
+                if (mb_strpos($e->getMessage(), 'Operation timed out') === false &&
+                    mb_strpos($e->getMessage(), 'Invalid headers') === false
                 ) {
                     if (BackendModel::getContainer()->getParameter('kernel.debug')) {
                         throw $e;
@@ -961,8 +961,8 @@ class Model extends \Common\Core\Model
                 }
             } catch (Exception $e) {
                 // check if the error should not be ignored
-                if (strpos($e->getMessage(), 'Operation timed out') === false &&
-                    strpos($e->getMessage(), 'Invalid headers') === false
+                if (mb_strpos($e->getMessage(), 'Operation timed out') === false &&
+                    mb_strpos($e->getMessage(), 'Invalid headers') === false
                 ) {
                     if (BackendModel::getContainer()->getParameter('kernel.debug')) {
                         throw $e;

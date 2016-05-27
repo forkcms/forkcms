@@ -52,7 +52,7 @@ services:
             - %database.name%
             - %database.port%
         calls:
-            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8' } ] ]
+            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
             - [ setDebug, [ %kernel.debug% ]]
     mailer_configurator:
         class: Common\Mailer\Configurator

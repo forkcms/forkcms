@@ -424,7 +424,7 @@ class Navigation extends Base\Object
         $activeURL = $this->URL->getModule() . '/' . $this->URL->getAction();
 
         // we use the lowercased versions in the url
-        $activeURL = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $activeURL));
+        $activeURL = mb_strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $activeURL));
 
         // add current key
         $keys[] = $key;

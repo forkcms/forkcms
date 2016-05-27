@@ -119,20 +119,20 @@ class Model extends \BaseModel
         // reformat the pass
         for ($i = 0; $i < $length; $i++) {
             if (rand(0, 1) == 1) {
-                $pass .= strtoupper(substr($tmp, $i, 1));
+                $pass .= mb_strtoupper(mb_substr($tmp, $i, 1));
             } else {
-                $pass .= substr($tmp, $i, 1);
+                $pass .= mb_substr($tmp, $i, 1);
             }
         }
 
         // reformat it again, if uppercase isn't allowed
         if (!$uppercaseAllowed) {
-            $pass = strtolower($pass);
+            $pass = mb_strtolower($pass);
         }
 
         // reformat it again, if uppercase isn't allowed
         if (!$lowercaseAllowed) {
-            $pass = strtoupper($pass);
+            $pass = mb_strtoupper($pass);
         }
 
         // return pass
@@ -201,8 +201,8 @@ class Model extends \BaseModel
             $item = array();
             $item['dirname'] = $directory->getBasename();
             $item['path'] = $directory->getRealPath();
-            if (substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) {
-                $item['url'] = substr($path, strlen(PATH_WWW));
+            if (mb_substr($path, 0, mb_strlen(PATH_WWW)) == PATH_WWW) {
+                $item['url'] = mb_substr($path, mb_strlen(PATH_WWW));
             }
 
             if ($item['dirname'] == 'source') {
@@ -405,7 +405,7 @@ class Model extends \BaseModel
             $pid = trim(file_get_contents(BACKEND_CACHE_PATH . '/Hooks/pid'));
 
             // running on windows?
-            if (strtolower(substr(php_uname('s'), 0, 3)) == 'win') {
+            if (mb_strtolower(mb_substr(php_uname('s'), 0, 3)) == 'win') {
                 // get output
                 $output = @shell_exec('tasklist.exe /FO LIST /FI "PID eq ' . $pid . '"');
 
@@ -417,7 +417,7 @@ class Model extends \BaseModel
                     // already running
                     return true;
                 }
-            } elseif (strtolower(substr(php_uname('s'), 0, 6)) == 'darwin') {
+            } elseif (mb_strtolower(mb_substr(php_uname('s'), 0, 6)) == 'darwin') {
                 // darwin == Mac
                 // get output
                 $output = @posix_getsid($pid);

@@ -355,8 +355,8 @@ class DataGrid extends \SpoonDataGrid
                 $value = $this->columns[$column]->getValue();
 
                 // add class for confirmation
-                if (substr_count($value, '<a') > 0) {
-                    if (substr_count($value, 'class="') > 0) {
+                if (mb_substr_count($value, '<a') > 0) {
+                    if (mb_substr_count($value, 'class="') > 0) {
                         $value = str_replace(
                             'class="',
                             'data-message-id="' . $id . '" class="askConfirmation ',
