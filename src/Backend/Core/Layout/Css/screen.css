@@ -7081,7 +7081,7 @@ html {
   min-height: 100%; }
 
 body {
-  -webkit-transform: translate3d(0, 0, 0); }
+  -webkit-transform: none; }
 
 .main-wrapper {
   position: relative;
