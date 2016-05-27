@@ -94,15 +94,15 @@ class Add extends BackendBaseActionAdd
                 }
 
                 // get the tag offset
-                $offset = strpos($reflection->getDocComment(), ACTION_GROUP_TAG) + strlen(ACTION_GROUP_TAG);
+                $offset = mb_strpos($reflection->getDocComment(), ACTION_GROUP_TAG) + mb_strlen(ACTION_GROUP_TAG);
 
                 // no tag present? move on!
-                if (!($offset - strlen(ACTION_GROUP_TAG))) {
+                if (!($offset - mb_strlen(ACTION_GROUP_TAG))) {
                     continue;
                 }
 
                 // get the group info
-                $groupInfo = trim(substr($reflection->getDocComment(), $offset, (strpos($reflection->getDocComment(), '*', $offset) - $offset)));
+                $groupInfo = trim(mb_substr($reflection->getDocComment(), $offset, (mb_strpos($reflection->getDocComment(), '*', $offset) - $offset)));
 
                 // get name and description
                 $bits = explode("\t", $groupInfo);
@@ -172,8 +172,8 @@ class Add extends BackendBaseActionAdd
                 $reflection = new \ReflectionClass($class);
                 $phpDoc = trim($reflection->getDocComment());
                 if ($phpDoc != '') {
-                    $offset = strpos($reflection->getDocComment(), '*', 7);
-                    $description = substr($reflection->getDocComment(), 0, $offset);
+                    $offset = mb_strpos($reflection->getDocComment(), '*', 7);
+                    $description = mb_substr($reflection->getDocComment(), 0, $offset);
                     $description = str_replace('*', '', $description);
                     $description = trim(str_replace('/', '', $description));
                 } else {
@@ -233,8 +233,8 @@ class Add extends BackendBaseActionAdd
                     $reflection = new \ReflectionClass($class);
                     $phpDoc = trim($reflection->getDocComment());
                     if ($phpDoc != '') {
-                        $offset = strpos($reflection->getDocComment(), '*', 7);
-                        $description = substr($reflection->getDocComment(), 0, $offset);
+                        $offset = mb_strpos($reflection->getDocComment(), '*', 7);
+                        $description = mb_substr($reflection->getDocComment(), 0, $offset);
                         $description = str_replace('*', '', $description);
                         $description = trim(str_replace('/', '', $description));
                     } else {

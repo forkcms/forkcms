@@ -39,16 +39,16 @@ class FormDate extends \SpoonFormDate
         $data = $this->getMethod(true);
 
         // init some vars
-        $year = (strpos($longMask, 'yyyy') !== false) ? substr(
+        $year = (mb_strpos($longMask, 'yyyy') !== false) ? mb_substr(
             $data[$this->attributes['name']],
-            strpos($longMask, 'yyyy'),
+            mb_strpos($longMask, 'yyyy'),
             4
-        ) : substr($data[$this->attributes['name']], strpos($longMask, 'yy'), 2);
-        $month = substr($data[$this->attributes['name']], strpos($longMask, 'mm'), 2);
-        $day = substr($data[$this->attributes['name']], strpos($longMask, 'dd'), 2);
+        ) : mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'yy'), 2);
+        $month = mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'mm'), 2);
+        $day = mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'dd'), 2);
 
         // validate datefields that have a from-date set
-        if (strpos($this->attributes['class'], 'inputDatefieldFrom') !== false) {
+        if (mb_strpos($this->attributes['class'], 'inputDatefieldFrom') !== false) {
             // process from date
             $fromDateChunks = explode('-', $this->attributes['data-startdate']);
             $fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
@@ -64,7 +64,7 @@ class FormDate extends \SpoonFormDate
 
                 return false;
             }
-        } elseif (strpos($this->attributes['class'], 'inputDatefieldTill') !== false) {
+        } elseif (mb_strpos($this->attributes['class'], 'inputDatefieldTill') !== false) {
             // validate datefield that have a till-date set
             // process till date
             $tillDateChunks = explode('-', $this->attributes['data-enddate']);
@@ -81,7 +81,7 @@ class FormDate extends \SpoonFormDate
 
                 return false;
             }
-        } elseif (strpos($this->attributes['class'], 'inputDatefieldRange') !== false) {
+        } elseif (mb_strpos($this->attributes['class'], 'inputDatefieldRange') !== false) {
             // validate datefield that have a from and till-date set
             // process from date
             $fromDateChunks = explode('-', $this->attributes['data-startdate']);

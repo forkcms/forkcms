@@ -35,7 +35,7 @@ class Form extends \Common\Core\Form
 
         $name = (string) $name;
 
-        if ($hash !== null && strlen($hash) > 0) {
+        if ($hash !== null && mb_strlen($hash) > 0) {
             $hash = (string) $hash;
             // check if the # is present
             if ($hash[0] !== '#') {
@@ -136,9 +136,10 @@ class Form extends \Common\Core\Form
             $mask
         );
         $attributes['data-firstday'] = $firstDay;
-        $attributes['year'] = date('Y', $value);
-        $attributes['month'] = date('n', $value);
-        $attributes['day'] = date('j', $value);
+        $attributes['data-year'] = date('Y', $value);
+        // -1 because javascript starts at 0
+        $attributes['data-month'] = date('n', $value) - 1;
+        $attributes['data-day'] = date('j', $value);
 
         // add extra classes based on type
         switch ($type) {
@@ -437,16 +438,16 @@ class FrontendFormDate extends \SpoonFormDate
         $data = $this->getMethod(true);
 
         // init some vars
-        $year = (strpos($longMask, 'yyyy') !== false) ? substr(
+        $year = (mb_strpos($longMask, 'yyyy') !== false) ? mb_substr(
             $data[$this->attributes['name']],
-            strpos($longMask, 'yyyy'),
+            mb_strpos($longMask, 'yyyy'),
             4
-        ) : substr($data[$this->attributes['name']], strpos($longMask, 'yy'), 2);
-        $month = substr($data[$this->attributes['name']], strpos($longMask, 'mm'), 2);
-        $day = substr($data[$this->attributes['name']], strpos($longMask, 'dd'), 2);
+        ) : mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'yy'), 2);
+        $month = mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'mm'), 2);
+        $day = mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'dd'), 2);
 
         // validate datefields that have a from-date set
-        if (strpos($this->attributes['class'], 'inputDatefieldFrom') !== false) {
+        if (mb_strpos($this->attributes['class'], 'inputDatefieldFrom') !== false) {
             // process from date
             $fromDateChunks = explode('-', $this->attributes['data-startdate']);
             $fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
@@ -462,7 +463,7 @@ class FrontendFormDate extends \SpoonFormDate
 
                 return false;
             }
-        } elseif (strpos($this->attributes['class'], 'inputDatefieldTill') !== false) {
+        } elseif (mb_strpos($this->attributes['class'], 'inputDatefieldTill') !== false) {
             // process till date
             $tillDateChunks = explode('-', $this->attributes['data-enddate']);
             $tillDateTimestamp = mktime(12, 00, 00, $tillDateChunks[1], $tillDateChunks[2], $tillDateChunks[0]);
@@ -478,7 +479,7 @@ class FrontendFormDate extends \SpoonFormDate
 
                 return false;
             }
-        } elseif (strpos($this->attributes['class'], 'inputDatefieldRange') !== false) {
+        } elseif (mb_strpos($this->attributes['class'], 'inputDatefieldRange') !== false) {
             // process from date
             $fromDateChunks = explode('-', $this->attributes['data-startdate']);
             $fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);

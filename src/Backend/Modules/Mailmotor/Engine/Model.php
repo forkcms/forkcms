@@ -1148,7 +1148,7 @@ class Model
         // loop the languages
         foreach ($languages as $abbreviation) {
             // build new value
-            $results[] = array('value' => $abbreviation, 'label' => BL::lbl(strtoupper($abbreviation)));
+            $results[] = array('value' => $abbreviation, 'label' => BL::lbl(mb_strtoupper($abbreviation)));
         }
 
         return $results;

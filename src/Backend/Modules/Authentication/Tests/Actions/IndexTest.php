@@ -45,6 +45,17 @@ class IndexTest extends WebTestCase
         );
     }
 
+    public function testPrivateContainsRobotsTag()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/private/en/authentication');
+        $this->assertContains(
+            '<meta name="robots" content="noindex, nofollow"',
+            $client->getResponse()->getContent()
+        );
+    }
+
     public function testAuthenticationWithWrongCredentials()
     {
         $client = static::createClient();

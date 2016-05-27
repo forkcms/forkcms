@@ -147,7 +147,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('groups', $groups);
 
         // assign the template language
-        $this->tpl->assign('templateLanguage', \SpoonFilter::ucfirst(BL::lbl(strtoupper($template['language']))));
+        $this->tpl->assign('templateLanguage', \SpoonFilter::ucfirst(BL::lbl(mb_strtoupper($template['language']))));
 
         // get the price settings
         $pricePerEmail = $this->get('fork.settings')->get($this->getModule(), 'price_per_email');

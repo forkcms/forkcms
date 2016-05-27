@@ -127,7 +127,7 @@ class Language
     public static function getBrowserLanguage($forRedirect = true)
     {
         // browser language set
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && strlen($_SERVER['HTTP_ACCEPT_LANGUAGE']) >= 2) {
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && mb_strlen($_SERVER['HTTP_ACCEPT_LANGUAGE']) >= 2) {
             // get languages
             $redirectLanguages = self::getRedirectLanguages();
 
@@ -136,12 +136,12 @@ class Language
             $browserLanguages = array();
 
             foreach ($acceptedLanguages as $language) {
-                $qPos = strpos($language, 'q=');
+                $qPos = mb_strpos($language, 'q=');
                 $weight = 1;
 
                 if ($qPos !== false) {
-                    $endPos = strpos($language, ';', $qPos);
-                    $weight = ($endPos === false) ? (float) substr($language, $qPos + 2) : (float) substr(
+                    $endPos = mb_strpos($language, ';', $qPos);
+                    $weight = ($endPos === false) ? (float) mb_substr($language, $qPos + 2) : (float) mb_substr(
                         $language,
                         $qPos + 2,
                         $endPos
@@ -157,7 +157,7 @@ class Language
             // loop until result
             foreach (array_keys($browserLanguages) as $language) {
                 // redefine language
-                $language = substr($language, 0, 2); // first two characters
+                $language = mb_substr($language, 0, 2); // first two characters
 
                 // find possible language
                 if ($forRedirect) {

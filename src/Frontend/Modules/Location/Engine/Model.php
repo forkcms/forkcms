@@ -37,7 +37,7 @@ class Model
         $url .= '&z=' . $settings['zoom_level'];
 
         // set the map type
-        switch (strtolower($settings['map_type'])) {
+        switch (mb_strtolower($settings['map_type'])) {
             case 'roadmap':
                 $url .= '&t=m';
                 break;

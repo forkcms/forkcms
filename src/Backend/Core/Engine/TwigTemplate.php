@@ -75,6 +75,48 @@ class TwigTemplate extends BaseTwigTemplate
             $twig->addExtension(new \Twig_Extension_Debug());
         }
 
+        // string
+        $this->mapModifier('formatfloat', array('Backend\Core\Engine\TemplateModifiers', 'formatFloat'));
+        $this->mapModifier('truncate', array('Backend\Core\Engine\TemplateModifiers', 'truncate'));
+        $this->mapModifier('camelcase', array('\SpoonFilter', 'toCamelCase'));
+        $this->mapModifier('stripnewlines', array('Backend\Core\Engine\TemplateModifiers', 'stripNewlines'));
+
+        // debug stuff
+        $this->mapModifier('dump', array('Backend\Core\Engine\TemplateModifiers', 'dump'));
+
+        // dates
+        $this->mapModifier('formatdate', array('Backend\Core\Engine\TemplateModifiers', 'formatDate'));
+        $this->mapModifier('formattime', array('Backend\Core\Engine\TemplateModifiers', 'formatTime'));
+        $this->mapModifier('formatdatetime', array('Backend\Core\Engine\TemplateModifiers', 'formatDateTime'));
+
+        // numbers
+        $this->mapModifier('formatnumber', array('Backend\Core\Engine\TemplateModifiers', 'formatNumber'));
+
+        // label (locale)
+        $this->mapModifier('tolabel', array('Backend\Core\Engine\TemplateModifiers', 'toLabel'));
+
+        // array
+        $this->mapModifier('count', array('Backend\Core\Engine\TemplateModifiers', 'count'));
+    }
+
+    /**
+     * Parse the settings for the authenticated user
+     */
+    private function parseAuthenticatedUser()
+    {
+        // check if the current user is authenticated
+        if (Authentication::getUser()->isAuthenticated()) {
+            // show stuff that only should be visible if authenticated
+            $this->assign('isAuthenticated', true);
+
+            // get authenticated user-settings
+            $settings = (array) Authentication::getUser()->getSettings();
+
+            foreach ($settings as $key => $setting) {
+                // redefine setting
+                $setting = ($setting === null) ? '' : $setting;
+>>>>>>> master:src/Backend/Core/Engine/Template.php
+
         if (count($this->forms) > 0) {
             foreach ($this->forms as $form) {
                 $twig->addGlobal('form_'.$form->getName(), $form);

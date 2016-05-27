@@ -261,7 +261,7 @@ class Model
         // no custom avatar defined, get gravatar if allowed
         if (empty($avatar) && BackendModel::get('fork.settings')->get('Profiles', 'allow_gravatar', true)) {
             // define hash
-            $hash = md5(strtolower(trim('d' . $email)));
+            $hash = md5(mb_strtolower(trim('d' . $email)));
 
             // define avatar url
             $avatar = 'http://www.gravatar.com/avatar/' . $hash;
@@ -449,7 +449,7 @@ class Model
         // get random characters
         for ($i = 0; $i < $length; $i++) {
             // random index
-            $index = mt_rand(0, strlen($characters));
+            $index = mt_rand(0, mb_strlen($characters));
 
             // add character to salt
             $string .= mb_substr($characters, $index, 1, $charset);

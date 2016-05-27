@@ -52,7 +52,7 @@ class Cronjob extends Object
      */
     public function getId()
     {
-        return strtolower($this->getModule() . '_' . $this->getAction());
+        return mb_strtolower($this->getModule() . '_' . $this->getAction());
     }
 
     /**

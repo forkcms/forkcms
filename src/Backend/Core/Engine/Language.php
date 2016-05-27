@@ -90,7 +90,7 @@ class Language
         foreach ($languages as $abbreviation) {
             $results[] = array(
                 'value' => $abbreviation,
-                'label' => self::lbl(strtoupper($abbreviation))
+                'label' => self::lbl(mb_strtoupper($abbreviation))
             );
         }
 

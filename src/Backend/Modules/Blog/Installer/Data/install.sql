@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `blog_categories` (
  `language` varchar(5) NOT NULL,
  `title` varchar(255) NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `blog_comments` (
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `blog_comments` (
  `data` text COMMENT 'Serialized array with extra data',
  PRIMARY KEY (`id`),
  KEY `idx_post_id_status` (`post_id`,`status`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `blog_posts` (
@@ -44,4 +44,4 @@ CREATE TABLE IF NOT EXISTS `blog_posts` (
  `num_comments` int(11) NOT NULL DEFAULT 0,
  PRIMARY KEY (`revision_id`),
  KEY `idx_status_language_hidden` (`status`,`language`,`hidden`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;

@@ -50,7 +50,7 @@ class TemplateModifiers extends BaseTwigModifiers
         $format = FrontendModel::get('fork.settings')->get('Core', 'number_format');
 
         // get amount of decimals
-        $decimals = (strpos($string, '.') ? strlen(substr($string, strpos($string, '.') + 1)) : 0);
+        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
 
         // get separators
         $separators = explode('_', $format);
@@ -441,5 +441,17 @@ class TemplateModifiers extends BaseTwigModifiers
 
         // return
         return $string;
+    }
+
+    /**
+     * Returns the count of the count of the array.
+     *
+     * @param array $data
+     *
+     * @return int
+     */
+    public static function count(array $data)
+    {
+        return count($data);
     }
 }

@@ -169,8 +169,8 @@ class CacheBuilder
             'page_id' => (int) $page['id'],
             'url' => $page['url'],
             'full_url' => $languageURL . $keys[$page['id']],
-            'title' => preg_replace('/\'/', '\\\\\'', $page['title']),
-            'navigation_title' => preg_replace('/\'/', '\\\\\'', $page['navigation_title']),
+            'title' => $page['title'],
+            'navigation_title' => $page['navigation_title'],
             'has_extra' => (bool) ($page['has_extra'] == 'Y'),
             'no_follow' => (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow'),
             'hidden' => (bool) ($page['hidden'] == 'Y'),
@@ -197,7 +197,7 @@ class CacheBuilder
             $treeType = 'home';
         } elseif ($page['id'] == 404) {
             $treeType = 'error';
-        } elseif ($page['id'] < 404 && substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
+        } elseif ($page['id'] < 404 && mb_substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
             // get extras
             $extraIDs = explode(',', $page['extra_ids']);
 

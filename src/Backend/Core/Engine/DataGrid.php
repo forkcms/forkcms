@@ -271,8 +271,10 @@ class DataGrid extends \SpoonDataGrid
         // disable paging
         $this->setPaging(false);
 
-        // hide the sequence column
-        $this->setColumnHidden('sequence');
+        // hide the sequence column if present
+        if ($this->hasColumn('sequence')) {
+            $this->setColumnHidden('sequence');
+        }
 
         // add a column for the handle, so users have something to hold while dragging
         $this->addColumn('dragAndDropHandle', null, '<span class="fa fa-reorder"></span>');
@@ -287,6 +289,17 @@ class DataGrid extends \SpoonDataGrid
 
         // our JS needs to know an id, so we can send the new order
         $this->setRowAttributes(array('data-id' => '[id]'));
+    }
+
+    /**
+     * Checks wether a column is present in the datagrid
+     *
+     * @param string $column
+     * @return bool
+     */
+    public function hasColumn($column)
+    {
+        return in_array($column, $this->columns);
     }
 
     /**
@@ -381,8 +394,8 @@ class DataGrid extends \SpoonDataGrid
                 $value = $this->columns[$column]->getValue();
 
                 // add class for confirmation
-                if (substr_count($value, '<a') > 0) {
-                    if (substr_count($value, 'class="') > 0) {
+                if (mb_substr_count($value, '<a') > 0) {
+                    if (mb_substr_count($value, 'class="') > 0) {
                         $value = str_replace(
                             'class="',
                             'data-message-id="' . $id . '" class="jsConfirmationTrigger ',

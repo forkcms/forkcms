@@ -102,10 +102,17 @@ class Page extends FrontendBaseObject
         // set tracking cookie
         Model::getVisitorId();
 
+        // create header instance
+        $this->header = new Header($this->getKernel());
+
         // get page content from pageId of the requested URL
         $this->record = $this->getPageContent(
             Navigation::getPageId(implode('/', $this->URL->getPages()))
         );
+
+        if (empty($this->record)) {
+            $this->record = Model::getPage(404);
+        }
 
         // we need to set the correct id
         $this->pageId = (int) $this->record['id'];
@@ -121,9 +128,6 @@ class Page extends FrontendBaseObject
 
         // create breadcrumb instance
         $this->breadcrumb = new Breadcrumb($this->getKernel());
-
-        // create header instance
-        $this->header = new Header($this->getKernel());
 
         // new footer instance
         $this->footer = new Footer($this->getKernel());
@@ -241,6 +245,10 @@ class Page extends FrontendBaseObject
             $record = (array) Model::getPage($pageId);
         }
 
+        if (empty($record)) {
+            return array();
+        }
+
         // init var
         $redirect = true;
 
@@ -328,7 +336,7 @@ class Page extends FrontendBaseObject
                 $temp = array();
                 $temp['url'] = '/' . $language;
                 $temp['label'] = $language;
-                $temp['name'] = Language::msg(strtoupper($language));
+                $temp['name'] = Language::msg(mb_strtoupper($language));
                 $temp['current'] = (bool) ($language == FRONTEND_LANGUAGE);
 
                 // add

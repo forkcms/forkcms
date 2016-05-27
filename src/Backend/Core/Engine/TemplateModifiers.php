@@ -64,7 +64,7 @@ class TemplateModifiers extends BaseTwigModifiers
         $format = Authentication::getUser()->getSetting('number_format', 'dot_nothing');
 
         // get amount of decimals
-        $decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);
+        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
 
         // get separators
         $separators = explode('_', $format);
@@ -148,5 +148,100 @@ class TemplateModifiers extends BaseTwigModifiers
     public static function toLabel($value)
     {
         return \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
+    }
+
+    /**
+     * Truncate a string
+     *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}
+     *
+     * @param string $var         The string passed from the template.
+     * @param int    $length      The maximum length of the truncated string.
+     * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
+     * @param bool   $closestWord Truncate on exact length or on closest word?
+     * @return string
+     */
+    public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
+    {
+        // init vars
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
+
+        // remove special chars, all of them, also the ones that shouldn't be there.
+        $var = \SpoonFilter::htmlentitiesDecode($var, null, ENT_QUOTES);
+
+        // remove HTML
+        $var = strip_tags($var);
+
+        // less characters
+        if (mb_strlen($var) <= $length) {
+            return \SpoonFilter::htmlspecialchars($var);
+        } else {
+            // more characters
+            // hellip is seen as 1 char, so remove it from length
+            if ($useHellip) {
+                $length = $length - 1;
+            }
+
+            // truncate
+            if ($closestWord) {
+                $var = mb_substr($var, 0, mb_strrpos(mb_substr($var, 0, $length + 1), ' '), $charset);
+            } else {
+                $var = mb_substr($var, 0, $length, $charset);
+            }
+
+            // add hellip
+            if ($useHellip) {
+                $var .= '…';
+            }
+
+            // return
+            return \SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
+        }
+    }
+
+    /**
+     * Shows a v or x to indicate the boolean state (Y|N, j|n, true|false)
+     *
+     * @param string|bool $status
+     * @param bool        $reverse show the opposite of the status
+     * @return string
+     */
+    public static function showBool($status, $reverse = false)
+    {
+        $showTrue = '<strong style="color:green">&#10003;</strong>';
+        $showFalse = '<strong style="color:red">&#10008;</strong>';
+
+        if ($reverse) {
+            if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
+                return $showFalse;
+            }
+
+            if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
+                return $showTrue;
+            }
+
+            return $status;
+        }
+
+        if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
+            return $showTrue;
+        }
+
+        if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
+            return $showFalse;
+        }
+
+        return $status;
+    }
+
+    /**
+     * Returns the count of the count of the array.
+     *
+     * @param array $data
+     *
+     * @return int
+     */
+    public static function count(array $data)
+    {
+        return count($data);
     }
 }

@@ -475,8 +475,8 @@ class Model implements FrontendTagsInterface
         // loop the numbers
         foreach ($numbers as $key => $count) {
             // init vars
-            $year = substr($key, 0, 4);
-            $month = substr($key, 4, 2);
+            $year = mb_substr($key, 0, 4);
+            $month = mb_substr($key, 4, 2);
 
             // reset
             if ($year < $firstYear) {

@@ -118,12 +118,13 @@ class AskOwnQuestion extends FrontendBaseWidget
                 }
 
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
+                $to = $this->get('fork.settings')->get('Core', 'mailer_to');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message = \Common\Mailer\Message::newInstance(
                         sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name'])
                     )
                     ->setFrom(array($from['email'] => $from['name']))
-                    ->setTo(array($variables['email'] => $variables['name']))
+                    ->setTo(array($to['email'] => $to['name']))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
                         FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/OwnQuestion.html.twig',

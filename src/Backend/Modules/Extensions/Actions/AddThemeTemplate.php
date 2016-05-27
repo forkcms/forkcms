@@ -285,7 +285,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                             // not alphanumeric -> error
                             if (!in_array($cell, $this->names)) {
                                 $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
-                            } elseif (substr_count($html, '"#position-' . $cell . '"') != 1) {
+                            } elseif (mb_substr_count($html, '"#position-' . $cell . '"') != 1) {
                                 // can't build proper html -> error
                                 $errors[] = BL::err('InvalidTemplateSyntax');
                             }

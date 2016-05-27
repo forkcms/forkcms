@@ -282,6 +282,7 @@ class Detail extends FrontendBaseBlock
                                 true
                             )
                         ;
+                        $this->get('mailer')->send($message);
                     }
                 }
 

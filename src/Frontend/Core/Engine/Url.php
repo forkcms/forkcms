@@ -308,7 +308,7 @@ class Url extends \KernelLoader
 
         // remove language from query string
         if ($hasMultiLanguages) {
-            $queryString = trim(substr($queryString, strlen($language)), '/');
+            $queryString = trim(mb_substr($queryString, mb_strlen($language)), '/');
         }
 
         // if it's the homepage AND parameters were given (not allowed!)
@@ -338,7 +338,7 @@ class Url extends \KernelLoader
         }
 
         // set parameters
-        $parameters = trim(substr($startURL, strlen($URL)), '/');
+        $parameters = trim(mb_substr($startURL, mb_strlen($URL)), '/');
 
         // has at least one parameter
         if ($parameters != '') {
