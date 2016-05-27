@@ -14,7 +14,7 @@
  * @author <thijs@wijs.be>
  */
 
-class Spoon2Twig
+class spoon2twig
 {
     private $interationNr = 0;
     private $previousTimeStamp = 0;
@@ -25,7 +25,7 @@ class Spoon2Twig
     private $errors;
     private $type;
 
-    function __construct()
+    public function __construct()
     {
         $this->startTime = microtime(true);
         $this->webroot = __DIR__.'/../';
@@ -48,14 +48,21 @@ class Spoon2Twig
         $force = (isset($argv[2]) && $argv[2] === '-f');
         $this->type['module'] = (isset($argv[2]) && $argv[2] === '-m');
         $this->type['theme'] = (isset($argv[2]) && $argv[2] === '-t');
+        $this->type['backend'] = (isset($argv[2]) && $argv[2] === '-b');
         $input = (string) $argv[1];
         $source = $this->getCorrectSourceVersion();
 
-        $path['templates'] = array('/Layout/Templates', '/Layout/Widgets', '/Core/Layout/Templates');
+        $path['templates'] = array('/Layout/Templates', '/Layout/Widgets');
 
         if ($input === '-all') {
             $path['base'] = array('Frontend/Themes', 'Backend/Modules', 'Frontend/Modules', 'Frontend');
             $this->convertAllFiles($force, $path);
+            return;
+        }
+
+        if ($input === '-backend') {
+            $path['base'] = array('Backend/Modules');
+            $this->convertAllFiles($force, $path, $input);
             return;
         }
 
@@ -86,7 +93,7 @@ class Spoon2Twig
             return;
         }
 
-        if (!file_exists(str_replace('.tpl', $this->extension, $input))) {
+        if (!file_exists(str_replace('.html.twig', $this->extension, $input))) {
             $this->write($input, $this->ruleParser($this->getFile($input)));
             return;
         }
@@ -110,10 +117,8 @@ class Spoon2Twig
      */
     public function displayErrors()
     {
-        if ($this->errors)
-        {
-            foreach ($this->errors as $error)
-            {
+        if ($this->errors) {
+            foreach ($this->errors as $error) {
                 echo $error .  PHP_EOL;
             }
         }
@@ -163,17 +168,28 @@ class Spoon2Twig
         $possiblePath = $source . $BPath;
 
         if (is_dir($this->webroot . $possiblePath)) {
-
             // single module or theme?
             if ($this->type['theme'] || $this->type['module']) {
                 $tpls[] = $input;
-            }
-            else {
+            } else {
                 $tpls = array_diff(scandir($this->webroot . $possiblePath), $excludes);
             }
 
-            foreach ($tpls as $tpl) {
+            // core tpl
+            $coreTplPath = $this->webroot .$possiblePath .'/../Core/Layout/Templates';
+            if (is_dir($coreTplPath)) {
+                $coreTpls = array_diff(scandir($coreTplPath), $excludes);
+                if (!empty($coreTpls)) {
+                    // append full path
+                    foreach ($coreTpls as $coreTpl) {
+                        if (strpos($coreTpl, '.html.twig') !== false) {
+                            $templatePaths[] = $possiblePath .'/../Core/Layout/Templates/' . $coreTpl;
+                        }
+                    }
+                }
+            }
 
+            foreach ($tpls as $tpl) {
                 // theme exception
                 if ($BPath === 'Frontend/Themes') {
                     $themeModule = $possiblePath . '/' . $tpl . '/Modules';
@@ -194,11 +210,13 @@ class Spoon2Twig
                         if (!empty($tplsz)) {
                             // append full path
                             foreach ($tplsz as $tpl_Z) {
-                                if (strpos($tpl_Z, '.tpl') !== false) {
+                                if (strpos($tpl_Z, '.html.twig') !== false) {
                                     $templatePaths[] = $possibletpl . '/' . $tpl_Z;
                                 }
                             }
                         }
+                    } else {
+                        var_dump($this->webroot . $possibletpl);
                     }
                 }
             }
@@ -219,7 +237,7 @@ class Spoon2Twig
             if ($force === true) {
                 $this->write($templatePath, $this->ruleParser($this->getFile($templatePath)));
             } else {
-                if (!file_exists(str_replace('.tpl', $this->extension, $templatePath))) {
+                if (!file_exists(str_replace('.html.twig', $this->extension, $templatePath))) {
                     $this->write($templatePath, $this->ruleParser($this->getFile($templatePath)));
                 } else {
                     $excluded[] = $templatePath;
@@ -241,8 +259,7 @@ class Spoon2Twig
     {
         // checking what version
         $version = $this->getFile('VERSION.md');
-        switch (true)
-        {
+        switch (true) {
             case (strpos($version, '3.9.') !== false):
                 $source = 'src/';
                 break;
@@ -268,7 +285,7 @@ class Spoon2Twig
     {
         if (empty($this->errors)) {
             // OUR OUTPUT CODE
-            $input = str_replace('.tpl', $this->extension, $input);
+            $input = str_replace('.html.twig', $this->extension, $input);
             $file = $this->webroot . $input;
             $inputPath = pathinfo($input);
 
@@ -332,13 +349,12 @@ class Spoon2Twig
             foreach ($match[1] as $value) {
                 if ($extra === 'snakeCase') {
                     $value = $this->fromCamelToSnake($value);
-                }
-                elseif($extra === 'comma') {
+                } elseif ($extra === 'comma') {
                     $value = $this->comma($value);
                 }
                 $values[] = sprintf($format, $value);
             }
-            return str_replace($match[0], $values , $filedata);
+            return str_replace($match[0], $values, $filedata);
         }
         $this->error('no match found on the ' . $regex . ' line');
     }
@@ -404,8 +420,8 @@ class Spoon2Twig
                 $new_val = $this->dePluralize($value);
 
                 $prev_match = $match[0];
-                $match[0] = str_replace('{iteration:'.$value.'}','{% for '. $new_val . ' in ' . $value . '_ %}', $match[0]);
-                $match[0] = str_replace('{/iteration:'.$value.'}','{% endfor %}', $match[0]);
+                $match[0] = str_replace('{iteration:'.$value.'}', '{% for '. $new_val . ' in ' . $value . '_ %}', $match[0]);
+                $match[0] = str_replace('{/iteration:'.$value.'}', '{% endfor %}', $match[0]);
                 $match[0] = str_replace($value, $new_val, $match[0]);
                 $match[0] = str_replace($new_val.'_', $value, $match[0]);
                 $filedata = str_replace($prev_match, $match[0], $filedata);
@@ -446,7 +462,7 @@ class Spoon2Twig
         $filedata = str_replace('*}', '#}', $filedata); // comments
         $filedata = str_replace('{*', '{#', $filedata); // comments
         $filedata = str_replace('|ucfirst', '|capitalize', $filedata);
-        $filedata = str_replace('.tpl', $this->extension, $filedata);
+        $filedata = str_replace('.html.twig', $this->extension, $filedata);
         $filedata = str_replace("\t", "  ", $filedata);
 
         // raw converter
@@ -493,6 +509,6 @@ class Spoon2Twig
     }
 }
 
-$converter = New Spoon2Twig();
+$converter = new spoon2twig();
 $converter->start($argv);
 $converter->displayErrors();

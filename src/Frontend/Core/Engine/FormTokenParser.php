@@ -19,7 +19,7 @@ class FormTokenParser extends \Twig_TokenParser
         $form = $stream->expect(\Twig_Token::NAME_TYPE)->getValue();
         $stream->expect(\Twig_Token::BLOCK_END_TYPE);
 
-        if(FormState::$current !== null) {
+        if (FormState::$current !== null) {
             throw new \Twig_Error_Syntax(
                 sprintf(
                     'form [%s] not closed while opening form [%s]',

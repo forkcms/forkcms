@@ -30,7 +30,9 @@ class FormFieldNode extends \Twig_Node
      */
     public function compile(\Twig_Compiler $compiler)
     {
-        $parseField = "\$context['form_{$this->form}']->getField('{$this->field}')->parse()";
+        $frm = "\$context['form_{$this->form}']";
+        $parseField = $frm . "->getField('{$this->field}')->parse()";
+
         $compiler
             ->addDebugInfo($this)
             ->write("echo $parseField;\n")

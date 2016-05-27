@@ -17,7 +17,7 @@
 								{{ 'msg.WrittenBy'|trans|capitalize|sprintf(item.user_id|usersetting('nickname')) }}
 
 								{# Written on #}
-								{{ 'lbl.On'|trans }} {{ item.publish_on|spoon_date(dateFormatLong, LANGUAGE) }}
+								{{ 'lbl.On'|trans }} {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
 
 								{# Category#}
 								{{ 'lbl.In'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Category'|trans }} <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}

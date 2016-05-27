@@ -202,10 +202,10 @@ class Model
         $fs = new Filesystem();
 
         // load all templates in the 'templates' folder for this language
-        if (!$fs->exists($path . '/' . $name . '/template.tpl')) {
+        if (!$fs->exists($path . '/' . $name . '/template.html.twig')) {
             throw new \SpoonException(
                 'The template folder "' . $name . '" exists, but no
-                template.tpl file was found. Please create one.'
+                template.html.twig file was found. Please create one.'
             );
         }
         if (!$fs->exists($path . '/' . $name . '/Css/screen.css')) {
@@ -219,7 +219,7 @@ class Model
         $record = array();
         $record['name'] = $name;
         $record['language'] = $language;
-        $record['path_content'] = $path . '/' . $name . '/template.tpl';
+        $record['path_content'] = $path . '/' . $name . '/template.html.twig';
         $record['path_css'] = $path . '/' . $name . '/Css/screen.css';
         $record['url_css'] = SITE_URL . '/src/Backend/Modules/Mailmotor/Templates/' .
                              $language . '/' . $name . '/Css/screen.css';

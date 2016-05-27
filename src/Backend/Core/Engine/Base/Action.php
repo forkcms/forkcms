@@ -128,7 +128,7 @@ class Action extends Object
          * based on the name of the current action
          */
         if ($template === null) {
-            $template = $this->getBackendModulePath() . '/Layout/Templates/' . $this->URL->getAction() . '.tpl';
+            $template = '/'. $this->getModule() . '/Layout/Templates/' . $this->URL->getAction() . '.html.twig';
         }
 
         $this->content = $this->tpl->getContent($template);
@@ -149,17 +149,17 @@ class Action extends Object
         $this->header->addJS('jquery/jquery.backend.js', 'Core');
 
         // add items that always need to be loaded
-        $this->header->addJS('utils.js', 'Core');
-        $this->header->addJS('backend.js', 'Core');
+        $this->header->addJS('utils.js', 'Core', true, false, true);
+        $this->header->addJS('backend.js', 'Core', true, false, true);
 
         // add module js
         if (is_file($this->getBackendModulePath() . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($this->getModule() . '.js');
+            $this->header->addJS($this->getModule() . '.js', null, true, false, true);
         }
 
         // add action js
         if (is_file($this->getBackendModulePath() . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($this->getAction() . '.js');
+            $this->header->addJS($this->getAction() . '.js', null, true, false, true);
         }
 
         // add core css files

@@ -61,6 +61,7 @@ class Navigation extends Base\Object
 
         // load it
         $this->navigation = (array) $navigation;
+        $this->navigation = $this->addActiveStateToNavigation($this->navigation);
 
         // cleanup navigation (not needed for god user)
         if (!Authentication::getUser()->isGod()) {
@@ -107,88 +108,26 @@ class Navigation extends Base\Object
         );
     }
 
-    /**
-     * Build the HTML for a navigation item
-     *
-     * @param array  $value        The current value.
-     * @param string $key          The current key.
-     * @param array  $selectedKeys The keys that are selected.
-     * @param int    $startDepth   The depth to start from.
-     * @param int    $endDepth     The depth to end.
-     * @param int    $currentDepth The depth the method is currently on.
-     * @return string
-     */
-    public function buildHTML(
-        array $value,
-        $key,
-        array $selectedKeys = null,
-        $startDepth = 0,
-        $endDepth = null,
-        $currentDepth = 0
-    ) {
-        // return
-        if ($endDepth !== null && $currentDepth >= $endDepth) {
-            return '';
-        }
+    public function parse(TwigTemplate $template)
+    {
+        $template->assign('navigation', $this->navigation);
+    }
 
-        // needed elements are set?
-        if (isset($value['url']) && isset($value['label'])) {
-            // init some vars
-            $selected = (isset($selectedKeys[$currentDepth]) && $selectedKeys[$currentDepth] == $key);
-            $label = \SpoonFilter::ucfirst(Language::lbl($value['label']));
-            $url = $value['url'];
+    private function addActiveStateToNavigation($navigation, $depth = 0)
+    {
+        $selectedKeys = $this->getSelectedKeys();
 
-            // start HTML
-            $HTML = '';
+        foreach ($navigation as $key => &$item) {
+            if ($key == $selectedKeys[$depth]) {
+                $item['active'] = true;
 
-            // que? let's call this piece magic
-            if ($currentDepth >= $startDepth - 1) {
-                // start li
-                if ($selected) {
-                    $HTML .= '<li class="active">' . "\n";
-                } else {
-                    $HTML .= '<li>' . "\n";
+                if (!empty($item['children'])) {
+                    $item['children'] = $this->addActiveStateToNavigation($item['children'], $depth + 1);
                 }
-                $HTML .= '	<a href="/' . NAMED_APPLICATION . '/' .
-                         Language::getWorkingLanguage() . '/' . $url . '">' . $label . '</a>' . "\n";
-            }
-
-            // children?
-            if ($selected && isset($value['children'])) {
-                // end depth not passed or isn't reached
-                if ($endDepth === null || $currentDepth < $endDepth) {
-                    // start ul if needed
-                    if ($currentDepth != 0) {
-                        $HTML .= '<ul class="nav">' . "\n";
-                    }
-
-                    // loop children
-                    foreach ($value['children'] as $subKey => $row) {
-                        $HTML .= '	' .
-                                 $this->buildHTML(
-                                     $row,
-                                     $subKey,
-                                     $selectedKeys,
-                                     $startDepth,
-                                     $endDepth,
-                                     $currentDepth + 1
-                                 );
-                    }
-
-                    // end ul if needed
-                    if ($currentDepth != 0) {
-                        $HTML .= '</ul>' . "\n";
-                    }
-                }
-            }
-
-            // end
-            if ($currentDepth >= $startDepth - 1) {
-                $HTML .= '</li>' . "\n";
             }
         }
 
-        return $HTML;
+        return $navigation;
     }
 
     /**
@@ -459,34 +398,6 @@ class Navigation extends Base\Object
                 }
             }
         }
-    }
-
-    /**
-     * Get the HTML for the navigation
-     *
-     * @param int $startDepth The start-depth.
-     * @param int $endDepth   The end-depth.
-     * @param string $class Class attribute of ul list
-     * @return string
-     */
-    public function getNavigation($startDepth = 0, $endDepth = null, $class = null)
-    {
-        // get selected
-        $selectedKeys = $this->getSelectedKeys();
-
-        // init html
-        $HTML = '<ul ' . ($class?'class="' . $class . '"':'') . '>' . "\n";
-
-        // loop the navigation elements
-        foreach ($this->navigation as $key => $value) {
-            // append the generated HTML
-            $HTML .= $this->buildHTML($value, $key, $selectedKeys, $startDepth, $endDepth);
-        }
-
-        // end ul
-        $HTML .= '</ul>';
-
-        return $HTML;
     }
 
     /**

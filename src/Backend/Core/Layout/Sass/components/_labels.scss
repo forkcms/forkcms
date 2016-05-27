@@ -1,0 +1,15 @@
+.strength-none .label {
+  background-color: $gray-light;
+}
+
+.strength-weak .label {
+  background-color: $brand-danger;
+}
+
+.strength-average .label {
+  background-color: $brand-warning;
+}
+
+.strength-strong .label {
+  background-color: $brand-success;
+}

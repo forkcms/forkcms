@@ -182,10 +182,16 @@ class Edit extends BackendBaseActionEdit
 
         // sender
         $this->frm->addText('from_name', $this->record['from_name']);
-        $this->frm->addText('from_email', $this->record['from_email']);
+        $this->frm
+            ->addText('from_email', $this->record['from_email'])
+            ->setAttribute('type', 'email')
+        ;
 
         // reply-to address
-        $this->frm->addText('reply_to_email', $this->record['reply_to_email']);
+        $this->frm
+            ->addText('reply_to_email', $this->record['reply_to_email'])
+            ->setAttribute('type', 'email')
+        ;
 
         // groups
         $this->frm->addMultiCheckbox('groups', $groups, $this->record['groups']);

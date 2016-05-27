@@ -6,15 +6,15 @@
 }
 
 .fork-loader {
-  position: relative;
+  animation: spin 1s infinite steps(8);
   display: inline-block;
-  width: 5em;
+  font-size: 12px;
   height: 5em;
   margin: 0 .5em;
-  font-size: 12px;
-  text-indent: 999em;
   overflow: hidden;
-  animation: spin 1s infinite steps(8);
+  position: relative;
+  text-indent: 999em;
+  width: 5em;
 }
 
 .fork-loader.xs {
@@ -37,33 +37,37 @@
 .fork-loader:after,
 .fork-loader > div:before,
 .fork-loader > div:after {
+  background-color: #eee;
+  border-radius: .2em;
+  box-shadow: 0 3.5em #eee;
   content: '';
+  height: 1.5em;
+  left: 2.25em;
   position: absolute;
   top: 0;
-  left: 2.25em;
-  width: .5em;
-  height: 1.5em;
-  border-radius: .2em;
-  background: #eee;
-  box-shadow: 0 3.5em #eee;
   transform-origin: 50% 2.5em;
+  width: .5em;
 }
 
 .fork-loader:before {
-  background: #555;
+  background-color: #555;
 }
 
 .fork-loader:after {
+  background-color: #777;
   transform: rotate(-45deg);
-  background: #777;
 }
 
 .fork-loader > div:before {
+  background-color: #999;
   transform: rotate(-90deg);
-  background: #999;
 }
 
 .fork-loader > div:after {
+  background-color: #bbb;
   transform: rotate(-135deg);
-  background: #bbb;
+}
+
+#ajaxSpinner {
+  z-index: 5;
 }

@@ -855,7 +855,7 @@ class Model
                 IF(COUNT(p.id), "Y", "N") AS has_children
              FROM pages AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
+             LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id
              LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
              LEFT OUTER JOIN pages AS p ON p.parent_id = i.id AND p.status = "active" AND p.hidden = "N"
              AND p.language = i.language

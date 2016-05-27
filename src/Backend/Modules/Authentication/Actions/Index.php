@@ -61,8 +61,15 @@ class Index extends BackendBaseActionIndex
     private function load()
     {
         $this->frm = new BackendForm(null, null, 'post', true, false);
-        $this->frm->addText('backend_email');
-        $this->frm->addPassword('backend_password');
+        $this->frm
+            ->addText('backend_email')
+            ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Email')))
+            ->setAttribute('type', 'email')
+        ;
+        $this->frm
+            ->addPassword('backend_password')
+            ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Password')))
+        ;
 
         $this->frmForgotPassword = new BackendForm('forgotPassword');
         $this->frmForgotPassword->addText('backend_email_forgot');
@@ -235,7 +242,7 @@ class Index extends BackendBaseActionIndex
                     ->setTo(array($email))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        BACKEND_MODULES_PATH . '/Authentication/Layout/Templates/Mails/ResetPassword.tpl',
+                         '/Authentication/Layout/Templates/Mails/ResetPassword.html.twig',
                         $variables
                     )
                 ;

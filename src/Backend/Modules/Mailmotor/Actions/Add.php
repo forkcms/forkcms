@@ -72,10 +72,16 @@ class Add extends BackendBaseActionAdd
 
         // sender
         $this->frm->addText('from_name', $this->get('fork.settings')->get($this->getModule(), 'from_name'));
-        $this->frm->addText('from_email', $this->get('fork.settings')->get($this->getModule(), 'from_email'));
+        $this->frm
+            ->addText('from_email', $this->get('fork.settings')->get($this->getModule(), 'from_email'))
+            ->setAttribute('type', 'email')
+        ;
 
         // reply-to address
-        $this->frm->addText('reply_to_email', $this->get('fork.settings')->get($this->getModule(), 'reply_to_email'));
+        $this->frm
+            ->addText('reply_to_email', $this->get('fork.settings')->get($this->getModule(), 'reply_to_email'))
+            ->setAttribute('type', 'email')
+        ;
 
         // groups - if there is only 1 group present, we select it by default
         $this->frm->addMultiCheckbox(

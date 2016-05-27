@@ -16,7 +16,7 @@
 							<header class="hd">
 								<h4><a href="{{ article.full_url }}" title="{{ article.title }}">{{ article.title }}</a></h4>
 								<ul>
-									<li>{{ 'msg.WrittenBy'|trans|capitalize|sprintf(article.user_id|usersetting('nickname')) }} {{ 'lbl.On'|trans }} {{ article.publish_on|spoon_date(dateFormatLong, LANGUAGE) }}</li>
+									<li>{{ 'msg.WrittenBy'|trans|capitalize|sprintf(article.user_id|usersetting('nickname')) }} {{ 'lbl.On'|trans }} {{ article.publish_on|spoondate(dateFormatLong, LANGUAGE) }}</li>
 									{% if article.allow_comments %}
 										<li>
 											{% if not article.comments %}<a href="{{ article.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNoComments'|trans|capitalize }}</a>{% endif %}
@@ -39,7 +39,7 @@
 			</div>
 			<footer class="ft">
 				<p>
-					<a href="{{ var|geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|capitalize }}</a>
+					<a href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|capitalize }}</a>
 					<a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|capitalize }}</a>
 				</p>
 			</footer>

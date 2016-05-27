@@ -18,7 +18,7 @@
 						{{ 'msg.WrittenBy'|trans|capitalize|sprintf(item.user_id|usersetting('nickname')) }}
 
 						{# Written on #}
-						{{ 'lbl.On'|trans }} <time itemprop="datePublished" datetime="{{ item.publish_on|spoon_date('Y-m-d\TH:i:s') }}">{{ item.publish_on|date(dateFormatLong) }}</time>
+						{{ 'lbl.On'|trans }} <time itemprop="datePublished" datetime="{{ item.publish_on|spoondate('Y-m-d\TH:i:s') }}">{{ item.publish_on|date(dateFormatLong) }}</time>
 
 						{# Category#}
 						{{ 'lbl.In'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Category'|trans }} <a itemprop="articleSection" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}
@@ -38,7 +38,7 @@
 						<li>
 							{% if not comments %}<a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNoComments'|trans|capitalize }}</a>{% endif %}
 							{% if comments %}
-								{% if blogCommentsMultiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msgBlogNumberOfComments'|trans|sprintf(commentsCount) }}</a>{% endif %}
+								{% if blogCommentsMultiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|sprintf(commentsCount) }}</a>{% endif %}
 								{% if not blogCommentsMultiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
 							{% endif %}
 						</li>

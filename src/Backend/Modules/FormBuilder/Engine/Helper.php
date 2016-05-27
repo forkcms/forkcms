@@ -11,7 +11,7 @@ namespace Backend\Modules\FormBuilder\Engine;
 
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Template as BackendTemplate;
+use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 
 /**
  * Helper class for the form_builder module.
@@ -177,7 +177,7 @@ class Helper
                 $tpl->assign('simple', true);
             }
 
-            return $tpl->getContent(BACKEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Field.tpl');
+            return $tpl->getContent(BACKEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Field.html.twig');
         } else {
             // empty field so return empty string
             return '';

@@ -1,4 +1,5 @@
 <?php
+
 namespace Frontend\Core\Engine;
 
 use Twig_Extension;
@@ -39,5 +40,6 @@ class FormExtension
         $this->twig->addTokenParser(new FormEndTokenParser());
         $this->twig->addTokenParser(new FormFieldTokenParser());
         $this->twig->addTokenParser(new FormFieldErrorTokenParser());
+        $this->twig->addTokenParser(new SeoFormTokenParser());
     }
 }

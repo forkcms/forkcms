@@ -15,7 +15,6 @@ use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Language as FL;
-use Frontend\Core\Engine\Theme as FrontendTheme;
 
 /**
  * This class will handle all stuff related to blocks
@@ -343,6 +342,6 @@ class Extra extends FrontendBaseObject
      */
     private function setTemplatePath($path)
     {
-        $this->templatePath = FrontendTheme::getPath($path);
+        $this->templatePath = $path;
     }
 }

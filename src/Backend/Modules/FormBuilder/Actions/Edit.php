@@ -238,7 +238,8 @@ class Edit extends BackendBaseActionEdit
                 $btn = $this->frm->addButton(
                     'submit_field',
                     \SpoonFilter::htmlspecialcharsDecode($field['settings']['values']),
-                    'button'
+                    'button',
+                    'btn btn-default'
                 );
                 $btn->setAttribute('disabled', 'disabled');
 

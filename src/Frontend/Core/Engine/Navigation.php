@@ -205,7 +205,7 @@ class Navigation extends FrontendBaseObject
      * @param int    $parentId     The parentID to start of.
      * @param int    $depth        The maximum depth to parse.
      * @param array  $excludeIds   PageIDs to be excluded.
-     * @param string $tpl          The template that will be used.
+     * @param string $template     The template that will be used.
      * @param int    $depthCounter A counter that will hold the current depth.
      * @return string
      */
@@ -214,7 +214,7 @@ class Navigation extends FrontendBaseObject
         $parentId = 0,
         $depth = null,
         $excludeIds = array(),
-        $tpl = '/Core/Layout/Templates/Navigation.html.twig',
+        $template = '/Core/Layout/Templates/Navigation.html.twig',
         $depthCounter = 1
     ) {
         // get navigation
@@ -241,7 +241,7 @@ class Navigation extends FrontendBaseObject
             throw new Exception('The parent (' . $parentId . ') doesn\'t exists.');
         }
 
-        // special construction to merge home with it's immediate children
+        // special construction to merge home with its immediate children
         $mergedHome = false;
         while (true) {
             // loop elements
@@ -319,7 +319,7 @@ class Navigation extends FrontendBaseObject
                         $page['page_id'],
                         $depth,
                         $excludeIds,
-                        $tpl,
+                        $template,
                         $depthCounter + 1
                     );
                 } else {
@@ -352,14 +352,11 @@ class Navigation extends FrontendBaseObject
             break;
         }
 
-        // create template
-        $navigationTpl = new TwigTemplate(false);
-
-        // assign navigation to template
-        $navigationTpl->assign('navigation', $navigation[$type][$parentId]);
-
         // return parsed content
-        return $navigationTpl->render(FRONTEND_PATH . (string) $tpl, true, true);
+        return Model::get('templating')->render(
+            $template,
+            array('navigation' => $navigation[$type][$parentId])
+        );
     }
 
     /**

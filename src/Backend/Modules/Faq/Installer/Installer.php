@@ -21,7 +21,7 @@ use Backend\Core\Installer\ModuleInstaller;
 class Installer extends ModuleInstaller
 {
     /**
-     * @var	int
+     * @var int
      */
     private $defaultCategoryId;
 
@@ -98,14 +98,7 @@ class Installer extends ModuleInstaller
      */
     private function insertWidget()
     {
-        $feedback = array(
-            'column' => 'right',
-            'position' => 1,
-            'hidden' => false,
-            'present' => true
-        );
-
-        $this->insertDashboardWidget('Faq', 'Feedback', $feedback);
+        $this->insertDashboardWidget('Faq', 'Feedback');
     }
 
     /**

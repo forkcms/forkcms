@@ -219,7 +219,10 @@ class Addresses extends BackendBaseActionIndex
         $this->frm = new BackendForm('filter', null, 'get');
 
         // add fields
-        $this->frm->addText('email', $this->filter['email']);
+        $this->frm
+            ->addText('email', $this->filter['email'])
+            ->setAttribute('type', 'email')
+        ;
         $this->frm->addHidden('group_id', $this->group['id']);
 
         // manually parse fields

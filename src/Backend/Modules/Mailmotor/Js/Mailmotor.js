@@ -12,6 +12,7 @@ jsBackend.mailmotor =
 		jsBackend.mailmotor.changeGroup.init();
 		jsBackend.mailmotor.linkAccount.init();
 		jsBackend.mailmotor.resizing.init();
+		jsBackend.mailmotor.step2.init();
 		jsBackend.mailmotor.step3.init();
 		jsBackend.mailmotor.step4.init();
 
@@ -301,6 +302,36 @@ jsBackend.mailmotor.resizing =
 				$('#iframeOverlay').remove();
 			}
 		});
+	}
+};
+
+jsBackend.mailmotor.step2 =
+{
+	init: function()
+	{
+		// store the list items
+		var listItems = $('#templateSelection .js-template');
+
+		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
+		listItems.on('click', function(e)
+		{
+			// store the object
+			var radiobutton = $(this).find('input:radio:first');
+
+			// set checked
+			radiobutton.prop('checked', true);
+
+			// if the radiobutton is checked
+			if(radiobutton.is(':checked'))
+			{
+				// remove the selected state from all other templates
+				listItems.find('.panel').removeClass('panel-primary').addClass('panel-default');
+
+				// add a selected state to the parent
+				radiobutton.closest('.panel').addClass('panel-primary');
+			}
+		});
+
 	}
 };
 

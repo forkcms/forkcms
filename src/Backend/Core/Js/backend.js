@@ -46,6 +46,8 @@ var jsBackend =
         jsBackend.tooltip.init();
         jsBackend.tableSequenceByDragAndDrop.init();
         jsBackend.ckeditor.init();
+        jsBackend.resizeFunctions.init();
+        jsBackend.navigation.init();
 
         // IE fixes
         jsBackend.selectors.init();
@@ -102,6 +104,124 @@ var jsBackend =
         $(document).ajaxStop(function () {
             $ajaxSpinner.hide();
         });
+    }
+};
+
+/**
+ * Navigation controls
+ *
+ * @author    Katrien Vanhaute <katrien@sumocoders.be>
+ * @author    Daan De Deckere <daan@sumocoders.be>
+ */
+
+jsBackend.navigation =
+{
+    init: function() {
+        jsBackend.navigation.mobile();
+        jsBackend.navigation.toggleCollapse();
+        jsBackend.navigation.tooltip();
+    },
+
+    mobile: function() {
+        var navbarWidth = this.calculateNavbarWidth();
+        var $navbarNav = $('.navbar-default .navbar-nav');
+
+        $('.navbar-default .navbar-nav').css('width', navbarWidth);
+
+        $('.js-nav-prev').on('click', function(e) {
+            e.preventDefault();
+            $navbarNav.animate({'left':'+=85px'});
+            this.setControls(85);
+
+        }.bind(this));
+
+        $('.js-nav-next').on('click', function(e) {
+            e.preventDefault();
+            $navbarNav.animate({'left':'-=85px'});
+            this.setControls(-85);
+
+        }.bind(this));
+    },
+
+    resize: function() {
+        var $navbarNav = $('.navbar-default .navbar-nav');
+        var navbarWidth = this.calculateNavbarWidth();
+        var windowWidth = this.calculateWindowWidth();
+
+        if (navbarWidth < windowWidth) {
+            $navbarNav.css('left', '0');
+            $('.js-nav-next').hide();
+        }
+        this.setControls(0);
+    },
+
+    toggleCollapse: function() {
+        var $wrapper = $('.main-wrapper');
+        var $navCollapse = $('.js-toggle-nav');
+        var collapsed = ($wrapper.hasClass('navigation-collapsed')) ? true : false;
+
+        $navCollapse.on('click', function(e) {
+            e.preventDefault();
+            $wrapper.toggleClass('navigation-collapsed');
+            collapsed = !collapsed;
+            utils.cookies.setCookie('navigation-collapse', collapsed);
+            setTimeout(function(){
+                jsBackend.resizeFunctions.init();
+            }, 250);
+
+        });
+    },
+
+    tooltip: function(){
+        var $tooltip = $('[data-toggle="tooltip-nav"]');
+        var $wrapper = $('.main-wrapper');
+
+        if ($tooltip.length > 0) {
+            $tooltip.tooltip({
+                trigger: 'manual'
+            });
+
+            $tooltip.on('mouseover', function(e){
+                if ($wrapper.hasClass('navigation-collapsed') && $(window).width() > 787){
+                    $target = $(e.target);
+                    $target.tooltip('show');
+                }
+            });
+            $tooltip.on('mouseout', function(e) {
+                $(e.target).tooltip('hide');
+            });
+        }
+    },
+
+    setControls: function(offset) {
+        var $navbarNav = $('.navbar-default .navbar-nav');
+        var rightOffset = this.calculateOffset(offset);
+
+        if((parseInt($navbarNav.css('left')) + offset) >= 0) {
+            $('.js-nav-prev').hide();
+        } else {
+            $('.js-nav-prev').show();
+        }
+
+        if(rightOffset < 0) {
+            $('.js-nav-next').show();
+        } else {
+            $('.js-nav-next').hide();
+        }
+    },
+
+    calculateWindowWidth: function() {
+        return $(window).width();
+    },
+
+    calculateNavbarWidth: function() {
+        var $navItem = $('.navbar-default .nav-item');
+        return $navItem.width() * $navItem.length;
+    },
+
+    calculateOffset: function(offset) {
+        var $navbarNav = $('.navbar-default .navbar-nav');
+        return this.calculateWindowWidth() - this.calculateNavbarWidth() - parseInt($navbarNav.css('left')) - offset;
     }
 };
 
@@ -629,7 +749,7 @@ jsBackend.controls =
 
     // bind confirm message
     bindConfirm: function () {
-        $('.jsConfirmationTrigger').on('click', function (e) {
+        $('.jsConfirmationTrigger').on('click', function (e) {;
             // prevent default
             e.preventDefault();
 
@@ -1382,6 +1502,7 @@ jsBackend.forms =
 
             allTags.initialize();
             $('.js-tags-input').tagsinput({
+                tagClass: 'label label-primary',
                 typeaheadjs: {
                     name: 'Tags',
                     displayKey: 'name',
@@ -1641,6 +1762,7 @@ jsBackend.locale =
  *
  * @author    Tijs Verkoyen <tijs@sumocoders.be>
  * @author    Thomas Deceuninck <thomas@fronto.be>
+ * @author    Katrien Vanhaute <katrien@sumocoders.be>
  */
 jsBackend.messages =
 {
@@ -1662,26 +1784,52 @@ jsBackend.messages =
     },
 
     // add a new message into the que
-    add: function (type, content) {
+    add: function (type, content, optionalClass) {
         var uniqueId = 'e' + new Date().getTime().toString();
-        var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' alert-dismissible formMessage ' + type + 'Message">' +
-            '<div class="container">' +
-               content +
-            '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-            '    <span aria-hidden="true">&times;</span>' +
-            '  </button>'
+
+        // switch icon type
+        var icon;
+        switch (type)
+        {
+            case 'danger':
+                icon = 'times';
+                break;
+            case 'warning':
+                icon = 'exclamation-triangle';
+                break;
+            case 'success':
+                icon = 'check';
+                break;
+            case 'info':
+                icon = 'info';
+                break;
+        }
+
+        var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
+            '<div class="container-fluid">' +
+                '<i class="fa fa-' + icon + '"></i>' + ' ' +
+                content +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true" class="fa fa-close"></span>' +
+                '</button>' +
             '</div>' +
         '</div>';
 
         // prepend
-        $('#messaging').prepend(html);
+        if (optionalClass == undefined || optionalClass !=='alert-static') {
+            $('#messaging').prepend(html);
+        } else {
+            $('.content').prepend(html);
+        }
 
         // show
         $('#' + uniqueId).addClass('active');
 
         // timeout
-        if (type == 'notice') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
-        if (type == 'success') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
+        if (optionalClass == undefined || optionalClass !== 'alert-static') {
+            if (type == 'info') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
+            if (type == 'success') setTimeout('jsBackend.messages.hide($("#' + uniqueId + '"));', 5000);
+        }
     }
 };
 
@@ -1890,4 +2038,50 @@ jsBackend.tableSequenceByDragAndDrop =
     }
 };
 
+window.requestAnimationFrame = (function() {
+    var lastTime;
+    lastTime = 0;
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback, element) {
+            var curTime, id, timeToCall;
+            curTime = new Date().getTime();
+            timeToCall = Math.max(0, 16 - (curTime - lastTime));
+            id = window.setTimeout(function() {
+                return callback(curTime + timeToCall);
+            }, timeToCall);
+            lastTime = curTime + timeToCall;
+            return id;
+        };
+})();
+
+jsBackend.resizeFunctions = {
+
+    init: function() {
+        var calculate, tick, ticking;
+        ticking = false;
+        calculate = (function(_this) {
+            return function() {
+                jsBackend.navigation.resize();
+                if (typeof jsBackend.analytics !== 'undefined'){
+                    jsBackend.analytics.charts.init();
+                    jsBackend.analytics.chartDoubleMetricPerDay.init();
+                    jsBackend.analytics.chartPieChart.init();
+                }
+                return ticking = false;
+            };
+        })(this);
+        tick = function() {
+            if (!ticking) {
+                this.requestAnimationFrame(calculate);
+                return ticking = true;
+            }
+        };
+        tick();
+        return $(window).on('load resize', function() {
+            return tick();
+        });
+    }
+};
+
 $(jsBackend.init);
+
+

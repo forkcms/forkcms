@@ -321,7 +321,7 @@ jsBackend.pages.extras =
 			blockExtraId.parent('.contentBlock').removeClass('reset');
 
 			// while we're at it, make sure the position is also correct
-			blockPosition.val($(this).parent().parent().attr('data-position'));
+			blockPosition.val($(this).closest('*[data-position]').attr('data-position'));
 		});
 
 		// mark all as having been reset
@@ -513,7 +513,7 @@ jsBackend.pages.extras =
 		jsBackend.pages.template.original = false;
 
 		// get index of block
-		var index = $(this).parent().parent().attr('data-block-id');
+		var index = $(this).closest('*[data-block-id]').attr('data-block-id');
 
 		// get visibility checbox
 		var checkbox = $('#blockVisible' + index);
@@ -529,7 +529,7 @@ jsBackend.pages.extras =
 
 		// remove current visibility indicators
 		$(this).find('.fa').removeClass('fa-eye fa-eye-slash');
-		$(this).parent().parent().removeClass('templateDisabled');
+		$(this).closest('*[data-block-id]').removeClass('templateDisabled');
 
 		// toggle visibility indicators
 		if(visible) $(this).find('.fa').addClass('fa-eye');
@@ -543,7 +543,7 @@ jsBackend.pages.extras =
 	// display an effect on updated items
 	updatedBlock: function(element)
 	{
-		element.effect('highlight');
+		element.effect('highlight', {color: '#D9E5F3'});
 	}
 };
 
@@ -754,19 +754,6 @@ jsBackend.pages.tree =
 				beforemove: jsBackend.pages.tree.beforeMove,
 				onselect: jsBackend.pages.tree.onSelect,
 				onmove: jsBackend.pages.tree.onMove
-			},
-			types:
-			{
-				'default': { renameable: false, deletable: false, creatable: false, icon: { image: '/src/Backend/Modules/Pages/Js/jstree/themes/fork/icons.gif' } },
-				'page': { icon: { position: '0 -80px' } },
-				'folder': { icon: { position: false } },
-				'hidden': { icon: { position: false } },
-				'home': { draggable: false, icon: { position: '0 -112px' } },
-				'pages': { icon: { position: false } },
-				'error': { draggable: false, max_children: 0, icon: { position: '0 -160px' } },
-				'sitemap': { max_children: 0, icon: { position: '0 -176px' } },
-				'redirect': { icon: { position: '0 -264px' } },
-				'direct_action': { max_children: 0, icon: { position: '0 -280px' } }
 			},
 			plugins:
 			{

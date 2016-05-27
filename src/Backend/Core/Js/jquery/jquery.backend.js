@@ -159,10 +159,9 @@
 			var id = $(this).attr('id');
 
 			// append the button
-			$(this).closest('.form-group').after(
-				'	<div class="btn-group">' +
-				'		<a href="#" data-id="' + id + '" class="generatePasswordButton btn btn-default"><span>' + options.generateLabel + '</span></a>' +
-				'	</div>');
+			$(this).closest('.input-group input').after(
+				'		<a href="#" data-id="' + id + '" class="generatePasswordButton btn btn-default input-group-addon"><span>' + options.generateLabel + '</span></a>'
+			);
 
 			$('.generatePasswordButton').live('click', generatePassword);
 
@@ -315,8 +314,13 @@
 			$this.hover(
 				function()
 				{
-					$this.addClass('inlineEditHover');
-					tooltip.show();
+					if (element.hasClass('inlineEditing')) {
+						$this.removeClass('inlineEditHover');
+						tooltip.hide();
+					}else {
+						$this.addClass('inlineEditHover');
+						tooltip.show();
+					}
 				},
 				function()
 				{
@@ -348,6 +352,10 @@
 
 				// add class
 				element.addClass('inlineEditing');
+
+				// hide label
+				$this.removeClass('inlineEditHover');
+				tooltip.hide();
 
 				// remove events
 				element.unbind('click').unbind('focus');
@@ -518,7 +526,7 @@
 				'	<div class="form-group input-group">' +
 				'		<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
                 '	    <a href="#" id="addButton-' + id + '" class="btn btn-primary input-group-addon">' +
-                '           <span class="fa fa-plus"></span>' +
+                '           <span class="fa fa-plus-square"></span>' +
                 (options.showIconOnly?'':'	        <span>' + options.addLabel + '</span>') +
                 '	    </a>' +
 				'   </div>' +
@@ -816,8 +824,8 @@
 			var html = 	'<div class="form-inline form-group tagsWrapper">' +
 						'	<div class="form-group input-group">' +
                         '       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-                        '       <a href="#" id="addButton-' + id + '" class="btn btn-success btn-xs input-group-addon">' +
-                        '           <span class="fa fa-plus"></span>' +
+                        '       <a href="#" id="addButton-' + id + '" class="btn btn-default btn-second btn-xs input-group-addon">' +
+                        '           <span class="fa fa-plus-square"></span>' +
                             (options.showIconOnly?'':'          <span>' + options.addLabel + '</span>') +
                         '       </a>' +
                         '   </div>' +
@@ -1334,15 +1342,15 @@
 			// build replace html
 			var html =
 				'<div class="multipleTextWrapper">' +
-				'	<div id="elementList-' + id + '" class="form-group multipleTextList">' +
-				'	</div>' +
-				'	<div class="form-group input-group">' +
-				'       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-                '		<a href="#" id="addButton-' + id + '" class="btn btn-success input-group-addon">' +
-                '           <span class="fa fa-plus"></span>' +
-                (options.showIconOnly?'':'          <span>' + options.addLabel + '</span>') +
-                '		</a>' +
-				'	</div>' +
+					'<div id="elementList-' + id + '" class="multipleTextList">' +
+					'</div>' +
+					'<div class="input-group">' +
+						'<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+								'<a href="#" id="addButton-' + id + '" class="btn btn-default btn-second input-group-addon">' +
+                '<span class="fa fa-plus-square"></span>' +
+                (options.showIconOnly?'':'<span>' + options.addLabel + '</span>') +
+                '</a>' +
+					'</div>' +
 				'</div>';
 
 			// hide current element
@@ -1427,9 +1435,6 @@
 				else $('#addButton-' + id).removeClass('disabledButton');
 			});
 
-			// unblock the submit event when we lose focus
-			$('#addValue-' + id).bind('blur', function(e) { blockSubmit = false; add(); });
-
 			// bind click on add-button
 			$('#addButton-' + id).bind('click', function(e)
 			{
@@ -1492,8 +1497,10 @@
 				value = $('<div />').text(value).html().replace('"', '&quot;');
 
 				// reset box
-				$('#addValue-' + id).val('').focus();
-				$('#addButton-' + id).addClass('disabledButton');
+				if ($('#addValue-' + id).val().length > 0) {
+					$('#addValue-' + id).val('').focus();
+					$('#addButton-' + id).addClass('disabledButton');
+				}
 
 				var values = value.split(options.splitChar);
 				for (var e in values) {
@@ -1544,7 +1551,7 @@
 						html += '	<li class="form-group input-group">' +
 								'	    <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
                                 '		<a href="#" class="btn btn-danger input-group-addon deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
-                                '           <span class="fa fa-plus"></span>' +
+                                '           <span class="fa fa-trash"></span>' +
                                 '			<span>' + options.removeLabel + '</span>' +
                                 '		</a>' +
 								'	</li>';

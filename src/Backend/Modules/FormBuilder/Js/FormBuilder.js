@@ -1333,7 +1333,7 @@ jsBackend.FormBuilder.Fields =
         }
 
         // highlight
-        $('#fieldHolder-' + fieldId).effect("highlight", {}, 3000);
+        $('#fieldHolder-' + fieldId).effect("highlight", {color: '#D9E5F3'}, 1500);
     },
 
     /**

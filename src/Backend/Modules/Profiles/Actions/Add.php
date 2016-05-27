@@ -90,7 +90,10 @@ class Add extends BackendBaseActionAdd
         $this->frm = new BackendForm('add');
 
         // create elements
-        $this->frm->addText('email');
+        $this->frm
+            ->addText('email')
+            ->setAttribute('type', 'email')
+        ;
         $this->frm->addPassword('password');
         $this->frm->addText('display_name');
         $this->frm->addText('first_name');
@@ -170,32 +173,24 @@ class Add extends BackendBaseActionAdd
 
             // no errors?
             if ($this->frm->isCorrect()) {
+                $salt = BackendProfilesModel::getRandomString();
+                $password = ($txtPassword->isFilled()) ?
+                    $txtPassword->getValue() : BackendModel::generatePassword(8);
+
                 // build item
                 $values = array(
                     'email' => $txtEmail->getValue(),
                     'registered_on' => BackendModel::getUTCDate(),
                     'display_name' => $txtDisplayName->getValue(),
                     'url' => BackendProfilesModel::getUrl($txtDisplayName->getValue()),
-                    'last_login' => BackendModel::getUTCDate(null, 0)
+                    'last_login' => BackendModel::getUTCDate(null, 0),
+                    'password' => BackendProfilesModel::getEncryptedString($password, $salt),
                 );
 
                 $this->id = BackendProfilesModel::insert($values);
 
-                // get new salt
-                $salt = BackendProfilesModel::getRandomString();
-
                 // update salt
                 BackendProfilesModel::setSetting($this->id, 'salt', $salt);
-
-                // new password filled in? otherwise generate a password
-                $password = ($txtPassword->isFilled()) ?
-                    $txtPassword->getValue() : BackendModel::generatePassword(8);
-
-                // build password
-                $values['password'] = BackendProfilesModel::getEncryptedString($password, $salt);
-
-                // update values
-                BackendProfilesModel::update($this->id, $values);
 
                 // bday is filled in
                 if ($ddmYear->isFilled()) {

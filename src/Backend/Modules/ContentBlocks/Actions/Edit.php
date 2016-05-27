@@ -185,6 +185,7 @@ class Edit extends BackendBaseActionEdit
 
             // validate fields
             $fields['title']->isFilled(BL::err('TitleIsRequired'));
+            $fields['text']->isFilled(BL::err('FieldIsRequired'));
 
             if ($this->frm->isCorrect()) {
                 $item['id'] = $this->id;
