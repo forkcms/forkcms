@@ -58,6 +58,7 @@ class TwigFilters
             'sprintf',
             array('is_safe' => array('html'))
         ));
+        $twig->addFilter(new Twig_SimpleFilter('ucfirst', 'ucfirst'));
 
         // Functions navigation
         $twig->addFunction(new Twig_SimpleFunction(
