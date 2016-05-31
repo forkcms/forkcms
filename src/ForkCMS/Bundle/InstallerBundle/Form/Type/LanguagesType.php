@@ -49,6 +49,7 @@ class LanguagesType extends AbstractType
                 'checkbox',
                 array(
                     'label' => 'Use the same language(s) for the CMS interface.',
+                    'required' => false
                 )
             )
             ->add(
