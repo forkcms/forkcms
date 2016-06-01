@@ -35,7 +35,7 @@ variables that are available:
                 </div>
                 <div class="col-md-6 metaExtra">
                     <span class="hideText">{$lblInThe} </span>{$lblCategory|ucfirst}:
-                    <a itemprop="articleSection" href="{$items.category_full_url}">{$items.category_title}</a>{option:!item.tags}.{/option:!item.tags}
+                    <a itemprop="articleSection" href="{$items.category_full_url}">{$items.category_title}</a>{option:!items.tags}.{/option:!items.tags}
                     {option:items.tags}
                     <span class="hideText">{$lblWithThe}</span> {$lblTags|ucfirst}:
 								<span itemprop="keywords">
