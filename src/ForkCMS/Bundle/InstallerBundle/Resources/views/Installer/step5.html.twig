@@ -21,6 +21,7 @@
         <div class="panel-body">
           <p>Enter the e-mail address and password you'd like to use to log in.</p>
           {{ form_row(form.email) }}
+
           {{ form_row(form.password.first) }}
           <table id="passwordStrengthMeter" class="passwordStrength" data-id="install_login_password_first">
             <tr>
@@ -39,7 +40,7 @@
                 </p>
               </td>
               <td>
-                <p class="text-info">&nbsp;Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>
+                <p class="help-block">&nbsp;Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>
               </td>
             </tr>
           </table>
@@ -55,9 +56,7 @@
             </div>
             <div class="btn-group pull-right" role="group">
               <button type="submit" id="installerButton" name="installer" class="btn btn-primary">
-                <span class="fa fa-flag"></span>&nbsp;
-                Finish installation
-                &nbsp;<img id="ajaxSpinner" src="/src/Backend/Core/Layout/images/spinner.gif" width="16" height="16" alt="loading" style="float: left; margin-top: 4px; display: none;" />
+                Finish installation <img id="ajaxSpinner" src="/src/Backend/Core/Layout/images/spinner.gif" width="16" height="16" alt="loading" style="float: left; margin-top: 4px; display: none;" />
               </button>
             </div>
           </div>
