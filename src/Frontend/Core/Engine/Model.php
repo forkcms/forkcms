@@ -52,7 +52,7 @@ class Model extends \Common\Core\Model
         }
 
         // build query string
-        $queryString = http_build_query($parameters, null, '&amp;');
+        $queryString = http_build_query($parameters, null, '&amp;', PHP_QUERY_RFC3986);
         if (mb_strpos($url, '?') !== false) {
             $url .= '&' . $queryString . $hash;
         } else {

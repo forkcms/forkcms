@@ -115,7 +115,7 @@ class Add extends BackendBaseActionAdd
         $this->filter['value'] = $this->getParameter('value');
 
         // build query for filter
-        $this->filterQuery = '&' . http_build_query($this->filter);
+        $this->filterQuery = '&' . http_build_query($this->filter, null, '&', PHP_QUERY_RFC3986);
     }
 
     /**

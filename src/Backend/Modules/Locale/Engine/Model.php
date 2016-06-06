@@ -50,7 +50,7 @@ class Model
      */
     public static function buildURLQueryByFilter($filter)
     {
-        $query = http_build_query($filter);
+        $query = http_build_query($filter, null, '&', PHP_QUERY_RFC3986);
         if ($query != '') {
             $query = '&' . $query;
         }

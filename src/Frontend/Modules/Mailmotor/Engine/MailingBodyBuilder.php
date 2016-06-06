@@ -212,7 +212,7 @@ class MailingBodyBuilder
         $params['utm_campaign'] = $utm['campaign'];
 
         // build google vars query
-        $googleQuery = http_build_query($params);
+        $googleQuery = http_build_query($params, null, '&', PHP_QUERY_RFC3986);
 
         // reserve search vars
         $search = array();

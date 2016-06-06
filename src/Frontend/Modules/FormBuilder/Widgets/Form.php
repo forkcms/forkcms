@@ -91,7 +91,7 @@ class Form extends FrontendBaseWidget
             $action .= '/' . implode('/', $moduleParameters);
         }
         if (count($getParameters) > 0) {
-            $action .= '?' . http_build_query($getParameters);
+            $action .= '?' . http_build_query($getParameters, null, '&', PHP_QUERY_RFC3986);
         }
 
         // remove trailing slash

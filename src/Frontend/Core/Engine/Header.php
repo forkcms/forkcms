@@ -879,7 +879,7 @@ class Header extends FrontendBaseObject
 
                 // add GET-params
                 if (!empty($addToUrl)) {
-                    $url .= '?' . http_build_query($addToUrl);
+                    $url .= '?' . http_build_query($addToUrl, null, '&', PHP_QUERY_RFC3986);
                 }
             }
         }
