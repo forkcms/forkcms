@@ -5,12 +5,14 @@
 {% block actionbar %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
-        {% set url = (SITE_URL ~ '/' ~ item.url) %}
-        {% if item.revision_id %}
-          {% set url = (url ~ '?revision=' ~ item.revision_id) %}
-        {% endif %}
+        {% if detailURL %}
+          {% set url = (detailURL ~ '/' ~ item.url) %}
+          {% if item.revision_id %}
+            {% set url = (url ~ '?revision=' ~ item.revision_id) %}
+          {% endif %}
 
-        {{ macro.buttonIcon( url, 'eye', 'lbl.View'|trans|capitalize) }}
+          {{ macro.buttonIcon( url, 'eye', 'lbl.View'|trans|capitalize) }}
+        {% endif %}
       </div>
     </div>
 {% endblock %}
