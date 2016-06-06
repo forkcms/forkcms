@@ -108,7 +108,7 @@
 
 						<div id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
 							<p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
-								<label for="message">{{ 'msg.HowToImprove'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
+								<label for="message">{{ 'msg.HowToImprove'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
 								{% form_field_error Message %} {% form_field Message %}
 							</p>
 							<p>

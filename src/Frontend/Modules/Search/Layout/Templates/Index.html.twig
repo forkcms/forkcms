@@ -12,7 +12,7 @@
 		<div class="bd">
 			{% form search %}
 				<p{% if form_field_error %} class="errorArea"{% endif %}>
-					<label for="q">{{ 'lbl.SearchTerm'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
+					<label for="q">{{ 'lbl.SearchTerm'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
 					{% form_field_error q %} {% form_field q %}
 				</p>
 				<p>

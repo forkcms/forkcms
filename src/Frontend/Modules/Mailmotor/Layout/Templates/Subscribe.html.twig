@@ -8,7 +8,7 @@
 			{% if not subscribeHideForm %}
 				{% form subscribe %}
 					<p{% if txtEmailError %} class="errorArea"{% endif %}>
-						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
+						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
 						{% form_field_error Email %} {% form_field Email %}
 					</p>
 					<p>
