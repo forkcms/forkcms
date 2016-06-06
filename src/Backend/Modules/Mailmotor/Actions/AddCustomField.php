@@ -118,7 +118,7 @@ class AddCustomField extends BackendBaseActionAdd
                     $this->redirect(
                         BackendModel::createURLForAction(
                             'CustomFields'
-                        ) . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . urlencode(
+                        ) . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . rawurlencode(
                             $e->getMessage()
                         )
                     );
@@ -128,7 +128,7 @@ class AddCustomField extends BackendBaseActionAdd
                 $this->redirect(
                     BackendModel::createURLForAction(
                         'CustomFields'
-                    ) . '&group_id=' . $this->group['id'] . '&report=added&var=' . urlencode(
+                    ) . '&group_id=' . $this->group['id'] . '&report=added&var=' . rawurlencode(
                         $txtName->getValue()
                     ) . '&highlight=id-' . $this->group['id']
                 );

@@ -116,7 +116,7 @@ class EditMailingCampaign extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode(
                         $this->record['name']
                     ) . '&highlight=id-' . $item['id']
                 );

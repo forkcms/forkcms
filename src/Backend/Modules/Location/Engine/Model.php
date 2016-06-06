@@ -140,7 +140,7 @@ class Model
         $address = implode(' ', $item);
 
         // define url
-        $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=false';
+        $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . rawurlencode($address) . '&sensor=false';
 
         // define result
         $geocodes = json_decode(file_get_contents($url), true);

@@ -390,7 +390,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 }
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . rawurlencode($item['label']) . '&highlight=row-' . $item['id']);
             }
         }
     }

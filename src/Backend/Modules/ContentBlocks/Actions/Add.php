@@ -96,7 +96,7 @@ class Add extends BackendBaseActionAdd
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=added&var=' .
-                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                    rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }
         }

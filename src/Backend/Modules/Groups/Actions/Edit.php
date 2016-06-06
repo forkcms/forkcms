@@ -767,7 +767,7 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $group));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
+                $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
             }
         }
     }

@@ -1519,7 +1519,7 @@ class Model
             // skip domain name
             $domain = array_shift($URLChunks);
             foreach ($URLChunks as &$URLChunk) {
-                $URLChunk = urlencode($URLChunk);
+                $URLChunk = rawurlencode($URLChunk);
             }
             $redirectURL = $matches[1] . '://' . $domain . '/' . implode('/', $URLChunks);
         }

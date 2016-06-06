@@ -41,7 +41,7 @@ class Delete extends BackendBaseActionDelete
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
             // item was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('Index') . '&report=deleted&var=' . urlencode($this->record['name']));
+            $this->redirect(BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['name']));
         }
 
         // no item found, redirect to the overview with an error

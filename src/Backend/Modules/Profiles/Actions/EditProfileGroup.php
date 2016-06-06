@@ -155,7 +155,7 @@ class EditProfileGroup extends BackendBaseActionEdit
                 $this->redirect(
                     BackendModel::createURLForAction(
                         'Edit'
-                    ) . '&id=' . $this->profileId . '&report=membership-saved&var=' . urlencode(
+                    ) . '&id=' . $this->profileId . '&report=membership-saved&var=' . rawurlencode(
                         $values['group_id']
                     ) . '&highlight=row-' . $this->id . '#tabGroups'
                 );

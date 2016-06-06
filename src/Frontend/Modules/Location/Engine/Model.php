@@ -55,7 +55,7 @@ class Model
         $pointers = array();
         // add the markers to the url
         foreach ($markers as $marker) {
-            $pointers[] = urlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
+            $pointers[] = rawurlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
         }
 
         if (!empty($pointers)) {

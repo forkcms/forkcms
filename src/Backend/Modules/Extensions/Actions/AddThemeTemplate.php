@@ -329,7 +329,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 }
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . rawurlencode($item['label']) . '&highlight=row-' . $item['id']);
             }
         }
     }

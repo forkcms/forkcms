@@ -466,12 +466,12 @@ class Edit extends BackendBaseActionEdit
 
                     // build URL
                     $redirectUrl = BackendModel::createURLForAction('Index') .
-                                   '&report=edited&var=' . urlencode($item['title']) .
+                                   '&report=edited&var=' . rawurlencode($item['title']) .
                                    '&id=' . $this->id . '&highlight=row-' . $item['revision_id'];
                 } elseif ($item['status'] == 'draft') {
                     // draft: everything is saved, so redirect to the edit action
                     $redirectUrl = BackendModel::createURLForAction('Edit') .
-                                   '&report=saved-as-draft&var=' . urlencode($item['title']) .
+                                   '&report=saved-as-draft&var=' . rawurlencode($item['title']) .
                                    '&id=' . $item['id'] . '&draft=' . $item['revision_id'] .
                                    '&highlight=row-' . $item['revision_id'];
                 }

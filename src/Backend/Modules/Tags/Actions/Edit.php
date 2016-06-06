@@ -165,7 +165,7 @@ class Edit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode(
                         $item['tag']
                     ) . '&highlight=row-' . $item['id']
                 );

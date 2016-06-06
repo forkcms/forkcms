@@ -57,6 +57,6 @@ class Copy extends BackendBaseActionIndex
         BackendPagesModel::copy($this->from, $this->to);
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('Index') . '&report=copy-added&var=' . urlencode($this->to));
+        $this->redirect(BackendModel::createURLForAction('Index') . '&report=copy-added&var=' . rawurlencode($this->to));
     }
 }

@@ -80,7 +80,7 @@ class AddGroup extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Groups') . '&report=group-added&var=' . urlencode(
+                    BackendModel::createURLForAction('Groups') . '&report=group-added&var=' . rawurlencode(
                         $values['name']
                     ) . '&highlight=row-' . $id
                 );

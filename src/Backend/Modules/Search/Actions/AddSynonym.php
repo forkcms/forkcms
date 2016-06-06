@@ -82,7 +82,7 @@ class AddSynonym extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Synonyms') . '&report=added-synonym&var=' . urlencode(
+                    BackendModel::createURLForAction('Synonyms') . '&report=added-synonym&var=' . rawurlencode(
                         $item['term']
                     ) . '&highlight=row-' . $id
                 );
