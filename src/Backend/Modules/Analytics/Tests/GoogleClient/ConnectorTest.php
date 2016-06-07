@@ -200,7 +200,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
 
     private function getModulesSettingsMock()
     {
-        return $this->getMockBuilder('\Common\ModulesSettings')
+        return $this->getMockBuilder(ModulesSettings::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
