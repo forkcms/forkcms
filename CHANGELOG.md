@@ -1,8 +1,20 @@
-4.0.x (xxxx-xx-xx)
+4.0.1 (2016-06-07)
 --
+
 Bugfixes:
 
-* Frontend: Fixes date field with empty date.
+* Core: Fixes date field with empty date.
+* Core: Fix lost ucfirst template modifier.
+* Installer: Make "same language" not required.
+* Core: Fix the THEME_URL constant referencing the backend.
+* Core: Fix the hasColumn function of datagrids.
+* Core: Fix the not-matching color of the fork logo.
+* Core: avoid &nbsp; in favor of spaces.
+* Extensions: improve icons.
+* Blog: Fix preview url in edit action.
+* Core: Fix asterisk changed by # in the frontend.
+* Users: Never use the (not created) source file of avatars.
+* Core: Improve the gitignore file.
 
 4.0.0 (2016-05-27)
 --
