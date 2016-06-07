@@ -7,7 +7,6 @@
 /bower_components/*
 /app/cache/*
 /app/logs/*
-/app/sessions/*
 /components/*
 /backend/cache/navigation/*
 /src/Backend/Cache/CachedTemplates/*
