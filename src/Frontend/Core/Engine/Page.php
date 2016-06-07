@@ -201,7 +201,7 @@ class Page extends FrontendBaseObject
 
         // output
         return new Response(
-            $this->tpl->getContent($this->templatePath, false, true),
+            $this->tpl->getContent($this->templatePath),
             $this->statusCode
         );
     }

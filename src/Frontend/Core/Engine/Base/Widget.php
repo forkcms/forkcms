@@ -180,7 +180,7 @@ class Widget extends Object
      */
     public function getContent()
     {
-        return $this->tpl->getContent($this->templatePath, false, true);
+        return $this->tpl->getContent($this->templatePath);
     }
 
     /**
