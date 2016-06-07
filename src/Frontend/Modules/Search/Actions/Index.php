@@ -10,7 +10,6 @@ namespace Frontend\Modules\Search\Actions;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -254,6 +253,9 @@ class Index extends FrontendBaseBlock
      */
     private function parse()
     {
+        $this->addJS('typeahead.bundle.min.js');
+        $this->addCSS('Search.css');
+
         // parse the form
         $this->frm->parse($this->tpl);
 

@@ -3,7 +3,8 @@
 namespace Common\Tests;
 
 use Common\ModulesSettings;
-use Common\Cache\InMemoryCache;
+use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
+use MatthiasMullie\Scrapbook\Psr6\Pool;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -17,7 +18,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
     {
         $modulesSettings = new ModulesSettings(
             $this->getDatabaseMock(),
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
 
         $modulesSettings->get('Core', 'theme', 'triton');
@@ -29,7 +30,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
     {
         $modulesSettings = new ModulesSettings(
             $this->getDatabaseMock(),
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
 
         $this->assertEquals(
@@ -46,7 +47,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
     {
         $modulesSettings = new ModulesSettings(
             $this->getDatabaseMock(),
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
 
         $this->assertEquals(
@@ -59,7 +60,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
     {
         $modulesSettings = new ModulesSettings(
             $this->getDatabaseMock(),
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
 
         $this->assertEquals(
@@ -71,80 +72,6 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             array(),
             $modulesSettings->getForModule('Fake')
-        );
-    }
-
-    public function testSettingAValueSavesIt()
-    {
-        $databaseMock = $this->getDatabaseMock();
-
-        $databaseMock
-            ->expects($this->once())
-            ->method('execute')
-        ;
-
-        $modulesSettings = new ModulesSettings(
-            $databaseMock,
-            new InMemoryCache()
-        );
-
-        $this->assertEquals(
-            'triton',
-            $modulesSettings->get('Core', 'theme')
-        );
-        $modulesSettings->set('Core', 'theme', 'test_theme');
-        $this->assertEquals(
-            'test_theme',
-            $modulesSettings->get('Core', 'theme')
-        );
-    }
-
-    public function testSettingAValueForANewModule()
-    {
-        $databaseMock = $this->getDatabaseMock();
-
-        $databaseMock
-            ->expects($this->once())
-            ->method('execute')
-        ;
-
-        $modulesSettings = new ModulesSettings(
-            $databaseMock,
-            new InMemoryCache()
-        );
-
-        $this->assertNull(
-            $modulesSettings->get('Fake', 'module')
-        );
-        $modulesSettings->set('Fake', 'module', 'value');
-        $this->assertEquals(
-            'value',
-            $modulesSettings->get('Fake', 'module')
-        );
-    }
-
-    public function testDeletingAValueDeletesIt()
-    {
-        $databaseMock = $this->getDatabaseMock();
-
-        $databaseMock
-            ->expects($this->once())
-            ->method('delete')
-        ;
-
-        $modulesSettings = new ModulesSettings(
-            $databaseMock,
-            new InMemoryCache()
-        );
-        $this->assertEquals(
-            'triton',
-            $modulesSettings->get('Core', 'theme')
-        );
-        $modulesSettings->delete('Core', 'theme');
-        $this->assertNull($modulesSettings->get('Core', 'theme'));
-        $this->assertEquals(
-            'default_value',
-            $modulesSettings->get('Core', 'theme', 'default_value')
         );
     }
 

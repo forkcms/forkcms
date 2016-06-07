@@ -3,10 +3,10 @@
 namespace Backend\Modules\Analytics\Tests\GoogleClient;
 
 use Backend\Modules\Analytics\GoogleClient\Connector;
-use Common\Cache\InMemoryCache;
-use Common\ModulesSettings;
 use Google_Client;
 use Google_Service_Analytics;
+use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
+use MatthiasMullie\Scrapbook\Psr6\Pool;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -18,7 +18,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -35,7 +35,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -52,7 +52,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -69,7 +69,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -86,7 +86,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -103,7 +103,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -122,7 +122,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
 
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -150,7 +150,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 
@@ -176,7 +176,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
-            new InMemoryCache(),
+            new Pool(new MemoryStore()),
             $this->getModulesSettingsMock()
         );
 

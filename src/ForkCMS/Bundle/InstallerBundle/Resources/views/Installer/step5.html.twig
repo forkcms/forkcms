@@ -3,34 +3,67 @@
 {% form_theme form 'ForkCMSInstallerBundle:Installer:form_theme.html.twig' %}
 
 {% block content %}
-  <h2>Settings</h2>
-  {{ form_start(form) }}
-    {{ form_errors(form) }}
 
-    <div class="horizontal">
-      <p>Enter the e-mail address and password you'd like to use to log in.</p>
-      {{ form_row(form.email) }}
-      {{ form_row(form.password.first) }}
-      <table id="passwordStrengthMeter" class="passwordStrength" data-id="install_login_password_first">
-        <tr>
-          <td class="strength" id="passwordStrength">
-            <p class="strength none">/</p>
-            <p class="strength weak">Weak</p>
-            <p class="strength ok">OK</p>
-            <p class="strength strong">Strong</p>
-          </td>
-          <td>
-            <p class="helpTxt">Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>
-          </td>
-        </tr>
-      </table>
-      {{ form_row(form.password.second) }}
+{{ form_start(form) }}
+  <div class="row fork-module-messages">
+    <div class="col-md-12">
+      {{ form_errors(form) }}
     </div>
-    <p class="spacing buttonHolder">
-      <a href="{{ path('install_step4') }}" class="button">Previous</a>
-      <input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Finish installation" />
-      <img id="ajaxSpinner" src="/src/Backend/Core/Layout/images/spinner.gif" width="16" height="16" alt="loading" style="float: left; margin-top: 4px; display: none;" />
-    </p>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">
+            Settings
+          </h2>
+        </div>
+        <div class="panel-body">
+          <p>Enter the e-mail address and password you'd like to use to log in.</p>
+          {{ form_row(form.email) }}
 
-  {{ form_end(form) }}
+          {{ form_row(form.password.first) }}
+          <table id="passwordStrengthMeter" class="passwordStrength" data-id="install_login_password_first">
+            <tr>
+              <td class="strength" id="passwordStrength">
+                <p class="strength none">
+                  <span class="label label-default">None</span>
+                </p>
+                <p class="strength weak">
+                  <span class="label label-danger">Weak</span>
+                </p>
+                <p class="strength average">
+                  <span class="label label-warning">Average</span>
+                </p>
+                <p class="strength strong">
+                  <span class="label label-success">Strong</span>
+                </p>
+              </td>
+              <td>
+                <p class="help-block">&nbsp;Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>
+              </td>
+            </tr>
+          </table>
+          {{ form_row(form.password.second) }}
+        </div>
+        <div class="panel-footer">
+          <div class="btn-toolbar">
+            <div class="btn-group pull-left" role="group">
+              <a href="{{ path('install_step4') }}" class="btn btn-default">
+                <span class="fa fa-chevron-left"></span>&nbsp;
+                Previous
+              </a>
+            </div>
+            <div class="btn-group pull-right" role="group">
+              <button type="submit" id="installerButton" name="installer" class="btn btn-primary">
+                Finish installation <img id="ajaxSpinner" src="/src/Backend/Core/Layout/images/spinner.gif" width="16" height="16" alt="loading" style="float: left; margin-top: 4px; display: none;" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{ form_end(form) }}
+
 {% endblock %}

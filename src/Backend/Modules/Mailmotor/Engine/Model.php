@@ -11,7 +11,6 @@ namespace Backend\Modules\Mailmotor\Engine;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Core\Engine\Language as BL;
@@ -1149,7 +1148,7 @@ class Model
         // loop the languages
         foreach ($languages as $abbreviation) {
             // build new value
-            $results[] = array('value' => $abbreviation, 'label' => BL::lbl(strtoupper($abbreviation)));
+            $results[] = array('value' => $abbreviation, 'label' => BL::lbl(mb_strtoupper($abbreviation)));
         }
 
         return $results;
@@ -1354,10 +1353,10 @@ class Model
         $fs = new Filesystem();
 
         // load all templates in the 'templates' folder for this language
-        if (!$fs->exists($path . '/' . $name . '/template.tpl')) {
+        if (!$fs->exists($path . '/' . $name . '/template.html.twig')) {
             throw new \SpoonException(
                 'The template folder "' . $name .
-                '" exists, but no template.tpl file was found. Please create one.'
+                '" exists, but no template.html.twig file was found. Please create one.'
             );
         }
         if (!$fs->exists($path . '/' . $name . '/Css/screen.css')) {
@@ -1372,7 +1371,7 @@ class Model
         $record['name'] = $name;
         $record['language'] = $language;
         $record['label'] = BL::lbl('Template' . \SpoonFilter::toCamelCase(\SpoonFilter::toCamelCase($name), '-'));
-        $record['path_content'] = $path . '/' . $name . '/template.tpl';
+        $record['path_content'] = $path . '/' . $name . '/template.html.twig';
         $record['path_css'] = $path . '/' . $name . '/Css/screen.css';
         $record['url_css'] = SITE_URL . '/src/Backend/Modules/Mailmotor/Templates/' . $language .
                              '/' . $name . '/Css/screen.css';

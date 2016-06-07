@@ -10,7 +10,6 @@ namespace Backend\Modules\Users\Installer;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Installer\ModuleInstaller;
 
 /**

@@ -10,7 +10,6 @@ namespace Backend\Modules\Blog\Actions;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -70,7 +69,7 @@ class Add extends BackendBaseActionAdd
         $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
         // create elements
-        $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('text');
         $this->frm->addEditor('introduction');
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
@@ -80,7 +79,7 @@ class Add extends BackendBaseActionAdd
             $this->frm->getField('category_id')->setDefaultElement('');
         }
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
-        $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
+        $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
         $this->frm->addDate('publish_on_date');
         $this->frm->addTime('publish_on_time');
         if ($this->imageIsAllowed) {

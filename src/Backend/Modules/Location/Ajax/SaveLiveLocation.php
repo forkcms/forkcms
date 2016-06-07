@@ -33,7 +33,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         // get parameters
         $itemId = \SpoonFilter::getPostValue('id', null, null, 'int');
         $zoomLevel = trim(\SpoonFilter::getPostValue('zoom', null, 'auto'));
-        $mapType = strtoupper(trim(\SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap')));
+        $mapType = mb_strtoupper(trim(\SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap')));
         $centerLat = \SpoonFilter::getPostValue('centerLat', null, 1, 'float');
         $centerlng = \SpoonFilter::getPostValue('centerLng', null, 1, 'float');
         $height = \SpoonFilter::getPostValue('height', null, $generalSettings['height'], 'int');
@@ -49,9 +49,15 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         $showOverview = ($showOverview == 'true');
 
         // standard dimensions
-        if ($width > 800) $width = 800;
-        if ($width < 300) $width = $generalSettings['width'];
-        if ($height < 150) $height = $generalSettings['height'];
+        if ($width > 800) {
+            $width = 800;
+        }
+        if ($width < 300) {
+            $width = $generalSettings['width'];
+        }
+        if ($height < 150) {
+            $height = $generalSettings['height'];
+        }
 
         // no id given, this means we should update the main map
         BackendLocationModel::setMapSetting($itemId, 'zoom_level', (string) $zoomLevel);

@@ -67,12 +67,9 @@ class Index extends BackendBaseActionIndex
                 BackendFaqModel::QRY_DATAGRID_BROWSE,
                 array(BL::getWorkingLanguage(), $categoryId)
             );
-            $dataGrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
+            $dataGrid->enableSequenceByDragAndDrop();
             $dataGrid->setColumnsHidden(array('category_id', 'sequence'));
-            $dataGrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
-            $dataGrid->setColumnsSequence('dragAndDropHandle');
             $dataGrid->setColumnAttributes('question', array('class' => 'title'));
-            $dataGrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
             $dataGrid->setRowAttributes(array('id' => '[id]'));
 
             // check if this action is allowed
@@ -103,7 +100,7 @@ class Index extends BackendBaseActionIndex
                 'edit' => ''
             ))
         );
-        $this->emptyDatagrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop emptyGrid'));
+        $this->emptyDatagrid->setAttributes(array('class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop emptyGrid'));
         $this->emptyDatagrid->setHeaderLabels(array('edit' => null, 'dragAndDropHandle' => null));
     }
 

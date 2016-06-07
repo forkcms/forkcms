@@ -34,7 +34,9 @@ class Model
         foreach ($installedModules as $module) {
             // model class
             $class = 'Backend\\Modules\\' . $module . '\\Engine\\Model';
-            if ($module == 'Core') $class = 'Backend\\Core\\Engine\\Model';
+            if ($module == 'Core') {
+                $class = 'Backend\\Core\\Engine\\Model';
+            }
 
             // method exists
             if (is_callable(array($class, 'checkSettings'))) {

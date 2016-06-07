@@ -16,6 +16,7 @@ use Backend\Core\Engine\Model as BackendModel;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class DataGridFunctions
 {
@@ -145,11 +146,11 @@ class DataGridFunctions
         // get the time ago as a string
         $timeAgo = \SpoonDate::getTimeAgo($timestamp, Language::getInterfaceLanguage(), $format);
 
-        return '<abbr title="' . \SpoonDate::getDate(
+        return '<time data-toggle="tooltip" datetime="' . \SpoonDate::getDate('Y-m-d H:i:s', $timestamp) . '" title="' . \SpoonDate::getDate(
             $format,
             $timestamp,
             Language::getInterfaceLanguage()
-        ) . '">' . $timeAgo . '</abbr>';
+        ) . '">' . $timeAgo . '</time>';
     }
 
     /**
@@ -173,34 +174,22 @@ class DataGridFunctions
             $allowed = Authentication::isAllowedAction('Edit', 'Users');
 
             // build html
-            $html = '<div class="dataGridAvatar">' . "\n";
-            $html .= '  <div class="avatar av24">' . "\n";
+            $html = '<div class="fork-data-grid-avatar">' . "\n";
             if ($allowed) {
                 $html .= '     <a href="' .
-                         BackendModel::createURLForAction(
-                             'Edit',
-                             'Users'
-                         ) . '&amp;id=' . $id . '">' . "\n";
+                    BackendModel::createURLForAction(
+                        'Edit',
+                        'Users'
+                    ) . '&amp;id=' . $id . '">' . "\n";
             }
-            $html .= '          <img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
-                     $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+            $html .= '          <img class="img-circle" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
+                $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+
+            $html .= '<span>' . $nickname . '</span>';
             if ($allowed) {
-                $html .= '     </a>' . "\n";
+                $html .= '</a>' . "\n";
             }
             $html .= '  </div>';
-            $html .= '  <p>';
-            if ($allowed) {
-                $html .= '<a href="' .
-                BackendModel::createURLForAction(
-                    'Edit',
-                    'Users'
-                ) . '&amp;id=' . $id . '">';
-            }
-            $html .= $nickname;
-            if ($allowed) {
-                $html .= '</a>';
-            }
-            $html .= '</p>' . "\n" . '</div>';
 
             self::$dataGridUsers[$id] = $html;
         }
@@ -220,7 +209,7 @@ class DataGridFunctions
      */
     public static function greyOut($type, $value, array $attributes = array())
     {
-        $grayedOutClass = 'grayedOut';
+        $grayedOutClass = 'fork-data-grid-grayed-out grayedOut';
         $greyOut = false;
 
         switch ($type) {
@@ -253,18 +242,37 @@ class DataGridFunctions
     /**
      * Returns an image tag
      *
-     * @param string $path  The path to the image.
-     * @param string $image The filename of the image.
-     * @param string $title The title (will be used as alt).
+     * @param string $path    The path to the image.
+     * @param string $image   The filename of the image.
+     * @param string $title   The title (will be used as alt).
+     * @param string $url     The url
+     * @param integer $width   The width for the <img element
+     * @param integer $height  The height for the <img element
      * @return string
      */
-    public static function showImage($path, $image, $title = '')
+    public static function showImage($path, $image, $title = '', $url = null, $width = null, $height = null)
     {
         $path = (string) $path;
         $image = (string) $image;
         $title = (string) $title;
 
-        return '<img src="' . $path . '/' . $image . '" alt="' . $title . '" />';
+        $html = '<img src="' . $path . '/' . $image . '" alt="' . $title . '"';
+
+        if ($width) {
+            $html .= ' width="' . $width . '"';
+        }
+
+        if ($height) {
+            $html .= ' height="' . $height . '"';
+        }
+
+        $html .= ' />';
+
+        if ($url) {
+            $html = '<a href="' . $url . '" title="' . $title . '">' . $html . '</a>';
+        }
+
+        return $html;
     }
 
     /**

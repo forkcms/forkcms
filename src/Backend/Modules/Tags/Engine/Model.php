@@ -10,7 +10,6 @@ namespace Backend\Modules\Tags\Engine;
  */
 
 use Common\Uri as CommonUri;
-
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -92,6 +91,25 @@ class Model
              FROM tags AS i
              WHERE i.id = ?',
             array((int) $id)
+        );
+    }
+
+    /**
+     * Get all tags.
+     *
+     * @return array
+     */
+    public static function getAll($language = null)
+    {
+        $language = ($language != null)
+            ? (string) $language
+            : BL::getWorkingLanguage();
+
+        return (array) BackendModel::getContainer()->get('database')->getRecords(
+            'SELECT i.tag AS name
+             FROM tags AS i
+             WHERE i.language = ?',
+            array($language)
         );
     }
 
@@ -282,7 +300,7 @@ class Model
             // loop tags
             foreach ($tags as $key => $tag) {
                 // cleanup
-                $tag = strtolower(trim($tag));
+                $tag = mb_strtolower(trim($tag));
 
                 // unset if the tag is empty
                 if ($tag == '') {

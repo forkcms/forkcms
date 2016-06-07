@@ -10,7 +10,6 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Backend\Core\Engine\Header;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -83,7 +82,7 @@ class Action extends Object
     public function checkToken()
     {
         $fromSession = (\SpoonSession::exists('csrf_token')) ? \SpoonSession::get('csrf_token') : '';
-        $fromGet = \SpoonFilter::getGetValue('token', null, '');
+        $fromGet = $this->getContainer()->get('request')->query->get('token');
 
         if ($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) {
             return;
@@ -129,7 +128,7 @@ class Action extends Object
          * based on the name of the current action
          */
         if ($template === null) {
-            $template = $this->getBackendModulePath() . '/Layout/Templates/' . $this->URL->getAction() . '.tpl';
+            $template = '/'. $this->getModule() . '/Layout/Templates/' . $this->URL->getAction() . '.html.twig';
         }
 
         $this->content = $this->tpl->getContent($template);
@@ -141,29 +140,31 @@ class Action extends Object
     public function execute()
     {
         // add jquery, we will need this in every action, so add it globally
-        $this->header->addJS('jquery/jquery.js', 'Core', false);
-        $this->header->addJS('jquery/jquery.ui.js', 'Core', false);
-        $this->header->addJS('jquery/jquery.ui.dialog.patch.js', 'Core');
-        $this->header->addJS('jquery/jquery.tools.js', 'Core', false);
+        $this->header->addJS('/bower_components/jquery/dist/jquery.min.js', 'Core', false, true);
+        $this->header->addJS('/bower_components/jquery-migrate/jquery-migrate.min.js', 'Core', false, true);
+        $this->header->addJS('/bower_components/jquery-ui/jquery-ui.min.js', 'Core', false, true);
+        $this->header->addJS('/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js', 'Core', false, true);
+        $this->header->addJS('/bower_components/typeahead.js/dist/typeahead.bundle.min.js', 'Core', false, true);
+        $this->header->addJS('/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js', 'Core', false, true);
         $this->header->addJS('jquery/jquery.backend.js', 'Core');
 
         // add items that always need to be loaded
-        $this->header->addJS('utils.js', 'Core');
-        $this->header->addJS('backend.js', 'Core');
+        $this->header->addJS('utils.js', 'Core', true, false, true);
+        $this->header->addJS('backend.js', 'Core', true, false, true);
 
         // add module js
         if (is_file($this->getBackendModulePath() . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($this->getModule() . '.js');
+            $this->header->addJS($this->getModule() . '.js', null, true, false, true);
         }
 
         // add action js
         if (is_file($this->getBackendModulePath() . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($this->getAction() . '.js');
+            $this->header->addJS($this->getAction() . '.js', null, true, false, true);
         }
 
         // add core css files
-        $this->header->addCSS('reset.css', 'Core');
-        $this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'Core', false, false);
+        $this->header->addCSS('/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css', 'Core', true);
+        $this->header->addCSS('/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css', 'Core', true);
         $this->header->addCSS('screen.css', 'Core');
         $this->header->addCSS('debug.css', 'Core');
 

@@ -71,7 +71,7 @@ class Installer extends ModuleInstaller
             'present' => true
         );
 
-        $this->insertDashboardWidget('Blog', 'Comments', $comments);
+        $this->insertDashboardWidget('Blog', 'Comments');
     }
 
     /**

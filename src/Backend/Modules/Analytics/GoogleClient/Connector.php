@@ -3,9 +3,9 @@
 namespace Backend\Modules\Analytics\GoogleClient;
 
 use Backend\Core\Engine\Model;
-use Common\Cache\Cache;
 use Common\ModulesSettings;
 use Google_Service_Analytics;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * The class that will do query's on the google analytics API
@@ -20,7 +20,7 @@ final class Connector
     private $analytics;
 
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
     private $cache;
 
@@ -31,7 +31,7 @@ final class Connector
 
     public function __construct(
         Google_Service_Analytics $analytics,
-        Cache $cache,
+        CacheItemPoolInterface $cache,
         ModulesSettings $settings
     ) {
         $this->analytics = $analytics;
@@ -176,21 +176,22 @@ final class Connector
     {
         $dateRange = $startDate . '-' . $endDate;
 
-        if (!$this->cache->isCached($dateRange)) {
-            $this->cache->cache(
-                $dateRange,
-                json_encode(
-                    array(
-                        'metrics' => $this->getMetrics($startDate, $endDate),
-                        'visitGraphData' => $this->collectVisitGraphData($startDate, $endDate),
-                        'pageViews' => $this->collectMostVisitedPagesData($startDate, $endDate),
-                        'sourceGraphData' => $this->collectSourceGraphData($startDate, $endDate),
-                    )
-                )
-            );
+        $item = $this->cache->getItem('analytics-' . $dateRange);
+        if ($item->isHit()) {
+            return $item->get();
         }
 
-        return json_decode($this->cache->getFromCache($dateRange), true);
+        $data = array(
+            'metrics' => $this->getMetrics($startDate, $endDate),
+            'visitGraphData' => $this->collectVisitGraphData($startDate, $endDate),
+            'pageViews' => $this->collectMostVisitedPagesData($startDate, $endDate),
+            'sourceGraphData' => $this->collectSourceGraphData($startDate, $endDate),
+        );
+
+        $item->set($data);
+        $this->cache->save($item);
+
+        return $data;
     }
 
     /**

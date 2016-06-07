@@ -1,0 +1,6 @@
+{% macro buttonIcon(url, icon, label, buttonType, extra) %}
+    <a href="{{ url }}" class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {{ extra }}>
+        <span class="fa fa-{{ icon }}"></span>
+        <span class="btn-text">{{ label }}</span>
+    </a>
+{% endmacro %}

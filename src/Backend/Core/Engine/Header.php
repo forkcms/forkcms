@@ -10,9 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use MatthiasMullie\Minify;
-
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 
@@ -296,7 +294,7 @@ class Header extends Base\Object
             foreach ($existingCSSFiles as $file) {
                 // add lastmodified time
                 if ($file['add_timestamp'] !== false) {
-                    $file['file'] .= (strpos($file['file'], '?') !== false) ?
+                    $file['file'] .= (mb_strpos($file['file'], '?') !== false) ?
                         '&m=' . LAST_MODIFIED_TIME :
                         '?m=' . LAST_MODIFIED_TIME
                     ;
@@ -323,10 +321,12 @@ class Header extends Base\Object
         if (!empty($existingJSFiles)) {
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
-                '/src/Backend/Core/Js/jquery/jquery.js',
-                '/src/Backend/Core/Js/jquery/jquery.ui.js',
-                '/src/Backend/Core/Js/ckeditor/jquery.ui.dialog.patch.js',
-                '/src/Backend/Core/Js/jquery/jquery.tools.js',
+                '/bower_components/jquery/dist/jquery.min.js',
+                '/bower_components/jquery-migrate/jquery-migrate.min.js',
+                '/bower_components/jquery-ui/jquery-ui.min.js',
+                '/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+                '/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
+                '/src/Backend/Core/Js/jquery/jquery.ui.dialog.patch.js',
                 '/src/Backend/Core/Js/jquery/jquery.backend.js',
                 '/src/Backend/Core/Js/ckeditor/ckeditor.js',
                 '/src/Backend/Core/Js/ckeditor/adapters/jquery.js',
@@ -340,10 +340,10 @@ class Header extends Base\Object
                 ) {
                     $file = array('file' => $file['file']);
                 } else {
-                    if (substr($file['file'], 0, 11) == '/frontend/js') {
+                    if (mb_substr($file['file'], 0, 11) == '/frontend/js') {
                         $file = array('file' => $file['file'] . '&amp;m=' . time());
                     } else {
-                        $modifiedTime = (strpos($file['file'], '?') !== false) ?
+                        $modifiedTime = (mb_strpos($file['file'], '?') !== false) ?
                             '&amp;m=' . LAST_MODIFIED_TIME :
                             '?m=' . LAST_MODIFIED_TIME
                         ;

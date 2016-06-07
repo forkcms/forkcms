@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Uri as CommonUri;
-
 use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
@@ -190,7 +189,7 @@ class FrontendIcalEvent extends \SpoonICalEvent
         $url = (string) $url;
 
         // if link doesn't start with http, we prepend the URL of the site
-        if (substr($url, 0, 7) != 'http://') {
+        if (mb_substr($url, 0, 7) != 'http://') {
             $url = SITE_URL . $url;
         }
 

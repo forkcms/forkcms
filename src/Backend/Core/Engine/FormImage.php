@@ -116,17 +116,17 @@ class FormImage extends \SpoonFormImage
         }
 
         // reformat if specified in kB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'K') {
-            $uploadMaxFilesize = substr($uploadMaxFilesize, 0, -1) . 'kB';
+        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'K') {
+            $uploadMaxFilesize = mb_substr($uploadMaxFilesize, 0, -1) . 'kB';
         }
 
         // reformat if specified in MB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'M') {
+        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'M') {
             $uploadMaxFilesize .= 'B';
         }
 
         // reformat if specified in GB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'G') {
+        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'G') {
             $uploadMaxFilesize .= 'B';
         }
 
@@ -148,11 +148,11 @@ class FormImage extends \SpoonFormImage
 
         // add help txt if needed
         if (!$this->hideHelpTxt) {
-            $output .= '<span class="helpTxt">' .
+            $output .= '<p class="help-block">' .
                         sprintf(
                             Language::getMessage('HelpImageFieldWithMaxFileSize', 'core'),
                             $uploadMaxFilesize
-                        ) . '</span>';
+                        ) . '</p>';
         }
 
         // parse to template
@@ -160,7 +160,7 @@ class FormImage extends \SpoonFormImage
             $template->assign('file' . \SpoonFilter::toCamelCase($this->attributes['name']), $output);
             $template->assign(
                 'file' . \SpoonFilter::toCamelCase($this->attributes['name']) . 'Error',
-                ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : ''
+                ($this->errors != '') ? '<span class="formError text-danger">' . $this->errors . '</span>' : ''
             );
         }
 

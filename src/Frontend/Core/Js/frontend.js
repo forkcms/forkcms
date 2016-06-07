@@ -28,9 +28,6 @@ var jsFrontend =
 		// init gravatar
 		jsFrontend.gravatar.init();
 
-		// init search
-		jsFrontend.search.init();
-
 		// init statistics
 		jsFrontend.statistics.init();
 
@@ -228,93 +225,95 @@ jsFrontend.forms =
 			var monthNames = [jsFrontend.locale.loc('MonthLong1'), jsFrontend.locale.loc('MonthLong2'), jsFrontend.locale.loc('MonthLong3'), jsFrontend.locale.loc('MonthLong4'), jsFrontend.locale.loc('MonthLong5'), jsFrontend.locale.loc('MonthLong6'), jsFrontend.locale.loc('MonthLong7'), jsFrontend.locale.loc('MonthLong8'), jsFrontend.locale.loc('MonthLong9'), jsFrontend.locale.loc('MonthLong10'), jsFrontend.locale.loc('MonthLong11'), jsFrontend.locale.loc('MonthLong12')];
 			var monthNamesShort = [jsFrontend.locale.loc('MonthShort1'), jsFrontend.locale.loc('MonthShort2'), jsFrontend.locale.loc('MonthShort3'), jsFrontend.locale.loc('MonthShort4'), jsFrontend.locale.loc('MonthShort5'), jsFrontend.locale.loc('MonthShort6'), jsFrontend.locale.loc('MonthShort7'), jsFrontend.locale.loc('MonthShort8'), jsFrontend.locale.loc('MonthShort9'), jsFrontend.locale.loc('MonthShort10'), jsFrontend.locale.loc('MonthShort11'), jsFrontend.locale.loc('MonthShort12')];
 
-			$inputDatefieldNormal.each(function()
-			{
-				// Create a hidden clone (before datepicker init!), which will contain the actual value
-				var clone = $(this).clone();
-				clone.insertAfter(this);
-				clone.hide();
-
-				// Rename the original field, used to contain the display value
-				$(this).attr('id', $(this).attr('id') + '-display');
-				$(this).attr('name', $(this).attr('name') + '-display');
-			});
-
-			$inputDatefields.datepicker({
-				dayNames: dayNames,
-				dayNamesMin: dayNamesMin,
-				dayNamesShort: dayNamesShort,
-				hideIfNoPrevNext: true,
-				monthNames: monthNames,
-				monthNamesShort: monthNamesShort,
-				nextText: jsFrontend.locale.lbl('Next'),
-				prevText: jsFrontend.locale.lbl('Previous'),
-				showAnim: 'slideDown'
-			});
-
-			// the default, nothing special
-			$inputDatefieldNormal.each(function()
-			{
-				// get data
-				var data = $(this).data();
-				var phpDate = new Date(data.year, data.month, data.day, 0, 0, 0); // Get date from php in YYYY-MM-DD format
-				var value = $.datepicker.formatDate(data.mask, phpDate); // Convert the value to the data-mask to display it
-
-				// Create the datepicker with the desired display format and alt field
-				$(this).datepicker('option', {
-					dateFormat: data.mask,
-					firstDay: data.firstday,
-					altField: "#" + $(this).attr('id').replace('-display', ''),
-					altFormat: "yy-mm-dd"
-				}).datepicker('setDate', value);
-			});
-
-			// date fields that have a certain start date
-			$inputDatefieldFrom.each(function()
-			{
-				// get data
-				var data = $(this).data();
-				var value = $(this).val();
-
-				// set options
-				$(this).datepicker('option', {
-					dateFormat: data.mask, firstDay: data.firstday,
-					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
-				}).datepicker('setDate', value);
-			});
-
-			// date fields that have a certain enddate
-			$inputDatefieldTill.each(function()
-			{
-				// get data
-				var data = $(this).data();
-				var value = $(this).val();
-
-				// set options
-				$(this).datepicker('option',
+			if ($.isFunction($.fn.datepicker)) {
+				$inputDatefieldNormal.each(function()
 				{
-					dateFormat: data.mask,
-					firstDay: data.firstday,
-					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
-				}).datepicker('setDate', value);
-			});
+					// Create a hidden clone (before datepicker init!), which will contain the actual value
+					var clone = $(this).clone();
+					clone.insertAfter(this);
+					clone.hide();
 
-			// date fields that have a certain range
-			$inputDatefieldRange.each(function()
-			{
-				// get data
-				var data = $(this).data();
-				var value = $(this).val();
+					// Rename the original field, used to contain the display value
+					$(this).attr('id', $(this).attr('id') + '-display');
+					$(this).attr('name', $(this).attr('name') + '-display');
+				});
 
-				// set options
-				$(this).datepicker('option',
+				$inputDatefields.datepicker({
+					dayNames: dayNames,
+					dayNamesMin: dayNamesMin,
+					dayNamesShort: dayNamesShort,
+					hideIfNoPrevNext: true,
+					monthNames: monthNames,
+					monthNamesShort: monthNamesShort,
+					nextText: jsFrontend.locale.lbl('Next'),
+					prevText: jsFrontend.locale.lbl('Previous'),
+					showAnim: 'slideDown'
+				});
+
+				// the default, nothing special
+				$inputDatefieldNormal.each(function()
 				{
-					dateFormat: data.mask,
-					firstDay: data.firstday,
-					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
-					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
-				}).datepicker('setDate', value);
-			});
+					// get data
+					var data = $(this).data();
+					var phpDate = new Date(data.year, data.month, data.day, 0, 0, 0); // Get date from php in YYYY-MM-DD format
+					var value = ($(this).val() !== '') ? $.datepicker.formatDate(data.mask, phpDate) : ''; // Convert the value to the data-mask to display it
+
+					// Create the datepicker with the desired display format and alt field
+					$(this).datepicker('option', {
+						dateFormat: data.mask,
+						firstDay: data.firstday,
+						altField: "#" + $(this).attr('id').replace('-display', ''),
+						altFormat: "yy-mm-dd"
+					}).datepicker('setDate', value);
+				});
+
+				// date fields that have a certain start date
+				$inputDatefieldFrom.each(function()
+				{
+					// get data
+					var data = $(this).data();
+					var value = $(this).val();
+
+					// set options
+					$(this).datepicker('option', {
+						dateFormat: data.mask, firstDay: data.firstday,
+						minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
+					}).datepicker('setDate', value);
+				});
+
+				// date fields that have a certain enddate
+				$inputDatefieldTill.each(function()
+				{
+					// get data
+					var data = $(this).data();
+					var value = $(this).val();
+
+					// set options
+					$(this).datepicker('option',
+					{
+						dateFormat: data.mask,
+						firstDay: data.firstday,
+						maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
+					}).datepicker('setDate', value);
+				});
+
+				// date fields that have a certain range
+				$inputDatefieldRange.each(function()
+				{
+					// get data
+					var data = $(this).data();
+					var value = $(this).val();
+
+					// set options
+					$(this).datepicker('option',
+					{
+						dateFormat: data.mask,
+						firstDay: data.firstday,
+						minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
+						maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
+					}).datepicker('setDate', value);
+				});
+			}
 		}
 	},
 
@@ -488,225 +487,6 @@ jsFrontend.locale =
 	msg: function(key)
 	{
 		return jsFrontend.locale.get('msg', key);
-	}
-};
-
-/**
- * Search controls
- *
- * @author	Matthias Mullie <forkcms@mullie.eu>
- */
-jsFrontend.search =
-{
-	// init, something like a constructor
-	init: function()
-	{
-		// auto suggest (search widget)
-		if($('input.autoSuggest').length > 0) jsFrontend.search.autosuggest(55);
-
-		// autocomplete (search results page: autocomplete based on known search terms)
-		if($('input.autoComplete').length > 0) jsFrontend.search.autocomplete();
-
-		// live suggest (search results page: live feed of matches)
-		if($('input.liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest();
-	},
-
-	// autocomplete (search results page: autocomplete based on known search terms)
-	autocomplete: function()
-	{
-		// grab element
-		var $input = $('input.autoComplete');
-
-		// autocomplete (based on saved search terms) on results page
-		$input.autocomplete(
-		{
-			minLength: 1,
-			source: function(request, response)
-			{
-				// ajax call!
-				$.ajax(
-				{
-					data:
-					{
-						fork: { module: 'Search', action: 'Autocomplete' },
-						term: request.term
-					},
-					success: function(data, textStatus)
-					{
-						// init var
-						var realData = [];
-
-						// alert the user
-						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
-
-						if(data.code == 200)
-						{
-							for(var i in data.data) realData.push({ label: data.data[i].term, value: data.data[i].term, url: data.data[i].url });
-						}
-
-						// set response
-						response(realData);
-					}
-				});
-			},
-			select: function(e, ui)
-			{
-				window.location.href = ui.item.url;
-			}
-		})
-		// when we have been typing in the search textfield and we blur out of it, we're ready to save it
-		.on('blur', function()
-		{
-			if($(this).val() !== '')
-			{
-				// ajax call!
-				$.ajax(
-				{
-					data:
-					{
-						fork: { module: 'Search', action: 'Save' },
-						term: $(this).val()
-					}
-				});
-			}
-		});
-	},
-
-	// auto suggest (search widget)
-	autosuggest: function(length)
-	{
-		// set default values
-		if(typeof length == 'undefined') length = 100;
-
-		// grab element
-		var $input = $('input.autoSuggest');
-
-		// search widget suggestions
-		$input.autocomplete(
-		{
-			minLength: 1,
-			source: function(request, response)
-			{
-				// ajax call!
-				$.ajax(
-				{
-					data:
-					{
-						fork: { module: 'Search', action: 'Autosuggest' },
-						term: request.term,
-						length: length
-					},
-					success: function(data, textStatus)
-					{
-						// init var
-						var realData = [];
-
-						// alert the user
-						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
-
-						if(data.code == 200)
-						{
-							for(var i in data.data) realData.push({ label: data.data[i].title, value: data.data[i].title, url: data.data[i].full_url, desc: data.data[i].text });
-						}
-
-						// set response
-						response(realData);
-					}
-				});
-			},
-			select: function(e, ui)
-			{
-				window.location.href = ui.item.url;
-			}
-		})
-		// when we have been typing in the search textfield and we blur out of it, we're ready to save it
-		.on('blur', function()
-		{
-			if($(this).val() !== '')
-			{
-				// ajax call!
-				$.ajax(
-				{
-					data:
-					{
-						fork: { module: 'Search', action: 'Save' },
-						term: $(this).val()
-					}
-				});
-			}
-		})
-		// and also: alter the autocomplete style: add description!
-		.data('ui-autocomplete')._renderItem = function(ul, item)
-		{
-			return $('<li></li>')
-			.data('item.autocomplete', item)
-			.append('<a><strong>' + item.label + '</strong><br />' + item.desc + '</a>' )
-			.appendTo(ul);
-		};
-	},
-
-	// livesuggest (search results page: live feed of matches)
-	livesuggest: function()
-	{
-		// check if calls for live suggest are allowed
-		var allowCall = true;
-
-		// grab element
-		var $input = $('input.liveSuggest');
-
-		// change in input = do the dance: live search results completion
-		$input.on('keyup', function()
-		{
-			var $searchContainer = $('#searchContainer');
-
-			// make sure we're allowed to do the call (= previous call is no longer processing)
-			if(allowCall)
-			{
-				// temporarily allow no more calls
-				allowCall = false;
-
-				// fade out
-				$searchContainer.fadeTo(0, 0.5);
-
-				// ajax call!
-				$.ajax(
-				{
-					data:
-					{
-						fork: { module: 'Search', action: 'Livesuggest' },
-						term: $(this).val()
-					},
-					success: function(data, textStatus)
-					{
-						// allow for new calls
-						allowCall = true;
-
-						// alert the user
-						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
-
-						if(data.code == 200)
-						{
-							// replace search results
-							$searchContainer.html(utils.string.html5(data.data));
-
-							// fade in
-							$searchContainer.fadeTo(0, 1);
-						}
-					},
-					error: function()
-					{
-						// allow for new calls
-						allowCall = true;
-
-						// replace search results
-						$searchContainer.html('');
-
-						// fade in
-						$searchContainer.fadeTo(0, 1);
-					}
-				});
-			}
-		});
 	}
 };
 

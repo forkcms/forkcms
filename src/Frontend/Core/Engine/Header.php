@@ -11,11 +11,8 @@ namespace Frontend\Core\Engine;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
-
 use MatthiasMullie\Minify;
-
 use Common\Cookie as CommonCookie;
-
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 
 /**
@@ -112,7 +109,6 @@ class Header extends FrontendBaseObject
         $this->getContainer()->set('header', $this);
 
         // add some default CSS files
-        $this->addCSS('/src/Frontend/Core/Layout/Css/jquery_ui/jquery_ui.css', false);
         $this->addCSS('/src/Frontend/Core/Layout/Css/screen.css');
 
         // debug stylesheet
@@ -122,7 +118,6 @@ class Header extends FrontendBaseObject
 
         // add default javascript-files
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false, null, self::PRIORITY_GROUP_GLOBAL);
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/utils.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/frontend.js', false, null, self::PRIORITY_GROUP_GLOBAL);
@@ -176,7 +171,7 @@ class Header extends FrontendBaseObject
         $addTimestamp = (bool) $addTimestamp;
 
         // get file path
-        if (substr($file, 0, 4) != 'http') {
+        if (mb_substr($file, 0, 4) != 'http') {
             $file = Theme::getPath($file);
         }
 
@@ -350,7 +345,7 @@ class Header extends FrontendBaseObject
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (substr($image, 0, 7) != SITE_PROTOCOL . '://') {
+        if (mb_substr($image, 0, 7) != SITE_PROTOCOL . '://') {
             if (!is_file(PATH_WWW . $image)) {
                 return;
             }
@@ -406,7 +401,7 @@ class Header extends FrontendBaseObject
 
         foreach ($cssFiles as $file) {
             // debug should be the last file
-            if (strpos($file['file'], 'debug.css') !== false) {
+            if (mb_strpos($file['file'], 'debug.css') !== false) {
                 $aTemp['e' . $i][] = $file;
             } else {
                 $aTemp['a' . $i][] = $file;
@@ -634,7 +629,7 @@ class Header extends FrontendBaseObject
         if (!empty($existingCSSFiles)) {
             foreach ($existingCSSFiles as $file) {
                 if ($file['add_timestamp'] !== false) {
-                    $file['file'] .= (strpos(
+                    $file['file'] .= (mb_strpos(
                                           $file['file'],
                                           '?'
                                       ) !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
@@ -662,8 +657,8 @@ class Header extends FrontendBaseObject
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
         if (
             $webPropertyId != '' &&
-            strpos($siteHTMLHeader, $webPropertyId) === false &&
-            strpos($siteHTMLFooter, $webPropertyId) === false
+            mb_strpos($siteHTMLHeader, $webPropertyId) === false &&
+            mb_strpos($siteHTMLFooter, $webPropertyId) === false
         ) {
             $anonymize = (
                 $this->get('fork.settings')->get('Core', 'show_cookie_bar', false) &&
@@ -768,13 +763,13 @@ class Header extends FrontendBaseObject
                     break;
 
                 default:
-                    $locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
+                    $locale = mb_strtolower(FRONTEND_LANGUAGE) . '_' . mb_strtoupper(FRONTEND_LANGUAGE);
             }
 
             $this->addOpenGraphData('locale', $locale);
 
             // if a default image has been set for facebook, assign it
-            $this->addOpenGraphImage('/frontend/themes/' . Theme::getTheme() . '/facebook.png');
+            $this->addOpenGraphImage('/src/Frontend/Themes/' . Theme::getTheme() . '/facebook.png');
             $this->addOpenGraphImage('/facebook.png');
         }
     }
@@ -804,7 +799,7 @@ class Header extends FrontendBaseObject
                     $file = array('file' => $file['file']);
                 } else {
                     // add last modified time
-                    $modifiedTime = (strpos(
+                    $modifiedTime = (mb_strpos(
                                          $file['file'],
                                          '?'
                                      ) !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
@@ -863,6 +858,10 @@ class Header extends FrontendBaseObject
         $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         if ($queryString == $language) {
             $this->canonical = rtrim(SITE_URL, '/');
+
+            if ($this->getContainer()->getParameter('site.multilanguage')) {
+                $this->canonical .= '/' . $language;
+            }
         }
 
         // any canonical URL provided?
@@ -929,7 +928,7 @@ class Header extends FrontendBaseObject
         $url = (string) $url;
 
         // convert relative url
-        if (substr($url, 0, 1) == '/') {
+        if (mb_substr($url, 0, 1) == '/') {
             $url = SITE_URL . $url;
         }
 

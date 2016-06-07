@@ -184,23 +184,28 @@ class Model
         );
         $jqueryui_format = "";
         $escaping = false;
-        for($i = 0; $i < strlen($php_format); $i++)
-        {
+        for ($i = 0; $i < mb_strlen($php_format); $i++) {
             $char = $php_format[$i];
-            if($char === '\\') // PHP date format escaping character
-            {
+            if ($char === '\\') {
+                // PHP date format escaping character
+
                 $i++;
-                if($escaping) $jqueryui_format .= $php_format[$i];
-                else $jqueryui_format .= '\'' . $php_format[$i];
+                if ($escaping) {
+                    $jqueryui_format .= $php_format[$i];
+                } else {
+                    $jqueryui_format .= '\'' . $php_format[$i];
+                }
                 $escaping = true;
-            }
-            else
-            {
-                if($escaping) { $jqueryui_format .= "'"; $escaping = false; }
-                if(isset($SYMBOLS_MATCHING[$char]))
+            } else {
+                if ($escaping) {
+                    $jqueryui_format .= "'";
+                    $escaping = false;
+                }
+                if (isset($SYMBOLS_MATCHING[$char])) {
                     $jqueryui_format .= $SYMBOLS_MATCHING[$char];
-                else
+                } else {
                     $jqueryui_format .= $char;
+                }
             }
         }
         return $jqueryui_format;

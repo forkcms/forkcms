@@ -10,7 +10,6 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\HttpFoundation\Response;
-
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 
 /**

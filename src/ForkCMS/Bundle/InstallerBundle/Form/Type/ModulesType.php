@@ -10,7 +10,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -37,6 +36,7 @@ class ModulesType extends AbstractType
                 'checkbox',
                 array(
                     'label' => 'Install example data',
+                    'required' => false,
                 )
             )
             ->add(
@@ -44,11 +44,15 @@ class ModulesType extends AbstractType
                 'checkbox',
                 array(
                     'label' => 'Use a specific debug email address',
+                    'required' => false,
                 )
             )
             ->add(
                 'debug_email',
-                'email'
+                'email',
+                array(
+                    'required' => false,
+                )
             )
         ;
 

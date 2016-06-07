@@ -10,7 +10,6 @@ namespace Frontend\Modules\Profiles\Engine;
  */
 
 use Common\Cookie as CommonCookie;
-
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;

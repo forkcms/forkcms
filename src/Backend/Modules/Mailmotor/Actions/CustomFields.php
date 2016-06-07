@@ -92,14 +92,21 @@ class CustomFields extends BackendBaseActionIndex
 
         // add the multicheckbox column
         $this->dataGrid->addColumn(
-            'checkbox',
+            'check',
             '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />',
             '<input type="checkbox" name="fields[]" value="[name]" class="inputCheckbox" /></div>'
         );
-        $this->dataGrid->setColumnsSequence('checkbox');
+        $this->dataGrid->setColumnsSequence('check');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array('delete' => BL::lbl('Delete')),
+            'delete',
+            false,
+            'form-control',
+            'form-control danger'
+        );
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // add styles

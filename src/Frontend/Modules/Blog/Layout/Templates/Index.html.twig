@@ -1,0 +1,65 @@
+{#
+	variables that are available:
+	- {{ items }}: contains an array with all posts, each element contains data about the post
+#}
+
+{% if not items %}
+	<div id="blogIndex">
+		<section class="mod">
+			<div class="inner">
+				<div class="bd content">
+					<p>{{ 'msg.BlogNoItems'|trans }}</p>
+				</div>
+			</div>
+		</section>
+	</div>
+{% endif %}
+{% if items %}
+	<div id="blogIndex">
+		{% for item in items %}
+			<article class="mod">
+				<div class="inner">
+					<header class="hd">
+						<h3><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></h3>
+						<ul>
+							<li>
+								{# Written by #}
+								{{ 'msg.WrittenBy'|trans|capitalize|sprintf(item.user_id|usersetting('nickname')) }}
+
+								{# Written on #}
+								{{ 'lbl.On'|trans }} {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
+
+								{# Category#}
+								{{ 'lbl.In'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Category'|trans }} <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}
+
+								{# Tags #}
+								{% if item.tags %}
+									{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Tags'|trans }}
+									{% for tags in item.tags %}
+										<a href="{{ tags.full_url }}" rel="tag" title="{{ tags.name }}">{{ tags.name }}</a>{% if not tags.last %}, {% endif %}{% if tags.last %}.{% endif %}
+									{% endfor %}
+								{% endif %}
+							</li>
+							{# Comments #}
+							{% if item.allow_comments %}
+								<li>
+									{% if not item.comments %}<a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNoComments'|trans|capitalize }}</a>{% endif %}
+									{% if item.comments %}
+										{% if item.comments_multiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|sprintf(item.comments_count) }}</a>{% endif %}
+										{% if not item.comments_multiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
+									{% endif %}
+								</li>
+							{% endif %}
+						</ul>
+					</header>
+					<div class="bd content">
+						{% if item.image %}<img src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
+						{% if not item.introduction %}{{ item.text|raw }}{% endif %}
+						{% if item.introduction %}{{ item.introduction|raw }}{% endif %}
+					</div>
+				</div>
+			</article>
+		{% endfor %}
+	</div>
+	{% include "Core/Layout/Templates/Pagination.html.twig" %}
+{% endif %}

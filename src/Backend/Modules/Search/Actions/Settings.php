@@ -106,7 +106,7 @@ class Settings extends BackendBaseActionEdit
                 // field disabled?
                 if (!isset($this->settings[$module]) || $this->settings[$module]['searchable'] != 'Y') {
                     $this->frm->getField('search_' . $module . '_weight')->setAttribute('disabled', 'disabled');
-                    $this->frm->getField('search_' . $module . '_weight')->setAttribute('class', 'inputText disabled');
+                    $this->frm->getField('search_' . $module . '_weight')->setAttribute('class', 'form-control disabled');
                 }
 
                 // add to list of modules

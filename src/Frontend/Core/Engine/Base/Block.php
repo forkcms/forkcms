@@ -11,7 +11,6 @@ namespace Frontend\Core\Engine\Base;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;
@@ -87,13 +86,6 @@ class Block extends Object
     private $templatePath;
 
     /**
-     * A reference to the current template
-     *
-     * @var    FrontendTemplate
-     */
-    public $tpl;
-
-    /**
      * A reference to the URL-instance
      *
      * @var    Url
@@ -111,7 +103,6 @@ class Block extends Object
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible
-        $this->tpl = new FrontendTemplate(false);
         $this->header = $this->getContainer()->get('header');
         $this->URL = $this->getContainer()->get('url');
         $this->breadcrumb = $this->getContainer()->get('breadcrumb');
@@ -192,12 +183,12 @@ class Block extends Object
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, null, Header::PRIORITY_GROUP_MODULE);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, true, Header::PRIORITY_GROUP_MODULE);
         }
 
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, null, Header::PRIORITY_GROUP_MODULE);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true, Header::PRIORITY_GROUP_MODULE);
         }
     }
 
@@ -218,7 +209,7 @@ class Block extends Object
      */
     public function getContent()
     {
-        return $this->tpl->getContent($this->templatePath, false, true);
+        return $this->tpl->getContent($this->templatePath);
     }
 
     /**
@@ -273,11 +264,7 @@ class Block extends Object
 
         // no template given, so we should build the path
         if ($path === null) {
-            // build path to the module
-            $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-
-            // build template path
-            $path = $frontendModulePath . '/Layout/Templates/' . $this->getAction() . '.tpl';
+            $path = $this->getModule() . '/Layout/Templates/' . $this->getAction() . '.html.twig';
         } else {
             // redefine
             $path = (string) $path;

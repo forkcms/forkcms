@@ -125,7 +125,7 @@ class Form extends FrontendBaseWidget
         }
 
         return $this->tpl->getContent(
-            FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Widgets/' . $this->getAction() . '.tpl'
+            FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Widgets/' . $this->getAction() . '.html.twig'
         );
     }
 
@@ -155,6 +155,7 @@ class Form extends FrontendBaseWidget
                 $item['type'] = $field['type'];
                 $item['label'] = (isset($field['settings']['label'])) ? $field['settings']['label'] : '';
                 $item['placeholder'] = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
+                $item['classname'] = (isset($field['settings']['classname']) ? $field['settings']['classname'] : null);
                 $item['required'] = isset($field['validations']['required']);
                 $item['html'] = '';
 
@@ -211,7 +212,6 @@ class Form extends FrontendBaseWidget
                 } elseif ($field['type'] == 'textbox') {
                     // create element
                     $txt = $this->frm->addText($item['name'], $defaultValues);
-                    $txt->setAttribute('placeholder', $item['placeholder']);
 
                     // add required attribute
                     if ($item['required']) {
@@ -272,7 +272,6 @@ class Form extends FrontendBaseWidget
                     // create element
                     $txt = $this->frm->addTextarea($item['name'], $defaultValues);
                     $txt->setAttribute('cols', 30);
-                    $txt->setAttribute('placeholder', $item['placeholder']);
 
                     // add required attribute
                     if ($item['required']) {
@@ -306,7 +305,10 @@ class Form extends FrontendBaseWidget
      */
     protected function loadTemplate($path = null)
     {
-        $this->tpl = new FrontendTemplate(false);
+        // spoon needs a new template Object
+        if ($this->tpl->getTemplateType() == 'spoon') {
+            $this->tpl = new FrontendTemplate(false);
+        }
     }
 
     /**
@@ -564,7 +566,7 @@ class Form extends FrontendBaseWidget
                 \SpoonSession::set('formbuilder_' . $this->item['id'], time());
 
                 // redirect
-                $redirect = SITE_URL . '/' . $this->URL->getQueryString();
+                $redirect = SITE_URL . $this->URL->getQueryString();
                 $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
                 $redirect .= 'identifier=' . $this->item['identifier'];
 

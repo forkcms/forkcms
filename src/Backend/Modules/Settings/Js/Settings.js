@@ -66,8 +66,10 @@ jsBackend.settings =
 				$spinner.hide();
 
 				// show success
-				if(data.code == 200) $success.show();
-				else $error.show();
+				if(data.code == 200) {
+					jsBackend.messages.add('success', jsBackend.locale.msg('TestWasSent'), '');
+				}
+				else jsBackend.messages.add('danger', jsBackend.locale.err('ErrorWhileSendingEmail'), '');
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
@@ -75,7 +77,7 @@ jsBackend.settings =
 				$spinner.hide();
 
 				// show error
-				$error.show();
+				jsBackend.messages.add('danger', jsBackend.locale.err('ErrorWhileSendingEmail'), '');
 			}
 		});
 	}

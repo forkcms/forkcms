@@ -168,7 +168,9 @@ class Model
             array((int) $mapId, (string) $name)
         );
 
-        if ($serializedData != null) return unserialize($serializedData);
+        if ($serializedData != null) {
+            return unserialize($serializedData);
+        }
         return false;
     }
 
@@ -187,7 +189,9 @@ class Model
             array((int) $mapId)
         );
 
-        foreach ($mapSettings as $key => $value) $mapSettings[$key] = unserialize($value);
+        foreach ($mapSettings as $key => $value) {
+            $mapSettings[$key] = unserialize($value);
+        }
 
         return $mapSettings;
     }

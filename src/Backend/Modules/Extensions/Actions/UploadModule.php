@@ -112,13 +112,13 @@ class UploadModule extends BackendBaseActionAdd
             // check if the file is in one of the valid directories
             foreach ($allowedDirectories as $directory) {
                 // yay, in a valid directory
-                if (stripos($fileName, $prefix . $directory) === 0) {
+                if (mb_stripos($fileName, $prefix . $directory) === 0) {
                     // we have a library file
                     if ($directory == $prefix . 'library/external/') {
                         // strip the prefix from the filename if necessary
                         $notPrefixedFileName = $fileName;
                         if (!empty($prefix)) {
-                            $notPrefixedFileName = substr($fileName, strlen($prefix));
+                            $notPrefixedFileName = mb_substr($fileName, mb_strlen($prefix));
                         }
 
                         if (!is_file(PATH_WWW . '/' . $fileName)) {
@@ -138,7 +138,7 @@ class UploadModule extends BackendBaseActionAdd
                     $tmpName = $chunks[0];
 
                     // ignore hidden files
-                    if (substr(basename($fileName), 0, 1) == '.') {
+                    if (mb_substr(basename($fileName), 0, 1) == '.') {
                         break;
                     } elseif ($moduleName === null) {
                         // first module we find, store the name
@@ -216,11 +216,12 @@ class UploadModule extends BackendBaseActionAdd
      * @param $file
      * @return string
      */
-    private function extractPrefix($file) {
+    private function extractPrefix($file)
+    {
         $name = explode(PATH_SEPARATOR, $file['name']);
         $prefix = array();
 
-        foreach($name as $element) {
+        foreach ($name as $element) {
             if ($element == 'src' || $element == 'library') {
                 return join(PATH_SEPARATOR, $prefix);
             } else {

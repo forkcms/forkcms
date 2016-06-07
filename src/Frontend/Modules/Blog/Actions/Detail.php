@@ -10,7 +10,6 @@ namespace Frontend\Modules\Blog\Actions;
  */
 
 use Common\Cookie as CommonCookie;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -388,7 +387,7 @@ class Detail extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Blog', 'after_add_comment', array('comment' => $comment));
 
                 // append a parameter to the URL so we can show moderation
-                if (strpos($redirectLink, '?') === false) {
+                if (mb_strpos($redirectLink, '?') === false) {
                     if ($comment['status'] == 'moderation') {
                         $redirectLink .= '?comment=moderation#' . FL::act('Comment');
                     }

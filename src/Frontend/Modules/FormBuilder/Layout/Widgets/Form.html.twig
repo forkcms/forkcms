@@ -1,0 +1,59 @@
+{# Note: we can use general variables names here since this template is parsed within its own scope #}
+
+<section class="mod">
+	<div class="inner">
+		<div class="bd">
+			{% if successMessage %}<div id="{{ formName }}" class="message success">{{ successMessage }}</div>{% endif %}
+			{% if formBuilderError %}<div class="message error"><p>{{ formBuilderError }}</p></div>{% endif %}
+
+			{% if fields %}
+				<form {% if hidUtf8 %}accept-charset="UTF-8" {% endif %}id="{{ formName }}" method="post" action="{{ formAction }}">
+					{% if formToken %}
+						<input type="hidden" name="form_token" id="formToken{{ formName|capitalize }}" value="{{ formToken }}" />
+					{% endif %}
+
+					<input type="hidden" name="form" value="{{ formName }}" />
+
+					{% for field in fields %}
+						{# Headings and paragraphs #}
+						{% if field.plaintext %}
+							<div class="content">
+								{{ field.html|raw }}
+							</div>
+						{% endif %}
+
+						{# Input field, textareas and drop downs #}
+						{% if field.simple %}
+							<p{% if field.error %} class="errorArea"{% endif %}>
+								<label for="{{ field.name }}">
+									{{ field.label }}{% if field.required %}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>{% endif %}
+								</label>
+								{{ field.html|raw }}
+								{% if field.error %}<span class="formError inlineError">{{ field.error }}</span>{% endif %}
+							</p>
+						{% endif %}
+
+						{# Radio buttons and checkboxes #}
+						{% if field.multiple %}
+							<div class="inputList{% if field.error %} errorArea{% endif %}">
+								<p class="label">
+									{{ field.label }}{% if field.required %}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>{% endif %}
+								</p>
+								<ul>
+									{% for html in field.html %}
+										<li><label for="{{ html.id }}">{{ html.field|raw }} {{ html.label }}</label></li>
+									{% endfor %}
+								</ul>
+								{% if field.error %}<span class="formError inlineError">{{ field.error }}</span>{% endif %}
+							</div>
+						{% endif %}
+					{% endfor %}
+
+					<p>
+						<input type="submit" value="{{ submitValue }}" name="submit" class="inputSubmit" />
+					</p>
+				</form>
+			{% endif %}
+		</div>
+	</div>
+</section>

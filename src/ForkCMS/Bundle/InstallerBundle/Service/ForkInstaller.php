@@ -5,7 +5,6 @@ namespace ForkCMS\Bundle\InstallerBundle\Service;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\DependencyInjection\Container;
-
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
@@ -73,7 +72,6 @@ class ForkInstaller
 
         $this->createYAMLConfig($data);
 
-        $this->definePaths();
         $this->deleteCachedData();
 
         $this->buildDatabase($data);
@@ -122,25 +120,6 @@ class ForkInstaller
     }
 
     /**
-     * Define paths also used in frontend/backend, to be used in installer.
-     * @deprecated This is done in different places in Fork. This should be centralized
-     */
-    private function definePaths()
-    {
-        // general paths
-        define('BACKEND_PATH', $this->rootDir . 'src/Backend');
-        define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
-        define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
-        define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
-
-        define('FRONTEND_PATH', $this->rootDir . 'src/Frontend');
-        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
-        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
-        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
-        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
-    }
-
-    /**
      * Delete the cached data
      */
     private function deleteCachedData()
@@ -185,7 +164,7 @@ class ForkInstaller
         );
         $database->execute(
             'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
-            array('charset' => 'utf8')
+            array('charset' => 'utf8mb4')
         );
         $this->container->set('database', $database);
     }
@@ -221,7 +200,6 @@ class ForkInstaller
 
             // install exists
             if (class_exists($class)) {
-
                 // create installer
                 /** @var $install ModuleInstaller */
                 $installer = new $class(
@@ -356,7 +334,7 @@ class ForkInstaller
             '<database-password>' => addslashes($data->getDbPassword()),
             '<database-port>' => $data->getDbPort(),
             '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
-                (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
+                (mb_strpos(mb_strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
                 'http'
             ,
             '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',

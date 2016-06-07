@@ -11,9 +11,7 @@ namespace Backend\Core\Installer;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-
 use Common\Uri as CommonUri;
-
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
@@ -403,9 +401,8 @@ class ModuleInstaller
      *
      * @param string $module
      * @param string $widget
-     * @param array $data
      */
-    protected function insertDashboardWidget($module, $widget, $data)
+    protected function insertDashboardWidget($module, $widget)
     {
         // get db
         $db = $this->getDB();
@@ -426,7 +423,7 @@ class ModuleInstaller
             $settings['value'] = unserialize($settings['value']);
 
             // add new widget
-            $settings['value'][$module][$widget] = $data;
+            $settings['value'][$module][] = $widget;
 
             // re-serialize value
             $settings['value'] = serialize($settings['value']);
@@ -446,7 +443,7 @@ class ModuleInstaller
             $settings['value'] = unserialize($settings['value']);
 
             // add new widget
-            $settings['value'][$module][$widget] = $data;
+            $settings['value'][$module][] = $widget;
 
             // re-serialize value
             $settings['value'] = serialize($settings['value']);
@@ -528,7 +525,7 @@ class ModuleInstaller
             $query .= ' AND data IS NULL';
         }
 
-        // get id (if its already exists)
+        // get id (if it already exists)
         $extraId = (int) $this->getDB()->getVar($query, $parameters);
 
         // doesn't already exist

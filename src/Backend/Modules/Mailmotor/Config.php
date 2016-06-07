@@ -10,7 +10,6 @@ namespace Backend\Modules\Mailmotor;
  */
 
 use \Symfony\Component\HttpKernel\KernelInterface;
-
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -171,7 +170,7 @@ class Config extends BackendBaseConfig
             // this language does not have a default group set
             if (!isset($groups[$language])) {
                 // set group record
-                $group['name'] = 'Website (' . strtoupper($language) . ')';
+                $group['name'] = 'Website (' . mb_strtoupper($language) . ')';
                 $group['language'] = $language;
                 $group['is_default'] = 'Y';
                 $group['created_on'] = date('Y-m-d H:i:s');

@@ -10,7 +10,6 @@ namespace Backend\Modules\Pages\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -18,7 +17,6 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-
 use Frontend\Core\Engine\Language as FrontendLanguage;
 
 /**
@@ -69,16 +67,29 @@ class Model
          ORDER BY i.label ASC';
 
     /**
+     * @return CacheBuilder
+     */
+    public static function getCacheBuilder()
+    {
+        static $cacheBuilder = null;
+        if ($cacheBuilder === null) {
+            $cacheBuilder = new CacheBuilder(BackendModel::get('database'), BackendModel::get('cache.pool'));
+        }
+
+        return $cacheBuilder;
+    }
+
+    /**
      * Build the cache
      *
-     * @param string $language The language to build the cache for, if not passes we use the working language.
+     * @param string $language The language to build the cache for, if not passed we use the working language.
      */
     public static function buildCache($language = null)
     {
         // redefine
         $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
 
-        $cacheBuilder = new CacheBuilder(BackendModel::get('database'));
+        $cacheBuilder = static::getCacheBuilder();
         $cacheBuilder->buildCache($language);
 
         // trigger an event
@@ -284,11 +295,7 @@ class Model
      */
     public static function createHtml($type = 'page', $depth = 0, $parentId = 1, $html = '')
     {
-        // init var
-        $navigation = array();
-
-        // require
-        require_once FRONTEND_CACHE_PATH . '/Navigation/navigation_' . BL::getWorkingLanguage() . '.php';
+        $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
 
         // check if item exists
         if (isset($navigation[$type][$depth][$parentId])) {
@@ -584,17 +591,8 @@ class Model
      */
     public static function getFullURL($id)
     {
-        // generate the cache files if needed
-        if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
-            self::buildCache(BL::getWorkingLanguage());
-        }
-
-        // init var
-        $keys = array();
+        $keys = static::getCacheBuilder()->getKeys(BL::getWorkingLanguage());
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
-
-        // require the file
-        require FRONTEND_CACHE_PATH . '/Navigation/keys_' . BL::getWorkingLanguage() . '.php';
 
         // available in generated file?
         if (isset($keys[$id])) {
@@ -857,7 +855,7 @@ class Model
                 IF(COUNT(p.id), "Y", "N") AS has_children
              FROM pages AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
+             LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id
              LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
              LEFT OUTER JOIN pages AS p ON p.parent_id = i.id AND p.status = "active" AND p.hidden = "N"
              AND p.language = i.language
@@ -891,19 +889,7 @@ class Model
      */
     public static function getTreeHTML()
     {
-        // check if the cached file exists, if not we generated it
-        if (!is_file(
-            FRONTEND_CACHE_PATH . '/Navigation/navigation_' . BL::getWorkingLanguage() . '.php'
-        )
-        ) {
-            self::buildCache(BL::getWorkingLanguage());
-        }
-
-        // init var
-        $navigation = array();
-
-        // require the file
-        require_once FRONTEND_CACHE_PATH . '/Navigation/navigation_' . BL::getWorkingLanguage() . '.php';
+        $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
 
         // start HTML
         $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
@@ -1545,5 +1531,28 @@ class Model
             // insert the blocks
             self::insertBlocks($blocksContent);
         }
+    }
+
+    /**
+     * Get encoded redirect URL
+     *
+     * @param string $redirectURL
+     *
+     * @return string
+     */
+    public static function getEncodedRedirectURL($redirectURL)
+    {
+        preg_match('!(http[s]?)://(.*)!i', $redirectURL, $matches);
+        $URLChunks = explode('/', $matches[2]);
+        if (!empty($URLChunks)) {
+            // skip domain name
+            $domain = array_shift($URLChunks);
+            foreach ($URLChunks as &$URLChunk) {
+                $URLChunk = urlencode($URLChunk);
+            }
+            $redirectURL = $matches[1] . '://' . $domain . '/' . implode('/', $URLChunks);
+        }
+
+        return $redirectURL;
     }
 }

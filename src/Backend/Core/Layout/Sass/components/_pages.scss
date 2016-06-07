@@ -1,0 +1,355 @@
+/*
+	Template visual small
+*/
+
+.templateVisual {
+
+  td {
+    background-color: $white;
+    border: 1px solid $gray-border;
+    text-align: center;
+    vertical-align: middle;
+
+    &:empty,
+    &.empty {
+      background: $white url('/src/Backend/Core/Layout/images/na.png') repeat;
+      background-size: 20px;
+      border: 1px solid $gray-border;
+    }
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  td {
+    /* @inc .secondarycontent */
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+    font-size: 10px;
+    padding: 4px 2px;
+
+    a {
+      color: $gray-base;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+}
+
+
+.disabled .templateVisual td {
+  background-color: $gray-lightest;
+  border-color: #CCC;
+
+  a {
+    color: $gray-light;
+    cursor: default;
+  }
+}
+
+/*
+	Template visual large
+*/
+
+/* Dirty padding fix */
+
+#tabContent.editTemplateTab {
+  padding: 10px 0 0 0;
+
+  .pageTitle {
+    margin: 0 10px;
+  }
+}
+
+/* General table layout */
+
+#templateVisualLarge,
+#templateVisualFallback {
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 2px; /* If you change the value "10" change it in model.php of pages module too; for IE7 */
+    table-layout: fixed;
+  }
+
+  td {
+    background: $gray-lightest;
+    border-radius: $border-radius-small;
+    border: 1px solid $gray-border;
+    vertical-align: top;
+
+    &.empty {
+      background: $white url('/src/Backend/Core/Layout/images/na.png') repeat;
+      background-size: 20px;
+      padding: 10px;
+      border-radius: 3px;
+      border: 1px solid $gray-border;
+    }
+  }
+
+  /* Title */
+
+  .templatePositionTitle {
+    background-color: $white;
+    border: 1px solid #BDBDBD;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    box-shadow: 0 -1px 0 1px #FFF;
+    color: $gray-base;
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  /* Blocks container */
+
+  .linkedBlocks {
+    padding: 20px 0;
+
+    &:empty {
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
+
+  /* Button holder */
+
+  .btn-group .btn {
+    padding: 2px 6px 3px;
+
+    &.addBlock .btn-text {
+      display: block;
+      font-size: $font-size-extra-small;
+    }
+
+    .fa {
+      padding-right: 0;
+    }
+  }
+
+  @media screen and (min-width: $screen-sm) {
+
+    .btn-group .btn {
+      padding: 4px 15px 5px;
+
+      &.addBlock .btn-text {
+        display: inline-block;
+        font-size: $font-size-small;
+      }
+
+      .fa {
+        padding-right: 6px;
+      }
+    }
+  }
+
+  /* Block */
+  .templatePositionCurrentType + .templatePositionCurrentType {
+    border-top: 0;
+  }
+
+  .templatePositionCurrentType {
+    background: $white;
+    border: 1px solid $gray-border;
+    cursor: move;
+    height: 61px;
+    overflow: ellipsis;
+    padding: 12px 15px;
+    position: relative;
+
+    &.ui-sortable-helper {
+      border-top: 1px solid #DDD;
+    }
+
+    .templateTitle {
+      color: $gray-base;
+      display: block;
+      font-size: $font-size-small;
+      font-weight: 600;
+      overflow: hidden;
+      -webkit-transition: color 0.3s ease-in-out;
+      -moz-transition: color 0.3s ease-in-out;
+      -o-transition: color 0.3s ease-in-out;
+      transition: color 0.3s ease-in-out;
+      white-space: nowrap;
+    }
+
+    .templateDescription {
+      color: $text-color;
+      display: block;
+      font-size: $font-size-small;
+      overflow: hidden;
+      -webkit-transition: color 0.3s ease-in-out;
+      -moz-transition: color 0.3s ease-in-out;
+      -o-transition: color 0.3s ease-in-out;
+      transition: color 0.3s ease-in-out;
+      white-space: nowrap;
+    }
+
+    &:hover .templateDescription {
+      color: $gray-base;
+    }
+
+    .buttonHolder {
+      opacity: 0;
+      position: absolute;
+      right: 5px;
+      top: 14px;
+      -webkit-transition: opacity 0.3s ease-in-out;
+      -moz-transition: opacity 0.3s ease-in-out;
+      -o-transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.3s ease-in-out;
+      z-index: 80;
+
+      .btn {
+        padding: 3px 6px;
+
+        .fa {
+          padding-right: 0;
+          font-size: $font-size-small;
+        }
+      }
+    }
+
+    @media screen and (min-width: $screen-sm) {
+
+      .buttonHolder {
+        right: 15px;
+
+        .btn {
+          padding: 6px 10px;
+
+          .fa {
+            font-size: $font-size-base;
+          }
+        }
+      }
+
+    }
+
+    &:after {
+      background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(20%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1)));
+      background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
+      background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
+      background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
+      background: linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
+      content: '.';
+      display: block;
+      height: 54px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      text-indent: -9999px;
+      -webkit-transition: width 0.3s ease-in-out;
+      -moz-transition: width 0.3s ease-in-out;
+      -o-transition: width 0.3s ease-in-out;
+      transition: width 0.3s ease-in-out;
+      width: 0;
+    }
+
+    &:hover:after,
+    &:focus:after {
+      width: 110px;
+    }
+  }
+
+  &:hover .templateTitle,
+  &:focus .templateTitle {
+    color: $gray-base;
+  }
+
+  .templateDisabled {
+
+    .templateTitle {
+      color: $gray-base;
+    }
+
+    .templateDescription {
+      color: $gray-light;
+    }
+  }
+}
+
+#templateVisualLarge {
+  clear: both;
+}
+
+#templateVisualFallback {
+  display: none;
+  margin: 10px;
+
+  div#fallback {
+    float: right;
+    width: 100%;
+  }
+
+  table {
+    border-spacing: 2px;
+  }
+
+  td {
+    background-color: $white;
+  }
+
+  #fallback {
+    margin: 10px 0;
+  }
+
+  .alert {
+    margin-top: 0;
+  }
+
+  .panel-body {
+    padding: 0 20px;
+  }
+}
+
+body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder,
+body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonHolder,
+#templateVisualLarge .templatePositionCurrentType:hover .buttonHolder,
+#templateVisualFallback .templatePositionCurrentType:hover .buttonHolder {
+  opacity: 1;
+}
+
+
+.current-template {
+  font-size: $font-size-btn;
+  margin-bottom: 5px;
+  padding-left: 15px;
+
+  a {
+    border-bottom: 1px solid $brand-primary;
+    cursor: pointer;
+    font-size: $font-size-small;
+    margin-left: 5px;
+
+    &:hover {
+      border-color: $brand-primary-dark;
+      color: $brand-primary-dark;
+      text-decoration: none;
+    }
+  }
+}
+
+#templateList {
+  margin-top: 20px;
+}
+
+.dragAndDropPlaceholder {
+  background: $gray-lighter;
+  border: 0;
+  height: 61px;
+  margin: 5px 0;
+}
+
+@media screen and (min-width: $screen-md) {
+  #templateVisualLarge table {
+    border-spacing: 15px;
+  }
+}

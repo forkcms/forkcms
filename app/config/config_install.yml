@@ -4,7 +4,7 @@ imports:
 framework:
     secret:          %kernel.secret%
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: "%kernel.root_dir%/config/routing_install.yml"
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
@@ -38,8 +38,8 @@ services:
             - %database.name%
             - %database.port%
         calls:
-            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8' } ] ]
+            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
     mailer:
         class: Common\Mailer
         arguments:
-            - @database
+            - "@database"

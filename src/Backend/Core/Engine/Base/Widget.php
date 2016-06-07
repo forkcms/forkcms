@@ -11,7 +11,6 @@ namespace Backend\Core\Engine\Base;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Header;
 use Backend\Core\Engine\Template;

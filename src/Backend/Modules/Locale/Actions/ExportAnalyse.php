@@ -12,7 +12,7 @@ namespace Backend\Modules\Locale\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 
 /**
  * This is the export-action, it will create a XML with missing locale items.
@@ -47,7 +47,7 @@ class ExportAnalyse extends BackendBaseActionIndex
         // xml headers
         header('Content-Disposition: attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"');
         header('Content-Type: application/octet-stream;charset=' . $charset);
-        header('Content-Length: ' . strlen($xmlOutput));
+        header('Content-Length: ' . mb_strlen($xmlOutput));
 
         // output XML
         echo $xmlOutput;

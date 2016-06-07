@@ -3,6 +3,20 @@
   <Backend>
     <Pages>
       <item type="label" name="Add">
+        <translation language="nl"><![CDATA[toevoegen]]></translation>
+        <translation language="en"><![CDATA[add]]></translation>
+        <translation language="it"><![CDATA[aggiungi]]></translation>
+        <translation language="ru"><![CDATA[Добавить]]></translation>
+        <translation language="zh"><![CDATA[添加页面]]></translation>
+        <translation language="de"><![CDATA[hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter]]></translation>
+        <translation language="hu"><![CDATA[hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar]]></translation>
+        <translation language="uk"><![CDATA[сторінку]]></translation>
+        <translation language="lt"><![CDATA[naujas]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη]]></translation>
+      </item>
+      <item type="label" name="AddPage">
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
         <translation language="en"><![CDATA[add page]]></translation>
         <translation language="it"><![CDATA[aggiungi pagina]]></translation>
@@ -564,6 +578,19 @@
         <translation language="hu"><![CDATA[A(z) <strong>%1$s</strong> widget csatolva a szekcióhoz.]]></translation>
         <translation language="es"><![CDATA[El widget <strong>%1$s</strong> is attached to this section.]]></translation>
         <translation language="el"><![CDATA[Η μικροεφαρμογή <strong>%1$s</strong> είναι συνημμένη σε αυτό το τμήμα.]]></translation>
+      </item>
+      <item type="message" name="AddTagsHere">
+        <translation language="nl"><![CDATA[Voeg tags toe.]]></translation>
+        <translation language="en"><![CDATA[Add tags here.]]></translation>
+        <translation language="it"><![CDATA[Spostare pagine su dispositivi touch non è possibile.]]></translation>
+        <translation language="de"><![CDATA[Aggiungere tag qui.]]></translation>
+        <translation language="fr"><![CDATA[Ajouter des tags ici.]]></translation>
+      </item>
+      <item type="message" name="MovePagesNotPossible">
+        <translation language="nl"><![CDATA[Het verplaatsen van pagina's is niet mogelijk op touch-apparaten.]]></translation>
+        <translation language="en"><![CDATA[Moving pages on touch devices is not possible.]]></translation>
+        <translation language="it"><![CDATA[Spostare pagine su dispositivi touch non è possibile.]]></translation>
+        <translation language="de"><![CDATA[Verschieben von Seiten auf Touch-Geräten ist nicht möglich.]]></translation>
       </item>
       <item type="error" name="CantAdd2Blocks">
         <translation language="nl"><![CDATA[Het is onmogelijk om 2 (of meer) modules aan dezelfde pagina te koppelen.]]></translation>
