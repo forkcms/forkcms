@@ -10,7 +10,6 @@ namespace Backend\Modules\ContentBlocks\Engine;
  */
 
 use Symfony\Component\Finder\Finder;
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -226,7 +225,7 @@ class Model
     {
         $templates = array();
         $finder = new Finder();
-        $finder->name('*.tpl');
+        $finder->name('*.html.twig');
         $finder->in(FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets');
 
         // if there is a custom theme we should include the templates there also

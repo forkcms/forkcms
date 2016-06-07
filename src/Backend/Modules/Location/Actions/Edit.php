@@ -63,7 +63,9 @@ class Edit extends BackendBaseActionEdit
         }
 
         // no item found, throw an exception, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        else {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
     }
 
     /**
@@ -74,7 +76,9 @@ class Edit extends BackendBaseActionEdit
         $this->record = (array) BackendLocationModel::get($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if (empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        if (empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
 
         $this->settings = BackendLocationModel::getMapSettings($this->id);
 
@@ -106,7 +110,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
         $this->frm->addText('street', $this->record['street']);
         $this->frm->addText('number', $this->record['number']);
         $this->frm->addText('zip', $this->record['zip']);
@@ -160,7 +164,9 @@ class Edit extends BackendBaseActionEdit
         $this->settingsForm->parse($this->tpl);
 
         // assign message if address was not be geocoded
-        if ($this->record['lat'] == null || $this->record['lng'] == null) $this->tpl->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
+        if ($this->record['lat'] == null || $this->record['lng'] == null) {
+            $this->tpl->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
+        }
     }
 
     /**
@@ -226,7 +232,9 @@ class Edit extends BackendBaseActionEdit
                     $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
                 }
                 // redirect to the edit action
-                else $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&report=edited');
+                else {
+                    $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&report=edited');
+                }
             }
         }
     }

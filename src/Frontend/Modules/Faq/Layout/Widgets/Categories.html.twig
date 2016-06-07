@@ -1,0 +1,15 @@
+{#
+	variables that are available:
+	- {{ widgetFaqCategories }}: contains an array with all posts, each element contains data about the post
+#}
+
+{% if widgetFaqCategories %}
+	<section id="faqCategoriesWidget" class="mod">
+		<h3>{{ 'lbl.AllCategories'|trans|capitalize }}</h3>
+		<ul>
+			{% for widgetFaqCategories in widgetFaqCategories %}
+				<li><a href="{{ widgetFaqCategories.full_url }}" title="{{ widgetFaqCategories.title }}">{{ widgetFaqCategories.title }}</a></li>
+			{% endfor %}
+		</ul>
+	</section>
+{% endif %}

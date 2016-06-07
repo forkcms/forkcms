@@ -32,27 +32,4 @@ class Init extends \Common\Core\Init
 
         \SpoonFilter::disableMagicQuotes();
     }
-
-    /**
-     * @inheritdoc
-     */
-    protected function definePaths()
-    {
-        // general paths
-        defined('FRONTEND_PATH') || define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
-        defined('FRONTEND_CACHE_PATH') || define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
-        defined('FRONTEND_CORE_PATH') || define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
-        defined('FRONTEND_MODULES_PATH') || define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
-        defined('FRONTEND_FILES_PATH') || define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function defineURLs()
-    {
-        defined('FRONTEND_CORE_URL') || define('FRONTEND_CORE_URL', '/src/' . APPLICATION . '/Core');
-        defined('FRONTEND_CACHE_URL') || define('FRONTEND_CACHE_URL', '/src/' . APPLICATION . '/Cache');
-        defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/' . APPLICATION . '/Files');
-    }
 }

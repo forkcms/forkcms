@@ -60,13 +60,22 @@ class Email extends BackendBaseActionIndex
         // email settings
         $mailerFrom = $this->get('fork.settings')->get('Core', 'mailer_from');
         $this->frm->addText('mailer_from_name', (isset($mailerFrom['name'])) ? $mailerFrom['name'] : '');
-        $this->frm->addText('mailer_from_email', (isset($mailerFrom['email'])) ? $mailerFrom['email'] : '');
+        $this->frm
+            ->addText('mailer_from_email', (isset($mailerFrom['email'])) ? $mailerFrom['email'] : '')
+            ->setAttribute('type', 'email')
+        ;
         $mailerTo = $this->get('fork.settings')->get('Core', 'mailer_to');
         $this->frm->addText('mailer_to_name', (isset($mailerTo['name'])) ? $mailerTo['name'] : '');
-        $this->frm->addText('mailer_to_email', (isset($mailerTo['email'])) ? $mailerTo['email'] : '');
+        $this->frm
+            ->addText('mailer_to_email', (isset($mailerTo['email'])) ? $mailerTo['email'] : '')
+            ->setAttribute('type', 'email')
+        ;
         $mailerReplyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
         $this->frm->addText('mailer_reply_to_name', (isset($mailerReplyTo['name'])) ? $mailerReplyTo['name'] : '');
-        $this->frm->addText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '');
+        $this->frm
+            ->addText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '')
+            ->setAttribute('type', 'email')
+        ;
 
 
         if ($this->isGod) {

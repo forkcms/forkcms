@@ -158,6 +158,11 @@
         <translation language="nl"><![CDATA[certificaat (.p12 bestand)]]></translation>
         <translation language="en"><![CDATA[certificate (.p12 file)]]></translation>
       </item>
+      <item type="label" name="MostViewedPages">
+        <translation language="nl"><![CDATA[meest bekeken pagina's]]></translation>
+        <translation language="en"><![CDATA[most viewed pages]]></translation>
+        <translation language="fr"><![CDATA[pages les plus vus]]></translation>
+      </item>
       <item type="error" name="P12Only">
         <translation language="nl"><![CDATA[Enkel p12 bestanden zijn toegelaten.]]></translation>
         <translation language="en"><![CDATA[Only p12 files are allowed.]]></translation>
@@ -182,6 +187,7 @@
           <p>
             <ol>
               <li>Ga naar de <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
+              <li>Zorg dat je aangemeld bent met een Google account die toegang heeft op de gewenste analytics account.</li>
               <li>Kies een project of maak een nieuw aan.</li>
               <li>Klik in de zijbalk op <strong>APIs &amp; auth</strong>. Kies daaronder <strong>APIs</strong>. Kies <strong>Enabled APIs</strong> om te zien welke API's er ingeschakeld zijn. Controleer of the Analytics API tussen de ingeschakelde API's staat. Indien de Analytics API niet aanwezig is, klik dan op de <strong>Enable API</strong> knop voor deze API.</li>
             </ol>
@@ -190,8 +196,8 @@
           <p>
             <ol>
               <li>Kies in de zijbalk aan de linkerkant <strong>Credentials.</strong></li>
-              <li>Klik op deze pagina op Create new Client ID onder de titel OAuth.</li>
-              <li>Kies <strong>Service account</strong> als application type.</li>
+              <li>Klik op deze pagina op New credentials onder de credentials tab.</li>
+              <li>Kies <strong>Service account</strong> in de dropdown.</li>
               <li>Download na het opslaan het gegenereerde certificaat (p12 file).</li>
               <li>Log in in Google Analytics and voeg leesrechten toe voor het gegenereerde emailadres in de developer console.</li>
               <li>Haal een kop koffie, en kom daarna terug. Het kan even duren voor de koppeling tot stand is gekomen.</li>
@@ -204,6 +210,7 @@
           <p>
             <ol>
               <li>Go to the <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
+              <li>Make sure you're logged in with a Google account that has access to the wanted Analytics account.</li>
               <li>Select a project, or create a new one.</li>
               <li>In the sidebar on the left, expand <strong>APIs &amp; auth</strong>. Next, click <strong>APIs</strong>. Select the <strong>Enabled APIs</strong> link in the API section to see a list of all your enabled APIs. Make sure that the Google Analytics API is on the list of enabled APIs. If you have not enabled it, select the API from the list of APIs, then select the <strong>Enable API</strong> button for the API.</li>
             </ol>
@@ -212,8 +219,8 @@
           <p>
             <ol>
               <li>In the sidebar on the left, select <strong>Credentials.</strong></li>
-              <li>From the Credentials page, click Create new Client ID under the OAuth heading to create your OAuth 2.0 credentials.</li>
-              <li>For the APPLICATION TYPE select <strong>Service account</strong>.</li>
+              <li>From the Credentials page, click New credentials under the Credentials tab to create your OAuth 2.0 credentials.</li>
+              <li>Select <strong>Service account key</strong> in the dropdown.</li>
               <li>Download the generated certificate (.p12 file).</li>
               <li>Login to analytics and add read rights to the wanted analytics profile to the generated emailadress from the developer console.</li>
               <li>Grab a cup of coffee, and come back to Fork in some minutes. It can take some time before the coupling is fully done.</li>

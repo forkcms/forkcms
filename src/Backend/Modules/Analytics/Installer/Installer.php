@@ -43,23 +43,11 @@ class Installer extends ModuleInstaller
     {
         $this->insertDashboardWidget(
             'Analytics',
-            'RecentVisits',
-            array(
-                'column' => 'middle',
-                'position' => 1,
-                'hidden' => false,
-                'present' => true,
-            )
+            'RecentVisits'
         );
         $this->insertDashboardWidget(
             'Analytics',
-            'TraficSources',
-            array(
-                'column' => 'middle',
-                'position' => 2,
-                'hidden' => false,
-                'present' => true,
-            )
+            'TraficSources'
         );
     }
 }

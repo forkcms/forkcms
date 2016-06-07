@@ -32,20 +32,6 @@ class Navigation extends FrontendBaseObject
     private static $excludedPageIds = array();
 
     /**
-     * The keys an structural data for pages
-     *
-     * @var    array
-     */
-    private static $keys = array();
-
-    /**
-     * The keys an structural data for pages
-     *
-     * @var    array
-     */
-    private static $navigation = array();
-
-    /**
      * The selected pageIds
      *
      * @var    array
@@ -196,35 +182,7 @@ class Navigation extends FrontendBaseObject
     public static function getKeys($language = null)
     {
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-
-        // does the keys exists in the cache?
-        if (!isset(self::$keys[$language]) || empty(self::$keys[$language])) {
-            // validate file
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php')) {
-                // generate the cache
-                BackendPagesModel::buildCache($language);
-
-                // recall
-                return self::getKeys($language);
-            }
-
-            // init var
-            $keys = array();
-
-            // require file
-            require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php';
-
-            // validate keys
-            if (empty($keys)) {
-                throw new Exception('No pages for ' . $language . '.');
-            }
-
-            // store
-            self::$keys[$language] = $keys;
-        }
-
-        // return from cache
-        return self::$keys[$language];
+        return BackendPagesModel::getCacheBuilder()->getKeys($language);
     }
 
     /**
@@ -236,28 +194,8 @@ class Navigation extends FrontendBaseObject
      */
     public static function getNavigation($language = null)
     {
-        // redefine
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-
-        // do the keys exists in the cache?
-        if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
-            // validate file @later: the file should be regenerated
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
-                throw new Exception('No navigation-file (navigation_' . $language . '.php) found.');
-            }
-
-            // init var
-            $navigation = array();
-
-            // require file
-            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
-
-            // store
-            self::$navigation[$language] = $navigation;
-        }
-
-        // return from cache
-        return self::$navigation[$language];
+        return BackendPagesModel::getCacheBuilder()->getNavigation($language);
     }
 
     /**
@@ -267,7 +205,7 @@ class Navigation extends FrontendBaseObject
      * @param int    $parentId     The parentID to start of.
      * @param int    $depth        The maximum depth to parse.
      * @param array  $excludeIds   PageIDs to be excluded.
-     * @param string $tpl          The template that will be used.
+     * @param string $template     The template that will be used.
      * @param int    $depthCounter A counter that will hold the current depth.
      * @return string
      */
@@ -276,7 +214,7 @@ class Navigation extends FrontendBaseObject
         $parentId = 0,
         $depth = null,
         $excludeIds = array(),
-        $tpl = '/Core/Layout/Templates/Navigation.tpl',
+        $template = '/Core/Layout/Templates/Navigation.html.twig',
         $depthCounter = 1
     ) {
         // get navigation
@@ -303,7 +241,7 @@ class Navigation extends FrontendBaseObject
             throw new Exception('The parent (' . $parentId . ') doesn\'t exists.');
         }
 
-        // special construction to merge home with it's immediate children
+        // special construction to merge home with its immediate children
         $mergedHome = false;
         while (true) {
             // loop elements
@@ -381,7 +319,7 @@ class Navigation extends FrontendBaseObject
                         $page['page_id'],
                         $depth,
                         $excludeIds,
-                        $tpl,
+                        $template,
                         $depthCounter + 1
                     );
                 } else {
@@ -414,14 +352,11 @@ class Navigation extends FrontendBaseObject
             break;
         }
 
-        // create template
-        $navigationTpl = new Template(false);
-
-        // assign navigation to template
-        $navigationTpl->assign('navigation', $navigation[$type][$parentId]);
-
         // return parsed content
-        return $navigationTpl->getContent(FRONTEND_PATH . (string) $tpl, true, true);
+        return Model::get('templating')->render(
+            $template,
+            array('navigation' => $navigation[$type][$parentId])
+        );
     }
 
     /**
@@ -548,8 +483,8 @@ class Navigation extends FrontendBaseObject
             foreach ($level as $pages) {
                 // loop pages
                 foreach ($pages as $pageId => $properties) {
-                    // only process pages with extra_blocks
-                    if (!isset($properties['extra_blocks'])) {
+                    // only process pages with extra_blocks that are visible
+                    if (!isset($properties['extra_blocks']) || $properties['hidden']) {
                         continue;
                     }
 

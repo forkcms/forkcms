@@ -673,7 +673,6 @@ class Model
                 array(BL::getWorkingLanguage(), $URL, $id)
             )
             ) {
-
                 $URL = BackendModel::addNumber($URL);
 
                 return self::getURL($URL, $id);
@@ -1054,9 +1053,17 @@ class Model
              LIMIT ?',
             array($item['id'], $archiveType, BL::getWorkingLanguage(), $rowsToKeep)
         );
-
+        
         // delete other revisions
         if (!empty($revisionIdsToKeep)) {
+            // get meta-ids that will be deleted
+            $metasIdsToRemove = (array) $db->getColumn(
+                'SELECT i.meta_id
+                 FROM blog_posts AS i
+                 WHERE i.id = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                array($item['id'])
+            );
+
             // get all the images of the revisions that will NOT be deleted
             $imagesToKeep = $db->getColumn(
                 'SELECT image FROM blog_posts
@@ -1083,6 +1090,13 @@ class Model
                 'id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
                 array($item['id'], $archiveType)
             );
+
+            if (!empty($metasIdsToRemove)) {
+                $db->delete(
+                    'meta',
+                    'id IN (' . implode(', ', $metasIdsToRemove) . ')'
+                );
+            }
         }
 
         // insert new version

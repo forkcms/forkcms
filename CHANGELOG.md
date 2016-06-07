@@ -1,3 +1,81 @@
+4.0.1 (2016-06-07)
+--
+
+Bugfixes:
+
+* Core: Fixes date field with empty date.
+* Core: Fix lost ucfirst template modifier.
+* Installer: Make "same language" not required.
+* Core: Fix the THEME_URL constant referencing the backend.
+* Core: Fix the hasColumn function of datagrids.
+* Core: Fix the not-matching color of the fork logo.
+* Core: avoid &nbsp; in favor of spaces.
+* Extensions: improve icons.
+* Blog: Fix preview url in edit action.
+* Core: Fix asterisk changed by # in the frontend.
+* Users: Never use the (not created) source file of avatars.
+* Core: Improve the gitignore file.
+
+4.0.0 (2016-05-27)
+--
+
+Improvements:
+
+* Core: Twig is now used everywhere
+* Core: Backend is now using bootstrap
+* Core: new backend device
+* ...
+
+Bugfixes:
+
+* Blog: Fixed saving Blog articles as draft.
+* Core: Fix incorrect path for theme OpenGraphImage.
+* Core: Fixed when deploying, that /src/Frontend/Cache/Navigation/editor_link_list_x.js is now created if not exists.
+* Faq: fixes faq-category sequence reordering not being saved.
+* Pages: removed single quotes converter in CacheBuilder. This fixes page titles with single quotes.
+* Pages: Fixes "Notice: Undefined index: parent_id" when viewing a page revision where the page is located in the root of the pages tree.
+* Pages: Fixes "Error: Call to a member function addMetaData() on null" when viewing an existing revision page.
+* Core: BackendDataGridFunctions::showImage updated with url, with and height.
+
+3.9.6 (2015-12-22)
+--
+Improvements:
+
+* Core: Adds a function to get checkbox enum values easier.
+* Core: use mod gzip on json files.
+* Settings: add start of body scripts.
+* Profiles: add missing labels.
+* Locale: speed up index and analyse actions.
+* Core: use PSR-6 compatible caching (with an external package: scrapbook).
+* Core: use Flysystem as the cache backend.
+* Core: replace jquery ui with typeahead & bloodhound.
+* Console: make the Symfony container available.
+* Core: update Spoon Library.
+* Analytics: improve coupling your analytics account.
+* Core: make the url of the last breadcrumb item available.
+* Installer: only load installer when Fork is not installed (and in test environment).
+* Location: use https for Google maps by default.
+* Locale: create a Symfony command to install locale.
+* Locale: allow us to install locale for a module.
+* Core: add the language to the canonical url.
+* Core: upgrade Symfony to version 2.8.
+* Core: bump the minimum php version to 5.5 and allow php 7 too.
+* Ajax: add testcases for invalid ajax requests.
+
+Bugfixes:
+
+* Pages: Don't get hidden pages with getUrlForBlock.
+* Pages: Fix 500 error when accessing hidden pages.
+* Console: use constants correctly.
+* MailMotor: avoid catching redirect exceptions.
+* Pages: fix array to string conversion.
+* Profiles: fix the import action.
+* Core: don't allow access to the .git folder.
+* Ajax: fix exceptions that should be handled.
+* Core: fix case mismatch in DataGrid classes.
+* FormBuilder: fix default value containing a space.
+
+
 3.9.5 (2015-08-31)
 --
 Improvements:

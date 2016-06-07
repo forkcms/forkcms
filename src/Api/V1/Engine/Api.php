@@ -12,7 +12,6 @@ namespace Api\V1\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\User as BackendUser;
 
@@ -119,7 +118,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
                     // set documentation
                     $parameterDocumentation[$matches[2][$i]] = array(
                         'type' => $matches[1][$i],
-                        'optional' => (substr_count($matches[1][$i], '[optional]') > 0),
+                        'optional' => (mb_substr_count($matches[1][$i], '[optional]') > 0),
                         'description' => $matches[3][$i]
                     );
                 }
@@ -238,7 +237,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
                 // find illegal characters in input string
                 foreach ($illegalCharacters as $character) {
-                    if (stripos($input, $character) !== false) {
+                    if (mb_stripos($input, $character) !== false) {
                         // wrap input with cdata
                         $wrapCdata = true;
 
@@ -394,17 +393,17 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // use the accept header if it is provided
         if (isset($_SERVER['HTTP_ACCEPT'])) {
-            $acceptHeader = strtolower($_SERVER['HTTP_ACCEPT']);
-            if (substr_count($acceptHeader, 'text/xml') > 0) {
+            $acceptHeader = mb_strtolower($_SERVER['HTTP_ACCEPT']);
+            if (mb_substr_count($acceptHeader, 'text/xml') > 0) {
                 $output = 'xml';
             }
-            if (substr_count($acceptHeader, 'application/xml') > 0) {
+            if (mb_substr_count($acceptHeader, 'application/xml') > 0) {
                 $output = 'xml';
             }
-            if (substr_count($acceptHeader, 'text/json') > 0) {
+            if (mb_substr_count($acceptHeader, 'text/json') > 0) {
                 $output = 'json';
             }
-            if (substr_count($acceptHeader, 'application/json') > 0) {
+            if (mb_substr_count($acceptHeader, 'application/json') > 0) {
                 $output = 'json';
             }
         }
@@ -446,7 +445,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
-        $version = strtolower($version);
+        $version = mb_strtolower($version);
 
         // build array
         $JSON = array();
@@ -484,7 +483,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
-        $version = strtolower($version);
+        $version = mb_strtolower($version);
 
         // init XML
         $XML = new \DOMDocument('1.0', $charset);

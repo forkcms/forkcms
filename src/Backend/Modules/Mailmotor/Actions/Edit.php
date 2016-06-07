@@ -147,7 +147,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('groups', $groups);
 
         // assign the template language
-        $this->tpl->assign('templateLanguage', \SpoonFilter::ucfirst(BL::lbl(strtoupper($template['language']))));
+        $this->tpl->assign('templateLanguage', \SpoonFilter::ucfirst(BL::lbl(mb_strtoupper($template['language']))));
 
         // get the price settings
         $pricePerEmail = $this->get('fork.settings')->get($this->getModule(), 'price_per_email');
@@ -182,10 +182,16 @@ class Edit extends BackendBaseActionEdit
 
         // sender
         $this->frm->addText('from_name', $this->record['from_name']);
-        $this->frm->addText('from_email', $this->record['from_email']);
+        $this->frm
+            ->addText('from_email', $this->record['from_email'])
+            ->setAttribute('type', 'email')
+        ;
 
         // reply-to address
-        $this->frm->addText('reply_to_email', $this->record['reply_to_email']);
+        $this->frm
+            ->addText('reply_to_email', $this->record['reply_to_email'])
+            ->setAttribute('type', 'email')
+        ;
 
         // groups
         $this->frm->addMultiCheckbox('groups', $groups, $this->record['groups']);

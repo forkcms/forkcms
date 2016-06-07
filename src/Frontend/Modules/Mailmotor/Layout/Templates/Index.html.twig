@@ -1,0 +1,13 @@
+<section id="mailmotorIndex" class="mod">
+	<div class="inner">
+		<div class="bd">
+			{% if dataGrid %}
+				{{ dataGrid }}
+			{% endif %}
+
+			{% if not dataGrid %}
+				<p>{{ 'msg.NoSentMailings'|trans }}</p>
+			{% endif %}
+		</div>
+	</div>
+</section>

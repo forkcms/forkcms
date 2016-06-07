@@ -130,44 +130,6 @@ class Model extends \Common\Core\Model
     }
 
     /**
-     * Get a module setting
-     *
-     * @deprecated
-     * @param string $module       The module wherefore a setting has to be retrieved.
-     * @param string $key          The key of the setting to be retrieved.
-     * @param mixed  $defaultValue A value that will be stored if the setting isn't present.
-     * @return mixed
-     */
-    public static function getModuleSetting($module, $key, $defaultValue = null)
-    {
-        trigger_error(
-            'FrontendModel::getModuleSetting is deprecated.
-             Use $container->get(\'fork.settings\')->get instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->get($module, $key, $defaultValue);
-    }
-
-    /**
-     * Get all module settings at once
-     *
-     * @deprecated
-     * @param string $module The module wherefore all settings has to be retrieved.
-     * @return array
-     */
-    public static function getModuleSettings($module)
-    {
-        trigger_error(
-            'FrontendModel::getModuleSettings is deprecated.
-             Use $container->get(\'fork.settings\')->getForModule instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->getForModule($module);
-    }
-
-    /**
      * Get all data for a page
      *
      * @param int $pageId The pageId wherefore the data will be retrieved.
@@ -184,7 +146,7 @@ class Model extends \Common\Core\Model
         // get data
         $record = (array) $db->getRecord(
             'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title,
-                 p.navigation_title_overwrite, p.data,
+                 p.navigation_title_overwrite, p.data, p.hidden,
                  m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
                  m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
                  m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
@@ -195,14 +157,19 @@ class Model extends \Common\Core\Model
              FROM pages AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
-             WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ?
+             WHERE p.id = ? AND p.status = ? AND p.language = ?
              LIMIT 1',
-            array($pageId, 'active', 'N', FRONTEND_LANGUAGE)
+            array($pageId, 'active', FRONTEND_LANGUAGE)
         );
 
         // validate
         if (empty($record)) {
             return array();
+        }
+
+        // if the page is hidden we need a 404 record
+        if ($record['hidden'] === 'Y' && $pageId !== 404) {
+            return self::getPage(404);
         }
 
         // unserialize page data and template data
@@ -264,7 +231,7 @@ class Model extends \Common\Core\Model
 
         // get data
         $record = (array) $db->getRecord(
-            'SELECT p.id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite,
+            'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite,
                  p.data,
                  m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
                  m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
@@ -504,24 +471,5 @@ class Model extends \Common\Core\Model
                 throw $e;
             }
         }
-    }
-
-    /**
-     * Store a module setting
-     *
-     * @deprecated
-     * @param string $module The module wherefore a setting has to be stored.
-     * @param string $key    The key of the setting.
-     * @param mixed  $value  The value (will be serialized so make sure the type is correct).
-     */
-    public static function setModuleSetting($module, $key, $value)
-    {
-        trigger_error(
-            'BackendModel::setModuleSetting is deprecated.
-             Use $container->get(\'fork.settings\')->set instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->set($module, $key, $value);
     }
 }

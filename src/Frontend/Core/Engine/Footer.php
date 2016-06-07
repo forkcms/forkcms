@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
@@ -72,7 +71,7 @@ class Footer extends FrontendBaseObject
     protected function getFacebookHtml($facebookAppId)
     {
         // build correct locale
-        $locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
+        $locale = mb_strtolower(FRONTEND_LANGUAGE) . '_' . mb_strtoupper(FRONTEND_LANGUAGE);
 
         // reform some locale
         switch (FRONTEND_LANGUAGE) {
@@ -152,8 +151,8 @@ class Footer extends FrontendBaseObject
         $siteLinksCode .= '    "url": "' . SITE_URL . '",' . "\n";
         $siteLinksCode .= '    "potentialAction": {' . "\n";
         $siteLinksCode .= '        "@type": "SearchAction",' . "\n";
-        $siteLinksCode .= '        "target": "' . SITE_URL . $searchUrl . '?form=search&q={search_term_string}",' . "\n";
-        $siteLinksCode .= '        "query-input": "required name=search_term_string"' . "\n";
+        $siteLinksCode .= '        "target": "' . SITE_URL . $searchUrl . '?form=search&q_widget={q_widget}",' . "\n";
+        $siteLinksCode .= '        "query-input": "name=q_widget"' . "\n";
         $siteLinksCode .= '    }' . "\n";
         $siteLinksCode .= '}' . "\n";
         $siteLinksCode .= '</script>';

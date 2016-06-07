@@ -1,0 +1,72 @@
+#fieldsHolder {
+  .btn-toolbar .btn {
+    padding: 6px 7px 7px;
+  }
+
+  .field {
+    border-bottom: 1px solid $gray-lighter;
+    border-radius: $border-radius-small;
+    background-color: $white;
+    padding: 25px;
+    margin: 0;
+
+    &.field-submit {
+      padding: 15px 25px;
+    }
+  }
+
+  .form-control[disabled] {
+    background-color: $white;
+    cursor: not-allowed;
+  }
+
+  .btn[disabled] {
+    opacity: 1;
+  }
+}
+
+#formElements {
+
+  h5 {
+    color: $gray;
+    margin-top: 0;
+  }
+
+  .panel-body {
+    padding: 0;
+  }
+
+  .list-group {
+    padding: 20px 25px 15px;
+    margin: 0;
+
+    .list-group-item {
+      border: 0;
+      border-top: 1px solid $gray-lightest;
+      padding: 11px 0 12px;
+
+      a {
+        color: $formbuilder-blue;
+      }
+
+      .fa {
+        color: $gray-light;
+        margin-right: 5px;
+      }
+
+      .icon {
+        margin: 0 6px 0 3px;
+        width: 14px;
+      }
+    }
+
+    &.first {
+      border-bottom: 1px solid $gray-lighter;
+    }
+  }
+}
+
+#datetimeValueAmount,
+#datetimeValueType {
+  width: 25%;
+}

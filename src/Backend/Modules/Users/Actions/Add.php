@@ -53,13 +53,16 @@ class Add extends BackendBaseActionAdd
 
         // create elements
         // profile
-        $this->frm->addText('email', null, 255);
+        $this->frm
+            ->addText('email', null, 255)
+            ->setAttribute('type', 'email')
+        ;
         $this->frm->addPassword(
             'password',
             null,
             75,
-            'inputText inputPassword passwordGenerator',
-            'inputTextError inputPasswordError passwordGenerator'
+            'form-control passwordGenerator',
+            'form-control danger passwordGenerator'
         )->setAttributes(array('autocomplete' => 'off'));
         $this->frm->addPassword('confirm_password', null, 75)->setAttributes(array('autocomplete' => 'off'));
         $this->frm->addText('name', null, 255);
@@ -207,9 +210,7 @@ class Add extends BackendBaseActionAdd
                         // loop through widgets inside a module
                         foreach ($module as $widgetKey => $widget) {
                             // if widget present set true
-                            if ($widget['present']) {
-                                $newSequence[$moduleKey][$widgetKey]['present'] = true;
-                            }
+                            $newSequence[$moduleKey][] = $widgetKey;
                         }
                     }
                 }

@@ -10,7 +10,6 @@ namespace Backend\Modules\Locale\Actions;
  */
 
 use Common\Uri as CommonUri;
-
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -68,11 +67,15 @@ class Add extends BackendBaseActionAdd
             }
 
             // this translation doesn't exist
-            else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing' . $this->filterQuery);
+            else {
+                $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing' . $this->filterQuery);
+            }
         }
 
         // not copying
-        else $isCopy = false;
+        else {
+            $isCopy = false;
+        }
 
         // create form
         $this->frm = new BackendForm('add', BackendModel::createURLForAction() . $this->filterQuery);
@@ -132,7 +135,9 @@ class Add extends BackendBaseActionAdd
                 // allowed regex (a-z and 0-9)
                 if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
                     // first letter does not seem to be a capital one
-                    if (!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::err('InvalidName'));
+                    if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
+                        $txtName->setError(BL::err('InvalidName'));
+                    }
 
                     // syntax is completely fine
                     else {
@@ -148,7 +153,9 @@ class Add extends BackendBaseActionAdd
             if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if ($this->frm->getField('type')->getValue() == 'act') {
-                    if (urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
+                    if (urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
+                        $txtValue->addError(BL::err('InvalidValue'));
+                    }
                 }
             }
 

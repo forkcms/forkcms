@@ -70,7 +70,6 @@ class CoreInstaller extends ModuleInstaller
         $this->setModuleRights(1, 'Dashboard');
 
         $this->setActionRights(1, 'Dashboard', 'Index');
-        $this->setActionRights(1, 'Dashboard', 'AlterSequence');
     }
 
     /**

@@ -475,8 +475,8 @@ class Model implements FrontendTagsInterface
         // loop the numbers
         foreach ($numbers as $key => $count) {
             // init vars
-            $year = substr($key, 0, 4);
-            $month = substr($key, 4, 2);
+            $year = mb_substr($key, 0, 4);
+            $month = mb_substr($key, 4, 2);
 
             // reset
             if ($year < $firstYear) {
@@ -961,7 +961,7 @@ class Model implements FrontendTagsInterface
                 ->setTo(array($to['email'] => $to['name']))
                 ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                 ->parseHtml(
-                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
+                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.html.twig',
                     $variables,
                     true
                 )
@@ -983,7 +983,7 @@ class Model implements FrontendTagsInterface
                 ->setTo(array($to['email'] => $to['name']))
                 ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                 ->parseHtml(
-                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
+                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.html.twig',
                     $variables,
                     true
                 )

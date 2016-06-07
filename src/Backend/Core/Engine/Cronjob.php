@@ -10,10 +10,8 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\HttpFoundation\Response;
-
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Base\Object;
-
 use Frontend\Core\Engine\Language as FrontendLanguage;
 
 /**
@@ -42,7 +40,7 @@ class Cronjob extends Object implements \ApplicationInterface
         $this->cronjob->execute();
 
         // a cronjob does not have output, so we return a empty string as response
-        // this is not a correct solution, in time cronjobs should have there own frontcontroller.
+        // this is not a correct solution, in time cronjobs should have their own frontcontroller.
         return new Response('');
     }
 

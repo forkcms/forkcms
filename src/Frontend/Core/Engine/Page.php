@@ -13,9 +13,7 @@ use Common\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Common\Cookie as CommonCookie;
-
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
@@ -104,8 +102,20 @@ class Page extends FrontendBaseObject
         // set tracking cookie
         Model::getVisitorId();
 
-        // get pageId for requested URL
-        $this->pageId = Navigation::getPageId(implode('/', $this->URL->getPages()));
+        // create header instance
+        $this->header = new Header($this->getKernel());
+
+        // get page content from pageId of the requested URL
+        $this->record = $this->getPageContent(
+            Navigation::getPageId(implode('/', $this->URL->getPages()))
+        );
+
+        if (empty($this->record)) {
+            $this->record = Model::getPage(404);
+        }
+
+        // we need to set the correct id
+        $this->pageId = (int) $this->record['id'];
 
         // set headers if this is a 404 page
         if ($this->pageId == 404) {
@@ -119,14 +129,8 @@ class Page extends FrontendBaseObject
         // create breadcrumb instance
         $this->breadcrumb = new Breadcrumb($this->getKernel());
 
-        // create header instance
-        $this->header = new Header($this->getKernel());
-
         // new footer instance
         $this->footer = new Footer($this->getKernel());
-
-        // get page content
-        $this->getPageContent();
 
         // process page
         $this->processPage();
@@ -197,7 +201,7 @@ class Page extends FrontendBaseObject
 
         // output
         return new Response(
-            $this->tpl->getContent($this->templatePath, false, true),
+            $this->tpl->getContent($this->templatePath),
             $this->statusCode
         );
     }
@@ -224,37 +228,32 @@ class Page extends FrontendBaseObject
 
     /**
      * Get page content
+     *
+     * @return array
      */
-    protected function getPageContent()
+    protected function getPageContent($pageId)
     {
         // load revision
         if ($this->URL->getParameter('page_revision', 'int') != 0) {
             // get data
-            $this->record = Model::getPageRevision($this->URL->getParameter('page_revision', 'int'));
+            $record = Model::getPageRevision($this->URL->getParameter('page_revision', 'int'));
 
             // add no-index to meta-custom, so the draft won't get accidentally indexed
             $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
         } else {
             // get page record
-            $this->record = (array) Model::getPage($this->pageId);
+            $record = (array) Model::getPage($pageId);
         }
 
-        // empty record (pageId doesn't exists, hope this line is never used)
-        if (empty($this->record) && $this->pageId != 404) {
-            throw new RedirectException(
-                'Redirect',
-                new RedirectResponse(
-                    Navigation::getURL(404),
-                    404
-                )
-            );
+        if (empty($record)) {
+            return array();
         }
 
         // init var
         $redirect = true;
 
         // loop blocks, if all are empty we should redirect to the first child
-        foreach ($this->record['positions'] as $blocks) {
+        foreach ($record['positions'] as $blocks) {
             // loop blocks in position
             foreach ($blocks as $block) {
                 // HTML provided?
@@ -277,7 +276,7 @@ class Page extends FrontendBaseObject
         // should we redirect?
         if ($redirect) {
             // get first child
-            $firstChildId = Navigation::getFirstChildId($this->record['id']);
+            $firstChildId = Navigation::getFirstChildId($record['id']);
 
             // validate the child
             if ($firstChildId !== false) {
@@ -294,6 +293,8 @@ class Page extends FrontendBaseObject
                 );
             }
         }
+
+        return $record;
     }
 
     /**
@@ -335,7 +336,7 @@ class Page extends FrontendBaseObject
                 $temp = array();
                 $temp['url'] = '/' . $language;
                 $temp['label'] = $language;
-                $temp['name'] = Language::msg(strtoupper($language));
+                $temp['name'] = Language::msg(mb_strtoupper($language));
                 $temp['current'] = (bool) ($language == FRONTEND_LANGUAGE);
 
                 // add
@@ -473,7 +474,7 @@ class Page extends FrontendBaseObject
         $this->tpl->assign('page', $this->record);
 
         // set template path
-        $this->templatePath = FRONTEND_PATH . '/' . $this->record['template_path'];
+        $this->templatePath = $this->record['template_path'];
 
         // loop blocks
         foreach ($this->record['positions'] as $position => &$blocks) {

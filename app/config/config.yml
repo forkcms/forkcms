@@ -10,9 +10,7 @@ framework:
     csrf_protection: ~
     templating:
         engines: ['twig']
-    session:
-        handler_id: session.handler.native_file
-        save_path: "%kernel.root_dir%/sessions"
+    session: ~
 
 # Assetic Configuration
 assetic:
@@ -25,7 +23,6 @@ assetic:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-
 
 monolog:
     handlers:
@@ -54,24 +51,52 @@ services:
             - %database.name%
             - %database.port%
         calls:
-            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8' } ] ]
+            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
             - [ setDebug, [ %kernel.debug% ]]
     mailer_configurator:
         class: Common\Mailer\Configurator
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
         arguments:
-            - @fork.settings
-            - @service_container
-    fork.settings_cache:
-        class: Common\Cache\InMemoryCache
+            - "@fork.settings"
+            - "@service_container"
+
+    cache.filesystem.adapter:
+        class: League\Flysystem\Adapter\Local
+        arguments:
+            - %kernel.cache_dir%
+    cache.filesystem.filesystem:
+        class: League\Flysystem\Filesystem
+        arguments:
+            - "@cache.filesystem.adapter"
+    cache.adapter:
+        class: MatthiasMullie\Scrapbook\Adapters\Flysystem
+        arguments:
+            - "@cache.filesystem.filesystem"
+    cache.buffer:
+        class: MatthiasMullie\Scrapbook\Buffered\BufferedStore
+        arguments:
+            - "@cache.adapter"
+    cache.pool:
+        class: MatthiasMullie\Scrapbook\Psr6\Pool
+        arguments:
+            - "@cache.buffer"
+
     fork.settings:
         class: Common\ModulesSettings
         arguments:
-            - @database
-            - @fork.settings_cache
+            - "@database"
+            - "@cache.pool"
 
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    templating:
+        class: Frontend\Core\Engine\TwigTemplate
+        arguments:
+            - "@twig"
+            - "@templating.name_parser"
+            - "@templating.locator"

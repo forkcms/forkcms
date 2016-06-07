@@ -51,6 +51,13 @@ class Index extends BackendBaseActionIndex
     private $isGod;
 
     /**
+     * Has Submissions?
+     *
+     * @var bool
+     */
+    private $hasSubmissions;
+
+    /**
      * Execute the action
      */
     public function execute()
@@ -72,15 +79,25 @@ class Index extends BackendBaseActionIndex
         // init vars
         $langWidth = (60 / count($this->filter['language']));
 
-        // get all the translations for the selected languages
-        $translations = BackendLocaleModel::getTranslations(
-            $this->filter['application'],
-            $this->filter['module'],
-            $this->filter['type'],
-            $this->filter['language'],
-            $this->filter['name'],
-            $this->filter['value']
+        // if nothing is submitted
+        // we don't need to fetch all the locale
+        $this->hasSubmissions =
+        (
+            '' !== $this->filter['application'].$this->filter['module'].
+            $this->filter['name'].$this->filter['value']
         );
+
+        if ($this->hasSubmissions) {
+            // get all the translations for the selected languages
+            $translations = BackendLocaleModel::getTranslations(
+                $this->filter['application'],
+                $this->filter['module'],
+                $this->filter['type'],
+                $this->filter['language'],
+                $this->filter['name'],
+                $this->filter['value']
+            );
+        }
 
         // create datagrids
         $this->dgLabels = new BackendDataGridArray(isset($translations['lbl']) ? $translations['lbl'] : array());
@@ -99,16 +116,7 @@ class Index extends BackendBaseActionIndex
         // loop the datagrids (as references)
         foreach ($dataGrids as $type => &$dataGrid) {
             /** @var $dataGrid BackendDataGridArray */
-            $dataGrid->setSortingColumns(array('module', 'name', 'edited_on', 'application'), 'name');
-
-            $dataGrid->setColumnFunction(
-                array(new BackendDataGridFunctions(), 'getTimeAgo'),
-                array('[edited_on]'),
-                'edited_on',
-                true
-            );
-
-            $dataGrid->setHeaderLabels(array('edited_on' => \SpoonFilter::ucfirst(BL::lbl('Edited'))));
+            $dataGrid->setSortingColumns(array('module', 'name', 'application'), 'name');
 
             // disable paging
             $dataGrid->setPaging(false);
@@ -116,13 +124,13 @@ class Index extends BackendBaseActionIndex
             // set header label for reference code
             $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
-            // add the multi checkbox column
-            $dataGrid->setMassActionCheckboxes('checkbox', '[name]');
-
             // hide the application when only one application is shown
             if ($this->filter['application'] != '') {
                 $dataGrid->setColumnHidden('application');
             }
+
+            // hide edite_on
+            $dataGrid->setColumnHidden('edited_on');
 
             // set column attributes for each language
             foreach ($this->filter['language'] as $lang) {
@@ -141,14 +149,17 @@ class Index extends BackendBaseActionIndex
 
                 // escape the double quotes
                 $dataGrid->setColumnFunction(
-                    array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true
+                    array('SpoonFilter', 'htmlentities'),
+                    array('[' . $lang . ']', null, ENT_QUOTES),
+                    $lang,
+                    true
                 );
                 if ($type == 'act') {
                     $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
                 }
 
                 // set header labels
-                $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(strtoupper($lang)))));
+                $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(mb_strtoupper($lang)))));
 
                 // only 1 language selected?
                 if (count($this->filter['language']) == 1) {
@@ -162,20 +173,22 @@ class Index extends BackendBaseActionIndex
                     $dataGrid->setColumnHidden('translation_id');
 
                     // check if this action is allowed
+                    if (BackendAuthentication::isAllowedAction('Add')) {
+                        // add copy button
+                        $dataGrid->addColumnAction(
+                            'copy',
+                            null,
+                            BL::lbl('Copy'),
+                            BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
+                        );
+                    }
+
+                    // check if this action is allowed
                     if (BackendAuthentication::isAllowedAction('Edit')) {
                         // add edit button
                         $dataGrid->addColumn(
                             'edit', null, BL::lbl('Edit'),
                             BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
-                        );
-                    }
-
-                    // check if this action is allowed
-                    if (BackendAuthentication::isAllowedAction('Add')) {
-                        // add copy button
-                        $dataGrid->addColumnAction(
-                            'copy', null, BL::lbl('Copy'),
-                            BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
                 } else {
@@ -280,6 +293,11 @@ class Index extends BackendBaseActionIndex
             $this->dgMessages->getNumResults() == 0 &&
             $this->dgErrors->getNumResults() == 0 &&
             $this->dgActions->getNumResults() == 0
+        );
+
+        $this->tpl->assign(
+            'hasSubmissions',
+            $this->hasSubmissions
         );
 
         // parse the add URL

@@ -41,7 +41,7 @@ class Theme
         // theme in use
         if (Model::get('fork.settings')->get('Core', 'theme', 'core') != 'core') {
             // theme not yet specified
-            if (strpos($file, 'src/Frontend/Themes/' . $theme) === false) {
+            if (mb_strpos($file, 'src/Frontend/Themes/' . $theme) === false) {
                 // add theme location
                 $themeTemplate = str_replace(array('src/Frontend/'), array('src/Frontend/Themes/' . $theme . '/'), $file);
 

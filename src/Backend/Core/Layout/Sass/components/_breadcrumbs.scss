@@ -1,0 +1,24 @@
+.breadcrumb {
+  margin-bottom: 0;
+  padding: 12px 0 8px;
+
+  li + li {
+    &:before {
+      content: '\f105';
+      font-family: FontAwesome;
+      font-size: $font-size-small;
+      padding: 0 5px 0 2px;
+    }
+  }
+
+  li a {
+    color: $gray-light;
+    font-size: $font-size-base;
+
+    &:hover,
+    &:focus {
+      border-bottom: 1px solid $gray-light;
+      text-decoration: none;
+    }
+  }
+}

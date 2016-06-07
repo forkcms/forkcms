@@ -169,10 +169,10 @@ jsBackend.pages.extras =
 		var blockHTML = '<div class="templatePositionCurrentType' + (visible ? ' ' : ' templateDisabled') + '" data-block-id="' + index + '">' +
 							'<span class="templateTitle">' + title + '</span>' +
 							'<span class="templateDescription">' + description + '</span>' +
-							'<div class="buttonHolder">' +
-								'<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'button icon iconOnly iconEdit' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span>' + utils.string.ucfirst(jsBackend.locale.lbl('Edit')) + '</span></a>' +
-								'<a href="#" class="button icon iconOnly ' + (visible ? 'iconVisible ' : 'iconInvisible ') + 'toggleVisibility"><span>&nbsp;</span></a>' +
-								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>' + utils.string.ucfirst(jsBackend.locale.lbl('DeleteBlock')) + '</span></a>' +
+							'<div class="btn-group buttonHolder">' +
+								'<a href="#" class="btn btn-default btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
+                '<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'btn btn-primary btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
+								'<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="fa fa-trash-o"></span></a>' +
 							'</div>' +
 						'</div>';
 
@@ -208,7 +208,7 @@ jsBackend.pages.extras =
 		e.preventDefault();
 
 		// fetch block index
-		var index = $(this).parent().parent().attr('data-block-id');
+		var index = $(this).closest('*[data-block-id]').data('block-id');
 
 		// save unaltered content
 		var previousContent = $('#blockHtml' + index).val();
@@ -217,68 +217,36 @@ jsBackend.pages.extras =
 		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
 
 		// show dialog
-		$('#blockHtml').dialog(
-		{
-			closeOnEscape: false,
-			draggable: false,
-			resizable: false,
-			modal: true,
-			width: 940,
-			title: utils.string.ucfirst(jsBackend.locale.lbl('Editor')),
-			position: 'center',
-			buttons:
-			[
-				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-					click: function()
-					{
-						// grab the content
-						var content = $('#html').val();
+		$('#blockHtmlSubmit').unbind('click').on('click', function(e) {
+			e.preventDefault();
 
-						// save content
-						jsBackend.pages.extras.setContent(index, content);
+			// grab the content
+			var content = $('#html').val();
 
-						// edit content = template is no longer original
-						jsBackend.pages.template.original = false;
+			// save content
+			jsBackend.pages.extras.setContent(index, content);
 
-						// close dialog
-						$(this).dialog('close');
-					}
-				},
-				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-					click: function()
-					{
-						// reset content
-						jsBackend.pages.extras.setContent(index, previousContent);
+			// edit content = template is no longer original
+			jsBackend.pages.template.original = false;
 
-						// close the dialog
-						$(this).dialog('close');
-					}
-				}
-			],
-			// jQuery's dialog is so nice to move this node to display it well, but does not put it back where it belonged
-			close: function(e, ui)
-			{
-				// destroy dialog (to get rid of html order problems)
-				$(this).dialog('destroy');
-
-				// find block placeholder
-				var blockPlaceholder = $('#blockPlaceholder');
-
-				// move node back to the original position
-				$(this).insertBefore(blockPlaceholder);
-
-				// remove placeholder
-				blockPlaceholder.remove();
-			},
-			// Open dialog with CKEditor
-			open: function()
-			{
-				// set content in editor
-				CKEDITOR.instances['html'].setData(previousContent);
-			}
+			// close dialog
+			$('#blockHtml').modal('hide');
 		});
+
+		$('#blockHtmlCancel').unbind('click').on('click', function(e) {
+			e.preventDefault();
+
+			// reset content
+			jsBackend.pages.extras.setContent(index, previousContent);
+
+			// close the dialog
+			$('#blockHtml').modal('hide');
+		});
+
+		$('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
+			// set content in editor
+			CKEDITOR.instances['html'].setData(previousContent);
+		}).modal('show');
 	},
 
 	// hide fallback
@@ -400,7 +368,7 @@ jsBackend.pages.extras =
 			blockExtraId.parent('.contentBlock').removeClass('reset');
 
 			// while we're at it, make sure the position is also correct
-			blockPosition.val($(this).parent().parent().attr('data-position'));
+			blockPosition.val($(this).closest('*[data-position]').attr('data-position'));
 		});
 
 		// mark all as having been reset
@@ -428,7 +396,7 @@ jsBackend.pages.extras =
 		e.preventDefault();
 
 		// save the position wherefor we will change the extra
-		position = $(this).parent().parent().attr('data-position');
+		position = $(this).closest('*[data-position]').data('position');
 
 		// init var
 		var hasModules = false;
@@ -479,66 +447,91 @@ jsBackend.pages.extras =
 
 		// populate the modules
 		jsBackend.pages.extras.populateExtraModules();
+        
+    // @TODO Fix the editor templates
+        /*
+         $('#addBlock').dialog(
+         {
+         draggable: false,
+         resizable: false,
+         modal: true,
+         width: 500,
+         buttons:
+         [
+         {
+         text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+         click: function()
+         {
+         // fetch the selected extra type
+         var selectedExtraType = $('#extraType').val();
+         // fetch the selected extra id
+         var selectedExtraId = $('#extraExtraId').val();
+         // is user template?
+         var isUserTemplate = (selectedExtraType == 'usertemplate');
+         // fetch user template id
+         if (isUserTemplate)
+         {
+         selectedExtraId = $('#userTemplate').val();
+         }
 
+         // add the extra
+         var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType);
+
+         // add a block = template is no longer original
+         jsBackend.pages.template.original = false;
+
+         // close dialog
+         $(this).dialog('close');
+
+         // if the added block was an editor, show the editor immediately
+         if(!isUserTemplate && index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
+         {
+         $('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
+         }
+
+         // if the added block was a user template, show the template popup immediately
+         if(isUserTemplate && index)
+         {
+         $('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click();
+         }
+         }
+         },
+         {
+         text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+         click: function()
+         {
+         // close the dialog
+         $(this).dialog('close');
+         }
+         }
+         ]
+         });
+     */
 		// initialize the modal for choosing an extra
 		if($('#addBlock').length > 0)
 		{
-			$('#addBlock').dialog(
-			{
-				draggable: false,
-				resizable: false,
-				modal: true,
-				width: 500,
-				buttons:
-				[
-					{
-						text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-						click: function()
-						{
-							// fetch the selected extra type
-							var selectedExtraType = $('#extraType').val();
-							// fetch the selected extra id
-							var selectedExtraId = $('#extraExtraId').val();
-							// is user template?
-							var isUserTemplate = (selectedExtraType == 'usertemplate');
-							// fetch user template id
-							if (isUserTemplate)
-							{
-								selectedExtraId = $('#userTemplate').val();
-							}
+			$('#addBlockSubmit').unbind('click').on('click', function (e) {
+				e.preventDefault();
+				// fetch the selected extra id
+				var selectedExtraId = $('#extraExtraId').val();
 
-							// add the extra
-							var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType);
+				// add the extra
+				var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
 
-							// add a block = template is no longer original
-							jsBackend.pages.template.original = false;
+				// add a block = template is no longer original
+				jsBackend.pages.template.original = false;
 
-							// close dialog
-							$(this).dialog('close');
+				// close dialog
+				$('#addBlock').modal('hide');
 
-							// if the added block was an editor, show the editor immediately
-							if(!isUserTemplate && index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
-							{
-								$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
-							}
-
-							// if the added block was a user template, show the template popup immediately
-							if(isUserTemplate && index)
-							{
-								$('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click();
-							}
-						}
-					},
-					{
-						text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-						click: function()
-						{
-							// close the dialog
-							$(this).dialog('close');
-						}
-					}
-				]
+				// if the added block was an editor, show the editor immediately
+				if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
+				{
+					$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
+				}
 			});
+
+			$('#addBlock').modal('show');
 		}
 	},
 
@@ -893,37 +886,18 @@ jsBackend.pages.extras =
 		// initialize the modal for deleting a block
 		if($('#confirmDeleteBlock').length > 0)
 		{
-			$('#confirmDeleteBlock').dialog(
-			{
-				draggable: false,
-				resizable: false,
-				modal: true,
-				buttons:
-				[
-					{
-						text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-						click: function()
-						{
-							// delete this block
-							jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').attr('data-block-id'));
+			$('#confirmDeleteBlockSubmit').unbind('click').on('click', function (e) {
+				// delete this block
+				jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').attr('data-block-id'));
 
-							// delete a block = template is no longer original
-							jsBackend.pages.template.original = false;
+				// delete a block = template is no longer original
+				jsBackend.pages.template.original = false;
 
-							// close dialog
-							$(this).dialog('close');
-						}
-					},
-					{
-						text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-						click: function()
-						{
-							// close the dialog
-							$(this).dialog('close');
-						}
-					}
-				]
-			});
+				// close dialog
+				$('#confirmDeleteBlock').modal('hide');
+			})
+
+			$('#confirmDeleteBlock').modal('show');
 		}
 	},
 
@@ -984,7 +958,7 @@ jsBackend.pages.extras =
 		jsBackend.pages.template.original = false;
 
 		// get index of block
-		var index = $(this).parent().parent().attr('data-block-id');
+		var index = $(this).closest('*[data-block-id]').attr('data-block-id');
 
 		// get visibility checbox
 		var checkbox = $('#blockVisible' + index);
@@ -999,22 +973,22 @@ jsBackend.pages.extras =
 		checkbox.attr('checked', visible);
 
 		// remove current visibility indicators
-		$(this).removeClass('iconVisible').removeClass('iconInvisible');
-		$(this).parent().parent().removeClass('templateDisabled');
+		$(this).find('.fa').removeClass('fa-eye fa-eye-slash');
+		$(this).closest('*[data-block-id]').removeClass('templateDisabled');
 
 		// toggle visibility indicators
-		if(visible) $(this).addClass('iconVisible');
+		if(visible) $(this).find('.fa').addClass('fa-eye');
 		else
 		{
-			$(this).addClass('iconInvisible');
-			$(this).parent().parent().addClass('templateDisabled');
+			$(this).find('.fa').addClass('fa-eye-slash');
+			$(this).closest('*[data-block-id]').addClass('templateDisabled');
 		}
 	},
 
 	// display an effect on updated items
 	updatedBlock: function(element)
 	{
-		element.effect('highlight');
+		element.effect('highlight', {color: '#D9E5F3'});
 	}
 };
 
@@ -1034,7 +1008,7 @@ jsBackend.pages.template =
 	init: function()
 	{
 		// bind events
-		$('#changeTemplate').on('click', jsBackend.pages.template.showTemplateDialog);
+		jsBackend.pages.template.changeTemplateBindSubmit();
 
 		// load to initialize when adding a page
 		jsBackend.pages.template.changeTemplate();
@@ -1162,43 +1136,20 @@ jsBackend.pages.template =
 		for(var i in newDefaults) jsBackend.pages.extras.addBlock(newDefaults[i][0], newDefaults[i][1]);
 	},
 
-	// show the dialog to alter the selected template
-	showTemplateDialog: function(e)
+	// bind template change submit click event
+	changeTemplateBindSubmit: function(e)
 	{
 		// prevent the default action
-		e.preventDefault();
+		$('#changeTemplateSubmit').unbind('click').on('click', function (e) {
+			e.preventDefault();
+			if($('#templateList input:radio:checked').val() != $('#templateId').val())
+			{
+				// change the template for real
+				jsBackend.pages.template.changeTemplate();
+			}
 
-		$('#chooseTemplate').dialog(
-		{
-			draggable: false,
-			resizable: false,
-			modal: true,
-			width: 940,
-			buttons:
-			[
-				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-					click: function()
-					{
-						if($('#templateList input:radio:checked').val() != $('#templateId').val())
-						{
-							// change the template for real
-							jsBackend.pages.template.changeTemplate();
-						}
-
-						// close dialog
-						$(this).dialog('close');
-					}
-				},
-				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-					click: function()
-					{
-						// close the dialog
-						$(this).dialog('close');
-					}
-				}
-			]
+			// close modal
+			$('#changeTemplate').modal('hide');
 		});
 	}
 };
@@ -1250,19 +1201,6 @@ jsBackend.pages.tree =
 				beforemove: jsBackend.pages.tree.beforeMove,
 				onselect: jsBackend.pages.tree.onSelect,
 				onmove: jsBackend.pages.tree.onMove
-			},
-			types:
-			{
-				'default': { renameable: false, deletable: false, creatable: false, icon: { image: '/src/Backend/Modules/Pages/Js/jstree/themes/fork/icons.gif' } },
-				'page': { icon: { position: '0 -80px' } },
-				'folder': { icon: { position: false } },
-				'hidden': { icon: { position: false } },
-				'home': { draggable: false, icon: { position: '0 -112px' } },
-				'pages': { icon: { position: false } },
-				'error': { draggable: false, max_children: 0, icon: { position: '0 -160px' } },
-				'sitemap': { max_children: 0, icon: { position: '0 -176px' } },
-				'redirect': { icon: { position: '0 -264px' } },
-				'direct_action': { max_children: 0, icon: { position: '0 -280px' } }
 			},
 			plugins:
 			{
@@ -1378,7 +1316,7 @@ jsBackend.pages.tree =
 					if(jsBackend.debug) alert(textStatus);
 
 					// show message
-					jsBackend.messages.add('error', jsBackend.locale.err('CantBeMoved'));
+					jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'));
 
 					// rollback
 					$.tree.rollback(rollback);

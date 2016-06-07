@@ -4,15 +4,18 @@
 .settings
 .*.swp
 .DS_Store
+/bower_components/*
 /app/cache/*
 /app/logs/*
-/backend/cache/navigation/
-/vendor/
+/components/*
+/backend/cache/navigation/*
+/src/Backend/Cache/CachedTemplates/*
+/vendor/*
 /app/config/parameters.yml
-/bin/
-/bundles/
-/js/
-/css/
+/bin/*
+/bundles/*
+/js/*
+/css/*
 
 # @remark: custom for Sumocoders
 /node_modules/*

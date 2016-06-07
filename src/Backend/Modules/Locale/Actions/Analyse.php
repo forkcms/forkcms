@@ -14,13 +14,14 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 
 /**
  * This is the analyse-action, it will display an overview of used locale.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Lowie Benoot <lowie.benoot@netlash.com>
+ * @author <thijs@wijs.be>
  */
 class Analyse extends BackendBaseActionIndex
 {
@@ -53,13 +54,17 @@ class Analyse extends BackendBaseActionIndex
         $files = (array) unserialize((string) $files);
 
         // no files
-        if (empty($files)) return '';
+        if (empty($files)) {
+            return '';
+        }
 
         // start
         $return = '<ul>' . "\n";
 
         // loop files
-        foreach ($files as $file) $return .= '<li><code title="' . str_replace(PATH_WWW, '', $file) . '">' . wordwrap(str_replace(PATH_WWW, '', $file), 80, '<br />', true) . '</code></li>' . "\n";
+        foreach ($files as $file) {
+            $return .= '<li><code title="' . str_replace(PATH_WWW, '', $file) . '">' . wordwrap(str_replace(PATH_WWW, '', $file), 80, '<br />', true) . '</code></li>' . "\n";
+        }
 
         // end
         $return .= '</ul>';
@@ -76,7 +81,8 @@ class Analyse extends BackendBaseActionIndex
         /*
          * Frontend datagrid
          */
-        $this->dgFrontend = new BackendDataGridArray(BackendLocaleModel::getNonExistingFrontendLocale(BL::getWorkingLanguage()));
+        $nonExistingFrontendLocale = BackendLocaleModel::getNonExistingFrontendLocale(BL::getWorkingLanguage());
+        $this->dgFrontend = new BackendDataGridArray($nonExistingFrontendLocale);
 
         // overrule default URL
         $this->dgFrontend->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
@@ -112,7 +118,8 @@ class Analyse extends BackendBaseActionIndex
         /*
          * Backend datagrid
          */
-        $this->dgBackend = new BackendDataGridArray(BackendLocaleModel::getNonExistingBackendLocale(BL::getWorkingLanguage()));
+        $getNonExistingBackendLocale = BackendLocaleModel::getNonExistingBackendLocale(BL::getWorkingLanguage());
+        $this->dgBackend = new BackendDataGridArray($getNonExistingBackendLocale);
 
         // overrule default URL
         $this->dgBackend->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));

@@ -136,8 +136,8 @@ class AddThemeTemplate extends BackendBaseActionAdd
         // create default position field
         $position = array();
         $position['i'] = 0;
-        $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'inputText positionName', 'inputTextError positionName');
-        $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'positionBlock', 'positionBlockError');
+        $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'form-control positionName', 'form-control danger positionName');
+        $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'form-control positionBlock', 'form-control danger positionBlockError');
         $positions[] = $position;
 
         // content has been submitted: re-create submitted content rather than the db-fetched content
@@ -200,9 +200,9 @@ class AddThemeTemplate extends BackendBaseActionAdd
             // create default position field
             $position = array();
             $position['i'] = $i + 1;
-            $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'inputText positionName', 'inputTextError positionName');
+            $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'form-control positionName', 'form-control danger positionName');
             foreach ($this->extras[$name] as $extra) {
-                $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, $extra, false, 'positionBlock', 'positionBlockError');
+                $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, $extra, false, 'form-control positionBlock', 'form-control danger positionBlockError');
             }
             $positions[] = $position;
         }
@@ -285,7 +285,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                             // not alphanumeric -> error
                             if (!in_array($cell, $this->names)) {
                                 $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
-                            } elseif (substr_count($html, '"#position-' . $cell . '"') != 1) {
+                            } elseif (mb_substr_count($html, '"#position-' . $cell . '"') != 1) {
                                 // can't build proper html -> error
                                 $errors[] = BL::err('InvalidTemplateSyntax');
                             }

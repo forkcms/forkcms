@@ -13,7 +13,6 @@ use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
-
 /**
  * This action is used to export statistics for a given campaign ID
  *

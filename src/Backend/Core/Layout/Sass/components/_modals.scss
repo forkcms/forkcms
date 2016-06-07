@@ -1,0 +1,39 @@
+.modal-content {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-radius: $border-radius-small;
+
+  .modal-title {
+    font-size: $font-size-btn;
+  }
+}
+
+.modal-header {
+  margin-bottom: 5px;
+}
+
+.modal-body {
+  background: $white;
+  border: 1px solid $gray-lighter;
+  border-radius: $border-radius-small;
+  margin: 0 30px;
+  padding: 20px;
+}
+
+.modal-footer {
+  padding: 15px 30px 25px;
+}
+
+.modal.fade .modal-dialog {
+  -webkit-transition: transform 200ms ease-out;
+  -moz-transition: transform 200ms ease-out;
+  transition: transform 200ms ease-out;
+}
+
+@media screen and (min-width: $screen-sm) {
+
+  .modal-dialog {
+    margin: 80px auto;
+  }
+}

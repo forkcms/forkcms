@@ -16,6 +16,7 @@ use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+use Common\Exception\RedirectException as RedirectException;
 
 /**
  * Register a profile.
@@ -176,7 +177,7 @@ class Register extends FrontendBaseBlock
                         ->setTo(array($txtEmail->getValue() => ''))
                         ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                         ->parseHtml(
-                            FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.tpl',
+                            FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.html.twig',
                             $mailValues,
                             true
                         )
@@ -184,8 +185,13 @@ class Register extends FrontendBaseBlock
                     $this->get('mailer')->send($message);
 
                     // redirect
-                    $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
+                    $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
                 } catch (\Exception $e) {
+                    // make sure RedirectExceptions get thrown
+                    if ($e instanceof RedirectException) {
+                        throw $e;
+                    }
+
                     // when debugging we need to see the exceptions
                     if ($this->getContainer()->getParameter('kernel.debug')) {
                         throw $e;

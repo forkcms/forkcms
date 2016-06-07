@@ -16,9 +16,9 @@ class RequirementsChecker
     /**
      * Requirements error statuses
      */
-    const STATUS_OK = 'ok';
+    const STATUS_OK = 'success';
     const STATUS_WARNING = 'warning';
-    const STATUS_ERROR = 'error';
+    const STATUS_ERROR = 'danger';
 
     /**
      * The root dir of our project
@@ -111,14 +111,16 @@ class RequirementsChecker
 
     /*
      * At first we're going to check to see if the PHP version meets the minimum
-     * requirements for Fork CMS. We require at least PHP 5.4.0, because we don't
+     * requirements for Fork CMS. We require at least PHP 5.5.0, because we don't
      * want to be responsible for security issues in PHP itself.
+     *
+     * We follow this timeline: http://php.net/supported-versions.php
      */
     protected function checkPhpVersion()
     {
         $this->checkRequirement(
             'phpVersion',
-            version_compare(PHP_VERSION, '5.4.0', '>='),
+            version_compare(PHP_VERSION, '5.5.0', '>='),
             self::STATUS_ERROR
         );
     }
@@ -193,7 +195,7 @@ class RequirementsChecker
         if (array_key_exists('REQUEST_URI', $_SERVER)) {
             $this->checkRequirement(
                 'subfolder',
-                (substr($_SERVER['REQUEST_URI'], 0, 8) == '/install'),
+                (mb_substr($_SERVER['REQUEST_URI'], 0, 8) == '/install'),
                 self::STATUS_ERROR
             );
         } else {
@@ -303,7 +305,7 @@ class RequirementsChecker
     }
 
     /**
-     * Check if a directory and it's sub-directories and it's subdirectories and ... are writable.
+     * Check if a directory and its sub-directories and its subdirectories and ... are writable.
      *
      * @param  string $path The path to check.
      * @return bool

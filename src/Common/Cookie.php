@@ -70,7 +70,7 @@ class Cookie extends \SpoonCookie
              for lighttpd you should add:
                  setenv.add-environment = ("HTTPS" => "on")
              */
-            $secure = (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on');
+            $secure = (isset($_SERVER['HTTPS']) && mb_strtolower($_SERVER['HTTPS']) == 'on');
         }
 
         // set cookie

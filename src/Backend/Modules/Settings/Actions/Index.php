@@ -10,7 +10,6 @@ namespace Backend\Modules\Settings\Actions;
  */
 
 use \TijsVerkoyen\Akismet\Akismet;
-
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
@@ -81,22 +80,29 @@ class Index extends BackendBaseActionIndex
         $this->frm->addTextarea(
             'site_html_header',
             $this->get('fork.settings')->get('Core', 'site_html_header', null),
-            'textarea code',
-            'textareaError code',
+            'form-control code',
+            'form-control danger code',
+            true
+        );
+        $this->frm->addTextarea(
+            'site_start_of_body_scripts',
+            $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null),
+            'form-control code',
+            'form-control danger code',
             true
         );
         $this->frm->addTextarea(
             'site_html_footer',
             $this->get('fork.settings')->get('Core', 'site_html_footer', null),
-            'textarea code',
-            'textareaError code',
+            'form-control code',
+            'form-control danger code',
             true
         );
         $this->frm->addTextarea(
             'site_domains',
             implode("\n", (array) $this->get('fork.settings')->get('Core', 'site_domains', $defaultDomains)),
-            'textarea code',
-            'textareaError code'
+            'form-control code',
+            'form-control danger code'
         );
 
         // facebook settings
@@ -360,6 +366,11 @@ class Index extends BackendBaseActionIndex
                     'Core',
                     'site_html_header',
                     $this->frm->getField('site_html_header')->getValue()
+                );
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'site_start_of_body_scripts',
+                    $this->frm->getField('site_start_of_body_scripts')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     'Core',

@@ -13,7 +13,7 @@ FileETag MTime Size
 	RewriteBase /
 
 	# forbidden folders
-	RewriteRule .git - [F]
+	RewriteRule \.git - [F]
 	RewriteRule .*\.gitignore - [F]
 	RewriteRule composer\.json - [F]
 	RewriteRule composer\.lock - [F]
@@ -57,7 +57,7 @@ FileETag MTime Size
 	RewriteCond %{REQUEST_URI} !^$
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule . /index.php [NC,L]
+	RewriteRule . index.php [NC,L]
 
 	# set environment variable to let PHP know that urls are being rewritten
 	RewriteRule .* - [E=MOD_REWRITE:1]
@@ -73,7 +73,7 @@ FileETag MTime Size
 
 # gzip on Apache 2
 <IfModule mod_deflate.c>
-	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml text/javascript text/css application/x-javascript application/xhtml+xml application/javascript image/svg+xml
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml text/javascript text/css application/x-javascript application/xhtml+xml application/javascript application/json image/svg+xml
 
 	# these browsers do not support deflate
 	BrowserMatch ^Mozilla/4 gzip-only-text/html
@@ -89,6 +89,7 @@ FileETag MTime Size
 
 	mod_gzip_item_include mime ^application/javascript$
 	mod_gzip_item_include mime ^application/x-javascript$
+	mod_gzip_item_include mime ^application/json$
 	mod_gzip_item_include mime ^application/xhtml+xml$
 	mod_gzip_item_include mime ^application/xml$
 	mod_gzip_item_include mime ^text/css$

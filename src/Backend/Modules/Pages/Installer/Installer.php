@@ -50,7 +50,7 @@ class Installer extends ModuleInstaller
             'widget',
             'Subpages',
             'Subpages',
-            serialize(array('template' => 'SubpagesDefault.tpl')),
+            serialize(array('template' => 'SubpagesDefault.html.twig')),
             'N',
             2
         );
@@ -206,7 +206,7 @@ class Installer extends ModuleInstaller
             'widget',
             'Subpages',
             'Subpages',
-            serialize(array('template' => 'SubpagesDefault.tpl')),
+            serialize(array('template' => 'SubpagesDefault.html.twig')),
             'N',
             2
         );

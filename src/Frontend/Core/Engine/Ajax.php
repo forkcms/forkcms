@@ -11,8 +11,8 @@ namespace Frontend\Core\Engine;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
-
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use InvalidArgumentException;
 
 /**
  * FrontendAJAX
@@ -72,19 +72,20 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
      */
     public function initialize()
     {
+        $request = $this->getContainer()->get('request');
+
         // get vars
-        $module = isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '';
-        if ($module == '' && isset($_GET['module'])) {
-            $module = $_GET['module'];
+        if ($request->request->has('fork')) {
+            $post = $request->request->get('fork');
+            $module = isset($post['module']) ? $post['module'] : '';
+            $action = isset($post['action']) ? $post['action'] : '';
+            $language = isset($post['language']) ? $post['language'] : '';
+        } else {
+            $module = $request->query->get('module');
+            $action = $request->query->get('action');
+            $language = $request->query->get('language');
         }
-        $action = isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '';
-        if ($action == '' && isset($_GET['action'])) {
-            $action = $_GET['action'];
-        }
-        $language = isset($_POST['fork']['language']) ? $_POST['fork']['language'] : '';
-        if ($language == '' && isset($_GET['language'])) {
-            $language = $_GET['language'];
-        }
+
         if ($language == '') {
             $language = SITE_DEFAULT_LANGUAGE;
         }
@@ -99,6 +100,12 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
             }
 
             $this->ajaxAction = new AjaxAction($this->getKernel(), $this->getAction(), $this->getModule());
+            $this->output = $this->ajaxAction->execute();
+        } catch (InvalidArgumentException $e) {
+            $message = Model::getContainer()->getParameter('fork.debug_message');
+
+            $this->ajaxAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
+            $this->ajaxAction->output(FrontendBaseAJAXAction::ERROR, null, $message);
             $this->output = $this->ajaxAction->execute();
         } catch (Exception $e) {
             if (Model::getContainer()->getParameter('kernel.debug')) {
@@ -156,8 +163,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
 
         // validate
         if (count($finder->files()) != 1) {
-            $fakeAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
-            $fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Action not correct.');
+            throw new Exception('Action not correct.');
         }
 
         // set property
@@ -211,11 +217,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
 
         // validate
         if (!in_array($value, $possibleModules)) {
-            // create fake action
-            $fakeAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
-
-            // output error
-            $fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Module not correct.');
+            throw new Exception('Module not correct');
         }
 
         // set property

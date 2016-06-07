@@ -91,9 +91,6 @@ class Edit extends BackendBaseActionEdit
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
         $this->header->addJS('SimpleAjaxUploader.min.js', 'Core', false);
 
-        // add css
-        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
-
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
 
@@ -246,7 +243,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('html');
         $this->frm->addHidden('template_id', $this->record['template_id']);
         $this->frm->addRadiobutton(
@@ -416,7 +413,7 @@ class Edit extends BackendBaseActionEdit
         );
         $this->frm->addText(
             'external_redirect',
-            ($redirectValue == 'external') ? $this->record['data']['external_redirect']['url'] : null,
+            ($redirectValue == 'external') ? urldecode($this->record['data']['external_redirect']['url']) : null,
             null,
             null,
             null,
@@ -432,8 +429,8 @@ class Edit extends BackendBaseActionEdit
             'tags',
             BackendTagsModel::getTags($this->URL->getModule(), $this->id),
             null,
-            'inputText tagBox',
-            'inputTextError tagBox'
+            'form-control js-tags-input',
+            'error js-tags-input'
         );
 
         // a specific action
@@ -631,7 +628,9 @@ class Edit extends BackendBaseActionEdit
                 }
                 if ($redirectValue == 'external') {
                     $data['external_redirect'] = array(
-                        'url' => $this->frm->getField('external_redirect')->getValue(),
+                        'url' => BackendPagesModel::getEncodedRedirectURL(
+                            $this->frm->getField('external_redirect')->getValue()
+                        ),
                         'code' => '301'
                     );
                 }
@@ -646,7 +645,7 @@ class Edit extends BackendBaseActionEdit
                 $page['type'] = $this->record['type'];
                 $page['title'] = $this->frm->getField('title')->getValue();
                 $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();
-                $page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
+                $page['navigation_title_overwrite'] = $this->frm->getField('navigation_title_overwrite')->getActualValue();
                 $page['hidden'] = $this->frm->getField('hidden')->getValue();
                 $page['status'] = $status;
                 $page['publish_on'] = BackendModel::getUTCDate(null, $this->record['publish_on']);

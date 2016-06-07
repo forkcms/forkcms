@@ -11,7 +11,6 @@ namespace Backend\Core\Engine\Base;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\Finder;
-
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -67,9 +66,6 @@ class Config extends Object
         parent::__construct($kernel);
 
         $this->setModule($module);
-
-        // read the possible actions based on the files
-        $this->setPossibleActions();
     }
 
     /**
@@ -85,20 +81,33 @@ class Config extends Object
     /**
      * Get the possible actions
      *
+     * @deprecated
      * @return array
      */
     public function getPossibleActions()
     {
+        trigger_error(
+            '$config->getPossibleActions() is deprecated.
+             Use $config->isActionAvailable($action) to determine if an action is available',
+            E_USER_DEPRECATED
+        );
+
         return $this->possibleActions;
     }
-
     /**
      * Get the possible AJAX actions
      *
+     * @deprecated
      * @return array
      */
     public function getPossibleAJAXActions()
     {
+        trigger_error(
+            '$config->getPossibleAJAXActions() is deprecated.
+             Use $config->isActionAvailable($action) to determine if an action is available',
+            E_USER_DEPRECATED
+        );
+
         return $this->possibleAJAXActions;
     }
 
@@ -128,36 +137,77 @@ class Config extends Object
     }
 
     /**
-     * Set the possible actions, based on files in folder
-     * You can disable action in the config file. (Populate $disabledActions)
+     * @return array
      */
-    public function setPossibleActions()
+    public function getPossibleActionTypes()
     {
-        $path = BACKEND_MODULES_PATH . '/' . $this->getModule();
-        if (is_dir($path . '/Actions')) {
-            $finder = new Finder();
-            foreach ($finder->files()->name('*.php')->in($path . '/Actions') as $file) {
-                /** @var $file \SplFileInfo */
-                $action = str_replace('.php', '', $file->getBasename());
+        return array(
+            'actions',
+            'ajax',
+        );
+    }
 
-                // if the action isn't disabled add it to the possible actions
-                if (!in_array($action, $this->disabledActions)) {
-                    $this->possibleActions[$file->getBasename()] = $action;
-                }
+    /**
+     * @param string $action
+     * @return bool
+     */
+    public function isActionAvailable($action)
+    {
+        // Save our action
+        $this->action = $action;
+
+        // Loop over every action type
+        foreach ($this->getPossibleActionTypes() as $actionType) {
+            // If this action is disabled for this type, continue on to the next type
+            if ($this->isActionDisabled($actionType)) {
+                continue;
             }
+
+            // If the action file is missing, continue on to the next type
+            if (!$this->isActionFilePresent($actionType)) {
+                continue;
+            }
+
+            // The action is not disabled and the file is present, this is an available action!
+            return true;
         }
 
-        if (is_dir($path . '/Ajax')) {
-            $finder = new Finder();
-            foreach ($finder->files()->name('*.php')->in($path . '/Ajax') as $file) {
-                /** @var $file \SplFileInfo */
-                $action = str_replace('.php', '', $file->getBasename());
+        // If no types contain an available action, the action is unavailable
+        return false;
+    }
 
-                // if the action isn't disabled add it to the possible actions
-                if (!in_array($action, $this->disabledAJAXActions)) {
-                    $this->possibleAJAXActions[$file->getBasename()] = $action;
-                }
-            }
+    /**
+     * @param string $actionType
+     * @return bool
+     * @throws \Exception
+     */
+    public function isActionDisabled($actionType)
+    {
+        switch ($actionType) {
+            case 'actions':
+                return in_array($this->getAction(), $this->disabledActions);
+            case 'ajax':
+                return in_array($this->action, $this->disabledAJAXActions);
         }
+
+        throw new \Exception($actionType . ' is not a valid action type');
+    }
+
+    /**
+     * @param string $actionType
+     * @return bool
+     */
+    public function isActionFilePresent($actionType)
+    {
+        // Create the directory string
+        $directory = BACKEND_MODULES_PATH . '/' . $this->module . '/' . ucfirst($actionType);
+
+        // If the directory doesn't exist, surely the action can't exist.
+        if (!is_dir($directory)) {
+            return false;
+        }
+
+        // Return if the file exists
+        return file_exists($directory . '/' . ucfirst($this->action) . '.php');
     }
 }

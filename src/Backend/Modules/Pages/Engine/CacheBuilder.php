@@ -10,10 +10,11 @@ namespace Backend\Modules\Pages\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * In this file, the pages cache is build
+ * In this file, the pages cache is built
  *
  * @author Wouter Sioen <wouter@wijs.be>
  */
@@ -24,15 +25,21 @@ class CacheBuilder
      */
     protected $database;
 
+    /**
+     * @var CacheItemPoolInterface
+     */
+    protected $cache;
+
     protected $blocks;
     protected $siteMapId;
 
     /**
      * @param \SpoonDatabase $database
      */
-    public function __construct(\SpoonDatabase $database)
+    public function __construct(\SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
         $this->database = $database;
+        $this->cache = $cache;
     }
 
     /**
@@ -42,26 +49,54 @@ class CacheBuilder
      */
     public function buildCache($language)
     {
-        list($keys, $navigation) = $this->getData($language);
+        // kill existing caches so they can be re-generated
+        $this->cache->deleteItems(array('keys_' . $language, 'navigation_' . $language));
+        $keys = $this->getKeys($language);
+        $navigation = $this->getNavigation($language);
 
+        // build file with navigation structure to feed into editor
         $fs = new Filesystem();
         $cachePath = FRONTEND_CACHE_PATH . '/Navigation/';
-        $keysFile = $cachePath . 'keys_' . $language . '.php';
-        $fs->dumpFile($keysFile, $this->dumpKeys($keys, $language));
-
-        $phpFile = $cachePath . 'navigation_' . $language . '.php';
-        $fs->dumpFile($phpFile, $this->dumpNavigation($navigation, $language));
-
         $fs->dumpFile(
             $cachePath . 'editor_link_list_' . $language . '.js',
             $this->dumpEditorLinkList($navigation, $keys, $language)
         );
+    }
 
-        // clear the php5.5+ opcode cache
-        if (function_exists('opcache_invalidate')) {
-            opcache_invalidate($keysFile);
-            opcache_invalidate($phpFile);
+    /**
+     * @param string $language
+     * @return array
+     */
+    public function getKeys($language)
+    {
+        $item = $this->cache->getItem('keys_' . $language);
+        if ($item->isHit()) {
+            return $item->get();
         }
+
+        list($keys, $navigation) = $this->getData($language);
+        $item->set($keys);
+        $this->cache->save($item);
+
+        return $keys;
+    }
+
+    /**
+     * @param string $language
+     * @return array
+     */
+    public function getNavigation($language)
+    {
+        $item = $this->cache->getItem('navigation_' . $language);
+        if ($item->isHit()) {
+            return $item->get();
+        }
+
+        list($keys, $navigation) = $this->getData($language);
+        $item->set($navigation);
+        $this->cache->save($item);
+
+        return $navigation;
     }
 
     /**
@@ -134,8 +169,8 @@ class CacheBuilder
             'page_id' => (int) $page['id'],
             'url' => $page['url'],
             'full_url' => $languageURL . $keys[$page['id']],
-            'title' => preg_replace('/\'/', '\\\\\'', $page['title']),
-            'navigation_title' => preg_replace('/\'/', '\\\\\'', $page['navigation_title']),
+            'title' => $page['title'],
+            'navigation_title' => $page['navigation_title'],
             'has_extra' => (bool) ($page['has_extra'] == 'Y'),
             'no_follow' => (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow'),
             'hidden' => (bool) ($page['hidden'] == 'Y'),
@@ -162,7 +197,7 @@ class CacheBuilder
             $treeType = 'home';
         } elseif ($page['id'] == 404) {
             $treeType = 'error';
-        } elseif ($page['id'] < 404 && substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
+        } elseif ($page['id'] < 404 && mb_substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
             // get extras
             $extraIDs = explode(',', $page['extra_ids']);
 
@@ -304,123 +339,6 @@ class CacheBuilder
 
         // return
         return $order;
-    }
-
-    /**
-     * Saves the keys file
-     *
-     * @param  array  $keys     The page keys
-     * @param  string $language The language to save the file for
-     * @return string           The full content for the cache file
-     */
-    protected function dumpKeys($keys, $language)
-    {
-        // write the key-file
-        $keysString = '<?php' . "\n\n";
-        $keysString .= $this->getCacheHeader(
-            'the mapping between a pageID and the URL'
-        );
-        $keysString .= '$keys = array();' . "\n\n";
-
-        // loop all keys
-        foreach ($keys as $pageId => $URL) {
-            $keysString .= '$keys[' . $pageId . '] = \'' . $URL . '\';' . "\n";
-        }
-
-        // end file
-        $keysString .= "\n" . '?>';
-
-        return $keysString;
-    }
-
-    /**
-     * Saves the keys file
-     *
-     * @param  array  $navigation The full navigation array
-     * @param  string $language   The language to save the file for
-     * @return string           The full content for the cache file
-     */
-    protected function dumpNavigation($navigation, $language)
-    {
-        // write the navigation-file
-        $navigationString = '<?php' . "\n\n";
-        $navigationString .= $this->getCacheHeader(
-            'more information about the page-structure'
-        );
-        $navigationString .= '$navigation = array();' . "\n\n";
-
-        // loop all types
-        foreach ($navigation as $type => $pages) {
-            // loop all parents
-            foreach ($pages as $parentID => $page) {
-                // loop all pages
-                foreach ($page as $pageId => $properties) {
-                    // loop properties
-                    foreach ($properties as $key => $value) {
-                        // page_id should be an integer
-                        if (is_int($value)) {
-                            $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageId .
-                                    '][\'' . $key . '\'] = ' . $value . ';' . "\n";
-                        } elseif (is_bool($value)) {
-                            if ($value) {
-                                $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageId .
-                                        '][\'' . $key . '\'] = true;' . "\n";
-                            } else {
-                                $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageId .
-                                        '][\'' . $key . '\'] = false;' . "\n";
-                            }
-                        } elseif ($key == 'extra_blocks') {
-                            if ($value === null) {
-                                $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageId .
-                                        '][\'' . $key . '\'] = null;' . "\n";
-                            } else {
-                                // init var
-                                $blocks = array();
-
-                                foreach ($value as $row) {
-                                    // init var
-                                    $temp = 'array(';
-
-                                    // add properties
-                                    $temp .= '\'id\' => ' . (int) $row['id'];
-                                    $temp .= ', \'module\' => \'' . (string) $row['module'] . '\'';
-
-                                    if ($row['action'] === null) {
-                                        $temp .= ', \'action\' => null';
-                                    } else {
-                                        $temp .= ', \'action\' => \'' . (string) $row['action'] . '\'';
-                                    }
-
-                                    $temp .= ')';
-
-                                    // add into extras
-                                    $blocks[] = $temp;
-                                }
-
-                                // set line
-                                $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' .
-                                        $pageId . '][\'' . $key . '\'] = array(' .
-                                        implode(', ', $blocks) . ');' . "\n";
-                            }
-                        } else {
-                            $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' .
-                                    $pageId . '][\'' . $key . '\'] = \'' . (string) $value . '\';' . "\n";
-                        }
-
-                        // add line
-                        $navigationString .= $line;
-                    }
-
-                    // end
-                    $navigationString .= "\n";
-                }
-            }
-        }
-
-        // end file
-        $navigationString .= '?>';
-
-        return $navigationString;
     }
 
     /**

@@ -10,7 +10,6 @@ namespace Backend\Modules\Mailmotor\Actions;
  */
 
 use Common\Uri as CommonUri;
-
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Core\Engine\Form as BackendForm;

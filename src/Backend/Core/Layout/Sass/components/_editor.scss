@@ -1,0 +1,29 @@
+.panel {
+
+  .cke_chrome {
+    background-color: $white;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .cke_top,
+  .cke_bottom {
+    background-color: $white;
+    padding: 3px 3px 0;
+  }
+
+  .cke_contents {
+    border-width: 0;
+    border-top-width: 1px;
+    border-radius: 0;
+  }
+
+  .cke_resizer_ltr {
+    margin-right: 0;
+  }
+
+  .cke_combo_button {
+    margin-bottom: 3px;
+  }
+}

@@ -9,16 +9,12 @@ namespace Frontend\Modules\Search\Ajax;
  * file that was distributed with this source code.
  */
 
-use Common\Exception\RedirectException;
 use Symfony\Component\Filesystem\Filesystem;
-
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception as FrontendException;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Template as FrontendTemplate;
+use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This is the live suggest-action, it will output a list of results for a certain search
@@ -84,6 +80,11 @@ class Livesuggest extends FrontendBaseAJAXAction
     private $term = '';
 
     /**
+     * @var TwigTemplate
+     */
+    private $tpl;
+
+    /**
      * Display
      */
     private function display()
@@ -108,7 +109,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         // output
         $this->output(
             self::OK,
-            $this->tpl->getContent(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.tpl', false, true)
+            $this->tpl->renderTemplate(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
         );
     }
 
@@ -118,7 +119,6 @@ class Livesuggest extends FrontendBaseAJAXAction
     public function execute()
     {
         parent::execute();
-        $this->loadTemplate();
         $this->validateForm();
         $this->display();
     }
@@ -137,7 +137,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if ($this->getContainer()->getParameter('kernel.debug')) {
+        if (SPOON_DEBUG) {
             return false;
         }
 
@@ -200,18 +200,13 @@ class Livesuggest extends FrontendBaseAJAXAction
             $this->pagination['num_pages'] = 1;
         }
 
-        // redirect if the request page doesn't exist
+        // error if the request page doesn't exist
         if ($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) {
-            throw new RedirectException(
-                'Redirect',
-                new RedirectResponse(
-                    FrontendNavigation::getURL(404)
-                )
-            );
+            throw new FrontendException('the request page doesn\'t exist');
         }
 
         // debug mode = no cache
-        if (!$this->getContainer()->getParameter('kernel.debug')) {
+        if (!SPOON_DEBUG) {
             // set cache content
             $fs = new Filesystem();
             $fs->dumpFile(
@@ -225,19 +220,12 @@ class Livesuggest extends FrontendBaseAJAXAction
     }
 
     /**
-     * Load the template
-     */
-    protected function loadTemplate()
-    {
-        // create template
-        $this->tpl = new FrontendTemplate(false);
-    }
-
-    /**
      * Parse the data into the template
      */
     private function parse()
     {
+        $this->tpl = $this->get('templating');
+
         // no search term = no search
         if (!$this->term) {
             return;
@@ -263,23 +251,28 @@ class Livesuggest extends FrontendBaseAJAXAction
         $useQuestionMark = true;
 
         // validate pagination array
-        if (!isset($this->pagination['limit'])) {
-            throw new FrontendException('no limit in the pagination-property.');
-        }
-        if (!isset($this->pagination['offset'])) {
-            throw new FrontendException('no offset in the pagination-property.');
-        }
-        if (!isset($this->pagination['requested_page'])) {
-            throw new FrontendException('no requested_page available in the pagination-property.');
-        }
-        if (!isset($this->pagination['num_items'])) {
-            throw new FrontendException('no num_items available in the pagination-property.');
-        }
-        if (!isset($this->pagination['num_pages'])) {
-            throw new FrontendException('no num_pages available in the pagination-property.');
-        }
-        if (!isset($this->pagination['url'])) {
-            throw new FrontendException('no URL available in the pagination-property.');
+        switch (true) {
+            case (!isset($this->pagination['limit'])):
+                throw new FrontendException('no limit in the pagination-property.');
+                break;
+            case (!isset($this->pagination['offset'])):
+                throw new FrontendException('no offset in the pagination-property.');
+                break;
+            case (!isset($this->pagination['requested_page'])):
+                throw new FrontendException('no requested_page available in the pagination-property.');
+                break;
+            case (!isset($this->pagination['num_items'])):
+                throw new FrontendException('no num_items available in the pagination-property.');
+                break;
+            case (!isset($this->pagination['num_pages'])):
+                throw new FrontendException('no num_pages available in the pagination-property.');
+                break;
+            case (!isset($this->pagination['url'])):
+                throw new FrontendException('no URL available in the pagination-property.');
+                break;
+            // default:
+            //     # code...
+            //     break;
         }
 
         // should we use a questionmark or an ampersand

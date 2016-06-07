@@ -65,7 +65,7 @@ class Form extends \Common\Core\Form
 
         // add default classes
         $this->setParameter('id', $name);
-        $this->setParameter('class', 'forkForms submitWithLink');
+        $this->setParameter('class', 'fork-form submitWithLink');
     }
 
     /**
@@ -82,7 +82,7 @@ class Form extends \Common\Core\Form
         $name = (string) $name;
         $value = (string) $value;
         $type = (string) $type;
-        $class = ($class !== null) ? (string) $class : 'inputButton';
+        $class = ($class !== null) ? (string) $class : 'btn btn-primary';
 
         // do a check
         if ($type == 'submit' && $name == 'submit') {
@@ -124,8 +124,8 @@ class Form extends \Common\Core\Form
         $type = \SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
-        $class = ($class !== null) ? (string) $class : 'inputText inputDate';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputDateError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-date inputDate';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // validate
         if ($type == 'from' && ($date == 0 || $date == null)) {
@@ -154,21 +154,21 @@ class Form extends \Common\Core\Form
         switch ($type) {
             // start date
             case 'from':
-                $class .= ' inputDatefieldFrom inputText';
+                $class .= ' fork-form-date-from inputDatefieldFrom';
                 $classError .= ' inputDatefieldFrom';
                 $attributes['data-startdate'] = date('Y-m-d', $date);
                 break;
 
             // end date
             case 'till':
-                $class .= ' inputDatefieldTill inputText';
+                $class .= ' fork-form-date-till inputDatefieldTill';
                 $classError .= ' inputDatefieldTill';
                 $attributes['data-enddate'] = date('Y-m-d', $date);
                 break;
 
             // date range
             case 'range':
-                $class .= ' inputDatefieldRange inputText';
+                $class .= ' fork-form-date-range inputDatefieldRange';
                 $classError .= ' inputDatefieldRange';
                 $attributes['data-startdate'] = date('Y-m-d', $date);
                 $attributes['data-enddate'] = date('Y-m-d', $date2);
@@ -176,7 +176,7 @@ class Form extends \Common\Core\Form
 
             // normal date field
             default:
-                $class .= ' inputDatefieldNormal inputText';
+                $class .= ' inputDatefieldNormal';
                 $classError .= ' inputDatefieldNormal';
                 break;
         }
@@ -244,8 +244,8 @@ class Form extends \Common\Core\Form
     public function addFile($name, $class = null, $classError = null)
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'inputFile';
-        $classError = ($classError !== null) ? (string) $classError : 'inputFileError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-file';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // add element
         $this->add(new FormFile($name, $class, $classError));
@@ -264,8 +264,8 @@ class Form extends \Common\Core\Form
     public function addImage($name, $class = null, $classError = null)
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'inputFile inputImage';
-        $classError = ($classError !== null) ? (string) $classError : 'inputFileError inputImageError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-image';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // add element
         $this->add(new FormImage($name, $class, $classError));
@@ -298,7 +298,7 @@ class Form extends \Common\Core\Form
     /**
      * Parse the form
      *
-     * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
+     * @param $tpl The template instance wherein the form will be parsed.
      */
     public function parse($tpl)
     {

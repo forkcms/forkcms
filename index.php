@@ -79,3 +79,4 @@ if ($response->getCharset() === null && $kernel->getContainer() != null) {
     );
 }
 $response->send();
+$kernel->terminate($request, $response);

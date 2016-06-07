@@ -44,20 +44,6 @@ class Index extends BackendBaseActionIndex
         $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
-        // add css
-        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
-
-        // check if the cached files exists
-        if (!is_file(PATH_WWW . '/src/Frontend/Cache/Navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
-            BackendPagesModel::buildCache(BL::getWorkingLanguage());
-        }
-        if (!is_file(
-            PATH_WWW . '/src/Frontend/Cache/Navigation/navigation_' . BL::getWorkingLanguage() . '.php'
-        )
-        ) {
-            BackendPagesModel::buildCache(BL::getWorkingLanguage());
-        }
-
         // load the dgRecentlyEdited
         $this->loadDataGrids();
 

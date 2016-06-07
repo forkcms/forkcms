@@ -10,7 +10,6 @@ namespace Backend\Modules\Locale\Actions;
  */
 
 use Common\Uri as CommonUri;
-
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -58,7 +57,9 @@ class Edit extends BackendBaseActionEdit
         }
 
         // no item found or the user is not god , throw an exceptions, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        else {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
     }
 
     /**
@@ -135,7 +136,9 @@ class Edit extends BackendBaseActionEdit
                 // allowed regex (a-z and 0-9)
                 if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
                     // first letter does not seem to be a capital one
-                    if (!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::err('InvalidName'));
+                    if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
+                        $txtName->setError(BL::err('InvalidName'));
+                    }
 
                     // syntax is completely fine
                     else {
@@ -151,7 +154,9 @@ class Edit extends BackendBaseActionEdit
             if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if ($this->frm->getField('type')->getValue() == 'act') {
-                    if (urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
+                    if (urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
+                        $txtValue->addError(BL::err('InvalidValue'));
+                    }
                 }
             }
 

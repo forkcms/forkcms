@@ -27,14 +27,6 @@ use Frontend\Core\Engine\Language as FrontendLanguage;
 class Model extends \Common\Core\Model
 {
     /**
-     * The keys and structural data for pages
-     *
-     * @var    array
-     */
-    private static $keys = array();
-    private static $navigation = array();
-
-    /**
      * Allowed module extras types
      *
      * @var    array
@@ -125,8 +117,8 @@ class Model extends \Common\Core\Model
         }
 
         // lets create underscore cased module and action names
-        $module = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $module));
-        $action = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $action));
+        $module = mb_strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $module));
+        $action = mb_strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $action));
 
         // add offset, order & sort (only if not yet manually added)
         if (isset($_GET['offset']) && !isset($parameters['offset'])) {
@@ -198,18 +190,24 @@ class Model extends \Common\Core\Model
 
         // loop found extras
         foreach ($extras as $extra) {
+            $deleteExtra = true;
+
             // match by parameters
             if ($data !== null && $extra['data'] !== null) {
                 $extraData = (array) unserialize($extra['data']);
 
-                // skip extra if parameters do not match
-                if (count(array_intersect($data, $extraData)) !== count($data)) {
-                    continue;
+                // do not delete extra if parameters do not match
+                foreach ($data as $dataKey => $dataValue) {
+                    if (isset($extraData[$dataKey]) && $dataValue != $extraData[$dataKey]) {
+                        $deleteExtra = false;
+                    }
                 }
             }
 
             // delete extra
-            self::deleteExtraById($extra['id']);
+            if ($deleteExtra) {
+                self::deleteExtraById($extra['id']);
+            }
         }
     }
 
@@ -260,24 +258,6 @@ class Model extends \Common\Core\Model
             // invalidate the cache for the module
             self::invalidateFrontendCache((string) $module, Language::getWorkingLanguage());
         }
-    }
-
-    /**
-     * Deletes a module-setting from the DB and the cached array
-     *
-     * @deprecated
-     * @param string $module The module to set the setting for.
-     * @param string $key    The name of the setting.
-     */
-    public static function deleteModuleSetting($module, $key)
-    {
-        trigger_error(
-            'BackendModel::deleteModuleSetting is deprecated.
-             Use $container->get(\'fork.settings\')->delete instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->delete($module, $key);
     }
 
     /**
@@ -340,7 +320,7 @@ class Model extends \Common\Core\Model
         // get random characters
         for ($i = 0; $i < $length; $i++) {
             // random index
-            $index = mt_rand(0, strlen($characters));
+            $index = mt_rand(0, mb_strlen($characters));
 
             // add character to salt
             $string .= mb_substr($characters, $index, 1, self::getContainer()->getParameter('kernel.charset'));
@@ -481,18 +461,8 @@ class Model extends \Common\Core\Model
     {
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
-        // does the keys exists in the cache?
-        if (!isset(self::$keys[$language]) || empty(self::$keys[$language])) {
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php')) {
-                BackendPagesModel::buildCache($language);
-            }
-
-            $keys = array();
-            require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php';
-            self::$keys[$language] = $keys;
-        }
-
-        return self::$keys[$language];
+        $cacheBuilder = BackendPagesModel::getCacheBuilder();
+        return $cacheBuilder->getKeys($language);
     }
 
     /**
@@ -514,45 +484,6 @@ class Model extends \Common\Core\Model
         }
 
         return $return;
-    }
-
-    /**
-     * Get a certain module-setting
-     *
-     * @deprecated
-     * @param string $module       The module in which the setting is stored.
-     * @param string $key          The name of the setting.
-     * @param mixed  $defaultValue The value to return if the setting isn't present.
-     * @return mixed
-     */
-    public static function getModuleSetting($module, $key, $defaultValue = null)
-    {
-        trigger_error(
-            'BackendModel::getModuleSetting is deprecated.
-             Use $container->get(\'fork.settings\')->get instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->get($module, $key, $defaultValue);
-    }
-
-    /**
-     * Get all module settings at once
-     *
-     * @deprecated
-     * @param string $module You can get all settings for a module.
-     * @return array
-     * @throws Exception If the module settings were not saved in a correct format
-     */
-    public static function getModuleSettings($module = null)
-    {
-        trigger_error(
-            'BackendModel::getModuleSettings is deprecated.
-             Use $container->get(\'fork.settings\')->getForModule instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->getForModule($module);
     }
 
     /**
@@ -583,21 +514,10 @@ class Model extends \Common\Core\Model
      */
     public static function getNavigation($language = null)
     {
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
-        // does the keys exists in the cache?
-        if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
-                BackendPagesModel::buildCache($language);
-            }
-
-            $navigation = array();
-            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
-
-            self::$navigation[$language] = $navigation;
-        }
-
-        return self::$navigation[$language];
+        $cacheBuilder = BackendPagesModel::getCacheBuilder();
+        return $cacheBuilder->getNavigation($language);
     }
 
     /**
@@ -704,7 +624,7 @@ class Model extends \Common\Core\Model
             foreach ($level as $pages) {
                 foreach ($pages as $pageId => $properties) {
                     // only process pages with extra_blocks
-                    if (!isset($properties['extra_blocks'])) {
+                    if (!isset($properties['extra_blocks']) || $properties['hidden']) {
                         continue;
                     }
 
@@ -853,15 +773,15 @@ class Model extends \Common\Core\Model
             // build regular expression
             if ($module !== null) {
                 if ($language === null) {
-                    $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
+                    $regexp = '/' . '(.*)' . $module . '(.*)_cache\.html.twig/i';
                 } else {
-                    $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
+                    $regexp = '/' . $language . '_' . $module . '(.*)_cache\.html.twig/i';
                 }
             } else {
                 if ($language === null) {
-                    $regexp = '/(.*)_cache\.tpl/i';
+                    $regexp = '/(.*)_cache\.html.twig/i';
                 } else {
-                    $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
+                    $regexp = '/' . $language . '_(.*)_cache\.html.twig/i';
                 }
             }
 
@@ -931,8 +851,8 @@ class Model extends \Common\Core\Model
                 $pingServices['date'] = time();
             } catch (Exception $e) {
                 // check if the error should not be ignored
-                if (strpos($e->getMessage(), 'Operation timed out') === false &&
-                    strpos($e->getMessage(), 'Invalid headers') === false
+                if (mb_strpos($e->getMessage(), 'Operation timed out') === false &&
+                    mb_strpos($e->getMessage(), 'Invalid headers') === false
                 ) {
                     if (BackendModel::getContainer()->getParameter('kernel.debug')) {
                         throw $e;
@@ -984,8 +904,8 @@ class Model extends \Common\Core\Model
                 }
             } catch (Exception $e) {
                 // check if the error should not be ignored
-                if (strpos($e->getMessage(), 'Operation timed out') === false &&
-                    strpos($e->getMessage(), 'Invalid headers') === false
+                if (mb_strpos($e->getMessage(), 'Operation timed out') === false &&
+                    mb_strpos($e->getMessage(), 'Invalid headers') === false
                 ) {
                     if (BackendModel::getContainer()->getParameter('kernel.debug')) {
                         throw $e;
@@ -996,25 +916,6 @@ class Model extends \Common\Core\Model
         }
 
         return true;
-    }
-
-    /**
-     * Saves a module-setting into the DB and the cached array
-     *
-     * @deprecated
-     * @param string $module The module to set the setting for.
-     * @param string $key    The name of the setting.
-     * @param string $value  The value to store.
-     */
-    public static function setModuleSetting($module, $key, $value)
-    {
-        trigger_error(
-            'BackendModel::setModuleSetting is deprecated.
-             Use $container->get(\'fork.settings\')->set instead',
-            E_USER_DEPRECATED
-        );
-
-        return self::get('fork.settings')->set($module, $key, $value);
     }
 
     /**

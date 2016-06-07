@@ -11,7 +11,7 @@ namespace Backend\Modules\FormBuilder\Engine;
 
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Template as BackendTemplate;
+use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 
 /**
  * Helper class for the form_builder module.
@@ -70,13 +70,13 @@ class Helper
                 $fieldHTML = $ddm->parse();
             } elseif ($field['type'] == 'datetime') {
                 // create element
-                if($field['settings']['input_type'] == 'date') {
+                if ($field['settings']['input_type'] == 'date') {
                     // calculate default value
                     $amount = $field['settings']['value_amount'];
                     $type = $field['settings']['value_type'];
 
-                    if($type != '') {
-                        switch($type) {
+                    if ($type != '') {
+                        switch ($type) {
                             case 'today':
                                 $defaultValues = date('d/m/Y');
                                 break;
@@ -84,7 +84,9 @@ class Helper
                             case 'week':
                             case 'month':
                             case 'year':
-                                if($amount != '') $defaultValues = date('d/m/Y', strtotime('+' . $amount . ' ' . $type));
+                                if ($amount != '') {
+                                    $defaultValues = date('d/m/Y', strtotime('+' . $amount . ' ' . $type));
+                                }
                                 break;
                         }
                     }
@@ -175,7 +177,7 @@ class Helper
                 $tpl->assign('simple', true);
             }
 
-            return $tpl->getContent(BACKEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Field.tpl');
+            return $tpl->getContent(BACKEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Field.html.twig');
         } else {
             // empty field so return empty string
             return '';

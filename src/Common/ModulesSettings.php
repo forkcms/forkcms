@@ -2,8 +2,8 @@
 
 namespace Common;
 
+use Psr\Cache\CacheItemPoolInterface;
 use SpoonDatabase;
-use Common\Cache\Cache;
 
 /**
  * This is our module settings class
@@ -18,15 +18,15 @@ class ModulesSettings
     private $database;
 
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
     private $cache;
 
     /**
      * @param SpoonDatabase $database
-     * @param Cache $cache
+     * @param CacheItemPoolInterface $cache
      */
-    public function __construct(SpoonDatabase $database, Cache $cache)
+    public function __construct(SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
         $this->database = $database;
         $this->cache = $cache;
@@ -69,18 +69,22 @@ class ModulesSettings
             array($module, $key, $valueToStore, $valueToStore)
         );
 
-        $settings = $this->getSettings();
-
-        if (!isset($settings[$module])) {
-            $settings[$module] = array();
-        }
-        $settings[$module][$key] = $value;
-
-        $this->cache->cache('settings', $settings);
+        /*
+         * Instead of invalidating the cache, we could also fetch existing
+         * settings, update them & re-store them to cache. That would save
+         * us the next query to repopulate the cache.
+         * However, there could be race conditions where 2 concurrent
+         * requests write at the same time and one ends up overwriting the
+         * other (unless we do a CAS, but PSR-6 doesn't support that)
+         * Clearing cache will be safe: in the case of concurrent requests
+         * & cache being regenerated while the other is being saved, it will
+         * be cleared again after saving the new setting!
+         */
+        $this->cache->deleteItems(array('settings'));
     }
 
     /**
-     * Delets a module setting
+     * Deletes a module setting
      *
      * @param string $module
      * @param string $key
@@ -96,12 +100,18 @@ class ModulesSettings
             )
         );
 
-        $settings = $this->getSettings();
-
-        if (isset($settings[$module][$key])) {
-            unset($settings[$module][$key]);
-            $this->cache->cache('settings', $settings);
-        }
+        /*
+         * Instead of invalidating the cache, we could also fetch existing
+         * settings, update them & re-store them to cache. That would save
+         * us the next query to repopulate the cache.
+         * However, there could be race conditions where 2 concurrent
+         * requests write at the same time and one ends up overwriting the
+         * other (unless we do a CAS, but PSR-6 doesn't support that)
+         * Clearing cache will be safe: in the case of concurrent requests
+         * & cache being regenerated while the other is being saved, it will
+         * be cleared again after saving the new setting!
+         */
+        $this->cache->deleteItems(array('settings'));
     }
 
     /**
@@ -128,11 +138,16 @@ class ModulesSettings
      */
     private function getSettings()
     {
-        if (!$this->cache->isCached('settings')) {
-            $this->cache->cache('settings', $this->getAllSettingsFromDatabase());
+        $item = $this->cache->getItem('settings');
+        if ($item->isHit()) {
+            return $item->get();
         }
 
-        return $this->cache->getFromCache('settings');
+        $settings = $this->getAllSettingsFromDatabase();
+        $item->set($settings);
+        $this->cache->save($item);
+
+        return $settings;
     }
 
     /**
@@ -149,7 +164,7 @@ class ModulesSettings
              INNER JOIN modules AS m ON ms.module = m.name'
         );
 
-        // loop settings and cache them, also unserialize the values
+        // loop settings & unserialize the values
         $groupedSettings = array();
         foreach ($settings as $row) {
             $groupedSettings[$row['module']][$row['name']] = unserialize(

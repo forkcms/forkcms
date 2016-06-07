@@ -79,9 +79,6 @@ class Add extends BackendBaseActionAdd
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
         $this->header->addJS('SimpleAjaxUploader.min.js', 'Core', false);
 
-        // add css
-        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
-
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
         $this->isGod = BackendAuthentication::getUser()->isGod();
@@ -125,7 +122,7 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
-        $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('html');
         $this->frm->addHidden('template_id', $defaultTemplateId);
         $this->frm->addRadiobutton(
@@ -281,7 +278,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addText('navigation_title');
 
         // tags
-        $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
+        $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
 
         // a specific action
         $this->frm->addCheckbox('is_action', false);
@@ -386,7 +383,9 @@ class Add extends BackendBaseActionAdd
                 }
                 if ($redirectValue == 'external') {
                     $data['external_redirect'] = array(
-                        'url' => $this->frm->getField('external_redirect')->getValue(),
+                        'url' => BackendPagesModel::getEncodedRedirectURL(
+                            $this->frm->getField('external_redirect')->getValue()
+                        ),
                         'code' => '301'
                     );
                 }
@@ -401,7 +400,7 @@ class Add extends BackendBaseActionAdd
                 $page['type'] = 'root';
                 $page['title'] = $this->frm->getField('title')->getValue();
                 $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();
-                $page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
+                $page['navigation_title_overwrite'] = $this->frm->getField('navigation_title_overwrite')->getActualValue();
                 $page['hidden'] = $this->frm->getField('hidden')->getValue();
                 $page['status'] = $status;
                 $page['publish_on'] = BackendModel::getUTCDate();

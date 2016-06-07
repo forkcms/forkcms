@@ -26,7 +26,7 @@ class Config extends \KernelLoader
      *
      * @var    string
      */
-    protected $defaultAction = 'index';
+    protected $defaultAction = 'Index';
 
     /**
      * The disabled actions

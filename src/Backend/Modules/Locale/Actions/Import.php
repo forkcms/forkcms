@@ -93,7 +93,9 @@ class Import extends BackendBaseActionAdd
                     $xml = @simplexml_load_file($fileFile->getTempFileName());
 
                     // invalid xml
-                    if ($xml === false) $fileFile->addError(BL::getError('InvalidXML'));
+                    if ($xml === false) {
+                        $fileFile->addError(BL::getError('InvalidXML'));
+                    }
                 }
             }
 

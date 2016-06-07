@@ -5054,20 +5054,20 @@
         <translation language="tr"><![CDATA[Sevgili]]></translation>
       </item>
       <item type="label" name="DebugMode">
-        <translation language="nl"><![CDATA[debug mode]]></translation>
-        <translation language="en"><![CDATA[debug mode]]></translation>
-        <translation language="hu"><![CDATA[fejlesztői mód]]></translation>
-        <translation language="it"><![CDATA[modalità debug]]></translation>
-        <translation language="ru"><![CDATA[Режим Отладки]]></translation>
+        <translation language="nl"><![CDATA[debug]]></translation>
+        <translation language="en"><![CDATA[debug]]></translation>
+        <translation language="hu"><![CDATA[fejlesztői]]></translation>
+        <translation language="it"><![CDATA[debug]]></translation>
+        <translation language="ru"><![CDATA[Отладки]]></translation>
         <translation language="zh"><![CDATA[调试模式]]></translation>
-        <translation language="de"><![CDATA[Debug-Modus]]></translation>
-        <translation language="fr"><![CDATA[mode debug]]></translation>
-        <translation language="es"><![CDATA[modo debug]]></translation>
-        <translation language="lt"><![CDATA[testavimo aplinka]]></translation>
-        <translation language="uk"><![CDATA[Режім відладки]]></translation>
-        <translation language="sv"><![CDATA[debug-läge]]></translation>
-        <translation language="el"><![CDATA[κατάσταση λειτουργίας debug]]></translation>
-        <translation language="tr"><![CDATA[Hata ayıklama modu]]></translation>
+        <translation language="de"><![CDATA[Debug]]></translation>
+        <translation language="fr"><![CDATA[Debug]]></translation>
+        <translation language="es"><![CDATA[Debug]]></translation>
+        <translation language="lt"><![CDATA[testavimo]]></translation>
+        <translation language="uk"><![CDATA[відладки]]></translation>
+        <translation language="sv"><![CDATA[debug]]></translation>
+        <translation language="el"><![CDATA[debug]]></translation>
+        <translation language="tr"><![CDATA[ayıklama modu]]></translation>
       </item>
       <item type="label" name="Default">
         <translation language="nl"><![CDATA[standaard]]></translation>
@@ -10000,6 +10000,10 @@
         <translation language="sv"><![CDATA[E-post som skickas från CMS använder dessa inställningar.]]></translation>
         <translation language="el"><![CDATA[Τα email που αποστέλλονται από το CMS χρησιμοποιούν αυτές τις ρυθμίσεις.]]></translation>
       </item>
+      <item type="message" name="HelpEmailReplyTo">
+        <translation language="nl"><![CDATA[Antwoorden op e-mails verzonden vanuit het CMS worden naar dit e-mailadres gestuurd.]]></translation>
+        <translation language="en"><![CDATA[Answers on e-mails sent from the CMS will be sent to this e-mailaddress.]]></translation>
+      </item>
       <item type="message" name="HelpEmailTo">
         <translation language="nl"><![CDATA[Notificaties van het CMS worden hiernaar verstuurd.]]></translation>
         <translation language="en"><![CDATA[Notifications from the CMS are sent here.]]></translation>
@@ -11133,18 +11137,18 @@
         <translation language="el"><![CDATA[Μη έγκυρος τομέας (domain).]]></translation>
       </item>
       <item type="error" name="InvalidEmailPasswordCombination">
-        <translation language="nl"><![CDATA[De combinatie van e-mail en wachtwoord is niet correct. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Bent u uw wachtwoord vergeten?</a>]]></translation>
-        <translation language="en"><![CDATA[Your e-mail and password combination is incorrect. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Did you forget your password?</a>]]></translation>
-        <translation language="hu"><![CDATA[Az e-mail és jelszó kombinációd hibás. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Elfelejtetted a jelszavadat?</a>]]></translation>
-        <translation language="it"><![CDATA[La combinazione email password fornita non è corretta. <a href="forgotPasswordHolder" class="toggleBalloon">Hai dimenticato la password?</a>]]></translation>
-        <translation language="ru"><![CDATA[Неверная пара логин/пароль. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Забыли?</a>]]></translation>
-        <translation language="zh"><![CDATA[你的Email地址或密码输入不正确。Your e-mail and password combination is incorrect. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">忘记密码？</a>]]></translation>
-        <translation language="fr"><![CDATA[La combinaison e-mail et mot de passe est incorrecte. Your e-mail and password combination is incorrect. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Avez-vous oublié votre mot de passe ?</a>]]></translation>
-        <translation language="de"><![CDATA[Diese E-Mail/Passwort-Kombination ist inkorrekt. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Hast du dein Passwort vergessen?</a>]]></translation>
-        <translation language="es"><![CDATA[Tu combinación de e-mail y contraseña es incorrecta. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">¿Olvidaste tu contraseña?</a>]]></translation>
-        <translation language="lt"><![CDATA[Jūsų slaptažodžio ir el.pašto kombinacija neteisinga. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Ar pamiršote slaptažodį?</a>]]></translation>
-        <translation language="sv"><![CDATA[Din e-postadress och lösenord kombination är felaktig. <en href="#" rel="forgotPasswordHolder" class="toggleBalloon">Did du forget ditt lösenord?</en>]]></translation>
-        <translation language="el"><![CDATA[Ο συνδυασμός e-mail και κωδικού που δώσατε δεν είναι σωστός. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Ξεχάσατε τον κωδικό σας;</a>]]></translation>
+        <translation language="nl"><![CDATA[De combinatie van e-mail en wachtwoord is niet correct. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Bent u uw wachtwoord vergeten?</a>]]></translation>
+        <translation language="en"><![CDATA[Your e-mail and password combination is incorrect. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Did you forget your password?</a>]]></translation>
+        <translation language="hu"><![CDATA[Az e-mail és jelszó kombinációd hibás. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Elfelejtetted a jelszavadat?</a>]]></translation>
+        <translation language="it"><![CDATA[La combinazione email password fornita non è corretta. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Hai dimenticato la password?</a>]]></translation>
+        <translation language="ru"><![CDATA[Неверная пара логин/пароль. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Забыли?</a>]]></translation>
+        <translation language="zh"><![CDATA[你的Email地址或密码输入不正确。Your e-mail and password combination is incorrect. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">忘记密码？</a>]]></translation>
+        <translation language="fr"><![CDATA[La combinaison e-mail et mot de passe est incorrecte. Your e-mail and password combination is incorrect. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Avez-vous oublié votre mot de passe ?</a>]]></translation>
+        <translation language="de"><![CDATA[Diese E-Mail/Passwort-Kombination ist inkorrekt. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Hast du dein Passwort vergessen?</a>]]></translation>
+        <translation language="es"><![CDATA[Tu combinación de e-mail y contraseña es incorrecta. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">¿Olvidaste tu contraseña?</a>]]></translation>
+        <translation language="lt"><![CDATA[Jūsų slaptažodžio ir el.pašto kombinacija neteisinga. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Ar pamiršote slaptažodį?</a>]]></translation>
+        <translation language="sv"><![CDATA[Din e-postadress och lösenord kombination är felaktig. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Did du forget ditt lösenord?</en>]]></translation>
+        <translation language="el"><![CDATA[Ο συνδυασμός e-mail και κωδικού που δώσατε δεν είναι σωστός. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Ξεχάσατε τον κωδικό σας;</a>]]></translation>
       </item>
       <item type="error" name="InvalidInteger">
         <translation language="nl"><![CDATA[Ongeldig getal.]]></translation>

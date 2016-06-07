@@ -47,8 +47,8 @@ final class Index extends ActionIndex
     private function loadForm()
     {
         $this->form = new Form('dates');
-        $this->form->addDate('start_date', $this->startDate, 'range', mktime(0, 0, 0, 1, 1, 2005), time(), 'noFocus');
-        $this->form->addDate('end_date', $this->endDate, 'range', mktime(0, 0, 0, 1, 1, 2005), time(), 'noFocus');
+        $this->form->addDate('start_date', $this->startDate, 'range', mktime(0, 0, 0, 1, 1, 2005), time());
+        $this->form->addDate('end_date', $this->endDate, 'range', mktime(0, 0, 0, 1, 1, 2005), time());
     }
 
     private function validateForm()

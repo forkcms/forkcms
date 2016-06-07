@@ -24,16 +24,7 @@ class Installer extends ModuleInstaller
      */
     private function insertWidget()
     {
-        // build widget
-        $statistics = array(
-            'column' => 'right',
-            'position' => 2,
-            'hidden' => false,
-            'present' => true
-        );
-
-        // insert widget
-        $this->insertDashboardWidget('Mailmotor', 'Statistics', $statistics);
+        $this->insertDashboardWidget('Mailmotor', 'Statistics');
     }
 
     /**
@@ -116,7 +107,7 @@ class Installer extends ModuleInstaller
     }
 
     /**
-     * Install the module and it's actions
+     * Install the module and its actions
      */
     private function installModule()
     {

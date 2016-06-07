@@ -55,7 +55,9 @@ class Export extends BackendBaseActionIndex
         if ($this->filter['language'] !== null) {
             // create an array for the languages, surrounded by quotes (example: 'en')
             $languages = array();
-            foreach ($this->filter['language'] as $key => $val) $languages[$key] = '\'' . $val . '\'';
+            foreach ($this->filter['language'] as $key => $val) {
+                $languages[$key] = '\'' . $val . '\'';
+            }
 
             $query .= ' AND l.language IN (' . implode(',', $languages) . ')';
         }
@@ -76,7 +78,9 @@ class Export extends BackendBaseActionIndex
         if ($this->filter['type'] !== null) {
             // create an array for the types, surrounded by quotes (example: 'lbl')
             $types = array();
-            foreach ($this->filter['type'] as $key => $val) $types[$key] = '\'' . $val . '\'';
+            foreach ($this->filter['type'] as $key => $val) {
+                $types[$key] = '\'' . $val . '\'';
+            }
 
             $query .= ' AND l.type IN (' . implode(',', $types) . ')';
         }
@@ -97,7 +101,7 @@ class Export extends BackendBaseActionIndex
         if ($this->filter['ids']) {
 
             // make really sure we are working with integers
-            foreach($this->filter['ids'] as &$id) {
+            foreach ($this->filter['ids'] as &$id) {
                 $id = (int) $id;
             }
 
@@ -124,7 +128,7 @@ class Export extends BackendBaseActionIndex
         // xml headers
         header('Content-Disposition: attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"');
         header('Content-Type: application/octet-stream;charset=' . $charset);
-        header('Content-Length: ' . strlen($xmlOutput));
+        header('Content-Length: ' . mb_strlen($xmlOutput));
 
         // output XML
         echo $xmlOutput;
@@ -156,9 +160,9 @@ class Export extends BackendBaseActionIndex
 
         $this->filter['ids'] = in_array($this->getParameter('ids'), array(null, '', false, array())) ? array() : explode('|', $this->getParameter('ids'));
 
-        foreach($this->filter['ids'] as $id) {
+        foreach ($this->filter['ids'] as $id) {
             // someone is messing with the url, clear ids
-            if(!is_numeric($id)) {
+            if (!is_numeric($id)) {
                 $this->filter['ids'] = array();
                 break;
             }

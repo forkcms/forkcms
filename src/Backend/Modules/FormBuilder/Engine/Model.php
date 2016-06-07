@@ -11,7 +11,6 @@ namespace Backend\Modules\FormBuilder\Engine;
 
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-
 use Frontend\Core\Engine\Language as FL;
 
 /**
@@ -93,7 +92,7 @@ class Model
         }
 
             // @todo refactor me...
-            // keep trying till its unique
+            // keep trying till it's unique
         while ((int) BackendModel::getContainer()->get('database')->getVar(
                 'SELECT 1
                  FROM forms AS i

@@ -68,7 +68,7 @@ class DatabaseType extends AbstractType
                     $chunks = explode('.', $host);
 
                     // seems like windows can't handle localhost...
-                    $data->setDbHostname((substr(PHP_OS, 0, 3) == 'WIN') ? '127.0.0.1' : 'localhost');
+                    $data->setDbHostname((mb_substr(PHP_OS, 0, 3) == 'WIN') ? '127.0.0.1' : 'localhost');
 
                     // remove tld
                     array_pop($chunks);

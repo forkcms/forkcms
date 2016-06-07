@@ -4,8 +4,8 @@ namespace Common\Mailer;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Frontend\Core\Engine\Model;
-use Frontend\Core\Engine\Template;
-use Backend\Core\Engine\Template as BackendTemplate;
+use Frontend\Core\Engine\TwigTemplate as FrontendTemplate;
+use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 use Common\Uri;
 
 /**
@@ -46,7 +46,7 @@ class Message extends \Swift_Message
     }
 
     /**
-     * Parses a SpoonTemplate with the wanted variables
+     * Parses a TwigTemplate with the wanted variables
      *
      * @param  string  $template
      * @param  array   $variables
@@ -151,7 +151,7 @@ class Message extends \Swift_Message
         if (APPLICATION === 'Backend') {
             $tpl = new BackendTemplate(false);
         } else {
-            $tpl = new Template(false);
+            $tpl = new FrontendTemplate(false);
         }
 
         // set some options

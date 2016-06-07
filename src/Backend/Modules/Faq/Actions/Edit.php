@@ -76,7 +76,7 @@ class Edit extends BackendBaseActionEdit
 
         // create form
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['question'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['question'], null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('answer', $this->record['answer']);
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
         $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
@@ -84,8 +84,8 @@ class Edit extends BackendBaseActionEdit
             'tags',
             BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']),
             null,
-            'inputText tagBox',
-            'inputTextError tagBox'
+            'form-control js-tags-input',
+            'form-control danger js-tags-input'
         );
 
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);

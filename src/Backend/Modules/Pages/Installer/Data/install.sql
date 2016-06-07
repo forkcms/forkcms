@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
  `sequence` int(11) NOT NULL,
  PRIMARY KEY (`revision_id`),
  KEY `idx_id_status_hidden_language` (`id`,`status`,`hidden`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `pages_blocks` (
@@ -37,4 +37,4 @@ CREATE TABLE IF NOT EXISTS `pages_blocks` (
  `visible` enum('N','Y') NOT NULL,
  `sequence` int(11) NOT NULL,
  KEY `idx_rev_status` (`revision_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

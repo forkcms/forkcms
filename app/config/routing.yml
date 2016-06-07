@@ -1,6 +1,3 @@
-installer:
-    resource: "@ForkCMSInstallerBundle/Resources/config/routing.yml"
-
 backend:
     path: /private/{_locale}/{module}/{action}
     defaults:

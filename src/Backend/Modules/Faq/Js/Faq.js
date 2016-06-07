@@ -12,13 +12,13 @@ jsBackend.faq =
 	init: function()
 	{
 		// index stuff
-		if($('#dataGridQuestionsHolder').length > 0)
+		if($('.jsDataGridQuestionsHolder').length > 0)
 		{
 			// destroy default drag and drop
 			$('.sequenceByDragAndDrop tbody').sortable('destroy');
 
 			// drag and drop
-			jsBackend.faq.bindDragAndDropCategoryFaq();
+			jsBackend.faq.bindDragAndDropQuestions();
 			jsBackend.faq.checkForEmptyCategories();
 		}
 
@@ -42,10 +42,10 @@ jsBackend.faq =
 		if($('tr.noQuestions').length > 0)
 		{
 			// make dataGrid droppable
-			$('table.dataGrid').droppable(
+			$('table.jsDataGrid').droppable(
 			{
 				// only accept table rows
-				accept: 'table.dataGrid tr',
+				accept: 'table.jsDataGrid tr',
 				drop: function(e, ui)
 				{
 					// remove the no questions in category message
@@ -54,7 +54,7 @@ jsBackend.faq =
 			});
 
 			// cleanup remaining no questions
-			$('table.dataGrid').each(function(){
+			$('table.jsDataGrid').each(function(){
 				if($(this).find('tr').length > 2) $(this).find('tr.noQuestions').remove();
 			});
 		}
@@ -63,24 +63,24 @@ jsBackend.faq =
 	/**
 	 * Bind drag and dropping of a category
 	 */
-	bindDragAndDropCategoryFaq: function()
+	bindDragAndDropQuestions: function()
 	{
 		// go over every dataGrid
-		$.each($('div.dataGridHolder'), function()
+		$.each($('div.jsDataGridQuestionsHolder'), function()
 		{
 			// make them sortable
-			$('div.dataGridHolder').sortable(
+			$('div.jsDataGridQuestionsHolder').sortable(
 			{
-				items: 'table.dataGrid tbody tr',		// set the elements that user can sort
+				items: 'table.jsDataGrid tbody tr',		// set the elements that user can sort
 				handle: 'td.dragAndDropHandle',			// set the element that user can grab
 				tolerance: 'pointer',					// give a more natural feeling
-				connectWith: 'div.dataGridHolder',		// this is what makes dragging between categories possible
+				connectWith: 'div.jsDataGridQuestionsHolder',		// this is what makes dragging between categories possible
 				stop: function(e, ui)				// on stop sorting
 				{
 					// vars we will need
 					var questionId = ui.item.attr('id');
 					var fromCategoryId = $(this).attr('id').substring(9);
-					var toCategoryId = ui.item.parents('.dataGridHolder').attr('id').substring(9);
+					var toCategoryId = ui.item.parents('.jsDataGridQuestionsHolder').attr('id').substring(9);
 					var fromCategorySequence = $(this).sortable('toArray').join(',');
 					var toCategorySequence = $('#dataGrid-' + toCategoryId).sortable('toArray').join(',');
 
@@ -98,37 +98,41 @@ jsBackend.faq =
 						},
 						success: function(data, textStatus)
 						{
-							// not a success so revert the changes
+							// successfully saved reordering sequence
 							if(data.code == 200)
 							{
 								// change count in title (if any)
-								$('div#dataGrid-' + fromCategoryId + ' h3').html($('div#dataGrid-' + fromCategoryId + ' h3').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + fromCategoryId + ' table.dataGrid tr').length - 1 ) + ')'));
+								$('div#dataGrid-' + fromCategoryId + ' .content-title p').html($('div#dataGrid-' + fromCategoryId + ' .content-title p').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
 
 								// if there are no records -> show message
-								if($('div#dataGrid-' + fromCategoryId + ' table.dataGrid tr').length == 1)
+								if($('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length == 1)
 								{
-									$('div#dataGrid-' + fromCategoryId + ' table.dataGrid').append('<tr class="noQuestions"><td colspan="3">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td></tr>');
+									$('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid').append('<tr class="noQuestions"><td colspan="3">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td></tr>');
 								}
 
 								// check empty categories
 								jsBackend.faq.checkForEmptyCategories();
 
 								// redo odd-even
-								var table = $('table.dataGrid');
+								var table = $('table.jsDataGrid');
 								table.find('tr').removeClass('odd').removeClass('even');
 								table.find('tr:even').addClass('even');
 								table.find('tr:odd').addClass('odd');
 
 								// change count in title (if any)
-								$('div#dataGrid-' + toCategoryId + ' h3').html($('div#dataGrid-' + toCategoryId + ' h3').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + toCategoryId + ' table.dataGrid tr').length - 1 ) + ')'));
+								$('div#dataGrid-' + toCategoryId + ' .content-title p').html($('div#dataGrid-' + toCategoryId + ' .content-title p').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + toCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
+
+								// show message
+								jsBackend.messages.add('success', data.message);
 							}
+							// not a success so revert the changes
 							else
 							{
 								// revert
 								$(this).sortable('cancel');
 
 								// show message
-								jsBackend.messages.add('error', 'alter sequence failed.');
+								jsBackend.messages.add('danger', 'alter sequence failed.');
 							}
 
 							// alert the user
@@ -140,7 +144,7 @@ jsBackend.faq =
 							$(this).sortable('cancel');
 
 							// show message
-							jsBackend.messages.add('error', 'alter sequence failed.');
+							jsBackend.messages.add('danger', 'alter sequence failed.');
 
 							// alert the user
 							if(jsBackend.debug){ alert(textStatus); }
