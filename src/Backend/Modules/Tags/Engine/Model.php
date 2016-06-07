@@ -52,6 +52,7 @@ class Model
      * Check if a tag exists.
      *
      * @param int $id The id to check for existence.
+     *
      * @return bool
      */
     public static function exists($id)
@@ -68,6 +69,7 @@ class Model
      * Check if a tag exists
      *
      * @param string $tag The tag to check for existence.
+     *
      * @return bool
      */
     public static function existsTag($tag)
@@ -82,6 +84,7 @@ class Model
      * Get tag record.
      *
      * @param int $id The id of the record to get.
+     *
      * @return array
      */
     public static function get($id)
@@ -119,6 +122,7 @@ class Model
      * @param string $term            The searchstring.
      * @param string $language        The language to use, if not provided
      *                                use the working language.
+     *
      * @return array
      */
     public static function getStartsWith($term, $language = null)
@@ -143,6 +147,7 @@ class Model
      * @param int    $otherId  The id of the record.
      * @param string $type     The type of the returnvalue, possible values are: array, string (tags will be joined by ,).
      * @param string $language The language to use, if not provided the working language will be used.
+     *
      * @return mixed
      */
     public static function getTags($module, $otherId, $type = 'string', $language = null)
@@ -176,6 +181,7 @@ class Model
      *
      * @param string $URL The URL to use as a base.
      * @param int    $id  The ID to ignore.
+     *
      * @return string
      */
     public static function getURL($URL, $id = null)
@@ -235,6 +241,7 @@ class Model
      * @param string $tag      The data for the tag.
      * @param string $language The language wherein the tag will be inserted,
      *                         if not provided the workinglanguage will be used.
+     *
      * @return int
      */
     public static function insert($tag, $language = null)

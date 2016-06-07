@@ -75,7 +75,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Tags',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $tagsID, 'position' => 'main'),

@@ -95,10 +95,10 @@ class DatabaseType extends AbstractType
                 new Callback(
                     array(
                         'methods' => array(
-                            array($this, 'checkDatabaseConnection')
+                            array($this, 'checkDatabaseConnection'),
                         ),
                     )
-                )
+                ),
             ),
             'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
         ));

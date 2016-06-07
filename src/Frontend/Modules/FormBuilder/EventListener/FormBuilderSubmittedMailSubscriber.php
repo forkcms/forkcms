@@ -87,6 +87,7 @@ final class FormBuilderSubmittedMailSubscriber
      * Converts the data to make sure it is nicely usable in the email
      *
      * @param  array $data
+     *
      * @return array
      */
     protected function getEmailFields($data)
@@ -94,12 +95,13 @@ final class FormBuilderSubmittedMailSubscriber
         return array_map(
             function ($item) {
                 $value = unserialize($item['value']);
+
                 return array(
                     'label' => $item['label'],
                     'value' => (is_array($value)
                         ? implode(',', $value)
                         : nl2br($value)
-                    )
+                    ),
                 );
             },
             $data

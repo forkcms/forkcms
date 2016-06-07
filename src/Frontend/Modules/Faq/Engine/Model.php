@@ -27,6 +27,7 @@ class Model implements FrontendTagsInterface
      * Fetch a question
      *
      * @param string $url
+     *
      * @return array
      */
     public static function get($url)
@@ -49,6 +50,7 @@ class Model implements FrontendTagsInterface
      * @param int   $categoryId
      * @param int   $limit
      * @param mixed $excludeIds
+     *
      * @return array
      */
     public static function getAllForCategory($categoryId, $limit = null, $excludeIds = null)
@@ -123,6 +125,7 @@ class Model implements FrontendTagsInterface
      * Get a category
      *
      * @param string $url
+     *
      * @return array
      */
     public static function getCategory($url)
@@ -141,6 +144,7 @@ class Model implements FrontendTagsInterface
      * Get a category by id
      *
      * @param int $id
+     *
      * @return array
      */
     public static function getCategoryById($id)
@@ -159,6 +163,7 @@ class Model implements FrontendTagsInterface
      * Fetch the list of tags for a list of items
      *
      * @param array $ids
+     *
      * @return array
      */
     public static function getForTags(array $ids)
@@ -189,6 +194,7 @@ class Model implements FrontendTagsInterface
      * Selects the proper part of the full URL to get the item's id from the database.
      *
      * @param FrontendURL $url
+     *
      * @return int
      */
     public static function getIdForTags(FrontendURL $url)
@@ -202,6 +208,7 @@ class Model implements FrontendTagsInterface
      * Get all items in a category
      *
      * @param int $limit
+     *
      * @return array
      */
     public static function getMostRead($limit)
@@ -228,6 +235,7 @@ class Model implements FrontendTagsInterface
      * Get the all questions for selected category
      *
      * @param int $id
+     *
      * @return array
      */
     public static function getFaqsForCategory($id)
@@ -255,6 +263,7 @@ class Model implements FrontendTagsInterface
      *
      * @param int $id
      * @param int $limit
+     *
      * @return array
      */
     public static function getRelated($id, $limit = 5)
@@ -289,6 +298,7 @@ class Model implements FrontendTagsInterface
      * Increase the number of views for this item
      *
      * @param int $id
+     *
      * @return array
      */
     public static function increaseViewCount($id)
@@ -321,6 +331,7 @@ class Model implements FrontendTagsInterface
      *
      *
      * @param array $ids
+     *
      * @return array
      */
     public static function search(array $ids)
@@ -352,6 +363,7 @@ class Model implements FrontendTagsInterface
      * @param int        $id
      * @param bool       $useful
      * @param mixed $previousFeedback
+     *
      * @return array
      */
     public static function updateFeedback($id, $useful, $previousFeedback = null)

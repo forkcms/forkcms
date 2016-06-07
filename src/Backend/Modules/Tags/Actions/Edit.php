@@ -94,7 +94,7 @@ class Edit extends BackendBaseActionEdit
                         $items[] = array(
                             'module' => \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module']))),
                             'name' => $row['name'],
-                            'url' => $row['url']
+                            'url' => $row['url'],
                         );
                     }
                 }

@@ -30,7 +30,7 @@ class ExportTemplate extends BackendBaseActionAdd
         $fields = array(
             'email',
             'display_name',
-            'password'
+            'password',
         );
 
         // define file

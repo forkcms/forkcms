@@ -22,7 +22,6 @@ use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 class ExportAnalyse extends BackendBaseActionIndex
 {
     /**
-     *
      * @var	array
      */
     private $filter;

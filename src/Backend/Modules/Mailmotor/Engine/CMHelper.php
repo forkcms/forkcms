@@ -58,6 +58,7 @@ class CMHelper
      *
      * @param string $name    The name of the custom field.
      * @param int    $groupId The group ID you want to add the custom field for.
+     *
      * @return bool
      */
     public static function createCustomField($name, $groupId)
@@ -78,6 +79,7 @@ class CMHelper
      *
      * @param string $name    The name of the custom field.
      * @param string $groupId The CampaignMonitor ID of the list you want to remove the custom field from.
+     *
      * @return bool
      */
     public static function deleteCustomField($name, $groupId)
@@ -96,6 +98,7 @@ class CMHelper
      * Deletes one or more groups
      *
      * @param mixed $ids The ids to delete.
+     *
      * @throws \CampaignMonitorException
      */
     public static function deleteGroups($ids)
@@ -118,7 +121,7 @@ class CMHelper
                 self::getCM()->deleteList(self::getCampaignMonitorID('list', $id));
             } catch (\CampaignMonitorException $e) {
                 // if list doesn't exist anymore in CM, delete our list anyway
-                if ($e->getMessage() != "400: Invalid ListID") {
+                if ($e->getMessage() != '400: Invalid ListID') {
                     throw $e;
                 }
             }
@@ -164,6 +167,7 @@ class CMHelper
      * Returns all bounces
      *
      * @param int $id The id of the campaign.
+     *
      * @return array
      */
     public static function getBounces($id)
@@ -192,6 +196,7 @@ class CMHelper
      *
      * @param string $type    The type to insert.
      * @param string $otherId The ID in our tables.
+     *
      * @return string
      */
     public static function getCampaignMonitorID($type, $otherId)
@@ -208,6 +213,7 @@ class CMHelper
      * Returns the CM IDs for a given list of group IDs
      *
      * @param array $groupIds The IDs of the groups.
+     *
      * @return array
      */
     public static function getCampaignMonitorIDsForGroups(array $groupIds)
@@ -228,6 +234,7 @@ class CMHelper
      * Returns the CM IDs for a given list of template IDs
      *
      * @param array $templateIds The ids of the templates.
+     *
      * @return array
      */
     public static function getCampaignMonitorIDsForTemplates($templateIds)
@@ -330,6 +337,7 @@ class CMHelper
      * Returns the custom fields by a given group ID
      *
      * @param int $groupId The id of the group.
+     *
      * @return array
      */
     public static function getCustomFields($groupId)
@@ -355,6 +363,7 @@ class CMHelper
      * @param string $cmId      The id of the mailing in CampaignMonitor.
      * @param bool   $getColumn If this is true, it will return an array with just the email addresses
      *                          who opened the mailing.
+     *
      * @return array
      */
     public static function getMailingOpens($cmId, $getColumn = false)
@@ -384,6 +393,7 @@ class CMHelper
      * Get the custom field value for 'name'
      *
      * @param array $fields The custom fields array.
+     *
      * @return string
      */
     private static function getNameFieldValue($fields)
@@ -408,6 +418,7 @@ class CMHelper
      * @param int  $id          The id of the mailing.
      * @param bool $fetchClicks If the click-count should be included.
      * @param bool $fetchOpens  If the open-count should be included.
+     *
      * @return array
      */
     public static function getStatistics($id, $fetchClicks = false, $fetchOpens = false)
@@ -482,6 +493,7 @@ class CMHelper
      * Returns the statistics for a given e-mail address
      *
      * @param string $email The emailaddress to get the stats for.
+     *
      * @return array
      */
     public static function getStatisticsByAddress($email)
@@ -535,6 +547,7 @@ class CMHelper
      * Returns the statistics for all mailings in a given campaign
      *
      * @param int $id The id of the campaign.
+     *
      * @return array
      */
     public static function getStatisticsByCampaignID($id)
@@ -589,6 +602,7 @@ class CMHelper
      * Returns all subscribers, regardless of the page limit CM gives us.
      *
      * @param string $listId The list ID to get the subscribers from.
+     *
      * @return array
      */
     public static function getSubscribers($listId)
@@ -606,10 +620,10 @@ class CMHelper
         // check if we have at least 1 page
         if ($listStats['total_subscribers'] !== 0) {
             // set the pagecount to 1 by default
-            $pageCount++;
+            ++$pageCount;
 
             // loop the total amount of pages and fetch the subscribers accordingly
-            for ($i = $pageCount; $i != 0; $i--) {
+            for ($i = $pageCount; $i != 0; --$i) {
                 $subscribers = self::getCM()->getSubscribers($listId, null, $i, 1000);
                 $results = array_merge($results, $subscribers);
             }
@@ -639,6 +653,7 @@ class CMHelper
      * @param string $type    The type of the record.
      * @param string $id      The id in CampaignMonitor.
      * @param string $otherId The id in our tables.
+     *
      * @return string
      */
     public static function insertCampaignMonitorID($type, $id, $otherId)
@@ -658,6 +673,7 @@ class CMHelper
      * Creates a list in campaignmonitor and inserts the group record in the database. Returns the group ID
      *
      * @param array $item The group record to insert.
+     *
      * @return int
      */
     public static function insertGroup(array $item)
@@ -699,6 +715,7 @@ class CMHelper
      * Creates a campaign in campaignmonitor. Returns the campaign ID
      *
      * @param array $item The mailing record to insert.
+     *
      * @return string|false
      */
     public static function insertMailing(array $item)
@@ -729,6 +746,7 @@ class CMHelper
      * Creates a campaign draft into campaignmonitor.
      *
      * @param array $item The mailing record to update a campaign draft.
+     *
      * @return string The campaign ID of the newly created draft.
      */
     public static function insertMailingDraft(array $item)
@@ -767,6 +785,7 @@ class CMHelper
      * Saves a draft mailing into campaignmonitor
      *
      * @param array $item The mailing record to create/update a campaign draft.
+     *
      * @return string The newly created campaignmonitor ID
      */
     public static function saveMailingDraft(array $item)
@@ -834,6 +853,7 @@ class CMHelper
      * @param string $email        The emailaddress.
      * @param string $groupId      The group wherein the emailaddress should be added.
      * @param array  $customFields Any optional custom fields.
+     *
      * @return bool
      */
     public static function subscribe($email, $groupId = null, $customFields = null)
@@ -864,7 +884,7 @@ class CMHelper
                     $subscriber['source'],
                     $subscriber['created_on'],
                     $subscriber['source'],
-                    $subscriber['created_on']
+                    $subscriber['created_on'],
                 )
             );
 
@@ -885,7 +905,7 @@ class CMHelper
                     $subscriberGroup['subscribed_on'],
                     $subscriberGroup['group_id'],
                     $subscriberGroup['status'],
-                    $subscriberGroup['subscribed_on']
+                    $subscriberGroup['subscribed_on'],
                 )
             );
 
@@ -905,6 +925,7 @@ class CMHelper
      *
      * @param string $email   The emailaddress to unsubscribe.
      * @param string $groupId The group wherefrom the emailaddress should be unsubscribed.
+     *
      * @return bool
      */
     public static function unsubscribe($email, $groupId = null)
@@ -952,6 +973,7 @@ class CMHelper
      * Updates a list with campaignmonitor and in the database. Returns the affected rows
      *
      * @param array $item The new data.
+     *
      * @return int
      */
     public static function updateGroup($item)
@@ -1047,6 +1069,7 @@ class CMHelper
      * to be able to use their sendCampaignPreview method.
      *
      * @param array $item The mailing record to update a campaign draft.
+     *
      * @return string|null Returns the newly made campaign ID, or false if the method failed.
      */
     public static function updateMailingDraft(array $item)

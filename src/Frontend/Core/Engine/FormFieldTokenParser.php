@@ -1,4 +1,5 @@
 <?php
+
 namespace Frontend\Core\Engine;
 
 /**
@@ -10,6 +11,7 @@ class FormFieldTokenParser extends \Twig_TokenParser
 {
     /**
      * @param Twig_Token $token consumed token by the lexer.
+     *
      * @return Twig_Node
      * @throw Twig_Error_Syntax
      */
@@ -25,6 +27,7 @@ class FormFieldTokenParser extends \Twig_TokenParser
                 $this->parser->getFilename()
             );
         }
+
         return new FormFieldNode(FormState::$current, $field, $token->getLine(), $this->getTag());
     }
 

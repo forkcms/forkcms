@@ -88,7 +88,7 @@ class Index extends BackendBaseActionIndex
         $this->dgDrafts->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
             )
         );
 
@@ -144,7 +144,7 @@ class Index extends BackendBaseActionIndex
         $this->dgRecentlyEdited->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
             )
         );
 

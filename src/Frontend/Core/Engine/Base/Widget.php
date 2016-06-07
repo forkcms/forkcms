@@ -15,6 +15,7 @@ use Frontend\Core\Engine\Url;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific widget
+ *
  * @later  Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>

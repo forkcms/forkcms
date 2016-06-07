@@ -17,6 +17,7 @@ class Model
      * Get an item.
      *
      * @param string $id The id of the item to fetch.
+     *
      * @return array
      */
     public static function get($id)

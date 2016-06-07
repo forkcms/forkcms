@@ -58,6 +58,7 @@ class Navigation extends FrontendBaseObject
      * @param string $language   The language to use, if not provided we will use the working language.
      * @param array  $parameters GET-parameters to use.
      * @param bool   $urlencode  Should the parameters be urlencoded?
+     *
      * @return string
      */
     public static function getBackendURLForBlock(
@@ -91,7 +92,7 @@ class Navigation extends FrontendBaseObject
             }
 
             // update counter
-            $i++;
+            ++$i;
         }
 
         // build the URL and return it
@@ -102,7 +103,8 @@ class Navigation extends FrontendBaseObject
      * Get the first child for a given parent
      *
      * @param int $pageId The pageID wherefore we should retrieve the first child.
-     * @return integer
+     *
+     * @return int
      */
     public static function getFirstChildId($pageId)
     {
@@ -177,11 +179,13 @@ class Navigation extends FrontendBaseObject
      *
      * @param string $language The language wherefore the navigation should be loaded,
      *                         if not provided we will load the language that was provided in the URL.
+     *
      * @return array
      */
     public static function getKeys($language = null)
     {
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
         return BackendPagesModel::getCacheBuilder()->getKeys($language);
     }
 
@@ -190,11 +194,13 @@ class Navigation extends FrontendBaseObject
      *
      * @param string $language The language wherefore the keys should be loaded,
      *                         if not provided we will load the language that was provided in the URL.
+     *
      * @return array
      */
     public static function getNavigation($language = null)
     {
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
         return BackendPagesModel::getCacheBuilder()->getNavigation($language);
     }
 
@@ -207,6 +213,7 @@ class Navigation extends FrontendBaseObject
      * @param array  $excludeIds   PageIDs to be excluded.
      * @param string $template     The template that will be used.
      * @param int    $depthCounter A counter that will hold the current depth.
+     *
      * @return string
      */
     public static function getNavigationHTML(
@@ -304,7 +311,7 @@ class Navigation extends FrontendBaseObject
                 }
 
                 // meta and footer subpages have the "page" type
-                if ($type == 'meta' || $type == "footer") {
+                if ($type == 'meta' || $type == 'footer') {
                     $subType = 'page';
                 } else {
                     $subType = $type;
@@ -365,6 +372,7 @@ class Navigation extends FrontendBaseObject
      * @param string $URL      The URL wherefore you want a pageID.
      * @param string $language The language wherefore the pageID should be retrieved,
      *                          if not provided we will load the language that was provided in the URL.
+     *
      * @return int
      */
     public static function getPageId($URL, $language = null)
@@ -392,6 +400,7 @@ class Navigation extends FrontendBaseObject
      * Get more info about a page
      *
      * @param int $pageId The pageID wherefore you want more information.
+     *
      * @return string
      */
     public static function getPageInfo($pageId)
@@ -429,6 +438,7 @@ class Navigation extends FrontendBaseObject
      * @param int    $pageId   The pageID wherefore you want the URL.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
+     *
      * @return string
      */
     public static function getURL($pageId, $language = null)
@@ -463,6 +473,7 @@ class Navigation extends FrontendBaseObject
      * @param string $action   The specific action wherefore the URL should be build.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
+     *
      * @return string
      */
     public static function getURLForBlock($module, $action = null, $language = null)
@@ -525,6 +536,7 @@ class Navigation extends FrontendBaseObject
      * @param int    $id       The id of the extra.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
+     *
      * @return string
      */
     public static function getURLForExtraId($id, $language = null)

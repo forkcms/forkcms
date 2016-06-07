@@ -29,6 +29,7 @@ class BaseModel
      * Gets a service by id.
      *
      * @param string $reference The service id
+     *
      * @return object The service
      */
     public static function get($reference)
@@ -48,6 +49,7 @@ class BaseModel
      * Returns true if the service id is defined.
      *
      * @param string $reference The service id
+     *
      * @return Boolean true if the service id is defined, false otherwise
      */
     public static function has($reference)

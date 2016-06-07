@@ -83,7 +83,7 @@ class Settings extends FrontendBaseBlock
         // gender dropdown values
         $genderValues = array(
             'male' => \SpoonFilter::ucfirst(FL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(FL::getLabel('Female'))
+            'female' => \SpoonFilter::ucfirst(FL::getLabel('Female')),
         );
 
         // birthdate dropdown values

@@ -41,6 +41,7 @@ class Model
      *
      * @param string $from The language code to copy the content blocks from.
      * @param string $to   The language code we want to copy the content blocks to.
+     *
      * @return array
      */
     public static function copy($from, $to)
@@ -88,7 +89,7 @@ class Model
             $newIds[$oldId] = $newId;
 
             // redefine counter
-            $i++;
+            ++$i;
         }
 
         // get the extra Ids for the content blocks
@@ -141,6 +142,7 @@ class Model
      *
      * @param int  $id         The id of the record to check for existence.
      * @param bool $activeOnly Only check in active items?
+     *
      * @return bool
      */
     public static function exists($id, $activeOnly = true)
@@ -172,6 +174,7 @@ class Model
      * Get all data for a given id.
      *
      * @param int $id The id for the record to get.
+     *
      * @return array
      */
     public static function get($id)
@@ -203,6 +206,7 @@ class Model
      *
      * @param int $id         The Id for the item wherefore you want a revision.
      * @param int $revisionId The Id of the revision.
+     *
      * @return array
      */
     public static function getRevision($id, $revisionId)
@@ -248,6 +252,7 @@ class Model
      * Add a new item.
      *
      * @param array $item The data to insert.
+     *
      * @return int
      */
     public static function insert(array $item)
@@ -275,7 +280,7 @@ class Model
                     'Edit',
                     'ContentBlocks',
                     $item['language']
-                ) . '&id=' . $item['id']
+                ) . '&id=' . $item['id'],
             )
         );
 
@@ -286,6 +291,7 @@ class Model
      * Update an existing item.
      *
      * @param array $item The new data.
+     *
      * @return int
      */
     public static function update(array $item)
@@ -300,7 +306,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
             )
         );
 

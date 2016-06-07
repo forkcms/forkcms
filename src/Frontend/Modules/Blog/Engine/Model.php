@@ -32,6 +32,7 @@ class Model implements FrontendTagsInterface
      * Get an item
      *
      * @param string $URL The URL for the item.
+     *
      * @return array
      */
     public static function get($URL)
@@ -78,6 +79,7 @@ class Model implements FrontendTagsInterface
      *
      * @param int $limit  The number of items to get.
      * @param int $offset The offset.
+     *
      * @return array
      */
     public static function getAll($limit = 10, $offset = 0)
@@ -100,7 +102,7 @@ class Model implements FrontendTagsInterface
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
                 (int) $offset,
-                (int) $limit
+                (int) $limit,
             ),
             'id'
         );
@@ -192,6 +194,7 @@ class Model implements FrontendTagsInterface
      *
      * @param int $limit  The number of items to get.
      * @param int $offset The offset.
+     *
      * @return array
      */
     public static function getAllComments($limit = 10, $offset = 0)
@@ -231,6 +234,7 @@ class Model implements FrontendTagsInterface
      * @param string $categoryURL The URL of the category to retrieve the posts for.
      * @param int    $limit       The number of items to get.
      * @param int    $offset      The offset.
+     *
      * @return array
      */
     public static function getAllForCategory($categoryURL, $limit = 10, $offset = 0)
@@ -254,7 +258,7 @@ class Model implements FrontendTagsInterface
                 FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
                 (string) $categoryURL,
                 (int) $offset,
-                (int) $limit
+                (int) $limit,
             ),
             'id'
         );
@@ -316,6 +320,7 @@ class Model implements FrontendTagsInterface
      * Get the number of items in a given category
      *
      * @param string $URL The URL for the category.
+     *
      * @return int
      */
     public static function getAllForCategoryCount($URL)
@@ -337,6 +342,7 @@ class Model implements FrontendTagsInterface
      * @param int $end    The end date as a UNIX-timestamp.
      * @param int $limit  The number of items to get.
      * @param int $offset The offset.
+     *
      * @return array
      */
     public static function getAllForDateRange($start, $end, $limit = 10, $offset = 0)
@@ -366,7 +372,7 @@ class Model implements FrontendTagsInterface
                 FrontendModel::getUTCDate('Y-m-d H:i', $start),
                 FrontendModel::getUTCDate('Y-m-d H:i', $end),
                 $offset,
-                $limit
+                $limit,
             ),
             'id'
         );
@@ -427,6 +433,7 @@ class Model implements FrontendTagsInterface
      *
      * @param int $start The start date as a UNIX-timestamp.
      * @param int $end   The end date as a UNIX-timestamp.
+     *
      * @return int
      */
     public static function getAllForDateRangeCount($start, $end)
@@ -444,7 +451,7 @@ class Model implements FrontendTagsInterface
                 FRONTEND_LANGUAGE,
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i:s', $start),
-                FrontendModel::getUTCDate('Y-m-d H:i:s', $end)
+                FrontendModel::getUTCDate('Y-m-d H:i:s', $end),
             )
         );
     }
@@ -495,7 +502,7 @@ class Model implements FrontendTagsInterface
                     'url' => $link . '/' . $year,
                     'label' => $year,
                     'total' => 0,
-                    'months' => null
+                    'months' => null,
                 );
             }
 
@@ -504,12 +511,12 @@ class Model implements FrontendTagsInterface
             $stats[$year]['months'][$key] = array(
                 'url' => $link . '/' . $year . '/' . $month,
                 'label' => $timestamp,
-                'total' => $count
+                'total' => $count,
             );
         }
 
         // loop years
-        for ($i = $firstYear; $i <= $lastYear; $i++) {
+        for ($i = $firstYear; $i <= $lastYear; ++$i) {
             // year missing
             if (!isset($stats[$i])) {
                 $stats[$i] = array('url' => null, 'label' => $i, 'total' => 0, 'months' => null);
@@ -541,6 +548,7 @@ class Model implements FrontendTagsInterface
      * Get the comments for an item
      *
      * @param int $id The ID of the item to get the comments for.
+     *
      * @return array
      */
     public static function getComments($id)
@@ -568,6 +576,7 @@ class Model implements FrontendTagsInterface
      * Fetch the list of tags for a list of items
      *
      * @param array $ids The ids of the items to grab.
+     *
      * @return array
      */
     public static function getForTags(array $ids)
@@ -611,6 +620,7 @@ class Model implements FrontendTagsInterface
      * Selects the proper part of the full URL to get the item's id from the database.
      *
      * @param FrontendURL $URL The current URL.
+     *
      * @return int
      */
     public static function getIdForTags(FrontendURL $URL)
@@ -626,6 +636,7 @@ class Model implements FrontendTagsInterface
      * Get an array with the previous and the next post
      *
      * @param int $id The id of the current item.
+     *
      * @return array
      */
     public static function getNavigation($id)
@@ -693,6 +704,7 @@ class Model implements FrontendTagsInterface
      * Get recent comments
      *
      * @param int $limit The number of comments to get.
+     *
      * @return array
      */
     public static function getRecentComments($limit = 5)
@@ -740,6 +752,7 @@ class Model implements FrontendTagsInterface
      *
      * @param int $id    The id of the item to get related items for.
      * @param int $limit The maximum number of items to retrieve.
+     *
      * @return array
      */
     public static function getRelated($id, $limit = 5)
@@ -784,6 +797,7 @@ class Model implements FrontendTagsInterface
      *
      * @param string $URL      The URL for the item to get.
      * @param int    $revision The revisionID.
+     *
      * @return array
      */
     public static function getRevision($URL, $revision)
@@ -829,6 +843,7 @@ class Model implements FrontendTagsInterface
      * Inserts a new comment
      *
      * @param array $comment The comment to add.
+     *
      * @return int
      */
     public static function insertComment(array $comment)
@@ -863,6 +878,7 @@ class Model implements FrontendTagsInterface
      *
      * @param string $author The name for the author.
      * @param string $email  The email address for the author.
+     *
      * @return bool
      */
     public static function isModerated($author, $email)
@@ -908,14 +924,14 @@ class Model implements FrontendTagsInterface
             'loc-key' => $key,
             'loc-args' => array(
                 $author,
-                $text
-            )
+                $text,
+            ),
         );
 
         // build data
         $data = array(
             'api' => SITE_URL . '/api/1.0',
-            'id' => $comment['id']
+            'id' => $comment['id'],
         );
 
         // push it
@@ -1001,6 +1017,7 @@ class Model implements FrontendTagsInterface
      *
      *
      * @param array $ids The ids of the found results.
+     *
      * @return array
      */
     public static function search(array $ids)

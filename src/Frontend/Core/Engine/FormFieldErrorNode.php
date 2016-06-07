@@ -1,4 +1,5 @@
 <?php
+
 namespace Frontend\Core\Engine;
 
 /**
@@ -27,7 +28,7 @@ class FormFieldErrorNode extends \Twig_Node
 
     public function compile(\Twig_Compiler $compiler)
     {
-        $writeErrorMessage = "echo "
+        $writeErrorMessage = 'echo '
             . "\$context['form_{$this->form}']->getField('{$this->field}')->getErrors() "
             . "? '<span class=\"formError\">' "
             . ". \$context['form_{$this->form}']->getField('{$this->field}')->getErrors() "

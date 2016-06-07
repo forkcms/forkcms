@@ -50,6 +50,7 @@ class Model
      * Check if a synonym exists
      *
      * @param int $id The id of the item we're looking for.
+     *
      * @return bool
      */
     public static function existsSynonymById($id)
@@ -68,6 +69,7 @@ class Model
      *
      * @param string $term    The term we're looking for.
      * @param int    $exclude Exclude a certain id.
+     *
      * @return bool
      */
     public static function existsSynonymByTerm($term, $exclude = null)
@@ -110,6 +112,7 @@ class Model
      * Get a synonym
      *
      * @param int $id The id of the item we're looking for.
+     *
      * @return array
      */
     public static function getSynonym($id)
@@ -147,6 +150,7 @@ class Model
      * Insert a synonym
      *
      * @param array $item The data to insert in the db.
+     *
      * @return int
      */
     public static function insertSynonym($item)

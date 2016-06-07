@@ -9,7 +9,6 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Meta;
 

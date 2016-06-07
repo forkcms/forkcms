@@ -12,7 +12,6 @@ namespace Frontend\Modules\Search\Ajax;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
@@ -62,7 +61,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**
@@ -218,7 +217,7 @@ class Autosuggest extends FrontendBaseAJAXAction
             $this->items[] = array(
                 'title' => FL::lbl('More'),
                 'text' => FL::msg('MoreResults'),
-                'full_url' => FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term
+                'full_url' => FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term,
             );
         }
 

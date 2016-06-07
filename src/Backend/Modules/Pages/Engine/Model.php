@@ -9,7 +9,6 @@ namespace Backend\Modules\Pages\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -291,6 +290,7 @@ class Model
      * @param int    $depth    The maximum depth to show.
      * @param int    $parentId The Id to start from.
      * @param string $html     Will hold the created HTML.
+     *
      * @return string
      */
     public static function createHtml($type = 'page', $depth = 0, $parentId = 1, $html = '')
@@ -336,6 +336,7 @@ class Model
      * @param string $language   The language wherein the page will be deleted,
      *                           if not provided we will use the working language.
      * @param int    $revisionId If specified the given revision will be deleted, used for deleting drafts.
+     *
      * @return bool
      */
     public static function delete($id, $language = null, $revisionId = null)
@@ -400,6 +401,7 @@ class Model
      * Check if a page exists
      *
      * @param int $id The id to check for existence.
+     *
      * @return bool
      */
     public static function exists($id)
@@ -424,6 +426,7 @@ class Model
      * @param int    $id       The Id of the page to fetch.
      * @param int    $revisionId
      * @param string $language The language to use while fetching the page.
+     *
      * @return mixed False if the record can't be found, otherwise an array with all data.
      */
     public static function get($id, $revisionId = null, $language = null)
@@ -493,6 +496,7 @@ class Model
      * @param int    $id         The id of the page.
      * @param int    $revisionId The revision to grab.
      * @param string $language   The language to use.
+     *
      * @return array
      */
     public static function getBlocks($id, $revisionId = null, $language = null)
@@ -522,6 +526,7 @@ class Model
      * Get all items by a given tag id
      *
      * @param int $tagId The id of the tag.
+     *
      * @return array
      */
     public static function getByTag($tagId)
@@ -557,6 +562,7 @@ class Model
      * Get the first child for a given parent
      *
      * @param int $pageId The Id of the page to get the first child for.
+     *
      * @return mixed
      */
     public static function getFirstChildId($pageId)
@@ -587,6 +593,7 @@ class Model
      * Get the full-URL for a given menuId
      *
      * @param int $id The Id of the page to get the URL for.
+     *
      * @return string
      */
     public static function getFullURL($id)
@@ -630,6 +637,7 @@ class Model
      *
      * @param int    $id       The id of the page.
      * @param string $language The language to use.
+     *
      * @return int
      */
     public static function getLatestRevision($id, $language = null)
@@ -662,6 +670,7 @@ class Model
      * Get the maximum unique id for pages
      *
      * @param string $language The language to use, if not provided we will use the working language.
+     *
      * @return int
      */
     public static function getMaximumPageId($language = null)
@@ -690,6 +699,7 @@ class Model
      *
      * @param int    $parentId The Id of the parent.
      * @param string $language The language to use, if not provided we will use the working language.
+     *
      * @return int
      */
     public static function getMaximumSequence($parentId, $language = null)
@@ -710,6 +720,7 @@ class Model
      * Get the pages for usage in a dropdown menu
      *
      * @param string $language The language to use, if not provided we will use the working language.
+     *
      * @return array
      */
     public static function getPagesForDropdown($language = null)
@@ -788,6 +799,7 @@ class Model
      * @param array  $navigation The navigation array.
      * @param int    $parentId   The id of the parent.
      * @param string $html       A holder for the generated HTML.
+     *
      * @return string
      */
     public static function getSubtree($navigation, $parentId, $html = '')
@@ -837,6 +849,7 @@ class Model
      * @param array  $data     A holder for the generated data.
      * @param int    $level    The counter for the level.
      * @param string $language The language.
+     *
      * @return array
      */
     public static function getTree(array $ids, array $data = null, $level = 1, $language = null)
@@ -1035,7 +1048,7 @@ class Model
         return array(
             'rich_text' => BL::lbl('Editor'),
             'block' => BL::lbl('Module'),
-            'widget' => BL::lbl('Widget')
+            'widget' => BL::lbl('Widget'),
         );
     }
 
@@ -1046,6 +1059,7 @@ class Model
      * @param int    $id       The id to ignore.
      * @param int    $parentId The parent for the page to create an url for.
      * @param bool   $isAction Is this page an action.
+     *
      * @return string
      */
     public static function getURL($URL, $id = null, $parentId = 0, $isAction = false)
@@ -1060,7 +1074,7 @@ class Model
                 1,
                 2,
                 3,
-                4
+                4,
             );
         }
 
@@ -1157,6 +1171,7 @@ class Model
      * Insert a page
      *
      * @param array $page The data for the page.
+     *
      * @return int
      */
     public static function insert(array $page)
@@ -1189,6 +1204,7 @@ class Model
      * @param string $typeOfDrop The type of drop, possible values are: before, after, inside.
      * @param string $tree       The tree the item is dropped on, possible values are: main, meta, footer, root.
      * @param string $language   The language to use, if not provided we will use the working language.
+     *
      * @return bool
      */
     public static function move($id, $droppedOn, $typeOfDrop, $tree, $language = null)
@@ -1353,6 +1369,7 @@ class Model
      * Update a page
      *
      * @param array $page The new data for the page.
+     *
      * @return int
      */
     public static function update(array $page)

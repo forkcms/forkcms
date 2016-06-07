@@ -127,7 +127,7 @@ class Detail extends FrontendBaseBlock
             'useful',
             array(
                  array('label' => FL::lbl('Yes'), 'value' => 'Y'),
-                 array('label' => FL::lbl('No'), 'value' => 'N')
+                 array('label' => FL::lbl('No'), 'value' => 'N'),
             )
         );
     }

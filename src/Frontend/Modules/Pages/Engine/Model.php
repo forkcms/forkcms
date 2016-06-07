@@ -26,6 +26,7 @@ class Model implements FrontendTagsInterface
      * Fetch a list of items for a list of ids
      *
      * @param array $ids The ids of the items to grab.
+     *
      * @return array
      */
     public static function getForTags(array $ids)
@@ -58,6 +59,7 @@ class Model implements FrontendTagsInterface
      * Selects the proper part of the full URL to get the item's id from the database.
      *
      * @param FrontendURL $URL The current URL.
+     *
      * @return int
      */
     public static function getIdForTags(FrontendURL $URL)
@@ -69,6 +71,7 @@ class Model implements FrontendTagsInterface
      * Fetch a list of subpages of a page.
      *
      * @param int $id The id of the item to grab the subpages for.
+     *
      * @return array
      */
     public static function getSubpages($id)
@@ -104,6 +107,7 @@ class Model implements FrontendTagsInterface
      *        - return only the entries that are allowed to be displayed, with their array's index being the entry's id
      *
      * @param array $ids The ids of the found results.
+     *
      * @return array
      */
     public static function search(array $ids)

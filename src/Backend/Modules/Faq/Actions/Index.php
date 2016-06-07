@@ -88,7 +88,7 @@ class Index extends BackendBaseActionIndex
             $this->dataGrids[] = array(
                 'id' => $categoryId,
                 'title' => $categoryTitle,
-                'content' => $dataGrid->getContent()
+                'content' => $dataGrid->getContent(),
             );
         }
 
@@ -97,7 +97,7 @@ class Index extends BackendBaseActionIndex
             array(array(
                 'dragAndDropHandle' => '',
                 'question' => BL::msg('NoQuestionInCategory'),
-                'edit' => ''
+                'edit' => '',
             ))
         );
         $this->emptyDatagrid->setAttributes(array('class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop emptyGrid'));

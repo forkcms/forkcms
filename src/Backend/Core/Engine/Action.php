@@ -86,7 +86,7 @@ class Action extends Base\Object
             $workingLanguages[] = array(
                 'abbr' => $abbreviation,
                 'label' => $label,
-                'selected' => ($abbreviation == Language::getWorkingLanguage())
+                'selected' => ($abbreviation == Language::getWorkingLanguage()),
             );
         }
 

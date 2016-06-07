@@ -28,6 +28,7 @@ class Theme
      * If it does not exist in the theme it will return $file.
      *
      * @param string $file Path to the file.
+     *
      * @return string Path to the (theme) file.
      */
     public static function getPath($file)

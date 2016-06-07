@@ -38,21 +38,21 @@ class GetAllTags extends BackendBaseAJAXAction
             $this->output(self::OK, $tags);
         }*/
         $tags = BackendTagsModel::getAll();
-        $data = [ "Kortrijk",
-                  "London",
-                  "Paris",
-                  "Washington",
-                  "New York",
-                  "Los Angeles",
-                  "Sydney",
-                  "Melbourne",
-                  "Canberra",
-                  "Beijing",
-                  "New Delhi",
-                  "Kathmandu",
-                  "Cairo",
-                  "Cape Town",
-                  "Kinshasa"
+        $data = ['Kortrijk',
+                  'London',
+                  'Paris',
+                  'Washington',
+                  'New York',
+                  'Los Angeles',
+                  'Sydney',
+                  'Melbourne',
+                  'Canberra',
+                  'Beijing',
+                  'New Delhi',
+                  'Kathmandu',
+                  'Cairo',
+                  'Cape Town',
+                  'Kinshasa',
                 ];
         $this->output(self::OK, $tags);
     }
