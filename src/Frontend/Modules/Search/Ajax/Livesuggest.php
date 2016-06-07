@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Template;
+use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
@@ -78,6 +78,11 @@ class Livesuggest extends FrontendBaseAJAXAction
      * @var string
      */
     private $term = '';
+
+    /**
+     * @var TwigTemplate
+     */
+    private $tpl;
 
     /**
      * Display
@@ -220,7 +225,7 @@ class Livesuggest extends FrontendBaseAJAXAction
      */
     protected function loadTemplate()
     {
-        $this->tpl = new Template(false);
+        $this->tpl = new TwigTemplate(false);
     }
 
     /**
