@@ -1,3 +1,9 @@
+4.0.x (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Frontend: Fixes date field with empty date.
+
 4.0.0 (2016-05-27)
 --
 
