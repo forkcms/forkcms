@@ -26,7 +26,7 @@
 						{% if field.simple %}
 							<p{% if field.error %} class="errorArea"{% endif %}>
 								<label for="{{ field.name }}">
-									{{ field.label }}{% if field.required %}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr>{% endif %}
+									{{ field.label }}{% if field.required %}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>{% endif %}
 								</label>
 								{{ field.html|raw }}
 								{% if field.error %}<span class="formError inlineError">{{ field.error }}</span>{% endif %}
@@ -37,7 +37,7 @@
 						{% if field.multiple %}
 							<div class="inputList{% if field.error %} errorArea{% endif %}">
 								<p class="label">
-									{{ field.label }}{% if field.required %}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr>{% endif %}
+									{{ field.label }}{% if field.required %}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>{% endif %}
 								</p>
 								<ul>
 									{% for html in field.html %}

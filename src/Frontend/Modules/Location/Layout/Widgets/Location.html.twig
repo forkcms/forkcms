@@ -12,7 +12,7 @@
 		<aside id="locationSearch{{ widgetLocationItem.id }}" class="locationSearch">
 			<form method="get" action="#">
 				<p>
-					<label for="locationSearchAddress{{ widgetLocationItem.id }}">{{ 'lbl.Start'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
+					<label for="locationSearchAddress{{ widgetLocationItem.id }}">{{ 'lbl.Start'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
 					<input type="text" id="locationSearchAddress{{ widgetLocationItem.id }}" name="locationSearchAddress" class="inputText" />
 					<span id="locationSearchError{{ widgetLocationItem.id }}" class="formError inlineError" style="display: none;">{{ 'err.FieldIsRequired'|trans|capitalize }}</span>
 				</p>

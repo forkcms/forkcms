@@ -15,15 +15,15 @@
 
 			{% form own_question %}
 				<p{% if txtNameError %} class="errorArea"{% endif %}>
-					<label for="name">{{ 'lbl.YourName'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
+					<label for="name">{{ 'lbl.YourName'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
 					{% form_field_error Name %} {% form_field Name %}
 				</p>
 				<p{% if txtEmailError %} class="errorArea"{% endif %}>
-					<label for="email">{{ 'lbl.YourEmail'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
+					<label for="email">{{ 'lbl.YourEmail'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
 					{% form_field_error Email %} {% form_field Email %}
 				</p>
 				<p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
-					<label for="message">{{ 'lbl.YourQuestion'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
+					<label for="message">{{ 'lbl.YourQuestion'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
 					{% form_field_error Message %} {% form_field Message %}
 				</p>
 				<p>

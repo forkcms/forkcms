@@ -14,11 +14,11 @@
 			{% form updateEmail %}
 				<fieldset>
 					<p{% if txtPasswordError %} class="errorArea"{% endif %}>
-						<label for="password">{{ 'lbl.Password'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
+						<label for="password">{{ 'lbl.Password'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
 						{% form_field_error Password %}{% form_field Password %}
 					</p>
 					<p{% if txtEmailError %} class="errorArea"{% endif %}>
-						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
+						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
 						{% form_field_error Email %}{% form_field Email %}
 					</p>
 					<p>
