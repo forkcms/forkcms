@@ -26,7 +26,7 @@
           <div class="form-group">
             <label for="hostname">
               Hostname
-              <abbr class="fa fa-asterisk" title="Required field"></abbr>
+              <abbr title="Required field">*</abbr>
             </label>
             <p class="text-info">If you are working locally, your hostname is probably <strong>localhost</strong>.</p>
             <div class="form-group form-inline">
@@ -36,7 +36,7 @@
           <div class="form-group">
             <label for="database">
               Database
-              <abbr class="fa fa-asterisk" title="Required field"></abbr>
+              <abbr title="Required field">*</abbr>
             </label>
             <p class="text-info">Make sure this database is empty!</p>
             {{ form_widget(form.dbDatabase) }}
@@ -44,14 +44,14 @@
           <div class="form-group">
             <label for="username">
               Username
-              <abbr class="fa fa-asterisk" title="Required field"></abbr>
+              <abbr title="Required field">*</abbr>
             </label>
             {{ form_widget(form.dbUsername) }}
           </div>
           <div class="form-group">
             <label for="password">
               Password
-              <abbr class="fa fa-asterisk" title="Required field"></abbr>
+              <abbr title="Required field">*</abbr>
             </label>
             {{ form_widget(form.dbPassword) }}
           </div>
@@ -60,14 +60,12 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-left" role="group">
               <a href="{{ path('install_step3') }}" class="btn btn-default">
-                <span class="fa fa-chevron-left"></span>&nbsp;
-                Previous
+                <span class="fa fa-chevron-left"></span> Previous
               </a>
             </div>
             <div class="btn-group pull-right" role="group">
               <button type="submit" id="installerButton" name="installer" class="btn btn-primary">
-                Next
-                &nbsp;<span class="fa fa-chevron-right"></span>
+                Next <span class="fa fa-chevron-right"></span>
               </button>
             </div>
           </div>
