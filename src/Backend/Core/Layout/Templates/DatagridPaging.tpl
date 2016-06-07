@@ -3,8 +3,9 @@
 {option:pagination.multiple_pages}
 <nav>
   <ul class="pagination">
-    <li{option:!pagination.show_previous} class="disabled"{/option:!pagination.show_previous}>
-      {option:!pagination.show_previous}
+    <li
+    {option:!pagination.show_previous} class="disabled"{/option:!pagination.show_previous}>
+    {option:!pagination.show_previous}
       <span>
       {/option:!pagination.show_previous}
       {option:pagination.show_previous}
@@ -16,7 +17,7 @@
       {/option:pagination.show_previous}
       {option:!pagination.show_previous}
       </span>
-      {/option:!pagination.show_previous}
+    {/option:!pagination.show_previous}
     </li>
     {option:pagination.first}
     {iteration:pagination.first}
@@ -54,8 +55,9 @@
     </li>
     {/iteration:pagination.last}
     {/option:pagination.last}
-    <li{option:!pagination.show_next} class="disabled"{/option:!pagination.show_next}>
-      {option:!pagination.show_next}
+    <li
+    {option:!pagination.show_next} class="disabled"{/option:!pagination.show_next}>
+    {option:!pagination.show_next}
       <span>
       {/option:!pagination.show_next}
       {option:pagination.show_next}
@@ -67,7 +69,7 @@
       {/option:pagination.show_next}
       {option:!pagination.show_next}
       </span>
-      {/option:!pagination.show_next}
+    {/option:!pagination.show_next}
     </li>
   </ul>
 </nav>
