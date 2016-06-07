@@ -214,7 +214,7 @@ class TwigTemplate extends BaseTwigTemplate
      * @param string $template path to render
      * @return string
      */
-    private function renderTemplate($template = null)
+    public function renderTemplate($template = null)
     {
         if (!empty($this->forms)) {
             foreach ($this->forms as $form) {

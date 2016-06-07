@@ -109,7 +109,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         // output
         $this->output(
             self::OK,
-            $this->tpl->getContent(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig', false, true)
+            $this->tpl->renderTemplate(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
         );
     }
 
@@ -119,7 +119,6 @@ class Livesuggest extends FrontendBaseAJAXAction
     public function execute()
     {
         parent::execute();
-        $this->loadTemplate();
         $this->validateForm();
         $this->display();
     }
@@ -221,18 +220,12 @@ class Livesuggest extends FrontendBaseAJAXAction
     }
 
     /**
-     * Load the template
-     */
-    protected function loadTemplate()
-    {
-        $this->tpl = new TwigTemplate(false);
-    }
-
-    /**
      * Parse the data into the template
      */
     private function parse()
     {
+        $this->tpl = $this->get('templating');
+
         // no search term = no search
         if (!$this->term) {
             return;
