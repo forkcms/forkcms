@@ -3,7 +3,6 @@
 namespace Backend\Modules\Analytics\Tests\GoogleClient;
 
 use Backend\Modules\Analytics\GoogleClient\Connector;
-use Common\ModulesSettings;
 use Google_Client;
 use Google_Service_Analytics;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
