@@ -9,7 +9,6 @@ namespace Backend\Modules\Authentication\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
