@@ -117,7 +117,6 @@ class Livesuggest extends FrontendBaseAJAXAction
     public function execute()
     {
         parent::execute();
-        $this->loadTemplate();
         $this->validateForm();
         $this->display();
     }
