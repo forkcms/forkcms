@@ -255,7 +255,7 @@ class BaseTwigModifiers
             if ($closestWord) {
                 $string = mb_substr($string, 0, strrpos(substr($string, 0, $length + 1), ' '), 'UTF-8');
             } else {
-                $string = mb_substr($string, 0, $length, 'UT8');
+                $string = mb_substr($string, 0, $length, 'UTF8');
             }
 
             // add hellip
