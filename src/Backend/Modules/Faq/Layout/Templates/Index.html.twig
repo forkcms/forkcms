@@ -3,13 +3,13 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-    <div class="btn-toolbar pull-right">
-      <div class="btn-group" role="group">
-        {% if showFaqAdd %}
-          {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize) }}
-        {% endif %}
-      </div>
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showFaqAdd %}
+        {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize) }}
+      {% endif %}
     </div>
+  </div>
 {% endblock %}
 
 {% block content %}

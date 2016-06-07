@@ -4,7 +4,8 @@
 <nav>
   <ul class="pagination">
     <li
-    {option:!pagination.show_previous} class="disabled"{/option:!pagination.show_previous}>
+      {option:!pagination.show_previous} class="disabled" {
+    /option:!pagination.show_previous}>
     {option:!pagination.show_previous}
       <span>
       {/option:!pagination.show_previous}
@@ -56,7 +57,8 @@
     {/iteration:pagination.last}
     {/option:pagination.last}
     <li
-    {option:!pagination.show_next} class="disabled"{/option:!pagination.show_next}>
+      {option:!pagination.show_next} class="disabled" {
+    /option:!pagination.show_next}>
     {option:!pagination.show_next}
       <span>
       {/option:!pagination.show_next}

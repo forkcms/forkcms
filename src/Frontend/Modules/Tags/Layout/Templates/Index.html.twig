@@ -4,16 +4,16 @@
 #}
 
 <section id="tagsIndex" class="mod">
-	<div class="inner">
-		<div class="bd content">
-			{% if not tags %}<p>{{ 'msg.TagsNoItems'|trans }}</p>{% endif %}
-			{% if tags %}
-				<ul>
-					{% for tags in tags %}
-						<li><a href="{{ geturlforblock('Tags', 'Detail') }}/{{ tags.url }}">{{ tags.name }}</a></li>
-					{% endfor %}
-				</ul>
-			{% endif %}
-		</div>
-	</div>
+  <div class="inner">
+    <div class="bd content">
+      {% if not tags %}<p>{{ 'msg.TagsNoItems'|trans }}</p>{% endif %}
+      {% if tags %}
+        <ul>
+          {% for tags in tags %}
+            <li><a href="{{ geturlforblock('Tags', 'Detail') }}/{{ tags.url }}">{{ tags.name }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
 </section>

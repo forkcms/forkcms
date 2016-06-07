@@ -28,9 +28,18 @@
         <div class="panel-body">
           <div id="dataChartPieChart" class="hidden">
             <ul class="data">
-              {% if stats.unique_opens %}<li><span class="label">{{ 'lbl.OpenedMailings'|trans|capitalize }}</span><span class="value">{{ stats.unique_opens }}</span><span class="percentage">{{ stats.unique_opens_percentage }}</span></li>{% endif %}
-              {% if stats.unopens %}<li><span class="label">{{ 'lbl.UnopenedMailings'|trans|capitalize }}</span><span class="value">{{ stats.unopens }}</span><span class="percentage">{{ stats.unopens_percentage }}</span></li>{% endif %}
-              {% if stats.bounces %}<li><span class="label">{{ 'lbl.Bounces'|trans|capitalize }}</span><span class="value">{{ stats.bounces }}</span><span class="percentage">{{ stats.bounces_percentage }}</span></li>{% endif %}
+              {% if stats.unique_opens %}
+                <li>
+                <span class="label">{{ 'lbl.OpenedMailings'|trans|capitalize }}</span><span class="value">{{ stats.unique_opens }}</span><span class="percentage">{{ stats.unique_opens_percentage }}</span>
+                </li>{% endif %}
+              {% if stats.unopens %}
+                <li>
+                <span class="label">{{ 'lbl.UnopenedMailings'|trans|capitalize }}</span><span class="value">{{ stats.unopens }}</span><span class="percentage">{{ stats.unopens_percentage }}</span>
+                </li>{% endif %}
+              {% if stats.bounces %}
+                <li>
+                <span class="label">{{ 'lbl.Bounces'|trans|capitalize }}</span><span class="value">{{ stats.bounces }}</span><span class="percentage">{{ stats.bounces_percentage }}</span>
+                </li>{% endif %}
             </ul>
           </div>
           <div id="chartPieChart">&nbsp;</div>
@@ -52,11 +61,22 @@
           </h3>
         </div>
         <div class="panel-body">
-          <p><strong>{{ stats.recipients }}</strong> {{ 'lbl.SentMailings'|trans|capitalize }} <small>(100%)</small></p>
-          <p><strong>{{ stats.unique_opens }}</strong> {{ 'lbl.OpenedMailings'|trans|capitalize }} <small>({{ stats.unique_opens_percentage }})</small></p>
-          <p><strong>{{ stats.unopens }}</strong> {{ 'lbl.UnopenedMailings'|trans|capitalize }} <small>({{ stats.unopens_percentage }})</small></p>
-          <p><strong>{{ stats.clicks_total }}</strong> <a href="#clicks">{{ 'lbl.Clicks'|trans|capitalize }}</a> <small>({{ stats.clicks_percentage }})</small></p>
-          {% if stats.bounces %}<p><strong>{{ stats.bounces }}/{{ stats.recipients_total }} </strong><a href="{{ geturl('statistics_bounces' ) }}&amp;mailing_id={{ mailing.id }}">{{ 'lbl.BounceRate'|trans|capitalize }}</a> <small>({{ stats.bounces_percentage }})</small></p>{% endif %}
+          <p><strong>{{ stats.recipients }}</strong> {{ 'lbl.SentMailings'|trans|capitalize }}
+            <small>(100%)</small>
+          </p>
+          <p><strong>{{ stats.unique_opens }}</strong> {{ 'lbl.OpenedMailings'|trans|capitalize }}
+            <small>({{ stats.unique_opens_percentage }})</small>
+          </p>
+          <p><strong>{{ stats.unopens }}</strong> {{ 'lbl.UnopenedMailings'|trans|capitalize }}
+            <small>({{ stats.unopens_percentage }})</small>
+          </p>
+          <p><strong>{{ stats.clicks_total }}</strong> <a href="#clicks">{{ 'lbl.Clicks'|trans|capitalize }}</a>
+            <small>({{ stats.clicks_percentage }})</small>
+          </p>
+          {% if stats.bounces %}
+            <p>
+            <strong>{{ stats.bounces }}/{{ stats.recipients_total }} </strong><a href="{{ geturl('statistics_bounces' ) }}&amp;mailing_id={{ mailing.id }}">{{ 'lbl.BounceRate'|trans|capitalize }}</a>
+            <small>({{ stats.bounces_percentage }})</small></p>{% endif %}
         </div>
       </div>
     </div>
@@ -65,10 +85,10 @@
     <div class="col-md-12">
       <h3>{{ 'msg.MailingLinks'|trans|capitalize }}</h3>
       {% if dataGrid %}
-      {{ dataGrid }}
+        {{ dataGrid }}
       {% endif %}
       {% if not dataGrid %}
-      <p>{{ 'msg.NoItems'|trans }}</p>
+        <p>{{ 'msg.NoItems'|trans }}</p>
       {% endif %}
     </div>
   </div>

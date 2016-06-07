@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-{% form add %}
+  {% form add %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
@@ -16,16 +16,16 @@
       </div>
       <div class="form-group">
         {% if groups %}
-        {% if chkGroupsError %}
-        <p class="text-danger">{% form_field_error groups %}</p>
-        {% endif %}
-        <ul class="list-unstyled">
-          {% for group in groups %}
-          <li class="checkbox">
-            <label for="{{ group.id }}">{{ group.chkGroups|raw }} {{ group.label|capitalize }}</label>
-          </li>
-          {% endfor %}
-        </ul>
+          {% if chkGroupsError %}
+            <p class="text-danger">{% form_field_error groups %}</p>
+          {% endif %}
+          <ul class="list-unstyled">
+            {% for group in groups %}
+              <li class="checkbox">
+                <label for="{{ group.id }}">{{ group.chkGroups|raw }} {{ group.label|capitalize }}</label>
+              </li>
+            {% endfor %}
+          </ul>
         {% endif %}
       </div>
     </div>
@@ -41,5 +41,5 @@
       </div>
     </div>
   </div>
-{% endform %}
+  {% endform %}
 {% endblock %}

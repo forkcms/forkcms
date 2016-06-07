@@ -5,32 +5,35 @@
 #}
 
 {% if widgetLocationItem %}
-	{# @remark: do not remove the parseMap-class, it is used by JS #}
-	<div id="map{{ widgetLocationItem.id }}" class="parseMap" style="height: {{ widgetLocationSettings.height }}px; width: {{ widgetLocationSettings.width }}px;"></div>
+  {# @remark: do not remove the parseMap-class, it is used by JS #}
+  <div id="map{{ widgetLocationItem.id }}" class="parseMap" style="height: {{ widgetLocationSettings.height }}px; width: {{ widgetLocationSettings.width }}px;"></div>
 
-	{% if widgetLocationSettings.directions %}
-		<aside id="locationSearch{{ widgetLocationItem.id }}" class="locationSearch">
-			<form method="get" action="#">
-				<p>
-					<label for="locationSearchAddress{{ widgetLocationItem.id }}">{{ 'lbl.Start'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-					<input type="text" id="locationSearchAddress{{ widgetLocationItem.id }}" name="locationSearchAddress" class="inputText" />
-					<span id="locationSearchError{{ widgetLocationItem.id }}" class="formError inlineError" style="display: none;">{{ 'err.FieldIsRequired'|trans|capitalize }}</span>
-				</p>
-				<p>
-					<input type="submit" id="locationSearchRequest{{ widgetLocationItem.id }}" name="locationSearchRequest" class="inputSubmit" value="{{ 'lbl.ShowDirections'|trans|capitalize }}" />
-				</p>
-			</form>
-		</aside>
-	{% endif %}
+  {% if widgetLocationSettings.directions %}
+    <aside id="locationSearch{{ widgetLocationItem.id }}" class="locationSearch">
+      <form method="get" action="#">
+        <p>
+          <label for="locationSearchAddress{{ widgetLocationItem.id }}">{{ 'lbl.Start'|trans|capitalize }}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <input type="text" id="locationSearchAddress{{ widgetLocationItem.id }}" name="locationSearchAddress" class="inputText" />
+          <span id="locationSearchError{{ widgetLocationItem.id }}" class="formError inlineError" style="display: none;">{{ 'err.FieldIsRequired'|trans|capitalize }}</span>
+        </p>
+        <p>
+          <input type="submit" id="locationSearchRequest{{ widgetLocationItem.id }}" name="locationSearchRequest" class="inputSubmit" value="{{ 'lbl.ShowDirections'|trans|capitalize }}" />
+        </p>
+      </form>
+    </aside>
+  {% endif %}
 
-	{% if widgetLocationSettings.full_url %}
-		<p><a id="map-full-url-{{ widgetLocationItem.id }}" href="{{ widgetLocationSettings.maps_url }}" title="{{ 'lbl.ViewLargeMap'|trans }}">{{ 'lbl.ViewLargeMap'|trans|capitalize }}</a></p>
-	{% endif %}
+  {% if widgetLocationSettings.full_url %}
+    <p>
+      <a id="map-full-url-{{ widgetLocationItem.id }}" href="{{ widgetLocationSettings.maps_url }}" title="{{ 'lbl.ViewLargeMap'|trans }}">{{ 'lbl.ViewLargeMap'|trans|capitalize }}</a>
+    </p>
+  {% endif %}
 
-	<div id="markerText{{ widgetLocationItem.id }}" style="display: none;">
-		<address>
-			{{ widgetLocationItem.street }} {{ widgetLocationItem.number }}<br />
-			{{ widgetLocationItem.zip }} {{ widgetLocationItem.city }}
-		</address>
-	</div>
+  <div id="markerText{{ widgetLocationItem.id }}" style="display: none;">
+    <address>
+      {{ widgetLocationItem.street }} {{ widgetLocationItem.number }}<br />
+      {{ widgetLocationItem.zip }} {{ widgetLocationItem.city }}
+    </address>
+  </div>
 {% endif %}
