@@ -98,7 +98,7 @@ class FormImage extends \SpoonFormImage
     /**
      * Parses the html for this filefield.
      *
-     * @param \SpoonTemplate $template The template to parse the element in.
+     * @param TwigTemplate $template The template to parse the element in.
      * @return string
      * @throws \SpoonFormException
      */

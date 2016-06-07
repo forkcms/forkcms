@@ -46,7 +46,7 @@ class Message extends \Swift_Message
     }
 
     /**
-     * Parses a SpoonTemplate with the wanted variables
+     * Parses a TwigTemplate with the wanted variables
      *
      * @param  string  $template
      * @param  array   $variables
