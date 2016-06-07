@@ -9,15 +9,11 @@ namespace Frontend\Modules\Search\Ajax;
  * file that was distributed with this source code.
  */
 
-use Common\Exception\RedirectException;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception as FrontendException;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This is the live suggest-action, it will output a list of results for a certain search
@@ -215,17 +211,6 @@ class Livesuggest extends FrontendBaseAJAXAction
                     true
                 ) . ";\n?>"
             );
-        }
-    }
-
-    /**
-     * Load the template
-     */
-    protected function loadTemplate()
-    {
-        // spoon needs a new template Object
-        if ($this->tpl->getTemplateType() == 'spoon') {
-            $this->tpl = new FrontendTemplate(false);
         }
     }
 

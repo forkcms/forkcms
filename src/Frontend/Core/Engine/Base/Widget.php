@@ -11,7 +11,6 @@ namespace Frontend\Core\Engine\Base;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Header;
-use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Core\Engine\Url;
 
 /**

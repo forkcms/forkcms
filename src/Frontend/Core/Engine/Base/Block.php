@@ -9,13 +9,13 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Url;
-use Frontend\Core\Engine\Template as FrontendTemplate;
 use Common\Exception\RedirectException;
 
 /**
@@ -235,7 +235,7 @@ class Block extends Object
     /**
      * Get template
      *
-     * @return string
+     * @return TwigTemplate
      */
     public function getTemplate()
     {
@@ -347,7 +347,6 @@ class Block extends Object
             if ($this->pagination['num_pages'] == 7) {
                 $pagesEnd = 7;
             } elseif ($this->pagination['num_pages'] <= 6) {
-
                 // when we have less then 6 pages, show the maximum page
                 $pagesEnd = $this->pagination['num_pages'];
             }

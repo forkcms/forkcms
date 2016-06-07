@@ -10,10 +10,9 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Header;
-use Backend\Core\Engine\Template;
+use Backend\Core\Engine\TwigTemplate;
 
 /**
  * This is the base-object for widgets
@@ -60,7 +59,7 @@ class Widget extends \KernelLoader
     /**
      * A reference to the current template
      *
-     * @var Template
+     * @var TwigTemplate
      */
     public $tpl;
 
