@@ -13,6 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Template;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
@@ -212,6 +213,14 @@ class Livesuggest extends FrontendBaseAJAXAction
                 ) . ";\n?>"
             );
         }
+    }
+
+    /**
+     * Load the template
+     */
+    protected function loadTemplate()
+    {
+        $this->tpl = new Template(false);
     }
 
     /**
