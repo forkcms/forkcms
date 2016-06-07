@@ -111,8 +111,7 @@ class Form extends FrontendBaseWidget
         $this->loadData();
 
         // success message
-        if (
-            $this->URL->hasParameter('identifier')
+        if ($this->URL->hasParameter('identifier')
             && $this->URL->getParameter('identifier') == $this->item['identifier']
         ) {
             $this->parseSuccessMessage();
