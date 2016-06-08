@@ -100,6 +100,8 @@ class Model
     /**
      * Get all tags.
      *
+     * @param string $language
+     *
      * @return array
      */
     public static function getAll($language = null)
