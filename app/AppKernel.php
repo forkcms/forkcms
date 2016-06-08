@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new ForkCMS\Bundle\InstallerBundle\ForkCMSInstallerBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
