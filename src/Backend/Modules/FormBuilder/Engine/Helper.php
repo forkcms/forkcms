@@ -47,9 +47,9 @@ class Helper
             );
             $placeholder = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
 
-/**
- * Create form and parse to HTML
- */
+            /*
+             * Create form and parse to HTML
+             */
             // dropdown
             if ($field['type'] == 'dropdown') {
                 // values and labels are the same
@@ -140,9 +140,9 @@ class Helper
                 $fieldHTML = $values;
             }
 
-/**
- * Parse the field into the template
- */
+            /*
+             * Parse the field into the template
+             */
             // init
             $tpl->assign('plaintext', false);
             $tpl->assign('simple', false);

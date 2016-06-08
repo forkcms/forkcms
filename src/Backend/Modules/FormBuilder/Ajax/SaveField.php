@@ -198,9 +198,9 @@ class SaveField extends BackendBaseAJAXAction
                             }
                         }
 
-/**
- * Save!
- */
+                        /*
+                         * Save!
+                         */
                         // settings
                         $settings = array();
                         if ($label != '') {
