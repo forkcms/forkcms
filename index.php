@@ -19,7 +19,7 @@ if (!is_dir(__DIR__ . '/vendor')) {
     exit;
 }
 
-require_once __DIR__ . '/autoload.php';
+require_once __DIR__ . '/app/autoload.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
