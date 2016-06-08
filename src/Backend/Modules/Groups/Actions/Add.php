@@ -183,7 +183,7 @@ class Add extends BackendBaseActionAdd
                 $this->actions[$module][] = array(
                     'label' => \SpoonFilter::toCamelCase($actionName),
                     'value' => $actionName,
-                    'description' => $description
+                    'description' => $description,
                 );
             }
         }
@@ -192,7 +192,7 @@ class Add extends BackendBaseActionAdd
         foreach ($modules as $module) {
             $this->modules[] = array(
                 'label' => \SpoonFilter::toCamelCase($module),
-                'value' => $module
+                'value' => $module,
             );
         }
     }
@@ -226,7 +226,7 @@ class Add extends BackendBaseActionAdd
                     $this->widgetInstances[] = array(
                         'module' => $module,
                         'widget' => $widgetName,
-                        'className' => $class
+                        'className' => $class,
                     );
 
                     // create reflection class
@@ -254,7 +254,7 @@ class Add extends BackendBaseActionAdd
                         'checkbox_name' => \SpoonFilter::toCamelCase($module) . \SpoonFilter::toCamelCase($widgetName),
                         'label' => \SpoonFilter::toCamelCase($widgetName),
                         'value' => $widgetName,
-                        'description' => $description
+                        'description' => $description,
                     );
                 }
             }
@@ -400,8 +400,8 @@ class Add extends BackendBaseActionAdd
                     'column' => $instance->getColumn(),
                     'position' => (int) $instance->getPosition(),
                     'hidden' => false,
-                    'present' => false
-                )
+                    'present' => false,
+                ),
             );
 
             // loop through selected widgets

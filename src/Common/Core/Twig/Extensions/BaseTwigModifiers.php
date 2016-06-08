@@ -118,9 +118,10 @@ class BaseTwigModifiers
      * Makes this string lowercase.
      * 		syntax: {{ $string|lowercase }}.
      *
-     * @return string The string, completely lowercased.
      *
      * @param string $string The string that you want to apply this method on.
+     *
+     * @return string The string, completely lowercased.
      */
     public static function lowercase($string)
     {

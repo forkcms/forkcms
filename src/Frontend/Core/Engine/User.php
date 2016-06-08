@@ -59,13 +59,14 @@ class User
      * Get a backend user
      *
      * @param int $userId The users id in the backend.
+     *
      * @return User
      */
     public static function getBackendUser($userId)
     {
         // create new instance if necessary and cache it
         if (!isset(self::$cache[$userId])) {
-            self::$cache[$userId] = new User($userId);
+            self::$cache[$userId] = new self($userId);
         }
 
         return self::$cache[$userId];
@@ -85,6 +86,7 @@ class User
      * Get a setting
      *
      * @param string $key The name of the setting.
+     *
      * @return mixed The stored value, if the setting wasn't found null will be returned
      */
     public function getSetting($key)
@@ -94,7 +96,7 @@ class User
 
         // not set? return null
         if (!isset($this->settings[$key])) {
-            return null;
+            return;
         }
 
         // return

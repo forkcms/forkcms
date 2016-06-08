@@ -26,7 +26,7 @@ class ModulesType extends AbstractType
                 'modules',
                 'choice',
                 array(
-                    'choices'  => $this->getInstallableModules(),
+                    'choices' => $this->getInstallableModules(),
                     'expanded' => true,
                     'multiple' => true,
                 )

@@ -71,6 +71,7 @@ class ImportAddresses extends BackendBaseActionEdit
      * Reformats a subscriber record with custom fields to the necessary format used in the import.
      *
      * @param array $subscriber The subscriber record as it comes out of the CSV.
+     *
      * @return array
      */
     private function formatSubscriberCSVRow($subscriber)
@@ -129,6 +130,7 @@ class ImportAddresses extends BackendBaseActionEdit
      *
      * @param array $csv     The uploaded CSV file.
      * @param int   $groupID The group ID for which we're importing.
+     *
      * @return array A list with failed subscribers.
      */
     private function processImport($csv, $groupID)

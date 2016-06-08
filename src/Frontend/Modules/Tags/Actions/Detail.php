@@ -92,7 +92,7 @@ class Detail extends FrontendBaseBlock
                 $this->results[] = array(
                     'name' => $module,
                     'label' => FL::lbl(\SpoonFilter::ucfirst($module)),
-                    'items' => $items
+                    'items' => $items,
                 );
             }
         }

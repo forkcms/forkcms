@@ -9,8 +9,6 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use TijsVerkoyen\Akismet\Akismet;
 use Common\Cookie as CommonCookie;
 
@@ -34,6 +32,7 @@ class Model extends \Common\Core\Model
      *
      * @param string $url        The URL to append the parameters too.
      * @param array  $parameters The parameters as key-value-pairs.
+     *
      * @return string
      */
     public static function addURLParameters($url, array $parameters)
@@ -68,6 +67,7 @@ class Model extends \Common\Core\Model
      * @param string $text           The text to convert.
      * @param bool   $includeAHrefs  Should the url be appended after the link-text?
      * @param bool   $includeImgAlts Should the alt tag be inserted for images?
+     *
      * @return string
      */
     public static function convertToPlainText($text, $includeAHrefs = true, $includeImgAlts = true)
@@ -133,6 +133,7 @@ class Model extends \Common\Core\Model
      * Get all data for a page
      *
      * @param int $pageId The pageId wherefore the data will be retrieved.
+     *
      * @return array
      */
     public static function getPage($pageId)
@@ -220,6 +221,7 @@ class Model extends \Common\Core\Model
      * Get a revision for a page
      *
      * @param int $revisionId The revisionID.
+     *
      * @return array
      */
     public static function getPageRevision($revisionId)
@@ -324,6 +326,7 @@ class Model extends \Common\Core\Model
      * @param string $email     Commenter's email address.
      * @param string $URL       Commenter's URL.
      * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
+     *
      * @return bool|string Will return a boolean, except when we can't decide the status
      *                          (unknown will be returned in that case)
      */

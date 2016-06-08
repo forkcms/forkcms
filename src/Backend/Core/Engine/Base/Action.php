@@ -97,7 +97,7 @@ class Action extends Object
                 null,
                 null,
                 array(
-                    'error' => 'csrf'
+                    'error' => 'csrf',
                 )
             )
         );
@@ -223,6 +223,7 @@ class Action extends Object
      *                             string, array.
      * @param mixed  $defaultValue The value that should be returned if the key
      *                             is not available.
+     *
      * @return mixed
      */
     public function getParameter($key, $type = 'string', $defaultValue = null)

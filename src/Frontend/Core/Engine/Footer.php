@@ -66,6 +66,7 @@ class Footer extends FrontendBaseObject
      * Builds the HTML needed for Facebook to be initialized
      *
      * @param  string $facebookAppId The application id used to interact with FB
+     *
      * @return string                HTML and JS needed to initialize FB JavaScript
      */
     protected function getFacebookHtml($facebookAppId)
@@ -140,6 +141,7 @@ class Footer extends FrontendBaseObject
      * https://developers.google.com/webmasters/richsnippets/sitelinkssearch
      *
      * @param  string $searchUrl The url to the search page
+     *
      * @return string            The script needed for google
      */
     protected function getSiteLinksCode($searchUrl)

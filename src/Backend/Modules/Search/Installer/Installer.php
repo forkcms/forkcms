@@ -87,7 +87,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => \SpoonFilter::ucfirst($this->getLocale('Search', 'Core', $language, 'lbl', 'Frontend')),
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $searchId, 'position' => 'main')
@@ -148,7 +148,7 @@ class Installer extends ModuleInstaller
                      $page['title'],
                      'Y',
                      $page['title'],
-                     'Y'
+                     'Y',
                 )
             );
             $db->execute(

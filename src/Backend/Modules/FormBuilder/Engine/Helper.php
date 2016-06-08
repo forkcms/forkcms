@@ -26,6 +26,7 @@ class Helper
      * Parse a field and return the HTML.
      *
      * @param array $field Field data.
+     *
      * @return string
      */
     public static function parseField(array $field)
@@ -46,7 +47,7 @@ class Helper
             );
             $placeholder = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
 
-            /**
+            /*
              * Create form and parse to HTML
              */
             // dropdown
@@ -139,7 +140,7 @@ class Helper
                 $fieldHTML = $values;
             }
 
-            /**
+            /*
              * Parse the field into the template
              */
             // init

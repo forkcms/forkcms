@@ -131,8 +131,8 @@ class InstallerController extends Controller
             'ForkCMSInstallerBundle:Installer:step6.html.twig',
             array(
                 'installStatus' => $status,
-                'installer'     => $forkInstaller,
-                'data'          => $this->getInstallationData($request),
+                'installer' => $forkInstaller,
+                'data' => $this->getInstallationData($request),
             )
         );
     }

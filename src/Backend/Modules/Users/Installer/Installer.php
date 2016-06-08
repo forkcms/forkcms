@@ -138,12 +138,12 @@ class Installer extends ModuleInstaller
 
         // more then 6 chars is good
         if (mb_strlen($password) >= 6) {
-            $score++;
+            ++$score;
         }
 
         // more then 8 is better
         if (mb_strlen($password) >= 8) {
-            $score++;
+            ++$score;
         }
 
         // @todo
@@ -154,12 +154,12 @@ class Installer extends ModuleInstaller
 
         // number?
         if (preg_match('/\d+/', $password)) {
-            $score++;
+            ++$score;
         }
 
         // special char?
         if (preg_match('/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/', $password)) {
-            $score++;
+            ++$score;
         }
 
         // strong password
@@ -213,7 +213,7 @@ class Installer extends ModuleInstaller
             'users/index',
             array(
                  'users/add',
-                 'users/edit'
+                 'users/edit',
             ),
             4
         );

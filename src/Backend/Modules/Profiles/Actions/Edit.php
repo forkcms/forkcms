@@ -34,7 +34,7 @@ class Edit extends BackendBaseActionEdit
      */
     private $dgGroups;
 
-     /**
+    /**
      * @var bool
      */
     private $notifyProfile;
@@ -90,7 +90,7 @@ class Edit extends BackendBaseActionEdit
         // gender dropdown values
         $genderValues = array(
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female'))
+            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
         );
 
         // birthdate dropdown values
@@ -357,7 +357,7 @@ class Edit extends BackendBaseActionEdit
                             'id' => $this->id,
                             'first_name' => $txtFirstName->getValue(),
                             'last_name' => $txtLastName->getValue(),
-                            'unencrypted_password' => $password
+                            'unencrypted_password' => $password,
                         )
                     );
 

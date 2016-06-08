@@ -62,6 +62,7 @@ class ApplicationRouting extends Controller
      * @param Request $request
      * @param string  $module
      * @param string  $action
+     *
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function backendController(Request $request, $module, $action)
@@ -71,6 +72,7 @@ class ApplicationRouting extends Controller
 
         $applicationClass = $this->initializeBackend('Backend');
         $application = new $applicationClass($this->container->get('kernel'));
+
         return $this->handleApplication($application);
     }
 
@@ -78,6 +80,7 @@ class ApplicationRouting extends Controller
      * Runs the backend ajax requests
      *
      * @param Request $request
+     *
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function backendAjaxController(Request $request)
@@ -86,6 +89,7 @@ class ApplicationRouting extends Controller
 
         $applicationClass = $this->initializeBackend('BackendAjax');
         $application = new $applicationClass($this->container->get('kernel'));
+
         return $this->handleApplication($application);
     }
 
@@ -93,6 +97,7 @@ class ApplicationRouting extends Controller
      * Runs the cronjobs
      *
      * @param Request $request
+     *
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function backendCronjobController(Request $request)
@@ -101,6 +106,7 @@ class ApplicationRouting extends Controller
 
         $applicationClass = $this->initializeBackend('BackendCronjob');
         $application = new $applicationClass($this->container->get('kernel'));
+
         return $this->handleApplication($application);
     }
 
@@ -109,6 +115,7 @@ class ApplicationRouting extends Controller
      *
      * @param Request $request
      * @param string  $route
+     *
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function frontendController(Request $request, $route)
@@ -117,6 +124,7 @@ class ApplicationRouting extends Controller
 
         $applicationClass = $this->initializeFrontend('Frontend');
         $application = new $applicationClass($this->container->get('kernel'));
+
         return $this->handleApplication($application);
     }
 
@@ -124,6 +132,7 @@ class ApplicationRouting extends Controller
      * Runs the frontend ajax requests
      *
      * @param Request $request
+     *
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function frontendAjaxController(Request $request)
@@ -132,6 +141,7 @@ class ApplicationRouting extends Controller
 
         $applicationClass = $this->initializeFrontend('FrontendAjax');
         $application = new $applicationClass($this->container->get('kernel'));
+
         return $this->handleApplication($application);
     }
 
@@ -141,6 +151,7 @@ class ApplicationRouting extends Controller
      * @param Request $request
      * @param string  $version
      * @param string  $client
+     *
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function apiController(Request $request, $version, $client)
@@ -149,6 +160,7 @@ class ApplicationRouting extends Controller
 
         $applicationClass = $this->initializeAPI('Api', $request);
         $application = new $applicationClass($this->container->get('kernel'));
+
         return $this->handleApplication($application);
     }
 
@@ -156,6 +168,7 @@ class ApplicationRouting extends Controller
      * Runs an application and returns the Response
      *
      * @param \ApplicationInterface $application
+     *
      * @return Symfony\Component\HttpFoundation\Response
      */
     protected function handleApplication(\ApplicationInterface $application)
@@ -164,6 +177,7 @@ class ApplicationRouting extends Controller
 
         try {
             $application->initialize();
+
             return $application->display();
         } catch (RedirectException $ex) {
             return $ex->getResponse();
@@ -173,8 +187,10 @@ class ApplicationRouting extends Controller
     /**
      * @param string $app The name of the application to load (ex. BackendAjax)
      * @param Request $request
-     * @return string The name of the application class we need to instantiate.
+     *
      * @throws Exception
+     *
+     * @return string The name of the application class we need to instantiate.
      */
     protected function initializeAPI($app, $request)
     {
@@ -205,6 +221,7 @@ class ApplicationRouting extends Controller
 
     /**
      * @param string $app The name of the application to load (ex. BackendAjax)
+     *
      * @return string The name of the application class we need to instantiate.
      */
     protected function initializeBackend($app)
@@ -228,6 +245,7 @@ class ApplicationRouting extends Controller
 
     /**
      * @param string $app The name of the application to load (ex. frontend_ajax)
+     *
      * @return string The name of the application class we need to instantiate.
      */
     protected function initializeFrontend($app)

@@ -10,7 +10,6 @@ namespace Frontend\Modules\Location\Widgets;
  */
 
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**

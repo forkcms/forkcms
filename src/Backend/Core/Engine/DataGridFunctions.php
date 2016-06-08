@@ -26,6 +26,7 @@ class DataGridFunctions
      * Formats plain text as HTML, links will be detected, paragraphs will be inserted
      *
      * @param string $var The data to cleanup.
+     *
      * @return string
      */
     public static function cleanupPlainText($var)
@@ -54,6 +55,7 @@ class DataGridFunctions
      *
      * @param float $number   The number to format.
      * @param int   $decimals The number of decimals.
+     *
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -68,6 +70,7 @@ class DataGridFunctions
      * Format a date according the users' settings
      *
      * @param int $timestamp The UNIX-timestamp to format as a human readable date.
+     *
      * @return string
      */
     public static function getDate($timestamp)
@@ -90,6 +93,7 @@ class DataGridFunctions
      * Format a date as a long representation according the users' settings
      *
      * @param int $timestamp The UNIX-timestamp to format as a human readable date.
+     *
      * @return string
      */
     public static function getLongDate($timestamp)
@@ -112,6 +116,7 @@ class DataGridFunctions
      * Format a time according the users' settings
      *
      * @param int $timestamp The UNIX-timestamp to format as a human readable time.
+     *
      * @return string
      */
     public static function getTime($timestamp)
@@ -134,6 +139,7 @@ class DataGridFunctions
      * Get time ago as a string for use in a datagrid
      *
      * @param int $timestamp The UNIX-timestamp to convert in a time-ago-string.
+     *
      * @return string
      */
     public static function getTimeAgo($timestamp)
@@ -157,6 +163,7 @@ class DataGridFunctions
      * Get the HTML for a user to use in a datagrid
      *
      * @param int $id The Id of the user.
+     *
      * @return string
      */
     public static function getUser($id)
@@ -205,6 +212,7 @@ class DataGridFunctions
      * @param string $type The type of column. This is given since some columns can have different meanings than others.
      * @param string $value
      * @param array  $attributes
+     *
      * @return array
      */
     public static function greyOut($type, $value, array $attributes = array())
@@ -246,8 +254,9 @@ class DataGridFunctions
      * @param string $image   The filename of the image.
      * @param string $title   The title (will be used as alt).
      * @param string $url     The url
-     * @param integer $width   The width for the <img element
-     * @param integer $height  The height for the <img element
+     * @param int $width   The width for the <img element
+     * @param int $height  The height for the <img element
+     *
      * @return string
      */
     public static function showImage($path, $image, $title = '', $url = null, $width = null, $height = null)
@@ -281,6 +290,7 @@ class DataGridFunctions
      * @param string $string    The string to truncate.
      * @param int    $length    The maximumlength for the string.
      * @param bool   $useHellip Should a hellip be appended?
+     *
      * @return string
      */
     public static function truncate($string, $length, $useHellip = true)

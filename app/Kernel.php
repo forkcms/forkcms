@@ -67,6 +67,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
 
     /**
      * This will disappear in time in favour of container-driven parameters.
+     *
      * @deprecated
      */
     public function defineForkConstants()
@@ -124,9 +125,9 @@ abstract class Kernel extends BaseKernel implements KernelInterface
     /**
      * Builds the service container.
      *
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder The compiled service container
-     *
      * @throws \RuntimeException
+     *
+     * @return \Symfony\Component\DependencyInjection\ContainerBuilder The compiled service container
      */
     protected function buildContainer()
     {

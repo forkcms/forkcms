@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Mailmotor\Engine;
 
-use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /*
  * This file is part of Fork CMS.
@@ -51,6 +51,7 @@ class MailingBodyBuilder
      * Builds and returns the generated mailing body HTML or plaintext.
      *
      * @param array $replacements An array of key/value pairs, where key is the string to replace with the value.
+     *
      * @return string The generated mailing body.
      */
     public function buildBody(array $replacements = null)
@@ -153,6 +154,7 @@ class MailingBodyBuilder
      * This method parses the template css in the template by using Tijs Verkoyen's CSSToInlineStyles parser.
      *
      * @param string $body
+     *
      * @return string
      */
     protected function processCSS($body)
@@ -174,6 +176,7 @@ class MailingBodyBuilder
      *
      * @param string $body
      * @param array  $replacements An array of key/value pairs, where key is the string to replace with the value.
+     *
      * @return string
      */
     protected function processReplacements($body, $replacements)
@@ -193,6 +196,7 @@ class MailingBodyBuilder
      * Adds Google UTM GET parameters to all anchor links in the mailing
      *
      * @param string $body
+     *
      * @return string The given HTML content, with the UTM-vars assigned.
      */
     private function processUTMParameters($body)

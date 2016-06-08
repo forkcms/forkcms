@@ -18,12 +18,12 @@ namespace Backend;
 class Init extends \Common\Core\Init
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected $allowedTypes = array('Backend', 'BackendAjax', 'BackendCronjob', 'Console');
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function initialize($type)
     {

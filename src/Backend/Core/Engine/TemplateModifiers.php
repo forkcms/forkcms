@@ -25,6 +25,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param float $number   The number to format.
      * @param int   $decimals The number of decimals.
+     *
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -54,6 +55,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * syntax: {$var|formatnumber}
      *
      * @param float $var The number to format.
+     *
      * @return string
      */
     public static function formatNumber($var)
@@ -85,6 +87,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * syntax: {{ $var|formatdate }}
      *
      * @param int $var The UNIX-timestamp to format.
+     *
      * @return string
      */
     public static function formatTime($var)
@@ -104,6 +107,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param string $module The module to build the URL for.
      * @param string $suffix A string to append.
      * @param string $language A language code
+     *
      * @return string
      */
     public static function getURL($action = null, $module = null, $suffix = null, $language = null)
@@ -158,6 +162,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param int    $length      The maximum length of the truncated string.
      * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
      * @param bool   $closestWord Truncate on exact length or on closest word?
+     *
      * @return string
      */
     public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
@@ -203,6 +208,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param string|bool $status
      * @param bool        $reverse show the opposite of the status
+     *
      * @return string
      */
     public static function showBool($status, $reverse = false)

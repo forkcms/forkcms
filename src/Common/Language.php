@@ -72,9 +72,10 @@ final class Language
     /**
      * Get an action.
      *
-     * @throws InvalidArgumentException when used in the backend.
      *
      * @param $key
+     *
+     * @throws InvalidArgumentException when used in the backend.
      *
      * @return string
      */

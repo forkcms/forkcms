@@ -47,6 +47,7 @@ class Analyse extends BackendBaseActionIndex
      * Format a serialized path-array into something that is usable in a datagrid
      *
      * @param string $files The serialized array with the paths.
+     *
      * @return string
      */
     public static function formatFilesList($files)

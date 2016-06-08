@@ -219,6 +219,7 @@ class Navigation extends Base\Object
      * Clean the navigation
      *
      * @param array $navigation The navigation array.
+     *
      * @return array
      */
     private function cleanup(array $navigation)
@@ -300,7 +301,6 @@ class Navigation extends Base\Object
                         }
                     }
 
-
                     if (!$allowed && empty($allowedChildrenB)) {
                         // error occurred and no allowed children on level B
                         unset($navigation[$key]['children'][$keyB]);
@@ -355,6 +355,7 @@ class Navigation extends Base\Object
      * @param array $value The value.
      * @param int   $key   The key.
      * @param array $keys  The previous marked keys.
+     *
      * @return mixed
      */
     private function compareURL(array $value, $key, $keys = array())
@@ -412,6 +413,7 @@ class Navigation extends Base\Object
      * If the item doesn't have an id, it will search recursively until it finds one.
      *
      * @param int $id The id to search for.
+     *
      * @return string
      */
     private function getNavigationUrl($id)

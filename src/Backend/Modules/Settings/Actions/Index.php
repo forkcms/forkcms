@@ -9,7 +9,7 @@ namespace Backend\Modules\Settings\Actions;
  * file that was distributed with this source code.
  */
 
-use \TijsVerkoyen\Akismet\Akismet;
+use TijsVerkoyen\Akismet\Akismet;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
@@ -214,13 +214,13 @@ class Index extends BackendBaseActionIndex
                 'label' => $label,
                 'value' => $abbreviation,
                 'attributes' => $activeAttributes,
-                'variables' => array('default' => $defaultLanguage)
+                'variables' => array('default' => $defaultLanguage),
             );
             $redirectLanguages[] = array(
                 'label' => $label,
                 'value' => $abbreviation,
                 'attributes' => $redirectAttributes,
-                'variables' => array('default' => $defaultLanguage)
+                'variables' => array('default' => $defaultLanguage),
             );
         }
 

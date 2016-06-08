@@ -81,11 +81,13 @@ if (!$results['total'] > 0) {
 } else {
     if ($results['imported'] > 0) {
         echo 'Locale installed successfully' . "\n";
+
         return;
     }
 
     if ($results['imported'] == 0) {
         echo 'No locale was installed. Try adding the overwrite (-o) option.' . "\n";
+
         return;
     }
 }

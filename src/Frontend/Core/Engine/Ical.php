@@ -138,6 +138,7 @@ class FrontendIcalEvent extends \SpoonICalEvent
      * Process links, will prepend SITE_URL if needed and append UTM-parameters
      *
      * @param string $content The content to process.
+     *
      * @return string
      */
     public function processLinks($content)

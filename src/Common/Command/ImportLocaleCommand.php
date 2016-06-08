@@ -2,18 +2,15 @@
 
 namespace Common\Command;
 
-use AppKernel;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use Backend\Init as BackendInit;
 
 /**
  * This is a simple command to install a locale file
- * @package Common\Command
  *
  * @author Jesse Dobbelaere <jesse@dobbelaere-ae.be>
  */
@@ -21,8 +18,6 @@ class ImportLocaleCommand extends Command
 {
     /**
      * Configure the command options.
-     *
-     * @return void
      */
     protected function configure()
     {
@@ -38,7 +33,7 @@ class ImportLocaleCommand extends Command
      *
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return void
+     *
      * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -69,6 +64,7 @@ class ImportLocaleCommand extends Command
      * @param string $localePath
      * @param bool $overwrite
      * @param OutputInterFace $output
+     *
      * @throws Exception
      */
     private function importLocale($localePath, $overwrite, OutputInterface $output)
@@ -86,16 +82,19 @@ class ImportLocaleCommand extends Command
 
         if ($results['total'] < 0) {
             $output->writeln('<error>Something went wrong during import.</error>');
+
             return;
         }
 
         if ($results['imported'] > 0) {
             $output->writeln('<comment>Imported ' . $results['imported'] . ' translations succesfully!</comment>');
+
             return;
         }
 
         if ($results['imported'] == 0) {
             $output->writeln('<info>No locale was imported. Try adding the overwrite (-o) option.</info>');
+
             return;
         }
     }
@@ -105,6 +104,7 @@ class ImportLocaleCommand extends Command
      *
      * @param string $fileOption
      * @param string $moduleOption
+     *
      * @return string
      */
     private function getLocalePath($fileOption, $moduleOption)

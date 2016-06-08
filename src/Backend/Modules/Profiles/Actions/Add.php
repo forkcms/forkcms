@@ -29,7 +29,7 @@ class Add extends BackendBaseActionAdd
      */
     private $id;
 
-     /**
+    /**
      * @var bool
      */
     private $notifyAdmin;
@@ -52,7 +52,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-     /**
+    /**
      * Get data
      */
     public function getData()
@@ -78,7 +78,7 @@ class Add extends BackendBaseActionAdd
         // gender dropdown values
         $genderValues = array(
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female'))
+            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
         );
 
         // birthdate dropdown values
@@ -218,7 +218,7 @@ class Add extends BackendBaseActionAdd
                         'id' => $this->id,
                         'first_name' => $txtFirstName->getValue(),
                         'last_name' => $txtLastName->getValue(),
-                        'unencrypted_password' => $password
+                        'unencrypted_password' => $password,
                     )
                 );
 

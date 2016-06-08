@@ -11,7 +11,6 @@ namespace Backend\Modules\Location\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
@@ -71,7 +70,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         $item = array(
             'id' => $itemId,
             'language' => BL::getWorkingLanguage(),
-            'show_overview' => ($showOverview) ? 'Y' : 'N'
+            'show_overview' => ($showOverview) ? 'Y' : 'N',
         );
         BackendLocationModel::update($item);
 

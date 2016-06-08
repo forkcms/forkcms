@@ -71,6 +71,7 @@ abstract class BaseTwigTemplate extends TwigEngine
             foreach ($key as $i => $value) {
                 $this->variables[$i] = $value;
             }
+
             return;
         }
 

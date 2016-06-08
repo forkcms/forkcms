@@ -62,7 +62,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**
@@ -125,6 +125,7 @@ class Livesuggest extends FrontendBaseAJAXAction
 
     /**
      * Load the cached data
+     *
      * @todo    refactor me
      *
      * @return bool
@@ -337,7 +338,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             $pagesFirstEnd = 1;
 
             // loop pages
-            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++) {
+            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;
@@ -351,7 +352,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // build array
-        for ($i = $pagesStart; $i <= $pagesEnd; $i++) {
+        for ($i = $pagesStart; $i <= $pagesEnd; ++$i) {
             // init var
             $current = ($i == $this->pagination['requested_page']);
 
@@ -373,7 +374,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             $pagesLastEnd = $this->pagination['num_pages'];
 
             // loop pages
-            for ($i = $pagesLastStart; $i <= $pagesLastEnd; $i++) {
+            for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;

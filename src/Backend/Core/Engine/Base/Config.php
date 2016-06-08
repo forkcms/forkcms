@@ -10,7 +10,6 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -82,6 +81,7 @@ class Config extends Object
      * Get the possible actions
      *
      * @deprecated
+     *
      * @return array
      */
     public function getPossibleActions()
@@ -98,6 +98,7 @@ class Config extends Object
      * Get the possible AJAX actions
      *
      * @deprecated
+     *
      * @return array
      */
     public function getPossibleAJAXActions()
@@ -118,6 +119,7 @@ class Config extends Object
      * called before any authentication is required.
      *
      * @param string $module The module to load.
+     *
      * @throws BackendException If module is not allowed
      */
     public function setModule($module)
@@ -149,6 +151,7 @@ class Config extends Object
 
     /**
      * @param string $action
+     *
      * @return bool
      */
     public function isActionAvailable($action)
@@ -178,8 +181,10 @@ class Config extends Object
 
     /**
      * @param string $actionType
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function isActionDisabled($actionType)
     {
@@ -195,6 +200,7 @@ class Config extends Object
 
     /**
      * @param string $actionType
+     *
      * @return bool
      */
     public function isActionFilePresent($actionType)

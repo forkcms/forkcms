@@ -90,7 +90,7 @@ class Rss extends \SpoonFeedRSS
             array(
                 'utm_source' => 'feed',
                 'utm_medium' => 'rss',
-                'utm_campaign' => CommonUri::getUrl($this->getTitle())
+                'utm_campaign' => CommonUri::getUrl($this->getTitle()),
             )
         );
 
