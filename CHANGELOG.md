@@ -3,6 +3,7 @@
 
 Bugfixes:
 
+* Backend: Core fix when using extra-params in a datagrid sequence reorder ajax call.
 * Core: Fixes date field with empty date.
 * Core: Fix lost ucfirst template modifier.
 * Installer: Make "same language" not required.

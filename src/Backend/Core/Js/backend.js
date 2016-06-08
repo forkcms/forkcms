@@ -1974,8 +1974,18 @@ jsBackend.tableSequenceByDragAndDrop =
                         var module = (typeof $table.parents('table.jsDataGrid').data('module') == 'undefined') ? jsBackend.current.module : $table.parents('table.jsDataGrid').data('module').toString();
 
                         // fetch extra params
-                        if (typeof $table.parents('table.jsDataGrid').data('extra-params') != 'undefined') extraParams = $table.parents('table.jsDataGrid').data('extra-params');
-                        else extraParams = {};
+                        if (typeof $table.parents('table.jsDataGrid').data('extra-params') != 'undefined') {
+                            // we define extra params
+                            extraParams = $table.parents('table.jsDataGrid').data('extra-params');
+
+                            // we convert the unvalid {'key':'value'} to the valid {"key":"value"}
+                            extraParams = extraParams.replace(/'/g, '"');
+
+                            // we parse it as an object
+                            extraParams = $.parseJSON(extraParams);
+                        } else {
+                            extraParams = {};
+                        }
 
                         // init var
                         $rows = $(this).find('tr');
