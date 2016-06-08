@@ -1,4 +1,4 @@
-<br/>
+<br />
 <hr />
 <p id="footer">
   {$SITE_TITLE} | {$SITE_DOMAIN}

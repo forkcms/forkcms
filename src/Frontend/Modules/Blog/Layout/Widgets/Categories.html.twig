@@ -4,22 +4,22 @@
 #}
 
 {% if widgetBlogCategories %}
-	<section id="blogCategoriesWidget" class="mod">
-		<div class="inner">
-			<header class="hd">
-				<h3>{{ 'lbl.Categories'|trans|capitalize }}</h3>
-			</header>
-			<div class="bd content">
-				<ul>
-					{% for widgetBlogCategories in widgetBlogCategories %}
-						<li>
-							<a href="{{ widgetBlogCategories.url }}">
-								{{ widgetBlogCategories.label }}&nbsp;({{ widgetBlogCategories.total }})
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
-	</section>
+  <section id="blogCategoriesWidget" class="mod">
+    <div class="inner">
+      <header class="hd">
+        <h3>{{ 'lbl.Categories'|trans|capitalize }}</h3>
+      </header>
+      <div class="bd content">
+        <ul>
+          {% for widgetBlogCategories in widgetBlogCategories %}
+            <li>
+              <a href="{{ widgetBlogCategories.url }}">
+                {{ widgetBlogCategories.label }}&nbsp;({{ widgetBlogCategories.total }})
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
 {% endif %}

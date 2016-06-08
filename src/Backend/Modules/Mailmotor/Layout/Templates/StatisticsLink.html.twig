@@ -16,38 +16,38 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% form add %}
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="group" class="control-label">{{ 'lbl.Group'|trans|capitalize }}</label>
-                  {% form_field_error group %} {% form_field group %}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="panel-footer">
-            <div class="btn-toolbar">
-              <div class="btn-group pull-right">
-                <button id="search" type="submit" class="btn btn-primary" name="search">
-                  <span class="fa fa-refresh"></span>&nbsp;
-                  {{ 'lbl.UpdateFilter'|trans|capitalize }}
-                </button>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="group" class="control-label">{{ 'lbl.Group'|trans|capitalize }}</label>
+                {% form_field_error group %} {% form_field group %}
               </div>
             </div>
           </div>
         </div>
+        <div class="panel-footer">
+          <div class="btn-toolbar">
+            <div class="btn-group pull-right">
+              <button id="search" type="submit" class="btn btn-primary" name="search">
+                <span class="fa fa-refresh"></span>&nbsp;
+                {{ 'lbl.UpdateFilter'|trans|capitalize }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       {% endform %}
     </div>
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% if dataGrid %}
-      {{ dataGrid }}
+        {{ dataGrid }}
       {% endif %}
       {% if not dataGrid %}
-      <p>{{ 'msg.NoItems'|trans }}</p>
+        <p>{{ 'msg.NoItems'|trans }}</p>
       {% endif %}
     </div>
   </div>

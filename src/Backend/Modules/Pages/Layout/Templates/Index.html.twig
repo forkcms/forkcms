@@ -18,27 +18,27 @@
 {% endblock %}
 
 {% block actionbar %}
-    {% if showPagesAdd %}
+  {% if showPagesAdd %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.AddPage'|trans|capitalize) }}
       </div>
     </div>
-    {% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% if dgDrafts %}
-      <div class="content-block content-block-pb">
+        <div class="content-block content-block-pb">
           <div class="content-title">
             <p>{{ 'lbl.Drafts'|trans|capitalize }}</p>
           </div>
           <div class="responsive-table">
             {{ dgDrafts|raw }}
           </div>
-      </div>
+        </div>
       {% endif %}
       <div class="content-block content-block-pb">
         {% if dgRecentlyEdited %}

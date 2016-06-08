@@ -4,11 +4,11 @@
 
 {% block actionbar %}
   {% if showUsersAdd %}
-  <div class="btn-toolbar pull-right">
-    <div class="btn-group" role="group">
-      {{ macro.buttonIcon(geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize ) }}
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon(geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize ) }}
+      </div>
     </div>
-  </div>
   {% endif %}
 {% endblock %}
 

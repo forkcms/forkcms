@@ -4,19 +4,19 @@
 
 {% block actionbar %}
   {% form themes %}
-      {% if showExtensionsAddThemeTemplate %}
-        <div class="btn-toolbar pull-right">
-          <div class="btn-group" role="group">
-            {% if selectedTheme %}
-              {% set url =  '&theme=' ~ selectedTheme %}
-            {% endif %}
+  {% if showExtensionsAddThemeTemplate %}
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group" role="group">
+        {% if selectedTheme %}
+          {% set url =  '&theme=' ~ selectedTheme %}
+        {% endif %}
 
-            {{ macro.buttonIcon( geturl('add_theme_template' ) ~ url, 'plus-square', 'lbl.AddTemplate'|trans|capitalize, 'btn-primary')  }}
+        {{ macro.buttonIcon( geturl('add_theme_template' ) ~ url, 'plus-square', 'lbl.AddTemplate'|trans|capitalize, 'btn-primary') }}
 
-            {{ macro.buttonIcon( geturl('export_theme_templates') ~ url, 'download', 'lbl.Export'|trans|capitalize) }}
-          </div>
-        </div>
-      {% endif %}
+        {{ macro.buttonIcon( geturl('export_theme_templates') ~ url, 'download', 'lbl.Export'|trans|capitalize) }}
+      </div>
+    </div>
+  {% endif %}
   {% endform %}
 {% endblock %}
 
@@ -35,7 +35,7 @@
         </div>
       {% endif %}
       {% if not dataGrid %}
-      <p>{{ 'msg.NoItems'|trans }}</p>
+        <p>{{ 'msg.NoItems'|trans }}</p>
       {% endif %}
     </div>
   </div>

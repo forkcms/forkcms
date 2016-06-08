@@ -10,87 +10,86 @@
 {% include "/Layout/Templates/header.html.twig" %}
 
 <div class="main-wrapper{% if attribute(cookies, 'navigation-collapse') == 'true' %} navigation-collapsed{% endif %}">
-    <div class="sidebar">
-        {% include "/Layout/Templates/navigation.html.twig" %}
-        <div class="sub-navigation">
-            <nav id="content-subnavigation" class="fork-nav-sidebar">
-                {% include "/Layout/Templates/subnavigation.html.twig" with { 'navigation': navigation } %}
-            </nav>
-        </div>
+  <div class="sidebar">
+    {% include "/Layout/Templates/navigation.html.twig" %}
+    <div class="sub-navigation">
+      <nav id="content-subnavigation" class="fork-nav-sidebar">
+        {% include "/Layout/Templates/subnavigation.html.twig" with { 'navigation': navigation } %}
+      </nav>
     </div>
-    <div id="root">
-        <div id="content" class="content-wrapper">
-            <div class="content-main">
-                <div class="content-action-bar">
-                    <div class="container-fluid">
-                        <div class="row fork-module-heading">
-                            {% set _block = block('actionbar')|trim %}
-                            {% if _block is not empty %}
-                                <div class="col-xs-12 col-sm-6">
-                                    {% include "/Layout/Templates/breadcrumb.html.twig" with { 'navigation': navigation } %}
-                                </div>
-                                <div class="col-xs-12 col-sm-6">
-                                    {% block actionbar %}{% endblock %}
-                                </div>
-                            {% endif %}
-                            {% if _block is empty %}
-                                <div class="col-xs-12">
-                                    {% include "/Layout/Templates/breadcrumb.html.twig" with { 'navigation': navigation } %}
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
+  </div>
+  <div id="root">
+    <div id="content" class="content-wrapper">
+      <div class="content-main">
+        <div class="content-action-bar">
+          <div class="container-fluid">
+            <div class="row fork-module-heading">
+              {% set _block = block('actionbar')|trim %}
+              {% if _block is not empty %}
+                <div class="col-xs-12 col-sm-6">
+                  {% include "/Layout/Templates/breadcrumb.html.twig" with { 'navigation': navigation } %}
                 </div>
-                <div class="content">
-                    <div class="container-fluid container-fluid-large">
-                        {% block content %}
-                        {% endblock %}
-                    </div>
+                <div class="col-xs-12 col-sm-6">
+                  {% block actionbar %}{% endblock %}
                 </div>
+              {% endif %}
+              {% if _block is empty %}
+                <div class="col-xs-12">
+                  {% include "/Layout/Templates/breadcrumb.html.twig" with { 'navigation': navigation } %}
+                </div>
+              {% endif %}
             </div>
+          </div>
         </div>
-        <div id="root-footer"></div>
+        <div class="content">
+          <div class="container-fluid container-fluid-large">
+            {% block content %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
     </div>
-    {% include "/Layout/Templates/footer.html.twig" %}
+    <div id="root-footer"></div>
+  </div>
+  {% include "/Layout/Templates/footer.html.twig" %}
 </div>
 
 <div id="messaging">
-    <noscript>
-        <div class="formMessage alert alert-danger alert-main">
-            <p>{{ 'err.JavascriptNotEnabled'|trans|capitalize }}</p>
-        </div>
-    </noscript>
-    <div id="noCookies" class="formMessage alert alert-danger alert-main" style="display: none;">
-        <p>{{ 'err.CookiesNotEnabled'|trans|capitalize }}</p>
+  <noscript>
+    <div class="formMessage alert alert-danger alert-main">
+      <p>{{ 'err.JavascriptNotEnabled'|trans|capitalize }}</p>
     </div>
+  </noscript>
+  <div id="noCookies" class="formMessage alert alert-danger alert-main" style="display: none;">
+    <p>{{ 'err.CookiesNotEnabled'|trans|capitalize }}</p>
+  </div>
 </div>
 <div id="ajaxSpinner" style="position: fixed; top: 10px; right: 10px; display: none;">
-    <img src="/src/Backend/Core/Layout/images/spinner.gif" width="16" height="16" alt="loading" />
+  <img src="/src/Backend/Core/Layout/images/spinner.gif" width="16" height="16" alt="loading" />
 </div>
 
-
 <div class="hidden">
-    <div class="modal fade jsConfirmation" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
-                </div>
-                <div class="modal-body">
-                    <p class="jsConfirmationMessage">{{ msg.Confirmation }}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
-                    </button>
-                    <a href="#" class="btn btn-primary jsConfirmationSubmit">
-                        <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
-                    </a>
-                </div>
-            </div>
+  <div class="modal fade jsConfirmation" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
         </div>
+        <div class="modal-body">
+          <p class="jsConfirmationMessage">{{ msg.Confirmation }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+          </button>
+          <a href="#" class="btn btn-primary jsConfirmationSubmit">
+            <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
+          </a>
+        </div>
+      </div>
     </div>
-    {# Scripts should be placed here #}
+  </div>
+  {# Scripts should be placed here #}
 </div>
 </body>
 </html>

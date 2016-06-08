@@ -12,15 +12,15 @@
       <nav class="navbar navbar-default" role="navigation">
         <ul class="nav navbar-nav">
           {% for _itr_17 in wizard %}
-          <li class="{% if _itr_17.selected %}active{% endif %}{% if not _itr_17.stepLink %}navbar-text{% endif %}">
-            {% if _itr_17.stepLink %}
-            <a href="{{ geturl('edit' ) }}&amp;id={{ mailing.id }}&amp;step={{ _itr_17.id }}">
-            {% endif %}
-              <span>{{ _itr_17.id }}. {{ _itr_17.label|capitalize }}</span>
-            {% if _itr_17.stepLink %}
-            </a>
-            {% endif %}
-          </li>
+            <li class="{% if _itr_17.selected %}active{% endif %}{% if not _itr_17.stepLink %}navbar-text{% endif %}">
+              {% if _itr_17.stepLink %}
+              <a href="{{ geturl('edit' ) }}&amp;id={{ mailing.id }}&amp;step={{ _itr_17.id }}">
+                {% endif %}
+                <span>{{ _itr_17.id }}. {{ _itr_17.label|capitalize }}</span>
+                {% if _itr_17.stepLink %}
+              </a>
+              {% endif %}
+            </li>
           {% endfor %}
         </ul>
       </nav>
@@ -29,7 +29,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% if step1 %}
-      {% form step1 %}
+        {% form step1 %}
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-default">
@@ -48,13 +48,13 @@
                   {% form_field_error name %} {% form_field name %}
                 </div>
                 {% if ddmCampaign %}
-                <div class="form-group">
-                  <label for="campaign" class="control-label">
-                    {{ 'lbl.Campaign'|trans|capitalize }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
-                  </label>
-                  {% form_field_error campaign %} {% form_field campaign %}
-                </div>
+                  <div class="form-group">
+                    <label for="campaign" class="control-label">
+                      {{ 'lbl.Campaign'|trans|capitalize }}
+                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                    </label>
+                    {% form_field_error campaign %} {% form_field campaign %}
+                  </div>
                 {% endif %}
               </div>
             </div>
@@ -118,19 +118,19 @@
               <div class="panel-body">
                 <div class="form-group">
                   {% if chkGroupsError %}
-                  <p class="text-danger">{% form_field_error groups %}</p>
+                    <p class="text-danger">{% form_field_error groups %}</p>
                   {% endif %}
                   <ul class="list-unstyled">
                     {% for group in groups %}
-                    <li class="checkbox">
-                      <label for="{{ group.id }}">
-                        {{ group.chkGroups|raw }}
-                        <attr title="{{ 'msg.GroupsNumberOfRecipients'|trans|sprintf(group.recipients ) }}">
-                          {{ group.label|capitalize }}
-                          ({% if group.recipients %}{{ group.recipients }}{% endif %}{% if not group.recipients %}{{ lbl.QuantityNo }}{% endif %} {% if group.single %}{{ lbl.EmailAddress }}{% endif %}{% if not group.single %}{{ lbl.EmailAddresses }}{% endif %})
-                        </attr>
-                      </label>
-                    </li>
+                      <li class="checkbox">
+                        <label for="{{ group.id }}">
+                          {{ group.chkGroups|raw }}
+                          <attr title="{{ 'msg.GroupsNumberOfRecipients'|trans|sprintf(group.recipients ) }}">
+                            {{ group.label|capitalize }}
+                            ({% if group.recipients %}{{ group.recipients }}{% endif %}{% if not group.recipients %}{{ lbl.QuantityNo }}{% endif %} {% if group.single %}{{ lbl.EmailAddress }}{% endif %}{% if not group.single %}{{ lbl.EmailAddresses }}{% endif %})
+                          </attr>
+                        </label>
+                      </li>
                     {% endfor %}
                   </ul>
                 </div>
@@ -149,15 +149,15 @@
               <div class="panel-body">
                 <div class="form-group">
                   {% if rbtLanguagesError %}
-                  <p class="text-danger">{{ rbtLanguagesError }}</p>
+                    <p class="text-danger">{{ rbtLanguagesError }}</p>
                   {% endif %}
                   <ul class="list-unstyled">
                     {% for languag in languages %}
-                    <li class="radio">
-                      <label for="{{ languag.id }}">
-                        {{ languag.rbtLanguages|raw }} {{ languag.label|capitalize }}
-                      </label>
-                    </li>
+                      <li class="radio">
+                        <label for="{{ languag.id }}">
+                          {{ languag.rbtLanguages|raw }} {{ languag.label|capitalize }}
+                        </label>
+                      </li>
                     {% endfor %}
                   </ul>
                 </div>
@@ -177,10 +177,10 @@
             </div>
           </div>
         </div>
-      {% endform %}
+        {% endform %}
       {% endif %}
       {% if step2 %}
-      {% form step2 %}
+        {% form step2 %}
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-default">
@@ -192,7 +192,7 @@
               <div class="panel-body">
                 <p class="help-block">{{ 'msg.HelpTemplates'|trans|capitalize }}</p>
                 {% if rbtTemplatesError %}
-                <p class="text-danger">{{ rbtTemplatesError }}</p>
+                  <p class="text-danger">{{ rbtTemplatesError }}</p>
                 {% endif %}
                 <div id="templateSelection" class="selectThumbList">
                   <div class="row">
@@ -201,8 +201,8 @@
                         <div class="panel panel-select {% if templat.selected %}panel-primary {% endif %} panel-default">
                           <label for="{{ templat.id }}" class="panel-title">
                             <div class="panel-heading">
-                                <span class="hidden">{{ templat.rbtTemplates|raw }}</span>
-                                <span class="panel-title">{{ templat.label|capitalize }}</span>
+                              <span class="hidden">{{ templat.rbtTemplates|raw }}</span>
+                              <span class="panel-title">{{ templat.label|capitalize }}</span>
                             </div>
                             <div class="panel-body">
                               <img src="/src/Backend/Modules/Mailmotor/Templates/{{ templat.language }}/{{ templat.value }}/images/thumb.jpg" width="172" height="129" class="img-thumbnail" alt="{{ templat.label|capitalize }}" />
@@ -230,10 +230,10 @@
             </div>
           </div>
         </div>
-      {% endform %}
+        {% endform %}
       {% endif %}
       {% if step3 %}
-      {% form step3 %}
+        {% form step3 %}
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
@@ -253,12 +253,12 @@
               </div>
             </div>
             {% if txtContentPlain %}
-            <div class="form-group">
-              <label for="subject" class="control-label">
-                {{ 'lbl.PlainTextVersion'|trans|capitalize }}
-              </label>
-              {% form_field_error content_plain %} {% form_field content_plain %}
-            </div>
+              <div class="form-group">
+                <label for="subject" class="control-label">
+                  {{ 'lbl.PlainTextVersion'|trans|capitalize }}
+                </label>
+                {% form_field_error content_plain %} {% form_field content_plain %}
+              </div>
             {% endif %}
           </div>
         </div>
@@ -274,10 +274,10 @@
             </div>
           </div>
         </div>
-      {% endform %}
+        {% endform %}
       {% endif %}
       {% if step4 %}
-      {% form step4 %}
+        {% form step4 %}
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-default">
@@ -288,14 +288,14 @@
               </div>
               <div class="panel-body">
                 {% if previewURL %}
-                <div id="iframeBox">
-                  <iframe id="contentBox" src="{{ previewURL }}" height="100%" width="100%" style="border-right: 1px solid rgb(221, 221, 221); border-width: medium 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(221, 221, 221) rgb(221, 221, 221); -moz-box-sizing: border-box;"></iframe>
-                </div>
+                  <div id="iframeBox">
+                    <iframe id="contentBox" src="{{ previewURL }}" height="100%" width="100%" style="border-right: 1px solid rgb(221, 221, 221); border-width: medium 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(221, 221, 221) rgb(221, 221, 221); -moz-box-sizing: border-box;"></iframe>
+                  </div>
                 {% endif %}
                 {% if not previewURL %}
-                <div class="options">
-                  <p><span class="infoMessage">{{ 'err.NoModuleLinked'|trans|capitalize }}</span></p>
-                </div>
+                  <div class="options">
+                    <p><span class="infoMessage">{{ 'err.NoModuleLinked'|trans|capitalize }}</span></p>
+                  </div>
                 {% endif %}
               </div>
             </div>
@@ -365,7 +365,8 @@
                 <span class="modal-title h4">{{ 'msg.MailingConfirmSend'|trans|capitalize }}</span>
               </div>
               <div class="modal-body">
-                <p>{{ recipientStatistics }} <span id="sendOn" style="display: none;">{{ 'msg.SendOn'|trans|capitalize }}</span></p>
+                <p>{{ recipientStatistics }}
+                  <span id="sendOn" style="display: none;">{{ 'msg.SendOn'|trans|capitalize }}</span></p>
                 <p>{{ 'msg.PeopleGroups'|trans|capitalize }}</p>
                 <p>
                   {% for group in groups %}{{ group.name }} {% if group.comma %}, {% endif %}{% endfor %}
@@ -392,14 +393,14 @@
             </div>
           </div>
         </div>
-      {% endform %}
+        {% endform %}
       {% endif %}
     </div>
   </div>
   <script type="text/javascript">
     //<![CDATA[
-      var variables = [];
-      variables = { mailingId: '{{ mailing.id }}' };
+    var variables = [];
+    variables = {mailingId: '{{ mailing.id }}'};
     //]]>
   </script>
 {% endblock %}
