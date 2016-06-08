@@ -3,6 +3,7 @@
 
 Bugfixes:
 
+* Faq: Fixed frontend JS which did not found if "yes" is checked.
 * Core: Fixes date field with empty date.
 * Core: Fix lost ucfirst template modifier.
 * Installer: Make "same language" not required.
