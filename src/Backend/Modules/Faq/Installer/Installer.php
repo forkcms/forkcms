@@ -173,8 +173,7 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ),
                     null,
-                    array(
-                         'extra_id' => $faqId, )
+                    array('extra_id' => $faqId)
                 );
             }
         }

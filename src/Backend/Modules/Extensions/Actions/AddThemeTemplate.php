@@ -129,8 +129,10 @@ class AddThemeTemplate extends BackendBaseActionAdd
         asort($widgets, SORT_STRING);
 
         // create array
-        $defaultExtras = array('' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
-                                \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets, );
+        $defaultExtras = array(
+            '' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
+            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
+        );
 
         // create default position field
         $position = array();
