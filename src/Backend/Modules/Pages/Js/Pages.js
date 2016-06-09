@@ -447,88 +447,42 @@ jsBackend.pages.extras =
 
 		// populate the modules
 		jsBackend.pages.extras.populateExtraModules();
-        
-    // @TODO Fix the editor templates
-        /*
-         $('#addBlock').dialog(
-         {
-         draggable: false,
-         resizable: false,
-         modal: true,
-         width: 500,
-         buttons:
-         [
-         {
-         text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-         click: function()
-         {
-         // fetch the selected extra type
-         var selectedExtraType = $('#extraType').val();
-         // fetch the selected extra id
-         var selectedExtraId = $('#extraExtraId').val();
-         // is user template?
-         var isUserTemplate = (selectedExtraType == 'usertemplate');
-         // fetch user template id
-         if (isUserTemplate)
-         {
-         selectedExtraId = $('#userTemplate').val();
-         }
 
-         // add the extra
-         var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType);
-
-         // add a block = template is no longer original
-         jsBackend.pages.template.original = false;
-
-         // close dialog
-         $(this).dialog('close');
-
-         // if the added block was an editor, show the editor immediately
-         if(!isUserTemplate && index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
-         {
-         $('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
-         }
-
-         // if the added block was a user template, show the template popup immediately
-         if(isUserTemplate && index)
-         {
-         $('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click();
-         }
-         }
-         },
-         {
-         text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-         click: function()
-         {
-         // close the dialog
-         $(this).dialog('close');
-         }
-         }
-         ]
-         });
-     */
 		// initialize the modal for choosing an extra
 		if($('#addBlock').length > 0)
 		{
 			$('#addBlockSubmit').unbind('click').on('click', function (e) {
 				e.preventDefault();
+				// fetch the selected extra type
+				var selectedExtraType = $('#extraType').val();
 				// fetch the selected extra id
 				var selectedExtraId = $('#extraExtraId').val();
+				// is user template?
+				var isUserTemplate = (selectedExtraType == 'usertemplate');
+
+				// fetch user template id
+				if (isUserTemplate) {
+					selectedExtraId = $('#userTemplate').val();
+				}
 
 				// add the extra
-				var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
+				var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType);
 
 				// add a block = template is no longer original
 				jsBackend.pages.template.original = false;
 
 				// close dialog
-				$('#addBlock').modal('hide');
+				$('#addBlock').off('hidden.bs.modal').on('hidden.bs.modal', function() {
+                    // if the added block was a user template, show the template popup immediately
+                    if (isUserTemplate && index) {
+                        $('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click();
+                    }
+                }).modal('hide');
 
-				// if the added block was an editor, show the editor immediately
-				if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
-				{
-					$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
-				}
+                // if the added block was an editor, show the editor immediately
+                if (!isUserTemplate && index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {
+                    $('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
+                }
 			});
 
 			$('#addBlock').modal('show');
@@ -552,102 +506,71 @@ jsBackend.pages.extras =
 		// placeholder for block node that will be moved by the jQuery dialog
 		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
 
-		$('#addUserTemplate').dialog(
-		{
-			closeOnEscape: false,
-			draggable: false,
-			resizable: false,
-			modal: true,
-			width: 700,
-			title: utils.string.ucfirst(jsBackend.locale.lbl('UserTemplate')),
-			position: 'center',
-			buttons:
-			[
+		var templateUrl, sourceHTML;
+
+		// if there already was content, use this.
+		if (previousContent !== '') {
+			$('#userTemplateHiddenPlaceholder').html(previousContent);
+
+			jsBackend.pages.extras.buildUserTemplateForm(
+				$('#userTemplateHiddenPlaceholder'),
+				$('#userTemplatePlaceholder')
+			);
+		} else {
+			// if there was no content yet, take the default content
+			templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
+
+			$.ajax({
+				url: templateUrl,
+				dataType: 'html',
+				success: function(data)
 				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-					click: function()
-					{
-						jsBackend.pages.extras.saveUserTemplateForm(
-							$('#userTemplateHiddenPlaceholder'),
-							$('#userTemplatePlaceholder')
-						);
-
-						// grab content
-						var content = $('#userTemplateHiddenPlaceholder').html();
-
-						//save content
-						jsBackend.pages.extras.setContent(index, content);
-
-						// edit content = template is no longer original
-						jsBackend.pages.template.original = false;
-
-						// close dialog
-						$(this).dialog('close');
-					}
-				},
-				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-					click: function()
-					{
-						// close the dialog
-						$(this).dialog('close');
-					}
-				}
-			],
-			// jQuery's dialog is so nice to move this node to display it well, but does not put it back where it belonged
-			close: function(e, ui)
-			{
-				// destroy dialog (to get rid of html order problems)
-				$(this).dialog('destroy');
-
-				// find block placeholder
-				var blockPlaceholder = $('#blockPlaceholder');
-
-				// move node back to the original position
-				$(this).insertBefore(blockPlaceholder);
-
-				// remove placeholder
-				blockPlaceholder.remove();
-
-				// the ajax file uploader inserts an input field in the body, remove it
-				$('body > div > input[name="file"]').parent().remove();
-			},
-			// Open dialog
-			open: function()
-			{
-				var templateUrl, sourceHTML;
-
-				// if there already was content, use this.
-				if (previousContent !== '') {
-					$('#userTemplateHiddenPlaceholder').html(previousContent);
+					$('#userTemplateHiddenPlaceholder').html(data);
 
 					jsBackend.pages.extras.buildUserTemplateForm(
 						$('#userTemplateHiddenPlaceholder'),
 						$('#userTemplatePlaceholder')
 					);
-				} else {
-					// if there was no content yet, take the default content
-					templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
-
-					$.ajax({
-						url: templateUrl,
-						dataType: 'html',
-						success: function(data)
-						{
-							$('#userTemplateHiddenPlaceholder').html(data);
-
-							jsBackend.pages.extras.buildUserTemplateForm(
-								$('#userTemplateHiddenPlaceholder'),
-								$('#userTemplatePlaceholder')
-							);
-						}
-					});
 				}
+			});
+		}
 
-				// recalculate the position, now the form is  build up
-				$("#addUserTemplate").dialog("option", "position", ['center', 'center']);
-			}
+		var $modal = $('#addUserTemplate');
+
+		$modal.find('js-submit-user-template').off('click').on('click', function(e) {
+			jsBackend.pages.extras.saveUserTemplateForm(
+				$('#userTemplateHiddenPlaceholder'),
+				$('#userTemplatePlaceholder')
+			);
+
+			// grab content
+			var content = $('#userTemplateHiddenPlaceholder').html();
+
+			//save content
+			jsBackend.pages.extras.setContent(index, content);
+
+			// edit content = template is no longer original
+			jsBackend.pages.template.original = false;
+
+			$('#addUserTemplate').modal('hide');
 		});
+		$modal.off('hidden.bs.modal').on('hidden.bs.modal', function() {
+			// destroy dialog (to get rid of html order problems)
+			$(this).dialog('destroy');
+
+			// find block placeholder
+			var blockPlaceholder = $('#blockPlaceholder');
+
+			// move node back to the original position
+			$(this).insertBefore(blockPlaceholder);
+
+			// remove placeholder
+			blockPlaceholder.remove();
+
+			// the ajax file uploader inserts an input field in the body, remove it
+			$('body > div > input[name="file"]').parent().remove();
+		});
+		$modal.modal('show');
 	},
 
 	/**
