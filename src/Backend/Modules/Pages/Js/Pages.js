@@ -551,6 +551,7 @@ jsBackend.pages.extras =
 		$modal.off('hidden.bs.modal').on('hidden.bs.modal', function() {
 			// the ajax file uploader inserts an input field in the body, remove it
 			$('body > div > input[name="file"]').parent().remove();
+			$('#userTemplatePlaceholder').html('');
 		});
 		$modal.modal('show');
 	},
