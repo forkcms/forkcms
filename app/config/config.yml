@@ -12,6 +12,25 @@ framework:
         engines: ['twig']
     session:
       handler_id: ~
+    session: ~
+
+# Doctrine Configuration
+doctrine:
+  dbal:
+    driver:   pdo_%database.driver%
+    host:     %database.host%
+    port:     %database.port%
+    dbname:   %database.name%
+    user:     %database.user%
+    password: %database.password%
+    charset: utf8mb4
+    default_table_options:
+      charset: utf8mb4
+      collate: utf8mb4_unicode_ci
+
+  orm:
+    auto_generate_proxy_classes: "%kernel.debug%"
+    auto_mapping: true
 
 # Assetic Configuration
 assetic:
