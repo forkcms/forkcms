@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Backend\DependencyInjection\BackendExtension;
 
 /**
  * The Kernel provides a proper way to load an environment and DI container.
@@ -152,6 +153,10 @@ abstract class Kernel extends BaseKernel implements KernelInterface
                 $extensions[] = $extension->getAlias();
             }
         }
+
+        $backendExtension = new BackendExtension();
+        $container->registerExtension($backendExtension);
+        $extensions[] = $backendExtension->getAlias();
 
         // ensure these extensions are implicitly loaded
         $container->getCompilerPassConfig()->setMergePass(new MergeExtensionConfigurationPass(array_keys($container->getExtensions())));
