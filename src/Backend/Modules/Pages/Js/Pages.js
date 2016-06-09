@@ -600,11 +600,26 @@ jsBackend.pages.extras =
 			url = $element.attr('href');
 			label = $element.data('ft-label');
 
-			html = '<div id="user-template-link-' + key + '" class="options">';
+			html = '<div class="panel panel-default" id="user-template-link-' + key + '">';
+
+            html += '<div class="panel-heading">';
+            html += '<h3 class="panel-title">' + label + '</h3>';
+            html += '</div>';
+
+            html += '<div class="panel-body">';
+
+            html += '<div class="form-group">';
 			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="text" class="inputText title" value="' + text + '"/>';
+			html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '"/>';
+            html += '</div>';
+
+            html += '<div class="form-group last">';
 			html += '<label>URL</label>';
-			html += '<input data-ft-url="' + label + '" type="url" class="inputText title" value="' + url + '"/>';
+			html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
+			html += '</div>';
+
+			html += '</div>';
+
 			html += '</div>';
 
 			$placeholder.append(html);
@@ -617,10 +632,21 @@ jsBackend.pages.extras =
 			url = $element.attr('href');
 			label = $element.data('ft-label');
 
-			html = '<div id="user-template-link-without-content-' + key + '" class="options">';
-			html += '<label>' + label + '</label>';
-			html += '<input data-ft-url="' + label + '" type="url" class="inputText title" value="' + url + '"/>';
-			html += '</div>';
+            html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">';
+
+            html += '<div class="panel-heading">';
+            html += '<h3 class="panel-title">' + label + '</h3>';
+            html += '</div>';
+
+            html += '<div class="panel-body">';
+
+            html += '<div class="form-group last">';
+            html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
+            html += '</div>';
+
+            html += '</div>';
+
+            html += '</div>';
 
 			$placeholder.append(html);
 		}
@@ -632,10 +658,21 @@ jsBackend.pages.extras =
 			text = $element.text();
 			label = $element.data('ft-label');
 
-			html = '<div id="user-template-text-' + key + '" class="options">';
-			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="text" class="inputText title" value="' + text + '" />';
-			html += '<div>';
+            html = '<div class="panel panel-default" id="user-template-text-' + key + '">';
+
+            html += '<div class="panel-heading">';
+            html += '<h3 class="panel-title">' + label + '</h3>';
+            html += '</div>';
+
+            html += '<div class="panel-body">';
+
+            html += '<div class="form-group last">';
+            html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />';
+            html += '</div>';
+
+            html += '</div>';
+
+            html += '</div>';
 
 			$placeholder.append(html);
 		}
@@ -646,10 +683,21 @@ jsBackend.pages.extras =
 			text = $element.text();
 			label = $element.data('ft-label');
 
-			html = '<div id="user-template-textarea-' + key + '" class="options">';
-			html += '<p class="p0"><label>' + label + '</label></p>';
-			html += '<textarea data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>';
-			html += '</div>';
+            html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">';
+
+            html += '<div class="panel-heading">';
+            html += '<h3 class="panel-title">' + label + '</h3>';
+            html += '</div>';
+
+            html += '<div class="panel-body">';
+
+            html += '<div class="form-group last">';
+            html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>';
+            html += '</div>';
+
+            html += '</div>';
+
+            html += '</div>';
 
 			$placeholder.append(html);
 		}
@@ -663,16 +711,29 @@ jsBackend.pages.extras =
 			label = $element.data('ft-label');
 			isVisible = $element.attr('style') !== 'display: none;';
 
-			html = '<div id="user-template-image-' + key + '" class="options clearfix">';
-			html += '<div class="imageHolder"><img' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" /></div>';
-			html += '<div id="ajax-upload-' + key + '">';
-			html += '<p>';
-			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
-			html += '</p>';
-			html += '</div>';
-			html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
-			html += '<div>';
+            html = '<div class="panel panel-default" id="user-template-image-' + key + '">';
+
+            html += '<div class="panel-heading">';
+            html += '<h3 class="panel-title">' + label + '</h3>';
+            html += '</div>';
+
+            html += '<div class="panel-body clearfix">';
+
+            html += '<div class="form-group thumbnail">';
+            html += '<img class="img-responsive"' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" />';
+            html += '<div class="caption" id="ajax-upload-' + key + '">';
+            html += '<label>' + label + '</label>';
+            html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
+            html += '</div>';
+            html += '</div>';
+
+            html += '<div class="checkbox">';
+            html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
+            html += '</div>';
+
+            html += '</div>';
+
+            html += '</div>';
 
 			$placeholder.append(html);
 
@@ -721,10 +782,22 @@ jsBackend.pages.extras =
 			text = $element.text();
 			label = $element.data('ft-label');
 
-			html = '<div id="user-template-editor-' + key + '" class="optionsRTE">';
-			html += '<div class="heading"><h3>' + label + '</h3></div>';
-			html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>';
-			html += '</div>';
+
+            html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">';
+
+            html += '<div class="panel-heading">';
+            html += '<h3 class="panel-title">' + label + '</h3>';
+            html += '</div>';
+
+            html += '<div class="panel-body">';
+
+            html += '<div class="form-group last">';
+            html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>';
+            html += '</div>';
+
+            html += '</div>';
+
+            html += '</div>';
 
 			$placeholder.append(html);
 
