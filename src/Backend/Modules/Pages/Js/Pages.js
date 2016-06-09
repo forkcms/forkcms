@@ -586,6 +586,164 @@ jsBackend.pages.extras =
 		});
 	},
 
+    /**
+     * Creates the html for a normal link
+     */
+    getLinkFieldHtml: function(text, url, label, key)
+    {
+        var html = '<div class="panel panel-default" id="user-template-link-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body">';
+
+        html += '<div class="form-group">';
+        html += '<label>' + label + '</label>';
+        html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '"/>';
+        html += '</div>';
+
+        html += '<div class="form-group last">';
+        html += '<label>URL</label>';
+        html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for a link without content
+     */
+    getLinkWithoutContentFieldHtml: function(url, label, key)
+    {
+        var html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body">';
+
+        html += '<div class="form-group last">';
+        html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for a text field
+     */
+    getTextFieldHtml: function(text, label, key)
+    {
+        var html = '<div class="panel panel-default" id="user-template-text-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body">';
+
+        html += '<div class="form-group last">';
+        html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for an editor
+     */
+    getTextAreaFieldHtml: function(text, label, key)
+    {
+        var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body">';
+
+        html += '<div class="form-group last">';
+        html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for an editor
+     */
+    getEditorFieldHtml: function(text, label, key)
+    {
+        var html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body">';
+
+        html += '<div class="form-group last">';
+        html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for an image field
+     */
+    getImageFieldHtml: function(src, alt, label, isVisible, key)
+    {
+        var html = '<div class="panel panel-default" id="user-template-image-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body clearfix">';
+
+        html += '<div class="form-group thumbnail">';
+        html += '<img class="img-responsive"' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" />';
+        html += '<div class="caption" id="ajax-upload-' + key + '">';
+        html += '<label>' + label + '</label>';
+        html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
+        html += '</div>';
+        html += '</div>';
+
+        html += '<div class="checkbox">';
+        html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
 	/**
 	 * Checks if an element is some kind of special field that should have form
 	 * fields and builds the html for it
@@ -594,151 +752,45 @@ jsBackend.pages.extras =
 	{
 		// replace links
 		if (($element).is('[data-ft-type="link"]')) {
-			var text, url, label, html;
+            $placeholder.append(jsBackend.pages.extras.getLinkFieldHtml($element.text(), $element.attr('href'), $element.data('ft-label'), key));
 
-			text = $element.text();
-			url = $element.attr('href');
-			label = $element.data('ft-label');
-
-			html = '<div class="panel panel-default" id="user-template-link-' + key + '">';
-
-            html += '<div class="panel-heading">';
-            html += '<h3 class="panel-title">' + label + '</h3>';
-            html += '</div>';
-
-            html += '<div class="panel-body">';
-
-            html += '<div class="form-group">';
-			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '"/>';
-            html += '</div>';
-
-            html += '<div class="form-group last">';
-			html += '<label>URL</label>';
-			html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
-			html += '</div>';
-
-			html += '</div>';
-
-			html += '</div>';
-
-			$placeholder.append(html);
-		}
+            return;
+        }
 
 		// replace links without content
 		if ($element.is('[data-ft-type="link-without-content"]')) {
-			var text, url, label, html;
+			$placeholder.append(jsBackend.pages.extras.getLinkWithoutContentFieldHtml($element.attr('href'), $element.data('ft-label'), key));
 
-			url = $element.attr('href');
-			label = $element.data('ft-label');
-
-            html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">';
-
-            html += '<div class="panel-heading">';
-            html += '<h3 class="panel-title">' + label + '</h3>';
-            html += '</div>';
-
-            html += '<div class="panel-body">';
-
-            html += '<div class="form-group last">';
-            html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
-            html += '</div>';
-
-            html += '</div>';
-
-            html += '</div>';
-
-			$placeholder.append(html);
+            return;
 		}
 
 		// replace text
 		if ($element.is('[data-ft-type="text"]')) {
-			var text, label, html;
+			$placeholder.append(jsBackend.pages.extras.getTextFieldHtml($element.text(), $element.data('ft-label'), key));
 
-			text = $element.text();
-			label = $element.data('ft-label');
-
-            html = '<div class="panel panel-default" id="user-template-text-' + key + '">';
-
-            html += '<div class="panel-heading">';
-            html += '<h3 class="panel-title">' + label + '</h3>';
-            html += '</div>';
-
-            html += '<div class="panel-body">';
-
-            html += '<div class="form-group last">';
-            html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />';
-            html += '</div>';
-
-            html += '</div>';
-
-            html += '</div>';
-
-			$placeholder.append(html);
+            return;
 		}
 
 		if ($element.is('[data-ft-type="textarea"]')) {
-			var text, label, html;
+			$placeholder.append(jsBackend.pages.extras.getTextAreaFieldHtml($element.text(), $element.data('ft-label'), key));
 
-			text = $element.text();
-			label = $element.data('ft-label');
-
-            html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">';
-
-            html += '<div class="panel-heading">';
-            html += '<h3 class="panel-title">' + label + '</h3>';
-            html += '</div>';
-
-            html += '<div class="panel-body">';
-
-            html += '<div class="form-group last">';
-            html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>';
-            html += '</div>';
-
-            html += '</div>';
-
-            html += '</div>';
-
-			$placeholder.append(html);
+            return;
 		}
 
 		// replace image
 		if ($element.is('[data-ft-type="image"]')) {
-			var src, alt, label, html, isVisible;
-
-			src = $element.attr('src');
-			alt = $element.attr('alt');
-			label = $element.data('ft-label');
-			isVisible = $element.attr('style') !== 'display: none;';
-
-            html = '<div class="panel panel-default" id="user-template-image-' + key + '">';
-
-            html += '<div class="panel-heading">';
-            html += '<h3 class="panel-title">' + label + '</h3>';
-            html += '</div>';
-
-            html += '<div class="panel-body clearfix">';
-
-            html += '<div class="form-group thumbnail">';
-            html += '<img class="img-responsive"' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" />';
-            html += '<div class="caption" id="ajax-upload-' + key + '">';
-            html += '<label>' + label + '</label>';
-            html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
-            html += '</div>';
-            html += '</div>';
-
-            html += '<div class="checkbox">';
-            html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
-            html += '</div>';
-
-            html += '</div>';
-
-            html += '</div>';
-
-			$placeholder.append(html);
+            $placeholder.append(
+                jsBackend.pages.extras.getImageFieldHtml(
+                    $element.attr('src'),
+                    $element.attr('alt'),
+                    $element.data('ft-label'),
+                    $element.attr('style') !== 'display: none;',
+                    key
+                )
+            );
 
 			// attach an ajax uploader to the field
-			var uploader = new ss.SimpleUpload({
+			new ss.SimpleUpload({
 				button: 'ajax-upload-' + key,
 				url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
 				name: 'file',
@@ -773,33 +825,13 @@ jsBackend.pages.extras =
 			$('#user-template-image-' + key + ' input[type=checkbox]').on('click', function(e) {
 				$('#user-template-image-' + key + ' img').toggle($(this).is(':checked'));
 			});
+
+            return;
 		}
 
 		// replace editor
 		if ($element.is('[data-ft-type="editor"]')) {
-			var text, label, html;
-
-			text = $element.text();
-			label = $element.data('ft-label');
-
-
-            html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">';
-
-            html += '<div class="panel-heading">';
-            html += '<h3 class="panel-title">' + label + '</h3>';
-            html += '</div>';
-
-            html += '<div class="panel-body">';
-
-            html += '<div class="form-group last">';
-            html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>';
-            html += '</div>';
-
-            html += '</div>';
-
-            html += '</div>';
-
-			$placeholder.append(html);
+			$placeholder.append(jsBackend.pages.extras.getEditorFieldHtml($element.text(), $element.data('ft-label'), key));
 
 			// Check if an instance already exists, if so, first destroy it before we re-enable it
 			var editor = CKEDITOR.instances['user-template-cke-' + key];
@@ -809,6 +841,8 @@ jsBackend.pages.extras =
 			} else {
 				jsBackend.ckeditor.load();
 			}
+
+            return;
 		}
 	},
 
