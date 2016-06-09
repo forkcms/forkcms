@@ -171,7 +171,7 @@ jsBackend.pages.extras =
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="btn-group buttonHolder">' +
 								'<a href="#" class="btn btn-default btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
-                '<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'btn btn-primary btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
+				'<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'btn btn-primary btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
 								'<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="fa fa-trash-o"></span></a>' +
 							'</div>' +
 						'</div>';
@@ -212,9 +212,6 @@ jsBackend.pages.extras =
 
 		// save unaltered content
 		var previousContent = $('#blockHtml' + index).val();
-
-		// placeholder for block node that will be moved by the jQuery dialog
-		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
 
 		// show dialog
 		$('#blockHtmlSubmit').unbind('click').on('click', function(e) {
@@ -473,16 +470,16 @@ jsBackend.pages.extras =
 
 				// close dialog
 				$('#addBlock').off('hidden.bs.modal').on('hidden.bs.modal', function() {
-                    // if the added block was a user template, show the template popup immediately
-                    if (isUserTemplate && index) {
-                        $('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click();
-                    }
-                }).modal('hide');
+					// if the added block was a user template, show the template popup immediately
+					if (isUserTemplate && index) {
+						$('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click();
+					}
+				}).modal('hide');
 
-                // if the added block was an editor, show the editor immediately
-                if (!isUserTemplate && index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {
-                    $('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
-                }
+				// if the added block was an editor, show the editor immediately
+				if (!isUserTemplate && index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {
+					$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
+				}
 			});
 
 			$('#addBlock').modal('show');
@@ -502,9 +499,6 @@ jsBackend.pages.extras =
 
 		// fetch the current content
 		var previousContent = $('#blockHtml' + index).val();
-
-		// placeholder for block node that will be moved by the jQuery dialog
-		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
 
 		var templateUrl, sourceHTML;
 
@@ -537,7 +531,7 @@ jsBackend.pages.extras =
 
 		var $modal = $('#addUserTemplate');
 
-		$modal.find('js-submit-user-template').off('click').on('click', function(e) {
+		$modal.find('.js-submit-user-template').off('click').on('click', function(e) {
 			jsBackend.pages.extras.saveUserTemplateForm(
 				$('#userTemplateHiddenPlaceholder'),
 				$('#userTemplatePlaceholder')
@@ -555,18 +549,6 @@ jsBackend.pages.extras =
 			$('#addUserTemplate').modal('hide');
 		});
 		$modal.off('hidden.bs.modal').on('hidden.bs.modal', function() {
-			// destroy dialog (to get rid of html order problems)
-			$(this).dialog('destroy');
-
-			// find block placeholder
-			var blockPlaceholder = $('#blockPlaceholder');
-
-			// move node back to the original position
-			$(this).insertBefore(blockPlaceholder);
-
-			// remove placeholder
-			blockPlaceholder.remove();
-
 			// the ajax file uploader inserts an input field in the body, remove it
 			$('body > div > input[name="file"]').parent().remove();
 		});
@@ -577,7 +559,7 @@ jsBackend.pages.extras =
 	 * Builds a form containing all fields that should be replaced in the
 	 * hidden placeholder
 	 */
-    buildUserTemplateForm: function($hiddenPlaceholder, $placeholder)
+	buildUserTemplateForm: function($hiddenPlaceholder, $placeholder)
 	{
 		$placeholder.html('');
 
@@ -586,208 +568,208 @@ jsBackend.pages.extras =
 		});
 	},
 
-    /**
-     * Creates the html for a normal link
-     */
-    getLinkFieldHtml: function(text, url, label, key)
-    {
-        var html = '<div class="panel panel-default" id="user-template-link-' + key + '">';
+	/**
+	 * Creates the html for a normal link
+	 */
+	getLinkFieldHtml: function(text, url, label, key)
+	{
+		var html = '<div class="panel panel-default" id="user-template-link-' + key + '">';
 
-        html += '<div class="panel-heading">';
-        html += '<h3 class="panel-title">' + label + '</h3>';
-        html += '</div>';
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
 
-        html += '<div class="panel-body">';
+		html += '<div class="panel-body">';
 
-        html += '<div class="form-group">';
-        html += '<label>' + label + '</label>';
-        html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '"/>';
-        html += '</div>';
+		html += '<div class="form-group">';
+		html += '<label>' + label + '</label>';
+		html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '"/>';
+		html += '</div>';
 
-        html += '<div class="form-group last">';
-        html += '<label>URL</label>';
-        html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
-        html += '</div>';
+		html += '<div class="form-group last">';
+		html += '<label>URL</label>';
+		html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        return html;
-    },
+		return html;
+	},
 
-    /**
-     * Creates the html for a link without content
-     */
-    getLinkWithoutContentFieldHtml: function(url, label, key)
-    {
-        var html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">';
+	/**
+	 * Creates the html for a link without content
+	 */
+	getLinkWithoutContentFieldHtml: function(url, label, key)
+	{
+		var html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">';
 
-        html += '<div class="panel-heading">';
-        html += '<h3 class="panel-title">' + label + '</h3>';
-        html += '</div>';
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
 
-        html += '<div class="panel-body">';
+		html += '<div class="panel-body">';
 
-        html += '<div class="form-group last">';
-        html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
-        html += '</div>';
+		html += '<div class="form-group last">';
+		html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        return html;
-    },
+		return html;
+	},
 
-    /**
-     * Creates the html for a text field
-     */
-    getTextFieldHtml: function(text, label, key)
-    {
-        var html = '<div class="panel panel-default" id="user-template-text-' + key + '">';
+	/**
+	 * Creates the html for a text field
+	 */
+	getTextFieldHtml: function(text, label, key)
+	{
+		var html = '<div class="panel panel-default" id="user-template-text-' + key + '">';
 
-        html += '<div class="panel-heading">';
-        html += '<h3 class="panel-title">' + label + '</h3>';
-        html += '</div>';
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
 
-        html += '<div class="panel-body">';
+		html += '<div class="panel-body">';
 
-        html += '<div class="form-group last">';
-        html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />';
-        html += '</div>';
+		html += '<div class="form-group last">';
+		html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        return html;
-    },
+		return html;
+	},
 
-    /**
-     * Creates the html for an editor
-     */
-    getTextAreaFieldHtml: function(text, label, key)
-    {
-        var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">';
+	/**
+	 * Creates the html for an editor
+	 */
+	getTextAreaFieldHtml: function(text, label, key)
+	{
+		var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">';
 
-        html += '<div class="panel-heading">';
-        html += '<h3 class="panel-title">' + label + '</h3>';
-        html += '</div>';
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
 
-        html += '<div class="panel-body">';
+		html += '<div class="panel-body">';
 
-        html += '<div class="form-group last">';
-        html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>';
-        html += '</div>';
+		html += '<div class="form-group last">';
+		html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        return html;
-    },
+		return html;
+	},
 
-    /**
-     * Creates the html for an editor
-     */
-    getEditorFieldHtml: function(text, label, key)
-    {
-        var html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">';
+	/**
+	 * Creates the html for an editor
+	 */
+	getEditorFieldHtml: function(text, label, key)
+	{
+		var html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">';
 
-        html += '<div class="panel-heading">';
-        html += '<h3 class="panel-title">' + label + '</h3>';
-        html += '</div>';
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
 
-        html += '<div class="panel-body">';
+		html += '<div class="panel-body">';
 
-        html += '<div class="form-group last">';
-        html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>';
-        html += '</div>';
+		html += '<div class="form-group last">';
+		html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        return html;
-    },
+		return html;
+	},
 
-    /**
-     * Creates the html for an image field
-     */
-    getImageFieldHtml: function(src, alt, label, isVisible, key)
-    {
-        var html = '<div class="panel panel-default" id="user-template-image-' + key + '">';
+	/**
+	 * Creates the html for an image field
+	 */
+	getImageFieldHtml: function(src, alt, label, isVisible, key)
+	{
+		var html = '<div class="panel panel-default" id="user-template-image-' + key + '">';
 
-        html += '<div class="panel-heading">';
-        html += '<h3 class="panel-title">' + label + '</h3>';
-        html += '</div>';
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
 
-        html += '<div class="panel-body clearfix">';
+		html += '<div class="panel-body clearfix">';
 
-        html += '<div class="form-group thumbnail">';
-        html += '<img class="img-responsive"' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" />';
-        html += '<div class="caption" id="ajax-upload-' + key + '">';
-        html += '<label>' + label + '</label>';
-        html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
-        html += '</div>';
-        html += '</div>';
+		html += '<div class="form-group thumbnail">';
+		html += '<img class="img-responsive"' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" />';
+		html += '<div class="caption" id="ajax-upload-' + key + '">';
+		html += '<label>' + label + '</label>';
+		html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
+		html += '</div>';
+		html += '</div>';
 
-        html += '<div class="checkbox">';
-        html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
-        html += '</div>';
+		html += '<div class="checkbox">';
+		html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        html += '</div>';
+		html += '</div>';
 
-        return html;
-    },
+		return html;
+	},
 
 	/**
 	 * Checks if an element is some kind of special field that should have form
 	 * fields and builds the html for it
 	 */
-    addCustomFieldInPlaceholderFor: function($element, key, $placeholder)
+	addCustomFieldInPlaceholderFor: function($element, key, $placeholder)
 	{
 		// replace links
 		if (($element).is('[data-ft-type="link"]')) {
-            $placeholder.append(jsBackend.pages.extras.getLinkFieldHtml($element.text(), $element.attr('href'), $element.data('ft-label'), key));
+			$placeholder.append(jsBackend.pages.extras.getLinkFieldHtml($element.text(), $element.attr('href'), $element.data('ft-label'), key));
 
-            return;
-        }
+			return;
+		}
 
 		// replace links without content
 		if ($element.is('[data-ft-type="link-without-content"]')) {
 			$placeholder.append(jsBackend.pages.extras.getLinkWithoutContentFieldHtml($element.attr('href'), $element.data('ft-label'), key));
 
-            return;
+			return;
 		}
 
 		// replace text
 		if ($element.is('[data-ft-type="text"]')) {
 			$placeholder.append(jsBackend.pages.extras.getTextFieldHtml($element.text(), $element.data('ft-label'), key));
 
-            return;
+			return;
 		}
 
 		if ($element.is('[data-ft-type="textarea"]')) {
 			$placeholder.append(jsBackend.pages.extras.getTextAreaFieldHtml($element.text(), $element.data('ft-label'), key));
 
-            return;
+			return;
 		}
 
 		// replace image
 		if ($element.is('[data-ft-type="image"]')) {
-            $placeholder.append(
-                jsBackend.pages.extras.getImageFieldHtml(
-                    $element.attr('src'),
-                    $element.attr('alt'),
-                    $element.data('ft-label'),
-                    $element.attr('style') !== 'display: none;',
-                    key
-                )
-            );
+			$placeholder.append(
+				jsBackend.pages.extras.getImageFieldHtml(
+					$element.attr('src'),
+					$element.attr('alt'),
+					$element.data('ft-label'),
+					$element.attr('style') !== 'display: none;',
+					key
+				)
+			);
 
 			// attach an ajax uploader to the field
 			new ss.SimpleUpload({
@@ -826,23 +808,16 @@ jsBackend.pages.extras =
 				$('#user-template-image-' + key + ' img').toggle($(this).is(':checked'));
 			});
 
-            return;
+			return;
 		}
 
 		// replace editor
 		if ($element.is('[data-ft-type="editor"]')) {
-			$placeholder.append(jsBackend.pages.extras.getEditorFieldHtml($element.text(), $element.data('ft-label'), key));
+			$placeholder.append(jsBackend.pages.extras.getEditorFieldHtml($element.html(), $element.data('ft-label'), key));
 
-			// Check if an instance already exists, if so, first destroy it before we re-enable it
-			var editor = CKEDITOR.instances['user-template-cke-' + key];
-			if (editor) {
-				editor.destroy(true);
-				jsBackend.ckeditor.load();
-			} else {
-				jsBackend.ckeditor.load();
-			}
+			jsBackend.ckeditor.load();
 
-            return;
+			return;
 		}
 	},
 
@@ -850,7 +825,7 @@ jsBackend.pages.extras =
 	 * Takes all the data out of the user template form and injects it again in
 	 * the original template html
 	 */
-    saveUserTemplateForm: function($hiddenPlaceholder, $placeholder)
+	saveUserTemplateForm: function($hiddenPlaceholder, $placeholder)
 	{
 		$hiddenPlaceholder.find('*').each(function(key) {
 			jsBackend.pages.extras.saveCustomField($(this), key, $placeholder);
@@ -860,34 +835,42 @@ jsBackend.pages.extras =
 	saveCustomField: function($element, key, $placeholder)
 	{
 		if ($element.is('[data-ft-type="link"]')) {
-			$labelField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-label]');
-			$urlField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-url]');
+			var $labelField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-label]');
+			var $urlField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-url]');
 
 			$element.attr('href', $urlField.val());
 			$element.text($labelField.val());
+
+			return;
 		}
 
 		if ($element.is('[data-ft-type="link-without-content"]')) {
-			$urlField = $placeholder.find('#user-template-link-without-content-' + key + ' input[data-ft-url]');
+			var $urlField = $placeholder.find('#user-template-link-without-content-' + key + ' input[data-ft-url]');
 
 			$element.attr('href', $urlField.val());
+
+			return;
 		}
 
 		if ($element.is('[data-ft-type="text"]')) {
-			$labelField = $placeholder.find('#user-template-text-' + key + ' input[data-ft-label]');
+			var $labelField = $placeholder.find('#user-template-text-' + key + ' input[data-ft-label]');
 
 			$element.text($labelField.val());
+
+			return;
 		}
 
 		if ($element.is('[data-ft-type="textarea"]')) {
-			$textarea = $placeholder.find('#user-template-textarea-' + key + ' textarea[data-ft-label]');
+			var $textarea = $placeholder.find('#user-template-textarea-' + key + ' textarea[data-ft-label]');
 
 			$element.text($textarea.val());
+
+			return;
 		}
 
 		if ($element.is('[data-ft-type="image"]')) {
-			$img = $placeholder.find('#user-template-image-' + key + ' img');
-			$visible = $placeholder.find('#user-template-image-' + key + ' input[type=checkbox]');
+			var $img = $placeholder.find('#user-template-image-' + key + ' img');
+			var $visible = $placeholder.find('#user-template-image-' + key + ' input[type=checkbox]');
 
 			$element.attr('src', $img.attr('src'));
 			if ($visible.is(':checked')) {
@@ -895,12 +878,22 @@ jsBackend.pages.extras =
 			} else {
 				$element.attr('style', 'display: none;');
 			}
+
+			return;
 		}
 
 		if ($element.is('[data-ft-type="editor"]')) {
-			$textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]');
+			var $textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]');
 
 			$element.html($textarea.val());
+
+			// destroy the editor
+			var editor = CKEDITOR.instances['user-template-cke-' + key];
+			if (editor) {
+				editor.destroy(true);
+			}
+
+			return;
 		}
 	},
 
