@@ -171,7 +171,7 @@ jsBackend.pages.extras =
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="btn-group buttonHolder">' +
 								'<a href="#" class="btn btn-default btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
-                '<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'btn btn-primary btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
+				'<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'btn btn-primary btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
 								'<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="fa fa-trash-o"></span></a>' +
 							'</div>' +
 						'</div>';
@@ -212,9 +212,6 @@ jsBackend.pages.extras =
 
 		// save unaltered content
 		var previousContent = $('#blockHtml' + index).val();
-
-		// placeholder for block node that will be moved by the jQuery dialog
-		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
 
 		// show dialog
 		$('#blockHtmlSubmit').unbind('click').on('click', function(e) {
@@ -447,86 +444,40 @@ jsBackend.pages.extras =
 
 		// populate the modules
 		jsBackend.pages.extras.populateExtraModules();
-        
-    // @TODO Fix the editor templates
-        /*
-         $('#addBlock').dialog(
-         {
-         draggable: false,
-         resizable: false,
-         modal: true,
-         width: 500,
-         buttons:
-         [
-         {
-         text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-         click: function()
-         {
-         // fetch the selected extra type
-         var selectedExtraType = $('#extraType').val();
-         // fetch the selected extra id
-         var selectedExtraId = $('#extraExtraId').val();
-         // is user template?
-         var isUserTemplate = (selectedExtraType == 'usertemplate');
-         // fetch user template id
-         if (isUserTemplate)
-         {
-         selectedExtraId = $('#userTemplate').val();
-         }
 
-         // add the extra
-         var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType);
-
-         // add a block = template is no longer original
-         jsBackend.pages.template.original = false;
-
-         // close dialog
-         $(this).dialog('close');
-
-         // if the added block was an editor, show the editor immediately
-         if(!isUserTemplate && index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
-         {
-         $('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
-         }
-
-         // if the added block was a user template, show the template popup immediately
-         if(isUserTemplate && index)
-         {
-         $('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click();
-         }
-         }
-         },
-         {
-         text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-         click: function()
-         {
-         // close the dialog
-         $(this).dialog('close');
-         }
-         }
-         ]
-         });
-     */
 		// initialize the modal for choosing an extra
 		if($('#addBlock').length > 0)
 		{
 			$('#addBlockSubmit').unbind('click').on('click', function (e) {
 				e.preventDefault();
+				// fetch the selected extra type
+				var selectedExtraType = $('#extraType').val();
 				// fetch the selected extra id
 				var selectedExtraId = $('#extraExtraId').val();
+				// is user template?
+				var isUserTemplate = (selectedExtraType == 'usertemplate');
+
+				// fetch user template id
+				if (isUserTemplate) {
+					selectedExtraId = $('#userTemplate').val();
+				}
 
 				// add the extra
-				var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
+				var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType);
 
 				// add a block = template is no longer original
 				jsBackend.pages.template.original = false;
 
 				// close dialog
-				$('#addBlock').modal('hide');
+				$('#addBlock').off('hidden.bs.modal').on('hidden.bs.modal', function() {
+					// if the added block was a user template, show the template popup immediately
+					if (isUserTemplate && index) {
+						$('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click();
+					}
+				}).modal('hide');
 
 				// if the added block was an editor, show the editor immediately
-				if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
-				{
+				if (!isUserTemplate && index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {
 					$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
 				}
 			});
@@ -549,112 +500,67 @@ jsBackend.pages.extras =
 		// fetch the current content
 		var previousContent = $('#blockHtml' + index).val();
 
-		// placeholder for block node that will be moved by the jQuery dialog
-		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
+		var templateUrl, sourceHTML;
 
-		$('#addUserTemplate').dialog(
-		{
-			closeOnEscape: false,
-			draggable: false,
-			resizable: false,
-			modal: true,
-			width: 700,
-			title: utils.string.ucfirst(jsBackend.locale.lbl('UserTemplate')),
-			position: 'center',
-			buttons:
-			[
+		// if there already was content, use this.
+		if (previousContent !== '') {
+			$('#userTemplateHiddenPlaceholder').html(previousContent);
+
+			jsBackend.pages.extras.buildUserTemplateForm(
+				$('#userTemplateHiddenPlaceholder'),
+				$('#userTemplatePlaceholder')
+			);
+		} else {
+			// if there was no content yet, take the default content
+			templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
+
+			$.ajax({
+				url: templateUrl,
+				dataType: 'html',
+				success: function(data)
 				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-					click: function()
-					{
-						jsBackend.pages.extras.saveUserTemplateForm(
-							$('#userTemplateHiddenPlaceholder'),
-							$('#userTemplatePlaceholder')
-						);
-
-						// grab content
-						var content = $('#userTemplateHiddenPlaceholder').html();
-
-						//save content
-						jsBackend.pages.extras.setContent(index, content);
-
-						// edit content = template is no longer original
-						jsBackend.pages.template.original = false;
-
-						// close dialog
-						$(this).dialog('close');
-					}
-				},
-				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-					click: function()
-					{
-						// close the dialog
-						$(this).dialog('close');
-					}
-				}
-			],
-			// jQuery's dialog is so nice to move this node to display it well, but does not put it back where it belonged
-			close: function(e, ui)
-			{
-				// destroy dialog (to get rid of html order problems)
-				$(this).dialog('destroy');
-
-				// find block placeholder
-				var blockPlaceholder = $('#blockPlaceholder');
-
-				// move node back to the original position
-				$(this).insertBefore(blockPlaceholder);
-
-				// remove placeholder
-				blockPlaceholder.remove();
-
-				// the ajax file uploader inserts an input field in the body, remove it
-				$('body > div > input[name="file"]').parent().remove();
-			},
-			// Open dialog
-			open: function()
-			{
-				var templateUrl, sourceHTML;
-
-				// if there already was content, use this.
-				if (previousContent !== '') {
-					$('#userTemplateHiddenPlaceholder').html(previousContent);
+					$('#userTemplateHiddenPlaceholder').html(data);
 
 					jsBackend.pages.extras.buildUserTemplateForm(
 						$('#userTemplateHiddenPlaceholder'),
 						$('#userTemplatePlaceholder')
 					);
-				} else {
-					// if there was no content yet, take the default content
-					templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
-
-					$.ajax({
-						url: templateUrl,
-						dataType: 'html',
-						success: function(data)
-						{
-							$('#userTemplateHiddenPlaceholder').html(data);
-
-							jsBackend.pages.extras.buildUserTemplateForm(
-								$('#userTemplateHiddenPlaceholder'),
-								$('#userTemplatePlaceholder')
-							);
-						}
-					});
 				}
+			});
+		}
 
-				// recalculate the position, now the form is  build up
-				$("#addUserTemplate").dialog("option", "position", ['center', 'center']);
-			}
+		var $modal = $('#addUserTemplate');
+
+		$modal.find('.js-submit-user-template').off('click').on('click', function(e) {
+			jsBackend.pages.extras.saveUserTemplateForm(
+				$('#userTemplateHiddenPlaceholder'),
+				$('#userTemplatePlaceholder')
+			);
+
+			// grab content
+			var content = $('#userTemplateHiddenPlaceholder').html();
+
+			//save content
+			jsBackend.pages.extras.setContent(index, content);
+
+			// edit content = template is no longer original
+			jsBackend.pages.template.original = false;
+
+			$('#addUserTemplate').modal('hide');
 		});
+		$modal.off('hidden.bs.modal').on('hidden.bs.modal', function() {
+			// the ajax file uploader inserts an input field in the body, remove it
+			$('body > div > input[name="file"]').parent().remove();
+			$('#userTemplatePlaceholder').html('');
+		});
+		$modal.modal('show');
 	},
 
 	/**
 	 * Builds a form containing all fields that should be replaced in the
 	 * hidden placeholder
 	 */
-    buildUserTemplateForm: function($hiddenPlaceholder, $placeholder)
+	buildUserTemplateForm: function($hiddenPlaceholder, $placeholder)
 	{
 		$placeholder.html('');
 
@@ -664,97 +570,210 @@ jsBackend.pages.extras =
 	},
 
 	/**
+	 * Creates the html for a normal link
+	 */
+	getLinkFieldHtml: function(text, url, label, key)
+	{
+		var html = '<div class="panel panel-default" id="user-template-link-' + key + '">';
+
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
+
+		html += '<div class="panel-body">';
+
+		html += '<div class="form-group">';
+		html += '<label>' + label + '</label>';
+		html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '"/>';
+		html += '</div>';
+
+		html += '<div class="form-group last">';
+		html += '<label>URL</label>';
+		html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
+		html += '</div>';
+
+		html += '</div>';
+
+		html += '</div>';
+
+		return html;
+	},
+
+	/**
+	 * Creates the html for a link without content
+	 */
+	getLinkWithoutContentFieldHtml: function(url, label, key)
+	{
+		var html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">';
+
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
+
+		html += '<div class="panel-body">';
+
+		html += '<div class="form-group last">';
+		html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
+		html += '</div>';
+
+		html += '</div>';
+
+		html += '</div>';
+
+		return html;
+	},
+
+	/**
+	 * Creates the html for a text field
+	 */
+	getTextFieldHtml: function(text, label, key)
+	{
+		var html = '<div class="panel panel-default" id="user-template-text-' + key + '">';
+
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
+
+		html += '<div class="panel-body">';
+
+		html += '<div class="form-group last">';
+		html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />';
+		html += '</div>';
+
+		html += '</div>';
+
+		html += '</div>';
+
+		return html;
+	},
+
+	/**
+	 * Creates the html for an editor
+	 */
+	getTextAreaFieldHtml: function(text, label, key)
+	{
+		var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">';
+
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
+
+		html += '<div class="panel-body">';
+
+		html += '<div class="form-group last">';
+		html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>';
+		html += '</div>';
+
+		html += '</div>';
+
+		html += '</div>';
+
+		return html;
+	},
+
+	/**
+	 * Creates the html for an editor
+	 */
+	getEditorFieldHtml: function(text, label, key)
+	{
+		var html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">';
+
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
+
+		html += '<div class="panel-body">';
+
+		html += '<div class="form-group last">';
+		html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>';
+		html += '</div>';
+
+		html += '</div>';
+
+		html += '</div>';
+
+		return html;
+	},
+
+	/**
+	 * Creates the html for an image field
+	 */
+	getImageFieldHtml: function(src, alt, label, isVisible, key)
+	{
+		var html = '<div class="panel panel-default" id="user-template-image-' + key + '">';
+
+		html += '<div class="panel-heading">';
+		html += '<h3 class="panel-title">' + label + '</h3>';
+		html += '</div>';
+
+		html += '<div class="panel-body clearfix">';
+
+		html += '<div class="form-group thumbnail">';
+		html += '<img class="img-responsive"' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" />';
+		html += '<div class="caption" id="ajax-upload-' + key + '">';
+		html += '<label>' + label + '</label>';
+		html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
+		html += '</div>';
+		html += '</div>';
+
+		html += '<div class="checkbox">';
+		html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
+		html += '</div>';
+
+		html += '</div>';
+
+		html += '</div>';
+
+		return html;
+	},
+
+	/**
 	 * Checks if an element is some kind of special field that should have form
 	 * fields and builds the html for it
 	 */
-    addCustomFieldInPlaceholderFor: function($element, key, $placeholder)
+	addCustomFieldInPlaceholderFor: function($element, key, $placeholder)
 	{
 		// replace links
 		if (($element).is('[data-ft-type="link"]')) {
-			var text, url, label, html;
+			$placeholder.append(jsBackend.pages.extras.getLinkFieldHtml($element.text(), $element.attr('href'), $element.data('ft-label'), key));
 
-			text = $element.text();
-			url = $element.attr('href');
-			label = $element.data('ft-label');
-
-			html = '<div id="user-template-link-' + key + '" class="options">';
-			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="text" class="inputText title" value="' + text + '"/>';
-			html += '<label>URL</label>';
-			html += '<input data-ft-url="' + label + '" type="url" class="inputText title" value="' + url + '"/>';
-			html += '</div>';
-
-			$placeholder.append(html);
+			return;
 		}
 
 		// replace links without content
 		if ($element.is('[data-ft-type="link-without-content"]')) {
-			var text, url, label, html;
+			$placeholder.append(jsBackend.pages.extras.getLinkWithoutContentFieldHtml($element.attr('href'), $element.data('ft-label'), key));
 
-			url = $element.attr('href');
-			label = $element.data('ft-label');
-
-			html = '<div id="user-template-link-without-content-' + key + '" class="options">';
-			html += '<label>' + label + '</label>';
-			html += '<input data-ft-url="' + label + '" type="url" class="inputText title" value="' + url + '"/>';
-			html += '</div>';
-
-			$placeholder.append(html);
+			return;
 		}
 
 		// replace text
 		if ($element.is('[data-ft-type="text"]')) {
-			var text, label, html;
+			$placeholder.append(jsBackend.pages.extras.getTextFieldHtml($element.text(), $element.data('ft-label'), key));
 
-			text = $element.text();
-			label = $element.data('ft-label');
-
-			html = '<div id="user-template-text-' + key + '" class="options">';
-			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="text" class="inputText title" value="' + text + '" />';
-			html += '<div>';
-
-			$placeholder.append(html);
+			return;
 		}
 
 		if ($element.is('[data-ft-type="textarea"]')) {
-			var text, label, html;
+			$placeholder.append(jsBackend.pages.extras.getTextAreaFieldHtml($element.text(), $element.data('ft-label'), key));
 
-			text = $element.text();
-			label = $element.data('ft-label');
-
-			html = '<div id="user-template-textarea-' + key + '" class="options">';
-			html += '<p class="p0"><label>' + label + '</label></p>';
-			html += '<textarea data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>';
-			html += '</div>';
-
-			$placeholder.append(html);
+			return;
 		}
 
 		// replace image
 		if ($element.is('[data-ft-type="image"]')) {
-			var src, alt, label, html, isVisible;
-
-			src = $element.attr('src');
-			alt = $element.attr('alt');
-			label = $element.data('ft-label');
-			isVisible = $element.attr('style') !== 'display: none;';
-
-			html = '<div id="user-template-image-' + key + '" class="options clearfix">';
-			html += '<div class="imageHolder"><img' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" /></div>';
-			html += '<div id="ajax-upload-' + key + '">';
-			html += '<p>';
-			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
-			html += '</p>';
-			html += '</div>';
-			html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
-			html += '<div>';
-
-			$placeholder.append(html);
+			$placeholder.append(
+				jsBackend.pages.extras.getImageFieldHtml(
+					$element.attr('src'),
+					$element.attr('alt'),
+					$element.data('ft-label'),
+					$element.attr('style') !== 'display: none;',
+					key
+				)
+			);
 
 			// attach an ajax uploader to the field
-			var uploader = new ss.SimpleUpload({
+			new ss.SimpleUpload({
 				button: 'ajax-upload-' + key,
 				url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
 				name: 'file',
@@ -789,30 +808,17 @@ jsBackend.pages.extras =
 			$('#user-template-image-' + key + ' input[type=checkbox]').on('click', function(e) {
 				$('#user-template-image-' + key + ' img').toggle($(this).is(':checked'));
 			});
+
+			return;
 		}
 
 		// replace editor
 		if ($element.is('[data-ft-type="editor"]')) {
-			var text, label, html;
+			$placeholder.append(jsBackend.pages.extras.getEditorFieldHtml($element.html(), $element.data('ft-label'), key));
 
-			text = $element.text();
-			label = $element.data('ft-label');
+			jsBackend.ckeditor.load();
 
-			html = '<div id="user-template-editor-' + key + '" class="optionsRTE">';
-			html += '<div class="heading"><h3>' + label + '</h3></div>';
-			html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>';
-			html += '</div>';
-
-			$placeholder.append(html);
-
-			// Check if an instance already exists, if so, first destroy it before we re-enable it
-			var editor = CKEDITOR.instances['user-template-cke-' + key];
-			if (editor) {
-				editor.destroy(true);
-				jsBackend.ckeditor.load();
-			} else {
-				jsBackend.ckeditor.load();
-			}
+			return;
 		}
 	},
 
@@ -820,7 +826,7 @@ jsBackend.pages.extras =
 	 * Takes all the data out of the user template form and injects it again in
 	 * the original template html
 	 */
-    saveUserTemplateForm: function($hiddenPlaceholder, $placeholder)
+	saveUserTemplateForm: function($hiddenPlaceholder, $placeholder)
 	{
 		$hiddenPlaceholder.find('*').each(function(key) {
 			jsBackend.pages.extras.saveCustomField($(this), key, $placeholder);
@@ -830,34 +836,42 @@ jsBackend.pages.extras =
 	saveCustomField: function($element, key, $placeholder)
 	{
 		if ($element.is('[data-ft-type="link"]')) {
-			$labelField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-label]');
-			$urlField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-url]');
+			var $labelField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-label]');
+			var $urlField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-url]');
 
 			$element.attr('href', $urlField.val());
 			$element.text($labelField.val());
+
+			return;
 		}
 
 		if ($element.is('[data-ft-type="link-without-content"]')) {
-			$urlField = $placeholder.find('#user-template-link-without-content-' + key + ' input[data-ft-url]');
+			var $urlField = $placeholder.find('#user-template-link-without-content-' + key + ' input[data-ft-url]');
 
 			$element.attr('href', $urlField.val());
+
+			return;
 		}
 
 		if ($element.is('[data-ft-type="text"]')) {
-			$labelField = $placeholder.find('#user-template-text-' + key + ' input[data-ft-label]');
+			var $labelField = $placeholder.find('#user-template-text-' + key + ' input[data-ft-label]');
 
 			$element.text($labelField.val());
+
+			return;
 		}
 
 		if ($element.is('[data-ft-type="textarea"]')) {
-			$textarea = $placeholder.find('#user-template-textarea-' + key + ' textarea[data-ft-label]');
+			var $textarea = $placeholder.find('#user-template-textarea-' + key + ' textarea[data-ft-label]');
 
 			$element.text($textarea.val());
+
+			return;
 		}
 
 		if ($element.is('[data-ft-type="image"]')) {
-			$img = $placeholder.find('#user-template-image-' + key + ' img');
-			$visible = $placeholder.find('#user-template-image-' + key + ' input[type=checkbox]');
+			var $img = $placeholder.find('#user-template-image-' + key + ' img');
+			var $visible = $placeholder.find('#user-template-image-' + key + ' input[type=checkbox]');
 
 			$element.attr('src', $img.attr('src'));
 			if ($visible.is(':checked')) {
@@ -865,12 +879,22 @@ jsBackend.pages.extras =
 			} else {
 				$element.attr('style', 'display: none;');
 			}
+
+			return;
 		}
 
 		if ($element.is('[data-ft-type="editor"]')) {
-			$textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]');
+			var $textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]');
 
 			$element.html($textarea.val());
+
+			// destroy the editor
+			var editor = CKEDITOR.instances['user-template-cke-' + key];
+			if (editor) {
+				editor.destroy(true);
+			}
+
+			return;
 		}
 	},
 
