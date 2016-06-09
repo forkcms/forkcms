@@ -331,12 +331,12 @@
             </div>
           </div>
 
-          <p id="userTemplateHolder" class="form-group"  style="display: none;">
+          <div id="userTemplateHolder" class="form-group"  style="display: none;">
             <label for="userTemplate">{{ 'lbl.WhichTemplate'|trans|capitalize }}</label>
-            <select id="userTemplate">
+            <select class="form-control" id="userTemplate">
               <option value="-1">-</option>
             </select>
-          </p>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
               <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
