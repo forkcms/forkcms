@@ -4,7 +4,6 @@
 .settings
 .*.swp
 .DS_Store
-/bower_components/*
 /app/cache/*
 /app/logs/*
 /components/*

@@ -33,12 +33,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "bower install",
             "php app/console assetic:dump .",
             "cd tools && bash ./remove_cache"
         ],
         "post-update-cmd": [
-            "bower install",
             "php app/console assetic:dump .",
             "cd tools && bash ./remove_cache"
         ]
