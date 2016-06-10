@@ -1,3 +1,23 @@
+4.0.2 (2016-06-10)
+--
+
+Bugfixes:
+
+* Core: remove duplicate swiftmailer config.
+* Core: cleanup unused use statements.
+* Core: fix some phpdocs.
+* Search: fix the livesuggest action.
+* Core: fix typo: UT8 instead of UTF8.
+* Core: remove obsolete parameters on the getContent method of templates.
+* Core: fix editorconfig for twig files.
+* Core: fix indentation in twig files.
+* Extensions: fix styling of "new themes".
+* Core: fix references to tpl files in triton's info.xml file.
+* Faq: make sure the feedback works in Safari.
+* Core: include bower components in this repository.
+* Core: take the language into account when fetching the 404 url.
+
+
 4.0.1 (2016-06-07)
 --
 
@@ -15,6 +35,7 @@ Bugfixes:
 * Core: Fix asterisk changed by # in the frontend.
 * Users: Never use the (not created) source file of avatars.
 * Core: Improve the gitignore file.
+
 
 4.0.0 (2016-05-27)
 --
@@ -36,6 +57,7 @@ Bugfixes:
 * Pages: Fixes "Notice: Undefined index: parent_id" when viewing a page revision where the page is located in the root of the pages tree.
 * Pages: Fixes "Error: Call to a member function addMetaData() on null" when viewing an existing revision page.
 * Core: BackendDataGridFunctions::showImage updated with url, with and height.
+
 
 3.9.6 (2015-12-22)
 --
