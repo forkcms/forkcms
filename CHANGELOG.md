@@ -1,7 +1,6 @@
 3.9.7 (xxxx-xx-xx)
 --
 Bugfixes:
-* Core: Adding multiple og:image:width and :height is now possible.
 * Blog: Fixed saving Blog articles as draft.
 * Core: Fix incorrect path for theme OpenGraphImage.
 * Core: Fixed when deploying, that /src/Frontend/Cache/Navigation/editor_link_list_x.js is now created if not exists.
