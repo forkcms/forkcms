@@ -653,7 +653,7 @@ class Model extends \Common\Core\Model
 
         // still no page id?
         if ($pageIdForURL === null) {
-            return self::getURL(404);
+            return self::getURL(404, $language);
         }
 
         $URL = self::getURL($pageIdForURL, $language);
