@@ -193,7 +193,7 @@ class Model extends \Common\Core\Model
             $deleteExtra = true;
 
             // get extra data
-            $extraData = $extra['data'] !== null ? (array)unserialize($extra['data']) : null;
+            $extraData = $extra['data'] !== null ? (array) unserialize($extra['data']) : null;
 
             // if we have $data parameter set and $extraData not null we should not delete such extra
             if (isset($data) && !isset($extraData)) {
