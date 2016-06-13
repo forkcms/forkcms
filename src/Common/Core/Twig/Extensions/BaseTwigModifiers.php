@@ -118,9 +118,10 @@ class BaseTwigModifiers
      * Makes this string lowercase.
      * 		syntax: {{ $string|lowercase }}.
      *
-     * @return string The string, completely lowercased.
      *
      * @param string $string The string that you want to apply this method on.
+     *
+     * @return string The string, completely lowercased.
      */
     public static function lowercase($string)
     {
@@ -255,7 +256,7 @@ class BaseTwigModifiers
             if ($closestWord) {
                 $string = mb_substr($string, 0, strrpos(substr($string, 0, $length + 1), ' '), 'UTF-8');
             } else {
-                $string = mb_substr($string, 0, $length, 'UT8');
+                $string = mb_substr($string, 0, $length, 'UTF8');
             }
 
             // add hellip

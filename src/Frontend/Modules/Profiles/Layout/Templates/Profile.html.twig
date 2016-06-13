@@ -1,8 +1,8 @@
 <aside id="userActions">
-	{% if isLoggedIn %}
-		<p>
-			<strong>{{ 'msg.WelcomeUserX'|trans|sprintf({$profileDisplayName }}})</strong>
-			<a href="{{ geturlforblock:'Profiles':'Settings' }}" title="{{ profileDisplayName }}">{{ 'lbl.ProfileSettings'|trans|capitalize }}</a>
+  {% if isLoggedIn %}
+  <p>
+    <strong>{{ 'msg.WelcomeUserX'|trans|sprintf({$profileDisplayName }}})</strong>
+    <a href="{{ geturlforblock:'Profiles':'Settings' }}" title="{{ profileDisplayName }}">{{ 'lbl.ProfileSettings'|trans|capitalize }}</a>
 			<a href="{{ geturlforblock:'Profiles':'Logout' }}">{{ 'lbl.Logout'|trans|capitalize }}</a>
 		</p>
 	{% endif %}

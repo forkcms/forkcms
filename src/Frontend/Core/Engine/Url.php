@@ -104,6 +104,7 @@ class Url extends \KernelLoader
      * Get a page specified by the given index
      *
      * @param int $index The index (0-based).
+     *
      * @return mixed
      */
     public function getPage($index)
@@ -117,7 +118,7 @@ class Url extends \KernelLoader
         }
 
         // fallback
-        return null;
+        return;
     }
 
     /**
@@ -140,6 +141,7 @@ class Url extends \KernelLoader
      * @param string $type         The return type, possible values are:
      *                             bool, boolean, int, integer, float, double, string, array.
      * @param mixed  $defaultValue The value that should be returned if the key is not available.
+     *
      * @return mixed
      */
     public function getParameter($index, $type = 'string', $defaultValue = null)
@@ -162,6 +164,7 @@ class Url extends \KernelLoader
      * Return all the parameters
      *
      * @param bool $includeGET Should the GET-parameters be included?
+     *
      * @return array
      */
     public function getParameters($includeGET = true)
@@ -186,7 +189,8 @@ class Url extends \KernelLoader
      * Check if a certain ($_GET) parameter exists
      *
      * @param  mixed   $index The index of the parameter.
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasParameter($index)
     {

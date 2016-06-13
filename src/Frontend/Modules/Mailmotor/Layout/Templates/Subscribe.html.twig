@@ -1,21 +1,25 @@
 <section id="subscribeIndex" class="mod">
-	<div class="inner">
-		<div class="bd">
-			{% if subscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>{% endif %}
-			{% if subscribeHasError %}<div class="message error"><p>{{ 'err.SubscribeFailed'|trans }}</p></div>{% endif %}
-			{% if subscribeIsSuccess %}<div class="message success"><p>{{ 'msg.SubscribeSuccess'|trans }}</p></div>{% endif %}
+  <div class="inner">
+    <div class="bd">
+      {% if subscribeHasFormError %}
+        <div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>{% endif %}
+      {% if subscribeHasError %}
+        <div class="message error"><p>{{ 'err.SubscribeFailed'|trans }}</p></div>{% endif %}
+      {% if subscribeIsSuccess %}
+        <div class="message success"><p>{{ 'msg.SubscribeSuccess'|trans }}</p></div>{% endif %}
 
-			{% if not subscribeHideForm %}
-				{% form subscribe %}
-					<p{% if txtEmailError %} class="errorArea"{% endif %}>
-						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-						{% form_field_error Email %} {% form_field Email %}
-					</p>
-					<p>
-						<input id="send" class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Send'|trans|capitalize }}" />
-					</p>
-				{% endform %}
-			{% endif %}
-		</div>
-	</div>
+      {% if not subscribeHideForm %}
+        {% form subscribe %}
+        <p{% if txtEmailError %} class="errorArea"{% endif %}>
+          <label for="email">{{ 'lbl.Email'|trans|capitalize }}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          {% form_field_error Email %} {% form_field Email %}
+        </p>
+        <p>
+          <input id="send" class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Send'|trans|capitalize }}" />
+        </p>
+        {% endform %}
+      {% endif %}
+    </div>
+  </div>
 </section>

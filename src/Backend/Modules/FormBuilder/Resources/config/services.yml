@@ -3,6 +3,7 @@ services:
         class: Frontend\Modules\FormBuilder\EventListener\FormBuilderSubmittedMailSubscriber
         arguments:
             - "@mailer"
+            - "@fork.settings"
         tags:
             - { name: kernel.event_listener, event: form.submitted, method: onFormSubmitted }
     formbuilder.submitted.notifier:

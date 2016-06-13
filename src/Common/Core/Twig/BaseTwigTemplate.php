@@ -71,6 +71,7 @@ abstract class BaseTwigTemplate extends TwigEngine
             foreach ($key as $i => $value) {
                 $this->variables[$i] = $value;
             }
+
             return;
         }
 
@@ -172,7 +173,7 @@ abstract class BaseTwigTemplate extends TwigEngine
             $twig->addGlobal('THEME', $this->forkSettings->get('Core', 'theme', 'default'));
             $twig->addGlobal(
                 'THEME_URL',
-                '/src/Backend/Themes/'.$this->forkSettings->get('Core', 'theme', 'default')
+                '/src/Frontend/Themes/'.$this->forkSettings->get('Core', 'theme', 'default')
             );
         }
 

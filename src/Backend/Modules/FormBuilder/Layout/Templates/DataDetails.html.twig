@@ -29,14 +29,14 @@
         </div>
         <div class="panel-body">
           {% if data %}
-          <table class="table">
-            {% for _itr_13 in data %}
-            <tr>
-              <th>{{ _itr_13.label }}:</th>
-              <td>{{ _itr_13.value }}</td>
-            </tr>
-            {% endfor %}
-          </table>
+            <table class="table">
+              {% for _itr_13 in data %}
+                <tr>
+                  <th>{{ _itr_13.label }}:</th>
+                  <td>{{ _itr_13.value }}</td>
+                </tr>
+              {% endfor %}
+            </table>
           {% endif %}
         </div>
       </div>
@@ -62,34 +62,34 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showFormBuilderMassDataAction %}
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-            <span class="fa fa-trash-o"></span>
-            {{ 'lbl.Delete'|trans|capitalize }}
-          </button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+              <span class="fa fa-trash-o"></span>
+              {{ 'lbl.Delete'|trans|capitalize }}
+            </button>
           {% endif %}
         </div>
       </div>
       {% if showFormBuilderMassDataAction %}
-      <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
-            </div>
-            <div class="modal-body">
-              <p>{{ 'msg.ConfirmDeleteData'|trans|capitalize }}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">
-                <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
-              </button>
-              <a href="{{ geturl('mass_data_action' ) }}&amp;action=delete&amp;form_id={{ formId }}&amp;id={{ id }}" class="btn btn-succes">
-                <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
-              </a>
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
+              </div>
+              <div class="modal-body">
+                <p>{{ 'msg.ConfirmDeleteData'|trans|capitalize }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                </button>
+                <a href="{{ geturl('mass_data_action' ) }}&amp;action=delete&amp;form_id={{ formId }}&amp;id={{ id }}" class="btn btn-succes">
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       {% endif %}
     </div>
   </div>

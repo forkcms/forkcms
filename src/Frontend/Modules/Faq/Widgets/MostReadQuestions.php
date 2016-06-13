@@ -10,7 +10,6 @@ namespace Frontend\Modules\Faq\Widgets;
  */
 
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
 /**

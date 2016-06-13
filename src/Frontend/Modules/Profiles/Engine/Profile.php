@@ -135,6 +135,7 @@ class Profile
      *
      * @param  string $name         Setting name.
      * @param  string $defaultValue Default value is used when the setting does not exist.
+     *
      * @return mixed
      */
     public function getSetting($name, $defaultValue = null)
@@ -193,7 +194,8 @@ class Profile
      * Does this user belong to the group with the given ID?
      *
      * @param  int $groupId Group id.
-     * @return boolean
+     *
+     * @return bool
      */
     public function isInGroup($groupId)
     {

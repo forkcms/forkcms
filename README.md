@@ -8,7 +8,7 @@
 
 ## Installation
 
-1. Make sure your have [bower](http://bower.io/) and [composer](https://getcomposer.org/) installed.
+1. Make sure your have [composer](https://getcomposer.org/) installed.
 2. Run `composer create-project forkcms/forkcms .` in your document root.
 3. Browse to your website
 4. Follow the steps on-screen

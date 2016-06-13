@@ -8,62 +8,62 @@
 
 {% block content %}
   {% form edit %}
-    <div class="row fork-module-content">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="name" class="control-label">
-            {{ 'lbl.ReferenceCode'|trans|capitalize }}
-            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
-          </label>
-          <p class="help-block">{{ 'msg.HelpAddName'|trans }}</p>
-          {% form_field_error name %} {% form_field name %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name" class="control-label">
+          {{ 'lbl.ReferenceCode'|trans|capitalize }}
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+        </label>
+        <p class="help-block">{{ 'msg.HelpAddName'|trans }}</p>
+        {% form_field_error name %} {% form_field name %}
+      </div>
+      <div class="form-group">
+        <label for="value" class="control-label">
+          {{ 'lbl.Translation'|trans|capitalize }}
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+        </label>
+        <p class="help-block">{{ 'msg.HelpAddValue'|trans }}</p>
+        {% form_field_error value %} {% form_field value %}
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="language" class="control-label">{{ 'lbl.Language'|trans|capitalize }}</label>
+            {% form_field_error language %} {% form_field language %}
+          </div>
         </div>
-        <div class="form-group">
-          <label for="value" class="control-label">
-            {{ 'lbl.Translation'|trans|capitalize }}
-            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
-          </label>
-          <p class="help-block">{{ 'msg.HelpAddValue'|trans }}</p>
-          {% form_field_error value %} {% form_field value %}
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="application" class="control-label">{{ 'lbl.Application'|trans|capitalize }}</label>
+            {% form_field_error application %} {% form_field application %}
+          </div>
         </div>
-        <div class="row">
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="language" class="control-label">{{ 'lbl.Language'|trans|capitalize }}</label>
-              {% form_field_error language %} {% form_field language %}
-            </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="module" class="control-label">{{ 'lbl.Module'|trans|capitalize }}</label>
+            {% form_field_error module %} {% form_field module %}
           </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="application" class="control-label">{{ 'lbl.Application'|trans|capitalize }}</label>
-              {% form_field_error application %} {% form_field application %}
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="module" class="control-label">{{ 'lbl.Module'|trans|capitalize }}</label>
-              {% form_field_error module %} {% form_field module %}
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="type" class="control-label">{{ 'lbl.Type'|trans|capitalize }}</label>
-              {% form_field_error type %} {% form_field type %}
-            </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="type" class="control-label">{{ 'lbl.Type'|trans|capitalize }}</label>
+            {% form_field_error type %} {% form_field type %}
           </div>
         </div>
       </div>
     </div>
-    <div class="row fork-module-actions">
-      <div class="col-md-12">
-        <div class="btn-toolbar">
-          <div class="btn-group pull-right" role="group">
-            <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-              <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
-            </button>
-          </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
+          </button>
         </div>
       </div>
     </div>
+  </div>
   {% endform %}
 {% endblock %}

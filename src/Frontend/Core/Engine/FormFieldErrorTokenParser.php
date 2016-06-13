@@ -1,4 +1,5 @@
 <?php
+
 namespace Frontend\Core\Engine;
 
 /**
@@ -10,6 +11,7 @@ class FormFieldErrorTokenParser extends \Twig_TokenParser
 {
     /**
      * @param Twig_Token $token consumed token by the lexer.
+     *
      * @return Twig_Node
      * @throw Twig_Error_Syntax
      */

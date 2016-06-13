@@ -36,6 +36,7 @@ class KernelLoader
      * Gets a service by id.
      *
      * @param string $reference The service id
+     *
      * @return object The service
      */
     public function get($reference)
@@ -63,6 +64,7 @@ class KernelLoader
      * Returns true if the service id is defined.
      *
      * @param string $reference The service id
+     *
      * @return Boolean true if the service id is defined, false otherwise
      */
     public function has($reference)

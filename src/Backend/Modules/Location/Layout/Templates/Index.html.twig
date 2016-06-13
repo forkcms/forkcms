@@ -4,83 +4,83 @@
 
 {% block actionbar %}
   {% if showLocationAdd %}
-  <div class="btn-toolbar pull-right">
-    <div class="btn-group" role="group">
-      {{ macro.buttonIcon(geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize) }}
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon(geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize) }}
+      </div>
     </div>
-  </div>
   {% endif %}
 {% endblock %}
 
 {% block content %}
   {% if dataGrid %}
-  <div class="row fork-module-content">
-    <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            {{ 'lbl.Map'|trans|capitalize }}
-          </h3>
-        </div>
-        <div class="panel-body">
-          {% if items %}
-          <div id="map" style="width: 100%; height: {{ settings.height }}px;"></div>
-          {% endif %}
+    <div class="row fork-module-content">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ 'lbl.Map'|trans|capitalize }}
+            </h3>
+          </div>
+          <div class="panel-body">
+            {% if items %}
+              <div id="map" style="width: 100%; height: {{ settings.height }}px;"></div>
+            {% endif %}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            {{ 'lbl.Settings'|trans|capitalize }}
-          </h3>
-        </div>
-        {% form settings %}
-        <div class="panel-body">
-          <div class="form-group">
-            <label for="zoomLevel" class="control-label">{{ 'lbl.ZoomLevel'|trans|capitalize }}</label>
-            {% form_field_error zoom_level %} {% form_field zoom_level %}
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ 'lbl.Settings'|trans|capitalize }}
+            </h3>
           </div>
-          <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
-            <label for="width" class="control-label">{{ 'lbl.Width'|trans|capitalize }}</label>
-            <p class="help-block">{{ 'msg.WidthHelp'|trans|sprintf(300,800 ) }}</p>
-            {% form_field_error width %} {% form_field width %}
-          </div>
-          <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
-            <label for="height" class="control-label">{{ 'lbl.Height'|trans|capitalize }}</label>
-            <p class="help-block">{{ 'msg.HeightHelp'|trans|sprintf(150 ) }}</p>
-            {% form_field_error height %} {% form_field height %}
-          </div>
-          <div class="form-group">
-            <label for="mapType" class="control-label">{{ 'lbl.MapType'|trans|capitalize }}</label>
-            {% form_field_error map_type %} {% form_field map_type %}
-          </div>
-          <div class="btn-toolbar">
-            <div class="btn-group pull-right" role="group">
-              <a href="#" id="saveLiveData" class="btn btn-primary">
-                <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}</a>
+          {% form settings %}
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="zoomLevel" class="control-label">{{ 'lbl.ZoomLevel'|trans|capitalize }}</label>
+              {% form_field_error zoom_level %} {% form_field zoom_level %}
+            </div>
+            <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
+              <label for="width" class="control-label">{{ 'lbl.Width'|trans|capitalize }}</label>
+              <p class="help-block">{{ 'msg.WidthHelp'|trans|sprintf(300,800 ) }}</p>
+              {% form_field_error width %} {% form_field width %}
+            </div>
+            <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
+              <label for="height" class="control-label">{{ 'lbl.Height'|trans|capitalize }}</label>
+              <p class="help-block">{{ 'msg.HeightHelp'|trans|sprintf(150 ) }}</p>
+              {% form_field_error height %} {% form_field height %}
+            </div>
+            <div class="form-group">
+              <label for="mapType" class="control-label">{{ 'lbl.MapType'|trans|capitalize }}</label>
+              {% form_field_error map_type %} {% form_field map_type %}
+            </div>
+            <div class="btn-toolbar">
+              <div class="btn-group pull-right" role="group">
+                <a href="#" id="saveLiveData" class="btn btn-primary">
+                  <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}</a>
+              </div>
             </div>
           </div>
+          {% endform %}
         </div>
-        {% endform %}
       </div>
     </div>
-  </div>
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div class="table-responsive">
-        {{ dataGrid|raw }}
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          {{ dataGrid|raw }}
+        </div>
       </div>
     </div>
-  </div>
   {% endif %}
   {% if not dataGrid %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <p>{{ 'msg.NoItems'|trans|sprintf(geturl('add' ) ) }}</p>
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <p>{{ 'msg.NoItems'|trans|sprintf(geturl('add' ) ) }}</p>
+      </div>
     </div>
-  </div>
   {% endif %}
   <script type="text/javascript">
     //@todo BUG: data below should come from action
@@ -94,16 +94,16 @@
     };
     var markers = [];
     {% for item in items %}
-      {% if item.lat %}
-        {% if item.lng %}
-          markers.push({
-            lat: {{ item.lat }},
-            lng: {{ item.lng }},
-            title: '{{ item.title }}',
-            text: '<p>{{ item.street }} {{ item.number }}</p><p>{{ item.zip }} {{ item.city }}</p>'
-          });
-        {% endif %}
-      {% endif %}
+    {% if item.lat %}
+    {% if item.lng %}
+    markers.push({
+      lat: {{ item.lat }},
+      lng: {{ item.lng }},
+      title: '{{ item.title }}',
+      text: '<p>{{ item.street }} {{ item.number }}</p><p>{{ item.zip }} {{ item.city }}</p>'
+    });
+    {% endif %}
+    {% endif %}
     {% endfor %}
   </script>
 {% endblock %}

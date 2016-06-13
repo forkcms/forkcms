@@ -3,41 +3,41 @@
 <div id="fieldHolder-{{ id }}" class="form-group field jsField">
   <div class="row">
     {% if plaintext %}
-    <div class="col-md-8">
-      {{ content|raw }}
-    </div>
+      <div class="col-md-8">
+        {{ content|raw }}
+      </div>
     {% endif %}
     {% if simple %}
-    <div class="col-md-3">
-      <label for="field{{ id }}">
-        {{ label }}
-        {% if required %}
-        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
-        {% endif %}
-      </label>
-    </div>
-    <div class="col-md-5">
-      {{ field|raw }}
-    </div>
+      <div class="col-md-3">
+        <label for="field{{ id }}">
+          {{ label }}
+          {% if required %}
+            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+          {% endif %}
+        </label>
+      </div>
+      <div class="col-md-5">
+        {{ field|raw }}
+      </div>
     {% endif %}
     {% if multiple %}
-    <div class="col-md-3">
-      <label for="field{{ id }}">
-        {{ label }}
-        {% if required %}
-        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
-        {% endif %}
-      </label>
-    </div>
-    <div class="col-md-5">
-      <ul class="list-unstyled">
-        {% for item in items %}
-        <li class="checkbox">
-          <label for="{{ item.id }}">{{ item.field|raw }} {{ item.label }}</label>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
+      <div class="col-md-3">
+        <label for="field{{ id }}">
+          {{ label }}
+          {% if required %}
+            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+          {% endif %}
+        </label>
+      </div>
+      <div class="col-md-5">
+        <ul class="list-unstyled">
+          {% for item in items %}
+            <li class="checkbox">
+              <label for="{{ item.id }}">{{ item.field|raw }} {{ item.label }}</label>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
     {% endif %}
     <div class="col-md-4">
       <div class="btn-toolbar">

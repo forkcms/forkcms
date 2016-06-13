@@ -37,7 +37,8 @@ class FormFile extends \SpoonFormFile
     /**
      * Parses the html for this filefield.
      *
-     * @param \SpoonTemplate $template The template to parse the element in.
+     * @param TwigTemplate $template The template to parse the element in.
+     *
      * @return string
      */
     public function parse($template = null)
@@ -80,7 +81,7 @@ class FormFile extends \SpoonFormFile
         $output .= $this->getAttributesHTML(
             array(
                 '[id]' => $this->attributes['id'],
-                '[name]' => $this->attributes['name']
+                '[name]' => $this->attributes['name'],
             )
         ) . ' />';
 

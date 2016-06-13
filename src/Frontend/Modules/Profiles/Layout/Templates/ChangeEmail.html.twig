@@ -1,31 +1,33 @@
 {# Success #}
 {% if updateEmailSuccess %}
-	<div class="message success"><p>{{ 'msg.UpdateEmailIsSuccess'|trans }}</p></div>
+  <div class="message success"><p>{{ 'msg.UpdateEmailIsSuccess'|trans }}</p></div>
 {% endif %}
 
 {# Error #}
 {% if updateEmailHasFormError %}
-	<div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
+  <div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
 {% endif %}
 
 <section id="updateEmailForm" class="mod">
-	<div class="inner">
-		<div class="bd">
-			{% form updateEmail %}
-				<fieldset>
-					<p{% if txtPasswordError %} class="errorArea"{% endif %}>
-						<label for="password">{{ 'lbl.Password'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-						{% form_field_error Password %}{% form_field Password %}
-					</p>
-					<p{% if txtEmailError %} class="errorArea"{% endif %}>
-						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-						{% form_field_error Email %}{% form_field Email %}
-					</p>
-					<p>
-						<input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|capitalize }}" />
-					</p>
-				</fieldset>
-			{% endform %}
-		</div>
-	</div>
+  <div class="inner">
+    <div class="bd">
+      {% form updateEmail %}
+      <fieldset>
+        <p{% if txtPasswordError %} class="errorArea"{% endif %}>
+          <label for="password">{{ 'lbl.Password'|trans|capitalize }}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          {% form_field_error Password %}{% form_field Password %}
+        </p>
+        <p{% if txtEmailError %} class="errorArea"{% endif %}>
+          <label for="email">{{ 'lbl.Email'|trans|capitalize }}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          {% form_field_error Email %}{% form_field Email %}
+        </p>
+        <p>
+          <input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|capitalize }}" />
+        </p>
+      </fieldset>
+      {% endform %}
+    </div>
+  </div>
 </section>

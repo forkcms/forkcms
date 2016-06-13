@@ -1,40 +1,42 @@
 {# Success #}
 {% if registerIsSuccess %}
-	<div class="message success"><p>{{ 'msg.RegisterIsSuccess'|trans }}</p></div>
+  <div class="message success"><p>{{ 'msg.RegisterIsSuccess'|trans }}</p></div>
 {% endif %}
 
 {# Error #}
 {% if registerHasFormError %}
-	<div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
+  <div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
 {% endif %}
 
 {% if not registerHideForm %}
-	{% form register %}
-		<section id="registerForm" class="mod">
-			<div class="inner">
-				<div class="bd">
-					<fieldset>
-						<p{% if txtDisplayNameError %} class="errorArea"{% endif %}>
-							<label for="displayName">{{ 'lbl.DisplayName'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-							{% form_field_error DisplayName %}{% form_field DisplayName %}
-						</p>
-						<p{% if txtEmailError %} class="errorArea"{% endif %}>
-							<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-							{% form_field_error Email %}{% form_field Email %}
-						</p>
-						<p{% if txtPasswordError %} class="errorArea"{% endif %}>
-							<label for="password">{{ 'lbl.Password'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-							{% form_field_error Password %}{% form_field Password %}
-						</p>
-						<p>
-							<label for="showPassword">{% form_field ShowPassword %} {{ 'lbl.ShowPassword'|trans|capitalize }} </label>
-						</p>
-						<p>
-							<input class="inputSubmit" type="submit" value="{{ 'lbl.Register'|trans|capitalize }}" />
-						</p>
-					</fieldset>
-				</div>
-			</div>
-		</section>
-	{% endform %}
+  {% form register %}
+  <section id="registerForm" class="mod">
+    <div class="inner">
+      <div class="bd">
+        <fieldset>
+          <p{% if txtDisplayNameError %} class="errorArea"{% endif %}>
+            <label for="displayName">{{ 'lbl.DisplayName'|trans|capitalize }}
+              <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+            {% form_field_error DisplayName %}{% form_field DisplayName %}
+          </p>
+          <p{% if txtEmailError %} class="errorArea"{% endif %}>
+            <label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+            {% form_field_error Email %}{% form_field Email %}
+          </p>
+          <p{% if txtPasswordError %} class="errorArea"{% endif %}>
+            <label for="password">{{ 'lbl.Password'|trans|capitalize }}
+              <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+            {% form_field_error Password %}{% form_field Password %}
+          </p>
+          <p>
+            <label for="showPassword">{% form_field ShowPassword %} {{ 'lbl.ShowPassword'|trans|capitalize }} </label>
+          </p>
+          <p>
+            <input class="inputSubmit" type="submit" value="{{ 'lbl.Register'|trans|capitalize }}" />
+          </p>
+        </fieldset>
+      </div>
+    </div>
+  </section>
+  {% endform %}
 {% endif %}

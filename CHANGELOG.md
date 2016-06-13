@@ -1,6 +1,54 @@
-3.9.7 (xxxx-xx-xx)
+4.0.2 (2016-06-10)
 --
+
 Bugfixes:
+
+* Core: remove duplicate swiftmailer config.
+* Core: cleanup unused use statements.
+* Core: fix some phpdocs.
+* Search: fix the livesuggest action.
+* Core: fix typo: UT8 instead of UTF8.
+* Core: remove obsolete parameters on the getContent method of templates.
+* Core: fix editorconfig for twig files.
+* Core: fix indentation in twig files.
+* Extensions: fix styling of "new themes".
+* Core: fix references to tpl files in triton's info.xml file.
+* Faq: make sure the feedback works in Safari.
+* Core: include bower components in this repository.
+* Core: take the language into account when fetching the 404 url.
+
+
+4.0.1 (2016-06-07)
+--
+
+Bugfixes:
+
+* Core: Fixes date field with empty date.
+* Core: Fix lost ucfirst template modifier.
+* Installer: Make "same language" not required.
+* Core: Fix the THEME_URL constant referencing the backend.
+* Core: Fix the hasColumn function of datagrids.
+* Core: Fix the not-matching color of the fork logo.
+* Core: avoid &nbsp; in favor of spaces.
+* Extensions: improve icons.
+* Blog: Fix preview url in edit action.
+* Core: Fix asterisk changed by # in the frontend.
+* Users: Never use the (not created) source file of avatars.
+* Core: Improve the gitignore file.
+
+
+4.0.0 (2016-05-27)
+--
+
+Improvements:
+
+* Core: Twig is now used everywhere
+* Core: Backend is now using bootstrap
+* Core: new backend device
+* ...
+
+Bugfixes:
+
 * Blog: Fixed saving Blog articles as draft.
 * Core: Fix incorrect path for theme OpenGraphImage.
 * Core: Fixed when deploying, that /src/Frontend/Cache/Navigation/editor_link_list_x.js is now created if not exists.
@@ -9,6 +57,7 @@ Bugfixes:
 * Pages: Fixes "Notice: Undefined index: parent_id" when viewing a page revision where the page is located in the root of the pages tree.
 * Pages: Fixes "Error: Call to a member function addMetaData() on null" when viewing an existing revision page.
 * Core: BackendDataGridFunctions::showImage updated with url, with and height.
+
 
 3.9.6 (2015-12-22)
 --

@@ -1,15 +1,21 @@
 <ol class="breadcrumb">
-    {% for topLevelItem in navigation if topLevelItem.active %}
-        <li><a href="/private/{{ LANGUAGE }}/{{ topLevelItem.url }}">{{ ('lbl.'~topLevelItem.label)|trans|capitalize }}</a></li>
-        {% if topLevelItem.children is not empty %}
-            {% for secondaryItem in topLevelItem.children if secondaryItem.active %}
-                <li><a href="/private/{{ LANGUAGE }}/{{ secondaryItem.url }}">{{ ('lbl.'~secondaryItem.label)|trans|capitalize }}</a></li>
-                {% if secondaryItem.children is not empty %}
-                    {% for tertiaryItem in secondaryItem.children if tertiaryItem.active %}
-                        <li><a href="/private/{{ LANGUAGE }}/{{ tertiaryItem.url }}">{{ ('lbl.'~tertiaryItem.label)|trans|capitalize }}</a></li>
-                    {% endfor %}
-                {% endif %}
-            {% endfor %}
+  {% for topLevelItem in navigation if topLevelItem.active %}
+    <li>
+      <a href="/private/{{ LANGUAGE }}/{{ topLevelItem.url }}">{{ ('lbl.'~topLevelItem.label)|trans|capitalize }}</a>
+    </li>
+    {% if topLevelItem.children is not empty %}
+      {% for secondaryItem in topLevelItem.children if secondaryItem.active %}
+        <li>
+          <a href="/private/{{ LANGUAGE }}/{{ secondaryItem.url }}">{{ ('lbl.'~secondaryItem.label)|trans|capitalize }}</a>
+        </li>
+        {% if secondaryItem.children is not empty %}
+          {% for tertiaryItem in secondaryItem.children if tertiaryItem.active %}
+            <li>
+              <a href="/private/{{ LANGUAGE }}/{{ tertiaryItem.url }}">{{ ('lbl.'~tertiaryItem.label)|trans|capitalize }}</a>
+            </li>
+          {% endfor %}
         {% endif %}
-    {% endfor %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
 </ol>

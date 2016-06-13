@@ -4,22 +4,22 @@
 #}
 
 {% if widgetTagsRelated %}
-	<section id="tagRelatedWidget" class="mod">
-		<div class="inner">
-			<header class="hd">
-				<h3>{{ 'lbl.Related'|trans|capitalize }}</h3>
-			</header>
-			<div class="bd content">
-				<ul>
-					{% for widgetTagsRelated in widgetTagsRelated %}
-						<li>
-							<a href="{{ widgetTagsRelated.full_url }}" title="{{ widgetTagsRelated.title }}">
-								{{ widgetTagsRelated.title }}
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
-	</section>
+  <section id="tagRelatedWidget" class="mod">
+    <div class="inner">
+      <header class="hd">
+        <h3>{{ 'lbl.Related'|trans|capitalize }}</h3>
+      </header>
+      <div class="bd content">
+        <ul>
+          {% for widgetTagsRelated in widgetTagsRelated %}
+            <li>
+              <a href="{{ widgetTagsRelated.full_url }}" title="{{ widgetTagsRelated.title }}">
+                {{ widgetTagsRelated.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
 {% endif %}

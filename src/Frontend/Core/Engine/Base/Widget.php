@@ -11,11 +11,11 @@ namespace Frontend\Core\Engine\Base;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Header;
-use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Core\Engine\Url;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific widget
+ *
  * @later  Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
@@ -181,7 +181,7 @@ class Widget extends Object
      */
     public function getContent()
     {
-        return $this->tpl->getContent($this->templatePath, false, true);
+        return $this->tpl->getContent($this->templatePath);
     }
 
     /**

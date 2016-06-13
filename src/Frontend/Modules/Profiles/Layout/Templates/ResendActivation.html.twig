@@ -1,29 +1,29 @@
 {# Success #}
 {% if resendActivationSuccess %}
-	<div class="message success"><p>{{ 'msg.ResendActivationIsSuccess'|trans }}</p></div>
+  <div class="message success"><p>{{ 'msg.ResendActivationIsSuccess'|trans }}</p></div>
 {% endif %}
 
 {# Error #}
 {% if resendActivationHasError %}
-	<div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
+  <div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
 {% endif %}
 
 {% if not resendActivationHideForm %}
-	<section id="resendActivationForm" class="mod">
-		<div class="inner">
-			<div class="bd">
-				{% form resendActivation %}
-					<fieldset>
-						<p {% if txtEmailError %} class="errorArea"{% endif %}>
-							<label for="email">{{ 'lbl.Email'|trans|capitalize }} <abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
-							{% form_field_error Email %} {% form_field Email %}
-						</p>
-						<p>
-							<input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|capitalize }}" />
-						</p>
-					</fieldset>
-				{% endform %}
-			</div>
-		</div>
-	</section>
+  <section id="resendActivationForm" class="mod">
+    <div class="inner">
+      <div class="bd">
+        {% form resendActivation %}
+        <fieldset>
+          <p {% if txtEmailError %} class="errorArea"{% endif %}>
+            <label for="email">{{ 'lbl.Email'|trans|capitalize }} <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+            {% form_field_error Email %} {% form_field Email %}
+          </p>
+          <p>
+            <input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|capitalize }}" />
+          </p>
+        </fieldset>
+        {% endform %}
+      </div>
+    </div>
+  </section>
 {% endif %}

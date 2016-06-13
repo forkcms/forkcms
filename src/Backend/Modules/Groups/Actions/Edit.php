@@ -188,7 +188,7 @@ class Edit extends BackendBaseActionEdit
                 $this->actions[$module][] = array(
                     'label' => \SpoonFilter::toCamelCase($actionName),
                     'value' => $actionName,
-                    'description' => $description
+                    'description' => $description,
                 );
             }
         }
@@ -197,7 +197,7 @@ class Edit extends BackendBaseActionEdit
         foreach ($modules as $module) {
             $this->modules[] = array(
                 'label' => \SpoonFilter::toCamelCase($module),
-                'value' => $module
+                'value' => $module,
             );
         }
     }
@@ -244,7 +244,7 @@ class Edit extends BackendBaseActionEdit
                     $this->widgetInstances[] = array(
                         'module' => $module,
                         'widget' => $widgetName,
-                        'className' => $class
+                        'className' => $class,
                     );
 
                     // create reflection class
@@ -272,7 +272,7 @@ class Edit extends BackendBaseActionEdit
                         'module_name' => $module,
                         'label' => \SpoonFilter::toCamelCase($widgetName),
                         'value' => $widgetName,
-                        'description' => $description
+                        'description' => $description,
                     );
                 }
             }
@@ -543,6 +543,7 @@ class Edit extends BackendBaseActionEdit
      * Update the widgets
      *
      * @param \SpoonFormElement[] $widgetPresets The widgets presets.
+     *
      * @return array
      */
     private function updateWidgets($widgetPresets)
@@ -589,8 +590,8 @@ class Edit extends BackendBaseActionEdit
                     'column' => $instance->getColumn(),
                     'position' => (int) $instance->getPosition(),
                     'hidden' => false,
-                    'present' => false
-                )
+                    'present' => false,
+                ),
             );
 
             // loop through selected widgets
@@ -674,8 +675,8 @@ class Edit extends BackendBaseActionEdit
                                             'column' => $instance->getColumn(),
                                             'position' => (int) $instance->getPosition(),
                                             'hidden' => false,
-                                            'present' => true
-                                        )
+                                            'present' => true,
+                                        ),
                                     );
                                 }
                             }

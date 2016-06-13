@@ -91,7 +91,7 @@ class DetailTheme extends BackendBaseActionIndex
                 // empty data (nothing useful)
                 if (empty($this->information)) {
                     $this->warnings[] = array(
-                        'message' => BL::getMessage('InformationFileIsEmpty')
+                        'message' => BL::getMessage('InformationFileIsEmpty'),
                     );
                 }
             } catch (\Exception $e) {

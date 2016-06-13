@@ -2,7 +2,6 @@
 
 namespace Frontend\Core\Engine;
 
-use Frontend\Core\Engine\Language as FL;
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
 
@@ -19,7 +18,6 @@ use Common\Core\Twig\Extensions\TwigFilters;
  *
  * @author <thijs@wijs.be>
  */
-
 class TwigTemplate extends BaseTwigTemplate
 {
     /**
@@ -76,8 +74,8 @@ class TwigTemplate extends BaseTwigTemplate
                     $this->themePath,
                     FRONTEND_MODULES_PATH,
                     FRONTEND_PATH,
-                    '/'
-                ))
+                    '/',
+                )),
             ));
             $this->environment->setLoader($loader);
         }
@@ -107,7 +105,6 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @param string $key
      * @param mixed $values
-     *
      */
     public function assign($key, $values = null)
     {
@@ -159,6 +156,7 @@ class TwigTemplate extends BaseTwigTemplate
                 }
             }
         }
+
         return $positions;
     }
 
@@ -166,7 +164,7 @@ class TwigTemplate extends BaseTwigTemplate
      * Convert a filename extension
      *
      * @param string template
-    */
+     */
     public function getPath($template)
     {
         if (strpos($template, FRONTEND_MODULES_PATH) !== false) {
@@ -212,9 +210,10 @@ class TwigTemplate extends BaseTwigTemplate
      * Renders the Page
      *
      * @param string $template path to render
+     *
      * @return string
      */
-    private function renderTemplate($template = null)
+    public function renderTemplate($template = null)
     {
         if (!empty($this->forms)) {
             foreach ($this->forms as $form) {

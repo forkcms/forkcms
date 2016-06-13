@@ -380,7 +380,7 @@ class Header extends FrontendBaseObject
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
                  'title' => $title,
-                 'href' => $link
+                 'href' => $link,
             ),
             true
         );
@@ -390,6 +390,7 @@ class Header extends FrontendBaseObject
      * Sort function for CSS-files
      *
      * @param array $cssFiles The css files to sort.
+     *
      * @return array
      */
     private function cssSort($cssFiles)
@@ -405,7 +406,7 @@ class Header extends FrontendBaseObject
                 $aTemp['e' . $i][] = $file;
             } else {
                 $aTemp['a' . $i][] = $file;
-                $i++;
+                ++$i;
             }
         }
 
@@ -497,6 +498,7 @@ class Header extends FrontendBaseObject
      *
      * @param string $attribute      The attribute to match on.
      * @param string $attributeValue The value for the unique attribute.
+     *
      * @return array
      */
     public function getMetaValue($attribute, $attributeValue)
@@ -523,6 +525,7 @@ class Header extends FrontendBaseObject
      * Minify a CSS-file
      *
      * @param string $file The file to be minified.
+     *
      * @return string
      */
     private function minifyCSS($file)
@@ -551,6 +554,7 @@ class Header extends FrontendBaseObject
      * Minify a javascript-file
      *
      * @param string $file The file to be minified.
+     *
      * @return string
      */
     private function minifyJS($file)
@@ -692,7 +696,7 @@ class Header extends FrontendBaseObject
             $this->addMetaData(
                 array(
                     'property' => 'fb:admins',
-                    'content' => $facebookAdminIds
+                    'content' => $facebookAdminIds,
                 ),
                 true,
                 array('property')
@@ -705,7 +709,7 @@ class Header extends FrontendBaseObject
             $this->addMetaData(
                 array(
                     'property' => 'fb:app_id',
-                    'content' => $facebookAppId
+                    'content' => $facebookAppId,
                 ),
                 true,
                 array('property')
@@ -771,7 +775,7 @@ class Header extends FrontendBaseObject
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
                 '/src/Frontend/Core/Js/Jquery/jquery.js',
-                '/src/Frontend/Core/Js/Jquery/jquery.ui.js'
+                '/src/Frontend/Core/Js/Jquery/jquery.ui.js',
             );
 
             foreach ($existingJSFiles as $file) {

@@ -32,6 +32,7 @@ class Model extends \BaseModel
      * Add a number to the string
      *
      * @param string $string The string where the number will be appended to.
+     *
      * @return string
      */
     public static function addNumber($string)
@@ -67,6 +68,7 @@ class Model extends \BaseModel
      * @param int  $length           The maximum length for the password to generate.
      * @param bool $uppercaseAllowed Are uppercase letters allowed?
      * @param bool $lowercaseAllowed Are lowercase letters allowed?
+     *
      * @return string
      */
     public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
@@ -101,7 +103,7 @@ class Model extends \BaseModel
             'th',
             'ch',
             'ph',
-            'st'
+            'st',
         );
 
         // init vars
@@ -111,13 +113,13 @@ class Model extends \BaseModel
         $tmp = '';
 
         // create temporary pass
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             $tmp .= ($consonants[rand(0, $consonantsCount - 1)] .
                 $vowels[rand(0, $vowelsCount - 1)]);
         }
 
         // reformat the pass
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             if (rand(0, 1) == 1) {
                 $pass .= mb_strtoupper(mb_substr($tmp, $i, 1));
             } else {
@@ -177,6 +179,7 @@ class Model extends \BaseModel
      *
      * @param string $path          The path
      * @param bool   $includeSource Should the source-folder be included in the return-array.
+     *
      * @return array
      */
     public static function getThumbnailFolders($path, $includeSource = false)
@@ -224,6 +227,7 @@ class Model extends \BaseModel
      *
      * @param string $format    The format to return the timestamp in. Default is MySQL datetime format.
      * @param int    $timestamp The timestamp to use, if not provided the current time will be used.
+     *
      * @return string
      */
     public static function getUTCDate($format = null, $timestamp = null)
@@ -241,8 +245,10 @@ class Model extends \BaseModel
      *
      * @param \SpoonFormDate $date An instance of \SpoonFormDate.
      * @param \SpoonFormTime $time An instance of \SpoonFormTime.
-     * @return int
+     *
      * @throws \Exception If provided $date, $time or both are invalid
+     *
+     * @return int
      */
     public static function getUTCTimestamp(\SpoonFormDate $date, \SpoonFormTime $time = null)
     {
@@ -291,7 +297,6 @@ class Model extends \BaseModel
         return self::$modules;
     }
 
-
     /**
      * Subscribe to an event, when the subscription already exists, the callback will be updated.
      *
@@ -299,6 +304,7 @@ class Model extends \BaseModel
      * @param string $eventName   The name of the event.
      * @param string $module      The module that subscribes to the event.
      * @param mixed  $callback    The callback that should be executed when the event is triggered.
+     *
      * @throws \Exception          When the callback is invalid
      */
     public static function subscribeToEvent($eventModule, $eventName, $module, $callback)

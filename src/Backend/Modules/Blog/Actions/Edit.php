@@ -149,7 +149,7 @@ class Edit extends BackendBaseActionEdit
         // set headers
         $this->dgDrafts->setHeaderLabels(array(
             'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
         ));
 
         // set column-functions
@@ -254,7 +254,7 @@ class Edit extends BackendBaseActionEdit
         // set headers
         $this->dgRevisions->setHeaderLabels(array(
             'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
         ));
 
         // set column-functions

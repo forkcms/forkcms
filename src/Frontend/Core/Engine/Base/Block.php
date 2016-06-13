@@ -9,17 +9,18 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Url;
-use Frontend\Core\Engine\Template as FrontendTemplate;
 use Common\Exception\RedirectException;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific block
+ *
  * @later  Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
@@ -235,7 +236,7 @@ class Block extends Object
     /**
      * Get template
      *
-     * @return string
+     * @return TwigTemplate
      */
     public function getTemplate()
     {
@@ -347,7 +348,6 @@ class Block extends Object
             if ($this->pagination['num_pages'] == 7) {
                 $pagesEnd = 7;
             } elseif ($this->pagination['num_pages'] <= 6) {
-
                 // when we have less then 6 pages, show the maximum page
                 $pagesEnd = $this->pagination['num_pages'];
             }
@@ -394,7 +394,7 @@ class Block extends Object
             $pagesFirstEnd = 1;
 
             // loop pages
-            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++) {
+            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;
@@ -408,7 +408,7 @@ class Block extends Object
         }
 
         // build array
-        for ($i = $pagesStart; $i <= $pagesEnd; $i++) {
+        for ($i = $pagesStart; $i <= $pagesEnd; ++$i) {
             // init var
             $current = ($i == $this->pagination['requested_page']);
 
@@ -430,7 +430,7 @@ class Block extends Object
             $pagesLastEnd = $this->pagination['num_pages'];
 
             // loop pages
-            for ($i = $pagesLastStart; $i <= $pagesLastEnd; $i++) {
+            for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;

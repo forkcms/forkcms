@@ -13,7 +13,6 @@
  *
  * @author <thijs@wijs.be>
  */
-
 class spoon2twig
 {
     private $interationNr = 0;
@@ -41,6 +40,7 @@ class spoon2twig
         // OUR INPUT AND REPLACE CODE
         if (!isset($argv[1])) {
             $this->error('no arguments given');
+
             return;
         }
 
@@ -57,12 +57,14 @@ class spoon2twig
         if ($input === '-all') {
             $path['base'] = array('Frontend/Themes', 'Backend/Modules', 'Frontend/Modules', 'Frontend');
             $this->convertAllFiles($force, $path);
+
             return;
         }
 
         if ($input === '-backend') {
             $path['base'] = array('Backend/Modules');
             $this->convertAllFiles($force, $path, $input);
+
             return;
         }
 
@@ -71,9 +73,11 @@ class spoon2twig
             $path['base'] = array('Backend/Modules', 'Frontend/Modules');
             if (!is_dir($this->webroot.$source.'Frontend/Modules/'.$input)) {
                 $this->error('unknown module folder '.$input);
+
                 return;
             }
             $this->convertAllFiles($force, $path, $input);
+
             return;
         }
 
@@ -82,19 +86,23 @@ class spoon2twig
             $path['base'] = array('Frontend/Themes');
             if (!is_dir($this->webroot.$source.'Frontend/Themes/'.$input)) {
                 $this->error('unknown theme folder '.$input);
+
                 return;
             }
             $this->convertAllFiles($force, $path, $input);
+
             return;
         }
 
         if ($this->isFile($input) && $force === true) {
             $this->write($input, $this->ruleParser($this->getFile($input)));
+
             return;
         }
 
         if (!file_exists(str_replace('.html.twig', $this->extension, $input))) {
             $this->write($input, $this->ruleParser($this->getFile($input)));
+
             return;
         }
 
@@ -113,7 +121,6 @@ class spoon2twig
 
     /**
      * Displays all Errors or notices
-     *
      */
     public function displayErrors()
     {
@@ -127,18 +134,18 @@ class spoon2twig
     /**
      * Stamps the time it takes from start to finnish
      *
-     * @param  integer $int how precise you wish to measure
+     * @param  int $int how precise you wish to measure
      */
     public function timestamp($int = null)
     {
-        return (float)substr(microtime(true) - $this->startTime, 0, (int)$int+5) * 1000;
+        return (float) substr(microtime(true) - $this->startTime, 0, (int) $int + 5) * 1000;
     }
 
     /**
      * Project file converter
      * Will locate ever file in the project and convert in automagicly
      *
-     * @param  boolean $force allow forced overwrite
+     * @param  bool $force allow forced overwrite
      */
     public function convertAllFiles($force, $path, $input = null)
     {
@@ -220,6 +227,7 @@ class spoon2twig
                     }
                 }
             }
+
             return $templatePaths;
         }
     }
@@ -228,7 +236,7 @@ class spoon2twig
      * Builds new Files from a paths array
      *
      * @param  array   $templatePaths paths array
-     * @param  boolean $force         forced
+     * @param  bool $force         forced
      */
     private function buildFiles(array $templatePaths, $force = false)
     {
@@ -272,6 +280,7 @@ class spoon2twig
                 $source = 'src/';
                 break;
         }
+
         return $source;
     }
 
@@ -311,14 +320,17 @@ class spoon2twig
             $stream = fopen($file, 'r');
             $filedata = stream_get_contents($stream);
             fclose($stream);
+
             return $filedata;
         }
     }
 
     /**
      * File checker
+     *
      * @param  string  $file file full path
-     * @return boolean
+     *
+     * @return bool
      */
     public function isFile($file)
     {
@@ -326,6 +338,7 @@ class spoon2twig
             return true;
         }
         $this->error('Could not open input file: ' . $this->webroot . $file);
+
         return false;
     }
 
@@ -354,6 +367,7 @@ class spoon2twig
                 }
                 $values[] = sprintf($format, $value);
             }
+
             return str_replace($match[0], $values, $filedata);
         }
         $this->error('no match found on the ' . $regex . ' line');
@@ -363,12 +377,13 @@ class spoon2twig
      * Converts a noun until it's ready
      *
      * @param  string $noun a noun
+     *
      * @return string       converted noun
      */
     public function dePluralize($noun)
     {
         $nouns = array(
-            'modules' => 'module'
+            'modules' => 'module',
         );
 
         // shorten
@@ -385,8 +400,9 @@ class spoon2twig
             $noun = substr($noun, 0, -1);
         } else {
             $noun = '_itr_'.$this->interationNr;
-            $this->interationNr++;
+            ++$this->interationNr;
         }
+
         return $noun;
     }
 
@@ -397,6 +413,7 @@ class spoon2twig
         foreach ($ret as &$match) {
             $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
         }
+
         return implode('_', $ret);
     }
 
@@ -409,6 +426,7 @@ class spoon2twig
      * Iteration Converter
      *
      * @param  string $filedata file to convert
+     *
      * @return string           file in converted form
      */
     public function pregReplaceIterations($filedata)
@@ -425,9 +443,11 @@ class spoon2twig
                 $match[0] = str_replace($value, $new_val, $match[0]);
                 $match[0] = str_replace($new_val.'_', $value, $match[0]);
                 $filedata = str_replace($prev_match, $match[0], $filedata);
+
                 return $this->pregReplaceIterations($filedata);
             }
         }
+
         return $filedata;
     }
 
@@ -463,7 +483,7 @@ class spoon2twig
         $filedata = str_replace('{*', '{#', $filedata); // comments
         $filedata = str_replace('|ucfirst', '|capitalize', $filedata);
         $filedata = str_replace('.html.twig', $this->extension, $filedata);
-        $filedata = str_replace("\t", "  ", $filedata);
+        $filedata = str_replace("\t", '  ', $filedata);
 
         // raw converter
         $filedata = str_replace('siteHTMLHeader', 'siteHTMLHeader|raw', $filedata);

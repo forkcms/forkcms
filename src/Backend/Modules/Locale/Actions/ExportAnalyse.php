@@ -22,15 +22,14 @@ use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 class ExportAnalyse extends BackendBaseActionIndex
 {
     /**
-     *
-     * @var	array
+     * @var array
      */
     private $filter;
 
     /**
      * Locale items.
      *
-     * @var	array
+     * @var array
      */
     private $locale;
 

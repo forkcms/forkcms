@@ -18,6 +18,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dave Lens <dave.lens@netlash.com>
+ * @author Mathias Helin <mathias@sumocoders.be>
  */
 class GetAllTags extends BackendBaseAJAXAction
 {
@@ -27,33 +28,6 @@ class GetAllTags extends BackendBaseAJAXAction
     public function execute()
     {
         parent::execute();
-
-        // validate
-        /*if ($term == '') {
-            $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
-        } else {
-            // get tags
-
-            // output
-            $this->output(self::OK, $tags);
-        }*/
-        $tags = BackendTagsModel::getAll();
-        $data = [ "Kortrijk",
-                  "London",
-                  "Paris",
-                  "Washington",
-                  "New York",
-                  "Los Angeles",
-                  "Sydney",
-                  "Melbourne",
-                  "Canberra",
-                  "Beijing",
-                  "New Delhi",
-                  "Kathmandu",
-                  "Cairo",
-                  "Cape Town",
-                  "Kinshasa"
-                ];
-        $this->output(self::OK, $tags);
+        $this->output(self::OK, BackendTagsModel::getAll());
     }
 }

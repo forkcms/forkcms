@@ -14,7 +14,6 @@ namespace Common\Core\Twig\Extensions;
  *
  * @author <thijs.dp@gmail.com>
  */
-
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;
 
@@ -58,6 +57,7 @@ class TwigFilters
             'sprintf',
             array('is_safe' => array('html'))
         ));
+        $twig->addFilter(new Twig_SimpleFilter('ucfirst', 'ucfirst'));
 
         // Functions navigation
         $twig->addFunction(new Twig_SimpleFunction(

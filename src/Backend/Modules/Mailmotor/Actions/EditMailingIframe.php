@@ -9,7 +9,7 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
-use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BackendLanguage;

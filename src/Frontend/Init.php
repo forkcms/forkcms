@@ -19,7 +19,7 @@ namespace Frontend;
 class Init extends \Common\Core\Init
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected $allowedTypes = array('Frontend', 'FrontendAjax');
 

@@ -128,7 +128,7 @@ class Index extends BackendBaseActionIndex
                     'sort' => '[sort]',
                     'email' => $this->filter['email'],
                     'status' => $this->filter['status'],
-                    'group' => $this->filter['group']
+                    'group' => $this->filter['group'],
                 ),
                 false
             )
@@ -150,7 +150,7 @@ class Index extends BackendBaseActionIndex
         $ddmMassAction = new \SpoonFormDropdown('action',
             array(
                 'addToGroup' => BL::getLabel('AddToGroup'),
-                'delete' => BL::getLabel('Delete')
+                'delete' => BL::getLabel('Delete'),
             ),
             'addToGroup',
             false,
@@ -159,10 +159,10 @@ class Index extends BackendBaseActionIndex
         );
         $ddmMassAction->setAttribute('id', 'massAction');
         $ddmMassAction->setOptionAttributes('addToGroup', array(
-            'data-target' => '#confirmAddToGroup'
+            'data-target' => '#confirmAddToGroup',
         ));
         $ddmMassAction->setOptionAttributes('delete', array(
-            'data-target' => '#confirmDelete'
+            'data-target' => '#confirmDelete',
         ));
         $this->dgProfiles->setMassAction($ddmMassAction);
 

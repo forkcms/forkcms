@@ -8,30 +8,30 @@
 
 {% block content %}
   {% if zlibIsMissing %}
-  <div class="row fork-module-messages">
-    <div class="col-md-12">
-      <div class="alert alert-danger" role="alert">
-        {{ 'msg.ZlibIsMissing'|trans }}
+    <div class="row fork-module-messages">
+      <div class="col-md-12">
+        <div class="alert alert-danger" role="alert">
+          {{ 'msg.ZlibIsMissing'|trans }}
+        </div>
       </div>
     </div>
-  </div>
   {% endif %}
   {% if notWritable %}
-  <div class="row fork-module-messages">
-    <div class="col-md-12">
-      <div class="alert alert-danger" role="alert">
-        {{ 'msg.ThemesNotWritable'|trans }}
+    <div class="row fork-module-messages">
+      <div class="col-md-12">
+        <div class="alert alert-danger" role="alert">
+          {{ 'msg.ThemesNotWritable'|trans }}
+        </div>
       </div>
     </div>
-  </div>
   {% endif %}
   {% if not zlibIsMissing %}
-  {% form upload %}
+    {% form upload %}
     <div class="row fork-module-content">
       <div class="col-md-12">
         <div class="form-group">
           <label for="file" class="control-label">
-            {{ 'lbl.File'|trans|capitalize }}&nbsp;
+            {{ 'lbl.File'|trans|capitalize }}
             <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
           </label>
           {% form_field_error file %} {% form_field file %}
@@ -48,6 +48,6 @@
         </div>
       </div>
     </div>
-  {% endform %}
+    {% endform %}
   {% endif %}
 {% endblock %}

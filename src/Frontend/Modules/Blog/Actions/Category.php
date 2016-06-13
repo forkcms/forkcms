@@ -11,7 +11,6 @@ namespace Frontend\Modules\Blog\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
@@ -48,7 +47,7 @@ class Category extends FrontendBaseBlock
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**

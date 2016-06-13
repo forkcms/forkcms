@@ -4,7 +4,7 @@
 
 {% block content %}
 
-{{ form_start(form) }}
+  {{ form_start(form) }}
   <div class="row fork-module-messages">
     <div class="col-md-12">
       {{ form_errors(form) }}
@@ -49,14 +49,12 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-left" role="group">
               <a href="{{ path('install_step2') }}" class="btn btn-default">
-                <span class="fa fa-chevron-left"></span>&nbsp;
-                Previous
+                <span class="fa fa-chevron-left"></span> Previous
               </a>
             </div>
             <div class="btn-group pull-right" role="group">
               <button type="submit" id="installerButton" name="installer" class="btn btn-primary">
-                Next
-                &nbsp;<span class="fa fa-chevron-right"></span>
+                Next <span class="fa fa-chevron-right"></span>
               </button>
             </div>
           </div>
@@ -64,6 +62,6 @@
       </div>
     </div>
   </div>
-{{ form_end(form) }}
+  {{ form_end(form) }}
 
 {% endblock %}

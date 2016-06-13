@@ -168,7 +168,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // create array
         $defaultExtras = array(
             '' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
-            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets
+            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
         );
 
         // create default position field
@@ -201,11 +201,11 @@ class EditThemeTemplate extends BackendBaseActionEdit
                     $extras[] = (int) $_POST['type_' . $i . '_' . $j];
 
                     // increment counter; go fetch next block
-                    $j++;
+                    ++$j;
                 }
 
                 // increment counter; go fetch next position
-                $i++;
+                ++$i;
 
                 // position already exists -> error
                 if (in_array($name, $this->names)) {

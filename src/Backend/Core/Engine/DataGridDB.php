@@ -32,7 +32,7 @@ class DataGridDB extends DataGrid
         // create a new source-object
         $source = new \SpoonDatagridSourceDB(BackendModel::get('database'), array(
             $query,
-            (array) $parameters
+            (array) $parameters,
         ), $results);
 
         parent::__construct($source);

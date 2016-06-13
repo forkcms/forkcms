@@ -113,6 +113,7 @@ class Categories extends BackendBaseActionIndex
      *
      * @param int $count
      * @param string $link
+     *
      * @return string
      */
     public static function setClickableCount($count, $link)

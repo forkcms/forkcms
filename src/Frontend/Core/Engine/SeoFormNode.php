@@ -248,7 +248,7 @@ class SeoFormNode extends \Twig_Node
     {
         $frm = "\$context['form_{$this->form}']";
 
-        return "echo " . $frm . "->getField('" . $fieldName . "')->parse();";
+        return 'echo ' . $frm . "->getField('" . $fieldName . "')->parse();";
     }
 
     private function hasField($fieldName)

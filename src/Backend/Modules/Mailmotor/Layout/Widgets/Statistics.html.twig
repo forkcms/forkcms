@@ -23,42 +23,42 @@
         <div role="tabpanel" class="tab-pane active" id="tabMailmotorSubscriptions">
           <div id="dataGridSubscriptions">
             {% if dgMailmotorSubscriptions %}
-            <div class="table table-striped dataGridHolder">
-              {{ dgMailmotorSubscriptions|raw }}
-            </div>
+              <div class="table table-striped dataGridHolder">
+                {{ dgMailmotorSubscriptions|raw }}
+              </div>
             {% endif %}
             {% if not dgMailmotorSubscriptions %}
-            <p>
-              {{ 'msg.NoSubscriptions'|trans|capitalize }}
-            </p>
+              <p>
+                {{ 'msg.NoSubscriptions'|trans|capitalize }}
+              </p>
             {% endif %}
           </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="tabMailmotorUnsubscriptions">
           <div id="dataGridUnsubscriptions">
             {% if dgMailmotorUnsubscriptions %}
-            <div class="table table-striped dataGridHolder" >
-              {{ dgMailmotorUnsubscriptions|raw }}
-            </div>
+              <div class="table table-striped dataGridHolder">
+                {{ dgMailmotorUnsubscriptions|raw }}
+              </div>
             {% endif %}
             {% if not dgMailmotorUnsubscriptions %}
-            <p>
-              {{ 'msg.NoUnsubscriptions'|trans|capitalize }}
-            </p>
+              <p>
+                {{ 'msg.NoUnsubscriptions'|trans|capitalize }}
+              </p>
             {% endif %}
           </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="tabMailmotorStatistics">
           <div id="dataGridStatistics">
             {% if dgMailmotorStatistics %}
-            <div class="table table-striped dataGridHolder">
-              {{ dgMailmotorStatistics|raw }}
-            </div>
+              <div class="table table-striped dataGridHolder">
+                {{ dgMailmotorStatistics|raw }}
+              </div>
             {% endif %}
             {% if not dgMailmotorStatistics %}
-            <p>
-              {{ 'msg.NoSentMailings'|trans|capitalize }}
-            </p>
+              <p>
+                {{ 'msg.NoSentMailings'|trans|capitalize }}
+              </p>
             {% endif %}
           </div>
         </div>

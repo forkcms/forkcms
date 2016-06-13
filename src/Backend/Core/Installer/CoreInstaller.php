@@ -9,8 +9,6 @@ namespace Backend\Core\Installer;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
-
 /**
  * Installer for the core
  *
@@ -123,7 +121,7 @@ class CoreInstaller extends ModuleInstaller
                 'd.m.y',
                 'm/d/y',
                 'm-d-y',
-                'm.d.y'
+                'm.d.y',
             )
         );
         $this->setSetting('Core', 'date_format_long', 'l j F Y');
@@ -144,7 +142,7 @@ class CoreInstaller extends ModuleInstaller
                 'l F j Y',
                 'F d, Y',
                 'D F d, Y',
-                'l F d, Y'
+                'l F d, Y',
             )
         );
         $this->setSetting('Core', 'time_format', 'H:i');
@@ -161,7 +159,7 @@ class CoreInstaller extends ModuleInstaller
                 'dot_comma' => '10,000.25',
                 'comma_dot' => '10.000,25',
                 'dot_space' => '10000.25',
-                'comma_space' => '10 000,25'
+                'comma_space' => '10 000,25',
             )
         );
 
@@ -208,7 +206,7 @@ class CoreInstaller extends ModuleInstaller
             'es' => 'Mi sitio web',
             'sv' => 'min hemsida',
             'tr' => 'web siteme',
-            'uk' => 'мій сайт'
+            'uk' => 'мій сайт',
         );
 
         // language specific
