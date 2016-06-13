@@ -36,6 +36,45 @@
         <translation language="lt"><![CDATA[automatinis]]></translation>
         <translation language="el"><![CDATA[Αυτόματα]]></translation>
       </item>
+      <item type="label" name="Blue">
+        <translation language="nl"><![CDATA[blauw]]></translation>
+        <translation language="en"><![CDATA[blue]]></translation>
+        <translation language="it"><![CDATA[Blu]]></translation>
+        <translation language="ru"><![CDATA[синий]]></translation>
+        <translation language="zh"><![CDATA[蓝]]></translation>
+        <translation language="de"><![CDATA[Blau]]></translation>
+        <translation language="fr"><![CDATA[Bleu]]></translation>
+        <translation language="hu"><![CDATA[Kék]]></translation>
+        <translation language="es"><![CDATA[Azul]]></translation>
+        <translation language="uk"><![CDATA[синій]]></translation>
+        <translation language="el"><![CDATA[έθιμο]]></translation>
+      </item>
+      <item type="label" name="Custom">
+        <translation language="nl"><![CDATA[op maat]]></translation>
+        <translation language="en"><![CDATA[custom]]></translation>
+        <translation language="it"><![CDATA[usanza]]></translation>
+        <translation language="ru"><![CDATA[обычай]]></translation>
+        <translation language="zh"><![CDATA[习俗]]></translation>
+        <translation language="de"><![CDATA[Brauch]]></translation>
+        <translation language="fr"><![CDATA[coutume]]></translation>
+        <translation language="hu"><![CDATA[szokás]]></translation>
+        <translation language="es"><![CDATA[personalizado]]></translation>
+        <translation language="uk"><![CDATA[звичай]]></translation>
+        <translation language="el"><![CDATA[έθιμο]]></translation>
+      </item>
+      <item type="label" name="Gray">
+        <translation language="nl"><![CDATA[grijs]]></translation>
+        <translation language="en"><![CDATA[gray]]></translation>
+        <translation language="it"><![CDATA[grigio]]></translation>
+        <translation language="ru"><![CDATA[серый]]></translation>
+        <translation language="zh"><![CDATA[灰色]]></translation>
+        <translation language="de"><![CDATA[grau]]></translation>
+        <translation language="fr"><![CDATA[gris]]></translation>
+        <translation language="hu"><![CDATA[szürke]]></translation>
+        <translation language="es"><![CDATA[gris]]></translation>
+        <translation language="uk"><![CDATA[сірий]]></translation>
+        <translation language="el"><![CDATA[γκρί]]></translation>
+      </item>
       <item type="label" name="Hybrid">
         <translation language="nl"><![CDATA[hybride]]></translation>
         <translation language="en"><![CDATA[hybrid]]></translation>
@@ -75,6 +114,19 @@
         <translation language="es"><![CDATA[tipo de mapa]]></translation>
         <translation language="uk"><![CDATA[Тип]]></translation>
         <translation language="el"><![CDATA[Τύπος χάρτη]]></translation>
+      </item>
+      <item type="label" name="MapStyle">
+        <translation language="nl"><![CDATA[kaartstijl]]></translation>
+        <translation language="en"><![CDATA[map style]]></translation>
+        <translation language="it"><![CDATA[mappa stile]]></translation>
+        <translation language="ru"><![CDATA[Карта стиль]]></translation>
+        <translation language="zh"><![CDATA[地图样式]]></translation>
+        <translation language="de"><![CDATA[map-Stil]]></translation>
+        <translation language="fr"><![CDATA[style de carte]]></translation>
+        <translation language="hu"><![CDATA[térkép stílust]]></translation>
+        <translation language="es"><![CDATA[asignación de estilos]]></translation>
+        <translation language="uk"><![CDATA[Карта стиль]]></translation>
+        <translation language="el"><![CDATA[Χάρτης στυλ]]></translation>
       </item>
       <item type="label" name="Roadmap">
         <translation language="nl"><![CDATA[wegenkaart]]></translation>
