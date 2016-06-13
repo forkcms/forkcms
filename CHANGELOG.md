@@ -1,10 +1,3 @@
-3.9.7 (xxxx-xx-xx)
---
-Improvements:
-
-* Location: You can now choose a map style "standard", "custom", "gray" or "blue".
-
-
 3.9.6 (2015-12-22)
 --
 Improvements:
