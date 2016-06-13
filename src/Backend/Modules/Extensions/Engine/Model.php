@@ -46,7 +46,7 @@ class Model
         'Dashboard',
         'Error',
         'Extensions',
-        'Settings'
+        'Settings',
     );
 
     /**
@@ -54,6 +54,7 @@ class Model
      *
      * @param array $format The template format.
      * @param bool  $large  Will the HTML be used in a large version?
+     *
      * @return string
      */
     public static function buildTemplateHTML($format, $large = false)
@@ -61,21 +62,18 @@ class Model
         // cleanup
         $table = self::templateSyntaxToArray($format);
 
-        // add start html
-        $html = '<table cellspacing="10">' . "\n";
-        $html .= '	<tbody>' . "\n";
-
         // init var
         $rows = count($table);
         $cells = count($table[0]);
 
+        $htmlContent = array();
+
         // loop rows
-        for ($y = 0; $y < $rows; $y++) {
-            // start row
-            $html .= '		<tr>' . "\n";
+        for ($y = 0; $y < $rows; ++$y) {
+            $htmlContent[$y] = array();
 
             // loop cells
-            for ($x = 0; $x < $cells; $x++) {
+            for ($x = 0; $x < $cells; ++$x) {
                 // skip if needed
                 if (!isset($table[$y][$x])) {
                     continue;
@@ -99,7 +97,7 @@ class Model
                 // loop while the rows match
                 while ($rowMatches && $y + $rowspan < $rows) {
                     // loop columns inside spanned columns
-                    for ($i = 0; $i < $colspan; $i++) {
+                    for ($i = 0; $i < $colspan; ++$i) {
                         // check value
                         if ($table[$y + $rowspan][$x + $i] !== $value) {
                             // no match, so stop
@@ -111,62 +109,29 @@ class Model
                     // any rowmatches?
                     if ($rowMatches) {
                         // loop columns and reset value
-                        for ($i = 0; $i < $colspan; $i++) {
+                        for ($i = 0; $i < $colspan; ++$i) {
                             $table[$y + $rowspan][$x + $i] = null;
                         }
 
                         // increment
-                        $rowspan++;
+                        ++$rowspan;
                     }
                 }
 
-                // decide state
-                $exists = $value != '/';
-
-                // set values
-                $title = \SpoonFilter::ucfirst($value);
-
-                // start cell
-                $html .= '<td';
-
-                // add rowspan if needed
-                if ($rowspan > 1) {
-                    $html .= ' rowspan="' . $rowspan . '"';
-                }
-
-                // add colspan if needed
-                if ($colspan > 1) {
-                    $html .= ' colspan="' . $colspan . '"';
-                }
-
-                // does the cell need content?
-                if (!$exists) {
-                    $html .= ' class="empty">&nbsp;</td>' . "\n";
-                } else {
-                    // large visual?
-                    if ($large) {
-                        $html .= ' id="templatePosition-' . $value . '" data-position="' . $value . '" class="box">
-                                    <div class="heading linkedBlocksTitle"><h3>' . $title . '</h3></div>
-                                    <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
-                                    <div class="buttonHolder buttonAddHolder">
-                                        <a href="#addBlock" class="button icon iconAdd addBlock">
-                                            <span>' . \SpoonFilter::ucfirst(BL::lbl('AddBlock')) . '</span>
-                                        </a>
-                                    </div>
-                                </td>' . "\n";
-                    } else {
-                        $html .= '><a href="#position-' . $value . '" title="' . $title . '">' . $title . '</a></td>' . "\n";
-                    }
-                }
+                $htmlContent[$y][$x] = array(
+                    'title' => \SpoonFilter::ucfirst($value),
+                    'value' => $value,
+                    'exists' => $value != '/',
+                    'rowspan' => $rowspan,
+                    'colspan' => $colspan,
+                    'large' => $large,
+                );
             }
-
-            // end row
-            $html .= '		</tr>' . "\n";
         }
 
-        // end html
-        $html .= '	</tbody>' . "\n";
-        $html .= '</table>' . "\n";
+        $templating = BackendModel::get('template');
+        $templating->assign('table', $htmlContent);
+        $html = $templating->getContent('Extensions/Layout/Templates/Templates.html.twig');
 
         return $html;
     }
@@ -191,7 +156,7 @@ class Model
                     'message' => sprintf(
                         BL::err('AkismetKey'),
                         BackendModel::createURLForAction('Index', 'Settings')
-                    )
+                    ),
                 );
             }
 
@@ -202,7 +167,7 @@ class Model
                     'message' => sprintf(
                         BL::err('GoogleMapsKey'),
                         BackendModel::createURLForAction('Index', 'Settings')
-                    )
+                    ),
                 );
             }
         }
@@ -218,7 +183,7 @@ class Model
                         'message' => sprintf(
                             BL::err('CronjobsNotSet', 'Extensions'),
                             BackendModel::createURLForAction('Modules', 'Extensions')
-                        )
+                        ),
                     );
                     break;
                 }
@@ -255,6 +220,7 @@ class Model
      * Delete a template.
      *
      * @param int $id The id of the template to delete.
+     *
      * @return bool
      */
     public static function deleteTemplate($id)
@@ -303,6 +269,7 @@ class Model
      * This does not check for existence in the database but on the filesystem.
      *
      * @param string $module Module to check for existence.
+     *
      * @return bool
      */
     public static function existsModule($module)
@@ -314,6 +281,7 @@ class Model
      * Check if a template exists
      *
      * @param int $id The Id of the template to check for existence.
+     *
      * @return bool
      */
     public static function existsTemplate($id)
@@ -329,6 +297,7 @@ class Model
      * This does not check for existence in the database but on the filesystem.
      *
      * @param string $theme Theme to check for existence.
+     *
      * @return bool
      */
     public static function existsTheme($theme)
@@ -439,7 +408,7 @@ class Model
                 $values[$row['module']] = array(
                     'value' => $row['module'],
                     'name' => $moduleName,
-                    'items' => array()
+                    'items' => array(),
                 );
             }
 
@@ -453,6 +422,7 @@ class Model
      * Fetch the module information from the info.xml file.
      *
      * @param string $module
+     *
      * @return array
      */
     public static function getModuleInformation($module)
@@ -466,7 +436,7 @@ class Model
                 $information['data'] = self::processModuleXml($infoXml);
                 if (empty($information['data'])) {
                     $information['warnings'][] = array(
-                        'message' => BL::getMessage('InformationFileIsEmpty')
+                        'message' => BL::getMessage('InformationFileIsEmpty'),
                     );
                 }
 
@@ -475,7 +445,7 @@ class Model
                     foreach ($information['data']['cronjobs'] as $cronjob) {
                         if (!$cronjob['active']) {
                             $information['warnings'][] = array(
-                                'message' => BL::getError('CronjobsNotSet')
+                                'message' => BL::getError('CronjobsNotSet'),
                             );
                         }
                         break;
@@ -483,12 +453,12 @@ class Model
                 }
             } catch (Exception $e) {
                 $information['warnings'][] = array(
-                    'message' => BL::getMessage('InformationFileCouldNotBeLoaded')
+                    'message' => BL::getMessage('InformationFileCouldNotBeLoaded'),
                 );
             }
         } else {
             $information['warnings'][] = array(
-                'message' => BL::getMessage('InformationFileIsMissing')
+                'message' => BL::getMessage('InformationFileIsMissing'),
             );
         }
 
@@ -608,6 +578,7 @@ class Model
      * Get a given template
      *
      * @param int $id The id of the requested template.
+     *
      * @return array
      */
     public static function getTemplate($id)
@@ -622,6 +593,7 @@ class Model
      * Get templates
      *
      * @param string $theme The theme we want to fetch the templates from.
+     *
      * @return array
      */
     public static function getTemplates($theme = null)
@@ -674,7 +646,7 @@ class Model
             if ($i == $half) {
                 $row['break'] = true;
             }
-            $i++;
+            ++$i;
         }
 
         return (array) $templates;
@@ -726,6 +698,7 @@ class Model
      * Create template XML for export
      *
      * @param string $theme
+     *
      * @return string
      */
     public static function createTemplateXmlForExport($theme)
@@ -774,6 +747,7 @@ class Model
      * Checks if a specific module has errors or not
      *
      * @param string $module
+     *
      * @return string
      */
     public static function hasModuleWarnings($module)
@@ -787,6 +761,7 @@ class Model
      * Inserts a new template
      *
      * @param array $template The data for the template to insert.
+     *
      * @return int
      */
     public static function insertTemplate(array $template)
@@ -880,6 +855,7 @@ class Model
      * Checks if a module is already installed.
      *
      * @param string $module
+     *
      * @return bool
      */
     public static function isModuleInstalled($module)
@@ -897,6 +873,7 @@ class Model
      * Is the provided template id in use by active versions of pages?
      *
      * @param int $templateId The id of the template to check.
+     *
      * @return bool
      */
     public static function isTemplateInUse($templateId)
@@ -914,6 +891,7 @@ class Model
      * Checks if a theme is already installed.
      *
      * @param string $theme
+     *
      * @return bool
      */
     public static function isThemeInstalled($theme)
@@ -932,6 +910,7 @@ class Model
      * The default is_writable function has problems due to Windows ACLs "bug"
      *
      * @param string $path The path to check.
+     *
      * @return bool
      */
     public static function isWritable($path)
@@ -951,6 +930,7 @@ class Model
      * Process the module's information XML and return an array with the information.
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return array
      */
     public static function processModuleXml(\SimpleXMLElement $xml)
@@ -1007,7 +987,7 @@ class Model
             $information['events'][] = array(
                 'application' => (isset($attributes['application'])) ? $attributes['application'] : '',
                 'name' => (isset($attributes['name'])) ? $attributes['name'] : '',
-                'description' => $event[0]
+                'description' => $event[0],
             );
         }
 
@@ -1018,6 +998,7 @@ class Model
      * Process the theme's information XML and return an array with the information.
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return array
      */
     public static function processThemeXml(\SimpleXMLElement $xml)
@@ -1068,7 +1049,7 @@ class Model
                     foreach ($positionXML->defaults->widget as $widget) {
                         $position['widgets'][] = array(
                             'module' => (string) $widget['module'],
-                            'action' => (string) $widget['action']
+                            'action' => (string) $widget['action'],
                         );
                     }
                 }
@@ -1094,6 +1075,7 @@ class Model
      * Convert the template syntax into an array to work with.
      *
      * @param string $syntax
+     *
      * @return array
      */
     public static function templateSyntaxToArray($syntax)
@@ -1144,6 +1126,7 @@ class Model
      * Make sure that we have an entirely valid theme information array
      *
      * @param array $information Contains the parsed theme info.xml data.
+     *
      * @return array
      */
     public static function validateThemeInformation($information)
@@ -1195,13 +1178,13 @@ class Model
 
                 // check if there still are valid positions
                 if (!isset($information['templates'][$i]['positions']) || !$information['templates'][$i]['positions']) {
-                    return null;
+                    return;
                 }
             }
 
             // check if there still are valid templates
             if (!isset($information['templates']) || !$information['templates']) {
-                return null;
+                return;
             }
         }
 

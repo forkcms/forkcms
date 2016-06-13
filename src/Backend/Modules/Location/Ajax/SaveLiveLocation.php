@@ -11,7 +11,6 @@ namespace Backend\Modules\Location\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
@@ -33,8 +32,12 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         // get parameters
         $itemId = \SpoonFilter::getPostValue('id', null, null, 'int');
         $zoomLevel = trim(\SpoonFilter::getPostValue('zoom', null, 'auto'));
+<<<<<<< HEAD
         $mapType = strtoupper(trim(\SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap')));
         $mapStyle = trim(\SpoonFilter::getPostValue('style', array('standard', 'custom', 'gray', 'blue'), 'standard'));
+=======
+        $mapType = mb_strtoupper(trim(\SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap')));
+>>>>>>> forkcms/master
         $centerLat = \SpoonFilter::getPostValue('centerLat', null, 1, 'float');
         $centerlng = \SpoonFilter::getPostValue('centerLng', null, 1, 'float');
         $height = \SpoonFilter::getPostValue('height', null, $generalSettings['height'], 'int');
@@ -73,7 +76,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         $item = array(
             'id' => $itemId,
             'language' => BL::getWorkingLanguage(),
-            'show_overview' => ($showOverview) ? 'Y' : 'N'
+            'show_overview' => ($showOverview) ? 'Y' : 'N',
         );
         BackendLocationModel::update($item);
 

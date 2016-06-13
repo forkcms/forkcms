@@ -89,9 +89,6 @@ class Edit extends BackendBaseActionEdit
         $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
-        // add css
-        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
-
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
 
@@ -195,7 +192,7 @@ class Edit extends BackendBaseActionEdit
         $this->dgDrafts->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
             )
         );
 
@@ -244,14 +241,14 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('html');
         $this->frm->addHidden('template_id', $this->record['template_id']);
         $this->frm->addRadiobutton(
             'hidden',
             array(
                  array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                 array('label' => BL::lbl('Published'), 'value' => 'N')
+                 array('label' => BL::lbl('Published'), 'value' => 'N'),
             ),
             $this->record['hidden']
         );
@@ -346,7 +343,7 @@ class Edit extends BackendBaseActionEdit
                 $this->blocksContent[] = $block;
 
                 // increment counter; go fetch next block
-                $i++;
+                ++$i;
             }
         }
 
@@ -386,12 +383,12 @@ class Edit extends BackendBaseActionEdit
             array(
                 'value' => 'internal',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
-                'variables' => array('isInternal' => true)
+                'variables' => array('isInternal' => true),
             ),
             array(
                 'value' => 'external',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
-                'variables' => array('isExternal' => true)
+                'variables' => array('isExternal' => true),
             ),
         );
         $this->frm->addRadiobutton('redirect', $redirectValues, $redirectValue);
@@ -418,8 +415,8 @@ class Edit extends BackendBaseActionEdit
             'tags',
             BackendTagsModel::getTags($this->URL->getModule(), $this->id),
             null,
-            'inputText tagBox',
-            'inputTextError tagBox'
+            'form-control js-tags-input',
+            'error js-tags-input'
         );
 
         // a specific action
@@ -452,7 +449,7 @@ class Edit extends BackendBaseActionEdit
                  $this->id,
                  'archive',
                  BL::getWorkingLanguage(
-                 )
+                 ),
             )
         );
 
@@ -466,7 +463,7 @@ class Edit extends BackendBaseActionEdit
         $this->dgRevisions->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
             )
         );
 
@@ -606,7 +603,7 @@ class Edit extends BackendBaseActionEdit
                 if ($redirectValue == 'internal') {
                     $data['internal_redirect'] = array(
                         'page_id' => $this->frm->getField('internal_redirect')->getValue(),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
                 if ($redirectValue == 'external') {
@@ -614,7 +611,7 @@ class Edit extends BackendBaseActionEdit
                         'url' => BackendPagesModel::getEncodedRedirectURL(
                             $this->frm->getField('external_redirect')->getValue()
                         ),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
 

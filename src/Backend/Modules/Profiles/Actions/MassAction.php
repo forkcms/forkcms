@@ -69,7 +69,7 @@ class MassAction extends BackendBaseAction
                         array(
                              'profile_id' => $id,
                              'group_id' => $newGroupId,
-                             'starts_on' => BackendModel::getUTCDate()
+                             'starts_on' => BackendModel::getUTCDate(),
                         )
                     );
                 }
@@ -97,7 +97,7 @@ class MassAction extends BackendBaseAction
                      'sort' => \SpoonFilter::getGetValue('sort', null, ''),
                      'email' => \SpoonFilter::getGetValue('email', null, ''),
                      'status' => \SpoonFilter::getGetValue('status', null, ''),
-                     'group' => \SpoonFilter::getGetValue('group', null, '')
+                     'group' => \SpoonFilter::getGetValue('group', null, ''),
                 )
             ) . '&report=' . $report
         );

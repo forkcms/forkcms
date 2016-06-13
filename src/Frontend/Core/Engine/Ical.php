@@ -138,6 +138,7 @@ class FrontendIcalEvent extends \SpoonICalEvent
      * Process links, will prepend SITE_URL if needed and append UTM-parameters
      *
      * @param string $content The content to process.
+     *
      * @return string
      */
     public function processLinks($content)
@@ -189,7 +190,7 @@ class FrontendIcalEvent extends \SpoonICalEvent
         $url = (string) $url;
 
         // if link doesn't start with http, we prepend the URL of the site
-        if (substr($url, 0, 7) != 'http://') {
+        if (mb_substr($url, 0, 7) != 'http://') {
             $url = SITE_URL . $url;
         }
 

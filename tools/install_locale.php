@@ -48,8 +48,7 @@ else {
 // bootstrap Fork
 define('APPLICATION', 'Backend');
 $kernel = new AppKernel('prod', false);
-$kernel->boot();
-$kernel->defineForkConstants();
+
 if (!defined('PATH_WWW')) {
     define('PATH_WWW', __DIR__ . '/..');
 }
@@ -82,11 +81,13 @@ if (!$results['total'] > 0) {
 } else {
     if ($results['imported'] > 0) {
         echo 'Locale installed successfully' . "\n";
+
         return;
     }
 
     if ($results['imported'] == 0) {
         echo 'No locale was installed. Try adding the overwrite (-o) option.' . "\n";
+
         return;
     }
 }

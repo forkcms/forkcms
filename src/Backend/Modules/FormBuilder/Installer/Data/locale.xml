@@ -3,19 +3,19 @@
   <Backend>
     <FormBuilder>
       <item type="label" name="Add">
-        <translation language="nl"><![CDATA[formulier toevoegen]]></translation>
-        <translation language="en"><![CDATA[add form]]></translation>
-        <translation language="it"><![CDATA[aggiungi form]]></translation>
-        <translation language="ru"><![CDATA[Добавить форму]]></translation>
+        <translation language="nl"><![CDATA[toevoegen]]></translation>
+        <translation language="en"><![CDATA[add]]></translation>
+        <translation language="it"><![CDATA[aggiungi]]></translation>
+        <translation language="ru"><![CDATA[Добавить]]></translation>
         <translation language="zh"><![CDATA[添加表单]]></translation>
-        <translation language="de"><![CDATA[Formular hinzufügen]]></translation>
-        <translation language="fr"><![CDATA[ajouter un formulaire]]></translation>
-        <translation language="hu"><![CDATA[űrlap hozzáadása]]></translation>
-        <translation language="es"><![CDATA[agregar formulario]]></translation>
-        <translation language="uk"><![CDATA[Додати форму]]></translation>
-        <translation language="lt"><![CDATA[nauja forma]]></translation>
-        <translation language="sv"><![CDATA[lägg till formulär]]></translation>
-        <translation language="el"><![CDATA[Προσθήκη φόρμας]]></translation>
+        <translation language="de"><![CDATA[hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter]]></translation>
+        <translation language="hu"><![CDATA[hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar]]></translation>
+        <translation language="uk"><![CDATA[Додати]]></translation>
+        <translation language="lt"><![CDATA[nauja]]></translation>
+        <translation language="sv"><![CDATA[lägg]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη]]></translation>
       </item>
       <item type="label" name="AddFields">
         <translation language="nl"><![CDATA[velden toevoegen]]></translation>
@@ -392,6 +392,20 @@
         <translation language="uk"><![CDATA[заповнювач]]></translation>
         <translation language="sv"><![CDATA[platshållare]]></translation>
         <translation language="el"><![CDATA[κράτησης θέσης]]></translation>
+      </item>
+      <item type="label" name="Classname">
+        <translation language="nl"><![CDATA[CSS-klasse]]></translation>
+        <translation language="en"><![CDATA[CSS class]]></translation>
+        <translation language="it"><![CDATA[Classe CSS]]></translation>
+        <translation language="ru"><![CDATA[CSS-класс]]></translation>
+        <translation language="zh"><![CDATA[CSS类]]></translation>
+        <translation language="fr"><![CDATA[Classe CSS]]></translation>
+        <translation language="hu"><![CDATA[CSS osztály]]></translation>
+        <translation language="de"><![CDATA[CSS-Klasse]]></translation>
+        <translation language="es"><![CDATA[Clases CSS]]></translation>
+        <translation language="uk"><![CDATA[CSS клас]]></translation>
+        <translation language="sv"><![CDATA[CSS-klass]]></translation>
+        <translation language="el"><![CDATA[CSS Class]]></translation>
       </item>
       <item type="label" name="Preview">
         <translation language="nl"><![CDATA[preview]]></translation>
@@ -941,6 +955,13 @@
         <translation language="es"><![CDATA[%1$s enviados]]></translation>
         <translation language="sv"><![CDATA[%1$s inskick]]></translation>
         <translation language="el"><![CDATA[%1$s υποβολές]]></translation>
+      </item>
+      <item type="message" name="TimeAndDate">
+        <translation language="nl"><![CDATA[Tijd en datum]]></translation>
+        <translation language="en"><![CDATA[Time and date]]></translation>
+        <translation language="it"><![CDATA[ora e data]]></translation>
+        <translation language="fr"><![CDATA[heure et date]]></translation>
+        <translation language="de"><![CDATA[Zeit und Datum]]></translation>
       </item>
       <item type="error" name="ErrorMessageIsRequired">
         <translation language="nl"><![CDATA[Gelieve een foutmelding in te geven.]]></translation>

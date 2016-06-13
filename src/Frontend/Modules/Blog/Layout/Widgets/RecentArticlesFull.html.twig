@@ -1,0 +1,53 @@
+{#
+	variables that are available:
+	- {{ widgetBlogRecentArticlesFull }}: contains an array with all posts, each element contains data about the post
+#}
+
+{% if widgetBlogRecentArticlesFull %}
+  <section id="blogRecentArticlesFullWidget" class="mod">
+    <div class="inner">
+      <header class="hd">
+        <h3>{{ 'lbl.RecentArticles'|trans|capitalize }}</h3>
+      </header>
+      <div class="bd">
+        {% for article in widgetBlogRecentArticlesFull %}
+          <article class="mod article">
+            <div class="inner">
+              <header class="hd">
+                <h4><a href="{{ article.full_url }}" title="{{ article.title }}">{{ article.title }}</a></h4>
+                <ul>
+                  <li>{{ 'msg.WrittenBy'|trans|capitalize|sprintf(article.user_id|usersetting('nickname')) }} {{ 'lbl.On'|trans }} {{ article.publish_on|spoondate(dateFormatLong, LANGUAGE) }}</li>
+                  {% if article.allow_comments %}
+                    <li>
+                      {% if not article.comments %}
+                        <a href="{{ article.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNoComments'|trans|capitalize }}</a>{% endif %}
+                      {% if article.comments %}
+                        {% if article.comments_multiple %}
+                          <a href="{{ article.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|sprintf(article.comments_count) }}</a>{% endif %}
+                        {% if not article.comments_multiple %}
+                          <a href="{{ article.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
+                      {% endif %}
+                    </li>
+                  {% endif %}
+                  <li>
+                    <a href="{{ article.category_full_url }}" title="{{ article.category_title }}">{{ article.category_title }}</a>
+                  </li>
+                </ul>
+              </header>
+              <div class="bd content">
+                {% if not article.introduction %}{{ article.text }}{% endif %}
+                {% if article.introduction %}{{ article.introduction }}{% endif %}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+      <footer class="ft">
+        <p>
+          <a href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|capitalize }}</a>
+          <a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|capitalize }}</a>
+        </p>
+      </footer>
+    </div>
+  </section>
+{% endif %}

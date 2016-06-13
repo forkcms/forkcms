@@ -142,6 +142,7 @@ class InstallationData
      * Sets the The host of the database.
      *
      * @param string $dbHostname the db hostname
+     *
      * @return self
      */
     public function setDbHostname($dbHostname)
@@ -165,6 +166,7 @@ class InstallationData
      * Sets the The username for the database.
      *
      * @param string $dbUsername the db username
+     *
      * @return self
      */
     public function setDbUsername($dbUsername)
@@ -188,6 +190,7 @@ class InstallationData
      * Sets the The password for the database.
      *
      * @param string $dbPassword the db password
+     *
      * @return self
      */
     public function setDbPassword($dbPassword)
@@ -211,6 +214,7 @@ class InstallationData
      * Sets the The database name.
      *
      * @param string $dbDatabase the db database
+     *
      * @return self
      */
     public function setDbDatabase($dbDatabase)
@@ -234,6 +238,7 @@ class InstallationData
      * Sets the The port for the database.
      *
      * @param int $dbPort the db port
+     *
      * @return self
      */
     public function setDbPort($dbPort)
@@ -257,6 +262,7 @@ class InstallationData
      * Sets the The type of language setup: single or multiple.
      *
      * @param string $languageType the language type
+     *
      * @return self
      */
     public function setLanguageType($languageType)
@@ -280,6 +286,7 @@ class InstallationData
      * Sets the Do we use the same languages for the backend or not?.
      *
      * @param bool $sameInterfaceLanguage the same interface language
+     *
      * @return self
      */
     public function setSameInterfaceLanguage($sameInterfaceLanguage)
@@ -313,6 +320,7 @@ class InstallationData
      * Sets the The languages to install Fork in.
      *
      * @param array $languages the languages
+     *
      * @return self
      */
     public function setLanguages(array $languages)
@@ -336,6 +344,7 @@ class InstallationData
      * Sets the The backend interface languages to install for Fork.
      *
      * @param array $interfaceLanguages the interface languages
+     *
      * @return self
      */
     public function setInterfaceLanguages(array $interfaceLanguages)
@@ -359,6 +368,7 @@ class InstallationData
      * Sets the The default language for this Fork installation.
      *
      * @param string $defaultLanguage the default language
+     *
      * @return self
      */
     public function setDefaultLanguage($defaultLanguage)
@@ -382,6 +392,7 @@ class InstallationData
      * Sets the The default language for the Fork backend.
      *
      * @param string $defaultInterfaceLanguage the default interface language
+     *
      * @return self
      */
     public function setDefaultInterfaceLanguage($defaultInterfaceLanguage)
@@ -405,6 +416,7 @@ class InstallationData
      * Adds a module to the modules array
      *
      * @param string $module
+     *
      * @return $this
      */
     public function addModule($module)
@@ -418,6 +430,7 @@ class InstallationData
      * Removes an item from the modules array
      *
      * @param string $module
+     *
      * @return $this
      */
     public function removeModule($module)
@@ -431,6 +444,7 @@ class InstallationData
      * Sets the The modules to install Fork in.
      *
      * @param array $modules the modules
+     *
      * @return self
      */
     public function setModules(array $modules)
@@ -454,6 +468,7 @@ class InstallationData
      * Sets the do we install exampleData?.
      *
      * @param bool $exampleData the example data
+     *
      * @return self
      */
     public function setExampleData($exampleData)
@@ -477,6 +492,7 @@ class InstallationData
      * Sets the Do we use a different debug emailaddress.
      *
      * @param bool $differentDebugEmail the different debug email
+     *
      * @return self
      */
     public function setDifferentDebugEmail($differentDebugEmail)
@@ -500,6 +516,7 @@ class InstallationData
      * Sets the The custom debug emailaddress, if applicable.
      *
      * @param string $debugEmail the debug email
+     *
      * @return self
      */
     public function setDebugEmail($debugEmail)
@@ -523,6 +540,7 @@ class InstallationData
      * Sets the The backend login email for the GOD user.
      *
      * @param string $email the email
+     *
      * @return self
      */
     public function setEmail($email)
@@ -546,6 +564,7 @@ class InstallationData
      * Sets the The backend password for the GOD user.
      *
      * @param string $password the password
+     *
      * @return self
      */
     public function setPassword($password)
@@ -558,7 +577,7 @@ class InstallationData
     /**
      * Checks if all data needed for installation is available here
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid()
     {

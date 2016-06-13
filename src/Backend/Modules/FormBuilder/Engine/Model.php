@@ -32,6 +32,7 @@ class Model
      * Calculate time ago.
      *
      * @param int $timestamp Unix timestamp from the past.
+     *
      * @return string
      */
     public static function calculateTimeAgo($timestamp)
@@ -87,12 +88,12 @@ class Model
 
         // create identifier
         do {
-            $id++;
+            ++$id;
             $identifier = 'form' . $id;
         }
 
             // @todo refactor me...
-            // keep trying till its unique
+            // keep trying till it's unique
         while ((int) BackendModel::getContainer()->get('database')->getVar(
                 'SELECT 1
                  FROM forms AS i
@@ -182,6 +183,7 @@ class Model
      * Does the item exist.
      *
      * @param int $id Id of a form.
+     *
      * @return bool
      */
     public static function exists($id)
@@ -199,6 +201,7 @@ class Model
      * Does the data item exist.
      *
      * @param int $id Id of the data item.
+     *
      * @return bool
      */
     public static function existsData($id)
@@ -217,6 +220,7 @@ class Model
      *
      * @param int $id     Id of a field.
      * @param int $formId Id of a form.
+     *
      * @return bool
      */
     public static function existsField($id, $formId = null)
@@ -249,6 +253,7 @@ class Model
      *
      * @param string $identifier Identifier.
      * @param int    $ignoreId   Field id to ignore.
+     *
      * @return bool
      */
     public static function existsIdentifier($identifier, $ignoreId = null)
@@ -280,6 +285,7 @@ class Model
      * Formats the recipients based on the serialized string
      *
      * @param string $string The serialized string that should be formatted
+     *
      * @return string
      */
     public static function formatRecipients($string)
@@ -291,6 +297,7 @@ class Model
      * Get all data for a given id.
      *
      * @param int $id The id for the record to get.
+     *
      * @return array
      */
     public static function get($id)
@@ -312,6 +319,7 @@ class Model
      * Get data for a given id.
      *
      * @param int $id The id for the record to get.
+     *
      * @return array
      */
     public static function getData($id)
@@ -347,6 +355,7 @@ class Model
      * Get errors (optional by type).
      *
      * @param string $type Type of error.
+     *
      * @return mixed
      */
     public static function getErrors($type = null)
@@ -378,6 +387,7 @@ class Model
      * Get a field.
      *
      * @param int $id Id of a field.
+     *
      * @return array
      */
     public static function getField($id)
@@ -410,6 +420,7 @@ class Model
      * Get all fields of a form.
      *
      * @param int $id Id of a form.
+     *
      * @return array
      */
     public static function getFields($id)
@@ -448,6 +459,7 @@ class Model
      * @param string $name        Name of the locale item.
      * @param string $type        Type of locale item.
      * @param string $application Name of the application.
+     *
      * @return string
      */
     public static function getLocale($name, $type = 'label', $application = 'Backend')
@@ -464,6 +476,7 @@ class Model
      * Get the maximum sequence for fields in a form.
      *
      * @param int $formId Id of the form.
+     *
      * @return int
      */
     public static function getMaximumSequence($formId)
@@ -480,6 +493,7 @@ class Model
      * Add a new item.
      *
      * @param array $values The data to insert.
+     *
      * @return int
      */
     public static function insert(array $values)
@@ -497,7 +511,7 @@ class Model
                 'id' => $formId,
                 'extra_label' => $values['name'],
                 'language' => $values['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $formId
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $formId,
             ),
             false,
             '400' . $formId
@@ -510,6 +524,7 @@ class Model
      * Add a new field.
      *
      * @param array $values The data to insert.
+     *
      * @return int
      */
     public static function insertField(array $values)
@@ -521,6 +536,7 @@ class Model
      * Add validation for a field.
      *
      * @param array $values The data to insert.
+     *
      * @return int
      */
     public static function insertFieldValidation(array $values)
@@ -533,6 +549,7 @@ class Model
      *
      * @param int   $id     The id for the item to update.
      * @param array $values The new data.
+     *
      * @return int
      */
     public static function update($id, array $values)
@@ -564,6 +581,7 @@ class Model
      *
      * @param int   $id     The id for the item to update.
      * @param array $values The new data.
+     *
      * @return int
      */
     public static function updateField($id, array $values)

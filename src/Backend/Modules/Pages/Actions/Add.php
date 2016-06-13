@@ -78,9 +78,6 @@ class Add extends BackendBaseActionAdd
         $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
-        // add css
-        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
-
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
         $this->isGod = BackendAuthentication::getUser()->isGod();
@@ -124,14 +121,14 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
-        $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('html');
         $this->frm->addHidden('template_id', $defaultTemplateId);
         $this->frm->addRadiobutton(
             'hidden',
             array(
                  array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                 array('label' => BL::lbl('Published'), 'value' => 'N')
+                 array('label' => BL::lbl('Published'), 'value' => 'N'),
             ),
             'N'
         );
@@ -218,7 +215,7 @@ class Add extends BackendBaseActionAdd
                 $this->blocksContent[] = $block;
 
                 // increment counter; go fetch next block
-                $i++;
+                ++$i;
             }
         }
 
@@ -251,12 +248,12 @@ class Add extends BackendBaseActionAdd
             array(
                 'value' => 'internal',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
-                'variables' => array('isInternal' => true)
+                'variables' => array('isInternal' => true),
             ),
             array(
                 'value' => 'external',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
-                'variables' => array('isExternal' => true)
+                'variables' => array('isExternal' => true),
             ),
         );
         $this->frm->addRadiobutton('redirect', $redirectValues, 'none');
@@ -268,7 +265,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addText('navigation_title');
 
         // tags
-        $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
+        $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
 
         // a specific action
         $this->frm->addCheckbox('is_action', false);
@@ -362,7 +359,7 @@ class Add extends BackendBaseActionAdd
                 if ($redirectValue == 'internal') {
                     $data['internal_redirect'] = array(
                         'page_id' => $this->frm->getField('internal_redirect')->getValue(),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
                 if ($redirectValue == 'external') {
@@ -370,7 +367,7 @@ class Add extends BackendBaseActionAdd
                         'url' => BackendPagesModel::getEncodedRedirectURL(
                             $this->frm->getField('external_redirect')->getValue()
                         ),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
 

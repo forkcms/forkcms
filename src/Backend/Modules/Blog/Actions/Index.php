@@ -108,7 +108,7 @@ class Index extends BackendBaseActionIndex
         $this->dgPosts->setHeaderLabels(
             array(
                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('Author')),
-                'publish_on' => \SpoonFilter::ucfirst(BL::lbl('PublishedOn'))
+                'publish_on' => \SpoonFilter::ucfirst(BL::lbl('PublishedOn')),
             )
         );
 
@@ -171,7 +171,7 @@ class Index extends BackendBaseActionIndex
                     $this->categoryId,
                     'draft',
                     BackendAuthentication::getUser()->getUserId(),
-                    BL::getWorkingLanguage()
+                    BL::getWorkingLanguage(),
                 )
             );
 
@@ -338,8 +338,11 @@ class Index extends BackendBaseActionIndex
         // get categories
         $categories = BackendBlogModel::getCategories(true);
 
+        $hasMultipleCategories = (count($categories) > 1);
+        $this->tpl->assign('hasMultipleCategories', $hasMultipleCategories);
+
         // multiple categories?
-        if (count($categories) > 1) {
+        if ($hasMultipleCategories) {
             // create form
             $frm = new BackendForm('filter', null, 'get', false);
 

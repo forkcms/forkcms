@@ -88,6 +88,7 @@ class Addresses extends BackendBaseActionIndex
      * Sets the headers so we may download the CSV file in question
      *
      * @param string $path The full path to the CSV file you wish to download.
+     *
      * @return array
      */
     private function downloadCSV($path)
@@ -152,7 +153,7 @@ class Addresses extends BackendBaseActionIndex
                      'offset' => '[offset]',
                      'order' => '[order]',
                      'sort' => '[sort]',
-                     'email' => $this->filter['email']
+                     'email' => $this->filter['email'],
                 ),
                 false
             )
@@ -174,17 +175,20 @@ class Addresses extends BackendBaseActionIndex
 
         // add the multicheckbox column
         $this->dataGrid->addColumn(
-            'checkbox',
+            'check',
             '<span class="checkboxHolder block"><input type="checkbox" name="toggleChecks" value="toggleChecks" />',
             '<input type="checkbox" name="emails[]" value="[email]" class="inputCheckbox" /></span>'
         );
-        $this->dataGrid->setColumnsSequence('checkbox');
+        $this->dataGrid->setColumnsSequence('check');
 
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown('action', array(
                 'export' => BL::lbl('Export'),
-                'delete' => BL::lbl('Delete')
-            ), 'delete'
+                'delete' => BL::lbl('Delete'),
+            ), 'delete',
+            false,
+            'form-control',
+            'form-control danger'
         );
         $this->dataGrid->setMassAction($ddmMassAction);
 
@@ -216,7 +220,10 @@ class Addresses extends BackendBaseActionIndex
         $this->frm = new BackendForm('filter', null, 'get');
 
         // add fields
-        $this->frm->addText('email', $this->filter['email']);
+        $this->frm
+            ->addText('email', $this->filter['email'])
+            ->setAttribute('type', 'email')
+        ;
         $this->frm->addHidden('group_id', $this->group['id']);
 
         // manually parse fields

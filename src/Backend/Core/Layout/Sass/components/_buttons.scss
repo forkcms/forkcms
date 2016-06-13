@@ -1,0 +1,60 @@
+.btn {
+  border-radius: 3px;
+  padding: 9px 12px 10px;
+
+  .fa {
+    padding-right: 6px;
+  }
+
+  &.ui-sortable-handle {
+    cursor: move;
+  }
+
+  &.btn-xs {
+    padding: 2px 8px;
+  }
+
+  &.btn-md {
+    font-size: $font-size-small;
+    padding: 4px 15px 5px;
+  }
+}
+
+.btn-icon-only {
+  .fa {
+    padding-right: 0;
+  }
+}
+
+.btn-group {
+  .btn + .btn {
+    margin-left: 6px;
+  }
+
+  .btn:first-child:not(:last-child):not(.dropdown-toggle),
+  .btn:last-child:not(:first-child),
+  .btn:not(:first-child):not(:last-child):not(.dropdown-toggle){
+    border-radius: 3px;
+  }
+}
+
+.btn-second {
+  color: $brand-primary;
+
+  &:hover,
+  &:focus {
+    color: $brand-primary;
+  }
+}
+
+.input-group-addon {
+  color: $text-color;
+
+  &.btn {
+    color: $brand-primary;
+
+    &:hover {
+      color: $white;
+    }
+  }
+}

@@ -44,7 +44,7 @@ class UpdateMarker extends BackendBaseAJAXAction
                 'id' => $itemId,
                 'lat' => $lat,
                 'lng' => $lng,
-                'language' => BL::getWorkingLanguage()
+                'language' => BL::getWorkingLanguage(),
             );
 
             BackendLocationModel::update($updateData);

@@ -93,7 +93,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('text', $this->record['text']);
         $this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
 
@@ -123,7 +123,7 @@ class Edit extends BackendBaseActionEdit
         // set headers
         $this->dgRevisions->setHeaderLabels(array(
             'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
         ));
 
         // set column-functions
@@ -185,6 +185,7 @@ class Edit extends BackendBaseActionEdit
 
             // validate fields
             $fields['title']->isFilled(BL::err('TitleIsRequired'));
+            $fields['text']->isFilled(BL::err('FieldIsRequired'));
 
             if ($this->frm->isCorrect()) {
                 $item['id'] = $this->id;

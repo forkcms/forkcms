@@ -177,7 +177,7 @@ class Register extends FrontendBaseBlock
                         ->setTo(array($txtEmail->getValue() => ''))
                         ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                         ->parseHtml(
-                            FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.tpl',
+                            FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.html.twig',
                             $mailValues,
                             true
                         )
@@ -185,7 +185,7 @@ class Register extends FrontendBaseBlock
                     $this->get('mailer')->send($message);
 
                     // redirect
-                    $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
+                    $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
                 } catch (\Exception $e) {
                     // make sure RedirectExceptions get thrown
                     if ($e instanceof RedirectException) {

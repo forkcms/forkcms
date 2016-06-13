@@ -28,6 +28,7 @@ class Theme
      * If it does not exist in the theme it will return $file.
      *
      * @param string $file Path to the file.
+     *
      * @return string Path to the (theme) file.
      */
     public static function getPath($file)
@@ -41,7 +42,7 @@ class Theme
         // theme in use
         if (Model::get('fork.settings')->get('Core', 'theme', 'core') != 'core') {
             // theme not yet specified
-            if (strpos($file, 'src/Frontend/Themes/' . $theme) === false) {
+            if (mb_strpos($file, 'src/Frontend/Themes/' . $theme) === false) {
                 // add theme location
                 $themeTemplate = str_replace(array('src/Frontend/'), array('src/Frontend/Themes/' . $theme . '/'), $file);
 

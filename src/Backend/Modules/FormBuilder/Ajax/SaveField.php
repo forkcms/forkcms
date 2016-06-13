@@ -46,17 +46,18 @@ class SaveField extends BackendBaseAJAXAction
 
         $defaultValues = trim(\SpoonFilter::getPostValue('default_values', null, '', 'string'));
         $placeholder = trim(\SpoonFilter::getPostValue('placeholder', null, '', 'string'));
-        $required = \SpoonFilter::getPostValue('required', array('Y','N'), 'N', 'string');
+        $classname = trim(\SpoonFilter::getPostValue('classname', null, '', 'string'));
+        $required = \SpoonFilter::getPostValue('required', array('Y', 'N'), 'N', 'string');
         $requiredErrorMessage = trim(\SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
         $validation = \SpoonFilter::getPostValue('validation', array('email', 'numeric', 'time'), '', 'string');
         $validationParameter = trim(\SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
         $errorMessage = trim(\SpoonFilter::getPostValue('error_message', null, '', 'string'));
 
         // special field for textbox: reply to
-        $replyTo = \SpoonFilter::getPostValue('reply_to', array('Y','N'), 'N', 'string');
+        $replyTo = \SpoonFilter::getPostValue('reply_to', array('Y', 'N'), 'N', 'string');
 
         // special fields for datetime
-        $inputType = \SpoonFilter::getPostValue('input_type', array('date','time'), 'date', 'string');
+        $inputType = \SpoonFilter::getPostValue('input_type', array('date', 'time'), 'date', 'string');
         $valueAmount = trim(\SpoonFilter::getPostValue('value_amount', null, '', 'string'));
         $valueType = trim(\SpoonFilter::getPostValue('value_type', null, '', 'string'));
 
@@ -112,7 +113,7 @@ class SaveField extends BackendBaseAJAXAction
                         if ($label == '') {
                             $errors['label'] = BL::getError('LabelIsRequired');
                         }
-                        if (in_array($valueType, array('day','week','month','year')) && $valueAmount == '') {
+                        if (in_array($valueType, array('day', 'week', 'month', 'year')) && $valueAmount == '') {
                             $errors['default_value_error_message'] = BL::getError('ValueIsRequired');
                         }
                         if ($required == 'Y' && $requiredErrorMessage == '') {
@@ -189,7 +190,7 @@ class SaveField extends BackendBaseAJAXAction
                             foreach ($postedValues as $postedValue) {
                                 $values[] = array(
                                     'value' => CommonUri::getUrl($postedValue),
-                                    'label' => $postedValue
+                                    'label' => $postedValue,
                                 );
                             }
                             if ($defaultValues != '') {
@@ -197,7 +198,7 @@ class SaveField extends BackendBaseAJAXAction
                             }
                         }
 
-                        /**
+                        /*
                          * Save!
                          */
                         // settings
@@ -213,6 +214,9 @@ class SaveField extends BackendBaseAJAXAction
                         }
                         if ($placeholder != '') {
                             $settings['placeholder'] = \SpoonFilter::htmlspecialchars($placeholder);
+                        }
+                        if ($classname != '') {
+                            $settings['classname'] = \SpoonFilter::htmlspecialchars($classname);
                         }
 
                         // reply-to, only for textboxes

@@ -28,18 +28,23 @@ use Symfony\Component\Intl\Intl as Intl;
 class Edit extends BackendBaseActionEdit
 {
     /**
-     * Info about the current profile.
-     *
-     * @var array
-     */
-    private $profile;
-
-    /**
      * Groups data grid.
      *
      * @var    BackendDataGridDB
      */
     private $dgGroups;
+
+    /**
+     * @var bool
+     */
+    private $notifyProfile;
+
+    /**
+     * Info about the current profile.
+     *
+     * @var array
+     */
+    private $profile;
 
     /**
      * Execute the action.
@@ -69,6 +74,12 @@ class Edit extends BackendBaseActionEdit
     {
         // get general info
         $this->profile = BackendProfilesModel::get($this->id);
+
+        $this->notifyProfile = $this->get('fork.settings')->get(
+            $this->URL->getModule(),
+            'send_new_profile_mail',
+            false
+        );
     }
 
     /**
@@ -79,7 +90,7 @@ class Edit extends BackendBaseActionEdit
         // gender dropdown values
         $genderValues = array(
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female'))
+            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
         );
 
         // birthdate dropdown values
@@ -104,7 +115,9 @@ class Edit extends BackendBaseActionEdit
         $this->frm = new BackendForm('edit');
 
         // create elements
+        $this->frm->addCheckbox('new_email');
         $this->frm->addText('email', $this->profile['email']);
+        $this->frm->addCheckbox('new_password');
         $this->frm->addPassword('password');
         $this->frm->addText('display_name', $this->profile['display_name']);
         $this->frm->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
@@ -179,6 +192,8 @@ class Edit extends BackendBaseActionEdit
     {
         parent::parse();
 
+        $this->tpl->assign('notifyProfile', $this->notifyProfile);
+
         // assign the active record and additional variables
         $this->tpl->assign('profile', $this->profile);
 
@@ -207,8 +222,10 @@ class Edit extends BackendBaseActionEdit
             $this->frm->cleanupFields();
 
             // get fields
+            $chkNewEmail = $this->frm->getField('new_email');
             $txtEmail = $this->frm->getField('email');
             $txtDisplayName = $this->frm->getField('display_name');
+            $chkNewPassword = $this->frm->getField('new_password');
             $txtPassword = $this->frm->getField('password');
             $txtFirstName = $this->frm->getField('first_name');
             $txtLastName = $this->frm->getField('last_name');
@@ -220,7 +237,12 @@ class Edit extends BackendBaseActionEdit
             $ddmCountry = $this->frm->getField('country');
 
             // email filled in?
-            if ($txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
+            if ($chkNewEmail->isChecked() && $txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
+                // email must not be the same as previous one
+                if ($txtEmail->getValue() == $this->profile['email']) {
+                    $txtEmail->addError(BL::getError('EmailMatchesPrevious'));
+                }
+
                 // valid email?
                 if ($txtEmail->isEmail(BL::getError('EmailIsInvalid'))) {
                     // email already exists?
@@ -240,6 +262,12 @@ class Edit extends BackendBaseActionEdit
                 }
             }
 
+            // new_password is checked, so verify new password (only if profile should not be notified)
+            // because then if the password field is empty, it will generate a new password
+            if ($chkNewPassword->isChecked() && !$this->notifyProfile) {
+                $txtPassword->isFilled(BL::err('FieldIsRequired'));
+            }
+
             // one of the bday fields are filled in
             if ($ddmDay->isFilled() || $ddmMonth->isFilled() || $ddmYear->isFilled()) {
                 // valid date?
@@ -252,24 +280,35 @@ class Edit extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $values['email'] = $txtEmail->getValue();
+                $values['email'] = ($chkNewEmail->isChecked()) ?
+                    $txtEmail->getValue() : $this->profile['email'];
 
                 // only update if display name changed
                 if ($txtDisplayName->getValue() != $this->profile['display_name']) {
                     $values['display_name'] = $txtDisplayName->getValue();
-                    $values['url'] = BackendProfilesModel::getUrl($txtDisplayName->getValue(), $this->id);
+                    $values['url'] = BackendProfilesModel::getUrl(
+                        $txtDisplayName->getValue(),
+                        $this->id
+                    );
                 }
 
                 // new password filled in?
-                if ($txtPassword->isFilled()) {
+                if ($chkNewPassword->isChecked()) {
                     // get new salt
                     $salt = BackendProfilesModel::getRandomString();
 
                     // update salt
                     BackendProfilesModel::setSetting($this->id, 'salt', $salt);
 
+                    // new password filled in? otherwise generate a password
+                    $password = ($txtPassword->isFilled()) ?
+                        $txtPassword->getValue() : BackendModel::generatePassword(8);
+
                     // build password
-                    $values['password'] = BackendProfilesModel::getEncryptedString($txtPassword->getValue(), $salt);
+                    $values['password'] = BackendProfilesModel::getEncryptedString(
+                        $password,
+                        $salt
+                    );
                 }
 
                 // update values
@@ -293,15 +332,51 @@ class Edit extends BackendBaseActionEdit
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
 
+                $displayName = (isset($values['display_name'])) ?
+                    $values['display_name'] : $this->profile['display_name'];
+
+                $redirectUrl = BackendModel::createURLForAction('Index') .
+                    '&var=' . urlencode($values['email']) .
+                    '&highlight=row-' . $this->id .
+                    '&var=' . urlencode($displayName) .
+                    '&report='
+                ;
+
+                if ($this->notifyProfile &&
+                    ($chkNewEmail->isChecked() || $chkNewPassword->isChecked())
+                ) {
+                    // no new password
+                    if (!$chkNewPassword->isChecked()) {
+                        $password = BL::lbl('YourExistingPassword');
+                    }
+
+                    // notify values
+                    $notifyValues = array_merge(
+                        $values,
+                        array(
+                            'id' => $this->id,
+                            'first_name' => $txtFirstName->getValue(),
+                            'last_name' => $txtLastName->getValue(),
+                            'unencrypted_password' => $password,
+                        )
+                    );
+
+                    if (!isset($notifyValues['display_name'])) {
+                        $notifyValues['display_name'] = $this->profile['display_name'];
+                    }
+
+                    BackendProfilesModel::notifyProfile($notifyValues, true);
+
+                    $redirectUrl .= 'saved-and-notified';
+                } else {
+                    $redirectUrl .= 'saved';
+                }
+
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=saved&var=' . urlencode(
-                        $values['email']
-                    ) . '&highlight=row-' . $this->id
-                );
+                $this->redirect($redirectUrl);
             }
         }
     }

@@ -51,6 +51,7 @@ class Model
      * Check if an item exists
      *
      * @param int $id The id of the record to look for.
+     *
      * @return bool
      */
     public static function exists($id)
@@ -68,6 +69,7 @@ class Model
      * Fetch a record from the database
      *
      * @param int $id The id of the record to fetch.
+     *
      * @return array
      */
     public static function get($id)
@@ -103,6 +105,7 @@ class Model
      * @param  string $city
      * @param  string $zip
      * @param  string $country
+     *
      * @return array  Contains 'latitude' and 'longitude' as variables
      */
     public static function getCoordinates(
@@ -148,7 +151,7 @@ class Model
         // return coordinates latitude/longitude
         return array(
             'latitude' => array_key_exists(0, $geocodes['results']) ? $geocodes['results'][0]['geometry']['location']['lat'] : null,
-            'longitude' => array_key_exists(0, $geocodes['results']) ? $geocodes['results'][0]['geometry']['location']['lng'] : null
+            'longitude' => array_key_exists(0, $geocodes['results']) ? $geocodes['results'][0]['geometry']['location']['lng'] : null,
         );
     }
 
@@ -157,6 +160,7 @@ class Model
      *
      * @param int $mapId
      * @param string $name
+     *
      * @return mixed
      */
     public static function getMapSetting($mapId, $name)
@@ -171,6 +175,7 @@ class Model
         if ($serializedData != null) {
             return unserialize($serializedData);
         }
+
         return false;
     }
 
@@ -178,6 +183,7 @@ class Model
      * Fetch all the settings for a specific map
      *
      * @param int $mapId
+     *
      * @return array
      */
     public static function getMapSettings($mapId)
@@ -200,6 +206,7 @@ class Model
      * Insert an item
      *
      * @param array $item The data of the record to insert.
+     *
      * @return int
      */
     public static function insert($item)
@@ -224,7 +231,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
             )
         );
 
@@ -254,6 +261,7 @@ class Model
      * Update an item
      *
      * @param array $item The data of the record to update.
+     *
      * @return int
      */
     public static function update($item)
@@ -271,7 +279,7 @@ class Model
                     'id' => $item['id'],
                     'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
                     'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
                 )
             );
         }

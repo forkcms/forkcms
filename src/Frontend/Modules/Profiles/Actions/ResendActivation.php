@@ -128,7 +128,7 @@ class ResendActivation extends FrontendBaseBlock
                     ->setTo(array($profile->getEmail() => ''))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.tpl',
+                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.html.twig',
                         $mailValues,
                         true
                     )
@@ -136,7 +136,7 @@ class ResendActivation extends FrontendBaseBlock
                 $this->get('mailer')->send($message);
 
                 // redirect
-                $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
+                $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
             } else {
                 $this->tpl->assign('resendActivationHasError', true);
             }

@@ -10,64 +10,22 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Common\Core\Twig\Extensions\BaseTwigModifiers;
 
 /**
  * This is our class with custom modifiers.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class TemplateModifiers
+class TemplateModifiers extends BaseTwigModifiers
 {
-    /**
-     * Dumps the data
-     *  syntax: {$var|dump}
-     *
-     * @param string $var The variable to dump.
-     * @return string
-     */
-    public static function dump($var)
-    {
-        \Spoon::dump($var, false);
-    }
-
-    /**
-     * Format a UNIX-timestamp as a date
-     * syntax: {$var|formatdate}
-     *
-     * @param int $var The UNIX-timestamp to format.
-     * @return string
-     */
-    public static function formatDate($var)
-    {
-        // get setting
-        $format = Authentication::getUser()->getSetting('date_format');
-
-        // format the date
-        return \SpoonDate::getDate($format, (int) $var, Language::getInterfaceLanguage());
-    }
-
-    /**
-     * Format a UNIX-timestamp as a datetime
-     * syntax: {$var|formatdatetime}
-     *
-     * @param int $var The UNIX-timestamp to format.
-     * @return string
-     */
-    public static function formatDateTime($var)
-    {
-        // get setting
-        $format = Authentication::getUser()->getSetting('datetime_format');
-
-        // format the date
-        return \SpoonDate::getDate($format, (int) $var, Language::getInterfaceLanguage());
-    }
-
     /**
      * Format a number as a float
      * syntax: {$var|formatfloat}
      *
      * @param float $number   The number to format.
      * @param int   $decimals The number of decimals.
+     *
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -97,6 +55,7 @@ class TemplateModifiers
      * syntax: {$var|formatnumber}
      *
      * @param float $var The number to format.
+     *
      * @return string
      */
     public static function formatNumber($var)
@@ -107,7 +66,7 @@ class TemplateModifiers
         $format = Authentication::getUser()->getSetting('number_format', 'dot_nothing');
 
         // get amount of decimals
-        $decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);
+        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
 
         // get separators
         $separators = explode('_', $format);
@@ -125,9 +84,10 @@ class TemplateModifiers
 
     /**
      * Format a UNIX-timestamp as a date
-     * syntax: {$var|formatdate}
+     * syntax: {{ $var|formatdate }}
      *
      * @param int $var The UNIX-timestamp to format.
+     *
      * @return string
      */
     public static function formatTime($var)
@@ -140,84 +100,53 @@ class TemplateModifiers
     }
 
     /**
-     * Convert a var into main-navigation-html
-     *  syntax: {$var|getmainnavigation}
-     *
-     * @param string $var A placeholder var, will be replaced with the generated HTML.
-     * @return string
-     */
-    public static function getMainNavigation($var = null)
-    {
-        return BackendModel::getContainer()->get('navigation')->getNavigation(1, 1);
-    }
-
-    /**
-     * Convert a var into navigation-html
-     * syntax: {$var|getnavigation:startdepth[:maximumdepth]}
-     *
-     * @param string $var        A placeholder var, will be replaced with the generated HTML.
-     * @param int    $startDepth The start depth of the navigation to get.
-     * @param int    $endDepth   The ending depth of the navigation to get.
-     * @return string
-     */
-    public static function getNavigation($var = null, $startDepth = null, $endDepth = null)
-    {
-        $startDepth = ($startDepth !== null) ? (int) $startDepth : 2;
-        $endDepth = ($endDepth !== null) ? (int) $endDepth : null;
-
-        // return navigation
-        return BackendModel::getContainer()->get('navigation')->getNavigation($startDepth, $endDepth);
-    }
-
-    /**
      * Convert a var into a URL
-     * syntax: {$var|geturl:<action>[:<module>]}
+     * syntax: {{ geturl:<action>[:<module>] }}
      *
-     * @param string $var    A placeholder variable, it will be replaced with the URL.
      * @param string $action The action to build the URL for.
      * @param string $module The module to build the URL for.
      * @param string $suffix A string to append.
+     * @param string $language A language code
+     *
      * @return string
      */
-    public static function getURL($var = null, $action = null, $module = null, $suffix = null)
+    public static function getURL($action = null, $module = null, $suffix = null, $language = null)
     {
+        if (!in_array($language, Language::getActiveLanguages())) {
+            $language = Language::getWorkingLanguage();
+        }
+
         $action = ($action !== null) ? (string) $action : null;
         $module = ($module !== null) ? (string) $module : null;
 
-        return BackendModel::createURLForAction($action, $module, Language::getWorkingLanguage()) . $suffix;
+        return BackendModel::createURLForAction($action, $module, $language) . $suffix;
     }
 
     /**
-     * Get a random var between a min and max
-     * syntax: {$var|rand:min:max}
+     * Translate a string.
      *
-     * @param string $var The string passed from the template.
-     * @param int    $min The minimum number.
-     * @param int    $max The maximum number.
-     * @return int
+     * @param string $string The string that you want to apply this method on.
+     *
+     * @throw exception thrown when no 'dot' is found in string
+     *
+     * @return string The string, to translate.
      */
-    public static function random($var = null, $min, $max)
+    public static function trans($string)
     {
-        return rand((int) $min, (int) $max);
-    }
+        if (strpos($string, '.') === false) {
+            throw new Exception('translation needs a dot character in : '.$string);
+        }
+        list($action, $string) = explode('.', $string);
 
-    /**
-     * Convert a multiline string into a string without newlines so it can be handles by JS
-     * syntax: {$var|stripnewlines}
-     *
-     * @param string $var The variable that should be processed.
-     * @return string
-     */
-    public static function stripNewlines($var)
-    {
-        return str_replace(array("\r\n", "\n", "\r"), ' ', $var);
+        return Language::$action($string);
     }
 
     /**
      * Convert this string into a well formed label.
-     *  syntax: {$var|tolabel}
+     *  syntax: {$var|tolabel}.
      *
      * @param string $value The value to convert to a label.
+     *
      * @return string
      */
     public static function toLabel($value)
@@ -233,6 +162,7 @@ class TemplateModifiers
      * @param int    $length      The maximum length of the truncated string.
      * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
      * @param bool   $closestWord Truncate on exact length or on closest word?
+     *
      * @return string
      */
     public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
@@ -258,7 +188,7 @@ class TemplateModifiers
 
             // truncate
             if ($closestWord) {
-                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), $charset);
+                $var = mb_substr($var, 0, mb_strrpos(mb_substr($var, 0, $length + 1), ' '), $charset);
             } else {
                 $var = mb_substr($var, 0, $length, $charset);
             }
@@ -278,6 +208,7 @@ class TemplateModifiers
      *
      * @param string|bool $status
      * @param bool        $reverse show the opposite of the status
+     *
      * @return string
      */
     public static function showBool($status, $reverse = false)
@@ -306,5 +237,17 @@ class TemplateModifiers
         }
 
         return $status;
+    }
+
+    /**
+     * Returns the count of the count of the array.
+     *
+     * @param array $data
+     *
+     * @return int
+     */
+    public static function count(array $data)
+    {
+        return count($data);
     }
 }

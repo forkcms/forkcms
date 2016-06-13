@@ -111,7 +111,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
         $this->frm->addText('street', $this->record['street']);
         $this->frm->addText('number', $this->record['number']);
         $this->frm->addText('zip', $this->record['zip']);
@@ -130,12 +130,15 @@ class Edit extends BackendBaseActionEdit
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
+<<<<<<< HEAD
         );
         $mapStyles = array(
             'standard' => BL::lbl('Default', $this->getModule()),
             'custom' => BL::lbl('Custom', $this->getModule()),
             'gray' => BL::lbl('Gray', $this->getModule()),
             'blue' => BL::lbl('Blue', $this->getModule()),
+=======
+>>>>>>> forkcms/master
         );
 
         $zoomLevels = array_combine(

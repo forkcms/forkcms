@@ -129,7 +129,7 @@ class ForgotPassword extends FrontendBaseBlock
                     ->setTo(array($txtEmail->getValue() => ''))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/ForgotPassword.tpl',
+                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
                         $mailValues,
                         true
                     )
@@ -137,7 +137,7 @@ class ForgotPassword extends FrontendBaseBlock
                 $this->get('mailer')->send($message);
 
                 // redirect
-                $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
+                $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
             } else {
                 $this->tpl->assign('forgotPasswordHasError', true);
             }

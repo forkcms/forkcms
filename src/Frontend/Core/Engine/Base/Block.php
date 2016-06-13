@@ -9,17 +9,18 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Url;
-use Frontend\Core\Engine\Template as FrontendTemplate;
 use Common\Exception\RedirectException;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific block
+ *
  * @later  Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
@@ -86,13 +87,6 @@ class Block extends Object
     private $templatePath;
 
     /**
-     * A reference to the current template
-     *
-     * @var    FrontendTemplate
-     */
-    public $tpl;
-
-    /**
      * A reference to the URL-instance
      *
      * @var    Url
@@ -110,7 +104,6 @@ class Block extends Object
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible
-        $this->tpl = new FrontendTemplate(false);
         $this->header = $this->getContainer()->get('header');
         $this->URL = $this->getContainer()->get('url');
         $this->breadcrumb = $this->getContainer()->get('breadcrumb');
@@ -191,12 +184,12 @@ class Block extends Object
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, null, Header::PRIORITY_GROUP_MODULE);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, true, Header::PRIORITY_GROUP_MODULE);
         }
 
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, null, Header::PRIORITY_GROUP_MODULE);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true, Header::PRIORITY_GROUP_MODULE);
         }
     }
 
@@ -217,7 +210,7 @@ class Block extends Object
      */
     public function getContent()
     {
-        return $this->tpl->getContent($this->templatePath, false, true);
+        return $this->tpl->getContent($this->templatePath);
     }
 
     /**
@@ -243,7 +236,7 @@ class Block extends Object
     /**
      * Get template
      *
-     * @return string
+     * @return TwigTemplate
      */
     public function getTemplate()
     {
@@ -272,11 +265,7 @@ class Block extends Object
 
         // no template given, so we should build the path
         if ($path === null) {
-            // build path to the module
-            $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-
-            // build template path
-            $path = $frontendModulePath . '/Layout/Templates/' . $this->getAction() . '.tpl';
+            $path = $this->getModule() . '/Layout/Templates/' . $this->getAction() . '.html.twig';
         } else {
             // redefine
             $path = (string) $path;
@@ -359,7 +348,6 @@ class Block extends Object
             if ($this->pagination['num_pages'] == 7) {
                 $pagesEnd = 7;
             } elseif ($this->pagination['num_pages'] <= 6) {
-
                 // when we have less then 6 pages, show the maximum page
                 $pagesEnd = $this->pagination['num_pages'];
             }
@@ -406,7 +394,7 @@ class Block extends Object
             $pagesFirstEnd = 1;
 
             // loop pages
-            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++) {
+            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;
@@ -420,7 +408,7 @@ class Block extends Object
         }
 
         // build array
-        for ($i = $pagesStart; $i <= $pagesEnd; $i++) {
+        for ($i = $pagesStart; $i <= $pagesEnd; ++$i) {
             // init var
             $current = ($i == $this->pagination['requested_page']);
 
@@ -442,7 +430,7 @@ class Block extends Object
             $pagesLastEnd = $this->pagination['num_pages'];
 
             // loop pages
-            for ($i = $pagesLastStart; $i <= $pagesLastEnd; $i++) {
+            for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;

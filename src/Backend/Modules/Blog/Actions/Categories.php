@@ -48,7 +48,7 @@ class Categories extends BackendBaseActionIndex
 
         // set headers
         $this->dataGrid->setHeaderLabels(array(
-            'num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))
+            'num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount')),
         ));
 
         // sorting columns
@@ -102,6 +102,7 @@ class Categories extends BackendBaseActionIndex
      *
      * @param int $count The count.
      * @param string $link The link for the count.
+     *
      * @return string
      */
     public static function setClickableCount($count, $link)

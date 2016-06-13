@@ -10,9 +10,7 @@ framework:
     csrf_protection: ~
     templating:
         engines: ['twig']
-    session:
-        handler_id: session.handler.native_file
-        save_path: "%kernel.root_dir%/sessions"
+    session: ~
 
 # Assetic Configuration
 assetic:
@@ -25,7 +23,6 @@ assetic:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-
 
 monolog:
     handlers:
@@ -54,12 +51,13 @@ services:
             - %database.name%
             - %database.port%
         calls:
-            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8' } ] ]
+            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
             - [ setDebug, [ %kernel.debug% ]]
     mailer_configurator:
         class: Common\Mailer\Configurator
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
         arguments:
             - "@fork.settings"
             - "@service_container"
@@ -95,3 +93,10 @@ services:
         class: Common\EventListener\ResponseSecurer
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    templating:
+        class: Frontend\Core\Engine\TwigTemplate
+        arguments:
+            - "@twig"
+            - "@templating.name_parser"
+            - "@templating.locator"

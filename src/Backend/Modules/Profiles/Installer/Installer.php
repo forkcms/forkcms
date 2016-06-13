@@ -35,6 +35,10 @@ class Installer extends ModuleInstaller
 
         // general settings
         $this->setSetting('Profiles', 'allow_gravatar', true);
+        $this->setSetting('Profiles', 'overwrite_profile_notification_email', false);
+        $this->setSetting('Profiles', 'profile_notification_email', null);
+        $this->setSetting('Profiles', 'send_mail_for_new_profile_to_admin', false);
+        $this->setSetting('Profiles', 'send_mail_for_new_profile_to_profile', false);
 
         // add folders
         \SpoonDirectory::create(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/source/');
@@ -74,7 +78,7 @@ class Installer extends ModuleInstaller
                  'profiles/edit',
                  'profiles/add_profile_group',
                  'profiles/edit_profile_group',
-                 'profiles/import'
+                 'profiles/import',
             )
         );
         $this->setNavigation(
@@ -83,9 +87,14 @@ class Installer extends ModuleInstaller
             'profiles/groups',
             array(
                  'profiles/add_group',
-                 'profiles/edit_group'
+                 'profiles/edit_group',
             )
         );
+
+        // settings navigation
+        $navigationSettingsId = $this->setNavigation(null, 'Settings');
+        $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+        $this->setNavigation($navigationModulesId, 'Profiles', 'profiles/settings');
 
         // add extra
         $activateId = $this->insertExtra('Profiles', 'block', 'Activate', 'Activate', null, 'N', 5000);
@@ -152,7 +161,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Activate',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $activateId, 'position' => 'main'),
@@ -164,7 +173,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Forgot password',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $forgotPasswordId, 'position' => 'main'),
@@ -176,7 +185,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Reset password',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $resetPasswordId, 'position' => 'main'),
@@ -188,7 +197,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Resend activation e-mail',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $resendActivationId, 'position' => 'main'),
@@ -200,7 +209,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Login',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $loginId, 'position' => 'main'),
@@ -212,7 +221,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Register',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $registerId, 'position' => 'main'),
@@ -224,7 +233,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Logout',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $logoutId, 'position' => 'main'),
@@ -236,7 +245,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Profile',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $indexId, 'position' => 'main'),
@@ -248,7 +257,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Profile settings',
                          'parent_id' => $indexPageId,
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $settingsId, 'position' => 'main'),
@@ -260,7 +269,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Change email',
                          'parent_id' => $indexPageId,
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $changeEmailId, 'position' => 'main'),
@@ -272,7 +281,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Change password',
                          'parent_id' => $indexPageId,
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $changePasswordId, 'position' => 'main'),

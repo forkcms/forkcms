@@ -41,6 +41,7 @@ class Comments extends BackendBaseActionIndex
      * @param string $title The title for the blogarticle.
      * @param string $URL The URL for the blogarticle.
      * @param int $id The id of the comment.
+     *
      * @return string
      */
     public static function addPostData($text, $title, $URL, $id)
@@ -85,11 +86,11 @@ class Comments extends BackendBaseActionIndex
         // header labels
         $this->dgPublished->setHeaderLabels(array(
             'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
-            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))
+            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
         ));
 
         // add the multicheckbox column
-        $this->dgPublished->setMassActionCheckboxes('checkbox', '[id]');
+        $this->dgPublished->setMassActionCheckboxes('check', '[id]');
 
         // assign column functions
         $this->dgPublished->setColumnFunction(
@@ -126,11 +127,14 @@ class Comments extends BackendBaseActionIndex
                 'spam' => BL::lbl('MoveToSpam'),
                 'delete' => BL::lbl('Delete'),
             ),
-            'spam'
+            'spam',
+            false,
+            'form-control',
+            'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'actionPublished');
-        $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeletePublished'));
-        $ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamPublished'));
+        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeletePublished'));
+        $ddmMassAction->setOptionAttributes('spam', array('data-target' => '#confirmPublishedToSpam'));
         $this->dgPublished->setMassAction($ddmMassAction);
 
         // check if this action is allowed
@@ -156,7 +160,6 @@ class Comments extends BackendBaseActionIndex
             );
         }
 
-
         /*
          * DataGrid for the comments that are awaiting moderation.
          */
@@ -176,11 +179,11 @@ class Comments extends BackendBaseActionIndex
         // header labels
         $this->dgModeration->setHeaderLabels(array(
             'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
-            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))
+            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
         ));
 
         // add the multicheckbox column
-        $this->dgModeration->setMassActionCheckboxes('checkbox', '[id]');
+        $this->dgModeration->setMassActionCheckboxes('check', '[id]');
 
         // assign column functions
         $this->dgModeration->setColumnFunction(
@@ -217,11 +220,14 @@ class Comments extends BackendBaseActionIndex
                 'spam' => BL::lbl('MoveToSpam'),
                 'delete' => BL::lbl('Delete'),
             ),
-            'published'
+            'published',
+            false,
+            'form-control',
+            'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'actionModeration');
-        $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteModeration'));
-        $ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamModeration'));
+        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeleteModeration'));
+        $ddmMassAction->setOptionAttributes('spam', array('data-target' => '#confirmModerationToSpam'));
         $this->dgModeration->setMassAction($ddmMassAction);
 
         // check if this action is allowed
@@ -247,7 +253,6 @@ class Comments extends BackendBaseActionIndex
             );
         }
 
-
         /*
          * DataGrid for the comments that are marked as spam
          */
@@ -265,11 +270,11 @@ class Comments extends BackendBaseActionIndex
         // header labels
         $this->dgSpam->setHeaderLabels(array(
             'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
-            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))
+            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
         ));
 
         // add the multicheckbox column
-        $this->dgSpam->setMassActionCheckboxes('checkbox', '[id]');
+        $this->dgSpam->setMassActionCheckboxes('check', '[id]');
 
         // assign column functions
         $this->dgSpam->setColumnFunction(
@@ -306,10 +311,13 @@ class Comments extends BackendBaseActionIndex
                 'moderation' => BL::lbl('MoveToModeration'),
                 'delete' => BL::lbl('Delete'),
             ),
-            'published'
+            'published',
+            false,
+            'form-control',
+            'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'actionSpam');
-        $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteSpam'));
+        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeleteSpam'));
         $this->dgSpam->setMassAction($ddmMassAction);
 
         // check if this action is allowed

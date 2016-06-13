@@ -38,6 +38,7 @@ class Model
      *
      * @param  int    $id   Profile id.
      * @param  string $name Setting name.
+     *
      * @return int
      */
     public static function deleteSetting($id, $name)
@@ -54,6 +55,7 @@ class Model
      *
      * @param  string $email    Email to check for existence.
      * @param  int    $ignoreId Profile id to ignore.
+     *
      * @return bool
      */
     public static function existsByEmail($email, $ignoreId = null)
@@ -72,6 +74,7 @@ class Model
      *
      * @param  string $displayName Display name to check for existence.
      * @param  int    $id          Profile id to ignore.
+     *
      * @return bool
      */
     public static function existsDisplayName($displayName, $id = null)
@@ -89,6 +92,7 @@ class Model
      * Get profile by its id.
      *
      * @param  int                     $profileId Id of the wanted profile.
+     *
      * @return FrontendProfilesProfile
      */
     public static function get($profileId)
@@ -102,6 +106,7 @@ class Model
      * @param  int    $id    The id for the profile we want to get the avatar from.
      * @param  string $email The email from the user we can use for gravatar.
      * @param  string $size  The resolution you want to use. Default: 240x240 pixels.
+     *
      * @return string $avatar            The absolute path to the avatar.
      */
     public static function getAvatar($id, $email = null, $size = '240x240')
@@ -132,7 +137,7 @@ class Model
         // no custom avatar defined, get gravatar if allowed
         if (empty($avatar) && FrontendModel::get('fork.settings')->get('Profiles', 'allow_gravatar', true)) {
             // define hash
-            $hash = md5(strtolower(trim('d' . $email)));
+            $hash = md5(mb_strtolower(trim('d' . $email)));
 
             // define avatar url
             $avatar = 'http://www.gravatar.com/avatar/' . $hash;
@@ -159,6 +164,7 @@ class Model
      *
      * @param  string $string String to encrypt.
      * @param  string $salt   Salt to add to the string.
+     *
      * @return string
      */
     public static function getEncryptedString($string, $salt)
@@ -170,6 +176,7 @@ class Model
      * Get profile id by email.
      *
      * @param  string $email Email address.
+     *
      * @return int
      */
     public static function getIdByEmail($email)
@@ -185,6 +192,7 @@ class Model
      *
      * @param  string $name  Setting name.
      * @param  string $value Value of the setting.
+     *
      * @return int
      */
     public static function getIdBySetting($name, $value)
@@ -205,6 +213,7 @@ class Model
      * @param  bool   $lowercase Use alphanumeric lowercase characters.
      * @param  bool   $uppercase Use alphanumeric uppercase characters.
      * @param  bool   $special   Use special characters.
+     *
      * @return string
      */
     public static function getRandomString(
@@ -234,9 +243,9 @@ class Model
         }
 
         // get random characters
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             // random index
-            $index = mt_rand(0, strlen($characters));
+            $index = mt_rand(0, mb_strlen($characters));
 
             // add character to salt
             $string .= mb_substr($characters, $index, 1, $charset);
@@ -250,6 +259,7 @@ class Model
      *
      * @param  int    $id   Profile id.
      * @param  string $name Setting name.
+     *
      * @return string
      */
     public static function getSetting($id, $name)
@@ -268,6 +278,7 @@ class Model
      * Get all settings for a profile.
      *
      * @param  int   $id Profile id.
+     *
      * @return array
      */
     public static function getSettings($id)
@@ -294,6 +305,7 @@ class Model
      *
      * @param  string $displayName The display name to base on.
      * @param  int    $id          The id of the profile to ignore.
+     *
      * @return string
      */
     public static function getUrl($displayName, $id = null)
@@ -354,6 +366,7 @@ class Model
      * Insert a new profile.
      *
      * @param  array $values Profile data.
+     *
      * @return int
      */
     public static function insert(array $values)
@@ -367,7 +380,7 @@ class Model
     public static function parse()
     {
         // get the template
-        $tpl = FrontendModel::getContainer()->get('template');
+        $tpl = FrontendModel::getContainer()->get('templating');
 
         // logged in
         if (FrontendProfilesAuthentication::isLoggedIn()) {
@@ -390,7 +403,7 @@ class Model
         $ignoreUrls = array(
             FrontendNavigation::getURLForBlock('Profiles', 'Login'),
             FrontendNavigation::getURLForBlock('Profiles', 'Register'),
-            FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword')
+            FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword'),
         );
 
         // query string
@@ -399,7 +412,7 @@ class Model
         // check all ignore urls
         foreach ($ignoreUrls as $url) {
             // query string contains a boeboe url
-            if (stripos($queryString, $url) !== false) {
+            if (mb_stripos($queryString, $url) !== false) {
                 $queryString = '';
                 break;
             }
@@ -462,6 +475,7 @@ class Model
      *
      * @param  int   $id     The profile id.
      * @param  array $values The values to update.
+     *
      * @return int
      */
     public static function update($id, array $values)

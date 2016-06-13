@@ -26,7 +26,7 @@ class ModulesType extends AbstractType
                 'modules',
                 'choice',
                 array(
-                    'choices'  => $this->getInstallableModules(),
+                    'choices' => $this->getInstallableModules(),
                     'expanded' => true,
                     'multiple' => true,
                 )
@@ -36,6 +36,7 @@ class ModulesType extends AbstractType
                 'checkbox',
                 array(
                     'label' => 'Install example data',
+                    'required' => false,
                 )
             )
             ->add(
@@ -43,11 +44,15 @@ class ModulesType extends AbstractType
                 'checkbox',
                 array(
                     'label' => 'Use a specific debug email address',
+                    'required' => false,
                 )
             )
             ->add(
                 'debug_email',
-                'email'
+                'email',
+                array(
+                    'required' => false,
+                )
             )
         ;
 

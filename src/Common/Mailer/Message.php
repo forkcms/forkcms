@@ -4,8 +4,8 @@ namespace Common\Mailer;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Frontend\Core\Engine\Model;
-use Frontend\Core\Engine\Template;
-use Backend\Core\Engine\Template as BackendTemplate;
+use Frontend\Core\Engine\TwigTemplate as FrontendTemplate;
+use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 use Common\Uri;
 
 /**
@@ -46,11 +46,12 @@ class Message extends \Swift_Message
     }
 
     /**
-     * Parses a SpoonTemplate with the wanted variables
+     * Parses a TwigTemplate with the wanted variables
      *
      * @param  string  $template
      * @param  array   $variables
      * @param  bool    $addUTM
+     *
      * @return Message
      */
     public function parseHtml($template, $variables, $addUTM = false)
@@ -72,6 +73,7 @@ class Message extends \Swift_Message
      * Attach multiple attachments to this message
      *
      * @param  array   $attachments
+     *
      * @return Message
      */
     public function addAttachments($attachments)
@@ -93,6 +95,7 @@ class Message extends \Swift_Message
      * Add plaintext content as fallback for the html
      *
      * @param  string  $content
+     *
      * @return Message
      */
     public function setPlainText($content)
@@ -107,6 +110,7 @@ class Message extends \Swift_Message
     /**
      * @param  string $html    The html to convert links in.
      * @param  string $subject The subject of the mail
+     *
      * @return string
      */
     private function addUTM($html, $subject)
@@ -142,6 +146,7 @@ class Message extends \Swift_Message
      *
      * @param  string $template  The template to use.
      * @param  array  $variables The variables to assign.
+     *
      * @return string
      */
     private function getTemplateContent($template, $variables = null)
@@ -151,7 +156,7 @@ class Message extends \Swift_Message
         if (APPLICATION === 'Backend') {
             $tpl = new BackendTemplate(false);
         } else {
-            $tpl = new Template(false);
+            $tpl = new FrontendTemplate(false);
         }
 
         // set some options
@@ -170,6 +175,7 @@ class Message extends \Swift_Message
      * Converts all css to inline styles
      *
      * @param  string $html
+     *
      * @return string
      */
     private function cssToInlineStyles($html)
@@ -188,6 +194,7 @@ class Message extends \Swift_Message
      * Replace internal links and images to absolute links
      *
      * @param  string $html The html to convert links in.
+     *
      * @return string
      */
     private function relativeToAbsolute($html)

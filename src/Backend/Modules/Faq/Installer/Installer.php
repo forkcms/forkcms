@@ -21,7 +21,7 @@ use Backend\Core\Installer\ModuleInstaller;
 class Installer extends ModuleInstaller
 {
     /**
-     * @var	int
+     * @var int
      */
     private $defaultCategoryId;
 
@@ -31,6 +31,7 @@ class Installer extends ModuleInstaller
      * @param string $language
      * @param string $title
      * @param string $url
+     *
      * @return int
      */
     private function addCategory($language, $title, $url)
@@ -62,7 +63,7 @@ class Installer extends ModuleInstaller
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id']
+                'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
             )
         );
 
@@ -81,6 +82,7 @@ class Installer extends ModuleInstaller
      * Fetch the id of the first category in this language we come across
      *
      * @param string $language
+     *
      * @return int
      */
     private function getCategory($language)
@@ -98,14 +100,7 @@ class Installer extends ModuleInstaller
      */
     private function insertWidget()
     {
-        $feedback = array(
-            'column' => 'right',
-            'position' => 1,
-            'hidden' => false,
-            'present' => true
-        );
-
-        $this->insertDashboardWidget('Faq', 'Feedback', $feedback);
+        $this->insertDashboardWidget('Faq', 'Feedback');
     }
 
     /**
@@ -175,11 +170,10 @@ class Installer extends ModuleInstaller
                 $this->insertPage(
                     array(
                         'title' => 'FAQ',
-                        'language' => $language
+                        'language' => $language,
                     ),
                     null,
-                    array(
-                         'extra_id' => $faqId)
+                    array('extra_id' => $faqId)
                 );
             }
         }

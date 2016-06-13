@@ -1,0 +1,36 @@
+{#
+	Variables that are available:
+	- {{ tagsModules }}: contains all tags, grouped per module
+#}
+
+<section id="tagsDetail" class="mod">
+  <div class="inner">
+    <header class="hd">
+      <h1>{{ 'lbl.ItemsWithTag'|trans|sprintf(tag.name)|capitalize }}</h1>
+    </header>
+    <div class="bd">
+      {% if tagsModules %}
+        {% for tagsModules in tagsModules %}
+          <section class="mod">
+            <div class="inner">
+              <header class="hd">
+                <h3>{{ tagsModules.label }}</h3>
+              </header>
+              <div class="bd content">
+                <ul>
+                  {% for item in tagsModules.items %}
+                    <li><a href="{{ item.full_url }}">{{ item.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </section>
+        {% endfor %}
+      {% endif %}
+      <p>
+        <a href="{{ geturlforblock('Tags') }}" title="{{ 'lbl.ToTagsOverview'|trans|capitalize }}">{{ 'lbl.ToTagsOverview'|trans|capitalize }}</a>
+      </p>
+
+    </div>
+  </div>
+</section>

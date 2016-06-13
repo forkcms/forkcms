@@ -31,7 +31,7 @@ class Detail extends FrontendBaseWidget
      */
     private function assignTemplate()
     {
-        $template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets/Default.tpl');
+        $template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets/Default.html.twig');
 
         // is the content block visible?
         if (!empty($this->item)) {

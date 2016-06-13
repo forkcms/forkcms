@@ -128,7 +128,7 @@ class Index extends BackendBaseActionIndex
                     'sort' => '[sort]',
                     'email' => $this->filter['email'],
                     'status' => $this->filter['status'],
-                    'group' => $this->filter['group']
+                    'group' => $this->filter['group'],
                 ),
                 false
             )
@@ -146,16 +146,24 @@ class Index extends BackendBaseActionIndex
         );
 
         // add the mass action controls
-        $this->dgProfiles->setMassActionCheckboxes('checkbox', '[id]');
+        $this->dgProfiles->setMassActionCheckboxes('check', '[id]');
         $ddmMassAction = new \SpoonFormDropdown('action',
             array(
                 'addToGroup' => BL::getLabel('AddToGroup'),
-                'delete' => BL::getLabel('Delete')
-            ), 'addToGroup'
+                'delete' => BL::getLabel('Delete'),
+            ),
+            'addToGroup',
+            false,
+            'form-control',
+            'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'massAction');
-        $ddmMassAction->setOptionAttributes('addToGroup', array('data-message-id' => 'confirmAddToGroup'));
-        $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
+        $ddmMassAction->setOptionAttributes('addToGroup', array(
+            'data-target' => '#confirmAddToGroup',
+        ));
+        $ddmMassAction->setOptionAttributes('delete', array(
+            'data-target' => '#confirmDelete',
+        ));
         $this->dgProfiles->setMassAction($ddmMassAction);
 
         // check if this action is allowed

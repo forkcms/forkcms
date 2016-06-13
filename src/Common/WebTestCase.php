@@ -21,11 +21,12 @@ abstract class WebTestCase extends BaseWebTestCase
      * Attempts to guess the kernel location.
      *
      * When the Kernel is located, the file is required.
+     *
      * @todo Remove this when Fork has no custom Kernel class anymore
      *
-     * @return string The Kernel class name
-     *
      * @throws \RuntimeException
+     *
+     * @return string The Kernel class name
      */
     protected static function getKernelClass()
     {
@@ -63,8 +64,6 @@ abstract class WebTestCase extends BaseWebTestCase
         }
 
         static::$kernel = static::createKernel($options);
-        static::$kernel->boot();
-        static::$kernel->defineForkConstants();
 
         $client = static::$kernel->getContainer()->get('test.client');
         $client->setServerParameters($server);
@@ -132,6 +131,9 @@ abstract class WebTestCase extends BaseWebTestCase
                 $kernelDir . '/config/parameters.yml~backup'
             );
         }
+        if ($fs->exists($kernelDir . '/cache/test')) {
+            $fs->remove($kernelDir . '/cache/test');
+        }
     }
 
     /**
@@ -149,6 +151,9 @@ abstract class WebTestCase extends BaseWebTestCase
                 true
             );
             $fs->remove($kernelDir . '/config/parameters.yml~backup');
+        }
+        if ($fs->exists($kernelDir . '/cache/test')) {
+            $fs->remove($kernelDir . '/cache/test');
         }
     }
 
@@ -218,6 +223,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Client $client
      * @param string $url
      * @param array  $data
+     *
      * @return Crawler
      */
     protected function requestWithGetParameters(

@@ -1,0 +1,19 @@
+<div class="main-navigation">
+  <nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+      {% for item in navigation %}
+        <li class="nav-item nav-item-{{ item.label|lower }}{% if item.active %} active{% endif %}">
+          <a href="/private/{{ LANGUAGE }}/{{ item.url }}" data-toggle="tooltip-nav" title="{{ ('lbl.'~item.label)|trans|ucfirst }}" data-container="body" data-placement="right">
+            <span class="nav-item-text">{{ ('lbl.'~item.label)|trans|ucfirst }}</span></a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+  <a href="#" class="arrow-right js-nav-next"></a>
+  <a href="#" class="arrow-left js-nav-prev"></a>
+  <div class="toggle-nav-collapse hidden-xs">
+    <a href="#" class="js-toggle-nav">
+      <span class="fa fa-chevron-left"></span>
+    </a>
+  </div>
+</div>

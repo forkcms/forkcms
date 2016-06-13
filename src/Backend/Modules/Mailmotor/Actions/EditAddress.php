@@ -132,7 +132,7 @@ class EditAddress extends BackendBaseActionEdit
                 $this->customFields[$i]['name'],
                 $value
             );
-            $i++;
+            ++$i;
 
             // unset this field
             unset($this->customFields[$name]);
@@ -151,7 +151,10 @@ class EditAddress extends BackendBaseActionEdit
         $this->frm = new BackendForm('edit');
 
         // create elements
-        $this->frm->addText('email', $this->email);
+        $this->frm
+            ->addText('email', $this->email)
+            ->setAttribute('type', 'email')
+        ;
         $this->frm->getField('email')->setAttribute('disabled', 'disabled');
 
         // fetch groups for checkbox format

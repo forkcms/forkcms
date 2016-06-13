@@ -1,0 +1,24 @@
+//== Container sizes
+//
+//## Define the maximum width of `.container` for different screen sizes.
+
+// Extra large screen / Extra wide desktop
+// Large screen / wide desktop
+$container-extra-large-desktop:      (1380px + $grid-gutter-width);
+//** For `$screen-lg-min` and up.
+$container-xl:                 $container-extra-large-desktop;
+
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Large screen / wide desktop
+//** Deprecated `$screen-lg` as of v3.0.1
+$screen-xl:                  1440px;
+$screen-xl-min:              $screen-xl;
+//** Deprecated `$screen-lg-desktop` as of v3.0.1
+$screen-xl-desktop:          $screen-xl-min;
+
+// So media queries don't overlap when required, provide a maximum
+$screen-lg-max:              ($screen-xl-min - 1);
+

@@ -23,7 +23,9 @@ class Uri
      * Prepares a string for a filename so that it can be used in urls.
      *
      * @param  string $value The value (without extension) that should be urlised.
+     *
      * @return string        The urlised string.
+     *
      * @deprecated use getUrl instead, it is strict enough to create valid filenames
      */
     public static function getFilename($value)
@@ -35,6 +37,7 @@ class Uri
      * Prepares a string so that it can be used in urls.
      *
      * @param  string $value The value that should be urlised.
+     *
      * @return string        The urlised string.
      */
     public static function getUrl($value)

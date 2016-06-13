@@ -9,7 +9,7 @@ namespace Backend\Modules\Mailmotor;
  * file that was distributed with this source code.
  */
 
-use \Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -127,7 +127,7 @@ class Config extends BackendBaseConfig
     /**
      * Checks for external groups, and parses a message to import them.
      *
-     * @return boolean Returns false if the user already made groups.
+     * @return bool Returns false if the user already made groups.
      */
     private function checkForExternalGroups()
     {
@@ -170,7 +170,7 @@ class Config extends BackendBaseConfig
             // this language does not have a default group set
             if (!isset($groups[$language])) {
                 // set group record
-                $group['name'] = 'Website (' . strtoupper($language) . ')';
+                $group['name'] = 'Website (' . mb_strtoupper($language) . ')';
                 $group['language'] = $language;
                 $group['is_default'] = 'Y';
                 $group['created_on'] = date('Y-m-d H:i:s');

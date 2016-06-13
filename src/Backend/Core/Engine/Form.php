@@ -9,7 +9,6 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -65,7 +64,7 @@ class Form extends \Common\Core\Form
 
         // add default classes
         $this->setParameter('id', $name);
-        $this->setParameter('class', 'forkForms submitWithLink');
+        $this->setParameter('class', 'fork-form submitWithLink');
     }
 
     /**
@@ -75,6 +74,7 @@ class Form extends \Common\Core\Form
      * @param string $value The value (or label) that will be printed.
      * @param string $type  The type of the button (submit is default).
      * @param string $class Class(es) that will be applied on the button.
+     *
      * @return \SpoonFormButton
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
@@ -82,7 +82,7 @@ class Form extends \Common\Core\Form
         $name = (string) $name;
         $value = (string) $value;
         $type = (string) $type;
-        $class = ($class !== null) ? (string) $class : 'inputButton';
+        $class = ($class !== null) ? (string) $class : 'btn btn-primary';
 
         // do a check
         if ($type == 'submit' && $name == 'submit') {
@@ -106,9 +106,11 @@ class Form extends \Common\Core\Form
      * @param int    $date2      The second date for a rangepicker.
      * @param string $class      Class(es) that have to be applied on the element.
      * @param string $classError Class(es) that have to be applied when an error occurs on the element.
-     * @return FormDate
+     *
      * @throws Exception
      * @throws \SpoonFormException
+     *
+     * @return FormDate
      */
     public function addDate(
         $name,
@@ -124,8 +126,8 @@ class Form extends \Common\Core\Form
         $type = \SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
-        $class = ($class !== null) ? (string) $class : 'inputText inputDate';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputDateError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-date inputDate';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // validate
         if ($type == 'from' && ($date == 0 || $date == null)) {
@@ -154,21 +156,21 @@ class Form extends \Common\Core\Form
         switch ($type) {
             // start date
             case 'from':
-                $class .= ' inputDatefieldFrom inputText';
+                $class .= ' fork-form-date-from inputDatefieldFrom';
                 $classError .= ' inputDatefieldFrom';
                 $attributes['data-startdate'] = date('Y-m-d', $date);
                 break;
 
             // end date
             case 'till':
-                $class .= ' inputDatefieldTill inputText';
+                $class .= ' fork-form-date-till inputDatefieldTill';
                 $classError .= ' inputDatefieldTill';
                 $attributes['data-enddate'] = date('Y-m-d', $date);
                 break;
 
             // date range
             case 'range':
-                $class .= ' inputDatefieldRange inputText';
+                $class .= ' fork-form-date-range inputDatefieldRange';
                 $classError .= ' inputDatefieldRange';
                 $attributes['data-startdate'] = date('Y-m-d', $date);
                 $attributes['data-enddate'] = date('Y-m-d', $date2);
@@ -176,7 +178,7 @@ class Form extends \Common\Core\Form
 
             // normal date field
             default:
-                $class .= ' inputDatefieldNormal inputText';
+                $class .= ' inputDatefieldNormal';
                 $classError .= ' inputDatefieldNormal';
                 break;
         }
@@ -199,6 +201,7 @@ class Form extends \Common\Core\Form
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the field contain HTML?
+     *
      * @return \SpoonFormTextarea
      */
     public function addEditor($name, $value = null, $class = null, $classError = null, $HTML = true)
@@ -239,13 +242,14 @@ class Form extends \Common\Core\Form
      * @param string $name       Name of the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormFile
      */
     public function addFile($name, $class = null, $classError = null)
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'inputFile';
-        $classError = ($classError !== null) ? (string) $classError : 'inputFileError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-file';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // add element
         $this->add(new FormFile($name, $class, $classError));
@@ -259,13 +263,14 @@ class Form extends \Common\Core\Form
      * @param string $name       The name of the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return FormImage
      */
     public function addImage($name, $class = null, $classError = null)
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'inputFile inputImage';
-        $classError = ($classError !== null) ? (string) $classError : 'inputFileError inputImageError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-image';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // add element
         $this->add(new FormImage($name, $class, $classError));
@@ -277,6 +282,7 @@ class Form extends \Common\Core\Form
      * Fetches all the values for this form as key/value pairs
      *
      * @param mixed $excluded Which elements should be excluded?
+     *
      * @return array
      */
     public function getValues($excluded = array('form', 'save', 'form_token', '_utf8'))
@@ -288,6 +294,7 @@ class Form extends \Common\Core\Form
      * Checks to see if this form has been correctly submitted. Will revalidate by default.
      *
      * @param bool $revalidate Do we need to enforce validation again, even if it might already been done before?
+     *
      * @return bool
      */
     public function isCorrect($revalidate = true)
@@ -298,7 +305,7 @@ class Form extends \Common\Core\Form
     /**
      * Parse the form
      *
-     * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
+     * @param $tpl The template instance wherein the form will be parsed.
      */
     public function parse($tpl)
     {

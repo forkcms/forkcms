@@ -56,10 +56,15 @@ class Action extends Base\Object
     {
         $this->loadConfig();
 
-        // is the requested action possible? If not we throw an exception.
-        // We don't redirect because that could trigger a redirect loop
-        if (!in_array($this->getAction(), $this->config->getPossibleActions())) {
-            throw new Exception('This is an invalid action (' . $this->getAction() . ').');
+        // is the requested action available? If not we redirect to the error page.
+        if (!$this->config->isActionAvailable($this->action)) {
+            // build the url
+            $errorUrl = '/' . NAMED_APPLICATION
+                . '/' . $this->get('request')->getLocale()
+                . '/error?type=action-not-allowed';
+
+            // redirect to the error page
+            return $this->redirect($errorUrl, 307);
         }
 
         // build action-class
@@ -81,7 +86,7 @@ class Action extends Base\Object
             $workingLanguages[] = array(
                 'abbr' => $abbreviation,
                 'label' => $label,
-                'selected' => ($abbreviation == Language::getWorkingLanguage())
+                'selected' => ($abbreviation == Language::getWorkingLanguage()),
             );
         }
 

@@ -39,27 +39,11 @@ class Installer extends ModuleInstaller
         $db->insert('groups_settings', $groupSetting);
         $db->insert('users_settings', $userSetting);
 
-        // create default dashboard widget
-        $analyse = array(
-            'column' => 'left',
-            'position' => 1,
-            'hidden' => false,
-            'present' => true
-        );
+        // insert default dashboard widget
+        $this->insertDashboardWidget('Settings', 'Analyse');
 
         // insert default dashboard widget
-        $this->insertDashboardWidget('Settings', 'Analyse', $analyse);
-
-        // create default dashboard widget
-        $statistics = array(
-            'column' => 'left',
-            'position' => 2,
-            'hidden' => false,
-            'present' => true
-        );
-
-        // insert default dashboard widget
-        $this->insertDashboardWidget('Users', 'Statistics', $statistics);
+        $this->insertDashboardWidget('Users', 'Statistics');
     }
 
     /**
@@ -89,7 +73,7 @@ class Installer extends ModuleInstaller
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', array(
             'groups/add',
-            'groups/edit'
+            'groups/edit',
         ), 5);
 
         // insert admins dashboard sequence

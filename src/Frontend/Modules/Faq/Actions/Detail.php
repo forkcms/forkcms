@@ -127,7 +127,7 @@ class Detail extends FrontendBaseBlock
             'useful',
             array(
                  array('label' => FL::lbl('Yes'), 'value' => 'Y'),
-                 array('label' => FL::lbl('No'), 'value' => 'N')
+                 array('label' => FL::lbl('No'), 'value' => 'N'),
             )
         );
     }
@@ -277,11 +277,12 @@ class Detail extends FrontendBaseBlock
                             ->setTo(array($to['email'] => $to['name']))
                             ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                             ->parseHtml(
-                                FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/Feedback.tpl',
+                                FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/Feedback.html.twig',
                                 $variables,
                                 true
                             )
                         ;
+                        $this->get('mailer')->send($message);
                     }
                 }
 

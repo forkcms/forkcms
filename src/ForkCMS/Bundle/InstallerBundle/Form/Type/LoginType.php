@@ -26,11 +26,11 @@ class LoginType extends AbstractType
                 'password',
                 'repeated',
                 array(
-                    'type'            => 'password',
+                    'type' => 'password',
                     'invalid_message' => 'The passwords do not match.',
-                    'required'        => true,
-                    'first_options'   => array('label' => 'Password'),
-                    'second_options'  => array('label' => 'Confirm'),
+                    'required' => true,
+                    'first_options' => array('label' => 'Password'),
+                    'second_options' => array('label' => 'Confirm'),
                 )
             )
         ;

@@ -49,7 +49,7 @@ class Detail extends FrontendBaseBlock
 
         // overwrite the template path
         $this->setOverwrite(true);
-        $this->setTemplatePath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Templates/Detail.tpl');
+        $this->setTemplatePath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Templates/Detail.html.twig');
 
         $this->loadData();
         $this->parse();
@@ -69,7 +69,7 @@ class Detail extends FrontendBaseBlock
         $replacements = array(
             '{$siteURL}' => SITE_URL,
             'src="/"' => 'src="' . SITE_URL . '/',
-            '{$css}' => $template['css']
+            '{$css}' => $template['css'],
         );
 
         // build the mailing body

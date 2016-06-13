@@ -51,6 +51,7 @@ class RssItem extends \SpoonFeedRSSItem
      * Process links, will prepend SITE_URL if needed and append UTM-parameters
      *
      * @param string $content The content to process.
+     *
      * @return string
      */
     public function processLinks($content)
@@ -144,7 +145,7 @@ class RssItem extends \SpoonFeedRSSItem
         $link = (string) $link;
 
         // if link doesn't start with http, we prepend the URL of the site
-        if (substr($link, 0, 7) != 'http://') {
+        if (mb_substr($link, 0, 7) != 'http://') {
             $link = SITE_URL . $link;
         }
 
@@ -164,7 +165,7 @@ class RssItem extends \SpoonFeedRSSItem
         $link = (string) $link;
 
         // if link doesn't start with http, we prepend the URL of the site
-        if (substr($link, 0, 7) != 'http://') {
+        if (mb_substr($link, 0, 7) != 'http://') {
             $link = SITE_URL . $link;
         }
 

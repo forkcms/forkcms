@@ -16,9 +16,9 @@ class RequirementsChecker
     /**
      * Requirements error statuses
      */
-    const STATUS_OK = 'ok';
+    const STATUS_OK = 'success';
     const STATUS_WARNING = 'warning';
-    const STATUS_ERROR = 'error';
+    const STATUS_ERROR = 'danger';
 
     /**
      * The root dir of our project
@@ -133,19 +133,19 @@ class RequirementsChecker
     {
         $pcreVersion = defined('PCRE_VERSION') ? (float) PCRE_VERSION : null;
         $extensionsArray = array(
-            'extensionCURL'      => extension_loaded('curl'),
-            'extensionLibXML'    => extension_loaded('libxml'),
-            'extensionDOM'       => extension_loaded('dom'),
+            'extensionCURL' => extension_loaded('curl'),
+            'extensionLibXML' => extension_loaded('libxml'),
+            'extensionDOM' => extension_loaded('dom'),
             'extensionSimpleXML' => extension_loaded('SimpleXML'),
-            'extensionSPL'       => extension_loaded('SPL'),
-            'extensionPDO'       => extension_loaded('PDO'),
-            'extensionPDOMySQL'  => extension_loaded('PDO') && in_array('mysql', \PDO::getAvailableDrivers()),
-            'extensionMBString'  => extension_loaded('mbstring'),
-            'extensionIconv'     => extension_loaded('iconv'),
-            'extensionGD2'       => extension_loaded('gd') && function_exists('gd_info'),
-            'extensionJSON'      => extension_loaded('json'),
-            'extensionPCRE'      => (extension_loaded('pcre') && (null !== $pcreVersion && $pcreVersion > 8.0)),
-            'extensionIntl'      => extension_loaded('intl'),
+            'extensionSPL' => extension_loaded('SPL'),
+            'extensionPDO' => extension_loaded('PDO'),
+            'extensionPDOMySQL' => extension_loaded('PDO') && in_array('mysql', \PDO::getAvailableDrivers()),
+            'extensionMBString' => extension_loaded('mbstring'),
+            'extensionIconv' => extension_loaded('iconv'),
+            'extensionGD2' => extension_loaded('gd') && function_exists('gd_info'),
+            'extensionJSON' => extension_loaded('json'),
+            'extensionPCRE' => (extension_loaded('pcre') && (null !== $pcreVersion && $pcreVersion > 8.0)),
+            'extensionIntl' => extension_loaded('intl'),
         );
 
         // not installed extensions give an error
@@ -195,7 +195,7 @@ class RequirementsChecker
         if (array_key_exists('REQUEST_URI', $_SERVER)) {
             $this->checkRequirement(
                 'subfolder',
-                (substr($_SERVER['REQUEST_URI'], 0, 8) == '/install'),
+                (mb_substr($_SERVER['REQUEST_URI'], 0, 8) == '/install'),
                 self::STATUS_ERROR
             );
         } else {
@@ -294,6 +294,7 @@ class RequirementsChecker
      * @param  string $name        The "name" of the check.
      * @param  bool   $requirement The result of the check.
      * @param  string $severity    The severity of the requirement.
+     *
      * @return bool
      */
     protected function checkRequirement($name, $requirement, $severity = self::STATUS_ERROR)
@@ -305,9 +306,10 @@ class RequirementsChecker
     }
 
     /**
-     * Check if a directory and it's sub-directories and it's subdirectories and ... are writable.
+     * Check if a directory and its sub-directories and its subdirectories and ... are writable.
      *
      * @param  string $path The path to check.
+     *
      * @return bool
      */
     private function isRecursivelyWritable($path)
@@ -342,6 +344,7 @@ class RequirementsChecker
      * The default is_writable function has problems due to Windows ACLs "bug"
      *
      * @param  string $path The path to check.
+     *
      * @return bool
      */
     private function isWritable($path)

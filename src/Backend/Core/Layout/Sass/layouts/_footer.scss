@@ -1,0 +1,81 @@
+// Sticky footer
+
+.logo-footer {
+  margin: 0 auto 20px auto;
+  width: 50px;
+}
+
+.footer-inner {
+  margin-top: 20px;
+}
+
+@media screen and (min-width: $screen-sm) {
+  html,
+  body {
+    height: 100%;
+    min-height: 100%;
+  }
+
+  #root {
+    clear: both;
+    height: 100%;
+    margin-bottom: -$footer-height;
+    min-height: 100%;
+  }
+
+  #root-footer {
+    height: $footer-height;
+  }
+
+  .footer-login #footer {
+    padding: 0;
+    margin: 0;
+  }
+
+  #footer {
+    bottom: 0;
+    clear: both;
+    height: $footer-height;
+    margin-left: -430px;
+    padding-left: 430px;
+    position: absolute;
+    -webkit-transition: padding 250ms, margin 250ms;
+    -moz-transition: padding 250ms, margin 250ms;
+    -ms-transition: padding 250ms, margin 250ms;
+    -o-transition: padding 250ms, margin 250ms;
+    transition: padding 250ms, margin 250ms;
+    width: 100%;
+  }
+
+  .footer-pages #footer {
+    margin-left: -480px;
+    padding-left: 480px;
+  }
+
+  .footer-dashboard #footer {
+    margin-left: -240px;
+    padding-left: 240px;
+  }
+
+  .navigation-collapsed {
+    #footer {
+      margin-left: -240px;
+      padding-left: 240px;
+      -webkit-transition: padding 250ms, margin 250ms;
+      -moz-transition: padding 250ms, margin 250ms;
+      -ms-transition: padding 250ms, margin 250ms;
+      -o-transition: padding 250ms, margin 250ms;
+      transition: padding 250ms, margin 250ms;
+    }
+
+    .footer-pages #footer {
+      margin-left: -290px;
+      padding-left: 290px;
+    }
+
+    .footer-dashboard #footer {
+      margin-left: -50px;
+      padding-left: 50px;
+    }
+  }
+}

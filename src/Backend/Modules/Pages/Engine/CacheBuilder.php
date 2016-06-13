@@ -65,6 +65,7 @@ class CacheBuilder
 
     /**
      * @param string $language
+     *
      * @return array
      */
     public function getKeys($language)
@@ -83,6 +84,7 @@ class CacheBuilder
 
     /**
      * @param string $language
+     *
      * @return array
      */
     public function getNavigation($language)
@@ -103,6 +105,7 @@ class CacheBuilder
      * Fetches all data from the database
      *
      * @param string $language
+     *
      * @return array tupple containing keys and navigation
      */
     protected function getData($language)
@@ -137,6 +140,7 @@ class CacheBuilder
      * @param  array  &$keys
      * @param  array  $page
      * @param  string $language
+     *
      * @return array  An array containing more data for the page
      */
     protected function getPageData(&$keys, $page, $language)
@@ -169,13 +173,13 @@ class CacheBuilder
             'page_id' => (int) $page['id'],
             'url' => $page['url'],
             'full_url' => $languageURL . $keys[$page['id']],
-            'title' => preg_replace('/\'/', '\\\\\'', $page['title']),
-            'navigation_title' => preg_replace('/\'/', '\\\\\'', $page['navigation_title']),
+            'title' => $page['title'],
+            'navigation_title' => $page['navigation_title'],
             'has_extra' => (bool) ($page['has_extra'] == 'Y'),
             'no_follow' => (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow'),
             'hidden' => (bool) ($page['hidden'] == 'Y'),
             'extra_blocks' => null,
-            'has_children' => (bool) ($page['has_children'] == 'Y')
+            'has_children' => (bool) ($page['has_children'] == 'Y'),
         );
 
         $pageData['extra_blocks'] = $this->getPageExtraBlocks($page, $pageData);
@@ -197,7 +201,7 @@ class CacheBuilder
             $treeType = 'home';
         } elseif ($page['id'] == 404) {
             $treeType = 'error';
-        } elseif ($page['id'] < 404 && substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
+        } elseif ($page['id'] < 404 && mb_substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
             // get extras
             $extraIDs = explode(',', $page['extra_ids']);
 
@@ -318,6 +322,7 @@ class CacheBuilder
      * @param  string $type       The type of navigation.
      * @param  int    $parentId   The Id to start from.
      * @param  array  $order      The array to hold the order.
+     *
      * @return array
      */
     protected function getOrder($navigation, $type = 'page', $parentId = 0, $order = array())
@@ -347,6 +352,7 @@ class CacheBuilder
      * @param  array  $navigation The full navigation array
      * @param  array  $keys       The page keys
      * @param  string $language   The language to save the file for
+     *
      * @return string             The full content for the cache file
      */
     protected function dumpEditorLinkList($navigation, $keys, $language)
@@ -432,6 +438,7 @@ class CacheBuilder
      * Gets the header for cache files
      *
      * @param  string $itContainsMessage A message about the content of the file
+     *
      * @return string A comment to be used in the cache file
      */
     protected function getCacheHeader($itContainsMessage)

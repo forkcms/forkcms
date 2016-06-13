@@ -387,7 +387,7 @@ class Detail extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Blog', 'after_add_comment', array('comment' => $comment));
 
                 // append a parameter to the URL so we can show moderation
-                if (strpos($redirectLink, '?') === false) {
+                if (mb_strpos($redirectLink, '?') === false) {
                     if ($comment['status'] == 'moderation') {
                         $redirectLink .= '?comment=moderation#' . FL::act('Comment');
                     }

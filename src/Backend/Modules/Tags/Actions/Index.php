@@ -50,7 +50,7 @@ class Index extends BackendBaseActionIndex
         // header labels
         $this->dataGrid->setHeaderLabels(array(
             'tag' => \SpoonFilter::ucfirst(BL::lbl('Name')),
-            'num_tags' => \SpoonFilter::ucfirst(BL::lbl('Amount'))
+            'num_tags' => \SpoonFilter::ucfirst(BL::lbl('Amount')),
         ));
 
         // sorting columns
@@ -58,11 +58,20 @@ class Index extends BackendBaseActionIndex
         $this->dataGrid->setSortParameter('desc');
 
         // add the multicheckbox column
-        $this->dataGrid->setMassActionCheckboxes('checkbox', '[id]');
+        $this->dataGrid->setMassActionCheckboxes('check', '[id]');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
-        $ddmMassAction->setOptionAttributes('delete', array('message-id' => 'confirmDelete'));
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array('delete' => BL::lbl('Delete')),
+            'delete',
+            false,
+            'form-control',
+            'form-control danger'
+        );
+        $ddmMassAction->setOptionAttributes('delete', array(
+            'data-target' => '#confirmDelete',
+        ));
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // add attributes, so the inline editing has all the needed data

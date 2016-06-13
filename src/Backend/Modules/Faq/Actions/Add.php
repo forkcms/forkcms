@@ -59,11 +59,11 @@ class Add extends BackendBaseActionAdd
         $categories = BackendFaqModel::getCategories();
 
         // create elements
-        $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('answer');
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
         $this->frm->addDropdown('category_id', $categories);
-        $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
+        $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
 
         // meta
         $this->meta = new BackendMeta($this->frm, null, 'title', true);

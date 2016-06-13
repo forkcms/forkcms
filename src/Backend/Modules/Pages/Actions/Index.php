@@ -44,9 +44,6 @@ class Index extends BackendBaseActionIndex
         $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
-        // add css
-        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
-
         // load the dgRecentlyEdited
         $this->loadDataGrids();
 
@@ -91,7 +88,7 @@ class Index extends BackendBaseActionIndex
         $this->dgDrafts->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
             )
         );
 
@@ -147,7 +144,7 @@ class Index extends BackendBaseActionIndex
         $this->dgRecentlyEdited->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
             )
         );
 

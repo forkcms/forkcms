@@ -9,7 +9,6 @@ namespace Backend\Modules\Locale\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -33,19 +32,22 @@ class AnalyseModel extends Model
      * @param string $start front key string
      * @param string $end back key string
      * @param string $str the string that needs to be checked
+     *
      * @return mixed return string or false
      */
     private static function getInbetweenStrings($start, $end, $str)
     {
         $matches = array();
         preg_match_all("@$start([a-zA-Z0-9_]*)$end@", $str, $matches);
-        return (isset($matches[1])) ? current($matches[1]) :'';
+
+        return (isset($matches[1])) ? current($matches[1]) : '';
     }
 
     /**
      * Get the locale that is used in the Backend but doesn't exists.
      *
      * @param string $language The language to check.
+     *
      * @return array
      */
     public static function getNonExistingBackendLocale($language)
@@ -58,7 +60,7 @@ class AnalyseModel extends Model
         $finder = new Finder();
         $finder
             ->name('*.php')
-            ->name('*.tpl')
+            ->name('*.html.twig')
             ->name('*.js');
 
         // collect all files
@@ -103,13 +105,14 @@ class AnalyseModel extends Model
                         'module' => $moduleName,
                         'type' => $type,
                         'name' => $key,
-                        'used_in' => serialize($file['file'])
+                        'used_in' => serialize($file['file']),
                     );
                 }
             }
         }
 
         ksort($nonExisting);
+
         return $nonExisting;
     }
 
@@ -117,6 +120,7 @@ class AnalyseModel extends Model
      * Get the locale that is used in the Frontend but doesn't exists.
      *
      * @param string $language The language to check.
+     *
      * @return array
      */
     public static function getNonExistingFrontendLocale($language)
@@ -129,7 +133,7 @@ class AnalyseModel extends Model
         $finder = new Finder();
         $finder->notPath('Cache')
             ->name('*.php')
-            ->name('*.tpl')
+            ->name('*.html.twig')
             ->name('*.js');
 
         // collect all files
@@ -168,13 +172,14 @@ class AnalyseModel extends Model
                         'module' => $moduleName,
                         'type' => $type,
                         'name' => $key,
-                        'used_in' => serialize($file['file'])
+                        'used_in' => serialize($file['file']),
                     );
                 }
             }
         }
 
         ksort($nonExisting);
+
         return $nonExisting;
     }
 
@@ -183,6 +188,7 @@ class AnalyseModel extends Model
      *
      * @param string $application the application
      * @param string $language the required language
+     *
      * @return array
      */
     public static function getSortLocaleFrom($application, $language)
@@ -203,6 +209,7 @@ class AnalyseModel extends Model
      * Find Locale in Files and return an array with of found files
      *
      * @param array $module
+     *
      * @return array found Locale Files
      */
     private static function findLocaleInFiles(array $module)
@@ -253,6 +260,7 @@ class AnalyseModel extends Model
                     break;
             }
         }
+
         return $locale;
     }
 }

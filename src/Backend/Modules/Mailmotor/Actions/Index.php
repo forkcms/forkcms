@@ -129,14 +129,21 @@ class Index extends BackendBaseActionIndex
 
         // add the multicheckbox column
         $this->dgQueuedMailings->addColumn(
-            'checkbox',
+            'check',
             '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>',
             '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>'
         );
-        $this->dgQueuedMailings->setColumnsSequence('checkbox');
+        $this->dgQueuedMailings->setColumnsSequence('check');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array('delete' => BL::lbl('Delete')),
+            'delete',
+            false,
+            'form-control',
+            'form-control danger'
+        );
         $this->dgQueuedMailings->setMassAction($ddmMassAction);
 
         // set column functions
@@ -237,14 +244,21 @@ class Index extends BackendBaseActionIndex
 
         // add the multicheckbox column
         $this->dgSentMailings->addColumn(
-            'checkbox',
+            'check',
             '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>',
             '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>'
         );
-        $this->dgSentMailings->setColumnsSequence('checkbox');
+        $this->dgSentMailings->setColumnsSequence('check');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array('delete' => BL::lbl('Delete')),
+            'delete',
+            false,
+            'form-control',
+            'form-control danger'
+        );
         $this->dgSentMailings->setMassAction($ddmMassAction);
 
         // set column functions
@@ -353,14 +367,21 @@ class Index extends BackendBaseActionIndex
 
         // add the multicheckbox column
         $this->dgUnsentMailings->addColumn(
-            'checkbox',
+            'check',
             '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>',
             '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>'
         );
-        $this->dgUnsentMailings->setColumnsSequence('checkbox');
+        $this->dgUnsentMailings->setColumnsSequence('check');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array('delete' => BL::lbl('Delete')),
+            'delete',
+            false,
+            'form-control',
+            'form-control danger'
+        );
         $this->dgUnsentMailings->setMassAction($ddmMassAction);
 
         // set column functions
@@ -420,6 +441,7 @@ class Index extends BackendBaseActionIndex
      *
      * @param int    $id   The ID of the campaign.
      * @param string $name The name of the campaign.
+     *
      * @return string
      */
     public static function setCampaignLink($id, $name)

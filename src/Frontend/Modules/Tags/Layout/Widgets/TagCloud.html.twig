@@ -1,0 +1,25 @@
+{#
+	variables that are available:
+	- {{ widgetTagsTagCloud }}: contains an array with the most popular tags
+#}
+
+{% if widgetTagsTagCloud %}
+  <section id="tagCloudWidget" class="mod">
+    <div class="inner">
+      <header class="hd">
+        <h3>{{ 'lbl.Tags'|trans|capitalize }}</h3>
+      </header>
+      <div class="bd content">
+        <ul>
+          {% for widgetTagsTagCloud in widgetTagsTagCloud %}
+            <li>
+              <a href="{{ widgetTagsTagCloud.url }}">
+                {{ widgetTagsTagCloud.name }}&nbsp;({{ widgetTagsTagCloud.number }})
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+{% endif %}

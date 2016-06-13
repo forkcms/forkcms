@@ -3,8 +3,8 @@
 namespace Frontend\Modules\FormBuilder\EventListener;
 
 use Swift_Mailer;
-use Frontend\Core\Engine\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
+use Common\ModulesSettings;
+use Frontend\Core\Engine\Language;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 
 /**
@@ -14,14 +14,26 @@ use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
  */
 final class FormBuilderSubmittedMailSubscriber
 {
+    /**
+     * @var ModulesSettings
+     */
+    protected $modulesSettings;
+
+    /**
+     * @var Swift_Mailer
+     */
     protected $mailer;
 
     /**
      * @param Swift_Mailer $mailer
+     * @param ModulesSettings $modulesSettings
      */
-    public function __construct(Swift_Mailer $mailer)
-    {
+    public function __construct(
+        Swift_Mailer $mailer,
+        ModulesSettings $modulesSettings
+    ) {
         $this->mailer = $mailer;
+        $this->modulesSettings = $modulesSettings;
     }
 
     /**
@@ -34,14 +46,14 @@ final class FormBuilderSubmittedMailSubscriber
         // need to send mail
         if ($form['method'] == 'database_email') {
             // build our message
-            $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
+            $from = $this->modulesSettings->get('Core', 'mailer_from');
             $fieldData = $this->getEmailFields($event->getData());
             $message = \Common\Mailer\Message::newInstance(sprintf(
-                    FL::getMessage('FormBuilderSubject'),
+                    Language::getMessage('FormBuilderSubject'),
                     $form['name']
                 ))
                 ->parseHtml(
-                    FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.tpl',
+                    FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.html.twig',
                     array(
                         'sentOn' => time(),
                         'name' => $form['name'],
@@ -63,7 +75,7 @@ final class FormBuilderSubmittedMailSubscriber
                 }
             }
             if ($message->getReplyTo() === null) {
-                $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
+                $replyTo = $this->modulesSettings->get('Core', 'mailer_reply_to');
                 $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
             }
 
@@ -75,6 +87,7 @@ final class FormBuilderSubmittedMailSubscriber
      * Converts the data to make sure it is nicely usable in the email
      *
      * @param  array $data
+     *
      * @return array
      */
     protected function getEmailFields($data)
@@ -82,12 +95,13 @@ final class FormBuilderSubmittedMailSubscriber
         return array_map(
             function ($item) {
                 $value = unserialize($item['value']);
+
                 return array(
                     'label' => $item['label'],
                     'value' => (is_array($value)
                         ? implode(',', $value)
                         : nl2br($value)
-                    )
+                    ),
                 );
             },
             $data

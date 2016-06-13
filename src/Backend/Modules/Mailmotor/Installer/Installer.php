@@ -24,16 +24,7 @@ class Installer extends ModuleInstaller
      */
     private function insertWidget()
     {
-        // build widget
-        $statistics = array(
-            'column' => 'right',
-            'position' => 2,
-            'hidden' => false,
-            'present' => true
-        );
-
-        // insert widget
-        $this->insertDashboardWidget('Mailmotor', 'Statistics', $statistics);
+        $this->insertDashboardWidget('Mailmotor', 'Statistics');
     }
 
     /**
@@ -73,7 +64,7 @@ class Installer extends ModuleInstaller
                  'mailmotor/statistics_link',
                  'mailmotor/statistics_bounces',
                  'mailmotor/statistics_campaign',
-                 'mailmotor/statistics_opens'
+                 'mailmotor/statistics_opens',
             )
         );
         $this->setNavigation(
@@ -83,7 +74,7 @@ class Installer extends ModuleInstaller
             array(
                  'mailmotor/add_campaign',
                  'mailmotor/edit_campaign',
-                 'mailmotor/statistics_campaigns'
+                 'mailmotor/statistics_campaigns',
             )
         );
         $this->setNavigation(
@@ -95,7 +86,7 @@ class Installer extends ModuleInstaller
                  'mailmotor/edit_group',
                  'mailmotor/custom_fields',
                  'mailmotor/add_custom_field',
-                 'mailmotor/import_groups'
+                 'mailmotor/import_groups',
             )
         );
         $this->setNavigation(
@@ -105,7 +96,7 @@ class Installer extends ModuleInstaller
             array(
                  'mailmotor/add_address',
                  'mailmotor/edit_address',
-                 'mailmotor/import_addresses'
+                 'mailmotor/import_addresses',
             )
         );
 
@@ -116,7 +107,7 @@ class Installer extends ModuleInstaller
     }
 
     /**
-     * Install the module and it's actions
+     * Install the module and its actions
      */
     private function installModule()
     {
@@ -205,7 +196,7 @@ class Installer extends ModuleInstaller
                 array(
                      'title' => \SpoonFilter::ucfirst($this->getLocale('SentMailings', 'Core', $language, 'lbl', 'Frontend')),
                      'type' => 'root',
-                     'language' => $language
+                     'language' => $language,
                 ),
                 null,
                 array('extra_id' => $sentMailingsID, 'position' => 'main'),
@@ -216,7 +207,7 @@ class Installer extends ModuleInstaller
                 array(
                      'parent_id' => $parentID,
                      'title' => \SpoonFilter::ucfirst($this->getLocale('Subscribe', 'Core', $language, 'lbl', 'Frontend')),
-                     'language' => $language
+                     'language' => $language,
                 ),
                 null,
                 array('extra_id' => $subscribeFormID, 'position' => 'main'),
@@ -227,7 +218,7 @@ class Installer extends ModuleInstaller
                 array(
                      'parent_id' => $parentID,
                      'title' => \SpoonFilter::ucfirst($this->getLocale('Unsubscribe', 'Core', $language, 'lbl', 'Frontend')),
-                     'language' => $language
+                     'language' => $language,
                 ),
                 null,
                 array('extra_id' => $unsubscribeFormID, 'position' => 'main'),

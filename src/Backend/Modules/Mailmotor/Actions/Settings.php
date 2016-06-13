@@ -17,7 +17,6 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
- *
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -57,6 +56,7 @@ class Settings extends BackendBaseActionEdit
      * Attempts to create a client
      *
      * @param array $record The client record to create.
+     *
      * @return mixed
      */
     private function createClient($record)
@@ -243,6 +243,7 @@ class Settings extends BackendBaseActionEdit
      * Updates a client record.
      *
      * @param array $record The client record to update.
+     *
      * @return mixed
      */
     private function updateClient($record)

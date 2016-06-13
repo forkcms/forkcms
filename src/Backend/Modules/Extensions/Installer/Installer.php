@@ -33,23 +33,23 @@ class Installer extends ModuleInstaller
         $templates['core']['default'] = array(
             'theme' => 'core',
             'label' => 'Default',
-            'path' => 'Core/Layout/Templates/Default.tpl',
+            'path' => 'Core/Layout/Templates/Default.html.twig',
             'active' => 'Y',
             'data' => serialize(array(
                 'format' => '[main]',
-                'names' => array('main')
-            ))
+                'names' => array('main'),
+            )),
         );
 
         $templates['core']['home'] = array(
             'theme' => 'core',
             'label' => 'Home',
-            'path' => 'Core/Layout/Templates/Home.tpl',
+            'path' => 'Core/Layout/Templates/Home.html.twig',
             'active' => 'Y',
             'data' => serialize(array(
                 'format' => '[main]',
-                'names' => array('main')
-            ))
+                'names' => array('main'),
+            )),
         );
 
         // insert templates
@@ -67,25 +67,25 @@ class Installer extends ModuleInstaller
         $templates['triton']['default'] = array(
             'theme' => 'triton',
             'label' => 'Default',
-            'path' => 'Core/Layout/Templates/Default.tpl',
+            'path' => 'Core/Layout/Templates/Default.html.twig',
             'active' => 'Y',
             'data' => serialize(array(
                 'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]',
                 'names' => array('main', 'left', 'top', 'advertisement'),
-                'default_extras' => array('top' => array($extras['search_form']))
-            ))
+                'default_extras' => array('top' => array($extras['search_form'])),
+            )),
         );
 
         $templates['triton']['home'] = array(
             'theme' => 'triton',
             'label' => 'Home',
-            'path' => 'Core/Layout/Templates/Home.tpl',
+            'path' => 'Core/Layout/Templates/Home.html.twig',
             'active' => 'Y',
             'data' => serialize(array(
                 'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]',
                 'names' => array('main', 'left', 'right', 'top', 'advertisement'),
-                'default_extras' => array('top' => array($extras['search_form']))
-            ))
+                'default_extras' => array('top' => array($extras['search_form'])),
+            )),
         );
 
         // insert templates
@@ -137,18 +137,18 @@ class Installer extends ModuleInstaller
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, 'Overview', 'extensions/modules', array(
             'extensions/detail_module',
-            'extensions/upload_module'
+            'extensions/upload_module',
         ));
 
         // theme navigation
         $navigationThemesId = $this->setNavigation($navigationSettingsId, 'Themes');
         $this->setNavigation($navigationThemesId, 'ThemesSelection', 'extensions/themes', array(
             'extensions/upload_theme',
-            'extensions/detail_theme'
+            'extensions/detail_theme',
         ));
         $this->setNavigation($navigationThemesId, 'Templates', 'extensions/theme_templates', array(
             'extensions/add_theme_template',
-            'extensions/edit_theme_template'
+            'extensions/edit_theme_template',
         ));
     }
 

@@ -22,8 +22,8 @@ class LanguagesType extends AbstractType
                 array(
                     'expanded' => true,
                     'multiple' => false,
-                    'choices'  => array(
-                        'single'   => 'Just one language',
+                    'choices' => array(
+                        'single' => 'Just one language',
                         'multiple' => 'Multiple languages',
                     ),
                 )
@@ -32,7 +32,7 @@ class LanguagesType extends AbstractType
                 'languages',
                 'choice',
                 array(
-                    'choices'  => $this->getInstallableLanguages(),
+                    'choices' => $this->getInstallableLanguages(),
                     'expanded' => true,
                     'multiple' => true,
                 )
@@ -49,6 +49,7 @@ class LanguagesType extends AbstractType
                 'checkbox',
                 array(
                     'label' => 'Use the same language(s) for the CMS interface.',
+                    'required' => false,
                 )
             )
             ->add(
@@ -62,7 +63,7 @@ class LanguagesType extends AbstractType
                 'interface_languages',
                 'choice',
                 array(
-                    'choices'  => $this->getInstallableLanguages(),
+                    'choices' => $this->getInstallableLanguages(),
                     'multiple' => true,
                     'expanded' => true,
                 )
@@ -97,7 +98,7 @@ class LanguagesType extends AbstractType
             'ru' => 'Russian',
             'es' => 'Spanish',
             'sv' => 'Swedish',
-            'uk' => 'Ukrainian'
+            'uk' => 'Ukrainian',
         );
     }
 }

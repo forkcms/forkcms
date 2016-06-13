@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
 // get environment and debug mode from environment variables
-$env = getenv('FORK_ENV') ? : 'prod';
+$env = getenv('FORK_ENV') ?: 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
 
 // Fork has not yet been installed

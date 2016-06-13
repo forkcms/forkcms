@@ -98,14 +98,14 @@ class SaveContent extends BackendBaseAJAXAction
                         BackendMailmotorCMHelper::saveMailingDraft($item);
                     } catch (Exception $e) {
                         // CM did not receive a valid URL
-                        if (strpos($e->getMessage(), 'HTML Content URL Required')) {
+                        if (mb_strpos($e->getMessage(), 'HTML Content URL Required')) {
                             $message = BL::err('HTMLContentURLRequired', $this->getModule());
-                        } elseif (strpos($e->getMessage(), 'Payment details required')) {
+                        } elseif (mb_strpos($e->getMessage(), 'Payment details required')) {
                             // no payment details were set for the CM client yet
                             $error = BL::err('PaymentDetailsRequired', $this->getModule());
                             $cmUsername = $this->get('fork.settings')->get($this->getModule(), 'cm_username');
                             $message = sprintf($error, $cmUsername);
-                        } elseif (strpos($e->getMessage(), 'Duplicate Campaign Name')) {
+                        } elseif (mb_strpos($e->getMessage(), 'Duplicate Campaign Name')) {
                             // the campaign name already exists in CM
                             $message = BL::err('DuplicateCampaignName', $this->getModule());
                         } else {

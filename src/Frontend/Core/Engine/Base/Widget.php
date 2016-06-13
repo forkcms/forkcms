@@ -11,11 +11,11 @@ namespace Frontend\Core\Engine\Base;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Header;
-use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Core\Engine\Url;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific widget
+ *
  * @later  Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
@@ -57,14 +57,7 @@ class Widget extends Object
      *
      * @var    string
      */
-    protected $templatePath;
-
-    /**
-     * A reference to the current template
-     *
-     * @var    FrontendTemplate
-     */
-    public $tpl;
+    public $templatePath;
 
     /**
      * A reference to the URL-instance
@@ -84,7 +77,6 @@ class Widget extends Object
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible
-        $this->tpl = new FrontendTemplate(false);
         $this->header = $this->getContainer()->get('header');
         $this->URL = $this->getContainer()->get('url');
 
@@ -189,7 +181,7 @@ class Widget extends Object
      */
     public function getContent()
     {
-        return $this->tpl->getContent($this->templatePath, false, true);
+        return $this->tpl->getContent($this->templatePath);
     }
 
     /**
@@ -225,7 +217,7 @@ class Widget extends Object
             $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
             // build template path
-            $path = $frontendModulePath . '/Layout/Widgets/' . $this->getAction() . '.tpl';
+            $path = $frontendModulePath . '/Layout/Widgets/' . $this->getAction() . '.html.twig';
         } else {
             // redefine
             $path = (string) $path;
