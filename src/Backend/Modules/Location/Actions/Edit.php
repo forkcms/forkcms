@@ -129,11 +129,12 @@ class Edit extends BackendBaseActionEdit
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
+            'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
         );
 
         $zoomLevels = array_combine(
-            array_merge(array('auto'), range(3, 18)),
-            array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))
+            array_merge(array('auto'), range(1, 18)),
+            array_merge(array(BL::lbl('Auto', $this->getModule())), range(1, 18))
         );
 
         $this->settingsForm = new BackendForm('settings');

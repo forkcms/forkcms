@@ -124,6 +124,7 @@ class Index extends BackendBaseActionIndex
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
+            'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
         );
 
         $zoomLevels = array_combine(

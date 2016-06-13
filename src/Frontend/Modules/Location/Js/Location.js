@@ -2,6 +2,7 @@
  * Interaction for the location module
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 jsFrontend.location =
 {
@@ -9,6 +10,7 @@ jsFrontend.location =
 	mapFullUrl: null,
 	directionService: null,
 	directionsDisplay: null,
+	panorama: {},
 
 	// init, something like a constructor
 	init: function()
@@ -30,16 +32,38 @@ jsFrontend.location =
 		var suffix = (id == '') ? '' : '_' + id;
 		var mapId = (id == '') ? 'general' : id;
 
+  		// define coordinates
+		var coordinates = new google.maps.LatLng(jsFrontend.data.get('Location.settings' + suffix + '.center.lat'), jsFrontend.data.get('Location.settings' + suffix + '.center.lng'));
+
 		// build the options
 		var options =
 		{
 			zoom: (jsFrontend.data.get('Location.settings' + suffix + '.zoom_level') == 'auto') ? 0 : parseInt(jsFrontend.data.get('Location.settings' + suffix + '.zoom_level')),
-			center: new google.maps.LatLng(jsFrontend.data.get('Location.settings' + suffix + '.center.lat'), jsFrontend.data.get('Location.settings' + suffix + '.center.lng')),
+			center: coordinates,
 			mapTypeId: google.maps.MapTypeId[jsFrontend.data.get('Location.settings' + suffix + '.map_type')]
 		};
 
 		// create map
 		jsFrontend.location.map[mapId] = new google.maps.Map(document.getElementById('map' + id), options);
+
+		// we want a streetview
+		if(jsFrontend.data.get('Location.settings' + suffix + '.map_type') == 'STREET_VIEW')
+		{
+			// get street view data from map
+			jsFrontend.location.panorama[mapId] = jsFrontend.location.map[mapId].getStreetView();
+
+			// define position
+			jsFrontend.location.panorama[mapId].setPosition(coordinates);
+
+			// define heading (horizontal °) and pitch (vertical °)
+			jsFrontend.location.panorama[mapId].setPov({
+				heading: 200,
+				pitch: 8
+			});
+
+			// show panorama
+			jsFrontend.location.panorama[mapId].setVisible(true);
+		}
 
 		// get the items
 		var items = jsFrontend.data.get('Location.items' + suffix);
