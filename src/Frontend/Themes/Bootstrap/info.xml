@@ -58,8 +58,6 @@
 		</template>
 		<template label="Home" path="Core/Layout/Templates/Home.tpl">
 			<positions>
-				<position name="slideshow" />
-				<position name="features" />
 				<position name="main" />
 				<position name="top">
 					<defaults>
@@ -68,7 +66,7 @@
 				</position>
 			</positions>
 			<format>
-				[/,/,/,top,/],[slideshow,slideshow,slideshow,slideshow,slideshow],[/,features,features,features,/],[/,main,main,main,/]
+				[/,/,/,top,/],[/,main,main,main,/]
 			</format>
 		</template>
 		<template label="Sidebar" path="Core/Layout/Templates/Sidebar.tpl">

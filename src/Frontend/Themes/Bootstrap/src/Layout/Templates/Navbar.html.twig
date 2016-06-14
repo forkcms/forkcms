@@ -9,19 +9,24 @@
 
     <h1>
       <a href="/" class="navbar-brand">
-        {$siteTitle}
+        {{ siteTitle }}
       </a>
     </h1>
   </div>
 
   <div class="collapse navbar-collapse navbar-page-collapse">
-    {$var|getnavigation:'page':0:1}
+    {{ getnavigation('page', 0, 1) }}
 
-    {iteration:positionTop}
-      {$positionTop.blockContent}
-    {/iteration:positionTop}
+    {# Top positions #}
+    {% for top in positions.top %}
+      {% if top.html %}
+        {{ top.html|raw }}
+      {% elseif top.include_path %}
+        {% include top.include_path %}
+      {% endif %}
+    {% endfor %}
 
-    {include:Core/Layout/Templates/Languages.tpl}
+    {% include 'Core/Layout/Templates/Languages.html.twig' %}
   </div>
 </nav>
 
