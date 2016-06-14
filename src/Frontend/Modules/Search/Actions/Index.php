@@ -63,7 +63,7 @@ class Index extends FrontendBaseBlock
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**

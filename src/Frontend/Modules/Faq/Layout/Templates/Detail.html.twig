@@ -4,120 +4,129 @@
 	- {{ related }}: the related items
 #}
 <div id="faqDetail">
-	<article class="mod article">
-		<div class="inner">
-			<header class="hd">
-				<h1>{{ item.question }}</h1>
-				{% if settings.allow_multiple_categories %}
-				<ul>
-					<li>
-						{# Category#}
-						{{ 'lbl.InTheCategory'|trans|capitalize }} <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
-						{% if not item.tags %}.{% endif %}
+  <article class="mod article">
+    <div class="inner">
+      <header class="hd">
+        <h1>{{ item.question }}</h1>
+        {% if settings.allow_multiple_categories %}
+          <ul>
+            <li>
+              {# Category#}
+              {{ 'lbl.InTheCategory'|trans|capitalize }}
+              <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
+              {% if not item.tags %}.{% endif %}
 
-						{# Tags#}
-						{% if item.tags %}
-							{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Tags'|trans }}
-							{% for tag in item.tags %}
-								<a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
-							{% endfor %}
-						{% endif %}
-					</li>
-				</ul>
-				{% endif %}
+              {# Tags#}
+              {% if item.tags %}
+                {{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Tags'|trans }}
+                {% for tag in item.tags %}
+                  <a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
+                {% endfor %}
+              {% endif %}
+            </li>
+          </ul>
+        {% endif %}
 
-				{# Tags #}
-				{% if not settings.allow_multiple_categories %}
-					{% if item.tags %}
-					<ul>
-						<li>
-							{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Tags'|trans }}
-							{% for tag in item.tags %}
-								<a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
-							{% endfor %}
-						</li>
-					</ul>
-					{% endif %}
-				{% endif %}
-			</header>
-			<div class="bd content">
-				{{ item.answer }}
-			</div>
-		</div>
-	</article>
+        {# Tags #}
+        {% if not settings.allow_multiple_categories %}
+          {% if item.tags %}
+            <ul>
+              <li>
+                {{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Tags'|trans }}
+                {% for tag in item.tags %}
+                  <a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
+                {% endfor %}
+              </li>
+            </ul>
+          {% endif %}
+        {% endif %}
+      </header>
+      <div class="bd content">
+        {{ item.answer }}
+      </div>
+    </div>
+  </article>
 
-	{% if inSameCategory %}
-		<section id="faqRelatedItems" class="mod">
-			<div class="inner">
-				<header class="hd">
-					{% if settings.allow_multiple_categories %}<h3>{{ 'msg.QuestionsInSameCategory'|trans|capitalize }}</h3>{% endif %}
-					{% if not settings.allow_multiple_categories %}<h3>{{ 'msg.OtherQuestions'|trans|capitalize }}</h3>{% endif %}
-				</header>
-				<div class="bd content">
-					<ul>
-						{% for inSameCategory in inSameCategory %}
-							<li><a href="{{ inSameCategory.full_url }}" title="{{ inSameCategory.question }}">{{ inSameCategory.question }}</a></li>
-						{% endfor %}
-					</ul>
-				</div>
-			</div>
-		</section>
-	{% endif %}
+  {% if inSameCategory %}
+    <section id="faqRelatedItems" class="mod">
+      <div class="inner">
+        <header class="hd">
+          {% if settings.allow_multiple_categories %}
+            <h3>{{ 'msg.QuestionsInSameCategory'|trans|capitalize }}</h3>{% endif %}
+          {% if not settings.allow_multiple_categories %}<h3>{{ 'msg.OtherQuestions'|trans|capitalize }}</h3>{% endif %}
+        </header>
+        <div class="bd content">
+          <ul>
+            {% for inSameCategory in inSameCategory %}
+              <li>
+                <a href="{{ inSameCategory.full_url }}" title="{{ inSameCategory.question }}">{{ inSameCategory.question }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </section>
+  {% endif %}
 
-	{% if related %}
-		<section id="faqRelatedItems" class="mod">
-			<div class="inner">
-				<header class="hd">
-					<h3>{{ 'msg.RelatedQuestions'|trans|capitalize }}</h3>
-				</header>
-				<div class="bd content">
-					<ul>
-						{% for related in related %}
-							<li><a href="{{ related.full_url }}" title="{{ related.question }}">{{ related.question }}</a></li>
-						{% endfor %}
-					</ul>
-				</div>
-			</div>
-		</section>
-	{% endif %}
+  {% if related %}
+    <section id="faqRelatedItems" class="mod">
+      <div class="inner">
+        <header class="hd">
+          <h3>{{ 'msg.RelatedQuestions'|trans|capitalize }}</h3>
+        </header>
+        <div class="bd content">
+          <ul>
+            {% for related in related %}
+              <li><a href="{{ related.full_url }}" title="{{ related.question }}">{{ related.question }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </section>
+  {% endif %}
 
-	<p><a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|capitalize }}">{{ 'lbl.ToFaqOverview'|trans|capitalize }}</a></p>
+  <p>
+    <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|capitalize }}">{{ 'lbl.ToFaqOverview'|trans|capitalize }}</a>
+  </p>
 
-	{% if settings.allow_feedback %}
-		<section id="faqFeedbackForm" class="mod">
-			<div class="inner">
-				<header class="hd">
-					<h3 id="{{ 'act.Feedback'|trans }}">{{ 'msg.Feedback'|trans|capitalize }}</h3>
-				</header>
-				<div class="bd">
-					{% if success %}<div class="message success"><p>{{ 'msg.FeedbackSuccess'|trans }}</p></div>{% endif %}
-					{% if spam %}<div class="message error"><p>{{ 'err.FeedbackSpam'|trans }}</p></div>{% endif %}
+  {% if settings.allow_feedback %}
+    <section id="faqFeedbackForm" class="mod">
+      <div class="inner">
+        <header class="hd">
+          <h3 id="{{ 'act.Feedback'|trans }}">{{ 'msg.Feedback'|trans|capitalize }}</h3>
+        </header>
+        <div class="bd">
+          {% if success %}
+            <div class="message success"><p>{{ 'msg.FeedbackSuccess'|trans }}</p></div>{% endif %}
+          {% if spam %}
+            <div class="message error"><p>{{ 'err.FeedbackSpam'|trans }}</p></div>{% endif %}
 
-					{% form feedback %}
-						{{ hidQuestionId }}
-						<div class="options">
-							<ul class="inputList">
-								{% for useful in useful %}
-									<li>
-										{{ useful.rbtUseful }}
-										<label for="{{ useful.id }}">{{ useful.label|capitalize }}</label>
-									</li>
-								{% endfor %}
-							</ul>
-						</div>
+          {% form feedback %}
+          {{ hidQuestionId }}
+          <div class="options">
+            <ul class="inputList">
+              {% for useful in useful %}
+                <li>
+                  {{ useful.rbtUseful }}
+                  <label for="{{ useful.id }}">{{ useful.label|capitalize }}</label>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
 
-						<div id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
-							<p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
-								<label for="message">{{ 'msg.HowToImprove'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-								{% form_field_error Message %} {% form_field Message %}
-							</p>
-							<p>
-								<input class="inputSubmit" type="submit" name="comment" value="{{ 'lbl.Send'|trans|capitalize }}" />
-							</p>
-						</div>
-					{% endform %}
-				</div>
-			</div>
-		</section>
-	{% endif %}
+          <div id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
+            <p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
+              <label for="message">{{ 'msg.HowToImprove'|trans|capitalize }}
+                <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+              {% form_field_error Message %} {% form_field Message %}
+            </p>
+            <p>
+              <input class="inputSubmit" type="submit" name="comment" value="{{ 'lbl.Send'|trans|capitalize }}" />
+            </p>
+          </div>
+          {% endform %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
 </div>

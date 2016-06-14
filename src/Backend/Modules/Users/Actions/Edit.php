@@ -342,7 +342,7 @@ class Edit extends BackendBaseActionEdit
                         'users_sessions',
                         'user_id = ?',
                         array(
-                            $this->user->getUserId()
+                            $this->user->getUserId(),
                         )
                     );
                 }

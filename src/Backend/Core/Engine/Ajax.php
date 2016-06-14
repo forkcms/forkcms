@@ -78,6 +78,7 @@ class Ajax extends Base\Object implements \ApplicationInterface
 
     /**
      * @param string $language
+     *
      * @throws Exception If the provided language is not valid
      */
     public function setLanguage($language)

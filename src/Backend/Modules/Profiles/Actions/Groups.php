@@ -103,7 +103,7 @@ class Groups extends BackendBaseActionIndex
                      'offset' => '[offset]',
                      'order' => '[order]',
                      'sort' => '[sort]',
-                     'name' => $this->filter['name']
+                     'name' => $this->filter['name'],
                 ),
                 false
             )
@@ -178,6 +178,7 @@ class Groups extends BackendBaseActionIndex
      *
      * @param int $groupId     Group id.
      * @param int $numProfiles Number of profiles.
+     *
      * @return string
      */
     public static function parseNumProfiles($groupId, $numProfiles)

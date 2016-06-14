@@ -9,7 +9,6 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -75,6 +74,7 @@ class Form extends \Common\Core\Form
      * @param string $value The value (or label) that will be printed.
      * @param string $type  The type of the button (submit is default).
      * @param string $class Class(es) that will be applied on the button.
+     *
      * @return \SpoonFormButton
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
@@ -106,9 +106,11 @@ class Form extends \Common\Core\Form
      * @param int    $date2      The second date for a rangepicker.
      * @param string $class      Class(es) that have to be applied on the element.
      * @param string $classError Class(es) that have to be applied when an error occurs on the element.
-     * @return FormDate
+     *
      * @throws Exception
      * @throws \SpoonFormException
+     *
+     * @return FormDate
      */
     public function addDate(
         $name,
@@ -199,6 +201,7 @@ class Form extends \Common\Core\Form
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the field contain HTML?
+     *
      * @return \SpoonFormTextarea
      */
     public function addEditor($name, $value = null, $class = null, $classError = null, $HTML = true)
@@ -239,6 +242,7 @@ class Form extends \Common\Core\Form
      * @param string $name       Name of the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormFile
      */
     public function addFile($name, $class = null, $classError = null)
@@ -259,6 +263,7 @@ class Form extends \Common\Core\Form
      * @param string $name       The name of the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return FormImage
      */
     public function addImage($name, $class = null, $classError = null)
@@ -277,6 +282,7 @@ class Form extends \Common\Core\Form
      * Fetches all the values for this form as key/value pairs
      *
      * @param mixed $excluded Which elements should be excluded?
+     *
      * @return array
      */
     public function getValues($excluded = array('form', 'save', 'form_token', '_utf8'))
@@ -288,6 +294,7 @@ class Form extends \Common\Core\Form
      * Checks to see if this form has been correctly submitted. Will revalidate by default.
      *
      * @param bool $revalidate Do we need to enforce validation again, even if it might already been done before?
+     *
      * @return bool
      */
     public function isCorrect($revalidate = true)

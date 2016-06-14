@@ -11,44 +11,44 @@
   <link rel="shortcut icon" href="/Backend/favicon.ico" />
 
   {% for cssFil in cssFiles %}
-  <link rel="stylesheet" href="{{ cssFil.file }}" />{{ CRLF }}{{ TAB }}
+    <link rel="stylesheet" href="{{ cssFil.file }}" />{{ CRLF }}{{ TAB }}
   {% endfor %}
 
   {% for jsFil in jsFiles %}
-  <script src="{{ jsFil.file }}"></script>{{ CRLF }}{{ TAB }}
+    <script src="{{ jsFil.file }}"></script>{{ CRLF }}{{ TAB }}
   {% endfor %}
 
   <script type="text/javascript">
     //<![CDATA[
-      {{ jsData }}
+    {{ jsData }}
 
-      // reports
-      $(function()
-      {
-        {% if form_error %}jsBackend.messages.add('danger', "{{ 'err.FormError'|trans|addslashes }}");{% endif %}
-        {% if usingRevision %}jsBackend.messages.add('info', "{{ 'msg.UsingARevision'|trans|addslashes }}", 'alert-static');{% endif %}
-        {% if usingDraft %}jsBackend.messages.add('info', "{{ 'msg.UsingADraft'|trans|addslashes }}", 'alert-static');{% endif %}
-        {% if report %}jsBackend.messages.add('success', "{{ reportMessage|addslashes }}");{% endif %}
-        {% if errorMessage %}jsBackend.messages.add('danger', '{{ errorMessage|addslashes }}');{% endif %}
-      });
+    // reports
+    $(function()
+    {
+      {% if form_error %}jsBackend.messages.add('danger', "{{ 'err.FormError'|trans|addslashes }}");{% endif %}
+      {% if usingRevision %}jsBackend.messages.add('info', "{{ 'msg.UsingARevision'|trans|addslashes }}", 'alert-static');{% endif %}
+      {% if usingDraft %}jsBackend.messages.add('info', "{{ 'msg.UsingADraft'|trans|addslashes }}", 'alert-static');{% endif %}
+      {% if report %}jsBackend.messages.add('success', "{{ reportMessage|addslashes }}");{% endif %}
+      {% if errorMessage %}jsBackend.messages.add('danger', '{{ errorMessage|addslashes }}');{% endif %}
+    });
 
-      var variables = [];
-      variables =
-      {
-        mailingId: '{{ mailing.id }}',
-        templateCSSPath: '{{ template.path_css }}',
-        templateCSSURL: '{{ template.url_css }}'
-      };
+    var variables = [];
+    variables =
+    {
+      mailingId: '{{ mailing.id }}',
+      templateCSSPath: '{{ template.path_css }}',
+      templateCSSURL: '{{ template.url_css }}'
+    };
 
-      // we need this method so we can easily access the editor's contents outside the iframe.
-      function getEditorContent()
-      {
-        return $('.inputEditorNewsletter').val();
-      }
+    // we need this method so we can easily access the editor's contents outside the iframe.
+    function getEditorContent()
+    {
+      return $('.inputEditorNewsletter').val();
+    }
     //]]>
   </script>
 </head>
 <body id="content" class="edit addEdit">
-  {{ templateHtml }}
+{{ templateHtml }}
 </body>
 </html>

@@ -27,6 +27,7 @@ class DataGrid extends \SpoonDataGrid
 {
     /**
      * Map of icons by given action name
+     *
      * @todo this map is not full
      *
      * @var array
@@ -45,7 +46,7 @@ class DataGrid extends \SpoonDataGrid
         'install' => 'fa-download',
         'use_revision' => 'fa-file-o',
         'use_draft' => 'fa-file-o',
-        'custom_fields' => 'fa-tasks'
+        'custom_fields' => 'fa-tasks',
     );
 
     /**
@@ -64,7 +65,7 @@ class DataGrid extends \SpoonDataGrid
         // set attributes for the datagrid
         $this->setAttributes(array(
             'class' => 'table table-hover table-striped fork-data-grid jsDataGrid', 'cellspacing' => 0,
-            'cellpadding' => 0, 'border' => 0
+            'cellpadding' => 0, 'border' => 0,
         ));
 
         // id gets special treatment
@@ -128,7 +129,7 @@ class DataGrid extends \SpoonDataGrid
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $URL . '" class="btn btn-default btn-xs pull-right">' .
-                ($icon?'<span class="fa ' . $icon . '"></span>&nbsp;':'') .
+                ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
                 $value .
                 '</a>';
 
@@ -140,7 +141,7 @@ class DataGrid extends \SpoonDataGrid
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
-                ($icon?'<span class="fa ' . $icon . '"></span>&nbsp;':'') .
+                ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
                 $value .
                 '</a>';
 
@@ -164,7 +165,7 @@ class DataGrid extends \SpoonDataGrid
                 'mark_as_spam',
                 'install',
                 'use_revision',
-                'use_draft'
+                'use_draft',
             )
         )
         ) {
@@ -216,7 +217,7 @@ class DataGrid extends \SpoonDataGrid
         // rebuild value
         $value =
             '<a href="' . $URL . '"' . $attributes . '>' .
-            ($icon?'<span class="fa ' . $icon . '"></span>&nbsp;':'') .
+            ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
             $value .
             '</a>';
 
@@ -228,7 +229,7 @@ class DataGrid extends \SpoonDataGrid
             $name,
             array(
                 'class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name),
-                'style' => 'width: 10%;'
+                'style' => 'width: 10%;',
             )
         );
 
@@ -265,7 +266,7 @@ class DataGrid extends \SpoonDataGrid
     {
         // add drag and drop-class
         $this->setAttributes(array(
-            'class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop'
+            'class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop',
         ));
 
         // disable paging
@@ -284,7 +285,7 @@ class DataGrid extends \SpoonDataGrid
 
         // add a class on the handler column, so JS knows this is just a handler
         $this->setColumnAttributes('dragAndDropHandle', array(
-            'class' => 'dragAndDropHandle fork-data-grid-sortable'
+            'class' => 'dragAndDropHandle fork-data-grid-sortable',
         ));
 
         // our JS needs to know an id, so we can send the new order
@@ -295,6 +296,7 @@ class DataGrid extends \SpoonDataGrid
      * Checks whether a column is present in the datagrid
      *
      * @param string $column
+     *
      * @return bool
      */
     public function hasColumn($column)
@@ -349,6 +351,7 @@ class DataGrid extends \SpoonDataGrid
      * @param string $custom   Unused parameter.
      * @param string $title    The title for the column.
      * @param string $uniqueId A unique ID that will be uses.
+     *
      * @throws Exception
      * @throws \SpoonDataGridException
      */
@@ -617,6 +620,7 @@ class DataGrid extends \SpoonDataGrid
      * Decides what icon to use by given name
      *
      * @param $name
+     *
      * @return null|string
      */
     private function decideIcon($name)

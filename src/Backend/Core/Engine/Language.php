@@ -10,7 +10,6 @@ namespace Backend\Core\Engine;
  */
 
 use Common\Cookie as CommonCookie;
-use Backend\Core\Engine\Model;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
@@ -90,7 +89,7 @@ class Language
         foreach ($languages as $abbreviation) {
             $results[] = array(
                 'value' => $abbreviation,
-                'label' => self::lbl(mb_strtoupper($abbreviation))
+                'label' => self::lbl(mb_strtoupper($abbreviation)),
             );
         }
 
@@ -117,6 +116,7 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function getError($key, $module = null)
@@ -190,6 +190,7 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function getLabel($key, $module = null)
@@ -231,6 +232,7 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function getMessage($key, $module = null)
@@ -383,6 +385,7 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function err($key, $module = null)
@@ -395,6 +398,7 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function lbl($key, $module = null)
@@ -407,6 +411,7 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function msg($key, $module = null)

@@ -54,6 +54,7 @@ class CacheBuilder
      *
      * @param  string $language
      * @param  string $application
+     *
      * @return array
      */
     protected function getLocale($language, $application)
@@ -72,6 +73,7 @@ class CacheBuilder
      *
      * @param  string $language
      * @param  string $application
+     *
      * @return array
      */
     protected function buildJsonCache($language, $application)

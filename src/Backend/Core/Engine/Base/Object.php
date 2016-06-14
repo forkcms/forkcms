@@ -11,7 +11,6 @@ namespace Backend\Core\Engine\Base;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Exception;
 use Common\Exception\RedirectException;
@@ -71,6 +70,7 @@ class Object extends \KernelLoader
      *
      * @param string $action The action to load.
      * @param string $module The module to load.
+     *
      * @throws Exception If module is not set or action is not allowed
      */
     public function setAction($action, $module = null)
@@ -102,6 +102,7 @@ class Object extends \KernelLoader
      * Set the module
      *
      * @param string $module The module to load.
+     *
      * @throws Exception If module is not allowed
      */
     public function setModule($module)
@@ -142,6 +143,7 @@ class Object extends \KernelLoader
      *
      * @param string $URL The URL to redirect to.
      * @param int    $code The redirect code, default is 302 which means this is a temporary redirect.
+     *
      * @throws RedirectException
      */
     public function redirect($URL, $code = 302)

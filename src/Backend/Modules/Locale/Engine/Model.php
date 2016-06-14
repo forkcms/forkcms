@@ -9,13 +9,10 @@ namespace Backend\Modules\Locale\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Engine\Language as FL;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module
@@ -46,6 +43,7 @@ class Model
      * Build a query for the URL based on the filter
      *
      * @param array $filter The filter.
+     *
      * @return string
      */
     public static function buildURLQueryByFilter($filter)
@@ -62,6 +60,7 @@ class Model
      * Create an XML-string that can be used for export.
      *
      * @param array $items The items.
+     *
      * @return string
      */
     public static function createXMLForExport(array $items)
@@ -152,6 +151,7 @@ class Model
      * Does an id exist.
      *
      * @param int $id The id to check for existence.
+     *
      * @return bool
      */
     public static function exists($id)
@@ -174,6 +174,7 @@ class Model
      * @param string $language    The language to use.
      * @param string $application The application wherein will be searched.
      * @param int    $id          The id to exclude in the check.
+     *
      * @return bool
      */
     public static function existsByName($name, $type, $module, $language, $application, $id = null)
@@ -212,6 +213,7 @@ class Model
      * Get a single item from locale.
      *
      * @param int $id The id of the item to get.
+     *
      * @return array
      */
     public static function get($id)
@@ -238,6 +240,7 @@ class Model
      * @param string $module      The module wherein will be searched.
      * @param string $language    The language to use.
      * @param string $application The application wherein will be searched.
+     *
      * @return bool
      */
     public static function getByName($name, $type, $module, $language, $application)
@@ -270,6 +273,7 @@ class Model
      * Get the languages for a multicheckbox.
      *
      * @param bool $includeInterfaceLanguages Should we also get the interfacelanguages?
+     *
      * @return array
      */
     public static function getLanguagesForMultiCheckbox($includeInterfaceLanguages = false)
@@ -304,6 +308,7 @@ class Model
      * @param array  $languages   The languages of the translations to get.
      * @param string $name        The name.
      * @param string $value       The value.
+     *
      * @return array
      */
     public static function getTranslations($application, $module, $types, $languages, $name, $value)
@@ -389,7 +394,7 @@ class Model
                         'application' => '',
                         'module' => $module,
                         'name' => $reference,
-                        'id' => $id++
+                        'id' => $id++,
                     );
 
                     // reset this var for every language
@@ -439,6 +444,7 @@ class Model
      * Get full type name.
      *
      * @param string $type The type of the locale.
+     *
      * @return string
      */
     public static function getTypeName($type)
@@ -528,6 +534,7 @@ class Model
      * @param array             $backendLanguages   The backend languages to install locale for.
      * @param int               $userId             Id of the user these translations should be inserted for.
      * @param int               $date               The date the translation has been inserted.
+     *
      * @return array The import statistics
      */
     public static function importXML(
@@ -541,7 +548,7 @@ class Model
         $overwriteConflicts = (bool) $overwriteConflicts;
         $statistics = array(
             'total' => 0,
-            'imported' => 0
+            'imported' => 0,
         );
 
         // set defaults if necessary
@@ -576,7 +583,7 @@ class Model
         // install English translations anyhow, they're fallback
         $possibleLanguages = array(
             'Frontend' => array_unique(array_merge(array('en'), $frontendLanguages)),
-            'Backend' => array_unique(array_merge(array('en'), $backendLanguages))
+            'Backend' => array_unique(array_merge(array('en'), $backendLanguages)),
         );
 
         // current locale items (used to check for conflicts)
@@ -617,7 +624,7 @@ class Model
                     // translations
                     foreach ($item->translation as $translation) {
                         // statistics
-                        $statistics['total']++;
+                        ++$statistics['total'];
 
                         // attributes
                         $attributes = $translation->attributes();
@@ -666,12 +673,12 @@ class Model
                                     $locale['edited_on'],
                                     $locale['user_id'],
                                     $locale['value'],
-                                    $locale['edited_on']
+                                    $locale['edited_on'],
                                 )
                             );
 
                             // statistics
-                            $statistics['imported']++;
+                            ++$statistics['imported'];
                         }
                     }
                 }
@@ -692,6 +699,7 @@ class Model
      * Insert a new locale item.
      *
      * @param array $item The data to insert.
+     *
      * @return int
      */
     public static function insert(array $item)

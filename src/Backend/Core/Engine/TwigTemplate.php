@@ -57,7 +57,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->parseLocale();
         $this->parseVars();
 
-        $template = str_replace(BACKEND_MODULES_PATH, "", $template);
+        $template = str_replace(BACKEND_MODULES_PATH, '', $template);
 
         // render the compiled File
         $loader = new \Twig_Loader_Filesystem(array(

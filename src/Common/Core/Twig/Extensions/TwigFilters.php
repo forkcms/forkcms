@@ -14,7 +14,6 @@ namespace Common\Core\Twig\Extensions;
  *
  * @author <thijs.dp@gmail.com>
  */
-
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;
 

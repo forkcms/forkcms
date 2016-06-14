@@ -194,7 +194,7 @@ class Edit extends BackendBaseActionEdit
         $this->dgDrafts->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
             )
         );
 
@@ -250,7 +250,7 @@ class Edit extends BackendBaseActionEdit
             'hidden',
             array(
                  array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                 array('label' => BL::lbl('Published'), 'value' => 'N')
+                 array('label' => BL::lbl('Published'), 'value' => 'N'),
             ),
             $this->record['hidden']
         );
@@ -353,7 +353,7 @@ class Edit extends BackendBaseActionEdit
                 $this->blocksContent[] = $block;
 
                 // increment counter; go fetch next block
-                $i++;
+                ++$i;
             }
         }
 
@@ -397,12 +397,12 @@ class Edit extends BackendBaseActionEdit
             array(
                 'value' => 'internal',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
-                'variables' => array('isInternal' => true)
+                'variables' => array('isInternal' => true),
             ),
             array(
                 'value' => 'external',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
-                'variables' => array('isExternal' => true)
+                'variables' => array('isExternal' => true),
             ),
         );
         $this->frm->addRadiobutton('redirect', $redirectValues, $redirectValue);
@@ -463,7 +463,7 @@ class Edit extends BackendBaseActionEdit
                  $this->id,
                  'archive',
                  BL::getWorkingLanguage(
-                 )
+                 ),
             )
         );
 
@@ -477,7 +477,7 @@ class Edit extends BackendBaseActionEdit
         $this->dgRevisions->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
             )
         );
 
@@ -623,7 +623,7 @@ class Edit extends BackendBaseActionEdit
                 if ($redirectValue == 'internal') {
                     $data['internal_redirect'] = array(
                         'page_id' => $this->frm->getField('internal_redirect')->getValue(),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
                 if ($redirectValue == 'external') {
@@ -631,7 +631,7 @@ class Edit extends BackendBaseActionEdit
                         'url' => BackendPagesModel::getEncodedRedirectURL(
                             $this->frm->getField('external_redirect')->getValue()
                         ),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
 

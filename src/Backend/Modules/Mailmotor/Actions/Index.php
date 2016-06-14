@@ -441,6 +441,7 @@ class Index extends BackendBaseActionIndex
      *
      * @param int    $id   The ID of the campaign.
      * @param string $name The name of the campaign.
+     *
      * @return string
      */
     public static function setCampaignLink($id, $name)

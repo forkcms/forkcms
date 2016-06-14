@@ -90,7 +90,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
                     'module' => 'Core',
                     'name' => 'theme',
                     'value' => serialize('triton'),
-                )
+                ),
             ))
         ;
 

@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Common\Cookie as CommonCookie;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
@@ -155,7 +154,7 @@ class Page extends FrontendBaseObject
                  'COOKIE' => $_COOKIE,
                  'GET' => $_GET,
                  'POST' => $_POST,
-                 'SERVER' => $_SERVER
+                 'SERVER' => $_SERVER,
             )
         );
     }
@@ -387,7 +386,7 @@ class Page extends FrontendBaseObject
                         $positions[$position][$i] = array(
                             'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
                             'blockIsEditor' => false,
-                            'blockContent' => $block['extra']->getContent()
+                            'blockContent' => $block['extra']->getContent(),
                         );
 
                         // Maintain backwards compatibility
@@ -415,7 +414,7 @@ class Page extends FrontendBaseObject
         // loop all extras
         foreach ($this->extras as $extra) {
             $this->getContainer()->get('logger')->info(
-                "Executing " . get_class($extra)
+                'Executing ' . get_class($extra)
                 . " '{$extra->getAction()}' for module '{$extra->getModule()}'."
             );
 
@@ -519,7 +518,7 @@ class Page extends FrontendBaseObject
                     // the block only contains HTML
                     $block = array(
                         'blockIsEditor' => true,
-                        'blockContent' => $block['html']
+                        'blockContent' => $block['html'],
                     );
 
                     // Maintain backwards compatibility

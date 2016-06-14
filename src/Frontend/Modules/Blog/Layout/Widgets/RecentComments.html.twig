@@ -4,23 +4,23 @@
 #}
 
 {% if widgetBlogRecentComments %}
-	<section id="blogRecentCommentsWidget" class="mod">
-		<div class="inner">
-			<header class="hd">
-				<h3>{{ 'lbl.RecentComments'|trans|capitalize }}</h3>
-			</header>
-			<div class="bd content">
-				<ul>
-					{% for comment in widgetBlogRecentComments %}
-						<li>
-							{% if comment.website %}<a href="{{ comment.website }}" rel="nofollow">{% endif %}
-								{{ comment.author }}
-							{% if comment.website %}</a>{% endif %}
-							{{ 'lbl.CommentedOn'|trans }} <a href="{{ comment.full_url }}">{{ comment.post_title }}</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
-	</section>
+  <section id="blogRecentCommentsWidget" class="mod">
+    <div class="inner">
+      <header class="hd">
+        <h3>{{ 'lbl.RecentComments'|trans|capitalize }}</h3>
+      </header>
+      <div class="bd content">
+        <ul>
+          {% for comment in widgetBlogRecentComments %}
+            <li>
+              {% if comment.website %}<a href="{{ comment.website }}" rel="nofollow">{% endif %}
+                {{ comment.author }}
+                {% if comment.website %}</a>{% endif %}
+              {{ 'lbl.CommentedOn'|trans }} <a href="{{ comment.full_url }}">{{ comment.post_title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
 {% endif %}

@@ -20,6 +20,7 @@ class FormDate extends \SpoonFormDate
      * Checks if this field is correctly submitted.
      *
      * @param string $error The errormessage to set.
+     *
      * @return bool
      */
     public function isValid($error = null)

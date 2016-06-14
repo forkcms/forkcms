@@ -109,6 +109,7 @@ class Model
      * Check if a profile exists.
      *
      * @param int $id Profile id.
+     *
      * @return bool
      */
     public static function exists($id)
@@ -127,6 +128,7 @@ class Model
      *
      * @param string $email Email address to check for existence.
      * @param int    $id    Profile id to ignore.
+     *
      * @return bool
      */
     public static function existsByEmail($email, $id = null)
@@ -145,6 +147,7 @@ class Model
      *
      * @param string $displayName The display name to check.
      * @param int    $id          Profile id to ignore.
+     *
      * @return bool
      */
     public static function existsDisplayName($displayName, $id = null)
@@ -162,6 +165,7 @@ class Model
      * Check if a group exists.
      *
      * @param int $id Group id.
+     *
      * @return bool
      */
     public static function existsGroup($id)
@@ -180,6 +184,7 @@ class Model
      *
      * @param string $groupName Group name.
      * @param int    $id        Group id to ignore.
+     *
      * @return bool
      */
     public static function existsGroupName($groupName, $id = null)
@@ -197,6 +202,7 @@ class Model
      * Check if a profile is in a group.
      *
      * @param int $id Membership id.
+     *
      * @return bool
      */
     public static function existsProfileGroup($id)
@@ -214,6 +220,7 @@ class Model
      * Get information about a profile.
      *
      * @param int $id The profile id to get the information for.
+     *
      * @return array
      */
     public static function get($id)
@@ -231,6 +238,7 @@ class Model
      *
      * @param int    $id    The id for the profile we want to get the avatar from.
      * @param string $email The email from the user we can use for gravatar.
+     *
      * @return string $avatar            The absolute path to the avatar.
      */
     public static function getAvatar($id, $email = null)
@@ -287,6 +295,7 @@ class Model
      * Get information about a profile, by email
      *
      * @param  string $email The profile email to get the information for.
+     *
      * @return array
      */
     public static function getByEmail($email)
@@ -304,6 +313,7 @@ class Model
      *
      * @param string $string String to encrypt.
      * @param string $salt   Salt to saltivy the string with.
+     *
      * @return string
      */
     public static function getEncryptedString($string, $salt)
@@ -315,6 +325,7 @@ class Model
      * Get information about a profile group.
      *
      * @param int $id Id of the group.
+     *
      * @return array
      */
     public static function getGroup($id)
@@ -344,6 +355,7 @@ class Model
      *
      * @param int $profileId Profile id.
      * @param int $includeId Group id to always include.
+     *
      * @return array
      */
     public static function getGroupsForDropDown($profileId, $includeId = null)
@@ -380,6 +392,7 @@ class Model
      * Get information about a profile group where a user is member of.
      *
      * @param int $id Membership id.
+     *
      * @return array
      */
     public static function getProfileGroup($id)
@@ -397,6 +410,7 @@ class Model
      * Get the groups where a profile is member of.
      *
      * @param int $id The profile id to get the groups for.
+     *
      * @return array
      */
     public static function getProfileGroups($id)
@@ -418,6 +432,7 @@ class Model
      * @param bool $lowercase Use alphanumeric lowercase characters.
      * @param bool $uppercase Use alphanumeric uppercase characters.
      * @param bool $special   Use special characters.
+     *
      * @return string
      */
     public static function getRandomString(
@@ -447,7 +462,7 @@ class Model
         }
 
         // get random characters
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             // random index
             $index = mt_rand(0, mb_strlen($characters));
 
@@ -464,6 +479,7 @@ class Model
      *
      * @param int    $id   Profile id.
      * @param string $name Setting name.
+     *
      * @return string
      */
     public static function getSetting($id, $name)
@@ -505,6 +521,7 @@ class Model
      *
      * @param string $displayName The display name to base on.
      * @param int    $id          The id of the profile to ignore.
+     *
      * @return string
      */
     public static function getUrl($displayName, $id = null)
@@ -565,6 +582,7 @@ class Model
      * Get the HTML for a user to use in a datagrid
      *
      * @param int $id The Id of the user.
+     *
      * @return string
      */
     public static function getUser($id)
@@ -651,7 +669,7 @@ class Model
                 'email' => $item['email'],
                 'registered_on' => BackendModel::getUTCDate(),
                 'display_name' => $item['display_name'],
-                'url' => self::getUrl($item['display_name'])
+                'url' => self::getUrl($item['display_name']),
             );
 
             // does not exists
@@ -708,6 +726,7 @@ class Model
      * Insert a new profile.
      *
      * @param array $values The values to insert.
+     *
      * @return int
      */
     public static function insert(array $values)
@@ -719,6 +738,7 @@ class Model
      * Insert a new group.
      *
      * @param array $values Group data.
+     *
      * @return int
      */
     public static function insertGroup(array $values)
@@ -730,6 +750,7 @@ class Model
      * Add a profile to a group.
      *
      * @param array $values Membership data.
+     *
      * @return int
      */
     public static function insertProfileGroup(array $values)
@@ -762,7 +783,7 @@ class Model
             array(
                 $values['display_name'],
                 $values['email'],
-                $backendURL
+                $backendURL,
             )
         );
 
@@ -770,7 +791,7 @@ class Model
         $subject = vsprintf(
             BL::lbl('NotificationNewProfileToAdmin', 'Profiles'),
             array(
-                $values['email']
+                $values['email'],
             )
         );
 
@@ -783,12 +804,12 @@ class Model
     }
 
     /**
-    * Notify profile - after adding profile to profiles module
-    *
-    * @param array $values
-    * @param bool $forUpdate
-    * @param string $templatePath
-    */
+     * Notify profile - after adding profile to profiles module
+     *
+     * @param array $values
+     * @param bool $forUpdate
+     * @param string $templatePath
+     */
     public static function notifyProfile(
         $values,
         $forUpdate = false,
@@ -800,7 +821,7 @@ class Model
             array(
                 $values['email'],
                 $values['unencrypted_password'],
-                SITE_URL
+                SITE_URL,
             )
         );
 
@@ -819,14 +840,14 @@ class Model
     }
 
     /**
-    * Send mail
-    *
-    * @param string $subject
-    * @param string $templatePath
-    * @param array $variables
-    * @param string $toEmail
-    * @param string $toDisplayName
-    */
+     * Send mail
+     *
+     * @param string $subject
+     * @param string $templatePath
+     * @param array $variables
+     * @param string $toEmail
+     * @param string $toDisplayName
+     */
     protected static function sendMail(
         $subject,
         $templatePath = null,
@@ -876,6 +897,7 @@ class Model
      *
      * @param int   $id     The profile id.
      * @param array $values The values to update.
+     *
      * @return int
      */
     public static function update($id, array $values)
@@ -888,6 +910,7 @@ class Model
      *
      * @param int   $id     Group id.
      * @param array $values Group data.
+     *
      * @return int
      */
     public static function updateGroup($id, array $values)
@@ -905,6 +928,7 @@ class Model
      *
      * @param int   $id     Membership id.
      * @param array $values Membership data.
+     *
      * @return int
      */
     public static function updateProfileGroup($id, array $values)

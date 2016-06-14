@@ -60,7 +60,7 @@ class Installer extends ModuleInstaller
             'locale/add',
             'locale/edit',
             'locale/import',
-            'locale/analyse'
+            'locale/analyse',
         ), 4);
     }
 }

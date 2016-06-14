@@ -58,6 +58,7 @@ class ForkInstaller
      * Installs Fork
      *
      * @param  InstallationData $data The collected data required for Fork
+     *
      * @return bool                   Is Fork successfully installed?
      */
     public function install(InstallationData $data)
@@ -171,6 +172,7 @@ class ForkInstaller
 
     /**
      * @param  InstallationData $data
+     *
      * @return CoreInstaller
      */
     protected function getCoreInstaller(InstallationData $data)
@@ -248,7 +250,7 @@ class ForkInstaller
                     'extra_id' => $extra['id'],
                     'created_on' => gmdate('Y-m-d H:i:s'),
                     'edited_on' => gmdate('Y-m-d H:i:s'),
-                    'visible' => 'Y'
+                    'visible' => 'Y',
                 );
             }
 
@@ -256,7 +258,6 @@ class ForkInstaller
             $this->container->get('database')->insert('pages_blocks', $insertExtras);
         }
     }
-
 
     /**
      * Create locale cache files
@@ -319,6 +320,7 @@ class ForkInstaller
 
     /**
      * @param  InstallationData $data
+     *
      * @return array A list of variables that should be parsed into the configuration file(s).
      */
     protected function getConfigurationVariables(InstallationData $data)
@@ -351,25 +353,26 @@ class ForkInstaller
 
     /**
      * @param  InstallationData $data
+     *
      * @return array A list of variables that will be used in installers.
      */
     protected function getInstallerData(InstallationData $data)
     {
         return array(
-            'default_language'           => $data->getDefaultLanguage(),
+            'default_language' => $data->getDefaultLanguage(),
             'default_interface_language' => $data->getDefaultInterfaceLanguage(),
-            'spoon_debug_email'          => $data->getEmail(),
-            'api_email'                  => $data->getEmail(),
-            'site_domain'                => (isset($_SERVER['HTTP_HOST'])) ?
+            'spoon_debug_email' => $data->getEmail(),
+            'api_email' => $data->getEmail(),
+            'site_domain' => (isset($_SERVER['HTTP_HOST'])) ?
                 $_SERVER['HTTP_HOST'] :
                 'fork.local',
-            'site_title'                 => 'Fork CMS',
-            'smtp_server'                => '',
-            'smtp_port'                  => '',
-            'smtp_username'              => '',
-            'smtp_password'              => '',
-            'email'                      => $data->getEmail(),
-            'password'                   => $data->getPassword(),
+            'site_title' => 'Fork CMS',
+            'smtp_server' => '',
+            'smtp_port' => '',
+            'smtp_username' => '',
+            'smtp_password' => '',
+            'email' => $data->getEmail(),
+            'password' => $data->getPassword(),
         );
     }
 }

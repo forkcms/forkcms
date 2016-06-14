@@ -8,102 +8,102 @@
 
 {% block content %}
   {% form settings %}
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              {{ 'lbl.Pagination'|trans|capitalize }}
-            </h3>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.Pagination'|trans|capitalize }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="overviewNumItems" class="control-label">{{ 'lbl.ItemsPerPage'|trans|capitalize }}</label>
+            {% form_field_error overview_num_items %} {% form_field overview_num_items %}
           </div>
-          <div class="panel-body">
-            <div class="form-group">
-              <label for="overviewNumItems" class="control-label">{{ 'lbl.ItemsPerPage'|trans|capitalize }}</label>
-              {% form_field_error overview_num_items %} {% form_field overview_num_items %}
-            </div>
-            <div class="form-group">
-              <label for="autocompleteNumItems" class="control-label">{{ 'lbl.ItemsForAutocomplete'|trans|capitalize }}</label>
-              {% form_field_error autocomplete_num_items %} {% form_field autocomplete_num_items %}
-            </div>
-            <div class="form-group last">
-              <label for="autosuggestNumItems" class="control-label">{{ 'lbl.ItemsForAutosuggest'|trans|capitalize }}</label>
-              {% form_field_error autosuggest_num_items %} {% form_field autosuggest_num_items %}
-            </div>
+          <div class="form-group">
+            <label for="autocompleteNumItems" class="control-label">{{ 'lbl.ItemsForAutocomplete'|trans|capitalize }}</label>
+            {% form_field_error autocomplete_num_items %} {% form_field autocomplete_num_items %}
+          </div>
+          <div class="form-group last">
+            <label for="autosuggestNumItems" class="control-label">{{ 'lbl.ItemsForAutosuggest'|trans|capitalize }}</label>
+            {% form_field_error autosuggest_num_items %} {% form_field autosuggest_num_items %}
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              {{ 'lbl.UseSitelinksSearchBox'|trans|capitalize }}
-            </h3>
-          </div>
-          <div class="panel-body">
-            <div class="form-group last">
-              <ul class="list-unstyled">
-                <li class="checkbox">
-                  <label for="useSitelinksSearchBox" class="control-label">
-                    {% form_field_error use_sitelinks_search_box %} {% form_field use_sitelinks_search_box %} {{ 'lbl.UseSitelinksSearchBox'|trans|capitalize }}
-                  </label>
-                  <div class="help-block">
-                    {{ 'msg.HelpSitelinksSearchBox'|trans|raw }}
-                  </div>
-                </li>
-              </ul>
-            </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.UseSitelinksSearchBox'|trans|capitalize }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group last">
+            <ul class="list-unstyled">
+              <li class="checkbox">
+                <label for="useSitelinksSearchBox" class="control-label">
+                  {% form_field_error use_sitelinks_search_box %} {% form_field use_sitelinks_search_box %} {{ 'lbl.UseSitelinksSearchBox'|trans|capitalize }}
+                </label>
+                <div class="help-block">
+                  {{ 'msg.HelpSitelinksSearchBox'|trans|raw }}
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              {{ 'lbl.ModuleWeight'|trans|capitalize }}
-            </h3>
-          </div>
-          <div id="searchModules" class="panel-body">
-            <p class="help-block">{{ 'msg.HelpWeightGeneral'|trans }}</p>
-            <table class="table table-hover table-striped jsDataGrid">
-              <tr>
-                <th>{{ 'msg.IncludeInSearch'|trans }}</th>
-                <th>{{ 'lbl.Module'|trans|capitalize }}</th>
-                <th>
-                  {{ 'lbl.Weight'|trans|capitalize }}
-                  <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{{ 'msg.HelpWeight'|trans|capitalize }}"></abbr>
-                </th>
-              </tr>
-              {% for module in modules %}
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.ModuleWeight'|trans|capitalize }}
+          </h3>
+        </div>
+        <div id="searchModules" class="panel-body">
+          <p class="help-block">{{ 'msg.HelpWeightGeneral'|trans }}</p>
+          <table class="table table-hover table-striped jsDataGrid">
+            <tr>
+              <th>{{ 'msg.IncludeInSearch'|trans }}</th>
+              <th>{{ 'lbl.Module'|trans|capitalize }}</th>
+              <th>
+                {{ 'lbl.Weight'|trans|capitalize }}
+                <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{{ 'msg.HelpWeight'|trans|capitalize }}"></abbr>
+              </th>
+            </tr>
+            {% for module in modules %}
               <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
                 <td>{{ module.chk|raw }}</td>
                 <td><label for="{{ module.id }}">{{ module.label }}</label></td>
                 <td>
                   {{ module.txt|raw }}
                   {% if module.txtError %}
-                  <p class="text-danger">{{ module.txtError }}</p>
+                    <p class="text-danger">{{ module.txtError }}</p>
                   {% endif %}
                 </td>
               </tr>
-              {% endfor %}
-            </table>
-          </div>
+            {% endfor %}
+          </table>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="btn-toolbar">
-          <div class="btn-group pull-right" role="group">
-            <button id="save" type="submit" name="save" class="btn btn-primary">
-              <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
-            </button>
-          </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="save" type="submit" name="save" class="btn btn-primary">
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
+          </button>
         </div>
       </div>
     </div>
+  </div>
   {% endform %}
 {% endblock %}

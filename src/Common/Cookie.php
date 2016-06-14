@@ -36,6 +36,7 @@ class Cookie extends \SpoonCookie
      * @param bool   $httpOnly Should the cookie only be available through
      *                         HTTP-protocol? If true, the cookie can't be
      *                         accessed by Javascript, ...
+     *
      * @return bool    If set with success, returns true otherwise false.
      */
     public static function set(

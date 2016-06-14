@@ -6,7 +6,6 @@ use Backend\Core\Engine\Base\ActionIndex;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Language;
 use Backend\Core\Engine\Model;
-use Backend\Modules\Analytics\GoogleClient\ClientFactory;
 use Google_Service_Exception;
 
 /**
@@ -56,6 +55,7 @@ final class Settings extends ActionIndex
                     'email',
                     $this->get('fork.settings')->get($this->getModule(), 'email')
                 );
+
                 return $this->tpl->assign('noAccounts', true);
             }
 

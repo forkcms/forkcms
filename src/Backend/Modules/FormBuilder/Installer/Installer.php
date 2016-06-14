@@ -56,7 +56,7 @@ class Installer extends ModuleInstaller
             'form_builder/add',
             'form_builder/edit',
             'form_builder/data',
-            'form_builder/data_details'
+            'form_builder/data_details',
         ));
 
         // get search extra id
@@ -87,7 +87,7 @@ class Installer extends ModuleInstaller
             $field['type'] = 'submit';
             $field['settings'] = serialize(
                 array(
-                    'values' => \SpoonFilter::ucfirst($this->getLocale('Send', 'Core', $language, 'lbl', 'Frontend'))
+                    'values' => \SpoonFilter::ucfirst($this->getLocale('Send', 'Core', $language, 'lbl', 'Frontend')),
                 )
             );
             $this->getDB()->insert('forms_fields', $field);
@@ -97,7 +97,7 @@ class Installer extends ModuleInstaller
             $field['type'] = 'textbox';
             $field['settings'] = serialize(
                 array(
-                    'label' => \SpoonFilter::ucfirst($this->getLocale('Name', 'Core', $language, 'lbl', 'Frontend'))
+                    'label' => \SpoonFilter::ucfirst($this->getLocale('Name', 'Core', $language, 'lbl', 'Frontend')),
                 )
             );
             $nameId = $this->getDB()->insert('forms_fields', $field);
@@ -113,7 +113,7 @@ class Installer extends ModuleInstaller
             $field['type'] = 'textbox';
             $field['settings'] = serialize(
                 array(
-                    'label' => \SpoonFilter::ucfirst($this->getLocale('Email', 'Core', $language, 'lbl', 'Frontend'))
+                    'label' => \SpoonFilter::ucfirst($this->getLocale('Email', 'Core', $language, 'lbl', 'Frontend')),
                 )
             );
             $emailId = $this->getDB()->insert('forms_fields', $field);
@@ -129,7 +129,7 @@ class Installer extends ModuleInstaller
             $field['type'] = 'textarea';
             $field['settings'] = serialize(
                 array(
-                    'label' => \SpoonFilter::ucfirst($this->getLocale('Message', 'Core', $language, 'lbl', 'Frontend'))
+                    'label' => \SpoonFilter::ucfirst($this->getLocale('Message', 'Core', $language, 'lbl', 'Frontend')),
                 )
             );
             $messageId = $this->getDB()->insert('forms_fields', $field);

@@ -4,24 +4,24 @@
 #}
 
 {% if widgetBlogRecentArticlesList %}
-	<section id="blogRecentArticlesListWidget" class="mod">
-		<div class="inner">
-			<header class="hd">
-				<h3>{{ 'lbl.RecentArticles'|trans|capitalize }}</h3>
-			</header>
-			<div class="bd content">
-				<ul>
-					{% for ArticlesList in widgetBlogRecentArticlesList %}
-						<li><a href="{{ ArticlesList.full_url }}" title="{{ ArticlesList.title }}">{{ ArticlesList.title }}</a></li>
-					{% endfor %}
-				</ul>
-			</div>
-			<footer class="ft">
-				<p>
-					<a href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|capitalize }}</a>
-					<a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|capitalize }}</a>
-				</p>
-			</footer>
-		</div>
-	</section>
+  <section id="blogRecentArticlesListWidget" class="mod">
+    <div class="inner">
+      <header class="hd">
+        <h3>{{ 'lbl.RecentArticles'|trans|capitalize }}</h3>
+      </header>
+      <div class="bd content">
+        <ul>
+          {% for ArticlesList in widgetBlogRecentArticlesList %}
+            <li><a href="{{ ArticlesList.full_url }}" title="{{ ArticlesList.title }}">{{ ArticlesList.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <footer class="ft">
+        <p>
+          <a href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|capitalize }}</a>
+          <a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|capitalize }}</a>
+        </p>
+      </footer>
+    </div>
+  </section>
 {% endif %}

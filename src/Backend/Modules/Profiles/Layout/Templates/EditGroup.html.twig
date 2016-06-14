@@ -8,35 +8,35 @@
 
 {% block content %}
   {% form editGroup %}
-    <div class="row fork-module-content">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="name" class="control-label">
-            {{ 'lbl.Name'|trans|capitalize }}
-            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
-          </label>
-          {% form_field_error name %} {% form_field name %}
-        </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name" class="control-label">
+          {{ 'lbl.Name'|trans|capitalize }}
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+        </label>
+        {% form_field_error name %} {% form_field name %}
       </div>
     </div>
-    <div class="row fork-page-actions">
-      <div class="col-md-12">
-        <div class="btn-toolbar">
-          <div class="btn-group pull-left" role="group">
-            {% if showContentBlocksDelete %}
+  </div>
+  <div class="row fork-page-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-left" role="group">
+          {% if showContentBlocksDelete %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
               <span class="fa fa-trash-o"></span>
               {{ 'lbl.Delete'|trans|capitalize }}
             </button>
-            {% endif %}
-          </div>
-          <div class="btn-group pull-right" role="group">
-            <button id="saveButton" type="submit" name="edit" class="btn btn-primary">
-              <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
-            </button>
-          </div>
+          {% endif %}
         </div>
-        {% if showProfilesDeleteGroup %}
+        <div class="btn-group pull-right" role="group">
+          <button id="saveButton" type="submit" name="edit" class="btn btn-primary">
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
+          </button>
+        </div>
+      </div>
+      {% if showProfilesDeleteGroup %}
         <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -57,8 +57,8 @@
             </div>
           </div>
         </div>
-        {% endif %}
-      </div>
+      {% endif %}
     </div>
+  </div>
   {% endform %}
 {% endblock %}

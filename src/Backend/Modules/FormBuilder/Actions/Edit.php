@@ -117,7 +117,7 @@ class Edit extends BackendBaseActionEdit
                 '2' => '+2',
                 '3' => '+3',
                 '4' => '+4',
-                '5' => '+5'
+                '5' => '+5',
             )
         );
         $this->frm->addDropdown(
@@ -151,7 +151,7 @@ class Edit extends BackendBaseActionEdit
             'datetime_validation',
             array(
                 '' => '',
-                'time' => BL::getLabel('Time')
+                'time' => BL::getLabel('Time'),
             )
         );
         $this->frm->addText('datetime_classname');

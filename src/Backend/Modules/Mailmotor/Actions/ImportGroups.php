@@ -108,7 +108,7 @@ class ImportGroups extends BackendBaseActionAdd
                         array(
                              'name' => $group['name'],
                              'custom_fields' => $group['custom_fields'],
-                             'created_on' => BackendModel::getUTCDate()
+                             'created_on' => BackendModel::getUTCDate(),
                         )
                     );
 

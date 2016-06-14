@@ -68,7 +68,7 @@ class Installer extends ModuleInstaller
                          'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
                          'language' => $language,
                          'allow_move' => 'N',
-                         'allow_delete' => 'N'
+                         'allow_delete' => 'N',
                     ),
                     null,
                     array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
@@ -81,7 +81,7 @@ class Installer extends ModuleInstaller
                          'id' => 2,
                          'title' => \SpoonFilter::ucfirst($this->getLocale('Sitemap', 'Core', $language, 'lbl', 'Frontend')),
                          'type' => 'footer',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('html' => dirname(__FILE__) . '/Data/' . $language . '/sitemap.txt'),
@@ -95,12 +95,12 @@ class Installer extends ModuleInstaller
                          'id' => 3,
                          'title' => \SpoonFilter::ucfirst($this->getLocale('Disclaimer', 'Core', $language, 'lbl', 'Frontend')),
                          'type' => 'footer',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
                     array(
                          'html' => dirname(__FILE__) . '/Data/' . $language .
-                                   '/disclaimer.txt'
+                                   '/disclaimer.txt',
                     ),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
@@ -114,7 +114,7 @@ class Installer extends ModuleInstaller
                          'type' => 'root',
                          'language' => $language,
                          'allow_move' => 'N',
-                         'allow_delete' => 'N'
+                         'allow_delete' => 'N',
                     ),
                     null,
                     array('html' => dirname(__FILE__) . '/Data/' . $language . '/404.txt'),
@@ -228,7 +228,7 @@ class Installer extends ModuleInstaller
                          'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
                          'language' => $language,
                          'allow_move' => 'N',
-                         'allow_delete' => 'N'
+                         'allow_delete' => 'N',
                     ),
                     null,
                     array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
@@ -241,7 +241,7 @@ class Installer extends ModuleInstaller
                 $this->insertPage(
                     array(
                          'title' => \SpoonFilter::ucfirst($this->getLocale('Blog', 'Core', $language, 'lbl', 'Frontend')),
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $extras['blog_block']),
@@ -257,7 +257,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')),
                          'parent_id' => 1,
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $extras['subpages_widget']),
@@ -269,7 +269,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => \SpoonFilter::ucfirst($this->getLocale('Location', 'Core', $language, 'lbl', 'Frontend')),
                          'parent_id' => $aboutUsId,
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
@@ -282,7 +282,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')),
                          'parent_id' => $aboutUsId,
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
@@ -295,7 +295,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => \SpoonFilter::ucfirst($this->getLocale('History', 'Core', $language, 'lbl', 'Frontend')),
                          'parent_id' => 1,
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
@@ -309,11 +309,11 @@ class Installer extends ModuleInstaller
                          'title' => 'Lorem ipsum',
                          'type' => 'root',
                          'language' => $language,
-                         'hidden' => 'Y'
+                         'hidden' => 'Y',
                     ),
                     array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
                     array(
-                         'html' => dirname(__FILE__) . '/Data/' . $language . '/lorem_ipsum.txt'
+                         'html' => dirname(__FILE__) . '/Data/' . $language . '/lorem_ipsum.txt',
                     ),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );

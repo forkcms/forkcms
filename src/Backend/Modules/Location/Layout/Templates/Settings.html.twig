@@ -8,46 +8,46 @@
 
 {% block content %}
   {% form settings %}
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              {{ 'lbl.IndividualMap'|trans|capitalize }}
-            </h3>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.IndividualMap'|trans|capitalize }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="zoomLevelWidget" class="control-label">{{ 'lbl.ZoomLevel'|trans|capitalize }}</label>
+            {% form_field_error zoom_level_widget %} {% form_field zoom_level_widget %}
           </div>
-          <div class="panel-body">
-            <div class="form-group">
-              <label for="zoomLevelWidget" class="control-label">{{ 'lbl.ZoomLevel'|trans|capitalize }}</label>
-              {% form_field_error zoom_level_widget %} {% form_field zoom_level_widget %}
-            </div>
-            <div class="form-group">
-              <label for="widthWidget" class="control-label">{{ 'lbl.Width'|trans|capitalize }}</label>
-              <p class="help-block">{{ 'msg.WidthHelp'|trans|sprintf(300,800 ) }}</p>
-              {% form_field_error width_widget %} {% form_field width_widget %}
-            </div>
-            <div class="form-group">
-              <label for="heightWidget" class="control-label">{{ 'lbl.Height'|trans|capitalize }}</label>
-              <p class="help-block">{{ 'msg.HeightHelp'|trans|sprintf(150 ) }}</p>
-              {% form_field_error height_widget %} {% form_field height_widget %}
-            </div>
-            <div class="form-group last">
-              <label for="mapTypeWidget" class="control-label">{{ 'lbl.MapType'|trans|capitalize }}</label>
-              {% form_field_error map_type_widget %} {% form_field map_type_widget %}
-            </div>
+          <div class="form-group">
+            <label for="widthWidget" class="control-label">{{ 'lbl.Width'|trans|capitalize }}</label>
+            <p class="help-block">{{ 'msg.WidthHelp'|trans|sprintf(300,800 ) }}</p>
+            {% form_field_error width_widget %} {% form_field width_widget %}
+          </div>
+          <div class="form-group">
+            <label for="heightWidget" class="control-label">{{ 'lbl.Height'|trans|capitalize }}</label>
+            <p class="help-block">{{ 'msg.HeightHelp'|trans|sprintf(150 ) }}</p>
+            {% form_field_error height_widget %} {% form_field height_widget %}
+          </div>
+          <div class="form-group last">
+            <label for="mapTypeWidget" class="control-label">{{ 'lbl.MapType'|trans|capitalize }}</label>
+            {% form_field_error map_type_widget %} {% form_field map_type_widget %}
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="btn-toolbar">
-          <div class="btn-group pull-right" role="group">
-            <button id="save" type="submit" name="save" class="btn btn-primary">
-              <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}</button>
-          </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="save" type="submit" name="save" class="btn btn-primary">
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}</button>
         </div>
       </div>
     </div>
+  </div>
   {% endform %}
 {% endblock %}

@@ -73,7 +73,7 @@ class Installer extends ModuleInstaller
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', array(
             'groups/add',
-            'groups/edit'
+            'groups/edit',
         ), 5);
 
         // insert admins dashboard sequence

@@ -129,7 +129,7 @@ class Add extends BackendBaseActionAdd
             'hidden',
             array(
                  array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                 array('label' => BL::lbl('Published'), 'value' => 'N')
+                 array('label' => BL::lbl('Published'), 'value' => 'N'),
             ),
             'N'
         );
@@ -224,7 +224,7 @@ class Add extends BackendBaseActionAdd
                 $this->blocksContent[] = $block;
 
                 // increment counter; go fetch next block
-                $i++;
+                ++$i;
             }
         }
 
@@ -261,12 +261,12 @@ class Add extends BackendBaseActionAdd
             array(
                 'value' => 'internal',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
-                'variables' => array('isInternal' => true)
+                'variables' => array('isInternal' => true),
             ),
             array(
                 'value' => 'external',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
-                'variables' => array('isExternal' => true)
+                'variables' => array('isExternal' => true),
             ),
         );
         $this->frm->addRadiobutton('redirect', $redirectValues, 'none');
@@ -378,7 +378,7 @@ class Add extends BackendBaseActionAdd
                 if ($redirectValue == 'internal') {
                     $data['internal_redirect'] = array(
                         'page_id' => $this->frm->getField('internal_redirect')->getValue(),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
                 if ($redirectValue == 'external') {
@@ -386,7 +386,7 @@ class Add extends BackendBaseActionAdd
                         'url' => BackendPagesModel::getEncodedRedirectURL(
                             $this->frm->getField('external_redirect')->getValue()
                         ),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
 

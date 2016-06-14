@@ -132,7 +132,7 @@ class MassAddressAction extends BackendBaseAction
             $address = BackendMailmotorModel::getAddress($email);
             $email = array(
                 'email' => $email,
-                'created_on' => strtotime($address['created_on'])
+                'created_on' => strtotime($address['created_on']),
             );
         }
 

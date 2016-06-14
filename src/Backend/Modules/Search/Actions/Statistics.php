@@ -82,6 +82,7 @@ class Statistics extends BackendBaseActionIndex
      * Set column referrer
      *
      * @param string $data The source data.
+     *
      * @return string
      */
     public static function setReferrer($data)

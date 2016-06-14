@@ -11,7 +11,6 @@ namespace Backend\Core\Ajax;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\AjaxAction;
-use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This action will generate JS that represents the templates that will be available in CK Editor
@@ -60,7 +59,8 @@ class Templates extends AjaxAction
      * Process the content of the file.
      *
      * @param string $file The file to process.
-     * @return boolean|array
+     *
+     * @return bool|array
      */
     private function processFile($file)
     {

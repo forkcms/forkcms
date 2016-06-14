@@ -116,7 +116,7 @@ class Settings extends BackendBaseActionEdit
                     'label' => $label,
                     'chk' => $this->frm->getField('search_' . $module)->parse(),
                     'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(),
-                    'txtError' => ''
+                    'txtError' => '',
                 );
             }
         }

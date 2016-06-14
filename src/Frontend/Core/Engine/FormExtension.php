@@ -3,7 +3,6 @@
 namespace Frontend\Core\Engine;
 
 use Twig_Extension;
-use Twig_SimpleFunction;
 
 /**
  * Keeps the state of a form between opening and closing the tag.

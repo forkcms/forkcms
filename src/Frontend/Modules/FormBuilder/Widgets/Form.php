@@ -252,7 +252,7 @@ class Form extends FrontendBaseWidget
                                 'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
                                 'type' => 'date',
-                                'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : '')
+                                'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : ''),
                             )
                         );
                     } else {
@@ -501,7 +501,7 @@ class Form extends FrontendBaseWidget
                         'data_id' => $dataId,
                         'data' => $data,
                         'fields' => $fields,
-                        'visitorId' => FrontendModel::getVisitorId()
+                        'visitorId' => FrontendModel::getVisitorId(),
                     )
                 );
 

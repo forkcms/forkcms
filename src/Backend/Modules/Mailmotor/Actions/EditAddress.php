@@ -132,7 +132,7 @@ class EditAddress extends BackendBaseActionEdit
                 $this->customFields[$i]['name'],
                 $value
             );
-            $i++;
+            ++$i;
 
             // unset this field
             unset($this->customFields[$name]);

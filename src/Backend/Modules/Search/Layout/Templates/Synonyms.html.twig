@@ -4,11 +4,11 @@
 
 {% block actionbar %}
   {% if showSearchAddSynonym %}
-  <div class="btn-toolbar pull-right">
-    <div class="btn-group" role="group">
-      {{ macro.buttonIcon(geturl('add_synonym'), 'plus-square', 'lbl.AddSynonym'|trans|capitalize) }}
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon(geturl('add_synonym'), 'plus-square', 'lbl.AddSynonym'|trans|capitalize) }}
+      </div>
     </div>
-  </div>
   {% endif %}
 {% endblock %}
 
@@ -21,7 +21,7 @@
         </div>
       {% endif %}
       {% if not dataGrid %}
-      <p>{{ 'msg.NoSynonyms'|trans|sprintf(geturl('add_synonym' ) ) }}</p>
+        <p>{{ 'msg.NoSynonyms'|trans|sprintf(geturl('add_synonym' ) ) }}</p>
       {% endif %}
     </div>
   </div>
