@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66b6ea7f-eb49-40ad-bc78-62ac7ba67879" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Backend/Modules/Blog/Layout/Templates/Edit.html.twig" afterPath="$PROJECT_DIR$/src/Backend/Modules/Blog/Layout/Templates/Edit.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Backend/Modules/Profiles/Layout/Templates/EditGroup.html.twig" afterPath="$PROJECT_DIR$/src/Backend/Modules/Profiles/Layout/Templates/EditGroup.html.twig" />
     </list>
     <ignored path="cms.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,11 +25,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Edit.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Edit.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Blog/Layout/Templates/Edit.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
               <caret line="201" column="24" selection-start-line="201" selection-start-column="24" selection-end-line="201" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EditGroup.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Profiles/Layout/Templates/EditGroup.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -46,6 +57,7 @@
         <option value="$PROJECT_DIR$/src/Backend/Core/Layout/Templates/navigation.html.twig" />
         <option value="$PROJECT_DIR$/src/Frontend/Core/Engine/Url.php" />
         <option value="$PROJECT_DIR$/src/Backend/Modules/Blog/Layout/Templates/Edit.html.twig" />
+        <option value="$PROJECT_DIR$/src/Backend/Modules/Profiles/Layout/Templates/EditGroup.html.twig" />
       </list>
     </option>
   </component>
@@ -341,12 +353,12 @@
       <workItem from="1464903721916" duration="628000" />
       <workItem from="1465548119778" duration="732000" />
       <workItem from="1465550240580" duration="674000" />
-      <workItem from="1465881416566" duration="727000" />
+      <workItem from="1465881416566" duration="829000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2761000" />
+    <option name="totallyTimeSpent" value="2863000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="837" extended-state="6" />
@@ -488,6 +500,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="201" column="24" selection-start-line="201" selection-start-column="24" selection-end-line="201" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Profiles/Layout/Templates/EditGroup.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
           <folding />
         </state>
       </provider>
