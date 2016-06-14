@@ -9,6 +9,7 @@ var autoprefixer = require('gulp-autoprefixer'),
     livereload = require('gulp-livereload'),
     plumber = require('gulp-plumber'),
     rename = require('gulp-rename'),
+    runSequence = require('run-sequence'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     gulpWebpack = require('webpack-stream'),
@@ -153,5 +154,5 @@ gulp.task('serve', function() {
 });
 
 gulp.task('build', function() {
-  gulp.start('clean', 'iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin');
+  runSequence('clean', ['iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin']);
 });
