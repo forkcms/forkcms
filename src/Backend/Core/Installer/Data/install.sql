@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `meta` (
   `custom` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'used for custom meta-information',
   `data` text COMMENT 'used for extra meta-information',
   PRIMARY KEY (`id`),
-  KEY `idx_url` (`url`)
+  KEY `idx_url` (`url`(249))
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Meta-information' AUTO_INCREMENT=1 ;
 
 

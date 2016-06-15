@@ -192,11 +192,13 @@ class Model extends \Common\Core\Model
         foreach ($extras as $extra) {
             $deleteExtra = true;
 
-            // match by parameters
-            if ($data !== null && $extra['data'] !== null) {
-                $extraData = (array) unserialize($extra['data']);
+            // get extra data
+            $extraData = $extra['data'] !== null ? (array) unserialize($extra['data']) : null;
 
-                // do not delete extra if parameters do not match
+            // if we have $data parameter set and $extraData not null we should not delete such extra
+            if (isset($data) && !isset($extraData)) {
+                $deleteExtra = false;
+            } elseif (isset($data) && isset($extraData)) {
                 foreach ($data as $dataKey => $dataValue) {
                     if (isset($extraData[$dataKey]) && $dataValue != $extraData[$dataKey]) {
                         $deleteExtra = false;

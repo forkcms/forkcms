@@ -3,8 +3,8 @@
     <ul class="nav navbar-nav">
       {% for item in navigation %}
         <li class="nav-item nav-item-{{ item.label|lower }}{% if item.active %} active{% endif %}">
-          <a href="/private/{{ LANGUAGE }}/{{ item.url }}" data-toggle="tooltip-nav" title="{{ item.label }}" data-container="body" data-placement="right">
-            <span class="nav-item-text">{{ item.label }}</span></a>
+          <a href="/private/{{ LANGUAGE }}/{{ item.url }}" data-toggle="tooltip-nav" title="{{ ('lbl.'~item.label)|trans|ucfirst }}" data-container="body" data-placement="right">
+            <span class="nav-item-text">{{ ('lbl.'~item.label)|trans|ucfirst }}</span></a>
         </li>
       {% endfor %}
     </ul>
