@@ -36,7 +36,14 @@ class Location extends FrontendBaseWidget
      */
     public function execute()
     {
-        $this->addJS('https://maps.google.com/maps/api/js?sensor=true', true, false);
+        // define Google Maps API key
+        $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+
+        // check Google Maps API key, otherwise show error
+        if ($apikey == null) {
+            trigger_error('Please provide a Google Maps API key.');
+        }
+        $this->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, true, false);
 
         parent::execute();
 
