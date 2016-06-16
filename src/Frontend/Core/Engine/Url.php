@@ -364,8 +364,11 @@ class Url extends \KernelLoader
 
             // remove language
             if ($hasMultiLanguages) {
-                $URL = trim(str_replace('/' . $language, '', $URL), '/');
+                $URL = str_replace('/' . $language, '', $URL);
             }
+
+            // remove the first slash
+            $URL = trim($URL, '/');
 
             // currently not in the homepage
             if ($URL != '') {

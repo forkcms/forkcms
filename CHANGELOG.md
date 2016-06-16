@@ -1,3 +1,15 @@
+4.0.3 (2016-06-15)
+--
+
+Bugfixes:
+
+* Core: translate labels in the backend menu
+* Extensions: fix deletion of modules extras
+* Core: fix limit on key length of 1000 bytes during installation
+* Core: fix breadcrumb on single language sites
+* Core: fix resequencing in Safari
+
+
 4.0.2 (2016-06-10)
 --
 
