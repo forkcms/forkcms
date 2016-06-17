@@ -73,17 +73,17 @@ final class Index extends ActionIndex
 
             // startdate cannot be before 2005 (earliest valid google startdate)
             if ($newStartDate < mktime(0, 0, 0, 1, 1, 2005)) {
-                $fields['start_date']->setError(BL::err('DateRangeIsInvalid'));
+                $fields['start_date']->setError(Language::err('DateRangeIsInvalid'));
             }
 
             // enddate cannot be in the future
             if ($newEndDate > time()) {
-                $fields['start_date']->setError(BL::err('DateRangeIsInvalid'));
+                $fields['start_date']->setError(Language::err('DateRangeIsInvalid'));
             }
 
             // enddate cannot be before the startdate
             if ($newStartDate > $newEndDate) {
-                $fields['start_date']->setError(BL::err('DateRangeIsInvalid'));
+                $fields['start_date']->setError(Language::err('DateRangeIsInvalid'));
             }
 
             if ($this->form->isCorrect()) {
