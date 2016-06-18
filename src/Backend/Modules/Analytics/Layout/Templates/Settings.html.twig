@@ -130,7 +130,7 @@
   {% endif %}
 
 
-  {% if not profile %}
+  {% if not profile and (noAccounts == false or noAccounts is not defined) %}
     <div class="row fork-module-actions">
       <div class="col-md-12">
         <div class="btn-toolbar">

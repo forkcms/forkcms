@@ -85,6 +85,8 @@ final class SettingsStepAccountType implements SettingsStepType
             $accounts = $this->googleServiceAnalytics->management_accounts->listManagementAccounts();
         } catch (Google_Service_Exception $e) {
             $this->hasAccounts = false;
+
+            return;
         }
 
         $accountsForDropDown = [];
