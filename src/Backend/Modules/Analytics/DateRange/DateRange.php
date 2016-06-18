@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Orders\DateRange;
+namespace Backend\Modules\Analytics\DateRange;
 
 /**
  * @author Jelmer Prins <jelmer@sumocoders.be>

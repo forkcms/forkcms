@@ -7,7 +7,7 @@ use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Language;
 use Backend\Core\Engine\Model;
 use Backend\Core\Engine\DataGridArray;
-use Backend\Modules\Orders\DateRange\DateRange;
+use Backend\Modules\Analytics\DateRange\DateRange;
 
 /**
  * This is the index-action (default), it will display the overview of analytics data
@@ -100,19 +100,25 @@ final class Index extends ActionIndex
         }
     }
 
+    private function parseDateRangeForm()
+    {
+        $this->form->parse($this->tpl);
+        $this->tpl->assign('startTimestamp', $this->dateRange->getStartDate());
+        $this->tpl->assign('endTimestamp', $this->dateRange->getEndDate());
+    }
+
     protected function parse()
     {
         parent::parse();
 
-        $this->header->addJS('highcharts.js', 'Core', false);
+        $this->parseDateRangeForm();
+        $this->parseAnalytics();
+    }
 
-        $this->form->parse($this->tpl);
-        $this->tpl->assign('startTimestamp', $this->dateRange->getStartDate());
-        $this->tpl->assign('endTimestamp', $this->dateRange->getEndDate());
-
+    private function parseAnalytics()
+    {
         // if we don't have a token anymore, redirect to the settings page
-        if (
-            $this->get('fork.settings')->get($this->getModule(), 'certificate') === null
+        if ($this->get('fork.settings')->get($this->getModule(), 'certificate') === null
             || $this->get('fork.settings')->get($this->getModule(), 'account') === null
             || $this->get('fork.settings')->get($this->getModule(), 'web_property_id') === null
             || $this->get('fork.settings')->get($this->getModule(), 'profile') === null
@@ -120,40 +126,26 @@ final class Index extends ActionIndex
             $this->redirect(Model::createURLForAction('Settings'));
         }
 
+        $this->header->addJS('highcharts.js', 'Core', false);
         $analytics = $this->get('analytics.connector');
+        $analyticsTemplateToFunctionMap = [
+            'page_views' => 'getPageViews',
+            'visitors' => 'getVisitors',
+            'pages_per_visit' => 'getPagesPerVisit',
+            'time_on_site' => 'getTimeOnSite',
+            'new_sessions_percentage' => 'getNewSessionsPercentage',
+            'bounce_rate' => 'getBounceRate',
+            'visitors_graph_data' => 'getVisitorsGraphData',
+            'source_graph_data' => 'getSourceGraphData'
+        ];
 
-        $this->tpl->assign(
-            'page_views',
-            $analytics->getPageViews($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
-        );
-        $this->tpl->assign(
-            'visitors',
-            $analytics->getVisitors($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
-        );
-        $this->tpl->assign(
-            'pages_per_visit',
-            $analytics->getPagesPerVisit($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
-        );
-        $this->tpl->assign(
-            'time_on_site',
-            $analytics->getTimeOnSite($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
-        );
-        $this->tpl->assign(
-            'new_sessions_percentage',
-            $analytics->getNewSessionsPercentage($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
-        );
-        $this->tpl->assign(
-            'bounce_rate',
-            $analytics->getBounceRate($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
-        );
-        $this->tpl->assign(
-            'visitors_graph_data',
-            $analytics->getVisitorsGraphData($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
-        );
-        $this->tpl->assign(
-            'source_graph_data',
-            $analytics->getSourceGraphData($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
-        );
+        foreach ($analyticsTemplateToFunctionMap as $templateVariableName => $functionName) {
+            $this->tpl->assign(
+                $templateVariableName,
+                $analytics->$functionName($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
+            );
+        }
+
         $dataGrid = new DataGridArray(
             $analytics->getMostVisitedPagesData($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
         );
