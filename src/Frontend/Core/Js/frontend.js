@@ -507,7 +507,7 @@ jsFrontend.statistics =
 	trackOutboundLinks: function()
 	{
 		// check if Google Analytics is available
-		if(typeof _gaq === 'object' || typeof ga === 'object')
+		if(typeof _gaq === 'object' || typeof ga === 'function')
 		{
 			// create a new selector
 			$.expr[':'].external = function(obj) {
