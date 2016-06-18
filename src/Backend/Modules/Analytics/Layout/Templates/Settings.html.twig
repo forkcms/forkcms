@@ -89,12 +89,6 @@
             <div class="form-group">
               <strong>{{ web_property_id }}</strong>{% if profile %}: ga:profile{% endif %}
             </div>
-            {% if profile %}
-
-              {% if showAnalyticsReset %}
-                <a href="{{ geturl('reset' ) }}">{{ 'msg.RemoveAccountLink'|trans|capitalize }}</a>{% endif %}
-
-            {% endif %}
           </div>
         </div>
       </div>
@@ -130,18 +124,23 @@
   {% endif %}
 
 
-  {% if not profile and (noAccounts == false or noAccounts is not defined) %}
-    <div class="row fork-module-actions">
-      <div class="col-md-12">
-        <div class="btn-toolbar">
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        {% if showAnalyticsReset and fileCertificate is not defined %}
+          <div class="btn-group" role="group">
+            <a href="{{ geturl('reset' ) }}">{{ 'msg.RemoveAccountLink'|trans|capitalize }}</a>
+          </div>
+        {% endif %}
+        {% if not profile and (noAccounts == false or noAccounts is not defined) %}
           <div class="btn-group pull-right" role="group">
             <button id="save" type="submit" name="save" class="btn btn-primary">
               <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
             </button>
           </div>
-        </div>
+        {% endif %}
       </div>
     </div>
-  {% endif %}
+  </div>
   {% endform %}
 {% endblock %}
