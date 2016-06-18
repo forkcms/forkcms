@@ -9,7 +9,7 @@ jsBackend.location =
 	// base values
 	bounds: null, center: null, centerLat: null, centerLng: null, height: null,
 	map: null, mapId: null, showDirections: false, showLink: false, showOverview: true,
-	type: null, width: null, zoomLevel: null,
+	type: null, style: null, width: null, zoomLevel: null,
 
 	init: function()
 	{
@@ -78,6 +78,7 @@ jsBackend.location =
 		// get the live data
 		jsBackend.location.zoomLevel = jsBackend.location.map.getZoom();
 		jsBackend.location.type = jsBackend.location.map.getMapTypeId();
+		jsBackend.location.style = jsBackend.location.getMapStyle();
 		jsBackend.location.center = jsBackend.location.map.getCenter();
 		jsBackend.location.centerLat = jsBackend.location.center.lat();
 		jsBackend.location.centerLng = jsBackend.location.center.lng();
@@ -90,6 +91,14 @@ jsBackend.location =
 		jsBackend.location.showDirections = ($('#directions').attr('checked') == 'checked');
 		jsBackend.location.showLink = ($('#fullUrl').attr('checked') == 'checked');
 		jsBackend.location.showOverview = ($('#markerOverview').attr('checked') == 'checked');
+	},
+
+	/**
+	 * Get map style
+	 */
+	getMapStyle: function()
+	{
+		return $('#mapStyle').find('option:selected').val();
 	},
 
 	// this will refresh the page and display a certain message
@@ -112,6 +121,7 @@ jsBackend.location =
 				fork: { module: 'Location', action: 'SaveLiveLocation' },
 				zoom: jsBackend.location.zoomLevel,
 				type: jsBackend.location.type,
+				style: jsBackend.location.style,
 				centerLat: jsBackend.location.centerLat,
 				centerLng: jsBackend.location.centerLng,
 				height: jsBackend.location.height,
