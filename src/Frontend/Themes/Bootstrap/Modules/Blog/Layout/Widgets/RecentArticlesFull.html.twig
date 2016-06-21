@@ -38,7 +38,7 @@
               <span class="hideText">{{ 'lbl.On'|trans }}</span> <time itemprop="datePublished" datetime="{{ post.publish_on|trans|date('Y-m-d\TH,i,s') }}">{{ post.publish_on|date(dateFormatLong,LANGUAGE ) }}</time>
             </div>
             <div class="col-md-6 metaExtra">
-              <span class="hideText">{{ 'lbl.InThe'|trans }} </span>{{ 'lbl.Category'|trans|capitalize }}: <a href="{{ post.category_full_url }}" title="{{ post.category_title }}">{{ post.category_title }}</a>
+              <span class="hideText">{{ 'lbl.InThe'|trans }} </span>{{ 'lbl.Category'|trans| }}: <a href="{{ post.category_full_url }}" title="{{ post.category_title }}">{{ post.category_title }}</a>
             </div>
           </div>
         </header>
