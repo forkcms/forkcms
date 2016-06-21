@@ -6,7 +6,6 @@ use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Language;
 use Backend\Core\Engine\TwigTemplate;
 use Common\ModulesSettings;
-use Google_Service_Analytics;
 
 /**
  * A form to change the settings of the analytics module
@@ -25,9 +24,8 @@ final class SettingsStepAuthConfigFileType implements SettingsStepType
     /**
      * @param string $name
      * @param ModulesSettings $settings
-     * @param Google_Service_Analytics $googleServiceAnalytics
      */
-    public function __construct($name, ModulesSettings $settings, Google_Service_Analytics $googleServiceAnalytics)
+    public function __construct($name, ModulesSettings $settings)
     {
         $this->form = new Form($name);
         $this->settings = $settings;

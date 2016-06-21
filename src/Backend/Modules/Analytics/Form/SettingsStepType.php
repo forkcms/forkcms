@@ -14,13 +14,6 @@ use Google_Service_Analytics;
 interface SettingsStepType
 {
     /**
-     * @param string $name
-     * @param ModulesSettings $settings
-     * @param Google_Service_Analytics $googleServiceAnalytics
-     */
-    public function __construct($name, ModulesSettings $settings, Google_Service_Analytics $googleServiceAnalytics);
-
-    /**
      * @param TwigTemplate $template
      */
     public function parse(TwigTemplate $template);
