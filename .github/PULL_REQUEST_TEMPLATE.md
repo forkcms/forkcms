@@ -1,11 +1,11 @@
 ## Type
 
-> Place an x between the [ ] on the type that applies.
+> remove the types that don't apply
 
-- [ ] Critical bugfix
-- [ ] Non critical bugfix
-- [ ] Enhancement
-- [ ] Feature
+- Critical bugfix
+- Non critical bugfix
+- Enhancement
+- Feature
 
 ## Resolves the following issues
 
