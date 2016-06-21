@@ -15,6 +15,6 @@
 
 > Describe how we can reproduce the problem here
 
-## Expected behavior/Proposed solutions
+## Expected behavior / Proposed solutions
 
 > explain what you had expected to happen and or a solution
