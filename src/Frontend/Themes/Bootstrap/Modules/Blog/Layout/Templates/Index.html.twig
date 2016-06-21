@@ -11,8 +11,7 @@ variables that are available:
     </div>
   </section>
 </div>
-{% endif %}
-{% if items %}
+{% else %}
 <div id="blogIndex" class="blog">
   {% for item in items %}
   <article class="article" itemcope itemtype="http://schema.org/Blog" role="main">
@@ -27,10 +26,14 @@ variables that are available:
           {% if item.allow_comments %}
           <div class="col-md-2 commentCount">
             <i class="icon-comment"></i>
-            {% if not item.comments %}<a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}</a>{% endif %}
-            {% if item.comments %}
-            {% if item.comments_multiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|sprintf(item.comments_count) }}</a>{% endif %}
-            {% if not item.comments_multiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
+            {% if not item.comments %}
+              <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}</a>
+            {% else %}
+              {% if item.comments_multiple %}
+                <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|sprintf(item.comments_count) }}</a>
+              {% else %}
+                <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>
+              {% endif %}
             {% endif %}
           </div>
           {% endif %}
@@ -44,22 +47,27 @@ variables that are available:
         </div>
         <div class="col-md-6 metaExtra">
           <span class="hideText">{{ 'lbl.InThe'|trans }} </span>{{ 'lbl.Category'|trans|capitalize }}:
-          <a itemprop="articleSection" href="{{ item.category_full_url }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}
-          {% if item.tags %}
-          <span class="hideText">{{ 'lbl.WithThe'|trans }}</span> {{ 'lbl.Tags'|trans|capitalize }}:
-          <span itemprop="keywords">
-          {% for tag in item.tags %}
-            <a class="label label-default" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>{% if not tag.last %}<span class="hideText">,</span> {% endif %}
-          {% endfor %}
-          </span>
+          <a itemprop="articleSection" href="{{ item.category_full_url }}">{{ item.category_title }}</a>
+          {% if not item.tags %}
+            .
+          {% else %}
+            <span class="hideText">{{ 'lbl.WithThe'|trans }}</span> {{ 'lbl.Tags'|trans|capitalize }}:
+            <span itemprop="keywords">
+            {% for tag in item.tags %}
+              <a class="label label-default" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>{% if not tag.last %}<span class="hideText">,</span> {% endif %}
+            {% endfor %}
+            </span>
           {% endif %}
         </div>
       </div>
     </header>
     <div class="articleBody" itemprop="articleBody">
       {% if item.image %}<img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
-      {% if not item.introduction %}{{ item.text|raw }}{% endif %}
-      {% if item.introduction %}{{ item.introduction|raw }}{% endif %}
+      {% if not item.introduction %}
+        {{ item.text|raw }}
+      {% else %}
+        {{ item.introduction|raw }}
+      {% endif %}
     </div>
   </article>
   {% endfor %}

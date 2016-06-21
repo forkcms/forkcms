@@ -13,9 +13,7 @@
       <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
     {% endfor %}
     </ul>
-  {% endif %}
-
-  {% if not questions %}
+  {% else %}
     <p>{{ 'msg.NoQuestionsInCategory'|trans|capitalize }}</p>
   {% endif %}
 

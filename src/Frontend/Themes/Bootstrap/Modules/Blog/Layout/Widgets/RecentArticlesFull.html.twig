@@ -19,12 +19,16 @@
       </div>
       {% if post.allow_comments %}
         <div class="col-md-2 commentCount">
-        <i class="icon-comment"></i>
-        {% if not post.comments %}<a href="{{ post.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}</a>{% endif %}
-        {% if post.comments %}
-          {% if post.comments_multiple %}<a href="{{ post.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}</a>{% endif %}
-          {% if not post.comments_multiple %}<a href="{{ post.full_url }}#{{ act.Comments }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
-        {% endif %}
+          <i class="icon-comment"></i>
+          {% if not post.comments %}
+            <a href="{{ post.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}</a>
+          {% else %}
+            {% if post.comments_multiple %}
+              <a href="{{ post.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}</a>
+            {% else %}
+              <a href="{{ post.full_url }}#{{ act.Comments }}">{{ 'msg.BlogOneComment'|trans }}</a>
+            {% endif %}
+          {% endif %}
         </div>
       {% endif %}
       </div>
@@ -40,8 +44,11 @@
     </header>
     <div class="bd content" itemprop="articleBody">
       {% if post.image %}<img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ post.image }}" alt="{{ post.title }}" />{% endif %}
-      {% if not post.introduction %}{{ post.text|raw }}{% endif %}
-      {% if post.introduction %}{{ post.introduction|raw }}{% endif %}
+      {% if not post.introduction %}
+        {{ post.text|raw }}
+      {% else %}
+        {{ post.introduction|raw }}
+      {% endif %}
     </div>
     </article>
   {% endfor %}

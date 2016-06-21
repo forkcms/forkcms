@@ -9,8 +9,14 @@
     </header>
     <p>
       {% for tag in widgetTagsTagCloud %}
-        <a href="{{ tag.url }}" rel="tag">{% if tag.first %}{{ tag.name|capitalize }}{% endif %}{% if not tag.first %}{{ tag.name }}{% endif %}</a>
-        <span class="badge hidden-phone">{{ tag.number }}</span>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
+        <a href="{{ tag.url }}" rel="tag">
+          {% if tag.first %}
+            {{ tag.name|capitalize }}
+          {% else %}
+            {{ tag.name }}
+          {% endif %}
+        </a>
+        <span class="badge hidden-phone">{{ tag.number }}</span>{% if not tag.last %}, {% else %}.{% endif %}
       {% endfor %}
     </p>
   </aside>

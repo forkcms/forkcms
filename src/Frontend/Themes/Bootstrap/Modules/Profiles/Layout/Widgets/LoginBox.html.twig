@@ -9,9 +9,7 @@
       {{ 'msg.ProfilesLoggedInAs'|trans|format(profile.display_name, profile.url.dashboard) }} -
       <a href="{{ profile.url.settings }}">{{ 'lbl.Settings'|trans|capitalize }}</a>
     </div>
-  {% endif %}
-
-  {% if not isLoggedIn %}
+  {% else %}
     <header role="banner">
     <h3>{{ 'lbl.Login'|trans|capitalize }}</h3>
     </header>

@@ -5,8 +5,7 @@
 <section id="tagsIndex" class="tags">
   {% if not tags %}
   <div class="alert alert-info" role="alert">{{ 'msg.TagsNoItems'|trans }}</div>
-  {% endif %}
-  {% if tags %}
+  {% else %}
   <ul>
     {% for tag in tags %}
     <li>

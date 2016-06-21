@@ -8,20 +8,17 @@
   <header role="banner">
     <h1>{{ item.question }}</h1>
       {% if settings.allow_multiple_categories %}
-      {# Category#}
-      <span class="hideText">{{ 'lbl.In'|trans|capitalize }} {{ 'lbl.The'|trans }} </span>{{ 'lbl.Category'|trans }}: <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
+        {# Category#}
+        <span class="hideText">{{ 'lbl.In'|trans|capitalize }} {{ 'lbl.The'|trans }} </span>{{ 'lbl.Category'|trans }}: <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
 
-      {# Tags#}
-      {% if item.tags %}
-      <span class="hideText">{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} </span>{{ 'lbl.Tags'|trans }}:
-      {% for tag in item.tags %}
-        <a class="label label-default" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>
-      {% endfor %}
-      {% endif %}
-      {% endif %}
-
-    {# Tags #}
-      {% if not settings.allow_multiple_categories %}
+        {# Tags#}
+        {% if item.tags %}
+          <span class="hideText">{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} </span>{{ 'lbl.Tags'|trans }}:
+          {% for tag in item.tags %}
+            <a class="label label-default" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>
+          {% endfor %}
+        {% endif %}
+      {% else %}
         {% if tag %}
         <ul>
           <li>

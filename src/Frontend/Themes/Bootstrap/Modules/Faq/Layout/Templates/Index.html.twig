@@ -8,17 +8,15 @@
       {{ 'msg.FaqNoItems'|trans }}
     </div>
   </div>
-{% endif %}
-
-{% if faqCategories %}
+{% else %}
   <div id="faqIndex" class="faq">
   {% for category in faqCategories %}
     <section>
-        {% if allowMultipleCategories %}
-      <header role="banner">
-      <h2 id="{{ category.url }}"><a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h2>
-      </header>
-        {% endif %}
+      {% if allowMultipleCategories %}
+        <header role="banner">
+          <h2 id="{{ category.url }}"><a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h2>
+        </header>
+      {% endif %}
     <ul>
       {% for question in category.questions %}
         <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>

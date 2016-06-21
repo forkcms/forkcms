@@ -10,16 +10,14 @@
     <p>{{ 'msg.BlogNoItems'|trans }}</p>
   </div>
   </section>
-{% endif %}
-{% if items %}
+{% else %}
   <section id="blogArchive" class="blog">
   <header role="banner">
     <h3>
     {% if archive.month %}
-      {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|date('F Y',LANGUAGE ) ) }}
-    {% endif %}
-    {% if not archive.month %}
-      {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|date('Y' ) ) }}
+      {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|date('F Y',LANGUAGE) ) }}
+    {% else %}
+      {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|date('Y') ) }}
     {% endif %}
     </h3>
   </header>
@@ -40,9 +38,12 @@
         {% if allowComments %}
         <td class="comments">
           {% if item.comments %}
-          <i class="icon-comment"></i>
-          {% if item.comments_multiple %}<a href="{{ item.full_url }}#{{ 'act.Comments }}">{{ 'msg.BlogNumberOfComments''|trans|format(item.comments_count ) }}</a>{% endif %}
-          {% if not item.comments_multiple %}<a href="{{ item.full_url }}#{{ act.Comments }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
+            <i class="icon-comment"></i>
+            {% if item.comments_multiple %}
+              <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}</a>
+            {% else %}
+              <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>
+            {% endif %}
           {% endif %}
         </td>
         {% endif %}
