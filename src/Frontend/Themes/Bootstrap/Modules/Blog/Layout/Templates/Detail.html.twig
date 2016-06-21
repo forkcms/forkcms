@@ -45,7 +45,7 @@ variables that are available:
             <span class="hideText">{{ 'lbl.WithThe'|trans }}</span> {{ 'lbl.Tags'|trans|capitalize }}:
             <span itemprop="keywords">
               {% for tag in item.tags %}
-                <a class="label" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>{% if not tag.last %}<span class="hideText">,</span> {% endif %}
+                <a class="label label-default" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>{% if not tag.last %}<span class="hideText">,</span> {% endif %}
               {% endfor %}
             </span>
           {% endif %}
