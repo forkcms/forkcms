@@ -39,7 +39,7 @@ jsBackend.template =
 
 		// fetch position & block index
 		var positionIndex = $(this).closest('.jsPosition').find('input[id^=position]').attr('id').replace('position', '');
-		var blockIndex = $(this).prevAll('.jsBlock').length;
+		var blockIndex = $(this).closest('.jsBlocks').find('.jsBlock').length;
 
 		// update for id & name
 		$('#type00', blockContainer).attr('id', 'type' + positionIndex + blockIndex).attr('name', 'type_' + positionIndex + '_' + blockIndex);
@@ -51,7 +51,7 @@ jsBackend.template =
 		}
 
 		// add to dom
-		blockContainer.insertAfter($(this).prevAll('.jsBlock').last());
+		blockContainer.insertAfter($(this).closest('.jsBlocks').find('.jsBlock').last());
 	},
 
 	/**
