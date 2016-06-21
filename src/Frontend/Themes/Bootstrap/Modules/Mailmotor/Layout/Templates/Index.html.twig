@@ -1,0 +1,10 @@
+<div id="mailmotorIndex">
+  {# @todo  this shouldn't be a datagrid, this sucks #}
+  {% if dataGrid %}
+    {{ dataGrid }}
+  {% endif %}
+
+  {% if not dataGrid %}
+    <div class="alert" role="alert">{{ 'msg.NoSentMailings'|trans }}</div>
+  {% endif %}
+</div>

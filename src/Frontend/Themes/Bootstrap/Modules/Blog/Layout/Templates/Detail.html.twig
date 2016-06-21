@@ -1,0 +1,178 @@
+{#
+variables that are available:
+- {{ item }}: contains data about the post
+- {{ comments }}: contains an array with the comments for the post, each element contains data about the comment.
+- {{ commentsCount }}: contains a variable with the number of comments for this blog post.
+- {{ navigation }}: contains an array with data for previous and next post
+#}
+<div id="blogDetail" class="blog">
+  <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
+    <meta itemprop="interactionCount" content="UserComments:commentsCount">
+    <meta itemprop="author" content="{{ item.user_id|usersetting('nickname' ) }}">
+    <header role="banner">
+      <div class="title">
+        <div class="row">
+          <div class="col-md-10">
+            <h1 itemprop="name">{{ item.title }}</h1>
+          </div>
+          {% if item.allow_comments %}
+          <div class="col-md-2 commentCount">
+            {% if comments %}
+            <i class="icon-comment"></i>
+            {% if blogCommentsMultiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(commentsCount ) }}</a>{% endif %}
+            {% if not blogCommentsMultiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="row muted meta" role="contentinfo">
+        <div class="col-md-6">
+          <span class="hideText">{{ 'msg.WrittenBy'|trans|capitalize|format('') }} </span>{{ item.user_id|usersetting('nickname' ) }}
+          <span class="hideText">{{ 'lbl.On'|trans }}</span>
+          <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">{{ item.publish_on|date(dateFormatLong,LANGUAGE ) }}</time>
+        </div>
+
+        <div class="col-md-6 metaExtra" role="contentinfo">
+          <span class="hideText">{{ 'lbl.InThe'|trans }} </span>{{ 'lbl.Category'|trans|capitalize }}:
+          <a itemprop="articleSection" href="{{ item.category_full_url }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}
+          {% if item.tags %}
+          <span class="hideText">{{ 'lbl.WithThe'|trans }}</span> {{ 'lbl.Tags'|trans|capitalize }}:
+        <span itemprop="keywords">
+          {% for tag in item.tags %}
+          <a class="label" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>{% if not tag.last %}<span class="hideText">,</span> {% endif %}
+          {% endfor %}
+        </span>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+
+    <div class="articleBody" itemprop="articleBody">
+      {% if item.image %}<img class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" itemprop="image" />{% endif %}
+      {{ item.text|raw }}
+    </div>
+    <footer role="contentinfo">
+      <div class="row social">
+        <div class="col-xs-12 well">
+          <div class="shareButton">
+            {{ 'lbl.Share'|trans|capitalize }}:
+          </div>
+          <div class="facebook shareButton">
+            <div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
+          </div>
+          <div class="twitter shareButton">
+            <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+          </div>
+        </div>
+      </div>
+      <nav>
+        <ul class="pager" role="navigation">
+          {% if navigation.previous %}
+          <li class="previous">
+            <a href="{{ navigation.previous.url }}" rel="prev" title="{{ navigation.previous.title }}">&larr;
+              <span class="hideText">{{ 'lbl.PreviousArticle'|trans|capitalize }}: </span><span class="title">{{ navigation.previous.title }}</span></a>
+          </li>
+          {% endif %}
+          {% if navigation.next %}
+          <li class="next">
+            <a href="{{ navigation.next.url }}" rel="next" title="{{ navigation.next.title }}"><span class="hideText">{{ 'lbl.NextArticle'|trans|capitalize }}: </span><span class="title">{{ navigation.next.title }}</span> &rarr;
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </footer>
+  </article>
+
+  <section id="{{ act.Comments }}" class="comments">
+    <header role="banner">
+      <h3>{{ 'lbl.Comments'|trans|capitalize }}</h3>
+    </header>
+    {% if not comments %}
+    <div class="alert" role="alert">{{ 'msg.BlogNoComments'|trans }}</div>
+    {% endif %}
+    {% if comments %}
+    {% for comment in comments %}
+    {# Do not alter the id! It is used as an anchor #}
+    <div id="comment-{{ comment.id }}" class="comment row {% if comment.last %}lastChild{% endif %}" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+      <div class="col-sm-1 avatar">
+        <meta itemprop="discusses" content="{{ item.title }}" />
+        {% if comment.website %}<a href="{{ comment.website }}">{% endif %}
+        <img src="{{ FRONTEND_CORE_URL }}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comment.author }}" class="replaceWithGravatar img-circle" data-gravatar-id="{{ comment.gravatar_id }}" />
+        {% if comment.website %}</a>{% endif %}
+      </div>
+      <div class="col-sm-7">
+        <div class="meta" itemscope itemtype="http://schema.org/Person">
+          {% if comment.website %}<a href="{{ comment.website }}" itemprop="url">{% endif %}
+          <span itemprop="creator name">{{ comment.author }}</span>{% if comment.website %}</a>{% endif %}
+          <span class="hideText">{{ 'lbl.Wrote'|trans }}</span>
+          <time class="muted" itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH,i,s' ) }}">{{ comment.created_on|timeago|raw }}</time>
+        </div>
+        <div class="commentText content" itemprop="commentText">
+          {{ comment.text|raw }}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </section>
+
+  {% if item.allow_comments %}
+  <section id="{{ act.Comment }}" class="commentForm">
+    <header role="banner">
+      <h3>{{ 'msg.Comment'|trans|capitalize }}</h3>
+    </header>
+    <div class="well">
+      {% if commentIsInModeration %}
+      <div class="alert" role="alert">{{ 'msg.BlogCommentInModeration'|trans }}</div>
+      {% endif %}
+      {% if commentIsSpam %}
+      <div class="alert alert-danger" role="alert">{{ 'msg.BlogCommentIsSpam'|trans }}</div>
+      {% endif %}
+      {% if commentIsAdded %}
+      <div class="alert alert-success" role="alert">{{ 'msg.BlogCommentIsAdded'|trans }}</div>
+      {% endif %}
+      {% form commentsForm %}
+      <div class="row">
+        <div class="col-sm-7">
+          <div class="control-group {% if txtMessageError %}error{% endif %}">
+            <label class="control-label" for="message">{{ 'lbl.Message'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+
+            <div class="controls">
+              {% form_field_error message %} {% form_field message %}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5 authorInfo">
+          <div class="control-group {% if txtAuthorError %}error{% endif %}">
+            <label class="control-label" for="author">{{ 'lbl.Name'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+
+            <div class="controls">
+              {% form_field_error author %} {% form_field author %}
+            </div>
+          </div>
+          <div class="control-group {% if txtEmailError %}error{% endif %}">
+            <label class="control-label" for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+
+            <div class="controls">
+              {% form_field_error email %} {% form_field email %}
+            </div>
+          </div>
+          <div class="control-group {% if txtWebsiteError %}error{% endif %}">
+            <label class="control-label" for="website">{{ 'lbl.Website'|trans|capitalize }}</label>
+
+            <div class="controls">
+              {% form_field_error website %} {% form_field website %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <input class="btn-primary btn" type="submit" name="comment" value="{{ 'msg.Comment'|trans|capitalize }}" />
+      </div>
+      {% endform %}
+    </div>
+  </section>
+  {% endif %}
+</div>

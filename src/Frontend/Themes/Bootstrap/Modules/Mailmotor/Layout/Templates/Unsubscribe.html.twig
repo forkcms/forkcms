@@ -1,0 +1,20 @@
+<div id="mailmotorUnsubscribe">
+  {% if unsubscribeHasFormError %}<div class="alert alert-danger" role="alert">{{ 'err.FormError'|trans }}</div>{% endif %}
+  {% if unsubscribeHasError %}<div class="alert alert-danger" role="alert">{{ 'err.UnsubscribeFailed'|trans }}</div>{% endif %}
+  {% if unsubscribeIsSuccess %}<div class="alert alert-success" role="alert">{{ 'msg.UnsubscribeSuccess'|trans }}</div>{% endif %}
+
+  {% if not unsubscribeHideForm %}
+    {% form unsubscribe %}
+      <div class="control-group{% if txtEmailError %} error{% endif %}">
+        <label class="control-label" for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+        <div class="controls">
+          {% form_field_error email %} {% form_field email %}
+        </div>
+      </div>
+
+      <div class="form-actions">
+      <input class="btn-primary btn" type="submit" name="send" value="{{ 'lbl.Send'|trans|capitalize }}" />
+      </div>
+    {% endform %}
+  {% endif %}
+</div>

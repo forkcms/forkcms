@@ -1,0 +1,35 @@
+{#
+  variables that are available:
+  - {{ widgetBlogArchive }}:
+#}
+
+{# cache(LANGUAGE_blogWidgetArchiveCache) #}
+  {% if widgetBlogArchive %}
+  <section id="blogArchiveWidget" class="well blog">
+    <header role="banner">
+      <h3>{{ 'lbl.Archive'|trans|capitalize }}</h3>
+    </header>
+    <ul>
+    {% for post in widgetBlogArchive %}
+      <li>
+      {% if post.url %}<a href="{{ post.url }}">{% endif %}
+        {{ post.label }}{% if post.url %}</a>{% endif %}
+        <span class="badge">{{ post.total }}</span>
+
+      {% if post.months %}
+        <ul>
+        {% for month in post.months %}
+          <li>
+          {% if month.url %}<a href="{{ month.url }}">{% endif %}
+            {{ month.label|date('F',LANGUAGE ) }}{% if month.url %}</a>{% endif %}
+            <span class="badge">{{ month.total }}</span>
+          </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+{# endcache #}

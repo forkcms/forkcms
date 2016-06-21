@@ -1,0 +1,34 @@
+{#
+  variables that are available:
+  - {{ widgetFaqOwnQuestion }}: true or false depending on if the data can be shown
+#}
+
+{% if widgetFaqOwnQuestion %}
+  <section id="faqOwnQuestionForm" class="well faq">
+    <header role="banner">
+      <h3 id="{{ 'act.OwnQuestion'|trans }}">{{ 'msg.AskOwnQuestion'|trans|capitalize }}</h3>
+    </header>
+    {% if ownQuestionerrorSpam %}
+      <div class="alert alert-danger" role="alert">{{ 'err.OwnQuestionSpam'|trans }}</div>
+    {% endif %}
+    {% if ownQuestionsuccess %}
+      <div class="alert alert-success" role="alert">{{ 'msg.OwnQuestionSuccess'|trans }}</div>
+    {% endif %}
+
+    {% form own_question %}
+    <div class="form-group{% if txtNameError %} has-error{% endif %}">
+      <label class="control-label" for="name">{{ 'lbl.YourName'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+      {% form_field_error name %} {% form_field name %}
+    </div>
+    <div class="form-group{% if txtEmailError %} has-error{% endif %}">
+      <label class="control-label" for="email">{{ 'lbl.YourEmail'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+      {% form_field_error email %} {% form_field email %}
+    </div>
+    <div class="bigInput form-group{% if txtMessageError %} has-error{% endif %}">
+      <label class="control-label" for="message">{{ 'lbl.YourQuestion'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+      {% form_field_error message %} {% form_field message %}
+    </div>
+    <input class="btn btn-default" type="submit" name="send" value="{{ 'lbl.Send'|trans|capitalize }}" />
+    {% endform %}
+  </section>
+{% endif %}

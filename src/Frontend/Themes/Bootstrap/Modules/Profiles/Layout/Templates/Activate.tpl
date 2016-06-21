@@ -1,1 +1,0 @@
-{option:activationSuccess}<div class="alert alert-success" role="alert">{$msgActivationIsSuccess}</div>{/option:activationSuccess}
