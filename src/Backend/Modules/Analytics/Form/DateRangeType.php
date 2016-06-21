@@ -19,9 +19,7 @@ final class DateRangeType
     /** @var Form */
     private $form;
 
-    /**
-     * @var DateRange $dateRange
-     */
+    /** @var DateRange $dateRange */
     private $dateRange;
 
     /**
