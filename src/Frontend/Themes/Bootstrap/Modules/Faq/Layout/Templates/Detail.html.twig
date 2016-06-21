@@ -38,7 +38,7 @@
     {% if settings.allow_feedback %}
       <aside id="faqFeedbackForm" role="complementary">
         {% if success %}<div class="alert alert-success" role="alert">{{ 'msg.FeedbackSuccess'|trans }}</div>{% endif %}
-        {% if spam %}<div class="alert alert-danger" role="alert">{{ err.FeedbackSpam }}</div>{% endif %}
+        {% if spam %}<div class="alert alert-danger" role="alert">{{ 'err.FeedbackSpam'|trans }}</div>{% endif %}
         {% form feedback %}
           <div class="row">
             <div class="col-xs-12 well">
