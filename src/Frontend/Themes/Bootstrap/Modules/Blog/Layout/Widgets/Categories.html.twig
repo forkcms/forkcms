@@ -12,7 +12,8 @@
       {% for category in widgetBlogCategories %}
         <li>
           <a href="{{ category.url }}">
-            {{ category.label }}</a>
+            {{ category.label }}
+          </a>
           <span class="badge">{{ category.total }}</span>
         </li>
       {% endfor %}
