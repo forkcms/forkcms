@@ -6,52 +6,54 @@
 
 {% if not items %}
   <section id="blogArchive" class="blog">
-  <div class="bd content">
-    <p>{{ 'msg.BlogNoItems'|trans }}</p>
-  </div>
+    <div class="bd content">
+      <p>{{ 'msg.BlogNoItems'|trans }}</p>
+    </div>
   </section>
 {% else %}
   <section id="blogArchive" class="blog">
-  <header role="banner">
-    <h3>
-    {% if archive.month %}
-      {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|date('F Y',LANGUAGE) ) }}
-    {% else %}
-      {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|date('Y') ) }}
-    {% endif %}
-    </h3>
-  </header>
-  <div class="bd content">
-    <table class="dataGrid table table-hover" width="100%" itemscope itemtype="http://schema.org/Blog">
-    <thead class="hide">
-      <tr>
-      <th class="date">{{ 'lbl.Date'|trans|capitalize }}</th>
-      <th class="title">{{ 'lbl.Title'|trans|capitalize }}</th>
-      {% if allowComments %}<th class="comments">{{ 'lbl.Comments'|trans|capitalize }}</th>{% endif %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in items %}
-      <tr {% if item.first %}class="firstChild"{% endif %}>
-        <td class="date muted"><time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">{{ item.publish_on|date(dateFormatShort,LANGUAGE ) }}</time></td>
-        <td class="title"><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></td>
-        {% if allowComments %}
-        <td class="comments">
-          {% if item.comments %}
-            <i class="icon-comment"></i>
-            {% if item.comments_multiple %}
-              <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}</a>
-            {% else %}
-              <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>
-            {% endif %}
-          {% endif %}
-        </td>
-        {% endif %}
-      </tr>
-      {% endfor %}
-    </tbody>
-    </table>
-  </div>
+    <header role="banner">
+      <h3>
+      {% if archive.month %}
+        {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|date('F Y',LANGUAGE) ) }}
+      {% else %}
+        {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|date('Y') ) }}
+      {% endif %}
+      </h3>
+    </header>
+    <div class="bd content">
+      <table class="dataGrid table table-hover" width="100%" itemscope itemtype="http://schema.org/Blog">
+        <thead class="hide">
+          <tr>
+            <th class="date">{{ 'lbl.Date'|trans|capitalize }}</th>
+            <th class="title">{{ 'lbl.Title'|trans|capitalize }}</th>
+            {% if allowComments %}<th class="comments">{{ 'lbl.Comments'|trans|capitalize }}</th>{% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+            <tr {% if item.first %}class="firstChild"{% endif %}>
+              <td class="date muted">
+                <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">{{ item.publish_on|date(dateFormatShort,LANGUAGE ) }}</time>
+              </td>
+              <td class="title"><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></td>
+              {% if allowComments %}
+                <td class="comments">
+                  {% if item.comments %}
+                    <i class="icon-comment"></i>
+                    {% if item.comments_multiple %}
+                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}</a>
+                    {% else %}
+                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>
+                    {% endif %}
+                  {% endif %}
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </section>
   {% include "Core/Layout/Templates/Pagination.html.twig" %}
 {% endif %}

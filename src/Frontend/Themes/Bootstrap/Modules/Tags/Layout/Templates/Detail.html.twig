@@ -4,29 +4,29 @@
 #}
 <section id="tagsDetail" class="tags">
   <header role="banner">
-  <h1>{{ 'lbl.ItemsWithTag'|trans|format(tag.name|capitalize) }}</h1>
+    <h1>{{ 'lbl.ItemsWithTag'|trans|format(tag.name|capitalize) }}</h1>
   </header>
   {% if tagsModules %}
     {% for module in tagsModules %}
       <section>
-      <header role="banner">
-        <h2>{{ module.label|capitalize }}</h2>
-      </header>
-      <ul>
-        {% for tag in module.items %}
-        <li>
-          <a href="{{ tag.full_url }}">
-            {{ tag.title }}
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
+        <header role="banner">
+          <h2>{{ module.label|capitalize }}</h2>
+        </header>
+        <ul>
+          {% for tag in module.items %}
+            <li>
+              <a href="{{ tag.full_url }}">
+                {{ tag.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
       </section>
     {% endfor %}
   {% endif %}
 
   <p>
-    <a href="{{ geturlforblock('Tags') }}" class="btn">
+    <a href="{{ geturlforblock('Tags') }}" class="btn btn-default">
       {{ 'lbl.ToTagsOverview'|trans|capitalize }}
     </a>
   </p>

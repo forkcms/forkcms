@@ -16,16 +16,16 @@ variables that are available:
             <h1 itemprop="name">{{ item.title }}</h1>
           </div>
           {% if item.allow_comments %}
-          <div class="col-md-2 commentCount">
-            {% if comments %}
-              <i class="icon-comment"></i>
-              {% if blogCommentsMultiple %}
-                <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(commentsCount) }}</a>
-              {% else %}
-                <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>
+            <div class="col-md-2 commentCount">
+              {% if comments %}
+                <i class="icon-comment"></i>
+                {% if blogCommentsMultiple %}
+                  <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(commentsCount) }}</a>
+                {% else %}
+                  <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>
+                {% endif %}
               {% endif %}
-            {% endif %}
-          </div>
+            </div>
           {% endif %}
         </div>
       </div>
@@ -45,7 +45,7 @@ variables that are available:
             <span class="hideText">{{ 'lbl.WithThe'|trans }}</span> {{ 'lbl.Tags'|trans|capitalize }}:
             <span itemprop="keywords">
               {% for tag in item.tags %}
-              <a class="label" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>{% if not tag.last %}<span class="hideText">,</span> {% endif %}
+                <a class="label" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>{% if not tag.last %}<span class="hideText">,</span> {% endif %}
               {% endfor %}
             </span>
           {% endif %}
@@ -74,16 +74,15 @@ variables that are available:
       <nav>
         <ul class="pager" role="navigation">
           {% if navigation.previous %}
-          <li class="previous">
-            <a href="{{ navigation.previous.url }}" rel="prev" title="{{ navigation.previous.title }}">&larr;
-              <span class="hideText">{{ 'lbl.PreviousArticle'|trans|capitalize }}: </span><span class="title">{{ navigation.previous.title }}</span></a>
-          </li>
+            <li class="previous">
+              <a href="{{ navigation.previous.url }}" rel="prev" title="{{ navigation.previous.title }}">&larr;
+                <span class="hideText">{{ 'lbl.PreviousArticle'|trans|capitalize }}: </span><span class="title">{{ navigation.previous.title }}</span></a>
+            </li>
           {% endif %}
           {% if navigation.next %}
-          <li class="next">
-            <a href="{{ navigation.next.url }}" rel="next" title="{{ navigation.next.title }}"><span class="hideText">{{ 'lbl.NextArticle'|trans|capitalize }}: </span><span class="title">{{ navigation.next.title }}</span> &rarr;
-            </a>
-          </li>
+            <li class="next">
+              <a href="{{ navigation.next.url }}" rel="next" title="{{ navigation.next.title }}"><span class="hideText">{{ 'lbl.NextArticle'|trans|capitalize }}: </span><span class="title">{{ navigation.next.title }}</span> &rarr;</a>
+            </li>
           {% endif %}
         </ul>
       </nav>
@@ -98,85 +97,81 @@ variables that are available:
       <div class="alert" role="alert">{{ 'msg.BlogNoComments'|trans }}</div>
     {% else %}
       {% for comment in comments %}
-      {# Do not alter the id! It is used as an anchor #}
-      <div id="comment-{{ comment.id }}" class="comment row {% if comment.last %}lastChild{% endif %}" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
-        <div class="col-sm-1 avatar">
-          <meta itemprop="discusses" content="{{ item.title }}" />
-          {% if comment.website %}<a href="{{ comment.website }}">{% endif %}
-          <img src="{{ FRONTEND_CORE_URL }}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comment.author }}" class="replaceWithGravatar img-circle" data-gravatar-id="{{ comment.gravatar_id }}" />
-          {% if comment.website %}</a>{% endif %}
-        </div>
-        <div class="col-sm-7">
-          <div class="meta" itemscope itemtype="http://schema.org/Person">
-            {% if comment.website %}<a href="{{ comment.website }}" itemprop="url">{% endif %}
-            <span itemprop="creator name">{{ comment.author }}</span>{% if comment.website %}</a>{% endif %}
-            <span class="hideText">{{ 'lbl.Wrote'|trans }}</span>
-            <time class="muted" itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH,i,s' ) }}">{{ comment.created_on|timeago|raw }}</time>
+        {# Do not alter the id! It is used as an anchor #}
+        <div id="comment-{{ comment.id }}" class="comment row {% if comment.last %}lastChild{% endif %}" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+          <div class="col-sm-1 avatar">
+            <meta itemprop="discusses" content="{{ item.title }}" />
+            {% if comment.website %}<a href="{{ comment.website }}">{% endif %}
+            <img src="{{ FRONTEND_CORE_URL }}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comment.author }}" class="replaceWithGravatar img-circle" data-gravatar-id="{{ comment.gravatar_id }}" />
+            {% if comment.website %}</a>{% endif %}
           </div>
-          <div class="commentText content" itemprop="commentText">
-            {{ comment.text|raw }}
+          <div class="col-sm-7">
+            <div class="meta" itemscope itemtype="http://schema.org/Person">
+              {% if comment.website %}<a href="{{ comment.website }}" itemprop="url">{% endif %}
+              <span itemprop="creator name">{{ comment.author }}</span>{% if comment.website %}</a>{% endif %}
+              <span class="hideText">{{ 'lbl.Wrote'|trans }}</span>
+              <time class="muted" itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH,i,s' ) }}">{{ comment.created_on|timeago|raw }}</time>
+            </div>
+            <div class="commentText content" itemprop="commentText">
+              {{ comment.text|raw }}
+            </div>
           </div>
         </div>
-      </div>
       {% endfor %}
     {% endif %}
   </section>
 
   {% if item.allow_comments %}
-  <section id="{{ act.Comment }}" class="commentForm">
-    <header role="banner">
-      <h3>{{ 'msg.Comment'|trans|capitalize }}</h3>
-    </header>
-    <div class="well">
-      {% if commentIsInModeration %}
-      <div class="alert" role="alert">{{ 'msg.BlogCommentInModeration'|trans }}</div>
-      {% endif %}
-      {% if commentIsSpam %}
-      <div class="alert alert-danger" role="alert">{{ 'msg.BlogCommentIsSpam'|trans }}</div>
-      {% endif %}
-      {% if commentIsAdded %}
-      <div class="alert alert-success" role="alert">{{ 'msg.BlogCommentIsAdded'|trans }}</div>
-      {% endif %}
-      {% form commentsForm %}
-      <div class="row">
-        <div class="col-sm-7">
-          <div class="control-group {% if txtMessageError %}error{% endif %}">
-            <label class="control-label" for="message">{{ 'lbl.Message'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
-
-            <div class="controls">
-              {% form_field_error message %} {% form_field message %}
+    <section id="{{ act.Comment }}" class="commentForm">
+      <header role="banner">
+        <h3>{{ 'msg.Comment'|trans|capitalize }}</h3>
+      </header>
+      <div class="well">
+        {% if commentIsInModeration %}
+          <div class="alert" role="alert">{{ 'msg.BlogCommentInModeration'|trans }}</div>
+        {% endif %}
+        {% if commentIsSpam %}
+          <div class="alert alert-danger" role="alert">{{ 'msg.BlogCommentIsSpam'|trans }}</div>
+        {% endif %}
+        {% if commentIsAdded %}
+          <div class="alert alert-success" role="alert">{{ 'msg.BlogCommentIsAdded'|trans }}</div>
+        {% endif %}
+        {% form commentsForm %}
+          <div class="row">
+            <div class="col-sm-7">
+              <div class="control-group {% if txtMessageError %}error{% endif %}">
+                <label class="control-label" for="message">{{ 'lbl.Message'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+                <div class="controls">
+                  {% form_field_error message %} {% form_field message %}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5 authorInfo">
+              <div class="control-group {% if txtAuthorError %}error{% endif %}">
+                <label class="control-label" for="author">{{ 'lbl.Name'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+                <div class="controls">
+                  {% form_field_error author %} {% form_field author %}
+                </div>
+              </div>
+              <div class="control-group {% if txtEmailError %}error{% endif %}">
+                <label class="control-label" for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+                <div class="controls">
+                  {% form_field_error email %} {% form_field email %}
+                </div>
+              </div>
+              <div class="control-group {% if txtWebsiteError %}error{% endif %}">
+                <label class="control-label" for="website">{{ 'lbl.Website'|trans|capitalize }}</label>
+                <div class="controls">
+                  {% form_field_error website %} {% form_field website %}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-sm-5 authorInfo">
-          <div class="control-group {% if txtAuthorError %}error{% endif %}">
-            <label class="control-label" for="author">{{ 'lbl.Name'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
-
-            <div class="controls">
-              {% form_field_error author %} {% form_field author %}
-            </div>
+          <div class="form-actions">
+            <input class="btn-primary btn" type="submit" name="comment" value="{{ 'msg.Comment'|trans|capitalize }}" />
           </div>
-          <div class="control-group {% if txtEmailError %}error{% endif %}">
-            <label class="control-label" for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
-
-            <div class="controls">
-              {% form_field_error email %} {% form_field email %}
-            </div>
-          </div>
-          <div class="control-group {% if txtWebsiteError %}error{% endif %}">
-            <label class="control-label" for="website">{{ 'lbl.Website'|trans|capitalize }}</label>
-
-            <div class="controls">
-              {% form_field_error website %} {% form_field website %}
-            </div>
-          </div>
-        </div>
+        {% endform %}
       </div>
-      <div class="form-actions">
-        <input class="btn-primary btn" type="submit" name="comment" value="{{ 'msg.Comment'|trans|capitalize }}" />
-      </div>
-      {% endform %}
-    </div>
-  </section>
+    </section>
   {% endif %}
 </div>

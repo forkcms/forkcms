@@ -4,17 +4,17 @@
 #}
 <section id="tagsIndex" class="tags">
   {% if not tags %}
-  <div class="alert alert-info" role="alert">{{ 'msg.TagsNoItems'|trans }}</div>
+    <div class="alert alert-info" role="alert">{{ 'msg.TagsNoItems'|trans }}</div>
   {% else %}
-  <ul>
-    {% for tag in tags %}
-    <li>
-      <a href="{{ geturlforblock('Tag':'Detail') }}/{{ tag.url }}" rel="tag">
-        {{ tag.name }}
-      </a>
-      <span class="badge hidden-phone">{{ tag.number }}</span>
-    </li>
-    {% endfor %}
-  </ul>
+    <ul>
+      {% for tag in tags %}
+      <li>
+        <a href="{{ geturlforblock('Tag':'Detail') }}/{{ tag.url }}" rel="tag">
+          {{ tag.name }}
+        </a>
+        <span class="badge hidden-phone">{{ tag.number }}</span>
+      </li>
+      {% endfor %}
+    </ul>
   {% endif %}
 </section>

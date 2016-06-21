@@ -4,13 +4,13 @@ variables that are available:
 #}
 
 {% if not items %}
-<div id="blogIndex" class="blog">
-  <section>
-    <div class="alert" role="alert">
-      {{ 'msg.BlogNoItems'|trans }}
-    </div>
-  </section>
-</div>
+  <div id="blogIndex" class="blog">
+    <section>
+      <div class="alert" role="alert">
+        {{ 'msg.BlogNoItems'|trans }}
+      </div>
+    </section>
+  </div>
 {% else %}
 <div id="blogIndex" class="blog">
   {% for item in items %}

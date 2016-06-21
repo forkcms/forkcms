@@ -8,13 +8,13 @@
       <h3>{{ 'lbl.Related'|trans|capitalize }}</h3>
     </header>
     <ul>
-    {% for item in widgetTagsRelated %}
-      <li>
-      <a href="{{ item.full_url }}" title="{{ item.title }}">
-        {{ item.title }}
-      </a>
-      </li>
-    {% endfor %}
+      {% for item in widgetTagsRelated %}
+        <li>
+          <a href="{{ item.full_url }}" title="{{ item.title }}">
+            {{ item.title }}
+          </a>
+        </li>
+      {% endfor %}
     </ul>
   </section>
 {% endif %}

@@ -5,14 +5,14 @@
 #}
 <section id="searchIndex" class="search" role="search">
   {% form search %}
-  <label for="q">{{ 'lbl.SearchTerm'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>&nbsp;</label>
-  <div class="input-group well{% if txtQError %} error{% endif %}">
-    {% form_field q %}
-    <span class="input-group-btn">
-      <input id="submit" class="btn btn-primary" type="submit" name="submit" value="{{ 'lbl.Search'|trans|capitalize }}" />
-    </span>
-  </div>
-  {% form_field_error q %}
+    <label for="q">{{ 'lbl.SearchTerm'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>&nbsp;</label>
+    <div class="input-group well{% if txtQError %} error{% endif %}">
+      {% form_field q %}
+      <span class="input-group-btn">
+        <input id="submit" class="btn btn-primary" type="submit" name="submit" value="{{ 'lbl.Search'|trans|capitalize }}" />
+      </span>
+    </div>
+    {% form_field_error q %}
   {% endform %}
 </section>
 
