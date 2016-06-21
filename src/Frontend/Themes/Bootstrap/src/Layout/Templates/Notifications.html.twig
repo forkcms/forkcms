@@ -1,17 +1,11 @@
 <!-- warning for people that don't have JS enabled -->
 <noscript>
-  <div class="fullWidthAlert alert">
-    <strong>{{ 'lbl.Warning'|trans|capitalize }}:</strong> {{ 'msg.EnableJavascript'|trans|raw }}
-    <button type="button" class="close" data-dismiss="alert">×</button>
-  </div>
+  {{ alerts.alert('danger', 'msg.EnableJavascript'|trans|raw, true) }}
 </noscript>
 
 <!-- Warning for people that still use IE7 or below -->
 <!--[if lt IE 8 ]>
-<div id="ie" class="fullWidthAlert alert">
-  <button type="button" class="close" data-dismiss="alert">×</button>
-  <strong>{{ 'lbl.Warning'|trans|capitalize }}:</strong> {{ 'msg.OldBrowser'|trans }}
-</div>
+  {{ alerts.alert('danger', 'msg.OldBrowser'|trans, true, 'ie') }}
 <![endif]-->
 
 <a href="#main" class="muted hide">{$lblSkipToContent|ucfirst}</a>

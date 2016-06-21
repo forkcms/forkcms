@@ -4,5 +4,6 @@
     {{ dataGrid }}
   {% else %}
     <div class="alert" role="alert">{{ 'msg.NoSentMailings'|trans }}</div>
+    {{ alerts.alert('info', 'msg.NoSentMailings'|trans) }}
   {% endif %}
 </div>

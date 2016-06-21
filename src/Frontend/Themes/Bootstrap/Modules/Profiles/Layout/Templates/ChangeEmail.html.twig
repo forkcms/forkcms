@@ -1,8 +1,8 @@
 {% if updateEmailSuccess %}
-  <div class="alert alert-success" role="alert">{{ 'msg.UpdateEmailIsSuccess'|trans }}</div>
+  {{ alerts.alert('success', 'msg.UpdateEmailIsSuccess'|trans) }}
 {% endif %}
 {% if updateEmailHasFormError %}
-  <div class="alert alert-danger" role="alert">{{ 'err.FormError'|trans }}</div>
+  {{ alerts.alert('danger', 'err.FormError'|trans) }}
 {% endif %}
 
 <section id="updateEmailForm" class="profiles">

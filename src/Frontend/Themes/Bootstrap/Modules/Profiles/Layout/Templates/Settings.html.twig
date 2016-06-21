@@ -1,8 +1,8 @@
 {% if updateSettingsSuccess %}
-  <div class="alert alert-success" role="alert">{{ 'msg.UpdateSettingsIsSuccess'|trans }}</div>
+  {{ alerts.alert('success', 'msg.UpdateSettingsIsSuccess'|trans) }}
 {% endif %}
 {% if updateSettingsHasFormError %}
-  <div class="alert alert-danger" role="alert">{{ 'err.FormError'|trans }}</div>
+  {{ alerts.alert('danger', 'err.FormError'|trans) }}
 {% endif %}
 
 <section id="settingsForm" class="profiles">

@@ -1,8 +1,8 @@
 {% if registerIsSuccess %}
-  <div class="alert alert-success" role="alert">{{ 'msg.RegisterIsSuccess'|trans }}</div>
+  {{ alerts.alert('success', 'msg.RegisterIsSuccess'|trans) }}
 {% endif %}
 {% if registerHasFormError %}
-  <div class="alert alert-danger" role="alert">{{ 'err.FormError'|trans }}</div>
+  {{ alerts.alert('danger', 'err.FormError'|trans) }}
 {% endif %}
 
 {% if not registerHideForm %}

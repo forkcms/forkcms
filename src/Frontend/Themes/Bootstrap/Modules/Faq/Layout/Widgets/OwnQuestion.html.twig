@@ -9,10 +9,10 @@
       <h3 id="{{ 'act.OwnQuestion'|trans }}">{{ 'msg.AskOwnQuestion'|trans|capitalize }}</h3>
     </header>
     {% if ownQuestionerrorSpam %}
-      <div class="alert alert-danger" role="alert">{{ 'err.OwnQuestionSpam'|trans }}</div>
+      {{ alerts.alert('danger', 'err.OwnQuestionSpam'|trans) }}
     {% endif %}
     {% if ownQuestionsuccess %}
-      <div class="alert alert-success" role="alert">{{ 'msg.OwnQuestionSuccess'|trans }}</div>
+      {{ alerts.alert('success', 'msg.OwnQuestionSuccess'|trans) }}
     {% endif %}
 
     {% form own_question %}

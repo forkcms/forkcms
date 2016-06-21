@@ -6,9 +6,7 @@ variables that are available:
 {% if not items %}
   <div id="blogIndex" class="blog">
     <section>
-      <div class="alert" role="alert">
-        {{ 'msg.BlogNoItems'|trans }}
-      </div>
+      {{ alerts.alert('info', 'msg.BlogNoItems'|trans) }}
     </section>
   </div>
 {% else %}

@@ -1,7 +1,13 @@
 <div id="mailmotorUnsubscribe">
-  {% if unsubscribeHasFormError %}<div class="alert alert-danger" role="alert">{{ 'err.FormError'|trans }}</div>{% endif %}
-  {% if unsubscribeHasError %}<div class="alert alert-danger" role="alert">{{ 'err.UnsubscribeFailed'|trans }}</div>{% endif %}
-  {% if unsubscribeIsSuccess %}<div class="alert alert-success" role="alert">{{ 'msg.UnsubscribeSuccess'|trans }}</div>{% endif %}
+  {% if unsubscribeHasFormError %}
+    {{ alerts.alert('danger', 'err.FormError'|trans) }}
+  {% endif %}
+  {% if unsubscribeHasError %}
+    {{ alerts.alert('danger', 'err.UnsubscribeFailed'|trans) }}
+  {% endif %}
+  {% if unsubscribeIsSuccess %}
+    {{ alerts.alert('success', 'msg.UnsubscribeSuccess'|trans) }}
+  {% endif %}
 
   {% if not unsubscribeHideForm %}
     {% form unsubscribe %}

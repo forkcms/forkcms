@@ -1,7 +1,13 @@
 <div id="mailmotorSubscribe">
-  {% if subscribeHasFormError %}<div class="alert alert-danger" role="alert">{{ 'err.FormError'|trans }}</div>{% endif %}
-  {% if subscribeHasError %}<div class="alert alert-danger" role="alert">{{ 'err.SubscribeFailed'|trans }}</div>{% endif %}
-  {% if subscribeIsSuccess %}<div class="alert alert-success" role="alert">{{ 'msg.SubscribeSuccess'|trans }}</div>{% endif %}
+  {% if subscribeHasFormError %}
+    {{ alerts.alert('danger', 'err.FormError'|trans) }}
+  {% endif %}
+  {% if subscribeHasError %}
+    {{ alerts.alert('danger', 'err.SubscribeFailed'|trans) }}
+  {% endif %}
+  {% if subscribeIsSuccess %}
+    {{ alerts.alert('success', 'msg.SubscribeSuccess'|trans) }}
+  {% endif %}
 
   {% if not subscribeHideForm %}
     {% form subscribe %}

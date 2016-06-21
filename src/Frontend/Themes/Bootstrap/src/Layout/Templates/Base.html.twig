@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <!--[if lte IE 8 ]>
-  <html lang="{{ LANGUAGE }}" class="ie8 ie">
+  <html lang="{{ FRONTEND_LANGUAGE }}" class="ie8 ie">
 <![endif]-->
 <!--[if IE 9 ]>
-  <html lang="{{ LANGUAGE }}" class="ie9 ie">
+  <html lang="{{ FRONTEND_LANGUAGE }}" class="ie9 ie">
 <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
-    <html lang="{{ LANGUAGE }}">
+    <html lang="{{ FRONTEND_LANGUAGE }}">
 <!--<![endif]-->
 <head>
   {# Meta #}
@@ -74,7 +74,8 @@
 
   {% endblock %}
 </head>
-<body class="{{ LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
+<body class="{{ FRONTEND_LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
+  {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
   {% block notifications %}
     {% include 'Core/Layout/Templates/Notifications.html.twig' %}

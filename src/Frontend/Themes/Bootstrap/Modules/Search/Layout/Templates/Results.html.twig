@@ -6,9 +6,7 @@
 {% if searchTerm %}
   <section id="searchResults" itemscope itemtype="http://schema.org/SearchResultsPage" class="search">
     {% if not searchResults %}
-      <div class="alert" role="alert">
-        {{ 'msg.SearchNoItems'|trans }}
-      </div>
+      {{ alerts.alert('info', 'msg.SearchNoItems'|trans) }}
     {% else %}
       <div class="media">
         {% for result in searchResults %}

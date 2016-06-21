@@ -4,9 +4,7 @@
 #}
 {% if not faqCategories %}
   <div id="faqIndex" class="faq">
-    <div class="alert" role="alert">
-      {{ 'msg.FaqNoItems'|trans }}
-    </div>
+    {{ alerts.alert('info', 'msg.FaqNoItems'|trans) }}
   </div>
 {% else %}
   <div id="faqIndex" class="faq">

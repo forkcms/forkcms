@@ -94,7 +94,7 @@ variables that are available:
       <h3>{{ 'lbl.Comments'|trans|capitalize }}</h3>
     </header>
     {% if not comments %}
-      <div class="alert" role="alert">{{ 'msg.BlogNoComments'|trans }}</div>
+      {{ alerts.alert('info', 'msg.BlogNoComments'|trans) }}
     {% else %}
       {% for comment in comments %}
         {# Do not alter the id! It is used as an anchor #}
@@ -128,13 +128,13 @@ variables that are available:
       </header>
       <div class="well">
         {% if commentIsInModeration %}
-          <div class="alert" role="alert">{{ 'msg.BlogCommentInModeration'|trans }}</div>
+          {{ alerts.alert('info', 'msg.BlogCommentInModeration'|trans) }}
         {% endif %}
         {% if commentIsSpam %}
-          <div class="alert alert-danger" role="alert">{{ 'msg.BlogCommentIsSpam'|trans }}</div>
+          {{ alerts.alert('danger', 'msg.BlogCommentIsSpam'|trans) }}
         {% endif %}
         {% if commentIsAdded %}
-          <div class="alert alert-success" role="alert">{{ 'msg.BlogCommentIsAdded'|trans }}</div>
+          {{ alerts.alert('success', 'msg.BlogCommentIsAdded'|trans) }}
         {% endif %}
         {% form commentsForm %}
           <div class="row">

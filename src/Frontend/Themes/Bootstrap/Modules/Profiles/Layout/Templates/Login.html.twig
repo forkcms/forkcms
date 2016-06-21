@@ -1,12 +1,11 @@
 {# Error #}
 {% if formError %}
-  <div class="alert alert-danger" role="alert">
-    {% if loginError %}
-      {{ loginError }}
-    {% else %}
-      {{ 'err.FormError'|trans }}
-    {% endif %}
-  </div>
+  {% if loginError %}
+    {% set error = loginError %}
+  {% else %}
+    {% set error = 'err.FormError'|trans %}
+  {% endif %}
+  {{ alerts.alert('danger', error) }}
 {% endif %}
 
 <section id="loginForm" class="profiles">

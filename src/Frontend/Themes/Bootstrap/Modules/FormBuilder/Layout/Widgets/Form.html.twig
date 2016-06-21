@@ -2,8 +2,12 @@
 
 <section class="row" id="formbuilder{{ formName|capitalize }}">
   <div class="col-xs-12">
-    {% if successMessage %}<div id="{{ formName }}" class="alert alert-success" role="alert">{{ successMessage }}</div>{% endif %}
-    {% if formBuilderError %}<div class="alert alert-danger" role="alert">{{ formBuilderError }}</div>{% endif %}
+    {% if successMessage %}
+      {{ alerts.alert('success', successMessage, false, formName) }}
+    {% endif %}
+    {% if formBuilderError %}
+      {{ alerts.alert('danger', formBuilderError, false, formName) }}
+    {% endif %}
 
     {% if fields %}
       <form id="{{ formName }}" method="post" action="{{ formAction }}">
