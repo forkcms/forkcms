@@ -395,7 +395,7 @@ jsBackend.pages.extras =
 		$('#extraType option[value=block]').attr('disabled', !enabled);
 
 		// set type
-		$('#extraType').val('html');
+		$('#extraType').val($('#extraType').val());
 		$('#extraExtraId').val(0);
 
 		// populate the modules

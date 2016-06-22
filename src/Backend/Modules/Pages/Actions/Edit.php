@@ -424,7 +424,8 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addCheckbox('is_action', $isAction);
 
         // extra
-        $this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+        $blockTypes = BackendPagesModel::getTypes();
+        $this->frm->addDropdown('extra_type', $blockTypes, key($blockTypes));
 
         // meta
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
