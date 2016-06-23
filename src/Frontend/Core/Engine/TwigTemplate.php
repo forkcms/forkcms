@@ -56,6 +56,13 @@ class TwigTemplate extends BaseTwigTemplate
     private $baseFile;
 
     /**
+     * Base file location
+     *
+     * @var string
+     */
+    private $baseSpoonFile;
+
+    /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
      */
     public function __construct()
