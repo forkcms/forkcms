@@ -18,10 +18,12 @@ We accept contributions via Pull Requests on [Github](https://github.com/forkcms
 
 ## Running Tests
 
+You must have Fork CMS installed for the functional tests to be able to run.
+
 > You need a database with the same credentials as in your parameters.yml file, but the name suffixed with _test to be able to run the (functional tests)
 
 ``` bash
-# run all tests
+# run all tests (so on an installed fork)
 bin/phpunit
 
 # only run unit tests (requires no db setup)
