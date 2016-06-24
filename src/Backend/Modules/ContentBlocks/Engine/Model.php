@@ -22,6 +22,7 @@ use Backend\Core\Engine\Model as BackendModel;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 class Model
 {
@@ -281,6 +282,7 @@ class Model
                     'ContentBlocks',
                     $item['language']
                 ) . '&id=' . $item['id'],
+                'custom_template' => $item['template'],
             )
         );
 
@@ -307,6 +309,7 @@ class Model
                 'extra_label' => $item['title'],
                 'language' => $item['language'],
                 'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
+                'custom_template' => $item['template'],
             )
         );
 
