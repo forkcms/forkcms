@@ -2,7 +2,7 @@
   <ul>
     {% for page in navigation %}
       <li>
-        <a href="{{ page.link }}" title="{{ page.navigationtitle }}"{% if page.nofollow %} rel="nofollow"{% endif %}>{{ page.navigationtitle }}</a>
+        <a href="{{ page.link }}" title="{{ page.navigation_title }}"{% if page.nofollow %} rel="nofollow"{% endif %}>{{ page.navigation_title }}</a>
         {{ page.children }}
       </li>
     {% endfor %}
