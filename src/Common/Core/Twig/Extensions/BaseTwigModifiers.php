@@ -40,7 +40,7 @@ class BaseTwigModifiers
             default:
         }
 
-        return $currency.' '.number_format((float) $string, $decimals, ',', ' ');
+        return $currency.'&nbsp;'.number_format((float) $string, $decimals, ',', '&nbsp;');
     }
 
     /**
