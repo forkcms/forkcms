@@ -91,6 +91,14 @@ class TwigFilters
             $app.'::getURLForBlock'
         ));
 
+        // boolean functions
+
+        $twig->addFunction(new Twig_SimpleFunction(
+            'showbool',
+            $app.'::showBool',
+            array('is_safe' => array('html'))
+        ));
+
         // Deprecated functions
 
         $twig->addFilter(new Twig_SimpleFilter('spoondate', $app.'::spoonDate'));
