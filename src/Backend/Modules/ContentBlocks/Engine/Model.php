@@ -16,13 +16,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 class Model
 {

@@ -19,9 +19,6 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * This is the module upload-action.
  * It will install a module via a compressed zip file.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class UploadModule extends BackendBaseActionAdd
 {

@@ -15,8 +15,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This action is used to export statistics for a given campaign ID
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class ExportStatisticsCampaign extends BackendBaseAction
 {

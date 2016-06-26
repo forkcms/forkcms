@@ -1,8 +1,5 @@
 /**
  * Interaction for the location module
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 jsBackend.location =
 {

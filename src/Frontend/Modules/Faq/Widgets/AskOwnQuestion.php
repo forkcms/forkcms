@@ -17,8 +17,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This is a widget with the form to ask a question
- *
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class AskOwnQuestion extends FrontendBaseWidget
 {

@@ -16,8 +16,6 @@ use Common\Core\Twig\Extensions\BaseTwigModifiers;
 
 /**
  * Contains all Frontend-related custom modifiers
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class TemplateModifiers extends BaseTwigModifiers
 {

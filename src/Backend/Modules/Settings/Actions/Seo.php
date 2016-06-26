@@ -15,8 +15,6 @@ use Backend\Core\Engine\Language as BL;
 
 /**
  * This is the SEO-action, it will display a form to set SEO settings
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Seo extends BackendBaseActionIndex
 {

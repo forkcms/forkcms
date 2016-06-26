@@ -6,8 +6,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the analytics module
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class Installer extends ModuleInstaller
 {

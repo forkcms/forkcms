@@ -15,8 +15,6 @@ use Backend\Core\Engine\Language as BL;
 
 /**
  * This widget will show the statistics of the authenticated user.
- *
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Statistics extends BackendBaseWidget
 {

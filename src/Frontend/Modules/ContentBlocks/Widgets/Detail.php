@@ -7,12 +7,6 @@ use Frontend\Modules\ContentBlocks\Engine\Model as FrontendContentBlocksModel;
 
 /**
  * This is the detail widget.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 class Detail extends FrontendBaseWidget
 {

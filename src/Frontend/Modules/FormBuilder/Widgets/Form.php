@@ -14,10 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This is the form widget.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class Form extends FrontendBaseWidget
 {

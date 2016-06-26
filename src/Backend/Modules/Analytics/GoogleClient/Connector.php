@@ -8,8 +8,6 @@ use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * The class that will do query's on the google analytics API
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 final class Connector
 {

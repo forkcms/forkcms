@@ -16,8 +16,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the cronjob that processes the queued hooks.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class ProcessQueuedHooks extends Cronjob
 {

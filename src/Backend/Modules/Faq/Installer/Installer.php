@@ -13,10 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the faq module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Installer extends ModuleInstaller
 {

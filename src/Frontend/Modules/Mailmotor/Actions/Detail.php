@@ -9,8 +9,6 @@ use Frontend\Modules\Mailmotor\Engine\MailingBodyBuilder;
 
 /**
  * This is the detail-action
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Detail extends FrontendBaseBlock
 {

@@ -19,8 +19,6 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
 /**
  * This is the resend activation-action. It will resend your activation email.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class ResendActivation extends FrontendBaseBlock
 {

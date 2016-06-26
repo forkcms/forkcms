@@ -4,8 +4,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * Twig token parser for form fields.
- *
- * @author <per@wijs.be>
  */
 class FormFieldTokenParser extends \Twig_TokenParser
 {

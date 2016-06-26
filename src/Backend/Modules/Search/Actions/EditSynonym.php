@@ -17,8 +17,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the edit synonym action, it will display a form to edit an existing synonym.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class EditSynonym extends BackendBaseActionEdit
 {

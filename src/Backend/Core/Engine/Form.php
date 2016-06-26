@@ -13,9 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is our extended version of \SpoonForm
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Form extends \Common\Core\Form
 {

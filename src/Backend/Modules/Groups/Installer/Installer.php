@@ -13,8 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the groups module
- *
- * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
 class Installer extends ModuleInstaller
 {

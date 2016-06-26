@@ -1,7 +1,5 @@
 /**
  * Interaction for the pages templates
- *
- * @author	Katrien Vanhaut <katrien@sumocoders.be>
  */
 jsBackend.extensions =
 {

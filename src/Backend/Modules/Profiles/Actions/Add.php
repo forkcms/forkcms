@@ -18,9 +18,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the add-action, it will display a form to add a new profile.
- *
- * @author Davy Van Vooren <davy.vanvooren@netlash.com>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Add extends BackendBaseActionAdd
 {

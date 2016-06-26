@@ -17,8 +17,6 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
  * This is the auto suggest-action, it will output a list of results for a certain search
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Autosuggest extends FrontendBaseAJAXAction
 {

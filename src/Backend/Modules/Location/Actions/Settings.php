@@ -17,8 +17,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the settings-action, it will display a form to set general location settings
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Settings extends BackendBaseActionEdit
 {

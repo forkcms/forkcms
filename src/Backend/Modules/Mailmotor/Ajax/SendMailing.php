@@ -17,8 +17,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This sends a mailing
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class SendMailing extends BackendBaseAJAXAction
 {

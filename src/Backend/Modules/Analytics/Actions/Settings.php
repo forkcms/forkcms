@@ -11,8 +11,6 @@ use Google_Service_Exception;
 /**
  * This is the settings-action (default), it will be used to couple your analytics
  * account
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 final class Settings extends ActionIndex
 {

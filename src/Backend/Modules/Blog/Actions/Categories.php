@@ -18,9 +18,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the categories-action, it will display the overview of blog categories
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Categories extends BackendBaseActionIndex
 {

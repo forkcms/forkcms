@@ -2,10 +2,6 @@
 #
 # This script will remove all cache-files and drop your database.
 #
-# @author	Yohann Bianchi <nstCactus@gmail.com>
-# @author	Tijs Verkoyen <tijs@sumocoders.be>
-# @author <per@wijs.be>
-#
 # @internal This script will spit out warnings for using mysql on the command
 #           line with a password.
 #           If a app/config/parameters.yml is not present, it'll spit out errors

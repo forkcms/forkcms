@@ -1,9 +1,5 @@
 /**
  * Backend related objects
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Dieter Vanden Eynde <dieter@netlash.com>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 var jsBackend =
 {
@@ -109,9 +105,6 @@ var jsBackend =
 
 /**
  * Navigation controls
- *
- * @author    Katrien Vanhaute <katrien@sumocoders.be>
- * @author    Daan De Deckere <daan@sumocoders.be>
  */
 
 jsBackend.navigation =
@@ -227,8 +220,6 @@ jsBackend.navigation =
 
 /**
  * Handle form messages (action feedback: success, error, ...)
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.balloons =
 {
@@ -306,9 +297,6 @@ jsBackend.balloons =
 
 /**
  * CK Editor related objects
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Matthias Mullie <forkcms@mullie.eu>
  */
 jsBackend.ckeditor =
 {
@@ -615,9 +603,6 @@ jsBackend.ckeditor =
 
 /**
  * Handle form functionality
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.controls =
 {
@@ -1161,8 +1146,6 @@ jsBackend.controls =
 
 /**
  * Data related methods
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.data =
 {
@@ -1193,10 +1176,6 @@ jsBackend.data =
 
 /**
  * Backend effects
- *
- * @author    Dieter Vanden Eynde <dieter@dieterve.be>
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.effects =
 {
@@ -1255,9 +1234,6 @@ jsBackend.effects =
 
 /**
  * Backend forms
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.forms =
 {
@@ -1568,9 +1544,6 @@ jsBackend.forms =
 
 /**
  * Do custom layout/interaction stuff
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.layout =
 {
@@ -1675,8 +1648,6 @@ jsBackend.layout =
 
 /**
  * Locale
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.locale =
 {
@@ -1759,10 +1730,6 @@ jsBackend.locale =
 
 /**
  * Handle form messages (action feedback: success, error, ...)
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
- * @author    Katrien Vanhaute <katrien@sumocoders.be>
  */
 jsBackend.messages =
 {
@@ -1835,10 +1802,6 @@ jsBackend.messages =
 
 /**
  * Apply tabs
- *
- * @author    Jan Moessen <jan@netlash.com>
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.tabs =
 {
@@ -1885,9 +1848,6 @@ jsBackend.tabs =
 
 /**
  * Apply tooltip
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.tooltip =
 {
@@ -1905,9 +1865,6 @@ jsBackend.tooltip =
 
 /**
  * Handle browsers with impaired CSS selector support
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.selectors =
 {
@@ -1922,9 +1879,6 @@ jsBackend.selectors =
 
 /**
  * Fix focus/blur events on impaired browsers
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.focusfix =
 {
@@ -1950,8 +1904,6 @@ jsBackend.focusfix =
 
 /**
  * Enable setting of sequence by drag & drop
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tableSequenceByDragAndDrop =
 {

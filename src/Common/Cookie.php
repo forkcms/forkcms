@@ -13,8 +13,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This is our extended version of SpoonCookie
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Cookie extends \SpoonCookie
 {

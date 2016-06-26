@@ -15,8 +15,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Footer extends FrontendBaseObject
 {

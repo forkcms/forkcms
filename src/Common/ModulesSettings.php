@@ -7,8 +7,6 @@ use SpoonDatabase;
 
 /**
  * This is our module settings class
- *
- * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class ModulesSettings
 {

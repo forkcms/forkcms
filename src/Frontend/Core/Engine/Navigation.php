@@ -16,11 +16,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This class will be used to build the navigation
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Navigation extends FrontendBaseObject
 {

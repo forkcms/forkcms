@@ -11,8 +11,6 @@ namespace Common\Core\Twig\Extensions;
 
 /**
  * Contains all Forkcms filters for Twig
- *
- * @author <thijs.dp@gmail.com>
  */
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;

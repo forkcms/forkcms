@@ -16,8 +16,6 @@ use Backend\Core\Engine\Language as BL;
 
 /**
  * This is the email-action, it will display a form to set email settings
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Email extends BackendBaseActionIndex
 {

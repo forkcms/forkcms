@@ -14,8 +14,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This loads CM client info
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class LoadClientInfo extends BackendBaseAJAXAction
 {

@@ -7,10 +7,6 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * Reorder questions
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class SequenceQuestions extends BackendBaseAJAXAction
 {

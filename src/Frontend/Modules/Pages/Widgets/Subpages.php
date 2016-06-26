@@ -16,8 +16,6 @@ use Frontend\Modules\Pages\Engine\Model as FrontendPagesModel;
 
 /**
  * This is a widget which shows the subpages.
- *
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Subpages extends FrontendBaseWidget
 {

@@ -20,10 +20,6 @@ use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 
 /**
  * Frontend page class, this class will handle everything on a page
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Page extends FrontendBaseObject
 {

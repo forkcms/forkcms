@@ -15,8 +15,6 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is a widget with the blog-categories
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Categories extends FrontendBaseWidget
 {

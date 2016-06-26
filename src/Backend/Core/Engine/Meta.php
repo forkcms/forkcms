@@ -14,8 +14,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This class represents a META-object
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Meta
 {

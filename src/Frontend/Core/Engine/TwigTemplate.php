@@ -15,9 +15,6 @@ use Common\Core\Twig\Extensions\TwigFilters;
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig
- *
- * @author <thijs@wijs.be>
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 class TwigTemplate extends BaseTwigTemplate
 {
