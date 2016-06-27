@@ -1,0 +1,25 @@
+{#
+  variables that are available:
+  - {{ questions }}: contains all questions inside this category
+#}
+
+<section id="faqCategory" class="faq">
+  <header role="banner">
+    <h1>{{ category.title }}</h1>
+  </header>
+  {% if questions %}
+    <ul>
+      {% for question in questions %}
+        <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>{{ 'msg.NoQuestionsInCategory'|trans|capitalize }}</p>
+  {% endif %}
+
+  <ul class="pager">
+    <li  class="previous">
+      <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|capitalize }}">&larr; {{ 'lbl.ToFaqOverview'|trans|capitalize }}</a>
+    </li>
+  </ul>
+</section>

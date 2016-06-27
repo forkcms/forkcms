@@ -30,7 +30,7 @@
 	</authors>
 	<metanavigation supported="false" />
 	<templates>
-		<template label="Default" path="Core/Layout/Templates/Default.tpl">
+		<template label="Default" path="Core/Layout/Templates/Default.html.twig">
 			<positions>
 				<position name="main" />
 				<position name="top">
@@ -43,7 +43,7 @@
 				[/,/,/,top,/],[/,main,main,main,/]
 			</format>
 		</template>
-		<template label="Error" path="Core/Layout/Templates/Error.tpl">
+		<template label="Error" path="Core/Layout/Templates/Error.html.twig">
 			<positions>
 				<position name="main" />
 				<position name="top">
@@ -56,10 +56,8 @@
 				[/,/,/,top,/],[/,main,main,main,/]
 			</format>
 		</template>
-		<template label="Home" path="Core/Layout/Templates/Home.tpl">
+		<template label="Home" path="Core/Layout/Templates/Home.html.twig">
 			<positions>
-				<position name="slideshow" />
-				<position name="features" />
 				<position name="main" />
 				<position name="top">
 					<defaults>
@@ -68,10 +66,10 @@
 				</position>
 			</positions>
 			<format>
-				[/,/,/,top,/],[slideshow,slideshow,slideshow,slideshow,slideshow],[/,features,features,features,/],[/,main,main,main,/]
+				[/,/,/,top,/],[/,main,main,main,/]
 			</format>
 		</template>
-		<template label="Sidebar" path="Core/Layout/Templates/Sidebar.tpl">
+		<template label="Sidebar" path="Core/Layout/Templates/Sidebar.html.twig">
 			<positions>
 				<position name="main" />
 				<position name="right" />
