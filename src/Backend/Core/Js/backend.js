@@ -45,10 +45,6 @@ var jsBackend =
         jsBackend.resizeFunctions.init();
         jsBackend.navigation.init();
 
-        // IE fixes
-        jsBackend.selectors.init();
-        jsBackend.focusfix.init();
-
         // do not move, should be run as the last item.
         if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning();
     },
@@ -1859,45 +1855,6 @@ jsBackend.tooltip =
 
         if ($tooltip.length > 0) {
             $tooltip.tooltip();
-        }
-    }
-};
-
-/**
- * Handle browsers with impaired CSS selector support
- */
-jsBackend.selectors =
-{
-    // init, something like a constructor
-    init: function () {
-        // missing CSS selector support IE6, IE7, IE8 as IE7
-        if ($.browser.msie && $.browser.version.substr(0, 1) < 9) {
-            // nothing yet
-        }
-    }
-};
-
-/**
- * Fix focus/blur events on impaired browsers
- */
-jsBackend.focusfix =
-{
-    // init, something like a constructor
-    init: function () {
-        function focusFix(selector, className) {
-            $(selector).focus(function () {
-                $(this).addClass(className);
-            });
-            $(selector).blur(function () {
-                $(this).removeClass(className);
-            });
-        }
-
-        // IE6 & IE7 focus fix
-        if ($.browser.msie && $.browser.version.substr(0, 1) < 9) {
-            // apply focus fix
-            focusFix('input.inputText', 'focus');
-            focusFix('textarea', 'focus');
         }
     }
 };
