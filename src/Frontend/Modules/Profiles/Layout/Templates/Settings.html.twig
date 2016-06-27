@@ -27,7 +27,7 @@
           {% form_field_error Email %}{% form_field Email %}
         </p>
         <p>
-          <a href="{{ geturlforblock:'Profiles':'ChangeEmail' }}">{{ 'msg.ChangeEmail'|trans }}</a>
+          <a href="{{ geturlforblock('Profiles', 'ChangeEmail') }}">{{ 'msg.ChangeEmail'|trans }}</a>
         </p>
         <p{% if txtFirstNameError %} class="errorArea"{% endif %}>
           <label for="firstName">{{ 'lbl.FirstName'|trans|capitalize }}</label>

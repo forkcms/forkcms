@@ -266,7 +266,8 @@ class Add extends BackendBaseActionAdd
         $this->frm->addCheckbox('is_action', false);
 
         // extra
-        $this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+        $blockTypes = BackendPagesModel::getTypes();
+        $this->frm->addDropdown('extra_type', $blockTypes, key($blockTypes));
 
         // meta
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
