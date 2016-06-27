@@ -102,7 +102,7 @@ class Installer extends ModuleInstaller
         $templates['bootstrap']['default'] = array(
             'theme' => 'Bootstrap',
             'label' => 'Default',
-            'path' => 'Core/Layout/Templates/Default.tpl',
+            'path' => 'Core/Layout/Templates/Default.html.twig',
             'active' => 'Y',
             'data' => serialize(array(
                     'format' => '[/,/,/,top,/],[/,main,main,main,/]',
@@ -114,7 +114,7 @@ class Installer extends ModuleInstaller
         $templates['bootstrap']['error'] = array(
             'theme' => 'Bootstrap',
             'label' => 'Error',
-            'path' => 'Core/Layout/Templates/Error.tpl',
+            'path' => 'Core/Layout/Templates/Error.html.twig',
             'active' => 'Y',
             'data' => serialize(array(
                     'format' => '[/,/,/,top,/],[/,main,main,main,/]',
@@ -126,11 +126,11 @@ class Installer extends ModuleInstaller
         $templates['bootstrap']['home'] = array(
             'theme' => 'Bootstrap',
             'label' => 'Home',
-            'path' => 'Core/Layout/Templates/Home.tpl',
+            'path' => 'Core/Layout/Templates/Home.html.twig',
             'active' => 'Y',
             'data' => serialize(array(
-                    'format' => '[/,/,/,top,/],[slideshow,slideshow,slideshow,slideshow,slideshow],[/,features,features,features,/],[/,main,main,main,/]',
-                    'names' => array('slideshow', 'features', 'main', 'top'),
+                    'format' => '[/,/,/,top,/],[/,main,main,main,/]',
+                    'names' => array('main', 'top'),
                     'default_extras' => array('top' => array($extras['search_form']))
                 ))
         );
