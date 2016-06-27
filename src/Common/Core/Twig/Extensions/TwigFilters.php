@@ -29,7 +29,7 @@ class TwigFilters
         $twig->addFilter(new Twig_SimpleFilter('getpageinfo', $app.'::getPageInfo'));
         $twig->addFilter(new Twig_SimpleFilter('highlight', $app.'::highlightCode'));
         $twig->addFilter(new Twig_SimpleFilter('profilesetting', $app.'::profileSetting'));
-        $twig->addFilter(new Twig_SimpleFilter('formatcurrency', $app.'::formatCurrency'));
+        $twig->addFilter(new Twig_SimpleFilter('formatcurrency', $app.'::formatCurrency', ['is_safe' => ['html']]));
         $twig->addFilter(new Twig_SimpleFilter('usersetting', $app.'::userSetting'));
         $twig->addFilter(new Twig_SimpleFilter('uppercase', $app.'::uppercase'));
         $twig->addFilter(new Twig_SimpleFilter('trans', $app.'::trans'));
