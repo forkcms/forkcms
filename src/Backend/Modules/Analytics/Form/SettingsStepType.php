@@ -8,8 +8,6 @@ use Google_Service_Analytics;
 
 /**
  * An interface so we can split the settings form up into multiple forms
- *
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 interface SettingsStepType
 {

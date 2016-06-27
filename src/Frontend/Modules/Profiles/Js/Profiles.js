@@ -1,7 +1,5 @@
 /**
  * Interaction for the profiles module
- *
- * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsFrontend.profiles = {
 	/**

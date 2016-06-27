@@ -13,9 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the profiles module.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Davy Van Vooren <davy.vanvooren@netlash.com>
  */
 class Installer extends ModuleInstaller
 {

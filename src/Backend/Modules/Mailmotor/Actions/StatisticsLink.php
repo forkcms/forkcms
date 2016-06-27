@@ -19,8 +19,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This page will display the statistical overview of who clicked a certain link in a specified mailing
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class StatisticsLink extends BackendBaseActionIndex
 {

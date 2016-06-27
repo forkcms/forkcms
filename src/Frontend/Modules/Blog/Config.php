@@ -13,8 +13,6 @@ use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Config extends FrontendBaseConfig
 {

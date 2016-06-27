@@ -13,8 +13,6 @@ use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /**
  * This builds the mailing's body
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class MailingBodyBuilder
 {

@@ -11,8 +11,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * The class below will handle all stuff relates to users
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class User
 {

@@ -11,8 +11,6 @@ namespace Common\Core\Twig\Extensions;
 
 /**
  * Contains all Forkcms filters for Twig
- *
- * @author <thijs.dp@gmail.com>
  */
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;
@@ -31,14 +29,14 @@ class TwigFilters
         $twig->addFilter(new Twig_SimpleFilter('getpageinfo', $app.'::getPageInfo'));
         $twig->addFilter(new Twig_SimpleFilter('highlight', $app.'::highlightCode'));
         $twig->addFilter(new Twig_SimpleFilter('profilesetting', $app.'::profileSetting'));
-        $twig->addFilter(new Twig_SimpleFilter('formatcurrency', $app.'::formatCurrency'));
+        $twig->addFilter(new Twig_SimpleFilter('formatcurrency', $app.'::formatCurrency', ['is_safe' => ['html']]));
         $twig->addFilter(new Twig_SimpleFilter('usersetting', $app.'::userSetting'));
         $twig->addFilter(new Twig_SimpleFilter('uppercase', $app.'::uppercase'));
         $twig->addFilter(new Twig_SimpleFilter('trans', $app.'::trans'));
         $twig->addFilter(new Twig_SimpleFilter('rand', $app.'::random'));
         $twig->addFilter(new Twig_SimpleFilter('formatfloat', $app.'::formatFloat'));
         $twig->addFilter(new Twig_SimpleFilter('truncate', $app.'::truncate'));
-        $twig->addFilter(new Twig_SimpleFilter('camelcase', $app.'::toCamelCase'));
+        $twig->addFilter(new Twig_SimpleFilter('camelcase', $app.'::camelCase'));
         $twig->addFilter(new Twig_SimpleFilter('snakeCase', $app.'::snakeCase'));
         $twig->addFilter(new Twig_SimpleFilter('stripnewlines', $app.'::stripNewlines'));
         $twig->addFilter(new Twig_SimpleFilter('formatnumber', $app.'::formatNumber'));
@@ -89,6 +87,14 @@ class TwigFilters
         $twig->addFunction(new Twig_SimpleFunction(
             'geturlforblock',
             $app.'::getURLForBlock'
+        ));
+
+        // boolean functions
+
+        $twig->addFunction(new Twig_SimpleFunction(
+            'showbool',
+            $app.'::showBool',
+            array('is_safe' => array('html'))
         ));
 
         // Deprecated functions

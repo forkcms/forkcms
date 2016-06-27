@@ -20,10 +20,6 @@ use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
 /**
  * This is the detail-action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Detail extends FrontendBaseBlock
 {

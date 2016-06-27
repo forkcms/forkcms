@@ -14,9 +14,6 @@ use Frontend\Core\Engine\Language as FL;
 
 /**
  * This is our extended version of SpoonForm.
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Form extends \Common\Core\Form
 {
@@ -414,8 +411,6 @@ class Form extends \Common\Core\Form
 
 /**
  * This is our extended version of \SpoonFormDate
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFormDate extends \SpoonFormDate
 {
@@ -517,8 +512,6 @@ class FrontendFormDate extends \SpoonFormDate
 
 /**
  * This is our extended version of \SpoonFormImage
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFormImage extends \SpoonFormImage
 {

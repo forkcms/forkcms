@@ -11,9 +11,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * This class is used to handle frontend related exceptions.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Exception extends \SpoonException
 {

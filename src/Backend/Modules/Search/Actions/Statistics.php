@@ -17,8 +17,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the statistics-action, it will display the overview of search statistics
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Statistics extends BackendBaseActionIndex
 {

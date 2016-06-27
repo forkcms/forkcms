@@ -23,12 +23,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Add extends BackendBaseActionAdd
 {

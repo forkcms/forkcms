@@ -6,8 +6,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the extensions module.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Installer extends ModuleInstaller
 {

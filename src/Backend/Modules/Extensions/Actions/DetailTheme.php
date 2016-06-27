@@ -11,8 +11,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the detail-action it will display the details of a theme.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class DetailTheme extends BackendBaseActionIndex
 {

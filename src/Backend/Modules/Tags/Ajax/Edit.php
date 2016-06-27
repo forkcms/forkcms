@@ -16,8 +16,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This edit-action will update tags using Ajax
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Edit extends BackendBaseAJAXAction
 {

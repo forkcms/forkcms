@@ -15,8 +15,6 @@ use Common\Core\Twig\Extensions\TwigFilters;
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig
- *
- * @author <thijs@wijs.be>
  */
 class TwigTemplate extends BaseTwigTemplate
 {
@@ -54,6 +52,13 @@ class TwigTemplate extends BaseTwigTemplate
      * @var string
      */
     private $baseFile;
+
+    /**
+     * Base file location
+     *
+     * @var string
+     */
+    private $baseSpoonFile;
 
     /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
@@ -144,6 +149,11 @@ class TwigTemplate extends BaseTwigTemplate
                     if (isset($block['extra_data']['template'])) {
                         $tpl = substr($block['extra_data']['template'], 0, -5);
                         $block['include_path'] = $this->widgets[$tpl];
+                    } elseif (isset($block['extra_data']['custom_template'])) {
+                        // make content blocks work again
+                        $block['include_path'] = $this->getPath(
+                            $block['extra_module'] . '/Layout/Widgets/' . $block['extra_data']['custom_template']
+                        );
                     } else {
                         $block['include_path'] = $this->getPath(
                             $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.html.twig'

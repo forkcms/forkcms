@@ -19,9 +19,6 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
 /**
  * Request a reset password email.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class ForgotPassword extends FrontendBaseBlock
 {

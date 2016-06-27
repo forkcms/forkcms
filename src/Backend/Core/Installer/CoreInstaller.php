@@ -11,10 +11,6 @@ namespace Backend\Core\Installer;
 
 /**
  * Installer for the core
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class CoreInstaller extends ModuleInstaller
 {

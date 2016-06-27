@@ -10,9 +10,6 @@ use Backend\Modules\Analytics\Form\DateRangeType;
 
 /**
  * This is the index-action (default), it will display the overview of analytics data
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 final class Index extends ActionIndex
 {

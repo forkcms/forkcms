@@ -10,9 +10,6 @@ use Backend\Modules\Analytics\DateRange\DateRange;
 
 /**
  * A form to change the date range of the analytics module
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 final class DateRangeType
 {

@@ -14,8 +14,6 @@ use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
 /**
  * This is the index-action
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Index extends FrontendBaseBlock
 {

@@ -18,8 +18,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This page will display the overview of custom fields
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class CustomFields extends BackendBaseActionIndex
 {

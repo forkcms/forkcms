@@ -13,10 +13,6 @@ use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 
 /**
  * This is a widget wherein the sitemap lives
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <matthias.mullie@netlash.com>
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Sitemap extends FrontendBaseWidget
 {

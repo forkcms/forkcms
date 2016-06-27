@@ -13,8 +13,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * In this file, the locale cache is build
- *
- * @author Wouter Sioen <wouter@wijs.be>
  */
 class CacheBuilder
 {

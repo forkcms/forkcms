@@ -15,10 +15,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * In this file we store all generic functions that we will be using in the location module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model
 {

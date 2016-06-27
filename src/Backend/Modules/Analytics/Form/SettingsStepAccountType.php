@@ -11,9 +11,6 @@ use Google_Service_Analytics;
 
 /**
  * A form to change the settings of the analytics module
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 final class SettingsStepAccountType implements SettingsStepType
 {

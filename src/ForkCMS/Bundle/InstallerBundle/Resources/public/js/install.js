@@ -1,9 +1,5 @@
 /**
  * Interaction for the installer
- *
- * @author  Tijs Verkoyen <tijs@sumocoders.be>
- * @author  Thomas Deceuninck <thomas@fronto.be>
- * @author  Wouter Sioen <wouter.sioen@wijs.be>
  */
 var jsInstall =
 {

@@ -19,8 +19,6 @@ use Backend\Modules\Blog\Engine\Model;
 
 /**
  * This import-action will let you import a wordpress blog
- *
- * @author Toon Daelman <toon@sumocoders.be>
  */
 class ImportWordpress extends BackendBaseActionEdit
 {

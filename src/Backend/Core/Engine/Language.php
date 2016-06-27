@@ -15,8 +15,6 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 /**
  * This class will store the language-dependant content for the Backend, it will also store the
  * current language for the user.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Language
 {

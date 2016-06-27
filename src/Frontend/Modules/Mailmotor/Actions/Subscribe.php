@@ -14,8 +14,6 @@ use Common\Exception\RedirectException as RedirectException;
 
 /**
  * This is the subscribe-action
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Subscribe extends FrontendBaseBlock
 {

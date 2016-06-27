@@ -14,10 +14,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the contact module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Installer extends ModuleInstaller
 {

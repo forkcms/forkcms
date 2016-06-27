@@ -1,7 +1,5 @@
 /**
  * Interaction for the tags module
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tags =
 {

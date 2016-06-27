@@ -20,8 +20,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This page will display the statistical overview of all sent mailings in a specified campaign
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class StatisticsCampaign extends BackendBaseActionIndex
 {

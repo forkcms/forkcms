@@ -9,9 +9,6 @@ use Common\ModulesSettings;
 
 /**
  * A form to change the settings of the analytics module
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 final class SettingsStepAuthConfigFileType implements SettingsStepType
 {

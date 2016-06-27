@@ -2,9 +2,6 @@
 
 namespace Backend\Modules\Analytics\DateRange;
 
-/**
- * @author Jelmer Prins <jelmer@sumocoders.be>
- */
 final class DateRange
 {
     /**

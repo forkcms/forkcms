@@ -9,9 +9,6 @@ use Backend\Modules\Analytics\Form\SettingsType;
 /**
  * This is the settings-action (default), it will be used to couple your analytics
  * account
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 final class Settings extends ActionIndex
 {

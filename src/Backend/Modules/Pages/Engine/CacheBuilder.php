@@ -15,8 +15,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * In this file, the pages cache is built
- *
- * @author Wouter Sioen <wouter@wijs.be>
  */
 class CacheBuilder
 {

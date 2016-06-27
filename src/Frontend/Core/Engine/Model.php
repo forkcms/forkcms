@@ -14,9 +14,6 @@ use Common\Cookie as CommonCookie;
 
 /**
  * In this file we store all generic functions that we will be using in the frontend.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Model extends \Common\Core\Model
 {

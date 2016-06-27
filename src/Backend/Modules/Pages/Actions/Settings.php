@@ -15,9 +15,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the settings-action, it will display a form to set general pages settings
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Settings extends BackendBaseActionEdit
 {
