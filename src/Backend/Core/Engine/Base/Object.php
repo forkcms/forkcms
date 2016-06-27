@@ -17,10 +17,6 @@ use Common\Exception\RedirectException;
 
 /**
  * This class will be the base of the objects used in the cms
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Object extends \KernelLoader
 {

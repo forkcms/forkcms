@@ -14,8 +14,6 @@ use Common\Core\Twig\Extensions\BaseTwigModifiers;
 
 /**
  * This is our class with custom modifiers.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class TemplateModifiers extends BaseTwigModifiers
 {

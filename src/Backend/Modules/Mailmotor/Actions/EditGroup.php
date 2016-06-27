@@ -18,8 +18,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the edit-action, it will display a form to edit a group
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class EditGroup extends BackendBaseActionEdit
 {

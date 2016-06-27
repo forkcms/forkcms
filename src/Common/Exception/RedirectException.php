@@ -6,8 +6,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This exception will be used to bubble up exceptions to the kernel
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class RedirectException extends \Exception
 {

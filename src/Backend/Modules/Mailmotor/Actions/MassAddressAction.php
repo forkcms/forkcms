@@ -16,8 +16,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This action is used to update one or more e-mail addresses (delete, ...)
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class MassAddressAction extends BackendBaseAction
 {

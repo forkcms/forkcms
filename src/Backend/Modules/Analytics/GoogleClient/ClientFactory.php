@@ -8,8 +8,6 @@ use Common\ModulesSettings;
 
 /**
  * Factory to easily create google client instances
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class ClientFactory
 {

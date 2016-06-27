@@ -15,9 +15,6 @@ use Frontend\Core\Engine\Url;
 
 /**
  * This class will be the base of the objects used in on-site
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Object extends \KernelLoader
 {

@@ -11,8 +11,6 @@ namespace Backend\Core\Engine;
 
 /**
  * This exception is used to handle backend related exceptions.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Exception extends \SpoonException
 {

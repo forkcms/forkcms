@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Validates and saves the data from the databases form
- *
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class DatabaseHandler
 {

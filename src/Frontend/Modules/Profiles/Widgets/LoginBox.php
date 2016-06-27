@@ -16,8 +16,6 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentic
 
 /**
  * This is a widget with a login form
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class LoginBox extends FrontendBaseWidget
 {

@@ -10,8 +10,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 /**
  * This is the theme install-action.
  * It will install the theme given via the "theme" GET parameter.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class InstallTheme extends BackendBaseActionIndex
 {

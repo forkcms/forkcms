@@ -4,12 +4,6 @@ namespace ForkCMS\Bundle\InstallerBundle\Service;
 
 /**
  * Requirements checker
- *
- * @author Davy Hellemans <davy@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class RequirementsChecker
 {

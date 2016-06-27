@@ -19,8 +19,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This page will display the overview of groups
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Groups extends BackendBaseActionIndex
 {

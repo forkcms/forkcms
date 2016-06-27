@@ -4,8 +4,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * Twig node for writing out the compiled version of form field.
- *
- * @author <per@wijs.be>
  */
 class FormFieldNode extends \Twig_Node
 {

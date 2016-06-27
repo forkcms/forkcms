@@ -12,9 +12,6 @@ namespace Common\Core\Twig\Extensions;
 /**
  * Contains Base Frontend-related custom modifiers.
  * These filters work independent of front/backend.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author <thijs.dp@gmail.com>
  */
 class BaseTwigModifiers
 {

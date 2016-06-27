@@ -13,9 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * The class below will handle all stuff relates to the current authenticated user
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class User
 {

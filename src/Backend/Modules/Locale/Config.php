@@ -13,8 +13,6 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the locale module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Config extends BackendBaseConfig
 {

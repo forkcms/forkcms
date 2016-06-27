@@ -14,8 +14,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * Builds the form to select modules to install
- *
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class ModulesType extends AbstractType
 {

@@ -10,8 +10,6 @@ use Common\Uri;
 
 /**
  * This class will send mails
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class Message extends \Swift_Message
 {

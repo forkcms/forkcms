@@ -15,9 +15,6 @@ use Backend\Core\Engine\User as BackendUser;
 
 /**
  * In this file we store all generic functions that we will be using in the users module.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Model
 {

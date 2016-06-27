@@ -10,8 +10,6 @@ use Twig_Extension;
  *
  * In the future we could remove it and use stack {push,popp}ing, but I'm hoping
  * we're using symfony forms or some other more OO form library.
- *
- * @author <per@wijs.be>
  */
 class FormState
 {

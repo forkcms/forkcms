@@ -15,8 +15,6 @@ use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
  * This action will delete an item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Delete extends BackendBaseActionDelete
 {

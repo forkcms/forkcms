@@ -6,8 +6,6 @@ use Backend\Core\Engine\Language as BackendLanguage;
 
 /**
  * Twig node for writing the SEO form
- *
- * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class SeoFormNode extends \Twig_Node
 {

@@ -15,8 +15,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * This action is used to update one or more data items
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class MassDataAction extends BackendBaseAction
 {

@@ -6,8 +6,6 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the analytics module
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class Config extends BackendBaseConfig
 {

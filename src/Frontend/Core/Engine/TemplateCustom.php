@@ -11,8 +11,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * Add all custom stuff here.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class TemplateCustom
 {

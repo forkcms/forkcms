@@ -1,10 +1,5 @@
 /**
  * Interaction for the faq module
- *
- * @author	Annelies Van Extergem <annelies@netlash.com>
- * @author	Jelmer Snoeck <jelmer@siphoc.com>
- * @author	Thomas Deceuninck <thomas@fronto.be>
- * @author	Jeroen Desloovere <jeroen@siesqo.be>
  */
 jsFrontend.faq =
 {

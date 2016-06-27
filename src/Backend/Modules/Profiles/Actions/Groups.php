@@ -18,9 +18,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the groups-action, it will display the overview of profile groups.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Lester Lievens <lester@netlash.com>
  */
 class Groups extends BackendBaseActionIndex
 {

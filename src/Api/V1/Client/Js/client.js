@@ -1,8 +1,5 @@
 if(!jsClient) { var jsClient = {}; }
 
-/**
- * @author Dave Lens <dave@netlash.com>
- */
 jsClient =
 {
 	debug: true,

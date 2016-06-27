@@ -10,8 +10,6 @@ use Backend\Core\Engine\DataGridArray;
 
 /**
  * This is the index-action (default), it will display the overview of analytics data
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 final class Index extends ActionIndex
 {
