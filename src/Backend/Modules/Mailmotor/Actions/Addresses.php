@@ -20,8 +20,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This page will display the overview of addresses
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Addresses extends BackendBaseActionIndex
 {

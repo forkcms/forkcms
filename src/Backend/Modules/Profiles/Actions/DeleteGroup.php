@@ -15,9 +15,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This action will delete a profile group.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class DeleteGroup extends BackendBaseActionDelete
 {

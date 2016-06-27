@@ -14,10 +14,6 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 
 /**
  * This class will be used to manage the breadcrumb
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class Breadcrumb extends FrontendBaseObject
 {

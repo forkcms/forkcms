@@ -20,8 +20,6 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the add-action, it will display a form to create a new group
- *
- * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
 class Add extends BackendBaseActionAdd
 {

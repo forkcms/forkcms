@@ -17,10 +17,6 @@ use Frontend\Core\Engine\Exception as FrontendException;
 
 /**
  * This class will handle all stuff related to widgets
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Widget extends FrontendBaseObject
 {

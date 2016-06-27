@@ -19,8 +19,6 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the index-action (default), it will display the pages-overview
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Index extends BackendBaseActionIndex
 {

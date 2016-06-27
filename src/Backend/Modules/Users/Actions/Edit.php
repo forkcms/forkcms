@@ -21,11 +21,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the edit-action, it will display a form to alter the user-details and settings
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Siesqo <info@siesqo.be>
  */
 class Edit extends BackendBaseActionEdit
 {

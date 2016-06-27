@@ -14,8 +14,6 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig.
- *
- * @author <thijs@wijs.be>
  */
 abstract class BaseTwigTemplate extends TwigEngine
 {

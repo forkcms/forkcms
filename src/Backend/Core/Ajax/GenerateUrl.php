@@ -15,8 +15,6 @@ use Backend\Core\Engine\Meta as BackendMeta;
 
 /**
  * This action will generate a valid url based upon the submitted url.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class GenerateUrl extends BackendBaseAJAXAction
 {

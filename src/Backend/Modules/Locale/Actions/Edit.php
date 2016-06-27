@@ -19,10 +19,6 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the edit action, it will display a form to edit an existing locale item.
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Edit extends BackendBaseActionEdit
 {

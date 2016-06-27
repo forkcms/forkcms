@@ -13,8 +13,6 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the form builder module
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Config extends BackendBaseConfig
 {

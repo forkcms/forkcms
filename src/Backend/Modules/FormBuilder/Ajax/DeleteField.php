@@ -14,8 +14,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * Delete a field via ajax.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class DeleteField extends BackendBaseAJAXAction
 {

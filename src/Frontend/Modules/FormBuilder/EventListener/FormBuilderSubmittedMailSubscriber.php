@@ -9,8 +9,6 @@ use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 
 /**
  * A Formbuilder submitted event subscriber that will send an email if needed
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 final class FormBuilderSubmittedMailSubscriber
 {

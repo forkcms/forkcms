@@ -18,9 +18,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * This is the index-action (default), it will display the overview
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Index extends BackendBaseActionIndex
 {

@@ -17,10 +17,6 @@ use Backend\Core\Engine\Language as BL;
 
 /**
  * This is the settings-action, it will display a form to set general blog settings
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Settings extends BackendBaseActionEdit
 {

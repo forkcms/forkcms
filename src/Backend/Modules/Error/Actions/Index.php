@@ -14,10 +14,6 @@ use Backend\Core\Engine\Language as BL;
 
 /**
  * This is the index-action (default), it will display an error depending on a given parameters
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class Index extends BackendBaseActionIndex
 {

@@ -20,10 +20,6 @@ use Common\Exception\RedirectException as RedirectException;
 
 /**
  * Register a profile.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Register extends FrontendBaseBlock
 {

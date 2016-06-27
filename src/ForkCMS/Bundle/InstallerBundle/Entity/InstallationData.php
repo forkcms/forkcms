@@ -4,8 +4,6 @@ namespace ForkCMS\Bundle\InstallerBundle\Entity;
 
 /**
  * This object contains all fork data
- *
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class InstallationData
 {

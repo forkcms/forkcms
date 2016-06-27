@@ -14,11 +14,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * The class below will handle all authentication stuff. It will handle module-access, action-access, ...
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Sam Tubbax <sam@sumocoders.be>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Authentication
 {

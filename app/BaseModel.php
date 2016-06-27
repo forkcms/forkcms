@@ -14,9 +14,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * both FrontendModel and BackendModel.
  *
  * In the long run models should not be a collection of static methods, and this will disappear.
- *
- * @author Dave Lens <dave.lens@wijs.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class BaseModel
 {

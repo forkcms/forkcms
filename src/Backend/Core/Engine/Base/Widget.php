@@ -16,8 +16,6 @@ use Backend\Core\Engine\TwigTemplate;
 
 /**
  * This is the base-object for widgets
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Widget extends \KernelLoader
 {

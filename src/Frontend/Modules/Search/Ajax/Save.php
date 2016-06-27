@@ -15,8 +15,6 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
  * This is the save-action, it will save the searched term in the statistics
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Save extends FrontendBaseAJAXAction
 {

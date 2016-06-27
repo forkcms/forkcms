@@ -23,9 +23,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the edit-action, it will display a form to edit a group
- *
- * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Edit extends BackendBaseActionEdit
 {

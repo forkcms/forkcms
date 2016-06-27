@@ -17,8 +17,6 @@ use Common\Uri as CommonUri;
 
 /**
  * Save a field via ajax.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class SaveField extends BackendBaseAJAXAction
 {

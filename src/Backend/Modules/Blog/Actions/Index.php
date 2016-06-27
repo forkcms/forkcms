@@ -20,11 +20,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the index-action (default), it will display the overview of blog posts
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Index extends BackendBaseActionIndex
 {

@@ -16,9 +16,6 @@ use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the pages module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Model implements FrontendTagsInterface
 {

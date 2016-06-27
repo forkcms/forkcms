@@ -19,9 +19,6 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is the RSS-feed
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Rss extends FrontendBaseBlock
 {

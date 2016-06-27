@@ -22,11 +22,6 @@ use Common\Exception\RedirectException;
  * This class implements a lot of functionality that can be extended by a specific block
  *
  * @later  Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Block extends Object
 {

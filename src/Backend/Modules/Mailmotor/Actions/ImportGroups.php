@@ -17,8 +17,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the import-action, it will import groups and their subscribers from CampaignMonitor
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class ImportGroups extends BackendBaseActionAdd
 {
