@@ -120,8 +120,7 @@ class TwigTemplate extends BaseTwigTemplate
             $this->positions = $values['positions'];
         }
 
-        // in all other cases
-        $this->variables[$key] = $values;
+        parent::assign($key, $values);
     }
 
     /**

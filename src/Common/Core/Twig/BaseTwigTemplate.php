@@ -60,15 +60,13 @@ abstract class BaseTwigTemplate extends TwigEngine
     /**
      * Spoon assign method.
      *
-     * @param string $key
+     * @param string|array $key
      * @param mixed  $values
      */
     public function assign($key, $values = null)
     {
         if (is_array($key)) {
-            foreach ($key as $i => $value) {
-                $this->variables[$i] = $value;
-            }
+            $this->assignArray($key);
 
             return;
         }
