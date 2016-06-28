@@ -9,6 +9,7 @@ namespace Frontend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -267,9 +268,9 @@ class Detail extends FrontendBaseBlock
                         $to = $this->get('fork.settings')->get('Core', 'mailer_to');
                         $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                         $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-                        $message = \Common\Mailer\Message::newInstance(
-                                sprintf(FL::getMessage('FaqFeedbackSubject'), $this->record['question'])
-                            )
+                        $message = Message::newInstance(
+                            sprintf(FL::getMessage('FaqFeedbackSubject'), $this->record['question'])
+                        )
                             ->setFrom(array($from['email'] => $from['name']))
                             ->setTo(array($to['email'] => $to['name']))
                             ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
