@@ -765,10 +765,10 @@ class Model
     public static function notifyAdmin($values, $templatePath = null)
     {
         // to email
-        $toEmail = BackendModel::getModuleSetting('Profiles', 'profile_notification_email', null);
+        $toEmail = BackendModel::get('fork.settings')->get('Profiles', 'profile_notification_email', null);
 
         if ($toEmail === null) {
-            $to = BackendModel::getModuleSetting('Core', 'mailer_to');
+            $to = BackendModel::get('fork.settings')->get('Core', 'mailer_to');
             $toEmail = $to['email'];
         }
 
@@ -858,8 +858,8 @@ class Model
         }
 
         // define variables
-        $from = BackendModel::getModuleSetting('Core', 'mailer_from');
-        $replyTo = BackendModel::getModuleSetting('Core', 'mailer_reply_to');
+        $from = BackendModel::get('fork.settings')->get('Core', 'mailer_from');
+        $replyTo = BackendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
 
         // create a message object and set all the needed properties
         $message = Message::newInstance($subject)
