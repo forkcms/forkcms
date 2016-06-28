@@ -165,7 +165,7 @@ class BaseTwigModifiers
 
     /**
      * Formats a language specific date.
-     * 		syntax: {{ spoondate($timestamp, $format, $language) }}.
+     * 		syntax: {{ $timestamp|spoondate($format, $language) }}.
      *
      * @param mixed            $timestamp The timestamp or date that you want to apply the format to.
      * @param string[optional] $format    The optional format that you want to apply on the provided timestamp.
