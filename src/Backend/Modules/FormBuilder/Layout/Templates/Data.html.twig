@@ -52,6 +52,7 @@
     <div class="col-md-12">
       {% if dataGrid %}
         <form action="{{ geturl('mass_data_action' ) }}" method="get" class="forkForms">
+          <input type="hidden" name="form_id" value="{{ id }}">
         {{ dataGrid|raw }}
         <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
           <div class="modal-dialog">
