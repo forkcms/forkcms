@@ -111,6 +111,7 @@ class Register extends FrontendBaseBlock
 
             // check password
             $txtPassword->isFilled(FL::getError('PasswordIsRequired'));
+            $txtDisplayName->isFilled(FL::getError('FieldIsRequired'));
 
             // no errors
             if ($this->frm->isCorrect()) {

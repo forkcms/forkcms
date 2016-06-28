@@ -17,33 +17,36 @@
 
         <p{% if txtDisplayNameError %} class="errorArea"{% endif %}>
           <label for="displayName">{{ 'lbl.DisplayName'|trans|capitalize }}
-            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          {% form_field_error DisplayName %}{% form_field DisplayName %}
-          <small class="helpTxt">{{ 'msg.HelpDisplayNameChanges'|trans|sprintf({$maxDisplayNameChanges }}:{{ displayNameChangesLeft }}})</small>
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+          </label>
+          {% form_field display_name %} {% form_field_error display_name %}
+          <small class="helpTxt">{{ 'msg.HelpDisplayNameChanges'|trans|format( maxDisplayNameChanges, displayNameChangesLeft ) }}</small>
         </p>
         <p{% if txtEmailError %} class="errorArea"{% endif %}>
           <label for="email">{{ 'lbl.Email'|trans|capitalize }}
-            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          {% form_field_error Email %}{% form_field Email %}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+          </label>
+          {% form_field email %} {% form_field_error email %}
         </p>
         <p>
           <a href="{{ geturlforblock('Profiles', 'ChangeEmail') }}">{{ 'msg.ChangeEmail'|trans }}</a>
         </p>
         <p{% if txtFirstNameError %} class="errorArea"{% endif %}>
           <label for="firstName">{{ 'lbl.FirstName'|trans|capitalize }}</label>
-          {% form_field_error FirstName %}{% form_field FirstName %}
+          {% form_field first_name %} {% form_field_error first_name %}
         </p>
         <p{% if txtLastNameError %} class="errorArea"{% endif %}>
           <label for="lastName">{{ 'lbl.LastName'|trans|capitalize }}</label>
-          {% form_field_error LastName %}{% form_field LastName %}
+          {% form_field last_name %} {% form_field_error last_name %}
         </p>
         <p{% if ddmGenderError %} class="errorArea"{% endif %}>
           <label for="gender">{{ 'lbl.Gender'|trans|capitalize }}</label>
-          {% form_field_error Gender %} {% form_field Gender %}
+          {% form_field gender %} {% form_field_error gender %}
         </p>
-        <p{% if ddmYearError %} class="errorArea"{% endif %}>
+        <p{% if ddmDayError or ddmMonthError or ddmYearError %} class="errorArea"{% endif %}>
           <label for="day">{{ 'lbl.BirthDate'|trans|capitalize }}</label>
-          {% form_field_error Day %} {% form_field Month %} {% form_field Year %} {% form_field Year %}
+          {% form_field day %} {% form_field month %} {% form_field year %}
+          {% form_field_error day %} {% form_field_error month %} {% form_field_error year %}
         </p>
       </fieldset>
       <fieldset>
@@ -51,11 +54,11 @@
 
         <p{% if txtCityError %} class="errorArea"{% endif %}>
           <label for="city">{{ 'lbl.City'|trans|capitalize }}</label>
-          {% form_field_error City %}{% form_field City %}
+          {% form_field city %} {% form_field_error city %}
         </p>
         <p{% if ddmCountryError %} class="errorArea"{% endif %}>
           <label for="country">{{ 'lbl.Country'|trans|capitalize }}</label>
-          {% form_field_error Country %} {% form_field Country %}
+          {% form_field country %} {% form_field_error country %}
         </p>
       </fieldset>
       <fieldset>
@@ -66,7 +69,7 @@
 
         <p{% if fileAvatarError %} class="errorArea"{% endif %}>
           <label for="avatar">{{ 'lbl.Avatar'|trans|capitalize }}</label>
-          {% form_field_error Avatar %}{% form_field Avatar %}
+          {% form_field avatar %} {% form_field_error avatar %}
         </p>
       </fieldset>
       <p>
