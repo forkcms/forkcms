@@ -42,7 +42,7 @@
         {% endif %}
       </header>
       <div class="bd content">
-        {{ item.answer }}
+        {{ item.answer|raw }}
       </div>
     </div>
   </article>
@@ -101,13 +101,14 @@
           {% if spam %}
             <div class="message error"><p>{{ 'err.FeedbackSpam'|trans }}</p></div>{% endif %}
 
+          {% if form_feedback %}
           {% form feedback %}
-          {{ hidQuestionId }}
+          {{ hidQuestionId|raw }}
           <div class="options">
             <ul class="inputList">
               {% for useful in useful %}
                 <li>
-                  {{ useful.rbtUseful }}
+                  {{ useful.rbtUseful|raw }}
                   <label for="{{ useful.id }}">{{ useful.label|capitalize }}</label>
                 </li>
               {% endfor %}
@@ -118,13 +119,14 @@
             <p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
               <label for="message">{{ 'msg.HowToImprove'|trans|capitalize }}
                 <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-              {% form_field_error Message %} {% form_field Message %}
+              {% form_field message %} {% form_field_error message %}
             </p>
             <p>
               <input class="inputSubmit" type="submit" name="comment" value="{{ 'lbl.Send'|trans|capitalize }}" />
             </p>
           </div>
           {% endform %}
+          {% endif %}
         </div>
       </div>
     </section>
