@@ -12,6 +12,7 @@ namespace Common\Core\Twig\Extensions;
 /**
  * Contains all Forkcms filters for Twig
  */
+use Twig_Environment;
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;
 
@@ -20,6 +21,9 @@ class TwigFilters
     /**
      * //http://twig.sensiolabs.org/doc/advanced.html#id2
      * returns a collection of Twig SimpleFilters
+     *
+     * @param Twig_Environment $twig
+     * @param string $app
      *
      * @return array
      */
