@@ -158,7 +158,7 @@ class Message extends \Swift_Message
         }
 
         // set some options
-        $tpl->setForceCompile(true);
+        $tpl->setForceCompile();
 
         // variables were set
         if (!empty($variables)) {
