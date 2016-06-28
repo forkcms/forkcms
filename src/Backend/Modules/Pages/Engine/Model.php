@@ -9,6 +9,7 @@ namespace Backend\Modules\Pages\Engine;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -1044,6 +1045,7 @@ class Model
             'rich_text' => BL::lbl('Editor'),
             'block' => BL::lbl('Module'),
             'widget' => BL::lbl('Widget'),
+            'usertemplate' => BL::lbl('UserTemplate'),
         );
     }
 
@@ -1186,9 +1188,37 @@ class Model
 
         // loop blocks
         foreach ($blocks as $block) {
+            if ($block['extra_type'] === 'usertemplate') {
+                $block['extra_id'] = null;
+            }
+
             // insert blocks
             $db->insert('pages_blocks', $block);
         }
+    }
+
+    public static function loadUserTemplates()
+    {
+        $themePath = FRONTEND_PATH . '/Themes/';
+        $themePath .= BackendModel::get('fork.settings')->get('Core', 'theme', 'default');
+        $filePath = $themePath . '/Core/Layout/Templates/UserTemplates/Templates.json';
+
+        $userTemplates = array();
+
+        $fs = new Filesystem();
+        if ($fs->exists($filePath)) {
+            $userTemplates = json_decode(file_get_contents($filePath), true);
+
+            foreach ($userTemplates as &$userTemplate) {
+                $userTemplate['file'] =
+                    '/src/Frontend/Themes/'.
+                    BackendModel::get('fork.settings')->get('Core', 'theme', 'default').
+                    '/Core/Layout/Templates/UserTemplates/'.
+                    $userTemplate['file'];
+            }
+        }
+
+        return $userTemplates;
     }
 
     /**

@@ -249,5 +249,7 @@ class CoreInstaller extends ModuleInstaller
         // ckfinder
         $this->setSetting('Core', 'ckfinder_license_name', 'Fork CMS');
         $this->setSetting('Core', 'ckfinder_license_key', 'VNA6-BP17-T7D3-CP1B-EMJF-X7Q3-5THF');
+
+        $this->setSetting('Core', 'show_cookie_bar', true);
     }
 }

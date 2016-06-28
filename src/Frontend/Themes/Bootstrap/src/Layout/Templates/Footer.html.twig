@@ -1,0 +1,18 @@
+<footer id="footer" role="contentinfo">
+    <div class="container">
+        <p class="pull-right"><a class="backToTop" data-scroll href="#">Back to top</a></p>
+        <nav>
+            <ul class="nav nav-pills" role="navigation">
+                <li class="disabled"><a>© <span itemprop="copyrightYear">{{ now|date('Y') }}</span> {{ siteTitle }}</a></li>
+                {% for footerLink in footerLinks %}
+                    <li>
+                        <a href="{{ footerLink.url }}" title="{{ footerLink.title }}"{% if footerLink.rel %} rel="{{ footerLink.rel }}"{% endif %}>
+                            {{ footerLink.navigation_title }}
+                        </a>
+                    </li>
+                {% endfor %}
+                <li><a href="http://www.sumocoders.be/?utm_source={{ siteTitle|urlencode }}&amp;utm_medium=credits&amp;utm_campaign=client_sites" rel="external">SumoCoders</a></li>
+            </ul>
+        </nav>
+    </div>
+</footer>

@@ -285,6 +285,9 @@
           {# this will store the selected extra #}
           {{ block.formElements.hidExtraId.parse() | raw }}
 
+          {* this will store the extra type *}
+          {{ block.formElements.hidExtraType.parse() | raw }}
+
           {# this will store the selected position #}
           {{ block.formElements.hidPosition.parse() | raw }}
 
@@ -333,13 +336,45 @@
               <option value="-1">-</option>
             </select>
           </div>
+          <div id="userTemplateHolder" class="form-group"  style="display: none;">
+            <label for="userTemplate">{{ 'lbl.WhichTemplate'|trans|capitalize }}</label>
+            <select class="form-control" id="userTemplate">
+              <option value="-1">-</option>
+            </select>
+          </div>
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
             <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
           </button>
           <button id="addBlockSubmit" type="button" class="btn btn-primary">
             <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Dialog to select user templates #}
+  <div class="modal fade" id="addUserTemplate" tabindex="-1" role="dialog"
+    aria-labelledby="{{ 'lbl.ChooseATemplate'|trans|capitalize }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <span class="modal-title h4">{{ 'lbl.Content'|trans|capitalize }}</span>
+        </div>
+        <div class="modal-body">
+          <div id="userTemplateHiddenPlaceholder" style="display:none;"></div>
+          <div id="userTemplatePlaceholder"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+          </button>
+          <button type="button" class="btn btn-primary js-submit-user-template">
+            <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
           </button>
         </div>
       </div>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+	<name>bootstrap</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>3.4.0</minimum_version>
+	</requirements>
+	<thumbnail>thumbnail.png</thumbnail>
+	<description>
+		<![CDATA[
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name>Tijs Verkoyen</name>
+			<url>http://www.sumocoders.be</url>
+		</author>
+		<author>
+			<name>Mathias Helin</name>
+			<url>http://www.sumocoders.be</url>
+		</author>
+        <author>
+            <name>Lisette Mazure</name>
+            <url>http://www.sumocoders.be</url>
+        </author>
+		<author>
+			<name>Niels De Paepe</name>
+			<url>http://www.sumocoders.be</url>
+		</author>
+	</authors>
+	<metanavigation supported="false" />
+	<templates>
+		<template label="Default" path="Core/Layout/Templates/Default.html.twig">
+			<positions>
+				<position name="main" />
+				<position name="top">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,/,top,/],[/,main,main,main,/]
+			</format>
+		</template>
+		<template label="Error" path="Core/Layout/Templates/Error.html.twig">
+			<positions>
+				<position name="main" />
+				<position name="top">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,/,top,/],[/,main,main,main,/]
+			</format>
+		</template>
+		<template label="Home" path="Core/Layout/Templates/Home.html.twig">
+			<positions>
+				<position name="main" />
+				<position name="top">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,/,top,/],[/,main,main,main,/]
+			</format>
+		</template>
+		<template label="Sidebar" path="Core/Layout/Templates/Sidebar.html.twig">
+			<positions>
+				<position name="main" />
+				<position name="right" />
+				<position name="top">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,/,top,/],[/,main,main,right,/],[/,main,main,right,/],[/,main,main,/,/]
+			</format>
+		</template>
+	</templates>
+</theme>

@@ -1,0 +1,9 @@
+{% if languages %}
+  <ul class="nav navbar-nav">
+    {% for language in languages %}
+      <li{% if language.current %} class="active"{% endif %}>
+        <a href="{{ language.url }}">{{ language.label|uppercase }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

@@ -1,11 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "33d9a7af622ca51715f5e4c2f76be762",
-    "content-hash": "783b51619535a9b7822b4cb03d48204a",
+    "hash": "b456bef46187a420c27b8dd6c63cb29e",
+    "content-hash": "2b21b273eb2ec970de6df1089301ab58",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -444,6 +444,39 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
+        },
+        {
+            "name": "flippa-official/errbit-php",
+            "version": "dev-master",
+            "target-dir": "Flippa/ErrbitPhp",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/flippa/errbit-php.git",
+                "reference": "e15eb15ca37963ee7dcc5dae0a70d5420fca85a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/flippa/errbit-php/zipball/e15eb15ca37963ee7dcc5dae0a70d5420fca85a4",
+                "reference": "e15eb15ca37963ee7dcc5dae0a70d5420fca85a4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Errbit & Airbrake Client for PHP",
+            "homepage": "https://github.com/flippa/errbit-php",
+            "time": "2013-05-03 07:04:08"
         },
         {
             "name": "google/apiclient",
@@ -1124,6 +1157,46 @@
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
             "time": "2016-04-13 14:03:11"
+        },
+        {
+            "name": "sumocoders/sumo-fork-class",
+            "version": "dev-master",
+            "target-dir": "SumoCoders/SumoForkClass",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sumocoders/Sumo-specific-Fork-stuff.git",
+                "reference": "c3da9e565df295216044baf7ab37b5e3b111f34d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sumocoders/Sumo-specific-Fork-stuff/zipball/c3da9e565df295216044baf7ab37b5e3b111f34d",
+                "reference": "c3da9e565df295216044baf7ab37b5e3b111f34d",
+                "shasum": ""
+            },
+            "require": {
+                "flippa-official/errbit-php": "dev-master",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SumoCoders\\SumoForkClass": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "tijs@sumocoders.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Fork is great, but we like to implemented our internal tools into the website we create for our clients",
+            "homepage": "https://github.com/sumocoders/Sumo-specific-Fork-stuff",
+            "time": "2016-03-31 12:56:56"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3057,7 +3130,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "flippa-official/errbit-php": 20,
+        "sumocoders/sumo-fork-class": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

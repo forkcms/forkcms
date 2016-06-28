@@ -17,7 +17,10 @@
         "spoon/library": "^2.0",
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
-        "league/flysystem": "~1.0"
+        "league/flysystem": "~1.0",
+
+        "flippa-official/errbit-php": "dev-master",
+        "sumocoders/sumo-fork-class": "dev-master"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",

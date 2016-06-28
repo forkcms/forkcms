@@ -59,6 +59,13 @@ class SaveField extends BackendBaseAJAXAction
         $valueAmount = trim(\SpoonFilter::getPostValue('value_amount', null, '', 'string'));
         $valueType = trim(\SpoonFilter::getPostValue('value_type', null, '', 'string'));
 
+        // @remark: custom for Sumocoders
+        // Special field for textbox. Using filter_input instead of SpoonFilter, so we can see if this var is not posted
+        $mailCopyTo = filter_input(INPUT_POST, 'mail_copy_to', FILTER_SANITIZE_STRING);
+        if ($mailCopyTo !== null) {
+            $mailCopyTo = ($mailCopyTo === 'Y' ? 'Y' : 'N');
+        }
+
         // invalid form id
         if (!BackendFormBuilderModel::exists($formId)) {
             $this->output(self::BAD_REQUEST, null, 'form does not exist');
@@ -94,6 +101,10 @@ class SaveField extends BackendBaseAJAXAction
                         }
                         if ($replyTo == 'Y' && $validation != 'email') {
                             $errors['reply_to_error_message'] = BL::getError('EmailValidationIsRequired');
+                        }
+                        // @remark: custom for Sumocoders
+                        if ($mailCopyTo === 'Y' && $validation !== 'email') {
+                            $errors['mail_copy_to'] = BL::getError('EmailValidationIsRequired');
                         }
                     } elseif ($type == 'textarea') {
                         // validate textarea
@@ -230,6 +241,11 @@ class SaveField extends BackendBaseAJAXAction
                                 $settings['value_amount'] = $valueAmount;
                                 $settings['value_type'] = $valueType;
                             }
+                        }
+
+                        // @remark: custom for Sumocoders
+                        if ($mailCopyTo !== null) {
+                            $settings['mailCopyTo'] = $mailCopyTo;
                         }
 
                         // build array

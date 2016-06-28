@@ -434,6 +434,9 @@ class Form extends FrontendBaseWidget
                 // init fields array
                 $fields = array();
 
+                // @remark: custom for Sumocoders
+                $mailCopyTo = null;
+
                 // loop all fields
                 foreach ($this->item['fields'] as $field) {
                     // skip
@@ -445,6 +448,13 @@ class Form extends FrontendBaseWidget
                     $fieldData['data_id'] = $dataId;
                     $fieldData['label'] = $field['settings']['label'];
                     $fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();
+
+                    // @remark: custom for Sumocoders
+                    if (isset($field['settings']['mailCopyTo']) && 'Y' == $field['settings']['mailCopyTo']) {
+                        if (filter_var($fieldData['value'], FILTER_VALIDATE_EMAIL)) {
+                            $mailCopyTo = $fieldData['value'];
+                        }
+                    }
 
                     if ($field['type'] == 'radiobutton') {
                         $values = array();
@@ -490,6 +500,44 @@ class Form extends FrontendBaseWidget
                         'visitorId' => FrontendModel::getVisitorId(),
                     )
                 );
+
+                // @remark: custom for Sumocoders
+                if ($mailCopyTo) {
+                    $fieldDataForEmail = array_map(
+                        function ($item) {
+                            $value = unserialize($item['value']);
+                            return array(
+                                'label' => $item['label'],
+                                'value' => (is_array($value)
+                                    ? implode(',', $value)
+                                    : nl2br($value)
+                                )
+                            );
+                        },
+                        $fields
+                    );
+
+                    // build our message
+                    $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
+                    $message = \Common\Mailer\Message::newInstance(sprintf(
+                        FL::getMessage('FormBuilderSubject'),
+                        $this->item['name']
+                    ))
+                        ->parseHtml(
+                            FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.tpl',
+                            array(
+                                'sentOn' => time(),
+                                'name' => $this->item['name'],
+                                'fields' => $fieldDataForEmail,
+                            ),
+                            true
+                        )
+                        ->setTo($mailCopyTo)
+                        ->setFrom(array($from['email'] => $from['name']))
+                    ;
+
+                    $this->get('mailer')->send($message);
+                }
 
                 // store timestamp in session so we can block excessive usage
                 \SpoonSession::set('formbuilder_' . $this->item['id'], time());

@@ -35,6 +35,15 @@ FileETag MTime Size
 	RewriteRule src/Backend/Cache/Logs - [F]
 	RewriteRule src/Backend/Cache/Navigation - [F]
 
+    # @remark: custom for Sumocoders
+	RewriteRule .*\.rb - [F]
+	RewriteRule Capfile - [F]
+	RewriteRule Gemfile - [F]
+	RewriteRule Gemfile\.lock - [F]
+	RewriteRule Gruntfile\.coffee - [F]
+	RewriteRule Sumofile - [F]
+	RewriteRule package\.json - [F]
+
 	# one url to rule them all
 	# RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
 	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]

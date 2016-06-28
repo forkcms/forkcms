@@ -44,6 +44,10 @@
         <translation language="lt"><![CDATA[keisti šabloną]]></translation>
         <translation language="el"><![CDATA[Αλλαγή προτύπου]]></translation>
       </item>
+      <item type="label" name="ChooseTemplate">
+        <translation language="en"><![CDATA[choose template]]></translation>
+        <translation language="nl"><![CDATA[kies template]]></translation>
+      </item>
       <item type="label" name="DeleteBlock">
         <translation language="nl"><![CDATA[blok verwijderen]]></translation>
         <translation language="en"><![CDATA[delete block]]></translation>
@@ -229,6 +233,10 @@
         <translation language="uk"><![CDATA[Надіслані розсилки]]></translation>
         <translation language="el"><![CDATA[απεσταλμένα μηνύματα]]></translation>
       </item>
+      <item type="label" name="ShowImage">
+        <translation language="en"><![CDATA[show the image]]></translation>
+        <translation language="nl"><![CDATA[toon de afbeelding]]></translation>
+      </item>
       <item type="label" name="SubscribeForm">
         <translation language="en"><![CDATA[subscribe form]]></translation>
         <translation language="nl"><![CDATA[inschrijvingsformulier]]></translation>
@@ -254,6 +262,14 @@
         <translation language="es"><![CDATA[formulario de baja]]></translation>
         <translation language="uk"><![CDATA[Форма відписки]]></translation>
         <translation language="el"><![CDATA[Φόρμα αποποίησης εγγραφής]]></translation>
+      </item>
+      <item type="label" name="UserTemplate">
+        <translation language="en"><![CDATA[user template]]></translation>
+        <translation language="nl"><![CDATA[user template]]></translation>
+      </item>
+      <item type="label" name="WhichTemplate">
+        <translation language="en"><![CDATA[template]]></translation>
+        <translation language="nl"><![CDATA[template]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De pagina "%1$s" werd toegevoegd.]]></translation>

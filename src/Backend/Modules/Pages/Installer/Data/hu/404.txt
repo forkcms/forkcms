@@ -1,2 +1,5 @@
-<iframe src="http://notfound-static.fwebservices.be/404/index.html" width="100%" height="650" frameborder="0"></iframe>
-<p>This page doesn't exist or is not accessible at this time. Take a look at the sitemap:</p>
+<div id="error">
+<p>This page doesn't exist or is not accessible at this time.</p>
+<a href="/">Go to home</a>
+<h2>404</h2>
+</div>

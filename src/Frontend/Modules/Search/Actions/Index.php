@@ -234,7 +234,7 @@ class Index extends FrontendBaseBlock
             'q',
             null,
             255,
-            'inputText liveSuggest autoComplete',
+            'form-control liveSuggest autoComplete',
             'inputTextError liveSuggest autoComplete'
         );
 
