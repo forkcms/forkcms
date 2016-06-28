@@ -9,6 +9,7 @@ namespace Backend\Modules\Profiles\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Mailer\Message;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
@@ -861,7 +862,7 @@ class Model
         $replyTo = BackendModel::getModuleSetting('Core', 'mailer_reply_to');
 
         // create a message object and set all the needed properties
-        $message = \Common\Mailer\Message::newInstance($subject)
+        $message = Message::newInstance($subject)
             ->setFrom(array($from['email'] => $from['name']))
             ->setTo(array($toEmail => $toDisplayName))
             ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
