@@ -27,7 +27,7 @@ class DataDetails extends BackendBaseActionIndex
     /**
      * Filter variables
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 
