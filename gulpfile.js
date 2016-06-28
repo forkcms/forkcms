@@ -38,7 +38,10 @@ gulp.task('sass', function() {
   return gulp.plumbedSrc(paths.src + '/Layout/Sass/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({
-      includePaths: ['./node_modules/bootstrap-sass/assets/stylesheets']
+        includePaths: [
+            './node_modules/bootstrap-sass/assets/stylesheets',
+            './node_modules'
+        ]
     }).on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(sourcemaps.write())
@@ -50,7 +53,10 @@ gulp.task('sass:build', function() {
   return gulp.src(paths.src + '/Layout/Sass/*.scss')
     .pipe(sass({
       outputStyle: 'compressed',
-      includePaths: ['./node_modules/bootstrap-sass/assets/stylesheets']
+        includePaths: [
+            './node_modules/bootstrap-sass/assets/stylesheets',
+            './node_modules'
+        ]
     }).on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(gulp.dest(paths.core + '/Layout/Css'));
