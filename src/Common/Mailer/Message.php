@@ -154,7 +154,10 @@ class Message extends \Swift_Message
         if (APPLICATION === 'Backend') {
             $tpl = new BackendTemplate(false);
         } else {
-            $tpl = new FrontendTemplate(false);
+            return Model::get('templating')->render(
+                $template,
+                $variables
+            );
         }
 
         // set some options
