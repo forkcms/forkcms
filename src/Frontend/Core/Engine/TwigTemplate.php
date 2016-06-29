@@ -4,6 +4,7 @@ namespace Frontend\Core\Engine;
 
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
+use Symfony\Component\Filesystem\Filesystem;
 
 /*
  * This file is part of Fork CMS.
@@ -39,13 +40,7 @@ class TwigTemplate extends BaseTwigTemplate
             $loader = $this->environment->getLoader();
             $loader = new \Twig_Loader_Chain(array(
                 $loader,
-                new \Twig_Loader_Filesystem(array(
-                    $this->themePath . '/Modules',
-                    $this->themePath,
-                    FRONTEND_MODULES_PATH,
-                    FRONTEND_PATH,
-                    '/',
-                )),
+                new \Twig_Loader_Filesystem($this->getLoadingFolders()),
             ));
             $this->environment->setLoader($loader);
         }
@@ -109,5 +104,26 @@ class TwigTemplate extends BaseTwigTemplate
         }
 
         return $this->environment->render($template, $variables);
+    }
+
+    /**
+     * @return array
+     */
+    private function getLoadingFolders()
+    {
+        $filesystem = new Filesystem();
+
+        return array_filter(
+            array(
+                $this->themePath . '/Modules',
+                $this->themePath,
+                FRONTEND_MODULES_PATH,
+                FRONTEND_PATH,
+                '/',
+            ),
+            function ($folder) use ($filesystem) {
+                return $filesystem->exists($folder);
+            }
+        );
     }
 }
