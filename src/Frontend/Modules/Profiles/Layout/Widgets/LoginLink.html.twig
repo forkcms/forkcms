@@ -5,7 +5,7 @@
 #}
 
 {% if isLoggedIn %}
-  {{ 'msg.ProfilesLoggedInAs'|trans|sprintf({$profile.display_name }}:{{ profile.url.dashboard } }})
+  {{ 'msg.ProfilesLoggedInAs'|trans|format(profile.display_name, profile.url.dashboard)|raw }}
 {% endif %}
 
 {% if not isLoggedIn %}

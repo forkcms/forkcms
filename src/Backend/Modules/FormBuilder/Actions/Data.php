@@ -32,7 +32,7 @@ class Data extends BackendBaseActionIndex
     /**
      * Form id.
      *
-     * @var	int
+     * @var int
      */
     private $id;
 

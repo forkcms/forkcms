@@ -1,0 +1,17 @@
+{% extends 'Core/Layout/Templates/Mails/Default.html.twig' %}
+
+{% block main %}
+  <h2>{{ SITE_TITLE }}: {{ 'msg.FaqOwnQuestionSubject'|trans|format(name) }}</h2>
+  <hr />
+  <h3>{{ 'lbl.SenderInformation'|trans|capitalize }}</h3>
+  <p>
+    <strong>{{ 'lbl.SentOn'|trans|capitalize }}:</strong><br />
+    {{ sentOn|spoondate(dateFormatLong, LANGUAGE) }}
+  </p>
+
+  <h3>{{ 'lbl.Content'|trans|capitalize }}</h3>
+
+  <p><strong>{{ 'lbl.Name'|trans|capitalize }}:</strong><br />{{ name }}</p>
+  <p><strong>{{ 'lbl.Email'|trans|capitalize }}:</strong><br />{{ email }}</p>
+  <p><strong>{{ 'lbl.Question'|trans|capitalize }}:</strong><br />{{ message }}</p>
+{% endblock %}

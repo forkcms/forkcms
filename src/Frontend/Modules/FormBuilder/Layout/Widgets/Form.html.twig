@@ -4,7 +4,7 @@
   <div class="inner">
     <div class="bd">
       {% if successMessage %}
-        <div id="{{ formName }}" class="message success">{{ successMessage }}</div>{% endif %}
+        <div id="{{ formName }}" class="message success">{{ successMessage|raw }}</div>{% endif %}
       {% if formBuilderError %}
         <div class="message error"><p>{{ formBuilderError }}</p></div>{% endif %}
 

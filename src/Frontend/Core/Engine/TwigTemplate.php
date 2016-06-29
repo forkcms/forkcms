@@ -61,6 +61,11 @@ class TwigTemplate extends BaseTwigTemplate
     private $baseSpoonFile;
 
     /**
+     * @var array
+     */
+    private $positions;
+
+    /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
      */
     public function __construct()
@@ -120,8 +125,7 @@ class TwigTemplate extends BaseTwigTemplate
             $this->positions = $values['positions'];
         }
 
-        // in all other cases
-        $this->variables[$key] = $values;
+        parent::assign($key, $values);
     }
 
     /**
@@ -131,7 +135,9 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * I must admit this is ugly
      *
-     * @param array positions
+     * @param array $positions
+     *
+     * @return array
      */
     private function setPositions(array $positions)
     {
@@ -173,7 +179,9 @@ class TwigTemplate extends BaseTwigTemplate
     /**
      * Convert a filename extension
      *
-     * @param string template
+     * @param string $template
+     *
+     * @return string
      */
     public function getPath($template)
     {
@@ -188,8 +196,6 @@ class TwigTemplate extends BaseTwigTemplate
      * Fetch the parsed content from this template.
      *
      * @param string $template      The location of the template file, used to display this template.
-     * @param bool   $customHeaders Are custom headers already set?
-     * @param bool   $parseCustom   Parse custom template.
      *
      * @return string The actual parsed content after executing this template.
      */

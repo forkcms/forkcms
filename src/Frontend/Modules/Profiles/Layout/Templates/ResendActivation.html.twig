@@ -16,7 +16,7 @@
         <fieldset>
           <p {% if txtEmailError %} class="errorArea"{% endif %}>
             <label for="email">{{ 'lbl.Email'|trans|capitalize }} <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field_error Email %} {% form_field Email %}
+            {% form_field email %} {% form_field_error email %}
           </p>
           <p>
             <input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|capitalize }}" />
