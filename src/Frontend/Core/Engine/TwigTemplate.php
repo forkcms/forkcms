@@ -198,18 +198,11 @@ class TwigTemplate extends BaseTwigTemplate
      */
     public function renderTemplate($template = null)
     {
-        if (!empty($this->forms)) {
-            foreach ($this->forms as $form) {
-                // using assign to pass the form as global
-                $this->environment->addGlobal('form_' . $form->getName(), $form);
-            }
-        }
-
         // template
         if ($template === null) {
             $template = $this->baseFile;
         }
 
-        return $this->environment->render($template, $this->variables);
+        return $this->render($template, $this->variables);
     }
 }
