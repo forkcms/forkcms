@@ -11,7 +11,7 @@
     </div>
     <div class="panel-body">
       <div class="change-periode content-block">
-        {% form dates %}
+        {% form date_range %}
         <div class="form-inline">
           <div class="form-group">
             <label for="startDate" class="control-label">{{ 'lbl.StartDate'|trans|capitalize }}</label>
@@ -98,7 +98,7 @@
       <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <p><a href="{{ googleTrafficSourcesURL }}">{{ 'lbl.PageviewsByTrafficSources'|trans|capitalize }}</a></p>
+            <p>{{ 'lbl.PageviewsByTrafficSources'|trans|capitalize }}</p>
           </div>
           <div class="panel-body">
             {% if source_graph_data %}

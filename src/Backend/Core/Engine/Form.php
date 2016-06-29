@@ -302,7 +302,7 @@ class Form extends \Common\Core\Form
     /**
      * Parse the form
      *
-     * @param $tpl The template instance wherein the form will be parsed.
+     * @param TwigTemplate $tpl The template instance wherein the form will be parsed.
      */
     public function parse($tpl)
     {
