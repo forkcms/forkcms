@@ -173,10 +173,15 @@ class Widget extends Object
     /**
      * Get parsed template content
      *
+     * @param string $template
      * @return string
      */
-    public function getContent()
+    public function getContent($template = null)
     {
+        if ($template !== null) {
+            return $this->tpl->getContent($template);
+        }
+
         return $this->tpl->getContent($this->templatePath);
     }
 

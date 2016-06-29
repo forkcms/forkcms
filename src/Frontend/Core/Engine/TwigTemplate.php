@@ -122,7 +122,6 @@ class TwigTemplate extends BaseTwigTemplate
         if ($key === 'page') {
             $this->baseFile = $values['template_path'];
             $this->baseSpoonFile = $values['template_path'];
-            $this->positions = $values['positions'];
         }
 
         parent::assign($key, $values);
@@ -141,7 +140,7 @@ class TwigTemplate extends BaseTwigTemplate
      */
     private function setPositions(array $positions)
     {
-        foreach ($positions as &$blocks) {
+        /*foreach ($positions as &$blocks) {
             foreach ($blocks as &$block) {
                 // skip html
                 if (!empty($block['html'])) {
@@ -173,7 +172,7 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        return $positions;
+        return $positions;*/
     }
 
     /**
@@ -201,11 +200,8 @@ class TwigTemplate extends BaseTwigTemplate
      */
     public function getContent($template)
     {
-        // bounce back trick because Pages calls getContent Method
-        // 2 times on every action
-        if (!$template || in_array($template, $this->templates)) {
-            return;
-        }
+        $template = $this->getPath($template);
+
         $path = pathinfo($template);
         $this->templates[] = $template;
 
@@ -216,10 +212,39 @@ class TwigTemplate extends BaseTwigTemplate
             $this->block = $this->getPath($template);
         }
 
+        if ($this->baseSpoonFile !== $template) {
+            return $this->render(
+                $template,
+                $this->variables
+            );
+        }
+
         // only baseFile can start the render
         if ($this->baseSpoonFile === $template) {
             return $this->renderTemplate();
         }
+    }
+
+    public function render($template, array $variables = array())
+    {
+        if (!empty($this->forms)) {
+            foreach ($this->forms as $form) {
+                // using assign to pass the form as global
+                $this->environment->addGlobal('form_' . $form->getName(), $form);
+            }
+        }
+
+        // set the positions array
+        if (!empty($this->positions)) {
+            $this->environment->addGlobal('positions', $this->setPositions($this->positions));
+        }
+
+        // template
+        if ($template === null) {
+            $template = $this->baseFile;
+        }
+
+        return $this->environment->render($template, $variables);
     }
 
     /**
@@ -240,7 +265,7 @@ class TwigTemplate extends BaseTwigTemplate
 
         // set the positions array
         if (!empty($this->positions)) {
-            $this->environment->addGlobal('positions', $this->setPositions($this->positions));
+            $this->environment->addGlobal('positions', $this->positions);
         }
 
         // template
