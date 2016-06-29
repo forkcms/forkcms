@@ -386,7 +386,9 @@ class Page extends FrontendBaseObject
                     $positions[$position][$i]['blockIsHTML'] = $positions[$position][$i]['blockIsEditor'];
                 } else {
                     $positions[$position][$i] = $block;
-                    $positions[$position][$i]['html'] = $block['blockContent'];
+                    if (array_key_exists('blockContent', $block)) {
+                        $positions[$position][$i]['html'] = $block['blockContent'];
+                    }
                 }
             }
 
