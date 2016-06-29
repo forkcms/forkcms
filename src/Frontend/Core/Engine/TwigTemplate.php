@@ -19,39 +19,11 @@ use Common\Core\Twig\Extensions\TwigFilters;
 class TwigTemplate extends BaseTwigTemplate
 {
     /**
-     * List of passed templates
-     *
-     * @var array
-     */
-    private $templates = array();
-
-    /**
-     * List of passed widgets
-     *
-     * @var array
-     */
-    private $widgets = array();
-
-    /**
-     * main action block
-     *
-     * @var array
-     */
-    private $block = '';
-
-    /**
      * theme path location
      *
      * @var string
      */
     private $themePath;
-
-    /**
-     * Base file location
-     *
-     * @var string
-     */
-    private $baseFile;
 
     /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
@@ -99,22 +71,6 @@ class TwigTemplate extends BaseTwigTemplate
     }
 
     /**
-     * Spoon assign method
-     *
-     * @param string $key
-     * @param mixed $values
-     */
-    public function assign($key, $values = null)
-    {
-        // page hook, last call
-        if ($key === 'page') {
-            $this->baseFile = $values['template_path'];
-        }
-
-        parent::assign($key, $values);
-    }
-
-    /**
      * Convert a filename extension
      *
      * @param string $template
@@ -141,8 +97,6 @@ class TwigTemplate extends BaseTwigTemplate
     {
         $template = $this->getPath($template);
 
-        $this->templates[] = $template;
-
         return $this->render(
             $template,
             $this->variables
@@ -156,11 +110,6 @@ class TwigTemplate extends BaseTwigTemplate
                 // using assign to pass the form as global
                 $this->environment->addGlobal('form_' . $form->getName(), $form);
             }
-        }
-
-        // template
-        if ($template === null) {
-            $template = $this->baseFile;
         }
 
         return $this->environment->render($template, $variables);
