@@ -61,16 +61,6 @@ class TwigTemplate extends BaseTwigTemplate
     }
 
     /**
-     * Returns the template type
-     *
-     * @return string Returns the template type
-     */
-    public function getTemplateType()
-    {
-        return 'twig';
-    }
-
-    /**
      * Convert a filename extension
      *
      * @param string $template
