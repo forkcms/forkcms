@@ -61,11 +61,6 @@ class TwigTemplate extends BaseTwigTemplate
     private $baseSpoonFile;
 
     /**
-     * @var array
-     */
-    private $positions;
-
-    /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
      */
     public function __construct()
@@ -128,54 +123,6 @@ class TwigTemplate extends BaseTwigTemplate
     }
 
     /**
-     * From assign we capture the Core Page assign
-     * so we could rebuild the positions with included
-     * module Path for widgets and actions
-     *
-     * I must admit this is ugly
-     *
-     * @param array $positions
-     *
-     * @return array
-     */
-    private function setPositions(array $positions)
-    {
-        /*foreach ($positions as &$blocks) {
-            foreach ($blocks as &$block) {
-                // skip html
-                if (!empty($block['html'])) {
-                    continue;
-                }
-
-                $block['extra_data'] = @unserialize($block['extra_data']);
-
-                // legacy search the correct module path
-                if ($block['extra_type'] === 'widget' && $block['extra_action']) {
-                    if (isset($block['extra_data']['template'])) {
-                        $tpl = substr($block['extra_data']['template'], 0, -5);
-                        $block['include_path'] = $this->widgets[$tpl];
-                    } elseif (isset($block['extra_data']['custom_template'])) {
-                        // make content blocks work again
-                        $block['include_path'] = $this->getPath(
-                            $block['extra_module'] . '/Layout/Widgets/' . $block['extra_data']['custom_template']
-                        );
-                    } else {
-                        $block['include_path'] = $this->getPath(
-                            $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.html.twig'
-                        );
-                    }
-
-                // main action block
-                } else {
-                    $block['include_path'] = $this->block;
-                }
-            }
-        }
-
-        return $positions;*/
-    }
-
-    /**
      * Convert a filename extension
      *
      * @param string $template
@@ -234,11 +181,6 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        // set the positions array
-        if (!empty($this->positions)) {
-            $this->environment->addGlobal('positions', $this->setPositions($this->positions));
-        }
-
         // template
         if ($template === null) {
             $template = $this->baseFile;
@@ -261,11 +203,6 @@ class TwigTemplate extends BaseTwigTemplate
                 // using assign to pass the form as global
                 $this->environment->addGlobal('form_' . $form->getName(), $form);
             }
-        }
-
-        // set the positions array
-        if (!empty($this->positions)) {
-            $this->environment->addGlobal('positions', $this->positions);
         }
 
         // template
