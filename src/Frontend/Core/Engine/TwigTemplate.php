@@ -149,15 +149,7 @@ class TwigTemplate extends BaseTwigTemplate
     {
         $template = $this->getPath($template);
 
-        $path = pathinfo($template);
         $this->templates[] = $template;
-
-        // collect the Widgets and Actions, we need them later
-        if (strpos($path['dirname'], 'Widgets') !== false) {
-            $this->widgets[$path['filename']] = $this->getPath($template);
-        } elseif (strpos($path['dirname'], 'Core/Layout/Templates') === false) {
-            $this->block = $this->getPath($template);
-        }
 
         if ($this->baseSpoonFile !== $template) {
             return $this->render(
