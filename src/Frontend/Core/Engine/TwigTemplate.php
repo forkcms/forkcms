@@ -19,51 +19,11 @@ use Common\Core\Twig\Extensions\TwigFilters;
 class TwigTemplate extends BaseTwigTemplate
 {
     /**
-     * List of passed templates
-     *
-     * @var array
-     */
-    private $templates = array();
-
-    /**
-     * List of passed widgets
-     *
-     * @var array
-     */
-    private $widgets = array();
-
-    /**
-     * main action block
-     *
-     * @var array
-     */
-    private $block = '';
-
-    /**
      * theme path location
      *
      * @var string
      */
     private $themePath;
-
-    /**
-     * Base file location
-     *
-     * @var string
-     */
-    private $baseFile;
-
-    /**
-     * Base file location
-     *
-     * @var string
-     */
-    private $baseSpoonFile;
-
-    /**
-     * @var array
-     */
-    private $positions;
 
     /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
@@ -101,82 +61,6 @@ class TwigTemplate extends BaseTwigTemplate
     }
 
     /**
-     * Returns the template type
-     *
-     * @return string Returns the template type
-     */
-    public function getTemplateType()
-    {
-        return 'twig';
-    }
-
-    /**
-     * Spoon assign method
-     *
-     * @param string $key
-     * @param mixed $values
-     */
-    public function assign($key, $values = null)
-    {
-        // page hook, last call
-        if ($key === 'page') {
-            $this->baseFile = $values['template_path'];
-            $this->baseSpoonFile = $values['template_path'];
-            $this->positions = $values['positions'];
-        }
-
-        parent::assign($key, $values);
-    }
-
-    /**
-     * From assign we capture the Core Page assign
-     * so we could rebuild the positions with included
-     * module Path for widgets and actions
-     *
-     * I must admit this is ugly
-     *
-     * @param array $positions
-     *
-     * @return array
-     */
-    private function setPositions(array $positions)
-    {
-        foreach ($positions as &$blocks) {
-            foreach ($blocks as &$block) {
-                // skip html
-                if (!empty($block['html'])) {
-                    continue;
-                }
-
-                $block['extra_data'] = @unserialize($block['extra_data']);
-
-                // legacy search the correct module path
-                if ($block['extra_type'] === 'widget' && $block['extra_action']) {
-                    if (isset($block['extra_data']['template'])) {
-                        $tpl = substr($block['extra_data']['template'], 0, -5);
-                        $block['include_path'] = $this->widgets[$tpl];
-                    } elseif (isset($block['extra_data']['custom_template'])) {
-                        // make content blocks work again
-                        $block['include_path'] = $this->getPath(
-                            $block['extra_module'] . '/Layout/Widgets/' . $block['extra_data']['custom_template']
-                        );
-                    } else {
-                        $block['include_path'] = $this->getPath(
-                            $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.html.twig'
-                        );
-                    }
-
-                // main action block
-                } else {
-                    $block['include_path'] = $this->block;
-                }
-            }
-        }
-
-        return $positions;
-    }
-
-    /**
      * Convert a filename extension
      *
      * @param string $template
@@ -201,35 +85,21 @@ class TwigTemplate extends BaseTwigTemplate
      */
     public function getContent($template)
     {
-        // bounce back trick because Pages calls getContent Method
-        // 2 times on every action
-        if (!$template || in_array($template, $this->templates)) {
-            return;
-        }
-        $path = pathinfo($template);
-        $this->templates[] = $template;
+        $template = $this->getPath($template);
 
-        // collect the Widgets and Actions, we need them later
-        if (strpos($path['dirname'], 'Widgets') !== false) {
-            $this->widgets[$path['filename']] = $this->getPath($template);
-        } elseif (strpos($path['dirname'], 'Core/Layout/Templates') === false) {
-            $this->block = $this->getPath($template);
-        }
-
-        // only baseFile can start the render
-        if ($this->baseSpoonFile === $template) {
-            return $this->renderTemplate();
-        }
+        return $this->render(
+            $template,
+            $this->variables
+        );
     }
 
     /**
-     * Renders the Page
-     *
-     * @param string $template path to render
+     * @param string $template
+     * @param array $variables
      *
      * @return string
      */
-    public function renderTemplate($template = null)
+    public function render($template, array $variables = array())
     {
         if (!empty($this->forms)) {
             foreach ($this->forms as $form) {
@@ -238,16 +108,6 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        // set the positions array
-        if (!empty($this->positions)) {
-            $this->environment->addGlobal('positions', $this->setPositions($this->positions));
-        }
-
-        // template
-        if ($template === null) {
-            $template = $this->baseFile;
-        }
-
-        return $this->environment->render($template, $this->variables);
+        return $this->environment->render($template, $variables);
     }
 }

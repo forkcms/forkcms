@@ -112,7 +112,8 @@ class Widget extends FrontendBaseObject
         }
 
         // call the execute method of the real action (defined in the module)
-        $this->output = $this->object->execute();
+        $this->object->execute();
+        $this->output = $this->render($this->getCustomTemplate());
     }
 
     /**
@@ -134,15 +135,25 @@ class Widget extends FrontendBaseObject
     }
 
     /**
-     * Get the block content
-     *
      * @return string
      */
     public function getContent()
     {
+        return $this->output;
+    }
+
+    /**
+     * Get the block content
+     *
+     * @param string $template
+     *
+     * @return string
+     */
+    public function render($template = null)
+    {
         // set path to template if the widget didn't return any data
         if ($this->output === null) {
-            return trim($this->object->getContent());
+            return trim($this->object->getContent($template));
         }
 
         // return possible output
@@ -157,6 +168,17 @@ class Widget extends FrontendBaseObject
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomTemplate()
+    {
+        $data = @unserialize($this->data);
+        if (is_array($data) && array_key_exists('custom_template', $data)) {
+            return $this->module . '/Layout/Widgets/' . $data['custom_template'];
+        }
     }
 
     /**
