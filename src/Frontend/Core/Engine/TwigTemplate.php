@@ -93,6 +93,12 @@ class TwigTemplate extends BaseTwigTemplate
         );
     }
 
+    /**
+     * @param string $template
+     * @param array $variables
+     *
+     * @return string
+     */
     public function render($template, array $variables = array())
     {
         if (!empty($this->forms)) {
