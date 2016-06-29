@@ -214,6 +214,9 @@ class Form extends FrontendBaseWidget
                     if (isset($field['validations']['email'])) {
                         $txt->setAttribute('type', 'email');
                     }
+                    if ($item['placeholder']) {
+                        $txt->setAttribute('placeholder', $item['placeholder']);
+                    }
 
                     // get content
                     $item['html'] = $txt->parse();
@@ -270,6 +273,9 @@ class Form extends FrontendBaseWidget
                     // add required attribute
                     if ($item['required']) {
                         $txt->setAttribute('required', null);
+                    }
+                    if ($item['placeholder']) {
+                        $txt->setAttribute('placeholder', $item['placeholder']);
                     }
 
                     // get content
