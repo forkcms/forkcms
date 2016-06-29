@@ -54,13 +54,6 @@ class TwigTemplate extends BaseTwigTemplate
     private $baseFile;
 
     /**
-     * Base file location
-     *
-     * @var string
-     */
-    private $baseSpoonFile;
-
-    /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
      */
     public function __construct()
@@ -116,7 +109,6 @@ class TwigTemplate extends BaseTwigTemplate
         // page hook, last call
         if ($key === 'page') {
             $this->baseFile = $values['template_path'];
-            $this->baseSpoonFile = $values['template_path'];
         }
 
         parent::assign($key, $values);
@@ -151,17 +143,10 @@ class TwigTemplate extends BaseTwigTemplate
 
         $this->templates[] = $template;
 
-        if ($this->baseSpoonFile !== $template) {
-            return $this->render(
-                $template,
-                $this->variables
-            );
-        }
-
-        // only baseFile can start the render
-        if ($this->baseSpoonFile === $template) {
-            return $this->renderTemplate();
-        }
+        return $this->render(
+            $template,
+            $this->variables
+        );
     }
 
     public function render($template, array $variables = array())
@@ -179,22 +164,5 @@ class TwigTemplate extends BaseTwigTemplate
         }
 
         return $this->environment->render($template, $variables);
-    }
-
-    /**
-     * Renders the Page
-     *
-     * @param string $template path to render
-     *
-     * @return string
-     */
-    public function renderTemplate($template = null)
-    {
-        // template
-        if ($template === null) {
-            $template = $this->baseFile;
-        }
-
-        return $this->render($template, $this->variables);
     }
 }
