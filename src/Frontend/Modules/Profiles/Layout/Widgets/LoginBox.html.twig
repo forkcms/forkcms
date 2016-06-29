@@ -8,7 +8,7 @@
   <div class="inner">
     {% if isLoggedIn %}
       <div class="bd content">
-        {{ 'msg.ProfilesLoggedInAs'|trans|format( profile.display_name, profile.url.dashboard )|raw }} -
+        {{ 'msg.ProfilesLoggedInAs'|trans|format(profile.display_name, profile.url.dashboard)|raw }} -
         <a href="{{ profile.url.settings }}">{{ 'lbl.Settings'|trans|capitalize }}</a>
       </div>
     {% endif %}
