@@ -55,6 +55,14 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
+        {% if showLocaleDelete %}
+          <div class="btn-group pull-left" role="group">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+              <span class="fa fa-trash-o"></span>
+              {{ 'lbl.Delete'|trans|capitalize }}
+            </button>
+          </div>
+        {% endif %}
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
             <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
@@ -64,4 +72,27 @@
     </div>
   </div>
   {% endform %}
+
+  {% if showLocaleDelete %}
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
+          </div>
+          <div class="modal-body">
+            <p>{{ 'msg.ConfirmDelete'|trans|sprintf(item.title) }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+            </button>
+            <a href="{{ geturl('delete') }}&amp;id={{ id }}" class="btn btn-danger">
+              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}
