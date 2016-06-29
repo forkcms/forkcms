@@ -178,6 +178,14 @@ abstract class BaseTwigTemplate extends TwigEngine
             'SITE_TITLE',
             $this->forkSettings->get('Core', 'site_title_'.$this->language, SITE_DEFAULT_TITLE)
         );
+        $twig->addGlobal(
+            'SITE_URL',
+            SITE_URL
+        );
+        $twig->addGlobal(
+            'SITE_DOMAIN',
+            SITE_DOMAIN
+        );
 
         // facebook stuff
         if ($this->forkSettings->get('Core', 'facebook_admin_ids', null) !== null) {
