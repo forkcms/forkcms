@@ -16,6 +16,10 @@
         <translation language="lt"><![CDATA[aktyvus]]></translation>
         <translation language="el"><![CDATA[Ενεργή]]></translation>
       </item>
+      <item type="label" name="FilterProfiles">
+        <translation language="nl"><![CDATA[filter profielen]]></translation>
+        <translation language="en"><![CDATA[filter profiles]]></translation>
+      </item>
       <item type="label" name="AddGroup">
         <translation language="nl"><![CDATA[groep toevoegen]]></translation>
         <translation language="en"><![CDATA[add group]]></translation>
