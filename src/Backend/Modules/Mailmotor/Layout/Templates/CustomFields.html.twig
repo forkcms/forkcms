@@ -4,7 +4,7 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {% if showMailmotorAddCustomField %}
-        {{ macro.buttonIcon(geturl('add_custom_field' ) ~ '&group_id=' ~ group.id, 'plus-square', 'lbl.AddCustomField'|trans|ucfirst) }}
+        {{ macro.buttonIcon(geturl('add_custom_field') ~ '&group_id=' ~ group.id, 'plus-square', 'lbl.AddCustomField'|trans|ucfirst) }}
       {% endif %}
     </div>
   </div>
@@ -14,7 +14,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% if dataGrid %}
-        <form action="{{ geturl('mass_custom_field_action' ) }}" method="get" class="forkForms submitWithLink" id="massCustomFieldAction">
+        <form action="{{ geturl('mass_custom_field_action') }}" method="get" class="forkForms submitWithLink" id="massCustomFieldAction">
         <input type="hidden" name="group_id" value="{{ group.id }}" />
         {{ dataGrid|raw }}
         </form>

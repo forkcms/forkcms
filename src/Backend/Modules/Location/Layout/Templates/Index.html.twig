@@ -42,12 +42,12 @@
             </div>
             <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
               <label for="width" class="control-label">{{ 'lbl.Width'|trans|ucfirst }}</label>
-              <p class="help-block">{{ 'msg.WidthHelp'|trans|format(300,800 )|raw }}</p>
+              <p class="help-block">{{ 'msg.WidthHelp'|trans|format(300,800)|raw }}</p>
               {% form_field width %} {% form_field_error width %}
             </div>
             <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
               <label for="height" class="control-label">{{ 'lbl.Height'|trans|ucfirst }}</label>
-              <p class="help-block">{{ 'msg.HeightHelp'|trans|format(150 )|raw }}</p>
+              <p class="help-block">{{ 'msg.HeightHelp'|trans|format(150)|raw }}</p>
               {% form_field height %} {% form_field_error height %}
             </div>
             <div class="form-group">
@@ -76,7 +76,7 @@
   {% if not dataGrid %}
     <div class="row fork-module-content">
       <div class="col-md-12">
-        <p>{{ 'msg.NoItems'|trans|format(geturl('add' )|raw ) }}</p>
+        <p>{{ 'msg.NoItems'|trans|format(geturl('add')|raw) }}</p>
       </div>
     </div>
   {% endif %}

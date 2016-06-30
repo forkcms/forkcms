@@ -20,7 +20,7 @@
             <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
           </label>
           {% form_field display_name %} {% form_field_error display_name %}
-          <small class="helpTxt">{{ 'msg.HelpDisplayNameChanges'|trans|format( maxDisplayNameChanges, displayNameChangesLeft ) }}</small>
+          <small class="helpTxt">{{ 'msg.HelpDisplayNameChanges'|trans|format( maxDisplayNameChanges, displayNameChangesLeft) }}</small>
         </p>
         <p{% if txtEmailError %} class="errorArea"{% endif %}>
           <label for="email">{{ 'lbl.Email'|trans|ucfirst }}

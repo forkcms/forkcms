@@ -4,11 +4,11 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {% if showMailmotorIndex %}
-        {{ macro.buttonIcon(geturl('index'), 'list', 'msg.BackToMailings'|trans|format(mailing.name )|raw ) }}
+        {{ macro.buttonIcon(geturl('index'), 'list', 'msg.BackToMailings'|trans|format(mailing.name)|raw) }}
       {% endif %}
 
       {% if showMailmotorExportStatistics %}
-        {{ macro.buttonIcon(geturl('export_statistics' ) ~ '&id=' ~ mailing.id, 'download', ''lbl.ExportStatistics'|trans|ucfirst') }}
+        {{ macro.buttonIcon(geturl('export_statistics') ~ '&id=' ~ mailing.id, 'download', ''lbl.ExportStatistics'|trans|ucfirst') }}
       {% endif %}
     </div>
   </div>
@@ -73,7 +73,7 @@
           </p>
           {% if stats.bounces %}
             <p>
-            <strong>{{ stats.bounces }}/{{ stats.recipients_total }} </strong><a href="{{ geturl('statistics_bounces' ) }}&amp;mailing_id={{ mailing.id }}">{{ 'lbl.BounceRate'|trans|ucfirst }}</a>
+            <strong>{{ stats.bounces }}/{{ stats.recipients_total }} </strong><a href="{{ geturl('statistics_bounces') }}&amp;mailing_id={{ mailing.id }}">{{ 'lbl.BounceRate'|trans|ucfirst }}</a>
             <small>({{ stats.bounces_percentage }})</small></p>{% endif %}
         </div>
       </div>

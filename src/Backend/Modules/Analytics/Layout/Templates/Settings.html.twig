@@ -116,7 +116,7 @@
       <div class="btn-toolbar">
         {% if showAnalyticsReset and fileCertificate is not defined %}
           <div class="btn-group" role="group">
-            <a href="{{ geturl('reset' ) }}">{{ 'msg.RemoveAccountLink'|trans|ucfirst }}</a>
+            <a href="{{ geturl('reset') }}">{{ 'msg.RemoveAccountLink'|trans|ucfirst }}</a>
           </div>
         {% endif %}
         {% if not profile and (noAccounts == false or noAccounts is not defined) %}

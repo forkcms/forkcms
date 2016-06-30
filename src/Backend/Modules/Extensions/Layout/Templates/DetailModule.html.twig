@@ -39,7 +39,7 @@
               </h3>
             </div>
             <div class="panel-body">
-              <p>{{ 'msg.CronjobsInfo'|trans|format(PATH_WWW_SITE_URL )|raw }}</p>
+              <p>{{ 'msg.CronjobsInfo'|trans|format(PATH_WWW_SITE_URL)|raw }}</p>
             </div>
             {{ dataGridCronjobs }}
           </div>
@@ -113,13 +113,13 @@
                 <span class="modal-title h4">{{ 'lbl.Install'|trans|ucfirst }}</span>
               </div>
               <div class="modal-body">
-                <p>{{ 'msg.ConfirmModuleInstall'|trans|format(name )|raw }}</p>
+                <p>{{ 'msg.ConfirmModuleInstall'|trans|format(name)|raw }}</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                   <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
-                <a href="{{ geturl('install_module' ) }}&amp;theme={{ name }}" class="btn btn-primary">
+                <a href="{{ geturl('install_module') }}&amp;theme={{ name }}" class="btn btn-primary">
                   <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|ucfirst }}
                 </a>
               </div>

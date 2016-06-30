@@ -116,7 +116,7 @@
                 {% if showProfilesAddProfileGroup %}
                   <div class="btn-toolbar pull-right">
                     <div class="btn-group" role="group">
-                      {{ macro.buttonIcon(geturl('add_profile_group') ~ '&id=' ~  profile.id , 'plus-square', 'lbl.AddGroup'|trans|ucfirst, 'btn-primary' ) }}
+                      {{ macro.buttonIcon(geturl('add_profile_group') ~ '&id=' ~  profile.id , 'plus-square', 'lbl.AddGroup'|trans|ucfirst, 'btn-primary') }}
                     </div>
                   </div>
                 {% endif %}
@@ -188,10 +188,10 @@
               </div>
               <div class="modal-body">
                 {% if deleted %}
-                  <p>{{ 'msg.ConfirmUndelete'|trans|format(profile.email )|raw }}</p>
+                  <p>{{ 'msg.ConfirmUndelete'|trans|format(profile.email)|raw }}</p>
                 {% endif %}
                 {% if not deleted %}
-                  <p>{{ 'msg.ConfirmDelete'|trans|format(profile.email )|raw }}</p>
+                  <p>{{ 'msg.ConfirmDelete'|trans|format(profile.email)|raw }}</p>
                 {% endif %}
               </div>
               <div class="modal-footer">
@@ -199,12 +199,12 @@
                   <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
                 {% if deleted %}
-                  <a href="{{ geturl('delete' ) }}&amp;id={{ profile.id }}" class="btn btn-primary">
+                  <a href="{{ geturl('delete') }}&amp;id={{ profile.id }}" class="btn btn-primary">
                     {{ 'lbl.Undelete'|trans|ucfirst }}
                   </a>
                 {% endif %}
                 {% if not deleted %}
-                  <a href="{{ geturl('delete' ) }}&amp;id={{ profile.id }}" class="btn btn-danger">
+                  <a href="{{ geturl('delete') }}&amp;id={{ profile.id }}" class="btn btn-danger">
                     <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                   </a>
                 {% endif %}
@@ -227,10 +227,10 @@
               </div>
               <div class="modal-body">
                 {% if blocked %}
-                  <p>{{ 'msg.ConfirmUnblock'|trans|format(profile.email )|raw }}</p>
+                  <p>{{ 'msg.ConfirmUnblock'|trans|format(profile.email)|raw }}</p>
                 {% endif %}
                 {% if not blocked %}
-                  <p>{{ 'msg.ConfirmBlock'|trans|format(profile.email )|raw }}</p>
+                  <p>{{ 'msg.ConfirmBlock'|trans|format(profile.email)|raw }}</p>
                 {% endif %}
               </div>
               <div class="modal-footer">
@@ -238,13 +238,13 @@
                   <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
                 {% if not blocked %}
-                  <a href="{{ geturl('block' ) }}&amp;id={{ profile.id }}" class="btn btn-warning">
-                    <span class="fa fa-ban"></span>{{ 'lbl.Block'|trans|ucfirst }}
+                  <a href="{{ geturl('block') }}&amp;id={{ profile.id }}" class="btn btn-warning">
+                    <span class="fa fa-ban"></span>{{ 'lbl.Block'|trans|ucfirst}}
                   </a>
                 {% endif %}
                 {% if blocked %}
-                  <a href="{{ geturl('block' ) }}&amp;id={{ profile.id }}" class="btn btn-primary">
-                    <span class="fa fa-check"></span>{{ 'lbl.Unblock'|trans|ucfirst }}
+                  <a href="{{ geturl('block') }}&amp;id={{ profile.id }}" class="btn btn-primary">
+                    <span class="fa fa-check"></span>{{ 'lbl.Unblock'|trans|ucfirst}}
                   </a>
                 {% endif %}
               </div>

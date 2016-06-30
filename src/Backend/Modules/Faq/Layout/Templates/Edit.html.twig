@@ -115,7 +115,7 @@
                       <div class="panel-heading" role="tab" id="_itr_11-heading-{{ _itr_11.id }}">
                         <h4 class="panel-title">
                           <a data-toggle="collapse" data-parent="#_itr_11" href="#_itr_11-collapse-{{ _itr_11.id }}" aria-expanded="true" aria-controls="_itr_11-collapse-{{ _itr_11.id }}">
-                            <span class="fa fa-caret-right fa-fw"></span>{{ _itr_11.text|truncate(150 ) }}
+                            <span class="fa fa-caret-right fa-fw"></span>{{ _itr_11.text|truncate(150) }}
                           </a>
                         </h4>
                       </div>
@@ -172,12 +172,12 @@
                 <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
               </div>
               <div class="modal-body">
-                <p>{{ 'msg.ConfirmDelete'|trans|format(title )|raw }}</p>
+                <p>{{ 'msg.ConfirmDelete'|trans|format(title)|raw }}</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                   <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}</button>
-                <a href="{{ geturl('delete' ) }}&amp;id={{ item.id }}" class="btn btn-danger">
+                <a href="{{ geturl('delete') }}&amp;id={{ item.id }}" class="btn btn-danger">
                   <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                 </a>
               </div>

@@ -37,7 +37,7 @@
           {% set url = url ~ '&group_id=' ~ group.id %}
         {% endif %}
 
-        {{ macro.buttonIcon(url, 'plus-square', 'lbl.AddEmail'|trans|ucfirst ) }}
+        {{ macro.buttonIcon(url, 'plus-square', 'lbl.AddEmail'|trans|ucfirst) }}
       {% endif %}
     </div>
   </div>
@@ -86,7 +86,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% if dataGrid %}
-        <form action="{{ geturl('mass_address_action' ) }}" method="get" class="forkForms submitWithLink" id="massAddressAction">
+        <form action="{{ geturl('mass_address_action') }}" method="get" class="forkForms submitWithLink" id="massAddressAction">
         <input type="hidden" name="offset" value="{{ offset }}" />
         <input type="hidden" name="order" value="{{ order }}" />
         <input type="hidden" name="sort" value="{{ sort }}" />

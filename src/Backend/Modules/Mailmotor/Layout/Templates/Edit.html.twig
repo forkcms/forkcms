@@ -12,7 +12,7 @@
           {% for _itr_17 in wizard %}
             <li class="{% if _itr_17.selected %}active{% endif %}{% if not _itr_17.stepLink %}navbar-text{% endif %}">
               {% if _itr_17.stepLink %}
-              <a href="{{ geturl('edit' ) }}&amp;id={{ mailing.id }}&amp;step={{ _itr_17.id }}">
+              <a href="{{ geturl('edit') }}&amp;id={{ mailing.id }}&amp;step={{ _itr_17.id }}">
                 {% endif %}
                 <span>{{ _itr_17.id }}. {{ _itr_17.label|ucfirst }}</span>
                 {% if _itr_17.stepLink %}
@@ -123,7 +123,7 @@
                       <li class="checkbox">
                         <label for="{{ group.id }}">
                           {{ group.chkGroups|raw }}
-                          <attr title="{{ 'msg.GroupsNumberOfRecipients'|trans|format(group.recipients )|raw }}">
+                          <attr title="{{ 'msg.GroupsNumberOfRecipients'|trans|format(group.recipients)|raw }}">
                             {{ group.label|ucfirst }}
                             ({% if group.recipients %}{{ group.recipients }}{% endif %}{% if not group.recipients %}{{ lbl.QuantityNo }}{% endif %} {% if group.single %}{{ lbl.EmailAddress }}{% endif %}{% if not group.single %}{{ lbl.EmailAddresses }}{% endif %})
                           </attr>
@@ -247,7 +247,7 @@
                 <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
               <div id="iframeBox">
-                <iframe id="contentBox" src="{{ geturl('edit_mailing_iframe' ) }}&amp;id={{ mailing.id }}" height="100%" width="100%"></iframe>
+                <iframe id="contentBox" src="{{ geturl('edit_mailing_iframe') }}&amp;id={{ mailing.id }}" height="100%" width="100%"></iframe>
               </div>
             </div>
             {% if txtContentPlain %}
