@@ -9,7 +9,7 @@
     <ul>
       {% for tag in tags %}
       <li>
-        <a href="{{ geturlforblock('Tag','Detail') }}/{{ tag.url }}" rel="tag">
+        <a href="{{ geturlforblock('Tags','Detail') }}/{{ tag.url }}" rel="tag">
           {{ tag.name }}
         </a>
         <span class="badge hidden-phone">{{ tag.number }}</span>
