@@ -21,7 +21,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
-              {{ 'lbl.Certificate'|trans|capitalize }}
+              {{ 'lbl.Certificate'|trans|ucfirst }}
             </h3>
           </div>
           <div class="panel-body">
@@ -30,7 +30,7 @@
                 {{ 'msg.CertificateHelp'|trans|raw }}
               </p>
               {% form_field_error certificate %} {% form_field certificate %}
-              <label for="email" class="control-label">{{ 'lbl.Email'|trans|capitalize }}</label>
+              <label for="email" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
               {% form_field_error email %} {% form_field email %}
             </div>
           </div>
@@ -44,7 +44,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
-              {{ 'lbl.ChooseThisAccount'|trans|capitalize }}
+              {{ 'lbl.ChooseThisAccount'|trans|ucfirst }}
             </h3>
           </div>
           <div class="panel-body">
@@ -62,7 +62,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
-              {{ 'lbl.ChooseWebsiteProfile'|trans|capitalize }}
+              {{ 'lbl.ChooseWebsiteProfile'|trans|ucfirst }}
             </h3>
           </div>
           <div class="panel-body">
@@ -80,7 +80,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
-              {{ 'lbl.LinkedProfile'|trans|capitalize }}
+              {{ 'lbl.LinkedProfile'|trans|ucfirst }}
             </h3>
           </div>
           <div class="panel-body">
@@ -98,7 +98,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
-              {{ 'lbl.ChooseWebsiteProfile'|trans|capitalize }}
+              {{ 'lbl.ChooseWebsiteProfile'|trans|ucfirst }}
             </h3>
           </div>
           <div class="panel-body">
@@ -116,13 +116,13 @@
       <div class="btn-toolbar">
         {% if showAnalyticsReset and fileCertificate is not defined %}
           <div class="btn-group" role="group">
-            <a href="{{ geturl('reset' ) }}">{{ 'msg.RemoveAccountLink'|trans|capitalize }}</a>
+            <a href="{{ geturl('reset' ) }}">{{ 'msg.RemoveAccountLink'|trans|ucfirst }}</a>
           </div>
         {% endif %}
         {% if not profile and (noAccounts == false or noAccounts is not defined) %}
           <div class="btn-group pull-right" role="group">
             <button id="save" type="submit" name="save" class="btn btn-primary">
-              <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
+              <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
             </button>
           </div>
         {% endif %}

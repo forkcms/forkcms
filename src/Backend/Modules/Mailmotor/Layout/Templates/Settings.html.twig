@@ -27,14 +27,14 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabGeneral" aria-controls="general" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|capitalize }}</a>
+            <a href="#tabGeneral" aria-controls="general" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
           </li>
           <li role="presentation">
-            <a href="#tabAccount" aria-controls="account" role="tab" data-toggle="tab">CampaignMonitor - {{ 'lbl.AccountSettings'|trans|capitalize }}</a>
+            <a href="#tabAccount" aria-controls="account" role="tab" data-toggle="tab">CampaignMonitor - {{ 'lbl.AccountSettings'|trans|ucfirst }}</a>
           </li>
           {% if account %}
             <li role="presentation">
-              <a href="#tabClient" aria-controls="client" role="tab" data-toggle="tab">CampaignMonitor - {{ 'lbl.ClientSettings'|trans|capitalize }}</a>
+              <a href="#tabClient" aria-controls="client" role="tab" data-toggle="tab">CampaignMonitor - {{ 'lbl.ClientSettings'|trans|ucfirst }}</a>
             </li>
           {% endif %}
         </ul>
@@ -46,21 +46,21 @@
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      {{ 'lbl.Sender'|trans|capitalize }}
+                      {{ 'lbl.Sender'|trans|ucfirst }}
                     </h4>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
                       <label for="fromName" class="control-label">
-                        {{ 'lbl.Name'|trans|capitalize }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                        {{ 'lbl.Name'|trans|ucfirst }}
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
                       {% form_field_error from_name %} {% form_field from_name %}
                     </div>
                     <div class="form-group">
                       <label for="fromEmail" class="control-label">
-                        {{ 'lbl.EmailAddress'|trans|capitalize }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                        {{ 'lbl.EmailAddress'|trans|ucfirst }}
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
                       {% form_field_error from_email %} {% form_field from_email %}
                     </div>
@@ -73,14 +73,14 @@
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      {{ 'lbl.ReplyTo'|trans|capitalize }}
+                      {{ 'lbl.ReplyTo'|trans|ucfirst }}
                     </h4>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
                       <label for="replyToEmail" class="control-label">
-                        {{ 'lbl.EmailAddress'|trans|capitalize }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                        {{ 'lbl.EmailAddress'|trans|ucfirst }}
+                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
                       {% form_field_error reply_to_email %} {% form_field reply_to_email %}
                     </div>
@@ -93,7 +93,7 @@
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      {{ 'lbl.PlainTextVersion'|trans|capitalize }}
+                      {{ 'lbl.PlainTextVersion'|trans|ucfirst }}
                     </h4>
                   </div>
                   <div class="panel-body">
@@ -101,7 +101,7 @@
                       <ul class="list-unstyled">
                         <li class="checkbox">
                           <label for="plainTextEditable" class="control-label">
-                            {% form_field plain_text_editable %} {{ 'msg.PlainTextEditable'|trans|capitalize }}
+                            {% form_field plain_text_editable %} {{ 'msg.PlainTextEditable'|trans|ucfirst }}
                           </label>
                         </li>
                       </ul>
@@ -116,14 +116,14 @@
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-title">
-                        {{ 'lbl.Prices'|trans|capitalize }}
+                        {{ 'lbl.Prices'|trans|ucfirst }}
                       </h4>
                     </div>
                     <div class="panel-body">
                       <div class="form-group">
                         <label for="pricePerEmail" class="control-label">
-                          {{ 'lbl.PerSentMailing'|trans|capitalize }}
-                          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                          {{ 'lbl.PerSentMailing'|trans|ucfirst }}
+                          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                         </label>
                         <p class="help-block">{{ 'msg.HelpPrice'|trans }}</p>
                         <div class="form-inline">
@@ -135,8 +135,8 @@
                       </div>
                       <div class="form-group">
                         <label for="pricePerEmail" class="control-label">
-                          {{ 'lbl.PerCampaign'|trans|capitalize }}
-                          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                          {{ 'lbl.PerCampaign'|trans|ucfirst }}
+                          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                         </label>
                         <p class="help-block">{{ 'msg.HelpPrice'|trans }}</p>
                         <div class="form-inline">
@@ -156,7 +156,7 @@
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right" role="group">
                     <button id="save" type="submit" name="save" class="btn btn-primary">
-                      <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
+                      <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
                     </button>
                   </div>
                 </div>
@@ -171,22 +171,22 @@
                 <div class="form-group">
                   <label for="url" class="control-label">
                     {{ 'lbl.URL'|trans|uppercase }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
                   <p class="help-block">{{ 'msg.HelpCMURL'|trans }}</p>
                   {% form_field_error url %} {% form_field url %}
                 </div>
                 <div class="form-group">
                   <label for="username" class="control-label">
-                    {{ 'lbl.Username'|trans|capitalize }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                    {{ 'lbl.Username'|trans|ucfirst }}
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
                   {% form_field_error username %} {% form_field username %}
                 </div>
                 <div class="form-group">
                   <label for="password" class="control-label">
-                    {{ 'lbl.Password'|trans|capitalize }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                    {{ 'lbl.Password'|trans|ucfirst }}
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
                   {% form_field_error password %} {% form_field password %}
                 </div>
@@ -228,7 +228,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="clientId" class="control-label">{{ 'lbl.Client'|trans|capitalize }}</label>
+                    <label for="clientId" class="control-label">{{ 'lbl.Client'|trans|ucfirst }}</label>
                     {% if not clientId %}
                       <p class="text-danger"><strong>{{ 'msg.NoClientID'|trans }}</strong></p>
                     {% endif %}
@@ -236,17 +236,17 @@
                   </div>
                   <div class="form-group">
                     <label for="companyName" class="control-label">
-                      {{ 'lbl.CompanyName'|trans|capitalize }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                      {{ 'lbl.CompanyName'|trans|ucfirst }}
+                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                     </label>
                     {% form_field_error company_name %} {% form_field company_name %}
                   </div>
                   <div class="form-group">
-                    <label for="countries" class="control-label">{{ 'lbl.Country'|trans|capitalize }}</label>
+                    <label for="countries" class="control-label">{{ 'lbl.Country'|trans|ucfirst }}</label>
                     {% form_field_error countries %} {% form_field countries %}
                   </div>
                   <div class="form-group">
-                    <label for="timezones" class="control-label">{{ 'lbl.Timezone'|trans|capitalize }}</label>
+                    <label for="timezones" class="control-label">{{ 'lbl.Timezone'|trans|ucfirst }}</label>
                     {% form_field_error timezones %} {% form_field timezones %}
                   </div>
                 </div>
@@ -256,7 +256,7 @@
                   <div class="btn-toolbar">
                     <div class="btn-group pull-right" role="group">
                       <button id="save" type="submit" name="save" class="btn btn-primary">
-                        <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
+                        <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
                       </button>
                     </div>
                   </div>

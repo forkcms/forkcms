@@ -10,16 +10,16 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="name" class="control-label">
-          {{ 'lbl.ReferenceCode'|trans|capitalize }}
-          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+          {{ 'lbl.ReferenceCode'|trans|ucfirst }}
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
         </label>
         <p class="help-block">{{ 'msg.HelpAddName'|trans }}</p>
         {% form_field_error name %} {% form_field name %}
       </div>
       <div class="form-group">
         <label for="value" class="control-label">
-          {{ 'lbl.Translation'|trans|capitalize }}
-          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+          {{ 'lbl.Translation'|trans|ucfirst }}
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
         </label>
         <p class="help-block">{{ 'msg.HelpAddValue'|trans }}</p>
         {% form_field_error value %} {% form_field value %}
@@ -27,25 +27,25 @@
       <div class="row">
         <div class="col-md-3">
           <div class="form-group">
-            <label for="language" class="control-label">{{ 'lbl.Language'|trans|capitalize }}</label>
+            <label for="language" class="control-label">{{ 'lbl.Language'|trans|ucfirst }}</label>
             {% form_field_error language %} {% form_field language %}
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="application" class="control-label">{{ 'lbl.Application'|trans|capitalize }}</label>
+            <label for="application" class="control-label">{{ 'lbl.Application'|trans|ucfirst }}</label>
             {% form_field_error application %} {% form_field application %}
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="module" class="control-label">{{ 'lbl.Module'|trans|capitalize }}</label>
+            <label for="module" class="control-label">{{ 'lbl.Module'|trans|ucfirst }}</label>
             {% form_field_error module %} {% form_field module %}
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="type" class="control-label">{{ 'lbl.Type'|trans|capitalize }}</label>
+            <label for="type" class="control-label">{{ 'lbl.Type'|trans|ucfirst }}</label>
             {% form_field_error type %} {% form_field type %}
           </div>
         </div>
@@ -57,7 +57,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
+            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>

@@ -14,7 +14,7 @@
               {% if _itr_17.stepLink %}
               <a href="{{ geturl('edit' ) }}&amp;id={{ mailing.id }}&amp;step={{ _itr_17.id }}">
                 {% endif %}
-                <span>{{ _itr_17.id }}. {{ _itr_17.label|capitalize }}</span>
+                <span>{{ _itr_17.id }}. {{ _itr_17.label|ucfirst }}</span>
                 {% if _itr_17.stepLink %}
               </a>
               {% endif %}
@@ -33,23 +33,23 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  {{ 'lbl.Settings'|trans|capitalize }}
+                  {{ 'lbl.Settings'|trans|ucfirst }}
                 </h4>
               </div>
               <div class="panel-body">
                 <div class="form-group">
                   <label for="name" class="control-label">
-                    {{ 'lbl.Name'|trans|capitalize }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                    {{ 'lbl.Name'|trans|ucfirst }}
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
-                  <p class="help-block">{{ 'msg.NameInternalUseOnly'|trans|capitalize }}</p>
+                  <p class="help-block">{{ 'msg.NameInternalUseOnly'|trans|ucfirst }}</p>
                   {% form_field_error name %} {% form_field name %}
                 </div>
                 {% if ddmCampaign %}
                   <div class="form-group">
                     <label for="campaign" class="control-label">
-                      {{ 'lbl.Campaign'|trans|capitalize }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                      {{ 'lbl.Campaign'|trans|ucfirst }}
+                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                     </label>
                     {% form_field_error campaign %} {% form_field campaign %}
                   </div>
@@ -63,21 +63,21 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  {{ 'lbl.Sender'|trans|capitalize }}
+                  {{ 'lbl.Sender'|trans|ucfirst }}
                 </h4>
               </div>
               <div class="panel-body">
                 <div class="form-group">
                   <label for="fromName" class="control-label">
-                    {{ 'lbl.Name'|trans|capitalize }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                    {{ 'lbl.Name'|trans|ucfirst }}
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
                   {% form_field_error from_name %} {% form_field from_name %}
                 </div>
                 <div class="form-group">
                   <label for="fromEmail" class="control-label">
-                    {{ 'lbl.EmailAddress'|trans|capitalize }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                    {{ 'lbl.EmailAddress'|trans|ucfirst }}
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
                   {% form_field_error from_email %} {% form_field from_email %}
                 </div>
@@ -90,14 +90,14 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  {{ 'lbl.ReplyTo'|trans|capitalize }}
+                  {{ 'lbl.ReplyTo'|trans|ucfirst }}
                 </h4>
               </div>
               <div class="panel-body">
                 <div class="form-group">
                   <label for="replyToEmail" class="control-label">
-                    {{ 'lbl.EmailAddress'|trans|capitalize }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                    {{ 'lbl.EmailAddress'|trans|ucfirst }}
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
                   {% form_field_error reply_to_email %} {% form_field reply_to_email %}
                 </div>
@@ -110,7 +110,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  {{ 'lbl.Recipients'|trans|capitalize }}
+                  {{ 'lbl.Recipients'|trans|ucfirst }}
                 </h4>
               </div>
               <div class="panel-body">
@@ -124,7 +124,7 @@
                         <label for="{{ group.id }}">
                           {{ group.chkGroups|raw }}
                           <attr title="{{ 'msg.GroupsNumberOfRecipients'|trans|sprintf(group.recipients ) }}">
-                            {{ group.label|capitalize }}
+                            {{ group.label|ucfirst }}
                             ({% if group.recipients %}{{ group.recipients }}{% endif %}{% if not group.recipients %}{{ lbl.QuantityNo }}{% endif %} {% if group.single %}{{ lbl.EmailAddress }}{% endif %}{% if not group.single %}{{ lbl.EmailAddresses }}{% endif %})
                           </attr>
                         </label>
@@ -141,7 +141,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  {{ 'msg.TemplateLanguage'|trans|capitalize }}
+                  {{ 'msg.TemplateLanguage'|trans|ucfirst }}
                 </h4>
               </div>
               <div class="panel-body">
@@ -153,7 +153,7 @@
                     {% for languag in languages %}
                       <li class="radio">
                         <label for="{{ languag.id }}">
-                          {{ languag.rbtLanguages|raw }} {{ languag.label|capitalize }}
+                          {{ languag.rbtLanguages|raw }} {{ languag.label|ucfirst }}
                         </label>
                       </li>
                     {% endfor %}
@@ -168,7 +168,7 @@
             <div class="btn-toolbar">
               <div class="btn-group pull-right" role="group">
                 <button id="toStep2" type="submit" name="to_step_2" class="btn btn-primary">
-                  {{ 'lbl.ToStep'|trans|capitalize }}
+                  {{ 'lbl.ToStep'|trans|ucfirst }}
                   &nbsp;<span class="fa fa-chevron-right"></span>
                 </button>
               </div>
@@ -184,11 +184,11 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  {{ 'lbl.ChooseTemplate'|trans|capitalize }}
+                  {{ 'lbl.ChooseTemplate'|trans|ucfirst }}
                 </h4>
               </div>
               <div class="panel-body">
-                <p class="help-block">{{ 'msg.HelpTemplates'|trans|capitalize }}</p>
+                <p class="help-block">{{ 'msg.HelpTemplates'|trans|ucfirst }}</p>
                 {% if rbtTemplatesError %}
                   <p class="text-danger">{{ rbtTemplatesError }}</p>
                 {% endif %}
@@ -200,10 +200,10 @@
                           <label for="{{ templat.id }}" class="panel-title">
                             <div class="panel-heading">
                               <span class="hidden">{{ templat.rbtTemplates|raw }}</span>
-                              <span class="panel-title">{{ templat.label|capitalize }}</span>
+                              <span class="panel-title">{{ templat.label|ucfirst }}</span>
                             </div>
                             <div class="panel-body">
-                              <img src="/src/Backend/Modules/Mailmotor/Templates/{{ templat.language }}/{{ templat.value }}/images/thumb.jpg" width="172" height="129" class="img-thumbnail" alt="{{ templat.label|capitalize }}" />
+                              <img src="/src/Backend/Modules/Mailmotor/Templates/{{ templat.language }}/{{ templat.value }}/images/thumb.jpg" width="172" height="129" class="img-thumbnail" alt="{{ templat.label|ucfirst }}" />
                             </div>
                           </label>
                         </div>
@@ -221,7 +221,7 @@
             <div class="btn-toolbar">
               <div class="btn-group pull-right" role="group">
                 <button id="toStep3" type="submit" name="to_step_3" class="btn btn-primary">
-                  {{ 'lbl.ToStep'|trans|capitalize }} 3
+                  {{ 'lbl.ToStep'|trans|ucfirst }} 3
                   &nbsp;<span class="fa fa-chevron-right"></span>
                 </button>
               </div>
@@ -236,15 +236,15 @@
           <div class="col-md-12">
             <div class="form-group">
               <label for="subject" class="control-label">
-                {{ 'lbl.Subject'|trans|capitalize }}
-                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                {{ 'lbl.Subject'|trans|ucfirst }}
+                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
               {% form_field_error subject %} {% form_field subject %}
             </div>
             <div class="form-group">
               <label for="content" class="control-label">
-                {{ 'lbl.Content'|trans|capitalize }}
-                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                {{ 'lbl.Content'|trans|ucfirst }}
+                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
               <div id="iframeBox">
                 <iframe id="contentBox" src="{{ geturl('edit_mailing_iframe' ) }}&amp;id={{ mailing.id }}" height="100%" width="100%"></iframe>
@@ -253,7 +253,7 @@
             {% if txtContentPlain %}
               <div class="form-group">
                 <label for="subject" class="control-label">
-                  {{ 'lbl.PlainTextVersion'|trans|capitalize }}
+                  {{ 'lbl.PlainTextVersion'|trans|ucfirst }}
                 </label>
                 {% form_field_error content_plain %} {% form_field content_plain %}
               </div>
@@ -265,7 +265,7 @@
             <div class="btn-toolbar">
               <div class="btn-group pull-right" role="group">
                 <button id="sendContent" type="submit" name="to_step_4" class="btn btn-primary">
-                  {{ 'lbl.ToStep'|trans|capitalize }} 4
+                  {{ 'lbl.ToStep'|trans|ucfirst }} 4
                   &nbsp;<span class="fa fa-chevron-right"></span>
                 </button>
               </div>
@@ -281,7 +281,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  {{ 'lbl.Preview'|trans|capitalize }}
+                  {{ 'lbl.Preview'|trans|ucfirst }}
                 </h4>
               </div>
               <div class="panel-body">
@@ -292,7 +292,7 @@
                 {% endif %}
                 {% if not previewURL %}
                   <div class="options">
-                    <p><span class="infoMessage">{{ 'err.NoModuleLinked'|trans|capitalize }}</span></p>
+                    <p><span class="infoMessage">{{ 'err.NoModuleLinked'|trans|ucfirst }}</span></p>
                   </div>
                 {% endif %}
               </div>
@@ -304,12 +304,12 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  {{ 'lbl.SendPreview'|trans|capitalize }}
+                  {{ 'lbl.SendPreview'|trans|ucfirst }}
                 </h4>
               </div>
               <div class="panel-body">
                 <div class="form-group">
-                  <label for="email" class="control-label">{{ 'lbl.EmailAddress'|trans|capitalize }}</label>
+                  <label for="email" class="control-label">{{ 'lbl.EmailAddress'|trans|ucfirst }}</label>
                   {% form_field_error email %} {% form_field email %}
                 </div>
               </div>
@@ -318,7 +318,7 @@
                   <div class="btn-group pull-right">
                     <button id="sendPreview" type="submit" class="btn btn-default" name="send_preview">
                       <span class="fa fa-eye"></span>&nbsp;
-                      {{ 'lbl.SendPreview'|trans|capitalize }}
+                      {{ 'lbl.SendPreview'|trans|ucfirst }}
                     </button>
                   </div>
                 </div>
@@ -331,12 +331,12 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  {{ 'lbl.SendOn'|trans|capitalize }}
+                  {{ 'lbl.SendOn'|trans|ucfirst }}
                 </h4>
               </div>
               <div class="panel-body">
                 <div class="form-group">
-                  <label for="sendOnDate" class="control-label">{{ 'lbl.SendDate'|trans|capitalize }}</label>
+                  <label for="sendOnDate" class="control-label">{{ 'lbl.SendDate'|trans|ucfirst }}</label>
                   {% form_field send_on_date %}
                 </div>
                 <div class="form-group">
@@ -347,8 +347,8 @@
               <div class="panel-footer">
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right">
-                    <a id="sendMailing" href="#" class="btn btn-primary" title="{{ 'lbl.SendMailing'|trans|capitalize }}">
-                      <span class="fa fa-send-o"></span>{{ 'lbl.SendMailing'|trans|capitalize }}
+                    <a id="sendMailing" href="#" class="btn btn-primary" title="{{ 'lbl.SendMailing'|trans|ucfirst }}">
+                      <span class="fa fa-send-o"></span>{{ 'lbl.SendMailing'|trans|ucfirst }}
                     </a>
                   </div>
                 </div>
@@ -356,36 +356,36 @@
             </div>
           </div>
         </div>
-        <div id="sendMailingConfirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'msg.MailingConfirmTitle'|trans|capitalize }}" aria-hidden="true">
+        <div id="sendMailingConfirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'msg.MailingConfirmTitle'|trans|ucfirst }}" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <span class="modal-title h4">{{ 'msg.MailingConfirmSend'|trans|capitalize }}</span>
+                <span class="modal-title h4">{{ 'msg.MailingConfirmSend'|trans|ucfirst }}</span>
               </div>
               <div class="modal-body">
                 <p>{{ recipientStatistics }}
-                  <span id="sendOn" style="display: none;">{{ 'msg.SendOn'|trans|capitalize }}</span></p>
-                <p>{{ 'msg.PeopleGroups'|trans|capitalize }}</p>
+                  <span id="sendOn" style="display: none;">{{ 'msg.SendOn'|trans|ucfirst }}</span></p>
+                <p>{{ 'msg.PeopleGroups'|trans|ucfirst }}</p>
                 <p>
                   {% for group in groups %}{{ group.name }} {% if group.comma %}, {% endif %}{% endfor %}
                 </p>
                 <table class="table">
                   <tr>
-                    <th>{{ 'lbl.TemplateLanguage'|trans|capitalize }}</th>
+                    <th>{{ 'lbl.TemplateLanguage'|trans|ucfirst }}</th>
                     <td>{{ templateLanguage }}</td>
                   </tr>
                   <tr>
-                    <th>{{ 'lbl.Price'|trans|capitalize }}</th>
+                    <th>{{ 'lbl.Price'|trans|ucfirst }}</th>
                     <td>&euro; {{ price }}</td>
                   </tr>
                 </table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
                 <a id="sendMailingConfirmationSubmit" href="#" class="btn btn-primary">
-                  <span class="fa fa-send-o"></span>{{ 'lbl.SendMailing'|trans|capitalize }}
+                  <span class="fa fa-send-o"></span>{{ 'lbl.SendMailing'|trans|ucfirst }}
                 </a>
               </div>
             </div>

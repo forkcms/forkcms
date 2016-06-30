@@ -24,7 +24,7 @@
   }
 </style>
 <div id="browserSupport" class="content">
-  <h2>{{ 'lbl.BrowserNotSupported'|trans|capitalize }}</h2>
+  <h2>{{ 'lbl.BrowserNotSupported'|trans|ucfirst }}</h2>
   {{ 'err.BrowserNotSupported'|trans|raw }}
 </div>
 <![endif]-->
@@ -87,7 +87,7 @@
               </div>
               <div class="btn-group">
                 <button name="login" type="submit" class="btn btn-primary">
-                  {{ 'lbl.SignIn'|trans|capitalize }}
+                  {{ 'lbl.SignIn'|trans|ucfirst }}
                 </button>
               </div>
             </div>
@@ -99,28 +99,28 @@
   </div>
 </div>
 
-<div class="modal fade" id="forgotPasswordHolder" tabindex="-1" role="dialog" aria-labelledby="{{ 'msg.HelpForgotPassword'|trans|capitalize }}" aria-hidden="true">
+<div class="modal fade" id="forgotPasswordHolder" tabindex="-1" role="dialog" aria-labelledby="{{ 'msg.HelpForgotPassword'|trans|ucfirst }}" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       {% form forgotPassword %}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{ 'msg.ForgotPassword'|trans|capitalize }}</h4>
+        <h4 class="modal-title" id="myModalLabel">{{ 'msg.ForgotPassword'|trans|ucfirst }}</h4>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="backendEmailForgot" class="control-label">{{ 'lbl.Email'|trans|capitalize }}</label>
+          <label for="backendEmailForgot" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
           {% form_field backend_email_forgot %}
           {% form_field_error backend_email_forgot %}
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">
-          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
         </button>
         <button id="send" name="send" type="submit" class="btn btn-primary">
-          <span class="fa fa-envelope"></span>{{ 'lbl.Send'|trans|capitalize }}
+          <span class="fa fa-envelope"></span>{{ 'lbl.Send'|trans|ucfirst }}
         </button>
       </div>
       {% endform %}

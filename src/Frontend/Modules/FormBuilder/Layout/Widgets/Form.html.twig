@@ -11,7 +11,7 @@
       {% if fields %}
         <form {% if hidUtf8 %}accept-charset="UTF-8" {% endif %}id="{{ formName }}" method="post" action="{{ formAction }}">
           {% if formToken %}
-            <input type="hidden" name="form_token" id="formToken{{ formName|capitalize }}" value="{{ formToken }}" />
+            <input type="hidden" name="form_token" id="formToken{{ formName|ucfirst }}" value="{{ formToken }}" />
           {% endif %}
 
           <input type="hidden" name="form" value="{{ formName }}" />

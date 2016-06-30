@@ -11,13 +11,13 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <p>{{ 'lbl.Template'|trans|capitalize }}</p>
+          <p>{{ 'lbl.Template'|trans|ucfirst }}</p>
         </div>
         <div class="panel-body">
           <div class="form-inline form-group">
             <p class="help-block">{{ 'msg.HelpTemplateLocation'|trans|raw }}</p>
-            <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|capitalize }}</label>
-            <label for="theme" class="hide">{{ 'lbl.Theme'|trans|capitalize }}</label>
+            <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|ucfirst }}</label>
+            <label for="theme" class="hide">{{ 'lbl.Theme'|trans|ucfirst }}</label>
             {% form_field_error theme %}
             {% form_field theme %}
             <small>
@@ -26,7 +26,7 @@
             {% form_field file %} {% form_field_error file %}
           </div>
           <div class="form-group">
-            <label for="label" class="control-label">{{ 'lbl.Label'|trans|capitalize }}</label>
+            <label for="label" class="control-label">{{ 'lbl.Label'|trans|ucfirst }}</label>
             {% form_field_error label %} {% form_field label %}
           </div>
         </div>
@@ -38,7 +38,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Positions'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.Positions'|trans|ucfirst }}</h3>
         </div>
         <div id="positions" class="panel-body">
           {% for position in positions %}
@@ -48,8 +48,8 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="position{{ position.i }}">
-                      <span>{{ 'lbl.Position'|trans|capitalize }}</span>
-                      <a href="#" class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|capitalize }}">
+                      <span>{{ 'lbl.Position'|trans|ucfirst }}</span>
+                      <a href="#" class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|ucfirst }}">
                         <span class="fa fa-trash-o"></span>
                       </a>
                     </label>
@@ -72,7 +72,7 @@
                           {{ block.formElements.ddmType.parse()|raw }}
                           {{ block.formElements.ddmTypeError }}
                           {# Button to remove block from this position #}
-                          <a href="#" class="btn btn-danger btn-icon-only jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|capitalize }}">
+                          <a href="#" class="btn btn-danger btn-icon-only jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|ucfirst }}">
                             <span class="fa fa-trash-o"></span>
                           </a>
                         </div>
@@ -86,7 +86,7 @@
                       {# Button to add new default block to this position #}
                       <a href="#" class="btn btn-default jsAddBlock">
                         <span class="fa fa-plus-square"></span>&nbsp;
-                        <span>{{ 'lbl.AddBlock'|trans|capitalize }}</span>
+                        <span>{{ 'lbl.AddBlock'|trans|ucfirst }}</span>
                       </a>
                     </div>
                   </div>
@@ -99,7 +99,7 @@
             <div class="btn-group" role="group">
               <a href="#" class="btn btn-primary jsAddPosition">
                 <span class="fa fa-plus-square"></span>&nbsp;
-                <span>{{ 'lbl.AddPosition'|trans|capitalize }}</span>
+                <span>{{ 'lbl.AddPosition'|trans|ucfirst }}</span>
               </a>
             </div>
           </div>
@@ -115,7 +115,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <label for="format" class="control-label">{{ 'lbl.Layout'|trans|capitalize }}</label>
+            <label for="format" class="control-label">{{ 'lbl.Layout'|trans|ucfirst }}</label>
           </h3>
         </div>
         <div class="panel-body">
@@ -140,16 +140,16 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Status'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="active">{% form_field active %} {% form_field_error active %} {{ 'lbl.Active'|trans|capitalize }}</label>
+                <label for="active">{% form_field active %} {% form_field_error active %} {{ 'lbl.Active'|trans|ucfirst }}</label>
               </li>
               <li class="checkbox">
-                <label for="default" class="control-label">{% form_field default %} {% form_field_error default %} {{ 'lbl.Default'|trans|capitalize }}</label>
+                <label for="default" class="control-label">{% form_field default %} {% form_field_error default %} {{ 'lbl.Default'|trans|ucfirst }}</label>
               </li>
             </ul>
           </div>
@@ -161,14 +161,14 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Overwrite'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.Overwrite'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
             <p class="help-block">{{ 'msg.HelpOverwrite'|trans|raw }}</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="overwrite" class="control-label">{% form_field overwrite %} {% form_field_error overwrite %} {{ 'lbl.Overwrite'|trans|capitalize }}</label>
+                <label for="overwrite" class="control-label">{% form_field overwrite %} {% form_field_error overwrite %} {{ 'lbl.Overwrite'|trans|ucfirst }}</label>
               </li>
             </ul>
           </div>
@@ -182,32 +182,32 @@
         <div class="btn-group pull-left" role="group">
           {% if showExtensionsDeleteThemeTemplate %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>{{ 'lbl.Delete'|trans|capitalize }}
+              <span class="fa fa-trash-o"></span>{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
       {% if showExtensionsDeleteThemeTemplate %}
-        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
+                <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
               </div>
               <div class="modal-body">
                 <p>{{ 'msg.ConfirmDeleteTemplate'|trans|sprintf(template.label ) }}</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
                 <a href="{{ geturl('delete_theme_template' ) }}&amp;id={{ template.id }}" class="btn btn-danger">
-                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                 </a>
               </div>
             </div>

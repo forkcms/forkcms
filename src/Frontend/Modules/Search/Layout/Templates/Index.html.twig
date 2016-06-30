@@ -7,17 +7,17 @@
 <section id="searchIndex" class="mod">
   <div class="inner">
     <header class="hd">
-      <h4>{{ 'lbl.SearchAgain'|trans|capitalize }}</h4>
+      <h4>{{ 'lbl.SearchAgain'|trans|ucfirst }}</h4>
     </header>
     <div class="bd">
       {% form search %}
       <p{% if form_field_error %} class="errorArea"{% endif %}>
-        <label for="q">{{ 'lbl.SearchTerm'|trans|capitalize }}
+        <label for="q">{{ 'lbl.SearchTerm'|trans|ucfirst }}
           <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
         {% form_field_error q %} {% form_field q %}
       </p>
       <p>
-        <input id="submit" class="inputSubmit" type="submit" name="submit" value="{{ 'lbl.Search'|trans|capitalize }}" />
+        <input id="submit" class="inputSubmit" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />
       </p>
       {% endform %}
     </div>

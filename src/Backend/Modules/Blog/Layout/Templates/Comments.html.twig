@@ -10,13 +10,13 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabPublished" aria-controls="published" role="tab" data-toggle="tab">{{ 'lbl.Published'|trans|capitalize }}</a>
+            <a href="#tabPublished" aria-controls="published" role="tab" data-toggle="tab">{{ 'lbl.Published'|trans|ucfirst }}</a>
           </li>
           <li role="presentation">
-            <a href="#tabModeration" aria-controls="moderation" role="tab" data-toggle="tab">{{ 'lbl.WaitingForModeration'|trans|capitalize }}</a>
+            <a href="#tabModeration" aria-controls="moderation" role="tab" data-toggle="tab">{{ 'lbl.WaitingForModeration'|trans|ucfirst }}</a>
           </li>
           <li role="presentation">
-            <a href="#tabSpam" aria-controls="spam" role="tab" data-toggle="tab">{{ 'lbl.Spam'|trans|capitalize }}</a>
+            <a href="#tabSpam" aria-controls="spam" role="tab" data-toggle="tab">{{ 'lbl.Spam'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -27,41 +27,41 @@
                 <div class="table-responsive">
                   {{ dgPublished|raw }}
                 </div>
-                <div class="modal fade" id="confirmPublishedToSpam" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Spam'|trans|capitalize }}" aria-hidden="true">
+                <div class="modal fade" id="confirmPublishedToSpam" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Spam'|trans|ucfirst }}" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <span class="modal-title h4">{{ 'lbl.Spam'|trans|capitalize }}</span>
+                        <span class="modal-title h4">{{ 'lbl.Spam'|trans|ucfirst }}</span>
                       </div>
                       <div class="modal-body">
-                        <p>{{ 'msg.ConfirmMassSpam'|trans|capitalize }}</p>
+                        <p>{{ 'msg.ConfirmMassSpam'|trans|ucfirst }}</p>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
-                          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                         </button>
                         <button type="submit" class="btn btn-primary">
-                          <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
+                          <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|ucfirst }}
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="modal fade" id="confirmDeletePublished" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
+                <div class="modal fade" id="confirmDeletePublished" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
+                        <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
                       </div>
                       <div class="modal-body">
-                        <p>{{ 'msg.ConfirmMassDelete'|trans|capitalize }}</p>
+                        <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
-                          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                         </button>
                         <button type="submit" class="btn btn-danger">
-                          <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+                          <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                         </button>
                       </div>
                     </div>
@@ -70,7 +70,7 @@
               </form>
             {% endif %}
             {% if not dgPublished %}
-              <p>{{ 'msg.NoComments'|trans|capitalize }}</p>
+              <p>{{ 'msg.NoComments'|trans|ucfirst }}</p>
             {% endif %}
           </div>
           <div role="tabpanel" class="tab-pane" id="tabModeration">
@@ -80,41 +80,41 @@
                 <div class="table-responsive">
                   {{ dgModeration|raw }}
                 </div>
-                <div class="modal fade" id="confirmModerationToSpam" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Spam'|trans|capitalize }}" aria-hidden="true">
+                <div class="modal fade" id="confirmModerationToSpam" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Spam'|trans|ucfirst }}" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <span class="modal-title h4">{{ 'lbl.Spam'|trans|capitalize }}</span>
+                        <span class="modal-title h4">{{ 'lbl.Spam'|trans|ucfirst }}</span>
                       </div>
                       <div class="modal-body">
-                        <p>{{ 'msg.ConfirmMassSpam'|trans|capitalize }}</p>
+                        <p>{{ 'msg.ConfirmMassSpam'|trans|ucfirst }}</p>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
-                          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                         </button>
                         <button type="submit" class="btn btn-primary">
-                          <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
+                          <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|ucfirst }}
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="modal fade" id="confirmDeleteModeration" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
+                <div class="modal fade" id="confirmDeleteModeration" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
+                        <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
                       </div>
                       <div class="modal-body">
-                        <p>{{ 'msg.ConfirmMassDelete'|trans|capitalize }}</p>
+                        <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
-                          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                         </button>
                         <button type="submit" class="btn btn-danger">
-                          <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+                          <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                         </button>
                       </div>
                     </div>
@@ -123,7 +123,7 @@
               </form>
             {% endif %}
             {% if not dgModeration %}
-              <p>{{ 'msg.NoComments'|trans|capitalize }}</p>
+              <p>{{ 'msg.NoComments'|trans|ucfirst }}</p>
             {% endif %}
           </div>
           <div role="tabpanel" class="tab-pane" id="tabSpam">
@@ -133,21 +133,21 @@
                 <div class="table-responsive">
                   {{ dgSpam|raw }}
                 </div>
-                <div class="modal fade" id="confirmDeleteSpam" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
+                <div class="modal fade" id="confirmDeleteSpam" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
+                        <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
                       </div>
                       <div class="modal-body">
-                        <p>{{ 'msg.ConfirmMassDelete'|trans|capitalize }}</p>
+                        <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
-                          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                         </button>
                         <button type="submit" class="btn btn-danger">
-                          <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+                          <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                         </button>
                       </div>
                     </div>

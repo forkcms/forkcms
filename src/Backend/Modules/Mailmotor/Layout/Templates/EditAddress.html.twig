@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="email" class="control-label">{{ 'lbl.EmailAddress'|trans|capitalize }}</label>
+        <label for="email" class="control-label">{{ 'lbl.EmailAddress'|trans|ucfirst }}</label>
         {% form_field_error email %} {% form_field email %}
       </div>
       <div class="form-group">
@@ -20,7 +20,7 @@
           <ul class="list-unstyled">
             {% for group in groups %}
               <li class="checkbox">
-                <label for="{{ group.id }}">{{ group.chkGroups|raw }} {{ group.label|capitalize }}</label>
+                <label for="{{ group.id }}">{{ group.chkGroups|raw }} {{ group.label|ucfirst }}</label>
               </li>
             {% endfor %}
           </ul>
@@ -34,12 +34,12 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
-              {{ 'lbl.CustomFields'|trans|capitalize }}
+              {{ 'lbl.CustomFields'|trans|ucfirst }}
             </h3>
           </div>
           <div class="panel-body">
             <div class="form-group">
-              <label for="subscriptions" class="control-label">{{ 'lbl.Group'|trans|capitalize }}</label>
+              <label for="subscriptions" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
               {% form_field_error subscriptions %} {% form_field subscriptions %}
             </div>
           </div>
@@ -62,7 +62,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="saveButton" type="submit" name="save" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>

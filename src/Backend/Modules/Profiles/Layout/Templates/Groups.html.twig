@@ -4,7 +4,7 @@
   {% if showProfilesAddGroup %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
-        {{ macro.buttonIcon(geturl('add_group'), 'plus-square', 'lbl.AddGroup'|trans|capitalize) }}
+        {{ macro.buttonIcon(geturl('add_group'), 'plus-square', 'lbl.AddGroup'|trans|ucfirst) }}
       </div>
     </div>
   {% endif %}
@@ -19,7 +19,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="name" class="control-label">{{ 'lbl.Name'|trans|capitalize }}</label>
+                <label for="name" class="control-label">{{ 'lbl.Name'|trans|ucfirst }}</label>
                 {% form_field_error name %} {% form_field name %}
               </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
                 <span class="fa fa-refresh"></span>&nbsp;
-                {{ 'lbl.UpdateFilter'|trans|capitalize }}
+                {{ 'lbl.UpdateFilter'|trans|ucfirst }}
               </button>
             </div>
           </div>

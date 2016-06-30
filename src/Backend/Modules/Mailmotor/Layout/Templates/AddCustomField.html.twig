@@ -9,7 +9,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="name" class="control-label">{{ 'lbl.Name'|trans|capitalize }}</label>
+        <label for="name" class="control-label">{{ 'lbl.Name'|trans|ucfirst }}</label>
         {% form_field_error name %} {% form_field name %}
       </div>
     </div>
@@ -19,7 +19,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
+            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>

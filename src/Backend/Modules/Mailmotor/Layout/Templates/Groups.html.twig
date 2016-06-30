@@ -5,11 +5,11 @@
     <div class="btn-group" role="group">
 
       {% if showMailmotorImportGroups %}
-        {{ macro.buttonIcon(geturl('import_groups'), 'upload', 'msg.ImportGroupsTitle'|trans|capitalize) }}
+        {{ macro.buttonIcon(geturl('import_groups'), 'upload', 'msg.ImportGroupsTitle'|trans|ucfirst) }}
       {% endif %}
 
       {% if showMailmotorAddGroup %}
-        {{ macro.buttonIcon(geturl('add_group'), 'plus-square', 'lbl.AddGroup'|trans|capitalize) }}
+        {{ macro.buttonIcon(geturl('add_group'), 'plus-square', 'lbl.AddGroup'|trans|ucfirst) }}
       {% endif %}
     </div>
   </div>
@@ -21,7 +21,7 @@
       <div class="col-md-12">
         <div class="alert alert-warning" role="alert">
           <p><strong><span class="fa fa-exclamation-triangle"></span>{{ 'msg.NoDefaultsSetTitle'|trans }}</strong></p>
-          <p>{{ 'msg.NoDefaultsSet'|trans|capitalize }}</p>
+          <p>{{ 'msg.NoDefaultsSet'|trans|ucfirst }}</p>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
         </form>
       {% endif %}
       {% if not dataGrid %}
-        <p>{{ 'msg.NoItems'|trans|capitalize }}</p>
+        <p>{{ 'msg.NoItems'|trans|ucfirst }}</p>
       {% endif %}
     </div>
   </div>

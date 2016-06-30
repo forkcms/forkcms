@@ -4,12 +4,12 @@
       {% form subscribe %}
       <input type="hidden" name="form_token" id="formToken" value="{{ formToken }}" />
       <p>
-        <label for="email">{{ 'lbl.Email'|trans|capitalize }}
+        <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
           <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
         {% form_field_error email %} {% form_field email %}
       </p>
       <p>
-        <input id="send" class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans|capitalize }}" />
+        <input id="send" class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans|ucfirst }}" />
       </p>
       {% endform %}
     </div>

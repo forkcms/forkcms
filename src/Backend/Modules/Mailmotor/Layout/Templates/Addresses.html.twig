@@ -11,7 +11,7 @@
           {% set url = url ~ '&group_id=' ~ group.id %}
         {% endif %}
 
-        {{ macro.buttonIcon(url, 'upload', 'lbl.ImportAddresses'|trans|capitalize) }}
+        {{ macro.buttonIcon(url, 'upload', 'lbl.ImportAddresses'|trans|ucfirst) }}
       {% endif %}
 
       {% if showMailmotorExportAddresses %}
@@ -24,7 +24,7 @@
           {% set url = url ~ group.id %}
         {% endif %}
 
-        {% set label = 'lbl.ExportAddresses'|trans|capitalize %}
+        {% set label = 'lbl.ExportAddresses'|trans|ucfirst %}
         {% if group %}
           {% set label = '' %}
         {% endif %}
@@ -37,7 +37,7 @@
           {% set url = url ~ '&group_id=' ~ group.id %}
         {% endif %}
 
-        {{ macro.buttonIcon(url, 'plus-square', 'lbl.AddEmail'|trans|capitalize ) }}
+        {{ macro.buttonIcon(url, 'plus-square', 'lbl.AddEmail'|trans|ucfirst ) }}
       {% endif %}
     </div>
   </div>
@@ -63,7 +63,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="email" class="control-label">{{ 'lbl.EmailAddress'|trans|capitalize }}</label>
+                <label for="email" class="control-label">{{ 'lbl.EmailAddress'|trans|ucfirst }}</label>
                 {% form_field_error email %} {% form_field email %}
               </div>
             </div>
@@ -74,7 +74,7 @@
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
                 <span class="fa fa-refresh"></span>&nbsp;
-                {{ 'lbl.UpdateFilter'|trans|capitalize }}
+                {{ 'lbl.UpdateFilter'|trans|ucfirst }}
               </button>
             </div>
           </div>

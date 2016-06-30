@@ -11,12 +11,12 @@
       {% if not subscribeHideForm %}
         {% form subscribe %}
         <p{% if txtEmailError %} class="errorArea"{% endif %}>
-          <label for="email">{{ 'lbl.Email'|trans|capitalize }}
+          <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
             <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
           {% form_field_error Email %} {% form_field Email %}
         </p>
         <p>
-          <input id="send" class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Send'|trans|capitalize }}" />
+          <input id="send" class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Send'|trans|ucfirst }}" />
         </p>
         {% endform %}
       {% endif %}

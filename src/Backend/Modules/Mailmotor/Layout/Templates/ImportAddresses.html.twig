@@ -11,14 +11,14 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.AddressList'|trans|capitalize }}
+            {{ 'lbl.AddressList'|trans|ucfirst }}
           </h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
             {% if showMailmotorImportAddresses %}
               <label for="download" class="control-label">Download
-                <a href="{{ geturl('import_addresses' ) }}&amp;example=1">{{ 'lbl.ExampleFile'|trans|capitalize }}</a>.</label>
+                <a href="{{ geturl('import_addresses' ) }}&amp;example=1">{{ 'lbl.ExampleFile'|trans|ucfirst }}</a>.</label>
             {% endif %}
             {% form_field_error csv %} {% form_field csv %}
           </div>
@@ -31,7 +31,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.Group'|trans|capitalize }}
+            {{ 'lbl.Group'|trans|ucfirst }}
           </h3>
         </div>
         <div class="panel-body">
@@ -42,7 +42,7 @@
             <ul class="list-unstyled">
               {% for group in groups %}
                 <li class="radio">
-                  <label for="{{ group.id }}">{{ group.rbtGroups|raw }} {{ group.label|capitalize }}</label>
+                  <label for="{{ group.id }}">{{ group.rbtGroups|raw }} {{ group.label|ucfirst }}</label>
                 </li>
               {% endfor %}
             </ul>
@@ -56,7 +56,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="importButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-download"></span>{{ 'lbl.Import'|trans|capitalize }}
+            <span class="fa fa-download"></span>{{ 'lbl.Import'|trans|ucfirst }}
           </button>
         </div>
       </div>

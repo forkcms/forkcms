@@ -23,7 +23,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
-                {{ 'lbl.Description'|trans|capitalize }}
+                {{ 'lbl.Description'|trans|ucfirst }}
               </h3>
             </div>
             <div class="panel-body">
@@ -35,7 +35,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
-                {{ 'lbl.Cronjobs'|trans|capitalize }}
+                {{ 'lbl.Cronjobs'|trans|ucfirst }}
               </h3>
             </div>
             <div class="panel-body">
@@ -48,7 +48,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
-                {{ 'lbl.Events'|trans|capitalize }}
+                {{ 'lbl.Events'|trans|ucfirst }}
               </h3>
             </div>
             {{ dataGridEvents|raw }}
@@ -60,7 +60,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
-                {{ 'lbl.Version'|trans|capitalize }}
+                {{ 'lbl.Version'|trans|ucfirst }}
               </h3>
             </div>
             <div class="panel-body">
@@ -72,7 +72,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
-                {{ 'lbl.Authors'|trans|capitalize }}
+                {{ 'lbl.Authors'|trans|ucfirst }}
               </h3>
             </div>
             <div class="panel-body">
@@ -102,25 +102,25 @@
           <div class="btn-group pull-right" role="group">
             <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmInstall">
               <span class="fa fa-file-o"></span>&nbsp;
-              {{ 'lbl.Install'|trans|capitalize }}
+              {{ 'lbl.Install'|trans|ucfirst }}
             </button>
           </div>
         </div>
-        <div class="modal fade" id="confirmInstall" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Install'|trans|capitalize }}" aria-hidden="true">
+        <div class="modal fade" id="confirmInstall" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Install'|trans|ucfirst }}" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <span class="modal-title h4">{{ 'lbl.Install'|trans|capitalize }}</span>
+                <span class="modal-title h4">{{ 'lbl.Install'|trans|ucfirst }}</span>
               </div>
               <div class="modal-body">
                 <p>{{ 'msg.ConfirmModuleInstall'|trans|sprintf(name ) }}</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
                 <a href="{{ geturl('install_module' ) }}&amp;theme={{ name }}" class="btn btn-primary">
-                  <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
+                  <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|ucfirst }}
                 </a>
               </div>
             </div>
