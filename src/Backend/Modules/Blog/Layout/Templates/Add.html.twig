@@ -43,11 +43,15 @@
                   <div class="panel-heading">
                     <p>{{ 'lbl.MainContent'|trans|ucfirst }}
                       <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></p>
-                    {% form_field_error text %}
                   </div>
                   <div class="panel-body">
                     {% form_field text %}
                   </div>
+                  {% if txtTextError %}
+                    <div class="panel-footer">
+                      {% form_field_error text %}
+                    </div>
+                  {% endif %}
                 </div>
                 {% if imageIsAllowed %}
                   <div class="panel panel-default">
@@ -64,12 +68,16 @@
                     <p>
                       {{ 'lbl.Summary'|trans|ucfirst }}
                       <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|ucfirst }}"></abbr><br>
-                      {% form_field_error introduction %}
                     </p>
                   </div>
                   <div class="panel-body">
                     {% form_field introduction %}
                   </div>
+                  {% if txtIntroductionError %}
+                    <div class="panel-footer">
+                      {% form_field_error introduction %}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
               <div class="col-md-4">

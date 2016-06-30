@@ -47,12 +47,16 @@
                   <div class="panel-heading">
                     <label for="answer" class="control-label">{{ 'lbl.Answer'|trans|ucfirst }}
                       <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr><br>
-                      {% form_field_error answer %}
                     </label>
                   </div>
                   <div class="panel-body">
                     {% form_field answer %}
                   </div>
+                  {% if txtAnswerError %}
+                    <div class="panel-footer">
+                      {% form_field_error answer %}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
               <div class="col-md-4">

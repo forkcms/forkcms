@@ -20,12 +20,16 @@
           <label for="text" class="control-label">
             {{ 'lbl.Content'|trans|ucfirst }}
             <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr><br>
-            {% form_field_error text %}
           </label>
         </div>
         <div class="panel-body">
           {% form_field text %}
         </div>
+        {% if txtTextError %}
+          <div class="panel-footer">
+            {% form_field_error text %}
+          </div>
+        {% endif %}
       </div>
       {% if ddmTemplate %}
         <div class="form-group">

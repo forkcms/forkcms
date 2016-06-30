@@ -56,7 +56,6 @@
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
                       <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr><br>
-                      {% form_field_error success_message %}
                     </label>
                   </div>
                   <div class="panel-body">
@@ -64,6 +63,11 @@
                       {% form_field success_message %}
                     </div>
                   </div>
+                  {% if txtSuccessMessageError %}
+                    <div class="panel-footer">
+                      {% form_field_error success_message %}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
             </div>
