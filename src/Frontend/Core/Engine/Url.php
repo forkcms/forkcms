@@ -268,8 +268,8 @@ class Url extends \KernelLoader
             // redirect is required
             if ($mustRedirect) {
                 // build URL
-                $URL = rtrim('/' . $language . '/' . $this->getQueryString(), '/');
-
+                // trim the first / from the query string to prevent double slashes
+                $URL = rtrim('/' . $language . '/' . trim($this->getQueryString(), '/'), '/');
                 // when we are just adding the language to the domain, it's a temporary redirect because
                 // Safari keeps the 301 in cache, so the cookie to switch language doesn't work any more
                 $redirectCode = ($URL == '/' . $language ? 302 : 301);
