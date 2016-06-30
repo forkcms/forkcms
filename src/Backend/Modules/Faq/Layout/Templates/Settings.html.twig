@@ -87,7 +87,7 @@
                   {{ 'msg.HelpSpamFilter'|trans }}
                   {% if noAkismetKey %}
                     <br>
-                    {{ 'msg.NoAkismetKey'|trans|sprintf(geturl('index','settings' ) ) }}
+                    {{ 'msg.NoAkismetKey'|trans|format(geturl('index','settings' )|raw ) }}
                   {% endif %}
                 </p>
               </li>

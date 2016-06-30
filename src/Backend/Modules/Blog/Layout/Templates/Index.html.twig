@@ -84,10 +84,10 @@
       {% endif %}
       {% if not dgPosts %}
         {% if filterCategory %}
-          <p>{{ 'msg.NoItems'|trans|sprintf(geturl('add', null, '&category=#{filterCategory.id}')) }}</p>
+          <p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&category=#{filterCategory.id}')|raw) }}</p>
         {% endif %}
         {% if not filterCategory %}
-          <p>{{ 'msg.NoItems'|trans|sprintf(geturl('add')) }}</p>
+          <p>{{ 'msg.NoItems'|trans|format(geturl('add')|raw) }}</p>
         {% endif %}
       {% endif %}
     </div>

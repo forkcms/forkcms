@@ -60,12 +60,12 @@
                   {{ 'msg.HelpSpamFilter'|trans|ucfirst }}
                   {% if noAkismetKey %}
                     <br />
-                    {{ 'msg.NoAkismetKey'|trans|sprintf(geturl('index','settings' ) ) }}
+                    {{ 'msg.NoAkismetKey'|trans|format(geturl('index','settings' )|raw ) }}
                   {% endif %}
                 </p>
               </li>
             </ul>
-            <p>{{ 'msg.FollowAllCommentsInRSS'|trans|sprintf(commentsRSSURL ) }}</p>
+            <p>{{ 'msg.FollowAllCommentsInRSS'|trans|format(commentsRSSURL )|raw }}</p>
           </div>
         </div>
       </div>

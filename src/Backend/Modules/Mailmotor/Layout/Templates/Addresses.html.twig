@@ -49,7 +49,7 @@
       <div class="col-md-12">
         <div class="alert alert-warning" role="alert">
           <p><strong><span class="fa fa-exclamation-triangle"></span>{{ 'msg.ImportRecentlyFailed'|trans }}</strong></p>
-          <p>{{ 'msg.ImportFailedDownloadCSV'|trans|sprintf(csvURL) }}</p>
+          <p>{{ 'msg.ImportFailedDownloadCSV'|trans|format(csvURL)|raw }}</p>
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@
       {% endif %}
       {% if not dataGrid %}
         {% if oPost %}
-          <p>{{ 'msg.NoResultsForFilter'|trans|sprintf(email) }}</p>
+          <p>{{ 'msg.NoResultsForFilter'|trans|format(email)|raw }}</p>
         {% endif %}
         {% if not oPost %}
           <p>{{ 'msg.NoSubscriptions'|trans }}</p>

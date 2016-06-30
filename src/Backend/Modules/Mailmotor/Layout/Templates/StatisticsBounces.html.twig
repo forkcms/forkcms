@@ -4,7 +4,7 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {% if showMailmotorStatistics %}
-        {{ macro.buttonIcon(geturl('statistics') ~ '&id=' ~ mailing.id, 'trash-o', 'msg.BackToStatistics'|trans|sprintf(mailing.name ) ) }}
+        {{ macro.buttonIcon(geturl('statistics') ~ '&id=' ~ mailing.id, 'trash-o', 'msg.BackToStatistics'|trans|format(mailing.name )|raw ) }}
       {% endif %}
       {% if showMailmotorDeleteBounces %}
         {{ macro.buttonIcon(geturl('delete_bounces') ~ '&mailing_id=' ~ mailing.id, 'trash-o', 'msg.DeleteBounces'|trans|ucfirst }}

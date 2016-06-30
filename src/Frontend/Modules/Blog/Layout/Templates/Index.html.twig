@@ -24,7 +24,7 @@
             <ul>
               <li>
                 {# Written by #}
-                {{ 'msg.WrittenBy'|trans|ucfirst|sprintf(item.user_id|usersetting('nickname')) }}
+                {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname'))|raw }}
 
                 {# Written on #}
                 {{ 'lbl.On'|trans }} {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
@@ -48,7 +48,7 @@
                     <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNoComments'|trans|ucfirst }}</a>{% endif %}
                   {% if item.comments %}
                     {% if item.comments_multiple %}
-                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|sprintf(item.comments_count) }}</a>{% endif %}
+                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count)|raw }}</a>{% endif %}
                     {% if not item.comments_multiple %}
                       <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
                   {% endif %}

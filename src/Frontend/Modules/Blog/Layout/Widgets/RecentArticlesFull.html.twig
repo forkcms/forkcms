@@ -16,14 +16,14 @@
               <header class="hd">
                 <h4><a href="{{ article.full_url }}" title="{{ article.title }}">{{ article.title }}</a></h4>
                 <ul>
-                  <li>{{ 'msg.WrittenBy'|trans|ucfirst|sprintf(article.user_id|usersetting('nickname')) }} {{ 'lbl.On'|trans }} {{ article.publish_on|spoondate(dateFormatLong, LANGUAGE) }}</li>
+                  <li>{{ 'msg.WrittenBy'|trans|ucfirst|format(article.user_id|usersetting('nickname')|raw) }} {{ 'lbl.On'|trans }} {{ article.publish_on|spoondate(dateFormatLong, LANGUAGE) }}</li>
                   {% if article.allow_comments %}
                     <li>
                       {% if not article.comments %}
                         <a href="{{ article.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNoComments'|trans|ucfirst }}</a>{% endif %}
                       {% if article.comments %}
                         {% if article.comments_multiple %}
-                          <a href="{{ article.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|sprintf(article.comments_count) }}</a>{% endif %}
+                          <a href="{{ article.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(article.comments_count)|raw }}</a>{% endif %}
                         {% if not article.comments_multiple %}
                           <a href="{{ article.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
                       {% endif %}

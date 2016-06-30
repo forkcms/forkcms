@@ -188,10 +188,10 @@
               </div>
               <div class="modal-body">
                 {% if deleted %}
-                  <p>{{ 'msg.ConfirmUndelete'|trans|sprintf(profile.email ) }}</p>
+                  <p>{{ 'msg.ConfirmUndelete'|trans|format(profile.email )|raw }}</p>
                 {% endif %}
                 {% if not deleted %}
-                  <p>{{ 'msg.ConfirmDelete'|trans|sprintf(profile.email ) }}</p>
+                  <p>{{ 'msg.ConfirmDelete'|trans|format(profile.email )|raw }}</p>
                 {% endif %}
               </div>
               <div class="modal-footer">
@@ -227,10 +227,10 @@
               </div>
               <div class="modal-body">
                 {% if blocked %}
-                  <p>{{ 'msg.ConfirmUnblock'|trans|sprintf(profile.email ) }}</p>
+                  <p>{{ 'msg.ConfirmUnblock'|trans|format(profile.email )|raw }}</p>
                 {% endif %}
                 {% if not blocked %}
-                  <p>{{ 'msg.ConfirmBlock'|trans|sprintf(profile.email ) }}</p>
+                  <p>{{ 'msg.ConfirmBlock'|trans|format(profile.email )|raw }}</p>
                 {% endif %}
               </div>
               <div class="modal-footer">

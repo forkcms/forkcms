@@ -8,7 +8,7 @@
     {% if blogNumCommentsToModerate %}
       <div class="panel-body">
         <div class="pull-left">
-          {{ 'msg.CommentsToModerate'|trans|sprintf(blogNumCommentsToModerate ) }}
+          {{ 'msg.CommentsToModerate'|trans|format(blogNumCommentsToModerate )|raw }}
         </div>
         <div class="pull-right">
           <a href="{{ geturl('comments','blog' ) }}#tabModeration"><span>{{ 'lbl.Moderate'|trans|ucfirst }}</span></a>

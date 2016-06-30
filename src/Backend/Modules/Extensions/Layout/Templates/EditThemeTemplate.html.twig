@@ -200,7 +200,7 @@
                 <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
               </div>
               <div class="modal-body">
-                <p>{{ 'msg.ConfirmDeleteTemplate'|trans|sprintf(template.label ) }}</p>
+                <p>{{ 'msg.ConfirmDeleteTemplate'|trans|format(template.label )|raw }}</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
