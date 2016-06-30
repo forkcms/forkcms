@@ -18,8 +18,8 @@
             <p class="help-block">{{ 'msg.HelpTemplateLocation'|trans|raw }}</p>
             <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|ucfirst }}</label>
             <label for="theme" class="hide">{{ 'lbl.Theme'|trans|ucfirst }}</label>
-            {% form_field_error theme %}
             {% form_field theme %}
+            {% form_field_error theme %}
             <small>
               <code>/Core/Layout/Templates/</code>
             </small>
@@ -27,7 +27,7 @@
           </div>
           <div class="form-group">
             <label for="label" class="control-label">{{ 'lbl.Label'|trans|ucfirst }}</label>
-            {% form_field_error label %} {% form_field label %}
+            {% form_field label %} {% form_field_error label %}
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <p class="help-block">{{ 'msg.HelpTemplateFormat'|trans }}</p>
-                {% form_field_error format %} {% form_field format %}
+                {% form_field format %} {% form_field_error format %}
               </div>
             </div>
             <div class="col-md-6">

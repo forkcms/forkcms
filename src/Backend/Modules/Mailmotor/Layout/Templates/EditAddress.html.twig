@@ -10,7 +10,7 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="email" class="control-label">{{ 'lbl.EmailAddress'|trans|ucfirst }}</label>
-        {% form_field_error email %} {% form_field email %}
+        {% form_field email %} {% form_field_error email %}
       </div>
       <div class="form-group">
         {% if groups %}
@@ -40,7 +40,7 @@
           <div class="panel-body">
             <div class="form-group">
               <label for="subscriptions" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
-              {% form_field_error subscriptions %} {% form_field subscriptions %}
+              {% form_field subscriptions %} {% form_field_error subscriptions %}
             </div>
           </div>
           {% if fields %}

@@ -48,21 +48,21 @@
                         {{ 'lbl.Name'|trans|ucfirst }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
-                      {% form_field_error name %} {% form_field name %}
+                      {% form_field name %} {% form_field_error name %}
                     </div>
                     <div class="form-group">
                       <label for="method" class="control-label">
                         {{ 'lbl.Method'|trans|ucfirst }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
-                      {% form_field_error method %} {% form_field method %}
+                      {% form_field method %} {% form_field_error method %}
                     </div>
                     <div class="form-group">
                       <label for="email" class="control-label">
                         {{ 'lbl.Recipient'|trans|ucfirst }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
-                      {% form_field_error email %} {% form_field email %}
+                      {% form_field email %} {% form_field_error email %}
                     </div>
                   </div>
                 </div>
@@ -199,7 +199,7 @@
                   {{ 'lbl.Identifier'|trans|ucfirst }}
                   <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpIdentifier'|trans|ucfirst }}"></abbr>
                 </label>
-                {% form_field_error identifier %} {% form_field identifier %}
+                {% form_field identifier %} {% form_field_error identifier %}
               </div>
             </div>
           </div>
@@ -603,7 +603,7 @@
                   <div class="form-group">
                     <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|ucfirst }}</label>
                     <p id="dropdownValuesError" class="text-danger jsFieldError" style="display: none;"></p>
-                    {% form_field_error dropdown_values %} {% form_field dropdown_values %}
+                    {% form_field dropdown_values %} {% form_field_error dropdown_values %}
                   </div>
                 </div>
               </div>
@@ -693,7 +693,7 @@
                   </div>
                   <div class="form-group">
                     <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|ucfirst }}</label>
-                    {% form_field_error radiobutton_values %} {% form_field radiobutton_values %}
+                    {% form_field radiobutton_values %} {% form_field_error radiobutton_values %}
                   </div>
                 </div>
               </div>
@@ -783,7 +783,7 @@
                   </div>
                   <div class="form-group">
                     <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|ucfirst }}</label>
-                    {% form_field_error checkbox_values %} {% form_field checkbox_values %}
+                    {% form_field checkbox_values %} {% form_field_error checkbox_values %}
                   </div>
                 </div>
               </div>

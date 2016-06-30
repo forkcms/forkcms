@@ -14,7 +14,7 @@
       <p{% if form_field_error %} class="errorArea"{% endif %}>
         <label for="q">{{ 'lbl.SearchTerm'|trans|ucfirst }}
           <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-        {% form_field_error q %} {% form_field q %}
+        {% form_field q %} {% form_field_error q %}
       </p>
       <p>
         <input id="submit" class="inputSubmit" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />

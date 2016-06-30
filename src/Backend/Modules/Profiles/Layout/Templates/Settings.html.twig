@@ -24,8 +24,8 @@
               <li class="checkbox" id="overwriteProfileNotificationEmailBox">
                 <label for="overwriteProfileNotificationEmail" class="control-label">{% form_field overwrite_profile_notification_email %} {{ 'lbl.OverwriteProfileNotificationEmail'|trans|ucfirst }}</label><br />
                     <span id="profileNotificationEmailBox">
-                        {% form_field_error profile_notification_email %}
                       <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr> {% form_field profile_notification_email %}
+                      {% form_field_error profile_notification_email %}
                     </span>
               </li>
             </ul>

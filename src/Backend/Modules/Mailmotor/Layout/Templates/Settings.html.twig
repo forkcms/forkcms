@@ -55,14 +55,14 @@
                         {{ 'lbl.Name'|trans|ucfirst }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
-                      {% form_field_error from_name %} {% form_field from_name %}
+                      {% form_field from_name %} {% form_field_error from_name %}
                     </div>
                     <div class="form-group">
                       <label for="fromEmail" class="control-label">
                         {{ 'lbl.EmailAddress'|trans|ucfirst }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
-                      {% form_field_error from_email %} {% form_field from_email %}
+                      {% form_field from_email %} {% form_field_error from_email %}
                     </div>
                   </div>
                 </div>
@@ -82,7 +82,7 @@
                         {{ 'lbl.EmailAddress'|trans|ucfirst }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
-                      {% form_field_error reply_to_email %} {% form_field reply_to_email %}
+                      {% form_field reply_to_email %} {% form_field_error reply_to_email %}
                     </div>
                   </div>
                 </div>
@@ -129,7 +129,7 @@
                         <div class="form-inline">
                           <div class="input-group">
                             <div class="input-group-addon">€</div>
-                            {% form_field_error price_per_email %} {% form_field price_per_email %}
+                            {% form_field price_per_email %} {% form_field_error price_per_email %}
                           </div>
                         </div>
                       </div>
@@ -142,7 +142,7 @@
                         <div class="form-inline">
                           <div class="input-group">
                             <div class="input-group-addon">€</div>
-                            {% form_field_error price_per_campaign %} {% form_field price_per_campaign %}
+                            {% form_field price_per_campaign %} {% form_field_error price_per_campaign %}
                           </div>
                         </div>
                       </div>
@@ -174,21 +174,21 @@
                     <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
                   <p class="help-block">{{ 'msg.HelpCMURL'|trans }}</p>
-                  {% form_field_error url %} {% form_field url %}
+                  {% form_field url %} {% form_field_error url %}
                 </div>
                 <div class="form-group">
                   <label for="username" class="control-label">
                     {{ 'lbl.Username'|trans|ucfirst }}
                     <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
-                  {% form_field_error username %} {% form_field username %}
+                  {% form_field username %} {% form_field_error username %}
                 </div>
                 <div class="form-group">
                   <label for="password" class="control-label">
                     {{ 'lbl.Password'|trans|ucfirst }}
                     <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
-                  {% form_field_error password %} {% form_field password %}
+                  {% form_field password %} {% form_field_error password %}
                 </div>
               </div>
             </div>
@@ -239,15 +239,15 @@
                       {{ 'lbl.CompanyName'|trans|ucfirst }}
                       <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                     </label>
-                    {% form_field_error company_name %} {% form_field company_name %}
+                    {% form_field company_name %} {% form_field_error company_name %}
                   </div>
                   <div class="form-group">
                     <label for="countries" class="control-label">{{ 'lbl.Country'|trans|ucfirst }}</label>
-                    {% form_field_error countries %} {% form_field countries %}
+                    {% form_field countries %} {% form_field_error countries %}
                   </div>
                   <div class="form-group">
                     <label for="timezones" class="control-label">{{ 'lbl.Timezone'|trans|ucfirst }}</label>
-                    {% form_field_error timezones %} {% form_field timezones %}
+                    {% form_field timezones %} {% form_field_error timezones %}
                   </div>
                 </div>
               </div>

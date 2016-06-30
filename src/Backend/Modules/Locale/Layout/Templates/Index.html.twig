@@ -26,11 +26,11 @@
             <div class="col-md-3 col-lg-4">
               <div class="form-group">
                 <label for="application" class="control-label">{{ 'lbl.Application'|trans|ucfirst }}</label>
-                {% form_field_error application %} {% form_field application %}
+                {% form_field application %} {% form_field_error application %}
               </div>
               <div class="form-group">
                 <label for="module" class="control-label">{{ 'lbl.Module'|trans|ucfirst }}</label>
-                {% form_field_error module %} {% form_field module %}
+                {% form_field module %} {% form_field_error module %}
               </div>
             </div>
             <div class="col-md-3 col-lg-2">
@@ -67,14 +67,14 @@
                   {{ 'lbl.ReferenceCode'|trans|ucfirst }}
                   <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpName'|trans }}"></abbr>
                 </label>
-                {% form_field_error name %} {% form_field name %}
+                {% form_field name %} {% form_field_error name %}
               </div>
               <div class="form-group">
                 <label for="value" class="control-label">
                   {{ 'lbl.Value'|trans|ucfirst }}
                   <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpValue'|trans }}"></abbr>
                 </label>
-                {% form_field_error value %} {% form_field value %}
+                {% form_field value %} {% form_field_error value %}
               </div>
             </div>
           </div>

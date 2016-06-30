@@ -24,7 +24,7 @@
             <div class="form-inline">
               <small>
                 <div class="form-group">
-                  {% form_field_error mailer_type %} {% form_field mailer_type %}
+                  {% form_field mailer_type %} {% form_field_error mailer_type %}
                   <a id="testEmailConnection" href="#">{{ 'msg.SendTestMail'|trans|ucfirst }}</a>
                   <span id="testEmailConnectionSpinner" style="display: none;">
                     <img style="margin-top: 3px;" src="/src/Backend/Core/Layout/images/spinner.gif" width="12px" height="12px" alt="loading" />
@@ -46,14 +46,14 @@
                 {{ 'lbl.Name'|trans|ucfirst }}
                 <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
-              {% form_field_error mailer_from_name %} {% form_field mailer_from_name %}
+              {% form_field mailer_from_name %} {% form_field_error mailer_from_name %}
             </div>
             <div class="form-group">
               <label for="mailerFromEmail" class="control-label">
                 {{ 'lbl.Email'|trans|ucfirst }}
                 <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
-              {% form_field_error mailer_from_email %} {% form_field mailer_from_email %}
+              {% form_field mailer_from_email %} {% form_field_error mailer_from_email %}
             </div>
           </div>
           <div class="content-block">
@@ -66,14 +66,14 @@
                 {{ 'lbl.Name'|trans|ucfirst }}
                 <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
-              {% form_field_error mailer_to_name %} {% form_field mailer_to_name %}
+              {% form_field mailer_to_name %} {% form_field_error mailer_to_name %}
             </div>
             <div class="form-group">
               <label for="mailerToEmail" class="control-label">
                 {{ 'lbl.Email'|trans|ucfirst }}
                 <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
-              {% form_field_error mailer_to_email %} {% form_field mailer_to_email %}
+              {% form_field mailer_to_email %} {% form_field_error mailer_to_email %}
             </div>
           </div>
           <div class="content-block">
@@ -85,14 +85,14 @@
                 {{ 'lbl.Name'|trans|ucfirst }}
                 <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
-              {% form_field_error mailer_reply_to_name %} {% form_field mailer_reply_to_name %}
+              {% form_field mailer_reply_to_name %} {% form_field_error mailer_reply_to_name %}
             </div>
             <div class="form-group last">
               <label for="mailerReplyToEmail" class="control-label">
                 {{ 'lbl.Email'|trans|ucfirst }}
                 <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
-              {% form_field_error mailer_reply_to_email %} {% form_field mailer_reply_to_email %}
+              {% form_field mailer_reply_to_email %} {% form_field_error mailer_reply_to_email %}
             </div>
           </div>
         </div>
@@ -116,16 +116,16 @@
                 {% form_field smtp_server %}
                 <span>:</span>
                 {% form_field smtp_port %}
-                {% form_field_error smtp_server %} {% form_field_error smtp_port %}
+                {% form_field_error smtp_port %} {% form_field_error smtp_server %}
               </div>
             </div>
             <div class="form-group">
               <label for="smtpUsername" class="control-label">{{ 'lbl.Username'|trans|ucfirst }}</label>
-              {% form_field_error smtp_username %} {% form_field smtp_username %}
+              {% form_field smtp_username %} {% form_field_error smtp_username %}
             </div>
             <div class="form-group">
               <label for="smtpPassword" class="control-label">{{ 'lbl.Password'|trans|ucfirst }}</label>
-              {% form_field_error smtp_password %} {% form_field smtp_password %}
+              {% form_field smtp_password %} {% form_field_error smtp_password %}
             </div>
             <div class="form-group last">
               <label for="smtpSecureLayer" class="control-label">{{ 'lbl.SmtpSecureLayer'|trans|ucfirst }}</label>

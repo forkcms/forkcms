@@ -10,16 +10,16 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
-        {% form_field_error group %} {% form_field group %}
+        {% form_field group %} {% form_field_error group %}
       </div>
       <div class="form-group">
         <label for="expirationDate" class="control-label">{{ 'lbl.ExpiresOn'|trans|ucfirst }}:</label>
         <div class="form-inline">
           <div class="form-group">
-            {% form_field_error expiration_date %} {% form_field expiration_date %}
+            {% form_field expiration_date %} {% form_field_error expiration_date %}
           </div>
           <div class="form-group">
-            {% form_field_error expiration_time %} {% form_field expiration_time %}
+            {% form_field expiration_time %} {% form_field_error expiration_time %}
           </div>
         </div>
       </div>

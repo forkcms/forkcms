@@ -13,7 +13,7 @@
           {{ 'lbl.Title'|trans|ucfirst }}
           <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
         </label>
-        {% form_field_error title %} {% form_field title %}
+        {% form_field title %} {% form_field_error title %}
       </div>
       <div class="panel panel-default panel-editor">
         <div class="panel-heading">
@@ -30,11 +30,12 @@
       {% if ddmTemplate %}
         <div class="form-group">
           <label for="template" class="control-label">{{ 'lbl.Template'|trans|ucfirst }}</label>
-          {% form_field_error template %} {% form_field template %}
+          {% form_field template %} {% form_field_error template %}
         </div>
       {% endif %}
       <div class="form-group last">
-        <label for="hidden" class="control-label">{% form_field_error hidden %} {% form_field hidden %} {{ 'lbl.VisibleOnSite'|trans|ucfirst }}</label>
+        <label for="hidden" class="control-label">{% form_field hidden %} {{ 'lbl.VisibleOnSite'|trans|ucfirst }}</label>
+        {% form_field_error hidden %}
       </div>
     </div>
   </div>
