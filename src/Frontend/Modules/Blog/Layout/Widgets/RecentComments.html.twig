@@ -13,9 +13,11 @@
         <ul>
           {% for comment in widgetBlogRecentComments %}
             <li>
-              {% if comment.website %}<a href="{{ comment.website }}" rel="nofollow">{% endif %}
+              {% if comment.website %}
+                <a href="{{ comment.website }}" rel="nofollow">{{ comment.author }}</a>
+              {% else %}
                 {{ comment.author }}
-                {% if comment.website %}</a>{% endif %}
+              {% endif %}
               {{ 'lbl.CommentedOn'|trans }} <a href="{{ comment.full_url }}">{{ comment.post_title }}</a>
             </li>
           {% endfor %}

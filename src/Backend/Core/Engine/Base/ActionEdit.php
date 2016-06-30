@@ -16,8 +16,6 @@ use Backend\Core\Engine\Meta;
 /**
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the edit action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class ActionEdit extends Action
 {

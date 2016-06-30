@@ -1,8 +1,5 @@
 /**
  * Frontend related objects
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 var jsFrontend =
 {
@@ -53,8 +50,6 @@ var jsFrontend =
 
 /**
  * Controls related javascript
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsFrontend.controls =
 {
@@ -104,8 +99,6 @@ jsFrontend.cookieBar =
 
 /**
  * Data related methods
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsFrontend.data =
 {
@@ -139,8 +132,6 @@ jsFrontend.data =
 
 /**
  * Facebook related
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsFrontend.facebook =
 {
@@ -175,8 +166,6 @@ jsFrontend.facebook =
 
 /**
  * Form related javascript
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsFrontend.forms =
 {
@@ -380,8 +369,6 @@ jsFrontend.forms =
 
 /**
  * Gravatar related javascript
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsFrontend.gravatar =
 {
@@ -419,8 +406,6 @@ jsFrontend.gravatar =
 
 /**
  * Locale
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsFrontend.locale =
 {
@@ -492,8 +477,6 @@ jsFrontend.locale =
 
 /**
  * Google analytics related javascript
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsFrontend.statistics =
 {
@@ -507,7 +490,7 @@ jsFrontend.statistics =
 	trackOutboundLinks: function()
 	{
 		// check if Google Analytics is available
-		if(typeof _gaq === 'object' || typeof ga === 'object')
+		if(typeof _gaq === 'object' || typeof ga === 'function')
 		{
 			// create a new selector
 			$.expr[':'].external = function(obj) {
@@ -560,8 +543,6 @@ jsFrontend.statistics =
 
 /**
  * Twitter related stuff
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsFrontend.twitter =
 {

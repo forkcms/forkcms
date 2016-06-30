@@ -15,8 +15,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This add-action will create a new category using Ajax
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class AddCategory extends BackendBaseAJAXAction
 {

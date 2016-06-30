@@ -10,8 +10,6 @@
 /**
  * The Spoon2Twig Convert is a command line file converter
  * to rebuild your old templates to new twig compatible templates
- *
- * @author <thijs@wijs.be>
  */
 class spoon2twig
 {

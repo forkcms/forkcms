@@ -18,8 +18,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This saves the mailing content
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class SaveContent extends BackendBaseAJAXAction
 {

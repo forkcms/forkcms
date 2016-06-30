@@ -17,10 +17,6 @@ use Frontend\Core\Engine\Url;
  * This class implements a lot of functionality that can be extended by a specific widget
  *
  * @later  Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Widget extends Object
 {
@@ -177,10 +173,15 @@ class Widget extends Object
     /**
      * Get parsed template content
      *
+     * @param string $template
      * @return string
      */
-    public function getContent()
+    public function getContent($template = null)
     {
+        if ($template !== null) {
+            return $this->tpl->getContent($template);
+        }
+
         return $this->tpl->getContent($this->templatePath);
     }
 

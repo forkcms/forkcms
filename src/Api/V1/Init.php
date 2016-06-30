@@ -11,8 +11,6 @@ namespace Api\V1;
 
 /**
  * This class will initiate the API.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Init extends \Common\Core\Init
 {

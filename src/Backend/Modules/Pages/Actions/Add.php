@@ -22,11 +22,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -271,7 +266,8 @@ class Add extends BackendBaseActionAdd
         $this->frm->addCheckbox('is_action', false);
 
         // extra
-        $this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+        $blockTypes = BackendPagesModel::getTypes();
+        $this->frm->addDropdown('extra_type', $blockTypes, key($blockTypes));
 
         // meta
         $this->meta = new BackendMeta($this->frm, null, 'title', true);

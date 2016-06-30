@@ -1,8 +1,3 @@
-/**
- * @author    Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- */
 jsBackend.FormBuilder =
 {
     /**

@@ -15,8 +15,6 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the delete-action, it will delete an item.
- *
- * @author Jeroen Van den Bossche <jeroenvandenbossche@gmail.com>
  */
 class Delete extends BackendBaseActionDelete
 {

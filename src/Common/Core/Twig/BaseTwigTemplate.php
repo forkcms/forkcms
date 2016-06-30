@@ -14,8 +14,6 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig.
- *
- * @author <thijs@wijs.be>
  */
 abstract class BaseTwigTemplate extends TwigEngine
 {
@@ -62,15 +60,13 @@ abstract class BaseTwigTemplate extends TwigEngine
     /**
      * Spoon assign method.
      *
-     * @param string $key
+     * @param string|array $key
      * @param mixed  $values
      */
     public function assign($key, $values = null)
     {
         if (is_array($key)) {
-            foreach ($key as $i => $value) {
-                $this->variables[$i] = $value;
-            }
+            $this->assignArray($key);
 
             return;
         }
@@ -181,6 +177,14 @@ abstract class BaseTwigTemplate extends TwigEngine
         $twig->addGlobal(
             'SITE_TITLE',
             $this->forkSettings->get('Core', 'site_title_'.$this->language, SITE_DEFAULT_TITLE)
+        );
+        $twig->addGlobal(
+            'SITE_URL',
+            SITE_URL
+        );
+        $twig->addGlobal(
+            'SITE_DOMAIN',
+            SITE_DOMAIN
         );
 
         // facebook stuff

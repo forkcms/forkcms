@@ -7,8 +7,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for our module settings
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class ConfiguratorTest extends PHPUnit_Framework_TestCase
 {

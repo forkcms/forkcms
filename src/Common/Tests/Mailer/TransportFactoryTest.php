@@ -7,8 +7,6 @@ use Common\Mailer\TransportFactory;
 
 /**
  * Tests for our module settings
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class TransportFactoryTest extends PHPUnit_Framework_TestCase
 {

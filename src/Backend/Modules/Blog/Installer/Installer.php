@@ -13,10 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the blog module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Installer extends ModuleInstaller
 {

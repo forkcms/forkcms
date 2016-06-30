@@ -1,10 +1,7 @@
 <?php
 
-/*
+/**
  * This is a simple script to install a locale file.
- *
- * @author Jelmer Snoeck <jelmer.snoeck@wijs.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 
 require_once __DIR__ . '/../autoload.php';

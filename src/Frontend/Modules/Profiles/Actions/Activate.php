@@ -17,9 +17,6 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
 /**
  * This is the activate-action.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Activate extends FrontendBaseBlock
 {

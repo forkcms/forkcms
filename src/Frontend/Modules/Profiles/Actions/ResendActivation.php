@@ -9,6 +9,7 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -19,8 +20,6 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
 /**
  * This is the resend activation-action. It will resend your activation email.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class ResendActivation extends FrontendBaseBlock
 {
@@ -123,7 +122,7 @@ class ResendActivation extends FrontendBaseBlock
                 // send email
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-                $message = \Common\Mailer\Message::newInstance(FL::getMessage('RegisterSubject'))
+                $message = Message::newInstance(FL::getMessage('RegisterSubject'))
                     ->setFrom(array($from['email'] => $from['name']))
                     ->setTo(array($profile->getEmail() => ''))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))

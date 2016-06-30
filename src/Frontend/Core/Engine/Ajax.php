@@ -17,11 +17,6 @@ use InvalidArgumentException;
 /**
  * FrontendAJAX
  * This class will handle AJAX-related stuff
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dave Lens <dave.lens@wijs.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class Ajax extends \KernelLoader implements \ApplicationInterface
 {

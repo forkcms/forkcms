@@ -19,10 +19,6 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This is the edit category action, it will display a form to edit an existing category.
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class EditCategory extends BackendBaseActionEdit
 {

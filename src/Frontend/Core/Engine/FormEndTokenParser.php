@@ -4,8 +4,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * Twig token parser for form closing tag.
- *
- * @author <per@wijs.be>
  */
 class FormEndTokenParser extends \Twig_TokenParser
 {

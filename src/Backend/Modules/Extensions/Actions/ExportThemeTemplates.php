@@ -22,8 +22,6 @@ use Backend\Modules\Extensions\Engine\Model;
 
 /**
  * Exports templates in the selected theme, for ease when packaging themes.
- *
- * @author Steven Dickinson <forkcms@orangestems.co.uk>
  */
 class ExportThemeTemplates extends ActionEdit
 {

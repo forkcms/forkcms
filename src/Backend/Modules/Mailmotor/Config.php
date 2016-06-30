@@ -18,8 +18,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the configuration-object for the mailmotor module
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Config extends BackendBaseConfig
 {

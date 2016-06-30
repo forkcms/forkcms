@@ -15,9 +15,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the base-object for cronjobs. The module-specific cronjob-files can extend the functionality from this class
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Cronjob extends Object
 {

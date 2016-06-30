@@ -16,10 +16,6 @@ use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
 /**
  * This is the detail-action
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Detail extends FrontendBaseBlock
 {

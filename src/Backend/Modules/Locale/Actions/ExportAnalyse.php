@@ -16,8 +16,6 @@ use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 
 /**
  * This is the export-action, it will create a XML with missing locale items.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class ExportAnalyse extends BackendBaseActionIndex
 {

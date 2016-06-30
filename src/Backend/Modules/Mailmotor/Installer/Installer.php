@@ -13,9 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the mailmotor module
- *
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Installer extends ModuleInstaller
 {

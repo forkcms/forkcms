@@ -33,8 +33,6 @@
       {% for top in positions.top %}
         {% if top.html %}
           {{ top.html|raw }}
-        {% elseif top.include_path %}
-          {% include top.include_path %}
         {% endif %}
       {% endfor %}
 
@@ -50,8 +48,6 @@
           <div id="headerAd">
             {{ advertisement.html|raw }}
           </div>
-        {% elseif advertisement.include_path %}
-          {% include advertisement.include_path %}
         {% endif %}
       {% endfor %}
     </div>
@@ -79,8 +75,6 @@
                 </div>
               </div>
             </section>
-          {% elseif left.include_path %}
-            {% include left.include_path %}
           {% endif %}
         {% endfor %}
 
@@ -92,7 +86,7 @@
         {# Page title #}
         {% if not hideContentTitle %}
           <header class="mainTitle">
-            <h1>{{ page.title }}</h1>
+            <h1>{{ page.title|raw }}</h1>
           </header>
         {% endif %}
 
@@ -106,8 +100,6 @@
                 </div>
               </div>
             </section>
-          {% else %}
-            {% include main.include_path %}
           {% endif %}
         {% endfor %}
       </div>

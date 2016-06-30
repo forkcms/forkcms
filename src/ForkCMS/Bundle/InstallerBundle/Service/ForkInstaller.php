@@ -13,13 +13,6 @@ use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 
 /**
  * This service installs fork
- *
- * @author Davy Hellemans <davy@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class ForkInstaller
 {

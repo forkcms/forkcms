@@ -15,9 +15,6 @@ use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
 /**
  * This is a widget with the related items based on tags
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Related extends FrontendBaseWidget
 {

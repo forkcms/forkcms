@@ -4,8 +4,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * Twig node for writing out a compiled version of a closing form tag.
- *
- * @author <per@wijs.be>
  */
 class FormEndNode extends \Twig_Node
 {

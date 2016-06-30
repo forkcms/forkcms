@@ -11,9 +11,6 @@ namespace Backend;
 
 /**
  * This class will initiate the backend-application
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Init extends \Common\Core\Init
 {

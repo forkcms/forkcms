@@ -14,8 +14,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * Client for the Fork CMS API.
- *
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Client extends Api
 {

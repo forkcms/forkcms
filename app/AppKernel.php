@@ -16,10 +16,6 @@ require_once __DIR__ . '/routing.php';
 
 /**
  * The AppKernel provides a proper way to handle a request and transform it into a response.
- *
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Dave Lens <dave.lens@wijs.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class AppKernel extends Kernel
 {

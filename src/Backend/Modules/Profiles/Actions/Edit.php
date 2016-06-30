@@ -21,9 +21,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the edit-action, it will display a form to edit an existing profile.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Edit extends BackendBaseActionEdit
 {

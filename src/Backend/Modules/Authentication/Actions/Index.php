@@ -21,9 +21,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the index-action (default), it will display the login screen
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Index extends BackendBaseActionIndex
 {

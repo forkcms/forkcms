@@ -8,7 +8,7 @@
   <div class="inner">
     {% if isLoggedIn %}
       <div class="bd content">
-        {{ 'msg.ProfilesLoggedInAs'|trans|sprintf({$profile.display_name }}:{{ profile.url.dashboard }}}) -
+        {{ 'msg.ProfilesLoggedInAs'|trans|format(profile.display_name, profile.url.dashboard)|raw }} -
         <a href="{{ profile.url.settings }}">{{ 'lbl.Settings'|trans|capitalize }}</a>
       </div>
     {% endif %}
@@ -22,16 +22,17 @@
         <fieldset>
           <p{% if txtEmailError %} class="errorArea"{% endif %}>
             <label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field_error Email %}{% form_field Email %}
+            {% form_field email %} {% form_field_error email %}
           </p>
           <p{% if txtPasswordError %} class="errorArea"{% endif %}>
             <label for="password">{{ 'lbl.Password'|trans|capitalize }}
-              <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field_error Password %}{% form_field Password %}
+              <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+            </label>
+            {% form_field password %} {% form_field_error password %}
           </p>
           <p>
-            <label for="remember">{% form_field Remember %} {{ 'lbl.RememberMe'|trans|capitalize }}</label>
-            {% form_field_error Remember %}
+            <label for="remember">{% form_field remember %} {{ 'lbl.RememberMe'|trans|capitalize }}</label>
+            {% form_field_error remember %}
           </p>
           <p>
             <input class="inputSubmit" type="submit" value="{{ 'lbl.Login'|trans|capitalize }}" />
@@ -41,7 +42,7 @@
       </div>
       <footer class="ft">
         <p>
-          <a href="{{ geturlforblock:'Profiles':'ForgotPassword' }}" title="{{ 'msg.ForgotPassword'|trans }}">{{ 'msg.ForgotPassword'|trans }}</a>
+          <a href="{{ geturlforblock('Profiles', 'ForgotPassword') }}" title="{{ 'msg.ForgotPassword'|trans }}">{{ 'msg.ForgotPassword'|trans }}</a>
         </p>
       </footer>
     {% endif %}

@@ -4,8 +4,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * Twig note for writing out the compiled version of a form field error.
- *
- * @author <per@wijs.be>
  */
 class FormFieldErrorNode extends \Twig_Node
 {

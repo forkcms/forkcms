@@ -19,9 +19,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the edit-action, it will display a form to create a new item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Edit extends BackendBaseActionEdit
 {

@@ -11,8 +11,6 @@ namespace Backend\Core\Engine;
 
 /**
  * A datagrid with an array as source
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class DataGridArray extends DataGrid
 {

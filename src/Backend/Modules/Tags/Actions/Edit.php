@@ -19,9 +19,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the edit action, it will display a form to edit an existing tag.
- *
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Edit extends BackendBaseActionEdit
 {

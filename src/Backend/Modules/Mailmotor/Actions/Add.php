@@ -17,8 +17,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This is the add-action, it will display a form to create a new mailing
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Add extends BackendBaseActionAdd
 {

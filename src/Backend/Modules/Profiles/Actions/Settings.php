@@ -16,8 +16,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the settings-action, it will display a form to set general profiles settings
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Settings extends BackendBaseActionEdit
 {

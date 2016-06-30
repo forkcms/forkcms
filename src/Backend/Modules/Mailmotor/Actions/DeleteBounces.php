@@ -16,8 +16,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This action will delete all bounces for a specified mailing
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class DeleteBounces extends BackendBaseActionDelete
 {

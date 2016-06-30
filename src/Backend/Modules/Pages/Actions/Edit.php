@@ -24,11 +24,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the edit-action, it will display a form to update an item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -424,7 +419,8 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addCheckbox('is_action', $isAction);
 
         // extra
-        $this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+        $blockTypes = BackendPagesModel::getTypes();
+        $this->frm->addDropdown('extra_type', $blockTypes, key($blockTypes));
 
         // meta
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
