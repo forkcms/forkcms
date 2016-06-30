@@ -1,11 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "33d9a7af622ca51715f5e4c2f76be762",
-    "content-hash": "783b51619535a9b7822b4cb03d48204a",
+    "hash": "527018db5e90c4f84a908c597591aa94",
+    "content-hash": "9163038df109595ac8ea5817b756c41b",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1092,16 +1092,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "2.1.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "6eb6865c3b47b67dfc18a81e959df7726c38c1b5"
+                "reference": "7e8f31f9f5187f48c6fd3c8c0fe7eb7d136e9d6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/6eb6865c3b47b67dfc18a81e959df7726c38c1b5",
-                "reference": "6eb6865c3b47b67dfc18a81e959df7726c38c1b5",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/7e8f31f9f5187f48c6fd3c8c0fe7eb7d136e9d6e",
+                "reference": "7e8f31f9f5187f48c6fd3c8c0fe7eb7d136e9d6e",
                 "shasum": ""
             },
             "require": {
@@ -1123,7 +1123,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2016-04-13 14:03:11"
+            "time": "2016-06-30 11:51:40"
         },
         {
             "name": "swiftmailer/swiftmailer",
