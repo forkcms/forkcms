@@ -135,3 +135,10 @@ select[size="1"] {
     width: 25%;
   }
 }
+
+.input-group-sm {
+
+  select.form-control {
+    line-height: 1.5;
+  }
+}
