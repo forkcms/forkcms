@@ -10,6 +10,7 @@
 /backend/cache/navigation/*
 /src/Backend/Cache/CachedTemplates/*
 /vendor/*
+/bower_components/*
 /app/config/parameters.yml
 /bin/*
 /bundles/*
