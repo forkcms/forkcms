@@ -14,10 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This is the form widget.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class Form extends FrontendBaseWidget
 {
@@ -218,6 +214,9 @@ class Form extends FrontendBaseWidget
                     if (isset($field['validations']['email'])) {
                         $txt->setAttribute('type', 'email');
                     }
+                    if ($item['placeholder']) {
+                        $txt->setAttribute('placeholder', $item['placeholder']);
+                    }
 
                     // get content
                     $item['html'] = $txt->parse();
@@ -274,6 +273,9 @@ class Form extends FrontendBaseWidget
                     // add required attribute
                     if ($item['required']) {
                         $txt->setAttribute('required', null);
+                    }
+                    if ($item['placeholder']) {
+                        $txt->setAttribute('placeholder', $item['placeholder']);
                     }
 
                     // get content

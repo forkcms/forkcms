@@ -15,8 +15,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This is a widget with the search form
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Form extends FrontendBaseWidget
 {

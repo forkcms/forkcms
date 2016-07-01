@@ -21,8 +21,6 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the index-action (default), it will display the login screen
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Index extends BackendBaseActionIndex
 {

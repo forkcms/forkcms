@@ -18,9 +18,6 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Header extends FrontendBaseObject
 {

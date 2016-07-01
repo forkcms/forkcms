@@ -15,8 +15,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the logout-action, it will logout the current user
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Logout extends BackendBaseAction
 {

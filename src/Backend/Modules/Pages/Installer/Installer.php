@@ -13,10 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the pages module
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Installer extends ModuleInstaller
 {

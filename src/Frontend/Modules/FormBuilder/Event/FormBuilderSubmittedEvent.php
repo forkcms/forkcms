@@ -7,8 +7,6 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * This class is in fact an immutable event class holding all the data
  * that could be needed by event subscribers on the FormBuilder submitted event
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class FormBuilderSubmittedEvent extends Event
 {

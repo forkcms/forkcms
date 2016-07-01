@@ -19,9 +19,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the comments-action , it will display the overview of blog comments
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Comments extends BackendBaseActionIndex
 {

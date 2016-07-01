@@ -1,9 +1,5 @@
 /**
  * Interaction for the groups module
- *
- * @author    Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
- * @author    Dieter Vanden Eynde <dieter@netlash.com>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.Groups =
 {
@@ -105,7 +101,8 @@ jsBackend.Groups =
     },
 
     // select all
-    selectAll: function () {
+    selectAll: function (event) {
+        event.stopPropagation();
         // init vars
         $this = $(this);
 

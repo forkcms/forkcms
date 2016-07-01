@@ -4,8 +4,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * Twig token parser for form fields.
- *
- * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class SeoFormTokenParser extends \Twig_TokenParser
 {

@@ -1,8 +1,5 @@
 /**
  * Interaction for the Profiles module
- *
- * @author Thomas Deceuninck <thomas@fronto.be>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 jsBackend.Profiles =
 {

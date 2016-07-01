@@ -19,9 +19,6 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the index-action, it will display an overview of all the translations with an inline edit option.
- *
- * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Stef Bastiaansen <stef.bastiaansen@wijs.be>
  */
 class Index extends BackendBaseActionIndex
 {

@@ -14,18 +14,18 @@
 
       {# Skip link #}
       <div id="skip">
-        <p><a href="#main">{{ 'lbl.SkipToContent'|trans|capitalize }}</a></p>
+        <p><a href="#main">{{ 'lbl.SkipToContent'|trans|ucfirst }}</a></p>
       </div>
 
       {# Navigation #}
       <nav id="headerNavigation">
-        <h4>{{ 'lbl.MainNavigation'|trans|capitalize }}</h4>
+        <h4>{{ 'lbl.MainNavigation'|trans|ucfirst }}</h4>
         {{ getnavigation('page', 0, 1) }}
       </nav>
 
       {# Language #}
       <nav id="headerLanguage">
-        <h4>{{ 'lbl.Language'|trans|capitalize }}</h4>
+        <h4>{{ 'lbl.Language'|trans|ucfirst }}</h4>
         {% include "Core/Layout/Templates/Languages.html.twig" %}
       </nav>
 
@@ -33,14 +33,12 @@
       {% for top in positions.top %}
         {% if top.html %}
           {{ top.html|raw }}
-        {% elseif top.include_path %}
-          {% include top.include_path %}
         {% endif %}
       {% endfor %}
 
       {# Breadcrumb #}
       <div id="breadcrumb">
-        <h4>{{ 'lbl.Breadcrumb'|trans|capitalize }}</h4>
+        <h4>{{ 'lbl.Breadcrumb'|trans|ucfirst }}</h4>
         {% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
       </div>
 
@@ -50,8 +48,6 @@
           <div id="headerAd">
             {{ advertisement.html|raw }}
           </div>
-        {% elseif advertisement.include_path %}
-          {% include advertisement.include_path %}
         {% endif %}
       {% endfor %}
     </div>
@@ -65,7 +61,7 @@
 
         {# Subnavigation #}
         <nav class="sideNavigation">
-          <h4>{{ 'lbl.Subnavigation'|trans|capitalize }}</h4>
+          <h4>{{ 'lbl.Subnavigation'|trans|ucfirst }}</h4>
           {{ getsubnavigation('page', page.id, 2) }}
         </nav>
 
@@ -79,8 +75,6 @@
                 </div>
               </div>
             </section>
-          {% elseif left.include_path %}
-            {% include left.include_path %}
           {% endif %}
         {% endfor %}
 
@@ -92,7 +86,7 @@
         {# Page title #}
         {% if not hideContentTitle %}
           <header class="mainTitle">
-            <h1>{{ page.title }}</h1>
+            <h1>{{ page.title|raw }}</h1>
           </header>
         {% endif %}
 
@@ -106,8 +100,6 @@
                 </div>
               </div>
             </section>
-          {% else %}
-            {% include main.include_path %}
           {% endif %}
         {% endfor %}
       </div>
@@ -115,7 +107,7 @@
   </div>
   <noscript>
     <div class="message notice">
-      <h4>{{ 'lbl.EnableJavascript'|trans|capitalize }}</h4>
+      <h4>{{ 'lbl.EnableJavascript'|trans|ucfirst }}</h4>
       <p>{{ 'msg.EnableJavascript'|trans }}</p>
     </div>
   </noscript>

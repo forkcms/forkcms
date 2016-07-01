@@ -14,8 +14,6 @@ use Frontend\Core\Engine\Url as FrontendURL;
 /**
  * In this file we specify the functions a class must implement to work with tags.
  * To use tags in your module simply implement this interface in your module's model class.
- *
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 interface TagsInterface
 {

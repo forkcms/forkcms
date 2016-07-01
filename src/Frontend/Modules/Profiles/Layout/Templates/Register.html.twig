@@ -15,24 +15,25 @@
       <div class="bd">
         <fieldset>
           <p{% if txtDisplayNameError %} class="errorArea"{% endif %}>
-            <label for="displayName">{{ 'lbl.DisplayName'|trans|capitalize }}
-              <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field_error DisplayName %}{% form_field DisplayName %}
+            <label for="displayName">{{ 'lbl.DisplayName'|trans|ucfirst }}
+              <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+            </label>
+            {% form_field display_name %} {% form_field_error display_name %}
           </p>
           <p{% if txtEmailError %} class="errorArea"{% endif %}>
-            <label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field_error Email %}{% form_field Email %}
+            <label for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+            {% form_field email %} {% form_field_error email %}
           </p>
           <p{% if txtPasswordError %} class="errorArea"{% endif %}>
-            <label for="password">{{ 'lbl.Password'|trans|capitalize }}
+            <label for="password">{{ 'lbl.Password'|trans|ucfirst }}
               <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field_error Password %}{% form_field Password %}
+            {% form_field password %} {% form_field_error password %}
           </p>
           <p>
-            <label for="showPassword">{% form_field ShowPassword %} {{ 'lbl.ShowPassword'|trans|capitalize }} </label>
+            <label for="showPassword">{% form_field show_password %} {{ 'lbl.ShowPassword'|trans|ucfirst }} </label>
           </p>
           <p>
-            <input class="inputSubmit" type="submit" value="{{ 'lbl.Register'|trans|capitalize }}" />
+            <input class="inputSubmit" type="submit" value="{{ 'lbl.Register'|trans|ucfirst }}" />
           </p>
         </fieldset>
       </div>

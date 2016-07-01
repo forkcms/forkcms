@@ -24,11 +24,11 @@
       {% endif %}
 
       {% if not questions %}
-        <p>{{ 'msg.NoQuestionsInCategory'|trans|capitalize }}</p>
+        <p>{{ 'msg.NoQuestionsInCategory'|trans|ucfirst }}</p>
       {% endif %}
 
       <p>
-        <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|capitalize }}">{{ 'lbl.ToFaqOverview'|trans|capitalize }}</a>
+        <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">{{ 'lbl.ToFaqOverview'|trans|ucfirst }}</a>
       </p>
     </div>
   </div>

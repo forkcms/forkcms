@@ -1,9 +1,5 @@
 /**
  * Backend related objects
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Dieter Vanden Eynde <dieter@netlash.com>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 var jsBackend =
 {
@@ -48,10 +44,6 @@ var jsBackend =
         jsBackend.ckeditor.init();
         jsBackend.resizeFunctions.init();
         jsBackend.navigation.init();
-
-        // IE fixes
-        jsBackend.selectors.init();
-        jsBackend.focusfix.init();
 
         // do not move, should be run as the last item.
         if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning();
@@ -109,9 +101,6 @@ var jsBackend =
 
 /**
  * Navigation controls
- *
- * @author    Katrien Vanhaute <katrien@sumocoders.be>
- * @author    Daan De Deckere <daan@sumocoders.be>
  */
 
 jsBackend.navigation =
@@ -227,8 +216,6 @@ jsBackend.navigation =
 
 /**
  * Handle form messages (action feedback: success, error, ...)
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.balloons =
 {
@@ -306,9 +293,6 @@ jsBackend.balloons =
 
 /**
  * CK Editor related objects
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Matthias Mullie <forkcms@mullie.eu>
  */
 jsBackend.ckeditor =
 {
@@ -615,9 +599,6 @@ jsBackend.ckeditor =
 
 /**
  * Handle form functionality
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.controls =
 {
@@ -1161,8 +1142,6 @@ jsBackend.controls =
 
 /**
  * Data related methods
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.data =
 {
@@ -1193,10 +1172,6 @@ jsBackend.data =
 
 /**
  * Backend effects
- *
- * @author    Dieter Vanden Eynde <dieter@dieterve.be>
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.effects =
 {
@@ -1255,9 +1230,6 @@ jsBackend.effects =
 
 /**
  * Backend forms
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.forms =
 {
@@ -1568,9 +1540,6 @@ jsBackend.forms =
 
 /**
  * Do custom layout/interaction stuff
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.layout =
 {
@@ -1675,8 +1644,6 @@ jsBackend.layout =
 
 /**
  * Locale
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.locale =
 {
@@ -1759,10 +1726,6 @@ jsBackend.locale =
 
 /**
  * Handle form messages (action feedback: success, error, ...)
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
- * @author    Katrien Vanhaute <katrien@sumocoders.be>
  */
 jsBackend.messages =
 {
@@ -1780,7 +1743,7 @@ jsBackend.messages =
     // hide a message
     hide: function (element) {
         // fade out
-        element.removeClass('active');
+        element.removeClass('active').delay(250).hide(1);
     },
 
     // add a new message into the que
@@ -1835,10 +1798,6 @@ jsBackend.messages =
 
 /**
  * Apply tabs
- *
- * @author    Jan Moessen <jan@netlash.com>
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.tabs =
 {
@@ -1885,9 +1844,6 @@ jsBackend.tabs =
 
 /**
  * Apply tooltip
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.tooltip =
 {
@@ -1904,54 +1860,7 @@ jsBackend.tooltip =
 };
 
 /**
- * Handle browsers with impaired CSS selector support
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
- */
-jsBackend.selectors =
-{
-    // init, something like a constructor
-    init: function () {
-        // missing CSS selector support IE6, IE7, IE8 as IE7
-        if ($.browser.msie && $.browser.version.substr(0, 1) < 9) {
-            // nothing yet
-        }
-    }
-};
-
-/**
- * Fix focus/blur events on impaired browsers
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Thomas Deceuninck <thomas@fronto.be>
- */
-jsBackend.focusfix =
-{
-    // init, something like a constructor
-    init: function () {
-        function focusFix(selector, className) {
-            $(selector).focus(function () {
-                $(this).addClass(className);
-            });
-            $(selector).blur(function () {
-                $(this).removeClass(className);
-            });
-        }
-
-        // IE6 & IE7 focus fix
-        if ($.browser.msie && $.browser.version.substr(0, 1) < 9) {
-            // apply focus fix
-            focusFix('input.inputText', 'focus');
-            focusFix('textarea', 'focus');
-        }
-    }
-};
-
-/**
  * Enable setting of sequence by drag & drop
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tableSequenceByDragAndDrop =
 {

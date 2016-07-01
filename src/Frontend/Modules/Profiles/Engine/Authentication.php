@@ -16,10 +16,6 @@ use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
 
 /**
  * Profile authentication functions.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jan Moesen <jan.moesen@netlash.com>
  */
 class Authentication
 {

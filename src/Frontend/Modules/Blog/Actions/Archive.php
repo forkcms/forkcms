@@ -16,8 +16,6 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is the archive-action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Archive extends FrontendBaseBlock
 {

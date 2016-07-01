@@ -7,8 +7,6 @@ use Google_Auth_Exception;
 
 /**
  * This widget will show recent visits
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class RecentVisits extends Widget
 {

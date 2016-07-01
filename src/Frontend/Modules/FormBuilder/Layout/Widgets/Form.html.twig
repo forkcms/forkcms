@@ -4,14 +4,14 @@
   <div class="inner">
     <div class="bd">
       {% if successMessage %}
-        <div id="{{ formName }}" class="message success">{{ successMessage }}</div>{% endif %}
+        <div id="{{ formName }}" class="message success">{{ successMessage|raw }}</div>{% endif %}
       {% if formBuilderError %}
         <div class="message error"><p>{{ formBuilderError }}</p></div>{% endif %}
 
       {% if fields %}
         <form {% if hidUtf8 %}accept-charset="UTF-8" {% endif %}id="{{ formName }}" method="post" action="{{ formAction }}">
           {% if formToken %}
-            <input type="hidden" name="form_token" id="formToken{{ formName|capitalize }}" value="{{ formToken }}" />
+            <input type="hidden" name="form_token" id="formToken{{ formName|ucfirst }}" value="{{ formToken }}" />
           {% endif %}
 
           <input type="hidden" name="form" value="{{ formName }}" />

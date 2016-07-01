@@ -20,9 +20,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This is the index-action, it will display the overview of profiles.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Lester Lievens <lester@netlash.com>
  */
 class Index extends BackendBaseActionIndex
 {

@@ -7,8 +7,6 @@ use Google_Auth_Exception;
 
 /**
  * This widget will show a trafic sources graph for the last week
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class TraficSources extends Widget
 {

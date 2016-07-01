@@ -14,9 +14,6 @@ jsBackend =
 
 /**
  * Handle form functionality
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.controls =
 {

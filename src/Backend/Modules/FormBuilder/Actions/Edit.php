@@ -19,9 +19,6 @@ use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Edit extends BackendBaseActionEdit
 {

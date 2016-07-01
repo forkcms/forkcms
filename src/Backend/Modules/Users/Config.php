@@ -13,8 +13,6 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the users module
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Config extends BackendBaseConfig
 {

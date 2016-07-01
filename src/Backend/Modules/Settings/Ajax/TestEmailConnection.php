@@ -14,8 +14,6 @@ use Backend\Core\Engine\Language as BL;
 
 /**
  * This test-email-action will test the mail-connection
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class TestEmailConnection extends BackendBaseAJAXAction
 {

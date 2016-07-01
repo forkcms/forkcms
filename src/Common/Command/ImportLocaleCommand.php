@@ -11,8 +11,6 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is a simple command to install a locale file
- *
- * @author Jesse Dobbelaere <jesse@dobbelaere-ae.be>
  */
 class ImportLocaleCommand extends Command
 {

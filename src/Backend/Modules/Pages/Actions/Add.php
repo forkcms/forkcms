@@ -9,6 +9,7 @@ namespace Backend\Modules\Pages\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -22,11 +23,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -277,14 +273,17 @@ class Add extends BackendBaseActionAdd
         $this->frm->addCheckbox('navigation_title_overwrite');
         $this->frm->addText('navigation_title');
 
-        // tags
-        $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
+        if ($this->showTags()) {
+            // tags
+            $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
+        }
 
         // a specific action
         $this->frm->addCheckbox('is_action', false);
 
         // extra
-        $this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+        $blockTypes = BackendPagesModel::getTypes();
+        $this->frm->addDropdown('extra_type', $blockTypes, key($blockTypes));
 
         // meta
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
@@ -308,6 +307,7 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL(1), '/'));
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
+        $this->tpl->assign('showTags', $this->showTags());
 
         // get default template id
         $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
@@ -461,12 +461,14 @@ class Add extends BackendBaseActionAdd
                 // trigger an event
                 BackendModel::triggerEvent($this->getModule(), 'after_add', $page);
 
-                // save tags
-                BackendTagsModel::saveTags(
-                    $page['id'],
-                    $this->frm->getField('tags')->getValue(),
-                    $this->URL->getModule()
-                );
+                if ($this->showTags()) {
+                    // save tags
+                    BackendTagsModel::saveTags(
+                        $page['id'],
+                        $this->frm->getField('tags')->getValue(),
+                        $this->URL->getModule()
+                    );
+                }
 
                 // build the cache
                 BackendPagesModel::buildCache(BL::getWorkingLanguage());
@@ -508,5 +510,21 @@ class Add extends BackendBaseActionAdd
                 }
             }
         }
+    }
+
+    /**
+     * Check if the user has the right to see/edit tags
+     *
+     * @return bool
+     */
+    private function showTags()
+    {
+        if (!Authentication::isAllowedAction('Edit', 'Tags')
+            || !Authentication::isAllowedAction('GetAllTags', 'Tags')
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }

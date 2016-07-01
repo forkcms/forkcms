@@ -19,10 +19,6 @@ use Frontend\Core\Engine\Language as FrontendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model extends \Common\Core\Model
 {
@@ -686,15 +682,15 @@ class Model extends \Common\Core\Model
         }
 
         $fs = new Filesystem();
-        foreach (array_keys($fileSizes) as $sizeDir) {
+        foreach ($fileSizes as $sizeDir) {
             $fullPath = FRONTEND_FILES_PATH . '/' . $module .
-                        (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
+                        (empty($subDirectory) ? '/' : '/' . $subDirectory . '/') . $sizeDir . '/' . $filename;
             if (is_file($fullPath)) {
                 $fs->remove($fullPath);
             }
         }
         $fullPath = FRONTEND_FILES_PATH . '/' . $module .
-                    (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
+                    (empty($subDirectory) ? '/' : '/' . $subDirectory . '/') . 'source/' . $filename;
         if (is_file($fullPath)) {
             $fs->remove($fullPath);
         }

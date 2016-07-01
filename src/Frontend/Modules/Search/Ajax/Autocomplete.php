@@ -15,8 +15,6 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
  * This is the autocomplete-action, it will output a list of searches that start with a certain string.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Autocomplete extends FrontendBaseAJAXAction
 {

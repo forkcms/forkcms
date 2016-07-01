@@ -16,10 +16,6 @@ use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
-/**
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- */
 class Settings extends BackendBaseActionEdit
 {
     /**

@@ -13,10 +13,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This is our extended version of \SpoonFormFile
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FormImage extends \SpoonFormImage
 {

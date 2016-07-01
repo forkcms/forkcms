@@ -9,6 +9,7 @@ namespace Backend\Modules\Pages\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
@@ -25,11 +26,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This is the edit-action, it will display a form to update an item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -424,21 +420,24 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addCheckbox('navigation_title_overwrite', ($this->record['navigation_title_overwrite'] == 'Y'));
         $this->frm->addText('navigation_title', $this->record['navigation_title']);
 
-        // tags
-        $this->frm->addText(
-            'tags',
-            BackendTagsModel::getTags($this->URL->getModule(), $this->id),
-            null,
-            'form-control js-tags-input',
-            'error js-tags-input'
-        );
+        if ($this->showTags()) {
+            // tags
+            $this->frm->addText(
+                'tags',
+                BackendTagsModel::getTags($this->URL->getModule(), $this->id),
+                null,
+                'form-control js-tags-input',
+                'error js-tags-input'
+            );
+        }
 
         // a specific action
         $isAction = (isset($this->record['data']['is_action']) && $this->record['data']['is_action'] == true) ? true : false;
         $this->frm->addCheckbox('is_action', $isAction);
 
         // extra
-        $this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+        $blockTypes = BackendPagesModel::getTypes();
+        $this->frm->addDropdown('extra_type', $blockTypes, key($blockTypes));
 
         // meta
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -534,6 +533,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL($this->record['parent_id']), '/'));
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
+        $this->tpl->assign('showTags', $this->showTags());
 
         // init var
         $showDelete = true;
@@ -706,12 +706,14 @@ class Edit extends BackendBaseActionEdit
                 // trigger an event
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $page));
 
-                // save tags
-                BackendTagsModel::saveTags(
-                    $page['id'],
-                    $this->frm->getField('tags')->getValue(),
-                    $this->URL->getModule()
-                );
+                if ($this->showTags()) {
+                    // save tags
+                    BackendTagsModel::saveTags(
+                        $page['id'],
+                        $this->frm->getField('tags')->getValue(),
+                        $this->URL->getModule()
+                    );
+                }
 
                 // build cache
                 BackendPagesModel::buildCache(BL::getWorkingLanguage());
@@ -753,5 +755,21 @@ class Edit extends BackendBaseActionEdit
                 }
             }
         }
+    }
+
+    /**
+     * Check if the user has the right to see/edit tags
+     *
+     * @return bool
+     */
+    private function showTags()
+    {
+        if (!Authentication::isAllowedAction('Edit', 'Tags')
+            || !Authentication::isAllowedAction('GetAllTags', 'Tags')
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }

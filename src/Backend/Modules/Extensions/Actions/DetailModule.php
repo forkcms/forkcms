@@ -11,9 +11,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the detail-action it will display the details of a module.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class DetailModule extends BackendBaseActionIndex
 {

@@ -17,9 +17,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the delete-action, it will deactivate and mark the user as deleted
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Delete extends BackendBaseActionDelete
 {

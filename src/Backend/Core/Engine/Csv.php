@@ -13,8 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is our extended version of SpoonFileCSV
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Csv extends \SpoonFileCSV
 {

@@ -1,7 +1,5 @@
 /**
  * Interaction for the dashboard module
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.users =
 {

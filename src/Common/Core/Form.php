@@ -14,8 +14,6 @@ use Backend\Core\Engine\Url;
 
 /**
  * This class will initiate the frontend-application
- *
- * @author Ghazi Triki <ghazi.triki@inhanx.com>
  */
 class Form extends \SpoonForm
 {
@@ -242,8 +240,6 @@ class Form extends \SpoonForm
 
 /**
  * This is our extended version of \SpoonFormCheckbox
- *
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 class CommonFormCheckbox extends \SpoonFormCheckbox
 {

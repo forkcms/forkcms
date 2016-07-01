@@ -20,10 +20,6 @@ use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 
 /**
  * Frontend page class, this class will handle everything on a page
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Page extends FrontendBaseObject
 {
@@ -357,53 +353,50 @@ class Page extends FrontendBaseObject
         // init array to store parsed positions data
         $positions = array();
 
-        do {
-            $oldPositions = $positions;
+        // fetch variables from main template
+        $mainVariables = $this->tpl->getAssignedVariables();
 
-            // fetch variables from main template
-            $mainVariables = $this->tpl->getAssignedVariables();
-
-            // loop all positions
-            foreach ($this->record['positions'] as $position => $blocks) {
-                // loop all blocks in this position
-                foreach ($blocks as $i => $block) {
-                    // check for extras that need to be reparsed
-                    if (isset($block['extra'])) {
-                        // fetch extra-specific variables
-                        if (isset($positions[$position][$i]['variables'])) {
-                            $extraVariables = $positions[$position][$i]['variables'];
-                        } else {
-                            $extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
-                        }
-
-                        // assign all main variables
-                        $block['extra']->getTemplate()->assignArray($mainVariables);
-
-                        // overwrite with all specific variables
-                        $block['extra']->getTemplate()->assignArray($extraVariables);
-
-                        // parse extra
-                        $positions[$position][$i] = array(
-                            'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
-                            'blockIsEditor' => false,
-                            'blockContent' => $block['extra']->getContent(),
-                        );
-
-                        // Maintain backwards compatibility
-                        $positions[$position][$i]['blockIsHTML'] = $positions[$position][$i]['blockIsEditor'];
-
-                        if (empty($positions[$position][$i]['blockContent'])) {
-                            unset($positions[$position][$i]);
-                        }
+        // loop all positions
+        foreach ($this->record['positions'] as $position => $blocks) {
+            // loop all blocks in this position
+            foreach ($blocks as $i => $block) {
+                // check for extras that need to be reparsed
+                if (isset($block['extra'])) {
+                    // fetch extra-specific variables
+                    if (isset($positions[$position][$i]['variables'])) {
+                        $extraVariables = $positions[$position][$i]['variables'];
                     } else {
-                        $positions[$position][$i] = $block;
+                        $extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
+                    }
+
+                    // assign all main variables
+                    $block['extra']->getTemplate()->assignArray($mainVariables);
+
+                    // overwrite with all specific variables
+                    $block['extra']->getTemplate()->assignArray($extraVariables);
+
+                    // parse extra
+                    $positions[$position][$i] = array(
+                        'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
+                        'blockIsEditor' => false,
+                        'html' => $block['extra']->getContent(),
+                    );
+
+                    // Maintain backwards compatibility
+                    $positions[$position][$i]['blockIsHTML'] = $positions[$position][$i]['blockIsEditor'];
+                } else {
+                    $positions[$position][$i] = $block;
+                    if (array_key_exists('blockContent', $block)) {
+                        $positions[$position][$i]['html'] = $block['blockContent'];
                     }
                 }
-
-                // assign position to template
-                $this->tpl->assign('position' . \SpoonFilter::ucfirst($position), $positions[$position]);
             }
-        } while ($oldPositions != $positions);
+
+            // assign position to template
+            $this->tpl->assign('position' . \SpoonFilter::ucfirst($position), $positions[$position]);
+        }
+
+        $this->tpl->assign('positions', $positions);
     }
 
     /**

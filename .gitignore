@@ -1,20 +1,24 @@
+# Configuration
+/app/config/parameters.yml
+
+# Libraries
+/vendor/*
+
+# Generated files
 .project
 .cache
+.sass-cache
 .buildpath
 .settings
 .*.swp
 .DS_Store
 /app/cache/*
 /app/logs/*
-/components/*
-/backend/cache/navigation/*
-/src/Backend/Cache/CachedTemplates/*
-/vendor/*
-/app/config/parameters.yml
+/app/sessions/*
 /bin/*
 /bundles/*
-/js/*
 /css/*
+/js/*
 
 # @remark: custom for Sumocoders
 /node_modules/*

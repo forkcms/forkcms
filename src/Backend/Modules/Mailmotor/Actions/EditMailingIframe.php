@@ -17,8 +17,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This is the edit-action, it will display a form to edit the mailing contents through an iframe
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class EditMailingIframe extends BackendBaseActionEdit
 {

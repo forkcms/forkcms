@@ -17,11 +17,6 @@ use Backend\Core\Engine\Model as BackendModel;
  *    - it will set debug mode
  *    - it will set the compile-directory
  *    - ...
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class DataGrid extends \SpoonDataGrid
 {

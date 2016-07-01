@@ -1,3 +1,43 @@
+4.0.4 (2016-07-01)
+--
+
+Bugfixes:
+
+* Analytics: fixes for tracking.
+* Locale: fix removing entries.
+* Core: fix camelcase instead of ucfirst.
+* Installer: fix unreadable text.
+* Core: also use browser cache on files with uppercased extensions.
+* Analytics: refactor to avoid some bugs.
+* Core: small layout fixes.
+* Core: fix image delete with a subfolder.
+* Core: use non breaking spaces in format currency.
+* Core: fix the showBool template modifier.
+* Core: cleanup fallbacks for legacy browsers.
+* Core: remove @author tags in favor of git history.
+* Core: remove twig generation notices.
+* Analytics: fix widgets when there is no data yet.
+* FormBuilder: fix placeholders.
+* Core: fix a lot of emails and template issues.
+* Core: fix navigation with deeper levels.
+* Core: fix multiple widgets with different content on one page.
+* Core: make sure modules folder isn't required in a theme.
+* Core: fix page titles containing html entities.
+* Core: fix overflowing logs in production mode.
+* Core: fix unsupported date formats.
+* Core: fix double slash in the url causing 404's.
+* Core: fix wrongly placed form errors.
+* Core: fix usage of deprecated sprintf filter.
+* Core: fix reference to the deprecated forum.
+* Core: fix an issue when navigation didn't contain pages.
+* Core: hide the navigation after the animation.
+* Profiles: show the profiles filter titles again.
+* Groups: fix javascript issues with the group rights.
+* Groups: fix shown tabs when a user has no rights to it.
+* Groups: fix some coding styles.
+* Core: fix the sub navigation with too many entries overflowing the page.
+
+
 4.0.3 (2016-06-15)
 --
 

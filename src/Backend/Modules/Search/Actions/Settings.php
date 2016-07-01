@@ -17,8 +17,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the settings-action, it will display a form to set general search settings
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Settings extends BackendBaseActionEdit
 {

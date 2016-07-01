@@ -19,8 +19,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * This is the data-action it will display the overview of sent data
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Data extends BackendBaseActionIndex
 {
@@ -34,7 +32,7 @@ class Data extends BackendBaseActionIndex
     /**
      * Form id.
      *
-     * @var	int
+     * @var int
      */
     private $id;
 
