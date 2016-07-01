@@ -1,17 +1,22 @@
+# Configuration
+/app/config/parameters.yml
+
+# Libraries
+/bower_components
+/vendor
+
+# Generated files
 .project
 .cache
+.sass-cache
 .buildpath
 .settings
 .*.swp
 .DS_Store
 /app/cache/*
 /app/logs/*
-/components/*
-/backend/cache/navigation/*
-/src/Backend/Cache/CachedTemplates/*
-/vendor/*
-/app/config/parameters.yml
+/app/sessions/*
 /bin/*
 /bundles/*
-/js/*
 /css/*
+/js/*
