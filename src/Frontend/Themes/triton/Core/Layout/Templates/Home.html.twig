@@ -14,18 +14,18 @@
 
       {# Skip link #}
       <div id="skip">
-        <p><a href="#main">{{ 'lbl.SkipToContent'|trans|capitalize }}</a></p>
+        <p><a href="#main">{{ 'lbl.SkipToContent'|trans|ucfirst }}</a></p>
       </div>
 
       {# Navigation #}
       <nav id="headerNavigation">
-        <h4>{{ 'lbl.MainNavigation'|trans|capitalize }}</h4>
+        <h4>{{ 'lbl.MainNavigation'|trans|ucfirst }}</h4>
         {{ getnavigation('page', 0, 1) }}
       </nav>
 
       {# Language #}
       <nav id="headerLanguage">
-        <h4>{{ 'lbl.Language'|trans|capitalize }}</h4>
+        <h4>{{ 'lbl.Language'|trans|ucfirst }}</h4>
         {% include "Core/Layout/Templates/Languages.html.twig" %}
       </nav>
 
@@ -38,7 +38,7 @@
 
       {# Breadcrumb #}
       <div id="breadcrumb">
-        <h4>{{ 'lbl.Breadcrumb'|trans|capitalize }}</h4>
+        <h4>{{ 'lbl.Breadcrumb'|trans|ucfirst }}</h4>
         {% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
       </div>
 
@@ -121,7 +121,7 @@
   </div>
   <noscript>
     <div class="message notice">
-      <h4>{{ 'lbl.EnableJavascript'|trans|capitalize }}</h4>
+      <h4>{{ 'lbl.EnableJavascript'|trans|ucfirst }}</h4>
       <p>{{ 'msg.EnableJavascript'|trans }}</p>
     </div>
   </noscript>

@@ -4,7 +4,7 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {% if showMailmotorAddCustomField %}
-        {{ macro.buttonIcon(geturl('add_custom_field' ) ~ '&group_id=' ~ group.id, 'plus-square', 'lbl.AddCustomField'|trans|capitalize) }}
+        {{ macro.buttonIcon(geturl('add_custom_field' ) ~ '&group_id=' ~ group.id, 'plus-square', 'lbl.AddCustomField'|trans|ucfirst) }}
       {% endif %}
     </div>
   </div>
@@ -20,7 +20,7 @@
         </form>
       {% endif %}
       {% if not dataGrid %}
-        <p>{{ 'msg.NoItems'|trans|capitalize }}</p>
+        <p>{{ 'msg.NoItems'|trans|ucfirst }}</p>
       {% endif %}
     </div>
   </div>

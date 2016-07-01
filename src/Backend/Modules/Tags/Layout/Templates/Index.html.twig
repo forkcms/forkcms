@@ -12,21 +12,21 @@
           <div class="table-responsive">
             {{ dataGrid|raw }}
           </div>
-          <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
+          <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
+                  <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
                 </div>
                 <div class="modal-body">
-                  <p>{{ 'msg.ConfirmMassDelete'|trans|capitalize }}</p>
+                  <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                    <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                   </button>
                   <button type="submit" class="btn btn-danger">
-                    <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+                    <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                   </button>
                 </div>
               </div>
@@ -35,7 +35,7 @@
         </form>
       {% endif %}
       {% if not dataGrid %}
-        <p>{{ 'msg.NoItems'|trans|capitalize }}</p>
+        <p>{{ 'msg.NoItems'|trans|ucfirst }}</p>
       {% endif %}
     </div>
   </div>

@@ -5,7 +5,7 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {% if showMailmotorAdd %}
-        {{ macro.buttonIcon(geturl('add'), 'envelope', 'lbl.AddNewMailing'|trans|capitalize) }}
+        {{ macro.buttonIcon(geturl('add'), 'envelope', 'lbl.AddNewMailing'|trans|ucfirst) }}
       {% endif %}
     </div>
   </div>
@@ -30,7 +30,7 @@
   {% if dgQueuedMailings %}
     <div class="row fork-module-heading">
       <div class="col-md-12">
-        <h2>{{ 'lbl.QueuedMailings'|trans|capitalize }}{% if name %} {{ lbl.In }} {{ lbl.Campaign }} &ldquo;{{ name }}&rdquo;{% endif %}</h2>
+        <h2>{{ 'lbl.QueuedMailings'|trans|ucfirst }}{% if name %} {{ lbl.In }} {{ lbl.Campaign }} &ldquo;{{ name }}&rdquo;{% endif %}</h2>
       </div>
     </div>
     <div class="row fork-module-content">
@@ -44,7 +44,7 @@
   {% if dgSentMailings %}
     <div class="row fork-module-heading">
       <div class="col-md-12">
-        <h2>{{ 'lbl.SentMailings'|trans|capitalize }}{% if name %} {{ lbl.In }} {{ lbl.Campaign }} &ldquo;{{ name }}&rdquo;{% endif %}</h2>
+        <h2>{{ 'lbl.SentMailings'|trans|ucfirst }}{% if name %} {{ lbl.In }} {{ lbl.Campaign }} &ldquo;{{ name }}&rdquo;{% endif %}</h2>
       </div>
     </div>
     <div class="row fork-module-content">

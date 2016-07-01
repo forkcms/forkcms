@@ -11,20 +11,20 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.Pagination'|trans|capitalize }}
+            {{ 'lbl.Pagination'|trans|ucfirst }}
           </h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="overviewNumberOfItems" class="control-label">{{ 'lbl.ItemsPerPage'|trans|capitalize }}</label>
+            <label for="overviewNumberOfItems" class="control-label">{{ 'lbl.ItemsPerPage'|trans|ucfirst }}</label>
             {% form_field_error overview_number_of_items %} {% form_field overview_number_of_items %}
           </div>
           <div class="form-group">
-            <label for="recentArticlesFullNumberOfItems" class="control-label">{{ 'msg.NumItemsInRecentArticlesFull'|trans|capitalize }}</label>
+            <label for="recentArticlesFullNumberOfItems" class="control-label">{{ 'msg.NumItemsInRecentArticlesFull'|trans|ucfirst }}</label>
             {% form_field_error recent_articles_full_number_of_items %} {% form_field recent_articles_full_number_of_items %}
           </div>
           <div class="form-group last">
-            <label for="recentArticlesListNumberOfItems" class="control-label">{{ 'msg.NumItemsInRecentArticlesList'|trans|capitalize }}</label>
+            <label for="recentArticlesListNumberOfItems" class="control-label">{{ 'msg.NumItemsInRecentArticlesList'|trans|ucfirst }}</label>
             {% form_field_error recent_articles_list_number_of_items %} {% form_field recent_articles_list_number_of_items %}
           </div>
         </div>
@@ -36,7 +36,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.Comments'|trans|capitalize }}
+            {{ 'lbl.Comments'|trans|ucfirst }}
           </h3>
         </div>
         <div class="panel-body">
@@ -44,20 +44,20 @@
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="allowComments" class="control-label">
-                  {% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|capitalize }}
+                  {% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|ucfirst }}
                 </label>
               </li>
               <li class="checkbox">
                 <label for="moderation" class="control-label">
-                  {% form_field moderation %} {{ 'lbl.EnableModeration'|trans|capitalize }}
+                  {% form_field moderation %} {{ 'lbl.EnableModeration'|trans|ucfirst }}
                 </label>
               </li>
               <li class="checkbox">
                 <label for="spamfilter" class="control-label">
-                  {% form_field spamfilter %} {{ 'lbl.FilterCommentsForSpam'|trans|capitalize }}
+                  {% form_field spamfilter %} {{ 'lbl.FilterCommentsForSpam'|trans|ucfirst }}
                 </label>
                 <p class="help-block">
-                  {{ 'msg.HelpSpamFilter'|trans|capitalize }}
+                  {{ 'msg.HelpSpamFilter'|trans|ucfirst }}
                   {% if noAkismetKey %}
                     <br />
                     {{ 'msg.NoAkismetKey'|trans|sprintf(geturl('index','settings' ) ) }}
@@ -77,7 +77,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
-              {{ 'lbl.Image'|trans|capitalize }}
+              {{ 'lbl.Image'|trans|ucfirst }}
             </h3>
           </div>
           <div class="panel-body">
@@ -85,7 +85,7 @@
               <ul class="list-unstyled">
                 <li class="checkbox">
                   <label for="showImageForm" class="control-label">
-                    {% form_field show_image_form %} {{ 'msg.ShowImageForm'|trans|capitalize }}
+                    {% form_field show_image_form %} {{ 'msg.ShowImageForm'|trans|ucfirst }}
                   </label>
                 </li>
               </ul>
@@ -100,7 +100,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.Notifications'|trans|capitalize }}
+            {{ 'lbl.Notifications'|trans|ucfirst }}
           </h3>
         </div>
         <div class="panel-body">
@@ -108,12 +108,12 @@
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="notifyByEmailOnNewCommentToModerate" class="control-label">
-                  {% form_field notify_by_email_on_new_comment_to_moderate %} {{ 'msg.NotifyByEmailOnNewCommentToModerate'|trans|capitalize }}
+                  {% form_field notify_by_email_on_new_comment_to_moderate %} {{ 'msg.NotifyByEmailOnNewCommentToModerate'|trans|ucfirst }}
                 </label>
               </li>
               <li class="checkbox">
                 <label for="notifyByEmailOnNewComment" class="control-label">
-                  {% form_field notify_by_email_on_new_comment %} {{ 'msg.NotifyByEmailOnNewComment'|trans|capitalize }}
+                  {% form_field notify_by_email_on_new_comment %} {{ 'msg.NotifyByEmailOnNewComment'|trans|ucfirst }}
                 </label>
               </li>
             </ul>
@@ -127,16 +127,16 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.SEO'|trans|capitalize }}
+            {{ 'lbl.SEO'|trans|ucfirst }}
           </h3>
         </div>
         <div class="panel-body">
           <div class="form-group last">
-            <p>{{ 'msg.HelpPingServices'|trans|capitalize }}:</p>
+            <p>{{ 'msg.HelpPingServices'|trans|ucfirst }}:</p>
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="pingServices" class="control-label">
-                  {% form_field ping_services %} {{ 'lbl.PingBlogServices'|trans|capitalize }}
+                  {% form_field ping_services %} {{ 'lbl.PingBlogServices'|trans|ucfirst }}
                 </label>
               </li>
             </ul>
@@ -150,28 +150,28 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.RSSFeed'|trans|capitalize }}
+            {{ 'lbl.RSSFeed'|trans|ucfirst }}
           </h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
             <label for="rssTitle" class="control-label">
-              {{ 'lbl.Title'|trans|capitalize }}
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+              {{ 'lbl.Title'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
             </label>
-            <p class="help-block">{{ 'msg.HelpRSSTitle'|trans|capitalize }}</p>
+            <p class="help-block">{{ 'msg.HelpRSSTitle'|trans|ucfirst }}</p>
             {% form_field_error rss_title %} {% form_field rss_title %}
           </div>
           <div class="form-group">
-            <label for="rssDescription" class="control-label">{{ 'lbl.Description'|trans|capitalize }}</label>
-            <p class="help-block">{{ 'msg.HelpRSSDescription'|trans|capitalize }}</p>
+            <label for="rssDescription" class="control-label">{{ 'lbl.Description'|trans|ucfirst }}</label>
+            <p class="help-block">{{ 'msg.HelpRSSDescription'|trans|ucfirst }}</p>
             {% form_field_error rss_description %} {% form_field rss_description %}
           </div>
           <div class="form-group last">
-            <p>{{ 'msg.HelpMeta'|trans|capitalize }}:</p>
+            <p>{{ 'msg.HelpMeta'|trans|ucfirst }}:</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="rssMeta" class="control-label">{% form_field rss_meta %} {{ 'lbl.MetaInformation'|trans|capitalize }}</label>
+                <label for="rssMeta" class="control-label">{% form_field rss_meta %} {{ 'lbl.MetaInformation'|trans|ucfirst }}</label>
               </li>
             </ul>
           </div>
@@ -184,7 +184,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="save" type="submit" name="save" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}</button>
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}</button>
         </div>
       </div>
     </div>

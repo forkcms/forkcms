@@ -10,7 +10,7 @@
         <label for="field{{ id }}">
           {{ label }}
           {% if required %}
-            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
           {% endif %}
         </label>
       </div>
@@ -23,7 +23,7 @@
         <label for="field{{ id }}">
           {{ label }}
           {% if required %}
-            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
           {% endif %}
         </label>
       </div>

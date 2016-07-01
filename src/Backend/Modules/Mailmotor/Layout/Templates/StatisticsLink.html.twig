@@ -19,7 +19,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="group" class="control-label">{{ 'lbl.Group'|trans|capitalize }}</label>
+                <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
                 {% form_field_error group %} {% form_field group %}
               </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
                 <span class="fa fa-refresh"></span>&nbsp;
-                {{ 'lbl.UpdateFilter'|trans|capitalize }}
+                {{ 'lbl.UpdateFilter'|trans|ucfirst }}
               </button>
             </div>
           </div>

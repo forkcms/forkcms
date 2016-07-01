@@ -4,10 +4,10 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {% if showFormBuilderIndex %}
-        {{ macro.buttonIcon( geturl('index'), 'list', 'lbl.Overview'|trans|capitalize) }}
+        {{ macro.buttonIcon( geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       {% endif %}
       {% if showFormBuilderExportData %}
-        {{ macro.buttonIcon( geturl('export_data') ~ '&id=' ~ id  ~ '&start_date=' ~ start_date ~ '&end_date=' ~ end_date, 'download', 'lbl.Export'|trans|capitalize) }}
+        {{ macro.buttonIcon( geturl('export_data') ~ '&id=' ~ id  ~ '&start_date=' ~ start_date ~ '&end_date=' ~ end_date, 'download', 'lbl.Export'|trans|ucfirst) }}
       {% endif %}
     </div>
   </div>
@@ -22,13 +22,13 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="startDate" class="control-label">{{ 'lbl.StartDate'|trans|capitalize }}</label>
+                <label for="startDate" class="control-label">{{ 'lbl.StartDate'|trans|ucfirst }}</label>
                 {% form_field_error start_date %} {% form_field start_date %}
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="endDate" class="control-label">{{ 'lbl.EndDate'|trans|capitalize }}</label>
+                <label for="endDate" class="control-label">{{ 'lbl.EndDate'|trans|ucfirst }}</label>
                 {% form_field_error end_date %} {% form_field end_date %}
               </div>
             </div>
@@ -39,7 +39,7 @@
             <div class="btn-group pull-right">
               <button id="search" type="submit" class="btn btn-primary" name="search">
                 <span class="fa fa-refresh"></span>&nbsp;
-                {{ 'lbl.UpdateFilter'|trans|capitalize }}
+                {{ 'lbl.UpdateFilter'|trans|ucfirst }}
               </button>
             </div>
           </div>
@@ -54,21 +54,21 @@
         <form action="{{ geturl('mass_data_action') }}" method="get" class="forkForms">
           <input type="hidden" name="form_id" value="{{ id }}">
           {{ dataGrid|raw }}
-          <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
+          <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
+                  <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
                 </div>
                 <div class="modal-body">
-                  <p>{{ 'msg.ConfirmMassDelete'|trans|capitalize }}</p>
+                  <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                    <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                   </button>
                   <button type="submit" class="btn btn-primary">
-                    <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+                    <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                   </button>
                 </div>
               </div>
@@ -77,7 +77,7 @@
         </form>
       {% endif %}
       {% if not dataGrid %}
-        <p>{{ 'msg.NoData'|trans|capitalize }}</p>
+        <p>{{ 'msg.NoData'|trans|ucfirst }}</p>
       {% endif %}
     </div>
   </div>

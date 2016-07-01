@@ -9,48 +9,48 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="title" class="control-label">{{ 'lbl.Title'|trans|capitalize }}</label>
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}</label>
         {% form_field_error title %} {% form_field title %}
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.Address'|trans|capitalize }}
+            {{ 'lbl.Address'|trans|ucfirst }}
           </h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
             <label for="street" class="control-label">
-              {{ 'lbl.Street'|trans|capitalize }}
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+              {{ 'lbl.Street'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
             </label>
             {% form_field_error street %} {% form_field street %}
           </div>
           <div class="form-group">
             <label for="number" class="control-label">
-              {{ 'lbl.Number'|trans|capitalize }}
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+              {{ 'lbl.Number'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
             </label>
             {% form_field_error number %} {% form_field number %}
           </div>
           <div class="form-group">
             <label for="zip" class="control-label">
-              {{ 'lbl.Zip'|trans|capitalize }}
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+              {{ 'lbl.Zip'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
             </label>
             {% form_field_error zip %} {% form_field zip %}
           </div>
           <div class="form-group">
             <label for="city" class="control-label">
-              {{ 'lbl.City'|trans|capitalize }}
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+              {{ 'lbl.City'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
             </label>
             {% form_field_error city %} {% form_field city %}
           </div>
           <div class="form-group">
             <label for="country" class="control-label">
-              {{ 'lbl.Country'|trans|capitalize }}
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+              {{ 'lbl.Country'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
             </label>
             {% form_field_error country %} {% form_field country %}
           </div>
@@ -63,7 +63,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.AddToMap'|trans|capitalize }}
+            <span class="fa fa-plus-square"></span>{{ 'lbl.AddToMap'|trans|ucfirst }}
           </button>
         </div>
       </div>

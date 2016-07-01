@@ -4,7 +4,7 @@
   {% if showLocaleExportAnalyse %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
-        {{ macro.buttonIcon(geturl('ExportAnalyse' ) ~ '&language=' ~ language, 'plus-square', 'lbl.Export'|trans|capitalize ) }}
+        {{ macro.buttonIcon(geturl('ExportAnalyse' ) ~ '&language=' ~ language, 'plus-square', 'lbl.Export'|trans|ucfirst ) }}
       </div>
     </div>
   {% endif %}
@@ -15,24 +15,24 @@
     <div class="col-md-12">
       <div class="content-block content-block-pb">
         <div class="content-title">
-          <p>{{ 'lbl.Frontend'|trans|capitalize }}</p>
+          <p>{{ 'lbl.Frontend'|trans|ucfirst }}</p>
         </div>
         {% if dgFrontend %}
           {{ dgFrontend|raw }}
         {% endif %}
         {% if not dgFrontend %}
-          <p>{{ 'msg.NoItemsAnalyse'|trans|capitalize }}</p>
+          <p>{{ 'msg.NoItemsAnalyse'|trans|ucfirst }}</p>
         {% endif %}
       </div>
       <div class="content-block content-block-pb">
         <div class="content-title">
-          <p>{{ 'lbl.Backend'|trans|capitalize }}</p>
+          <p>{{ 'lbl.Backend'|trans|ucfirst }}</p>
         </div>
         {% if dgBackend %}
           {{ dgBackend|raw }}
         {% endif %}
         {% if not dgBackend %}
-          <p>{{ 'msg.NoItemsAnalyse'|trans|capitalize }}</p>
+          <p>{{ 'msg.NoItemsAnalyse'|trans|ucfirst }}</p>
         {% endif %}
       </div>
     </div>

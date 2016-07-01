@@ -11,13 +11,13 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabName" aria-controls="name" role="tab" data-toggle="tab">{{ 'lbl.Name'|trans|capitalize }}</a>
+            <a href="#tabName" aria-controls="name" role="tab" data-toggle="tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
           </li>
           <li role="presentation">
-            <a href="#tabDashboard" aria-controls="dashboard" role="tab" data-toggle="tab">{{ 'lbl.Dashboard'|trans|capitalize }}</a>
+            <a href="#tabDashboard" aria-controls="dashboard" role="tab" data-toggle="tab">{{ 'lbl.Dashboard'|trans|ucfirst }}</a>
           </li>
           <li role="presentation">
-            <a href="#tabPermissions" aria-controls="permission" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|capitalize }}</a>
+            <a href="#tabPermissions" aria-controls="permission" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -25,8 +25,8 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group last">
-                  <label for="name" class="control-label">{{ 'lbl.Name'|trans|capitalize }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+                  <label for="name" class="control-label">{{ 'lbl.Name'|trans|ucfirst }}
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
                   {% form_field_error name %} {% form_field name %}
                 </div>
               </div>
@@ -37,13 +37,13 @@
               <div class="col-md-12">
                 <div class="content-block">
                   <div class="content-title">
-                    <label for="toggleChecksWidgets" class="control-label">{{ 'lbl.DisplayWidgets'|trans|capitalize }}</label>
+                    <label for="toggleChecksWidgets" class="control-label">{{ 'lbl.DisplayWidgets'|trans|ucfirst }}</label>
                   </div>
                   {% if widgets %}
                     {{ widgets|raw }}
                   {% endif %}
                   {% if not widgets %}
-                    {{ 'msg.NoWidgets'|trans|capitalize }}
+                    {{ 'msg.NoWidgets'|trans|ucfirst }}
                   {% endif %}
                 </div>
               </div>
@@ -82,7 +82,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
+            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>
