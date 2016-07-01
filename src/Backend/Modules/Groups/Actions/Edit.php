@@ -36,42 +36,42 @@ class Edit extends BackendBaseActionEdit
     /**
      * The actions
      *
-     * @var	array
+     * @var array
      */
     private $actions = array();
 
     /**
      * The dashboard sequence
      *
-     * @var	array
+     * @var array
      */
     private $dashboardSequence = array();
 
     /**
      * The users datagrid
      *
-     * @var	BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dataGridUsers;
 
     /**
      * The modules
      *
-     * @var	array
+     * @var array
      */
     private $modules;
 
     /**
      * The widgets
      *
-     * @var	array
+     * @var array
      */
     private $widgets;
 
     /**
      * The widget instances
      *
-     * @var	array
+     * @var array
      */
     private $widgetInstances;
 
@@ -87,10 +87,8 @@ class Edit extends BackendBaseActionEdit
                 if (class_exists('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
                     // create reflection class
                     $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
-                }
-
-                // no ajax action? create reflection class
-                else {
+                } else {
+                    // no ajax action? create reflection class
                     $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
                 }
 
@@ -327,7 +325,6 @@ class Edit extends BackendBaseActionEdit
         foreach ($this->modules as $key => $module) {
             // widgets available?
             if (isset($this->widgets)) {
-
                 // loop through widgets
                 foreach ($this->widgets as $j => $widget) {
                     // widget is present?
@@ -375,10 +372,7 @@ class Edit extends BackendBaseActionEdit
                         // add the group to the added bundles
                         $addedBundles[] = $action['group'];
                     }
-                }
-
-                // action not bundled
-                else {
+                } else {
                     // assign action boxes
                     $actionBoxes[$key]['actions'][$i]['check'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'], in_array($action['value'], $selectedActions))->parse();
                     $actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . \SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' . $action['label'] . '</label>';
@@ -465,10 +459,7 @@ class Edit extends BackendBaseActionEdit
                 if (!in_array($module, $checkedModules)) {
                     $checkedModules[] = $module;
                 }
-            }
-
-            // permission not checked?
-            else {
+            } else {
                 // add to denied
                 $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
 
@@ -504,10 +495,7 @@ class Edit extends BackendBaseActionEdit
                     if (!in_array($module, $checkedModules)) {
                         $checkedModules[] = $module;
                     }
-                }
-
-                // permission not checked?
-                else {
+                } else {
                     // add to denied
                     if (in_array($group, $moduleAction)) {
                         $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
@@ -661,10 +649,7 @@ class Edit extends BackendBaseActionEdit
                                 if (isset($userSequences[$user['id']][$widget['module']][$widget['widget']])) {
                                     // set visible
                                     $userSequences[$user['id']][$widget['module']][$widget['widget']]['present'] = true;
-                                }
-
-                                // else assign widget
-                                else {
+                                } else {
                                     // assign module if not yet present
                                     if (!isset($userSequences[$user['id']][$widget['module']])) {
                                         $userSequences[$user['id']][$widget['module']] = array();

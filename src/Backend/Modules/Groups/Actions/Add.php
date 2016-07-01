@@ -33,42 +33,42 @@ class Add extends BackendBaseActionAdd
     /**
      * The actions
      *
-     * @var	array
+     * @var array
      */
     private $actions = array();
 
     /**
      * The dashboard sequence
      *
-     * @var	array
+     * @var array
      */
     private $dashboardSequence;
 
     /**
      * The id of the new group
      *
-     * @var	int
+     * @var int
      */
     private $id;
 
     /**
      * The modules
      *
-     * @var	array
+     * @var array
      */
     private $modules;
 
     /**
      * The widgets
      *
-     * @var	array
+     * @var array
      */
     private $widgets;
 
     /**
      * The widget instances
      *
-     * @var	array
+     * @var array
      */
     private $widgetInstances;
 
@@ -84,10 +84,8 @@ class Add extends BackendBaseActionAdd
                 if (class_exists('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
                     // create reflection class
                     $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
-                }
-
-                // no ajax action? create reflection class
-                else {
+                } else {
+                    // no ajax action? create reflection class
                     $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
                 }
 
@@ -297,10 +295,7 @@ class Add extends BackendBaseActionAdd
                 if (!in_array($module, $checkedModules)) {
                     $checkedModules[] = $module;
                 }
-            }
-
-            // permission not checked?
-            else {
+            } else {
                 // add to denied
                 $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
 
@@ -336,10 +331,7 @@ class Add extends BackendBaseActionAdd
                     if (!in_array($module, $checkedModules)) {
                         $checkedModules[] = $module;
                     }
-                }
-
-                // permission not checked?
-                else {
+                } else {
                     // add to denied
                     if (in_array($group, $moduleAction)) {
                         $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
@@ -482,10 +474,7 @@ class Add extends BackendBaseActionAdd
                         // add the group to the added bundles
                         $addedBundles[] = $action['group'];
                     }
-                }
-
-                // action not bundled
-                else {
+                } else {
                     // assign action boxes
                     $actionBoxes[$key]['actions'][$i]['check'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
                     $actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . \SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' . $action['label'] . '</label>';
