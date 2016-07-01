@@ -2,7 +2,6 @@
 /app/config/parameters.yml
 
 # Libraries
-/bower_components/*
 /vendor/*
 
 # Generated files
