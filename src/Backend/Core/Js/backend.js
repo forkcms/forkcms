@@ -1743,7 +1743,7 @@ jsBackend.messages =
     // hide a message
     hide: function (element) {
         // fade out
-        element.removeClass('active');
+        element.removeClass('active').delay(250).hide(1);
     },
 
     // add a new message into the que
