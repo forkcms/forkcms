@@ -91,7 +91,7 @@ class TemplateModifiers extends BaseTwigModifiers
             $return = (string) Navigation::getNavigationHTML($type, $parentId, $depth, $excludeIds, $template);
         } catch (Exception $e) {
             // if something goes wrong just return as fallback
-            return;
+            return '';
         }
 
         // return the var
@@ -100,7 +100,7 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // fallback
-        return;
+        return '';
     }
 
     /**
