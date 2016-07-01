@@ -25,7 +25,7 @@
                   {{ 'lbl.Title'|trans|ucfirst }}
                   <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                 </label>
-                {% form_field_error title %} {% form_field title %}
+                {% form_field title %} {% form_field_error title %}
                 {% if detailURL %}
                   <a href="{{ detailURL }}">
                     <small>{{ detailURL }}/<span id="generatedUrl"></span></small>

@@ -21,7 +21,7 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}</label>
-        {% form_field_error title %} {% form_field title %}
+        {% form_field title %} {% form_field_error title %}
         {% if detailURL %}
           <a class="site-url" href="{{ detailURL }}/{{ item.url }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
         {% endif %}
@@ -57,11 +57,15 @@
                   <div class="panel-heading">
                     <p>{{ 'lbl.MainContent'|trans|ucfirst }}
                       <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></p>
-                    {% form_field_error text %}
                   </div>
                   <div class="panel-body">
                     {% form_field text %}
                   </div>
+                  {% if txtTextError %}
+                    <div class="panel-footer">
+                      {% form_field_error text %}
+                    </div>
+                  {% endif %}
                 </div>
                 {% if imageIsAllowed %}
                   <div class="panel panel-default">
@@ -80,7 +84,7 @@
                           </li>
                         </ul>
                       {% endif %}
-                      {% form_field_error image %} {% form_field image %}
+                      {% form_field image %} {% form_field_error image %}
                     </div>
                   </div>
                 {% endif %}
@@ -89,11 +93,15 @@
                     <p>{{ 'lbl.Summary'|trans|ucfirst }}
                       <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|ucfirst }}"></abbr>
                     </p>
-                    {% form_field_error introduction %}
                   </div>
                   <div class="panel-body">
                     {% form_field introduction %}
                   </div>
+                  {% if txtIntroductionError %}
+                    <div class="panel-footer">
+                      {% form_field_error introduction %}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
               <div class="col-md-4">
@@ -113,9 +121,9 @@
                     </div>
                     <div class="form-group last">
                       <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|ucfirst }}</label>
-                      {% form_field_error publish_on_date %} {% form_field publish_on_date %}
+                      {% form_field publish_on_date %} {% form_field_error publish_on_date %}
                       <label for="publishOnTime" class="control-label">{{ lbl.At }}</label>
-                      {% form_field_error publish_on_time %} {% form_field publish_on_time %}
+                      {% form_field publish_on_time %} {% form_field_error publish_on_time %}
                     </div>
                   </div>
                 </div>
@@ -126,16 +134,16 @@
                   <div class="panel-body">
                     <div class="form-group">
                       <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|ucfirst }}</label>
-                      {% form_field_error category_id %} {% form_field category_id %}
+                      {% form_field category_id %} {% form_field_error category_id %}
                     </div>
                     <div class="form-group">
                       <label for="userId" class="control-label">{{ 'lbl.Author'|trans|ucfirst }}</label>
-                      {% form_field_error user_id %} {% form_field user_id %}
+                      {% form_field user_id %} {% form_field_error user_id %}
                     </div>
                     {% if showTagsIndex %}
                       <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
-                        {% form_field_error tags %} {% form_field tags %}
+                        {% form_field tags %} {% form_field_error tags %}
                       </div>
                     {% endif %}
                   </div>

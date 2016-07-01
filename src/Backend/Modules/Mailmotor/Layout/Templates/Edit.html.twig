@@ -43,7 +43,7 @@
                     <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
                   <p class="help-block">{{ 'msg.NameInternalUseOnly'|trans|ucfirst }}</p>
-                  {% form_field_error name %} {% form_field name %}
+                  {% form_field name %} {% form_field_error name %}
                 </div>
                 {% if ddmCampaign %}
                   <div class="form-group">
@@ -51,7 +51,7 @@
                       {{ 'lbl.Campaign'|trans|ucfirst }}
                       <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                     </label>
-                    {% form_field_error campaign %} {% form_field campaign %}
+                    {% form_field campaign %} {% form_field_error campaign %}
                   </div>
                 {% endif %}
               </div>
@@ -72,14 +72,14 @@
                     {{ 'lbl.Name'|trans|ucfirst }}
                     <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
-                  {% form_field_error from_name %} {% form_field from_name %}
+                  {% form_field from_name %} {% form_field_error from_name %}
                 </div>
                 <div class="form-group">
                   <label for="fromEmail" class="control-label">
                     {{ 'lbl.EmailAddress'|trans|ucfirst }}
                     <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
-                  {% form_field_error from_email %} {% form_field from_email %}
+                  {% form_field from_email %} {% form_field_error from_email %}
                 </div>
               </div>
             </div>
@@ -99,7 +99,7 @@
                     {{ 'lbl.EmailAddress'|trans|ucfirst }}
                     <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
-                  {% form_field_error reply_to_email %} {% form_field reply_to_email %}
+                  {% form_field reply_to_email %} {% form_field_error reply_to_email %}
                 </div>
               </div>
             </div>
@@ -239,7 +239,7 @@
                 {{ 'lbl.Subject'|trans|ucfirst }}
                 <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
-              {% form_field_error subject %} {% form_field subject %}
+              {% form_field subject %} {% form_field_error subject %}
             </div>
             <div class="form-group">
               <label for="content" class="control-label">
@@ -255,7 +255,7 @@
                 <label for="subject" class="control-label">
                   {{ 'lbl.PlainTextVersion'|trans|ucfirst }}
                 </label>
-                {% form_field_error content_plain %} {% form_field content_plain %}
+                {% form_field content_plain %} {% form_field_error content_plain %}
               </div>
             {% endif %}
           </div>
@@ -310,7 +310,7 @@
               <div class="panel-body">
                 <div class="form-group">
                   <label for="email" class="control-label">{{ 'lbl.EmailAddress'|trans|ucfirst }}</label>
-                  {% form_field_error email %} {% form_field email %}
+                  {% form_field email %} {% form_field_error email %}
                 </div>
               </div>
               <div class="panel-footer">

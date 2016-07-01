@@ -46,7 +46,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        {% form_field_error title %} {% form_field title %}
+        {% form_field title %} {% form_field_error title %}
         <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" href="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}">
           {{ SITE_URL }}{{ prefixURL }}/<span id="generatedUrl">{{ item.url }}</span>
         </a>
@@ -216,12 +216,12 @@
                         <label for="{{ _itr_24.id }}">{{ _itr_24.rbtRedirect|raw }} {{ _itr_24.label }}</label>
                         {% if _itr_24.isInternal %}
                           <p class="help-block">{{ 'msg.HelpInternalRedirect'|trans|ucfirst }}</p>
-                          {% form_field_error internal_redirect %} {% form_field internal_redirect %}
+                          {% form_field internal_redirect %} {% form_field_error internal_redirect %}
                         {% endif %}
                         {% if _itr_24.isExternal %}
 
                           <p class="help-block">{{ 'msg.HelpExternalRedirect'|trans|ucfirst }}</p>
-                          {% form_field_error external_redirect %} {% form_field external_redirect %}
+                          {% form_field external_redirect %} {% form_field_error external_redirect %}
                         {% endif %}
                       </div>
                     </li>
@@ -236,7 +236,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <p class="tab-pane-title">{{ 'msg.AddTagsHere'|trans }}</p>
-                  {% form_field_error tags %} {% form_field tags %}
+                  {% form_field tags %} {% form_field_error tags %}
                 </div>
               </div>
             </div>

@@ -17,14 +17,14 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
-        {% form_field_error group %} {% form_field group %}
+        {% form_field group %} {% form_field_error group %}
       </div>
       <div class="form-group">
         <label for="file" class="control-label">
           {{ 'lbl.File'|trans|ucfirst }}
           <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
         </label>
-        {% form_field_error file %} {% form_field file %}
+        {% form_field file %} {% form_field_error file %}
       </div>
       <div class="form-group">
         <ul class="list-unstyled">

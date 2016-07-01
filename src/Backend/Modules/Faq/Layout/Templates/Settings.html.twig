@@ -17,15 +17,15 @@
         <div class="panel-body">
           <div class="form-group">
             <label for="overviewNumberOfItemsPerCategory" class="control-label">{{ 'lbl.ItemsPerCategory'|trans|ucfirst }}</label>
-            {% form_field_error overview_number_of_items_per_category %} {% form_field overview_number_of_items_per_category %}
+            {% form_field overview_number_of_items_per_category %} {% form_field_error overview_number_of_items_per_category %}
           </div>
           <div class="form-group">
             <label for="mostReadNumberOfItems" class="control-label">{{ 'msg.NumMostReadItems'|trans }}</label>
-            {% form_field_error most_read_number_of_items %} {% form_field most_read_number_of_items %}
+            {% form_field most_read_number_of_items %} {% form_field_error most_read_number_of_items %}
           </div>
           <div class="form-group last">
             <label for="relatedNumberOfItems" class="control-label">{{ 'msg.NumRelatedItems'|trans }}</label>
-            {% form_field_error related_number_of_items %} {% form_field related_number_of_items %}
+            {% form_field related_number_of_items %} {% form_field_error related_number_of_items %}
           </div>
         </div>
       </div>

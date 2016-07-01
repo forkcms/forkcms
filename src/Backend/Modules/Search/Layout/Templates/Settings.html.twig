@@ -17,15 +17,15 @@
         <div class="panel-body">
           <div class="form-group">
             <label for="overviewNumItems" class="control-label">{{ 'lbl.ItemsPerPage'|trans|ucfirst }}</label>
-            {% form_field_error overview_num_items %} {% form_field overview_num_items %}
+            {% form_field overview_num_items %} {% form_field_error overview_num_items %}
           </div>
           <div class="form-group">
             <label for="autocompleteNumItems" class="control-label">{{ 'lbl.ItemsForAutocomplete'|trans|ucfirst }}</label>
-            {% form_field_error autocomplete_num_items %} {% form_field autocomplete_num_items %}
+            {% form_field autocomplete_num_items %} {% form_field_error autocomplete_num_items %}
           </div>
           <div class="form-group last">
             <label for="autosuggestNumItems" class="control-label">{{ 'lbl.ItemsForAutosuggest'|trans|ucfirst }}</label>
-            {% form_field_error autosuggest_num_items %} {% form_field autosuggest_num_items %}
+            {% form_field autosuggest_num_items %} {% form_field_error autosuggest_num_items %}
           </div>
         </div>
       </div>
@@ -44,8 +44,9 @@
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="useSitelinksSearchBox" class="control-label">
-                  {% form_field_error use_sitelinks_search_box %} {% form_field use_sitelinks_search_box %} {{ 'lbl.UseSitelinksSearchBox'|trans|ucfirst }}
+                  {% form_field use_sitelinks_search_box %} {{ 'lbl.UseSitelinksSearchBox'|trans|ucfirst }}
                 </label>
+                {% form_field_error use_sitelinks_search_box %}
                 <div class="help-block">
                   {{ 'msg.HelpSitelinksSearchBox'|trans|raw }}
                 </div>

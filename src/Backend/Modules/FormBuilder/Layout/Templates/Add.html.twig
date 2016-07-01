@@ -31,21 +31,21 @@
                         {{ 'lbl.Name'|trans|ucfirst }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
-                      {% form_field_error name %} {% form_field name %}
+                      {% form_field name %} {% form_field_error name %}
                     </div>
                     <div class="form-group">
                       <label for="method" class="control-label">
                         {{ 'lbl.Method'|trans|ucfirst }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
-                      {% form_field_error method %} {% form_field method %}
+                      {% form_field method %} {% form_field_error method %}
                     </div>
                     <div class="form-group">
                       <label for="email" class="control-label">
                         {{ 'lbl.Recipient'|trans|ucfirst }}
                         <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                       </label>
-                      {% form_field_error email %} {% form_field email %}
+                      {% form_field email %} {% form_field_error email %}
                     </div>
                   </div>
                 </div>
@@ -56,7 +56,6 @@
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
                       <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr><br>
-                      {% form_field_error success_message %}
                     </label>
                   </div>
                   <div class="panel-body">
@@ -64,6 +63,11 @@
                       {% form_field success_message %}
                     </div>
                   </div>
+                  {% if txtSuccessMessageError %}
+                    <div class="panel-footer">
+                      {% form_field_error success_message %}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -75,7 +79,7 @@
                   {{ 'lbl.Identifier'|trans|ucfirst }}
                   <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpIdentifier'|trans }}"></abbr>
                 </label>
-                {% form_field_error identifier %} {% form_field identifier %}
+                {% form_field identifier %} {% form_field_error identifier %}
               </div>
             </div>
           </div>

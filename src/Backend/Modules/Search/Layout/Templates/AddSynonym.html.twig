@@ -13,7 +13,7 @@
           {{ 'lbl.Term'|trans|ucfirst }}
           <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
         </label>
-        {% form_field_error term %} {% form_field term %}
+        {% form_field term %} {% form_field_error term %}
       </div>
       <div class="form-group">
         <div class="fakeP">
@@ -22,7 +22,7 @@
             <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
           </label>
           <div class="itemAdder">
-            {% form_field_error synonym %} {% form_field synonym %}
+            {% form_field synonym %} {% form_field_error synonym %}
           </div>
         </div>
       </div>
