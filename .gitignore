@@ -8,6 +8,7 @@
 # Generated files
 .project
 .cache
+.sass-cache
 .buildpath
 .settings
 .*.swp
