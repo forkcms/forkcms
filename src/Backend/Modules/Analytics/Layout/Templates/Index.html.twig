@@ -69,8 +69,8 @@
                     <ul class="data">
                       {% for visitor in visitors_graph_data %}
                         <li>
-                          <span class="fulldate">{{ visitor.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|uppercase ) }}</span>
-                          <span class="date">{{ visitor.ga_date|spoondate('d M',INTERFACE_LANGUAGE|uppercase ) }}</span>
+                          <span class="fulldate">{{ visitor.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|uppercase) }}</span>
+                          <span class="date">{{ visitor.ga_date|spoondate('d M',INTERFACE_LANGUAGE|uppercase) }}</span>
                           <span class="value">{{ visitor.ga_pageviews }}</span>
                         </li>
                       {% endfor %}
@@ -81,8 +81,8 @@
                     <ul class="data">
                       {% for visitor in visitors_graph_data %}
                         <li>
-                          <span class="fulldate">{{ visitor.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|uppercase ) }}</span>
-                          <span class="date">{{ visitor.ga_date|spoondate('d M',INTERFACE_LANGUAGE|uppercase ) }}</span>
+                          <span class="fulldate">{{ visitor.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|uppercase) }}</span>
+                          <span class="date">{{ visitor.ga_date|spoondate('d M',INTERFACE_LANGUAGE|uppercase) }}</span>
                           <span class="value">{{ visitor.ga_users }}</span>
                         </li>
                       {% endfor %}

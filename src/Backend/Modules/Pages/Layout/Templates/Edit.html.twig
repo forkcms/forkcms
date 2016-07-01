@@ -30,7 +30,7 @@
       {% endif %}
 
       {% if showPagesIndex %}
-        {{ macro.buttonIcon(geturl('index' ), 'list', 'lbl.Overview'|trans|ucfirst) }}
+        {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       {% endif %}
 
       {% if showPagesAdd %}
@@ -460,13 +460,13 @@
             <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
           </div>
           <div class="modal-body">
-            <p>{{ 'msg.ConfirmDelete'|trans|sprintf(item.title ) }}</p>
+            <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
               <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
-            <a href="{{ geturl('delete' ) }}&amp;id={{ item.id }}" class="btn btn-danger">
+            <a href="{{ geturl('delete') }}&amp;id={{ item.id }}" class="btn btn-danger">
               <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
             </a>
           </div>

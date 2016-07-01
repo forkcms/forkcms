@@ -15,8 +15,8 @@
               <ul class="data">
                 {% for _itr_2 in visitors_graph_data %}
                   <li>
-                    <span class="fulldate">{{ _itr_2.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|ucfirst ) }}</span>
-                    <span class="date">{{ _itr_2.ga_date|spoondate('d M',INTERFACE_LANGUAGE|ucfirst ) }}</span>
+                    <span class="fulldate">{{ _itr_2.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|ucfirst) }}</span>
+                    <span class="date">{{ _itr_2.ga_date|spoondate('d M',INTERFACE_LANGUAGE|ucfirst) }}</span>
                     <span class="value">{{ _itr_2.ga_pageviews }}</span>
                   </li>
                 {% endfor %}
@@ -27,8 +27,8 @@
               <ul class="data">
                 {% for _itr_2 in visitors_graph_data %}
                   <li>
-                    <span class="fulldate">{{ _itr_2.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|ucfirst ) }}</span>
-                    <span class="date">{{ _itr_2.ga_date|spoondate('d M',INTERFACE_LANGUAGE|ucfirst ) }}</span>
+                    <span class="fulldate">{{ _itr_2.ga_date|spoondate('D d M',INTERFACE_LANGUAGE|ucfirst) }}</span>
+                    <span class="date">{{ _itr_2.ga_date|spoondate('d M',INTERFACE_LANGUAGE|ucfirst) }}</span>
                     <span class="value">{{ _itr_2.ga_users }}</span>
                   </li>
                 {% endfor %}
@@ -41,7 +41,7 @@
     </div>
     <div class="panel-footer">
       <div class="buttonHolderRight">
-        <a href="{{ geturl('Index','Analytics' ) }}" class="button"><span>{{ 'lbl.AllStatistics'|trans|ucfirst }}</span></a>
+        <a href="{{ geturl('Index','Analytics') }}" class="button"><span>{{ 'lbl.AllStatistics'|trans|ucfirst }}</span></a>
       </div>
     </div>
   </div>

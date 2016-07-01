@@ -18,7 +18,7 @@
           <div class="form-group">
             {% if showMailmotorImportAddresses %}
               <label for="download" class="control-label">Download
-                <a href="{{ geturl('import_addresses' ) }}&amp;example=1">{{ 'lbl.ExampleFile'|trans|ucfirst }}</a>.</label>
+                <a href="{{ geturl('import_addresses') }}&amp;example=1">{{ 'lbl.ExampleFile'|trans|ucfirst }}</a>.</label>
             {% endif %}
             {% form_field csv %} {% form_field_error csv %}
           </div>

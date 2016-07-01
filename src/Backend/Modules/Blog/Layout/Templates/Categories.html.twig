@@ -19,7 +19,7 @@
         </div>
       {% endif %}
       {% if not dataGrid %}
-        <p>{{ 'msg.NoCategoryItems'|trans|sprintf(geturl('add_category')) }}</p>
+        <p>{{ 'msg.NoCategoryItems'|trans|format(geturl('add_category'))|raw }}</p>
       {% endif %}
     </div>
   </div>

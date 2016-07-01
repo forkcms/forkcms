@@ -6,7 +6,7 @@
 <section id="tagsDetail" class="mod">
   <div class="inner">
     <header class="hd">
-      <h1>{{ 'lbl.ItemsWithTag'|trans|sprintf(tag.name)|ucfirst }}</h1>
+      <h1>{{ 'lbl.ItemsWithTag'|trans|format(tag.name)|raw|ucfirst }}</h1>
     </header>
     <div class="bd">
       {% if tagsModules %}

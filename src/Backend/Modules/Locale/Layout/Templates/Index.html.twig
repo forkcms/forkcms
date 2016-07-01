@@ -4,13 +4,13 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {% if showLocaleAdd %}
-        {{ macro.buttonIcon(geturl('add')  ~ filter, 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-default jsButtonAdd' ) }}
+        {{ macro.buttonIcon(geturl('add')  ~ filter, 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-default jsButtonAdd') }}
       {% endif %}
       {% if showLocaleExport %}
-        {{ macro.buttonIcon(geturl('export' ) ~ filter, 'download', 'lbl.Export'|trans|ucfirst, 'btn-default jsButtonExport' ) }}
+        {{ macro.buttonIcon(geturl('export') ~ filter, 'download', 'lbl.Export'|trans|ucfirst, 'btn-default jsButtonExport') }}
       {% endif %}
       {% if showLocaleImport %}
-        {{ macro.buttonIcon(geturl('import' ) ~ filter, 'upload', 'lbl.Import'|trans|ucfirst, 'btn-default jsButtonImport') }}
+        {{ macro.buttonIcon(geturl('import') ~ filter, 'upload', 'lbl.Import'|trans|ucfirst, 'btn-default jsButtonImport') }}
       {% endif %}
     </div>
   </div>
@@ -161,7 +161,7 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-body">
-            <p>{{ 'msg.NoItemsFilter'|trans|sprintf(addURL ) }}</p>
+            <p>{{ 'msg.NoItemsFilter'|trans|format(addURL)|raw }}</p>
           </div>
         </div>
       </div>

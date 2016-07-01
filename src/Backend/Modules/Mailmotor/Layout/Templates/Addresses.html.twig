@@ -37,7 +37,7 @@
           {% set url = url ~ '&group_id=' ~ group.id %}
         {% endif %}
 
-        {{ macro.buttonIcon(url, 'plus-square', 'lbl.AddEmail'|trans|ucfirst ) }}
+        {{ macro.buttonIcon(url, 'plus-square', 'lbl.AddEmail'|trans|ucfirst) }}
       {% endif %}
     </div>
   </div>
@@ -49,7 +49,7 @@
       <div class="col-md-12">
         <div class="alert alert-warning" role="alert">
           <p><strong><span class="fa fa-exclamation-triangle"></span>{{ 'msg.ImportRecentlyFailed'|trans }}</strong></p>
-          <p>{{ 'msg.ImportFailedDownloadCSV'|trans|sprintf(csvURL) }}</p>
+          <p>{{ 'msg.ImportFailedDownloadCSV'|trans|format(csvURL)|raw }}</p>
         </div>
       </div>
     </div>
@@ -86,7 +86,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% if dataGrid %}
-        <form action="{{ geturl('mass_address_action' ) }}" method="get" class="forkForms submitWithLink" id="massAddressAction">
+        <form action="{{ geturl('mass_address_action') }}" method="get" class="forkForms submitWithLink" id="massAddressAction">
         <input type="hidden" name="offset" value="{{ offset }}" />
         <input type="hidden" name="order" value="{{ order }}" />
         <input type="hidden" name="sort" value="{{ sort }}" />
@@ -101,7 +101,7 @@
       {% endif %}
       {% if not dataGrid %}
         {% if oPost %}
-          <p>{{ 'msg.NoResultsForFilter'|trans|sprintf(email) }}</p>
+          <p>{{ 'msg.NoResultsForFilter'|trans|format(email)|raw }}</p>
         {% endif %}
         {% if not oPost %}
           <p>{{ 'msg.NoSubscriptions'|trans }}</p>

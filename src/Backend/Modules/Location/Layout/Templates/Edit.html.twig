@@ -97,12 +97,12 @@
           </div>
           <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
             <label for="width" class="control-label">{{ 'lbl.Width'|trans|ucfirst }}</label>
-            <p class="help-block">{{ 'msg.WidthHelp'|trans|sprintf(300,800 ) }}</p>
+            <p class="help-block">{{ 'msg.WidthHelp'|trans|format(300,800)|raw }}</p>
             {% form_field width %} {% form_field_error width %}
           </div>
           <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
             <label for="height" class="control-label">{{ 'lbl.Height'|trans|ucfirst }}</label>
-            <p class="help-block">{{ 'msg.HeightHelp'|trans|sprintf(150 ) }}</p>
+            <p class="help-block">{{ 'msg.HeightHelp'|trans|format(150)|raw }}</p>
             {% form_field height %} {% form_field_error height %}
           </div>
           <div class="form-group">
@@ -151,13 +151,13 @@
                 <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
               </div>
               <div class="modal-body">
-                <p>{{ 'msg.ConfirmDelete'|trans|sprintf(item.title ) }}</p>
+                <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                   <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
-                <a href="{{ geturl('delete' ) }}&amp;id={{ item.id }}" class="btn btn-danger">
+                <a href="{{ geturl('delete') }}&amp;id={{ item.id }}" class="btn btn-danger">
                   <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                 </a>
               </div>
