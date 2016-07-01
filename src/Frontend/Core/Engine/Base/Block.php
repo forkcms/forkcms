@@ -182,7 +182,7 @@ class Block extends Object
             $this->header->addJS(
                 $frontendModuleURL . '/' . $this->getModule() . '.js',
                 true,
-                null,
+                true,
                 Header::PRIORITY_GROUP_MODULE
             );
         }
@@ -192,7 +192,7 @@ class Block extends Object
             $this->header->addJS(
                 $frontendModuleURL . '/' . $this->getAction() . '.js',
                 true,
-                null,
+                true,
                 Header::PRIORITY_GROUP_MODULE
             );
         }
