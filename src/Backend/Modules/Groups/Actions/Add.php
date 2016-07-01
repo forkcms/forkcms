@@ -139,6 +139,7 @@ class Add extends BackendBaseActionAdd
      */
     private function getActions()
     {
+        $this->actions = array();
         $filter = array('Authentication', 'Error', 'Core');
         $modules = array();
 
@@ -210,6 +211,9 @@ class Add extends BackendBaseActionAdd
      */
     private function getWidgets()
     {
+        $this->widgets = array();
+        $this->widgetInstances = array();
+
         $finder = new Finder();
         $finder->name('*.php')->in(BACKEND_MODULES_PATH . '/*/Widgets');
         foreach ($finder->files() as $file) {
@@ -508,7 +512,7 @@ class Add extends BackendBaseActionAdd
 
             // get content of datagrids
             $permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
-            $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload selectAll')->parse();
+            $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload jsSelectAll')->parse();
             $permissionBoxes[$key]['id'] = \SpoonFilter::toCamelCase($module['label']);
         }
 
@@ -567,6 +571,7 @@ class Add extends BackendBaseActionAdd
             }
 
             // loop through widgets and collect presets
+            $widgetPresets = array();
             foreach ($this->widgets as $widget) {
                 $widgetPresets[] = $this->frm->getField('widgets_' . $widget['checkbox_name']);
             }
