@@ -3,6 +3,10 @@
 {% block main %}
   <h2>{{ SITE_TITLE }}: {{ 'msg.FormBuilderSubject'|trans|format(name) }}</h2>
   <hr />
+  {% if is_confirmation_mail %}
+    <p>{{ 'msg.YouJustSentTheMessageBelow'|trans }}</p>
+    <hr>
+  {% endif %}
   <h3>{{ 'lbl.SenderInformation'|trans|ucfirst }}</h3>
   <p>
     <strong>{{ 'lbl.SentOn'|trans|ucfirst }}:</strong><br />

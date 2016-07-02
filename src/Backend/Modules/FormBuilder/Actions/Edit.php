@@ -86,6 +86,7 @@ class Edit extends BackendBaseActionEdit
                 'number' => BL::getLabel('Numeric'),
             )
         );
+        $this->frm->addCheckbox('textbox_send_confirmation_mail_to');
         $this->frm->addText('textbox_validation_parameter');
         $this->frm->addText('textbox_error_message');
 

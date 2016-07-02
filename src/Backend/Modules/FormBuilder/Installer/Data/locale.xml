@@ -1058,6 +1058,14 @@
       <item type="error" name="EmailValidationIsRequired">
         <translation language="en"><![CDATA[Email validation is required when using this field as 'reply to' emailaddress.]]></translation>
       </item>
+      <item type="error" name="ActivateEmailValidationToUseThisOption">
+        <translation language="nl"><![CDATA[Activeer email validatie om deze optie te kunnen gebruiken.]]></translation>
+        <translation language="en"><![CDATA[Activate email validation to use this option.]]></translation>
+      </item>
+      <item type="label" name="SendConfirmationMailTo">
+        <translation language="nl"><![CDATA[verstuur bevestigingsmail naar]]></translation>
+        <translation language="en"><![CDATA[send confirmation mail to]]></translation>
+      </item>
     </FormBuilder>
   </Backend>
   <Frontend>
@@ -1075,6 +1083,10 @@
         <translation language="uk"><![CDATA[Вкажіть значення]]></translation>
         <translation language="sv"><![CDATA[невірний час]]></translation>
         <translation language="el"><![CDATA[Μη έγκυρη ώρα]]></translation>
+      </item>
+      <item type="message" name="YouJustSentTheMessageBelow">
+        <translation language="nl"><![CDATA[U verstuurde net het onderstaande bericht.]]></translation>
+        <translation language="en"><![CDATA[You just sent the message below.]]></translation>
       </item>
     </Core>
   </Frontend>
