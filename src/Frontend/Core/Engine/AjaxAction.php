@@ -14,10 +14,6 @@ use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 
 /**
  * FrontendAJAXAction
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class AjaxAction extends FrontendBaseAJAXAction
 {

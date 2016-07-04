@@ -18,10 +18,6 @@ use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 
 /**
  * This is the analyse-action, it will display an overview of used locale.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author <thijs@wijs.be>
  */
 class Analyse extends BackendBaseActionIndex
 {

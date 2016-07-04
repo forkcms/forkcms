@@ -16,12 +16,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model
 {
@@ -281,6 +275,7 @@ class Model
                     'ContentBlocks',
                     $item['language']
                 ) . '&id=' . $item['id'],
+                'custom_template' => $item['template'],
             )
         );
 
@@ -307,6 +302,7 @@ class Model
                 'extra_label' => $item['title'],
                 'language' => $item['language'],
                 'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
+                'custom_template' => $item['template'],
             )
         );
 

@@ -13,9 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the form_builder module
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Installer extends ModuleInstaller
 {

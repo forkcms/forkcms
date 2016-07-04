@@ -19,8 +19,6 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
  * This action will display a form to search
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Index extends FrontendBaseBlock
 {

@@ -17,8 +17,6 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * This class will handle the incoming URL.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Url extends Base\Object
 {

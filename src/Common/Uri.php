@@ -13,9 +13,6 @@ use Behat\Transliterator\Transliterator;
 
 /**
  * This is our Uri generating class
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
- * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Uri
 {

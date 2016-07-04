@@ -15,8 +15,6 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This is the DeleteFeedback action, it will display a form to create a new item
- *
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class DeleteFeedback extends BackendBaseActionDelete
 {

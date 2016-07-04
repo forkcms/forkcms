@@ -15,9 +15,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * Mass action handler to delete profiles or add them to a specific group.
- *
- * @author Jan Moesen <jan.moesen@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class MassAction extends BackendBaseAction
 {

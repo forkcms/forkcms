@@ -19,9 +19,6 @@ use Frontend\Modules\Profiles\Engine\Profile;
 
 /**
  * Change the password of the current logged in profile.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class ChangePassword extends FrontendBaseBlock
 {

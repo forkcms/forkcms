@@ -13,8 +13,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the search module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Model
 {

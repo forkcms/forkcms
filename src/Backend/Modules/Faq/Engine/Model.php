@@ -16,12 +16,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model
 {

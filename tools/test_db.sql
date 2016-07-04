@@ -171,7 +171,7 @@ CREATE TABLE `content_blocks` (
   `revision_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `extra_id` int(11) NOT NULL,
-  `template` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'default.tpl',
+  `template` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Default.html.twig',
   `language` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `text` text COLLATE utf8mb4_unicode_ci,

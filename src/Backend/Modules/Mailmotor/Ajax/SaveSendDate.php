@@ -16,8 +16,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This saved the date on which the mailing is to be sent
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class SaveSendDate extends BackendBaseAJAXAction
 {

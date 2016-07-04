@@ -14,8 +14,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * Frontend Ical class.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendIcal extends \SpoonICal
 {
@@ -86,8 +84,6 @@ class FrontendIcal extends \SpoonICal
 
 /**
  * FrontendIcalItem, this is our extended version of SpoonIcalItemEvent
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendIcalEvent extends \SpoonICalEvent
 {

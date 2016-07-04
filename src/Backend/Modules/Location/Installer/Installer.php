@@ -13,8 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the location module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Installer extends ModuleInstaller
 {

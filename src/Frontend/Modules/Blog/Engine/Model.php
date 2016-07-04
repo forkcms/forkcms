@@ -9,6 +9,7 @@ namespace Frontend\Modules\Blog\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Mailer\Message;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -18,13 +19,6 @@ use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Model implements FrontendTagsInterface
 {
@@ -938,7 +932,11 @@ class Model implements FrontendTagsInterface
         FrontendModel::pushToAppleApp($alert, null, 'default', $data);
 
         // get settings
-        $notifyByMailOnComment = FrontendModel::get('fork.settings')->get('Blog', 'notify_by_email_on_new_comment', false);
+        $notifyByMailOnComment = FrontendModel::get('fork.settings')->get(
+            'Blog',
+            'notify_by_email_on_new_comment',
+            false
+        );
         $notifyByMailOnCommentToModerate = FrontendModel::get('fork.settings')->get(
             'Blog',
             'notify_by_email_on_new_comment_to_moderate',
@@ -972,7 +970,7 @@ class Model implements FrontendTagsInterface
             $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
             $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
             $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
-            $message = \Common\Mailer\Message::newInstance(FL::msg('NotificationSubject'))
+            $message = Message::newInstance(FL::msg('NotificationSubject'))
                 ->setFrom(array($from['email'] => $from['name']))
                 ->setTo(array($to['email'] => $to['name']))
                 ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
@@ -994,7 +992,7 @@ class Model implements FrontendTagsInterface
             $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
             $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
             $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
-            $message = \Common\Mailer\Message::newInstance(FL::msg('NotificationSubject'))
+            $message = Message::newInstance(FL::msg('NotificationSubject'))
                 ->setFrom(array($from['email'] => $from['name']))
                 ->setTo(array($to['email'] => $to['name']))
                 ->setReplyTo(array($replyTo['email'] => $replyTo['name']))

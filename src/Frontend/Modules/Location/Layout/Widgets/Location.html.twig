@@ -12,13 +12,13 @@
     <aside id="locationSearch{{ widgetLocationItem.id }}" class="locationSearch">
       <form method="get" action="#">
         <p>
-          <label for="locationSearchAddress{{ widgetLocationItem.id }}">{{ 'lbl.Start'|trans|capitalize }}
+          <label for="locationSearchAddress{{ widgetLocationItem.id }}">{{ 'lbl.Start'|trans|ucfirst }}
             <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
           <input type="text" id="locationSearchAddress{{ widgetLocationItem.id }}" name="locationSearchAddress" class="inputText" />
-          <span id="locationSearchError{{ widgetLocationItem.id }}" class="formError inlineError" style="display: none;">{{ 'err.FieldIsRequired'|trans|capitalize }}</span>
+          <span id="locationSearchError{{ widgetLocationItem.id }}" class="formError inlineError" style="display: none;">{{ 'err.FieldIsRequired'|trans|ucfirst }}</span>
         </p>
         <p>
-          <input type="submit" id="locationSearchRequest{{ widgetLocationItem.id }}" name="locationSearchRequest" class="inputSubmit" value="{{ 'lbl.ShowDirections'|trans|capitalize }}" />
+          <input type="submit" id="locationSearchRequest{{ widgetLocationItem.id }}" name="locationSearchRequest" class="inputSubmit" value="{{ 'lbl.ShowDirections'|trans|ucfirst }}" />
         </p>
       </form>
     </aside>
@@ -26,7 +26,7 @@
 
   {% if widgetLocationSettings.full_url %}
     <p>
-      <a id="map-full-url-{{ widgetLocationItem.id }}" href="{{ widgetLocationSettings.maps_url }}" title="{{ 'lbl.ViewLargeMap'|trans }}">{{ 'lbl.ViewLargeMap'|trans|capitalize }}</a>
+      <a id="map-full-url-{{ widgetLocationItem.id }}" href="{{ widgetLocationSettings.maps_url }}" title="{{ 'lbl.ViewLargeMap'|trans }}">{{ 'lbl.ViewLargeMap'|trans|ucfirst }}</a>
     </p>
   {% endif %}
 

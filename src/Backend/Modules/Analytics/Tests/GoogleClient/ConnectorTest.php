@@ -9,9 +9,6 @@ use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
 use PHPUnit_Framework_TestCase;
 
-/**
- * @author Wouter Sioen <wouter@sumocoders.be>
- */
 class ConnectorTest extends PHPUnit_Framework_TestCase
 {
     public function testGetPageViews()

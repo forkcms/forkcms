@@ -15,8 +15,6 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is a widget with recent blog-articles
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class RecentArticlesList extends FrontendBaseWidget
 {

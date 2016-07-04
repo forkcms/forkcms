@@ -20,8 +20,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the import-action, it will import records from a CSV file
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class ImportAddresses extends BackendBaseActionEdit
 {

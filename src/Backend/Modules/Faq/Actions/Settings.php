@@ -15,9 +15,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the settings-action, it will display a form to set general faq settings
- *
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Settings extends BackendBaseActionEdit
 {

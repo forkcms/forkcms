@@ -13,9 +13,6 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the settings module
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 final class Config extends BackendBaseConfig
 {

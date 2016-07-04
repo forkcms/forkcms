@@ -4,9 +4,6 @@
 
 /**
  * Meta-handler
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 (function($)
 {
@@ -133,8 +130,6 @@
 
 /**
  * Password generator
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
@@ -266,9 +261,6 @@
 
 /**
  * Inline editing
- *
- * @author	Dave Lens <dave@netlash.com>
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
@@ -463,8 +455,6 @@
 
 /**
  * key-value-box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
@@ -763,9 +753,6 @@
 
 /**
  * Tag-box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
 {
@@ -1060,9 +1047,6 @@
 
 /**
  * Multiple select box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 (function($)
 {
@@ -1299,9 +1283,6 @@
 
 /**
  * Multiple text box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
 {

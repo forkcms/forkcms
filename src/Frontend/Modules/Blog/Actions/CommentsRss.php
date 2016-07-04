@@ -18,8 +18,6 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is the RSS-feed with all the comments
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class CommentsRss extends FrontendBaseBlock
 {

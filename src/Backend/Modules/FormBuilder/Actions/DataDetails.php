@@ -15,8 +15,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * This is the data-action it will display the details of a sent data item
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class DataDetails extends BackendBaseActionIndex
 {
@@ -29,7 +27,7 @@ class DataDetails extends BackendBaseActionIndex
     /**
      * Filter variables
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 

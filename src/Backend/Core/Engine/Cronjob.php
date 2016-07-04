@@ -16,9 +16,6 @@ use Frontend\Core\Engine\Language as FrontendLanguage;
 
 /**
  * This class will handle cronjob related stuff
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class Cronjob extends Object implements \ApplicationInterface
 {

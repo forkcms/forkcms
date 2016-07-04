@@ -4,8 +4,6 @@ namespace Common\Mailer;
 
 /**
  * This class will create the right mailer transport based on some parameters
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class TransportFactory
 {

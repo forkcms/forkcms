@@ -13,64 +13,67 @@
     <div class="bd">
       {% form updateSettings %}
       <fieldset>
-        <legend>{{ 'lbl.YourData'|trans|capitalize }}</legend>
+        <legend>{{ 'lbl.YourData'|trans|ucfirst }}</legend>
 
         <p{% if txtDisplayNameError %} class="errorArea"{% endif %}>
-          <label for="displayName">{{ 'lbl.DisplayName'|trans|capitalize }}
-            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          {% form_field_error DisplayName %}{% form_field DisplayName %}
-          <small class="helpTxt">{{ 'msg.HelpDisplayNameChanges'|trans|sprintf({$maxDisplayNameChanges }}:{{ displayNameChangesLeft }}})</small>
+          <label for="displayName">{{ 'lbl.DisplayName'|trans|ucfirst }}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+          </label>
+          {% form_field display_name %} {% form_field_error display_name %}
+          <small class="helpTxt">{{ 'msg.HelpDisplayNameChanges'|trans|format( maxDisplayNameChanges, displayNameChangesLeft) }}</small>
         </p>
         <p{% if txtEmailError %} class="errorArea"{% endif %}>
-          <label for="email">{{ 'lbl.Email'|trans|capitalize }}
-            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          {% form_field_error Email %}{% form_field Email %}
+          <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+          </label>
+          {% form_field email %} {% form_field_error email %}
         </p>
         <p>
-          <a href="{{ geturlforblock:'Profiles':'ChangeEmail' }}">{{ 'msg.ChangeEmail'|trans }}</a>
+          <a href="{{ geturlforblock('Profiles', 'ChangeEmail') }}">{{ 'msg.ChangeEmail'|trans }}</a>
         </p>
         <p{% if txtFirstNameError %} class="errorArea"{% endif %}>
-          <label for="firstName">{{ 'lbl.FirstName'|trans|capitalize }}</label>
-          {% form_field_error FirstName %}{% form_field FirstName %}
+          <label for="firstName">{{ 'lbl.FirstName'|trans|ucfirst }}</label>
+          {% form_field first_name %} {% form_field_error first_name %}
         </p>
         <p{% if txtLastNameError %} class="errorArea"{% endif %}>
-          <label for="lastName">{{ 'lbl.LastName'|trans|capitalize }}</label>
-          {% form_field_error LastName %}{% form_field LastName %}
+          <label for="lastName">{{ 'lbl.LastName'|trans|ucfirst }}</label>
+          {% form_field last_name %} {% form_field_error last_name %}
         </p>
         <p{% if ddmGenderError %} class="errorArea"{% endif %}>
-          <label for="gender">{{ 'lbl.Gender'|trans|capitalize }}</label>
-          {% form_field_error Gender %} {% form_field Gender %}
+          <label for="gender">{{ 'lbl.Gender'|trans|ucfirst }}</label>
+          {% form_field gender %} {% form_field_error gender %}
         </p>
-        <p{% if ddmYearError %} class="errorArea"{% endif %}>
-          <label for="day">{{ 'lbl.BirthDate'|trans|capitalize }}</label>
-          {% form_field_error Day %} {% form_field Month %} {% form_field Year %} {% form_field Year %}
+        <p{% if ddmDayError or ddmMonthError or ddmYearError %} class="errorArea"{% endif %}>
+          <label for="day">{{ 'lbl.BirthDate'|trans|ucfirst }}</label>
+          {% form_field day %} {% form_field month %} {% form_field year %}
+          {% form_field_error day %} {% form_field_error month %} {% form_field_error year %}
         </p>
       </fieldset>
       <fieldset>
-        <legend>{{ 'lbl.YourLocationData'|trans|capitalize }}</legend>
+        <legend>{{ 'lbl.YourLocationData'|trans|ucfirst }}</legend>
 
         <p{% if txtCityError %} class="errorArea"{% endif %}>
-          <label for="city">{{ 'lbl.City'|trans|capitalize }}</label>
-          {% form_field_error City %}{% form_field City %}
+          <label for="city">{{ 'lbl.City'|trans|ucfirst }}</label>
+          {% form_field city %} {% form_field_error city %}
         </p>
         <p{% if ddmCountryError %} class="errorArea"{% endif %}>
-          <label for="country">{{ 'lbl.Country'|trans|capitalize }}</label>
-          {% form_field_error Country %} {% form_field Country %}
+          <label for="country">{{ 'lbl.Country'|trans|ucfirst }}</label>
+          {% form_field country %} {% form_field_error country %}
         </p>
       </fieldset>
       <fieldset>
-        <legend>{{ 'lbl.YourAvatar'|trans|capitalize }}</legend>
+        <legend>{{ 'lbl.YourAvatar'|trans|ucfirst }}</legend>
         {% if avatar %}
           <img src="{{ FRONTEND_FILES_URL }}/Profiles/Avatars/240x240/{{ avatar }}" />
         {% endif %}
 
         <p{% if fileAvatarError %} class="errorArea"{% endif %}>
-          <label for="avatar">{{ 'lbl.Avatar'|trans|capitalize }}</label>
-          {% form_field_error Avatar %}{% form_field Avatar %}
+          <label for="avatar">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+          {% form_field avatar %} {% form_field_error avatar %}
         </p>
       </fieldset>
       <p>
-        <input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|capitalize }}" />
+        <input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
       </p>
       {% endform %}
     </div>

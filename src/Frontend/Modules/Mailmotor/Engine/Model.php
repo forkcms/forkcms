@@ -15,8 +15,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * In this file we store all generic functions that we will be using in the mailmotor module
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Model
 {

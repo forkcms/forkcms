@@ -15,9 +15,6 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
 /**
  * This is the category-action
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Category extends FrontendBaseBlock
 {

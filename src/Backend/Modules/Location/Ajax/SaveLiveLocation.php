@@ -15,8 +15,6 @@ use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
  * This is an ajax handler that will set a new position for a certain map
- *
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class SaveLiveLocation extends BackendBaseAJAXAction
 {

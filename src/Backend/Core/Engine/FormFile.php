@@ -11,9 +11,6 @@ namespace Backend\Core\Engine;
 
 /**
  * This is our extended version of \SpoonFormFile
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FormFile extends \SpoonFormFile
 {

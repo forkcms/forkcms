@@ -16,9 +16,6 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is the category-action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Category extends FrontendBaseBlock
 {

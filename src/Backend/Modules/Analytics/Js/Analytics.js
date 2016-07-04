@@ -1,7 +1,5 @@
 /**
  * Interaction for the analytics module
- *
- * @author  Wouter Sioen <wouter@sumocoders.be>
  */
 jsBackend.analytics =
 {

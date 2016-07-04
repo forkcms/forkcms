@@ -18,9 +18,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the index-action (default), it will display the users-overview
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Index extends BackendBaseActionIndex
 {

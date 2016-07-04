@@ -13,9 +13,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This class is used in several Fork applications to bubble down the AppKernel/Kernel object.
- *
- * @author Dave Lens <dave.lens@wijs.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class KernelLoader
 {

@@ -14,8 +14,6 @@ use Backend\Core\Engine\Base\AjaxAction;
 
 /**
  * This action will generate JS that represents the templates that will be available in CK Editor
- *
- * @author Tijs Verkoyen <tijs@sumocoders.eu>
  */
 class Templates extends AjaxAction
 {

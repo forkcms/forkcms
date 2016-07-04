@@ -18,8 +18,6 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the themes-action, it will display the overview of modules.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Themes extends BackendBaseActionIndex
 {

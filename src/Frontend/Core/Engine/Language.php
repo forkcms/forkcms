@@ -14,8 +14,6 @@ use Backend\Modules\Locale\Engine\CacheBuilder;
 
 /**
  * This class will store the language-dependant content for the frontend.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Language
 {

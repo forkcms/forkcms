@@ -14,15 +14,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
- * @author Stef Bastiaansen <stef.bastiaansen@wijs.be>
- * @author <thijs@wijs.be>
  */
 class AnalyseModel extends Model
 {

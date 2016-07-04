@@ -19,11 +19,6 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This is the index-action (default), it will display the overview
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Davy Van Vooren <davy.vanvooren@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Index extends BackendBaseActionIndex
 {

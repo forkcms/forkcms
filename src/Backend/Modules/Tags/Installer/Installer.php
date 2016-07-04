@@ -13,9 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the tags module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Installer extends ModuleInstaller
 {

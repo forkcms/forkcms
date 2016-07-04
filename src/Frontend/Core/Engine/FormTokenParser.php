@@ -4,8 +4,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * Twig template tag for the start/opening element of a form tag.
- *
- * @author <per@wijs.be>
  */
 class FormTokenParser extends \Twig_TokenParser
 {

@@ -13,10 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * A set of commonly used functions that will be applied on rows or columns
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class DataGridFunctions
 {

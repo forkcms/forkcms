@@ -15,9 +15,6 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentic
 
 /**
  * This is the logout-action.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Logout extends FrontendBaseBlock
 {

@@ -17,9 +17,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * This action is used to export submissions of a form.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class ExportData extends BackendBaseAction
 {

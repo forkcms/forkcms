@@ -12,8 +12,6 @@ use Backend\Core\Engine\Authentication;
 
 /**
  * WebTestCase is the base class for functional tests.
- *
- * @author Wouter Sioen <wouter.sioen@gmail.com>
  */
 abstract class WebTestCase extends BaseWebTestCase
 {

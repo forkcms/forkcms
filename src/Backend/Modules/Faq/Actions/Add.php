@@ -21,11 +21,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Add extends BackendBaseActionAdd
 {

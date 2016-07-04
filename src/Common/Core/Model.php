@@ -16,8 +16,6 @@ require_once __DIR__ . '/../../../app/BaseModel.php';
 
 /**
  * This class will initiate the frontend-application
- *
- * @author Ghazi Triki <ghazi.triki@inhanx.com>
  */
 class Model extends \BaseModel
 {

@@ -15,13 +15,6 @@ use Common\Exception\RedirectException;
 
 /**
  * Application routing
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Dave Lens <dave.lens@wijs.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class ApplicationRouting extends Controller
 {

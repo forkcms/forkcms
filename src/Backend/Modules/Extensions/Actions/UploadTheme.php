@@ -11,8 +11,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 /**
  * This is the theme upload-action.
  * It will install a theme via a compressed zip file.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class UploadTheme extends BackendBaseActionAdd
 {

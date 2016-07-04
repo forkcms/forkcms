@@ -19,8 +19,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This is the index-action (default), it will display the overview of mailings
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Index extends BackendBaseActionIndex
 {
