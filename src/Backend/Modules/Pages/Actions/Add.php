@@ -123,22 +123,34 @@ class Add extends BackendBaseActionAdd
         $this->frm->addRadiobutton(
             'hidden',
             array(
-                 array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                 array('label' => BL::lbl('Published'), 'value' => 'N'),
+                array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
+                array('label' => BL::lbl('Published'), 'value' => 'N'),
             ),
             'N'
         );
 
+        // image related fields
+        $this->frm->addImage('image');
+
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
             // init some vars
-            $items = array('move', 'children', 'edit', 'delete');
+            $items = array(
+                'move' => true,
+                'children' => true,
+                'edit' => true,
+                'delete' => true,
+                'image' => false,
+            );
             $checked = array();
             $values = array();
 
-            foreach ($items as $value) {
+            foreach ($items as $value => $itemIsChecked) {
                 $values[] = array('label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
-                $checked[] = $value;
+
+                if ($itemIsChecked) {
+                    $checked[] = $value;
+                }
             }
 
             $this->frm->addMultiCheckbox('allow', $values, $checked);
@@ -391,6 +403,7 @@ class Add extends BackendBaseActionAdd
                 $page['allow_children'] = 'Y';
                 $page['allow_edit'] = 'Y';
                 $page['allow_delete'] = 'Y';
+                $page['allow_image'] = 'N';
                 $page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
                 $page['data'] = ($data !== null) ? serialize($data) : null;
 
@@ -411,7 +424,13 @@ class Add extends BackendBaseActionAdd
                         'delete',
                         (array) $this->frm->getField('allow')->getValue()
                     )) ? 'Y' : 'N';
+                    $page['allow_image'] = (in_array(
+                        'image',
+                        (array) $this->frm->getField('allow')->getValue()
+                    )) ? 'Y' : 'N';
                 }
+
+                $page['image'] = $this->getImage($page['allow_image']);
 
                 // set navigation title
                 if ($page['navigation_title'] == '') {
@@ -491,6 +510,23 @@ class Add extends BackendBaseActionAdd
                 }
             }
         }
+    }
+
+    /**
+     * @param bool $allowImage
+     * @return string|null
+     */
+    private function getImage($allowImage)
+    {
+        if (!$allowImage || !$this->frm->getField('image')->isFilled()) {
+            return null;
+        }
+
+        $imagePath = FRONTEND_FILES_PATH . '/pages/images';
+        $imageFilename = $this->meta->getURL() . '_' . time() . '.' . $this->frm->getField('image')->getExtension();
+        $this->frm->getField('image')->generateThumbnails($imagePath, $imageFilename);
+
+        return $imageFilename;
     }
 
     /**

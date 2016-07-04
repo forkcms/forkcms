@@ -61,6 +61,11 @@
           <li class="pull-right" role="presentation">
             <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
+          {% if isGod %}
+            <li class="pull-right js-page-image-tab" role="presentation">
+              <a href="#tabImage" aria-controls="image" role="tab" data-toggle="tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
+            </li>
+          {% endif %}
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabContent">
@@ -170,6 +175,19 @@
               </div>
             </div>
           </div>
+          {% if isGod %}
+            <div role="tabpanel" class="tab-pane js-page-image-tab" id="tabImage">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="image" class="control-label">{{ 'lbl.Image'|trans|ucfirst }}</label>
+                    <p class="help-block">{{ 'msg.HelpImage'|trans }}</p>
+                    {% form_field image %} {% form_field_error image %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
           {% if showTags %}
             <div role="tabpanel" class="tab-pane" id="tabTags">
               <div class="row">
