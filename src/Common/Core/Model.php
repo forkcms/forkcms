@@ -193,7 +193,7 @@ class Model extends \BaseModel
             $finder->name('source');
         }
 
-        foreach ($finder->directories()->in($path) as $directory) {
+        foreach ($finder->directories()->in($path)->depth('== 0') as $directory) {
             $chunks = explode('x', $directory->getBasename(), 2);
             if (count($chunks) != 2 && !$includeSource) {
                 continue;
