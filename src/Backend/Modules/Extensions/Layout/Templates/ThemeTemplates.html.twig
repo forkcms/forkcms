@@ -9,9 +9,9 @@
           {% set url =  '&theme=' ~ selectedTheme %}
         {% endif %}
 
-        {{ macro.buttonIcon( geturl('add_theme_template' ) ~ url, 'plus-square', 'lbl.AddTemplate'|trans|capitalize, 'btn-primary') }}
+        {{ macro.buttonIcon( geturl('add_theme_template') ~ url, 'plus-square', 'lbl.AddTemplate'|trans|ucfirst, 'btn-primary') }}
 
-        {{ macro.buttonIcon( geturl('export_theme_templates') ~ url, 'download', 'lbl.Export'|trans|capitalize) }}
+        {{ macro.buttonIcon( geturl('export_theme_templates') ~ url, 'download', 'lbl.Export'|trans|ucfirst) }}
       </div>
     </div>
   {% endif %}
@@ -24,7 +24,7 @@
     <div class="col-md-12">
       <div class="content-block">
         <div class="content-title">
-          <p>{{ 'lbl.Templates'|trans|capitalize }} {{ 'lbl.For'|trans }} {% form_field theme %}</p>
+          <p>{{ 'lbl.Templates'|trans|ucfirst }} {{ 'lbl.For'|trans }} {% form_field theme %}</p>
         </div>
       </div>
       {% if dataGrid %}

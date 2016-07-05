@@ -4,7 +4,7 @@
   <div class="sub-navigation">
     <div class="pages-tree">
       <div class="alert alert-warning visible-xs visible-sm">
-        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MovePagesNotPossible'|trans|capitalize }}</p>
+        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MovePagesNotPossible'|trans|ucfirst }}</p>
       </div>
       <div id="tree">
         {{ tree|raw }}
@@ -20,7 +20,7 @@
   {% if showPagesAdd %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
-        {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.AddPage'|trans|capitalize) }}
+        {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.AddPage'|trans|ucfirst) }}
       </div>
     </div>
   {% endif %}
@@ -32,7 +32,7 @@
       {% if dgDrafts %}
         <div class="content-block content-block-pb">
           <div class="content-title">
-            <p>{{ 'lbl.Drafts'|trans|capitalize }}</p>
+            <p>{{ 'lbl.Drafts'|trans|ucfirst }}</p>
           </div>
           <div class="responsive-table">
             {{ dgDrafts|raw }}
@@ -42,7 +42,7 @@
       <div class="content-block content-block-pb">
         {% if dgRecentlyEdited %}
           <div class="content-title">
-            <p>{{ 'lbl.RecentlyEdited'|trans|capitalize }}</p>
+            <p>{{ 'lbl.RecentlyEdited'|trans|ucfirst }}</p>
           </div>
           <div class="resposive-table">
             {{ dgRecentlyEdited|raw }}
@@ -50,7 +50,7 @@
         {% endif %}
       </div>
       {% if not dgRecentlyEdited %}
-        <p>{{ 'msg.NoItems'|trans|capitalize }}</p>
+        <p>{{ 'msg.NoItems'|trans|ucfirst }}</p>
       {% endif %}
     </div>
   </div>

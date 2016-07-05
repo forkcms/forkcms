@@ -4,10 +4,10 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {% if showMailmotorStatistics %}
-        {{ macro.buttonIcon(geturl('statistics') ~ '&id=' ~ mailing.id, 'trash-o', 'msg.BackToStatistics'|trans|sprintf(mailing.name ) ) }}
+        {{ macro.buttonIcon(geturl('statistics') ~ '&id=' ~ mailing.id, 'trash-o', 'msg.BackToStatistics'|trans|format(mailing.name)|raw) }}
       {% endif %}
       {% if showMailmotorDeleteBounces %}
-        {{ macro.buttonIcon(geturl('delete_bounces') ~ '&mailing_id=' ~ mailing.id, 'trash-o', 'msg.DeleteBounces'|trans|capitalize }}
+        {{ macro.buttonIcon(geturl('delete_bounces') ~ '&mailing_id=' ~ mailing.id, 'trash-o', 'msg.DeleteBounces'|trans|ucfirst }}
       {% endif %}
     </div>
   </div>
@@ -18,7 +18,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% if dataGrid %}
-        <form action="{{ geturl('mass_bounces_action' ) }}" method="get" class="forkForms submitWithLink" id="bounces">
+        <form action="{{ geturl('mass_bounces_action') }}" method="get" class="forkForms submitWithLink" id="bounces">
         {{ dataGrid }}
         </form>
       {% endif %}

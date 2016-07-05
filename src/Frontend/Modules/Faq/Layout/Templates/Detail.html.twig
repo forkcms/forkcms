@@ -12,7 +12,7 @@
           <ul>
             <li>
               {# Category#}
-              {{ 'lbl.InTheCategory'|trans|capitalize }}
+              {{ 'lbl.InTheCategory'|trans|ucfirst }}
               <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
               {% if not item.tags %}.{% endif %}
 
@@ -52,8 +52,8 @@
       <div class="inner">
         <header class="hd">
           {% if settings.allow_multiple_categories %}
-            <h3>{{ 'msg.QuestionsInSameCategory'|trans|capitalize }}</h3>{% endif %}
-          {% if not settings.allow_multiple_categories %}<h3>{{ 'msg.OtherQuestions'|trans|capitalize }}</h3>{% endif %}
+            <h3>{{ 'msg.QuestionsInSameCategory'|trans|ucfirst }}</h3>{% endif %}
+          {% if not settings.allow_multiple_categories %}<h3>{{ 'msg.OtherQuestions'|trans|ucfirst }}</h3>{% endif %}
         </header>
         <div class="bd content">
           <ul>
@@ -72,7 +72,7 @@
     <section id="faqRelatedItems" class="mod">
       <div class="inner">
         <header class="hd">
-          <h3>{{ 'msg.RelatedQuestions'|trans|capitalize }}</h3>
+          <h3>{{ 'msg.RelatedQuestions'|trans|ucfirst }}</h3>
         </header>
         <div class="bd content">
           <ul>
@@ -86,14 +86,14 @@
   {% endif %}
 
   <p>
-    <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|capitalize }}">{{ 'lbl.ToFaqOverview'|trans|capitalize }}</a>
+    <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">{{ 'lbl.ToFaqOverview'|trans|ucfirst }}</a>
   </p>
 
   {% if settings.allow_feedback %}
     <section id="faqFeedbackForm" class="mod">
       <div class="inner">
         <header class="hd">
-          <h3 id="{{ 'act.Feedback'|trans }}">{{ 'msg.Feedback'|trans|capitalize }}</h3>
+          <h3 id="{{ 'act.Feedback'|trans }}">{{ 'msg.Feedback'|trans|ucfirst }}</h3>
         </header>
         <div class="bd">
           {% if success %}
@@ -109,7 +109,7 @@
               {% for useful in useful %}
                 <li>
                   {{ useful.rbtUseful|raw }}
-                  <label for="{{ useful.id }}">{{ useful.label|capitalize }}</label>
+                  <label for="{{ useful.id }}">{{ useful.label|ucfirst }}</label>
                 </li>
               {% endfor %}
             </ul>
@@ -117,12 +117,12 @@
 
           <div id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
             <p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
-              <label for="message">{{ 'msg.HowToImprove'|trans|capitalize }}
+              <label for="message">{{ 'msg.HowToImprove'|trans|ucfirst }}
                 <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
               {% form_field message %} {% form_field_error message %}
             </p>
             <p>
-              <input class="inputSubmit" type="submit" name="comment" value="{{ 'lbl.Send'|trans|capitalize }}" />
+              <input class="inputSubmit" type="submit" name="comment" value="{{ 'lbl.Send'|trans|ucfirst }}" />
             </p>
           </div>
           {% endform %}

@@ -101,7 +101,8 @@ jsBackend.Groups =
     },
 
     // select all
-    selectAll: function () {
+    selectAll: function (event) {
+        event.stopPropagation();
         // init vars
         $this = $(this);
 

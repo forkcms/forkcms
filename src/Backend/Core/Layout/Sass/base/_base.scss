@@ -130,9 +130,11 @@ body {
       .sub-navigation {
         background: $white;
         border-right: 1px solid $gray-lighter;
-        min-height: 100%;
+        height: 100%;
         position: absolute;
         left: 240px;
+        overflow-x: hidden;
+        overflow-y: auto;
         top: 0;
         width: 190px;
         -webkit-transition: width,left 250ms;

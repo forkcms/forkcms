@@ -24,7 +24,7 @@
                   </h3>
                 </header>
                 <div class="bd content">
-                  {% if not result.introduction %}{{ result.text|truncate(200 ) }}{% endif %}
+                  {% if not result.introduction %}{{ result.text|truncate(200) }}{% endif %}
                   {% if result.introduction %}{{ result.introduction }}{% endif %}
                 </div>
               </div>

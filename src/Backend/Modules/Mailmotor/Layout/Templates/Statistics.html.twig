@@ -4,11 +4,11 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {% if showMailmotorIndex %}
-        {{ macro.buttonIcon(geturl('index'), 'list', 'msg.BackToMailings'|trans|sprintf(mailing.name ) ) }}
+        {{ macro.buttonIcon(geturl('index'), 'list', 'msg.BackToMailings'|trans|format(mailing.name)|raw) }}
       {% endif %}
 
       {% if showMailmotorExportStatistics %}
-        {{ macro.buttonIcon(geturl('export_statistics' ) ~ '&id=' ~ mailing.id, 'download', ''lbl.ExportStatistics'|trans|capitalize') }}
+        {{ macro.buttonIcon(geturl('export_statistics') ~ '&id=' ~ mailing.id, 'download', ''lbl.ExportStatistics'|trans|ucfirst') }}
       {% endif %}
     </div>
   </div>
@@ -20,7 +20,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.OpenedMailings'|trans|capitalize }}
+            {{ 'lbl.OpenedMailings'|trans|ucfirst }}
           </h3>
         </div>
         <div class="panel-body">
@@ -28,15 +28,15 @@
             <ul class="data">
               {% if stats.unique_opens %}
                 <li>
-                <span class="label">{{ 'lbl.OpenedMailings'|trans|capitalize }}</span><span class="value">{{ stats.unique_opens }}</span><span class="percentage">{{ stats.unique_opens_percentage }}</span>
+                <span class="label">{{ 'lbl.OpenedMailings'|trans|ucfirst }}</span><span class="value">{{ stats.unique_opens }}</span><span class="percentage">{{ stats.unique_opens_percentage }}</span>
                 </li>{% endif %}
               {% if stats.unopens %}
                 <li>
-                <span class="label">{{ 'lbl.UnopenedMailings'|trans|capitalize }}</span><span class="value">{{ stats.unopens }}</span><span class="percentage">{{ stats.unopens_percentage }}</span>
+                <span class="label">{{ 'lbl.UnopenedMailings'|trans|ucfirst }}</span><span class="value">{{ stats.unopens }}</span><span class="percentage">{{ stats.unopens_percentage }}</span>
                 </li>{% endif %}
               {% if stats.bounces %}
                 <li>
-                <span class="label">{{ 'lbl.Bounces'|trans|capitalize }}</span><span class="value">{{ stats.bounces }}</span><span class="percentage">{{ stats.bounces_percentage }}</span>
+                <span class="label">{{ 'lbl.Bounces'|trans|ucfirst }}</span><span class="value">{{ stats.bounces }}</span><span class="percentage">{{ stats.bounces_percentage }}</span>
                 </li>{% endif %}
             </ul>
           </div>
@@ -55,25 +55,25 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.Summary'|trans|capitalize }}
+            {{ 'lbl.Summary'|trans|ucfirst }}
           </h3>
         </div>
         <div class="panel-body">
-          <p><strong>{{ stats.recipients }}</strong> {{ 'lbl.SentMailings'|trans|capitalize }}
+          <p><strong>{{ stats.recipients }}</strong> {{ 'lbl.SentMailings'|trans|ucfirst }}
             <small>(100%)</small>
           </p>
-          <p><strong>{{ stats.unique_opens }}</strong> {{ 'lbl.OpenedMailings'|trans|capitalize }}
+          <p><strong>{{ stats.unique_opens }}</strong> {{ 'lbl.OpenedMailings'|trans|ucfirst }}
             <small>({{ stats.unique_opens_percentage }})</small>
           </p>
-          <p><strong>{{ stats.unopens }}</strong> {{ 'lbl.UnopenedMailings'|trans|capitalize }}
+          <p><strong>{{ stats.unopens }}</strong> {{ 'lbl.UnopenedMailings'|trans|ucfirst }}
             <small>({{ stats.unopens_percentage }})</small>
           </p>
-          <p><strong>{{ stats.clicks_total }}</strong> <a href="#clicks">{{ 'lbl.Clicks'|trans|capitalize }}</a>
+          <p><strong>{{ stats.clicks_total }}</strong> <a href="#clicks">{{ 'lbl.Clicks'|trans|ucfirst }}</a>
             <small>({{ stats.clicks_percentage }})</small>
           </p>
           {% if stats.bounces %}
             <p>
-            <strong>{{ stats.bounces }}/{{ stats.recipients_total }} </strong><a href="{{ geturl('statistics_bounces' ) }}&amp;mailing_id={{ mailing.id }}">{{ 'lbl.BounceRate'|trans|capitalize }}</a>
+            <strong>{{ stats.bounces }}/{{ stats.recipients_total }} </strong><a href="{{ geturl('statistics_bounces') }}&amp;mailing_id={{ mailing.id }}">{{ 'lbl.BounceRate'|trans|ucfirst }}</a>
             <small>({{ stats.bounces_percentage }})</small></p>{% endif %}
         </div>
       </div>
@@ -81,7 +81,7 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <h3>{{ 'msg.MailingLinks'|trans|capitalize }}</h3>
+      <h3>{{ 'msg.MailingLinks'|trans|ucfirst }}</h3>
       {% if dataGrid %}
         {{ dataGrid }}
       {% endif %}

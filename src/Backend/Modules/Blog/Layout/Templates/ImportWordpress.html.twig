@@ -3,7 +3,7 @@
 {% block actionbar %}
   <div class="row fork-module-heading">
     <div class="col-md-6">
-      <h2>{{ 'lbl.Import'|trans|capitalize }}</h2>
+      <h2>{{ 'lbl.Import'|trans|ucfirst }}</h2>
     </div>
     <div class="col-md-6">
 
@@ -16,14 +16,14 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="wordpress" class="control-label">{{ 'lbl.File'|trans|capitalize }}</label>
-        <p class="help-block">{{ 'msg.HelpWordpress'|trans|capitalize }}</p>
-        {% form_field_error wordpress %} {% form_field wordpress %}
+        <label for="wordpress" class="control-label">{{ 'lbl.File'|trans|ucfirst }}</label>
+        <p class="help-block">{{ 'msg.HelpWordpress'|trans|ucfirst }}</p>
+        {% form_field wordpress %} {% form_field_error wordpress %}
       </div>
       <div class="form-group">
-        <label for="filter" class="control-label">{{ 'lbl.WordpressFilter'|trans|capitalize }}</label>
-        <p class="help-block">{{ 'msg.HelpWordpressFilter'|capitalize }}</p>
-        {% form_field_error filter %} {% form_field filter %}
+        <label for="filter" class="control-label">{{ 'lbl.WordpressFilter'|trans|ucfirst }}</label>
+        <p class="help-block">{{ 'msg.HelpWordpressFilter'|ucfirst }}</p>
+        {% form_field filter %} {% form_field_error filter %}
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="importButton" type="submit" name="save" class="btn btn-primary">{{ 'lbl.Import'|trans|capitalize }}</button>
+          <button id="importButton" type="submit" name="save" class="btn btn-primary">{{ 'lbl.Import'|trans|ucfirst }}</button>
         </div>
       </div>
     </div>

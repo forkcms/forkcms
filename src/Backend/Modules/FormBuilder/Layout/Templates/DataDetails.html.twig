@@ -3,14 +3,14 @@
 {% block actionbar %}
   <div class="row fork-module-heading">
     <div class="col-md-6">
-      <h2>{{ 'lbl.FormData'|trans|sprintf(name|capitalize ) }}</h2>
+      <h2>{{ 'lbl.FormData'|trans|format(name|ucfirst)|raw }}</h2>
     </div>
     <div class="col-md-6">
 
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
           {% if showFormBuilderData %}
-            {{ macro.buttonIcon( geturl('data') ~ '&id=' ~ formId ~ '&start_date=' ~ filter.start_date ~ '&end_date=' ~ filter.end_date, 'list', 'lbl.BackToData'|trans|capitalize) }}
+            {{ macro.buttonIcon( geturl('data') ~ '&id=' ~ formId ~ '&start_date=' ~ filter.start_date ~ '&end_date=' ~ filter.end_date, 'list', 'lbl.BackToData'|trans|ucfirst) }}
           {% endif %}
         </div>
       </div>
@@ -23,7 +23,7 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Content'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.Content'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           {% if data %}
@@ -42,12 +42,12 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.SenderInformation'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.SenderInformation'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <table class="table">
             <tr>
-              <th>{{ 'lbl.SentOn'|trans|capitalize }}:</th>
+              <th>{{ 'lbl.SentOn'|trans|ucfirst }}:</th>
               <td>{{ sentOn|spoondate }}</td>
             </tr>
           </table>
@@ -62,27 +62,27 @@
           {% if showFormBuilderMassDataAction %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
               <span class="fa fa-trash-o"></span>
-              {{ 'lbl.Delete'|trans|capitalize }}
+              {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
       </div>
       {% if showFormBuilderMassDataAction %}
-        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|capitalize }}" aria-hidden="true">
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <span class="modal-title h4">{{ 'lbl.Delete'|trans|capitalize }}</span>
+                <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
               </div>
               <div class="modal-body">
-                <p>{{ 'msg.ConfirmDeleteData'|trans|capitalize }}</p>
+                <p>{{ 'msg.ConfirmDeleteData'|trans|ucfirst }}</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
                 <a href="{{ geturl('mass_data_action') }}&amp;action=delete&amp;form_id={{ formId }}&amp;id={{ id }}" class="btn btn-succes">
-                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|capitalize }}
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                 </a>
               </div>
             </div>

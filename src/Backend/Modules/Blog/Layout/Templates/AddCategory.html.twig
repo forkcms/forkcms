@@ -11,27 +11,27 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|capitalize }}</a>
+            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
           <li class="pull-right" role="presentation">
-            <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|capitalize }}</a>
+            <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="form-group last">
               <label for="title" class="control-label">
-                {{ 'lbl.Title'|trans|capitalize }}
-                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                {{ 'lbl.Title'|trans|ucfirst }}
+                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
               </label>
-              {% form_field_error title %} {% form_field title %}
+              {% form_field title %} {% form_field_error title %}
               {% if detailURL %}
                 <a href="{{ detailURL }}">
                   <small>{{ detailURL }}/<span id="generatedUrl"></span></small>
                 </a>      {% endif %}
               {% if not detailURL %}
                 <p class="alert alert-warning alert-xs">
-                  <span class="fa fa-exclamation-triangle"></span>{{ 'err.NoModuleLinked'|trans|capitalize }}</p>
+                  <span class="fa fa-exclamation-triangle"></span>{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
               {% endif %}
             </div>
           </div>
@@ -47,7 +47,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.AddCategory'|trans|capitalize }}
+            <span class="fa fa-plus-square"></span>{{ 'lbl.AddCategory'|trans|ucfirst }}
           </button>
         </div>
       </div>

@@ -15,7 +15,7 @@
         <ul>
           <li>
             {# Written by #}
-            {{ 'msg.WrittenBy'|trans|capitalize|sprintf(item.user_id|usersetting('nickname')) }}
+            {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname')|raw) }}
 
             {# Written on #}
             {{ 'lbl.On'|trans }}
@@ -39,17 +39,17 @@
           {% if item.allow_comments %}
             <li>
               {% if not comments %}
-                <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNoComments'|trans|capitalize }}</a>{% endif %}
+                <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNoComments'|trans|ucfirst }}</a>{% endif %}
               {% if comments %}
                 {% if blogCommentsMultiple %}
-                  <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|sprintf(commentsCount) }}</a>{% endif %}
+                  <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(commentsCount)|raw }}</a>{% endif %}
                 {% if not blogCommentsMultiple %}
                   <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
               {% endif %}
             </li>
           {% endif %}
           <li>
-            <a href="{{ item.full_url }}" class="share">{{ 'lbl.Share'|trans|capitalize }}</a>
+            <a href="{{ item.full_url }}" class="share">{{ 'lbl.Share'|trans|ucfirst }}</a>
           </li>
         </ul>
       </header>
@@ -63,12 +63,12 @@
           <ul class="pageNavigation">
             {% if navigation.previous %}
               <li class="previousLink">
-                <a href="{{ navigation.previous.url }}" rel="prev">{{ 'lbl.PreviousArticle'|trans|capitalize }}: {{ navigation.previous.title }}</a>
+                <a href="{{ navigation.previous.url }}" rel="prev">{{ 'lbl.PreviousArticle'|trans|ucfirst }}: {{ navigation.previous.title }}</a>
               </li>
             {% endif %}
             {% if navigation.next %}
               <li class="nextLink">
-                <a href="{{ navigation.next.url }}" rel="next">{{ 'lbl.NextArticle'|trans|capitalize }}: {{ navigation.next.title }}</a>
+                <a href="{{ navigation.next.url }}" rel="next">{{ 'lbl.NextArticle'|trans|ucfirst }}: {{ navigation.next.title }}</a>
               </li>
             {% endif %}
           </ul>
@@ -82,7 +82,7 @@
       <section id="blogComments" class="mod" itemscope itemtype="http://schema.org/Article">
         <div class="inner">
           <header class="hd">
-            <h3 id="{{ 'act.Comments'|trans }}">{{ 'lbl.Comments'|trans|capitalize }}</h3>
+            <h3 id="{{ 'act.Comments'|trans }}">{{ 'lbl.Comments'|trans|ucfirst }}</h3>
           </header>
           <div class="bd content">
             {% for comment in comments %}
@@ -117,7 +117,7 @@
     <section id="blogCommentForm" class="mod">
       <div class="inner">
         <header class="hd">
-          <h3 id="{{ 'act.Comment'|trans }}">{{ 'msg.Comment'|trans|capitalize }}</h3>
+          <h3 id="{{ 'act.Comment'|trans }}">{{ 'msg.Comment'|trans|ucfirst }}</h3>
         </header>
         <div class="bd">
           {% if commentIsInModeration %}
@@ -129,27 +129,27 @@
           {% form commentsForm %}
           <div class="alignBlocks">
             <p {% if txtAuthorError %}class="errorArea"{% endif %}>
-              <label for="author">{{ 'lbl.Name'|trans|capitalize }}
+              <label for="author">{{ 'lbl.Name'|trans|ucfirst }}
                 <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-              {% form_field_error author %} {% form_field author %}
+              {% form_field author %} {% form_field_error author %}
             </p>
             <p {% if txtEmailError %}class="errorArea"{% endif %}>
-              <label for="email">{{ 'lbl.Email'|trans|capitalize }}
+              <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
                 <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-              {% form_field_error email %} {% form_field email %}
+              {% form_field email %} {% form_field_error email %}
             </p>
           </div>
           <p class="bigInput{% if txtWebsiteError %} errorArea{% endif %}">
-            <label for="website">{{ 'lbl.Website'|trans|capitalize }}</label>
-            {% form_field_error website %} {% form_field website %}
+            <label for="website">{{ 'lbl.Website'|trans|ucfirst }}</label>
+            {% form_field website %} {% form_field_error website %}
           </p>
           <p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
-            <label for="message">{{ 'lbl.Message'|trans|capitalize }}
+            <label for="message">{{ 'lbl.Message'|trans|ucfirst }}
               <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field_error message %} {% form_field message %}
+            {% form_field message %} {% form_field_error message %}
           </p>
           <p>
-            <input class="inputSubmit" type="submit" name="comment" value="{{ 'msg.Comment'|trans|capitalize }}" />
+            <input class="inputSubmit" type="submit" name="comment" value="{{ 'msg.Comment'|trans|ucfirst }}" />
           </p>
           {% endform %}
         </div>

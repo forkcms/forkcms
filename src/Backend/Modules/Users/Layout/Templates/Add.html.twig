@@ -11,10 +11,10 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabProfile" aria-controls="profile" role="tab" data-toggle="tab">{{ 'lbl.Profile'|trans|capitalize }}</a>
+            <a href="#tabProfile" aria-controls="profile" role="tab" data-toggle="tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
           </li>
           <li role="presentation">
-            <a href="#tabPermissions" aria-controls="permission" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|capitalize }}</a>
+            <a href="#tabPermissions" aria-controls="permission" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -23,15 +23,15 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="email" class="control-label">
-                    {{ 'lbl.Email'|trans|capitalize }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                    {{ 'lbl.Email'|trans|ucfirst }}
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
-                  {% form_field_error email %} {% form_field email %}
+                  {% form_field email %} {% form_field_error email %}
                 </div>
                 <div class="form-group last">
                   <label for="password" class="control-label">
-                    {{ 'lbl.Password'|trans|capitalize }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                    {{ 'lbl.Password'|trans|ucfirst }}
+                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                   </label>
                   <table id="passwordStrengthMeter" class="passwordStrength" data-id="password">
                     <tr>
@@ -58,7 +58,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="input-group">
-                          {% form_field_error password %} {% form_field password %}
+                          {% form_field password %} {% form_field_error password %}
                         </div>
                       </div>
                     </div>
@@ -67,10 +67,10 @@
                     <div class="col-md-6">
                       <div class="form-group last">
                         <label for="confirmPassword" class="control-label">
-                          {{ 'lbl.ConfirmPassword'|trans|capitalize }}
-                          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                          {{ 'lbl.ConfirmPassword'|trans|ucfirst }}
+                          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                         </label>
-                        {% form_field_error confirm_password %} {% form_field confirm_password %}
+                        {% form_field confirm_password %} {% form_field_error confirm_password %}
                       </div>
                     </div>
                   </div>
@@ -81,34 +81,34 @@
               <div class="col-md-12">
                 <div class="content-block content-block-pt">
                   <div class="content-title">
-                    <p>{{ 'lbl.PersonalInformation'|trans|capitalize }}</p>
+                    <p>{{ 'lbl.PersonalInformation'|trans|ucfirst }}</p>
                   </div>
                   <div class="form-group">
                     <label for="name" class="control-label">
-                      {{ 'lbl.Name'|trans|capitalize }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                      {{ 'lbl.Name'|trans|ucfirst }}
+                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                     </label>
-                    {% form_field_error name %} {% form_field name %}
+                    {% form_field name %} {% form_field_error name %}
                   </div>
                   <div class="form-group">
                     <label for="surname" class="control-label">
-                      {{ 'lbl.Surname'|trans|capitalize }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                      {{ 'lbl.Surname'|trans|ucfirst }}
+                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                     </label>
-                    {% form_field_error surname %} {% form_field surname %}
+                    {% form_field surname %} {% form_field_error surname %}
                   </div>
                   <div class="form-group">
                     <label for="nickname" class="control-label">
-                      {{ 'lbl.Nickname'|trans|capitalize }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                      {{ 'lbl.Nickname'|trans|ucfirst }}
+                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                     </label>
                     <p class="help-block">{{ 'msg.HelpNickname'|trans }}</p>
-                    {% form_field_error nickname %} {% form_field nickname %}
+                    {% form_field nickname %} {% form_field_error nickname %}
                   </div>
                   <div class="form-group last">
-                    <label for="avatar" class="control-label">{{ 'lbl.Avatar'|trans|capitalize }}</label>
+                    <label for="avatar" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
                     <p class="help-block">{{ 'msg.HelpAvatar'|trans }}</p>
-                    {% form_field_error avatar %} {% form_field avatar %}
+                    {% form_field avatar %} {% form_field_error avatar %}
                   </div>
                 </div>
               </div>
@@ -117,23 +117,23 @@
               <div class="col-md-12">
                 <div class="content-block content-block-pt">
                   <div class="content-title">
-                    <p>{{ 'lbl.InterfacePreferences'|trans|capitalize }}</p>
+                    <p>{{ 'lbl.InterfacePreferences'|trans|ucfirst }}</p>
                   </div>
                   <div class="form-group">
-                    <label for="interfaceLanguage" class="control-label">{{ 'lbl.Language'|trans|capitalize }}</label>
-                    {% form_field_error interface_language %} {% form_field interface_language %}
+                    <label for="interfaceLanguage" class="control-label">{{ 'lbl.Language'|trans|ucfirst }}</label>
+                    {% form_field interface_language %} {% form_field_error interface_language %}
                   </div>
                   <div class="form-group">
-                    <label for="dateFormat" class="control-label">{{ 'lbl.DateFormat'|trans|capitalize }}</label>
-                    {% form_field_error date_format %} {% form_field date_format %}
+                    <label for="dateFormat" class="control-label">{{ 'lbl.DateFormat'|trans|ucfirst }}</label>
+                    {% form_field date_format %} {% form_field_error date_format %}
                   </div>
                   <div class="form-group">
-                    <label for="timeFormat" class="control-label">{{ 'lbl.TimeFormat'|trans|capitalize }}</label>
-                    {% form_field_error time_format %} {% form_field time_format %}
+                    <label for="timeFormat" class="control-label">{{ 'lbl.TimeFormat'|trans|ucfirst }}</label>
+                    {% form_field time_format %} {% form_field_error time_format %}
                   </div>
                   <div class="form-group">
-                    <label for="numberFormat" class="control-label">{{ 'lbl.NumberFormat'|trans|capitalize }}</label>
-                    {% form_field_error number_format %} {% form_field number_format %}
+                    <label for="numberFormat" class="control-label">{{ 'lbl.NumberFormat'|trans|ucfirst }}</label>
+                    {% form_field number_format %} {% form_field_error number_format %}
                   </div>
                 </div>
               </div>
@@ -142,15 +142,15 @@
               <div class="col-md-12">
                 <div class="content-block content-block-pt">
                   <div class="content-title">
-                    <p>{{ 'lbl.CSV'|trans|capitalize }}</p>
+                    <p>{{ 'lbl.CSV'|trans|ucfirst }}</p>
                   </div>
                   <div class="form-group">
-                    <label for="csvSplitChar'act.r">{{ 'lbl.SplitCharacter'|trans|capitalize }}</label>
-                    {% form_field_error csv_split_character %} {% form_field csv_split_character %}
+                    <label for="csvSplitChar'act.r">{{ 'lbl.SplitCharacter'|trans|ucfirst }}</label>
+                    {% form_field csv_split_character %} {% form_field_error csv_split_character %}
                   </div>
                   <div class="form-group last">
-                    <label for="csvLineEnding" class="control-label">{{ 'lbl.LineEnding'|trans|capitalize }}</label>
-                    {% form_field_error csv_line_ending %} {% form_field csv_line_ending %}
+                    <label for="csvLineEnding" class="control-label">{{ 'lbl.LineEnding'|trans|ucfirst }}</label>
+                    {% form_field csv_line_ending %} {% form_field_error csv_line_ending %}
                   </div>
                 </div>
               </div>
@@ -170,7 +170,7 @@
                   </ul>
                 </div>
                 <div class="form-group">
-                  <p>{{ 'lbl.Groups'|trans|capitalize }}</p>
+                  <p>{{ 'lbl.Groups'|trans|ucfirst }}</p>
                   <ul id="groupList" class="list-unstyled">
                     {% for group in groups %}
                       <li class="checkbox">
@@ -192,7 +192,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
+            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>

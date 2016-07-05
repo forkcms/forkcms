@@ -7,7 +7,7 @@
   <section id="blogRecentArticlesListWidget" class="mod">
     <div class="inner">
       <header class="hd">
-        <h3>{{ 'lbl.RecentArticles'|trans|capitalize }}</h3>
+        <h3>{{ 'lbl.RecentArticles'|trans|ucfirst }}</h3>
       </header>
       <div class="bd content">
         <ul>
@@ -18,8 +18,8 @@
       </div>
       <footer class="ft">
         <p>
-          <a href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|capitalize }}</a>
-          <a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|capitalize }}</a>
+          <a href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|ucfirst }}</a>
+          <a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|ucfirst }}</a>
         </p>
       </footer>
     </div>

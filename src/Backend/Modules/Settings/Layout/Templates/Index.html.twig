@@ -10,7 +10,7 @@
     <div class="row fork-module-messages">
       <div class="col-md-12">
         <div class="alert alert-warning" role="alert">
-          <p><strong><span class="fa fa-exclamation-triangle"></span>{{ 'msg.ConfigurationError'|trans|capitalize }}
+          <p><strong><span class="fa fa-exclamation-triangle"></span>{{ 'msg.ConfigurationError'|trans|ucfirst }}
             </strong></p>
           <ul>
             {% for warning in warnings %}
@@ -26,13 +26,13 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            {{ 'lbl.WebsiteTitle'|trans|capitalize }}
-            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+            {{ 'lbl.WebsiteTitle'|trans|ucfirst }}
+            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
           </h3>
         </div>
         <div class="panel-body">
           <div class="form-group last">
-            {% form_field_error site_title %} {% form_field site_title %}
+            {% form_field site_title %} {% form_field_error site_title %}
           </div>
         </div>
       </div>
@@ -42,17 +42,17 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Scripts'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.Scripts'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
             <label for="siteHtmlHeader" class="control-label"><code>&lt;head&gt;</code> script(s)</label>
-            {% form_field_error site_html_header %} {% form_field site_html_header %}
+            {% form_field site_html_header %} {% form_field_error site_html_header %}
             <span class="help-block">{{ msg.HelpScriptsHead }}</span>
           </div>
           <div class="form-group last">
             <label for="siteHtmlFooter" class="control-label">End of <code>&lt;body&gt;</code> script(s)</label>
-            {% form_field_error site_html_footer %} {% form_field site_html_footer %}
+            {% form_field site_html_footer %} {% form_field_error site_html_footer %}
             <span class="help-block">{{ msg.HelpScriptsFoot }}</span>
           </div>
         </div>
@@ -63,28 +63,28 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Languages'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.Languages'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <p>{{ 'msg.HelpLanguages'|trans|capitalize }}</p>
+            <p>{{ 'msg.HelpLanguages'|trans|ucfirst }}</p>
             <ul id="activeLanguages" class="list-unstyled">
               {% for activeLanguage in activeLanguages %}
                 <li class="checkbox">
                   <label for="{{ activeLanguage.id }}">
-                    {{ activeLanguage.chkActiveLanguages|raw }} {{ activeLanguage.label }}{% if activeLanguage.default %} ({{ 'lbl.Default'|trans|capitalize }}){% endif %}
+                    {{ activeLanguage.chkActiveLanguages|raw }} {{ activeLanguage.label }}{% if activeLanguage.default %} ({{ 'lbl.Default'|trans|ucfirst }}){% endif %}
                   </label>
                 </li>
               {% endfor %}
             </ul>
           </div>
           <div class="form-group last">
-            <p>{{ 'msg.HelpRedirectLanguages'|trans|capitalize }}</p>
+            <p>{{ 'msg.HelpRedirectLanguages'|trans|ucfirst }}</p>
             <ul id="redirectLanguages" class="list-unstyled">
               {% for redirectLanguage in redirectLanguages %}
                 <li class="checkbox">
                   <label for="{{ redirectLanguage.id }}">
-                    {{ redirectLanguage.chkRedirectLanguages|raw }} {{ redirectLanguage.label }}{% if redirectLanguage.default %} ({{ 'lbl.Default'|trans|capitalize }}){% endif %}
+                    {{ redirectLanguage.chkRedirectLanguages|raw }} {{ redirectLanguage.label }}{% if redirectLanguage.default %} ({{ 'lbl.Default'|trans|ucfirst }}){% endif %}
                   </label>
                 </li>
               {% endfor %}
@@ -98,23 +98,23 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.DateAndTime'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.DateAndTime'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="timeFormat" class="control-label">{{ 'lbl.TimeFormat'|trans|capitalize }}</label>
-            {% form_field_error time_format %} {% form_field time_format %}
-            <span class="help-block">{{ 'msg.HelpTimeFormat'|trans|capitalize }}</span>
+            <label for="timeFormat" class="control-label">{{ 'lbl.TimeFormat'|trans|ucfirst }}</label>
+            {% form_field time_format %} {% form_field_error time_format %}
+            <span class="help-block">{{ 'msg.HelpTimeFormat'|trans|ucfirst }}</span>
           </div>
           <div class="form-group">
-            <label for="dateFormatShort" class="control-label">{{ 'lbl.ShortDateFormat'|trans|capitalize }}</label>
-            {% form_field_error date_format_short %} {% form_field date_format_short %}
-            <span class="help-block">{{ 'msg.HelpDateFormatShort'|trans|capitalize }}</span>
+            <label for="dateFormatShort" class="control-label">{{ 'lbl.ShortDateFormat'|trans|ucfirst }}</label>
+            {% form_field date_format_short %} {% form_field_error date_format_short %}
+            <span class="help-block">{{ 'msg.HelpDateFormatShort'|trans|ucfirst }}</span>
           </div>
           <div class="form-group last">
-            <label for="dateFormatLong" class="control-label">{{ 'lbl.LongDateFormat'|trans|capitalize }}</label>
-            {% form_field_error date_format_long %} {% form_field date_format_long %}
-            <span class="help-block">{{ 'msg.HelpDateFormatLong'|trans|capitalize }}</span>
+            <label for="dateFormatLong" class="control-label">{{ 'lbl.LongDateFormat'|trans|ucfirst }}</label>
+            {% form_field date_format_long %} {% form_field_error date_format_long %}
+            <span class="help-block">{{ 'msg.HelpDateFormatLong'|trans|ucfirst }}</span>
           </div>
         </div>
       </div>
@@ -124,13 +124,13 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Numbers'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.Numbers'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <div class="form-group last">
-            <label for="numberFormat" class="control-label">{{ 'lbl.NumberFormat'|trans|capitalize }}</label>
-            {% form_field_error number_format %} {% form_field number_format %}
-            <span class="help-block">{{ 'msg.HelpNumberFormat'|trans|capitalize }}</span>
+            <label for="numberFormat" class="control-label">{{ 'lbl.NumberFormat'|trans|ucfirst }}</label>
+            {% form_field number_format %} {% form_field_error number_format %}
+            <span class="help-block">{{ 'msg.HelpNumberFormat'|trans|ucfirst }}</span>
           </div>
         </div>
       </div>
@@ -140,39 +140,39 @@
     <div class="col-md-12">
       <div id="settingsApiKeys" class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.APIKeys'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.APIKeys'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <p>{{ msg.HelpAPIKeys }}</p>
           <table class="table table-striped">
             <thead>
               <tr>
-                <th class="title" style="width: 20%;"><span>{{ 'lbl.Name'|trans|capitalize }}</span></th>
-                <th style="width: 40%;"><span>{{ 'lbl.APIKey'|trans|capitalize }}</span></th>
-                <th style="width: 60%;"><span>{{ 'lbl.APIURL'|trans|capitalize }}</span></th>
+                <th class="title" style="width: 20%;"><span>{{ 'lbl.Name'|trans|ucfirst }}</span></th>
+                <th style="width: 40%;"><span>{{ 'lbl.APIKey'|trans|ucfirst }}</span></th>
+                <th style="width: 60%;"><span>{{ 'lbl.APIURL'|trans|ucfirst }}</span></th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th><label for="forkApiPublicKey" class="control-label">Fork public key</label>
                 </td>
-                <td>{% form_field_error fork_api_public_key %} {% form_field fork_api_public_key %}</td>
+                <td>{% form_field fork_api_public_key %} {% form_field_error fork_api_public_key %}</td>
                 <td>&nbsp;</td>
               </tr>
               <tr>
                 <th><label for="forkApiPrivateKey" class="control-label">Fork private key</label>
                 </td>
-                <td>{% form_field_error fork_api_private_key %} {% form_field fork_api_private_key %}</td>
+                <td>{% form_field fork_api_private_key %} {% form_field_error fork_api_private_key %}</td>
                 <td>&nbsp;</td>
               </tr>
               {% if needsGoogleMaps %}
                 <tr>
                   <th>
                     <label for="googleMapsKey" class="control-label">
-                      Google maps key<abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+                      Google maps key<abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                     </label>
                   </td>
-                  <td>{% form_field_error google_maps_key %} {% form_field google_maps_key %}</td>
+                  <td>{% form_field google_maps_key %} {% form_field_error google_maps_key %}</td>
                   <td>
                     <a href="http://code.google.com/apis/maps/signup.html">http://code.google.com/apis/maps/signup.html</a>
                   </td>
@@ -182,7 +182,7 @@
                 <tr>
                   <th><label for="akismetKey" class="control-label">Akismet key</label>
                   </td>
-                  <td>{% form_field_error akismet_key %} {% form_field akismet_key %}</td>
+                  <td>{% form_field akismet_key %} {% form_field_error akismet_key %}</td>
                   <td><a href="http://akismet.com/personal">http://akismet.com/personal</a></td>
                 </tr>
               {% endif %}
@@ -196,26 +196,26 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.CkFinder'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.CkFinder'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="ckfinderLicenseName" class="control-label">{{ 'lbl.LicenseName'|trans|capitalize }}</label>
-            {% form_field_error ckfinder_license_name %} {% form_field ckfinder_license_name %}
+            <label for="ckfinderLicenseName" class="control-label">{{ 'lbl.LicenseName'|trans|ucfirst }}</label>
+            {% form_field ckfinder_license_name %} {% form_field_error ckfinder_license_name %}
           </div>
           <div class="form-group">
-            <label for="ckfinderLicenseKey" class="control-label">{{ 'lbl.LicenseKey'|trans|capitalize }}</label>
-            {% form_field_error ckfinder_license_key %} {% form_field ckfinder_license_key %}
+            <label for="ckfinderLicenseKey" class="control-label">{{ 'lbl.LicenseKey'|trans|ucfirst }}</label>
+            {% form_field ckfinder_license_key %} {% form_field_error ckfinder_license_key %}
           </div>
           <div class="form-group">
-            <label for="ckfinderImageMaxWidth" class="control-label">{{ 'lbl.MaximumWidth'|trans|capitalize }}</label>
-            {% form_field_error ckfinder_image_max_width %} {% form_field ckfinder_image_max_width %}
-            <span class="help-block">{{ 'msg.HelpCkfinderMaximumWidth'|trans|capitalize }}</span>
+            <label for="ckfinderImageMaxWidth" class="control-label">{{ 'lbl.MaximumWidth'|trans|ucfirst }}</label>
+            {% form_field ckfinder_image_max_width %} {% form_field_error ckfinder_image_max_width %}
+            <span class="help-block">{{ 'msg.HelpCkfinderMaximumWidth'|trans|ucfirst }}</span>
           </div>
           <div class="form-group last">
-            <label for="ckfinderImageMaxHeight" class="control-label">{{ 'lbl.MaximumHeight'|trans|capitalize }}</label>
-            {% form_field_error ckfinder_image_max_height %} {% form_field ckfinder_image_max_height %}
-            <span class="help-block">{{ 'msg.HelpCkfinderMaximumHeight'|trans|capitalize }}</span>
+            <label for="ckfinderImageMaxHeight" class="control-label">{{ 'lbl.MaximumHeight'|trans|ucfirst }}</label>
+            {% form_field ckfinder_image_max_height %} {% form_field_error ckfinder_image_max_height %}
+            <span class="help-block">{{ 'msg.HelpCkfinderMaximumHeight'|trans|ucfirst }}</span>
           </div>
         </div>
       </div>
@@ -225,23 +225,23 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Facebook'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.Facebook'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="addValue-facebookAdminIds" class="control-label">{{ 'lbl.AdminIds'|trans|capitalize }}</label>
-            {% form_field_error facebook_admin_ids %} {% form_field facebook_admin_ids %}
-            <span class="help-block">{{ 'msg.HelpFacebookAdminIds'|trans|capitalize }}</span>
+            <label for="addValue-facebookAdminIds" class="control-label">{{ 'lbl.AdminIds'|trans|ucfirst }}</label>
+            {% form_field facebook_admin_ids %} {% form_field_error facebook_admin_ids %}
+            <span class="help-block">{{ 'msg.HelpFacebookAdminIds'|trans|ucfirst }}</span>
           </div>
           <div class="form-group">
-            <label for="facebookApplicationId" class="control-label">{{ 'lbl.ApplicationId'|trans|capitalize }}</label>
-            {% form_field_error facebook_application_id %} {% form_field facebook_application_id %}
-            <span class="help-block">{{ 'msg.HelpFacebookApplicationId'|trans|capitalize }}</span>
+            <label for="facebookApplicationId" class="control-label">{{ 'lbl.ApplicationId'|trans|ucfirst }}</label>
+            {% form_field facebook_application_id %} {% form_field_error facebook_application_id %}
+            <span class="help-block">{{ 'msg.HelpFacebookApplicationId'|trans|ucfirst }}</span>
           </div>
           <div class="form-group last">
-            <label for="facebookApplicationSecret" class="control-label">{{ 'lbl.ApplicationSecret'|trans|capitalize }}</label>
-            {% form_field_error facebook_application_secret %} {% form_field facebook_application_secret %}
-            <span class="help-block">{{ 'msg.HelpFacebookApplicationSecret'|trans|capitalize }}</span>
+            <label for="facebookApplicationSecret" class="control-label">{{ 'lbl.ApplicationSecret'|trans|ucfirst }}</label>
+            {% form_field facebook_application_secret %} {% form_field_error facebook_application_secret %}
+            <span class="help-block">{{ 'msg.HelpFacebookApplicationSecret'|trans|ucfirst }}</span>
           </div>
         </div>
       </div>
@@ -251,11 +251,11 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Twitter'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.Twitter'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <div class="form-group last">
-            <label for="twitterSiteName" class="control-label">{{ 'lbl.TwitterSiteName'|trans|capitalize }}</label>
+            <label for="twitterSiteName" class="control-label">{{ 'lbl.TwitterSiteName'|trans|ucfirst }}</label>
             <div class="input-group">
               <div class="input-group-addon">@</div>
               {% form_field twitter_site_name %}
@@ -270,14 +270,14 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Cookies'|trans|capitalize }}</h3>
+          <h3 class="panel-title">{{ 'lbl.Cookies'|trans|ucfirst }}</h3>
         </div>
         <div class="panel-body">
           <div class="form-group last">
             <p>{{ 'msg.HelpCookies'|trans }}</p>
             <ul class="list-unstyled">
               <li class="checkbox">
-                <label for="showCookieBar" class="control-label">{% form_field show_cookie_bar %} {{ 'msg.ShowCookieBar'|trans|capitalize }}</label>
+                <label for="showCookieBar" class="control-label">{% form_field show_cookie_bar %} {{ 'msg.ShowCookieBar'|trans|ucfirst }}</label>
               </li>
             </ul>
           </div>
@@ -291,7 +291,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="save" type="submit" name="save" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|capitalize }}
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>

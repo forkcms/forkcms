@@ -1,17 +1,17 @@
 <div id="widgetBlogComments" class="panel panel-default">
   <div class="panel-heading">
     <h2 class="panel-title">
-      <a href="{{ geturl('comments','blog' ) }}">{{ 'lbl.Blog'|trans|capitalize }}: {{ 'lbl.LatestComments'|trans|capitalize }}</a>
+      <a href="{{ geturl('comments','blog') }}">{{ 'lbl.Blog'|trans|ucfirst }}: {{ 'lbl.LatestComments'|trans|ucfirst }}</a>
     </h2>
   </div>
   <div class="panel-body">
     {% if blogNumCommentsToModerate %}
       <div class="panel-body">
         <div class="pull-left">
-          {{ 'msg.CommentsToModerate'|trans|sprintf(blogNumCommentsToModerate ) }}
+          {{ 'msg.CommentsToModerate'|trans|format(blogNumCommentsToModerate)|raw }}
         </div>
         <div class="pull-right">
-          <a href="{{ geturl('comments','blog' ) }}#tabModeration"><span>{{ 'lbl.Moderate'|trans|capitalize }}</span></a>
+          <a href="{{ geturl('comments','blog') }}#tabModeration"><span>{{ 'lbl.Moderate'|trans|ucfirst }}</span></a>
         </div>
       </div>
     {% endif %}
@@ -34,6 +34,6 @@
     {% endif %}
   </div>
   <div class="panel-footer">
-    <a href="{{ geturl('index','faq' ) }}"><span>{{ 'lbl.AllQuestions'|trans|capitalize }}</span></a>
+    <a href="{{ geturl('index','faq') }}"><span>{{ 'lbl.AllQuestions'|trans|ucfirst }}</span></a>
   </div>
 </div>

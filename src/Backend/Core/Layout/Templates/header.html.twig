@@ -8,21 +8,21 @@
     </div>
     <div class="site-text">
       <p class="site-title">{{ SITE_TITLE }}
-        <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}" href="{{ SITE_URL }}{{ prefixURL }}" target="_blank">{{ 'lbl.VisitWebsite'|trans|capitalize }}</a>
+        <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}" href="{{ SITE_URL }}{{ prefixURL }}" target="_blank">{{ 'lbl.VisitWebsite'|trans|ucfirst }}</a>
       </p>
       {% if SITE_MULTILANGUAGE %}
         <ul class="nav navbar-nav navbar-languages">
           {% if workingLanguages %}
-            <label class="working-language hidden-xs" for="workingLanguages">{{ 'msg.NowEditing'|trans|capitalize }}</label>
+            <label class="working-language hidden-xs" for="workingLanguages">{{ 'msg.NowEditing'|trans|ucfirst }}</label>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ LANGUAGE|uppercase }}">
-                <span class="dropdown-text">{{ ('lbl.'~LANGUAGE|uppercase)|trans|capitalize }}</span>
+                <span class="dropdown-text">{{ ('lbl.'~LANGUAGE|uppercase)|trans|ucfirst }}</span>
                 <span class="dropdown-angle"><i class="fa fa-angle-right"></i></span>
               </a>
               <ul class="dropdown-menu" role="menu">
                 {% for workingLanguage in workingLanguages %}
                   <li{% if workingLanguage.selected %} class="active"{% endif %}>
-                    <a href="{{ geturl(null,null,null,workingLanguage.abbr) }}" title="{{ workingLanguage.label|capitalize }}">{{ ('lbl.'~workingLanguage.abbr|uppercase)|trans|capitalize }}</a>
+                    <a href="{{ geturl(null,null,null,workingLanguage.abbr) }}" title="{{ workingLanguage.label|ucfirst }}">{{ ('lbl.'~workingLanguage.abbr|uppercase)|trans|ucfirst }}</a>
                   </li>
                 {% endfor %}
               </ul>
@@ -41,9 +41,9 @@
       </a>
       <ul class="dropdown-menu pull-right" role="menu">
         {% if authenticatedUserEditUrl %}
-          <li><a href="{{ authenticatedUserEditUrl }}">{{ 'lbl.EditProfile'|trans|capitalize }}</a></li>
+          <li><a href="{{ authenticatedUserEditUrl }}">{{ 'lbl.EditProfile'|trans|ucfirst }}</a></li>
         {% endif %}
-        <li><a href="{{ geturl('logout','authentication') }}">{{ 'lbl.SignOut'|trans|capitalize }}</a></li>
+        <li><a href="{{ geturl('logout','authentication') }}">{{ 'lbl.SignOut'|trans|ucfirst }}</a></li>
       </ul>
     </li>
   </ul>
