@@ -63,6 +63,27 @@ class TemplateModifiers extends BaseTwigModifiers
     }
 
     /**
+     * Format a number as phone number
+     *    syntax: {$var|formatphone}
+     *
+     * @param float $string The number to format.
+     *
+     * @return string
+     */
+    public static function formatPhone($var)
+    {
+        $firstGroup = (strlen($var) == 10) ? 4 : 3;
+        $nextThree = substr($var, 0, $firstGroup);
+        $firstTwo = substr($var, 3, 2);
+        $secondTwo = substr($var, 5, 2);
+        $lastTwo = substr($var, 7, 2);
+
+        $var = $nextThree . ' ' . $firstTwo . ' ' . $secondTwo . ' ' . $lastTwo;
+
+        return $var;
+    }
+
+    /**
      * Get the navigation html
      *    syntax: {{ getnavigation($type, $parentId, $depth, $excludeIds-splitted-by-dash, $template) }}
      *
