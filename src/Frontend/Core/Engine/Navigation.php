@@ -501,7 +501,8 @@ class Navigation extends FrontendBaseObject
                         // direct link?
                         if ($extra['module'] == $module && $extra['action'] == $action) {
                             // if there is data check if all the requested data matches the extra data
-                            if ($data !== null && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                            if (isset($extra['data']) && $data !== null
+                                && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
                                 // It is the correct action but has the wrong data
                                 continue;
                             }
@@ -511,7 +512,8 @@ class Navigation extends FrontendBaseObject
 
                         if ($extra['module'] == $module && $extra['action'] == null) {
                             // if there is data check if all the requested data matches the extra data
-                            if ($data !== null && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                            if (isset($extra['data']) && $data !== null
+                                && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
                                 // It is the correct module but has the wrong data
                                 continue;
                             }
