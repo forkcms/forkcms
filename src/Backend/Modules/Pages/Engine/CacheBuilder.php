@@ -274,11 +274,24 @@ class CacheBuilder
     {
         if (empty($this->blocks)) {
             $this->blocks = (array) $this->database->getRecords(
-                'SELECT i.id, i.module, i.action
+                'SELECT i.id, i.module, i.action, i.data
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
                 array('block', 'N'),
                 'id'
+            );
+
+            $this->blocks = array_map(
+                function (array $block) {
+                    if ($block['data'] === null) {
+                        return $block;
+                    }
+
+                    $block['data'] = unserialize($block['data']);
+
+                    return $block;
+                },
+                $this->blocks
             );
         }
 
