@@ -67,6 +67,10 @@ swiftmailer:
     transport: "mail"
 
 services:
+    entity.create_schema:
+        class: Backend\Doctrine\Entity\CreateSchema
+        arguments:
+            - "@doctrine.orm.entity_manager"
     database:
         class: SpoonDatabase
         arguments:
