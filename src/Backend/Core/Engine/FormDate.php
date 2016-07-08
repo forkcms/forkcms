@@ -11,8 +11,6 @@ namespace Backend\Core\Engine;
 
 /**
  * This is our extended version of \SpoonFormDate
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FormDate extends \SpoonFormDate
 {

@@ -1,7 +1,5 @@
 /**
  * Interaction for the locale module
- *
- * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.translations =
 {

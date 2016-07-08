@@ -11,8 +11,6 @@ namespace Common\Core;
 
 /**
  * This class will initiate the application
- *
- * @author Ghazi Triki <ghazi.triki@inhanx.com>
  */
 abstract class Init extends \KernelLoader
 {

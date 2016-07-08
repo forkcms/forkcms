@@ -11,8 +11,6 @@ namespace Frontend\Core\Engine;
 
 /**
  * This class will take care of functionality pertaining themes.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Theme
 {
@@ -55,7 +53,7 @@ class Theme
 
         // check if the file exists
         if (!is_file(PATH_WWW . str_replace(PATH_WWW, '', $file))) {
-            throw new Exception('The template (' . $file . ') does not exists.');
+            throw new Exception('The template (' . $file . ') does not exist.');
         }
 
         // return template path

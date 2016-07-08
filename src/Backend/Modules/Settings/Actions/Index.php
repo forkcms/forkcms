@@ -19,9 +19,6 @@ use Backend\Modules\Settings\Engine\Model as BackendSettingsModel;
 
 /**
  * This is the index-action (default), it will display the setting-overview
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Index extends BackendBaseActionIndex
 {

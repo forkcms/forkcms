@@ -13,9 +13,6 @@ use Common\Uri as CommonUri;
 
 /**
  * FrontendRSSItem, this is our extended version of SpoonRSSItem
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class RssItem extends \SpoonFeedRSSItem
 {

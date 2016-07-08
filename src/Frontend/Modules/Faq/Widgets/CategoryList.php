@@ -14,8 +14,6 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
 /**
  * This is a widget with most read faq-questions
- *
- * @author Jonas De Keukelaere <jonas@sumocoders.be>
  */
 class CategoryList extends FrontendBaseWidget
 {

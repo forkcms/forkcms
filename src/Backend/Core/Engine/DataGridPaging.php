@@ -11,9 +11,6 @@ namespace Backend\Core\Engine;
 
 /**
  * This is our implementation of iSpoonDatagridPaging
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class DataGridPaging implements \iSpoonDatagridPaging
 {

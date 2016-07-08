@@ -14,8 +14,6 @@ use Backend\Core\Engine\DataGridDB;
 /**
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the index action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class ActionIndex extends Action
 {

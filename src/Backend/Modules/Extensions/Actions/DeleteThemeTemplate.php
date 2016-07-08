@@ -15,8 +15,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the delete-action, it will delete a template
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class DeleteThemeTemplate extends BackendBaseActionDelete
 {

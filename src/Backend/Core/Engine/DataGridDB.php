@@ -13,8 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * A datagrid with a DB-connection as source
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class DataGridDB extends DataGrid
 {

@@ -14,8 +14,6 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This edit-action will get the page info using Ajax
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class GetInfo extends BackendBaseAJAXAction
 {

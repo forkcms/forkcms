@@ -7,7 +7,7 @@
   <section id="faqOwnQuestionForm" class="mod">
     <div class="inner">
       <header class="hd">
-        <h3 id="{{ 'act.OwnQuestion'|trans }}">{{ 'msg.AskOwnQuestion'|trans|capitalize }}</h3>
+        <h3 id="{{ 'act.OwnQuestion'|trans }}">{{ 'msg.AskOwnQuestion'|trans|ucfirst }}</h3>
       </header>
       <div class="bd">
         {% if errorSpam %}
@@ -15,25 +15,27 @@
         {% if success %}
           <div class="message success"><p>{{ 'msg.OwnQuestionSuccess'|trans }}</p></div>{% endif %}
 
+        {% if form_own_question %}
         {% form own_question %}
         <p{% if txtNameError %} class="errorArea"{% endif %}>
-          <label for="name">{{ 'lbl.YourName'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          {% form_field_error Name %} {% form_field Name %}
+          <label for="name">{{ 'lbl.YourName'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          {% form_field name %} {% form_field_error name %}
         </p>
         <p{% if txtEmailError %} class="errorArea"{% endif %}>
-          <label for="email">{{ 'lbl.YourEmail'|trans|capitalize }}
+          <label for="email">{{ 'lbl.YourEmail'|trans|ucfirst }}
             <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          {% form_field_error Email %} {% form_field Email %}
+          {% form_field email %} {% form_field_error email %}
         </p>
         <p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
-          <label for="message">{{ 'lbl.YourQuestion'|trans|capitalize }}
+          <label for="message">{{ 'lbl.YourQuestion'|trans|ucfirst }}
             <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          {% form_field_error Message %} {% form_field Message %}
+          {% form_field message %} {% form_field_error message %}
         </p>
         <p>
-          <input class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Send'|trans|capitalize }}" />
+          <input class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Send'|trans|ucfirst }}" />
         </p>
         {% endform %}
+        {% endif %}
       </div>
     </div>
   </section>

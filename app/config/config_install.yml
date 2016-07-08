@@ -10,7 +10,8 @@ framework:
     csrf_protection: ~
     templating:
         engines: ['twig']
-    session:         ~
+    session:
+        handler_id: ~
 
 # Assetic Configuration
 assetic:

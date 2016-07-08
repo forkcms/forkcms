@@ -7,8 +7,6 @@ use Backend\Core\Engine\Model;
 
 /**
  * This is the reset-action. It will remove your coupling with analytics
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 final class Reset extends ActionDelete
 {

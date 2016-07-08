@@ -14,8 +14,6 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is a widget with the link to the archive
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Archive extends FrontendBaseWidget
 {

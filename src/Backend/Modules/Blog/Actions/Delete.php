@@ -16,10 +16,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This action will delete a blogpost
- *
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Delete extends BackendBaseActionDelete
 {

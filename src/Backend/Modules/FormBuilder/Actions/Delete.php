@@ -15,8 +15,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * This is the delete-action, it will delete an item.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Delete extends BackendBaseActionDelete
 {

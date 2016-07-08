@@ -15,10 +15,6 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
 /**
  * In this file we store all generic functions that we will be using to get and set profile information.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jan Moesen <jan.moesen@netlash.com>
  */
 class Profile
 {
@@ -140,7 +136,7 @@ class Profile
      */
     public function getSetting($name, $defaultValue = null)
     {
-        // if settings array does not exists then get it first
+        // if settings array does not exist then get it first
         if (empty($this->settings)) {
             $this->settings = $this->getSettings();
         }

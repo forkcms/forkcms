@@ -14,8 +14,6 @@ use Common\Core\Twig\Extensions\BaseTwigModifiers;
 
 /**
  * This is our class with custom modifiers.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class TemplateModifiers extends BaseTwigModifiers
 {
@@ -201,42 +199,6 @@ class TemplateModifiers extends BaseTwigModifiers
             // return
             return \SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
         }
-    }
-
-    /**
-     * Shows a v or x to indicate the boolean state (Y|N, j|n, true|false)
-     *
-     * @param string|bool $status
-     * @param bool        $reverse show the opposite of the status
-     *
-     * @return string
-     */
-    public static function showBool($status, $reverse = false)
-    {
-        $showTrue = '<strong style="color:green">&#10003;</strong>';
-        $showFalse = '<strong style="color:red">&#10008;</strong>';
-
-        if ($reverse) {
-            if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
-                return $showFalse;
-            }
-
-            if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
-                return $showTrue;
-            }
-
-            return $status;
-        }
-
-        if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
-            return $showTrue;
-        }
-
-        if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
-            return $showFalse;
-        }
-
-        return $status;
     }
 
     /**

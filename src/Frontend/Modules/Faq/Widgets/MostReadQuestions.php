@@ -14,8 +14,6 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
 /**
  * This is a widget with most read faq-questions
- *
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class MostReadQuestions extends FrontendBaseWidget
 {

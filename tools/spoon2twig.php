@@ -10,8 +10,6 @@
 /**
  * The Spoon2Twig Convert is a command line file converter
  * to rebuild your old templates to new twig compatible templates
- *
- * @author <thijs@wijs.be>
  */
 class spoon2twig
 {
@@ -467,7 +465,7 @@ class spoon2twig
         // filters
         $filedata = $this->pregReplaceSprintf('/\|date:(.*?)}/', '|spoon_date(%s) }', $filedata, 'comma');
         $filedata = $this->pregReplaceSprintf('/\|date:(.*?)}/', '|date(%s) }', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\|sprintf:(.*?)}/', '|sprintf(%s) }', $filedata);
+        $filedata = $this->pregReplaceSprintf('/\|sprintf:(.*?)}/', '|format(%s)|raw }', $filedata);
         $filedata = $this->pregReplaceSprintf('/\|usersetting:(.*?)}/', '|usersetting(%s) }', $filedata);
         $filedata = $this->pregReplaceSprintf('/\|geturlforblock:(.*?)}/', '|geturlforblock(%s) }', $filedata);
         $filedata = $this->pregReplaceSprintf('/\|getnavigation:(.*?)}/', '|getnavigation(%s)|raw }', $filedata, 'comma');

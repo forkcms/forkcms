@@ -15,8 +15,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This action is used to update one or more comments (status, delete, ...)
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class MassCommentAction extends BackendBaseAction
 {

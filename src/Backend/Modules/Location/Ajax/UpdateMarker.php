@@ -15,8 +15,6 @@ use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
  * This is an ajax handler
- *
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class UpdateMarker extends BackendBaseAJAXAction
 {

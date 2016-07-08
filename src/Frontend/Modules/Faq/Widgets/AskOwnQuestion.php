@@ -9,6 +9,7 @@ namespace Frontend\Modules\Faq\Widgets;
  * file that was distributed with this source code.
  */
 
+use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -17,8 +18,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This is a widget with the form to ask a question
- *
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class AskOwnQuestion extends FrontendBaseWidget
 {
@@ -120,9 +119,7 @@ class AskOwnQuestion extends FrontendBaseWidget
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $to = $this->get('fork.settings')->get('Core', 'mailer_to');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-                $message = \Common\Mailer\Message::newInstance(
-                        sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name'])
-                    )
+                $message = Message::newInstance(sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']))
                     ->setFrom(array($from['email'] => $from['name']))
                     ->setTo(array($to['email'] => $to['name']))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))

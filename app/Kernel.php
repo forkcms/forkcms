@@ -16,10 +16,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 /**
  * The Kernel provides a proper way to load an environment and DI container.
  * It also handles requests and responses.
- *
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Dave Lens <dave.lens@wijs.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 abstract class Kernel extends BaseKernel implements KernelInterface
 {

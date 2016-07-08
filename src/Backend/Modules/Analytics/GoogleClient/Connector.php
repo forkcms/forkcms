@@ -8,8 +8,6 @@ use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * The class that will do query's on the google analytics API
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 final class Connector
 {
@@ -244,7 +242,7 @@ final class Connector
 
         // make sure our column headers are the metric names, not just numbers
         $namedRows = array();
-        foreach ($visitGraphData['rows'] as $dataRow) {
+        foreach ((array) $visitGraphData['rows'] as $dataRow) {
             $namedRow = array();
             foreach ($dataRow as $key => $value) {
                 $headerName = $visitGraphData['columnHeaders'][$key]['name'];
@@ -283,7 +281,7 @@ final class Connector
 
         // make sure our column headers are the metric names, not just numbers
         $namedRows = array();
-        foreach ($sourceGraphData['rows'] as $dataRow) {
+        foreach ((array) $sourceGraphData['rows'] as $dataRow) {
             $namedRow = array();
             foreach ($dataRow as $key => $value) {
                 $headerName = $sourceGraphData['columnHeaders'][$key]['name'];
@@ -318,7 +316,7 @@ final class Connector
 
         // make sure our column headers are the metric names, not just numbers
         $namedRows = array();
-        foreach ($sourceGraphData['rows'] as $dataRow) {
+        foreach ((array) $sourceGraphData['rows'] as $dataRow) {
             $namedRow = array();
             foreach ($dataRow as $key => $value) {
                 $headerName = $sourceGraphData['columnHeaders'][$key]['name'];

@@ -15,8 +15,6 @@ use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
 /**
  * This is a widget with the tags
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class TagCloud extends FrontendBaseWidget
 {

@@ -13,10 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the locale module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class Installer extends ModuleInstaller
 {

@@ -8,8 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Builds the form to select languages to install
- *
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class LanguagesType extends AbstractType
 {

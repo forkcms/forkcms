@@ -10,8 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Builds the form to set up login information
- *
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class LoginType extends AbstractType
 {

@@ -16,8 +16,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This is a widget which creates a previous/next navigation for pages on the same level.
- *
- * @author Frederik Heyninck <frederik@figure8.be>
  */
 class PreviousNextNavigation extends FrontendBaseWidget
 {

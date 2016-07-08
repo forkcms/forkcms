@@ -18,8 +18,6 @@ use Backend\Core\Engine\Csv;
 
 /**
  * This is the add-action, it will display a form to add a new profile.
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Import extends BackendBaseActionAdd
 {

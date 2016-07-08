@@ -20,9 +20,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the classic fork mailmotor widget
- *
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Statistics extends BackendBaseWidget
 {

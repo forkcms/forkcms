@@ -10,7 +10,8 @@ framework:
     csrf_protection: ~
     templating:
         engines: ['twig']
-    session: ~
+    session:
+      handler_id: ~
 
 # Assetic Configuration
 assetic:
@@ -29,7 +30,7 @@ monolog:
         main:
             type:  stream
             path:  %site.path_www%/app/logs/%kernel.environment%.log
-            level: debug
+            level: error
         # swift:
         #     type:       swift_mailer
         #     from_email: %fork.debug_email%

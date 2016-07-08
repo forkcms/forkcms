@@ -1,0 +1,9 @@
+{% extends 'Core/Layout/Templates/Mails/Default.html.twig' %}
+
+{% block main %}
+  <h2>{{ 'msg.RegisterSubject'|trans }}</h2>
+  <hr /><br />
+  <p>{{ 'msg.RegisterSalutation'|trans }}</p>
+  <p>{{ 'msg.RegisterBody'|trans|format( SITE_URL, activationUrl)|raw }}</p>
+  <p>{{ 'msg.RegisterClosure'|trans|raw }}</p>
+{% endblock %}

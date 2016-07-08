@@ -14,10 +14,6 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
 /**
  * This is the index-action
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Index extends FrontendBaseBlock
 {

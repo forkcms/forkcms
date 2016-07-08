@@ -16,8 +16,6 @@ require_once __DIR__ . '/../../../app/BaseModel.php';
 
 /**
  * This class will initiate the frontend-application
- *
- * @author Ghazi Triki <ghazi.triki@inhanx.com>
  */
 class Model extends \BaseModel
 {
@@ -195,7 +193,7 @@ class Model extends \BaseModel
             $finder->name('source');
         }
 
-        foreach ($finder->directories()->in($path) as $directory) {
+        foreach ($finder->directories()->in($path)->depth('== 0') as $directory) {
             $chunks = explode('x', $directory->getBasename(), 2);
             if (count($chunks) != 2 && !$includeSource) {
                 continue;

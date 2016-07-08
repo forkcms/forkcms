@@ -16,8 +16,6 @@ use Backend\Core\Engine\Model as BackendModel;
 /**
  * This is the base-object for config-files. The module-specific config-files
  * can extend the functionality from this class
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Config extends Object
 {

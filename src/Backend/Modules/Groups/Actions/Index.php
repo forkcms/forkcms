@@ -18,8 +18,6 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the index-action (default), it will display the groups-overview
- *
- * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
 class Index extends BackendBaseActionIndex
 {

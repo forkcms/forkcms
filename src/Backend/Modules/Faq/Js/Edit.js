@@ -1,9 +1,5 @@
 /**
  * Interaction for the faq categories
- *
- * @author	Lester Lievens <lester.lievens@netlash.com>
- * @author	Annelies Van Extergem <annelies@netlash.com>
- * @author	Davy Van Vooren <davy.vanvooren@netlash.com>
  */
 jsBackend.faq.edit =
 {

@@ -14,8 +14,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * Re-sequence the fields via ajax.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Sequence extends BackendBaseAJAXAction
 {

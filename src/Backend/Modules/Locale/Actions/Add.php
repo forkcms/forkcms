@@ -19,17 +19,13 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the add action, it will display a form to add an item to the locale.
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Add extends BackendBaseActionAdd
 {
     /**
      * Filter variables
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 
