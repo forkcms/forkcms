@@ -11,7 +11,7 @@ namespace Backend\Modules\ContentBlocks\Installer;
 
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
 
 /**
  * Installer for the content blocks module
@@ -33,22 +33,22 @@ class Installer extends ModuleInstaller
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         // general settings
-        $this->setSetting('ContentBlocks', 'max_num_revisions', 20);
+        $this->setSetting($this->getModule(), 'max_num_revisions', 20);
 
         // module rights
-        $this->setModuleRights(1, 'ContentBlocks');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'ContentBlocks', 'Add');
-        $this->setActionRights(1, 'ContentBlocks', 'Delete');
-        $this->setActionRights(1, 'ContentBlocks', 'Edit');
-        $this->setActionRights(1, 'ContentBlocks', 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Index');
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation(
             $navigationModulesId,
-            'ContentBlocks',
+            $this->getModule(),
             'content_blocks/index',
             array('content_blocks/add', 'content_blocks/edit')
         );
