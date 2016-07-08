@@ -9,6 +9,7 @@ namespace Backend\Core\Language;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model;
 use Common\Cookie as CommonCookie;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 

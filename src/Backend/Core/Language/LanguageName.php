@@ -30,6 +30,14 @@ final class LanguageName
     }
 
     /**
+     * @return self
+     */
+    public static function workingLanguage()
+    {
+        return new self(Language::getWorkingLanguage());
+    }
+
+    /**
      * @param string $language
      *
      * @throws InvalidArgumentException
