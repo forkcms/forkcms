@@ -9,7 +9,9 @@ namespace Backend\Modules\ContentBlocks\Installer;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 
 /**
  * Installer for the content blocks module
@@ -21,8 +23,8 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        // add the schema of the entity to the database
+        Model::get('entity.create_schema')->forEntityClass(ContentBlock::class);
 
         // add 'content_blocks' as a module
         $this->addModule('ContentBlocks');
@@ -44,6 +46,11 @@ class Installer extends ModuleInstaller
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $this->setNavigation($navigationModulesId, 'ContentBlocks', 'content_blocks/index', array('content_blocks/add', 'content_blocks/edit'));
+        $this->setNavigation(
+            $navigationModulesId,
+            'ContentBlocks',
+            'content_blocks/index',
+            array('content_blocks/add', 'content_blocks/edit')
+        );
     }
 }
