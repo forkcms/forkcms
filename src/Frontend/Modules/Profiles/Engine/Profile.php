@@ -136,7 +136,7 @@ class Profile
      */
     public function getSetting($name, $defaultValue = null)
     {
-        // if settings array does not exists then get it first
+        // if settings array does not exist then get it first
         if (empty($this->settings)) {
             $this->settings = $this->getSettings();
         }
