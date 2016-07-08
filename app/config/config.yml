@@ -29,6 +29,8 @@ doctrine:
     mapping_types:
       # Remove when we don't have legacy tables anymore
       enum: string
+    types:
+      enum_bool: Common\Doctrine\Type\EnumBoolType
 
   orm:
     auto_generate_proxy_classes: "%kernel.debug%"
