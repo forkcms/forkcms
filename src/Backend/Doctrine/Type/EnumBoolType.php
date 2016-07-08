@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Doctrine\Type;
+namespace Backend\Doctrine\Type;
 
 use Backend\Modules\ContentBlocks\ValueObject\Status;
 use Doctrine\DBAL\Types\Type;
