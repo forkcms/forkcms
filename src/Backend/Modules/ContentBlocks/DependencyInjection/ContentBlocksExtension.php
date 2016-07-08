@@ -20,7 +20,6 @@ class ContentBlocksExtension extends Extension implements PrependExtensionInterf
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        // register the repository
     }
 
     /**

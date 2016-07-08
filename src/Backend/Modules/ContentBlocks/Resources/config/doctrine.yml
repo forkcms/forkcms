@@ -1,4 +1,12 @@
 doctrine:
     dbal:
         types:
-            content_blocks_status: Backend\Modules\ContentBlocks\Type\StatusType
+            content_blocks_status: Backend\Modules\ContentBlocks\ContentBlock\StatusType
+    orm:
+        mappings:
+            content_block:
+                type: annotation
+                is_bundle: false
+                dir: %kernel.root_dir%/../src/Backend/Modules/ContentBlocks/ContentBlock
+                alias: ContentBlock
+                prefix: Backend\Modules\ContentBlocks\ContentBlock

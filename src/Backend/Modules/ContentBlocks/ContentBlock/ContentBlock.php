@@ -1,8 +1,7 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Entity;
+namespace Backend\Modules\ContentBlocks\ContentBlock;
 
-use Backend\Modules\ContentBlocks\ValueObject\Status;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
