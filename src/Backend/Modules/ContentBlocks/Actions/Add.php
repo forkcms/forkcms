@@ -15,6 +15,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -24,7 +25,7 @@ class Add extends BackendBaseActionAdd
     /**
      * The available templates
      *
-     * @var	array
+     * @var array
      */
     private $templates = array();
 

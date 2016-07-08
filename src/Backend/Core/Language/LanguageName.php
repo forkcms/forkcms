@@ -46,7 +46,7 @@ final class LanguageName
      */
     private function setLanguage($language)
     {
-        if (!in_array($language, Language::getWorkingLanguages())) {
+        if (!array_key_exists($language, Language::getWorkingLanguages())) {
             throw new InvalidArgumentException('Invalid language');
         }
 

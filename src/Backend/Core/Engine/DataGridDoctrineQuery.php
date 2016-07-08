@@ -27,10 +27,41 @@ class DataGridDoctrineQuery extends DataGrid
         // create a new source-object
         $source = new SpoonDatagridSourceDB(
             BackendModel::get('database'),
-            $query->getSQL(),
-            isNull($resultsQuery) ? null : $resultsQuery->getSQL()
+            [
+                $this->getQueryString($query),
+                $this->getQueryParameters($query),
+            ],
+            is_null($resultsQuery) ? null : [
+                $this->getQueryString($resultsQuery),
+                $this->getQueryParameters($resultsQuery),
+            ]
         );
 
         parent::__construct($source);
+    }
+
+    /**
+     * @param Query $query
+     *
+     * @return array
+     */
+    private function getQueryParameters(Query $query)
+    {
+        return array_map(
+            function (Query\Parameter $parameter) {
+                return (string) $parameter->getValue();
+            },
+            $query->getParameters()->toArray()
+        );
+    }
+
+    /**
+     * @param Query $query
+     *
+     * @return string
+     */
+    private function getQueryString(Query $query)
+    {
+        return preg_replace('#(AS\s)(.+?)_\d+(,|\sFROM)#', '$1$2$3', $query->getSQL());
     }
 }

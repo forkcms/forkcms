@@ -10,11 +10,13 @@ namespace Backend\Modules\ContentBlocks\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDoctrineQuery;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Core\Language\LanguageName;
+use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository;
+use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
 
 /**
  * This is the index-action (default), it will display the overview
@@ -37,11 +39,12 @@ class Index extends BackendBaseActionIndex
      */
     private function loadDataGrid()
     {
-        $this->dataGrid = new BackendDataGridDB(
-            BackendContentBlocksModel::QRY_BROWSE,
-            array('active', BL::getWorkingLanguage())
+        /** @var ContentBlockRepository $contentBlockRepository */
+        $contentBlockRepository = $this->get('doctrine.orm.entity_manager')->getRepository(ContentBlock::class);
+        $this->dataGrid = new DataGridDoctrineQuery(
+            $contentBlockRepository->getDataGridQuery(LanguageName::workingLanguage())
         );
-        $this->dataGrid->setSortingColumns(array('title'));
+        $this->dataGrid->setSortingColumns(['title']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
