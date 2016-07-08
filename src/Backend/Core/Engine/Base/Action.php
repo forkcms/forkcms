@@ -12,7 +12,7 @@ namespace Backend\Core\Engine\Base;
 use Backend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Header;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Url;
 

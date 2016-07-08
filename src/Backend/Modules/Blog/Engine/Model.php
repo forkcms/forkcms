@@ -12,7 +12,7 @@ namespace Backend\Modules\Blog\Engine;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**

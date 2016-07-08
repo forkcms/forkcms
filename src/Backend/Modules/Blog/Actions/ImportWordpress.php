@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Form;
 use Backend\Modules\Blog\Engine\Model;
 

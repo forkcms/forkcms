@@ -11,7 +11,7 @@ namespace Backend\Core\Engine;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use MatthiasMullie\Minify;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend

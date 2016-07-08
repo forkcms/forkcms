@@ -12,7 +12,7 @@ namespace Backend\Modules\Profiles\Engine;
 use Common\Mailer\Message;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Exception as BackendException;
 

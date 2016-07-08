@@ -9,7 +9,7 @@ namespace Backend\Modules\Location\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\Intl\Intl as Intl;
 

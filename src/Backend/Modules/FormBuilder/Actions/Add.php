@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Frontend\Core\Engine\Language as FL;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 

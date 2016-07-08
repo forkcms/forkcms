@@ -11,7 +11,7 @@ namespace Backend\Modules\ContentBlocks\Engine;
 
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**

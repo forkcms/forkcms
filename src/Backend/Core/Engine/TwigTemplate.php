@@ -2,7 +2,7 @@
 
 namespace Backend\Core\Engine;
 
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Frontend\Core\Engine\FormExtension;
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;

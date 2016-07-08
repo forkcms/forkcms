@@ -10,7 +10,7 @@ namespace Backend\Modules\Pages\Engine;
  */
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;

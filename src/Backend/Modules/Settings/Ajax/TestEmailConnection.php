@@ -10,7 +10,7 @@ namespace Backend\Modules\Settings\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 
 /**
  * This test-email-action will test the mail-connection
