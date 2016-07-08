@@ -25,7 +25,7 @@ final class Status
     /**
      * @return array
      */
-    private function getPossibleStatuses()
+    public static function getPossibleStatuses()
     {
         return [
             self::STATUS_ARCHIVED,
@@ -52,7 +52,7 @@ final class Status
      */
     private function setStatus($status)
     {
-        if (!in_array($status, $this->getPossibleStatuses())) {
+        if (!in_array($status, self::getPossibleStatuses())) {
             throw new InvalidArgumentException('Invalid status');
         }
 

@@ -1,0 +1,4 @@
+doctrine:
+    dbal:
+        types:
+            content_blocks_status: Backend\Modules\ContentBlocks\Type\StatusType
