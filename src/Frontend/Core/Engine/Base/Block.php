@@ -273,8 +273,12 @@ class Block extends Object
 
     /**
      * Parse pagination
+     *
+     * @param string $query_parameter
+     *
+     * @throws Exception
      */
-    protected function parsePagination()
+    protected function parsePagination($query_parameter = 'page')
     {
         $pagination = null;
         $showFirstPages = false;
@@ -364,9 +368,9 @@ class Block extends Object
         if ($this->pagination['requested_page'] > 1) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
+                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
+                $URL = $this->pagination['url'] . '&amp;' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
             }
 
             // set
@@ -392,9 +396,9 @@ class Block extends Object
             for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?page=' . $i;
+                    $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                    $URL = $this->pagination['url'] . '&amp;' . $query_parameter . '=' . $i;
                 }
 
                 // add
@@ -409,9 +413,9 @@ class Block extends Object
 
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . $i;
+                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                $URL = $this->pagination['url'] . '&amp;' . $query_parameter . '=' . $i;
             }
 
             // add
@@ -428,9 +432,9 @@ class Block extends Object
             for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?page=' . $i;
+                    $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                    $URL = $this->pagination['url'] . '&amp;' . $query_parameter . '=' . $i;
                 }
 
                 // add
@@ -442,9 +446,9 @@ class Block extends Object
         if ($this->pagination['requested_page'] < $this->pagination['num_pages']) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
+                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
+                $URL = $this->pagination['url'] . '&amp;' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
             }
 
             // set
