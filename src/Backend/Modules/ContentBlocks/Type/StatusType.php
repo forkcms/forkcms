@@ -18,10 +18,7 @@ class StatusType extends Type
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        return 'ENUM("' . implode(
-            '","',
-            Status::getPossibleStatuses()
-        ) . '") COMMENT "(DC2Type:' . self::CONTENT_BLOCKS_STATUS . ')"';
+        return 'ENUM("' . implode('","', Status::getPossibleStatuses()) . '")';
     }
 
     /**

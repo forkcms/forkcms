@@ -74,14 +74,14 @@ class ContentBlock
     /**
      * @var bool
      *
-     * @ORM\Column(type="enum_bool", name="hidden")
+     * @ORM\Column(type="enum_bool", name="hidden", options={"default" = "N"})
      */
     private $isHidden;
 
     /**
      * @var Status
      *
-     * @ORM\Column(type="content_blocks_status")
+     * @ORM\Column(type="content_blocks_status", options={"default" = "active"})
      */
     private $status;
 
