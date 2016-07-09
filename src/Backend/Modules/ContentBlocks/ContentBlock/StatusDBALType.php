@@ -5,7 +5,7 @@ namespace Backend\Modules\ContentBlocks\ContentBlock;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
-class StatusType extends Type
+class StatusDBALType extends Type
 {
     const CONTENT_BLOCKS_STATUS = 'content_blocks_status';
 
