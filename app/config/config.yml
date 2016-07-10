@@ -12,6 +12,7 @@ framework:
         engines: ['twig']
     session:
       handler_id: ~
+      storage_id: session.storage.php_bridge
 
 # Doctrine Configuration
 doctrine:
