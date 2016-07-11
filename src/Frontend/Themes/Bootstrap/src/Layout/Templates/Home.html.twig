@@ -6,8 +6,6 @@
     {% for main in positions.main %}
       {% if main.html %}
         {{ main.html|raw }}
-      {% elseif main.include_path %}
-        {% include main.include_path %}
       {% endif %}
     {% endfor %}
   </div>
