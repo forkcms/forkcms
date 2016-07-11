@@ -15,8 +15,6 @@
     {% for main in positions.main %}
       {% if main.html %}
         {{ main.html|raw }}
-      {% else %}
-        {% include main.include_path %}
       {% endif %}
     {% endfor %}
   </div>
