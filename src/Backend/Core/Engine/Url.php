@@ -12,8 +12,10 @@ namespace Backend\Core\Engine;
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 use Backend\Core\Engine\Model as BackendModel;
 use Common\Cookie as CommonCookie;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\Finder;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class will handle the incoming URL.
@@ -105,7 +107,7 @@ class Url extends Base\Object
         // get the language, this will always be in front
         $language = '';
         if (isset($chunks[1]) && $chunks[1] != '') {
-            $language = \SpoonFilter::getValue($chunks[1], array_keys(Language::getWorkingLanguages()), '');
+            $language = \SpoonFilter::getValue($chunks[1], array_keys(BackendLanguage::getWorkingLanguages()), '');
         }
 
         // no language provided?
@@ -176,7 +178,7 @@ class Url extends Base\Object
 
             $this->setModule($module);
             $this->setAction($action);
-            Language::setWorkingLanguage($language);
+            BackendLanguage::setWorkingLanguage($language);
         } else {
             $this->processRegularRequest($module, $action, $language);
         }
@@ -254,7 +256,7 @@ class Url extends Base\Object
             );
         } else {
             // set the working language, this is not the interface language
-            Language::setWorkingLanguage($language);
+            BackendLanguage::setWorkingLanguage($language);
 
             $this->setLocale();
             $this->setModule($module);
@@ -269,7 +271,7 @@ class Url extends Base\Object
     {
         $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
         $locale = $default;
-        $possibleLocale = array_keys(Language::getInterfaceLanguages());
+        $possibleLocale = array_keys(BackendLanguage::getInterfaceLanguages());
 
         // is the user authenticated
         if (Authentication::getUser()->isAuthenticated()) {
@@ -284,6 +286,6 @@ class Url extends Base\Object
             $locale = $default;
         }
 
-        Language::setLocale($locale);
+        BackendLanguage::setLocale($locale);
     }
 }

@@ -361,7 +361,7 @@ class Header extends Base\Object
         if (Authentication::getUser()->isAuthenticated()) {
             $interfaceLanguage = (string) Authentication::getUser()->getSetting('interface_language');
         } else {
-            $interfaceLanguage = Language::getInterfaceLanguage();
+            $interfaceLanguage = BL::getInterfaceLanguage();
         }
 
         // some default stuff

@@ -16,6 +16,7 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Core\Engine\Model as BackendModel;
 use Frontend\Core\Engine\Language as FrontendLanguage;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.
@@ -40,7 +41,7 @@ class Model extends \Common\Core\Model
 
         // check if debug-mode is active
         if (BackendModel::getContainer()->getParameter('kernel.debug')) {
-            $warnings[] = array('message' => Language::err('DebugModeIsActive'));
+            $warnings[] = array('message' => BackendLanguage::err('DebugModeIsActive'));
         }
 
         // check if this action is allowed
@@ -51,7 +52,7 @@ class Model extends \Common\Core\Model
             ) {
                 $warnings[] = array(
                     'message' => sprintf(
-                        Language::err('ForkAPIKeys'),
+                        BackendLanguage::err('ForkAPIKeys'),
                         self::createURLForAction('Index', 'Settings')
                     ),
                 );
@@ -90,7 +91,7 @@ class Model extends \Common\Core\Model
         // redefine variables
         $action = ($action !== null) ? (string) $action : null;
         $module = ($module !== null) ? (string) $module : null;
-        $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
         $queryString = '';
 
         // checking if we have an url, because in a cronjob we don't have one
@@ -458,7 +459,7 @@ class Model extends \Common\Core\Model
      */
     public static function getKeys($language = null)
     {
-        $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
         $cacheBuilder = BackendPagesModel::getCacheBuilder();
 
@@ -501,7 +502,7 @@ class Model extends \Common\Core\Model
 
         // loop and add into the return-array (with correct label)
         foreach ($modules as $module) {
-            $dropDown[$module] = \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($module)));
+            $dropDown[$module] = \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($module)));
         }
 
         return $dropDown;
@@ -516,7 +517,7 @@ class Model extends \Common\Core\Model
      */
     public static function getNavigation($language = null)
     {
-        $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
         $cacheBuilder = BackendPagesModel::getCacheBuilder();
 
@@ -587,7 +588,7 @@ class Model extends \Common\Core\Model
     public static function getURL($pageId, $language = null)
     {
         $pageId = (int) $pageId;
-        $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
         // init URL
         $URL = (self::getContainer()->getParameter('site.multilanguage')) ? '/' . $language . '/' : '/';
@@ -619,7 +620,7 @@ class Model extends \Common\Core\Model
     {
         $module = (string) $module;
         $action = ($action !== null) ? (string) $action : null;
-        $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
         $pageIdForURL = null;
         $navigation = self::getNavigation($language);
@@ -803,7 +804,7 @@ class Model extends \Common\Core\Model
      */
     public static function ping($pageOrFeedURL = null, $category = null)
     {
-        $siteTitle = self::get('fork.settings')->get('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE);
+        $siteTitle = self::get('fork.settings')->get('Core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE);
         $siteURL = SITE_URL;
         $pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
         $category = ($category !== null) ? (string) $category : null;

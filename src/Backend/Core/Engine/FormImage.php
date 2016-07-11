@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This is our extended version of \SpoonFormFile
@@ -75,8 +76,8 @@ class FormImage extends \SpoonFormImage
     {
         // do an image validation
         if ($this->isFilled()) {
-            $this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), Language::err('JPGGIFAndPNGOnly'));
-            $this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), Language::err('JPGGIFAndPNGOnly'));
+            $this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BackendLanguage::err('JPGGIFAndPNGOnly'));
+            $this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), BackendLanguage::err('JPGGIFAndPNGOnly'));
         }
 
         return $this->errors;
@@ -149,7 +150,7 @@ class FormImage extends \SpoonFormImage
         if (!$this->hideHelpTxt) {
             $output .= '<p class="help-block">' .
                         sprintf(
-                            Language::getMessage('HelpImageFieldWithMaxFileSize', 'core'),
+                            BackendLanguage::getMessage('HelpImageFieldWithMaxFileSize', 'core'),
                             $uploadMaxFilesize
                         ) . '</p>';
         }

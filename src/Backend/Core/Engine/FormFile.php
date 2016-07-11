@@ -9,6 +9,8 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Language\Language as BackendLanguage;
+
 /**
  * This is our extended version of \SpoonFormFile
  */
@@ -87,14 +89,14 @@ class FormFile extends \SpoonFormFile
             if (isset($this->attributes['extension'])) {
                 $output .= '<p class="help-block">' .
                            sprintf(
-                               Language::getMessage('HelpFileFieldWithMaxFileSize', 'core'),
+                               BackendLanguage::getMessage('HelpFileFieldWithMaxFileSize', 'core'),
                                $this->attributes['extension'],
                                $uploadMaxFilesize
                            ) . '</p>';
             } else {
                 $output .= '<p class="help-block">' .
                            sprintf(
-                               Language::getMessage('HelpMaxFileSize'),
+                               BackendLanguage::getMessage('HelpMaxFileSize'),
                                $uploadMaxFilesize
                            ) . '</p>';
             }

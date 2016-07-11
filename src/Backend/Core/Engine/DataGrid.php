@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This is our extended version of \SpoonDataGrid
@@ -81,7 +82,7 @@ class DataGrid extends \SpoonDataGrid
 
             // set default label
             $this->setHeaderLabels(
-                array($column => \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($column))))
+                array($column => \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($column))))
             );
         }
 
@@ -384,7 +385,7 @@ class DataGrid extends \SpoonDataGrid
 
                 // set title if there wasn't one provided
                 if ($title === null) {
-                    $title = \SpoonFilter::ucfirst(Language::lbl('Delete') . '?');
+                    $title = \SpoonFilter::ucfirst(BackendLanguage::lbl('Delete') . '?');
                 }
 
                 // grab current value
@@ -473,11 +474,11 @@ class DataGrid extends \SpoonDataGrid
         // build HTML
         $HTML =
             '<label for="' . $actionDropDown->getAttribute('id') . '">' .
-                \SpoonFilter::ucfirst(Language::lbl('WithSelected')) .
+                \SpoonFilter::ucfirst(BackendLanguage::lbl('WithSelected')) .
             '</label>' .
             $actionDropDown->parse() .
             '<button type="button" class="btn btn-default jsMassActionSubmit">' .
-            '   <span>' . \SpoonFilter::ucfirst(Language::lbl('Execute')) . '</span>' .
+            '   <span>' . \SpoonFilter::ucfirst(BackendLanguage::lbl('Execute')) . '</span>' .
             '</button>';
 
         // assign parsed html
@@ -567,10 +568,10 @@ class DataGrid extends \SpoonDataGrid
 
         // sorting labels
         $this->setSortingLabels(
-            Language::lbl('SortAscending'),
-            Language::lbl('SortedAscending'),
-            Language::lbl('SortDescending'),
-            Language::lbl('SortedDescending')
+            BackendLanguage::lbl('SortAscending'),
+            BackendLanguage::lbl('SortedAscending'),
+            BackendLanguage::lbl('SortDescending'),
+            BackendLanguage::lbl('SortedDescending')
         );
     }
 
@@ -578,7 +579,7 @@ class DataGrid extends \SpoonDataGrid
      * Set a tooltip
      *
      * @param string $column  The name of the column to set the tooltop for.
-     * @param string $message The key for the message (will be parsed through Language::msg).
+     * @param string $message The key for the message (will be parsed through BackendLanguage::msg).
      */
     public function setTooltip($column, $message)
     {
@@ -586,7 +587,7 @@ class DataGrid extends \SpoonDataGrid
         $instance = $this->getColumn($column);
 
         // build the value for the tooltip
-        $value = Language::msg($message);
+        $value = BackendLanguage::msg($message);
 
         // reset the label
         $instance->setLabel(

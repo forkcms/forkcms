@@ -116,7 +116,7 @@ class TwigTemplate extends BaseTwigTemplate
         }
 
         // we use some abbreviations and common terms, these should also be assigned
-        $this->assign('LANGUAGE', Language::getWorkingLanguage());
+        $this->assign('LANGUAGE', BL::getWorkingLanguage());
 
         // adding parameters
         $this->assign(
@@ -160,7 +160,7 @@ class TwigTemplate extends BaseTwigTemplate
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
-            Model::get('fork.settings')->get('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
     }
 
@@ -239,11 +239,11 @@ class TwigTemplate extends BaseTwigTemplate
     private function parseLabels()
     {
         // grab the current module
-        $currentModule = Language::getCurrentModule();
+        $currentModule = BL::getCurrentModule();
 
-        $errors = Language::getErrors();
-        $labels = Language::getLabels();
-        $messages = Language::getMessages();
+        $errors = BL::getErrors();
+        $labels = BL::getLabels();
+        $messages = BL::getMessages();
 
         // set the begin state
         $realErrors = $errors['Core'];
@@ -323,12 +323,12 @@ class TwigTemplate extends BaseTwigTemplate
         $localeToAssign = array();
 
         // get months
-        $monthsLong = \SpoonLocale::getMonths(Language::getInterfaceLanguage(), false);
-        $monthsShort = \SpoonLocale::getMonths(Language::getInterfaceLanguage(), true);
+        $monthsLong = \SpoonLocale::getMonths(BL::getInterfaceLanguage(), false);
+        $monthsShort = \SpoonLocale::getMonths(BL::getInterfaceLanguage(), true);
 
         // get days
-        $daysLong = \SpoonLocale::getWeekDays(Language::getInterfaceLanguage(), false, 'sunday');
-        $daysShort = \SpoonLocale::getWeekDays(Language::getInterfaceLanguage(), true, 'sunday');
+        $daysLong = \SpoonLocale::getWeekDays(BL::getInterfaceLanguage(), false, 'sunday');
+        $daysShort = \SpoonLocale::getWeekDays(BL::getInterfaceLanguage(), true, 'sunday');
 
         // build labels
         foreach ($monthsLong as $key => $value) {

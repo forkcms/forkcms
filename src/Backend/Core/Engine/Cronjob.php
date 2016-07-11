@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Base\Object;
 use Frontend\Core\Engine\Language as FrontendLanguage;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class will handle cronjob related stuff
@@ -210,7 +211,7 @@ class Cronjob extends Object implements \ApplicationInterface
     public function setLanguage($value)
     {
         // get the possible languages
-        $possibleLanguages = Language::getWorkingLanguages();
+        $possibleLanguages = BackendLanguage::getWorkingLanguages();
 
         // validate
         if (!in_array($value, array_keys($possibleLanguages))) {
@@ -221,10 +222,10 @@ class Cronjob extends Object implements \ApplicationInterface
         $this->language = $value;
 
         // set the locale (we need this for the labels)
-        Language::setLocale($this->language);
+        BackendLanguage::setLocale($this->language);
 
         // set working language
-        Language::setWorkingLanguage($this->language);
+        BackendLanguage::setWorkingLanguage($this->language);
     }
 
     /**
