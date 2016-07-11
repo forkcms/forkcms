@@ -234,7 +234,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
         try {
             // get HTML
-            $return = (string) Navigation::getNavigationHtml(
+            $return = (string) Navigation::getNavigationHTML(
                 $type,
                 $parentID,
                 $endDepth,
