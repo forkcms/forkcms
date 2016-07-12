@@ -53,14 +53,14 @@
                     <div class="form-group">
                       <label for="fromName" class="control-label">
                         {{ 'lbl.Name'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field from_name %} {% form_field_error from_name %}
                     </div>
                     <div class="form-group">
                       <label for="fromEmail" class="control-label">
                         {{ 'lbl.EmailAddress'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field from_email %} {% form_field_error from_email %}
                     </div>
@@ -80,7 +80,7 @@
                     <div class="form-group">
                       <label for="replyToEmail" class="control-label">
                         {{ 'lbl.EmailAddress'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field reply_to_email %} {% form_field_error reply_to_email %}
                     </div>
@@ -123,7 +123,7 @@
                       <div class="form-group">
                         <label for="pricePerEmail" class="control-label">
                           {{ 'lbl.PerSentMailing'|trans|ucfirst }}
-                          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                          {{ macro.required }}
                         </label>
                         <p class="help-block">{{ 'msg.HelpPrice'|trans }}</p>
                         <div class="form-inline">
@@ -136,7 +136,7 @@
                       <div class="form-group">
                         <label for="pricePerEmail" class="control-label">
                           {{ 'lbl.PerCampaign'|trans|ucfirst }}
-                          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                          {{ macro.required }}
                         </label>
                         <p class="help-block">{{ 'msg.HelpPrice'|trans }}</p>
                         <div class="form-inline">
@@ -171,7 +171,7 @@
                 <div class="form-group">
                   <label for="url" class="control-label">
                     {{ 'lbl.URL'|trans|uppercase }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                    {{ macro.required }}
                   </label>
                   <p class="help-block">{{ 'msg.HelpCMURL'|trans }}</p>
                   {% form_field url %} {% form_field_error url %}
@@ -179,14 +179,14 @@
                 <div class="form-group">
                   <label for="username" class="control-label">
                     {{ 'lbl.Username'|trans|ucfirst }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                    {{ macro.required }}
                   </label>
                   {% form_field username %} {% form_field_error username %}
                 </div>
                 <div class="form-group">
                   <label for="password" class="control-label">
                     {{ 'lbl.Password'|trans|ucfirst }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                    {{ macro.required }}
                   </label>
                   {% form_field password %} {% form_field_error password %}
                 </div>
@@ -237,7 +237,7 @@
                   <div class="form-group">
                     <label for="companyName" class="control-label">
                       {{ 'lbl.CompanyName'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     {% form_field company_name %} {% form_field_error company_name %}
                   </div>

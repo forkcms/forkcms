@@ -27,7 +27,7 @@
         <div class="panel-heading">
           <h3 class="panel-title">
             {{ 'lbl.WebsiteTitle'|trans|ucfirst }}
-            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+            {{ macro.required }}
           </h3>
         </div>
         <div class="panel-body">
@@ -169,7 +169,7 @@
                 <tr>
                   <th>
                     <label for="googleMapsKey" class="control-label">
-                      Google maps key<abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      Google maps key{{ macro.required }}
                     </label>
                   </td>
                   <td>{% form_field google_maps_key %} {% form_field_error google_maps_key %}</td>

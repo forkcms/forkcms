@@ -22,7 +22,7 @@
             <div class="form-group last">
               <label for="title" class="control-label">
                 {{ 'lbl.Title'|trans|ucfirst }}
-                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                {{ macro.required }}
               </label>
               {% form_field title %} {% form_field_error title %}
               {% if detailURL %}

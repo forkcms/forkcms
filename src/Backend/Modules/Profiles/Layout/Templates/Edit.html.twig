@@ -39,7 +39,7 @@
                     <div class="form-group">
                       <label for="displayName" class="control-label">
                         {{ 'lbl.DisplayName'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field display_name %} {% form_field_error display_name %}
                     </div>

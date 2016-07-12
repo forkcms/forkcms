@@ -44,14 +44,14 @@
             <div class="form-group">
               <label for="mailerFromName" class="control-label">
                 {{ 'lbl.Name'|trans|ucfirst }}
-                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                {{ macro.required }}
               </label>
               {% form_field mailer_from_name %} {% form_field_error mailer_from_name %}
             </div>
             <div class="form-group">
               <label for="mailerFromEmail" class="control-label">
                 {{ 'lbl.Email'|trans|ucfirst }}
-                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                {{ macro.required }}
               </label>
               {% form_field mailer_from_email %} {% form_field_error mailer_from_email %}
             </div>
@@ -64,14 +64,14 @@
             <div class="form-group">
               <label for="mailerToName" class="control-label">
                 {{ 'lbl.Name'|trans|ucfirst }}
-                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                {{ macro.required }}
               </label>
               {% form_field mailer_to_name %} {% form_field_error mailer_to_name %}
             </div>
             <div class="form-group">
               <label for="mailerToEmail" class="control-label">
                 {{ 'lbl.Email'|trans|ucfirst }}
-                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                {{ macro.required }}
               </label>
               {% form_field mailer_to_email %} {% form_field_error mailer_to_email %}
             </div>
@@ -83,14 +83,14 @@
             <div class="form-group">
               <label for="mailerReplyToName" class="control-label">
                 {{ 'lbl.Name'|trans|ucfirst }}
-                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                {{ macro.required }}
               </label>
               {% form_field mailer_reply_to_name %} {% form_field_error mailer_reply_to_name %}
             </div>
             <div class="form-group last">
               <label for="mailerReplyToEmail" class="control-label">
                 {{ 'lbl.Email'|trans|ucfirst }}
-                <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                {{ macro.required }}
               </label>
               {% form_field mailer_reply_to_email %} {% form_field_error mailer_reply_to_email %}
             </div>

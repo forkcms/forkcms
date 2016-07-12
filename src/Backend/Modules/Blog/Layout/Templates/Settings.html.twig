@@ -157,7 +157,7 @@
           <div class="form-group">
             <label for="rssTitle" class="control-label">
               {{ 'lbl.Title'|trans|ucfirst }}
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+              {{ macro.required }}
             </label>
             <p class="help-block">{{ 'msg.HelpRSSTitle'|trans|ucfirst }}</p>
             {% form_field rss_title %} {% form_field_error rss_title %}
