@@ -36,7 +36,9 @@ monolog:
         #     from_email: %fork.debug_email%
         #     to_email:   %fork.debug_email%
         #     subject:    %site.default_title% %fork.debug_message%
-        #     level:      critical
+        #     level:      error
+        #     formatter:  monolog.formatter.html
+        #     content_type: text/html
 
 swiftmailer:
     transport: "mail"
