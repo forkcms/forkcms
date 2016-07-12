@@ -17,7 +17,9 @@
         "spoon/library": "^2.3",
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
-        "league/flysystem": "~1.0"
+        "league/flysystem": "~1.0",
+        "mailmotor/mailchimp-bundle": "^1.5",
+        "mailmotor/mailmotor-bundle": "^1.7"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
