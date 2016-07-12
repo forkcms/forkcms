@@ -8,34 +8,6 @@ use PHPUnit_Framework_TestCase;
 
 class TemplateModifiersTest extends PHPUnit_Framework_TestCase
 {
-    public function test_format_currency()
-    {
-        $this->assertEquals(
-            '€&nbsp;1,23',
-            TemplateModifiers::formatCurrency(1.2324, 'EUR', 2)
-        );
-
-        $this->assertEquals(
-            '€&nbsp;1,23',
-            TemplateModifiers::formatCurrency(1.2324, 'EUR', null)
-        );
-
-        $this->assertEquals(
-            '€&nbsp;1',
-            TemplateModifiers::formatCurrency(1.2324, 'EUR', 0)
-        );
-
-        $this->assertEquals(
-            '€&nbsp;1,2324',
-            TemplateModifiers::formatCurrency(1.2324, 'EUR', 4)
-        );
-
-        $this->assertEquals(
-            'USD&nbsp;1,23',
-            TemplateModifiers::formatCurrency(1.2324, 'USD')
-        );
-    }
-
     public function test_format_float()
     {
         $this->assertEquals(
