@@ -37,7 +37,24 @@ class BaseTwigModifiers
             default:
         }
 
-        return $currency.'&nbsp;'.number_format((float) $string, $decimals, ',', '&nbsp;');
+        return $currency.'&nbsp;'.static::formatNumber($string, $decimals);
+    }
+
+    /**
+     * Fallback for if our parent functions don't implement this method
+     *
+     * @param string $number
+     * @param int $decimals
+     *
+     * @return string
+     */
+    public static function formatNumber($number, $decimals = null)
+    {
+        if ($decimals === null) {
+            $decimals = 2;
+        }
+
+        return number_format((float) $number, $decimals, ',', '&nbsp;');
     }
 
     /**
