@@ -11,7 +11,7 @@ How to make a new template:
 
 {% if widgetSubpages is not empty %}
   <div id="subpagesBlocks">
-    {% for subpage in widgetSubPages %}
+    {% for subpage in widgetSubpages %}
       <div class="subpagesBlock">
         <h3><a href="{{ subpage.full_url }}" title="{{ subpage.title }}">{{ subpage.title }}</a></h3>
         {{ subpage.description }}
