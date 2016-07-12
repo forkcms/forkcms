@@ -3,7 +3,6 @@
 # This script will resize a batch of files (be careful the original images will be altered)
 #
 # @version	1.0.0
-# @author	Tijs Verkoyen <tijs@sumocoders.be>
 
 # check if convert exists
 if ! which "convert" > /dev/null; then

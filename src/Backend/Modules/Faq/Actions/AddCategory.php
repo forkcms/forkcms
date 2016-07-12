@@ -18,11 +18,6 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This is the add-action, it will display a form to create a new category
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author SIESQO <info@siesqo.be>
  */
 class AddCategory extends BackendBaseActionAdd
 {

@@ -14,8 +14,6 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is a widget with recent comments on all blog-articles
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class RecentComments extends FrontendBaseWidget
 {

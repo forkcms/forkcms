@@ -13,8 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is our extended version of SpoonFileCSV
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Csv extends \SpoonFileCSV
 {
@@ -47,7 +45,7 @@ class Csv extends \SpoonFileCSV
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
         header('Content-type: application/csv; charset=' . $charset);
         header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Content-Length: ' . strlen($csv));
+        header('Content-Length: ' . mb_strlen($csv));
         header('Pragma: no-cache');
 
         // output the CSV

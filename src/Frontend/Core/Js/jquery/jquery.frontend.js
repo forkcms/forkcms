@@ -28,8 +28,6 @@
  * - default_image	the image that will be used by default.
  * - sequence		an array containing the names of the share-items in the wanted sequence.
  * - isDropdown		will the plugin be used as a drop-down-menu? If so we will hide it by default an show on click/hover.
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {

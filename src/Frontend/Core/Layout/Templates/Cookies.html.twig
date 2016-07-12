@@ -1,0 +1,7 @@
+{% if not cookieBarHide %}
+  <div id="cookieBar" class="fullWidthAlert alert">
+    {{ 'msg.CookiesWarning'|trans|raw }}
+    <a href="#" id="cookieBarAgree">{{ 'lbl.IAgree'|trans|ucfirst }}</a>
+    <a href="#" id="cookieBarDisagree">{{ 'lbl.IDisagree'|trans|ucfirst }}</a>
+  </div>
+{% endif %}

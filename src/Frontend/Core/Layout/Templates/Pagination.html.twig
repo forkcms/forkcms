@@ -1,0 +1,56 @@
+{% if pagination %}
+  {% if pagination.multiple_pages %}
+    <nav class="mod pagination">
+      <div class="inner">
+        <div class="bd">
+          <ul>
+            <li class="previousPage">
+              {% if pagination.show_previous %}
+              <a href="{{ pagination.previous_url }}" rel="prev nofollow" title="{{ 'lbl.PreviousPage'|trans|ucfirst }}">{% endif %}
+                {% if not pagination.show_previous %}<span>{% endif %}
+                  &lsaquo; {{ 'lbl.PreviousPage'|trans|ucfirst }}
+                  {% if not pagination.show_previous %}</span>{% endif %}
+                {% if pagination.show_previous %}</a>{% endif %}
+            </li>
+
+            {% if pagination.first %}
+              {% for pagination in pagination.first %}
+                <li>
+                <a href="{{ pagination.first.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.first.label }}">{{ pagination.first.label }}</a>
+                </li>{% endfor %}
+              <li class="ellipsis"><span>&hellip;</span></li>
+            {% endif %}
+
+            {% for pagination in pagination.pages %}
+              <li{% if pagination.pages.current %} class="currentPage"{% endif %}>
+                {% if not pagination.pages.current %}
+                <a href="{{ pagination.pages.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.pages.label }}">{% endif %}
+                  {% if pagination.pages.current %}<span>{% endif %}
+                    {{ pagination.pages.label }}
+                    {% if pagination.pages.current %}</span>{% endif %}
+                  {% if not pagination.pages.current %}</a>{% endif %}
+              </li>
+            {% endfor %}
+
+            {% if pagination.last %}
+              <li class="ellipsis"><span>&hellip;</span></li>
+              {% for pagination in pagination.last %}
+                <li>
+                <a href="{{ pagination.last.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.last.label }}">{{ pagination.last.label }}</a>
+                </li>{% endfor %}
+            {% endif %}
+
+            <li class="nextPage">
+              {% if pagination.show_next %}
+              <a href="{{ pagination.next_url }}" rel="next nofollow" title="{{ 'lbl.NextPage'|trans|ucfirst }}">{% endif %}
+                {% if not pagination.show_next %}<span>{% endif %}
+                  {{ 'lbl.NextPage'|trans|ucfirst }} &#8250;
+                  {% if not pagination.show_next %}</span>{% endif %}
+                {% if pagination.show_next %}</a>{% endif %}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  {% endif %}
+{% endif %}

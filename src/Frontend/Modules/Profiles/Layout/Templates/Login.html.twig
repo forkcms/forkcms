@@ -1,0 +1,47 @@
+{# Error #}
+{% if formError %}
+  <div class="message error">
+    {% if loginError %}
+      <p>{{ loginError|raw }}</p>
+    {% endif %}
+
+    {% if not loginError %}
+      <p>{{ 'err.FormError'|trans }}</p>
+    {% endif %}
+  </div>
+{% endif %}
+
+<section id="loginForm" class="mod">
+  <div class="inner">
+    <div class="bd">
+      {% form login %}
+      <fieldset>
+        <p{% if txtEmailError %} class="errorArea"{% endif %}>
+          <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+          </label>
+          {% form_field email %} {% form_field_error email %}
+        </p>
+        <p{% if txtPasswordError %} class="errorArea"{% endif %}>
+          <label for="password">{{ 'lbl.Password'|trans|ucfirst }}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+          </label>
+          {% form_field password %} {% form_field_error password %}
+        </p>
+        <p>
+          <label for="remember">{% form_field remember %} {{ 'lbl.RememberMe'|trans|ucfirst }}</label>
+          {% form_field_error remember %}
+        </p>
+        <p>
+          <input class="inputSubmit" type="submit" value="{{ 'lbl.Login'|trans|ucfirst }}" />
+        </p>
+      </fieldset>
+      {% endform %}
+    </div>
+    <footer class="ft">
+      <p>
+        <a href="{{ geturlforblock('Profiles', 'ForgotPassword') }}" title="{{ 'msg.ForgotPassword'|trans }}">{{ 'msg.ForgotPassword'|trans }}</a>
+      </p>
+    </footer>
+  </div>
+</section>

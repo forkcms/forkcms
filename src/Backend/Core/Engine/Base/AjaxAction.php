@@ -10,13 +10,9 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific AJAX action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class AjaxAction extends Object
 {

@@ -15,8 +15,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Footer extends FrontendBaseObject
 {
@@ -66,12 +64,13 @@ class Footer extends FrontendBaseObject
      * Builds the HTML needed for Facebook to be initialized
      *
      * @param  string $facebookAppId The application id used to interact with FB
+     *
      * @return string                HTML and JS needed to initialize FB JavaScript
      */
     protected function getFacebookHtml($facebookAppId)
     {
         // build correct locale
-        $locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
+        $locale = mb_strtolower(FRONTEND_LANGUAGE) . '_' . mb_strtoupper(FRONTEND_LANGUAGE);
 
         // reform some locale
         switch (FRONTEND_LANGUAGE) {
@@ -140,6 +139,7 @@ class Footer extends FrontendBaseObject
      * https://developers.google.com/webmasters/richsnippets/sitelinkssearch
      *
      * @param  string $searchUrl The url to the search page
+     *
      * @return string            The script needed for google
      */
     protected function getSiteLinksCode($searchUrl)

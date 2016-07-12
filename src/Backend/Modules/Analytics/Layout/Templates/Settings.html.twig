@@ -1,0 +1,133 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+
+{% endblock %}
+
+{% block content %}
+  {% if noAccounts %}
+    <div class="row fork-module-messages">
+      <div class="col-md-12">
+        <div class="alert alert-info" role="alert">
+          {{ 'msg.NoAccounts'|trans|format(email)|raw }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% form settings %}
+  {% if fileCertificate %}
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ 'lbl.Certificate'|trans|ucfirst }}
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <p class="help-block">
+                {{ 'msg.CertificateHelp'|trans|raw }}
+              </p>
+              {% form_field certificate %} {% form_field_error certificate %}
+              <label for="email" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
+              {% form_field email %} {% form_field_error email %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if ddmAccount %}
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ 'lbl.ChooseThisAccount'|trans|ucfirst }}
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              {% form_field account %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if ddmWebPropertyId %}
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ 'lbl.ChooseWebsiteProfile'|trans|ucfirst }}
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              {% form_field web_property_id %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if web_property_id %}
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ 'lbl.LinkedProfile'|trans|ucfirst }}
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <strong>{{ web_property_id }}</strong>{% if profile %}: ga:profile{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if ddmProfile %}
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ 'lbl.ChooseWebsiteProfile'|trans|ucfirst }}
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              {% form_field profile %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        {% if showAnalyticsReset and fileCertificate is not defined %}
+          <div class="btn-group" role="group">
+            <a href="{{ geturl('reset') }}">{{ 'msg.RemoveAccountLink'|trans|ucfirst }}</a>
+          </div>
+        {% endif %}
+        {% if not profile and (noAccounts == false or noAccounts is not defined) %}
+          <div class="btn-group pull-right" role="group">
+            <button id="save" type="submit" name="save" class="btn btn-primary">
+              <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            </button>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endform %}
+{% endblock %}

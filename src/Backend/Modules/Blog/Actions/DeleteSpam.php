@@ -15,8 +15,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This action will delete a blogpost
- *
- * @author Tijs Verkoyen <tijs@verkoyen.eu>
  */
 class DeleteSpam extends BackendBaseActionDelete
 {

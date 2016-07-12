@@ -14,11 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This class defines the backend, it is the core. Everything starts here.
  * We create all needed instances and execute the requested action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Dave Lens <dave.lens@wijs.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class Backend extends \KernelLoader implements \ApplicationInterface
 {
@@ -42,7 +37,8 @@ class Backend extends \KernelLoader implements \ApplicationInterface
     public function initialize()
     {
         $URL = new Url($this->getKernel());
-        new Template();
+
+        new TwigTemplate();
         new Navigation($this->getKernel());
         new Header($this->getKernel());
 

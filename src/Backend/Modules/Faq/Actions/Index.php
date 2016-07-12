@@ -19,11 +19,6 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This is the index-action (default), it will display the overview
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Davy Van Vooren <davy.vanvooren@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -67,12 +62,9 @@ class Index extends BackendBaseActionIndex
                 BackendFaqModel::QRY_DATAGRID_BROWSE,
                 array(BL::getWorkingLanguage(), $categoryId)
             );
-            $dataGrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
+            $dataGrid->enableSequenceByDragAndDrop();
             $dataGrid->setColumnsHidden(array('category_id', 'sequence'));
-            $dataGrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
-            $dataGrid->setColumnsSequence('dragAndDropHandle');
             $dataGrid->setColumnAttributes('question', array('class' => 'title'));
-            $dataGrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
             $dataGrid->setRowAttributes(array('id' => '[id]'));
 
             // check if this action is allowed
@@ -91,7 +83,7 @@ class Index extends BackendBaseActionIndex
             $this->dataGrids[] = array(
                 'id' => $categoryId,
                 'title' => $categoryTitle,
-                'content' => $dataGrid->getContent()
+                'content' => $dataGrid->getContent(),
             );
         }
 
@@ -100,10 +92,10 @@ class Index extends BackendBaseActionIndex
             array(array(
                 'dragAndDropHandle' => '',
                 'question' => BL::msg('NoQuestionInCategory'),
-                'edit' => ''
+                'edit' => '',
             ))
         );
-        $this->emptyDatagrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop emptyGrid'));
+        $this->emptyDatagrid->setAttributes(array('class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop emptyGrid'));
         $this->emptyDatagrid->setHeaderLabels(array('edit' => null, 'dragAndDropHandle' => null));
     }
 

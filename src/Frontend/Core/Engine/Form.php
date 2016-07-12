@@ -14,9 +14,6 @@ use Frontend\Core\Engine\Language as FL;
 
 /**
  * This is our extended version of SpoonForm.
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Form extends \Common\Core\Form
 {
@@ -35,7 +32,7 @@ class Form extends \Common\Core\Form
 
         $name = (string) $name;
 
-        if ($hash !== null && strlen($hash) > 0) {
+        if ($hash !== null && mb_strlen($hash) > 0) {
             $hash = (string) $hash;
             // check if the # is present
             if ($hash[0] !== '#') {
@@ -46,7 +43,7 @@ class Form extends \Common\Core\Form
         }
 
         $useToken = (bool) $useToken;
-        $action = ($action === null) ? '/' . $this->URL->getQueryString() : (string) $action;
+        $action = ($action === null) ? $this->URL->getQueryString() : (string) $action;
 
         // call the real form-class
         parent::__construct((string) $name, $action . $hash, $method, (bool) $useToken);
@@ -63,6 +60,7 @@ class Form extends \Common\Core\Form
      * @param string $value The value (or label) that will be printed.
      * @param string $type  The type of the button (submit is default).
      * @param string $class Class(es) that will be applied on the button.
+     *
      * @return \SpoonFormButton
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
@@ -95,6 +93,7 @@ class Form extends \Common\Core\Form
      * @param int    $date2      The second date for a rangepicker.
      * @param string $class      Class(es) that have to be applied on the element.
      * @param string $classError Class(es) that have to be applied when an error occurs on the element.
+     *
      * @return FrontendFormDate
      */
     public function addDate(
@@ -136,9 +135,10 @@ class Form extends \Common\Core\Form
             $mask
         );
         $attributes['data-firstday'] = $firstDay;
-        $attributes['year'] = date('Y', $value);
-        $attributes['month'] = date('n', $value);
-        $attributes['day'] = date('j', $value);
+        $attributes['data-year'] = date('Y', $value);
+        // -1 because javascript starts at 0
+        $attributes['data-month'] = date('n', $value) - 1;
+        $attributes['data-day'] = date('j', $value);
 
         // add extra classes based on type
         switch ($type) {
@@ -187,6 +187,7 @@ class Form extends \Common\Core\Form
      * @param string $name       Name of the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormFile
      */
     public function addFile($name, $class = null, $classError = null)
@@ -205,6 +206,7 @@ class Form extends \Common\Core\Form
      * @param string $name       The name of the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return FrontendFormImage
      */
     public function addImage($name, $class = null, $classError = null)
@@ -379,6 +381,7 @@ class Form extends \Common\Core\Form
      * Fetches all the values for this form as key/value pairs
      *
      * @param mixed $excluded Which elements should be excluded?
+     *
      * @return array
      */
     public function getValues($excluded = array('form', 'save', '_utf8'))
@@ -389,7 +392,7 @@ class Form extends \Common\Core\Form
     /**
      * Parse the form
      *
-     * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
+     * @param TwigTemplate $tpl The template instance wherein the form will be parsed.
      */
     public function parse($tpl)
     {
@@ -408,8 +411,6 @@ class Form extends \Common\Core\Form
 
 /**
  * This is our extended version of \SpoonFormDate
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFormDate extends \SpoonFormDate
 {
@@ -417,6 +418,7 @@ class FrontendFormDate extends \SpoonFormDate
      * Checks if this field is correctly submitted.
      *
      * @param string $error The error message to set.
+     *
      * @return bool
      */
     public function isValid($error = null)
@@ -436,16 +438,16 @@ class FrontendFormDate extends \SpoonFormDate
         $data = $this->getMethod(true);
 
         // init some vars
-        $year = (strpos($longMask, 'yyyy') !== false) ? substr(
+        $year = (mb_strpos($longMask, 'yyyy') !== false) ? mb_substr(
             $data[$this->attributes['name']],
-            strpos($longMask, 'yyyy'),
+            mb_strpos($longMask, 'yyyy'),
             4
-        ) : substr($data[$this->attributes['name']], strpos($longMask, 'yy'), 2);
-        $month = substr($data[$this->attributes['name']], strpos($longMask, 'mm'), 2);
-        $day = substr($data[$this->attributes['name']], strpos($longMask, 'dd'), 2);
+        ) : mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'yy'), 2);
+        $month = mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'mm'), 2);
+        $day = mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'dd'), 2);
 
         // validate datefields that have a from-date set
-        if (strpos($this->attributes['class'], 'inputDatefieldFrom') !== false) {
+        if (mb_strpos($this->attributes['class'], 'inputDatefieldFrom') !== false) {
             // process from date
             $fromDateChunks = explode('-', $this->attributes['data-startdate']);
             $fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
@@ -461,7 +463,7 @@ class FrontendFormDate extends \SpoonFormDate
 
                 return false;
             }
-        } elseif (strpos($this->attributes['class'], 'inputDatefieldTill') !== false) {
+        } elseif (mb_strpos($this->attributes['class'], 'inputDatefieldTill') !== false) {
             // process till date
             $tillDateChunks = explode('-', $this->attributes['data-enddate']);
             $tillDateTimestamp = mktime(12, 00, 00, $tillDateChunks[1], $tillDateChunks[2], $tillDateChunks[0]);
@@ -477,7 +479,7 @@ class FrontendFormDate extends \SpoonFormDate
 
                 return false;
             }
-        } elseif (strpos($this->attributes['class'], 'inputDatefieldRange') !== false) {
+        } elseif (mb_strpos($this->attributes['class'], 'inputDatefieldRange') !== false) {
             // process from date
             $fromDateChunks = explode('-', $this->attributes['data-startdate']);
             $fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
@@ -510,8 +512,6 @@ class FrontendFormDate extends \SpoonFormDate
 
 /**
  * This is our extended version of \SpoonFormImage
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFormImage extends \SpoonFormImage
 {
@@ -521,6 +521,7 @@ class FrontendFormImage extends \SpoonFormImage
      * @param    string            $name          The name.
      * @param    string [optional] $class         The CSS-class to be used.
      * @param    string [optional] $classError    The CSS-class to be used when there is an error.
+     *
      * @see      SpoonFormFile::__construct()
      */
     public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')

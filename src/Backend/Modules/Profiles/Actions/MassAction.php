@@ -15,9 +15,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * Mass action handler to delete profiles or add them to a specific group.
- *
- * @author Jan Moesen <jan.moesen@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class MassAction extends BackendBaseAction
 {
@@ -69,7 +66,7 @@ class MassAction extends BackendBaseAction
                         array(
                              'profile_id' => $id,
                              'group_id' => $newGroupId,
-                             'starts_on' => BackendModel::getUTCDate()
+                             'starts_on' => BackendModel::getUTCDate(),
                         )
                     );
                 }
@@ -97,7 +94,7 @@ class MassAction extends BackendBaseAction
                      'sort' => \SpoonFilter::getGetValue('sort', null, ''),
                      'email' => \SpoonFilter::getGetValue('email', null, ''),
                      'status' => \SpoonFilter::getGetValue('status', null, ''),
-                     'group' => \SpoonFilter::getGetValue('group', null, '')
+                     'group' => \SpoonFilter::getGetValue('group', null, ''),
                 )
             ) . '&report=' . $report
         );

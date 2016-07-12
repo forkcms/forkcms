@@ -14,9 +14,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * both FrontendModel and BackendModel.
  *
  * In the long run models should not be a collection of static methods, and this will disappear.
- *
- * @author Dave Lens <dave.lens@wijs.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class BaseModel
 {
@@ -29,6 +26,7 @@ class BaseModel
      * Gets a service by id.
      *
      * @param string $reference The service id
+     *
      * @return object The service
      */
     public static function get($reference)
@@ -48,6 +46,7 @@ class BaseModel
      * Returns true if the service id is defined.
      *
      * @param string $reference The service id
+     *
      * @return Boolean true if the service id is defined, false otherwise
      */
     public static function has($reference)

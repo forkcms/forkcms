@@ -15,15 +15,13 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This widget will show the latest feedback
- *
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Feedback extends BackendBaseWidget
 {
     /**
      * The feedback
      *
-     * @var	array
+     * @var array
      */
     private $feedback = array();
 

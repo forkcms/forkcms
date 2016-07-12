@@ -17,8 +17,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This page will display the statistical overview of bounces for a specified mailing
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class StatisticsBounces extends BackendBaseActionIndex
 {

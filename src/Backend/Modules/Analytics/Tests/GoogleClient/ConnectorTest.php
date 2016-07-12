@@ -10,9 +10,6 @@ use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
 use PHPUnit_Framework_TestCase;
 
-/**
- * @author Wouter Sioen <wouter@sumocoders.be>
- */
 class ConnectorTest extends PHPUnit_Framework_TestCase
 {
     public function testGetPageViews()
@@ -201,7 +198,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
 
     private function getModulesSettingsMock()
     {
-        return $this->getMockBuilder('\Common\ModulesSettings')
+        return $this->getMockBuilder(ModulesSettings::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -209,7 +206,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
 
     private function getAnalyticsServiceMock()
     {
-        $analyticsService = new Google_Service_Analytics(new Google_Client);
+        $analyticsService = new Google_Service_Analytics(new Google_Client());
 
         $dataGateway = $this->getMockBuilder('Google_Service_Analytics_DataGa_Resource')
             ->disableOriginalConstructor()
@@ -224,7 +221,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
                 'ga:avgSessionDuration' => 1.02,
                 'ga:percentNewSessions' => 78.23,
                 'ga:bounceRate' => 23.25,
-            )
+            ),
         );
 
         $visitGraphDataMock = array(
@@ -236,7 +233,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
                 array('name' => 'ga:date'),
                 array('name' => 'ga:pageviews'),
                 array('name' => 'ga:users'),
-            )
+            ),
         );
 
         $sourceGraphDataMock = array(
@@ -247,7 +244,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             'columnHeaders' => array(
                 array('name' => 'ga:medium'),
                 array('name' => 'ga:pageviews'),
-            )
+            ),
         );
 
         $pageViewsDataMock = array(
@@ -258,7 +255,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             'columnHeaders' => array(
                 array('name' => 'ga:pagePath'),
                 array('name' => 'ga:pageviews'),
-            )
+            ),
         );
 
         $dataGateway->method('get')

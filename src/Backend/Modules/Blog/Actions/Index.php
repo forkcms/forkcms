@@ -20,11 +20,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the index-action (default), it will display the overview of blog posts
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -108,7 +103,7 @@ class Index extends BackendBaseActionIndex
         $this->dgPosts->setHeaderLabels(
             array(
                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('Author')),
-                'publish_on' => \SpoonFilter::ucfirst(BL::lbl('PublishedOn'))
+                'publish_on' => \SpoonFilter::ucfirst(BL::lbl('PublishedOn')),
             )
         );
 
@@ -171,7 +166,7 @@ class Index extends BackendBaseActionIndex
                     $this->categoryId,
                     'draft',
                     BackendAuthentication::getUser()->getUserId(),
-                    BL::getWorkingLanguage()
+                    BL::getWorkingLanguage(),
                 )
             );
 
@@ -338,8 +333,11 @@ class Index extends BackendBaseActionIndex
         // get categories
         $categories = BackendBlogModel::getCategories(true);
 
+        $hasMultipleCategories = (count($categories) > 1);
+        $this->tpl->assign('hasMultipleCategories', $hasMultipleCategories);
+
         // multiple categories?
-        if (count($categories) > 1) {
+        if ($hasMultipleCategories) {
             // create form
             $frm = new BackendForm('filter', null, 'get', false);
 

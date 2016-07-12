@@ -16,8 +16,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the undo-delete-action, it will restore a deleted user
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class UndoDelete extends BackendBaseAction
 {

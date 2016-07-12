@@ -36,7 +36,7 @@ class CategoryTest extends WebTestCase
         $this->assertIs404($client);
     }
 
-    public function testCategoryPageContainsBlogPost()
+    public function testCategoryPageContainsQuestion()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/en/faq/category/faqcategory-for-tests');

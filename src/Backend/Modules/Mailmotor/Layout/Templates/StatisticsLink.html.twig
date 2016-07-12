@@ -1,0 +1,52 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showMailmotorStatistics %}
+        {{ macro.buttonIcon(geturl('statistics') ~ '&id=' ~ mailing.id, 'list','msg.BackToStatistics'|trans|format(mailing.name)|raw) }}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      {% form add %}
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
+                {% form_field group %} {% form_field_error group %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="btn-toolbar">
+            <div class="btn-group pull-right">
+              <button id="search" type="submit" class="btn btn-primary" name="search">
+                <span class="fa fa-refresh"></span>&nbsp;
+                {{ 'lbl.UpdateFilter'|trans|ucfirst }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endform %}
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      {% if dataGrid %}
+        {{ dataGrid }}
+      {% endif %}
+      {% if not dataGrid %}
+        <p>{{ 'msg.NoItems'|trans }}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

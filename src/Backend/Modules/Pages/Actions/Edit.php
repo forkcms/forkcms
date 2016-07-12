@@ -9,6 +9,7 @@ namespace Backend\Modules\Pages\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
@@ -24,11 +25,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the edit-action, it will display a form to update an item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -88,9 +84,6 @@ class Edit extends BackendBaseActionEdit
         $this->header->addJS('jstree/jquery.tree.js', null, false);
         $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
-
-        // add css
-        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
 
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
@@ -195,7 +188,7 @@ class Edit extends BackendBaseActionEdit
         $this->dgDrafts->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
             )
         );
 
@@ -244,14 +237,14 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('html');
         $this->frm->addHidden('template_id', $this->record['template_id']);
         $this->frm->addRadiobutton(
             'hidden',
             array(
                  array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                 array('label' => BL::lbl('Published'), 'value' => 'N')
+                 array('label' => BL::lbl('Published'), 'value' => 'N'),
             ),
             $this->record['hidden']
         );
@@ -346,7 +339,7 @@ class Edit extends BackendBaseActionEdit
                 $this->blocksContent[] = $block;
 
                 // increment counter; go fetch next block
-                $i++;
+                ++$i;
             }
         }
 
@@ -386,12 +379,12 @@ class Edit extends BackendBaseActionEdit
             array(
                 'value' => 'internal',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
-                'variables' => array('isInternal' => true)
+                'variables' => array('isInternal' => true),
             ),
             array(
                 'value' => 'external',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
-                'variables' => array('isExternal' => true)
+                'variables' => array('isExternal' => true),
             ),
         );
         $this->frm->addRadiobutton('redirect', $redirectValues, $redirectValue);
@@ -413,21 +406,24 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addCheckbox('navigation_title_overwrite', ($this->record['navigation_title_overwrite'] == 'Y'));
         $this->frm->addText('navigation_title', $this->record['navigation_title']);
 
-        // tags
-        $this->frm->addText(
-            'tags',
-            BackendTagsModel::getTags($this->URL->getModule(), $this->id),
-            null,
-            'inputText tagBox',
-            'inputTextError tagBox'
-        );
+        if ($this->showTags()) {
+            // tags
+            $this->frm->addText(
+                'tags',
+                BackendTagsModel::getTags($this->URL->getModule(), $this->id),
+                null,
+                'form-control js-tags-input',
+                'error js-tags-input'
+            );
+        }
 
         // a specific action
         $isAction = (isset($this->record['data']['is_action']) && $this->record['data']['is_action'] == true) ? true : false;
         $this->frm->addCheckbox('is_action', $isAction);
 
         // extra
-        $this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+        $blockTypes = BackendPagesModel::getTypes();
+        $this->frm->addDropdown('extra_type', $blockTypes, key($blockTypes));
 
         // meta
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -452,7 +448,7 @@ class Edit extends BackendBaseActionEdit
                  $this->id,
                  'archive',
                  BL::getWorkingLanguage(
-                 )
+                 ),
             )
         );
 
@@ -466,7 +462,7 @@ class Edit extends BackendBaseActionEdit
         $this->dgRevisions->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
             )
         );
 
@@ -523,6 +519,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL($this->record['parent_id']), '/'));
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
+        $this->tpl->assign('showTags', $this->showTags());
 
         // init var
         $showDelete = true;
@@ -606,7 +603,7 @@ class Edit extends BackendBaseActionEdit
                 if ($redirectValue == 'internal') {
                     $data['internal_redirect'] = array(
                         'page_id' => $this->frm->getField('internal_redirect')->getValue(),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
                 if ($redirectValue == 'external') {
@@ -614,7 +611,7 @@ class Edit extends BackendBaseActionEdit
                         'url' => BackendPagesModel::getEncodedRedirectURL(
                             $this->frm->getField('external_redirect')->getValue()
                         ),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
 
@@ -689,12 +686,14 @@ class Edit extends BackendBaseActionEdit
                 // trigger an event
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $page));
 
-                // save tags
-                BackendTagsModel::saveTags(
-                    $page['id'],
-                    $this->frm->getField('tags')->getValue(),
-                    $this->URL->getModule()
-                );
+                if ($this->showTags()) {
+                    // save tags
+                    BackendTagsModel::saveTags(
+                        $page['id'],
+                        $this->frm->getField('tags')->getValue(),
+                        $this->URL->getModule()
+                    );
+                }
 
                 // build cache
                 BackendPagesModel::buildCache(BL::getWorkingLanguage());
@@ -736,5 +735,21 @@ class Edit extends BackendBaseActionEdit
                 }
             }
         }
+    }
+
+    /**
+     * Check if the user has the right to see/edit tags
+     *
+     * @return bool
+     */
+    private function showTags()
+    {
+        if (!Authentication::isAllowedAction('Edit', 'Tags')
+            || !Authentication::isAllowedAction('GetAllTags', 'Tags')
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }

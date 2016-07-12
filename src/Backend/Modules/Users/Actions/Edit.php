@@ -21,11 +21,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the edit-action, it will display a form to alter the user-details and settings
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Siesqo <info@siesqo.be>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -131,7 +126,10 @@ class Edit extends BackendBaseActionEdit
 
         // create elements
         // profile
-        $this->frm->addText('email', $this->record['email'], 255);
+        $this->frm
+            ->addText('email', $this->record['email'], 255)
+            ->setAttribute('type', 'email')
+        ;
         if ($this->user->isGod()) {
             $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
         }
@@ -339,7 +337,7 @@ class Edit extends BackendBaseActionEdit
                         'users_sessions',
                         'user_id = ?',
                         array(
-                            $this->user->getUserId()
+                            $this->user->getUserId(),
                         )
                     );
                 }
@@ -384,34 +382,6 @@ class Edit extends BackendBaseActionEdit
                 if ($this->allowUserRights) {
                     // get selected groups
                     $groups = $fields['groups']->getChecked();
-
-                    // init var
-                    $newSequence = BackendGroupsModel::getSetting($groups[0], 'dashboard_sequence');
-
-                    // loop through groups and collect all dashboard widget sequences
-                    foreach ($groups as $group) {
-                        $sequences[] = BackendGroupsModel::getSetting(
-                            $group,
-                            'dashboard_sequence'
-                        );
-                    }
-
-                    // loop through sequences
-                    foreach ($sequences as $sequence) {
-                        // loop through modules inside a sequence
-                        foreach ($sequence as $moduleKey => $module) {
-                            // loop through widgets inside a module
-                            foreach ($module as $widgetKey => $widget) {
-                                // if widget present set true
-                                if ($widget['present']) {
-                                    $newSequence[$moduleKey][$widgetKey]['present'] = true;
-                                }
-                            }
-                        }
-                    }
-
-                    // add new sequence to settings
-                    $settings['dashboard_sequence'] = $newSequence;
                 }
 
                 // has the user submitted an avatar?

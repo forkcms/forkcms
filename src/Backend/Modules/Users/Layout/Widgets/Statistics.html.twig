@@ -1,0 +1,42 @@
+<div id="widgetUsersStatistics" class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title">
+      <a href="{{ authenticatedUserEditUrl }}">{{ 'lbl.Users'|trans|ucfirst }}: {{ 'lbl.Statistics'|trans|ucfirst }}</a>
+    </h2>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <tr>
+        <th>{{ 'lbl.LastLogin'|trans|ucfirst }}:</th>
+        <td>
+          {% if authenticatedUserLastLogin %}{{ authenticatedUserLastLogin|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }} {% endif %}
+          {% if not authenticatedUserLastLogin %}{{ lbl.NoPreviousLogin }}{% endif %}
+        </td>
+      </tr>
+      {% if authenticatedUserLastFailedLoginAttempt %}
+        <tr>
+          <th>{{ 'lbl.LastFailedLoginAttempt'|trans|ucfirst }}:</th>
+          <td>{{ authenticatedUserLastFailedLoginAttempt|spoondate( authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}</td>
+        </tr>
+      {% endif %}
+      <tr>
+        <th>{{ 'lbl.LastPasswordChange'|trans|ucfirst }}:</th>
+        <td>
+          {% if authenticatedUserLastPasswordChange %}{{ authenticatedUserLastPasswordChange|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
+          {% if not authenticatedUserLastPasswordChange %}{{ lbl.Never }}{% endif %}
+        </td>
+      </tr>
+      {% if showPasswordStrength %}
+        <tr>
+          <th>{{ 'lbl.PasswordStrength'|trans|ucfirst }}:</th>
+          <td>{{ passwordStrengthLabel }}</td>
+        </tr>
+      {% endif %}
+    </table>
+  </div>
+  <div class="panel-footer">
+    <a href="{{ authenticatedUserEditUrl }}">
+      <span>{{ 'lbl.EditProfile'|trans|ucfirst }}</span>
+    </a>
+  </div>
+</div>

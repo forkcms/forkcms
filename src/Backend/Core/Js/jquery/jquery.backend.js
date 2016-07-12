@@ -4,9 +4,6 @@
 
 /**
  * Meta-handler
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 (function($)
 {
@@ -133,8 +130,6 @@
 
 /**
  * Password generator
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
@@ -159,7 +154,9 @@
 			var id = $(this).attr('id');
 
 			// append the button
-			$(this).parent().after('<div class="buttonHolder"><a href="#" data-id="' + id + '" class="generatePasswordButton button"><span>' + options.generateLabel + '</span></a></div>');
+			$(this).closest('.input-group input').after(
+				'		<a href="#" data-id="' + id + '" class="generatePasswordButton btn btn-default input-group-addon"><span>' + options.generateLabel + '</span></a>'
+			);
 
 			$('.generatePasswordButton').live('click', generatePassword);
 
@@ -264,9 +261,6 @@
 
 /**
  * Inline editing
- *
- * @author	Dave Lens <dave@netlash.com>
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
@@ -297,7 +291,7 @@
 			var $this = $(this);
 
 			// add wrapper and tooltip
-			$this.html('<span>' + $this.html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
+			$this.html('<span>' + $this.html() + '</span><span style="display: none;" class="inlineEditTooltip label label-primary">' + options.tooltip + '</span>');
 
 			// grab element
 			$span = $this.find('span');
@@ -312,8 +306,13 @@
 			$this.hover(
 				function()
 				{
-					$this.addClass('inlineEditHover');
-					tooltip.show();
+					if (element.hasClass('inlineEditing')) {
+						$this.removeClass('inlineEditHover');
+						tooltip.hide();
+					}else {
+						$this.addClass('inlineEditHover');
+						tooltip.show();
+					}
 				},
 				function()
 				{
@@ -345,6 +344,10 @@
 
 				// add class
 				element.addClass('inlineEditing');
+
+				// hide label
+				$this.removeClass('inlineEditHover');
+				tooltip.hide();
 
 				// remove events
 				element.unbind('click').unbind('focus');
@@ -438,7 +441,7 @@
 							destroyElement();
 
 							// show message
-							jsBackend.messages.add('error', $.parseJSON(XMLHttpRequest.responseText).message);
+							jsBackend.messages.add('danger', $.parseJSON(XMLHttpRequest.responseText).message);
 						}
 					});
 				}
@@ -452,8 +455,6 @@
 
 /**
  * key-value-box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
@@ -497,12 +498,12 @@
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '')
 				{
 					// show warning
-					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError text-danger">'+ options.errorMessage +'</span>');
 
 					// clear other timers
 					clearTimeout(timer);
 
-					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
+					// we need the timeout otherwise the error is show every time the user presses enter in the keyvaluebox
 					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
 				}
 
@@ -510,11 +511,20 @@
 			});
 
 			// build replace html
-			var html = '<div class="tagsWrapper">' + '	<div class="oneLiner">' + '		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + '		<div class="buttonHolder">' + '			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
-
-			if(options.showIconOnly) html += ' iconOnly';
-
-			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '	<div id="elementList-' + id + '" class="tagList">' + '	</div>' + '</div>';
+			var html =
+				'<div class="form-inline form-group keyValueWrapper">' +
+				'	<div class="form-group input-group">' +
+				'		<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+                '	    <a href="#" id="addButton-' + id + '" class="btn btn-primary input-group-addon">' +
+                '           <span class="fa fa-plus-square"></span>' +
+                (options.showIconOnly?'':'	        <span>' + options.addLabel + '</span>') +
+                '	    </a>' +
+				'   </div>' +
+                '</div>' +
+				'<div class="form-inline form-group">' +
+				'    <div id="elementList-' + id + '" class="form-group keyValueList">' +
+				'    </div>' +
+				'</div>';
 
 			// hide current element
 			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
@@ -742,13 +752,10 @@
 
 /**
  * Tag-box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
 {
-	$.fn.tagBox = function(options)
+	$.fn.tagsBox = function(options)
 	{
 		// define defaults
 		var defaults =
@@ -788,7 +795,7 @@
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '')
 				{
 					// show warning
-					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError text-danger">'+ options.errorMessage +'</span>');
 
 					// clear other timers
 					clearTimeout(timer);
@@ -801,21 +808,18 @@
 			});
 
 			// build replace html
-			var html = 	'<div class="tagsWrapper">' +
-						'	<div class="oneLiner">' +
-						'		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' +
-						'		<div class="buttonHolder">' +
-						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
-
-			if(options.showIconOnly) html += ' iconOnly';
-
-			html += 	'">' +
-						'				<span>' + options.addLabel + '</span>' +
-						'			</a>' +
-						'		</div>' +
-						'	</div>' +
-						'	<div id="elementList-' + id + '" class="tagList">' +
-						'	</div>' +
+			var html = 	'<div class="form-inline form-group tagsWrapper">' +
+						'	<div class="form-group input-group">' +
+                        '       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+                        '       <a href="#" id="addButton-' + id + '" class="btn btn-default btn-second btn-xs input-group-addon">' +
+                        '           <span class="fa fa-plus-square"></span>' +
+                            (options.showIconOnly?'':'          <span>' + options.addLabel + '</span>') +
+                        '       </a>' +
+                        '   </div>' +
+						'</div>' +
+						'<div class="form-inline form-group">' +
+						'    <div id="elementList-' + id + '" class="form-group tagList">' +
+						'    </div>' +
 						'</div>';
 
 			// hide current element
@@ -982,15 +986,16 @@
 				else
 				{
 					// start html
-					html = '<ul>';
+					html = '<ul class="list-group">';
 
 					// loop elements
 					for(var i in elements)
 					{
-						var value = utils.string.stripForTag(elements[i]);
-
-						html += '	<li><span><strong>' + value + '</strong>' +
-								'		<a href="#" class="deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '">' + options.removeLabel + '</a></span>' +
+                        var value = utils.string.stripForTag(elements[i]);
+                        
+						html += '	<li class="list-group-item">' +
+								'		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash"></span></a></span>' +
+								'       <span><strong>' + value + '</strong>' +
 								'	</li>';
 					}
 
@@ -1040,9 +1045,6 @@
 
 /**
  * Multiple select box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 (function($)
 {
@@ -1278,9 +1280,6 @@
 
 /**
  * Multiple text box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
 {
@@ -1322,11 +1321,18 @@
 			}
 
 			// build replace html
-			var html = '<div class="multipleTextWrapper">' + '	<div id="elementList-' + id + '" class="multipleTextList">' + '	</div>' + '	<div class="oneLiner">' + '		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + '		<div class="buttonHolder">' + '			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
-
-			if(options.showIconOnly) html += ' iconOnly';
-
-			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '</div>';
+			var html =
+				'<div class="multipleTextWrapper">' +
+					'<div id="elementList-' + id + '" class="multipleTextList">' +
+					'</div>' +
+					'<div class="input-group">' +
+						'<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+								'<a href="#" id="addButton-' + id + '" class="btn btn-default btn-second input-group-addon">' +
+                '<span class="fa fa-plus-square"></span>' +
+                (options.showIconOnly?'':'<span>' + options.addLabel + '</span>') +
+                '</a>' +
+					'</div>' +
+				'</div>';
 
 			// hide current element
 			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
@@ -1410,9 +1416,6 @@
 				else $('#addButton-' + id).removeClass('disabledButton');
 			});
 
-			// unblock the submit event when we lose focus
-			$('#addValue-' + id).bind('blur', function(e) { blockSubmit = false; add(); });
-
 			// bind click on add-button
 			$('#addButton-' + id).bind('click', function(e)
 			{
@@ -1475,8 +1478,10 @@
 				value = $('<div />').text(value).html().replace('"', '&quot;');
 
 				// reset box
-				$('#addValue-' + id).val('').focus();
-				$('#addButton-' + id).addClass('disabledButton');
+				if ($('#addValue-' + id).val().length > 0) {
+					$('#addValue-' + id).val('').focus();
+					$('#addButton-' + id).addClass('disabledButton');
+				}
 
 				var values = value.split(options.splitChar);
 				for (var e in values) {
@@ -1519,16 +1524,17 @@
 				else
 				{
 					// start html
-					html = '<ul>';
+					html = '<ul class="list-unstyled">';
 
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li class="oneLiner">' +
-								'		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' +
-								'		<div class="buttonHolder">' +
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' +
-								'		</div>' +
+						html += '	<li class="form-group input-group">' +
+								'	    <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
+                                '		<a href="#" class="btn btn-danger input-group-addon deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+                                '           <span class="fa fa-trash"></span>' +
+                                '			<span>' + options.removeLabel + '</span>' +
+                                '		</a>' +
 								'	</li>';
 					}
 

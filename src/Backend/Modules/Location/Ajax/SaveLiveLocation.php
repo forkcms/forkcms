@@ -11,13 +11,10 @@ namespace Backend\Modules\Location\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
  * This is an ajax handler that will set a new position for a certain map
- *
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class SaveLiveLocation extends BackendBaseAJAXAction
 {
@@ -33,7 +30,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         // get parameters
         $itemId = \SpoonFilter::getPostValue('id', null, null, 'int');
         $zoomLevel = trim(\SpoonFilter::getPostValue('zoom', null, 'auto'));
-        $mapType = strtoupper(trim(\SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap')));
+        $mapType = mb_strtoupper(trim(\SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap')));
         $centerLat = \SpoonFilter::getPostValue('centerLat', null, 1, 'float');
         $centerlng = \SpoonFilter::getPostValue('centerLng', null, 1, 'float');
         $height = \SpoonFilter::getPostValue('height', null, $generalSettings['height'], 'int');
@@ -71,7 +68,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         $item = array(
             'id' => $itemId,
             'language' => BL::getWorkingLanguage(),
-            'show_overview' => ($showOverview) ? 'Y' : 'N'
+            'show_overview' => ($showOverview) ? 'Y' : 'N',
         );
         BackendLocationModel::update($item);
 

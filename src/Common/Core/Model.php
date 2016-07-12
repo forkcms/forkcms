@@ -16,8 +16,6 @@ require_once __DIR__ . '/../../../app/BaseModel.php';
 
 /**
  * This class will initiate the frontend-application
- *
- * @author Ghazi Triki <ghazi.triki@inhanx.com>
  */
 class Model extends \BaseModel
 {
@@ -32,6 +30,7 @@ class Model extends \BaseModel
      * Add a number to the string
      *
      * @param string $string The string where the number will be appended to.
+     *
      * @return string
      */
     public static function addNumber($string)
@@ -67,6 +66,7 @@ class Model extends \BaseModel
      * @param int  $length           The maximum length for the password to generate.
      * @param bool $uppercaseAllowed Are uppercase letters allowed?
      * @param bool $lowercaseAllowed Are lowercase letters allowed?
+     *
      * @return string
      */
     public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
@@ -101,7 +101,7 @@ class Model extends \BaseModel
             'th',
             'ch',
             'ph',
-            'st'
+            'st',
         );
 
         // init vars
@@ -111,28 +111,28 @@ class Model extends \BaseModel
         $tmp = '';
 
         // create temporary pass
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             $tmp .= ($consonants[rand(0, $consonantsCount - 1)] .
                 $vowels[rand(0, $vowelsCount - 1)]);
         }
 
         // reformat the pass
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             if (rand(0, 1) == 1) {
-                $pass .= strtoupper(substr($tmp, $i, 1));
+                $pass .= mb_strtoupper(mb_substr($tmp, $i, 1));
             } else {
-                $pass .= substr($tmp, $i, 1);
+                $pass .= mb_substr($tmp, $i, 1);
             }
         }
 
         // reformat it again, if uppercase isn't allowed
         if (!$uppercaseAllowed) {
-            $pass = strtolower($pass);
+            $pass = mb_strtolower($pass);
         }
 
         // reformat it again, if uppercase isn't allowed
         if (!$lowercaseAllowed) {
-            $pass = strtoupper($pass);
+            $pass = mb_strtoupper($pass);
         }
 
         // return pass
@@ -177,6 +177,7 @@ class Model extends \BaseModel
      *
      * @param string $path          The path
      * @param bool   $includeSource Should the source-folder be included in the return-array.
+     *
      * @return array
      */
     public static function getThumbnailFolders($path, $includeSource = false)
@@ -192,7 +193,7 @@ class Model extends \BaseModel
             $finder->name('source');
         }
 
-        foreach ($finder->directories()->in($path) as $directory) {
+        foreach ($finder->directories()->in($path)->depth('== 0') as $directory) {
             $chunks = explode('x', $directory->getBasename(), 2);
             if (count($chunks) != 2 && !$includeSource) {
                 continue;
@@ -201,8 +202,8 @@ class Model extends \BaseModel
             $item = array();
             $item['dirname'] = $directory->getBasename();
             $item['path'] = $directory->getRealPath();
-            if (substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) {
-                $item['url'] = substr($path, strlen(PATH_WWW));
+            if (mb_substr($path, 0, mb_strlen(PATH_WWW)) == PATH_WWW) {
+                $item['url'] = mb_substr($path, mb_strlen(PATH_WWW));
             }
 
             if ($item['dirname'] == 'source') {
@@ -224,6 +225,7 @@ class Model extends \BaseModel
      *
      * @param string $format    The format to return the timestamp in. Default is MySQL datetime format.
      * @param int    $timestamp The timestamp to use, if not provided the current time will be used.
+     *
      * @return string
      */
     public static function getUTCDate($format = null, $timestamp = null)
@@ -241,8 +243,10 @@ class Model extends \BaseModel
      *
      * @param \SpoonFormDate $date An instance of \SpoonFormDate.
      * @param \SpoonFormTime $time An instance of \SpoonFormTime.
-     * @return int
+     *
      * @throws \Exception If provided $date, $time or both are invalid
+     *
+     * @return int
      */
     public static function getUTCTimestamp(\SpoonFormDate $date, \SpoonFormTime $time = null)
     {
@@ -291,7 +295,6 @@ class Model extends \BaseModel
         return self::$modules;
     }
 
-
     /**
      * Subscribe to an event, when the subscription already exists, the callback will be updated.
      *
@@ -299,6 +302,7 @@ class Model extends \BaseModel
      * @param string $eventName   The name of the event.
      * @param string $module      The module that subscribes to the event.
      * @param mixed  $callback    The callback that should be executed when the event is triggered.
+     *
      * @throws \Exception          When the callback is invalid
      */
     public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
@@ -405,7 +409,7 @@ class Model extends \BaseModel
             $pid = trim(file_get_contents(BACKEND_CACHE_PATH . '/Hooks/pid'));
 
             // running on windows?
-            if (strtolower(substr(php_uname('s'), 0, 3)) == 'win') {
+            if (mb_strtolower(mb_substr(php_uname('s'), 0, 3)) == 'win') {
                 // get output
                 $output = @shell_exec('tasklist.exe /FO LIST /FI "PID eq ' . $pid . '"');
 
@@ -417,7 +421,7 @@ class Model extends \BaseModel
                     // already running
                     return true;
                 }
-            } elseif (strtolower(substr(php_uname('s'), 0, 6)) == 'darwin') {
+            } elseif (mb_strtolower(mb_substr(php_uname('s'), 0, 6)) == 'darwin') {
                 // darwin == Mac
                 // get output
                 $output = @posix_getsid($pid);

@@ -15,9 +15,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the base-object for cronjobs. The module-specific cronjob-files can extend the functionality from this class
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Cronjob extends Object
 {
@@ -52,7 +49,7 @@ class Cronjob extends Object
      */
     public function getId()
     {
-        return strtolower($this->getModule() . '_' . $this->getAction());
+        return mb_strtolower($this->getModule() . '_' . $this->getAction());
     }
 
     /**
@@ -62,6 +59,7 @@ class Cronjob extends Object
      *
      * @param string $action The action to load.
      * @param string $module The module to load.
+     *
      * @throws BackendException If module is not set or the action does not exist
      */
     public function setAction($action, $module = null)
@@ -133,7 +131,7 @@ class Cronjob extends Object
         }
 
         // increment counter
-        $counter++;
+        ++$counter;
 
         // store content
         $fs->dumpFile($path, $counter);
@@ -150,6 +148,7 @@ class Cronjob extends Object
      * We can't rely on the parent setModule function, because a cronjob requires no login
      *
      * @param string $module The module to load.
+     *
      * @throws BackendException If module is not allowed
      */
     public function setModule($module)

@@ -17,11 +17,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Model
 {
@@ -119,7 +114,7 @@ class Model
                     'message' => sprintf(
                         BL::err('RSSTitle', 'Blog'),
                         BackendModel::createURLForAction('Settings', 'Blog')
-                    )
+                    ),
                 );
             }
 
@@ -129,7 +124,7 @@ class Model
                     'message' => sprintf(
                         BL::err('RSSDescription', 'Blog'),
                         BackendModel::createURLForAction('Settings', 'Blog')
-                    )
+                    ),
                 );
             }
         }
@@ -159,7 +154,6 @@ class Model
 
         // create an string with an equal amount of questionmarks as ids provided
         $idPlaceHolders = implode(', ', array_fill(0, count($ids), '?'));
-
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -237,6 +231,7 @@ class Model
      * Checks if it is allowed to delete the a category
      *
      * @param int $id The id of the category.
+     *
      * @return bool
      */
     public static function deleteCategoryAllowed($id)
@@ -322,6 +317,7 @@ class Model
      * Checks if an item exists
      *
      * @param int $id The id of the item to check for existence.
+     *
      * @return bool
      */
     public static function exists($id)
@@ -338,6 +334,7 @@ class Model
      * Checks if a category exists
      *
      * @param int $id The id of the category to check for existence.
+     *
      * @return int
      */
     public static function existsCategory($id)
@@ -355,6 +352,7 @@ class Model
      * Checks if a comment exists
      *
      * @param int $id The id of the item to check for existence.
+     *
      * @return int
      */
     public static function existsComment($id)
@@ -372,6 +370,7 @@ class Model
      * Get all data for a given id
      *
      * @param int $id The Id of the item to fetch?
+     *
      * @return array
      */
     public static function get($id)
@@ -392,6 +391,7 @@ class Model
      * @param string $status The type of comments to get.
      * @param int    $limit  The maximum number of items to retrieve.
      * @param int    $offset The offset.
+     *
      * @return array
      */
     public static function getAllCommentsForStatus($status, $limit = 30, $offset = 0)
@@ -434,6 +434,7 @@ class Model
      * Get all items by a given tag id
      *
      * @param int $tagId The id of the tag.
+     *
      * @return array
      */
     public static function getByTag($tagId)
@@ -459,6 +460,7 @@ class Model
      * Get all categories
      *
      * @param bool $includeCount Include the count?
+     *
      * @return array
      */
     public static function getCategories($includeCount = false)
@@ -488,6 +490,7 @@ class Model
      * Get all data for a given id
      *
      * @param int $id The id of the category to fetch.
+     *
      * @return array
      */
     public static function getCategory($id)
@@ -505,6 +508,7 @@ class Model
      *
      * @param string $title    The title of the category.
      * @param string $language The language to use, if not provided we will use the working language.
+     *
      * @return int
      */
     public static function getCategoryId($title, $language = null)
@@ -524,6 +528,7 @@ class Model
      * Get all data for a given id
      *
      * @param int $id The Id of the comment to fetch?
+     *
      * @return array
      */
     public static function getComment($id)
@@ -544,6 +549,7 @@ class Model
      * Get multiple comments at once
      *
      * @param array $ids The id(s) of the comment(s).
+     *
      * @return array
      */
     public static function getComments(array $ids)
@@ -577,6 +583,7 @@ class Model
      *
      * @param string $status The status for the comments to retrieve.
      * @param int    $limit  The maximum number of items to retrieve.
+     *
      * @return array
      */
     public static function getLatestComments($status, $limit = 10)
@@ -619,6 +626,7 @@ class Model
      *
      * @param int $id         The id of the item.
      * @param int $revisionId The revision to get.
+     *
      * @return array
      */
     public static function getRevision($id, $revisionId)
@@ -637,6 +645,7 @@ class Model
      *
      * @param string $URL The URL to base on.
      * @param int    $id  The id of the item to ignore.
+     *
      * @return string
      */
     public static function getURL($URL, $id = null)
@@ -687,6 +696,7 @@ class Model
      *
      * @param string $URL The string whereon the URL will be based.
      * @param int    $id  The id of the category to ignore.
+     *
      * @return string
      */
     public static function getURLForCategory($URL, $id = null)
@@ -737,6 +747,7 @@ class Model
      * Inserts an item into the database
      *
      * @param array $item The data to insert.
+     *
      * @return int
      */
     public static function insert(array $item)
@@ -768,6 +779,7 @@ class Model
      * @param array $meta     The metadata to insert.
      * @param array $tags     The tags to connect to this post.
      * @param array $comments The comments attached to this post.
+     *
      * @return int
      */
     public static function insertCompletePost($item, $meta = array(), $tags = array(), $comments = array())
@@ -899,6 +911,7 @@ class Model
      *
      * @param array $item The data for the category to insert.
      * @param array $meta The metadata for the category to insert.
+     *
      * @return int
      */
     public static function insertCategory(array $item, $meta = null)
@@ -925,6 +938,7 @@ class Model
      * Inserts a new comment (Taken from FrontendBlogModel)
      *
      * @param array $comment The comment to add.
+     *
      * @return int
      */
     public static function insertComment(array $comment)
@@ -958,6 +972,7 @@ class Model
      * Recalculate the commentcount
      *
      * @param array $ids The id(s) of the post wherefore the commentcount should be recalculated.
+     *
      * @return bool
      */
     public static function reCalculateCommentCount(array $ids)
@@ -1003,6 +1018,7 @@ class Model
      * Update an existing item
      *
      * @param array $item The new data.
+     *
      * @return int
      */
     public static function update(array $item)
@@ -1053,17 +1069,17 @@ class Model
              LIMIT ?',
             array($item['id'], $archiveType, BL::getWorkingLanguage(), $rowsToKeep)
         );
-        
-        // get meta-ids that will be deleted
-        $metasIdsToRemove = (array) $db->getColumn(
-            'SELECT i.meta_id
-             FROM blog_posts AS i
-             WHERE i.id = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
-            array($item['id'])
-        );
-        
+
         // delete other revisions
         if (!empty($revisionIdsToKeep)) {
+            // get meta-ids that will be deleted
+            $metasIdsToRemove = (array) $db->getColumn(
+                'SELECT i.meta_id
+                 FROM blog_posts AS i
+                 WHERE i.id = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                array($item['id'])
+            );
+
             // get all the images of the revisions that will NOT be deleted
             $imagesToKeep = $db->getColumn(
                 'SELECT image FROM blog_posts
@@ -1114,6 +1130,7 @@ class Model
      *
      * @param array       $item The new data.
      * @param array $meta The new meta-data.
+     *
      * @return int
      */
     public static function updateCategory(array $item, $meta = null)
@@ -1143,6 +1160,7 @@ class Model
      * Update an existing comment
      *
      * @param array $item The new data.
+     *
      * @return int
      */
     public static function updateComment(array $item)

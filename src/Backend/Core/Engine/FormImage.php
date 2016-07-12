@@ -13,10 +13,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This is our extended version of \SpoonFormFile
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FormImage extends \SpoonFormImage
 {
@@ -26,6 +22,7 @@ class FormImage extends \SpoonFormImage
      * @param    string            $name          The name.
      * @param    string [optional] $class         The CSS-class to be used.
      * @param    string [optional] $classError    The CSS-class to be used when there is an error.
+     *
      * @see      SpoonFormFile::__construct()
      */
     public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
@@ -98,9 +95,11 @@ class FormImage extends \SpoonFormImage
     /**
      * Parses the html for this filefield.
      *
-     * @param \SpoonTemplate $template The template to parse the element in.
-     * @return string
+     * @param TwigTemplate $template The template to parse the element in.
+     *
      * @throws \SpoonFormException
+     *
+     * @return string
      */
     public function parse($template = null)
     {
@@ -116,17 +115,17 @@ class FormImage extends \SpoonFormImage
         }
 
         // reformat if specified in kB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'K') {
-            $uploadMaxFilesize = substr($uploadMaxFilesize, 0, -1) . 'kB';
+        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'K') {
+            $uploadMaxFilesize = mb_substr($uploadMaxFilesize, 0, -1) . 'kB';
         }
 
         // reformat if specified in MB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'M') {
+        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'M') {
             $uploadMaxFilesize .= 'B';
         }
 
         // reformat if specified in GB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'G') {
+        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'G') {
             $uploadMaxFilesize .= 'B';
         }
 
@@ -142,17 +141,17 @@ class FormImage extends \SpoonFormImage
         $output .= $this->getAttributesHTML(
             array(
                 '[id]' => $this->attributes['id'],
-                '[name]' => $this->attributes['name']
+                '[name]' => $this->attributes['name'],
             )
         ) . ' />';
 
         // add help txt if needed
         if (!$this->hideHelpTxt) {
-            $output .= '<span class="helpTxt">' .
+            $output .= '<p class="help-block">' .
                         sprintf(
                             Language::getMessage('HelpImageFieldWithMaxFileSize', 'core'),
                             $uploadMaxFilesize
-                        ) . '</span>';
+                        ) . '</p>';
         }
 
         // parse to template
@@ -160,7 +159,7 @@ class FormImage extends \SpoonFormImage
             $template->assign('file' . \SpoonFilter::toCamelCase($this->attributes['name']), $output);
             $template->assign(
                 'file' . \SpoonFilter::toCamelCase($this->attributes['name']) . 'Error',
-                ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : ''
+                ($this->errors != '') ? '<span class="formError text-danger">' . $this->errors . '</span>' : ''
             );
         }
 

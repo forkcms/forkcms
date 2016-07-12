@@ -15,8 +15,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This action is used to perform mass actions on tags (delete, ...)
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class MassAction extends BackendBaseAction
 {

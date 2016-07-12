@@ -18,10 +18,6 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -51,7 +47,7 @@ class Add extends BackendBaseActionAdd
     private function loadForm()
     {
         $this->frm = new BackendForm('add');
-        $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('text');
         $this->frm->addCheckbox('hidden', true);
 
@@ -72,6 +68,7 @@ class Add extends BackendBaseActionAdd
 
             // validate fields
             $fields['title']->isFilled(BL::err('TitleIsRequired'));
+            $fields['text']->isFilled(BL::err('FieldIsRequired'));
 
             if ($this->frm->isCorrect()) {
                 // build item

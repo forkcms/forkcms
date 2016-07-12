@@ -18,8 +18,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the add-action, it will display a form to create a new category
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class AddCategory extends BackendBaseActionAdd
 {
@@ -41,7 +39,7 @@ class AddCategory extends BackendBaseActionAdd
     private function loadForm()
     {
         $this->frm = new BackendForm('addCategory');
-        $this->frm->addText('title', null, 255, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', null, 255, 'form-control title', 'form-control danger title');
 
         // meta
         $this->meta = new BackendMeta($this->frm, null, 'title', true);

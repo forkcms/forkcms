@@ -1,0 +1,195 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+
+{% endblock %}
+
+{% block content %}
+  {% form edit %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}</label>
+        {% form_field title %} {% form_field_error title %}
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.Address'|trans|ucfirst }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="street" class="control-label">
+              {{ 'lbl.Street'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+            </label>
+            {% form_field street %} {% form_field_error street %}
+          </div>
+          <div class="form-group">
+            <label for="number" class="control-label">
+              {{ 'lbl.Number'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+            </label>
+            {% form_field number %} {% form_field_error number %}
+          </div>
+          <div class="form-group">
+            <label for="zip" class="control-label">
+              {{ 'lbl.Zip'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+            </label>
+            {% form_field zip %} {% form_field_error zip %}
+          </div>
+          <div class="form-group">
+            <label for="city" class="control-label">
+              {{ 'lbl.City'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+            </label>
+            {% form_field city %} {% form_field_error city %}
+          </div>
+          <div class="form-group">
+            <label for="country" class="control-label">
+              {{ 'lbl.Country'|trans|ucfirst }}
+              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+            </label>
+            {% form_field country %} {% form_field_error country %}
+          </div>
+          <div class="hide">
+            {{ hidMapId }} {{ hidRedirect }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-group pull-right" role="group">
+        <button id="editButton" type="submit" name="edit" class="btn btn-primary">{{ 'lbl.UpdateMap'|trans|ucfirst }}</button>
+      </div>
+    </div>
+  </div>
+  {% endform %}
+  {% form settings %}
+  <div class="row fork-module-content">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.Map'|trans|ucfirst }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div id="map" style="width: 100%; height: {{ settings.height }}px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.Settings'|trans|ucfirst }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="zoomLevel" class="control-label">{{ 'lbl.ZoomLevel'|trans|ucfirst }}</label>
+            {% form_field zoom_level %} {% form_field_error zoom_level %}
+          </div>
+          <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
+            <label for="width" class="control-label">{{ 'lbl.Width'|trans|ucfirst }}</label>
+            <p class="help-block">{{ 'msg.WidthHelp'|trans|format(300,800)|raw }}</p>
+            {% form_field width %} {% form_field_error width %}
+          </div>
+          <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
+            <label for="height" class="control-label">{{ 'lbl.Height'|trans|ucfirst }}</label>
+            <p class="help-block">{{ 'msg.HeightHelp'|trans|format(150)|raw }}</p>
+            {% form_field height %} {% form_field_error height %}
+          </div>
+          <div class="form-group">
+            <label for="mapType" class="control-label">{{ 'lbl.MapType'|trans|ucfirst }}</label>
+            {% form_field map_type %} {% form_field_error map_type %}
+          </div>
+          <div class="form-group">
+            <ul class="list-unstyled">
+              <li class="checkbox">
+                <label for="fullUrl" class="control-label">{% form_field full_url %} {{ 'msg.ShowMapUrl'|trans|ucfirst }}</label>
+              </li>
+              <li class="checkbox">
+                <label for="directions" class="control-label">{% form_field directions %} {{ 'msg.ShowDirections'|trans|ucfirst }}</label>
+              </li>
+              <li class="checkbox">
+                <label for="markerOverview" class="control-label">{% form_field marker_overview %} {{ 'msg.ShowMarkerOverview'|trans|ucfirst }}</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-page-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-left" role="group">
+          {% if showLocationDelete %}
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+              <span class="fa fa-trash-o"></span>
+              {{ 'lbl.Delete'|trans|ucfirst }}
+            </button>
+          {% endif %}
+        </div>
+        <div class="btn-group pull-right" role="group">
+          <button id="saveLiveData" type="button" name="edit" class="btn btn-primary">
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+      {% if showLocationDelete %}
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+              </div>
+              <div class="modal-body">
+                <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+                </button>
+                <a href="{{ geturl('delete') }}&amp;id={{ item.id }}" class="btn btn-danger">
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endform %}
+  <script type="text/javascript">
+    var mapOptions =
+    {
+      zoom: '{{ settings.zoom_level }}' == 'auto' ? 0 : {{ settings.zoom_level }},
+      type: '{{ settings.map_type }}',
+      center: {
+        lat: {{ settings.center.lat }},
+        lng: {{ settings.center.lng }}
+      }
+    };
+    var markers = [];
+    {% if item.lat %}
+    {% if item.lng %}
+    markers.push(
+      {
+        lat: {{ item.lat }},
+        lng: {{ item.lng }},
+        title: '{{ item.title }}',
+        text: '<p>{{ item.street }} {{ item.number }}</p><p>{{ item.zip }} {{ item.city }}</p>',
+        dragable: true
+      });
+    {% endif %}
+    {% endif %}
+  </script>
+{% endblock %}

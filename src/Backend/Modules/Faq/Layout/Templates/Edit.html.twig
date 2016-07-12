@@ -1,0 +1,192 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+
+{% endblock %}
+
+{% block content %}
+  {% form edit %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="title" class="control-label">{{ 'lbl.Question'|trans|ucfirst }}</label>
+        {% form_field title %} {% form_field_error title %}
+        {% if detailURL %}
+          <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
+        {% endif %}
+        {% if not detailURL %}
+          <p class="alert alert-warning alert-xs">
+            <span class="fa fa-exclamation-triangle"></span>{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+          </li>
+          <li class="pull-right" role="presentation">
+            <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+          </li>
+          <li class="pull-right" role="presentation">
+            <a href="#tabFeedback" aria-controls="feedback" role="tab" data-toggle="tab">
+              {{ 'lbl.Feedback'|trans|ucfirst }}
+              <span class="label label-success">{{ item.num_usefull_yes }}</span>
+              <span class="label label-danger">{{ item.num_usefull_no }}</span>
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tabContent">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="panel panel-default panel-editor optionsRTE">
+                  <div class="panel-heading">
+                    <label for="answer" class="control-label">{{ 'lbl.Answer'|trans|ucfirst }}
+                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr><br>
+                    </label>
+                  </div>
+                  <div class="panel-body">
+                    {% form_field answer %}
+                  </div>
+                  {% if txtAnswerError %}
+                    <div class="panel-footer">
+                      {% form_field_error answer %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group last">
+                      <ul class="list-unstyled">
+                        {% for _itr_10 in hidden %}
+                          <li class="radio">
+                            <label for="{{ _itr_10.id }}">{{ _itr_10.rbtHidden | raw }} {{ _itr_10.label }}</label>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-default last">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">{{ 'lbl.MetaData'|trans|ucfirst }}</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|ucfirst }}</label>
+                      {% form_field category_id %} {% form_field_error category_id %}
+                    </div>
+                    <div class="form-group last">
+                      <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
+                      {% form_field tags %} {% form_field_error tags %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabSEO">
+            {% seo %}
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabFeedback">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="content-title">
+                  <p>{{ 'lbl.Feedback'|trans|ucfirst }}</p>
+                  <p class="help-block">{{ 'msg.FeedbackInfo'|trans }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                {% if feedback %}
+                <div class="panel-group" id="feedback" role="tablist" aria-multiselectable="false">
+                  {% for _itr_11 in feedback %}
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="_itr_11-heading-{{ _itr_11.id }}">
+                        <h4 class="panel-title">
+                          <a data-toggle="collapse" data-parent="#_itr_11" href="#_itr_11-collapse-{{ _itr_11.id }}" aria-expanded="true" aria-controls="_itr_11-collapse-{{ _itr_11.id }}">
+                            <span class="fa fa-caret-right fa-fw"></span>{{ _itr_11.text|truncate(150) }}
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="_itr_11-collapse-{{ _itr_11.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="_itr_11-heading-{{ _itr_11.id }}">
+                        <div class="panel-body">
+                          {{ _itr_11.text }}
+                        </div>
+                        {% if showFaqDeleteFeedback %}
+                          <div class="panel-footer">
+                            <div class="btn-toolbar">
+                              <div class="btn-group pull-left" role="group">
+                                {{ macro.buttonIcon( geturl(delete__itr_11) ~ '&id=' ~ _itr_11.id, 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger') }}
+                              </div>
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% if not feedback %}
+              <p>{{ 'msg.NoFeedbackItems'|trans }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-page-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-left" role="group">
+          {% if showFaqDelete %}
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+              <span class="fa fa-trash-o"></span>
+              {{ 'lbl.Delete'|trans|ucfirst }}
+            </button>
+          {% endif %}
+        </div>
+        <div class="btn-group pull-right" role="group">
+          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+            <span class="fa fa-check"></span>{{ 'lbl.Publish'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+      {% if showFaqDelete %}
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+              </div>
+              <div class="modal-body">
+                <p>{{ 'msg.ConfirmDelete'|trans|format(title)|raw }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}</button>
+                <a href="{{ geturl('delete') }}&amp;id={{ item.id }}" class="btn btn-danger">
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endform %}
+{% endblock %}
+

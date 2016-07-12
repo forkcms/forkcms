@@ -1,0 +1,132 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+
+{% endblock %}
+
+{% block content %}
+  {% if warnings %}
+    <div class="row fork-module-messages">
+      <div class="col-md-12">
+        {% for warning in warnings %}
+          <div class="alert alert-warning" role="alert">
+            <span class="fa fa-exclamation-triangle"></span>{{ warning.message|raw }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+  {% if information %}
+    <div class="row fork-module-content">
+      <div class="col-md-8">
+        {% if information.description %}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                {{ 'lbl.Description'|trans|ucfirst }}
+              </h3>
+            </div>
+            <div class="panel-body">
+              <p>{{ information.description }}</p>
+            </div>
+          </div>
+        {% endif %}
+        {% if dataGridCronjobs %}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                {{ 'lbl.Cronjobs'|trans|ucfirst }}
+              </h3>
+            </div>
+            <div class="panel-body">
+              <p>{{ 'msg.CronjobsInfo'|trans|format(PATH_WWW_SITE_URL)|raw }}</p>
+            </div>
+            {{ dataGridCronjobs }}
+          </div>
+        {% endif %}
+        {% if dataGridEvents %}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                {{ 'lbl.Events'|trans|ucfirst }}
+              </h3>
+            </div>
+            {{ dataGridEvents|raw }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-md-4">
+        {% if information.version %}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                {{ 'lbl.Version'|trans|ucfirst }}
+              </h3>
+            </div>
+            <div class="panel-body">
+              <p>{{ information.version }}</p>
+            </div>
+          </div>
+        {% endif %}
+        {% if information.authors %}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                {{ 'lbl.Authors'|trans|ucfirst }}
+              </h3>
+            </div>
+            <div class="panel-body">
+              <ul>
+                {% for author in information.authors %}
+                  <li>
+                    {% if author.url %}
+                    <a href="{{ author.url }}" target="_blank" title="{{ author.name }}">
+                      {% endif %}
+                      {{ author.name }}
+                      {% if author.url %}
+                    </a>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+  {% if showInstallButton %}
+    <div class="row fork-module-actions">
+      <div class="col-md-12">
+        <div class="btn-toolbar">
+          <div class="btn-group pull-right" role="group">
+            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmInstall">
+              <span class="fa fa-file-o"></span>&nbsp;
+              {{ 'lbl.Install'|trans|ucfirst }}
+            </button>
+          </div>
+        </div>
+        <div class="modal fade" id="confirmInstall" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Install'|trans|ucfirst }}" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="modal-title h4">{{ 'lbl.Install'|trans|ucfirst }}</span>
+              </div>
+              <div class="modal-body">
+                <p>{{ 'msg.ConfirmModuleInstall'|trans|format(name)|raw }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+                </button>
+                <a href="{{ geturl('install_module') }}&amp;theme={{ name }}" class="btn btn-primary">
+                  <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|ucfirst }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

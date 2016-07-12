@@ -1,0 +1,45 @@
+<table cellspacing="10">
+  <tbody>
+    {% for row in table %}
+      <tr>
+        {% for template in row %}
+          <td {% spaceless %}
+            {% if template.rowspan > 1 %} rowspan="{{ template.rowspan }}"{% endif %}
+            {% if template.colspan > 1 %} colspan="{{ template.colspan }}"{% endif %}
+            {% if not template.exists %}
+            class="empty">
+            {% elseif template.large %}
+              id="templatePosition-{{ template.value }}" data-position="{{ template.value }}" class="box templatePosition">
+            {% else %}
+              >
+            {% endif %}
+            {% endspaceless %}
+
+            {% if not template.exists %}
+              &nbsp;
+            {% elseif template.large %}
+              <div class="panel panel-default panel-pages-block">
+                <div class="panel-heading">
+                  <div class="heading linkedBlocksTitle"><p>{{ template.title }}</p></div>
+                </div>
+                <div class="panel-body">
+                  <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
+                  <div class="text-center" role="toolbar">
+                    <div class="btn-group" role="group">
+                      <a href="#addBlock" class="btn btn-default btn-second btn-md addBlock">
+                        <span class="fa fa-plus-square"></span>
+                        <span class="btn-text">{{ 'lbl.AddBlock'|trans|ucfirst }}</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              <a href="#position-{{ template.value }}" title="{{ template.title }}">{{ template.title }}</a>
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

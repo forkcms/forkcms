@@ -15,8 +15,6 @@ use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
 
 /**
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class CMHelper
 {
@@ -24,6 +22,7 @@ class CMHelper
      * Checks if a group exists by its CampaignMonitor ID
      *
      * @param string $id The id of the group on Campaign Monitor.
+     *
      * @return bool
      */
     public static function existsGroupByCampaignMonitorID($id)
@@ -43,6 +42,7 @@ class CMHelper
      *
      * @param string $type    The type for the item.
      * @param string $otherId The id of the item.
+     *
      * @return string
      */
     public static function getCampaignMonitorID($type, $otherId)
@@ -69,6 +69,7 @@ class CMHelper
      * Returns the CampaignMonitor object
      *
      * @param int $listId The default list id to use.
+     *
      * @return \CampaignMonitor
      */
     public static function getCM($listId = null)
@@ -128,6 +129,7 @@ class CMHelper
      *
      * @param string        $email   The e-mail address to subscribe.
      * @param string $groupId The id of the group to subscribe to.
+     *
      * @return bool
      */
     public static function subscribe($email, $groupId = null)
@@ -159,7 +161,7 @@ class CMHelper
                     $subscriber['source'],
                     $subscriber['created_on'],
                     $subscriber['source'],
-                    $subscriber['created_on']
+                    $subscriber['created_on'],
                 )
             );
 
@@ -181,7 +183,7 @@ class CMHelper
                     $subscriberGroup['subscribed_on'],
                     $subscriberGroup['group_id'],
                     $subscriberGroup['status'],
-                    $subscriberGroup['subscribed_on']
+                    $subscriberGroup['subscribed_on'],
                 )
             );
 
@@ -198,6 +200,7 @@ class CMHelper
      *
      * @param string        $email   The e-mail address to unsubscribe.
      * @param string $groupId The id of the group to unsubscribe from.
+     *
      * @return bool
      */
     public static function unsubscribe($email, $groupId = null)

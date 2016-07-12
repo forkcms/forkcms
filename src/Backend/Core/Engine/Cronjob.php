@@ -16,9 +16,6 @@ use Frontend\Core\Engine\Language as FrontendLanguage;
 
 /**
  * This class will handle cronjob related stuff
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class Cronjob extends Object implements \ApplicationInterface
 {
@@ -40,7 +37,7 @@ class Cronjob extends Object implements \ApplicationInterface
         $this->cronjob->execute();
 
         // a cronjob does not have output, so we return a empty string as response
-        // this is not a correct solution, in time cronjobs should have there own frontcontroller.
+        // this is not a correct solution, in time cronjobs should have their own frontcontroller.
         return new Response('');
     }
 

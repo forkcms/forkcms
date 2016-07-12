@@ -4,14 +4,12 @@ namespace Common\Mailer;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Frontend\Core\Engine\Model;
-use Frontend\Core\Engine\Template;
-use Backend\Core\Engine\Template as BackendTemplate;
+use Frontend\Core\Engine\TwigTemplate as FrontendTemplate;
+use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 use Common\Uri;
 
 /**
  * This class will send mails
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class Message extends \Swift_Message
 {
@@ -46,11 +44,12 @@ class Message extends \Swift_Message
     }
 
     /**
-     * Parses a SpoonTemplate with the wanted variables
+     * Parses a TwigTemplate with the wanted variables
      *
      * @param  string  $template
      * @param  array   $variables
      * @param  bool    $addUTM
+     *
      * @return Message
      */
     public function parseHtml($template, $variables, $addUTM = false)
@@ -72,6 +71,7 @@ class Message extends \Swift_Message
      * Attach multiple attachments to this message
      *
      * @param  array   $attachments
+     *
      * @return Message
      */
     public function addAttachments($attachments)
@@ -93,6 +93,7 @@ class Message extends \Swift_Message
      * Add plaintext content as fallback for the html
      *
      * @param  string  $content
+     *
      * @return Message
      */
     public function setPlainText($content)
@@ -107,6 +108,7 @@ class Message extends \Swift_Message
     /**
      * @param  string $html    The html to convert links in.
      * @param  string $subject The subject of the mail
+     *
      * @return string
      */
     private function addUTM($html, $subject)
@@ -142,20 +144,27 @@ class Message extends \Swift_Message
      *
      * @param  string $template  The template to use.
      * @param  array  $variables The variables to assign.
+     *
      * @return string
      */
     private function getTemplateContent($template, $variables = null)
     {
         // new template instance
         $tpl = null;
-        if (APPLICATION === 'Backend') {
+
+        // with the strpos we check if it is a frontend template, in that case we use the frontend template to prevent
+        // errors that the template could not be found. This way we don't have a backwards compatibility break.
+        if (APPLICATION === 'Backend' && strpos($template, FRONTEND_CORE_PATH) === false) {
             $tpl = new BackendTemplate(false);
         } else {
-            $tpl = new Template(false);
+            return Model::get('templating')->render(
+                $template,
+                $variables
+            );
         }
 
         // set some options
-        $tpl->setForceCompile(true);
+        $tpl->setForceCompile();
 
         // variables were set
         if (!empty($variables)) {
@@ -170,6 +179,7 @@ class Message extends \Swift_Message
      * Converts all css to inline styles
      *
      * @param  string $html
+     *
      * @return string
      */
     private function cssToInlineStyles($html)
@@ -188,6 +198,7 @@ class Message extends \Swift_Message
      * Replace internal links and images to absolute links
      *
      * @param  string $html The html to convert links in.
+     *
      * @return string
      */
     private function relativeToAbsolute($html)

@@ -19,9 +19,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * In this file we store all generic functions that we will be using in the mailmotor module
- *
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Model
 {
@@ -107,7 +104,7 @@ class Model
                     'message' => sprintf(
                         BL::err('AnalysisNoCMAccount', 'Mailmotor'),
                         BackendModel::createURLForAction('Settings', 'Mailmotor')
-                    )
+                    ),
                 );
             } elseif (BackendModel::get('fork.settings')->get('Mailmotor', 'cm_client_id') == '') {
                 // add warning
@@ -115,7 +112,7 @@ class Model
                     'message' => sprintf(
                         BL::err('AnalysisNoCMClientID', 'Mailmotor'),
                         BackendModel::createURLForAction('Settings', 'Mailmtor')
-                    )
+                    ),
                 );
             }
         }
@@ -229,6 +226,7 @@ class Model
      * Checks if an e-mailaddress exists
      *
      * @param string $email The emailaddress to check for existence.
+     *
      * @return bool
      */
     public static function existsAddress($email)
@@ -246,6 +244,7 @@ class Model
      * Checks if a campaign exists
      *
      * @param int $id The id of the campaign.
+     *
      * @return bool
      */
     public static function existsCampaign($id)
@@ -263,6 +262,7 @@ class Model
      * Checks if a campaign exists
      *
      * @param string $name The name of the campaign to check for existence.
+     *
      * @return bool
      */
     public static function existsCampaignByName($name)
@@ -280,6 +280,7 @@ class Model
      * Checks if a group exists
      *
      * @param int $id The id of the group to check.
+     *
      * @return bool
      */
     public static function existsGroup($id)
@@ -297,6 +298,7 @@ class Model
      * Checks if a group exists
      *
      * @param string $name The name of the group to check.
+     *
      * @return bool
      */
     public static function existsGroupByName($name)
@@ -314,6 +316,7 @@ class Model
      * Checks if a mailing exists
      *
      * @param int $id The id of the mailing to check.
+     *
      * @return bool
      */
     public static function existsMailing($id)
@@ -331,6 +334,7 @@ class Model
      * Checks if a mailing exists by name
      *
      * @param string $name The name of the mailing to check.
+     *
      * @return bool
      */
     public static function existsMailingByName($name)
@@ -363,6 +367,7 @@ class Model
      * Checks if a given campaign has sent mailings under it
      *
      * @param int $id The id of the campaign to check.
+     *
      * @return bool
      */
     public static function existsSentMailingsByCampaignID($id)
@@ -596,6 +601,7 @@ class Model
      * Get an e-mail address record
      *
      * @param string $email The emailaddress to get.
+     *
      * @return array
      */
     public static function getAddress($email)
@@ -629,6 +635,7 @@ class Model
      * Get all e-mail addresses
      *
      * @param int $limit Maximum number of addresses to get.
+     *
      * @return array
      */
     public static function getAddresses($limit = null)
@@ -670,6 +677,7 @@ class Model
      * @param array $ids       The ids of the groups.
      * @param bool  $getColumn If this is true, the function returns a column of addresses instead.
      * @param int   $limit     Maximum number if addresses to return.
+     *
      * @return array
      */
     public static function getAddressesByGroupID($ids, $getColumn = false, $limit = null)
@@ -714,6 +722,7 @@ class Model
      * Get all data for a given id
      *
      * @param int $id The id of the campaign to fetch.
+     *
      * @return array
      */
     public static function getCampaign($id)
@@ -730,6 +739,7 @@ class Model
      * Get a campaign id by name
      *
      * @param string $name The name of the campaign.
+     *
      * @return int
      */
     public static function getCampaignID($name)
@@ -788,6 +798,7 @@ class Model
      * Get all custom fields for a given group ID
      *
      * @param int $groupId The ID of the group.
+     *
      * @return array
      */
     public static function getCustomFields($groupId)
@@ -803,6 +814,7 @@ class Model
      * Get all custom fields and their values for a given e-mail address
      *
      * @param string $email The emailaddress to get the custom fields for.
+     *
      * @return array
      */
     public static function getCustomFieldsByAddress($email)
@@ -848,6 +860,7 @@ class Model
      * Returns the default group ID
      *
      * @param string $language The language wherefore the default should be returned.
+     *
      * @return int
      */
     public static function getDefaultGroupID($language = null)
@@ -900,6 +913,7 @@ class Model
      * Get all data for a given group
      *
      * @param int $id The id of the group to fetch.
+     *
      * @return array
      */
     public static function getGroup($id)
@@ -928,6 +942,7 @@ class Model
      * Get a group id by name
      *
      * @param string $name The name of the group.
+     *
      * @return int
      */
     public static function getGroupID($name)
@@ -956,6 +971,7 @@ class Model
      * Get all groups for a given e-mail address
      *
      * @param string $email The emailaddress to get the groupID for.
+     *
      * @return array
      */
     public static function getGroupIDsByEmail($email)
@@ -974,6 +990,7 @@ class Model
      * Get all groups for a given mailing
      *
      * @param int $id The ID of the mailing.
+     *
      * @return array
      */
     public static function getGroupIDsByMailingID($id)
@@ -1037,6 +1054,7 @@ class Model
      * Get all groups in key/value pairs
      *
      * @param string $email The emailaddress to get the groups for.
+     *
      * @return array
      */
     public static function getGroupsByEmailAsPairs($email)
@@ -1054,6 +1072,7 @@ class Model
      * Get all groups by their IDs
      *
      * @param array $ids The ids of the required groups.
+     *
      * @return array
      */
     public static function getGroupsByIds($ids)
@@ -1117,7 +1136,7 @@ class Model
             // store variables array
             $record['variables'] = array(
                 'recipients' => ($record['recipients'] != 0) ? $record['recipients'] : false,
-                'single' => ($record['recipients'] == 1) ? true : false
+                'single' => ($record['recipients'] == 1) ? true : false,
             );
 
             // unset the recipients from this stack
@@ -1148,7 +1167,7 @@ class Model
         // loop the languages
         foreach ($languages as $abbreviation) {
             // build new value
-            $results[] = array('value' => $abbreviation, 'label' => BL::lbl(strtoupper($abbreviation)));
+            $results[] = array('value' => $abbreviation, 'label' => BL::lbl(mb_strtoupper($abbreviation)));
         }
 
         return $results;
@@ -1158,6 +1177,7 @@ class Model
      * Get all data for a given mailing
      *
      * @param int $id The id of the mailing.
+     *
      * @return array
      */
     public static function getMailing($id)
@@ -1207,6 +1227,7 @@ class Model
      * @param int    $id          The id of the mailing.
      * @param string $contentType The content-type, possible values are: html, plain.
      * @param bool   $forCM       Is the URL intended for Campaign Monitor.
+     *
      * @return string
      */
     public static function getMailingPreviewURL($id, $contentType = 'html', $forCM = false)
@@ -1249,6 +1270,7 @@ class Model
      * Get all recent subscriptions
      *
      * @param int $limit
+     *
      * @return array
      */
     public static function getRecentSubscriptions($limit = null)
@@ -1278,6 +1300,7 @@ class Model
      * Get all recent unsubscriptions
      *
      * @param int $limit
+     *
      * @return array
      */
     public static function getRecentUnsubscriptions($limit = null)
@@ -1307,7 +1330,8 @@ class Model
      * Get all sent mailings
      *
      * @param int $limit The maximum number of items to retrieve.
-     * @return integer|null
+     *
+     * @return int|null
      */
     public static function getSentMailings($limit = null)
     {
@@ -1326,6 +1350,7 @@ class Model
      * Get all subscriptions for a given e-mail address
      *
      * @param string $email The email address to get the subscriptions for.
+     *
      * @return array
      */
     public static function getSubscriptions($email)
@@ -1344,6 +1369,7 @@ class Model
      *
      * @param string $language The language.
      * @param string $name     The name of the template.
+     *
      * @return array
      */
     public static function getTemplate($language, $name)
@@ -1353,10 +1379,10 @@ class Model
         $fs = new Filesystem();
 
         // load all templates in the 'templates' folder for this language
-        if (!$fs->exists($path . '/' . $name . '/template.tpl')) {
+        if (!$fs->exists($path . '/' . $name . '/template.html.twig')) {
             throw new \SpoonException(
                 'The template folder "' . $name .
-                '" exists, but no template.tpl file was found. Please create one.'
+                '" exists, but no template.html.twig file was found. Please create one.'
             );
         }
         if (!$fs->exists($path . '/' . $name . '/Css/screen.css')) {
@@ -1371,7 +1397,7 @@ class Model
         $record['name'] = $name;
         $record['language'] = $language;
         $record['label'] = BL::lbl('Template' . \SpoonFilter::toCamelCase(\SpoonFilter::toCamelCase($name), '-'));
-        $record['path_content'] = $path . '/' . $name . '/template.tpl';
+        $record['path_content'] = $path . '/' . $name . '/template.html.twig';
         $record['path_css'] = $path . '/' . $name . '/Css/screen.css';
         $record['url_css'] = SITE_URL . '/src/Backend/Modules/Mailmotor/Templates/' . $language .
                              '/' . $name . '/Css/screen.css';
@@ -1392,6 +1418,7 @@ class Model
      * SpoonForm::addRadioButton() and SpoonForm::addMultiCheckbox()
      *
      * @param string $language The language.
+     *
      * @return array
      */
     public static function getTemplatesForCheckboxes($language)
@@ -1420,6 +1447,7 @@ class Model
      * Get the unsubscribed e-mail addresses by group ID(s)
      *
      * @param mixed $ids The ids of the groups.
+     *
      * @return array
      */
     public static function getUnsubscribedAddressesByGroupID($ids)
@@ -1489,6 +1517,7 @@ class Model
      * Inserts a new campaign into the database
      *
      * @param array $item The data to insert for the campaign.
+     *
      * @return int
      */
     public static function insertCampaign(array $item)
@@ -1505,7 +1534,8 @@ class Model
      * @param string $email             The email you want to insert the custom fields for.
      * @param int    $customFieldsGroup If this is set it will only update the custom fields for this group.
      * @param bool   $import            This method is called through the import action.
-     * @return boolean|null
+     *
+     * @return bool|null
      */
     public static function insertCustomFields(
         array $fields,
@@ -1539,7 +1569,7 @@ class Model
                     $subscription['group_id'],
                     'subscribed',
                     BackendModel::getUTCDate('Y-m-d H:i:s'),
-                    $subscription['custom_fields']
+                    $subscription['custom_fields'],
                 )
             );
         }
@@ -1563,6 +1593,7 @@ class Model
      * Inserts a new group into the database
      *
      * @param array $item The data to insert for the group.
+     *
      * @return int
      */
     public static function insertGroup(array $item)
@@ -1592,6 +1623,7 @@ class Model
      * Inserts a new mailing into the database
      *
      * @param array $item The data to insert for the mailing.
+     *
      * @return int
      */
     public static function insertMailing(array $item)
@@ -1604,6 +1636,7 @@ class Model
      *
      * @param array $item   The data to insert for the address.
      * @param array $fields The custom field values for this user.
+     *
      * @return bool
      */
     public static function insertSubscription(array $item, array $fields = null)
@@ -1638,6 +1671,7 @@ class Model
      *
      * @param string $email   The email address to check.
      * @param int    $groupId The id of the group.
+     *
      * @return bool
      */
     public static function isSubscribed($email, $groupId = null)
@@ -1660,7 +1694,8 @@ class Model
      * @param array $item    The data to update for the e-mail address.
      * @param int   $groupId The group to subscribe the address to.
      * @param array $fields  The custom fields for the address in the given group.
-     * @return boolean|null
+     *
+     * @return bool|null
      */
     public static function saveAddress(array $item, $groupId, $fields = array())
     {
@@ -1680,7 +1715,7 @@ class Model
                 $record['email'],
                 $record['source'],
                 $record['created_on'],
-                $record['email']
+                $record['email'],
             )
         );
 
@@ -1700,7 +1735,7 @@ class Model
                 $subscription['group_id'],
                 'subscribed',
                 BackendModel::getUTCDate(),
-                $subscription['custom_fields']
+                $subscription['custom_fields'],
             )
         );
     }
@@ -1709,6 +1744,7 @@ class Model
      * Updates a campaign
      *
      * @param array $item The data to update for the campaign.
+     *
      * @return int
      */
     public static function updateCampaign(array $item)
@@ -1728,6 +1764,7 @@ class Model
      * @param array  $fields  The fields.
      * @param int    $groupId The group to update.
      * @param string $email   The email you want to update the custom fields for.
+     *
      * @return int
      */
     public static function updateCustomFields($fields, $groupId, $email = null)
@@ -1768,6 +1805,7 @@ class Model
      * Updates a group
      *
      * @param array $item The data to update for the group.
+     *
      * @return int
      */
     public static function updateGroup(array $item)
@@ -1785,6 +1823,7 @@ class Model
      *
      * @param string $email    The email address to update.
      * @param mixed  $groupIds The ids of the groups.
+     *
      * @return false|null
      */
     public static function updateGroups($email, $groupIds)
@@ -1818,6 +1857,7 @@ class Model
      *
      * @param int   $mailingId The id of the mailing.
      * @param array $groupIds  A list of group-ids.
+     *
      * @return false|null
      */
     public static function updateGroupsForMailing($mailingId, $groupIds)
@@ -1848,6 +1888,7 @@ class Model
      * Updates a mailing
      *
      * @param array $item The data to update for the mailing.
+     *
      * @return int
      */
     public static function updateMailing(array $item)

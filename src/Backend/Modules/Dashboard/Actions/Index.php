@@ -21,17 +21,15 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the index-action (default), it will display the login screen
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Index extends BackendBaseActionIndex
 {
     /**
      * The widgets
      *
-     * @var	array
+     * @var array
      */
-    private $widgets = array('left' => array(), 'middle' => array(), 'right' => array());
+    private $widgets = array();
 
     /**
      * Execute the action
@@ -88,14 +86,6 @@ class Index extends BackendBaseActionIndex
                         throw new BackendException('The widgetfile ' . $className . ' could not be found.');
                     }
 
-                    // present?
-                    $present = (isset($userSequence[$module][$widgetName]['present'])) ? $userSequence[$module][$widgetName]['present'] : false;
-
-                    // if not present, continue
-                    if (!$present) {
-                        continue;
-                    }
-
                     // create instance
                     /** @var $instance BackendBaseWidget */
                     $instance = new $className($this->getKernel());
@@ -105,48 +95,36 @@ class Index extends BackendBaseActionIndex
                         continue;
                     }
 
-                    // hidden?
-                    $hidden = (isset($userSequence[$module][$widgetName]['hidden'])) ? $userSequence[$module][$widgetName]['hidden'] : false;
-
-                    // execute instance if it is not hidden
-                    if (!$hidden) {
-                        $instance->execute();
-                    }
+                    $instance->execute();
 
                     // user sequence provided?
-                    $column = (isset($userSequence[$module][$widgetName]['column'])) ? $userSequence[$module][$widgetName]['column'] : $instance->getColumn();
-                    $position = (isset($userSequence[$module][$widgetName]['position'])) ? $userSequence[$module][$widgetName]['position'] : $instance->getPosition();
                     $title = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($module))) . ': ' . BL::lbl(\SpoonFilter::toCamelCase($widgetName));
                     $templatePath = $instance->getTemplatePath();
 
                     // reset template path
                     if ($templatePath == null) {
-                        $templatePath = BACKEND_PATH . '/Modules/' . $module . '/Layout/Widgets/' . $widgetName . '.tpl';
+                        $templatePath = '/' . $module . '/Layout/Widgets/' . $widgetName . '.html.twig';
+                    }
+
+                    $templating = $this->get('template');
+                    $content = trim($templating->getContent($templatePath));
+
+                    if (empty($content)) {
+                        continue;
                     }
 
                     // build item
                     $item = array(
-                        'template' => $templatePath,
+                        'content' => $content,
                         'module' => $module,
                         'widget' => $widgetName,
                         'title' => $title,
-                        'hidden' => $hidden
                     );
 
                     // add on new position if no position is set or if the position is already used
-                    if ($position === null || isset($this->widgets[$column][$position])) {
-                        $this->widgets[$column][] = $item;
-                    } else {
-                        // add on requested position
-                        $this->widgets[$column][$position] = $item;
-                    }
+                    $this->widgets[] = $item;
                 }
             }
-        }
-
-        // sort the widgets
-        foreach ($this->widgets as &$column) {
-            ksort($column);
         }
     }
 
@@ -164,8 +142,6 @@ class Index extends BackendBaseActionIndex
         }
 
         // assign
-        $this->tpl->assign('leftColumn', $this->widgets['left']);
-        $this->tpl->assign('middleColumn', $this->widgets['middle']);
-        $this->tpl->assign('rightColumn', $this->widgets['right']);
+        $this->tpl->assign('widgets', $this->widgets);
     }
 }

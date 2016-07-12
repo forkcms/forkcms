@@ -19,8 +19,6 @@ use Backend\Modules\Blog\Engine\Model;
 
 /**
  * This import-action will let you import a wordpress blog
- *
- * @author Toon Daelman <toon@sumocoders.be>
  */
 class ImportWordpress extends BackendBaseActionEdit
 {
@@ -131,7 +129,7 @@ class ImportWordpress extends BackendBaseActionEdit
             }
 
             // Is it really an item?
-            if (substr($xmlString, 0, 5) == '<item') {
+            if (mb_substr($xmlString, 0, 5) == '<item') {
                 // What type of content are we dealing with?
                 switch ($xml->children('wp', true)->post_type) {
                     case 'post':
@@ -148,7 +146,7 @@ class ImportWordpress extends BackendBaseActionEdit
                         // Don't do anything
                         break;
                 }
-            } elseif (substr($xmlString, 0, 10) == '<wp:author') {
+            } elseif (mb_substr($xmlString, 0, 10) == '<wp:author') {
                 // Process the authors
                 $this->authors[(string) $xml->children('wp', true)->author_login] = array(
                     'id' => (string) $xml->children('wp', true)->author_id,
@@ -174,6 +172,7 @@ class ImportWordpress extends BackendBaseActionEdit
      * Import a blog post
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return bool
      */
     private function processPost($xml)
@@ -273,6 +272,7 @@ class ImportWordpress extends BackendBaseActionEdit
      * Import an attachment
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return bool
      */
     private function processAttachment($xml)
@@ -309,8 +309,8 @@ class ImportWordpress extends BackendBaseActionEdit
         }
 
         // Keep a log of downloaded files
-        $this->attachments[strtolower($file)] = $imagesURL . '/' . $destinationFile;
-        $this->attachments[strtolower($guid)] = $imagesURL . '/' . $destinationFile;
+        $this->attachments[mb_strtolower($file)] = $imagesURL . '/' . $destinationFile;
+        $this->attachments[mb_strtolower($guid)] = $imagesURL . '/' . $destinationFile;
 
         return true;
     }
@@ -322,6 +322,7 @@ class ImportWordpress extends BackendBaseActionEdit
      * If we find no matches, we'll assign to the main fork user.
      *
      * @param string $username The original user name
+     *
      * @return int
      */
     private function handleUser($username = '')
@@ -331,7 +332,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $db = BackendModel::getContainer()->get('database');
         $id = (int) $db->getVar(
             'SELECT id FROM users WHERE email=? AND active=? AND deleted=?',
-            array(strtolower($this->authors[(string) $username]['email']), 'Y', 'N')
+            array(mb_strtolower($this->authors[(string) $username]['email']), 'Y', 'N')
         );
 
         // We found an id!
@@ -351,6 +352,7 @@ class ImportWordpress extends BackendBaseActionEdit
      *
      * @param string $text The post text
      * @param string $filter The text that needs to be in a url before we start replacing it.
+     *
      * @return string
      */
     private function handleUrls($text, $filter = '')
@@ -362,16 +364,16 @@ class ImportWordpress extends BackendBaseActionEdit
             // Walk through image links
             foreach ($matchesImages[1] as $key => $file) {
                 // Should we bother looking at this file?
-                if (!empty($filter) && !stristr($file, $filter)) {
+                if (!empty($filter) && !mb_stristr($file, $filter)) {
                     continue;
                 }
 
                 $noSize = preg_replace('/\-\d+x\d+/i', '', $file);
 
-                if (isset($this->attachments[strtolower($file)])) {
-                    $text = str_replace($file, $this->attachments[strtolower($file)], $text);
-                } elseif (isset($this->attachments[strtolower($noSize)])) {
-                    $text = str_replace($file, $this->attachments[strtolower($noSize)], $text);
+                if (isset($this->attachments[mb_strtolower($file)])) {
+                    $text = str_replace($file, $this->attachments[mb_strtolower($file)], $text);
+                } elseif (isset($this->attachments[mb_strtolower($noSize)])) {
+                    $text = str_replace($file, $this->attachments[mb_strtolower($noSize)], $text);
                 }
             }
         }
@@ -383,16 +385,16 @@ class ImportWordpress extends BackendBaseActionEdit
             // Walk through links
             foreach ($matchesLinks[1] as $key => $link) {
                 // Should we bother looking at this file?
-                if (!empty($filter) && !stristr($link, $filter)) {
+                if (!empty($filter) && !mb_stristr($link, $filter)) {
                     continue;
                 }
 
                 $noSize = preg_replace('/\-\d+x\d+/i', '', $link);
 
-                if (isset($this->attachments[strtolower($link)])) {
-                    $text = str_replace($link, $this->attachments[strtolower($link)], $text);
-                } elseif (isset($this->attachments[strtolower($noSize)])) {
-                    $text = str_replace($link, $this->attachments[strtolower($noSize)], $text);
+                if (isset($this->attachments[mb_strtolower($link)])) {
+                    $text = str_replace($link, $this->attachments[mb_strtolower($link)], $text);
+                } elseif (isset($this->attachments[mb_strtolower($noSize)])) {
+                    $text = str_replace($link, $this->attachments[mb_strtolower($noSize)], $text);
                 }
             }
         }
@@ -406,6 +408,7 @@ class ImportWordpress extends BackendBaseActionEdit
      * We'll check if the category exists in the fork blog module, and create it if it doesn't.
      *
      * @param string $category The post category
+     *
      * @return int
      */
     private function handleCategory($category = '')

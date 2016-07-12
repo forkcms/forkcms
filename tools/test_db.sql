@@ -1,7 +1,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -9,52 +9,52 @@
 DROP TABLE IF EXISTS `analytics_keywords`;
 CREATE TABLE `analytics_keywords` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `keyword` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `keyword` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `entrances` int(11) NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `analytics_landing_pages`;
 CREATE TABLE `analytics_landing_pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `page_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `page_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `entrances` int(11) NOT NULL,
   `bounces` int(11) NOT NULL,
-  `bounce_rate` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `bounce_rate` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
   `updated_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `analytics_pages`;
 CREATE TABLE `analytics_pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `page` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `page` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_viewed` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `analytics_referrers`;
 CREATE TABLE `analytics_referrers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `referrer` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `referrer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `entrances` int(11) NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `backend_navigation`;
 CREATE TABLE `backend_navigation` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL,
-  `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `selected_for` text COLLATE utf8_unicode_ci,
+  `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `selected_for` text COLLATE utf8mb4_unicode_ci,
   `sequence` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `backend_navigation` WRITE;
 /*!40000 ALTER TABLE `backend_navigation` DISABLE KEYS */;
@@ -120,27 +120,27 @@ DROP TABLE IF EXISTS `blog_categories`;
 CREATE TABLE `blog_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `meta_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `blog_comments`;
 CREATE TABLE `blog_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `post_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_on` datetime NOT NULL,
-  `author` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `website` text COLLATE utf8_unicode_ci,
-  `text` text COLLATE utf8_unicode_ci NOT NULL,
-  `type` enum('comment','trackback') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'comment',
-  `status` enum('published','moderation','spam') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'moderation',
-  `data` text COLLATE utf8_unicode_ci COMMENT 'Serialized array with extra data',
+  `author` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `website` text COLLATE utf8mb4_unicode_ci,
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('comment','trackback') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'comment',
+  `status` enum('published','moderation','spam') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'moderation',
+  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'Serialized array with extra data',
   PRIMARY KEY (`id`),
   KEY `idx_post_id_status` (`post_id`,`status`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `blog_posts`;
 CREATE TABLE `blog_posts` (
@@ -149,21 +149,21 @@ CREATE TABLE `blog_posts` (
   `category_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `meta_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `introduction` text COLLATE utf8_unicode_ci,
-  `text` text COLLATE utf8_unicode_ci,
-  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` enum('active','archived','draft') COLLATE utf8_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `introduction` text COLLATE utf8mb4_unicode_ci,
+  `text` text COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('active','archived','draft') COLLATE utf8mb4_unicode_ci NOT NULL,
   `publish_on` datetime NOT NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
-  `hidden` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `allow_comments` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+  `hidden` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `allow_comments` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
   `num_comments` int(11) NOT NULL,
   PRIMARY KEY (`revision_id`),
   KEY `idx_status_language_hidden` (`status`,`language`,`hidden`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `content_blocks`;
 CREATE TABLE `content_blocks` (
@@ -171,38 +171,38 @@ CREATE TABLE `content_blocks` (
   `revision_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `extra_id` int(11) NOT NULL,
-  `template` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'default.tpl',
-  `language` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `text` text COLLATE utf8_unicode_ci,
-  `hidden` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `status` enum('active','archived') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'active',
+  `template` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Default.html.twig',
+  `language` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `text` text COLLATE utf8mb4_unicode_ci,
+  `hidden` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `status` enum('active','archived') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`revision_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `faq_categories`;
 CREATE TABLE `faq_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `meta_id` int(11) NOT NULL,
   `extra_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sequence` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `faq_feedback`;
 CREATE TABLE `faq_feedback` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `question_id` int(11) unsigned NOT NULL,
-  `text` text COLLATE utf8_unicode_ci NOT NULL,
-  `processed` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `processed` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `faq_questions`;
 CREATE TABLE `faq_questions` (
@@ -210,85 +210,85 @@ CREATE TABLE `faq_questions` (
   `category_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `meta_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `question` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `answer` text COLLATE utf8_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `question` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `answer` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_on` datetime NOT NULL,
   `num_views` int(11) NOT NULL DEFAULT '0',
   `num_usefull_yes` int(11) NOT NULL DEFAULT '0',
   `num_usefull_no` int(11) NOT NULL DEFAULT '0',
-  `hidden` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+  `hidden` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
   `sequence` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_faq_questions_faq_categories` (`hidden`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `forms`;
 CREATE TABLE `forms` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `method` enum('database','database_email') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'database_email',
-  `email` text COLLATE utf8_unicode_ci,
-  `success_message` text COLLATE utf8_unicode_ci,
-  `identifier` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `method` enum('database','database_email') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email',
+  `email` text COLLATE utf8mb4_unicode_ci,
+  `success_message` text COLLATE utf8mb4_unicode_ci,
+  `identifier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `forms_data`;
 CREATE TABLE `forms_data` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `form_id` int(11) unsigned NOT NULL,
-  `session_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `session_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sent_on` datetime NOT NULL,
-  `data` text COLLATE utf8_unicode_ci COMMENT 'Serialized array with extra information.',
+  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'Serialized array with extra information.',
   PRIMARY KEY (`id`),
   KEY `form_id` (`form_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `forms_data_fields`;
 CREATE TABLE `forms_data_fields` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `data_id` int(11) unsigned NOT NULL,
-  `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `value` text COLLATE utf8_unicode_ci,
+  `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `data_id` (`data_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `forms_fields`;
 CREATE TABLE `forms_fields` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `form_id` int(11) unsigned NOT NULL,
-  `type` enum('textbox','textarea','dropdown','checkbox','radiobutton','heading','paragraph','submit') COLLATE utf8_unicode_ci NOT NULL,
-  `settings` text COLLATE utf8_unicode_ci,
+  `type` enum('textbox','textarea','dropdown','checkbox','radiobutton','heading','paragraph','submit') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `settings` text COLLATE utf8mb4_unicode_ci,
   `sequence` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `sequence` (`sequence`),
   KEY `form_id` (`form_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `forms_fields_validation`;
 CREATE TABLE `forms_fields_validation` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `field_id` int(11) unsigned NOT NULL,
-  `type` enum('required','email','numeric') COLLATE utf8_unicode_ci NOT NULL,
-  `parameter` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'If you want to validate higher then a number, the number would be the parameter',
-  `error_message` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` enum('required','email','numeric') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parameter` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'If you want to validate higher then a number, the number would be the parameter',
+  `error_message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `field_id` (`field_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `groups`;
 CREATE TABLE `groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `parameters` text COLLATE utf8_unicode_ci COMMENT 'serialized array containing default user module/action rights',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parameters` text COLLATE utf8mb4_unicode_ci COMMENT 'serialized array containing default user module/action rights',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `groups` WRITE;
 /*!40000 ALTER TABLE `groups` DISABLE KEYS */;
@@ -306,11 +306,11 @@ DROP TABLE IF EXISTS `groups_rights_actions`;
 CREATE TABLE `groups_rights_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the module',
-  `action` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the action',
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the module',
+  `action` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'name of the action',
   `level` double NOT NULL DEFAULT '1' COMMENT 'unix type levels 1, 3, 5 and 7',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `groups_rights_actions` WRITE;
 /*!40000 ALTER TABLE `groups_rights_actions` DISABLE KEYS */;
@@ -505,10 +505,10 @@ DROP TABLE IF EXISTS `groups_rights_modules`;
 CREATE TABLE `groups_rights_modules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the module',
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the module',
   PRIMARY KEY (`id`),
   KEY `idx_group_id` (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `groups_rights_modules` WRITE;
 /*!40000 ALTER TABLE `groups_rights_modules` DISABLE KEYS */;
@@ -541,10 +541,10 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `groups_settings`;
 CREATE TABLE `groups_settings` (
   `group_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
-  `value` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'serialized value',
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the setting',
+  `value` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'serialized value',
   PRIMARY KEY (`group_id`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `groups_settings` WRITE;
 /*!40000 ALTER TABLE `groups_settings` DISABLE KEYS */;
@@ -559,38 +559,38 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `hooks_queue`;
 CREATE TABLE `hooks_queue` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `callback` text COLLATE utf8_unicode_ci NOT NULL,
-  `data` text COLLATE utf8_unicode_ci,
-  `status` enum('busy','error','queued') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'queued',
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `callback` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci,
+  `status` enum('busy','error','queued') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'queued',
   `created_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `hooks_subscriptions`;
 CREATE TABLE `hooks_subscriptions` (
-  `event_module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `event_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `callback` text COLLATE utf8_unicode_ci NOT NULL,
+  `event_module` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `event_name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `callback` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_on` datetime NOT NULL,
   UNIQUE KEY `event_module` (`event_module`(100),`event_name`(100),`module`(100))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `locale`;
 CREATE TABLE `locale` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `application` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `type` enum('act','err','lbl','msg') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'lbl',
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `value` text COLLATE utf8_unicode_ci,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `application` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `type` enum('act','err','lbl','msg') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'lbl',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `language` (`language`,`application`(20),`module`(20),`type`,`name`(100))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `locale` WRITE;
 /*!40000 ALTER TABLE `locale` DISABLE KEYS */;
@@ -2076,96 +2076,96 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_id` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `street` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `number` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `zip` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `country` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `street` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lat` float DEFAULT NULL,
   `lng` float DEFAULT NULL,
-  `show_overview` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+  `show_overview` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `location_settings`;
 CREATE TABLE `location_settings` (
   `map_id` int(11) unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `value` text COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`map_id`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `mailmotor_addresses`;
 CREATE TABLE `mailmotor_addresses` (
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `source` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `source` varchar(255)  CHARACTER SET utf8 DEFAULT NULL,
   `created_on` datetime DEFAULT NULL,
   PRIMARY KEY (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `mailmotor_addresses_groups`;
 CREATE TABLE `mailmotor_addresses_groups` (
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 NOT NULL,
   `group_id` int(11) NOT NULL,
-  `custom_fields` text COLLATE utf8_unicode_ci,
-  `status` enum('subscribed','unsubscribed','inserted') COLLATE utf8_unicode_ci NOT NULL,
+  `custom_fields` text COLLATE utf8mb4_unicode_ci,
+  `status` enum('subscribed','unsubscribed','inserted') COLLATE utf8mb4_unicode_ci NOT NULL,
   `subscribed_on` datetime DEFAULT NULL,
   `unsubscribed_on` datetime DEFAULT NULL,
   PRIMARY KEY (`email`,`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `mailmotor_campaignmonitor_ids`;
 CREATE TABLE `mailmotor_campaignmonitor_ids` (
-  `cm_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `type` enum('campaign','list','template') COLLATE utf8_unicode_ci NOT NULL,
+  `cm_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('campaign','list','template') COLLATE utf8mb4_unicode_ci NOT NULL,
   `other_id` int(11) NOT NULL,
   PRIMARY KEY (`type`,`cm_id`,`other_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `mailmotor_campaigns`;
 CREATE TABLE `mailmotor_campaigns` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `mailmotor_groups`;
 CREATE TABLE `mailmotor_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `custom_fields` text COLLATE utf8_unicode_ci,
-  `is_default` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `custom_fields` text COLLATE utf8mb4_unicode_ci,
+  `is_default` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
   `created_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `mailmotor_mailings`;
 CREATE TABLE `mailmotor_mailings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `template` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `template` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `campaign_id` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `from_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `from_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `reply_to_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `reply_to_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subject` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content_html` text COLLATE utf8_unicode_ci,
-  `content_plain` text COLLATE utf8_unicode_ci,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `from_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `from_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reply_to_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reply_to_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content_html` text COLLATE utf8mb4_unicode_ci,
+  `content_plain` text COLLATE utf8mb4_unicode_ci,
   `send_on` datetime DEFAULT NULL,
-  `status` enum('concept','queued','sent') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` enum('concept','queued','sent') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_on` datetime DEFAULT NULL,
   `edited_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `mailmotor_mailings_groups`;
 CREATE TABLE `mailmotor_mailings_groups` (
@@ -2174,24 +2174,24 @@ CREATE TABLE `mailmotor_mailings_groups` (
   PRIMARY KEY (`mailing_id`,`group_id`),
   KEY `group_id` (`group_id`),
   KEY `mailing_id` (`mailing_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `meta`;
 CREATE TABLE `meta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `keywords_overwrite` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description_overwrite` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `title_overwrite` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `url_overwrite` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+  `keywords` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `keywords_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
   `custom` text CHARACTER SET utf8 COMMENT 'used for custom meta-information',
-  `data` text COLLATE utf8_unicode_ci COMMENT 'used for extra meta-information',
+  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'used for extra meta-information',
   PRIMARY KEY (`id`),
   KEY `idx_url` (`url`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Meta-information';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Meta-information';
 
 LOCK TABLES `meta` WRITE;
 /*!40000 ALTER TABLE `meta` DISABLE KEYS */;
@@ -2227,11 +2227,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `modules`;
 CREATE TABLE `modules` (
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'unique module name',
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'unique module name',
   `installed_on` datetime NOT NULL,
   PRIMARY KEY (`name`),
   KEY `idx_name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `modules` WRITE;
 /*!40000 ALTER TABLE `modules` DISABLE KEYS */;
@@ -2265,15 +2265,15 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `modules_extras`;
 CREATE TABLE `modules_extras` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the extra.',
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the module this extra belongs to.',
-  `type` enum('homepage','block','widget') COLLATE utf8_unicode_ci NOT NULL COMMENT 'The type of the block.',
-  `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The label for this extra. It will be used for displaying purposes.',
-  `action` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `data` text COLLATE utf8_unicode_ci COMMENT 'A serialized value with the optional parameters',
-  `hidden` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'Should the extra be shown in the backend?',
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'The name of the module this extra belongs to.',
+  `type` enum('homepage','block','widget') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The type of the block.',
+  `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The label for this extra. It will be used for displaying purposes.',
+  `action` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'A serialized value with the optional parameters',
+  `hidden` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'Should the extra be shown in the backend?',
   `sequence` int(11) NOT NULL COMMENT 'The sequence in the backend.',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible extras';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The possible extras';
 
 LOCK TABLES `modules_extras` WRITE;
 /*!40000 ALTER TABLE `modules_extras` DISABLE KEYS */;
@@ -2323,11 +2323,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `modules_settings`;
 CREATE TABLE `modules_settings` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the module',
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
-  `value` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'serialized value',
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the module',
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'name of the setting',
+  `value` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'serialized value',
   PRIMARY KEY (`module`(25),`name`(100))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `modules_settings` WRITE;
 /*!40000 ALTER TABLE `modules_settings` DISABLE KEYS */;
@@ -2426,11 +2426,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `modules_tags`;
 CREATE TABLE `modules_tags` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
   `tag_id` int(11) NOT NULL,
   `other_id` int(11) NOT NULL,
   PRIMARY KEY (`module`,`tag_id`,`other_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `pages`;
 CREATE TABLE `pages` (
@@ -2440,25 +2440,25 @@ CREATE TABLE `pages` (
   `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT 'the parent_id for the page ',
   `template_id` int(11) NOT NULL DEFAULT '0' COMMENT 'the template to use',
   `meta_id` int(11) NOT NULL COMMENT 'linked meta information',
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL COMMENT 'language of the content',
-  `type` enum('home','root','page','meta','footer') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'root' COMMENT 'page, header, footer, ...',
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `navigation_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'title that will be used in the navigation',
-  `navigation_title_overwrite` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'should we override the navigation title',
-  `hidden` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'is the page hidden?',
-  `status` enum('active','archive','draft') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'active' COMMENT 'is this the active, archive or draft version',
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'language of the content',
+  `type` enum('home','root','page','meta','footer') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'root' COMMENT 'page, header, footer, ...',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `navigation_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'title that will be used in the navigation',
+  `navigation_title_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'should we override the navigation title',
+  `hidden` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'is the page hidden?',
+  `status` enum('active','archive','draft') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active' COMMENT 'is this the active, archive or draft version',
   `publish_on` datetime NOT NULL,
-  `data` text COLLATE utf8_unicode_ci COMMENT 'serialized array that may contain type specific parameters',
+  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'serialized array that may contain type specific parameters',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
-  `allow_move` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-  `allow_children` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-  `allow_edit` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-  `allow_delete` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+  `allow_move` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+  `allow_children` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+  `allow_edit` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+  `allow_delete` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
   `sequence` int(11) NOT NULL,
   PRIMARY KEY (`revision_id`),
   KEY `idx_id_status_hidden_language` (`id`,`status`,`hidden`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `pages` WRITE;
 /*!40000 ALTER TABLE `pages` DISABLE KEYS */;
@@ -2495,15 +2495,15 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `pages_blocks`;
 CREATE TABLE `pages_blocks` (
   `revision_id` int(11) NOT NULL COMMENT 'The ID of the page that contains this block.',
-  `position` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `position` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_id` int(11) DEFAULT NULL COMMENT 'The linked extra.',
-  `html` text COLLATE utf8_unicode_ci COMMENT 'if this block is HTML this field should contain the real HTML.',
+  `html` text COLLATE utf8mb4_unicode_ci COMMENT 'if this block is HTML this field should contain the real HTML.',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
-  `visible` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL,
+  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL,
   `sequence` int(11) NOT NULL,
   KEY `idx_rev_status` (`revision_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `pages_blocks` WRITE;
 /*!40000 ALTER TABLE `pages_blocks` DISABLE KEYS */;
@@ -2564,22 +2564,22 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE `profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `status` enum('active','inactive','deleted','blocked') COLLATE utf8_unicode_ci NOT NULL,
-  `display_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('active','inactive','deleted','blocked') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registered_on` datetime NOT NULL,
   `last_login` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `profiles_groups`;
 CREATE TABLE `profiles_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `profiles_groups_rights`;
 CREATE TABLE `profiles_groups_rights` (
@@ -2590,38 +2590,38 @@ CREATE TABLE `profiles_groups_rights` (
   `expires_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `profile_id__group__id__expires_on` (`profile_id`,`group_id`,`expires_on`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `profiles_sessions`;
 CREATE TABLE `profiles_sessions` (
-  `session_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `session_id` varchar(255) CHARACTER SET utf8 NOT NULL,
   `profile_id` int(11) NOT NULL,
-  `secret_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`session_id`,`profile_id`),
   KEY `fk_profiles_sessions_profiles1` (`profile_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `profiles_settings`;
 CREATE TABLE `profiles_settings` (
   `profile_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `value` text COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`name`,`profile_id`),
   KEY `fk_profiles_settings_profiles1` (`profile_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `search_index`;
 CREATE TABLE `search_index` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
   `other_id` int(11) NOT NULL,
-  `field` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `value` text COLLATE utf8_unicode_ci NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `active` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+  `field` varchar(64) CHARACTER SET utf8 NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `language` varchar(5) CHARACTER SET utf8 NOT NULL,
+  `active` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
   PRIMARY KEY (`module`,`other_id`,`field`,`language`),
   FULLTEXT KEY `value` (`value`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Search index';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Search index';
 
 LOCK TABLES `search_index` WRITE;
 /*!40000 ALTER TABLE `search_index` DISABLE KEYS */;
@@ -2644,11 +2644,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `search_modules`;
 CREATE TABLE `search_modules` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `searchable` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `searchable` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL,
   `weight` int(11) NOT NULL,
   PRIMARY KEY (`module`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `search_modules` WRITE;
 /*!40000 ALTER TABLE `search_modules` DISABLE KEYS */;
@@ -2665,54 +2665,54 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `search_statistics`;
 CREATE TABLE `search_statistics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `term` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `term` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `time` datetime NOT NULL,
-  `data` text COLLATE utf8_unicode_ci,
+  `data` text COLLATE utf8mb4_unicode_ci,
   `num_results` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `search_synonyms`;
 CREATE TABLE `search_synonyms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `term` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `synonym` text COLLATE utf8_unicode_ci NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `term` varchar(245) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `synonym` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQUE` (`term`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `tags`;
 CREATE TABLE `tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `tag` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `number` int(11) NOT NULL,
-  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `themes_templates`;
 CREATE TABLE `themes_templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the template.',
-  `theme` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The name of the theme.',
-  `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The label for the template, will be used for displaying purposes.',
-  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Filename for the template.',
-  `active` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'Is this template active (as in: will it be used).',
-  `data` text COLLATE utf8_unicode_ci COMMENT 'A serialized array with data that is specific for this template (eg.: names for the blocks).',
+  `theme` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'The name of the theme.',
+  `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The label for the template, will be used for displaying purposes.',
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Filename for the template.',
+  `active` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'Is this template active (as in: will it be used).',
+  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'A serialized array with data that is specific for this template (eg.: names for the blocks).',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible templates';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The possible templates';
 
 LOCK TABLES `themes_templates` WRITE;
 /*!40000 ALTER TABLE `themes_templates` DISABLE KEYS */;
 
 INSERT INTO `themes_templates` (`id`, `theme`, `label`, `path`, `active`, `data`)
 VALUES
-  (1,'core','Default','Core/Layout/Templates/Default.tpl','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
-  (2,'core','Home','Core/Layout/Templates/Home.tpl','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
-  (3,'triton','Default','Core/Layout/Templates/Default.tpl','Y','a:3:{s:6:\"format\";s:91:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]\";s:5:\"names\";a:4:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:3:\"top\";i:3;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}'),
-  (4,'triton','Home','Core/Layout/Templates/Home.tpl','Y','a:3:{s:6:\"format\";s:115:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]\";s:5:\"names\";a:5:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:5:\"right\";i:3;s:3:\"top\";i:4;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}');
+  (1,'core','Default','Core/Layout/Templates/Default.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
+  (2,'core','Home','Core/Layout/Templates/Home.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
+  (3,'triton','Default','Core/Layout/Templates/Default.html.twig','Y','a:3:{s:6:\"format\";s:91:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]\";s:5:\"names\";a:4:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:3:\"top\";i:3;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}'),
+  (4,'triton','Home','Core/Layout/Templates/Home.html.twig','Y','a:3:{s:6:\"format\";s:115:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]\";s:5:\"names\";a:5:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:5:\"right\";i:3;s:3:\"top\";i:4;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}');
 
 /*!40000 ALTER TABLE `themes_templates` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -2721,13 +2721,13 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'will be case-sensitive',
-  `active` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'is this user active?',
-  `deleted` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'is the user deleted?',
-  `is_god` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'will be case-sensitive',
+  `active` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'is this user active?',
+  `deleted` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'is the user deleted?',
+  `is_god` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The backend users';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The backend users';
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
@@ -2747,7 +2747,7 @@ CREATE TABLE `users_groups` (
   `group_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`group_id`,`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `users_groups` WRITE;
 /*!40000 ALTER TABLE `users_groups` DISABLE KEYS */;
@@ -2766,20 +2766,20 @@ DROP TABLE IF EXISTS `users_sessions`;
 CREATE TABLE `users_sessions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `session_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `secret_key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `session_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_session_id_secret_key` (`session_id`(100),`secret_key`(100))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_settings`;
 CREATE TABLE `users_settings` (
   `user_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
-  `value` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'serialized value',
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the setting',
+  `value` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'serialized value',
   PRIMARY KEY (`user_id`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `users_settings` WRITE;
 /*!40000 ALTER TABLE `users_settings` DISABLE KEYS */;

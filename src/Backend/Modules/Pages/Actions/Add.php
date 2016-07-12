@@ -9,6 +9,7 @@ namespace Backend\Modules\Pages\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -22,11 +23,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -78,9 +74,6 @@ class Add extends BackendBaseActionAdd
         $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
-        // add css
-        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
-
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
         $this->isGod = BackendAuthentication::getUser()->isGod();
@@ -124,14 +117,14 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
-        $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('html');
         $this->frm->addHidden('template_id', $defaultTemplateId);
         $this->frm->addRadiobutton(
             'hidden',
             array(
                  array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                 array('label' => BL::lbl('Published'), 'value' => 'N')
+                 array('label' => BL::lbl('Published'), 'value' => 'N'),
             ),
             'N'
         );
@@ -218,7 +211,7 @@ class Add extends BackendBaseActionAdd
                 $this->blocksContent[] = $block;
 
                 // increment counter; go fetch next block
-                $i++;
+                ++$i;
             }
         }
 
@@ -251,12 +244,12 @@ class Add extends BackendBaseActionAdd
             array(
                 'value' => 'internal',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
-                'variables' => array('isInternal' => true)
+                'variables' => array('isInternal' => true),
             ),
             array(
                 'value' => 'external',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
-                'variables' => array('isExternal' => true)
+                'variables' => array('isExternal' => true),
             ),
         );
         $this->frm->addRadiobutton('redirect', $redirectValues, 'none');
@@ -267,14 +260,17 @@ class Add extends BackendBaseActionAdd
         $this->frm->addCheckbox('navigation_title_overwrite');
         $this->frm->addText('navigation_title');
 
-        // tags
-        $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
+        if ($this->showTags()) {
+            // tags
+            $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
+        }
 
         // a specific action
         $this->frm->addCheckbox('is_action', false);
 
         // extra
-        $this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+        $blockTypes = BackendPagesModel::getTypes();
+        $this->frm->addDropdown('extra_type', $blockTypes, key($blockTypes));
 
         // meta
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
@@ -298,6 +294,7 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL(1), '/'));
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
+        $this->tpl->assign('showTags', $this->showTags());
 
         // get default template id
         $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
@@ -362,7 +359,7 @@ class Add extends BackendBaseActionAdd
                 if ($redirectValue == 'internal') {
                     $data['internal_redirect'] = array(
                         'page_id' => $this->frm->getField('internal_redirect')->getValue(),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
                 if ($redirectValue == 'external') {
@@ -370,7 +367,7 @@ class Add extends BackendBaseActionAdd
                         'url' => BackendPagesModel::getEncodedRedirectURL(
                             $this->frm->getField('external_redirect')->getValue()
                         ),
-                        'code' => '301'
+                        'code' => '301',
                     );
                 }
 
@@ -445,12 +442,14 @@ class Add extends BackendBaseActionAdd
                 // trigger an event
                 BackendModel::triggerEvent($this->getModule(), 'after_add', $page);
 
-                // save tags
-                BackendTagsModel::saveTags(
-                    $page['id'],
-                    $this->frm->getField('tags')->getValue(),
-                    $this->URL->getModule()
-                );
+                if ($this->showTags()) {
+                    // save tags
+                    BackendTagsModel::saveTags(
+                        $page['id'],
+                        $this->frm->getField('tags')->getValue(),
+                        $this->URL->getModule()
+                    );
+                }
 
                 // build the cache
                 BackendPagesModel::buildCache(BL::getWorkingLanguage());
@@ -492,5 +491,21 @@ class Add extends BackendBaseActionAdd
                 }
             }
         }
+    }
+
+    /**
+     * Check if the user has the right to see/edit tags
+     *
+     * @return bool
+     */
+    private function showTags()
+    {
+        if (!Authentication::isAllowedAction('Edit', 'Tags')
+            || !Authentication::isAllowedAction('GetAllTags', 'Tags')
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }

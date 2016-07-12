@@ -19,10 +19,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the templates-action, it will display the templates-overview
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class ThemeTemplates extends BackendBaseActionEdit
 {
@@ -102,7 +98,7 @@ class ThemeTemplates extends BackendBaseActionEdit
         $this->frm = new BackendForm('themes');
 
         // create elements
-        $this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme, false, 'inputDropdown dontCheckBeforeUnload', 'inputDropdownError dontCheckBeforeUnload');
+        $this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme, false, 'form-control dontCheckBeforeUnload', 'form-control dontCheckBeforeUnload');
     }
 
     /**

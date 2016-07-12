@@ -20,8 +20,6 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the add-action, it will display a form to create a new group
- *
- * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -35,42 +33,42 @@ class Add extends BackendBaseActionAdd
     /**
      * The actions
      *
-     * @var	array
+     * @var array
      */
     private $actions = array();
 
     /**
      * The dashboard sequence
      *
-     * @var	array
+     * @var array
      */
     private $dashboardSequence;
 
     /**
      * The id of the new group
      *
-     * @var	int
+     * @var int
      */
     private $id;
 
     /**
      * The modules
      *
-     * @var	array
+     * @var array
      */
     private $modules;
 
     /**
      * The widgets
      *
-     * @var	array
+     * @var array
      */
     private $widgets;
 
     /**
      * The widget instances
      *
-     * @var	array
+     * @var array
      */
     private $widgetInstances;
 
@@ -86,23 +84,21 @@ class Add extends BackendBaseActionAdd
                 if (class_exists('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
                     // create reflection class
                     $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
-                }
-
-                // no ajax action? create reflection class
-                else {
+                } else {
+                    // no ajax action? create reflection class
                     $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
                 }
 
                 // get the tag offset
-                $offset = strpos($reflection->getDocComment(), ACTION_GROUP_TAG) + strlen(ACTION_GROUP_TAG);
+                $offset = mb_strpos($reflection->getDocComment(), ACTION_GROUP_TAG) + mb_strlen(ACTION_GROUP_TAG);
 
                 // no tag present? move on!
-                if (!($offset - strlen(ACTION_GROUP_TAG))) {
+                if (!($offset - mb_strlen(ACTION_GROUP_TAG))) {
                     continue;
                 }
 
                 // get the group info
-                $groupInfo = trim(substr($reflection->getDocComment(), $offset, (strpos($reflection->getDocComment(), '*', $offset) - $offset)));
+                $groupInfo = trim(mb_substr($reflection->getDocComment(), $offset, (mb_strpos($reflection->getDocComment(), '*', $offset) - $offset)));
 
                 // get name and description
                 $bits = explode("\t", $groupInfo);
@@ -141,6 +137,7 @@ class Add extends BackendBaseActionAdd
      */
     private function getActions()
     {
+        $this->actions = array();
         $filter = array('Authentication', 'Error', 'Core');
         $modules = array();
 
@@ -172,8 +169,8 @@ class Add extends BackendBaseActionAdd
                 $reflection = new \ReflectionClass($class);
                 $phpDoc = trim($reflection->getDocComment());
                 if ($phpDoc != '') {
-                    $offset = strpos($reflection->getDocComment(), '*', 7);
-                    $description = substr($reflection->getDocComment(), 0, $offset);
+                    $offset = mb_strpos($reflection->getDocComment(), '*', 7);
+                    $description = mb_substr($reflection->getDocComment(), 0, $offset);
                     $description = str_replace('*', '', $description);
                     $description = trim(str_replace('/', '', $description));
                 } else {
@@ -183,7 +180,7 @@ class Add extends BackendBaseActionAdd
                 $this->actions[$module][] = array(
                     'label' => \SpoonFilter::toCamelCase($actionName),
                     'value' => $actionName,
-                    'description' => $description
+                    'description' => $description,
                 );
             }
         }
@@ -192,7 +189,7 @@ class Add extends BackendBaseActionAdd
         foreach ($modules as $module) {
             $this->modules[] = array(
                 'label' => \SpoonFilter::toCamelCase($module),
-                'value' => $module
+                'value' => $module,
             );
         }
     }
@@ -212,6 +209,9 @@ class Add extends BackendBaseActionAdd
      */
     private function getWidgets()
     {
+        $this->widgets = array();
+        $this->widgetInstances = array();
+
         $finder = new Finder();
         $finder->name('*.php')->in(BACKEND_MODULES_PATH . '/*/Widgets');
         foreach ($finder->files() as $file) {
@@ -226,15 +226,15 @@ class Add extends BackendBaseActionAdd
                     $this->widgetInstances[] = array(
                         'module' => $module,
                         'widget' => $widgetName,
-                        'className' => $class
+                        'className' => $class,
                     );
 
                     // create reflection class
                     $reflection = new \ReflectionClass($class);
                     $phpDoc = trim($reflection->getDocComment());
                     if ($phpDoc != '') {
-                        $offset = strpos($reflection->getDocComment(), '*', 7);
-                        $description = substr($reflection->getDocComment(), 0, $offset);
+                        $offset = mb_strpos($reflection->getDocComment(), '*', 7);
+                        $description = mb_substr($reflection->getDocComment(), 0, $offset);
                         $description = str_replace('*', '', $description);
                         $description = trim(str_replace('/', '', $description));
                     } else {
@@ -254,7 +254,7 @@ class Add extends BackendBaseActionAdd
                         'checkbox_name' => \SpoonFilter::toCamelCase($module) . \SpoonFilter::toCamelCase($widgetName),
                         'label' => \SpoonFilter::toCamelCase($widgetName),
                         'value' => $widgetName,
-                        'description' => $description
+                        'description' => $description,
                     );
                 }
             }
@@ -295,10 +295,7 @@ class Add extends BackendBaseActionAdd
                 if (!in_array($module, $checkedModules)) {
                     $checkedModules[] = $module;
                 }
-            }
-
-            // permission not checked?
-            else {
+            } else {
                 // add to denied
                 $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
 
@@ -334,10 +331,7 @@ class Add extends BackendBaseActionAdd
                     if (!in_array($module, $checkedModules)) {
                         $checkedModules[] = $module;
                     }
-                }
-
-                // permission not checked?
-                else {
+                } else {
                     // add to denied
                     if (in_array($group, $moduleAction)) {
                         $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
@@ -400,8 +394,8 @@ class Add extends BackendBaseActionAdd
                     'column' => $instance->getColumn(),
                     'position' => (int) $instance->getPosition(),
                     'hidden' => false,
-                    'present' => false
-                )
+                    'present' => false,
+                ),
             );
 
             // loop through selected widgets
@@ -451,7 +445,7 @@ class Add extends BackendBaseActionAdd
             // loop through widgets
             foreach ($this->widgets as $j => $widget) {
                 // add widget checkboxes
-                $widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['checkbox_name'])->parse() . '</span>';
+                $widgetBoxes[$j]['check'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['checkbox_name'])->parse() . '</span>';
                 $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BL::lbl($widget['module_name']));
                 $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['label']) . '">' . $widget['label'] . '</label>';
                 $widgetBoxes[$j]['description'] = $widget['description'];
@@ -473,19 +467,16 @@ class Add extends BackendBaseActionAdd
                     // bundle not yet in array?
                     if (!in_array($action['group'], $addedBundles)) {
                         // assign bundled action boxes
-                        $actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($action['group']))->parse();
+                        $actionBoxes[$key]['actions'][$i]['check'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($action['group']))->parse();
                         $actionBoxes[$key]['actions'][$i]['action'] = \SpoonFilter::ucfirst($action['group']);
                         $actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
                         // add the group to the added bundles
                         $addedBundles[] = $action['group'];
                     }
-                }
-
-                // action not bundled
-                else {
+                } else {
                     // assign action boxes
-                    $actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
+                    $actionBoxes[$key]['actions'][$i]['check'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
                     $actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . \SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' . $action['label'] . '</label>';
                     $actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
                 }
@@ -495,7 +486,7 @@ class Add extends BackendBaseActionAdd
             if (isset($widgetBoxes)) {
                 // create datagrid
                 $widgetGrid = new BackendDataGridArray($widgetBoxes);
-                $widgetGrid->setHeaderLabels(array('checkbox' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /><span class="visuallyHidden"></span>'));
+                $widgetGrid->setHeaderLabels(array('check' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /><span class="visuallyHidden"></span>'));
 
                 // get content
                 $widgets = $widgetGrid->getContent();
@@ -503,13 +494,14 @@ class Add extends BackendBaseActionAdd
 
             // create datagrid
             $actionGrid = new BackendDataGridArray($actionBoxes[$key]['actions']);
+            $actionGrid->setHeaderLabels(array('check' => ''));
 
             // disable paging
             $actionGrid->setPaging(false);
 
             // get content of datagrids
             $permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
-            $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload selectAll')->parse();
+            $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload jsSelectAll')->parse();
             $permissionBoxes[$key]['id'] = \SpoonFilter::toCamelCase($module['label']);
         }
 
@@ -568,6 +560,7 @@ class Add extends BackendBaseActionAdd
             }
 
             // loop through widgets and collect presets
+            $widgetPresets = array();
             foreach ($this->widgets as $widget) {
                 $widgetPresets[] = $this->frm->getField('widgets_' . $widget['checkbox_name']);
             }

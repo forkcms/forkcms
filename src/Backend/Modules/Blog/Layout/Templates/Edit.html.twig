@@ -1,0 +1,276 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if detailURL %}
+        {% set url = (detailURL ~ '/' ~ item.url) %}
+        {% if item.revision_id %}
+          {% set url = (url ~ '?revision=' ~ item.revision_id) %}
+        {% endif %}
+
+        {{ macro.buttonIcon( url, 'eye', 'lbl.View'|trans|ucfirst) }}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {% form edit %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}</label>
+        {% form_field title %} {% form_field_error title %}
+        {% if detailURL %}
+          <a class="site-url" href="{{ detailURL }}/{{ item.url }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
+        {% endif %}
+        {% if not detailURL %}
+          <p class="alert alert-warning alert-xs">
+            <span class="fa fa-exclamation-triangle"></span>{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+          </li>
+          <li class="pull-right" role="presentation">
+            <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+          </li>
+          <li class="pull-right" role="presentation">
+            <a href="#tabComments" aria-controls="comments" role="tab" data-toggle="tab">{{ 'lbl.Comments'|trans|ucfirst }}</a>
+          </li>
+          <li class="pull-right" role="presentation">
+            <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tabContent">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="panel panel-default panel-editor">
+                  <div class="panel-heading">
+                    <p>{{ 'lbl.MainContent'|trans|ucfirst }}
+                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></p>
+                  </div>
+                  <div class="panel-body">
+                    {% form_field text %}
+                  </div>
+                  {% if txtTextError %}
+                    <div class="panel-footer">
+                      {% form_field_error text %}
+                    </div>
+                  {% endif %}
+                </div>
+                {% if imageIsAllowed %}
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <p>{{ 'lbl.Image'|trans|ucfirst }}</p>
+                    </div>
+                    <div class="panel-body">
+                      {% if item.image %}
+                        <div>
+                          <img src="{{ FRONTEND_FILES_URL }}/blog/images/128x128/{{ item.image }}" class="img-thumbnail" width="128" height="128" alt="{{ 'lbl.Image'|trans|ucfirst }}" />
+                        </div>
+                        <ul class="list-unstyled">
+                          <li class="checkbox">
+                            <label for="deleteImage" class="control-label">{% form_field delete_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
+                            {% form_field_error delete_image %}
+                          </li>
+                        </ul>
+                      {% endif %}
+                      {% form_field image %} {% form_field_error image %}
+                    </div>
+                  </div>
+                {% endif %}
+                <div class="panel panel-default panel-editor last">
+                  <div class="panel-heading">
+                    <p>{{ 'lbl.Summary'|trans|ucfirst }}
+                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|ucfirst }}"></abbr>
+                    </p>
+                  </div>
+                  <div class="panel-body">
+                    {% form_field introduction %}
+                  </div>
+                  {% if txtIntroductionError %}
+                    <div class="panel-footer">
+                      {% form_field_error introduction %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <p>{{ 'lbl.Status'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <ul class="list-unstyled">
+                        {% for rbtn in hidden %}
+                          <li class="radio">
+                            <label for="{{ rbtn.id }}">{{ rbtn.rbtHidden|raw }} {{ rbtn.label }}</label>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    <div class="form-group last">
+                      <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|ucfirst }}</label>
+                      {% form_field publish_on_date %} {% form_field_error publish_on_date %}
+                      <label for="publishOnTime" class="control-label">{{ lbl.At }}</label>
+                      {% form_field publish_on_time %} {% form_field_error publish_on_time %}
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <p>{{ 'lbl.MetaData'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|ucfirst }}</label>
+                      {% form_field category_id %} {% form_field_error category_id %}
+                    </div>
+                    <div class="form-group">
+                      <label for="userId" class="control-label">{{ 'lbl.Author'|trans|ucfirst }}</label>
+                      {% form_field user_id %} {% form_field_error user_id %}
+                    </div>
+                    {% if showTagsIndex %}
+                      <div class="form-group last">
+                        <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
+                        {% form_field tags %} {% form_field_error tags %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabVersions">
+            <div class="row">
+              <div class="col-md-12">
+                {% if drafts %}
+                  <div class="content-block">
+                    <div class="content-title">
+                      <p>{{ 'lbl.Drafts'|trans|ucfirst }}
+                        <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpDrafts'|trans|ucfirst }}"></abbr>
+                      </p>
+                    </div>
+                    {{ drafts|raw }}
+                  </div>
+                {% endif %}
+                <div class="content-block">
+                  <div class="content-title">
+                    <p>
+                      {{ 'lbl.PreviousVersions'|trans|ucfirst }}
+                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans|ucfirst }}"></abbr>
+                    </p>
+                  </div>
+                  {% if revisions %}
+                    {{ revisions|raw }}
+                  {% endif %}
+                  {% if not revisions %}
+                    <p>{{ 'msg.NoRevisions'|trans|ucfirst }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabComments">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group last">
+                  <ul class="list-unstyled">
+                    <li class="checkbox">
+                      <label for="allowComments" class="control-label">{% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|ucfirst }}</label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabSEO">
+            {% seo %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-left" role="group">
+          {% if showBlogDelete %}
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+              <span class="fa fa-trash-o"></span>
+              {{ 'lbl.Delete'|trans|ucfirst }}
+            </button>
+          {% endif %}
+        </div>
+        <div class="btn-group pull-right" role="group">
+          <a href="#" id="saveAsDraft" class="btn btn-default">
+            <span class="fa fa-file-o"></span>{{ 'lbl.SaveDraft'|trans|ucfirst }}
+          </a>
+          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+            <span class="fa fa-check"></span>{{ 'lbl.Publish'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if showBlogDelete %}
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+          </div>
+          <div class="modal-body">
+            <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            </button>
+            <a href="{{ geturl('delete') }}&amp;id={{ item.id }}{% if categoryId %}&amp;category={{ categoryId }}{% endif %}" class="btn btn-danger">
+              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <div class="modal fade" id="addCategoryDialog" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.AddCategory'|trans|ucfirst }}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-title h4">{{ 'lbl.AddCategory'|trans|ucfirst }}</span>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="categoryTitle" class="control-label">
+              {{ 'lbl.Title'|trans|ucfirst }}
+              <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}"></abbr>
+            </label>
+            <input type="text" name="categoryTitle" id="categoryTitle" class="form-control" maxlength="255" />
+            <p class="text-danger" id="categoryTitle'err.r" style="display: none;">{{ 'err.FieldIsRequired'|trans|ucfirst }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+          </button>
+          <button id="addCategorySubmit" type="button" class="btn btn-primary">
+            <span class="fa fa-plus-square"></span>{{ 'lbl.AddCategory'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endform %}
+{% endblock %}

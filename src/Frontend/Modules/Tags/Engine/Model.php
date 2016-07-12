@@ -15,9 +15,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * In this file we store all generic functions that we will be using in the tags module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Model
 {
@@ -28,8 +25,10 @@ class Model
      * @param string       $class     The class that should contain the method.
      * @param string       $method    The method to call.
      * @param mixed $parameter The parameters to pass.
-     * @return mixed
+     *
      * @throws FrontendException When FrontendTagsInterface is not correctly implemented to the module model
+     *
+     * @return mixed
      */
     public static function callFromInterface($module, $class, $method, $parameter = null)
     {
@@ -52,6 +51,7 @@ class Model
      *
      * @param string        $URL The URL to get the tag for.
      * @param string $language
+     *
      * @return array
      */
     public static function get($URL, $language = null)
@@ -89,6 +89,7 @@ class Model
      *
      * @param string $module  The module wherein the otherId occurs.
      * @param int    $otherId The id of the item.
+     *
      * @return array
      */
     public static function getForItem($module, $otherId)
@@ -134,6 +135,7 @@ class Model
      *
      * @param string $module   The module wherefore you want to retrieve the tags.
      * @param array  $otherIds The ids for the items.
+     *
      * @return array
      */
     public static function getForMultipleItems($module, array $otherIds)
@@ -179,6 +181,7 @@ class Model
      * Get the tag-id for a given URL
      *
      * @param string $URL The URL to get the id for.
+     *
      * @return int
      */
     public static function getIdByURL($URL)
@@ -195,6 +198,7 @@ class Model
      * Get the modules that used a tag.
      *
      * @param int $id The id of the tag.
+     *
      * @return array
      */
     public static function getModulesForTag($id)
@@ -213,6 +217,7 @@ class Model
      * Fetch a specific tag name
      *
      * @param int $id The id of the tag to grab the name for.
+     *
      * @return string
      */
     public static function getName($id)
@@ -232,6 +237,7 @@ class Model
      * @param int     $module      The source module.
      * @param int     $otherModule The module wherein the related items should appear.
      * @param int $limit       The maximum of related items to grab.
+     *
      * @return array
      */
     public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)

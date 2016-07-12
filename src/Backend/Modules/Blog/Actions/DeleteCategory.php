@@ -15,8 +15,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This action will delete a category
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class DeleteCategory extends BackendBaseActionDelete
 {

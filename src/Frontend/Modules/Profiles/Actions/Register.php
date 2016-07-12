@@ -9,6 +9,7 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -20,10 +21,6 @@ use Common\Exception\RedirectException as RedirectException;
 
 /**
  * Register a profile.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Register extends FrontendBaseBlock
 {
@@ -114,6 +111,7 @@ class Register extends FrontendBaseBlock
 
             // check password
             $txtPassword->isFilled(FL::getError('PasswordIsRequired'));
+            $txtDisplayName->isFilled(FL::getError('FieldIsRequired'));
 
             // no errors
             if ($this->frm->isCorrect()) {
@@ -172,12 +170,12 @@ class Register extends FrontendBaseBlock
                     // send email
                     $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                     $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-                    $message = \Common\Mailer\Message::newInstance(FL::getMessage('RegisterSubject'))
+                    $message = Message::newInstance(FL::getMessage('RegisterSubject'))
                         ->setFrom(array($from['email'] => $from['name']))
                         ->setTo(array($txtEmail->getValue() => ''))
                         ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                         ->parseHtml(
-                            FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.tpl',
+                            FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.html.twig',
                             $mailValues,
                             true
                         )
@@ -185,7 +183,7 @@ class Register extends FrontendBaseBlock
                     $this->get('mailer')->send($message);
 
                     // redirect
-                    $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
+                    $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
                 } catch (\Exception $e) {
                     // make sure RedirectExceptions get thrown
                     if ($e instanceof RedirectException) {

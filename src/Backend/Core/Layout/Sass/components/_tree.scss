@@ -1,0 +1,328 @@
+/*
+
+    Tree layout
+    Based on basic tree skin
+
+    @package      backend
+    @subpackage   core
+
+    @since        2.0
+
+*/
+.pages-tree {
+  padding: 20px 25px;
+}
+
+#tree {
+
+  h4 {
+    font-size: $font-size-base;
+    font-weight: 600;
+  }
+}
+
+.tree {
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type:none;
+    background: url('/src/Backend/Core/Layout/images/separate/decoded_base64.gif');
+    background-position: 11px 0;
+    background-repeat: repeat-y;
+    min-height: 16px;
+    max-width: 100%;
+
+    ins {
+      display:inline-block;
+      text-decoration:none;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  li {
+    display: block;
+    min-height: 16px;
+    line-height: 16px;
+    padding: 0 0 0 21px;
+    /* Background fix */
+    clear: both;
+    max-width: 100%;
+
+    li {
+      overflow: hidden;
+    }
+
+    ul {
+      display: none;
+    }
+
+    a:link,
+    a:visited,
+    span {
+      display: inline-block;
+      line-height: 17px;
+      height: 20px;
+      padding: 2px 4px 2px 2px;
+      color: $gray-base;
+      white-space: nowrap;
+      text-decoration: none;
+      margin: 0;
+      border: none !important;
+      outline: 0 !important;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    a:focus {
+      outline: none;
+    }
+
+    a input:not([class="xxx"]),
+    span input:not([class="xxx"]) {
+      padding: 1px 0;
+    }
+
+    /* OPEN OR CLOSE */
+    &.open ul {
+      display: block;
+    }
+
+    &.closed ul {
+      display:none !important;
+    }
+  }
+
+  /* FOR DOTS */
+  .ltr {
+
+    li.last {
+      float:left;
+    }
+
+    ins {
+      margin: 0 2px 0 0;
+    }
+  }
+
+  > .ltr > li {
+    display:table;
+  }
+
+  > ul li.last {
+    overflow:visible;
+  }
+}
+
+/* FOR DRAGGING */
+#jstree-dragged {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  margin: 0;
+  padding: 0;
+}
+
+#jstree-marker {
+  padding: 0;
+  margin: 0;
+  line-height: 5px;
+  font-size: 1px;
+  display: block;
+  position: absolute;
+  z-index: 2147483647;
+  width: 16px;
+  height: 16px;
+  background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -653px no-repeat;
+
+  &.marker_plus {
+    background: url('/src/Backend/Core/Layout/images/sprites/fork_icons.png') 0 -3px no-repeat;
+  }
+}
+
+/* DOTS */
+.tree-fork {
+
+  li {
+    display: block !important;
+    font-size: $font-size-small;
+    position: relative;
+    background: url('/src/Backend/Core/Layout/images/separate/leaf.gif') no-repeat 11px 0;
+
+    &:before {
+      background: $white;
+      color: $brand-primary-darker;
+      font-family: FontAwesome;
+      font-size: $font-size-small;
+      left: 6px;
+      position: absolute;
+      top: 5px;
+      line-height: 12px;
+      height: 9px;
+      width: 9px;
+    }
+
+    /* OPEN or CLOSED */
+
+    &.closed,
+    &.closed.last {
+
+      &:before {
+        content:'\f196';
+      }
+    }
+
+    &.open,
+    &.open.last {
+      background: url('/src/Backend/Core/Layout/images/separate/leaf.gif') no-repeat 11px 0;
+
+      &:before {
+        content: '\f147';
+      }
+    }
+
+    &[rel="page"],
+    &[rel="home"],
+    &[rel="error"],
+    &[rel="hidden"],
+    &[rel="sitemap"],
+    &[rel="redirect"]{
+
+      a {
+        position: relative;
+
+        &:before {
+          color: $gray-light;
+          font-family: FontAwesome;
+          font-size: $font-size-small;
+          position: absolute;
+          left: 4px;
+        }
+      }
+    }
+
+    &[rel="page"],
+    &[rel="home"],
+    &[rel="hidden"] {
+
+      a:before {
+        content: "\f016";
+      }
+    }
+
+    &[rel="error"] {
+
+      a:before {
+        content: "\f071";
+      }
+    }
+
+    &[rel="sitemap"] {
+
+      a:before {
+        content: "\f0e8";
+      }
+    }
+
+    &[rel="redirect"] {
+
+      a:before {
+        content: "\f08e";
+      }
+    }
+
+    &[rel="hidden"],
+    &.treeHidden {
+      opacity: .5; /* Standard: FF gt 1.5, Opera, Safari */
+      filter: alpha(opacity=50); /* IE lt 8 */
+      -ms-filter: "alpha(opacity=50)"; /* IE 8 */
+      -khtml-opacity: .50; /* Safari 1.x */
+      -moz-opacity: .50; /* FF lt 1.5, Netscape */
+    }
+
+    &.dragged {
+      outline: none;
+    }
+
+    /* DEFAULT, HOVER, CLICKED, LOADING STATES */
+    a:hover,
+    a.active,
+    a.focus {
+      background: $brand-primary;
+      color: $white;
+      /* @inc .rc */
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px;
+
+      &:before {
+        color: $white;
+      }
+    }
+
+    span,
+    &.selected > a {
+      /* @inc .selectedBlue */
+      background: $brand-primary;
+      /* @inc .rc */
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px;
+      color: $white;
+
+      &:before {
+        color: $white;
+      }
+    }
+
+    a.clicked,
+    a.clicked:hover,
+    span.clicked {
+      background: $brand-primary;
+      /* @inc .rc */
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -o-border-radius: 4px;
+      border-radius: 4px;
+      color: $white;
+
+      &:before {
+        color: $white;
+      }
+    }
+
+    a ins.forbidden {
+      background-position: -16px -16px;
+    }
+
+    span ins {
+      background-position: -16px 0;
+    }
+  }
+
+  ul li a.loading ins {
+    background-image: url('/src/Backend/Core/Layout/images/throbber.gif') !important;
+    background-position: 0 0 !important;
+  }
+
+  .locked li a ins {
+    background-position: 0 -48px;
+  }
+}
+
+#jstree-dragged {
+  border: 1px dotted $gray;
+  background-color: $gray-lighter;
+  z-index: 20;
+
+  &.tree-fork {
+
+    li li.open {
+      background-position: 0 -16px;
+    }
+  }
+}

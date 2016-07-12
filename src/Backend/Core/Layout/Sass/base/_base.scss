@@ -1,0 +1,152 @@
+html {
+  min-height: 100%;
+}
+
+body {
+  -webkit-transform: none;
+}
+
+.main-wrapper {
+  position: relative;
+  width: 100%;
+
+  .sidebar {
+    width: 100%;
+  }
+}
+
+.content-wrapper {
+  height: 100%;
+}
+
+.content-main {
+
+  &.content-main-dashboard {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (min-width: $screen-sm) {
+
+  .main-wrapper {
+    min-height: 100%;
+    margin-top: -82px;
+    padding-left: 430px;
+    padding-top: 82px;
+    position: relative;
+    -webkit-transition: padding 250ms;
+    -moz-transition: padding 250ms;
+    -ms-transition: padding 250ms;
+    -o-transition: padding 250ms;
+    transition: padding 250ms;
+
+    &.navigation-collapsed {
+      padding-left: 240px;
+
+      .sidebar {
+        width: 240px;
+
+
+        .main-navigation {
+          width: 50px;
+        }
+
+        .sub-navigation {
+          left: 50px;
+          width: 190px;
+        }
+      }
+    }
+
+    &.main-wrapper-pages {
+      padding-left: 480px;
+
+      .sidebar {
+        width: 480px;
+
+        .sub-navigation {
+          width: 240px;
+        }
+      }
+
+      &.navigation-collapsed {
+        padding-left: 290px;
+
+        .sidebar {
+          width: 290px;
+
+          .sub-navigation {
+            width: 240px;
+          }
+        }
+      }
+    }
+
+    &.main-wrapper-dashboard {
+      padding-left: 240px;
+
+      .sidebar {
+        width: 240px;
+      }
+
+      &.navigation-collapsed {
+        padding-left: 50px;
+
+        .sidebar {
+          width: 50px;
+        }
+      }
+    }
+
+    .sidebar {
+      bottom: 0;
+      height: auto;
+      left: 0;
+      overflow-y: hidden;
+      position: absolute;
+      top: 82px;
+      width: 430px;
+      z-index: 2;
+      -webkit-transition: width 250ms;
+      -moz-transition: width 250ms;
+      -ms-transition: width 250ms;
+      -o-transition: width 250ms;
+      transition: width 250ms;
+
+      .main-navigation {
+        background: $brand-primary-dark;
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 240px;
+        -webkit-transition: width 250ms;
+        -moz-transition: width 250ms;
+        -ms-transition: width 250ms;
+        -o-transition: width 250ms;
+        transition: width 250ms;
+      }
+
+      .sub-navigation {
+        background: $white;
+        border-right: 1px solid $gray-lighter;
+        height: 100%;
+        position: absolute;
+        left: 240px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        top: 0;
+        width: 190px;
+        -webkit-transition: width,left 250ms;
+        -moz-transition: width,left 250ms;
+        -ms-transition: width,left 250ms;
+        -o-transition: width,left 250ms;
+        transition: width,left 250ms;
+      }
+    }
+  }
+
+  .content-main {
+    width: 100%;
+  }
+}

@@ -15,15 +15,9 @@ use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Language as FL;
-use Frontend\Core\Engine\Theme as FrontendTheme;
 
 /**
  * This class will handle all stuff related to blocks
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Extra extends FrontendBaseObject
 {
@@ -343,6 +337,6 @@ class Extra extends FrontendBaseObject
      */
     private function setTemplatePath($path)
     {
-        $this->templatePath = FrontendTheme::getPath($path);
+        $this->templatePath = $path;
     }
 }

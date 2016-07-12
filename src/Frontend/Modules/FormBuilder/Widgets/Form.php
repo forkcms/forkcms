@@ -7,7 +7,6 @@ use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
@@ -15,10 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This is the form widget.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class Form extends FrontendBaseWidget
 {
@@ -112,8 +107,7 @@ class Form extends FrontendBaseWidget
         $this->loadData();
 
         // success message
-        if (
-            $this->URL->hasParameter('identifier')
+        if ($this->URL->hasParameter('identifier')
             && $this->URL->getParameter('identifier') == $this->item['identifier']
         ) {
             $this->parseSuccessMessage();
@@ -125,7 +119,7 @@ class Form extends FrontendBaseWidget
         }
 
         return $this->tpl->getContent(
-            FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Widgets/' . $this->getAction() . '.tpl'
+            FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Widgets/' . $this->getAction() . '.html.twig'
         );
     }
 
@@ -155,6 +149,7 @@ class Form extends FrontendBaseWidget
                 $item['type'] = $field['type'];
                 $item['label'] = (isset($field['settings']['label'])) ? $field['settings']['label'] : '';
                 $item['placeholder'] = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
+                $item['classname'] = (isset($field['settings']['classname']) ? $field['settings']['classname'] : null);
                 $item['required'] = isset($field['validations']['required']);
                 $item['html'] = '';
 
@@ -211,7 +206,6 @@ class Form extends FrontendBaseWidget
                 } elseif ($field['type'] == 'textbox') {
                     // create element
                     $txt = $this->frm->addText($item['name'], $defaultValues);
-                    $txt->setAttribute('placeholder', $item['placeholder']);
 
                     // add required attribute
                     if ($item['required']) {
@@ -219,6 +213,9 @@ class Form extends FrontendBaseWidget
                     }
                     if (isset($field['validations']['email'])) {
                         $txt->setAttribute('type', 'email');
+                    }
+                    if ($item['placeholder']) {
+                        $txt->setAttribute('placeholder', $item['placeholder']);
                     }
 
                     // get content
@@ -254,7 +251,7 @@ class Form extends FrontendBaseWidget
                                 'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
                                 'type' => 'date',
-                                'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : '')
+                                'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : ''),
                             )
                         );
                     } else {
@@ -272,11 +269,13 @@ class Form extends FrontendBaseWidget
                     // create element
                     $txt = $this->frm->addTextarea($item['name'], $defaultValues);
                     $txt->setAttribute('cols', 30);
-                    $txt->setAttribute('placeholder', $item['placeholder']);
 
                     // add required attribute
                     if ($item['required']) {
                         $txt->setAttribute('required', null);
+                    }
+                    if ($item['placeholder']) {
+                        $txt->setAttribute('placeholder', $item['placeholder']);
                     }
 
                     // get content
@@ -293,20 +292,6 @@ class Form extends FrontendBaseWidget
                 $this->fieldsHTML[] = $item;
             }
         }
-    }
-
-    /**
-     * Load the template.
-     *
-     * We create a new FrontendTemplate because we could have multiple form widgets on 1 page.
-     * Every form needs to have its own scope so error messages stay within the current scope.
-     * (Without an own scope the successMessage would show in all forms instead of just 1 form.)
-     *
-     * @param string $path Unused parameter but needed because parent function uses it.
-     */
-    protected function loadTemplate($path = null)
-    {
-        $this->tpl = new FrontendTemplate(false);
     }
 
     /**
@@ -508,7 +493,7 @@ class Form extends FrontendBaseWidget
                         'data_id' => $dataId,
                         'data' => $data,
                         'fields' => $fields,
-                        'visitorId' => FrontendModel::getVisitorId()
+                        'visitorId' => FrontendModel::getVisitorId(),
                     )
                 );
 
@@ -516,7 +501,7 @@ class Form extends FrontendBaseWidget
                 \SpoonSession::set('formbuilder_' . $this->item['id'], time());
 
                 // redirect
-                $redirect = SITE_URL . '/' . $this->URL->getQueryString();
+                $redirect = SITE_URL . $this->URL->getQueryString();
                 $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
                 $redirect .= 'identifier=' . $this->item['identifier'];
 

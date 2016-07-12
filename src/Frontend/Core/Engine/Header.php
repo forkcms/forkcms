@@ -18,9 +18,6 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Header extends FrontendBaseObject
 {
@@ -171,7 +168,7 @@ class Header extends FrontendBaseObject
         $addTimestamp = (bool) $addTimestamp;
 
         // get file path
-        if (substr($file, 0, 4) != 'http') {
+        if (mb_substr($file, 0, 4) != 'http') {
             $file = Theme::getPath($file);
         }
 
@@ -345,7 +342,7 @@ class Header extends FrontendBaseObject
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (substr($image, 0, 7) != SITE_PROTOCOL . '://') {
+        if (mb_substr($image, 0, 7) != SITE_PROTOCOL . '://') {
             if (!is_file(PATH_WWW . $image)) {
                 return;
             }
@@ -380,7 +377,7 @@ class Header extends FrontendBaseObject
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
                  'title' => $title,
-                 'href' => $link
+                 'href' => $link,
             ),
             true
         );
@@ -390,6 +387,7 @@ class Header extends FrontendBaseObject
      * Sort function for CSS-files
      *
      * @param array $cssFiles The css files to sort.
+     *
      * @return array
      */
     private function cssSort($cssFiles)
@@ -401,11 +399,11 @@ class Header extends FrontendBaseObject
 
         foreach ($cssFiles as $file) {
             // debug should be the last file
-            if (strpos($file['file'], 'debug.css') !== false) {
+            if (mb_strpos($file['file'], 'debug.css') !== false) {
                 $aTemp['e' . $i][] = $file;
             } else {
                 $aTemp['a' . $i][] = $file;
-                $i++;
+                ++$i;
             }
         }
 
@@ -497,6 +495,7 @@ class Header extends FrontendBaseObject
      *
      * @param string $attribute      The attribute to match on.
      * @param string $attributeValue The value for the unique attribute.
+     *
      * @return array
      */
     public function getMetaValue($attribute, $attributeValue)
@@ -523,6 +522,7 @@ class Header extends FrontendBaseObject
      * Minify a CSS-file
      *
      * @param string $file The file to be minified.
+     *
      * @return string
      */
     private function minifyCSS($file)
@@ -551,6 +551,7 @@ class Header extends FrontendBaseObject
      * Minify a javascript-file
      *
      * @param string $file The file to be minified.
+     *
      * @return string
      */
     private function minifyJS($file)
@@ -615,7 +616,7 @@ class Header extends FrontendBaseObject
         if (!empty($existingCSSFiles)) {
             foreach ($existingCSSFiles as $file) {
                 if ($file['add_timestamp'] !== false) {
-                    $file['file'] .= (strpos(
+                    $file['file'] .= (mb_strpos(
                                           $file['file'],
                                           '?'
                                       ) !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
@@ -640,8 +641,8 @@ class Header extends FrontendBaseObject
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
         if (
             $webPropertyId != '' &&
-            strpos($siteHTMLHeader, $webPropertyId) === false &&
-            strpos($siteHTMLFooter, $webPropertyId) === false
+            mb_strpos($siteHTMLHeader, $webPropertyId) === false &&
+            mb_strpos($siteHTMLFooter, $webPropertyId) === false
         ) {
             $anonymize = (
                 $this->get('fork.settings')->get('Core', 'show_cookie_bar', false) &&
@@ -692,7 +693,7 @@ class Header extends FrontendBaseObject
             $this->addMetaData(
                 array(
                     'property' => 'fb:admins',
-                    'content' => $facebookAdminIds
+                    'content' => $facebookAdminIds,
                 ),
                 true,
                 array('property')
@@ -705,7 +706,7 @@ class Header extends FrontendBaseObject
             $this->addMetaData(
                 array(
                     'property' => 'fb:app_id',
-                    'content' => $facebookAppId
+                    'content' => $facebookAppId,
                 ),
                 true,
                 array('property')
@@ -746,13 +747,13 @@ class Header extends FrontendBaseObject
                     break;
 
                 default:
-                    $locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
+                    $locale = mb_strtolower(FRONTEND_LANGUAGE) . '_' . mb_strtoupper(FRONTEND_LANGUAGE);
             }
 
             $this->addOpenGraphData('locale', $locale);
 
             // if a default image has been set for facebook, assign it
-            $this->addOpenGraphImage('/frontend/themes/' . Theme::getTheme() . '/facebook.png');
+            $this->addOpenGraphImage('/src/Frontend/Themes/' . Theme::getTheme() . '/facebook.png');
             $this->addOpenGraphImage('/facebook.png');
         }
     }
@@ -771,7 +772,7 @@ class Header extends FrontendBaseObject
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
                 '/src/Frontend/Core/Js/Jquery/jquery.js',
-                '/src/Frontend/Core/Js/Jquery/jquery.ui.js'
+                '/src/Frontend/Core/Js/Jquery/jquery.ui.js',
             );
 
             foreach ($existingJSFiles as $file) {
@@ -782,7 +783,7 @@ class Header extends FrontendBaseObject
                     $file = array('file' => $file['file']);
                 } else {
                     // add last modified time
-                    $modifiedTime = (strpos(
+                    $modifiedTime = (mb_strpos(
                                          $file['file'],
                                          '?'
                                      ) !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
@@ -911,7 +912,7 @@ class Header extends FrontendBaseObject
         $url = (string) $url;
 
         // convert relative url
-        if (substr($url, 0, 1) == '/') {
+        if (mb_substr($url, 0, 1) == '/') {
             $url = SITE_URL . $url;
         }
 

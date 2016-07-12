@@ -9,10 +9,11 @@ namespace Common\Core;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Header;
+use Backend\Core\Engine\Url;
+
 /**
  * This class will initiate the frontend-application
- *
- * @author Ghazi Triki <ghazi.triki@inhanx.com>
  */
 class Form extends \SpoonForm
 {
@@ -37,14 +38,15 @@ class Form extends \SpoonForm
      * @param bool   $checked    Should the checkbox be checked?
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return CommonFormCheckbox
      */
     public function addCheckbox($name, $checked = false, $class = null, $classError = null)
     {
         $name = (string) $name;
         $checked = (bool) $checked;
-        $class = ($class !== null) ? (string) $class : 'inputCheckbox';
-        $classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-checkbox';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a checkbox
         $this->add(new CommonFormCheckbox($name, $checked, $class, $classError));
@@ -62,6 +64,7 @@ class Form extends \SpoonForm
      * @param bool   $multipleSelection Is it possible to select multiple items?
      * @param string $class             Class(es) that will be applied on the element.
      * @param string $classError        Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormDropdown
      */
     public function addDropdown(
@@ -76,13 +79,12 @@ class Form extends \SpoonForm
         $values = (array) $values;
         $selected = ($selected !== null) ? $selected : null;
         $multipleSelection = (bool) $multipleSelection;
-        $class = ($class !== null) ? (string) $class : 'select';
-        $classError = ($classError !== null) ? (string) $classError : 'selectError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-select';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // special classes for multiple
         if ($multipleSelection) {
-            $class .= ' selectMultiple';
-            $classError .= ' selectMultipleError';
+            $class .= ' fork-form-select-multiple';
         }
 
         // create and return a dropdown
@@ -97,6 +99,7 @@ class Form extends \SpoonForm
      * @param mixed  $checked    Should the checkboxes be checked?
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormMultiCheckbox
      */
     public function addMultiCheckbox($name, array $values, $checked = null, $class = null, $classError = null)
@@ -104,8 +107,8 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $values = (array) $values;
         $checked = ($checked !== null) ? (array) $checked : null;
-        $class = ($class !== null) ? (string) $class : 'inputCheckbox';
-        $classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-multi-checkbox';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a multi checkbox
         return parent::addMultiCheckbox($name, $values, $checked, $class, $classError);
@@ -120,6 +123,7 @@ class Form extends \SpoonForm
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the field contain HTML?
+     *
      * @return \SpoonFormPassword
      */
     public function addPassword(
@@ -133,8 +137,8 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
-        $class = ($class !== null) ? (string) $class : 'inputText inputPassword';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputPasswordError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-password inputPassword';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
         $HTML = (bool) $HTML;
 
         // create and return a password field
@@ -149,6 +153,7 @@ class Form extends \SpoonForm
      * @param string $checked    Should the element be checked?
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormRadiobutton
      */
     public function addRadiobutton($name, array $values, $checked = null, $class = null, $classError = null)
@@ -156,8 +161,8 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $values = (array) $values;
         $checked = ($checked !== null) ? (string) $checked : null;
-        $class = ($class !== null) ? (string) $class : 'inputRadio';
-        $classError = ($classError !== null) ? (string) $classError : 'inputRadioError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-radio';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a radio button
         return parent::addRadiobutton($name, $values, $checked, $class, $classError);
@@ -172,6 +177,7 @@ class Form extends \SpoonForm
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will this element contain HTML?
+     *
      * @return \SpoonFormText
      */
     public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
@@ -179,8 +185,8 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
-        $class = ($class !== null) ? (string) $class : 'inputText';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-text';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
         $HTML = (bool) $HTML;
 
         // create and return a textfield
@@ -195,14 +201,15 @@ class Form extends \SpoonForm
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the element contain HTML?
+     *
      * @return \SpoonFormTextarea
      */
     public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
-        $class = ($class !== null) ? (string) $class : 'textarea';
-        $classError = ($classError !== null) ? (string) $classError : 'textareaError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-textarea';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
         $HTML = (bool) $HTML;
 
         // create and return a textarea
@@ -216,14 +223,15 @@ class Form extends \SpoonForm
      * @param string $value      The value inside the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormTime
      */
     public function addTime($name, $value = null, $class = null, $classError = null)
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
-        $class = ($class !== null) ? (string) $class : 'inputText inputTime';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputTimeError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-time inputTime';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a time field
         return parent::addTime($name, $value, $class, $classError);
@@ -232,8 +240,6 @@ class Form extends \SpoonForm
 
 /**
  * This is our extended version of \SpoonFormCheckbox
- *
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 class CommonFormCheckbox extends \SpoonFormCheckbox
 {
@@ -242,6 +248,7 @@ class CommonFormCheckbox extends \SpoonFormCheckbox
      *
      * @param mixed $checked the return value when checked
      * @param mixed $notChecked the return value when not checked
+     *
      * @return string
      */
     public function getActualValue($checked = 'Y', $notChecked = 'N')

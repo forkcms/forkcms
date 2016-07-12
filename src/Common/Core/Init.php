@@ -11,8 +11,6 @@ namespace Common\Core;
 
 /**
  * This class will initiate the application
- *
- * @author Ghazi Triki <ghazi.triki@inhanx.com>
  */
 abstract class Init extends \KernelLoader
 {
@@ -58,91 +56,5 @@ abstract class Init extends \KernelLoader
 
         // define as a constant
         defined('LAST_MODIFIED_TIME') || define('LAST_MODIFIED_TIME', $lastModifiedTime);
-
-        $this->definePaths();
-        $this->defineURLs();
-    }
-
-    /**
-     * Define paths
-     */
-    protected function definePaths()
-    {
-        // To be implemented in inherited classes
-    }
-
-    /**
-     * Define URLs
-     */
-    protected function defineURLs()
-    {
-        // To be implemented in inherited classes
-    }
-
-    /**
-     * A custom error-handler so we can handle warnings about undefined labels
-     *
-     * @param int    $errorNumber The level of the error raised, as an integer.
-     * @param string $errorString The error message, as a string.
-     * @return null|false
-     */
-    public static function errorHandler($errorNumber, $errorString)
-    {
-        $errorString = (string) $errorString;
-        // is this an undefined index?
-        if (mb_substr_count($errorString, 'Undefined index:') > 0) {
-            // cleanup
-            $index = trim(str_replace('Undefined index:', '', $errorString));
-
-            // get the type
-            $type = mb_substr($index, 0, 3);
-
-            // is the index locale?
-            if (in_array($type, array('act', 'err', 'lbl', 'msg'))) {
-                echo '{$' . $index . '}';
-            } else {
-                // return false, so the standard error handler isn't bypassed
-                return false;
-            }
-        } else {
-            // return false, so the standard error handler isn't bypassed
-            return false;
-        }
-    }
-
-    /**
-     * This method will be called by the Spoon Exception handler and is specific for exceptions thrown in AJAX-actions
-     *
-     * @param object $exception The exception that was thrown.
-     * @param string $output    The output that should be mailed.
-     */
-    public static function exceptionAJAXHandler($exception, $output)
-    {
-        header('content-type: application/json');
-        $response = array(
-            'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
-            'message' => $exception->getMessage()
-        );
-        echo json_encode($response);
-        exit;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function setDebugging()
-    {
-        if ($this->getContainer()->getParameter('kernel.debug') === false) {
-            // set error reporting as low as possible
-            error_reporting(0);
-
-            // don't show error on the screen
-            ini_set('display_errors', 'Off');
-
-            // add callback for the spoon exceptionhandler
-            if ($this->type === 'BackendAjax') {
-                \Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
-            }
-        }
     }
 }

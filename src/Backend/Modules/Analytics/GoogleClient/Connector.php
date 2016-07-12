@@ -2,15 +2,12 @@
 
 namespace Backend\Modules\Analytics\GoogleClient;
 
-use Backend\Core\Engine\Model;
 use Common\ModulesSettings;
 use Google_Service_Analytics;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * The class that will do query's on the google analytics API
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 final class Connector
 {
@@ -44,6 +41,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return int
      */
     public function getPageViews($startDate, $endDate)
@@ -58,6 +56,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return int
      */
     public function getVisitors($startDate, $endDate)
@@ -72,6 +71,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return float
      */
     public function getPagesPerVisit($startDate, $endDate)
@@ -86,6 +86,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return float
      */
     public function getTimeOnSite($startDate, $endDate)
@@ -100,6 +101,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return float
      */
     public function getNewSessionsPercentage($startDate, $endDate)
@@ -114,6 +116,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return float
      */
     public function getBounceRate($startDate, $endDate)
@@ -128,6 +131,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return array
      */
     public function getVisitorsGraphData($startDate, $endDate)
@@ -142,6 +146,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return array
      */
     public function getSourceGraphData($startDate, $endDate)
@@ -156,6 +161,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return array
      */
     public function getMostVisitedPagesData($startDate, $endDate)
@@ -170,6 +176,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return array
      */
     private function getData($startDate, $endDate)
@@ -199,6 +206,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return array
      */
     private function getMetrics($startDate, $endDate)
@@ -217,6 +225,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return array
      */
     private function collectVisitGraphData($startDate, $endDate)
@@ -233,7 +242,7 @@ final class Connector
 
         // make sure our column headers are the metric names, not just numbers
         $namedRows = array();
-        foreach ($visitGraphData['rows'] as $dataRow) {
+        foreach ((array) $visitGraphData['rows'] as $dataRow) {
             $namedRow = array();
             foreach ($dataRow as $key => $value) {
                 $headerName = $visitGraphData['columnHeaders'][$key]['name'];
@@ -255,6 +264,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return array
      */
     private function collectSourceGraphData($startDate, $endDate)
@@ -271,7 +281,7 @@ final class Connector
 
         // make sure our column headers are the metric names, not just numbers
         $namedRows = array();
-        foreach ($sourceGraphData['rows'] as $dataRow) {
+        foreach ((array) $sourceGraphData['rows'] as $dataRow) {
             $namedRow = array();
             foreach ($dataRow as $key => $value) {
                 $headerName = $sourceGraphData['columnHeaders'][$key]['name'];
@@ -288,6 +298,7 @@ final class Connector
      *
      * @param  int $startDate
      * @param  int $endDate
+     *
      * @return array
      */
     private function collectMostVisitedPagesData($startDate, $endDate)
@@ -305,7 +316,7 @@ final class Connector
 
         // make sure our column headers are the metric names, not just numbers
         $namedRows = array();
-        foreach ($sourceGraphData['rows'] as $dataRow) {
+        foreach ((array) $sourceGraphData['rows'] as $dataRow) {
             $namedRow = array();
             foreach ($dataRow as $key => $value) {
                 $headerName = $sourceGraphData['columnHeaders'][$key]['name'];
@@ -324,6 +335,7 @@ final class Connector
      * @param  int $endDate
      * @param  string $metrics A comma-separated list of Analytics metrics.
      * @param  array $optParams Optional parameters.
+     *
      * @return Google_Service_Analytics_GaData
      */
     private function getAnalyticsData($startDate, $endDate, $metrics, $optParams = array())

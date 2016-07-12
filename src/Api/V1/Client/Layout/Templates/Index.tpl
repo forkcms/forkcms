@@ -5,11 +5,6 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/src/Api/V1/Client/Layout/css/screen.css" />
 
-	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
-		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-
 	<script type="text/javascript" src="/src/Frontend/Core/Js/jquery/jquery.js"></script>
 	<script type="text/javascript" src="/src/Api/V1/Client/Js/client.js"></script>
 </head>

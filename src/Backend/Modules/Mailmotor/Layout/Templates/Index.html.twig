@@ -1,0 +1,59 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+  <form action="{{ geturl('mass_mailing_action') }}" method="get" class="forkForms submitWithLink" id="mailings">
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showMailmotorAdd %}
+        {{ macro.buttonIcon(geturl('add'), 'envelope', 'lbl.AddNewMailing'|trans|ucfirst) }}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      {% if dgUnsentMailings %}
+        <div class="dataGridHolder">
+          <div class="table-responsive">
+            {{ dgUnsentMailings|raw }}
+          </div>
+        </div>
+      {% endif %}
+      {% if not dgUnsentMailings %}
+        <p>{{ 'msg.NoUnsentMailings'|trans }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% if dgQueuedMailings %}
+    <div class="row fork-module-heading">
+      <div class="col-md-12">
+        <h2>{{ 'lbl.QueuedMailings'|trans|ucfirst }}{% if name %} {{ lbl.In }} {{ lbl.Campaign }} &ldquo;{{ name }}&rdquo;{% endif %}</h2>
+      </div>
+    </div>
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          {{ dgQueuedMailings|raw }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if dgSentMailings %}
+    <div class="row fork-module-heading">
+      <div class="col-md-12">
+        <h2>{{ 'lbl.SentMailings'|trans|ucfirst }}{% if name %} {{ lbl.In }} {{ lbl.Campaign }} &ldquo;{{ name }}&rdquo;{% endif %}</h2>
+      </div>
+    </div>
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          {{ dgSentMailings|raw }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  </form>
+{% endblock %}

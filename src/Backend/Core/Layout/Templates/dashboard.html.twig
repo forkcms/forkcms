@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="{{ INTERFACE_LANGUAGE }}">
+
+{% include "/Layout/Templates/head.html.twig" %}
+
+<body id="{{ bodyID }}" class="{{ bodyClass }}">
+
+{% include "/Layout/Templates/header.html.twig" %}
+
+<div class="main-wrapper main-wrapper-dashboard {% if attribute(cookies, 'navigation-collapse') == 'true' %} navigation-collapsed{% endif %}">
+  <div class="sidebar">
+    {% include "/Layout/Templates/navigation.html.twig" %}
+  </div>
+
+  <div id="root">
+    <div id="content" class="content-wrapper">
+      <div class="content-main content-main-dashboard{% if attribute(cookies, 'navigation-collapse') == 'true' %} navigation-collapsed{% endif %}">
+        <div class="container-fluid container-fluid-large">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+      <div id="root-footer"></div>
+    </div>
+  </div>
+  <div class="footer-dashboard">
+    {% include "/Layout/Templates/footer.html.twig" %}
+  </div>
+</div>
+
+<div id="messaging">
+  <noscript>
+    <div class="formMessage errorMessage">
+      <p>{{ err.JavascriptNotEnabled }}</p>
+    </div>
+  </noscript>
+  <div id="noCookies" class="formMessage errorMessage" style="display: none;">
+    <p>{{ err.CookiesNotEnabled }}</p>
+  </div>
+</div>
+<div id="ajaxSpinner" style="position: fixed; top: 10px; right: 10px; display: none;">
+  <img src="/src/Backend/Core/Layout/images/spinner.gif" width="16" height="16" alt="loading" />
+</div>
+
+<div class="hidden">
+  <div class="modal fade jsConfirmation" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+        </div>
+        <div class="modal-body">
+          <p class="jsConfirmationMessage">{{ msg.Confirmation }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|ucfirst }}</button>
+          <a href="#" class="btn btn-primary jsConfirmationSubmit">
+            {{ 'lbl.OK'|trans|ucfirst }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {# Scripts should be placed here #}
+</div>
+</body>
+</html>

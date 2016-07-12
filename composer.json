@@ -14,7 +14,7 @@
         "symfony/assetic-bundle": "^2.7",
         "symfony/swiftmailer-bundle": "^2.3",
         "symfony/monolog-bundle": "^2.8",
-        "spoon/library": "~2.0.0",
+        "spoon/library": "^2.3",
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
         "league/flysystem": "~1.0"
@@ -32,12 +32,23 @@
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {
-        "post-install-cmd": "php app/console assetic:dump . && cd tools && bash ./remove_cache",
-        "post-update-cmd": "php app/console assetic:dump . && cd tools && bash ./remove_cache"
+        "post-install-cmd": [
+            "php app/console assetic:dump .",
+            "cd tools && bash ./remove_cache"
+        ],
+        "post-update-cmd": [
+            "php app/console assetic:dump .",
+            "cd tools && bash ./remove_cache"
+        ]
     },
     "autoload": {
         "psr-0": {
             "": "src/"
-        }
+        },
+        "exclude-from-classmap": [
+            "**/Tests/",
+            "**/tests/",
+            "**/Test/"
+        ]
     }
 }

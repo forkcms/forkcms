@@ -13,9 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * The class below will handle all stuff relates to the current authenticated user
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class User
 {
@@ -151,6 +148,7 @@ class User
      *
      * @param string $key          The key for the setting to get.
      * @param mixed  $defaultValue Default value, will be stored if the setting isn't set.
+     *
      * @return mixed
      */
     public function getSetting($key, $defaultValue = null)
@@ -210,6 +208,7 @@ class User
      * Load a user
      *
      * @param int $userId The id of the user to load.
+     *
      * @throws Exception If user cannot be loaded
      */
     public function loadUser($userId)
@@ -266,6 +265,7 @@ class User
      * Load a user by his e-mail adress
      *
      * @param string $email The email of the user to load.
+     *
      * @throws Exception If user cannot be loaded
      */
     public function loadUserByEmail($email)

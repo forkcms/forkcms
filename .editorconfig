@@ -44,6 +44,14 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*.twig]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
 
 #
 # Following languages aren't used at the moment in Fork CMS, but just in case.
