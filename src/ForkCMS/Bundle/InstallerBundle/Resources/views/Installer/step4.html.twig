@@ -22,13 +22,13 @@
           </h2>
         </div>
         <div class="panel-body">
-          <p class="text-info">Enter your database details. Make sure this database already exists.</p>
+          <p class="help-block">Enter your database details. Make sure this database already exists.</p>
           <div class="form-group">
             <label for="hostname">
               Hostname
               <abbr title="Required field">*</abbr>
             </label>
-            <p class="text-info">If you are working locally, your hostname is probably <strong>localhost</strong>.</p>
+            <p class="help-block">If you are working locally, your hostname is probably <strong>localhost</strong>.</p>
             <div class="form-group form-inline">
               {{ form_widget(form.dbHostname) }} : {{ form_widget(form.dbPort) }}
             </div>
@@ -38,7 +38,7 @@
               Database
               <abbr title="Required field">*</abbr>
             </label>
-            <p class="text-info">Make sure this database is empty!</p>
+            <p class="help-block">Make sure this database is empty!</p>
             {{ form_widget(form.dbDatabase) }}
           </div>
           <div class="form-group">
