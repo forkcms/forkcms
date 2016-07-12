@@ -80,6 +80,33 @@ class Cookie extends \SpoonCookie
     }
 
     /**
+     * Deletes one or more cookies.
+     *
+     * This overwrites the spoon cookie method and adds the same functionality
+     * as in the set method to automatically set the domain.
+     */
+    public static function delete()
+    {
+        $domain = null;
+        if (FrontendModel::getContainer()->has('request')) {
+            $domain = '.' . FrontendModel::getContainer()->get('request')->getHost();
+        }
+
+        foreach (func_get_args() as $argument) {
+            // multiple arguments are given
+            if (is_array($argument)) {
+                foreach ($argument as $key) {
+                    self::delete($key);
+                }
+            } else {
+                // delete the given cookie
+                unset($_COOKIE[(string) $argument]);
+                setcookie((string) $argument, null, 1, '/', $domain);
+            }
+        }
+    }
+
+    /**
      * Has the visitor allowed cookies?
      *
      * @return bool
