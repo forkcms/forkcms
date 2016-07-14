@@ -74,6 +74,10 @@ services:
         class: Backend\Doctrine\Entity\CreateSchema
         arguments:
             - "@doctrine.orm.entity_manager"
+    form.type.editor:
+        class: Backend\Form\Type\EditorType
+        tags:
+          - { name: form.type, alias: editor}
     database:
         class: SpoonDatabase
         arguments:
