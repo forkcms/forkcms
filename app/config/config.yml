@@ -34,6 +34,7 @@ doctrine:
       enum: string
     types:
       enum_bool: Backend\Doctrine\Type\EnumBoolType
+      language: Backend\Doctrine\Type\LanguageType
 
   orm:
     auto_generate_proxy_classes: "%kernel.debug%"
