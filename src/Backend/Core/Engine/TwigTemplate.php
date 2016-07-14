@@ -6,6 +6,14 @@ use Backend\Core\Language\Language as BL;
 use Frontend\Core\Engine\FormExtension;
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
+use ReflectionClass;
+use Symfony\Bridge\Twig\AppVariable;
+use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Twig_Environment;
+use Twig_Extension_Debug;
+use Twig_Loader_Filesystem;
 
 /*
  * This file is part of Fork CMS.
@@ -40,8 +48,6 @@ class TwigTemplate extends BaseTwigTemplate
      * Fetch the parsed content from this template.
      *
      * @param string $template      The location of the template file, used to display this template.
-     * @param bool   $customHeaders Are custom headers already set?
-     * @param bool   $parseCustom   Parse custom template.
      *
      * @return string The actual parsed content after executing this template.
      */
@@ -57,10 +63,15 @@ class TwigTemplate extends BaseTwigTemplate
 
         $template = str_replace(BACKEND_MODULES_PATH, '', $template);
 
+        // path to TwigBridge library so we can locate the form theme files.
+        $appVariableReflection = new ReflectionClass(AppVariable::class);
+        $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
+
         // render the compiled File
-        $loader = new \Twig_Loader_Filesystem(array(
+        $loader = new Twig_Loader_Filesystem(array(
             BACKEND_MODULES_PATH,
             BACKEND_CORE_PATH,
+            $vendorTwigBridgeDir . '/Resources/Views/Form'
         ));
 
         $twig = new \Twig_Environment($loader, array(
@@ -68,9 +79,18 @@ class TwigTemplate extends BaseTwigTemplate
             'debug' => $this->debugMode,
         ));
 
+        // connect symphony forms
+        $formEngine = new TwigRendererEngine(array('Layout/Templates/form_layout.html.twig'));
+        $formEngine->setEnvironment($twig);
+        $twig->addExtension(
+            new SymfonyFormExtension(
+                new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
+            )
+        );
+
         // debug options
         if ($this->debugMode === true) {
-            $twig->addExtension(new \Twig_Extension_Debug());
+            $twig->addExtension(new Twig_Extension_Debug());
         }
 
         if (count($this->forms) > 0) {
@@ -79,7 +99,7 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        // should always be included
+        // should always be included, makes it possible to parse SpoonForm in twig
         new FormExtension($twig);
 
         // start the filters / globals
