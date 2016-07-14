@@ -1,9 +1,5 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
-{% block actionbar %}
-
-{% endblock %}
-
 {% block content %}
   {% form add %}
   <div class="row fork-module-content">
@@ -11,7 +7,7 @@
       <div class="form-group">
         <label for="title" class="control-label">
           {{ 'lbl.Title'|trans|ucfirst }}
-          {{ macro.required }}
+          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
         </label>
         {% form_field title %} {% form_field_error title %}
       </div>
@@ -19,7 +15,7 @@
         <div class="panel-heading">
           <label for="text" class="control-label">
             {{ 'lbl.Content'|trans|ucfirst }}
-            {{ macro.required }}<br>
+            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr><br>
           </label>
         </div>
         <div class="panel-body">
@@ -55,5 +51,5 @@
       </div>
     </div>
   </div>
-  {% endform %}
+  {{ form_end(form) }}
 {% endblock %}
