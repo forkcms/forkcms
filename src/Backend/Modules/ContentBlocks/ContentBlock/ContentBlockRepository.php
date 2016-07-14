@@ -23,4 +23,21 @@ class ContentBlockRepository extends EntityRepository
             ->setParameters([Status::active(), $language])
             ->getQuery();
     }
+
+    /**
+     * @param LanguageName $language
+     *
+     * @return int
+     */
+    public function getNextIdForLanguage(LanguageName $language)
+    {
+        return (int) $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('MAX(cb.id) + 1 as id')
+            ->from(ContentBlock::class, 'cb')
+            ->where('cb.language = :language')
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

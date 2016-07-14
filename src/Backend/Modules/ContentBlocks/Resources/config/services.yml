@@ -1,0 +1,11 @@
+services:
+    contant_blocks.repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository
+
+    content_blocks.handler:
+        class: Backend\Modules\ContentBlocks\ContentBlock\ContentBlockHandler
+        arguments:
+            - "@doctrine.orm.entity_manager"
