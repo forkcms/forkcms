@@ -2,6 +2,9 @@
 
 namespace Backend\Modules\ContentBlocks\ContentBlock;
 
+use Backend\Core\Engine\Authentication;
+use Backend\Core\Engine\Model;
+use Backend\Core\Language\LanguageName;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ContentBlock
 {
+    const DEFAULT_TEMPLATE = 'Default.html.twig';
+
     /**
      * @var int
      *
@@ -50,9 +55,9 @@ class ContentBlock
     private $template = 'Default.html.twig';
 
     /**
-     * @var string
+     * @var LanguageName
      *
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="language")
      */
     private $language;
 
@@ -109,7 +114,7 @@ class ContentBlock
      * @param bool $isHidden
      * @param Status $status
      */
-    public function __construct(
+    private function __construct(
         $id,
         $userId,
         $extraId,
@@ -129,6 +134,39 @@ class ContentBlock
         $this->text = $text;
         $this->isHidden = $isHidden;
         $this->status = $status;
+    }
+
+    /**
+     * @param int $id
+     * @param int $extraId The id of the module extra
+     * @param string $language
+     * @param string $title
+     * @param string $text
+     * @param bool $isHidden
+     * @param string $template
+     *
+     * @return self
+     */
+    public static function create(
+        $id,
+        $extraId,
+        $language,
+        $title,
+        $text,
+        $isHidden,
+        $template = self::DEFAULT_TEMPLATE
+    ) {
+        return new self(
+            $id,
+            Authentication::getUser()->getUserId(),
+            $extraId,
+            $template,
+            $language,
+            $title,
+            $text,
+            $isHidden,
+            Status::active()
+        );
     }
 
     /**
@@ -172,7 +210,7 @@ class ContentBlock
     }
 
     /**
-     * @return string
+     * @return LanguageName
      */
     public function getLanguage()
     {
@@ -233,6 +271,7 @@ class ContentBlock
     public function prePersist()
     {
         $this->createdOn = $this->editedOn = new DateTime();
+        $this->updateWidget();
     }
 
     /**
@@ -241,5 +280,27 @@ class ContentBlock
     public function preUpdate()
     {
         $this->editedOn = new DateTime();
+        $this->updateWidget();
+    }
+
+    /**
+     * Update the widget so it shows the correct title and has the correct template
+     */
+    private function updateWidget()
+    {
+        $editUrl = Model::createURLForAction('Edit', 'ContentBlocks', (string) $this->language) . '&id=' . $this->id;
+
+        // update data for the extra
+        Model::updateExtra(
+            $this->extraId,
+            'data',
+            [
+                'id' => $this->id,
+                'extra_label' => $this->title,
+                'language' => (string) $this->language,
+                'edit_url' => $editUrl,
+                'custom_template' => $this->template,
+            ]
+        );
     }
 }
