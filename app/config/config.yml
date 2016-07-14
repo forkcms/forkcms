@@ -7,6 +7,8 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
+    validation:
+        enable_annotations: true
     csrf_protection: ~
     templating:
         engines: ['twig']
