@@ -65,7 +65,7 @@
                       {% for permission in permissions %}
                         <div class="panel panel-transparent jsGroupsPermissionsModule">
                           <div class="panel-heading" role="tab" id="permission-heading-{{ permission.id }}">
-                            <div data-toggle="collapse" role="treeitem" data-parent="#permission" data-target="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="collapseOne">
+                            <div data-toggle="collapse" role="treeitem" data-parent="#permission" data-target="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="permission-list-{{ permission.id }}">
                               <h4 class="panel-title">
                                 {{ permission.chk|raw }}
                                 <label for="{{ permission.id }}"><span class="fa fa-caret-right fa-fw"></span> {{ permission.label }}
