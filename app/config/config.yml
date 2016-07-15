@@ -19,11 +19,11 @@ framework:
 # Doctrine Configuration
 doctrine:
   dbal:
-    driver:   pdo_%database.driver%
-    host:     %database.host%
-    port:     %database.port%
-    dbname:   %database.name%
-    user:     %database.user%
+    driver: pdo_%database.driver%
+    host: %database.host%
+    port: %database.port%
+    dbname: %database.name%
+    user: %database.user%
     password: %database.password%
     charset: utf8mb4
     default_table_options:

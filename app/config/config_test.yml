@@ -16,7 +16,7 @@ web_profiler:
 
 doctrine:
   dbal:
-    dbname:   %database.name%_test
+    dbname: %database.name%_test
 
 services:
     database:
