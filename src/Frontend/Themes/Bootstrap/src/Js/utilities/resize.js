@@ -1,4 +1,5 @@
 import requestAnimationFrame from 'requestanimationframe';
+import {distributeHeight} from './distribute-height';
 
 export class resizeFunction {
 
@@ -12,6 +13,7 @@ export class resizeFunction {
             ticking = false;
 
         calculate = function() {
+            new distributeHeight();
             ticking = false;
         };
 
