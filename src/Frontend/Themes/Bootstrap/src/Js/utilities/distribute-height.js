@@ -1,4 +1,4 @@
-export class distributeHeight {
+export default class {
 
     constructor() {
         this.setHeights();

@@ -1,7 +1,7 @@
 import requestAnimationFrame from 'requestanimationframe';
-import {distributeHeight} from './distribute-height';
+import distributeHeight from './distribute-height';
 
-export class resizeFunction {
+export default class {
 
     constructor() {
         this.resize();
