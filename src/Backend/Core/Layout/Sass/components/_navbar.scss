@@ -384,6 +384,12 @@
     display: inline-block;
     float: none;
 
+    a {
+      position: relative;
+      display: block;
+      line-height: 20px;
+    }
+
     .dropdown-toggle {
       border: 1px solid $gray-lighter;
       border-radius: $border-radius-small;
