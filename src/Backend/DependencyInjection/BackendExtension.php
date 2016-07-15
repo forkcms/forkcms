@@ -30,13 +30,20 @@ class BackendExtension extends Extension implements PrependExtensionInterface
                 continue;
             }
 
-            // @TODO Check for YAML/XML files and set the type accordingly
+            /*
+             * Find and load entities in the backend folder.
+             * We do this by looping all installed modules and looking for an Entity directory.
+             * If the Entity map is found, a configuration will be prepended to the configuration.
+             * So it's basically like if you would add every single module by hand, but automagically.
+             *
+             * @TODO Check for YAML/XML files and set the type accordingly
+             */
             $container->prependExtensionConfig(
                 'doctrine',
                 array(
-                    'orm' => array (
-                        'mappings' => array (
-                            $module => array (
+                    'orm' => array(
+                        'mappings' => array(
+                            $module => array(
                                 'type' => 'annotation',
                                 'is_bundle' => false,
                                 'dir' => $dir,
