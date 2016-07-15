@@ -151,8 +151,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
             }
         }
 
-        $backendExtension = new BackendExtension();
-        $container->registerExtension($backendExtension);
+        $container->registerExtension(new BackendExtension());
 
         // ensure these extensions are implicitly loaded
         $container->getCompilerPassConfig()->setMergePass(
