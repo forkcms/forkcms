@@ -27,14 +27,14 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabGeneral" aria-controls="general" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
           </li>
           <li role="presentation">
-            <a href="#tabAccount" aria-controls="account" role="tab" data-toggle="tab">CampaignMonitor - {{ 'lbl.AccountSettings'|trans|ucfirst }}</a>
+            <a href="#tabAccount" aria-controls="tabAccount" role="tab" data-toggle="tab">CampaignMonitor - {{ 'lbl.AccountSettings'|trans|ucfirst }}</a>
           </li>
           {% if account %}
             <li role="presentation">
-              <a href="#tabClient" aria-controls="client" role="tab" data-toggle="tab">CampaignMonitor - {{ 'lbl.ClientSettings'|trans|ucfirst }}</a>
+              <a href="#tabClient" aria-controls="tabClient" role="tab" data-toggle="tab">CampaignMonitor - {{ 'lbl.ClientSettings'|trans|ucfirst }}</a>
             </li>
           {% endif %}
         </ul>

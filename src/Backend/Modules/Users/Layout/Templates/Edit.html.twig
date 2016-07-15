@@ -58,19 +58,19 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabProfile" aria-controls="profile" role="tab" data-toggle="tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
+            <a href="#tabProfile" aria-controls="tabProfile" role="tab" data-toggle="tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
           </li>
           {% if allowPasswordEdit %}
             <li role="presentation">
-              <a href="#tabPassword" aria-controls="password" role="tab" data-toggle="tab">{{ 'lbl.Password'|trans|ucfirst }}</a>
+              <a href="#tabPassword" aria-controls="tabPassword" role="tab" data-toggle="tab">{{ 'lbl.Password'|trans|ucfirst }}</a>
             </li>
           {% endif %}
           <li role="presentation">
-            <a href="#tabSettings" aria-controls="settings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+            <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
           </li>
           {% if allowUserRights %}
             <li role="presentation">
-              <a href="#tabPermissions" aria-controls="permissions" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
+              <a href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
             </li>
           {% endif %}
         </ul>
