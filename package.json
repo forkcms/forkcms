@@ -34,7 +34,8 @@
     "bootstrap-sass": "^3.3.6",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
-    "requestanimationframe": "0.0.23"
+    "requestanimationframe": "0.0.23",
+    "sweet-scroll": "^1.0.3"
   },
   "babel": {
     "presets": [
