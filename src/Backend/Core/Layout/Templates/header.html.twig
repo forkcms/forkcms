@@ -13,7 +13,7 @@
       {% if SITE_MULTILANGUAGE %}
         <div class="nav navbar-nav navbar-languages">
           {% if workingLanguages %}
-            <label class="working-language hidden-xs" for="workingLanguages">{{ 'msg.NowEditing'|trans|ucfirst }}</label>
+            <span class="working-language hidden-xs">{{ 'msg.NowEditing'|trans|ucfirst }}</span>
             <div class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ LANGUAGE|uppercase }}">
                 <span class="dropdown-text">{{ ('lbl.'~LANGUAGE|uppercase)|trans|ucfirst }}</span>
