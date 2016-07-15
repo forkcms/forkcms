@@ -38,7 +38,10 @@ gulp.task('sass', function() {
   return gulp.plumbedSrc(paths.src + '/Layout/Sass/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({
-      includePaths: ['./node_modules/bootstrap-sass/assets/stylesheets']
+        includePaths: [
+            './node_modules/bootstrap-sass/assets/stylesheets',
+            './node_modules'
+        ]
     }).on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(sourcemaps.write())
@@ -50,7 +53,10 @@ gulp.task('sass:build', function() {
   return gulp.src(paths.src + '/Layout/Sass/*.scss')
     .pipe(sass({
       outputStyle: 'compressed',
-      includePaths: ['./node_modules/bootstrap-sass/assets/stylesheets']
+        includePaths: [
+            './node_modules/bootstrap-sass/assets/stylesheets',
+            './node_modules'
+        ]
     }).on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(gulp.dest(paths.core + '/Layout/Css'));
@@ -139,7 +145,12 @@ gulp.task('imagemin', function() {
     .pipe(livereload());
 });
 
-gulp.task('default', function() {
+gulp.task('fontAwesome', function() {
+  return gulp.src('node_modules/font-awesome/fonts/*')
+    .pipe(gulp.dest(paths.core + '/Layout/Fonts'))
+});
+
+gulp.task('default',['fontAwesome'], function() {
   livereload.listen();
   gulp.watch(paths.src + '/Js/**/*.js', ['webpack']);
   gulp.watch(paths.src + '/Layout/Sass/**/*.scss', ['sass']);
@@ -154,5 +165,5 @@ gulp.task('serve', function() {
 });
 
 gulp.task('build', function() {
-  runSequence('clean', ['iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin']);
+  runSequence('clean', ['iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin', 'fontAwesome']);
 });
