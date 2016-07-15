@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.6",
+    "fancybox": "^3.0.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "requestanimationframe": "0.0.23",
