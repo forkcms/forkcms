@@ -143,23 +143,21 @@ abstract class Kernel extends BaseKernel implements KernelInterface
 
         $container->setParameter('installed_modules', $installedModules);
 
-        $extensions = array();
         foreach ($installedModules as $module) {
             $class = 'Backend\\Modules\\' . $module . '\\DependencyInjection\\' . $module . 'Extension';
 
             if (class_exists($class)) {
-                $extension = new $class();
-                $container->registerExtension($extension);
-                $extensions[] = $extension->getAlias();
+                $container->registerExtension(new $class());
             }
         }
 
         $backendExtension = new BackendExtension();
         $container->registerExtension($backendExtension);
-        $extensions[] = $backendExtension->getAlias();
 
         // ensure these extensions are implicitly loaded
-        $container->getCompilerPassConfig()->setMergePass(new MergeExtensionConfigurationPass(array_keys($container->getExtensions())));
+        $container->getCompilerPassConfig()->setMergePass(
+            new MergeExtensionConfigurationPass(array_keys($container->getExtensions()))
+        );
 
         return $container;
     }
