@@ -14,10 +14,4 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class MailMotorExtension extends Extension
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function load(array $configs, ContainerBuilder $container)
-    {
-    }
 }
