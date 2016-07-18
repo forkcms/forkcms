@@ -4,7 +4,7 @@ namespace Backend\Modules\MailMotor;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Backend\Modules\MailMotor\DependencyInjection\Compiler\CustomCompilerPass;
+use Backend\Modules\MailMotor\DependencyInjection\Compiler\MailMotorCompilerPass;
 
 class MailMotor extends Bundle
 {
@@ -12,6 +12,6 @@ class MailMotor extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new CustomCompilerPass());
+        $container->addCompilerPass(new MailMotorCompilerPass());
     }
 }

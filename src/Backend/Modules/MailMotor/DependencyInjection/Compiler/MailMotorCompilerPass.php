@@ -5,7 +5,11 @@ namespace Backend\Modules\MailMotor\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class CustomCompilerPass implements CompilerPassInterface
+/**
+ * MailMotor compiler pass will add parameters to your symfony app,
+ * so we can change these variables in the Fork CMS Backend.
+ */
+class MailMotorCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritDoc}
