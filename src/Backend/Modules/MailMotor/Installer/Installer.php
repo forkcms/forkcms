@@ -14,9 +14,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Modules\MailMotor\Engine\ApiCall as ApiCall;
 
 /**
- * Installer for the MailMotor module
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * Installer for the MailMotor moduleJobCurrentState
  */
 class Installer extends ModuleInstaller
 {

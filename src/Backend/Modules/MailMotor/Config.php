@@ -13,9 +13,7 @@ use \Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
- * This is the configuration-object for the MailMotor module
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * This is the configuration-object for the MailMotor moduleJobCurrentState
  */
 class Config extends BackendBaseConfig
 {

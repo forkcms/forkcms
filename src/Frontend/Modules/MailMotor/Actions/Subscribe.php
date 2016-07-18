@@ -17,9 +17,7 @@ use Frontend\Modules\MailMotor\Engine\Model as FrontendMailMotorModel;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
- * This is the Subscribe-action for our MailMotor
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * This is the Subscribe-action for our MailMotorJobCurrentState
  */
 class Subscribe extends FrontendBaseBlock
 {

@@ -13,9 +13,7 @@ use \Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
- * This is the configuration-object
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * This is the configuration-objectJobCurrentState
  */
 class Config extends FrontendBaseConfig
 {

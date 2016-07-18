@@ -17,9 +17,7 @@ use Frontend\Modules\MailMotor\Engine\Model as FrontendMailMotorModel;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
- * This is the Unsubscribe-action for MailMotor
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * This is the Unsubscribe-action for MailMotorJobCurrentState
  */
 class Unsubscribe extends FrontendBaseBlock
 {

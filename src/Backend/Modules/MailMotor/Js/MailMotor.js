@@ -1,7 +1,5 @@
 /**
- * Interaction for the MailMotor module
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * Interaction for the MailMotor moduleJobCurrentState
  */
 jsBackend.mailmotor =
 {

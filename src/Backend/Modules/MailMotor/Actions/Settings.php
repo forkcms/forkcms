@@ -17,9 +17,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This is the settings-action (default),
- * it will be used to couple your "mail-engine" account
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * it will be used to couple your "mail-engine" accountJobCurrentState
  */
 final class Settings extends ActionIndex
 {

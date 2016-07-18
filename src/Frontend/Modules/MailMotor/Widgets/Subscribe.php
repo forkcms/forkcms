@@ -12,9 +12,7 @@ namespace Frontend\Modules\MailMotor\Widgets;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 
 /**
- * This is a widget with the Subscribe form
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * This is a widget with the Subscribe formJobCurrentState
  */
 class Subscribe extends FrontendBaseWidget
 {

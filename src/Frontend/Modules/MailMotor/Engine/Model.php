@@ -6,9 +6,7 @@ use Frontend\Core\Engine\Language;
 use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
- * In this file we store all generic functions that we will be using in the MailMotor module
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * In this file we store all generic functions that we will be using in the MailMotor moduleJobCurrentState
  */
 class Model
 {
