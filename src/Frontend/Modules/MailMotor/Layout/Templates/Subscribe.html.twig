@@ -1,0 +1,24 @@
+<section id="mailMotorSubscribeForm" class="mod">
+  <div class="inner">
+    <div class="hd">
+      <h3>{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
+    </div>
+    <div class="bd">
+      {% if mailMotorSubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans|raw }}</p></div>{% endif %}
+      {% if mailMotorSubscribeHasError %}<div class="message error"><p>{{ 'err.SubscribeFailed'|trans|raw }}</p></div>{% endif %}
+      {% if mailMotorSubscribeIsSuccess %}<div class="message success"><p>{{ 'msg.SubscribeSuccess'|trans|raw }}</p></div>{% endif %}
+
+      {% if not mailMotorSubscribeHideForm %}
+        {% form mailMotorSubscribeForm %}
+          <p{% if txtEmailError %} class="errorArea"{% endif %}>
+            <label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+            {% form_field_error email %} {% form_field email %}
+          </p>
+          <p>
+            <input id="send" class="inputSubmit btn" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans|capitalize }}" />
+          </p>
+        {% endform %}
+      {% endif %}
+    </div>
+  </div>
+</section>
