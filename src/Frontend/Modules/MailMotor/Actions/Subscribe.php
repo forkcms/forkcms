@@ -24,9 +24,9 @@ class Subscribe extends FrontendBaseBlock
     /**
      * FrontendForm instance
      *
-     * @var	FrontendForm
+     * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * Execute the extra
@@ -50,7 +50,7 @@ class Subscribe extends FrontendBaseBlock
     private function loadForm()
     {
         // create the form
-        $this->frm = new FrontendForm('mailMotorSubscribeForm');
+        $this->form = new FrontendForm('mailMotorSubscribeForm');
 
         // define email
         $email = null;
@@ -61,8 +61,8 @@ class Subscribe extends FrontendBaseBlock
         }
 
         // create & add elements
-        $this->frm->addText('email', $email);
-        $this->frm->addText('email')
+        $this->form->addText('email', $email);
+        $this->form->addText('email')
             ->setAttributes(
                 array(
                     'required' => null,
@@ -90,7 +90,7 @@ class Subscribe extends FrontendBaseBlock
         }
 
         // parse the form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
     }
 
     /**
@@ -101,9 +101,9 @@ class Subscribe extends FrontendBaseBlock
     private function validateForm()
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // validate required fields
-            $email = $this->frm->getField('email');
+            $email = $this->form->getField('email');
 
             // build
             $mergeFields = array();
@@ -115,20 +115,20 @@ class Subscribe extends FrontendBaseBlock
                         $email->addError(Language::err('AlreadySubscribed'));
 
                         // do not remove this line, it is required to make the form show error messages properly
-                        $this->frm->addError(Language::err('AlreadySubscribed'));
+                        $this->form->addError(Language::err('AlreadySubscribed'));
                     }
                 // fallback for when no mail-engine is chosen in the Backend
                 } catch (NotImplementedException $e) {
                     // do nothing
                 }
             // we need to add this because the line below
-            // $this->frm->getErrors() only checks if form errors are set, not if an element in the form has errors.
+            // $this->form->getErrors() only checks if form errors are set, not if an element in the form has errors.
             } else {
-                $this->frm->addError(Language::err('EmailIsInvalid'));
+                $this->form->addError(Language::err('EmailIsInvalid'));
             }
 
             // no errors
-            if (trim($this->frm->getErrors()) == '') {
+            if (trim($this->form->getErrors()) == '') {
                 try {
                     // subscribe the user to our default group
                     $this->get('mailmotor.subscriber')->subscribe(
