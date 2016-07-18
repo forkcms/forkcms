@@ -52,13 +52,8 @@ class Subscribe extends FrontendBaseBlock
         // create the form
         $this->form = new FrontendForm('mailMotorSubscribeForm');
 
-        // define email
-        $email = null;
-
-        // request contains an email
-        if ($this->get('request')->request->get('email') != null) {
-            $email = $this->get('request')->request->get('email');
-        }
+        // define email, default = null
+        $email = $this->get('request')->request->get('email');
 
         // create & add elements
         $this->form->addText('email', $email);
