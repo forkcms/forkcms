@@ -99,9 +99,6 @@ class Subscribe extends FrontendBaseBlock
             // validate required fields
             $email = $this->form->getField('email');
 
-            // build
-            $mergeFields = array();
-
             // validate required fields
             if ($email->isEmail(Language::err('EmailIsInvalid'))) {
                 try {
@@ -127,7 +124,7 @@ class Subscribe extends FrontendBaseBlock
                     // subscribe the user to our default group
                     $this->get('mailmotor.subscriber')->subscribe(
                         $email->getValue(),
-                        $mergeFields,
+                        array(), // MergeFields are optional
                         FRONTEND_LANGUAGE
                     );
                 // fallback for when no mail-engine is chosen in the Backend
