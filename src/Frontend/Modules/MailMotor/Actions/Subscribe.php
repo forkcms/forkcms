@@ -56,8 +56,7 @@ class Subscribe extends FrontendBaseBlock
         $email = $this->get('request')->request->get('email');
 
         // create & add elements
-        $this->form->addText('email', $email);
-        $this->form->addText('email')
+        $this->form->addText('email', $email)
             ->setAttributes(
                 array(
                     'required' => null,
