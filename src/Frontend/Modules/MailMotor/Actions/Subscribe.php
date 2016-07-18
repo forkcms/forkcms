@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\MailMotor\Actions;
 
-/*
- * This file is part of the Fork CMS MailMotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Language;
 use Frontend\Core\Engine\Form as FrontendForm;
@@ -17,7 +10,7 @@ use Frontend\Modules\MailMotor\Engine\Model as FrontendMailMotorModel;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
- * This is the Subscribe-action for our MailMotorJobCurrentState
+ * This is the Subscribe-action for our MailMotor
  */
 class Subscribe extends FrontendBaseBlock
 {
