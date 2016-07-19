@@ -342,8 +342,8 @@ class Header extends FrontendBaseObject
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (mb_substr($image, 0, strlen(SITE_PROTOCOL) + 3) != SITE_PROTOCOL . '://') {
-            if (!is_file(PATH_WWW . $image)) {
+        if (mb_substr($image, 0, 7) != 'http://' && mb_substr($image, 0, 8) != 'https://') {
+            if (!is_file(PATH_WWW . strtok($image, '?'))) {
                 return;
             }
             $image = SITE_URL . $image;
