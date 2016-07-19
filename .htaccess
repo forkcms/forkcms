@@ -21,7 +21,6 @@ FileETag MTime Size
 	RewriteRule .*\.md - [F]
 	RewriteRule app/logs - [F]
 	RewriteRule app/config - [F]
-	RewriteRule src/Frontend/Cache/CachedTemplates - [F]
 	RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
 	RewriteRule src/Frontend/Cache/Config - [F]
 	RewriteRule src/Frontend/Cache/Locale/.*\.php - [F]

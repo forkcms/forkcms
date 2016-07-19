@@ -6,7 +6,6 @@
 
 SCRIPT_PATH="`dirname \"$0\"`"
 
-rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CachedTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/MinifiedCss/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/MinifiedJs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
