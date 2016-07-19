@@ -19,7 +19,6 @@ clear_file_caches() {
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Mailmotor/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`

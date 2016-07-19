@@ -30,12 +30,19 @@ class Cronjob extends Object
      */
     protected function clearBusyFile()
     {
-        // build path
-        $path = BACKEND_CACHE_PATH . '/Cronjobs/' . $this->getId() . '.busy';
+        $path = $this->getCacheDirectory() . $this->getId() . '.busy';
 
         // remove the file
         $fs = new Filesystem();
         $fs->remove($path);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCacheDirectory()
+    {
+        return BackendModel::getContainer()->getParameter('kernel.cache_dir') . '/cronjobs/';
     }
 
     public function execute()
@@ -103,7 +110,7 @@ class Cronjob extends Object
 
         // build path
         $fs = new Filesystem();
-        $path = BACKEND_CACHE_PATH . '/Cronjobs/' . $this->getId() . '.busy';
+        $path = $this->getCacheDirectory() . $this->getId() . '.busy';
 
         // init var
         $isBusy = false;
