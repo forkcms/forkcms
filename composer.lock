@@ -1092,16 +1092,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "7e8f31f9f5187f48c6fd3c8c0fe7eb7d136e9d6e"
+                "reference": "077644a9f117c36da2ad62226cd1e48dda4bd3b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/7e8f31f9f5187f48c6fd3c8c0fe7eb7d136e9d6e",
-                "reference": "7e8f31f9f5187f48c6fd3c8c0fe7eb7d136e9d6e",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/077644a9f117c36da2ad62226cd1e48dda4bd3b2",
+                "reference": "077644a9f117c36da2ad62226cd1e48dda4bd3b2",
                 "shasum": ""
             },
             "require": {
@@ -1123,7 +1123,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2016-06-30 11:51:40"
+            "time": "2016-07-20 08:55:19"
         },
         {
             "name": "swiftmailer/swiftmailer",
