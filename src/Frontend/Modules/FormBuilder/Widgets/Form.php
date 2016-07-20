@@ -303,6 +303,7 @@ class Form extends FrontendBaseWidget
         $formName = 'form' . $this->item['id'];
         $this->tpl->assign('formName', $formName);
         $this->tpl->assign('formAction', $this->createAction() . '#' . $formName);
+        $this->tpl->assign('successMessage', false);
 
         // got fields
         if (!empty($this->fieldsHTML)) {
