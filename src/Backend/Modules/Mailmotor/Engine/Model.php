@@ -59,6 +59,14 @@ class Model
          WHERE mm.status = ? AND mm.campaign_id = ?';
 
     /**
+     * @return string
+     */
+    public static function getCacheDirectory()
+    {
+        return BackendModel::getContainer()->get('kernel.root_dir') . '/Mailmotor/';
+    }
+
+    /**
      * Returns true if every working language has a default group set, false if at least one is missing.
      *
      * @return bool
@@ -391,7 +399,7 @@ class Model
     {
         // set the filename and path
         $filename = 'addresses-' . \SpoonDate::getDate('YmdHi') . '.csv';
-        $path = BACKEND_CACHE_PATH . '/Mailmotor/' . $filename;
+        $path = self::getCacheDirectory() . $filename;
 
         // reformat the created_on date
         if (!empty($emails)) {
@@ -418,7 +426,7 @@ class Model
     {
         // set the filename and path
         $filename = 'addresses-' . \SpoonDate::getDate('YmdHi') . '.csv';
-        $path = BACKEND_CACHE_PATH . '/Mailmotor/' . $filename;
+        $path = self::getCacheDirectory() . $filename;
 
         // fetch the addresses by group
         $records = self::getAddressesByGroupID(array($id));

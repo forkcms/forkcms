@@ -64,7 +64,7 @@ class TwigTemplate extends BaseTwigTemplate
         ));
 
         $twig = new \Twig_Environment($loader, array(
-            'cache' => BACKEND_CACHE_PATH.'/CachedTemplates/Twig_'.($this->debugMode ? 'dev/' : 'prod/'),
+            'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
             'debug' => $this->debugMode,
         ));
 

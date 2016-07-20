@@ -204,7 +204,7 @@ class Url extends Base\Object
             // if the module is the dashboard redirect to the first allowed module
             if ($module == 'Dashboard') {
                 // require navigation-file
-                require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
+                require_once Navigation::getCacheDirectory() . 'navigation.php';
 
                 // loop the navigation to find the first allowed module
                 foreach ($navigation as $value) {

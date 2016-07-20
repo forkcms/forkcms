@@ -254,7 +254,7 @@ class Addresses extends BackendBaseActionIndex
 
             // we should download the file
             if ($download) {
-                $this->downloadCSV(BACKEND_CACHE_PATH . '/Mailmotor/' . $csv);
+                $this->downloadCSV(BackendMailmotorModel::getCacheDirectory() . $csv);
             }
         }
 
