@@ -155,13 +155,13 @@
             <tbody>
               <tr>
                 <th><label for="forkApiPublicKey" class="control-label">Fork public key</label>
-                </td>
+                </th>
                 <td>{% form_field fork_api_public_key %} {% form_field_error fork_api_public_key %}</td>
                 <td>&nbsp;</td>
               </tr>
               <tr>
                 <th><label for="forkApiPrivateKey" class="control-label">Fork private key</label>
-                </td>
+                </th>
                 <td>{% form_field fork_api_private_key %} {% form_field_error fork_api_private_key %}</td>
                 <td>&nbsp;</td>
               </tr>
@@ -171,7 +171,7 @@
                     <label for="googleMapsKey" class="control-label">
                       Google maps key<abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
                     </label>
-                  </td>
+                  </th>
                   <td>{% form_field google_maps_key %} {% form_field_error google_maps_key %}</td>
                   <td>
                     <a href="http://code.google.com/apis/maps/signup.html">http://code.google.com/apis/maps/signup.html</a>
@@ -181,7 +181,7 @@
               {% if needsAkismet %}
                 <tr>
                   <th><label for="akismetKey" class="control-label">Akismet key</label>
-                  </td>
+                  </th>
                   <td>{% form_field akismet_key %} {% form_field_error akismet_key %}</td>
                   <td><a href="http://akismet.com/personal">http://akismet.com/personal</a></td>
                 </tr>
@@ -229,7 +229,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="addValue-facebookAdminIds" class="control-label">{{ 'lbl.AdminIds'|trans|ucfirst }}</label>
+            <label for="facebookAdminIds" class="control-label">{{ 'lbl.AdminIds'|trans|ucfirst }}</label>
             {% form_field facebook_admin_ids %} {% form_field_error facebook_admin_ids %}
             <span class="help-block">{{ 'msg.HelpFacebookAdminIds'|trans|ucfirst }}</span>
           </div>

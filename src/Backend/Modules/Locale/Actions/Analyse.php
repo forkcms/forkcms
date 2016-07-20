@@ -22,11 +22,14 @@ use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 class Analyse extends BackendBaseActionIndex
 {
     /**
-     * DataGrid instances
-     *
-     * @var	BackendDataGridArray
+     * @var BackendDataGridArray
      */
-    private $dgBackend, $dgFrontend;
+    private $dgBackend;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgFrontend;
 
     /**
      * Execute the action

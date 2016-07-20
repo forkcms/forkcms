@@ -992,7 +992,7 @@
 					for(var i in elements)
 					{
                         var value = utils.string.stripForTag(elements[i]);
-                        
+
 						html += '	<li class="list-group-item">' +
 								'		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash"></span></a></span>' +
 								'       <span><strong>' + value + '</strong>' +
@@ -1307,6 +1307,8 @@
 			var id = $(this).attr('id');
 			var elements = get();
 			var blockSubmit = false;
+
+			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
 			$(this.form).submit(function()
