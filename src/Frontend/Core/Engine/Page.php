@@ -160,18 +160,6 @@ class Page extends FrontendBaseObject
      */
     public function display()
     {
-        // parse header
-        $this->header->parse();
-
-        // parse breadcrumb
-        $this->breadcrumb->parse();
-
-        // parse languages
-        $this->parseLanguages();
-
-        // parse footer
-        $this->footer->parse();
-
         // assign the id so we can use it as an option
         $this->tpl->addGlobal('isPage' . $this->pageId, true);
         $this->tpl->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
@@ -193,6 +181,18 @@ class Page extends FrontendBaseObject
                 array()
             );
         }
+
+        // parse header
+        $this->header->parse();
+
+        // parse breadcrumb
+        $this->breadcrumb->parse();
+
+        // parse languages
+        $this->parseLanguages();
+
+        // parse footer
+        $this->footer->parse();
 
         // output
         return new Response(
