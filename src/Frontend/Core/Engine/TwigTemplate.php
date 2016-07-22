@@ -72,6 +72,17 @@ class TwigTemplate extends BaseTwigTemplate
     }
 
     /**
+     * Adds a global variable to the template
+     *
+     * @param string $name
+     * @param mixed $value
+     */
+    public function addGlobal($name, $value)
+    {
+        $this->environment->addGlobal($name, $value);
+    }
+
+    /**
      * Fetch the parsed content from this template.
      *
      * @param string $template      The location of the template file, used to display this template.
@@ -82,10 +93,14 @@ class TwigTemplate extends BaseTwigTemplate
     {
         $template = $this->getPath($template);
 
-        return $this->render(
+        $content = $this->render(
             $template,
             $this->variables
         );
+
+        $this->variables = array();
+
+        return $content;
     }
 
     /**
