@@ -142,6 +142,6 @@ class Breadcrumb extends FrontendBaseObject
     public function parse()
     {
         // assign
-        $this->tpl->assign('breadcrumb', $this->items);
+        $this->tpl->addGlobal('breadcrumb', $this->items);
     }
 }

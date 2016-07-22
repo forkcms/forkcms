@@ -117,10 +117,6 @@ class Form extends FrontendBaseWidget
             $this->validateForm();
             $this->parse();
         }
-
-        return $this->tpl->getContent(
-            FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Widgets/' . $this->getAction() . '.html.twig'
-        );
     }
 
     /**
