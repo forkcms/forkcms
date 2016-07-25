@@ -172,10 +172,10 @@
       font-size: $font-size-small;
       font-weight: 600;
       overflow: hidden;
-      -webkit-transition: color 0.3s ease-in-out;
-      -moz-transition: color 0.3s ease-in-out;
-      -o-transition: color 0.3s ease-in-out;
-      transition: color 0.3s ease-in-out;
+      -webkit-transition: opacity 0.3s ease-in-out;
+      -moz-transition: opacity 0.3s ease-in-out;
+      -o-transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.3s ease-in-out;
       white-space: nowrap;
     }
 
@@ -184,15 +184,18 @@
       display: block;
       font-size: $font-size-small;
       overflow: hidden;
-      -webkit-transition: color 0.3s ease-in-out;
-      -moz-transition: color 0.3s ease-in-out;
-      -o-transition: color 0.3s ease-in-out;
-      transition: color 0.3s ease-in-out;
+      -webkit-transition: opacity 0.3s ease-in-out;
+      -moz-transition: opacity 0.3s ease-in-out;
+      -o-transition: opacity 0.3s ease-in-out;
+      transition: opacity 0.3s ease-in-out;
       white-space: nowrap;
     }
 
-    &:hover .templateDescription {
-      color: $gray-base;
+    &:hover {
+      .templateDescription,
+      .templateTitle {
+        opacity: 0.75;
+      }
     }
 
     .buttonHolder {
@@ -273,12 +276,9 @@
 
   .templateDisabled {
 
-    .templateTitle {
-      color: $gray-base;
-    }
-
+    .templateTitle,
     .templateDescription {
-      color: $gray-light;
+      opacity: 0.25;
     }
   }
 }
