@@ -371,7 +371,7 @@ class Block extends Object
             if ($useQuestionMark) {
                 $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
+                $URL = $this->pagination['url'] . '&page=' . ($this->pagination['requested_page'] - 1);
             }
 
             // set
@@ -399,7 +399,7 @@ class Block extends Object
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                    $URL = $this->pagination['url'] . '&page=' . $i;
                 }
 
                 // add
@@ -416,7 +416,7 @@ class Block extends Object
             if ($useQuestionMark) {
                 $URL = $this->pagination['url'] . '?page=' . $i;
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                $URL = $this->pagination['url'] . '&page=' . $i;
             }
 
             // add
@@ -435,7 +435,7 @@ class Block extends Object
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                    $URL = $this->pagination['url'] . '&page=' . $i;
                 }
 
                 // add
@@ -449,7 +449,7 @@ class Block extends Object
             if ($useQuestionMark) {
                 $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
+                $URL = $this->pagination['url'] . '&page=' . ($this->pagination['requested_page'] + 1);
             }
 
             // set
