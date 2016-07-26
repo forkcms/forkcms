@@ -881,6 +881,7 @@
           <span class="modal-title h4">{{ 'lbl.Heading'|trans|ucfirst }}</span>
         </div>
         <div class="modal-body">
+          <input type="hidden" name="heading_id" id="headingId" value="" />
           <div class="form-group">
             <label for="heading" class="control-label">
               {{ 'lbl.Content'|trans|ucfirst }}
@@ -910,6 +911,7 @@
           <span class="modal-title h4">{{ 'lbl.Content'|trans|ucfirst }}</span>
         </div>
         <div class="modal-body">
+          <input type="hidden" name="paragraph_id" id="paragraphId" value="" />
           <div class="form-group">
             <p id="paragraphError" class="text-danger jsFieldError" style="display: none;"></p>
             {% form_field paragraph %}
