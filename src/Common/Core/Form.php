@@ -180,7 +180,7 @@ class Form extends \SpoonForm
      *
      * @return \SpoonFormText
      */
-    public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
+    public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = true)
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
@@ -204,7 +204,7 @@ class Form extends \SpoonForm
      *
      * @return \SpoonFormTextarea
      */
-    public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
+    public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = true)
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
