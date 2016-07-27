@@ -2,7 +2,7 @@
 variables that are available:
 - {{ items }}: contains an array with all posts, each element contains data about the post
 #}
-
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 {% if not items %}
   <div id="blogIndex" class="blog">
     <section>
