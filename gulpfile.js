@@ -145,12 +145,7 @@ gulp.task('imagemin', function() {
     .pipe(livereload());
 });
 
-gulp.task('fontAwesome', function() {
-  return gulp.src('node_modules/font-awesome/fonts/*')
-    .pipe(gulp.dest(paths.core + '/Layout/Fonts'))
-});
-
-gulp.task('default',['fontAwesome'], function() {
+gulp.task('default', function() {
   livereload.listen();
   gulp.watch(paths.src + '/Js/**/*.js', ['webpack']);
   gulp.watch(paths.src + '/Layout/Sass/**/*.scss', ['sass']);
@@ -165,5 +160,5 @@ gulp.task('serve', function() {
 });
 
 gulp.task('build', function() {
-  runSequence('clean', ['iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin', 'fontAwesome']);
+  runSequence('clean', ['iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin']);
 });
