@@ -2,6 +2,7 @@
   variables that are available:
   - {{ faqCategories }}: contains all categories, along with all questions inside a category
 #}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 {% if not faqCategories %}
   <div id="faqIndex" class="faq">
     {{ alerts.alert('info', 'msg.FaqNoItems'|trans) }}

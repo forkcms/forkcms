@@ -5,6 +5,7 @@ variables that are available:
 - {{ commentsCount }}: contains a variable with the number of comments for this blog post.
 - {{ navigation }}: contains an array with data for previous and next post
 #}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 <div id="blogDetail" class="blog">
   <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
     <meta itemprop="interactionCount" content="UserComments:commentsCount">
