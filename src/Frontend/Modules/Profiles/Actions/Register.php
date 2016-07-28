@@ -175,7 +175,7 @@ class Register extends FrontendBaseBlock
                         ->setTo(array($txtEmail->getValue() => ''))
                         ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                         ->parseHtml(
-                            FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.html.twig',
+                            '/Profiles/Layout/Templates/Mails/Register.html.twig',
                             $mailValues,
                             true
                         )
