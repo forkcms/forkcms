@@ -36,7 +36,8 @@
     "webpack-stream": "^3.2.0"
   },
   "dependencies": {
-    "fancybox": "3.0.0"
+    "fancybox": "3.0.0",
+    "font-awesome": "^4.6.3"
   },
   "babel": {
     "presets": [
