@@ -670,7 +670,7 @@ class Model
                 'url' => self::getUrl($item['display_name']),
             );
 
-            // does not exists
+            // does not exist
             if (!$exists) {
                 // import
                 $id = self::insert($values);

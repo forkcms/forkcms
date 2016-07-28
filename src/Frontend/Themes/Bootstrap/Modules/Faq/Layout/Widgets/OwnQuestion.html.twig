@@ -2,7 +2,7 @@
   variables that are available:
   - {{ widgetFaqOwnQuestion }}: true or false depending on if the data can be shown
 #}
-
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 {% if widgetFaqOwnQuestion %}
   <section id="faqOwnQuestionForm" class="well faq">
     <header role="banner">

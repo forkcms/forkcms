@@ -97,8 +97,8 @@ class Installer extends ModuleInstaller
         $extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 
         // build templates
-        $templates['bootstrap']['default'] = array(
-            'theme' => 'Bootstrap',
+        $templates['custom']['default'] = array(
+            'theme' => 'Custom',
             'label' => 'Default',
             'path' => 'Core/Layout/Templates/Default.html.twig',
             'active' => 'Y',
@@ -109,8 +109,8 @@ class Installer extends ModuleInstaller
                 ))
         );
 
-        $templates['bootstrap']['error'] = array(
-            'theme' => 'Bootstrap',
+        $templates['custom']['error'] = array(
+            'theme' => 'Custom',
             'label' => 'Error',
             'path' => 'Core/Layout/Templates/Error.html.twig',
             'active' => 'Y',
@@ -121,8 +121,8 @@ class Installer extends ModuleInstaller
                 ))
         );
 
-        $templates['bootstrap']['home'] = array(
-            'theme' => 'Bootstrap',
+        $templates['custom']['home'] = array(
+            'theme' => 'Custom',
             'label' => 'Home',
             'path' => 'Core/Layout/Templates/Home.html.twig',
             'active' => 'Y',
@@ -134,16 +134,16 @@ class Installer extends ModuleInstaller
         );
 
         // insert templates
-        $this->getDB()->insert('themes_templates', $templates['bootstrap']['default']);
-        $this->getDB()->insert('themes_templates', $templates['bootstrap']['home']);
-        $this->getDB()->insert('themes_templates', $templates['bootstrap']['error']);
+        $this->getDB()->insert('themes_templates', $templates['custom']['default']);
+        $this->getDB()->insert('themes_templates', $templates['custom']['home']);
+        $this->getDB()->insert('themes_templates', $templates['custom']['error']);
 
         /*
          * General theme settings
          */
 
         // set default theme
-        $this->setSetting('Core', 'theme', 'Bootstrap', true);
+        $this->setSetting('Core', 'theme', 'Custom', true);
 
         // set default template
         $this->setSetting('Pages', 'default_template', $this->getTemplateId('default'));

@@ -2,7 +2,7 @@
 variables that are available:
 - {{ items }}: contains an array with all posts, each element contains data about the post
 #}
-
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 {% if not items %}
   <div id="blogIndex" class="blog">
     <section>
@@ -28,7 +28,7 @@ variables that are available:
               <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}</a>
             {% else %}
               {% if item.comments_multiple %}
-                <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|sprintf(item.comments_count) }}</a>
+                <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}</a>
               {% else %}
                 <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>
               {% endif %}

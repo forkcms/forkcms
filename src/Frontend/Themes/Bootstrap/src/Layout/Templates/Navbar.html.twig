@@ -20,8 +20,6 @@
     {% for top in positions.top %}
       {% if top.html %}
         {{ top.html|raw }}
-      {% elseif top.include_path %}
-        {% include top.include_path %}
       {% endif %}
     {% endfor %}
 

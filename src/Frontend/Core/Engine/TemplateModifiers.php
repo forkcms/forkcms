@@ -35,13 +35,14 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Format a number
-     *    syntax: {{ $string|formatnumber }}
+     *    syntax: {{ $string|formatnumber($decimals) }}
      *
      * @param float $string The number to format.
+     * @param int $decimals The number of decimals
      *
      * @return string
      */
-    public static function formatNumber($string)
+    public static function formatNumber($string, $decimals = null)
     {
         // redefine
         $string = (float) $string;
@@ -50,7 +51,9 @@ class TemplateModifiers extends BaseTwigModifiers
         $format = FrontendModel::get('fork.settings')->get('Core', 'number_format');
 
         // get amount of decimals
-        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
+        if ($decimals === null) {
+            $decimals = (mb_strpos($string, '.') ? mb_strlen(mb_substr($string, mb_strpos($string, '.') + 1)) : 0);
+        }
 
         // get separators
         $separators = explode('_', $format);
@@ -234,7 +237,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
         try {
             // get HTML
-            $return = (string) Navigation::getNavigationHtml(
+            $return = (string) Navigation::getNavigationHTML(
                 $type,
                 $parentID,
                 $endDepth,
