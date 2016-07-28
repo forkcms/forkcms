@@ -127,7 +127,7 @@ class ResendActivation extends FrontendBaseBlock
                     ->setTo(array($profile->getEmail() => ''))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.html.twig',
+                        '/Profiles/Layout/Templates/Mails/Register.html.twig',
                         $mailValues,
                         true
                     )
