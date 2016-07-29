@@ -24,6 +24,13 @@ class User
     private $groupId;
 
     /**
+     * The groups
+     *
+     * @var array
+     */
+    private $groups = array();
+
+    /**
      * Is the user-object a valid one? As in: is the user authenticated
      *
      * @var    bool
@@ -242,6 +249,8 @@ class User
         $this->isAuthenticated = true;
         $this->isGod = ($userData['is_god'] == 'Y');
 
+        $this->loadGroups($userData['id']);
+
         // get settings
         $settings = (array) $db->getPairs(
             'SELECT us.name, us.value
@@ -259,6 +268,27 @@ class User
         if (!isset($this->settings['nickname']) || $this->settings['nickname'] == '') {
             $this->setSetting('nickname', $this->settings['name'] . ' ' . $this->settings['surname']);
         }
+    }
+
+    /**
+     * @param int $userId
+     */
+    private function loadGroups($userId)
+    {
+        $this->groups = (array) BackendModel::get('database')->getColumn(
+            'SELECT group_id
+             FROM users_groups
+             WHERE user_id = ?',
+            array((int) $userId)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 
     /**
@@ -296,6 +326,7 @@ class User
         $this->setLastloggedInDate($userData['date']);
         $this->isAuthenticated = true;
         $this->isGod = ($userData['is_god'] == 'Y');
+        $this->loadGroups($userData['id']);
 
         // get settings
         $settings = (array) $db->getPairs(
