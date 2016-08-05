@@ -44,6 +44,7 @@ class TwigFilters
         $twig->addFilter(new Twig_SimpleFilter('snakeCase', $app.'::snakeCase'));
         $twig->addFilter(new Twig_SimpleFilter('stripnewlines', $app.'::stripNewlines'));
         $twig->addFilter(new Twig_SimpleFilter('formatnumber', $app.'::formatNumber'));
+        $twig->addFilter(new Twig_SimpleFilter('formatphone', $app.'::formatPhone'));
         $twig->addFilter(new Twig_SimpleFilter('tolabel', $app.'::toLabel'));
         $twig->addFilter(new Twig_SimpleFilter('cleanupplaintext', $app.'::cleanupPlainText'));
 
