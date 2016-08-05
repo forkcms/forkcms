@@ -25,7 +25,6 @@ $debug = getenv('FORK_DEBUG') === '1';
 
 $kernel = new AppKernel($env, $debug);
 $loader = new KernelLoader($kernel);
-$kernel->getContainer()->get('session.handler');
 $loader->passContainerToModels();
 
 // after registring autoloaders, let's add use statements for our needed classes
