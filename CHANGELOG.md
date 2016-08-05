@@ -1070,6 +1070,7 @@ Bugfixes:
 --
 Improvements:
 
+* dit is een tweede test
 * Core: it is now possible to use positions inside modules' templates.
 * Backend: first page after login will always be dashboard (if allowed).
 * Core: application specific config files are now optional.
