@@ -11,6 +11,9 @@ namespace Frontend\Core\Engine;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 use MatthiasMullie\Minify;
 
@@ -720,7 +723,8 @@ class Header extends FrontendBaseObject
         $this->jsData['FRONTEND_LANGUAGE'] = FRONTEND_LANGUAGE;
 
         // encode and add
-        $jsData = json_encode($this->jsData);
+        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
+        $jsData = $serializer->serialize($this->jsData, 'json');
         $siteHTMLHeader .= "\n" . '<script>var jsData = ' . $jsData . '</script>';
 
         // assign site wide html
