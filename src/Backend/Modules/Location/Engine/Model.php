@@ -62,6 +62,26 @@ class Model
     }
 
     /**
+     * Check if an item with a certain title exists
+     *
+     * @param string $title The title of the record to look for.
+     * @return bool
+     */
+    public static function existsByTitle($title, $language = null)
+    {
+        // define language
+        $language = ($language == null) ? BL::getWorkingLanguage() : (string) $language;
+
+        return (bool) BackendModel::getContainer()->get('database')->getVar(
+            'SELECT 1
+             FROM location AS i
+             WHERE i.title = ? AND i.language = ?
+             LIMIT 1',
+            array((string) $title, $language)
+        );
+    }
+
+    /**
      * Fetch a record from the database
      *
      * @param int $id The id of the record to fetch.
@@ -90,6 +110,26 @@ class Model
              FROM location AS i
              WHERE i.language = ? AND i.show_overview = ?',
             array(BL::getWorkingLanguage(), 'Y')
+        );
+    }
+
+    /**
+     * Check if an item for a certain title exists
+     *
+     * @param string $title The title of the record to look for.
+     * @return bool
+     */
+    public static function getByTitle($title, $language = null)
+    {
+        // define language
+        $language = ($language == null) ? BL::getWorkingLanguage() : (string) $language;
+
+        return BackendModel::getContainer()->get('database')->getRecord(
+            'SELECT i.*
+             FROM location AS i
+             WHERE i.title = ? AND i.language = ?
+             LIMIT 1',
+            array((string) $title, $language)
         );
     }
 
