@@ -11,8 +11,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 /**
  * This is the theme upload-action.
  * It will install a theme via a compressed zip file.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class UploadTheme extends BackendBaseActionAdd
 {
@@ -141,7 +139,7 @@ class UploadTheme extends BackendBaseActionAdd
                             $files = array();
 
                             // check every file in the zip
-                            for ($i = 0; $i < $zip->numFiles; $i++) {
+                            for ($i = 0; $i < $zip->numFiles; ++$i) {
                                 // get the file name
                                 $file = $zip->statIndex($i);
                                 $fileName = $file['name'];

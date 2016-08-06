@@ -15,8 +15,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Footer extends FrontendBaseObject
 {
@@ -36,7 +34,7 @@ class Footer extends FrontendBaseObject
     public function parse()
     {
         $footerLinks = (array) Navigation::getFooterLinks();
-        $this->tpl->assign('footerLinks', $footerLinks);
+        $this->tpl->addGlobal('footerLinks', $footerLinks);
 
         $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_footer', null);
 
@@ -59,13 +57,14 @@ class Footer extends FrontendBaseObject
         }
 
         // assign site wide html
-        $this->tpl->assign('siteHTMLFooter', $siteHTMLFooter);
+        $this->tpl->addGlobal('siteHTMLFooter', $siteHTMLFooter);
     }
 
     /**
      * Builds the HTML needed for Facebook to be initialized
      *
      * @param  string $facebookAppId The application id used to interact with FB
+     *
      * @return string                HTML and JS needed to initialize FB JavaScript
      */
     protected function getFacebookHtml($facebookAppId)
@@ -140,6 +139,7 @@ class Footer extends FrontendBaseObject
      * https://developers.google.com/webmasters/richsnippets/sitelinkssearch
      *
      * @param  string $searchUrl The url to the search page
+     *
      * @return string            The script needed for google
      */
     protected function getSiteLinksCode($searchUrl)

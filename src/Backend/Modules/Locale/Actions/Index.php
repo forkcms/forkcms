@@ -12,7 +12,6 @@ namespace Backend\Modules\Locale\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -20,16 +19,28 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the index-action, it will display an overview of all the translations with an inline edit option.
- *
- * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Stef Bastiaansen <stef.bastiaansen@wijs.be>
  */
 class Index extends BackendBaseActionIndex
 {
     /**
      * @var BackendDataGridArray
      */
-    private $dgActions, $dgErrors, $dgLabels, $dgMessages;
+    private $dgActions;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgErrors;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgLabels;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgMessages;
 
     /**
      * Filter variables
@@ -110,7 +121,7 @@ class Index extends BackendBaseActionIndex
             'lbl' => &$this->dgLabels,
             'msg' => &$this->dgMessages,
             'err' => &$this->dgErrors,
-            'act' => &$this->dgActions
+            'act' => &$this->dgActions,
         );
 
         // loop the datagrids (as references)
@@ -143,7 +154,7 @@ class Index extends BackendBaseActionIndex
                     array(
                         'data-id' => '{language: \'' .
                             $lang . '\',application: \'[application]\',module: \'[module]\',name: \'[name]\',type: \'' .
-                            $type . '\'}'
+                            $type . '\'}',
                     )
                 );
 
@@ -202,7 +213,7 @@ class Index extends BackendBaseActionIndex
                         array(
                             'style' => 'width: ' .
                                 $langWidth .
-                                '%; max-width: '. (600 / count($this->filter['language'])) .'px;'
+                                '%; max-width: '. (600 / count($this->filter['language'])) .'px;',
                         )
                     );
                 }
@@ -221,7 +232,7 @@ class Index extends BackendBaseActionIndex
             array(
                 '' => '-',
                 'Backend' => 'Backend',
-                'Frontend' => 'Frontend'
+                'Frontend' => 'Frontend',
             ),
             $this->filter['application']
         );

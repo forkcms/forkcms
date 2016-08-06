@@ -14,9 +14,6 @@ use Frontend\Core\Engine\Language as FL;
 
 /**
  * This is our extended version of SpoonForm.
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Form extends \Common\Core\Form
 {
@@ -63,6 +60,7 @@ class Form extends \Common\Core\Form
      * @param string $value The value (or label) that will be printed.
      * @param string $type  The type of the button (submit is default).
      * @param string $class Class(es) that will be applied on the button.
+     *
      * @return \SpoonFormButton
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
@@ -95,6 +93,7 @@ class Form extends \Common\Core\Form
      * @param int    $date2      The second date for a rangepicker.
      * @param string $class      Class(es) that have to be applied on the element.
      * @param string $classError Class(es) that have to be applied when an error occurs on the element.
+     *
      * @return FrontendFormDate
      */
     public function addDate(
@@ -188,6 +187,7 @@ class Form extends \Common\Core\Form
      * @param string $name       Name of the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormFile
      */
     public function addFile($name, $class = null, $classError = null)
@@ -206,6 +206,7 @@ class Form extends \Common\Core\Form
      * @param string $name       The name of the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return FrontendFormImage
      */
     public function addImage($name, $class = null, $classError = null)
@@ -380,6 +381,7 @@ class Form extends \Common\Core\Form
      * Fetches all the values for this form as key/value pairs
      *
      * @param mixed $excluded Which elements should be excluded?
+     *
      * @return array
      */
     public function getValues($excluded = array('form', 'save', '_utf8'))
@@ -390,8 +392,7 @@ class Form extends \Common\Core\Form
     /**
      * Parse the form
      *
-     * @param \SpoonTemplate|TwigTemplate
-     *        $tpl The template instance wherein the form will be parsed.
+     * @param TwigTemplate $tpl The template instance wherein the form will be parsed.
      */
     public function parse($tpl)
     {
@@ -410,8 +411,6 @@ class Form extends \Common\Core\Form
 
 /**
  * This is our extended version of \SpoonFormDate
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFormDate extends \SpoonFormDate
 {
@@ -419,6 +418,7 @@ class FrontendFormDate extends \SpoonFormDate
      * Checks if this field is correctly submitted.
      *
      * @param string $error The error message to set.
+     *
      * @return bool
      */
     public function isValid($error = null)
@@ -512,8 +512,6 @@ class FrontendFormDate extends \SpoonFormDate
 
 /**
  * This is our extended version of \SpoonFormImage
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFormImage extends \SpoonFormImage
 {
@@ -523,6 +521,7 @@ class FrontendFormImage extends \SpoonFormImage
      * @param    string            $name          The name.
      * @param    string [optional] $class         The CSS-class to be used.
      * @param    string [optional] $classError    The CSS-class to be used when there is an error.
+     *
      * @see      SpoonFormFile::__construct()
      */
     public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')

@@ -14,8 +14,6 @@ use Backend\Core\Engine\Url;
 
 /**
  * This class will initiate the frontend-application
- *
- * @author Ghazi Triki <ghazi.triki@inhanx.com>
  */
 class Form extends \SpoonForm
 {
@@ -40,6 +38,7 @@ class Form extends \SpoonForm
      * @param bool   $checked    Should the checkbox be checked?
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return CommonFormCheckbox
      */
     public function addCheckbox($name, $checked = false, $class = null, $classError = null)
@@ -65,6 +64,7 @@ class Form extends \SpoonForm
      * @param bool   $multipleSelection Is it possible to select multiple items?
      * @param string $class             Class(es) that will be applied on the element.
      * @param string $classError        Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormDropdown
      */
     public function addDropdown(
@@ -99,6 +99,7 @@ class Form extends \SpoonForm
      * @param mixed  $checked    Should the checkboxes be checked?
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormMultiCheckbox
      */
     public function addMultiCheckbox($name, array $values, $checked = null, $class = null, $classError = null)
@@ -122,6 +123,7 @@ class Form extends \SpoonForm
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the field contain HTML?
+     *
      * @return \SpoonFormPassword
      */
     public function addPassword(
@@ -151,6 +153,7 @@ class Form extends \SpoonForm
      * @param string $checked    Should the element be checked?
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormRadiobutton
      */
     public function addRadiobutton($name, array $values, $checked = null, $class = null, $classError = null)
@@ -174,9 +177,10 @@ class Form extends \SpoonForm
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will this element contain HTML?
+     *
      * @return \SpoonFormText
      */
-    public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
+    public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = true)
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
@@ -197,9 +201,10 @@ class Form extends \SpoonForm
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the element contain HTML?
+     *
      * @return \SpoonFormTextarea
      */
-    public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
+    public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = true)
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
@@ -218,6 +223,7 @@ class Form extends \SpoonForm
      * @param string $value      The value inside the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormTime
      */
     public function addTime($name, $value = null, $class = null, $classError = null)
@@ -234,8 +240,6 @@ class Form extends \SpoonForm
 
 /**
  * This is our extended version of \SpoonFormCheckbox
- *
- * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 class CommonFormCheckbox extends \SpoonFormCheckbox
 {
@@ -244,6 +248,7 @@ class CommonFormCheckbox extends \SpoonFormCheckbox
      *
      * @param mixed $checked the return value when checked
      * @param mixed $notChecked the return value when not checked
+     *
      * @return string
      */
     public function getActualValue($checked = 'Y', $notChecked = 'N')

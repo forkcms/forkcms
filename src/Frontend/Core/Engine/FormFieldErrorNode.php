@@ -1,10 +1,9 @@
 <?php
+
 namespace Frontend\Core\Engine;
 
 /**
  * Twig note for writing out the compiled version of a form field error.
- *
- * @author <per@wijs.be>
  */
 class FormFieldErrorNode extends \Twig_Node
 {
@@ -27,7 +26,7 @@ class FormFieldErrorNode extends \Twig_Node
 
     public function compile(\Twig_Compiler $compiler)
     {
-        $writeErrorMessage = "echo "
+        $writeErrorMessage = 'echo '
             . "\$context['form_{$this->form}']->getField('{$this->field}')->getErrors() "
             . "? '<span class=\"formError\">' "
             . ". \$context['form_{$this->form}']->getField('{$this->field}')->getErrors() "

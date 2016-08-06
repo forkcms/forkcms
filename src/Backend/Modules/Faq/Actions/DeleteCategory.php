@@ -15,10 +15,6 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This action will delete a category
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class DeleteCategory extends BackendBaseActionDelete
 {

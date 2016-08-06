@@ -17,8 +17,6 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the import action, it will display a form to import a XML locale file.
- *
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class Import extends BackendBaseActionAdd
 {

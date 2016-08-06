@@ -12,8 +12,6 @@ use Backend\Core\Engine\Authentication;
 
 /**
  * WebTestCase is the base class for functional tests.
- *
- * @author Wouter Sioen <wouter.sioen@gmail.com>
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
@@ -21,11 +19,12 @@ abstract class WebTestCase extends BaseWebTestCase
      * Attempts to guess the kernel location.
      *
      * When the Kernel is located, the file is required.
+     *
      * @todo Remove this when Fork has no custom Kernel class anymore
      *
-     * @return string The Kernel class name
-     *
      * @throws \RuntimeException
+     *
+     * @return string The Kernel class name
      */
     protected static function getKernelClass()
     {
@@ -222,6 +221,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Client $client
      * @param string $url
      * @param array  $data
+     *
      * @return Crawler
      */
     protected function requestWithGetParameters(

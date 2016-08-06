@@ -17,9 +17,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This is the add_group-action, it will display a form to add a group for profiles.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class AddGroup extends BackendBaseActionAdd
 {

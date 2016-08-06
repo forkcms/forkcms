@@ -5,34 +5,34 @@
 #}
 
 {% if searchTerm %}
-	<section id="searchResults" class="mod">
-		<div class="inner">
-			{% if not searchResults %}
-				<div class="bd content">
-					<p>{{ 'msg.SearchNoItems'|trans }}</p>
-				</div>
-			{% else %}
-				{% for result in searchResults %}
-					<div class="bd">
-						<section class="mod">
-							<div class="inner">
-								<header class="hd">
-									<h3>
-										<a href="{{ result.full_url }}" title="{{ result.title }}">
-											{{ result.title }}
-										</a>
-									</h3>
-								</header>
-								<div class="bd content">
-									{% if not result.introduction %}{{ result.text|truncate(200 ) }}{% endif %}
-									{% if result.introduction %}{{ result.introduction }}{% endif %}
-								</div>
-							</div>
-						</section>
-					</div>
-				{% endfor %}
-			{% endif %}
-		</div>
-	</section>
-	{% include "Core/Layout/Templates/Pagination.html.twig" %}
+  <section id="searchResults" class="mod">
+    <div class="inner">
+      {% if not searchResults %}
+        <div class="bd content">
+          <p>{{ 'msg.SearchNoItems'|trans }}</p>
+        </div>
+      {% else %}
+        {% for result in searchResults %}
+          <div class="bd">
+            <section class="mod">
+              <div class="inner">
+                <header class="hd">
+                  <h3>
+                    <a href="{{ result.full_url }}" title="{{ result.title }}">
+                      {{ result.title }}
+                    </a>
+                  </h3>
+                </header>
+                <div class="bd content">
+                  {% if not result.introduction %}{{ result.text|truncate(200) }}{% endif %}
+                  {% if result.introduction %}{{ result.introduction }}{% endif %}
+                </div>
+              </div>
+            </section>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </section>
+  {% include "Core/Layout/Templates/Pagination.html.twig" %}
 {% endif %}

@@ -17,8 +17,6 @@ use Common\Core\Twig\Extensions\TwigFilters;
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig.
- *
- * @author <thijs@wijs.be>
  */
 class TwigTemplate extends BaseTwigTemplate
 {
@@ -57,7 +55,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->parseLocale();
         $this->parseVars();
 
-        $template = str_replace(BACKEND_MODULES_PATH, "", $template);
+        $template = str_replace(BACKEND_MODULES_PATH, '', $template);
 
         // render the compiled File
         $loader = new \Twig_Loader_Filesystem(array(
@@ -66,7 +64,7 @@ class TwigTemplate extends BaseTwigTemplate
         ));
 
         $twig = new \Twig_Environment($loader, array(
-            'cache' => BACKEND_CACHE_PATH.'/CachedTemplates/Twig_'.($this->debugMode ? 'dev/' : 'prod/'),
+            'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
             'debug' => $this->debugMode,
         ));
 

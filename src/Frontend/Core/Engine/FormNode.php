@@ -1,10 +1,9 @@
 <?php
+
 namespace Frontend\Core\Engine;
 
 /**
  * Twig node for writing out the compiled representation of an opeing form tag.
- *
- * @author <per@wijs.be>
  */
 class FormNode extends \Twig_Node
 {

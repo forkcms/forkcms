@@ -10,21 +10,18 @@ namespace Frontend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Frontend\Core\Engine\Template;
+use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
 
 /**
  * This class will be the base of the objects used in on-site
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Object extends \KernelLoader
 {
     /**
-     * Template instance
+     * TwigTemplate instance
      *
-     * @var    Template
+     * @var TwigTemplate
      */
     protected $tpl;
 

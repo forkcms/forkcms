@@ -26,12 +26,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
- *
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -149,7 +143,7 @@ class Edit extends BackendBaseActionEdit
         // set headers
         $this->dgDrafts->setHeaderLabels(array(
             'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
         ));
 
         // set column-functions
@@ -254,7 +248,7 @@ class Edit extends BackendBaseActionEdit
         // set headers
         $this->dgRevisions->setHeaderLabels(array(
             'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
         ));
 
         // set column-functions

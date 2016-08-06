@@ -15,8 +15,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This action will delete a synonym
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class DeleteSynonym extends BackendBaseActionDelete
 {

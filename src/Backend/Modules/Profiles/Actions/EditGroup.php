@@ -17,9 +17,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This is the edit_group-action, it will display a form to edit an existing group.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class EditGroup extends BackendBaseActionEdit
 {

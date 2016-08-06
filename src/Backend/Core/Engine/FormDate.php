@@ -11,8 +11,6 @@ namespace Backend\Core\Engine;
 
 /**
  * This is our extended version of \SpoonFormDate
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FormDate extends \SpoonFormDate
 {
@@ -20,6 +18,7 @@ class FormDate extends \SpoonFormDate
      * Checks if this field is correctly submitted.
      *
      * @param string $error The errormessage to set.
+     *
      * @return bool
      */
     public function isValid($error = null)

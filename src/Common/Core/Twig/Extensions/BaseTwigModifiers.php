@@ -12,9 +12,6 @@ namespace Common\Core\Twig\Extensions;
 /**
  * Contains Base Frontend-related custom modifiers.
  * These filters work independent of front/backend.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author <thijs.dp@gmail.com>
  */
 class BaseTwigModifiers
 {
@@ -40,7 +37,24 @@ class BaseTwigModifiers
             default:
         }
 
-        return $currency.' '.number_format((float) $string, $decimals, ',', ' ');
+        return $currency.'&nbsp;'.static::formatNumber($string, $decimals);
+    }
+
+    /**
+     * Fallback for if our parent functions don't implement this method
+     *
+     * @param string $number
+     * @param int $decimals
+     *
+     * @return string
+     */
+    public static function formatNumber($number, $decimals = null)
+    {
+        if ($decimals === null) {
+            $decimals = 2;
+        }
+
+        return number_format((float) $number, $decimals, ',', '&nbsp;');
     }
 
     /**
@@ -118,9 +132,10 @@ class BaseTwigModifiers
      * Makes this string lowercase.
      * 		syntax: {{ $string|lowercase }}.
      *
-     * @return string The string, completely lowercased.
      *
      * @param string $string The string that you want to apply this method on.
+     *
+     * @return string The string, completely lowercased.
      */
     public static function lowercase($string)
     {
@@ -167,7 +182,7 @@ class BaseTwigModifiers
 
     /**
      * Formats a language specific date.
-     * 		syntax: {{ spoondate($timestamp, $format, $language) }}.
+     * 		syntax: {{ $timestamp|spoondate($format, $language) }}.
      *
      * @param mixed            $timestamp The timestamp or date that you want to apply the format to.
      * @param string[optional] $format    The optional format that you want to apply on the provided timestamp.
@@ -255,7 +270,7 @@ class BaseTwigModifiers
             if ($closestWord) {
                 $string = mb_substr($string, 0, strrpos(substr($string, 0, $length + 1), ' '), 'UTF-8');
             } else {
-                $string = mb_substr($string, 0, $length, 'UT8');
+                $string = mb_substr($string, 0, $length, 'UTF8');
             }
 
             // add hellip

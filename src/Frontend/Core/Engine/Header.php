@@ -18,9 +18,6 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Header extends FrontendBaseObject
 {
@@ -345,8 +342,8 @@ class Header extends FrontendBaseObject
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (mb_substr($image, 0, 7) != SITE_PROTOCOL . '://') {
-            if (!is_file(PATH_WWW . $image)) {
+        if (mb_substr($image, 0, 7) != 'http://' && mb_substr($image, 0, 8) != 'https://') {
+            if (!is_file(PATH_WWW . strtok($image, '?'))) {
                 return;
             }
             $image = SITE_URL . $image;
@@ -380,7 +377,7 @@ class Header extends FrontendBaseObject
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
                  'title' => $title,
-                 'href' => $link
+                 'href' => $link,
             ),
             true
         );
@@ -390,6 +387,7 @@ class Header extends FrontendBaseObject
      * Sort function for CSS-files
      *
      * @param array $cssFiles The css files to sort.
+     *
      * @return array
      */
     private function cssSort($cssFiles)
@@ -405,7 +403,7 @@ class Header extends FrontendBaseObject
                 $aTemp['e' . $i][] = $file;
             } else {
                 $aTemp['a' . $i][] = $file;
-                $i++;
+                ++$i;
             }
         }
 
@@ -497,6 +495,7 @@ class Header extends FrontendBaseObject
      *
      * @param string $attribute      The attribute to match on.
      * @param string $attributeValue The value for the unique attribute.
+     *
      * @return array
      */
     public function getMetaValue($attribute, $attributeValue)
@@ -523,6 +522,7 @@ class Header extends FrontendBaseObject
      * Minify a CSS-file
      *
      * @param string $file The file to be minified.
+     *
      * @return string
      */
     private function minifyCSS($file)
@@ -551,6 +551,7 @@ class Header extends FrontendBaseObject
      * Minify a javascript-file
      *
      * @param string $file The file to be minified.
+     *
      * @return string
      */
     private function minifyJS($file)
@@ -596,8 +597,8 @@ class Header extends FrontendBaseObject
         $this->parseJS();
         $this->parseCustomHeaderHTMLAndGoogleAnalytics();
 
-        $this->tpl->assign('pageTitle', (string) $this->getPageTitle());
-        $this->tpl->assign(
+        $this->tpl->addGlobal('pageTitle', (string) $this->getPageTitle());
+        $this->tpl->addGlobal(
             'siteTitle',
             (string) $this->get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
@@ -624,7 +625,7 @@ class Header extends FrontendBaseObject
             }
         }
 
-        $this->tpl->assign('cssFiles', $cssFiles);
+        $this->tpl->addGlobal('cssFiles', $cssFiles);
     }
 
     /**
@@ -675,7 +676,7 @@ class Header extends FrontendBaseObject
         $siteHTMLHeader .= "\n" . '<script>var jsData = ' . $jsData . '</script>';
 
         // assign site wide html
-        $this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));
+        $this->tpl->addGlobal('siteHTMLHeader', trim($siteHTMLHeader));
     }
 
     /**
@@ -692,7 +693,7 @@ class Header extends FrontendBaseObject
             $this->addMetaData(
                 array(
                     'property' => 'fb:admins',
-                    'content' => $facebookAdminIds
+                    'content' => $facebookAdminIds,
                 ),
                 true,
                 array('property')
@@ -705,7 +706,7 @@ class Header extends FrontendBaseObject
             $this->addMetaData(
                 array(
                     'property' => 'fb:app_id',
-                    'content' => $facebookAppId
+                    'content' => $facebookAppId,
                 ),
                 true,
                 array('property')
@@ -771,7 +772,7 @@ class Header extends FrontendBaseObject
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
                 '/src/Frontend/Core/Js/Jquery/jquery.js',
-                '/src/Frontend/Core/Js/Jquery/jquery.ui.js'
+                '/src/Frontend/Core/Js/Jquery/jquery.ui.js',
             );
 
             foreach ($existingJSFiles as $file) {
@@ -799,7 +800,7 @@ class Header extends FrontendBaseObject
             }
         }
 
-        $this->tpl->assign('jsFiles', $jsFiles);
+        $this->tpl->addGlobal('jsFiles', $jsFiles);
     }
 
     /**
@@ -827,8 +828,8 @@ class Header extends FrontendBaseObject
             $link .= '>' . "\n";
         }
 
-        $this->tpl->assign('meta', $meta . "\n" . $link);
-        $this->tpl->assign('metaCustom', $this->getMetaCustom());
+        $this->tpl->addGlobal('meta', $meta . "\n" . $link);
+        $this->tpl->addGlobal('metaCustom', $this->getMetaCustom());
     }
 
     /**

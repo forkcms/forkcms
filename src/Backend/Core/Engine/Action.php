@@ -14,10 +14,6 @@ use Backend\Core\Engine\Base\Action as BackendBaseAction;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Action extends Base\Object
 {
@@ -86,7 +82,7 @@ class Action extends Base\Object
             $workingLanguages[] = array(
                 'abbr' => $abbreviation,
                 'label' => $label,
-                'selected' => ($abbreviation == Language::getWorkingLanguage())
+                'selected' => ($abbreviation == Language::getWorkingLanguage()),
             );
         }
 

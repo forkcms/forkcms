@@ -13,9 +13,6 @@ use Common\Uri as CommonUri;
 
 /**
  * FrontendRSSItem, this is our extended version of SpoonRSSItem
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class RssItem extends \SpoonFeedRSSItem
 {
@@ -51,6 +48,7 @@ class RssItem extends \SpoonFeedRSSItem
      * Process links, will prepend SITE_URL if needed and append UTM-parameters
      *
      * @param string $content The content to process.
+     *
      * @return string
      */
     public function processLinks($content)

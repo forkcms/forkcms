@@ -14,8 +14,6 @@ use Backend\Modules\Locale\Engine\CacheBuilder;
 
 /**
  * This class will store the language-dependant content for the frontend.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Language
 {
@@ -63,6 +61,7 @@ class Language
      *
      * @param string $key      The key to get.
      * @param bool   $fallback Should we provide a fallback in English?
+     *
      * @return string
      */
     public static function getAction($key, $fallback = true)
@@ -122,6 +121,7 @@ class Language
      * Get the preferred language by using the browser-language
      *
      * @param bool $forRedirect Only look in the languages to redirect?
+     *
      * @return string
      */
     public static function getBrowserLanguage($forRedirect = true)
@@ -178,6 +178,7 @@ class Language
      *
      * @param string $key      The key to get.
      * @param bool   $fallback Should we provide a fallback in English?
+     *
      * @return string
      */
     public static function getError($key, $fallback = true)
@@ -218,6 +219,7 @@ class Language
      *
      * @param string $key      The key to get.
      * @param bool   $fallback Should we provide a fallback in English?
+     *
      * @return string
      */
     public static function getLabel($key, $fallback = true)
@@ -258,6 +260,7 @@ class Language
      *
      * @param string $key      The key to get.
      * @param bool   $fallback Should we provide a fallback in English?
+     *
      * @return string
      */
     public static function getMessage($key, $fallback = true)
@@ -364,6 +367,7 @@ class Language
      *
      * @param string $key      The key to get.
      * @param bool   $fallback Should we provide a fallback in English?
+     *
      * @return string
      */
     public static function act($key, $fallback = true)
@@ -376,6 +380,7 @@ class Language
      *
      * @param string $key      The key to get.
      * @param bool   $fallback Should we provide a fallback in English?
+     *
      * @return string
      */
     public static function err($key, $fallback = true)
@@ -388,6 +393,7 @@ class Language
      *
      * @param string $key      The key to get.
      * @param bool   $fallback Should we provide a fallback in English?
+     *
      * @return string
      */
     public static function lbl($key, $fallback = true)
@@ -400,6 +406,7 @@ class Language
      *
      * @param string $key      The key to get.
      * @param bool   $fallback Should we provide a fallback in English?
+     *
      * @return string
      */
     public static function msg($key, $fallback = true)

@@ -14,8 +14,6 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig.
- *
- * @author <thijs@wijs.be>
  */
 abstract class BaseTwigTemplate extends TwigEngine
 {
@@ -62,15 +60,14 @@ abstract class BaseTwigTemplate extends TwigEngine
     /**
      * Spoon assign method.
      *
-     * @param string $key
+     * @param string|array $key
      * @param mixed  $values
      */
     public function assign($key, $values = null)
     {
         if (is_array($key)) {
-            foreach ($key as $i => $value) {
-                $this->variables[$i] = $value;
-            }
+            $this->assignArray($key);
+
             return;
         }
 
@@ -149,13 +146,8 @@ abstract class BaseTwigTemplate extends TwigEngine
         // remove protected constants aka constants that should not be used in the template
         foreach ($constants['user'] as $key => $value) {
             if (!in_array($key, $notPublicConstants)) {
-                $realConstants[$key] = $value;
+                $twig->addGlobal($key, $value);
             }
-        }
-
-        // we should only assign constants if there are constants to assign
-        if (!empty($realConstants)) {
-            $this->assignArray($realConstants);
         }
 
         /* Setup Backend for the Twig environment. */
@@ -172,7 +164,7 @@ abstract class BaseTwigTemplate extends TwigEngine
             $twig->addGlobal('THEME', $this->forkSettings->get('Core', 'theme', 'default'));
             $twig->addGlobal(
                 'THEME_URL',
-                '/src/Backend/Themes/'.$this->forkSettings->get('Core', 'theme', 'default')
+                '/src/Frontend/Themes/'.$this->forkSettings->get('Core', 'theme', 'default')
             );
         }
 
@@ -180,6 +172,14 @@ abstract class BaseTwigTemplate extends TwigEngine
         $twig->addGlobal(
             'SITE_TITLE',
             $this->forkSettings->get('Core', 'site_title_'.$this->language, SITE_DEFAULT_TITLE)
+        );
+        $twig->addGlobal(
+            'SITE_URL',
+            SITE_URL
+        );
+        $twig->addGlobal(
+            'SITE_DOMAIN',
+            SITE_DOMAIN
         );
 
         // facebook stuff

@@ -13,8 +13,6 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the groups module
- *
- * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
 class Config extends BackendBaseConfig
 {

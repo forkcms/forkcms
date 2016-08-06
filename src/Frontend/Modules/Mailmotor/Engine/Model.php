@@ -15,8 +15,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * In this file we store all generic functions that we will be using in the mailmotor module
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Model
 {
@@ -52,6 +50,7 @@ class Model
      * Checks if a given e-mail address exists in the mailmotor_addresses table
      *
      * @param string $email The e-mail address to check.
+     *
      * @return bool
      */
     public static function exists($email)
@@ -69,6 +68,7 @@ class Model
      * Checks if a group exists
      *
      * @param int $id The id of the group to check for.
+     *
      * @return bool
      */
     public static function existsGroup($id)
@@ -86,6 +86,7 @@ class Model
      * Get all data for a given mailing
      *
      * @param int $id The id of the mailing.
+     *
      * @return array
      */
     public static function get($id)
@@ -138,6 +139,7 @@ class Model
      *
      * @param string     $email     The e-email address to use.
      * @param int $excludeId The id off the group to exclude.
+     *
      * @return array
      */
     public static function getGroupIDsByEmail($email, $excludeId = null)
@@ -173,6 +175,7 @@ class Model
      * @param int        $id          The id of the mailing.
      * @param string $contentType The content-type to set.
      * @param bool   $forCM       Will this URL be used in Campaign Monitor?
+     *
      * @return string
      */
     public static function getMailingPreviewURL($id, $contentType = 'html', $forCM = false)
@@ -193,6 +196,7 @@ class Model
      *
      * @param string $language The language.
      * @param string $name     The name of the template.
+     *
      * @return array
      */
     public static function getTemplate($language, $name)
@@ -241,6 +245,7 @@ class Model
      * @param array $item        The data to insert for the address.
      * @param bool  $unsubscribe If there are no groups the user will be added
      *                           to the default group, unless this is true.
+     *
      * @return bool
      */
     public static function insertAddress(array $item, $unsubscribe = false)
@@ -287,6 +292,7 @@ class Model
      *
      * @param string     $email   The e-mail address to check.
      * @param int $groupId The id of the group that has to be checked.
+     *
      * @return bool
      */
     public static function isSubscribed($email, $groupId = null)
@@ -312,6 +318,7 @@ class Model
      *
      * @param string        $email   The e-mail address to subscribe.
      * @param string $groupId The id of the group to subscribe to.
+     *
      * @return bool
      */
     public static function subscribe($email, $groupId = null)
@@ -339,7 +346,7 @@ class Model
                     $subscriber['source'],
                     $subscriber['created_on'],
                     $subscriber['source'],
-                    $subscriber['created_on']
+                    $subscriber['created_on'],
                 )
             );
 
@@ -361,7 +368,7 @@ class Model
                     $subscriberGroup['subscribed_on'],
                     $subscriberGroup['group_id'],
                     $subscriberGroup['status'],
-                    $subscriberGroup['subscribed_on']
+                    $subscriberGroup['subscribed_on'],
                 )
             );
 
@@ -378,6 +385,7 @@ class Model
      *
      * @param string        $email   The mail address to unsubscribe.
      * @param string $groupId The id of the group to unsubscribe from.
+     *
      * @return bool
      */
     public static function unsubscribe($email, $groupId = null)

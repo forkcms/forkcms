@@ -18,9 +18,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the add-action, it will display a form to add a new profile.
- *
- * @author Davy Van Vooren <davy.vanvooren@netlash.com>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -29,7 +26,7 @@ class Add extends BackendBaseActionAdd
      */
     private $id;
 
-     /**
+    /**
      * @var bool
      */
     private $notifyAdmin;
@@ -52,7 +49,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-     /**
+    /**
      * Get data
      */
     public function getData()
@@ -78,7 +75,7 @@ class Add extends BackendBaseActionAdd
         // gender dropdown values
         $genderValues = array(
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female'))
+            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
         );
 
         // birthdate dropdown values
@@ -218,7 +215,7 @@ class Add extends BackendBaseActionAdd
                         'id' => $this->id,
                         'first_name' => $txtFirstName->getValue(),
                         'last_name' => $txtLastName->getValue(),
-                        'unencrypted_password' => $password
+                        'unencrypted_password' => $password,
                     )
                 );
 

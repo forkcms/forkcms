@@ -10,14 +10,11 @@ namespace Frontend\Modules\Blog\Widgets;
  */
 
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is a widget with recent blog-articles
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class RecentArticlesList extends FrontendBaseWidget
 {

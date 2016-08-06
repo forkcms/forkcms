@@ -1,3 +1,136 @@
+4.0.6 (2016-07-29)
+--
+
+Bugfixes:
+
+* Pages: fix casing issue.
+* Core: add missing yaml config to the editorconfig file.
+* Core: make the backend more anysurfer compliant.
+* Pages: make filesystem checks more robust for og:image tags.
+* Faq: use label instead of hardcoded text after sequence success.
+* FormBuilder: only show the success message for the submitted form.
+* Core: fix cache sharing between environments.
+* Core: fix issues on PHP 7.1.
+* Core: fix issues when widgets mixed up content.
+* Core: fix double encoded ampersand in pagination urls.
+* Pages: fix bad contrast when showing hidden page blocks.
+* FormBuilder: fix paragraph and heading that weren't editable.
+* Core: fix template bug in pagination.
+* Core: make sure emails can be themed.
+* Core: make sure diactrics will be showd correctly in twig.
+* Groups: make sure we can hide dashboard widgets for groups.
+
+
+4.0.5 (2016-07-12)
+--
+
+Bugfixes:
+
+* Location: show google maps key when Location is installed.
+* Core: add needed swiftmailer monolog configuration.
+* Core: make the formatCurrency modifier respect the number format.
+* Core: fix deletion of cookies.
+* Core: fix case error.
+* Core: fix "exists" instead of "exist" in exceptions and comments.
+* Core: fix wrong order of twig filters.
+* Core: fix wrong css class on help-blocks.
+* Core: fix link in cookie bar text in the triton theme.
+* Core: use php.ini's default session location.
+* Extensions: fix install button for installed modules.
+* Core: minify module JavaScript files.
+
+
+4.0.4 (2016-07-01)
+--
+
+Bugfixes:
+
+* Analytics: fixes for tracking.
+* Locale: fix removing entries.
+* Core: fix camelcase instead of ucfirst.
+* Installer: fix unreadable text.
+* Core: also use browser cache on files with uppercased extensions.
+* Analytics: refactor to avoid some bugs.
+* Core: small layout fixes.
+* Core: fix image delete with a subfolder.
+* Core: use non breaking spaces in format currency.
+* Core: fix the showBool template modifier.
+* Core: cleanup fallbacks for legacy browsers.
+* Core: remove @author tags in favor of git history.
+* Core: remove twig generation notices.
+* Analytics: fix widgets when there is no data yet.
+* FormBuilder: fix placeholders.
+* Core: fix a lot of emails and template issues.
+* Core: fix navigation with deeper levels.
+* Core: fix multiple widgets with different content on one page.
+* Core: make sure modules folder isn't required in a theme.
+* Core: fix page titles containing html entities.
+* Core: fix overflowing logs in production mode.
+* Core: fix unsupported date formats.
+* Core: fix double slash in the url causing 404's.
+* Core: fix wrongly placed form errors.
+* Core: fix usage of deprecated sprintf filter.
+* Core: fix reference to the deprecated forum.
+* Core: fix an issue when navigation didn't contain pages.
+* Core: hide the navigation after the animation.
+* Profiles: show the profiles filter titles again.
+* Groups: fix javascript issues with the group rights.
+* Groups: fix shown tabs when a user has no rights to it.
+* Groups: fix some coding styles.
+* Core: fix the sub navigation with too many entries overflowing the page.
+
+
+4.0.3 (2016-06-15)
+--
+
+Bugfixes:
+
+* Core: translate labels in the backend menu
+* Extensions: fix deletion of modules extras
+* Core: fix limit on key length of 1000 bytes during installation
+* Core: fix breadcrumb on single language sites
+* Core: fix resequencing in Safari
+
+
+4.0.2 (2016-06-10)
+--
+
+Bugfixes:
+
+* Core: remove duplicate swiftmailer config.
+* Core: cleanup unused use statements.
+* Core: fix some phpdocs.
+* Search: fix the livesuggest action.
+* Core: fix typo: UT8 instead of UTF8.
+* Core: remove obsolete parameters on the getContent method of templates.
+* Core: fix editorconfig for twig files.
+* Core: fix indentation in twig files.
+* Extensions: fix styling of "new themes".
+* Core: fix references to tpl files in triton's info.xml file.
+* Faq: make sure the feedback works in Safari.
+* Core: include bower components in this repository.
+* Core: take the language into account when fetching the 404 url.
+
+
+4.0.1 (2016-06-07)
+--
+
+Bugfixes:
+
+* Core: Fixes date field with empty date.
+* Core: Fix lost ucfirst template modifier.
+* Installer: Make "same language" not required.
+* Core: Fix the THEME_URL constant referencing the backend.
+* Core: Fix the hasColumn function of datagrids.
+* Core: Fix the not-matching color of the fork logo.
+* Core: avoid &nbsp; in favor of spaces.
+* Extensions: improve icons.
+* Blog: Fix preview url in edit action.
+* Core: Fix asterisk changed by # in the frontend.
+* Users: Never use the (not created) source file of avatars.
+* Core: Improve the gitignore file.
+
+
 4.0.0 (2016-05-27)
 --
 
@@ -18,6 +151,7 @@ Bugfixes:
 * Pages: Fixes "Notice: Undefined index: parent_id" when viewing a page revision where the page is located in the root of the pages tree.
 * Pages: Fixes "Error: Call to a member function addMetaData() on null" when viewing an existing revision page.
 * Core: BackendDataGridFunctions::showImage updated with url, with and height.
+
 
 3.9.6 (2015-12-22)
 --

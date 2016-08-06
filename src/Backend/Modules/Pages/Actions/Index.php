@@ -19,8 +19,6 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the index-action (default), it will display the pages-overview
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -88,7 +86,7 @@ class Index extends BackendBaseActionIndex
         $this->dgDrafts->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
             )
         );
 
@@ -144,7 +142,7 @@ class Index extends BackendBaseActionIndex
         $this->dgRecentlyEdited->setHeaderLabels(
             array(
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited'))
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
             )
         );
 

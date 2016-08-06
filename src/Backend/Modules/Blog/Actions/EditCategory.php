@@ -18,9 +18,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the edit category action, it will display a form to edit an existing category.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class EditCategory extends BackendBaseActionEdit
 {

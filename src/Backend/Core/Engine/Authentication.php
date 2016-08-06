@@ -14,11 +14,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * The class below will handle all authentication stuff. It will handle module-access, action-access, ...
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Sam Tubbax <sam@sumocoders.be>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Authentication
 {
@@ -47,6 +42,7 @@ class Authentication
      * Check the strength of the password
      *
      * @param string $password The password.
+     *
      * @return string
      */
     public static function checkPassword($password)
@@ -73,12 +69,12 @@ class Authentication
 
         // more then 6 chars is good
         if (mb_strlen($password) >= 6) {
-            $score++;
+            ++$score;
         }
 
         // more then 8 is better
         if (mb_strlen($password) >= 8) {
-            $score++;
+            ++$score;
         }
 
         // @todo
@@ -89,12 +85,12 @@ class Authentication
 
         // number?
         if (preg_match('/\d+/', $password)) {
-            $score++;
+            ++$score;
         }
 
         // special char?
         if (preg_match('/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/', $password)) {
-            $score++;
+            ++$score;
         }
 
         // strong password
@@ -126,6 +122,7 @@ class Authentication
      *
      * @param string $email    The email.
      * @param string $password The password.
+     *
      * @return string
      */
     public static function getEncryptedPassword($email, $password)
@@ -155,6 +152,7 @@ class Authentication
      *
      * @param string $string The string to encrypt.
      * @param string $salt   The salt to use.
+     *
      * @return string
      */
     public static function getEncryptedString($string, $salt = null)
@@ -221,6 +219,7 @@ class Authentication
      *
      * @param string $action The action to check for.
      * @param string $module The module wherein the action is located.
+     *
      * @return bool
      */
     public static function isAllowedAction($action = null, $module = null)
@@ -271,7 +270,7 @@ class Authentication
         return array(
             'Core' => array('GenerateUrl' => 7, 'ContentCss' => 7, 'Templates' => 7),
             'Error' => array('Index' => 7),
-            'Authentication' => array('Index' => 7, 'ResetPassword' => 7, 'Logout' => 7)
+            'Authentication' => array('Index' => 7, 'ResetPassword' => 7, 'Logout' => 7),
         );
     }
 
@@ -279,6 +278,7 @@ class Authentication
      * Is the given module allowed for the current user
      *
      * @param string $module The module to check for.
+     *
      * @return bool
      */
     public static function isAllowedModule($module)
@@ -377,6 +377,7 @@ class Authentication
 
                 // the user is logged on
                 BackendModel::getContainer()->set('logged_in', true);
+
                 return true;
             }
         }
@@ -395,6 +396,7 @@ class Authentication
      *
      * @param string $login    The users login.
      * @param string $password The password provided by the user.
+     *
      * @return bool
      */
     public static function loginUser($login, $password)

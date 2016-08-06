@@ -13,9 +13,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the location module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Model
 {
@@ -24,6 +21,7 @@ class Model
      *
      * @param array $settings
      * @param array $markers
+     *
      * @return string
      */
     public static function buildUrl(array $settings, array $markers = array())
@@ -69,6 +67,7 @@ class Model
      * Get an item
      *
      * @param int $id The id of the item to fetch.
+     *
      * @return array
      */
     public static function get($id)
@@ -99,6 +98,7 @@ class Model
      *
      * @param int    $mapId
      * @param string $name
+     *
      * @return mixed
      */
     public static function getMapSetting($mapId, $name)
@@ -121,6 +121,7 @@ class Model
      * Fetch all the settings for a specific map
      *
      * @param int $mapId
+     *
      * @return array
      */
     public static function getMapSettings($mapId)

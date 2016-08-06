@@ -16,8 +16,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the cronjob that processes the queued hooks.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class ProcessQueuedHooks extends Cronjob
 {
@@ -41,7 +39,7 @@ class ProcessQueuedHooks extends Cronjob
         // store PID
         $fs = new Filesystem();
         $fs->dumpFile(
-            BACKEND_CACHE_PATH . '/Hooks/pid',
+            $this->getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid',
             $pid
         );
 
@@ -123,7 +121,7 @@ class ProcessQueuedHooks extends Cronjob
                 }
             } else {
                 $fs = new Filesystem();
-                $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                $fs->remove($this->getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
 
                 // stop the script
                 exit;

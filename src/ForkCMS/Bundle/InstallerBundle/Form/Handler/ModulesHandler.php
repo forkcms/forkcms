@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Validates and saves the data from the modules form
- *
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class ModulesHandler
 {

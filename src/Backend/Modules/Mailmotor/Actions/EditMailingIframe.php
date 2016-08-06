@@ -9,7 +9,7 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
-use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BackendLanguage;
@@ -17,8 +17,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This is the edit-action, it will display a form to edit the mailing contents through an iframe
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class EditMailingIframe extends BackendBaseActionEdit
 {

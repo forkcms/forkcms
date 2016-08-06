@@ -4,12 +4,14 @@
 #}
 
 {% if widgetFaqCategories %}
-	<section id="faqCategoriesWidget" class="mod">
-		<h3>{{ 'lbl.AllCategories'|trans|capitalize }}</h3>
-		<ul>
-			{% for widgetFaqCategories in widgetFaqCategories %}
-				<li><a href="{{ widgetFaqCategories.full_url }}" title="{{ widgetFaqCategories.title }}">{{ widgetFaqCategories.title }}</a></li>
-			{% endfor %}
-		</ul>
-	</section>
+  <section id="faqCategoriesWidget" class="mod">
+    <h3>{{ 'lbl.AllCategories'|trans|ucfirst }}</h3>
+    <ul>
+      {% for widgetFaqCategories in widgetFaqCategories %}
+        <li>
+          <a href="{{ widgetFaqCategories.full_url }}" title="{{ widgetFaqCategories.title }}">{{ widgetFaqCategories.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
 {% endif %}

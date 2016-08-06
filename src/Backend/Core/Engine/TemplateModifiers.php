@@ -14,8 +14,6 @@ use Common\Core\Twig\Extensions\BaseTwigModifiers;
 
 /**
  * This is our class with custom modifiers.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class TemplateModifiers extends BaseTwigModifiers
 {
@@ -25,6 +23,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param float $number   The number to format.
      * @param int   $decimals The number of decimals.
+     *
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -51,20 +50,24 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Format a number
-     * syntax: {$var|formatnumber}
+     *    syntax: {{ $string|formatnumber($decimals) }}
      *
-     * @param float $var The number to format.
+     * @param float $number The number to format.
+     * @param int $decimals The number of decimals
+     *
      * @return string
      */
-    public static function formatNumber($var)
+    public static function formatNumber($number, $decimals = null)
     {
-        $var = (float) $var;
+        $number = (float) $number;
 
         // get setting
         $format = Authentication::getUser()->getSetting('number_format', 'dot_nothing');
 
         // get amount of decimals
-        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
+        if ($decimals === null) {
+            $decimals = (mb_strpos($number, '.') ? mb_strlen(mb_substr($number, mb_strpos($number, '.') + 1)) : 0);
+        }
 
         // get separators
         $separators = explode('_', $format);
@@ -77,7 +80,7 @@ class TemplateModifiers extends BaseTwigModifiers
         );
 
         // format the number
-        return number_format($var, $decimals, $decimalSeparator, $thousandsSeparator);
+        return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
     }
 
     /**
@@ -85,6 +88,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * syntax: {{ $var|formatdate }}
      *
      * @param int $var The UNIX-timestamp to format.
+     *
      * @return string
      */
     public static function formatTime($var)
@@ -104,6 +108,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param string $module The module to build the URL for.
      * @param string $suffix A string to append.
      * @param string $language A language code
+     *
      * @return string
      */
     public static function getURL($action = null, $module = null, $suffix = null, $language = null)
@@ -158,6 +163,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param int    $length      The maximum length of the truncated string.
      * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
      * @param bool   $closestWord Truncate on exact length or on closest word?
+     *
      * @return string
      */
     public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
@@ -196,41 +202,6 @@ class TemplateModifiers extends BaseTwigModifiers
             // return
             return \SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
         }
-    }
-
-    /**
-     * Shows a v or x to indicate the boolean state (Y|N, j|n, true|false)
-     *
-     * @param string|bool $status
-     * @param bool        $reverse show the opposite of the status
-     * @return string
-     */
-    public static function showBool($status, $reverse = false)
-    {
-        $showTrue = '<strong style="color:green">&#10003;</strong>';
-        $showFalse = '<strong style="color:red">&#10008;</strong>';
-
-        if ($reverse) {
-            if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
-                return $showFalse;
-            }
-
-            if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
-                return $showTrue;
-            }
-
-            return $status;
-        }
-
-        if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
-            return $showTrue;
-        }
-
-        if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
-            return $showFalse;
-        }
-
-        return $status;
     }
 
     /**

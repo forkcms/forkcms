@@ -5,50 +5,51 @@
 
 
 {% if not faqCategories %}
-	<div id="faqIndex">
-		<section class="mod">
-			<div class="inner">
-				<div class="bd content">
-					<p>{{ 'msg.FaqNoItems'|trans }}</p>
-				</div>
-			</div>
-		</section>
-	</div>
+  <div id="faqIndex">
+    <section class="mod">
+      <div class="inner">
+        <div class="bd content">
+          <p>{{ 'msg.FaqNoItems'|trans }}</p>
+        </div>
+      </div>
+    </section>
+  </div>
 {% endif %}
 
 {% if faqCategories %}
-	<section id="faqIndex" class="mod">
-		<div class="inner">
-			{% if allowMultipleCategories %}
-			<div class="hd">
-				<ul>
-					{% for category in faqCategories %}
-						<li><a href="#{{ category.url }}" title="{{ category.title }}">{{ category.title }}</a></li>
-					{% endfor %}
-				</ul>
-			</div>
-			{% endif %}
-			<div class="bd">
-				{% for category in faqCategories %}
-					<section class="mod">
-						<div class="inner">
-							{% if allowMultipleCategories %}
-							<header class="hd">
-								<h3 id="{{ category.url }}"><a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h3>
-							</header>
-							{% endif %}
+  <section id="faqIndex" class="mod">
+    <div class="inner">
+      {% if allowMultipleCategories %}
+        <div class="hd">
+          <ul>
+            {% for category in faqCategories %}
+              <li><a href="#{{ category.url }}" title="{{ category.title }}">{{ category.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      <div class="bd">
+        {% for category in faqCategories %}
+          <section class="mod">
+            <div class="inner">
+              {% if allowMultipleCategories %}
+                <header class="hd">
+                  <h3 id="{{ category.url }}">
+                    <a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h3>
+                </header>
+              {% endif %}
 
-							<div class="bd content">
-								<ul>
-									{% for question in category.questions %}
-										<li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
-									{% endfor %}
-								</ul>
-							</div>
-						</div>
-					</section>
-				{% endfor %}
-			</div>
-		</div>
-	</section>
+              <div class="bd content">
+                <ul>
+                  {% for question in category.questions %}
+                    <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </section>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
 {% endif %}

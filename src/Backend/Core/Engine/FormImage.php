@@ -13,10 +13,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This is our extended version of \SpoonFormFile
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FormImage extends \SpoonFormImage
 {
@@ -26,6 +22,7 @@ class FormImage extends \SpoonFormImage
      * @param    string            $name          The name.
      * @param    string [optional] $class         The CSS-class to be used.
      * @param    string [optional] $classError    The CSS-class to be used when there is an error.
+     *
      * @see      SpoonFormFile::__construct()
      */
     public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
@@ -98,9 +95,11 @@ class FormImage extends \SpoonFormImage
     /**
      * Parses the html for this filefield.
      *
-     * @param \SpoonTemplate $template The template to parse the element in.
-     * @return string
+     * @param TwigTemplate $template The template to parse the element in.
+     *
      * @throws \SpoonFormException
+     *
+     * @return string
      */
     public function parse($template = null)
     {
@@ -142,7 +141,7 @@ class FormImage extends \SpoonFormImage
         $output .= $this->getAttributesHTML(
             array(
                 '[id]' => $this->attributes['id'],
-                '[name]' => $this->attributes['name']
+                '[name]' => $this->attributes['name'],
             )
         ) . ' />';
 

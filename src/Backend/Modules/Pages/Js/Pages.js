@@ -1,9 +1,5 @@
 /**
  * Interaction for the pages module
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Matthias Mullie <forkcms@mullie.eu>
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 jsBackend.pages =
 {
@@ -35,10 +31,6 @@ jsBackend.pages =
 
 /**
  * All methods related to the controls (buttons, ...)
- *
- * @author	Matthias Mullie <forkcms@mullie.eu>
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 jsBackend.pages.extras =
 {
@@ -395,7 +387,7 @@ jsBackend.pages.extras =
 		$('#extraType option[value=block]').attr('disabled', !enabled);
 
 		// set type
-		$('#extraType').val('html');
+		$('#extraType').val($('#extraType').val());
 		$('#extraExtraId').val(0);
 
 		// populate the modules
@@ -549,9 +541,6 @@ jsBackend.pages.extras =
 
 /**
  * All methods related to the templates
- *
- * @author	Matthias Mullie <forkcms@mullie.eu>
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.pages.template =
 {
@@ -709,8 +698,6 @@ jsBackend.pages.template =
 
 /**
  * All methods related to the tree
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.pages.tree =
 {

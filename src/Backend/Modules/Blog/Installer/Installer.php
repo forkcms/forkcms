@@ -13,10 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the blog module
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Installer extends ModuleInstaller
 {
@@ -33,6 +29,7 @@ class Installer extends ModuleInstaller
      * @param string $language The language to use.
      * @param string $title    The title of the category.
      * @param string $url      The URL for the category.
+     *
      * @return int
      */
     private function addCategory($language, $title, $url)
@@ -49,6 +46,7 @@ class Installer extends ModuleInstaller
      * Fetch the id of the first category in this language we come across
      *
      * @param string $language The language to use.
+     *
      * @return int
      */
     private function getCategory($language)
@@ -68,7 +66,7 @@ class Installer extends ModuleInstaller
             'column' => 'right',
             'position' => 1,
             'hidden' => false,
-            'present' => true
+            'present' => true,
         );
 
         $this->insertDashboardWidget('Blog', 'Comments');
@@ -246,7 +244,7 @@ class Installer extends ModuleInstaller
                     'edited_on' => gmdate('Y-m-d H:i:00'),
                     'hidden' => 'N',
                     'allow_comments' => 'Y',
-                    'num_comments' => '2'
+                    'num_comments' => '2',
                 )
             );
 
@@ -258,7 +256,7 @@ class Installer extends ModuleInstaller
                     'title' => 'Nunc sediam est',
                     'text' => file_get_contents(
                         PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
-                    )
+                    ),
                 ),
                 $language
             );
@@ -285,7 +283,7 @@ class Installer extends ModuleInstaller
                     'edited_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
                     'hidden' => 'N',
                     'allow_comments' => 'Y',
-                    'num_comments' => '0'
+                    'num_comments' => '0',
                 )
             );
 
@@ -297,7 +295,7 @@ class Installer extends ModuleInstaller
                     'title' => 'Lorem ipsum',
                     'text' => file_get_contents(
                         PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
-                    )
+                    ),
                 ),
                 $language
             );
@@ -315,7 +313,7 @@ class Installer extends ModuleInstaller
                     'text' => 'awesome!',
                     'type' => 'comment',
                     'status' => 'published',
-                    'data' => null
+                    'data' => null,
                 )
             );
 
@@ -332,7 +330,7 @@ class Installer extends ModuleInstaller
                     'text' => 'wicked!',
                     'type' => 'comment',
                     'status' => 'published',
-                    'data' => null
+                    'data' => null,
                 )
             );
         }

@@ -6,7 +6,6 @@
     @package      backend
     @subpackage   core
 
-    @author       Johan Ronsse <johan@netlash.com>
     @since        2.0
 
 */
@@ -71,14 +70,9 @@
       text-decoration: none;
       margin: 0;
       border: none !important;
-      outline: 0 !important;
       max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-
-    a:focus {
-      outline: none;
     }
 
     a input:not([class="xxx"]),
@@ -87,8 +81,14 @@
     }
 
     /* OPEN OR CLOSE */
-    &.open ul {
-      display: block;
+    &.open {
+      ul {
+        display: block;
+      }
+
+      a:focus {
+        outline: 5px auto -webkit-focus-ring-color;
+      }
     }
 
     &.closed ul {

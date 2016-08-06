@@ -18,10 +18,6 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 
 /**
  * This is the index-action (default), it will display the overview
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Index extends BackendBaseActionIndex
 {

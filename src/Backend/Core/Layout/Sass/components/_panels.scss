@@ -45,10 +45,13 @@
     }
   }
 
-  .panel-footer {
+  a {
+    text-decoration: underline;
+  }
 
-    a {
-      text-decoration: underline;
+  .panel-footer {
+    .btn {
+      text-decoration: none;
     }
   }
 }

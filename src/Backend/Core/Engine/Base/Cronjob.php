@@ -15,9 +15,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the base-object for cronjobs. The module-specific cronjob-files can extend the functionality from this class
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Cronjob extends Object
 {
@@ -33,12 +30,19 @@ class Cronjob extends Object
      */
     protected function clearBusyFile()
     {
-        // build path
-        $path = BACKEND_CACHE_PATH . '/Cronjobs/' . $this->getId() . '.busy';
+        $path = $this->getCacheDirectory() . $this->getId() . '.busy';
 
         // remove the file
         $fs = new Filesystem();
         $fs->remove($path);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCacheDirectory()
+    {
+        return BackendModel::getContainer()->getParameter('kernel.cache_dir') . '/cronjobs/';
     }
 
     public function execute()
@@ -62,6 +66,7 @@ class Cronjob extends Object
      *
      * @param string $action The action to load.
      * @param string $module The module to load.
+     *
      * @throws BackendException If module is not set or the action does not exist
      */
     public function setAction($action, $module = null)
@@ -105,7 +110,7 @@ class Cronjob extends Object
 
         // build path
         $fs = new Filesystem();
-        $path = BACKEND_CACHE_PATH . '/Cronjobs/' . $this->getId() . '.busy';
+        $path = $this->getCacheDirectory() . $this->getId() . '.busy';
 
         // init var
         $isBusy = false;
@@ -133,7 +138,7 @@ class Cronjob extends Object
         }
 
         // increment counter
-        $counter++;
+        ++$counter;
 
         // store content
         $fs->dumpFile($path, $counter);
@@ -150,6 +155,7 @@ class Cronjob extends Object
      * We can't rely on the parent setModule function, because a cronjob requires no login
      *
      * @param string $module The module to load.
+     *
      * @throws BackendException If module is not allowed
      */
     public function setModule($module)

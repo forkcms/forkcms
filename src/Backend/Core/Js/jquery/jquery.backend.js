@@ -4,9 +4,6 @@
 
 /**
  * Meta-handler
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 (function($)
 {
@@ -133,8 +130,6 @@
 
 /**
  * Password generator
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
@@ -266,9 +261,6 @@
 
 /**
  * Inline editing
- *
- * @author	Dave Lens <dave@netlash.com>
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
@@ -463,8 +455,6 @@
 
 /**
  * key-value-box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
@@ -762,9 +752,6 @@
 
 /**
  * Tag-box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
 {
@@ -1005,7 +992,7 @@
 					for(var i in elements)
 					{
                         var value = utils.string.stripForTag(elements[i]);
-                        
+
 						html += '	<li class="list-group-item">' +
 								'		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash"></span></a></span>' +
 								'       <span><strong>' + value + '</strong>' +
@@ -1058,9 +1045,6 @@
 
 /**
  * Multiple select box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 (function($)
 {
@@ -1296,9 +1280,6 @@
 
 /**
  * Multiple text box
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
 {
@@ -1326,6 +1307,8 @@
 			var id = $(this).attr('id');
 			var elements = get();
 			var blockSubmit = false;
+
+			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
 			$(this.form).submit(function()

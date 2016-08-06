@@ -2,15 +2,12 @@
 
 namespace Backend\Modules\Analytics\GoogleClient;
 
-use Backend\Core\Engine\Model;
 use Google_Client;
 use Google_Service_Analytics;
 use Common\ModulesSettings;
 
 /**
  * Factory to easily create google client instances
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class ClientFactory
 {

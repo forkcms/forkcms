@@ -20,11 +20,6 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -123,7 +118,7 @@ class Edit extends BackendBaseActionEdit
         // set headers
         $this->dgRevisions->setHeaderLabels(array(
             'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
         ));
 
         // set column-functions

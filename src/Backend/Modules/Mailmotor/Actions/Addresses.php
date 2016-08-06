@@ -20,8 +20,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This page will display the overview of addresses
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Addresses extends BackendBaseActionIndex
 {
@@ -88,6 +86,7 @@ class Addresses extends BackendBaseActionIndex
      * Sets the headers so we may download the CSV file in question
      *
      * @param string $path The full path to the CSV file you wish to download.
+     *
      * @return array
      */
     private function downloadCSV($path)
@@ -152,7 +151,7 @@ class Addresses extends BackendBaseActionIndex
                      'offset' => '[offset]',
                      'order' => '[order]',
                      'sort' => '[sort]',
-                     'email' => $this->filter['email']
+                     'email' => $this->filter['email'],
                 ),
                 false
             )
@@ -183,7 +182,7 @@ class Addresses extends BackendBaseActionIndex
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown('action', array(
                 'export' => BL::lbl('Export'),
-                'delete' => BL::lbl('Delete')
+                'delete' => BL::lbl('Delete'),
             ), 'delete',
             false,
             'form-control',
@@ -255,7 +254,7 @@ class Addresses extends BackendBaseActionIndex
 
             // we should download the file
             if ($download) {
-                $this->downloadCSV(BACKEND_CACHE_PATH . '/Mailmotor/' . $csv);
+                $this->downloadCSV(BackendMailmotorModel::getCacheDirectory() . $csv);
             }
         }
 

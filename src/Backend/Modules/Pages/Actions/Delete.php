@@ -17,8 +17,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the delete-action, it will delete a page
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Delete extends BackendBaseActionDelete
 {

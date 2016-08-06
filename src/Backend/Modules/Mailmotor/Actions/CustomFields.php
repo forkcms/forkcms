@@ -18,8 +18,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This page will display the overview of custom fields
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class CustomFields extends BackendBaseActionIndex
 {
@@ -134,6 +132,7 @@ class CustomFields extends BackendBaseActionIndex
      * Sets a link to the campaign statistics if it contains sent mailings
      *
      * @param int $id The ID of the campaign.
+     *
      * @return string
      */
     public function setStatisticsLink($id)

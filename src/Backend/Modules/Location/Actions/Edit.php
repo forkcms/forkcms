@@ -19,9 +19,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the edit-action, it will display a form to create a new item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -128,7 +125,7 @@ class Edit extends BackendBaseActionEdit
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
-            'TERRAIN' => BL::lbl('Terrain', $this->getModule())
+            'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
         );
 
         $zoomLevels = array_combine(

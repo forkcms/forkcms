@@ -11,12 +11,9 @@ namespace Frontend\Core\Engine\Base;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific AJAX action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class AjaxAction extends \KernelLoader
 {

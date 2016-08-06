@@ -13,8 +13,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * In this file, the locale cache is build
- *
- * @author Wouter Sioen <wouter@wijs.be>
  */
 class CacheBuilder
 {
@@ -54,6 +52,7 @@ class CacheBuilder
      *
      * @param  string $language
      * @param  string $application
+     *
      * @return array
      */
     protected function getLocale($language, $application)
@@ -72,6 +71,7 @@ class CacheBuilder
      *
      * @param  string $language
      * @param  string $application
+     *
      * @return array
      */
     protected function buildJsonCache($language, $application)

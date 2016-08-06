@@ -18,10 +18,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the index-action, it will display the overview of tags
- *
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -50,7 +46,7 @@ class Index extends BackendBaseActionIndex
         // header labels
         $this->dataGrid->setHeaderLabels(array(
             'tag' => \SpoonFilter::ucfirst(BL::lbl('Name')),
-            'num_tags' => \SpoonFilter::ucfirst(BL::lbl('Amount'))
+            'num_tags' => \SpoonFilter::ucfirst(BL::lbl('Amount')),
         ));
 
         // sorting columns
@@ -70,7 +66,7 @@ class Index extends BackendBaseActionIndex
             'form-control danger'
         );
         $ddmMassAction->setOptionAttributes('delete', array(
-            'data-target' => '#confirmDelete'
+            'data-target' => '#confirmDelete',
         ));
         $this->dataGrid->setMassAction($ddmMassAction);
 

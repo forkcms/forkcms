@@ -13,9 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the profiles module.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Davy Van Vooren <davy.vanvooren@netlash.com>
  */
 class Installer extends ModuleInstaller
 {
@@ -78,7 +75,7 @@ class Installer extends ModuleInstaller
                  'profiles/edit',
                  'profiles/add_profile_group',
                  'profiles/edit_profile_group',
-                 'profiles/import'
+                 'profiles/import',
             )
         );
         $this->setNavigation(
@@ -87,7 +84,7 @@ class Installer extends ModuleInstaller
             'profiles/groups',
             array(
                  'profiles/add_group',
-                 'profiles/edit_group'
+                 'profiles/edit_group',
             )
         );
 
@@ -161,7 +158,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Activate',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $activateId, 'position' => 'main'),
@@ -173,7 +170,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Forgot password',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $forgotPasswordId, 'position' => 'main'),
@@ -185,7 +182,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Reset password',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $resetPasswordId, 'position' => 'main'),
@@ -197,7 +194,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Resend activation e-mail',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $resendActivationId, 'position' => 'main'),
@@ -209,7 +206,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Login',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $loginId, 'position' => 'main'),
@@ -221,7 +218,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Register',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $registerId, 'position' => 'main'),
@@ -233,7 +230,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Logout',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $logoutId, 'position' => 'main'),
@@ -245,7 +242,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Profile',
                          'type' => 'root',
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $indexId, 'position' => 'main'),
@@ -257,7 +254,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Profile settings',
                          'parent_id' => $indexPageId,
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $settingsId, 'position' => 'main'),
@@ -269,7 +266,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Change email',
                          'parent_id' => $indexPageId,
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $changeEmailId, 'position' => 'main'),
@@ -281,7 +278,7 @@ class Installer extends ModuleInstaller
                     array(
                          'title' => 'Change password',
                          'parent_id' => $indexPageId,
-                         'language' => $language
+                         'language' => $language,
                     ),
                     null,
                     array('extra_id' => $changePasswordId, 'position' => 'main'),

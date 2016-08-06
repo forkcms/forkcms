@@ -13,10 +13,6 @@ use Common\Uri as CommonUri;
 
 /**
  * Frontend RSS class.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class Rss extends \SpoonFeedRSS
 {
@@ -90,7 +86,7 @@ class Rss extends \SpoonFeedRSS
             array(
                 'utm_source' => 'feed',
                 'utm_medium' => 'rss',
-                'utm_campaign' => CommonUri::getUrl($this->getTitle())
+                'utm_campaign' => CommonUri::getUrl($this->getTitle()),
             )
         );
 

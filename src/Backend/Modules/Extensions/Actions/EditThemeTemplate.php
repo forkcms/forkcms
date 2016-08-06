@@ -19,11 +19,6 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the edit-action, it will display a form to edit an item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class EditThemeTemplate extends BackendBaseActionEdit
 {
@@ -168,7 +163,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // create array
         $defaultExtras = array(
             '' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
-            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets
+            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
         );
 
         // create default position field
@@ -201,11 +196,11 @@ class EditThemeTemplate extends BackendBaseActionEdit
                     $extras[] = (int) $_POST['type_' . $i . '_' . $j];
 
                     // increment counter; go fetch next block
-                    $j++;
+                    ++$j;
                 }
 
                 // increment counter; go fetch next position
-                $i++;
+                ++$i;
 
                 // position already exists -> error
                 if (in_array($name, $this->names)) {

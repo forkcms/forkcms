@@ -16,8 +16,6 @@ use Common\Core\Twig\Extensions\BaseTwigModifiers;
 
 /**
  * Contains all Frontend-related custom modifiers
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class TemplateModifiers extends BaseTwigModifiers
 {
@@ -27,6 +25,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param float $number   The number to format.
      * @param int   $decimals The number of decimals.
+     *
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -36,12 +35,14 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Format a number
-     *    syntax: {{ $string|formatnumber }}
+     *    syntax: {{ $string|formatnumber($decimals) }}
      *
      * @param float $string The number to format.
+     * @param int $decimals The number of decimals
+     *
      * @return string
      */
-    public static function formatNumber($string)
+    public static function formatNumber($string, $decimals = null)
     {
         // redefine
         $string = (float) $string;
@@ -50,7 +51,9 @@ class TemplateModifiers extends BaseTwigModifiers
         $format = FrontendModel::get('fork.settings')->get('Core', 'number_format');
 
         // get amount of decimals
-        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
+        if ($decimals === null) {
+            $decimals = (mb_strpos($string, '.') ? mb_strlen(mb_substr($string, mb_strpos($string, '.') + 1)) : 0);
+        }
 
         // get separators
         $separators = explode('_', $format);
@@ -71,6 +74,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param int    $depth      The maximum depth that has to be build.
      * @param string $excludeIds Which pageIds should be excluded (split them by -).
      * @param string $template        The template that will be used.
+     *
      * @return string
      */
     public static function getNavigation(
@@ -86,7 +90,12 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // get HTML
-        $return = (string) Navigation::getNavigationHtml($type, $parentId, $depth, $excludeIds, $template);
+        try {
+            $return = (string) Navigation::getNavigationHTML($type, $parentId, $depth, $excludeIds, $template);
+        } catch (Exception $e) {
+            // if something goes wrong just return as fallback
+            return '';
+        }
 
         // return the var
         if ($return != '') {
@@ -94,7 +103,7 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // fallback
-        return null;
+        return '';
     }
 
     /**
@@ -132,6 +141,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param int    $pageId   The id of the page to build the URL for.
      * @param string $field    The field to get.
      * @param string $language The language to use, if not provided we will use the loaded language.
+     *
      * @return string
      */
     public static function getPageInfo($pageId, $field = 'title', $language = null)
@@ -180,6 +190,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param int    $endDepth   The maximum depth that has to be build.
      * @param string $excludeIds Which pageIds should be excluded (split them by -).
      * @param string $template        The template that will be used.
+     *
      * @return string
      */
     public static function getSubNavigation(
@@ -217,7 +228,7 @@ class TemplateModifiers extends BaseTwigModifiers
         $parentURL = '';
 
         // build url
-        for ($i = 0; $i < $startDepth - 1; $i++) {
+        for ($i = 0; $i < $startDepth - 1; ++$i) {
             $parentURL .= $chunks[$i] . '/';
         }
 
@@ -226,7 +237,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
         try {
             // get HTML
-            $return = (string) Navigation::getNavigationHtml(
+            $return = (string) Navigation::getNavigationHTML(
                 $type,
                 $parentID,
                 $endDepth,
@@ -243,7 +254,7 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // fallback
-        return null;
+        return;
     }
 
     /**
@@ -252,6 +263,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param int    $pageId   The id of the page to build the URL for.
      * @param string $language The language to use, if not provided we will use the loaded language.
+     *
      * @return string
      */
     public static function getURL($pageId, $language = null)
@@ -268,6 +280,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param string $module   The module wherefore the URL should be build.
      * @param string $action   A specific action wherefore the URL should be build, otherwise the default will be used.
      * @param string $language The language to use, if not provided we will use the loaded language.
+     *
      * @return string
      */
     public static function getURLForBlock($module, $action = null, $language = null)
@@ -284,6 +297,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param int    $extraId  The id of the extra.
      * @param string $language The language to use, if not provided we will use the loaded language.
+     *
      * @return string
      */
     public static function getURLForExtraId($extraId, $language = null)
@@ -329,7 +343,7 @@ class TemplateModifiers extends BaseTwigModifiers
                 throw $e;
             }
 
-            return null;
+            return;
         }
     }
 
@@ -339,6 +353,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param string $string  The variable
      * @param string $name The name of the setting
+     *
      * @return string
      */
     public static function profileSetting($string, $name)
@@ -368,6 +383,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param string $string     The string passed from the template.
      * @param string $setting The name of the setting you want.
      * @param int    $userId  The userId, if not set by $string.
+     *
      * @return string
      */
     public static function userSetting($string = null, $setting, $userId = null)

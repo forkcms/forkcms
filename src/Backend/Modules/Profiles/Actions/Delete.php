@@ -15,8 +15,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This action will delete or restore a profile.
- *
- * @author Lester Lievens <lester@netlash.com>
  */
 class Delete extends BackendBaseActionDelete
 {

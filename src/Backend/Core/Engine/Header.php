@@ -11,15 +11,11 @@ namespace Backend\Core\Engine;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use MatthiasMullie\Minify;
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Header extends Base\Object
 {
@@ -223,6 +219,7 @@ class Header extends Base\Object
      * Minify a CSS-file
      *
      * @param string $file The file to be minified.
+     *
      * @return string
      */
     private function minifyCSS($file)
@@ -246,6 +243,7 @@ class Header extends Base\Object
      * Minify a JS-file
      *
      * @param string $file The file to be minified.
+     *
      * @return string
      */
     private function minifyJS($file)
@@ -330,7 +328,7 @@ class Header extends Base\Object
                 '/src/Backend/Core/Js/jquery/jquery.backend.js',
                 '/src/Backend/Core/Js/ckeditor/ckeditor.js',
                 '/src/Backend/Core/Js/ckeditor/adapters/jquery.js',
-                '/src/Backend/Core/Js/ckfinder/ckfinder.js'
+                '/src/Backend/Core/Js/ckfinder/ckfinder.js',
             );
 
             foreach ($existingJSFiles as $file) {

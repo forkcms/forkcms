@@ -18,9 +18,6 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This action will update a translation using AJAX
- *
- * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class SaveTranslation extends BackendBaseAJAXAction
 {

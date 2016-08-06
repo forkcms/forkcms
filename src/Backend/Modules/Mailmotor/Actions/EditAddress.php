@@ -17,8 +17,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the edit-action, it will display a form to edit a subscriber
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class EditAddress extends BackendBaseActionEdit
 {
@@ -132,7 +130,7 @@ class EditAddress extends BackendBaseActionEdit
                 $this->customFields[$i]['name'],
                 $value
             );
-            $i++;
+            ++$i;
 
             // unset this field
             unset($this->customFields[$name]);

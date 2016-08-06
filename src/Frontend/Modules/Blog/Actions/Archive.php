@@ -11,14 +11,11 @@ namespace Frontend\Modules\Blog\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is the archive-action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Archive extends FrontendBaseBlock
 {
@@ -54,7 +51,7 @@ class Archive extends FrontendBaseBlock
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**
@@ -200,7 +197,7 @@ class Archive extends FrontendBaseBlock
                  'start_date' => $this->startDate,
                  'end_date' => $this->endDate,
                  'year' => $this->year,
-                 'month' => $this->month
+                 'month' => $this->month,
             )
         );
 

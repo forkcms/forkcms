@@ -7,7 +7,6 @@ use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
@@ -15,10 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This is the form widget.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class Form extends FrontendBaseWidget
 {
@@ -112,8 +107,7 @@ class Form extends FrontendBaseWidget
         $this->loadData();
 
         // success message
-        if (
-            $this->URL->hasParameter('identifier')
+        if ($this->URL->hasParameter('identifier')
             && $this->URL->getParameter('identifier') == $this->item['identifier']
         ) {
             $this->parseSuccessMessage();
@@ -123,10 +117,6 @@ class Form extends FrontendBaseWidget
             $this->validateForm();
             $this->parse();
         }
-
-        return $this->tpl->getContent(
-            FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Widgets/' . $this->getAction() . '.html.twig'
-        );
     }
 
     /**
@@ -220,6 +210,9 @@ class Form extends FrontendBaseWidget
                     if (isset($field['validations']['email'])) {
                         $txt->setAttribute('type', 'email');
                     }
+                    if ($item['placeholder']) {
+                        $txt->setAttribute('placeholder', $item['placeholder']);
+                    }
 
                     // get content
                     $item['html'] = $txt->parse();
@@ -254,7 +247,7 @@ class Form extends FrontendBaseWidget
                                 'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
                                 'type' => 'date',
-                                'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : '')
+                                'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : ''),
                             )
                         );
                     } else {
@@ -277,6 +270,9 @@ class Form extends FrontendBaseWidget
                     if ($item['required']) {
                         $txt->setAttribute('required', null);
                     }
+                    if ($item['placeholder']) {
+                        $txt->setAttribute('placeholder', $item['placeholder']);
+                    }
 
                     // get content
                     $item['html'] = $txt->parse();
@@ -295,23 +291,6 @@ class Form extends FrontendBaseWidget
     }
 
     /**
-     * Load the template.
-     *
-     * We create a new FrontendTemplate because we could have multiple form widgets on 1 page.
-     * Every form needs to have its own scope so error messages stay within the current scope.
-     * (Without an own scope the successMessage would show in all forms instead of just 1 form.)
-     *
-     * @param string $path Unused parameter but needed because parent function uses it.
-     */
-    protected function loadTemplate($path = null)
-    {
-        // spoon needs a new template Object
-        if ($this->tpl->getTemplateType() == 'spoon') {
-            $this->tpl = new FrontendTemplate(false);
-        }
-    }
-
-    /**
      * Parse.
      */
     private function parse()
@@ -320,6 +299,7 @@ class Form extends FrontendBaseWidget
         $formName = 'form' . $this->item['id'];
         $this->tpl->assign('formName', $formName);
         $this->tpl->assign('formAction', $this->createAction() . '#' . $formName);
+        $this->tpl->assign('successMessage', false);
 
         // got fields
         if (!empty($this->fieldsHTML)) {
@@ -510,7 +490,7 @@ class Form extends FrontendBaseWidget
                         'data_id' => $dataId,
                         'data' => $data,
                         'fields' => $fields,
-                        'visitorId' => FrontendModel::getVisitorId()
+                        'visitorId' => FrontendModel::getVisitorId(),
                     )
                 );
 

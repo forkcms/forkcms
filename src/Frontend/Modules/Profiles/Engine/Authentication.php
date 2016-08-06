@@ -16,10 +16,6 @@ use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
 
 /**
  * Profile authentication functions.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jan Moesen <jan.moesen@netlash.com>
  */
 class Authentication
 {
@@ -82,6 +78,7 @@ class Authentication
      *
      * @param  string $email    Profile email address.
      * @param  string $password Profile password.
+     *
      * @return string One of the FrontendProfilesAuthentication::LOGIN_* constants.
      */
     public static function getLoginStatus($email, $password)
@@ -193,7 +190,7 @@ class Authentication
                     array(
                         'session_id' => \SpoonSession::getSessionId(),
                         'secret_key' => $profileSecret,
-                        'date' => FrontendModel::getUTCDate()
+                        'date' => FrontendModel::getUTCDate(),
                     ),
                     'secret_key = ?',
                     $secret
@@ -228,6 +225,7 @@ class Authentication
      *
      * @param  int  $profileId Login the profile with this id in.
      * @param  bool $remember  Should we set a cookie for later?
+     *
      * @return bool
      */
     public static function login($profileId, $remember = false)
@@ -269,7 +267,7 @@ class Authentication
                 'profile_id' => $profileId,
                 'session_id' => \SpoonSession::getSessionId(),
                 'secret_key' => $secretKey,
-                'date' => FrontendModel::getUTCDate()
+                'date' => FrontendModel::getUTCDate(),
             )
         );
 

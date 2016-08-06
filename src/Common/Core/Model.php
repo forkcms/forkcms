@@ -16,8 +16,6 @@ require_once __DIR__ . '/../../../app/BaseModel.php';
 
 /**
  * This class will initiate the frontend-application
- *
- * @author Ghazi Triki <ghazi.triki@inhanx.com>
  */
 class Model extends \BaseModel
 {
@@ -32,6 +30,7 @@ class Model extends \BaseModel
      * Add a number to the string
      *
      * @param string $string The string where the number will be appended to.
+     *
      * @return string
      */
     public static function addNumber($string)
@@ -67,6 +66,7 @@ class Model extends \BaseModel
      * @param int  $length           The maximum length for the password to generate.
      * @param bool $uppercaseAllowed Are uppercase letters allowed?
      * @param bool $lowercaseAllowed Are lowercase letters allowed?
+     *
      * @return string
      */
     public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
@@ -101,7 +101,7 @@ class Model extends \BaseModel
             'th',
             'ch',
             'ph',
-            'st'
+            'st',
         );
 
         // init vars
@@ -111,13 +111,13 @@ class Model extends \BaseModel
         $tmp = '';
 
         // create temporary pass
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             $tmp .= ($consonants[rand(0, $consonantsCount - 1)] .
                 $vowels[rand(0, $vowelsCount - 1)]);
         }
 
         // reformat the pass
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             if (rand(0, 1) == 1) {
                 $pass .= mb_strtoupper(mb_substr($tmp, $i, 1));
             } else {
@@ -177,6 +177,7 @@ class Model extends \BaseModel
      *
      * @param string $path          The path
      * @param bool   $includeSource Should the source-folder be included in the return-array.
+     *
      * @return array
      */
     public static function getThumbnailFolders($path, $includeSource = false)
@@ -192,7 +193,7 @@ class Model extends \BaseModel
             $finder->name('source');
         }
 
-        foreach ($finder->directories()->in($path) as $directory) {
+        foreach ($finder->directories()->in($path)->depth('== 0') as $directory) {
             $chunks = explode('x', $directory->getBasename(), 2);
             if (count($chunks) != 2 && !$includeSource) {
                 continue;
@@ -224,6 +225,7 @@ class Model extends \BaseModel
      *
      * @param string $format    The format to return the timestamp in. Default is MySQL datetime format.
      * @param int    $timestamp The timestamp to use, if not provided the current time will be used.
+     *
      * @return string
      */
     public static function getUTCDate($format = null, $timestamp = null)
@@ -241,8 +243,10 @@ class Model extends \BaseModel
      *
      * @param \SpoonFormDate $date An instance of \SpoonFormDate.
      * @param \SpoonFormTime $time An instance of \SpoonFormTime.
-     * @return int
+     *
      * @throws \Exception If provided $date, $time or both are invalid
+     *
+     * @return int
      */
     public static function getUTCTimestamp(\SpoonFormDate $date, \SpoonFormTime $time = null)
     {
@@ -291,7 +295,6 @@ class Model extends \BaseModel
         return self::$modules;
     }
 
-
     /**
      * Subscribe to an event, when the subscription already exists, the callback will be updated.
      *
@@ -299,6 +302,7 @@ class Model extends \BaseModel
      * @param string $eventName   The name of the event.
      * @param string $module      The module that subscribes to the event.
      * @param mixed  $callback    The callback that should be executed when the event is triggered.
+     *
      * @throws \Exception          When the callback is invalid
      */
     public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
@@ -400,9 +404,9 @@ class Model extends \BaseModel
     {
         $fs = new Filesystem();
         // is the queue already running?
-        if ($fs->exists(BACKEND_CACHE_PATH . '/Hooks/pid')) {
+        if ($fs->exists(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid')) {
             // get the pid
-            $pid = trim(file_get_contents(BACKEND_CACHE_PATH . '/Hooks/pid'));
+            $pid = trim(file_get_contents(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid'));
 
             // running on windows?
             if (mb_strtolower(mb_substr(php_uname('s'), 0, 3)) == 'win') {
@@ -412,7 +416,7 @@ class Model extends \BaseModel
                 // validate output
                 if ($output == '' || $output === false) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                    $fs->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -425,7 +429,7 @@ class Model extends \BaseModel
                 // validate output
                 if ($output === false) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                    $fs->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -435,7 +439,7 @@ class Model extends \BaseModel
                 // check if the process is still running, by checking the proc folder
                 if (!$fs->exists('/proc/' . $pid)) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                    $fs->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;

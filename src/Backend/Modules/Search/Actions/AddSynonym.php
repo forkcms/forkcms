@@ -17,8 +17,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the add-action, it will display a form to create a new synonym
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class AddSynonym extends BackendBaseActionAdd
 {

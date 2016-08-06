@@ -19,9 +19,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the comments-action , it will display the overview of blog comments
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Comments extends BackendBaseActionIndex
 {
@@ -41,6 +38,7 @@ class Comments extends BackendBaseActionIndex
      * @param string $title The title for the blogarticle.
      * @param string $URL The URL for the blogarticle.
      * @param int $id The id of the comment.
+     *
      * @return string
      */
     public static function addPostData($text, $title, $URL, $id)
@@ -85,7 +83,7 @@ class Comments extends BackendBaseActionIndex
         // header labels
         $this->dgPublished->setHeaderLabels(array(
             'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
-            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))
+            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
         ));
 
         // add the multicheckbox column
@@ -159,7 +157,6 @@ class Comments extends BackendBaseActionIndex
             );
         }
 
-
         /*
          * DataGrid for the comments that are awaiting moderation.
          */
@@ -179,7 +176,7 @@ class Comments extends BackendBaseActionIndex
         // header labels
         $this->dgModeration->setHeaderLabels(array(
             'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
-            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))
+            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
         ));
 
         // add the multicheckbox column
@@ -253,7 +250,6 @@ class Comments extends BackendBaseActionIndex
             );
         }
 
-
         /*
          * DataGrid for the comments that are marked as spam
          */
@@ -271,7 +267,7 @@ class Comments extends BackendBaseActionIndex
         // header labels
         $this->dgSpam->setHeaderLabels(array(
             'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
-            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))
+            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
         ));
 
         // add the multicheckbox column

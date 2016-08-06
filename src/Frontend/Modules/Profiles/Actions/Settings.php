@@ -21,9 +21,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * Change the settings for the current logged in profile.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Settings extends FrontendBaseBlock
 {
@@ -83,7 +80,7 @@ class Settings extends FrontendBaseBlock
         // gender dropdown values
         $genderValues = array(
             'male' => \SpoonFilter::ucfirst(FL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(FL::getLabel('Female'))
+            'female' => \SpoonFilter::ucfirst(FL::getLabel('Female')),
         );
 
         // birthdate dropdown values

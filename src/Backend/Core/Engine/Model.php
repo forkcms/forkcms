@@ -19,10 +19,6 @@ use Frontend\Core\Engine\Language as FrontendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model extends \Common\Core\Model
 {
@@ -57,7 +53,7 @@ class Model extends \Common\Core\Model
                     'message' => sprintf(
                         Language::err('ForkAPIKeys'),
                         self::createURLForAction('Index', 'Settings')
-                    )
+                    ),
                 );
             }
         }
@@ -80,9 +76,9 @@ class Model extends \Common\Core\Model
      * @param array  $parameters GET-parameters to use.
      * @param bool   $urlencode  Should the parameters be urlencoded?
      *
-     * @return string
-     *
      * @throws \Exception If $action, $module or both are not set
+     *
+     * @return string
      */
     public static function createURLForAction(
         $action = null,
@@ -144,7 +140,7 @@ class Model extends \Common\Core\Model
                 $queryString .= '&' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
             }
 
-            $i++;
+            ++$i;
         }
 
         // build the URL and return it
@@ -152,8 +148,8 @@ class Model extends \Common\Core\Model
             'backend',
             array(
                 '_locale' => $language,
-                'module'  => $module,
-                'action'  => $action
+                'module' => $module,
+                'action' => $action,
             )
         ) . $queryString;
     }
@@ -192,11 +188,13 @@ class Model extends \Common\Core\Model
         foreach ($extras as $extra) {
             $deleteExtra = true;
 
-            // match by parameters
-            if ($data !== null && $extra['data'] !== null) {
-                $extraData = (array) unserialize($extra['data']);
+            // get extra data
+            $extraData = $extra['data'] !== null ? (array) unserialize($extra['data']) : null;
 
-                // do not delete extra if parameters do not match
+            // if we have $data parameter set and $extraData not null we should not delete such extra
+            if (isset($data) && !isset($extraData)) {
+                $deleteExtra = false;
+            } elseif (isset($data) && isset($extraData)) {
                 foreach ($data as $dataKey => $dataValue) {
                     if (isset($extraData[$dataKey]) && $dataValue != $extraData[$dataKey]) {
                         $deleteExtra = false;
@@ -254,9 +252,6 @@ class Model extends \Common\Core\Model
         if (!empty($ids)) {
             // delete extras
             self::getContainer()->get('database')->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
-
-            // invalidate the cache for the module
-            self::invalidateFrontendCache((string) $module, Language::getWorkingLanguage());
         }
     }
 
@@ -291,6 +286,7 @@ class Model extends \Common\Core\Model
      * @param bool $lowercase Use alphanumeric lowercase characters.
      * @param bool $uppercase Use alphanumeric uppercase characters.
      * @param bool $special   Use special characters.
+     *
      * @return string
      */
     public static function generateRandomString(
@@ -318,7 +314,7 @@ class Model extends \Common\Core\Model
         }
 
         // get random characters
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             // random index
             $index = mt_rand(0, mb_strlen($characters));
 
@@ -377,6 +373,7 @@ class Model extends \Common\Core\Model
      * Get extras
      *
      * @param array $ids The ids of the modules_extras to get.
+     *
      * @return array
      */
     public static function getExtras($ids)
@@ -408,6 +405,7 @@ class Model extends \Common\Core\Model
      * @param string $key    The key of the data you want to check the value for.
      * @param string $value  The value to check the key for.
      * @param string $action In case you want to search for a certain action.
+     *
      * @return array                    The ids for the extras.
      */
     public static function getExtrasForData($module, $key, $value, $action = null)
@@ -455,6 +453,7 @@ class Model extends \Common\Core\Model
      * Get the page-keys
      *
      * @param string $language The language to use, if not provided we will use the working language.
+     *
      * @return array
      */
     public static function getKeys($language = null)
@@ -462,6 +461,7 @@ class Model extends \Common\Core\Model
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
         $cacheBuilder = BackendPagesModel::getCacheBuilder();
+
         return $cacheBuilder->getKeys($language);
     }
 
@@ -469,6 +469,7 @@ class Model extends \Common\Core\Model
      * Get the modules that are available on the filesystem
      *
      * @param bool $includeCore Should core be included as a module?
+     *
      * @return array
      */
     public static function getModulesOnFilesystem($includeCore = true)
@@ -510,6 +511,7 @@ class Model extends \Common\Core\Model
      * Get the navigation-items
      *
      * @param string $language The language to use, if not provided we will use the working language.
+     *
      * @return array
      */
     public static function getNavigation($language = null)
@@ -517,6 +519,7 @@ class Model extends \Common\Core\Model
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
         $cacheBuilder = BackendPagesModel::getCacheBuilder();
+
         return $cacheBuilder->getNavigation($language);
     }
 
@@ -578,6 +581,7 @@ class Model extends \Common\Core\Model
      *
      * @param int    $pageId   The id of the page to get the URL for.
      * @param string $language The language to use, if not provided we will use the working language.
+     *
      * @return string
      */
     public static function getURL($pageId, $language = null)
@@ -608,6 +612,7 @@ class Model extends \Common\Core\Model
      * @param string $module   The module to get the URL for.
      * @param string $action   The action to get the URL for.
      * @param string $language The language to use, if not provided we will use the working language.
+     *
      * @return string
      */
     public static function getURLForBlock($module, $action = null, $language = null)
@@ -643,7 +648,7 @@ class Model extends \Common\Core\Model
 
         // still no page id?
         if ($pageIdForURL === null) {
-            return self::getURL(404);
+            return self::getURL(404, $language);
         }
 
         $URL = self::getURL($pageIdForURL, $language);
@@ -674,15 +679,15 @@ class Model extends \Common\Core\Model
         }
 
         $fs = new Filesystem();
-        foreach (array_keys($fileSizes) as $sizeDir) {
+        foreach ($fileSizes as $sizeDir) {
             $fullPath = FRONTEND_FILES_PATH . '/' . $module .
-                        (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
+                        (empty($subDirectory) ? '/' : '/' . $subDirectory . '/') . $sizeDir . '/' . $filename;
             if (is_file($fullPath)) {
                 $fs->remove($fullPath);
             }
         }
         $fullPath = FRONTEND_FILES_PATH . '/' . $module .
-                    (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
+                    (empty($subDirectory) ? '/' : '/' . $subDirectory . '/') . 'source/' . $filename;
         if (is_file($fullPath)) {
             $fs->remove($fullPath);
         }
@@ -698,8 +703,10 @@ class Model extends \Common\Core\Model
      * @param  array     $data           Containing extra variables.
      * @param  bool      $hidden         Should this extra be visible in frontend or not?
      * @param  int       $sequence
-     * @return int       The new extra id
+     *
      * @throws Exception If extra type is not allowed
+     *
+     * @return int       The new extra id
      */
     public static function insertExtra($type, $module, $action = null, $label = null, $data = null, $hidden = false, $sequence = null)
     {
@@ -748,7 +755,7 @@ class Model extends \Common\Core\Model
             'action' => $action,
             'data' => serialize((array) $data),
             'hidden' => ($hidden) ? 'Y' : 'N',
-            'sequence' => $sequence
+            'sequence' => $sequence,
         );
 
         // return id for inserted extra
@@ -756,52 +763,27 @@ class Model extends \Common\Core\Model
     }
 
     /**
-     * Invalidate cache
+     * @deprecated: twig doesn't contain this same type of caching out of the box.
+     * Use https://github.com/asm89/twig-cache-extension instead
      *
      * @param string $module   A specific module to clear the cache for.
      * @param string $language The language to use.
      */
     public static function invalidateFrontendCache($module = null, $language = null)
     {
-        $module = ($module !== null) ? (string) $module : null;
-        $language = ($language !== null) ? (string) $language : null;
-
-        // get cache path
-        $path = FRONTEND_CACHE_PATH . '/CachedTemplates';
-
-        if (is_dir($path)) {
-            // build regular expression
-            if ($module !== null) {
-                if ($language === null) {
-                    $regexp = '/' . '(.*)' . $module . '(.*)_cache\.html.twig/i';
-                } else {
-                    $regexp = '/' . $language . '_' . $module . '(.*)_cache\.html.twig/i';
-                }
-            } else {
-                if ($language === null) {
-                    $regexp = '/(.*)_cache\.html.twig/i';
-                } else {
-                    $regexp = '/' . $language . '_(.*)_cache\.html.twig/i';
-                }
-            }
-
-            $finder = new Finder();
-            $fs = new Filesystem();
-            foreach ($finder->files()->name($regexp)->in($path) as $file) {
-                $fs->remove($file->getRealPath());
-            }
-        }
-
-        // clear the php5.5+ opcode cache
-        if (function_exists('opcache_reset')) {
-            opcache_reset();
-        }
+        trigger_error(
+            'invalidateFrontendCache is deprecated since twig does not use the
+            same caching mechanisme. You can use https://github.com/asm89/twig-cache-extension
+            if you want a similar type of template cache.',
+            E_USER_DEPRECATED
+        );
     }
 
     /**
      * Is module installed?
      *
      * @param string $module
+     *
      * @return bool
      */
     public static function isModuleInstalled($module)
@@ -816,6 +798,7 @@ class Model extends \Common\Core\Model
      *
      * @param string $pageOrFeedURL The page/feed that has changed.
      * @param string $category      An optional category for the site.
+     *
      * @return bool If everything went fne true will, otherwise false.
      */
     public static function ping($pageOrFeedURL = null, $category = null)
@@ -932,6 +915,7 @@ class Model extends \Common\Core\Model
      * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
      * @param string $referrer  The content of the HTTP_REFERER header should be sent here.
      * @param array  $others    Other data (the variables from $_SERVER).
+     *
      * @return bool If everything went fine, true will be returned, otherwise an exception will be triggered.
      */
     public static function submitHam(
@@ -994,6 +978,7 @@ class Model extends \Common\Core\Model
      * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
      * @param string $referrer  The content of the HTTP_REFERER header should be sent here.
      * @param array  $others    Other data (the variables from $_SERVER).
+     *
      * @return bool If everything went fine true will be returned, otherwise an exception will be triggered.
      */
     public static function submitSpam(
@@ -1049,6 +1034,7 @@ class Model extends \Common\Core\Model
      * @param int    $id    The id for the extra.
      * @param string $key   The key you want to update.
      * @param string $value The new value.
+     *
      * @throws Exception If key parameter is not allowed
      */
     public static function updateExtra($id, $key, $value)

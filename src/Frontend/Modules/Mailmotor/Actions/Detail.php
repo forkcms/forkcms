@@ -9,8 +9,6 @@ use Frontend\Modules\Mailmotor\Engine\MailingBodyBuilder;
 
 /**
  * This is the detail-action
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Detail extends FrontendBaseBlock
 {
@@ -69,7 +67,7 @@ class Detail extends FrontendBaseBlock
         $replacements = array(
             '{$siteURL}' => SITE_URL,
             'src="/"' => 'src="' . SITE_URL . '/',
-            '{$css}' => $template['css']
+            '{$css}' => $template['css'],
         );
 
         // build the mailing body

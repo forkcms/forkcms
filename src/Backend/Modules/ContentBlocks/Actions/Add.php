@@ -18,10 +18,6 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Add extends BackendBaseActionAdd
 {

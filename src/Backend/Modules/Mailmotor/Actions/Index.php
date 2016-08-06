@@ -19,8 +19,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This is the index-action (default), it will display the overview of mailings
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -441,6 +439,7 @@ class Index extends BackendBaseActionIndex
      *
      * @param int    $id   The ID of the campaign.
      * @param string $name The name of the campaign.
+     *
      * @return string
      */
     public static function setCampaignLink($id, $name)

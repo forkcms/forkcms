@@ -1,64 +1,62 @@
 {% include "Core/Layout/Templates/Head.html.twig" %}
 
 <body class="{{ LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
-	{% include "Core/Layout/Templates/Cookies.html.twig" %}
+{% include "Core/Layout/Templates/Cookies.html.twig" %}
 
-	<div id="container">
-		<header id="header">
-			{# Logo #}
-			<h2>
-				<a href="/">{{ siteTitle }}</a>
-			</h2>
+<div id="container">
+  <header id="header">
+    {# Logo #}
+    <h2>
+      <a href="/">{{ siteTitle }}</a>
+    </h2>
 
-			{# Language #}
-			<div>
-				{% include "Core/Layout/Templates/Languages.html.twig" %}
-			</div>
-		</header>
+    {# Language #}
+    <div>
+      {% include "Core/Layout/Templates/Languages.html.twig" %}
+    </div>
+  </header>
 
-		{# Navigation #}
-		<nav>
-			{{ getnavigation('page', 0, 1) }}
-		</nav>
+  {# Navigation #}
+  <nav>
+    {{ getnavigation('page', 0, 1) }}
+  </nav>
 
-		<section>
-			{# Breadcrumb #}
-			{% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
+  <section>
+    {# Breadcrumb #}
+    {% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
 
-			{# Page title #}
-			{% if not hideContentTitle %}
-				<header class="mainTitle">
-					<h1>{{ page.title }}</h1>
-				</header>
-			{% endif %}
+    {# Page title #}
+    {% if not hideContentTitle %}
+      <header class="mainTitle">
+        <h1>{{ page.title }}</h1>
+      </header>
+    {% endif %}
 
-				{# Main positions #}
-				{% for main in positions.main %}
-					{% if main.html %}
-						<section class="mod">
-							<div class="inner">
-								<div class="bd content">
-									{{ main.html|raw }}
-								</div>
-							</div>
-						</section>
-					{% elseif main.include_path %}
-						{% include main.include_path %}
-					{% endif %}
-				{% endfor %}
-		</section>
+    {# Main positions #}
+    {% for main in positions.main %}
+      {% if main.html %}
+        <section class="mod">
+          <div class="inner">
+            <div class="bd content">
+              {{ main.html|raw }}
+            </div>
+          </div>
+        </section>
+      {% endif %}
+    {% endfor %}
+  </section>
 
-		<footer>
-			{% include "Core/Layout/Templates/Footer.html.twig" %}
-		</footer>
-	</div>
+  <footer>
+    {% include "Core/Layout/Templates/Footer.html.twig" %}
+  </footer>
+</div>
 
-	{# General Javascript #}
-	{% for js in jsFiles %}
-		<script src="{{ js.file }}"></script>
-	{% endfor %}
+{# General Javascript #}
+{% for js in jsFiles %}
+  <script src="{{ js.file }}"></script>
+{% endfor %}
 
-	{# Site wide HTML #}
-	{{ siteHTMLFooter|raw }}
+{# Site wide HTML #}
+{{ siteHTMLFooter|raw }}
 </body>
 </html>

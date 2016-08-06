@@ -14,17 +14,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Common\Cookie as CommonCookie;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 
 /**
  * Frontend page class, this class will handle everything on a page
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Page extends FrontendBaseObject
 {
@@ -155,7 +150,7 @@ class Page extends FrontendBaseObject
                  'COOKIE' => $_COOKIE,
                  'GET' => $_GET,
                  'POST' => $_POST,
-                 'SERVER' => $_SERVER
+                 'SERVER' => $_SERVER,
             )
         );
     }
@@ -165,21 +160,9 @@ class Page extends FrontendBaseObject
      */
     public function display()
     {
-        // parse header
-        $this->header->parse();
-
-        // parse breadcrumb
-        $this->breadcrumb->parse();
-
-        // parse languages
-        $this->parseLanguages();
-
-        // parse footer
-        $this->footer->parse();
-
         // assign the id so we can use it as an option
-        $this->tpl->assign('isPage' . $this->pageId, true);
-        $this->tpl->assign('isChildOfPage' . $this->record['parent_id'], true);
+        $this->tpl->addGlobal('isPage' . $this->pageId, true);
+        $this->tpl->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
         // hide the cookiebar from within the code to prevent flickering
         $this->tpl->assign(
@@ -199,9 +182,21 @@ class Page extends FrontendBaseObject
             );
         }
 
+        // parse header
+        $this->header->parse();
+
+        // parse breadcrumb
+        $this->breadcrumb->parse();
+
+        // parse languages
+        $this->parseLanguages();
+
+        // parse footer
+        $this->footer->parse();
+
         // output
         return new Response(
-            $this->tpl->getContent($this->templatePath, false, true),
+            $this->tpl->getContent($this->templatePath),
             $this->statusCode
         );
     }
@@ -345,7 +340,7 @@ class Page extends FrontendBaseObject
 
             // assign
             if (count($languages) > 1) {
-                $this->tpl->assign('languages', $languages);
+                $this->tpl->addGlobal('languages', $languages);
             }
         }
     }
@@ -358,53 +353,52 @@ class Page extends FrontendBaseObject
         // init array to store parsed positions data
         $positions = array();
 
-        do {
-            $oldPositions = $positions;
+        // fetch variables from main template
+        $mainVariables = $this->tpl->getAssignedVariables();
 
-            // fetch variables from main template
-            $mainVariables = $this->tpl->getAssignedVariables();
+        // loop all positions
+        foreach ($this->record['positions'] as $position => $blocks) {
+            // loop all blocks in this position
+            foreach ($blocks as $i => $block) {
+                // check for extras that need to be reparsed
+                if (isset($block['extra'])) {
+                    $block['extra']->execute();
 
-            // loop all positions
-            foreach ($this->record['positions'] as $position => $blocks) {
-                // loop all blocks in this position
-                foreach ($blocks as $i => $block) {
-                    // check for extras that need to be reparsed
-                    if (isset($block['extra'])) {
-                        // fetch extra-specific variables
-                        if (isset($positions[$position][$i]['variables'])) {
-                            $extraVariables = $positions[$position][$i]['variables'];
-                        } else {
-                            $extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
-                        }
-
-                        // assign all main variables
-                        $block['extra']->getTemplate()->assignArray($mainVariables);
-
-                        // overwrite with all specific variables
-                        $block['extra']->getTemplate()->assignArray($extraVariables);
-
-                        // parse extra
-                        $positions[$position][$i] = array(
-                            'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
-                            'blockIsEditor' => false,
-                            'blockContent' => $block['extra']->getContent()
-                        );
-
-                        // Maintain backwards compatibility
-                        $positions[$position][$i]['blockIsHTML'] = $positions[$position][$i]['blockIsEditor'];
-
-                        if (empty($positions[$position][$i]['blockContent'])) {
-                            unset($positions[$position][$i]);
-                        }
+                    // fetch extra-specific variables
+                    if (isset($positions[$position][$i]['variables'])) {
+                        $extraVariables = $positions[$position][$i]['variables'];
                     } else {
-                        $positions[$position][$i] = $block;
+                        $extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
+                    }
+
+                    // assign all main variables
+                    $block['extra']->getTemplate()->assignArray($mainVariables);
+
+                    // overwrite with all specific variables
+                    $block['extra']->getTemplate()->assignArray($extraVariables);
+
+                    // parse extra
+                    $positions[$position][$i] = array(
+                        'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
+                        'blockIsEditor' => false,
+                        'html' => $block['extra']->getContent(),
+                    );
+
+                    // Maintain backwards compatibility
+                    $positions[$position][$i]['blockIsHTML'] = $positions[$position][$i]['blockIsEditor'];
+                } else {
+                    $positions[$position][$i] = $block;
+                    if (array_key_exists('blockContent', $block)) {
+                        $positions[$position][$i]['html'] = $block['blockContent'];
                     }
                 }
-
-                // assign position to template
-                $this->tpl->assign('position' . \SpoonFilter::ucfirst($position), $positions[$position]);
             }
-        } while ($oldPositions != $positions);
+
+            // assign position to template
+            $this->tpl->assign('position' . \SpoonFilter::ucfirst($position), $positions[$position]);
+        }
+
+        $this->tpl->assign('positions', $positions);
     }
 
     /**
@@ -415,22 +409,18 @@ class Page extends FrontendBaseObject
         // loop all extras
         foreach ($this->extras as $extra) {
             $this->getContainer()->get('logger')->info(
-                "Executing " . get_class($extra)
+                'Executing ' . get_class($extra)
                 . " '{$extra->getAction()}' for module '{$extra->getModule()}'."
             );
 
             // all extras extend FrontendBaseObject, which extends KernelLoader
             $extra->setKernel($this->getKernel());
-            $extra->execute();
 
             // overwrite the template
             if (is_callable(array($extra, 'getOverwrite')) && $extra->getOverwrite()
             ) {
                 $this->templatePath = $extra->getTemplatePath();
             }
-
-            // assign the variables from this extra to the main template
-            $this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
         }
     }
 
@@ -471,7 +461,7 @@ class Page extends FrontendBaseObject
         // assign content
         $pageInfo = Navigation::getPageInfo($this->record['id']);
         $this->record['has_children'] = $pageInfo['has_children'];
-        $this->tpl->assign('page', $this->record);
+        $this->tpl->addGlobal('page', $this->record);
 
         // set template path
         $this->templatePath = $this->record['template_path'];
@@ -519,7 +509,7 @@ class Page extends FrontendBaseObject
                     // the block only contains HTML
                     $block = array(
                         'blockIsEditor' => true,
-                        'blockContent' => $block['html']
+                        'blockContent' => $block['html'],
                     );
 
                     // Maintain backwards compatibility

@@ -11,9 +11,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the detail-action it will display the details of a module.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class DetailModule extends BackendBaseActionIndex
 {
@@ -153,7 +150,7 @@ class DetailModule extends BackendBaseActionIndex
         $this->tpl->assign('name', $this->currentModule);
         $this->tpl->assign('warnings', $this->warnings);
         $this->tpl->assign('information', $this->information);
-        $this->tpl->assign('showExtensionsInstallModule', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('InstallModule'));
+        $this->tpl->assign('showInstallButton', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('InstallModule'));
 
         // data grids
         $this->tpl->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);

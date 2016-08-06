@@ -19,8 +19,6 @@ use Backend\Modules\Blog\Engine\Model;
 
 /**
  * This import-action will let you import a wordpress blog
- *
- * @author Toon Daelman <toon@sumocoders.be>
  */
 class ImportWordpress extends BackendBaseActionEdit
 {
@@ -174,6 +172,7 @@ class ImportWordpress extends BackendBaseActionEdit
      * Import a blog post
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return bool
      */
     private function processPost($xml)
@@ -273,6 +272,7 @@ class ImportWordpress extends BackendBaseActionEdit
      * Import an attachment
      *
      * @param \SimpleXMLElement $xml
+     *
      * @return bool
      */
     private function processAttachment($xml)
@@ -322,6 +322,7 @@ class ImportWordpress extends BackendBaseActionEdit
      * If we find no matches, we'll assign to the main fork user.
      *
      * @param string $username The original user name
+     *
      * @return int
      */
     private function handleUser($username = '')
@@ -351,6 +352,7 @@ class ImportWordpress extends BackendBaseActionEdit
      *
      * @param string $text The post text
      * @param string $filter The text that needs to be in a url before we start replacing it.
+     *
      * @return string
      */
     private function handleUrls($text, $filter = '')
@@ -406,6 +408,7 @@ class ImportWordpress extends BackendBaseActionEdit
      * We'll check if the category exists in the fork blog module, and create it if it doesn't.
      *
      * @param string $category The post category
+     *
      * @return int
      */
     private function handleCategory($category = '')

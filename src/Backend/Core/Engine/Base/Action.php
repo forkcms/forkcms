@@ -9,19 +9,15 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Header;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Template;
 use Backend\Core\Engine\Url;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Frederik Heyninck <frederik@figure8.be>
- * @author Davy Hellemans <davy@spoon-library.com>
  */
 class Action extends Object
 {
@@ -42,7 +38,7 @@ class Action extends Object
     /**
      * A reference to the current template
      *
-     * @var Template
+     * @var TwigTemplate
      */
     public $tpl;
 
@@ -97,7 +93,7 @@ class Action extends Object
                 null,
                 null,
                 array(
-                    'error' => 'csrf'
+                    'error' => 'csrf',
                 )
             )
         );
@@ -223,6 +219,7 @@ class Action extends Object
      *                             string, array.
      * @param mixed  $defaultValue The value that should be returned if the key
      *                             is not available.
+     *
      * @return mixed
      */
     public function getParameter($key, $type = 'string', $defaultValue = null)

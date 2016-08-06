@@ -17,8 +17,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the settings-action, it will display a form to set general search settings
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Settings extends BackendBaseActionEdit
 {
@@ -116,7 +114,7 @@ class Settings extends BackendBaseActionEdit
                     'label' => $label,
                     'chk' => $this->frm->getField('search_' . $module)->parse(),
                     'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(),
-                    'txtError' => ''
+                    'txtError' => '',
                 );
             }
         }

@@ -21,19 +21,12 @@ FileETag MTime Size
 	RewriteRule .*\.md - [F]
 	RewriteRule app/logs - [F]
 	RewriteRule app/config - [F]
-	RewriteRule src/Frontend/Cache/CachedTemplates - [F]
 	RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
-	RewriteRule src/Frontend/Cache/Config - [F]
 	RewriteRule src/Frontend/Cache/Locale/.*\.php - [F]
-	RewriteRule src/Frontend/Cache/Logs - [F]
 	RewriteRule src/Frontend/Cache/Navigation/.*\.php - [F]
 	RewriteRule src/Frontend/Cache/Search - [F]
 	RewriteRule src/Backend/Cache/CompiledTemplates - [F]
-	RewriteRule src/Backend/Cache/Config - [F]
-	RewriteRule src/Backend/Cache/Cronjobs - [F]
 	RewriteRule src/Backend/Cache/Locale/.*\.php - [F]
-	RewriteRule src/Backend/Cache/Logs - [F]
-	RewriteRule src/Backend/Cache/Navigation - [F]
 
 	# one url to rule them all
 	# RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
@@ -57,7 +50,7 @@ FileETag MTime Size
 # file caching in browser
 <IfModule mod_expires.c>
 	ExpiresActive On
-	<FilesMatch "\.(ico|gif|jpe?g|png|svg|svgz|js|css|swf|ttf|otf|woff|eot)$">
+	<FilesMatch "\.(?i:ico|gif|jpe?g|png|svg|svgz|js|css|swf|ttf|otf|woff|eot)$">
 		ExpiresDefault "access plus 1 month"
 	</FilesMatch>
 </IfModule>

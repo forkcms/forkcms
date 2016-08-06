@@ -14,8 +14,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * Frontend Ical class.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendIcal extends \SpoonICal
 {
@@ -86,8 +84,6 @@ class FrontendIcal extends \SpoonICal
 
 /**
  * FrontendIcalItem, this is our extended version of SpoonIcalItemEvent
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendIcalEvent extends \SpoonICalEvent
 {
@@ -138,6 +134,7 @@ class FrontendIcalEvent extends \SpoonICalEvent
      * Process links, will prepend SITE_URL if needed and append UTM-parameters
      *
      * @param string $content The content to process.
+     *
      * @return string
      */
     public function processLinks($content)

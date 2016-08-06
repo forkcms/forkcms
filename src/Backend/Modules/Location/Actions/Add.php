@@ -18,8 +18,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Add extends BackendBaseActionAdd
 {

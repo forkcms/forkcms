@@ -11,8 +11,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the detail-action it will display the details of a theme.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class DetailTheme extends BackendBaseActionIndex
 {
@@ -91,7 +89,7 @@ class DetailTheme extends BackendBaseActionIndex
                 // empty data (nothing useful)
                 if (empty($this->information)) {
                     $this->warnings[] = array(
-                        'message' => BL::getMessage('InformationFileIsEmpty')
+                        'message' => BL::getMessage('InformationFileIsEmpty'),
                     );
                 }
             } catch (\Exception $e) {

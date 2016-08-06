@@ -11,15 +11,11 @@ namespace Frontend;
 
 /**
  * This class will initiate the frontend-application
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Init extends \Common\Core\Init
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected $allowedTypes = array('Frontend', 'FrontendAjax');
 

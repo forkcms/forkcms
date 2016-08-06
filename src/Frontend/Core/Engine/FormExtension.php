@@ -3,7 +3,6 @@
 namespace Frontend\Core\Engine;
 
 use Twig_Extension;
-use Twig_SimpleFunction;
 
 /**
  * Keeps the state of a form between opening and closing the tag.
@@ -11,8 +10,6 @@ use Twig_SimpleFunction;
  *
  * In the future we could remove it and use stack {push,popp}ing, but I'm hoping
  * we're using symfony forms or some other more OO form library.
- *
- * @author <per@wijs.be>
  */
 class FormState
 {

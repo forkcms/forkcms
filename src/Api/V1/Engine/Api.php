@@ -17,10 +17,6 @@ use Backend\Core\Engine\User as BackendUser;
 
 /**
  * This class defines the API.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Api extends \KernelLoader implements \ApplicationInterface
 {

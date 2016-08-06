@@ -17,8 +17,6 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This action will delete a translation
- *
- * @author Lowie Benoot <lowiebenoot@netlash.com>
  */
 class Delete extends BackendBaseActionDelete
 {

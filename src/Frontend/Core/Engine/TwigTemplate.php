@@ -2,9 +2,9 @@
 
 namespace Frontend\Core\Engine;
 
-use Frontend\Core\Engine\Language as FL;
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
+use Symfony\Component\Filesystem\Filesystem;
 
 /*
  * This file is part of Fork CMS.
@@ -16,46 +16,15 @@ use Common\Core\Twig\Extensions\TwigFilters;
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig
- *
- * @author <thijs@wijs.be>
  */
-
 class TwigTemplate extends BaseTwigTemplate
 {
-    /**
-     * List of passed templates
-     *
-     * @var array
-     */
-    private $templates = array();
-
-    /**
-     * List of passed widgets
-     *
-     * @var array
-     */
-    private $widgets = array();
-
-    /**
-     * main action block
-     *
-     * @var array
-     */
-    private $block = '';
-
     /**
      * theme path location
      *
      * @var string
      */
     private $themePath;
-
-    /**
-     * Base file location
-     *
-     * @var string
-     */
-    private $baseFile;
 
     /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
@@ -71,13 +40,7 @@ class TwigTemplate extends BaseTwigTemplate
             $loader = $this->environment->getLoader();
             $loader = new \Twig_Loader_Chain(array(
                 $loader,
-                new \Twig_Loader_Filesystem(array(
-                    $this->themePath . '/Modules',
-                    $this->themePath,
-                    FRONTEND_MODULES_PATH,
-                    FRONTEND_PATH,
-                    '/'
-                ))
+                new \Twig_Loader_Filesystem($this->getLoadingFolders()),
             ));
             $this->environment->setLoader($loader);
         }
@@ -93,80 +56,12 @@ class TwigTemplate extends BaseTwigTemplate
     }
 
     /**
-     * Returns the template type
-     *
-     * @return string Returns the template type
-     */
-    public function getTemplateType()
-    {
-        return 'twig';
-    }
-
-    /**
-     * Spoon assign method
-     *
-     * @param string $key
-     * @param mixed $values
-     *
-     */
-    public function assign($key, $values = null)
-    {
-        // page hook, last call
-        if ($key === 'page') {
-            $this->baseFile = $values['template_path'];
-            $this->baseSpoonFile = $values['template_path'];
-            $this->positions = $values['positions'];
-        }
-
-        // in all other cases
-        $this->variables[$key] = $values;
-    }
-
-    /**
-     * From assign we capture the Core Page assign
-     * so we could rebuild the positions with included
-     * module Path for widgets and actions
-     *
-     * I must admit this is ugly
-     *
-     * @param array positions
-     */
-    private function setPositions(array $positions)
-    {
-        foreach ($positions as &$blocks) {
-            foreach ($blocks as &$block) {
-                // skip html
-                if (!empty($block['html'])) {
-                    continue;
-                }
-
-                $block['extra_data'] = @unserialize($block['extra_data']);
-
-                // legacy search the correct module path
-                if ($block['extra_type'] === 'widget' && $block['extra_action']) {
-                    if (isset($block['extra_data']['template'])) {
-                        $tpl = substr($block['extra_data']['template'], 0, -5);
-                        $block['include_path'] = $this->widgets[$tpl];
-                    } else {
-                        $block['include_path'] = $this->getPath(
-                            $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.html.twig'
-                        );
-                    }
-
-                // main action block
-                } else {
-                    $block['include_path'] = $this->block;
-                }
-            }
-        }
-        return $positions;
-    }
-
-    /**
      * Convert a filename extension
      *
-     * @param string template
-    */
+     * @param string $template
+     *
+     * @return string
+     */
     public function getPath($template)
     {
         if (strpos($template, FRONTEND_MODULES_PATH) !== false) {
@@ -177,44 +72,44 @@ class TwigTemplate extends BaseTwigTemplate
     }
 
     /**
+     * Adds a global variable to the template
+     *
+     * @param string $name
+     * @param mixed $value
+     */
+    public function addGlobal($name, $value)
+    {
+        $this->environment->addGlobal($name, $value);
+    }
+
+    /**
      * Fetch the parsed content from this template.
      *
      * @param string $template      The location of the template file, used to display this template.
-     * @param bool   $customHeaders Are custom headers already set?
-     * @param bool   $parseCustom   Parse custom template.
      *
      * @return string The actual parsed content after executing this template.
      */
     public function getContent($template)
     {
-        // bounce back trick because Pages calls getContent Method
-        // 2 times on every action
-        if (!$template || in_array($template, $this->templates)) {
-            return;
-        }
-        $path = pathinfo($template);
-        $this->templates[] = $template;
+        $template = $this->getPath($template);
 
-        // collect the Widgets and Actions, we need them later
-        if (strpos($path['dirname'], 'Widgets') !== false) {
-            $this->widgets[$path['filename']] = $this->getPath($template);
-        } elseif (strpos($path['dirname'], 'Core/Layout/Templates') === false) {
-            $this->block = $this->getPath($template);
-        }
+        $content = $this->render(
+            $template,
+            $this->variables
+        );
 
-        // only baseFile can start the render
-        if ($this->baseSpoonFile === $template) {
-            return $this->renderTemplate();
-        }
+        $this->variables = array();
+
+        return $content;
     }
 
     /**
-     * Renders the Page
+     * @param string $template
+     * @param array $variables
      *
-     * @param string $template path to render
      * @return string
      */
-    private function renderTemplate($template = null)
+    public function render($template, array $variables = array())
     {
         if (!empty($this->forms)) {
             foreach ($this->forms as $form) {
@@ -223,16 +118,27 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        // set the positions array
-        if (!empty($this->positions)) {
-            $this->environment->addGlobal('positions', $this->setPositions($this->positions));
-        }
+        return $this->environment->render($template, $variables);
+    }
 
-        // template
-        if ($template === null) {
-            $template = $this->baseFile;
-        }
+    /**
+     * @return array
+     */
+    private function getLoadingFolders()
+    {
+        $filesystem = new Filesystem();
 
-        return $this->environment->render($template, $this->variables);
+        return array_filter(
+            array(
+                $this->themePath . '/Modules',
+                $this->themePath,
+                FRONTEND_MODULES_PATH,
+                FRONTEND_PATH,
+                '/',
+            ),
+            function ($folder) use ($filesystem) {
+                return $filesystem->exists($folder);
+            }
+        );
     }
 }

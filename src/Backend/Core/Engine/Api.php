@@ -10,12 +10,9 @@ namespace Backend\Core\Engine;
  */
 
 use Api\V1\Engine\Api as BaseAPI;
-use Backend\Core\Engine\Model;
 
 /**
  * In this file we store all generic functions that we will be available through the API
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Api
 {
@@ -129,6 +126,7 @@ class Api
      *
      * @param string $email    The emailaddress for the user.
      * @param string $password The password for the user.
+     *
      * @return array
      */
     public static function getAPIKey($email, $password)

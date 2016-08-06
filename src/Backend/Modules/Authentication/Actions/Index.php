@@ -9,7 +9,6 @@ namespace Backend\Modules\Authentication\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
@@ -22,9 +21,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the index-action (default), it will display the login screen
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Index extends BackendBaseActionIndex
 {

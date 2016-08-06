@@ -9,20 +9,15 @@ namespace Frontend\Modules\Search\Ajax;
  * file that was distributed with this source code.
  */
 
-use Common\Exception\RedirectException;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception as FrontendException;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Template as FrontendTemplate;
+use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This is the live suggest-action, it will output a list of results for a certain search
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Livesuggest extends FrontendBaseAJAXAction
 {
@@ -65,7 +60,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**
@@ -81,6 +76,11 @@ class Livesuggest extends FrontendBaseAJAXAction
      * @var string
      */
     private $term = '';
+
+    /**
+     * @var TwigTemplate
+     */
+    private $tpl;
 
     /**
      * Display
@@ -107,7 +107,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         // output
         $this->output(
             self::OK,
-            $this->tpl->getContent(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig', false, true)
+            $this->tpl->renderTemplate(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
         );
     }
 
@@ -117,13 +117,13 @@ class Livesuggest extends FrontendBaseAJAXAction
     public function execute()
     {
         parent::execute();
-        $this->loadTemplate();
         $this->validateForm();
         $this->display();
     }
 
     /**
      * Load the cached data
+     *
      * @todo    refactor me
      *
      * @return bool
@@ -219,21 +219,12 @@ class Livesuggest extends FrontendBaseAJAXAction
     }
 
     /**
-     * Load the template
-     */
-    protected function loadTemplate()
-    {
-        // spoon needs a new template Object
-        if ($this->tpl->getTemplateType() == 'spoon') {
-            $this->tpl = new FrontendTemplate(false);
-        }
-    }
-
-    /**
      * Parse the data into the template
      */
     private function parse()
     {
+        $this->tpl = $this->get('templating');
+
         // no search term = no search
         if (!$this->term) {
             return;
@@ -345,7 +336,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             $pagesFirstEnd = 1;
 
             // loop pages
-            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++) {
+            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;
@@ -359,7 +350,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // build array
-        for ($i = $pagesStart; $i <= $pagesEnd; $i++) {
+        for ($i = $pagesStart; $i <= $pagesEnd; ++$i) {
             // init var
             $current = ($i == $this->pagination['requested_page']);
 
@@ -381,7 +372,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             $pagesLastEnd = $this->pagination['num_pages'];
 
             // loop pages
-            for ($i = $pagesLastStart; $i <= $pagesLastEnd; $i++) {
+            for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;

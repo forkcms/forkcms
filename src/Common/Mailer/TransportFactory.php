@@ -4,8 +4,6 @@ namespace Common\Mailer;
 
 /**
  * This class will create the right mailer transport based on some parameters
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class TransportFactory
 {
@@ -18,6 +16,7 @@ class TransportFactory
      * @param  string $user
      * @param  string $pass
      * @param  string $encryption
+     *
      * @return \Swift_Transport
      */
     public static function create($type = 'mail', $server = null, $port = 25, $user = null, $pass = null, $encryption = null)
@@ -37,6 +36,7 @@ class TransportFactory
      * @param  string $user
      * @param  string $pass
      * @param  string $encryption
+     *
      * @return \Swift_SmtpTransport
      */
     private static function getSmtpTransport($server, $port, $user, $pass, $encryption = null)
@@ -52,7 +52,6 @@ class TransportFactory
 
         return $transport;
     }
-
 
     /**
      * Create a new PHP Mailer Transport instance.

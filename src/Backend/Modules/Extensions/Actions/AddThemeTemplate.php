@@ -9,7 +9,6 @@ namespace Backend\Modules\Extensions\Actions;
  * file that was distributed with this source code.
  */
 
-
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
@@ -18,10 +17,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class AddThemeTemplate extends BackendBaseActionAdd
 {
@@ -130,8 +125,10 @@ class AddThemeTemplate extends BackendBaseActionAdd
         asort($widgets, SORT_STRING);
 
         // create array
-        $defaultExtras = array('' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
-                                \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets);
+        $defaultExtras = array(
+            '' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
+            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
+        );
 
         // create default position field
         $position = array();
@@ -163,11 +160,11 @@ class AddThemeTemplate extends BackendBaseActionAdd
                     $extras[] = (int) $_POST['type_' . $i . '_' . $j];
 
                     // increment counter; go fetch next block
-                    $j++;
+                    ++$j;
                 }
 
                 // increment counter; go fetch next position
-                $i++;
+                ++$i;
 
                 // position already exists -> error
                 if (in_array($name, $this->names)) {

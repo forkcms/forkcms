@@ -19,8 +19,6 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
  * This action will display a form to search
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Index extends FrontendBaseBlock
 {
@@ -63,7 +61,7 @@ class Index extends FrontendBaseBlock
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**

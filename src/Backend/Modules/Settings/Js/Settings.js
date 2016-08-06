@@ -1,7 +1,5 @@
 /**
  * Interaction for the settings index-action
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.settings =
 {

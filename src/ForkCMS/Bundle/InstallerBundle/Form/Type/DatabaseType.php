@@ -13,8 +13,6 @@ use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Builds the form to set up database information
- *
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class DatabaseType extends AbstractType
 {
@@ -95,10 +93,10 @@ class DatabaseType extends AbstractType
                 new Callback(
                     array(
                         'methods' => array(
-                            array($this, 'checkDatabaseConnection')
+                            array($this, 'checkDatabaseConnection'),
                         ),
                     )
-                )
+                ),
             ),
             'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
         ));

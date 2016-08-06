@@ -21,8 +21,6 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the index-action (default), it will display the login screen
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -50,17 +48,28 @@ class Index extends BackendBaseActionIndex
     private function loadData()
     {
         $modules = BackendModel::getModules();
-        $userSequence = BackendAuthentication::getUser()->getSetting('dashboard_sequence');
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
 
-        // user sequence does not exist?
-        if (!isset($userSequence)) {
-            // get group ID of user
-            $groupId = BackendAuthentication::getUser()->getGroupId();
-
-            // get group preset
-            $userSequence = BackendGroupsModel::getSetting($groupId, 'dashboard_sequence');
+        // fetch the hidden widgets for all groups the user is in
+        $hiddenWidgets = [];
+        $userGroups = BackendAuthentication::getUser()->getGroups();
+        $groupCount = count($userGroups);
+        foreach ($userGroups as $group) {
+            foreach (BackendGroupsModel::getSetting($group, 'hidden_on_dashboard') as $module => $widgets) {
+                foreach ($widgets as $widget) {
+                    $hiddenWidgets[] = $module . $widget;
+                }
+            }
         }
+
+        // only widgets hidden for all user groups should really be hidden
+        $hiddenWidgets = array_count_values($hiddenWidgets);
+        $hiddenWidgets = array_filter(
+            $hiddenWidgets,
+            function ($hiddenCount) use ($groupCount) {
+                return $hiddenCount === $groupCount;
+            }
+        );
 
         // loop all modules
         foreach ($modules as $module) {
@@ -70,7 +79,7 @@ class Index extends BackendBaseActionIndex
             // you have sufficient rights?
             if (
                 BackendAuthentication::isAllowedModule($module) &&
-                $fs->exists($pathName . '/Widgets')
+                $filesystem->exists($pathName . '/Widgets')
             ) {
                 $finder = new Finder();
                 $finder->name('*.php');
@@ -82,6 +91,11 @@ class Index extends BackendBaseActionIndex
                     $className = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
                     if ($module == 'Core') {
                         $className = 'Backend\\Core\\Widgets\\' . $widgetName;
+                    }
+
+                    // if the widget is hidden for all the users groups, don't render it
+                    if (array_key_exists($module . $widgetName, $hiddenWidgets)) {
+                        continue;
                     }
 
                     if (!class_exists($className)) {

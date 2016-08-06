@@ -16,12 +16,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model
 {
@@ -72,7 +66,6 @@ class Model
             $db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
 
             BackendModel::deleteExtraById($item['extra_id']);
-            BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
         }
     }
 
@@ -80,6 +73,7 @@ class Model
      * Is the deletion of a category allowed?
      *
      * @param int $id
+     *
      * @return bool
      */
     public static function deleteCategoryAllowed($id)
@@ -120,6 +114,7 @@ class Model
      * Does the question exist?
      *
      * @param int $id
+     *
      * @return bool
      */
     public static function exists($id)
@@ -137,6 +132,7 @@ class Model
      * Does the category exist?
      *
      * @param int $id
+     *
      * @return bool
      */
     public static function existsCategory($id)
@@ -154,6 +150,7 @@ class Model
      * Fetch a question
      *
      * @param int $id
+     *
      * @return array
      */
     public static function get($id)
@@ -171,6 +168,7 @@ class Model
      * Fetches all the feedback that is available
      *
      * @param int $limit
+     *
      * @return array
      */
     public static function getAllFeedback($limit = 5)
@@ -188,6 +186,7 @@ class Model
      * Fetches all the feedback for a question
      *
      * @param int $id The question id.
+     *
      * @return array
      */
     public static function getAllFeedbackForQuestion($id)
@@ -204,6 +203,7 @@ class Model
      * Get all items by a given tag id
      *
      * @param int $tagId
+     *
      * @return array
      */
     public static function getByTag($tagId)
@@ -228,6 +228,7 @@ class Model
      * Get all the categories
      *
      * @param bool $includeCount
+     *
      * @return array
      */
     public static function getCategories($includeCount = false)
@@ -257,6 +258,7 @@ class Model
      * Fetch a category
      *
      * @param int $id
+     *
      * @return array
      */
     public static function getCategory($id)
@@ -288,6 +290,7 @@ class Model
      * Fetch the feedback item
      *
      * @param int $id
+     *
      * @return array
      */
     public static function getFeedback($id)
@@ -319,6 +322,7 @@ class Model
      * Get the max sequence id for a category
      *
      * @param int $id The category id.
+     *
      * @return int
      */
     public static function getMaximumSequence($id)
@@ -336,6 +340,7 @@ class Model
      *
      * @param string $url
      * @param int    $id The id of the item to ignore.
+     *
      * @return string
      */
     public static function getURL($url, $id = null)
@@ -383,6 +388,7 @@ class Model
      *
      * @param string $url
      * @param int    $id The id of the category to ignore.
+     *
      * @return string
      */
     public static function getURLForCategory($url, $id = null)
@@ -429,13 +435,12 @@ class Model
      * Insert a question in the database
      *
      * @param array $item
+     *
      * @return int
      */
     public static function insert(array $item)
     {
         $insertId = BackendModel::getContainer()->get('database')->insert('faq_questions', $item);
-
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
         return $insertId;
     }
@@ -445,6 +450,7 @@ class Model
      *
      * @param array $item
      * @param array $meta The metadata for the category to insert.
+     *
      * @return int
      */
     public static function insertCategory(array $item, $meta = null)
@@ -477,11 +483,9 @@ class Model
                     'EditCategory',
                     'Faq',
                     $item['language']
-                ) . '&id=' . $item['id']
+                ) . '&id=' . $item['id'],
             )
         );
-
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
         return $item['id'];
     }
@@ -499,7 +503,6 @@ class Model
             'id = ?',
             array((int) $item['id'])
         );
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
     }
 
     /**
@@ -520,11 +523,8 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id']
+                'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id'],
             )
         );
-
-        // invalidate faq
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
     }
 }

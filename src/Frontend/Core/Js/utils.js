@@ -1,8 +1,5 @@
 /**
  * Utilities; useful scripts
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 var utils =
 {
@@ -11,8 +8,6 @@ var utils =
 
 /**
  * Functions related to arrays
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.array =
 {
@@ -36,8 +31,6 @@ utils.array =
 
 /**
  * Function related to cookies
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.cookies =
 {
@@ -97,8 +90,6 @@ utils.cookies =
 
 /**
  * Functions related to forms
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.form =
 {
@@ -162,10 +153,6 @@ utils.form =
 
 /**
  * Functions related to strings
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
- * @author	Matthias Mullie <forkcms@mullie.eu>
  */
 utils.string =
 {
@@ -413,9 +400,6 @@ utils.string =
 
 /**
  * Functions related to the current url
- *
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.url =
 {

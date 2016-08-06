@@ -13,12 +13,9 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the email-action, it will display a form to set email settings
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Email extends BackendBaseActionIndex
 {
@@ -76,7 +73,6 @@ class Email extends BackendBaseActionIndex
             ->addText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '')
             ->setAttribute('type', 'email')
         ;
-
 
         if ($this->isGod) {
             $mailerType = $this->get('fork.settings')->get('Core', 'mailer_type', 'mail');
@@ -140,7 +136,7 @@ class Email extends BackendBaseActionIndex
                     'mailer_from',
                     array(
                          'name' => $this->frm->getField('mailer_from_name')->getValue(),
-                         'email' => $this->frm->getField('mailer_from_email')->getValue()
+                         'email' => $this->frm->getField('mailer_from_email')->getValue(),
                     )
                 );
                 $this->get('fork.settings')->set(
@@ -148,7 +144,7 @@ class Email extends BackendBaseActionIndex
                     'mailer_to',
                     array(
                          'name' => $this->frm->getField('mailer_to_name')->getValue(),
-                         'email' => $this->frm->getField('mailer_to_email')->getValue()
+                         'email' => $this->frm->getField('mailer_to_email')->getValue(),
                     )
                 );
                 $this->get('fork.settings')->set(
@@ -156,10 +152,9 @@ class Email extends BackendBaseActionIndex
                     'mailer_reply_to',
                     array(
                          'name' => $this->frm->getField('mailer_reply_to_name')->getValue(),
-                         'email' => $this->frm->getField('mailer_reply_to_email')->getValue()
+                         'email' => $this->frm->getField('mailer_reply_to_email')->getValue(),
                     )
                 );
-
 
                 if ($this->isGod) {
                     $this->get('fork.settings')->set(

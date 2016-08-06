@@ -15,10 +15,6 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 
 /**
  * This is the delete-action, it will delete an item.
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Delete extends BackendBaseActionDelete
 {
