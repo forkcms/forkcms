@@ -545,7 +545,7 @@ class CampaignMonitor
 
 			case 'GET':
 				// add the parameters into the querystring
-				if(!empty($parameters)) $url .= '?'. http_build_query($parameters);
+				if(!empty($parameters)) $url .= '?'. http_build_query($parameters, null, '&', PHP_QUERY_RFC3986);
 			break;
 
 			case 'POST':

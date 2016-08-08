@@ -150,7 +150,7 @@ class Edit extends BackendBaseActionEdit
             if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if ($this->frm->getField('type')->getValue() == 'act') {
-                    if (urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
+                    if (rawurlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
                         $txtValue->addError(BL::err('InvalidValue'));
                     }
                 }
@@ -180,7 +180,7 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
+                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=edited&var=' . rawurlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
             }
         }
     }

@@ -39,7 +39,7 @@ class Delete extends BackendBaseActionDelete
 
             $this->redirect(
                 BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-                urlencode($this->record['question'])
+                rawurlencode($this->record['question'])
             );
         } else {
             $this->redirect(

@@ -261,7 +261,7 @@ class EditAddress extends BackendBaseActionEdit
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Addresses') .
-                    (!empty($this->subscriptions) ? '&group_id=' . $ddmGroups->getValue() : '') . '&report=edited&var=' . urlencode($item['email']) . '&highlight=email-' . $item['email']
+                    (!empty($this->subscriptions) ? '&group_id=' . $ddmGroups->getValue() : '') . '&report=edited&var=' . rawurlencode($item['email']) . '&highlight=email-' . $item['email']
                 );
             }
         }

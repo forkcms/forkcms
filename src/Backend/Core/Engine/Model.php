@@ -135,9 +135,9 @@ class Model extends \Common\Core\Model
         foreach ($parameters as $key => $value) {
             // first element
             if ($i == 1) {
-                $queryString .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+                $queryString .= '?' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
             } else {
-                $queryString .= '&' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+                $queryString .= '&' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
             }
 
             ++$i;

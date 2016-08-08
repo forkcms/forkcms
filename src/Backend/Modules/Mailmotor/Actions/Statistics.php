@@ -103,7 +103,7 @@ class Statistics extends BackendBaseActionIndex
 
         // map urlencode to clicked links stack
         $this->statistics['clicked_links'] = \SpoonFilter::arrayMapRecursive(
-            'urlencode',
+            'rawurlencode',
             $this->statistics['clicked_links']
         );
 

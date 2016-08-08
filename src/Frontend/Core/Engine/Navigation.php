@@ -80,10 +80,10 @@ class Navigation extends FrontendBaseObject
         foreach ($parameters as $key => $value) {
             // first element
             if ($i == 1) {
-                $queryString .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+                $queryString .= '?' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
             } else {
                 // other elements
-                $queryString .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+                $queryString .= '&amp;' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
             }
 
             // update counter
