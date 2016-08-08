@@ -45,8 +45,16 @@ class Edit extends BackendBaseActionEdit
         if ($this->id !== null && BackendLocationModel::exists($this->id)) {
             parent::execute();
 
+            // define Google Maps API key
+            $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+
+            // check Google Maps API key, otherwise redirect to settings
+            if ($apikey === null) {
+                $this->redirect(BackendModel::createURLForAction('Index', 'Settings'));
+            }
+
             // add js
-            $this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
+            $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, null, false, true, false);
 
             $this->loadData();
 
