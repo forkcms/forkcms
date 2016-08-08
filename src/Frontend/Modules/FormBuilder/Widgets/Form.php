@@ -32,6 +32,13 @@ class Form extends FrontendBaseWidget
     private $frm;
 
     /**
+     * Form name
+     *
+     * @var string
+     */
+    private $formName;
+
+    /**
      * The form item.
      *
      * @var    array
@@ -126,6 +133,9 @@ class Form extends FrontendBaseWidget
     {
         // fetch the item
         $this->item = FrontendFormBuilderModel::get((int) $this->data['id']);
+
+        // define form name
+        $this->formName = 'form' . $this->item['id'];
     }
 
     /**
@@ -357,8 +367,7 @@ class Form extends FrontendBaseWidget
     private function parseSuccessMessage()
     {
         // form name
-        $formName = 'form' . $this->item['id'];
-        $this->tpl->assign('formName', $formName);
+        $this->tpl->assign('formName', $this->formName);
         $this->tpl->assign('successMessage', $this->item['success_message']);
     }
 
@@ -501,6 +510,7 @@ class Form extends FrontendBaseWidget
                 $redirect = SITE_URL . $this->URL->getQueryString();
                 $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
                 $redirect .= 'identifier=' . $this->item['identifier'];
+                $redirect .= '#' . $this->formName;
 
                 throw new RedirectException(
                     'Redirect',
