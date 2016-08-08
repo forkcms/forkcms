@@ -21,6 +21,7 @@ Bugfixes:
 * Profiles: make sure the settings are loaded in cache before a new setting is set
 * Location: fix settings not loading correctly because twig escaped the html
 
+
 4.0.6 (2016-07-29)
 --
 
