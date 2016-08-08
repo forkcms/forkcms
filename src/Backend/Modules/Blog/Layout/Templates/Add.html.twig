@@ -42,7 +42,7 @@
                 <div class="panel panel-default panel-editor">
                   <div class="panel-heading">
                     <p>{{ 'lbl.MainContent'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></p>
+                      {{ macro.required }}</p>
                   </div>
                   <div class="panel-body">
                     {% form_field text %}
@@ -171,7 +171,7 @@
           <div class="form-group">
             <label for="categoryTitle" class="control-label">
               {{ 'lbl.Title'|trans|ucfirst }}
-              <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}"></abbr>
+              {{ macro.required }}
             </label>
             <input type="text" name="categoryTitle" id="categoryTitle" class="form-control" maxlength="255" />
             <p class="text-danger" id="categoryTitle'err.r" style="display: none;">{{ 'err.FieldIsRequired'|trans|ucfirst }}</p>

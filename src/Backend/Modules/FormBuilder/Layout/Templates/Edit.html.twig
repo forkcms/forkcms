@@ -46,21 +46,21 @@
                     <div class="form-group">
                       <label for="name" class="control-label">
                         {{ 'lbl.Name'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field name %} {% form_field_error name %}
                     </div>
                     <div class="form-group">
                       <label for="method" class="control-label">
                         {{ 'lbl.Method'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field method %} {% form_field_error method %}
                     </div>
                     <div class="form-group">
                       <label for="email" class="control-label">
                         {{ 'lbl.Recipient'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field email %} {% form_field_error email %}
                     </div>
@@ -72,7 +72,7 @@
                   <div class="panel-heading">
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr><br>
+                      {{ macro.required }}<br>
                     </label>
                   </div>
                   <div class="panel-body">
@@ -258,7 +258,7 @@
                   <div class="form-group">
                     <label for="textboxLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     <p id="textboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                     {% form_field textbox_label %}
@@ -294,7 +294,7 @@
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="textboxRequiredErrorMessage" class="control-label">
                         {{ 'lbl.errorMessage'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <p id="textboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                       {% form_field textbox_required_error_message %}
@@ -309,14 +309,14 @@
                     <div class="form-group jsValidationParameter" style="display: none;">
                       <label for="textboxValidationParameter" class="control-label">
                         {{ 'lbl.Parameter'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field textbox_validation_parameter %}
                     </div>
                     <div class="form-group jsValidationErrorMessage" style="display: none;">
                       <label for="textareaErrorMessage" class="control-label">
                         {{ 'lbl.errorMessage'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <p id="textboxErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                       {% form_field textbox_error_message %}
@@ -380,7 +380,7 @@
                   <div class="form-group">
                     <label for="textareaLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     <p id="textareaLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                     {% form_field textarea_label %}
@@ -406,7 +406,7 @@
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="textareaRequiredErrorMessage" class="control-label">
                         {{ 'lbl.errorMessage'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <p id="textareaRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                       {% form_field textarea_required_error_message %}
@@ -420,14 +420,14 @@
                     <div class="form-group jsValidationParameter" style="display: none;">
                       <label for="textareaValidationParameter" class="control-label">
                         {{ 'lbl.Parameter'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field textarea_validation_parameter %}
                     </div>
                     <div class="form-group jsValidationErrorMessage" style="display: none;">
                       <label for="textareaErrorMessage" class="control-label">
                         {{ 'lbl.errorMessage'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <p id="textareaErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                       {% form_field_error textarea_error_message %}
@@ -491,7 +491,7 @@
                   <div class="form-group">
                     <label for="datetimeLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     <p id="datetimeLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                     {% form_field datetime_label %}
@@ -519,7 +519,7 @@
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="datetimeRequiredErrorMessage" class="control-label">
                         {{ 'lbl.errorMessage'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <p id="datetimeRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                       {% form_field datetime_required_error_message %}
@@ -539,7 +539,7 @@
                     <div class="form-group jsValidationErrorMessage" style="display: none;">
                       <label for="datetimeErrorMessage" class="control-label">
                         {{ 'lbl.errorMessage'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <p id="datetimeErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                       {% form_field_error datetime_error_message %}
@@ -599,7 +599,7 @@
                   <div class="form-group">
                     <label for="dropdownLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     <p id="dropdownLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                     {% form_field dropdown_label %}
@@ -630,7 +630,7 @@
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="dropdownRequiredErrorMessage" class="control-label">
                         {{ 'lbl.errorMessage'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <p id="dropdownRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                       {% form_field dropdown_required_error_message %}
@@ -690,7 +690,7 @@
                   <div class="form-group">
                     <label for="radiobuttonLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     <p id="radiobuttonLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                     {% form_field radiobutton_label %}
@@ -720,7 +720,7 @@
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="checkboxRequiredErrorMessage" class="control-label">
                         {{ 'lbl.errorMessage'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <p id="radiobuttonRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                       {% form_field radiobutton_required_error_message %}
@@ -780,7 +780,7 @@
                   <div class="form-group">
                     <label for="checkboxLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     <p id="checkboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                     {% form_field checkbox_label %}
@@ -810,7 +810,7 @@
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="checkboxRequiredErrorMessage" class="control-label">
                         {{ 'lbl.errorMessage'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <p id="checkboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                       {% form_field checkbox_required_error_message %}
@@ -855,7 +855,7 @@
           <div class="form-group">
             <label for="submit" class="control-label">
               {{ 'lbl.Content'|trans|ucfirst }}
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+              {{ macro.required }}
             </label>
             <p id="submitError" class="text-danger jsFieldError" style="display: none;"></p>
             {% form_field submit %}
@@ -885,7 +885,7 @@
           <div class="form-group">
             <label for="heading" class="control-label">
               {{ 'lbl.Content'|trans|ucfirst }}
-              <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+              {{ macro.required }}
             </label>
             <p id="headingError" class="text-danger jsFieldError" style="display: none;"></p>
             {% form_field heading %}

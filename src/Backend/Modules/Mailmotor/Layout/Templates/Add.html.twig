@@ -40,7 +40,7 @@
               <div class="form-group">
                 <label for="name" class="control-label">
                   {{ 'lbl.Name'|trans|ucfirst }}
-                  <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                  {{ macro.required }}
                 </label>
                 <p class="help-block">{{ 'msg.NameInternalUseOnly'|trans }}</p>
                 {% form_field name %} {% form_field_error name %}
@@ -49,7 +49,7 @@
                 <div class="form-group">
                   <label for="campaign" class="control-label">
                     {{ 'lbl.Campaign'|trans|ucfirst }}
-                    <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                    {{ macro.required }}
                   </label>
                   {% form_field campaign %} {% form_field_error campaign %}
                 </div>
@@ -70,14 +70,14 @@
               <div class="form-group">
                 <label for="fromName" class="control-label">
                   {{ 'lbl.Name'|trans|ucfirst }}
-                  <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                  {{ macro.required }}
                 </label>
                 {% form_field from_name %} {% form_field_error from_name %}
               </div>
               <div class="form-group">
                 <label for="fromEmail" class="control-label">
                   {{ 'lbl.EmailAddress'|trans|ucfirst }}
-                  <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                  {{ macro.required }}
                 </label>
                 {% form_field from_email %} {% form_field_error from_email %}
               </div>
@@ -97,7 +97,7 @@
               <div class="form-group">
                 <label for="replyToEmail" class="control-label">
                   {{ 'lbl.EmailAddress'|trans|ucfirst }}
-                  <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                  {{ macro.required }}
                 </label>
                 {% form_field reply_to_email %} {% form_field_error reply_to_email %}
               </div>

@@ -30,7 +30,7 @@
         <div class="form-group">
           <label for="file" class="control-label">
             {{ 'lbl.File'|trans|ucfirst }}
-            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+            {{ macro.required }}
           </label>
           {% form_field file %} {% form_field_error file %}
         </div>
