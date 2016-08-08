@@ -468,10 +468,12 @@ class Navigation extends FrontendBaseObject
      * @param string $action   The specific action wherefore the URL should be build.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
+     * @param array $data      An array with keys and values that partially or fully match the data of the block.
+     *                         If it matches multiple versions of that block it will just return the first match.
      *
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, array $data = null)
     {
         $module = (string) $module;
         $action = ($action !== null) ? (string) $action : null;
@@ -498,9 +500,24 @@ class Navigation extends FrontendBaseObject
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
                         if ($extra['module'] == $module && $extra['action'] == $action) {
+                            // if there is data check if all the requested data matches the extra data
+                            if (isset($extra['data']) && $data !== null
+                                && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                                // It is the correct action but has the wrong data
+                                continue;
+                            }
                             // exact page was found, so return
                             return self::getURL($properties['page_id'], $language);
-                        } elseif ($extra['module'] == $module && $extra['action'] == null) {
+                        }
+
+                        if ($extra['module'] == $module && $extra['action'] == null) {
+                            // if there is data check if all the requested data matches the extra data
+                            if (isset($extra['data']) && $data !== null
+                                && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                                // It is the correct module but has the wrong data
+                                continue;
+                            }
+
                             // correct module but no action
                             // store pageId
                             $pageIdForURL = (int) $pageId;
