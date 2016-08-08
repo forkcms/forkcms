@@ -48,7 +48,7 @@ class ImportAddresses extends BackendBaseActionEdit
         $csv[] = array('email' => $this->get('fork.settings')->get($this->getModule(), 'from_email'));
 
         // download the file
-        BackendCSV::arrayToFile(BACKEND_CACHE_PATH . '/Mailmotor/example.csv', $csv, null, null, ';', '"', true);
+        BackendCSV::arrayToFile(BackendMailmotorModel::getCacheDirectory() . 'example.csv', $csv, null, null, ';', '"', true);
     }
 
     /**
@@ -281,7 +281,7 @@ class ImportAddresses extends BackendBaseActionEdit
                     // write a CSV file to the cache
                     $csvFile = 'import-report-' . CommonUri::getUrl(BackendModel::getUTCDate()) . '.csv';
                     BackendCSV::arrayToFile(
-                        BACKEND_CACHE_PATH . '/Mailmotor/' . $csvFile,
+                        BackendMailmotorModel::getCacheDirectory() . $csvFile,
                         $failedSubscribers,
                         null,
                         null,

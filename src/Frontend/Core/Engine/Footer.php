@@ -34,7 +34,7 @@ class Footer extends FrontendBaseObject
     public function parse()
     {
         $footerLinks = (array) Navigation::getFooterLinks();
-        $this->tpl->assign('footerLinks', $footerLinks);
+        $this->tpl->addGlobal('footerLinks', $footerLinks);
 
         $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_footer', null);
 
@@ -57,7 +57,7 @@ class Footer extends FrontendBaseObject
         }
 
         // assign site wide html
-        $this->tpl->assign('siteHTMLFooter', $siteHTMLFooter);
+        $this->tpl->addGlobal('siteHTMLFooter', $siteHTMLFooter);
     }
 
     /**

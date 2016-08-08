@@ -11,7 +11,7 @@
       <div class="form-group">
         <label for="name" class="control-label">
           {{ 'lbl.ReferenceCode'|trans|ucfirst }}
-          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+          {{ macro.required }}
         </label>
         <p class="help-block">{{ 'msg.HelpAddName'|trans }}</p>
         {% form_field name %} {% form_field_error name %}
@@ -19,7 +19,7 @@
       <div class="form-group">
         <label for="value" class="control-label">
           {{ 'lbl.Translation'|trans|ucfirst }}
-          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+          {{ macro.required }}
         </label>
         <p class="help-block">{{ 'msg.HelpAddValue'|trans }}</p>
         {% form_field value %} {% form_field_error value %}
@@ -74,7 +74,7 @@
   {% endform %}
 
   {% if showLocaleDelete %}
-    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

@@ -333,9 +333,9 @@ class Edit extends BackendBaseActionEdit
                     $values['display_name'] : $this->profile['display_name'];
 
                 $redirectUrl = BackendModel::createURLForAction('Index') .
-                    '&var=' . urlencode($values['email']) .
+                    '&var=' . rawurlencode($values['email']) .
                     '&highlight=row-' . $this->id .
-                    '&var=' . urlencode($displayName) .
+                    '&var=' . rawurlencode($displayName) .
                     '&report='
                 ;
 

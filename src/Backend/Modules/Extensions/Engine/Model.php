@@ -13,6 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Navigation;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -209,7 +210,7 @@ class Model
         ) {
             $fs->remove($file->getRealPath());
         }
-        $fs->remove(BACKEND_CACHE_PATH . '/Navigation/navigation.php');
+        $fs->remove(Navigation::getCacheDirectory() . 'navigation.php');
     }
 
     /**

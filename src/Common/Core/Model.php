@@ -404,9 +404,9 @@ class Model extends \BaseModel
     {
         $fs = new Filesystem();
         // is the queue already running?
-        if ($fs->exists(BACKEND_CACHE_PATH . '/Hooks/pid')) {
+        if ($fs->exists(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid')) {
             // get the pid
-            $pid = trim(file_get_contents(BACKEND_CACHE_PATH . '/Hooks/pid'));
+            $pid = trim(file_get_contents(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid'));
 
             // running on windows?
             if (mb_strtolower(mb_substr(php_uname('s'), 0, 3)) == 'win') {
@@ -416,7 +416,7 @@ class Model extends \BaseModel
                 // validate output
                 if ($output == '' || $output === false) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                    $fs->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -429,7 +429,7 @@ class Model extends \BaseModel
                 // validate output
                 if ($output === false) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                    $fs->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -439,7 +439,7 @@ class Model extends \BaseModel
                 // check if the process is still running, by checking the proc folder
                 if (!$fs->exists('/proc/' . $pid)) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                    $fs->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;

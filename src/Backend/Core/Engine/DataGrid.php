@@ -59,8 +59,7 @@ class DataGrid extends \SpoonDataGrid
 
         // set attributes for the datagrid
         $this->setAttributes(array(
-            'class' => 'table table-hover table-striped fork-data-grid jsDataGrid', 'cellspacing' => 0,
-            'cellpadding' => 0, 'border' => 0,
+            'class' => 'table table-hover table-striped fork-data-grid jsDataGrid'
         ));
 
         // id gets special treatment

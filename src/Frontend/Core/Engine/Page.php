@@ -160,21 +160,9 @@ class Page extends FrontendBaseObject
      */
     public function display()
     {
-        // parse header
-        $this->header->parse();
-
-        // parse breadcrumb
-        $this->breadcrumb->parse();
-
-        // parse languages
-        $this->parseLanguages();
-
-        // parse footer
-        $this->footer->parse();
-
         // assign the id so we can use it as an option
-        $this->tpl->assign('isPage' . $this->pageId, true);
-        $this->tpl->assign('isChildOfPage' . $this->record['parent_id'], true);
+        $this->tpl->addGlobal('isPage' . $this->pageId, true);
+        $this->tpl->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
         // hide the cookiebar from within the code to prevent flickering
         $this->tpl->assign(
@@ -193,6 +181,18 @@ class Page extends FrontendBaseObject
                 array()
             );
         }
+
+        // parse header
+        $this->header->parse();
+
+        // parse breadcrumb
+        $this->breadcrumb->parse();
+
+        // parse languages
+        $this->parseLanguages();
+
+        // parse footer
+        $this->footer->parse();
 
         // output
         return new Response(
@@ -340,7 +340,7 @@ class Page extends FrontendBaseObject
 
             // assign
             if (count($languages) > 1) {
-                $this->tpl->assign('languages', $languages);
+                $this->tpl->addGlobal('languages', $languages);
             }
         }
     }
@@ -362,6 +362,8 @@ class Page extends FrontendBaseObject
             foreach ($blocks as $i => $block) {
                 // check for extras that need to be reparsed
                 if (isset($block['extra'])) {
+                    $block['extra']->execute();
+
                     // fetch extra-specific variables
                     if (isset($positions[$position][$i]['variables'])) {
                         $extraVariables = $positions[$position][$i]['variables'];
@@ -413,16 +415,12 @@ class Page extends FrontendBaseObject
 
             // all extras extend FrontendBaseObject, which extends KernelLoader
             $extra->setKernel($this->getKernel());
-            $extra->execute();
 
             // overwrite the template
             if (is_callable(array($extra, 'getOverwrite')) && $extra->getOverwrite()
             ) {
                 $this->templatePath = $extra->getTemplatePath();
             }
-
-            // assign the variables from this extra to the main template
-            $this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
         }
     }
 
@@ -463,7 +461,7 @@ class Page extends FrontendBaseObject
         // assign content
         $pageInfo = Navigation::getPageInfo($this->record['id']);
         $this->record['has_children'] = $pageInfo['has_children'];
-        $this->tpl->assign('page', $this->record);
+        $this->tpl->addGlobal('page', $this->record);
 
         // set template path
         $this->templatePath = $this->record['template_path'];

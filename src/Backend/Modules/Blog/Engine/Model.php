@@ -194,9 +194,6 @@ class Model
         foreach ($ids as $id) {
             BackendTagsModel::saveTags($id, '', 'Blog');
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -221,9 +218,6 @@ class Model
 
             // update category for the posts that might be in this category
             $db->update('blog_posts', array('category_id' => null), 'category_id = ?', array($id));
-
-            // invalidate the cache for blog
-            BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
         }
     }
 
@@ -281,9 +275,6 @@ class Model
         if (!empty($itemIds)) {
             self::reCalculateCommentCount($itemIds);
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -308,9 +299,6 @@ class Model
         if (!empty($itemIds)) {
             self::reCalculateCommentCount($itemIds);
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -755,9 +743,6 @@ class Model
         // insert and return the new revision id
         $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
 
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
-
         // return the new revision id
         return $item['revision_id'];
     }
@@ -926,9 +911,6 @@ class Model
 
         // create category
         $item['id'] = $db->insert('blog_categories', $item);
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         // return the id
         return $item['id'];
@@ -1118,9 +1100,6 @@ class Model
         // insert new version
         $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
 
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
-
         // return the new revision id
         return $item['revision_id'];
     }
@@ -1149,9 +1128,6 @@ class Model
             // update the meta
             $db->update('meta', $meta, 'id = ?', array((int) $category['meta_id']));
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         return $updated;
     }
@@ -1220,11 +1196,6 @@ class Model
 
             // recalculate the comment count
             self::reCalculateCommentCount($itemIds);
-
-            // invalidate the cache for blog
-            foreach ($languages as $language) {
-                BackendModel::invalidateFrontendCache('Blog', $language);
-            }
         }
     }
 

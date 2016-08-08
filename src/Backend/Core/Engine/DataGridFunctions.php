@@ -315,4 +315,17 @@ class DataGridFunctions
             return \SpoonFilter::htmlspecialchars($string);
         }
     }
+
+    /**
+     * This is an alias for the template modifier since it can also be used here and people didn't find it.
+     *
+     * @param string|bool $status
+     * @param bool        $reverse show the opposite of the status
+     *
+     * @return string
+     */
+    public static function showBool($status, $reverse = false)
+    {
+        return TemplateModifiers::showBool($status, $reverse);
+    }
 }

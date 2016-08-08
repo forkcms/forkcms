@@ -58,24 +58,24 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+            <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
           <li class="pull-right" role="presentation">
-            <a href="#tabSettings" aria-controls="settings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+            <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
           </li>
           <li class="pull-right" role="presentation">
-            <a href="#tabRedirect" aria-controls="redirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
+            <a href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
           </li>
           {% if showTags %}
             <li class="pull-right" role="presentation">
-              <a href="#tabTags" aria-controls="tags" role="tab" data-toggle="tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
+              <a href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
             </li>
           {% endif %}
           <li class="pull-right" role="presentation">
-            <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
           <li class="pull-right" role="presentation">
-            <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+            <a href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -305,7 +305,7 @@
   </div>
 
   {# Dialog to select the content (editor, module or widget). Do not change the ID! #}
-  <div class="modal fade" id="addBlock" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.ChooseContent'|trans|ucfirst }}"
+  <div class="modal fade" id="addBlock" tabindex="-1" role="dialog"
     aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -387,7 +387,7 @@
 
   {# Dialog to select another template. Do not change the ID! #}
   <div class="modal fade" id="changeTemplate" tabindex="-1" role="dialog"
-    aria-labelledby="{{ 'lbl.ChooseATemplate'|trans|ucfirst }}" aria-hidden="true">
+    aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -434,7 +434,7 @@
   </div>
 
   {# Dialog to confirm block removal. Do not change the ID! #}
-  <div class="modal fade" id="confirmDeleteBlock" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.DeleteBlock'|trans|ucfirst }}" aria-hidden="true">
+  <div class="modal fade" id="confirmDeleteBlock" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -455,7 +455,7 @@
   </div>
 
   {# Text editor block #}
-  <div class="modal fade" id="blockHtml" role="dialog" aria-labelledby="{{ 'lbl.Editor'|trans|ucfirst }}" aria-hidden="true">
+  <div class="modal fade" id="blockHtml" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -488,7 +488,7 @@
 
   {# Page delete confirm block #}
   {% if item %}
-    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

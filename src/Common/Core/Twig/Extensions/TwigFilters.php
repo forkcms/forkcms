@@ -50,6 +50,7 @@ class TwigFilters
         // exposed PHP functions
 
         $twig->addFilter(new Twig_SimpleFilter('urlencode', 'urlencode'));
+        $twig->addFilter(new Twig_SimpleFilter('rawurlencode', 'rawurlencode'));
         $twig->addFilter(new Twig_SimpleFilter('striptags', 'strip_tags'));
         $twig->addFilter(new Twig_SimpleFilter('addslashes', 'addslashes'));
         $twig->addFilter(new Twig_SimpleFilter('count', 'count'));

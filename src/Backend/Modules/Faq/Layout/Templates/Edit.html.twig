@@ -26,13 +26,13 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+            <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
           <li class="pull-right" role="presentation">
-            <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
           <li class="pull-right" role="presentation">
-            <a href="#tabFeedback" aria-controls="feedback" role="tab" data-toggle="tab">
+            <a href="#tabFeedback" aria-controls="tabFeedback" role="tab" data-toggle="tab">
               {{ 'lbl.Feedback'|trans|ucfirst }}
               <span class="label label-success">{{ item.num_usefull_yes }}</span>
               <span class="label label-danger">{{ item.num_usefull_no }}</span>
@@ -46,7 +46,7 @@
                 <div class="panel panel-default panel-editor optionsRTE">
                   <div class="panel-heading">
                     <label for="answer" class="control-label">{{ 'lbl.Answer'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr><br>
+                      {{ macro.required }}<br>
                     </label>
                   </div>
                   <div class="panel-body">
@@ -165,7 +165,7 @@
         </div>
       </div>
       {% if showFaqDelete %}
-        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

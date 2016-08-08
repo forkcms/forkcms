@@ -34,6 +34,14 @@ class Navigation extends Base\Object
     protected $URL;
 
     /**
+     * @return string
+     */
+    public static function getCacheDirectory()
+    {
+        return BackendModel::getContainer()->getParameter('kernel.cache_dir') . '/navigation/';
+    }
+
+    /**
      * @param KernelInterface $kernel
      */
     public function __construct(KernelInterface $kernel)
@@ -46,7 +54,7 @@ class Navigation extends Base\Object
         $this->URL = $this->getContainer()->get('url');
 
         // check if navigation cache file exists
-        if (!is_file(BACKEND_CACHE_PATH . '/Navigation/navigation.php')) {
+        if (!is_file(self::getCacheDirectory() . 'navigation.php')) {
             $this->buildCache();
         }
 
@@ -58,7 +66,7 @@ class Navigation extends Base\Object
         $navigation = array();
 
         // require navigation-file
-        require BACKEND_CACHE_PATH . '/Navigation/navigation.php';
+        require self::getCacheDirectory() . 'navigation.php';
 
         // load it
         $this->navigation = (array) $navigation;
@@ -103,7 +111,7 @@ class Navigation extends Base\Object
         // store
         $fs = new Filesystem();
         $fs->dumpFile(
-            BACKEND_CACHE_PATH . '/Navigation/navigation.php',
+            self::getCacheDirectory() . 'navigation.php',
             $value
         );
     }

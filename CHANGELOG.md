@@ -1,3 +1,50 @@
+4.1.0 (2016-08-08)
+------------------
+
+Features:
+
+* Location: added Google Maps API key
+* Core: multiple og:image:width and :height
+* Core: change urlencoding from RFC 1738 to RFC 3986
+* FormBuilder: Anchor added to form widget
+* Location: added zoom-leven 1 and 2
+* Github: added issue and pull request templates
+* Core: added TemplateModifier showBool alias to DataGridFunctions
+* Profiles: added SecurePage widget
+* Core: getUrlForBlock now takes data into account
+* Core: page parameter can now be changed in the pagination query
+* Twig: added a macro for the required asterisk and tooltip
+
+Bugfixes:
+
+* CK Finder: fix non existent service session.handler
+* Profiles: make sure the settings are loaded in cache before a new setting is set
+* Location: fix settings not loading correctly because twig escaped the html
+
+
+4.0.6 (2016-07-29)
+--
+
+Bugfixes:
+
+* Pages: fix casing issue.
+* Core: add missing yaml config to the editorconfig file.
+* Core: make the backend more anysurfer compliant.
+* Pages: make filesystem checks more robust for og:image tags.
+* Faq: use label instead of hardcoded text after sequence success.
+* FormBuilder: only show the success message for the submitted form.
+* Core: fix cache sharing between environments.
+* Core: fix issues on PHP 7.1.
+* Core: fix issues when widgets mixed up content.
+* Core: fix double encoded ampersand in pagination urls.
+* Pages: fix bad contrast when showing hidden page blocks.
+* FormBuilder: fix paragraph and heading that weren't editable.
+* Core: fix template bug in pagination.
+* Core: make sure emails can be themed.
+* Core: make sure diactrics will be showd correctly in twig.
+* Groups: make sure we can hide dashboard widgets for groups.
+
+
 4.0.5 (2016-07-12)
 --
 
