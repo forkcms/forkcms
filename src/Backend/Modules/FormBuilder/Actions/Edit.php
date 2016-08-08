@@ -23,6 +23,13 @@ use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 class Edit extends BackendBaseActionEdit
 {
     /**
+     * The available templates
+     *
+     * @var array
+     */
+    private $templates = array();
+
+    /**
      * Execute the action
      */
     public function execute()
@@ -49,6 +56,7 @@ class Edit extends BackendBaseActionEdit
     private function getData()
     {
         $this->record = BackendFormBuilderModel::get($this->id);
+        $this->templates = BackendFormBuilderModel::getTemplates();
     }
 
     /**
@@ -67,6 +75,16 @@ class Edit extends BackendBaseActionEdit
             $this->record['method']
         );
         $this->frm->addText('email', implode(',', (array) $this->record['email']));
+        $this->frm->addText('email_subject', $this->record['email_subject']);
+
+        // if we have multiple templates, add a dropdown to select them
+        if (count($this->templates) > 1) {
+            $this->frm->addDropdown(
+                'template',
+                array_combine($this->templates, $this->templates),
+                $this->record['email_template']
+            );
+        }
         $this->frm->addText('identifier', $this->record['identifier']);
         $this->frm->addEditor('success_message', $this->record['success_message']);
 
@@ -87,6 +105,7 @@ class Edit extends BackendBaseActionEdit
             )
         );
         $this->frm->addCheckbox('textbox_send_confirmation_mail_to');
+        $this->frm->addText('textbox_confirmation_mail_subject');
         $this->frm->addText('textbox_validation_parameter');
         $this->frm->addText('textbox_error_message');
 
@@ -264,6 +283,7 @@ class Edit extends BackendBaseActionEdit
             // shorten the fields
             $txtName = $this->frm->getField('name');
             $txtEmail = $this->frm->getField('email');
+            $txtEmailSubject = $this->frm->getField('email_subject');
             $ddmMethod = $this->frm->getField('method');
             $txtSuccessMessage = $this->frm->getField('success_message');
             $txtIdentifier = $this->frm->getField('identifier');
@@ -307,6 +327,9 @@ class Edit extends BackendBaseActionEdit
                 $values['name'] = $txtName->getValue();
                 $values['method'] = $ddmMethod->getValue();
                 $values['email'] = ($ddmMethod->getValue() == 'database_email') ? serialize($emailAddresses) : null;
+                $values['email_template'] = count($this->templates) > 1
+                    ? $this->frm->getField('template')->getValue() : $this->templates[0];
+                $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :

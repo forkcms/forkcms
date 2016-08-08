@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS `forms` (
   `email` text,
   `success_message` text,
   `identifier` varchar(255) NOT NULL,
+  `email_template` VARCHAR(255) DEFAULT "Form.html.twig",
+  `email_subject` VARCHAR(255) NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY  (`id`)

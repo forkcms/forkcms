@@ -389,6 +389,7 @@ jsBackend.FormBuilder.Fields =
                                 $('#textboxClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
                                 if (data.data.field.settings.reply_to && data.data.field.settings.reply_to == true) $('#textboxReplyTo').prop('checked', true);
                                 if (data.data.field.settings.send_confirmation_mail_to && data.data.field.settings.send_confirmation_mail_to == true) $('#textboxSendConfirmationMailTo').prop('checked', true);
+                                $('#textboxConfirmationMailSubject').val(utils.string.htmlDecode(data.data.field.settings.confirmation_mail_subject));
                                 $.each(data.data.field.validations, function (k, v) {
                                     // required checkbox
                                     if (k == 'required') {
@@ -1270,6 +1271,7 @@ jsBackend.FormBuilder.Fields =
         var placeholder = $('#textboxPlaceholder').val();
         var replyTo = ($('#textboxReplyTo').is(':checked') ? 'Y' : 'N');
         var sendConfirmationMailTo = ($('#textboxSendConfirmationMailTo').is(':checked') ? 'Y' : 'N');
+        var confirmationMailSubject = $('#textboxConfirmationMailSubject').val();
         var required = ($('#textboxRequired').is(':checked') ? 'Y' : 'N');
         var requiredErrorMessage = $('#textboxRequiredErrorMessage').val();
         var validation = $('#textboxValidation').val();
@@ -1287,6 +1289,7 @@ jsBackend.FormBuilder.Fields =
                 default_values: value,
                 reply_to: replyTo,
                 send_confirmation_mail_to: sendConfirmationMailTo,
+                confirmation_mail_subject: confirmationMailSubject,
                 required: required,
                 required_error_message: requiredErrorMessage,
                 validation: validation,
@@ -1321,6 +1324,9 @@ jsBackend.FormBuilder.Fields =
                         }
                         if(typeof data.data.errors.send_confirmation_mail_to_error_message != 'undefined') {
                             $('#textboxSendConfirmationMailToErrorMessageError').html(data.data.errors.send_confirmation_mail_to_error_message);
+                        }
+                        if(typeof data.data.errors.confirmation_mail_subject_error_message != 'undefined') {
+                            $('#textboxConfirmationMailSubjectErrorMessageError').html(data.data.errors.confirmation_mail_subject_error_message);
                         }
 
                         // toggle error messages

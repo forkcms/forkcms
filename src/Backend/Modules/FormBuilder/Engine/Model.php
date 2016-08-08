@@ -13,6 +13,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Common\ModuleExtraType;
 use Frontend\Core\Language\Language as FL;
+use Symfony\Component\Finder\Finder;
 
 /**
  * In this file we store all generic functions that we will be using in the form_builder module
@@ -598,5 +599,33 @@ class Model
         BackendModel::getContainer()->get('database')->update('forms_fields', $values, 'id = ?', (int) $id);
 
         return $id;
+    }
+
+    /**
+     * Get templates.
+     *
+     * @return array
+     */
+    public static function getTemplates()
+    {
+        $templates = array();
+        $finder = new Finder();
+        $finder->name('*.html.twig');
+        $finder->in(FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails');
+
+        // if there is a custom theme we should include the templates there also
+        $theme = BackendModel::get('fork.settings')->get('Core', 'theme', 'core');
+        if ($theme !== 'core') {
+            $path = FRONTEND_PATH . '/Themes/' . $theme . '/Modules/FormBuilder/Layout/Templates/Mails';
+            if (is_dir($path)) {
+                $finder->in($path);
+            }
+        }
+
+        foreach ($finder->files() as $file) {
+            $templates[] = $file->getBasename();
+        }
+
+        return array_unique($templates);
     }
 }

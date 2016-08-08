@@ -228,6 +228,8 @@ CREATE TABLE `forms` (
   `email` text COLLATE utf8mb4_unicode_ci,
   `success_message` text COLLATE utf8mb4_unicode_ci,
   `identifier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_template` VARCHAR(255) DEFAULT "Form.html.twig",
+  `email_subject` VARCHAR(255) NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)

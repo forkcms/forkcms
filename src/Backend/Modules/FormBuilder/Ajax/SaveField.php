@@ -59,6 +59,7 @@ class SaveField extends BackendBaseAJAXAction
             'N',
             'string'
         );
+        $confirmationMailSubject = trim(\SpoonFilter::getPostValue('confirmation_mail_subject', null, '', 'string'));
 
         // special fields for datetime
         $inputType = \SpoonFilter::getPostValue('input_type', array('date', 'time'), 'date', 'string');
@@ -104,6 +105,11 @@ class SaveField extends BackendBaseAJAXAction
                         if ($sendConfirmationMailTo == 'Y' && $validation != 'email') {
                             $errors['send_confirmation_mail_to_error_message'] = BL::getError(
                                 'ActivateEmailValidationToUseThisOption'
+                            );
+                        }
+                        if ($sendConfirmationMailTo == 'Y' && empty($confirmationMailSubject)) {
+                            $errors['confirmation_mail_subject_error_message'] = BL::getError(
+                                'ConfirmationSubjectIsEmpty'
                             );
                         }
                     } elseif ($type == 'textarea') {
@@ -232,6 +238,7 @@ class SaveField extends BackendBaseAJAXAction
                         if ($type == 'textbox') {
                             $settings['reply_to'] = ($replyTo === 'Y');
                             $settings['send_confirmation_mail_to'] = ($sendConfirmationMailTo === 'Y');
+                            $settings['confirmation_mail_subject'] = $confirmationMailSubject;
                         }
 
                         // only for datetime input

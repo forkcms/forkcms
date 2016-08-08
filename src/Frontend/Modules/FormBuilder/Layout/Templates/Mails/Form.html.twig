@@ -1,7 +1,7 @@
 {% extends 'Core/Layout/Templates/Mails/Default.html.twig' %}
 
 {% block main %}
-  <h2>{{ SITE_TITLE }}: {{ 'msg.FormBuilderSubject'|trans|format(name) }}</h2>
+  <h2>{{ SITE_TITLE }}: {{ subject|format(name) }}</h2>
   <hr />
   {% if is_confirmation_mail %}
     <p>{{ 'msg.YouJustSentTheMessageBelow'|trans }}</p>

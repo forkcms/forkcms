@@ -8,7 +8,6 @@ use Common\ModulesSettings;
 use Frontend\Core\Language\Language;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use Swift_Mime_SimpleMessage;
-use Swift_Mime_SimpleMessage;
 
 /**
  * A Formbuilder submitted event subscriber that will send an email if needed
@@ -47,7 +46,7 @@ final class FormBuilderSubmittedMailSubscriber
 
         // need to send mail
         if ($form['method'] == 'database_email') {
-            $this->mailer->send($this->getMessage($form, $fieldData));
+            $this->mailer->send($this->getMessage($form, $fieldData, $form['email_subject']));
         }
 
         // check if we need to send confirmation mails
@@ -56,7 +55,9 @@ final class FormBuilderSubmittedMailSubscriber
                 $field['settings']['send_confirmation_mail_to'] === true
             ) {
                 $email = $fieldData[$field['id']]['value'];
-                $this->mailer->send($this->getMessage($form, $fieldData, $email, true));
+                $this->mailer->send(
+                    $this->getMessage($form, $fieldData, $field['settings']['confirmation_mail_subject'], $email, true)
+                );
             }
         }
     }
@@ -64,19 +65,30 @@ final class FormBuilderSubmittedMailSubscriber
     /**
      * @param array $form
      * @param array $fieldData
+     * @param string $subject
      * @param string|null $to
      * @param bool $isConfirmationMail
      *
      * @return Swift_Mime_SimpleMessage
      */
-    private function getMessage(array $form, array $fieldData, $to = null, $isConfirmationMail = false)
-    {
+    private function getMessage(
+        array $form,
+        array $fieldData,
+        $subject = null,
+        $to = null,
+        $isConfirmationMail = false
+    ) {
+        if ($subject === null) {
+            $subject = Language::getMessage('FormBuilderSubject');
+        }
+
         $from = $this->modulesSettings->get('Core', 'mailer_from');
 
-        $message = Message::newInstance(sprintf(Language::getMessage('FormBuilderSubject'), $form['name']))
+        $message = Message::newInstance(sprintf($subject, $form['name']))
             ->parseHtml(
-                '/FormBuilder/Layout/Templates/Mails/Form.html.twig',
+                '/FormBuilder/Layout/Templates/Mails/' . $form['email_template'],
                 array(
+                    'subject' => $subject,
                     'sentOn' => time(),
                     'name' => $form['name'],
                     'fields' => $fieldData,
