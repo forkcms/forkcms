@@ -137,8 +137,8 @@ class Edit extends BackendBaseActionEdit
         );
 
         $zoomLevels = array_combine(
-            array_merge(array('auto'), range(3, 18)),
-            array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))
+            array_merge(array('auto'), range(1, 18)),
+            array_merge(array(BL::lbl('Auto', $this->getModule())), range(1, 18))
         );
 
         $this->settingsForm = new BackendForm('settings');
