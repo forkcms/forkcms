@@ -147,6 +147,7 @@ You do need to run the following queries for that.
 
     ALTER TABLE forms ADD email_template VARCHAR(255) DEFAULT "Form.html.twig";
     ALTER TABLE forms ADD email_subject VARCHAR(255) NULL;
+    ALTER TABLE forms MODIFY `method` enum('database','database_email','email') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email';
 
 ## Removed constants
 

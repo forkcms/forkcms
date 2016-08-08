@@ -45,7 +45,7 @@ final class FormBuilderSubmittedMailSubscriber
         $fieldData = $this->getEmailFields($event->getData());
 
         // need to send mail
-        if ($form['method'] == 'database_email') {
+        if ($form['method'] === 'database_email' || $form['method'] === 'email') {
             $this->mailer->send($this->getMessage($form, $fieldData, $form['email_subject']));
         }
 

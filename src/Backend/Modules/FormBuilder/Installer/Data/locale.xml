@@ -295,6 +295,16 @@
         <translation language="sv"><![CDATA[spara i databas och skicka e-post]]></translation>
         <translation language="el"><![CDATA[Αποθήκευση στη Βάση δεδομένων και αποστολή email]]></translation>
       </item>
+      <item type="label" name="MethodEmail">
+        <translation language="nl"><![CDATA[email verzenden]]></translation>
+        <translation language="en"><![CDATA[send email]]></translation>
+        <translation language="it"><![CDATA[invia mail]]></translation>
+        <translation language="fr"><![CDATA[envoyer par e-mail]]></translation>
+        <translation language="hu"><![CDATA[email-ben küldés]]></translation>
+        <translation language="de"><![CDATA[E-Mail versenden]]></translation>
+        <translation language="es"><![CDATA[enviar un email]]></translation>
+        <translation language="sv"><![CDATA[skicka e-post]]></translation>
+      </item>
       <item type="label" name="MinutesAgo">
         <translation language="nl"><![CDATA[%1$s minuten geleden]]></translation>
         <translation language="en"><![CDATA[%1$s minutes ago]]></translation>

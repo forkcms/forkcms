@@ -54,6 +54,7 @@ class Add extends BackendBaseActionAdd
             array(
                 'database' => BL::getLabel('MethodDatabase'),
                 'database_email' => BL::getLabel('MethodDatabaseEmail'),
+                'email' => BL::getLabel('MethodEmail'),
             ),
             'database_email'
         );
@@ -125,9 +126,11 @@ class Add extends BackendBaseActionAdd
                 $values['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $values['name'] = $txtName->getValue();
                 $values['method'] = $ddmMethod->getValue();
-                $values['email'] = ($ddmMethod->getValue() == 'database_email') ? serialize($emailAddresses) : null;
+                $values['email'] = ($ddmMethod->getValue() === 'database_email' || $ddmMethod->getValue() === 'email')
+                    ? serialize($emailAddresses) : null;
                 $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
-                $values['email_template'] = count($this->templates) > 1 ? $this->frm->getField('template')->getValue() : $this->templates[0];
+                $values['email_template'] = count($this->templates) > 1
+                    ? $this->frm->getField('template')->getValue() : $this->templates[0];
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :

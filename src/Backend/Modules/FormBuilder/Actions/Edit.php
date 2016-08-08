@@ -71,6 +71,7 @@ class Edit extends BackendBaseActionEdit
             array(
                 'database' => BL::getLabel('MethodDatabase'),
                 'database_email' => BL::getLabel('MethodDatabaseEmail'),
+                'email' => BL::getLabel('MethodEmail'),
             ),
             $this->record['method']
         );
@@ -326,7 +327,8 @@ class Edit extends BackendBaseActionEdit
                 // build array
                 $values['name'] = $txtName->getValue();
                 $values['method'] = $ddmMethod->getValue();
-                $values['email'] = ($ddmMethod->getValue() == 'database_email') ? serialize($emailAddresses) : null;
+                $values['email'] = ($ddmMethod->getValue() == 'database_email' || $ddmMethod->getValue() === 'email')
+                    ? serialize($emailAddresses) : null;
                 $values['email_template'] = count($this->templates) > 1
                     ? $this->frm->getField('template')->getValue() : $this->templates[0];
                 $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();

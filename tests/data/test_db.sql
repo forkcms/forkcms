@@ -224,7 +224,7 @@ CREATE TABLE `forms` (
   `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `method` enum('database','database_email') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email',
+  `method` enum('database','database_email','email') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email',
   `email` text COLLATE utf8mb4_unicode_ci,
   `success_message` text COLLATE utf8mb4_unicode_ci,
   `identifier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
