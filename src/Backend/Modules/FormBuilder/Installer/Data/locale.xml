@@ -1076,6 +1076,14 @@
         <translation language="nl"><![CDATA[verstuur bevestigingsmail naar]]></translation>
         <translation language="en"><![CDATA[send confirmation mail to]]></translation>
       </item>
+      <item type="label" name="EmailSubject">
+        <translation language="nl"><![CDATA[onderwerp email]]></translation>
+        <translation language="en"><![CDATA[email subject]]></translation>
+      </item>
+      <item type="label" name="ConfirmationMailSubject">
+        <translation language="nl"><![CDATA[onderwerp bevestigingsmail]]></translation>
+        <translation language="en"><![CDATA[subject confirmation mail]]></translation>
+      </item>
     </FormBuilder>
   </Backend>
   <Frontend>
@@ -1094,9 +1102,9 @@
         <translation language="sv"><![CDATA[невірний час]]></translation>
         <translation language="el"><![CDATA[Μη έγκυρη ώρα]]></translation>
       </item>
-      <item type="message" name="YouJustSentTheMessageBelow">
+      <item type="message" name="YouJustSentTheFollowingMessage">
         <translation language="nl"><![CDATA[U verstuurde net het onderstaande bericht.]]></translation>
-        <translation language="en"><![CDATA[You just sent the message below.]]></translation>
+        <translation language="en"><![CDATA[You just sent the following message.]]></translation>
       </item>
     </Core>
   </Frontend>
