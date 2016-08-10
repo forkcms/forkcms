@@ -1480,7 +1480,7 @@ class CampaignMonitor
 		$results['status'] = $record['State'];
 
 		// check if there are clickedlinks present
-		if(empty($record['CustomFields'])) continue;
+		if(empty($record['CustomFields'])) return array();
 
 		// loop records
 		foreach($record['CustomFields'] as $field)
