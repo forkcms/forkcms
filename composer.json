@@ -36,7 +36,7 @@
         "bin-dir": "bin"
     },
     "support": {
-        "irc": "irc://irc.freenode.org/forkcms",
+        "forum": "https://fork-cms.herokuapp.com",
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {
