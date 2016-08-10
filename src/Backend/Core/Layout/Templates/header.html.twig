@@ -22,7 +22,7 @@
               <ul class="dropdown-menu" role="menu">
                 {% for workingLanguage in workingLanguages %}
                   <li{% if workingLanguage.selected %} class="active"{% endif %}>
-                    <a href="{{ geturl(null,null,null,workingLanguage.abbr) }}" title="{{ workingLanguage.label|ucfirst }}">{{ ('lbl.'~workingLanguage.abbr|uppercase)|trans|ucfirst }}</a>
+                    <a href="{{ geturl('',null,null,workingLanguage.abbr) }}" title="{{ workingLanguage.label|ucfirst }}">{{ ('lbl.'~workingLanguage.abbr|uppercase)|trans|ucfirst }}</a>
                   </li>
                 {% endfor %}
               </ul>
