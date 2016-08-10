@@ -1,3 +1,18 @@
+4.1.1 (2016-08-10)
+------------------
+
+Bugfixes:
+
+* MailMotor: Mailmotor was broken when it wasn't configured yet
+* Core: When switching languages you no longer get Item not found messages
+* Core: Fork CMS now works on mysql 5.7, some queries broke on the default configuration
+
+Enhancements:
+
+* Add extra key-words to composer.json
+* Composer: irc has been removed as support option and slack has been added
+
+
 4.1.0 (2016-08-08)
 ------------------
 

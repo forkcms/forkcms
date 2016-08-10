@@ -1,7 +1,15 @@
 {
     "name": "forkcms/forkcms",
     "description": "Fork is an open source CMS that will rock your world.",
-    "keywords": ["cms"],
+    "keywords": [
+        "cms",
+        "fork",
+        "fork cms",
+        "content management system",
+        "symfony",
+        "blog",
+        "php"
+    ],
     "homepage": "http://www.fork-cms.com/",
     "license": "MIT",
     "require": {
@@ -31,7 +39,7 @@
         "bin-dir": "bin"
     },
     "support": {
-        "irc": "irc://irc.freenode.org/forkcms",
+        "forum": "https://fork-cms.herokuapp.com",
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {
