@@ -1,7 +1,15 @@
 {
     "name": "forkcms/forkcms",
     "description": "Fork is an open source CMS that will rock your world.",
-    "keywords": ["cms"],
+    "keywords": [
+        "cms",
+        "fork",
+        "fork cms",
+        "content management system",
+        "symfony",
+        "blog",
+        "php"
+    ],
     "homepage": "http://www.fork-cms.com/",
     "license": "MIT",
     "require": {
