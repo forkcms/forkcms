@@ -468,8 +468,11 @@ class Form extends FrontendBaseWidget
                 $data['sent_on'] = FrontendModel::getUTCDate();
                 $data['data'] = serialize(array('server' => $_SERVER));
 
+                $dataId = null;
                 // insert data
-                $dataId = FrontendFormBuilderModel::insertData($data);
+                if ($this->item['method'] !== 'email') {
+                    $dataId = FrontendFormBuilderModel::insertData($data);
+                }
 
                 // init fields array
                 $fields = array();
@@ -511,7 +514,9 @@ class Form extends FrontendBaseWidget
                     $fields[$field['id']] = $fieldData;
 
                     // insert
-                    FrontendFormBuilderModel::insertDataField($fieldData);
+                    if ($this->item['method'] !== 'email') {
+                        FrontendFormBuilderModel::insertDataField($fieldData);
+                    }
                 }
 
                 $this->get('event_dispatcher')->dispatch(
