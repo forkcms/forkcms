@@ -61,7 +61,7 @@ class Add extends BackendBaseActionAdd
                     'id' => $contentBlock->getId(),
                     'user_id' => $contentBlock->getUserId(),
                     'template' => $contentBlock->getTemplate(),
-                    'language' => (string) $contentBlock->getLanguage(),
+                    'language' => (string) $contentBlock->getLocale(),
                     'title' => $contentBlock->getTitle(),
                     'text' => $contentBlock->getText(),
                     'hidden' => $contentBlock->isHidden(),

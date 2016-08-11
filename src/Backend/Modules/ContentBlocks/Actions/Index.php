@@ -15,7 +15,7 @@ use Backend\Core\Engine\TemplateModifiers;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\LanguageName;
+use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
 
@@ -43,7 +43,7 @@ class Index extends BackendBaseActionIndex
         /** @var ContentBlockRepository $contentBlockRepository */
         $contentBlockRepository = $this->get('doctrine.orm.entity_manager')->getRepository(ContentBlock::class);
         $this->dataGrid = new DataGridDoctrineQuery(
-            $contentBlockRepository->getDataGridQuery(LanguageName::workingLanguage())
+            $contentBlockRepository->getDataGridQuery(Locale::workingLocale())
         );
         $this->dataGrid->setSortingColumns(['title']);
 

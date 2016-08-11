@@ -4,7 +4,7 @@ namespace Backend\Modules\ContentBlocks\ContentBlock;
 
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\LanguageName;
+use Backend\Core\Language\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -55,11 +55,11 @@ class ContentBlock
     private $template = 'Default.html.twig';
 
     /**
-     * @var LanguageName
+     * @var Locale
      *
-     * @ORM\Column(type="language")
+     * @ORM\Column(type="locale", name="language")
      */
-    private $language;
+    private $locale;
 
     /**
      * @var string
@@ -108,7 +108,7 @@ class ContentBlock
      * @param int $userId
      * @param int $extraId
      * @param string $template
-     * @param string $language
+     * @param string $locale
      * @param string $title
      * @param string $text
      * @param bool $isHidden
@@ -119,7 +119,7 @@ class ContentBlock
         $userId,
         $extraId,
         $template,
-        $language,
+        $locale,
         $title,
         $text,
         $isHidden,
@@ -129,7 +129,7 @@ class ContentBlock
         $this->userId = $userId;
         $this->extraId = $extraId;
         $this->template = $template;
-        $this->language = $language;
+        $this->locale = $locale;
         $this->title = $title;
         $this->text = $text;
         $this->isHidden = $isHidden;
@@ -139,7 +139,7 @@ class ContentBlock
     /**
      * @param int $id
      * @param int $extraId The id of the module extra
-     * @param string $language
+     * @param string $locale
      * @param string $title
      * @param string $text
      * @param bool $isHidden
@@ -150,7 +150,7 @@ class ContentBlock
     public static function create(
         $id,
         $extraId,
-        $language,
+        $locale,
         $title,
         $text,
         $isHidden,
@@ -161,7 +161,7 @@ class ContentBlock
             Authentication::getUser()->getUserId(),
             $extraId,
             $template,
-            $language,
+            $locale,
             $title,
             $text,
             $isHidden,
@@ -210,11 +210,11 @@ class ContentBlock
     }
 
     /**
-     * @return LanguageName
+     * @return Locale
      */
-    public function getLanguage()
+    public function getLocale()
     {
-        return $this->language;
+        return $this->locale;
     }
 
     /**
@@ -288,7 +288,7 @@ class ContentBlock
      */
     private function updateWidget()
     {
-        $editUrl = Model::createURLForAction('Edit', 'ContentBlocks', (string) $this->language) . '&id=' . $this->id;
+        $editUrl = Model::createURLForAction('Edit', 'ContentBlocks', (string) $this->locale) . '&id=' . $this->id;
 
         // update data for the extra
         Model::updateExtra(
@@ -297,7 +297,7 @@ class ContentBlock
             [
                 'id' => $this->id,
                 'extra_label' => $this->title,
-                'language' => (string) $this->language,
+                'language' => (string) $this->locale,
                 'edit_url' => $editUrl,
                 'custom_template' => $this->template,
             ]

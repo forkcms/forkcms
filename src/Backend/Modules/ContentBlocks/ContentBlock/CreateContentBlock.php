@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\ContentBlock;
 
-use Backend\Core\Language\LanguageName;
+use Backend\Core\Language\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateContentBlock
@@ -34,17 +34,17 @@ class CreateContentBlock
     public $isVisible = true;
 
     /**
-     * @var LanguageName
+     * @var Locale
      */
     public $language;
 
     /**
-     * @param LanguageName|null $language
+     * @param Locale|null $language
      */
-    public function __construct(LanguageName $language = null)
+    public function __construct(Locale $language = null)
     {
         if ($language === null) {
-            $language = LanguageName::workingLanguage();
+            $language = Locale::workingLocale();
         }
 
         $this->language = $language;

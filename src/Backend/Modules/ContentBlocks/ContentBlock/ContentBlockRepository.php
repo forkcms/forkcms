@@ -2,18 +2,18 @@
 
 namespace Backend\Modules\ContentBlocks\ContentBlock;
 
-use Backend\Core\Language\LanguageName;
+use Backend\Core\Language\Locale;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
 class ContentBlockRepository extends EntityRepository
 {
     /**
-     * @param LanguageName $language
+     * @param Locale $language
      *
      * @return Query
      */
-    public function getDataGridQuery(LanguageName $language)
+    public function getDataGridQuery(Locale $language)
     {
         return $this->getEntityManager()
             ->createQueryBuilder()
@@ -25,11 +25,11 @@ class ContentBlockRepository extends EntityRepository
     }
 
     /**
-     * @param LanguageName $language
+     * @param Locale $language
      *
      * @return int
      */
-    public function getNextIdForLanguage(LanguageName $language)
+    public function getNextIdForLanguage(Locale $language)
     {
         return (int) $this->getEntityManager()
             ->createQueryBuilder()

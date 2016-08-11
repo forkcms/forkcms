@@ -2,13 +2,13 @@
 
 namespace Backend\Doctrine\Type;
 
-use Backend\Core\Language\LanguageName;
+use Backend\Core\Language\Locale;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
-class LanguageType extends TextType
+class LocaleType extends TextType
 {
-    const LANGUAGE = 'language';
+    const LOCALE = 'locale';
 
     /**
      * @param array $fieldDeclaration
@@ -22,25 +22,25 @@ class LanguageType extends TextType
     }
 
     /**
-     * @param string $language
+     * @param string $locale
      * @param AbstractPlatform $platform
      *
-     * @return LanguageName
+     * @return Locale
      */
-    public function convertToPHPValue($language, AbstractPlatform $platform)
+    public function convertToPHPValue($locale, AbstractPlatform $platform)
     {
-        return LanguageName::fromString($language);
+        return Locale::fromString($locale);
     }
 
     /**
-     * @param LanguageName $languageName
+     * @param Locale $locale
      * @param AbstractPlatform $platform
      *
      * @return string
      */
-    public function convertToDatabaseValue($languageName, AbstractPlatform $platform)
+    public function convertToDatabaseValue($locale, AbstractPlatform $platform)
     {
-        return (string) $languageName;
+        return (string) $locale;
     }
 
     /**
@@ -48,6 +48,6 @@ class LanguageType extends TextType
      */
     public function getName()
     {
-        return self::LANGUAGE;
+        return self::LOCALE;
     }
 }
