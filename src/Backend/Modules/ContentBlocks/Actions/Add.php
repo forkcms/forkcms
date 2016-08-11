@@ -12,7 +12,6 @@ namespace Backend\Modules\ContentBlocks\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\ContentBlocks\ContentBlock\Command\CreateContentBlock;
-use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockType;
 use Backend\Modules\ContentBlocks\ContentBlock\Event\ContentBlockCreated;
 
@@ -30,7 +29,6 @@ class Add extends BackendBaseActionAdd
 
         $form = $this->createForm(
             new ContentBlockType(
-                CreateContentBlock::class,
                 $this->get('fork.settings')->get('Core', 'theme', 'core')
             )
         );
@@ -49,7 +47,6 @@ class Add extends BackendBaseActionAdd
         /** @var CreateContentBlock $createContentBlock */
         $createContentBlock = $form->getData();
 
-        /** @var ContentBlock $contentBlock */
         $this->get('command_bus')->handle($createContentBlock);
 
         $this->get('event_dispatcher')->dispatch(

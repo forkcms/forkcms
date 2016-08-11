@@ -6,7 +6,7 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
 use Doctrine\ORM\EntityManager;
 
-class CreateContentBlockCommandHandler
+final class CreateContentBlockCommandHandler
 {
     /** @var EntityManager */
     private $entityManager;
