@@ -6,6 +6,10 @@ use Backend\Modules\ContentBlocks\ValueObject\Status;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
+/**
+ * @TODO Remove this in favour of the doctrine bool type, for now it is used because database changes are BB
+ * @deprecated
+ */
 class EnumBoolType extends Type
 {
     const ENUM_BOOL = 'enum_bool';
