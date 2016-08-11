@@ -2,6 +2,12 @@
 
 namespace Backend\Modules\ContentBlocks\Engine;
 
+trigger_error(
+    'Backend\Modules\ContentBlocks\Engine is deprecated.
+     Switch to doctrine instead.',
+    E_USER_DEPRECATED
+);
+
 /*
  * This file is part of Fork CMS.
  *
@@ -16,14 +22,23 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
+ *
+ * @deprecated This isn't needed anymore by switching to doctrine.
  */
 class Model
 {
+    /**
+     * @deprecated use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository::getDataGridQuery()
+     */
     const QRY_BROWSE =
         'SELECT i.id, i.title, i.hidden
          FROM content_blocks AS i
          WHERE i.status = ? AND i.language = ?';
 
+    /**
+     * @deprecated use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository::getRevisionDataGridQuery()
+     * @TODO implement doctrine implementation
+     */
     const QRY_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM content_blocks AS i
@@ -34,9 +49,12 @@ class Model
      * Copy content blocks
      *
      * @param string $from The language code to copy the content blocks from.
-     * @param string $to   The language code we want to copy the content blocks to.
+     * @param string $to The language code we want to copy the content blocks to.
      *
      * @return array
+     *
+     * @deprecated
+     * @TODO implement doctrine implementation
      */
     public static function copy($from, $to)
     {
@@ -111,6 +129,9 @@ class Model
      * Delete an item.
      *
      * @param int $id The id of the record to delete.
+     *
+     * @deprecated
+     * @TODO implement doctrine implementation
      */
     public static function delete($id)
     {
@@ -127,17 +148,20 @@ class Model
         BackendModel::getContainer()->get('database')->delete(
             'content_blocks',
             'id = ? AND language = ?',
-            array($id, BL::getWorkingLanguage())
+            [$id, BL::getWorkingLanguage()]
         );
     }
 
     /**
      * Does the item exist.
      *
-     * @param int  $id         The id of the record to check for existence.
+     * @param int $id The id of the record to check for existence.
      * @param bool $activeOnly Only check in active items?
      *
      * @return bool
+     *
+     * @deprecated
+     * @TODO implement doctrine implementation
      */
     public static function exists($id, $activeOnly = true)
     {
@@ -170,6 +194,9 @@ class Model
      * @param int $id The id for the record to get.
      *
      * @return array
+     *
+     * @deprecated
+     * @TODO implement doctrine implementation
      */
     public static function get($id)
     {
@@ -186,22 +213,28 @@ class Model
      * Get the maximum id.
      *
      * @return int
+     *
+     * @deprecated
+     * @TODO implement doctrine implementation
      */
     public static function getMaximumId()
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT MAX(i.id) FROM content_blocks AS i WHERE i.language = ? LIMIT 1',
-            array(BL::getWorkingLanguage())
+            [BL::getWorkingLanguage()]
         );
     }
 
     /**
      * Get all data for a given revision.
      *
-     * @param int $id         The Id for the item wherefore you want a revision.
+     * @param int $id The Id for the item wherefore you want a revision.
      * @param int $revisionId The Id of the revision.
      *
      * @return array
+     *
+     * @deprecated
+     * @TODO implement doctrine implementation
      */
     public static function getRevision($id, $revisionId)
     {
@@ -218,6 +251,9 @@ class Model
      * Get templates.
      *
      * @return array
+     *
+     * @deprecated
+     * @TODO implement doctrine implementation
      */
     public static function getTemplates()
     {
@@ -248,6 +284,9 @@ class Model
      * @param array $item The data to insert.
      *
      * @return int
+     *
+     * @deprecated
+     * @TODO implement doctrine implementation
      */
     public static function insert(array $item)
     {
@@ -259,8 +298,7 @@ class Model
         );
 
         $item['revision_id'] = BackendModel::get('database')
-            ->insert('content_blocks', $item)
-        ;
+            ->insert('content_blocks', $item);
 
         // update data for the extra
         BackendModel::updateExtra(
@@ -271,10 +309,10 @@ class Model
                 'extra_label' => $item['title'],
                 'language' => $item['language'],
                 'edit_url' => BackendModel::createURLForAction(
-                    'Edit',
-                    'ContentBlocks',
-                    $item['language']
-                ) . '&id=' . $item['id'],
+                        'Edit',
+                        'ContentBlocks',
+                        $item['language']
+                    ) . '&id=' . $item['id'],
                 'custom_template' => $item['template'],
             )
         );
@@ -288,6 +326,9 @@ class Model
      * @param array $item The new data.
      *
      * @return int
+     *
+     * @deprecated
+     * @TODO implement doctrine implementation
      */
     public static function update(array $item)
     {
