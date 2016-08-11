@@ -107,7 +107,11 @@ class Url extends Base\Object
         // get the language, this will always be in front
         $language = '';
         if (isset($chunks[1]) && $chunks[1] != '') {
-            $language = \SpoonFilter::getValue($chunks[1], array_keys(BackendLanguage::getWorkingLanguages()), '');
+            $language = \SpoonFilter::getValue(
+                $chunks[1],
+                array_keys(BackendLanguage::getWorkingLanguages()),
+                ''
+            );
         }
 
         // no language provided?
