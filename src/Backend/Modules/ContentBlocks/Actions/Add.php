@@ -28,13 +28,11 @@ class Add extends BackendBaseActionAdd
     {
         parent::execute();
 
-        $createContentBlockCommand = new CreateContentBlock();
         $form = $this->createForm(
             new ContentBlockType(
                 CreateContentBlock::class,
                 $this->get('fork.settings')->get('Core', 'theme', 'core')
-            ),
-            $createContentBlockCommand
+            )
         );
 
         $form->handleRequest($this->get('request'));

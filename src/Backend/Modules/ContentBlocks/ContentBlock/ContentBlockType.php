@@ -3,6 +3,7 @@
 namespace Backend\Modules\ContentBlocks\ContentBlock;
 
 use Backend\Form\Type\EditorType;
+use Backend\Modules\ContentBlocks\ContentBlock\Command\CreateContentBlock;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -87,7 +88,7 @@ class ContentBlockType extends AbstractType
      */
     public function getDefaultOptions(array $options)
     {
-        return ['data_class' => $this->dataClass];
+        return ['data_class' => CreateContentBlock::class];
     }
 
     /**
