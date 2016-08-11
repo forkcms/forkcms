@@ -26,6 +26,7 @@
 		</author>
 	</authors>
 	<events>
+		<event application="backend (symfony event listener)" name="content_blocks.event.content_block_created"><![CDATA[Triggered when a content block is added.]]></event>
 		<event application="backend" name="after_delete"><![CDATA[Triggered when a content block is deleted.]]></event>
 		<event application="backend" name="after_edit"><![CDATA[Triggered when a content block is edited.]]></event>
 	</events>

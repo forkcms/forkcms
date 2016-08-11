@@ -11,9 +11,10 @@ namespace Backend\Modules\ContentBlocks\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\ContentBlocks\ContentBlock\Command\CreateContentBlock;
 use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockType;
-use Backend\Modules\ContentBlocks\ContentBlock\CreateContentBlock;
+use Backend\Modules\ContentBlocks\ContentBlock\Event\ContentBlockCreated;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -49,10 +50,15 @@ class Add extends BackendBaseActionAdd
 
         /** @var CreateContentBlock $createContentBlock */
         $createContentBlock = $form->getData();
+
         /** @var ContentBlock $contentBlock */
         $this->get('command_bus')->handle($createContentBlock);
 
-        // @TODO add event
+        $this->get('event_dispatcher')->dispatch(
+            ContentBlockCreated::EVENT_NAME,
+            new ContentBlockCreated($createContentBlock->contentBlock)
+        );
+
         return $this->redirect(
             BackendModel::createURLForAction('Index') . '&report=added&var=' .
             rawurlencode(
