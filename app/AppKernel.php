@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
             new SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle(),
+            new SimpleBus\SymfonyBridge\SimpleBusEventBusBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
