@@ -40,6 +40,10 @@ doctrine:
     auto_generate_proxy_classes: "%kernel.debug%"
     auto_mapping: true
 
+doctrine_orm_bridge:
+    entity_manager: default
+    connection: default
+
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"

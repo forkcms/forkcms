@@ -34,6 +34,8 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new ForkCMS\Bundle\InstallerBundle\ForkCMSInstallerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
+            new SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
