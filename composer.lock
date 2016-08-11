@@ -4,9 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7970182656a0132afefbecf55da53164",
-    "content-hash": "cbd530b2067a8554eb089eb8ee9b0079",
+    "hash": "9506ea52cd22e7a917227b1b3a0c5852",
+    "content-hash": "757bce97219bb1dd915e0bae9fb3e9b6",
     "packages": [
+        {
+            "name": "beberlei/assert",
+            "version": "v2.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beberlei/assert.git",
+                "reference": "8a9ad22f1220e47a6d174843e8abef08f5eac441"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/8a9ad22f1220e47a6d174843e8abef08f5eac441",
+                "reference": "8a9ad22f1220e47a6d174843e8abef08f5eac441",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Assert": "lib/"
+                },
+                "files": [
+                    "lib/Assert/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                }
+            ],
+            "description": "Thin assertion library for input validation in business models.",
+            "keywords": [
+                "assert",
+                "assertion",
+                "validation"
+            ],
+            "time": "2016-06-20 12:01:28"
+        },
         {
             "name": "behat/transliterator",
             "version": "v1.1.0",
@@ -1508,6 +1561,174 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
+        },
+        {
+            "name": "simple-bus/doctrine-orm-bridge",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SimpleBus/DoctrineORMBridge.git",
+                "reference": "46df998f26940d9525f8e35c40641328c679dbfe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SimpleBus/DoctrineORMBridge/zipball/46df998f26940d9525f8e35c40641328c679dbfe",
+                "reference": "46df998f26940d9525f8e35c40641328c679dbfe",
+                "shasum": ""
+            },
+            "require": {
+                "beberlei/assert": "~2.0",
+                "doctrine/orm": "~2.2",
+                "php": ">=5.4",
+                "simple-bus/message-bus": "~2.0"
+            },
+            "require-dev": {
+                "matthiasnoback/doctrine-orm-test-service-provider": "~2.0",
+                "phpunit/phpunit": "~4.5",
+                "satooshi/php-coveralls": "~0.6"
+            },
+            "suggest": {
+                "simple-bus/symfony-bridge": "Bridge for using command buses and event buses with Symfony"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SimpleBus\\DoctrineORMBridge\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Noback",
+                    "email": "matthiasnoback@gmail.com",
+                    "homepage": "http://php-and-symfony.matthiasnoback.nl"
+                }
+            ],
+            "description": "Doctrine ORM bridge for using command and event buses",
+            "homepage": "http://github.com/SimpleBus/DoctrineORMBridge",
+            "keywords": [
+                "command bus",
+                "doctrine",
+                "event bus"
+            ],
+            "time": "2015-04-29 12:27:27"
+        },
+        {
+            "name": "simple-bus/message-bus",
+            "version": "v2.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SimpleBus/MessageBus.git",
+                "reference": "723bf20b93e17e9e87e83032ec21d8b2452328cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SimpleBus/MessageBus/zipball/723bf20b93e17e9e87e83032ec21d8b2452328cf",
+                "reference": "723bf20b93e17e9e87e83032ec21d8b2452328cf",
+                "shasum": ""
+            },
+            "require": {
+                "beberlei/assert": "~2.0",
+                "php": ">=5.4",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SimpleBus\\Message\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Noback",
+                    "email": "matthiasnoback@gmail.com",
+                    "homepage": "http://php-and-symfony.matthiasnoback.nl"
+                }
+            ],
+            "description": "Generic classes and interfaces for messages and message buses",
+            "homepage": "http://github.com/SimpleBus/MessageBus",
+            "keywords": [
+                "command bus",
+                "event bus",
+                "message",
+                "message bus"
+            ],
+            "time": "2016-02-12 08:35:53"
+        },
+        {
+            "name": "simple-bus/symfony-bridge",
+            "version": "v4.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SimpleBus/SymfonyBridge.git",
+                "reference": "aaead1b08eb604ef9b2b1256a12ef0d033571c86"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SimpleBus/SymfonyBridge/zipball/aaead1b08eb604ef9b2b1256a12ef0d033571c86",
+                "reference": "aaead1b08eb604ef9b2b1256a12ef0d033571c86",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "simple-bus/message-bus": "~2.0",
+                "symfony/config": "~2.3|~3.0",
+                "symfony/dependency-injection": "~2.3|~3.0",
+                "symfony/http-kernel": "~2.3|~3.0",
+                "symfony/yaml": "~2.3|~3.0"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "~1.0",
+                "doctrine/orm": "~2.3",
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6",
+                "simple-bus/doctrine-orm-bridge": "~4.0",
+                "symfony/monolog-bridge": "~2.3|~3.0",
+                "symfony/monolog-bundle": "~2.3|~3.0"
+            },
+            "suggest": {
+                "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
+                "doctrine/orm": "For integration with Doctrine ORM",
+                "simple-bus/doctrine-orm-bridge": "For integration with Doctrine ORM",
+                "symfony/monolog-bundle": "For logging messages"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SimpleBus\\SymfonyBridge\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Noback",
+                    "email": "matthiasnoback@gmail.com",
+                    "homepage": "http://php-and-symfony.matthiasnoback.nl"
+                }
+            ],
+            "description": "Bridge for using command buses and event buses in Symfony projects",
+            "homepage": "http://github.com/SimpleBus/SymfonyBridge",
+            "keywords": [
+                "command bus",
+                "doctrine",
+                "event bus",
+                "symfony"
+            ],
+            "time": "2015-11-25 22:21:13"
         },
         {
             "name": "spoon/library",
