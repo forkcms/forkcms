@@ -1,8 +1,9 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\ContentBlock;
+namespace Backend\Modules\ContentBlocks\ContentBlock\Command;
 
 use Backend\Core\Engine\Model;
+use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
 use Doctrine\ORM\EntityManager;
 
 class CreateContentBlockCommandHandler

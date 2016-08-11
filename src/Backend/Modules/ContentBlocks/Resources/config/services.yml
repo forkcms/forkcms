@@ -6,8 +6,8 @@ services:
             - Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository
 
     content_blocks.create_content_block_command_handler:
-        class: Backend\Modules\ContentBlocks\ContentBlock\CreateContentBlockCommandHandler
+        class: Backend\Modules\ContentBlocks\ContentBlock\Command\CreateContentBlockCommandHandler
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:
-            - { name: command_handler, handles: Backend\Modules\ContentBlocks\ContentBlock\CreateContentBlock }
+            - { name: command_handler, handles: Backend\Modules\ContentBlocks\ContentBlock\Command\CreateContentBlock }

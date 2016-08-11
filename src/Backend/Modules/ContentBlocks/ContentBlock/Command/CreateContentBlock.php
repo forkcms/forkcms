@@ -1,8 +1,9 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\ContentBlock;
+namespace Backend\Modules\ContentBlocks\ContentBlock\Command;
 
 use Backend\Core\Language\Locale;
+use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateContentBlock
