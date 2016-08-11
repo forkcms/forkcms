@@ -13,11 +13,11 @@ class EditorType extends TextareaType
     {
         $optionsResolver->setDefaults(['attr' => ['class' => 'inputEditor']]);
 
-        if (!Model::getContainer()->has('header')) {
+        if (!Model::has('header')) {
             return;
         }
         // add the needed javascript to the header;
-        $header = Model::getContainer()->get('header');
+        $header = Model::get('header');
         // we add JS because we need CKEditor
         $header->addJS('ckeditor/ckeditor.js', 'Core', false);
         $header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
