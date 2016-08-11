@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9506ea52cd22e7a917227b1b3a0c5852",
+    "hash": "a4511193de9b33bb7a300889ae66c31d",
     "content-hash": "757bce97219bb1dd915e0bae9fb3e9b6",
     "packages": [
         {
@@ -1668,16 +1668,16 @@
         },
         {
             "name": "simple-bus/symfony-bridge",
-            "version": "v4.1.3",
+            "version": "v4.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SimpleBus/SymfonyBridge.git",
-                "reference": "aaead1b08eb604ef9b2b1256a12ef0d033571c86"
+                "reference": "9e485c78793cbe6e357d17d154998cc4974fc389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SimpleBus/SymfonyBridge/zipball/aaead1b08eb604ef9b2b1256a12ef0d033571c86",
-                "reference": "aaead1b08eb604ef9b2b1256a12ef0d033571c86",
+                "url": "https://api.github.com/repos/SimpleBus/SymfonyBridge/zipball/9e485c78793cbe6e357d17d154998cc4974fc389",
+                "reference": "9e485c78793cbe6e357d17d154998cc4974fc389",
                 "shasum": ""
             },
             "require": {
@@ -1728,7 +1728,7 @@
                 "event bus",
                 "symfony"
             ],
-            "time": "2015-11-25 22:21:13"
+            "time": "2016-07-16 17:45:36"
         },
         {
             "name": "spoon/library",
