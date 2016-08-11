@@ -47,14 +47,17 @@ class Add extends BackendBaseActionAdd
             return;
         }
 
+        /** @var CreateContentBlock $createContentBlock */
         $createContentBlock = $form->getData();
-
         /** @var ContentBlock $contentBlock */
-        $contentBlock = $this->get('content_blocks.handler')->create($createContentBlock);
+        $this->get('command_bus')->handle($createContentBlock);
 
+        // @TODO add event
         return $this->redirect(
             BackendModel::createURLForAction('Index') . '&report=added&var=' .
-            rawurlencode($contentBlock->getTitle()) . '&highlight=row-' . $contentBlock->getId()
+            rawurlencode(
+                $createContentBlock->contentBlock->getTitle()
+            ) . '&highlight=row-' . $createContentBlock->contentBlock->getId()
         );
     }
 }

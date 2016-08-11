@@ -5,7 +5,7 @@ namespace Backend\Modules\ContentBlocks\ContentBlock;
 use Backend\Core\Engine\Model;
 use Doctrine\ORM\EntityManager;
 
-class ContentBlockHandler
+class CreateContentBlockCommandHandler
 {
     /** @var EntityManager */
     private $entityManager;
@@ -23,7 +23,7 @@ class ContentBlockHandler
      *
      * @return ContentBlock
      */
-    public function create(CreateContentBlock $createContentBlock)
+    public function handle(CreateContentBlock $createContentBlock)
     {
         $contentBlock = ContentBlock::create(
             $this->entityManager
@@ -38,9 +38,8 @@ class ContentBlockHandler
         );
 
         $this->entityManager->persist($contentBlock);
-        $this->entityManager->flush($contentBlock);
 
-        return $contentBlock;
+        $createContentBlock->contentBlock = $contentBlock;
     }
 
     /**
