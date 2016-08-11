@@ -42,9 +42,7 @@ class CreateSchema
         try {
             $schemaTool->createSchema(
                 array_map(
-                    function ($entityClass) {
-                        return $this->entityManager->getClassMetadata($entityClass);
-                    },
+                    array($this->entityManager, 'getClassMetadata'),
                     $entityClasses
                 )
             );
