@@ -47,31 +47,10 @@ class Add extends BackendBaseActionAdd
             return;
         }
 
-        $createContentBlockCommand = $form->getData();
+        $createContentBlock = $form->getData();
 
         /** @var ContentBlock $contentBlock */
-        $contentBlock = $this->get('content_blocks.handler')->create($createContentBlockCommand);
-
-        // trigger fork cms event
-        BackendModel::triggerEvent(
-            $this->getModule(),
-            'after_add',
-            [
-                'item' => [
-                    'id' => $contentBlock->getId(),
-                    'user_id' => $contentBlock->getUserId(),
-                    'template' => $contentBlock->getTemplate(),
-                    'language' => (string) $contentBlock->getLocale(),
-                    'title' => $contentBlock->getTitle(),
-                    'text' => $contentBlock->getText(),
-                    'hidden' => $contentBlock->isHidden(),
-                    'status' => (string) $contentBlock->getStatus(),
-                    'created_on' => $contentBlock->getCreatedOn(),
-                    'edited_on' => $contentBlock->getEditedOn(),
-                    'revision_id' => $contentBlock->getRevisionId(),
-                ],
-            ]
-        );
+        $contentBlock = $this->get('content_blocks.handler')->create($createContentBlock);
 
         return $this->redirect(
             BackendModel::createURLForAction('Index') . '&report=added&var=' .
