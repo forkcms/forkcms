@@ -11,3 +11,10 @@ services:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\ContentBlock\Command\CreateContentBlock }
+
+    content_blocks.update_content_block_command_handler:
+        class: Backend\Modules\ContentBlocks\ContentBlock\Command\UpdateContentBlockCommandHandler
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: command_handler, handles: Backend\Modules\ContentBlocks\ContentBlock\Command\UpdateContentBlock }

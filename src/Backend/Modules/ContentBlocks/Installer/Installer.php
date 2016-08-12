@@ -50,7 +50,7 @@ class Installer extends ModuleInstaller
             $navigationModulesId,
             $this->getModule(),
             'content_blocks/index',
-            array('content_blocks/add', 'content_blocks/edit')
+            ['content_blocks/add', 'content_blocks/edit']
         );
     }
 }

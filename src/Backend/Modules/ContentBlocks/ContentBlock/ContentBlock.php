@@ -303,4 +303,19 @@ class ContentBlock
             ]
         );
     }
+
+    /**
+     * @param string $title
+     * @param string $text
+     * @param bool $isHidden
+     * @param string $template
+     *
+     * @return ContentBlock
+     */
+    public function revise($title, $text, $isHidden, $template)
+    {
+        $this->status = Status::archived();
+
+        return self::create($this->id, $this->extraId, $this->locale, $title, $text, $isHidden, $template);
+    }
 }

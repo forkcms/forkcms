@@ -26,7 +26,7 @@ final class CreateContentBlockCommandHandler
      */
     public function handle(CreateContentBlock $createContentBlock)
     {
-        $contentBlock = ContentBlock::create(
+        $createContentBlock->contentBlock = ContentBlock::create(
             $this->entityManager
                 ->getRepository(ContentBlock::class)
                 ->getNextIdForLanguage($createContentBlock->language),
@@ -38,9 +38,7 @@ final class CreateContentBlockCommandHandler
             $createContentBlock->template
         );
 
-        $this->entityManager->persist($contentBlock);
-
-        $createContentBlock->contentBlock = $contentBlock;
+        $this->entityManager->persist($createContentBlock->contentBlock);
     }
 
     /**
