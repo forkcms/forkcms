@@ -18,7 +18,7 @@ class RevisionDataGrid extends DataGridDB
              FROM content_blocks AS i
              WHERE i.status = :archived AND i.id = :id AND i.language = :language
              ORDER BY i.edited_on DESC',
-            ['archived' => Status::active(), 'language' => $locale, 'id' => $contentBlock->getId()]
+            ['archived' => Status::archived(), 'language' => $locale, 'id' => $contentBlock->getId()]
         );
     }
 }
