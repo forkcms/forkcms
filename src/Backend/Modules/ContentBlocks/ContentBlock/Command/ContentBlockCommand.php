@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\ContentBlocks\ContentBlock\Command;
 
-use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -35,24 +34,7 @@ abstract class ContentBlockCommand
     public $isVisible = true;
 
     /**
-     * @var Locale
-     */
-    public $language;
-
-    /**
      * @var ContentBlock
      */
     public $contentBlock;
-
-    /**
-     * @param Locale|null $language
-     */
-    public function __construct(Locale $language = null)
-    {
-        if ($language === null) {
-            $language = Locale::workingLocale();
-        }
-
-        $this->language = $language;
-    }
 }
