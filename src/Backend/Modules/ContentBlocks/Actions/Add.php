@@ -47,6 +47,7 @@ class Add extends BackendBaseActionAdd
         /** @var CreateContentBlock $createContentBlock */
         $createContentBlock = $form->getData();
 
+        // The command bus will handle the saving of the content block in the database.
         $this->get('command_bus')->handle($createContentBlock);
 
         $this->get('event_dispatcher')->dispatch(
