@@ -33,11 +33,11 @@ class ContentBlockRepository extends EntityRepository
     {
         return (int) $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('MAX(cb.id) + 1 as id')
+            ->select('MAX(cb.id) as id')
             ->from(ContentBlock::class, 'cb')
             ->where('cb.locale = :locale')
             ->setParameter('locale', $locale)
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getSingleScalarResult() + 1;
     }
 }
