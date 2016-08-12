@@ -47,7 +47,7 @@ class Index extends BackendBaseActionIndex
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
-            $editUrl = BackendModel::createURLForAction('Edit', null, null, ['id' => '[id]']);
+            $editUrl = BackendModel::createURLForAction('Edit', null, null, ['id' => '[id]'], false);
             $this->dataGrid->setColumnURL('title', $editUrl);
             $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), $editUrl, BL::lbl('Edit'));
         }
