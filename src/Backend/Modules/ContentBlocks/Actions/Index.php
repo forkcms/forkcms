@@ -10,14 +10,12 @@ namespace Backend\Modules\ContentBlocks\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\DataGridDoctrineQuery;
 use Backend\Core\Engine\TemplateModifiers;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository;
-use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\ContentBlock\BrowseDataGrid;
 
 /**
  * This is the index-action (default), it will display the overview
@@ -36,15 +34,11 @@ class Index extends BackendBaseActionIndex
     }
 
     /**
-     * Load the datagrids
+     * Load the datagrid
      */
     private function loadDataGrid()
     {
-        /** @var ContentBlockRepository $contentBlockRepository */
-        $contentBlockRepository = $this->get('doctrine.orm.entity_manager')->getRepository(ContentBlock::class);
-        $this->dataGrid = new DataGridDoctrineQuery(
-            $contentBlockRepository->getDataGridQuery(Locale::workingLocale())
-        );
+        $this->dataGrid = new BrowseDataGrid(Locale::workingLocale());
         $this->dataGrid->setSortingColumns(['title']);
 
         // show the hidden status
@@ -53,17 +47,9 @@ class Index extends BackendBaseActionIndex
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
-            $this->dataGrid->setColumnURL(
-                'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
-            );
-            $this->dataGrid->addColumn(
-                'edit',
-                null,
-                BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
-                BL::lbl('Edit')
-            );
+            $editUrl = BackendModel::createURLForAction('Edit', null, null, ['id' => '[id]']);
+            $this->dataGrid->setColumnURL('title', $editUrl);
+            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), $editUrl, BL::lbl('Edit'));
         }
     }
 
