@@ -56,10 +56,16 @@ class Add extends BackendBaseActionAdd
         );
 
         return $this->redirect(
-            BackendModel::createURLForAction('Index') . '&report=added&var=' .
-            rawurlencode(
-                $createContentBlock->contentBlock->getTitle()
-            ) . '&highlight=row-' . $createContentBlock->contentBlock->getId()
+            BackendModel::createURLForAction(
+                'Index',
+                null,
+                null,
+                [
+                    'report' => 'added',
+                    'var' => $createContentBlock->contentBlock->getTitle(),
+                    'highlight' => 'row-' . $createContentBlock->contentBlock->getId(),
+                ]
+            )
         );
     }
 }
