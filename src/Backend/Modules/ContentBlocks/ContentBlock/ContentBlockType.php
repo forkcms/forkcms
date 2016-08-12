@@ -10,21 +10,27 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentBlockType extends AbstractType
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $currentTheme;
+
+    /** @var string */
+    private $dataClass;
 
     /**
      * @param string $currentTheme
+     * @param string $dataClass
      */
-    public function __construct($currentTheme)
+    public function __construct($currentTheme, $dataClass = CreateContentBlock::class)
     {
         $this->currentTheme = $currentTheme;
+        $this->dataClass = $dataClass;
     }
 
     /**
@@ -80,7 +86,7 @@ class ContentBlockType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => CreateContentBlock::class]);
+        $resolver->setDefaults(['data_class' => $this->dataClass]);
     }
 
     /**
