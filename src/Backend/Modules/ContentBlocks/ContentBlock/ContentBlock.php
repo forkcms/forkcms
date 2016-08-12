@@ -312,7 +312,7 @@ class ContentBlock
      *
      * @return ContentBlock
      */
-    public function revise($title, $text, $isHidden, $template)
+    public function update($title, $text, $isHidden, $template)
     {
         $this->status = Status::archived();
 

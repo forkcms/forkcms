@@ -23,4 +23,14 @@ class ContentBlockRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult() + 1;
     }
+
+    /**
+     * @param int $id
+     *
+     * @return ContentBlock|null
+     */
+    public function findById($id)
+    {
+        return $this->findOneBy(['id' => $id, 'status' => Status::active()]);
+    }
 }

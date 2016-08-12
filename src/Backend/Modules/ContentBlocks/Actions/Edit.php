@@ -9,204 +9,158 @@ namespace Backend\Modules\ContentBlocks\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\DataGridFunctions;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
-use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Core\Language\Language;
+use Backend\Modules\ContentBlocks\ContentBlock\Command\UpdateContentBlock;
+use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository;
+use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockType;
+use Backend\Modules\ContentBlocks\ContentBlock\Event\ContentBlockUpdated;
+use Backend\Modules\ContentBlocks\ContentBlock\RevisionDataGrid;
+use Backend\Core\Language\Locale;
+use SpoonFilter;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
  */
 class Edit extends BackendBaseActionEdit
 {
-    /**
-     * The available templates
-     *
-     * @var	array
-     */
-    private $templates = array();
+    /** @var ContentBlock */
+    private $contentBlock;
 
     /**
      * Execute the action
      */
     public function execute()
     {
-        $this->id = $this->getParameter('id', 'int');
+        parent::execute();
 
-        // does the item exist
-        if ($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
-            parent::execute();
-            $this->getData();
-            $this->loadRevisions();
-            $this->loadForm();
-            $this->validateForm();
-            $this->parse();
-            $this->display();
-        } else {
-            // no item found, throw an exceptions, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        $this->contentBlock = $this->getContentBlock();
+
+        if ($this->contentBlock === null) {
+            return $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
         }
+
+        $form = $this->createForm(
+            new ContentBlockType($this->get('fork.settings')->get('Core', 'theme', 'core'), UpdateContentBlock::class),
+            new UpdateContentBlock($this->contentBlock)
+        );
+
+        $form->handleRequest($this->get('request'));
+
+        if (!$form->isValid()) {
+            $this->tpl->assign('form', $form->createView());
+
+            $this->parse($this->contentBlock);
+            $this->display();
+
+            return;
+        }
+
+        /** @var UpdateContentBlock $updateContentBlock */
+        $updateContentBlock = $form->getData();
+
+        // The command bus will handle the saving of the content block in the database.
+        $this->get('command_bus')->handle($updateContentBlock);
+
+        $this->get('event_dispatcher')->dispatch(
+            ContentBlockUpdated::EVENT_NAME,
+            new ContentBlockUpdated($updateContentBlock->contentBlock)
+        );
+
+        return $this->redirect(
+            BackendModel::createURLForAction('Index') . '&report=edited&var=' .
+            rawurlencode(
+                $updateContentBlock->contentBlock->getTitle()
+            ) . '&highlight=row-' . $updateContentBlock->contentBlock->getId()
+        );
     }
 
     /**
-     * Get the data
-     * If a revision-id was specified in the URL we load the revision and not the most recent data.
+     * @return ContentBlock|null
      */
-    private function getData()
+    private function getContentBlock()
     {
-        $this->record = BackendContentBlocksModel::get($this->id);
+        /** @var ContentBlockRepository $contentBlockRepository */
+        $contentBlockRepository = $this->get('doctrine.orm.entity_manager')->getRepository(ContentBlock::class);
 
         // specific revision?
-        $revisionToLoad = $this->getParameter('revision', 'int');
+        $revisionId = $this->getParameter('revision', 'int');
 
-        // if this is a valid revision
-        if ($revisionToLoad !== null) {
-            // overwrite the current record
-            $this->record = BackendContentBlocksModel::getRevision($this->id, $revisionToLoad);
-
-            // show warning
+        if ($revisionId !== null) {
             $this->tpl->assign('usingRevision', true);
+
+            return $contentBlockRepository->find($revisionId);
         }
 
-        // get the templates
-        // @todo why is $this->templates loaded twice?
-        $this->templates = BackendContentBlocksModel::getTemplates();
-
-        // check if selected template is still available
-        if ($this->record['template'] && !in_array($this->record['template'], $this->templates)) {
-            $this->record['template'] = '';
-        }
+        return $contentBlockRepository->findById($this->getParameter('id', 'int'));
     }
 
     /**
-     * Load the form
+     * Parses a data grid with the revisions in the template
      */
-    private function loadForm()
-    {
-        $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
-        $this->frm->addEditor('text', $this->record['text']);
-        $this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
-
-        // if we have multiple templates, add a dropdown to select them
-        if (count($this->templates) > 1) {
-            $this->frm->addDropdown('template', array_combine($this->templates, $this->templates), $this->record['template']);
-        }
-    }
-
-    /**
-     * Load the datagrid with revisions
-     */
-    private function loadRevisions()
+    private function parseRevisionsDataGrid()
     {
         // create datagrid
-        $this->dgRevisions = new BackendDataGridDB(
-            BackendContentBlocksModel::QRY_BROWSE_REVISIONS,
-            array('archived', $this->record['id'], BL::getWorkingLanguage())
-        );
+        $revisions = new RevisionDataGrid($this->contentBlock, Locale::workingLocale());
 
         // hide columns
-        $this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
+        $revisions->setColumnsHidden(['id', 'revision_id']);
 
         // disable paging
-        $this->dgRevisions->setPaging(false);
+        $revisions->setPaging(false);
 
         // set headers
-        $this->dgRevisions->setHeaderLabels(array(
-            'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
-        ));
+        $revisions->setHeaderLabels(
+            [
+                'user_id' => SpoonFilter::ucfirst(Language::lbl('By')),
+                'edited_on' => SpoonFilter::ucfirst(Language::lbl('LastEditedOn')),
+            ]
+        );
 
         // set column-functions
-        $this->dgRevisions->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
-            'user_id'
-        );
-        $this->dgRevisions->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'),
-            'edited_on'
-        );
+        $revisions->setColumnFunction([DataGridFunctions::class, 'getUser'], ['[user_id]'], 'user_id');
+        $revisions->setColumnFunction([DataGridFunctions::class, 'getTimeAgo'], ['[edited_on]'], 'edited_on');
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('Edit')) {
-            // set column URLs
-            $this->dgRevisions->setColumnURL(
-                'title',
-                BackendModel::createURLForAction('Edit') .
-                '&amp;id=[id]&amp;revision=[revision_id]'
+        if (Authentication::isAllowedAction('Edit')) {
+            $editRevisionUrl = BackendModel::createURLForAction(
+                'Edit',
+                null,
+                null,
+                ['id' => '[id]', 'revision' => '[revision_id]'],
+                false
             );
+            // set column URLs
+            $revisions->setColumnURL('title', $editRevisionUrl);
 
             // add use column
-            $this->dgRevisions->addColumn(
+            $revisions->addColumn(
                 'use_revision',
                 null,
-                BL::lbl('UseThisVersion'),
-                BackendModel::createURLForAction('Edit') .
-                '&amp;id=[id]&amp;revision=[revision_id]',
-                BL::lbl('UseThisVersion')
+                Language::lbl('UseThisVersion'),
+                $editRevisionUrl,
+                Language::lbl('UseThisVersion')
             );
         }
+
+        $this->tpl->assign('revisions', (string) $revisions->getContent());
     }
 
     /**
-     * Parse the form
+     * Parse the content block and the revisions
      */
     protected function parse()
     {
         parent::parse();
 
-        $this->tpl->assign('id', $this->record['id']);
-        $this->tpl->assign('title', $this->record['title']);
-        $this->tpl->assign('revision_id', $this->record['revision_id']);
+        $this->tpl->assign('id', $this->contentBlock->getId());
+        $this->tpl->assign('title', $this->contentBlock->getTitle());
+        $this->tpl->assign('revision_id', $this->contentBlock->getRevisionId());
 
-        // assign revisions-datagrid
-        $this->tpl->assign('revisions', (string) $this->dgRevisions->getContent());
-    }
-
-    /**
-     * Validate the form
-     */
-    private function validateForm()
-    {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
-            $fields = $this->frm->getFields();
-
-            // validate fields
-            $fields['title']->isFilled(BL::err('TitleIsRequired'));
-            $fields['text']->isFilled(BL::err('FieldIsRequired'));
-
-            if ($this->frm->isCorrect()) {
-                $item['id'] = $this->id;
-                $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];
-                $item['language'] = $this->record['language'];
-                $item['extra_id'] = $this->record['extra_id'];
-                $item['title'] = $fields['title']->getValue();
-                $item['text'] = $fields['text']->getValue();
-                $item['hidden'] = $fields['hidden']->getChecked() ? 'N' : 'Y';
-                $item['status'] = 'active';
-                $item['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);
-                $item['edited_on'] = BackendModel::getUTCDate();
-
-                // insert the item
-                $item['revision_id'] = BackendContentBlocksModel::update($item);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
-
-                // everything is saved, so redirect to the overview
-                $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=edited&var=' .
-                    rawurlencode($item['title']) . '&highlight=row-' . $item['id']
-                );
-            }
-        }
+        $this->parseRevisionsDataGrid();
     }
 }
