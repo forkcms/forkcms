@@ -72,10 +72,16 @@ class Edit extends BackendBaseActionEdit
         );
 
         return $this->redirect(
-            BackendModel::createURLForAction('Index') . '&report=edited&var=' .
-            rawurlencode(
-                $updateContentBlock->contentBlock->getTitle()
-            ) . '&highlight=row-' . $updateContentBlock->contentBlock->getId()
+            BackendModel::createURLForAction(
+                'Index',
+                null,
+                null,
+                [
+                    'report' => 'edited',
+                    'var' => $updateContentBlock->contentBlock->getTitle(),
+                    'highlight' => 'row-' . $updateContentBlock->contentBlock->getId(),
+                ]
+            )
         );
     }
 
