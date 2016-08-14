@@ -26,11 +26,12 @@ class ContentBlockRepository extends EntityRepository
 
     /**
      * @param int $id
+     * @param Locale $locale
      *
      * @return ContentBlock|null
      */
-    public function findById($id)
+    public function findByIdAndLocale($id, Locale $locale)
     {
-        return $this->findOneBy(['id' => $id, 'status' => Status::active()]);
+        return $this->findOneBy(['id' => $id, 'status' => Status::active(), 'language' => $locale]);
     }
 }
