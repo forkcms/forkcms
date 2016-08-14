@@ -18,3 +18,10 @@ services:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\ContentBlock\Command\UpdateContentBlock }
+
+    content_blocks.delete_content_block_command_handler:
+        class: Backend\Modules\ContentBlocks\ContentBlock\Command\DeleteContentBlockCommandHandler
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: command_handler, handles: Backend\Modules\ContentBlocks\ContentBlock\Command\DeleteContentBlock }

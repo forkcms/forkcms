@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\ContentBlock\Command;
 
+use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
 use Doctrine\ORM\EntityManager;
 
@@ -19,12 +20,17 @@ final class DeleteContentBlockCommandHandler
     }
 
     /**
-     * @param UpdateContentBlock $updateContentBlock
+     * @param DeleteContentBlock $deleteContentBlock
      *
      * @return ContentBlock
      */
-    public function handle(UpdateContentBlock $updateContentBlock)
+    public function handle(DeleteContentBlock $deleteContentBlock)
     {
-        $this->entityManager->remove($updateContentBlock->contentBlock);
+        $this->entityManager->getRepository(ContentBlock::class)->removeByIdAndLocale(
+            $deleteContentBlock->contentBlock->getId(),
+            $deleteContentBlock->contentBlock->getLocale()
+        );
+
+        Model::deleteExtraById($deleteContentBlock->contentBlock->getExtraId());
     }
 }
