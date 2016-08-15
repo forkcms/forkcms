@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\ContentBlock;
 
-use Backend\Core\Language\Locale;
+use Common\Locale;
 use Doctrine\ORM\EntityRepository;
 
 class ContentBlockRepository extends EntityRepository

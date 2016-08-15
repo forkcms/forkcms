@@ -2,33 +2,10 @@
 
 namespace Backend\Core\Language;
 
-use InvalidArgumentException;
+use Common\Locale as CommonLocale;
 
-final class Locale
+final class Locale extends CommonLocale
 {
-    /**
-     * @var string
-     */
-    private $locale;
-
-    /**
-     * @param string $locale
-     */
-    private function __construct($locale)
-    {
-        $this->setLocale($locale);
-    }
-
-    /**
-     * @param $locale
-     *
-     * @return self
-     */
-    public static function fromString($locale)
-    {
-        return new self($locale);
-    }
-
     /**
      * @return self
      */
@@ -38,36 +15,10 @@ final class Locale
     }
 
     /**
-     * @param string $locale
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return self
-     */
-    private function setLocale($locale)
-    {
-        if (!array_key_exists($locale, Language::getWorkingLanguages())) {
-            throw new InvalidArgumentException('Invalid language');
-        }
-
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function __toString()
+    protected function getPossibleLanguages()
     {
-        return $this->locale;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
+        return Language::getWorkingLanguages();
     }
 }
