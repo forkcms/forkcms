@@ -15,7 +15,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\ContentBlock\BrowseDataGrid;
+use Backend\Modules\ContentBlocks\DataGrid\BrowseDataGrid;
 
 /**
  * This is the index-action (default), it will display the overview

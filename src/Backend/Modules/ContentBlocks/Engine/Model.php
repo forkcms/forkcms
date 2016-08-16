@@ -22,7 +22,7 @@ use Backend\Core\Engine\Model as BackendModel;
 class Model
 {
     /**
-     * @deprecated replaced by Backend\Modules\ContentBlocks\ContentBlock\BrowseDataGrid.
+     * @deprecated replaced by Backend\Modules\ContentBlocks\DataGrid\BrowseDataGrid.
      */
     const QRY_BROWSE =
         'SELECT i.id, i.title, i.hidden
@@ -30,7 +30,7 @@ class Model
          WHERE i.status = ? AND i.language = ?';
 
     /**
-     * @deprecated replaced by Backend\Modules\ContentBlocks\ContentBlock\RevisionDataGrid.
+     * @deprecated replaced by Backend\Modules\ContentBlocks\DataGrid\RevisionDataGrid.
      */
     const QRY_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id

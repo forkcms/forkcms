@@ -1,9 +1,11 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\ContentBlock;
+namespace Backend\Modules\ContentBlocks\DataGrid;
 
 use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Language\Locale;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\ValueObject\Status;
 
 class RevisionDataGrid extends DataGridDB
 {

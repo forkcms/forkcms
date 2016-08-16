@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\ContentBlock;
+namespace Backend\Modules\ContentBlocks\ValueObject;
 
 use InvalidArgumentException;
 

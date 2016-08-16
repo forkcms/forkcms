@@ -1,7 +1,9 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\ContentBlock;
+namespace Backend\Modules\ContentBlocks\Repository;
 
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\ValueObject\Status;
 use Common\Locale;
 use Doctrine\ORM\EntityRepository;
 

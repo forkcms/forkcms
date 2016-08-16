@@ -1,16 +1,17 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\ContentBlock;
+namespace Backend\Modules\ContentBlocks\Entity;
 
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Locale;
+use Backend\Modules\ContentBlocks\ValueObject\Status;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="content_blocks")
- * @ORM\Entity(repositoryClass="Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository")
+ * @ORM\Entity(repositoryClass="Backend\Modules\ContentBlocks\Repository\ContentBlockRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class ContentBlock

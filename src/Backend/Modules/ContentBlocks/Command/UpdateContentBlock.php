@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\ContentBlock\Command;
+namespace Backend\Modules\ContentBlocks\Command;
 
-use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 
 final class UpdateContentBlock extends ContentBlockCommand
 {

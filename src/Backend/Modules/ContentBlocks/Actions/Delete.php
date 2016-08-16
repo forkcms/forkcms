@@ -12,10 +12,10 @@ namespace Backend\Modules\ContentBlocks\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\ContentBlock\Command\DeleteContentBlock;
-use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
-use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository;
-use Backend\Modules\ContentBlocks\ContentBlock\Event\ContentBlockDeleted;
+use Backend\Modules\ContentBlocks\Command\DeleteContentBlock;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
+use Backend\Modules\ContentBlocks\Event\ContentBlockDeleted;
 
 /**
  * This is the delete-action, it will delete an item.

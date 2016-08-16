@@ -11,7 +11,7 @@ namespace Backend\Modules\ContentBlocks\Installer;
 
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 
 /**
  * Installer for the content blocks module

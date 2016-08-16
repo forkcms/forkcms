@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\ContentBlock;
+namespace Backend\Modules\ContentBlocks\Form;
 
 use Backend\Form\Type\EditorType;
-use Backend\Modules\ContentBlocks\ContentBlock\Command\CreateContentBlock;
+use Backend\Modules\ContentBlocks\Command\CreateContentBlock;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

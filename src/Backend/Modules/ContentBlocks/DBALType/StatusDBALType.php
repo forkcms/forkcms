@@ -1,7 +1,8 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\ContentBlock;
+namespace Backend\Modules\ContentBlocks\DBALType;
 
+use Backend\Modules\ContentBlocks\ValueObject\Status;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 

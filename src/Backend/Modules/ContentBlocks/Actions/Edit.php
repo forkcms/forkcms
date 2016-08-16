@@ -14,12 +14,12 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridFunctions;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language;
-use Backend\Modules\ContentBlocks\ContentBlock\Command\UpdateContentBlock;
-use Backend\Modules\ContentBlocks\ContentBlock\ContentBlock;
-use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository;
-use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockType;
-use Backend\Modules\ContentBlocks\ContentBlock\Event\ContentBlockUpdated;
-use Backend\Modules\ContentBlocks\ContentBlock\RevisionDataGrid;
+use Backend\Modules\ContentBlocks\Command\UpdateContentBlock;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
+use Backend\Modules\ContentBlocks\Form\ContentBlockType;
+use Backend\Modules\ContentBlocks\Event\ContentBlockUpdated;
+use Backend\Modules\ContentBlocks\DataGrid\RevisionDataGrid;
 use Backend\Core\Language\Locale;
 use SpoonFilter;
 
