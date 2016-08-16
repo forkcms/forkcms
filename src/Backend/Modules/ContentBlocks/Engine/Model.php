@@ -46,14 +46,13 @@ class Model
      *
      * @return array
      *
-     * @deprecated
-     * @TODO implement doctrine implementation
+     * @deprecated use the CopyContentBlocksToOtherLocale command
      */
     public static function copy($from, $to)
     {
         trigger_error(
-            'Backend\Modules\ContentBlocks\Engine is deprecated.
-             Switch to doctrine instead.',
+            'Backend\Modules\ContentBlocks\Engine::copy is deprecated.
+             Switch the CopyContentBlocksToOtherLocale command instead.',
             E_USER_DEPRECATED
         );
 

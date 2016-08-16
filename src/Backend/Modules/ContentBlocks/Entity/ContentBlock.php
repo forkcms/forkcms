@@ -292,6 +292,7 @@ class ContentBlock
         $editUrl = Model::createURLForAction('Edit', 'ContentBlocks', (string) $this->locale) . '&id=' . $this->id;
 
         // update data for the extra
+        // @TODO replace this with an implementation with doctrine
         Model::updateExtra(
             $this->extraId,
             'data',

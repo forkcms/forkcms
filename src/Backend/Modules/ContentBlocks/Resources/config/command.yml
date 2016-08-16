@@ -1,21 +1,35 @@
 services:
-    content_blocks.create_content_block_command_handler:
-        class: Backend\Modules\ContentBlocks\Command\CreateContentBlockCommandHandler
+    content_blocks.create_content_block_handler:
+        class: Backend\Modules\ContentBlocks\Command\CreateContentBlockHandler
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\CreateContentBlock }
 
-    content_blocks.update_content_block_command_handler:
-        class: Backend\Modules\ContentBlocks\Command\UpdateContentBlockCommandHandler
+    content_blocks.update_content_block_handler:
+        class: Backend\Modules\ContentBlocks\Command\UpdateContentBlockHandler
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\UpdateContentBlock }
 
-    content_blocks.delete_content_block_command_handler:
-        class: Backend\Modules\ContentBlocks\Command\DeleteContentBlockCommandHandler
+    content_blocks.delete_content_block_handler:
+        class: Backend\Modules\ContentBlocks\Command\DeleteContentBlockHandler
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\DeleteContentBlock }
+
+    content_blocks.delete_content_block_handler:
+        class: Backend\Modules\ContentBlocks\Command\DeleteContentBlockHandler
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\DeleteContentBlock }
+
+    content_blocks.copy_content_blocks_to_other_locale_handler:
+        class: Backend\Modules\ContentBlocks\Command\CopyContentBlocksToOtherLocaleHandler
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\CopyContentBlocksToOtherLocale }

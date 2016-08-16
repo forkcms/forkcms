@@ -5,7 +5,7 @@ namespace Backend\Modules\ContentBlocks\Command;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Doctrine\ORM\EntityManager;
 
-final class UpdateContentBlockCommandHandler
+final class UpdateContentBlockHandler
 {
     /** @var EntityManager */
     private $entityManager;
