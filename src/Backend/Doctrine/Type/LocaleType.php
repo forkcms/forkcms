@@ -18,7 +18,7 @@ class LocaleType extends TextType
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        return 'VARCHAR(10)';
+        return 'VARCHAR(5)';
     }
 
     /**
