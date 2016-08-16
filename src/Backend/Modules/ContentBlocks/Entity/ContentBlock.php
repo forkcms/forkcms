@@ -84,7 +84,7 @@ class ContentBlock
     private $isHidden;
 
     /**
-     * @var Status
+     * @var ContentBlockStatus
      *
      * @ORM\Column(type="content_blocks_status", options={"default" = "active"})
      */
