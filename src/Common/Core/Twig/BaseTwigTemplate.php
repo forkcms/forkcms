@@ -146,13 +146,8 @@ abstract class BaseTwigTemplate extends TwigEngine
         // remove protected constants aka constants that should not be used in the template
         foreach ($constants['user'] as $key => $value) {
             if (!in_array($key, $notPublicConstants)) {
-                $realConstants[$key] = $value;
+                $twig->addGlobal($key, $value);
             }
-        }
-
-        // we should only assign constants if there are constants to assign
-        if (!empty($realConstants)) {
-            $this->assignArray($realConstants);
         }
 
         /* Setup Backend for the Twig environment. */

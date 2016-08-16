@@ -112,7 +112,7 @@ class EditGroup extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Groups') . '&report=group-saved&var=' . urlencode(
+                    BackendModel::createURLForAction('Groups') . '&report=group-saved&var=' . rawurlencode(
                         $values['name']
                     ) . '&highlight=row-' . $this->id
                 );

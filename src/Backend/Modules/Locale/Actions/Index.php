@@ -25,7 +25,22 @@ class Index extends BackendBaseActionIndex
     /**
      * @var BackendDataGridArray
      */
-    private $dgActions, $dgErrors, $dgLabels, $dgMessages;
+    private $dgActions;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgErrors;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgLabels;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgMessages;
 
     /**
      * Filter variables

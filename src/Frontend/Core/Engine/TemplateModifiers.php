@@ -275,20 +275,22 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Get the URL for a give module & action combination
-     *    syntax: {{ geturlforblock($module, $action, $language) }}
+     *    syntax: {{ geturlforblock($module, $action, $language, $data) }}
      *
      * @param string $module   The module wherefore the URL should be build.
      * @param string $action   A specific action wherefore the URL should be build, otherwise the default will be used.
      * @param string $language The language to use, if not provided we will use the loaded language.
+     * @param array $data      An array with keys and values that partially or fully match the data of the block.
+     *                         If it matches multiple versions of that block it will just return the first match.
      *
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, array $data = null)
     {
         $action = ($action !== null) ? (string) $action : null;
         $language = ($language !== null) ? (string) $language : null;
 
-        return Navigation::getURLForBlock((string) $module, $action, $language);
+        return Navigation::getURLForBlock((string) $module, $action, $language, $data);
     }
 
     /**

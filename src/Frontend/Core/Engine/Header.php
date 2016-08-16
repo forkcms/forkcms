@@ -251,8 +251,9 @@ class Header extends FrontendBaseObject
      * @param array $attributes The attributes to parse.
      * @param bool  $overwrite  Should we overwrite the current value?
      * @param mixed $uniqueKeys Which keys can we use to decide if an item is unique.
+     * @param mixed $additionalKey This additional key helps you to create your own custom unique keys if required.
      */
-    public function addMetaData(array $attributes, $overwrite = false, $uniqueKeys = null)
+    public function addMetaData(array $attributes, $overwrite = false, $uniqueKeys = null, $additionalKey = null)
     {
         $overwrite = (bool) $overwrite;
         $uniqueKeys = (array) $uniqueKeys;
@@ -272,6 +273,12 @@ class Header extends FrontendBaseObject
             if (isset($attributes[$key])) {
                 $uniqueKey .= $attributes[$key] . '|';
             }
+        }
+
+        // Sometimes we want to add an extra key, because the uniqueKeys are not enough,
+        // f.e.: when using multiple og:image:width meta elements
+        if ($additionalKey !== null) {
+            $uniqueKey .= $additionalKey;
         }
 
         // is the metadata already available?
@@ -330,20 +337,27 @@ class Header extends FrontendBaseObject
         $this->addMetaData(array('property' => 'og:' . $key, 'content' => $value), $overwrite, 'property');
     }
 
+
     /**
      * Add Open Graph image
      *
      * @param string $image     The path to the image.
      * @param bool   $overwrite Should we overwrite the previous value?
+     * @param integer $width    The width of the image.
+     * @param integer $height   The height of the image.
      */
-    public function addOpenGraphImage($image, $overwrite = false)
+    public function addOpenGraphImage($image, $overwrite = false, $width = 0, $height = 0)
     {
+        // recast width and height
+        $width = (int) $width;
+        $height = (int) $height;
+
         // remove site url from path
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (mb_substr($image, 0, 7) != SITE_PROTOCOL . '://') {
-            if (!is_file(PATH_WWW . $image)) {
+        if (mb_substr($image, 0, 7) != 'http://' && mb_substr($image, 0, 8) != 'https://') {
+            if (!is_file(PATH_WWW . strtok($image, '?'))) {
                 return;
             }
             $image = SITE_URL . $image;
@@ -360,6 +374,24 @@ class Header extends FrontendBaseObject
                 array('property' => 'og:image:secure_url', 'content' => $image),
                 $overwrite,
                 array('property', 'content')
+            );
+        }
+
+        if ($width !== 0) {
+            $this->addMetaData(
+                array('property' => 'og:image:width', 'content' => $width),
+                $overwrite,
+                array('property', 'content'),
+                $image
+            );
+        }
+
+        if ($height !== 0) {
+            $this->addMetaData(
+                array('property' => 'og:image:height', 'content' => $height),
+                $overwrite,
+                array('property', 'content'),
+                $image
             );
         }
     }
@@ -597,8 +629,8 @@ class Header extends FrontendBaseObject
         $this->parseJS();
         $this->parseCustomHeaderHTMLAndGoogleAnalytics();
 
-        $this->tpl->assign('pageTitle', (string) $this->getPageTitle());
-        $this->tpl->assign(
+        $this->tpl->addGlobal('pageTitle', (string) $this->getPageTitle());
+        $this->tpl->addGlobal(
             'siteTitle',
             (string) $this->get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
@@ -625,7 +657,7 @@ class Header extends FrontendBaseObject
             }
         }
 
-        $this->tpl->assign('cssFiles', $cssFiles);
+        $this->tpl->addGlobal('cssFiles', $cssFiles);
     }
 
     /**
@@ -676,7 +708,7 @@ class Header extends FrontendBaseObject
         $siteHTMLHeader .= "\n" . '<script>var jsData = ' . $jsData . '</script>';
 
         // assign site wide html
-        $this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));
+        $this->tpl->addGlobal('siteHTMLHeader', trim($siteHTMLHeader));
     }
 
     /**
@@ -800,7 +832,7 @@ class Header extends FrontendBaseObject
             }
         }
 
-        $this->tpl->assign('jsFiles', $jsFiles);
+        $this->tpl->addGlobal('jsFiles', $jsFiles);
     }
 
     /**
@@ -828,8 +860,8 @@ class Header extends FrontendBaseObject
             $link .= '>' . "\n";
         }
 
-        $this->tpl->assign('meta', $meta . "\n" . $link);
-        $this->tpl->assign('metaCustom', $this->getMetaCustom());
+        $this->tpl->addGlobal('meta', $meta . "\n" . $link);
+        $this->tpl->addGlobal('metaCustom', $this->getMetaCustom());
     }
 
     /**
@@ -880,7 +912,7 @@ class Header extends FrontendBaseObject
 
                 // add GET-params
                 if (!empty($addToUrl)) {
-                    $url .= '?' . http_build_query($addToUrl);
+                    $url .= '?' . http_build_query($addToUrl, null, '&', PHP_QUERY_RFC3986);
                 }
             }
         }

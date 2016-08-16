@@ -11,10 +11,10 @@
         <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}" href="{{ SITE_URL }}{{ prefixURL }}" target="_blank">{{ 'lbl.VisitWebsite'|trans|ucfirst }}</a>
       </p>
       {% if SITE_MULTILANGUAGE %}
-        <ul class="nav navbar-nav navbar-languages">
+        <div class="nav navbar-nav navbar-languages">
           {% if workingLanguages %}
-            <label class="working-language hidden-xs" for="workingLanguages">{{ 'msg.NowEditing'|trans|ucfirst }}</label>
-            <li class="dropdown">
+            <span class="working-language hidden-xs">{{ 'msg.NowEditing'|trans|ucfirst }}</span>
+            <div class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ LANGUAGE|uppercase }}">
                 <span class="dropdown-text">{{ ('lbl.'~LANGUAGE|uppercase)|trans|ucfirst }}</span>
                 <span class="dropdown-angle"><i class="fa fa-angle-right"></i></span>
@@ -22,13 +22,13 @@
               <ul class="dropdown-menu" role="menu">
                 {% for workingLanguage in workingLanguages %}
                   <li{% if workingLanguage.selected %} class="active"{% endif %}>
-                    <a href="{{ geturl(null,null,null,workingLanguage.abbr) }}" title="{{ workingLanguage.label|ucfirst }}">{{ ('lbl.'~workingLanguage.abbr|uppercase)|trans|ucfirst }}</a>
+                    <a href="{{ geturl('',null,null,workingLanguage.abbr) }}" title="{{ workingLanguage.label|ucfirst }}">{{ ('lbl.'~workingLanguage.abbr|uppercase)|trans|ucfirst }}</a>
                   </li>
                 {% endfor %}
               </ul>
-            </li>
+            </div>
           {% endif %}
-        </ul>
+        </div>
       {% endif %}
     </div>
   </div>

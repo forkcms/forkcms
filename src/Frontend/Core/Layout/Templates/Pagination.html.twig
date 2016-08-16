@@ -22,13 +22,13 @@
             {% endif %}
 
             {% for pagination in pagination.pages %}
-              <li{% if pagination.pages.current %} class="currentPage"{% endif %}>
-                {% if not pagination.pages.current %}
-                <a href="{{ pagination.pages.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.pages.label }}">{% endif %}
-                  {% if pagination.pages.current %}<span>{% endif %}
-                    {{ pagination.pages.label }}
-                    {% if pagination.pages.current %}</span>{% endif %}
-                  {% if not pagination.pages.current %}</a>{% endif %}
+              <li{% if pagination.current %} class="currentPage"{% endif %}>
+                {% if not pagination.current %}
+                <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">{% endif %}
+                  {% if pagination.current %}<span>{% endif %}
+                    {{ pagination.label }}
+                    {% if pagination.current %}</span>{% endif %}
+                  {% if not pagination.current %}</a>{% endif %}
               </li>
             {% endfor %}
 

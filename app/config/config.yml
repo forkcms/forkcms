@@ -55,6 +55,9 @@ services:
             - %database.port%
         calls:
             - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
+            # The following line removes the ONLY_FULL_GROUP_BY from the sessions sql_mode, it was added in 5.7
+            # and caused some queries to break.
+            - [ execute, [ 'SET sql_mode = REPLACE(@@SESSION.sql_mode, "ONLY_FULL_GROUP_BY", "")'] ]
             - [ setDebug, [ %kernel.debug% ]]
     mailer_configurator:
         class: Common\Mailer\Configurator

@@ -322,6 +322,9 @@ class Profile
      */
     public function setSetting($name, $value)
     {
+        // make sure we have the current settings in cache
+        $this->getSettings();
+
         // set setting
         FrontendProfilesModel::setSetting($this->getId(), (string) $name, $value);
 
@@ -336,6 +339,9 @@ class Profile
      */
     public function setSettings(array $values)
     {
+        // make sure we have the current settings in cache
+        $this->getSettings();
+
         // set settings
         FrontendProfilesModel::setSettings($this->getId(), $values);
 
