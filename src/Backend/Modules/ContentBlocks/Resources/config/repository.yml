@@ -1,0 +1,6 @@
+services:
+    contant_blocks.repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Backend\Modules\ContentBlocks\Repository\ContentBlockRepository
