@@ -15,7 +15,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\DataGrid\BrowseDataGrid;
+use Backend\Modules\ContentBlocks\DataGrid\ContentBlockDataGrid;
 
 /**
  * This is the index-action (default), it will display the overview
@@ -38,7 +38,7 @@ class Index extends BackendBaseActionIndex
      */
     private function loadDataGrid()
     {
-        $this->dataGrid = new BrowseDataGrid(Locale::workingLocale());
+        $this->dataGrid = new ContentBlockDataGrid(Locale::workingLocale());
         $this->dataGrid->setSortingColumns(['title']);
 
         // show the hidden status

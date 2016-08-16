@@ -7,7 +7,10 @@ use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\ValueObject\Status;
 
-class RevisionDataGrid extends DataGridDB
+/**
+ * @TODO replace with a doctrine implementation of the data grid
+ */
+class ContentBlockRevisionDataGrid extends DataGridDB
 {
     /**
      * @param ContentBlock $contentBlock

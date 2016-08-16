@@ -6,7 +6,10 @@ use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\ValueObject\Status;
 
-class BrowseDataGrid extends DataGridDB
+/**
+ * @TODO replace with a doctrine implementation of the data grid
+ */
+class ContentBlockDataGrid extends DataGridDB
 {
     /**
      * @param Locale $locale

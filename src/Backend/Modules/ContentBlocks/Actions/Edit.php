@@ -19,7 +19,7 @@ use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\Form\ContentBlockType;
 use Backend\Modules\ContentBlocks\Event\ContentBlockUpdated;
-use Backend\Modules\ContentBlocks\DataGrid\RevisionDataGrid;
+use Backend\Modules\ContentBlocks\DataGrid\ContentBlockRevisionDataGrid;
 use Backend\Core\Language\Locale;
 use SpoonFilter;
 
@@ -111,7 +111,7 @@ class Edit extends BackendBaseActionEdit
     private function parseRevisionsDataGrid()
     {
         // create datagrid
-        $revisions = new RevisionDataGrid($this->contentBlock, Locale::workingLocale());
+        $revisions = new ContentBlockRevisionDataGrid($this->contentBlock, Locale::workingLocale());
 
         // hide columns
         $revisions->setColumnsHidden(['id', 'revision_id']);
