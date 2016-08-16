@@ -33,8 +33,8 @@ doctrine:
       # Remove when we don't have legacy tables anymore
       enum: string
     types:
-      enum_bool: Backend\Doctrine\Type\EnumBoolType
-      locale: Backend\Doctrine\Type\LocaleType
+      enum_bool: Common\Doctrine\Type\EnumBoolType
+      locale: Common\Doctrine\Type\LocaleType
 
   orm:
     auto_generate_proxy_classes: "%kernel.debug%"

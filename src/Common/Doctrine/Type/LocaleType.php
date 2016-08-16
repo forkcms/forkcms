@@ -1,8 +1,10 @@
 <?php
 
-namespace Backend\Doctrine\Type;
+namespace Common\Doctrine\Type;
 
-use Backend\Core\Language\Locale;
+use Backend\Core\Language\Locale as BackendLocale;
+use Common\Locale;
+use Frontend\Core\Language\Locale as FrontendLocale;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
@@ -29,7 +31,11 @@ class LocaleType extends TextType
      */
     public function convertToPHPValue($locale, AbstractPlatform $platform)
     {
-        return Locale::fromString($locale);
+        if (APPLICATION === 'frontend') {
+            return FrontendLocale::fromString($locale);
+        }
+
+        return BackendLocale::fromString($locale);
     }
 
     /**

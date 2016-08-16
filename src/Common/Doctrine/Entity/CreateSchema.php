@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Doctrine\Entity;
+namespace Common\Doctrine\Entity;
 
 use Doctrine\DBAL\Exception\TableExistsException;
 use Doctrine\ORM\EntityManager;
@@ -42,7 +42,7 @@ class CreateSchema
         try {
             $schemaTool->createSchema(
                 array_map(
-                    array($this->entityManager, 'getClassMetadata'),
+                    [$this->entityManager, 'getClassMetadata'],
                     $entityClasses
                 )
             );
