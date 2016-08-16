@@ -5,7 +5,7 @@ namespace Backend\Modules\ContentBlocks\Entity;
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\ValueObject\Status;
+use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -113,7 +113,7 @@ class ContentBlock
      * @param string $title
      * @param string $text
      * @param bool $isHidden
-     * @param Status $status
+     * @param ContentBlockStatus $status
      */
     private function __construct(
         $id,
@@ -124,7 +124,7 @@ class ContentBlock
         $title,
         $text,
         $isHidden,
-        Status $status
+        ContentBlockStatus $status
     ) {
         $this->id = $id;
         $this->userId = $userId;
@@ -166,7 +166,7 @@ class ContentBlock
             $title,
             $text,
             $isHidden,
-            Status::active()
+            ContentBlockStatus::active()
         );
     }
 
@@ -243,7 +243,7 @@ class ContentBlock
     }
 
     /**
-     * @return Status
+     * @return ContentBlockStatus
      */
     public function getStatus()
     {
@@ -316,7 +316,7 @@ class ContentBlock
      */
     public function update($title, $text, $isHidden, $template)
     {
-        $this->status = Status::archived();
+        $this->status = ContentBlockStatus::archived();
 
         return self::create($this->id, $this->extraId, $this->locale, $title, $text, $isHidden, $template);
     }

@@ -1,4 +1,4 @@
 doctrine:
   dbal:
     types:
-      content_blocks_status: Backend\Modules\ContentBlocks\DBALType\StatusDBALType
+      content_blocks_status: Backend\Modules\ContentBlocks\DBALType\ContentBlockStatusDBALType

@@ -4,7 +4,7 @@ namespace Backend\Modules\ContentBlocks\ValueObject;
 
 use InvalidArgumentException;
 
-final class Status
+final class ContentBlockStatus
 {
     const STATUS_ARCHIVED = 'archived';
     const STATUS_ACTIVE = 'active';

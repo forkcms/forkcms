@@ -3,7 +3,7 @@
 namespace Backend\Modules\ContentBlocks\Repository;
 
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
-use Backend\Modules\ContentBlocks\ValueObject\Status;
+use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
 use Common\Locale;
 use Doctrine\ORM\EntityRepository;
 
@@ -34,7 +34,7 @@ class ContentBlockRepository extends EntityRepository
      */
     public function findByIdAndLocale($id, Locale $locale)
     {
-        return $this->findOneBy(['id' => $id, 'status' => Status::active(), 'locale' => $locale]);
+        return $this->findOneBy(['id' => $id, 'status' => ContentBlockStatus::active(), 'locale' => $locale]);
     }
 
     /**

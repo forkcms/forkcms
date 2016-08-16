@@ -48,7 +48,6 @@ class BackendExtension extends Extension implements PrependExtensionInterface
                                 'is_bundle' => false,
                                 'dir' => $dir,
                                 'prefix' => 'Backend\\Modules\\' . $module . '\\Entity',
-                                'alias' => $module,
                             ),
                         ),
                     ),

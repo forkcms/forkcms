@@ -5,7 +5,7 @@ namespace Backend\Modules\ContentBlocks\DataGrid;
 use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
-use Backend\Modules\ContentBlocks\ValueObject\Status;
+use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
@@ -23,7 +23,7 @@ class ContentBlockRevisionDataGrid extends DataGridDB
              FROM content_blocks AS i
              WHERE i.status = :archived AND i.id = :id AND i.language = :language
              ORDER BY i.edited_on DESC',
-            ['archived' => Status::archived(), 'language' => $locale, 'id' => $contentBlock->getId()]
+            ['archived' => ContentBlockStatus::archived(), 'language' => $locale, 'id' => $contentBlock->getId()]
         );
     }
 }
