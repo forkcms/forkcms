@@ -12,6 +12,8 @@ namespace Backend\Modules\Pages\Engine;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Locale;
+use Backend\Modules\ContentBlocks\Command\CopyContentBlocksToOtherLocale;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -102,7 +104,9 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // copy contentBlocks and get copied contentBlockIds
-        $contentBlockIds = BackendContentBlocksModel::copy($from, $to);
+        $copyContentBlocks = new CopyContentBlocksToOtherLocale(Locale::fromString($to), Locale::fromString($from));
+        BackendModel::get('command_bus')->handle($copyContentBlocks);
+        $contentBlockIds = $copyContentBlocks->extraIdMap;
 
         // define old block ids
         $contentBlockOldIds = array_keys($contentBlockIds);

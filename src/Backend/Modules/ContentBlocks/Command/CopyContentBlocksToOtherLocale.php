@@ -12,6 +12,9 @@ final class CopyContentBlocksToOtherLocale
     /** @var Locale */
     public $fromLocale;
 
+    /** @var array this is used to be able to convert the old ids to the new ones if used in other places */
+    public $extraIdMap;
+
     /**
      * @param Locale $toLocale
      * @param Locale|null $fromLocale
@@ -24,5 +27,6 @@ final class CopyContentBlocksToOtherLocale
 
         $this->toLocale = $toLocale;
         $this->fromLocale = $fromLocale;
+        $this->extraIdMap = array();
     }
 }

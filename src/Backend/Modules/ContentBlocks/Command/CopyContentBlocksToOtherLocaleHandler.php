@@ -32,11 +32,13 @@ final class CopyContentBlocksToOtherLocaleHandler
 
         array_map(
             function (ContentBlock $contentBlock) use ($copyContentBlocksToOtherLocale) {
+                $copyContentBlocksToOtherLocale->extraIdMap[$contentBlock->getExtraId()] = $this->getNewExtraId();
+
                 $otherLocaleContentBlock = ContentBlock::create(
                     $this->entityManager
                         ->getRepository(ContentBlock::class)
                         ->getNextIdForLanguage($copyContentBlocksToOtherLocale->toLocale),
-                    $this->getNewExtraId(),
+                    $copyContentBlocksToOtherLocale->extraIdMap[$contentBlock->getExtraId()],
                     $copyContentBlocksToOtherLocale->toLocale,
                     $contentBlock->getTitle(),
                     $contentBlock->getText(),
