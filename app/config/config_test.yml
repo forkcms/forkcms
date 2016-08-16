@@ -16,7 +16,9 @@ web_profiler:
 
 doctrine:
   dbal:
-    dbname: %database.name%_test
+    connections:
+      default:
+        dbname: %database.name%_test
 
 services:
     database:
