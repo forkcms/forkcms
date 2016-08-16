@@ -2,12 +2,6 @@
 
 namespace Backend\Modules\ContentBlocks\Engine;
 
-trigger_error(
-    'Backend\Modules\ContentBlocks\Engine is deprecated.
-     Switch to doctrine instead.',
-    E_USER_DEPRECATED
-);
-
 /*
  * This file is part of Fork CMS.
  *
@@ -28,7 +22,7 @@ use Backend\Core\Engine\Model as BackendModel;
 class Model
 {
     /**
-     * @deprecated use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository::getDataGridQuery()
+     * @deprecated replaced by Backend\Modules\ContentBlocks\ContentBlock\BrowseDataGrid.
      */
     const QRY_BROWSE =
         'SELECT i.id, i.title, i.hidden
@@ -36,8 +30,7 @@ class Model
          WHERE i.status = ? AND i.language = ?';
 
     /**
-     * @deprecated use Backend\Modules\ContentBlocks\ContentBlock\ContentBlockRepository::getRevisionDataGridQuery()
-     * @TODO implement doctrine implementation
+     * @deprecated replaced by Backend\Modules\ContentBlocks\ContentBlock\RevisionDataGrid.
      */
     const QRY_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
@@ -58,6 +51,12 @@ class Model
      */
     public static function copy($from, $to)
     {
+        trigger_error(
+            'Backend\Modules\ContentBlocks\Engine is deprecated.
+             Switch to doctrine instead.',
+            E_USER_DEPRECATED
+        );
+
         // get db
         $db = BackendModel::getContainer()->get('database');
 
@@ -130,11 +129,16 @@ class Model
      *
      * @param int $id The id of the record to delete.
      *
-     * @deprecated
-     * @TODO implement doctrine implementation
+     * @deprecated use doctrine instead
      */
     public static function delete($id)
     {
+        trigger_error(
+            'Backend\Modules\ContentBlocks\Engine is deprecated.
+             Switch to doctrine instead.',
+            E_USER_DEPRECATED
+        );
+
         // recast id
         $id = (int) $id;
 
@@ -160,11 +164,16 @@ class Model
      *
      * @return bool
      *
-     * @deprecated
-     * @TODO implement doctrine implementation
+     * @deprecated use doctrine instead
      */
     public static function exists($id, $activeOnly = true)
     {
+        trigger_error(
+            'Backend\Modules\ContentBlocks\Engine is deprecated.
+             Switch to doctrine instead.',
+            E_USER_DEPRECATED
+        );
+
         $db = BackendModel::getContainer()->get('database');
 
         // if the item should also be active, there should be at least one row to return true
@@ -195,11 +204,16 @@ class Model
      *
      * @return array
      *
-     * @deprecated
-     * @TODO implement doctrine implementation
+     * @deprecated use doctrine instead
      */
     public static function get($id)
     {
+        trigger_error(
+            'Backend\Modules\ContentBlocks\Engine is deprecated.
+             Switch to doctrine instead.',
+            E_USER_DEPRECATED
+        );
+
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
              FROM content_blocks AS i
@@ -215,10 +229,15 @@ class Model
      * @return int
      *
      * @deprecated
-     * @TODO implement doctrine implementation
      */
     public static function getMaximumId()
     {
+        trigger_error(
+            'Backend\Modules\ContentBlocks\Engine is deprecated.
+             Switch to doctrine instead.',
+            E_USER_DEPRECATED
+        );
+
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT MAX(i.id) FROM content_blocks AS i WHERE i.language = ? LIMIT 1',
             [BL::getWorkingLanguage()]
@@ -233,11 +252,16 @@ class Model
      *
      * @return array
      *
-     * @deprecated
-     * @TODO implement doctrine implementation
+     * @deprecated use doctrine instead
      */
     public static function getRevision($id, $revisionId)
     {
+        trigger_error(
+            'Backend\Modules\ContentBlocks\Engine is deprecated.
+             Switch to doctrine instead.',
+            E_USER_DEPRECATED
+        );
+
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
              FROM content_blocks AS i
@@ -252,11 +276,16 @@ class Model
      *
      * @return array
      *
-     * @deprecated
-     * @TODO implement doctrine implementation
+     * @deprecated moved to the FormType
      */
     public static function getTemplates()
     {
+        trigger_error(
+            'Backend\Modules\ContentBlocks\Engine is deprecated.
+             Switch to doctrine instead.',
+            E_USER_DEPRECATED
+        );
+
         $templates = array();
         $finder = new Finder();
         $finder->name('*.html.twig');
@@ -285,11 +314,16 @@ class Model
      *
      * @return int
      *
-     * @deprecated
-     * @TODO implement doctrine implementation
+     * @deprecated use doctrine instead
      */
     public static function insert(array $item)
     {
+        trigger_error(
+            'Backend\Modules\ContentBlocks\Engine is deprecated.
+             Switch to doctrine instead.',
+            E_USER_DEPRECATED
+        );
+
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
             'widget',
@@ -327,11 +361,16 @@ class Model
      *
      * @return int
      *
-     * @deprecated
-     * @TODO implement doctrine implementation
+     * @deprecated use doctrine instead
      */
     public static function update(array $item)
     {
+        trigger_error(
+            'Backend\Modules\ContentBlocks\Engine is deprecated.
+             Switch to doctrine instead.',
+            E_USER_DEPRECATED
+        );
+
         $db = BackendModel::getContainer()->get('database');
 
         // update extra
