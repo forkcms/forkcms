@@ -50,21 +50,24 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Format a number
-     * syntax: {$var|formatnumber}
+     *    syntax: {{ $string|formatnumber($decimals) }}
      *
-     * @param float $var The number to format.
+     * @param float $number The number to format.
+     * @param int $decimals The number of decimals
      *
      * @return string
      */
-    public static function formatNumber($var)
+    public static function formatNumber($number, $decimals = null)
     {
-        $var = (float) $var;
+        $number = (float) $number;
 
         // get setting
         $format = Authentication::getUser()->getSetting('number_format', 'dot_nothing');
 
         // get amount of decimals
-        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
+        if ($decimals === null) {
+            $decimals = (mb_strpos($number, '.') ? mb_strlen(mb_substr($number, mb_strpos($number, '.') + 1)) : 0);
+        }
 
         // get separators
         $separators = explode('_', $format);
@@ -77,7 +80,7 @@ class TemplateModifiers extends BaseTwigModifiers
         );
 
         // format the number
-        return number_format($var, $decimals, $decimalSeparator, $thousandsSeparator);
+        return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
     }
 
     /**

@@ -179,12 +179,22 @@ class Block extends Object
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, true, Header::PRIORITY_GROUP_MODULE);
+            $this->header->addJS(
+                $frontendModuleURL . '/' . $this->getModule() . '.js',
+                true,
+                true,
+                Header::PRIORITY_GROUP_MODULE
+            );
         }
 
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true, Header::PRIORITY_GROUP_MODULE);
+            $this->header->addJS(
+                $frontendModuleURL . '/' . $this->getAction() . '.js',
+                true,
+                true,
+                Header::PRIORITY_GROUP_MODULE
+            );
         }
     }
 

@@ -1,3 +1,22 @@
+4.0.5 (2016-07-12)
+--
+
+Bugfixes:
+
+* Location: show google maps key when Location is installed.
+* Core: add needed swiftmailer monolog configuration.
+* Core: make the formatCurrency modifier respect the number format.
+* Core: fix deletion of cookies.
+* Core: fix case error.
+* Core: fix "exists" instead of "exist" in exceptions and comments.
+* Core: fix wrong order of twig filters.
+* Core: fix wrong css class on help-blocks.
+* Core: fix link in cookie bar text in the triton theme.
+* Core: use php.ini's default session location.
+* Extensions: fix install button for installed modules.
+* Core: minify module JavaScript files.
+
+
 4.0.4 (2016-07-01)
 --
 
