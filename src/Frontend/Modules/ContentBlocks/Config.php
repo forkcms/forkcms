@@ -19,14 +19,14 @@ class Config extends FrontendBaseConfig
     /**
      * The default action
      *
-     * @var	string
+     * @var string
      */
     protected $defaultAction = 'Detail';
 
     /**
      * The disabled actions
      *
-     * @var	array
+     * @var array
      */
-    protected $disabledActions = array();
+    protected $disabledActions = [];
 }

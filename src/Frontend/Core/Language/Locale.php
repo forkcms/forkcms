@@ -19,6 +19,6 @@ final class Locale extends CommonLocale
      */
     protected function getPossibleLanguages()
     {
-        return Language::getActiveLanguages();
+        return array_flip(Language::getActiveLanguages());
     }
 }

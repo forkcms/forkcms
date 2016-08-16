@@ -4,6 +4,12 @@ namespace Frontend\Modules\ContentBlocks\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 
+trigger_error(
+    'Frontend\Modules\ContentBlocks\Engine is deprecated.
+     Switch to doctrine instead.',
+    E_USER_DEPRECATED
+);
+
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
  */
