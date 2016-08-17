@@ -632,7 +632,7 @@ class Header extends FrontendBaseObject
         $this->tpl->addGlobal('pageTitle', (string) $this->getPageTitle());
         $this->tpl->addGlobal(
             'siteTitle',
-            (string) $this->get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            (string) $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE)
         );
     }
 
@@ -701,7 +701,7 @@ class Header extends FrontendBaseObject
         }
 
         // store language
-        $this->jsData['FRONTEND_LANGUAGE'] = FRONTEND_LANGUAGE;
+        $this->jsData['LANGUAGE'] = LANGUAGE;
 
         // encode and add
         $jsData = json_encode($this->jsData);
@@ -749,7 +749,7 @@ class Header extends FrontendBaseObject
         // should we add extra open-graph data?
         if ($parseFacebook) {
             // build correct locale
-            switch (FRONTEND_LANGUAGE) {
+            switch (LANGUAGE) {
                 case 'en':
                     $locale = 'en_US';
                     break;
@@ -779,7 +779,7 @@ class Header extends FrontendBaseObject
                     break;
 
                 default:
-                    $locale = mb_strtolower(FRONTEND_LANGUAGE) . '_' . mb_strtoupper(FRONTEND_LANGUAGE);
+                    $locale = mb_strtolower(LANGUAGE) . '_' . mb_strtoupper(LANGUAGE);
             }
 
             $this->addOpenGraphData('locale', $locale);
@@ -981,7 +981,7 @@ class Header extends FrontendBaseObject
             if (empty($value)) {
                 $this->pageTitle = $this->get('fork.settings')->get(
                     'Core',
-                    'site_title_' . FRONTEND_LANGUAGE,
+                    'site_title_' . LANGUAGE,
                     SITE_DEFAULT_TITLE
                 );
             } else {
@@ -990,7 +990,7 @@ class Header extends FrontendBaseObject
                     $this->pageTitle = $value . ' -  ' .
                                        $this->get('fork.settings')->get(
                                            'Core',
-                                           'site_title_' . FRONTEND_LANGUAGE,
+                                           'site_title_' . LANGUAGE,
                                            SITE_DEFAULT_TITLE
                                        );
                 } else {

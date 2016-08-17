@@ -95,7 +95,7 @@ class Index extends FrontendBaseBlock
         $this->limit = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
-                           FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
+                           LANGUAGE . '_' . md5($this->term) . '_' .
                            $this->offset . '_' . $this->limit . '.php';
 
         // load the cached data
@@ -289,7 +289,7 @@ class Index extends FrontendBaseBlock
             // format data
             $this->statistics = array();
             $this->statistics['term'] = $this->term;
-            $this->statistics['language'] = FRONTEND_LANGUAGE;
+            $this->statistics['language'] = LANGUAGE;
             $this->statistics['time'] = FrontendModel::getUTCDate();
             $this->statistics['data'] = serialize(array('server' => $_SERVER));
             $this->statistics['num_results'] = $this->pagination['num_items'];

@@ -50,7 +50,7 @@ class Save extends FrontendBaseAJAXAction
                 // format data
                 $this->statistics = array();
                 $this->statistics['term'] = $term;
-                $this->statistics['language'] = FRONTEND_LANGUAGE;
+                $this->statistics['language'] = LANGUAGE;
                 $this->statistics['time'] = FrontendModel::getUTCDate();
                 $this->statistics['data'] = serialize(array('server' => $_SERVER));
                 $this->statistics['num_results'] = FrontendSearchModel::getTotal($term);

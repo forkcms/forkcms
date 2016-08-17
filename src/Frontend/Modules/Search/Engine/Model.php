@@ -119,7 +119,7 @@ class Model
                 $params2 = array_merge(
                     $params2,
                     $terms,
-                    array((string) $field, FRONTEND_LANGUAGE, 'Y', 'Y')
+                    array((string) $field, LANGUAGE, 'Y', 'Y')
                 );
             }
 
@@ -169,7 +169,7 @@ class Model
             $params = array_merge(
                 $terms,
                 $terms,
-                array(FRONTEND_LANGUAGE, 'Y', 'Y', $offset, $limit)
+                array(LANGUAGE, 'Y', 'Y', $offset, $limit)
             );
         }
 
@@ -322,7 +322,7 @@ class Model
                 $params = array_merge(
                     $params,
                     $terms,
-                    array((string) $field, FRONTEND_LANGUAGE, 'Y', 'Y')
+                    array((string) $field, LANGUAGE, 'Y', 'Y')
                 );
             }
 
@@ -364,7 +364,7 @@ class Model
                 GROUP BY i.module, i.other_id
             ) AS results';
 
-            $params = array_merge($terms, array(FRONTEND_LANGUAGE, 'Y', 'Y'));
+            $params = array_merge($terms, array(LANGUAGE, 'Y', 'Y'));
         }
 
         // get the search results
@@ -530,7 +530,7 @@ class Model
                 WHERE language = ? AND active = ?
                 GROUP BY module, other_id
                 LIMIT ?, ?',
-                array(FRONTEND_LANGUAGE, 'N', $offset, $limit)
+                array(LANGUAGE, 'N', $offset, $limit)
             );
 
             // none found? good news!

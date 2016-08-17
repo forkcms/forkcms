@@ -64,7 +64,7 @@ class Related extends FrontendBaseWidget
                  FROM modules_tags AS mt
                  INNER JOIN tags AS t ON t.id = mt.tag_id
                  WHERE t.language = ? AND t.tag = ?',
-                array(FRONTEND_LANGUAGE, $tag)
+                array(LANGUAGE, $tag)
             );
 
             // loop items

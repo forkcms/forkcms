@@ -65,7 +65,7 @@ class Navigation extends FrontendBaseObject
     ) {
         $action = (string) $action;
         $module = (string) $module;
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
         $queryString = '';
 
         // add at least one parameter
@@ -179,7 +179,7 @@ class Navigation extends FrontendBaseObject
      */
     public static function getKeys($language = null)
     {
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         return BackendPagesModel::getCacheBuilder()->getKeys($language);
     }
@@ -194,7 +194,7 @@ class Navigation extends FrontendBaseObject
      */
     public static function getNavigation($language = null)
     {
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         return BackendPagesModel::getCacheBuilder()->getNavigation($language);
     }
@@ -374,7 +374,7 @@ class Navigation extends FrontendBaseObject
     {
         // redefine
         $URL = trim((string) $URL, '/');
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // get menu items array
         $keys = self::getKeys($language);
@@ -439,7 +439,7 @@ class Navigation extends FrontendBaseObject
     public static function getURL($pageId, $language = null)
     {
         $pageId = (int) $pageId;
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // init URL
         $URL = (FrontendModel::getContainer()->getParameter('site.multilanguage'))
@@ -477,7 +477,7 @@ class Navigation extends FrontendBaseObject
     {
         $module = (string) $module;
         $action = ($action !== null) ? (string) $action : null;
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // init var
         $pageIdForURL = null;
@@ -554,7 +554,7 @@ class Navigation extends FrontendBaseObject
     public static function getURLForExtraId($id, $language = null)
     {
         $id = (int) $id;
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // get the menuItems
         $navigation = self::getNavigation($language);
