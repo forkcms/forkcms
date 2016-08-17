@@ -9,9 +9,7 @@ final class ContentBlockStatus
     const STATUS_ARCHIVED = 'archived';
     const STATUS_ACTIVE = 'active';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $status;
 
     /**

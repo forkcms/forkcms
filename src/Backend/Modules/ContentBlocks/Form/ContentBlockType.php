@@ -55,7 +55,6 @@ class ContentBlockType extends AbstractType
         $templates = $this->getPossibleTemplates();
         // if we have multiple templates, add a dropdown to select them
         if (count($templates) > 1) {
-            //$this->frm->addDropdown('template', array_combine($templates, $templates));
             $builder->add(
                 'template',
                 ChoiceType::class,
