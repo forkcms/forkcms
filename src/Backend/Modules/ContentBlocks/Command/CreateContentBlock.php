@@ -39,7 +39,9 @@ final class CreateContentBlock
      */
     public $contentBlock;
 
-    /** @var Locale */
+    /**
+     * @var Locale
+     */
     public $language;
 
     /**
