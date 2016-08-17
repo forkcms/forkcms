@@ -66,11 +66,6 @@ class Edit extends BackendBaseActionEdit
         // The command bus will handle the saving of the content block in the database.
         $this->get('command_bus')->handle($updateContentBlock);
 
-        $this->get('event_dispatcher')->dispatch(
-            ContentBlockUpdated::EVENT_NAME,
-            new ContentBlockUpdated($updateContentBlock->contentBlock)
-        );
-
         return $this->redirect(
             BackendModel::createURLForAction(
                 'Index',
@@ -78,8 +73,8 @@ class Edit extends BackendBaseActionEdit
                 null,
                 [
                     'report' => 'edited',
-                    'var' => $updateContentBlock->contentBlock->getTitle(),
-                    'highlight' => 'row-' . $updateContentBlock->contentBlock->getId(),
+                    'var' => $updateContentBlock->title,
+                    'highlight' => 'row-' . $this->contentBlock->getId(),
                 ]
             )
         );
