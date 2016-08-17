@@ -15,10 +15,10 @@ web_profiler:
     intercept_redirects: false
 
 doctrine:
-  dbal:
-    connections:
-      default:
-        dbname: %database.name%_test
+    dbal:
+        connections:
+            default:
+                dbname: %database.name%_test
 
 services:
     database:
