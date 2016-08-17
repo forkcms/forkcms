@@ -82,7 +82,7 @@ swiftmailer:
 
 services:
     entity.create_schema:
-        class: Backend\Doctrine\Entity\CreateSchema
+        class: Common\Doctrine\Entity\CreateSchema
         arguments:
             - "@doctrine.orm.entity_manager"
     form.type.editor:
