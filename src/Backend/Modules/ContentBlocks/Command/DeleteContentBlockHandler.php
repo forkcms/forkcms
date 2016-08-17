@@ -4,19 +4,26 @@ namespace Backend\Modules\ContentBlocks\Command;
 
 use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
-use Doctrine\ORM\EntityManager;
+use Backend\Modules\ContentBlocks\Event\ContentBlockDeleted;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class DeleteContentBlockHandler
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $entityManager;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     /**
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
     {
         $this->entityManager = $entityManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -32,5 +39,10 @@ final class DeleteContentBlockHandler
         );
 
         Model::deleteExtraById($deleteContentBlock->contentBlock->getExtraId());
+
+        $this->eventDispatcher->dispatch(
+            ContentBlockDeleted::EVENT_NAME,
+            new ContentBlockDeleted($deleteContentBlock->contentBlock)
+        );
     }
 }
