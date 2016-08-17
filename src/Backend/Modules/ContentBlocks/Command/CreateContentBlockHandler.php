@@ -4,19 +4,26 @@ namespace Backend\Modules\ContentBlocks\Command;
 
 use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
-use Doctrine\ORM\EntityManager;
+use Backend\Modules\ContentBlocks\Event\ContentBlockCreated;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class CreateContentBlockHandler
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $entityManager;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     /**
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
     {
         $this->entityManager = $entityManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -26,7 +33,7 @@ final class CreateContentBlockHandler
      */
     public function handle(CreateContentBlock $createContentBlock)
     {
-        $createContentBlock->contentBlock = ContentBlock::create(
+        $contentBlock = ContentBlock::create(
             $this->entityManager
                 ->getRepository(ContentBlock::class)
                 ->getNextIdForLanguage($createContentBlock->language),
@@ -38,7 +45,12 @@ final class CreateContentBlockHandler
             $createContentBlock->template
         );
 
-        $this->entityManager->persist($createContentBlock->contentBlock);
+        $this->entityManager->persist($contentBlock);
+
+        $this->eventDispatcher->dispatch(
+            ContentBlockCreated::EVENT_NAME,
+            new ContentBlockCreated($contentBlock)
+        );
     }
 
     /**

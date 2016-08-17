@@ -13,7 +13,6 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\ContentBlocks\Command\CreateContentBlock;
 use Backend\Modules\ContentBlocks\Form\ContentBlockType;
-use Backend\Modules\ContentBlocks\Event\ContentBlockCreated;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -50,11 +49,6 @@ class Add extends BackendBaseActionAdd
         // The command bus will handle the saving of the content block in the database.
         $this->get('command_bus')->handle($createContentBlock);
 
-        $this->get('event_dispatcher')->dispatch(
-            ContentBlockCreated::EVENT_NAME,
-            new ContentBlockCreated($createContentBlock->contentBlock)
-        );
-
         return $this->redirect(
             BackendModel::createURLForAction(
                 'Index',
@@ -62,8 +56,7 @@ class Add extends BackendBaseActionAdd
                 null,
                 [
                     'report' => 'added',
-                    'var' => $createContentBlock->contentBlock->getTitle(),
-                    'highlight' => 'row-' . $createContentBlock->contentBlock->getId(),
+                    'var' => $createContentBlock->title
                 ]
             )
         );

@@ -35,11 +35,6 @@ final class CreateContentBlock
     public $isVisible = true;
 
     /**
-     * @var ContentBlock
-     */
-    public $contentBlock;
-
-    /**
      * @var Locale
      */
     public $language;
