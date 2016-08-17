@@ -3,6 +3,7 @@ services:
         class: Backend\Modules\ContentBlocks\Command\CreateContentBlockHandler
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@event_dispatcher"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\CreateContentBlock }
 
@@ -10,6 +11,7 @@ services:
         class: Backend\Modules\ContentBlocks\Command\UpdateContentBlockHandler
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@event_dispatcher"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\UpdateContentBlock }
 
@@ -17,13 +19,7 @@ services:
         class: Backend\Modules\ContentBlocks\Command\DeleteContentBlockHandler
         arguments:
             - "@doctrine.orm.entity_manager"
-        tags:
-            - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\DeleteContentBlock }
-
-    content_blocks.delete_content_block_handler:
-        class: Backend\Modules\ContentBlocks\Command\DeleteContentBlockHandler
-        arguments:
-            - "@doctrine.orm.entity_manager"
+            - "@event_dispatcher"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\DeleteContentBlock }
 
