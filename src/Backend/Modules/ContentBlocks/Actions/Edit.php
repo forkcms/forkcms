@@ -86,7 +86,7 @@ class Edit extends BackendBaseActionEdit
     private function getContentBlock()
     {
         /** @var ContentBlockRepository $contentBlockRepository */
-        $contentBlockRepository = $this->get('doctrine.orm.entity_manager')->getRepository(ContentBlock::class);
+        $contentBlockRepository = $this->get('contant_blocks.content_block_repository');
 
         // specific revision?
         $revisionId = $this->getParameter('revision', 'int');

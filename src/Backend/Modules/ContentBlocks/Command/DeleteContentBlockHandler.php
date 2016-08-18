@@ -5,6 +5,7 @@ namespace Backend\Modules\ContentBlocks\Command;
 use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\Event\ContentBlockDeleted;
+use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -16,14 +17,22 @@ final class DeleteContentBlockHandler
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
+    /** @var ContentBlockRepository */
+    private $contentBlockRepository;
+
     /**
      * @param EntityManagerInterface $entityManager
      * @param EventDispatcherInterface $eventDispatcher
+     * @param ContentBlockRepository $contentBlockRepository
      */
-    public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        EventDispatcherInterface $eventDispatcher,
+        ContentBlockRepository $contentBlockRepository
+    ) {
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->contentBlockRepository = $contentBlockRepository;
     }
 
     /**
@@ -33,7 +42,7 @@ final class DeleteContentBlockHandler
      */
     public function handle(DeleteContentBlock $deleteContentBlock)
     {
-        $this->entityManager->getRepository(ContentBlock::class)->removeByIdAndLocale(
+        $this->contentBlockRepository->removeByIdAndLocale(
             $deleteContentBlock->contentBlock->getId(),
             $deleteContentBlock->contentBlock->getLocale()
         );

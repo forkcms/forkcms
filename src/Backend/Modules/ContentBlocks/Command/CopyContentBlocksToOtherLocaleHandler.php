@@ -4,6 +4,7 @@ namespace Backend\Modules\ContentBlocks\Command;
 
 use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 use Doctrine\ORM\EntityManager;
 
 final class CopyContentBlocksToOtherLocaleHandler
@@ -11,12 +12,17 @@ final class CopyContentBlocksToOtherLocaleHandler
     /** @var EntityManager */
     private $entityManager;
 
+    /** @var ContentBlockRepository */
+    private $contentBlockRepository;
+
     /**
      * @param EntityManager $entityManager
+     * @param ContentBlockRepository $contentBlockRepository
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, ContentBlockRepository $contentBlockRepository)
     {
         $this->entityManager = $entityManager;
+        $this->contentBlockRepository = $contentBlockRepository;
     }
 
     /**
@@ -26,18 +32,16 @@ final class CopyContentBlocksToOtherLocaleHandler
      */
     public function handle(CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale)
     {
-        $fromLocaleContentBlocks = (array) $this->entityManager
-            ->getRepository(ContentBlock::class)
-            ->findBy(['locale' => $copyContentBlocksToOtherLocale->fromLocale]);
+        $fromLocaleContentBlocks = (array) $this->contentBlockRepository->findBy(
+            ['locale' => $copyContentBlocksToOtherLocale->fromLocale]
+        );
 
         array_map(
             function (ContentBlock $contentBlock) use ($copyContentBlocksToOtherLocale) {
                 $copyContentBlocksToOtherLocale->extraIdMap[$contentBlock->getExtraId()] = $this->getNewExtraId();
 
                 $otherLocaleContentBlock = ContentBlock::create(
-                    $this->entityManager
-                        ->getRepository(ContentBlock::class)
-                        ->getNextIdForLanguage($copyContentBlocksToOtherLocale->toLocale),
+                    $this->contentBlockRepository->getNextIdForLanguage($copyContentBlocksToOtherLocale->toLocale),
                     $copyContentBlocksToOtherLocale->extraIdMap[$contentBlock->getExtraId()],
                     $copyContentBlocksToOtherLocale->toLocale,
                     $contentBlock->getTitle(),
