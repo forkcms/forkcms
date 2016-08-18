@@ -94,7 +94,7 @@ class Edit extends BackendBaseActionEdit
         if ($revisionId !== null) {
             $this->tpl->assign('usingRevision', true);
 
-            return $contentBlockRepository->find($revisionId);
+            return $contentBlockRepository->findOneByRevisionIdAndLocale($revisionId, Locale::workingLocale());
         }
 
         return $contentBlockRepository->findOneByIdAndLocale($this->getParameter('id', 'int'), Locale::workingLocale());
