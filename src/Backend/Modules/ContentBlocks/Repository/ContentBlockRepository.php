@@ -32,7 +32,7 @@ class ContentBlockRepository extends EntityRepository
      *
      * @return ContentBlock|null
      */
-    public function findByIdAndLocale($id, Locale $locale)
+    public function findOneByIdAndLocale($id, Locale $locale)
     {
         return $this->findOneBy(['id' => $id, 'status' => ContentBlockStatus::active(), 'locale' => $locale]);
     }

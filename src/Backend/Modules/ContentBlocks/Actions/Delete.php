@@ -29,7 +29,7 @@ class Delete extends BackendBaseActionDelete
         /** @var ContentBlockRepository $contentBlockRepository */
         $contentBlockRepository = $this->get('contant_blocks.content_block_repository');
 
-        $contentBlock = $contentBlockRepository->findByIdAndLocale(
+        $contentBlock = $contentBlockRepository->findOneByIdAndLocale(
             $this->getParameter('id', 'int'),
             Locale::workingLocale()
         );

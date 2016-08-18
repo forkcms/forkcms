@@ -97,7 +97,7 @@ class Edit extends BackendBaseActionEdit
             return $contentBlockRepository->find($revisionId);
         }
 
-        return $contentBlockRepository->findByIdAndLocale($this->getParameter('id', 'int'), Locale::workingLocale());
+        return $contentBlockRepository->findOneByIdAndLocale($this->getParameter('id', 'int'), Locale::workingLocale());
     }
 
     /**

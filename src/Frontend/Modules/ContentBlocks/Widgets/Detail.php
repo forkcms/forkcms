@@ -21,7 +21,7 @@ class Detail extends FrontendBaseWidget
 
         /** @var ContentBlockRepository $contentBlockRepository */
         $contentBlockRepository = $this->get('doctrine.orm.entity_manager')->getRepository(ContentBlock::class);
-        $contentBlock = $contentBlockRepository->findByIdAndLocale(
+        $contentBlock = $contentBlockRepository->findOneByIdAndLocale(
             (int) $this->data['id'],
             Locale::frontendLanguage()
         );
