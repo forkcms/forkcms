@@ -15,6 +15,10 @@ FileETag MTime Size
 	# forbidden folders
 	RewriteRule \.git - [F]
 	RewriteRule .*\.gitignore - [F]
+	RewriteRule \.editorconfig - [F]
+	RewriteRule \.travis.yml - [F]
+	RewriteRule autoload\.php - [F]
+	RewriteRule bower\.json - [F]
 	RewriteRule composer\.json - [F]
 	RewriteRule composer\.lock - [F]
 	RewriteRule phpunit\.xml\.dist - [F]
