@@ -21,5 +21,6 @@ rm -f `find ${SCRIPT_PATH}/../app/cache/ ! -name ".gitignore" -type f ! -path *.
 
 ${SCRIPT_PATH}/../app/console cache:clear
 ${SCRIPT_PATH}/../app/console cache:clear --env=prod
+${SCRIPT_PATH}/../app/console cache:clear --env=install
 
 echo 'All done! Cache files removed.'
