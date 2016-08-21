@@ -130,8 +130,8 @@ class TemplateModifiers extends BaseTwigModifiers
                 'time_format'
             ),
             $string,
-            FRONTEND_LANGUAGE
-        ).'">'.\SpoonDate::getTimeAgo($string, FRONTEND_LANGUAGE).'</abbr>';
+            LANGUAGE
+        ).'">'.\SpoonDate::getTimeAgo($string, LANGUAGE).'</abbr>';
     }
 
     /**

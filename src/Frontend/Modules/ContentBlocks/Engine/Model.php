@@ -22,7 +22,7 @@ class Model
             'SELECT i.title, i.text, i.template
              FROM content_blocks AS i
              WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ?',
-            array((int) $id, 'active', 'N', FRONTEND_LANGUAGE)
+            array((int) $id, 'active', 'N', LANGUAGE)
         );
     }
 }

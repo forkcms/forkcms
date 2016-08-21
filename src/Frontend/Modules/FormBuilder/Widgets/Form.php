@@ -85,7 +85,7 @@ class Form extends FrontendBaseWidget
 
         // single language
         if ($this->getContainer()->getParameter('site.multilanguage')) {
-            $action = FRONTEND_LANGUAGE . '/' . $action;
+            $action = LANGUAGE . '/' . $action;
         }
 
         // add to action
