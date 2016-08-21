@@ -982,6 +982,23 @@
         <translation language="pl"><![CDATA[Niemiecki]]></translation>
         <translation language="tr"><![CDATA[Flemenkçe]]></translation>
       </item>
+      <item type="label" name="DE">
+        <translation language="nl"><![CDATA[Duits]]></translation>
+        <translation language="en"><![CDATA[German]]></translation>
+        <translation language="hu"><![CDATA[német]]></translation>
+        <translation language="ru"><![CDATA[Немецкий]]></translation>
+        <translation language="it"><![CDATA[Tedesco]]></translation>
+        <translation language="zh"><![CDATA[德语]]></translation>
+        <translation language="fr"><![CDATA[Allemand]]></translation>
+        <translation language="de"><![CDATA[Deutsch]]></translation>
+        <translation language="es"><![CDATA[Alemán]]></translation>
+        <translation language="lt"><![CDATA[Vokiškai]]></translation>
+        <translation language="uk"><![CDATA[німецька]]></translation>
+        <translation language="sv"><![CDATA[Tyska]]></translation>
+        <translation language="el"><![CDATA[Γερμανικά]]></translation>
+        <translation language="pl"><![CDATA[Niemiecki]]></translation>
+        <translation language="tr"><![CDATA[Almanca]]></translation>
+      </item>
       <item type="label" name="No">
         <translation language="nl"><![CDATA[nee]]></translation>
         <translation language="en"><![CDATA[no]]></translation>
