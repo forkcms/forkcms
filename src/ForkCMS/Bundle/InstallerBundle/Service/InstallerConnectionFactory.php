@@ -2,7 +2,6 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Service;
 
-use Common\Core\Model;
 use Doctrine\Bundle\DoctrineBundle\ConnectionFactory;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Configuration;
