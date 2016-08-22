@@ -11,9 +11,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class DeleteContentBlockHandler
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
@@ -21,16 +18,13 @@ final class DeleteContentBlockHandler
     private $contentBlockRepository;
 
     /**
-     * @param EntityManagerInterface $entityManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param ContentBlockRepository $contentBlockRepository
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         ContentBlockRepository $contentBlockRepository
     ) {
-        $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->contentBlockRepository = $contentBlockRepository;
     }

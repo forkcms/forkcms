@@ -19,7 +19,6 @@ services:
     content_blocks.delete_content_block_handler:
         class: Backend\Modules\ContentBlocks\Command\DeleteContentBlockHandler
         arguments:
-            - "@doctrine.orm.entity_manager"
             - "@event_dispatcher"
             - "@content_blocks.content_block_repository"
         tags:
