@@ -103,12 +103,8 @@ VALUES
   (40,2,'FormBuilder','form_builder/index','a:4:{i:0;s:16:\"form_builder/add\";i:1;s:17:\"form_builder/edit\";i:2;s:17:\"form_builder/data\";i:3;s:25:\"form_builder/data_details\";}',6),
   (41,2,'Location','location/index','a:2:{i:0;s:12:\"location/add\";i:1;s:13:\"location/edit\";}',7),
   (42,9,'Location','location/settings',NULL,7),
-  (43,0,'Mailmotor','',NULL,5),
-  (44,43,'Newsletters','mailmotor/index','a:8:{i:0;s:13:\"mailmotor/add\";i:1;s:14:\"mailmotor/edit\";i:2;s:31:\"mailmotor/edit_mailing_campaign\";i:3;s:20:\"mailmotor/statistics\";i:4;s:25:\"mailmotor/statistics_link\";i:5;s:28:\"mailmotor/statistics_bounces\";i:6;s:29:\"mailmotor/statistics_campaign\";i:7;s:26:\"mailmotor/statistics_opens\";}',1),
-  (45,43,'Campaigns','mailmotor/campaigns','a:3:{i:0;s:22:\"mailmotor/add_campaign\";i:1;s:23:\"mailmotor/edit_campaign\";i:2;s:30:\"mailmotor/statistics_campaigns\";}',2),
-  (46,43,'MailmotorGroups','mailmotor/groups','a:5:{i:0;s:19:\"mailmotor/add_group\";i:1;s:20:\"mailmotor/edit_group\";i:2;s:23:\"mailmotor/custom_fields\";i:3;s:26:\"mailmotor/add_custom_field\";i:4;s:23:\"mailmotor/import_groups\";}',3),
-  (47,43,'Addresses','mailmotor/addresses','a:3:{i:0;s:21:\"mailmotor/add_address\";i:1;s:22:\"mailmotor/edit_address\";i:2;s:26:\"mailmotor/import_addresses\";}',4),
-  (48,9,'Mailmotor','mailmotor/settings',NULL,8),
+  (43,0,'MailMotor','',NULL,5),
+  (48,9,'MailMotor','mail_motor/settings',NULL,8),
   (49,2,'Profiles','',NULL,8),
   (50,49,'Overview','profiles/index','a:5:{i:0;s:12:\"profiles/add\";i:1;s:13:\"profiles/edit\";i:2;s:26:\"profiles/add_profile_group\";i:3;s:27:\"profiles/edit_profile_group\";i:4;s:15:\"profiles/import\";}',1),
   (51,49,'Groups','profiles/groups','a:2:{i:0;s:18:\"profiles/add_group\";i:1;s:19:\"profiles/edit_group\";}',2);
@@ -1040,16 +1036,6 @@ VALUES
   (441,1,'en','Backend','Core','lbl','Logout','logout','2015-02-23 19:48:52'),
   (442,1,'en','Backend','Core','lbl','LongDateFormat','long date format','2015-02-23 19:48:52'),
   (443,1,'en','Backend','Core','lbl','LT','Lithuanian','2015-02-23 19:48:52'),
-  (444,1,'en','Backend','Core','lbl','Mailmotor','mailmotor','2015-02-23 19:48:52'),
-  (445,1,'en','Backend','Core','lbl','MailmotorClicks','clicks','2015-02-23 19:48:52'),
-  (446,1,'en','Backend','Core','lbl','MailmotorGroups','groups','2015-02-23 19:48:52'),
-  (447,1,'en','Backend','Core','lbl','MailmotorLatestMailing','last sent mailing','2015-02-23 19:48:52'),
-  (448,1,'en','Backend','Core','lbl','MailmotorOpened','opened','2015-02-23 19:48:52'),
-  (449,1,'en','Backend','Core','lbl','MailmotorSendDate','send date','2015-02-23 19:48:52'),
-  (450,1,'en','Backend','Core','lbl','MailmotorSent','sent','2015-02-23 19:48:52'),
-  (451,1,'en','Backend','Core','lbl','MailmotorStatistics','statistics','2015-02-23 19:48:52'),
-  (452,1,'en','Backend','Core','lbl','MailmotorSubscriptions','subscriptions','2015-02-23 19:48:52'),
-  (453,1,'en','Backend','Core','lbl','MailmotorUnsubscriptions','unsubscriptions','2015-02-23 19:48:52'),
   (454,1,'en','Backend','Core','lbl','MainContent','main content','2015-02-23 19:48:52'),
   (455,1,'en','Backend','Core','lbl','MarkAsSpam','mark as spam','2015-02-23 19:48:52'),
   (456,1,'en','Backend','Core','lbl','Marketing','marketing','2015-02-23 19:48:52'),
@@ -2098,82 +2084,6 @@ CREATE TABLE `location_settings` (
   `name` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '',
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`map_id`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `mailmotor_addresses`;
-CREATE TABLE `mailmotor_addresses` (
-  `email` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `source` varchar(255)  CHARACTER SET utf8 DEFAULT NULL,
-  `created_on` datetime DEFAULT NULL,
-  PRIMARY KEY (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `mailmotor_addresses_groups`;
-CREATE TABLE `mailmotor_addresses_groups` (
-  `email` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `group_id` int(11) NOT NULL,
-  `custom_fields` text COLLATE utf8mb4_unicode_ci,
-  `status` enum('subscribed','unsubscribed','inserted') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subscribed_on` datetime DEFAULT NULL,
-  `unsubscribed_on` datetime DEFAULT NULL,
-  PRIMARY KEY (`email`,`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `mailmotor_campaignmonitor_ids`;
-CREATE TABLE `mailmotor_campaignmonitor_ids` (
-  `cm_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` enum('campaign','list','template') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `other_id` int(11) NOT NULL,
-  PRIMARY KEY (`type`,`cm_id`,`other_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `mailmotor_campaigns`;
-CREATE TABLE `mailmotor_campaigns` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_on` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `mailmotor_groups`;
-CREATE TABLE `mailmotor_groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `custom_fields` text COLLATE utf8mb4_unicode_ci,
-  `is_default` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
-  `created_on` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `mailmotor_mailings`;
-CREATE TABLE `mailmotor_mailings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `template` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `campaign_id` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `from_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `from_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `reply_to_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `reply_to_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content_html` text COLLATE utf8mb4_unicode_ci,
-  `content_plain` text COLLATE utf8mb4_unicode_ci,
-  `send_on` datetime DEFAULT NULL,
-  `status` enum('concept','queued','sent') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_on` datetime DEFAULT NULL,
-  `edited_on` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `mailmotor_mailings_groups`;
-CREATE TABLE `mailmotor_mailings_groups` (
-  `mailing_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
-  PRIMARY KEY (`mailing_id`,`group_id`),
-  KEY `group_id` (`group_id`),
-  KEY `mailing_id` (`mailing_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `meta`;
