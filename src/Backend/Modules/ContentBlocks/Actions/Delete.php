@@ -27,7 +27,7 @@ class Delete extends BackendBaseActionDelete
     public function execute()
     {
         /** @var ContentBlockRepository $contentBlockRepository */
-        $contentBlockRepository = $this->get('contant_blocks.content_block_repository');
+        $contentBlockRepository = $this->get('content_blocks.content_block_repository');
 
         $contentBlock = $contentBlockRepository->findOneByIdAndLocale(
             $this->getParameter('id', 'int'),
