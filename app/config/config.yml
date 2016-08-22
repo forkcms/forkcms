@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: doctrine.yml }
 
 framework:
     secret:          %kernel.secret%
@@ -15,40 +16,6 @@ framework:
     session:
         handler_id: ~
         storage_id: session.storage.php_bridge
-
-# Doctrine Configuration
-doctrine:
-    dbal:
-        default_connection: default
-        connections:
-            default:
-                driver: pdo_%database.driver%
-                host: %database.host%
-                port: %database.port%
-                dbname: %database.name%
-                user: %database.user%
-                password: %database.password%
-                charset: utf8mb4
-                default_table_options:
-                    charset: utf8mb4
-                    collate: utf8mb4_unicode_ci
-                mapping_types:
-                    # Remove when we don't have legacy tables anymore
-                    enum: string
-        types:
-            enum_bool: Common\Doctrine\Type\EnumBoolType
-            locale: Common\Doctrine\Type\LocaleType
-
-    orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
-        entity_managers:
-            default:
-                connection: default
-                auto_mapping: true
-
-doctrine_orm_bridge:
-    entity_manager: default
-    connection: default
 
 # Assetic Configuration
 assetic:
@@ -81,10 +48,6 @@ swiftmailer:
     transport: "mail"
 
 services:
-    entity.create_schema:
-        class: Common\Doctrine\Entity\CreateSchema
-        arguments:
-            - "@doctrine.orm.entity_manager"
     form.type.editor:
         class: Backend\Form\Type\EditorType
         tags:
