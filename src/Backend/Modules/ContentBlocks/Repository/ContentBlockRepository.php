@@ -10,6 +10,16 @@ use Doctrine\ORM\EntityRepository;
 class ContentBlockRepository extends EntityRepository
 {
     /**
+     * @param ContentBlock $contentBlock
+     *
+     * We don't flush here, see http://disq.us/p/okjc6b
+     */
+    public function add(ContentBlock $contentBlock)
+    {
+        $this->getEntityManager()->persist($contentBlock);
+    }
+
+    /**
      * @param Locale $locale
      *
      * @return int

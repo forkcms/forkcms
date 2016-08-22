@@ -11,9 +11,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class CreateContentBlockHandler
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
@@ -21,16 +18,13 @@ final class CreateContentBlockHandler
     private $contentBlockRepository;
 
     /**
-     * @param EntityManagerInterface $entityManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param ContentBlockRepository $contentBlockRepository
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         ContentBlockRepository $contentBlockRepository
     ) {
-        $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->contentBlockRepository = $contentBlockRepository;
     }
@@ -52,7 +46,7 @@ final class CreateContentBlockHandler
             $createContentBlock->template
         );
 
-        $this->entityManager->persist($contentBlock);
+        $this->contentBlockRepository->add($contentBlock);
 
         $this->eventDispatcher->dispatch(
             ContentBlockCreated::EVENT_NAME,

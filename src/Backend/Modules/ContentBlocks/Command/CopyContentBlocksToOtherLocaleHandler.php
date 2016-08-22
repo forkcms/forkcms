@@ -9,19 +9,14 @@ use Doctrine\ORM\EntityManager;
 
 final class CopyContentBlocksToOtherLocaleHandler
 {
-    /** @var EntityManager */
-    private $entityManager;
-
     /** @var ContentBlockRepository */
     private $contentBlockRepository;
 
     /**
-     * @param EntityManager $entityManager
      * @param ContentBlockRepository $contentBlockRepository
      */
-    public function __construct(EntityManager $entityManager, ContentBlockRepository $contentBlockRepository)
+    public function __construct(ContentBlockRepository $contentBlockRepository)
     {
-        $this->entityManager = $entityManager;
         $this->contentBlockRepository = $contentBlockRepository;
     }
 
@@ -50,7 +45,7 @@ final class CopyContentBlocksToOtherLocaleHandler
                     $contentBlock->getTemplate()
                 );
 
-                $this->entityManager->persist($otherLocaleContentBlock);
+                $this->contentBlockRepository->add($otherLocaleContentBlock);
             },
             $fromLocaleContentBlocks
         );

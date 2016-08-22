@@ -4,25 +4,28 @@ namespace Backend\Modules\ContentBlocks\Command;
 
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\Event\ContentBlockUpdated;
+use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class UpdateContentBlockHandler
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
+    /** @var ContentBlockRepository */
+    private $contentBlockRepository;
+
     /**
-     * @param EntityManagerInterface $entityManager
      * @param EventDispatcherInterface $eventDispatcher
+     * @param ContentBlockRepository $contentBlockRepository
      */
-    public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        ContentBlockRepository $contentBlockRepository
+    ) {
         $this->eventDispatcher = $eventDispatcher;
+        $this->contentBlockRepository = $contentBlockRepository;
     }
 
     /**
@@ -39,7 +42,7 @@ final class UpdateContentBlockHandler
             $updateContentBlock->template
         );
 
-        $this->entityManager->persist($updateContentBlock->contentBlock);
+        $this->contentBlockRepository->add($updateContentBlock->contentBlock);
 
         $this->eventDispatcher->dispatch(
             ContentBlockUpdated::EVENT_NAME,
