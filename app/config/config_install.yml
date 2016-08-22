@@ -28,6 +28,9 @@ monolog:
             path:  %site.path_www%/app/logs/logs.log
             level: debug
 
+parameters:
+    doctrine.dbal.connection_factory.class: ForkCMS\Bundle\InstallerBundle\Service\InstallerConnectionFactory
+
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -63,6 +66,10 @@ doctrine_orm_bridge:
     connection: default
 
 services:
+    entity.create_schema:
+        class: Common\Doctrine\Entity\CreateSchema
+        arguments:
+            - "@doctrine.orm.entity_manager"
     database:
         class: SpoonDatabase
         arguments:
