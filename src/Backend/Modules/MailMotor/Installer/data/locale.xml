@@ -87,16 +87,37 @@
                 <translation language="nl"><![CDATA[nieuwsbrief]]></translation>
             </item>
             <item type="action" name="Subscribe">
-                <translation language="de"><![CDATA[Abonnieren]]></translation>
                 <translation language="en"><![CDATA[subscribe]]></translation>
-                <translation language="fr"><![CDATA[s'abonner]]></translation>
                 <translation language="nl"><![CDATA[inschrijven]]></translation>
+                <translation language="hu"><![CDATA[feliratkozas]]></translation>
+                <translation language="it"><![CDATA[abbonati]]></translation>
+                <translation language="fr"><![CDATA[inscription]]></translation>
+                <translation language="ru"><![CDATA[подписка]]></translation>
+                <translation language="zh"><![CDATA[订阅]]></translation>
+                <translation language="de"><![CDATA[abonnieren]]></translation>
+                <translation language="es"><![CDATA[subscribir]]></translation>
+                <translation language="lt"><![CDATA[uzsisakyti]]></translation>
+                <translation language="sv"><![CDATA[prenumerera]]></translation>
+                <translation language="el"><![CDATA[εγγραφή-συνδρομής]]></translation>
+                <translation language="pl"><![CDATA[subskrybuj]]></translation>
+                <translation language="tr"><![CDATA[abone-ol]]></translation>
             </item>
             <item type="label" name="Subscribe">
-                <translation language="de"><![CDATA[subscribe]]></translation>
                 <translation language="en"><![CDATA[subscribe]]></translation>
-                <translation language="fr"><![CDATA[subscribe]]></translation>
                 <translation language="nl"><![CDATA[inschrijven]]></translation>
+                <translation language="hu"><![CDATA[feliratkozás]]></translation>
+                <translation language="it"><![CDATA[abbonati]]></translation>
+                <translation language="fr"><![CDATA[s'abonner]]></translation>
+                <translation language="ru"><![CDATA[Подписка]]></translation>
+                <translation language="zh"><![CDATA[订阅]]></translation>
+                <translation language="de"><![CDATA[abonnieren]]></translation>
+                <translation language="es"><![CDATA[subscribir]]></translation>
+                <translation language="lt"><![CDATA[prenumeruoti]]></translation>
+                <translation language="uk"><![CDATA[Підписка]]></translation>
+                <translation language="sv"><![CDATA[prenumerera]]></translation>
+                <translation language="el"><![CDATA[εγγραφή]]></translation>
+                <translation language="pl"><![CDATA[subskrybuj]]></translation>
+                <translation language="tr"><![CDATA[abone ol]]></translation>
             </item>
             <item type="label" name="SubscribeToNewsletter">
                 <translation language="de"><![CDATA[Newsletter abonnieren]]></translation>
@@ -117,16 +138,36 @@
                 <translation language="nl"><![CDATA[<strong>CONTROLEER UW MAILBOX OM UW E-MAILADRES TE BEVESTIGEN</strong><br/><br/>Binnen 10 minuten ontvangt u van ons een e-mail.<br/>Gelieve te klikken op de bevestigingslink om uw inschrijving te bevestigen.<br/>Anders wordt uw e-mailadres niet op onze mailinglijst toegevoegd.<br/>Vergeet niet om in uw SPAM-box te kijken.]]></translation>
             </item>
             <item type="action" name="Unsubscribe">
-                <translation language="de"><![CDATA[abmelden]]></translation>
                 <translation language="en"><![CDATA[unsubscribe]]></translation>
-                <translation language="fr"><![CDATA[desinscrire]]></translation>
                 <translation language="nl"><![CDATA[uitschrijven]]></translation>
+                <translation language="hu"><![CDATA[leiratkozas]]></translation>
+                <translation language="it"><![CDATA[cancella-abbonamento]]></translation>
+                <translation language="fr"><![CDATA[desinscription]]></translation>
+                <translation language="ru"><![CDATA[отписка]]></translation>
+                <translation language="zh"><![CDATA[退订]]></translation>
+                <translation language="de"><![CDATA[abbestellen]]></translation>
+                <translation language="es"><![CDATA[Darse-de-baja]]></translation>
+                <translation language="lt"><![CDATA[atsaukta]]></translation>
+                <translation language="sv"><![CDATA[avanmäl]]></translation>
+                <translation language="el"><![CDATA[διαγραφή-συνδρομής]]></translation>
+                <translation language="pl"><![CDATA[nie-subskrybuj]]></translation>
             </item>
             <item type="label" name="Unsubscribe">
-                <translation language="de"><![CDATA[Abmelden]]></translation>
                 <translation language="en"><![CDATA[unsubscribe]]></translation>
-                <translation language="fr"><![CDATA[désinscrire]]></translation>
                 <translation language="nl"><![CDATA[uitschrijven]]></translation>
+                <translation language="hu"><![CDATA[leiratkozás]]></translation>
+                <translation language="it"><![CDATA[cancella abbonamento]]></translation>
+                <translation language="fr"><![CDATA[se désabonner]]></translation>
+                <translation language="ru"><![CDATA[Отписаться]]></translation>
+                <translation language="zh"><![CDATA[取消订阅]]></translation>
+                <translation language="de"><![CDATA[abbestellen]]></translation>
+                <translation language="es"><![CDATA[Darse de baja]]></translation>
+                <translation language="lt"><![CDATA[nutraukti prenumeratą]]></translation>
+                <translation language="uk"><![CDATA[Відписатися]]></translation>
+                <translation language="sv"><![CDATA[avanmäl]]></translation>
+                <translation language="el"><![CDATA[διακοπή συνδρομής]]></translation>
+                <translation language="pl"><![CDATA[nie subskrybuj]]></translation>
+                <translation language="tr"><![CDATA[aboneliğinizi iptal edin]]></translation>
             </item>
             <item type="label" name="UnsubscribeFromNewsletter">
                 <translation language="de"><![CDATA[Newsletter abbestellen]]></translation>
