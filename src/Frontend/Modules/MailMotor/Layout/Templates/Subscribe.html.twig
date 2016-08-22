@@ -6,7 +6,14 @@
     <div class="bd">
       {% if mailMotorSubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans|raw }}</p></div>{% endif %}
       {% if mailMotorSubscribeHasError %}<div class="message error"><p>{{ 'err.SubscribeFailed'|trans|raw }}</p></div>{% endif %}
-      {% if mailMotorSubscribeIsSuccess %}<div class="message success"><p>{{ 'msg.SubscribeSuccess'|trans|raw }}</p></div>{% endif %}
+      {% if mailMotorSubscribeIsSuccess %}
+        <div class="message success">
+          <p>
+            {% if mailMotorNotImplemented %}{{ 'msg.SubscribeSuccessNotImplemented'|trans|raw }}
+            {% else %}{{ 'msg.SubscribeSuccess'|trans|raw }}{% endif %}
+          </p>
+        </div>
+      {% endif %}
 
       {% if not mailMotorSubscribeHideForm %}
         {% form mailMotorSubscribeForm %}

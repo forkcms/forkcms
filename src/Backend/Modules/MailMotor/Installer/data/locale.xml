@@ -137,6 +137,12 @@
                 <translation language="fr"><![CDATA[<Strong>VÉRIFIER VOTRE BOÎTE POUR CONFIRMER VOTRE ADRESSE MAIL</strong><br/><br/>Dans les 10 minutes, vous recevrez un mail de notre part.<br/>Vous devez cliquer sur le lien de confirmation pour confirmer votre abonnement.<br/>Sinon, votre adresse e-mail ne sera pas ajouté à notre liste de diffusion.<br/>Ne pas oublier de vérifier votre boîte SPAM.]]></translation>
                 <translation language="nl"><![CDATA[<strong>CONTROLEER UW MAILBOX OM UW E-MAILADRES TE BEVESTIGEN</strong><br/><br/>Binnen 10 minuten ontvangt u van ons een e-mail.<br/>Gelieve te klikken op de bevestigingslink om uw inschrijving te bevestigen.<br/>Anders wordt uw e-mailadres niet op onze mailinglijst toegevoegd.<br/>Vergeet niet om in uw SPAM-box te kijken.]]></translation>
             </item>
+            <item type="message" name="SubscribeSuccessNotImplemented">
+                <translation language="de"><![CDATA[<strong> DANKE FÜR IHRE ANMELDUNG</strong><br/>Wir haben die notwendigen Schritte durchführen werden Sie auf unsere Mailing-Liste hinzuzufügen.]]></translation>
+                <translation language="en"><![CDATA[<strong>THANK YOU FOR YOUR REGISTRATION</strong><br/>We will carry out the necessary steps to add you to our mailing list.]]></translation>
+                <translation language="fr"><![CDATA[<strong> MERCI DE VOTRE INSCRIPTION</strong><br/>Nous allons effectuer les mesures nécessaires pour vous ajouter à notre liste de diffusion.]]></translation>
+                <translation language="nl"><![CDATA[<strong>BEDANKT VOOR UW INSCHRIJVING</string><br/>Wij zullen het nodige uitvoeren om u toe te voegen op onze mailinglijst.]]></translation>
+            </item>
             <item type="action" name="Unsubscribe">
                 <translation language="en"><![CDATA[unsubscribe]]></translation>
                 <translation language="nl"><![CDATA[uitschrijven]]></translation>

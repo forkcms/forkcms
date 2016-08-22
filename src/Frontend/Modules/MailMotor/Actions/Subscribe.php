@@ -72,6 +72,12 @@ class Subscribe extends FrontendBaseBlock
             // show message
             $this->tpl->assign('mailMotorSubscribeIsSuccess', true);
 
+            // not implemented
+            if ($this->URL->getParameter('not_implemented') == 'true') {
+                // assign not implemented
+                $this->tpl->assign('mailMotorNotImplemented', true);
+            }
+
             // hide form
             $this->tpl->assign('mailMotorSubscribeHideForm', true);
         }
@@ -113,6 +119,9 @@ class Subscribe extends FrontendBaseBlock
 
             // no errors
             if (trim($this->form->getErrors()) == '') {
+                $redirectLink = FrontendNavigation::getURLForBlock('MailMotor', 'Subscribe');
+                $redirectLink .= '?sent=true';
+
                 try {
                     // subscribe the user to our default group
                     $this->get('mailmotor.subscriber')->subscribe(
@@ -127,17 +136,12 @@ class Subscribe extends FrontendBaseBlock
                         $email->getValue(),
                         FRONTEND_LANGUAGE
                     );
+
+                    $redirectLink .= '&not_implemented=true';
                 }
 
                 // redirect
-                $this->redirect(
-                    FrontendNavigation::getURLForBlock(
-                        'MailMotor',
-                        'Subscribe'
-                    )
-                    . '?sent=true'
-                    . '#mailMotorSubscribeForm'
-                );
+                $this->redirect($redirectLink . '#mailMotorSubscribeForm');
             // show errors
             } else {
                 $this->tpl->assign('mailMotorSubscribeHasFormError', true);
