@@ -56,7 +56,7 @@ class Add extends BackendBaseActionAdd
                 null,
                 [
                     'report' => 'added',
-                    'var' => $createContentBlock->title
+                    'var' => $createContentBlock->title,
                 ]
             )
         );

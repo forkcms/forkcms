@@ -27,6 +27,6 @@ final class CopyContentBlocksToOtherLocale
 
         $this->toLocale = $toLocale;
         $this->fromLocale = $fromLocale;
-        $this->extraIdMap = array();
+        $this->extraIdMap = [];
     }
 }

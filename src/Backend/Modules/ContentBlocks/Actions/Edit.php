@@ -18,7 +18,6 @@ use Backend\Modules\ContentBlocks\Command\UpdateContentBlock;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\Form\ContentBlockType;
-use Backend\Modules\ContentBlocks\Event\ContentBlockUpdated;
 use Backend\Modules\ContentBlocks\DataGrid\ContentBlockRevisionDataGrid;
 use Backend\Core\Language\Locale;
 use SpoonFilter;
