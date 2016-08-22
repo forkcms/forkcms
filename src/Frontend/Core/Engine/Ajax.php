@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Language\Language;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;

@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Language\Language;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
