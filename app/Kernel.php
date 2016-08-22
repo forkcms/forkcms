@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -22,6 +23,9 @@ use Backend\DependencyInjection\BackendExtension;
  */
 abstract class Kernel extends BaseKernel implements KernelInterface
 {
+    /** @var Request We need this to check if a module is being installed */
+    private $request;
+
     /**
      * Constructor.
      *
@@ -32,6 +36,8 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      */
     public function __construct($environment, $debug)
     {
+        $this->request = Request::createFromGlobals();
+
         parent::__construct($environment, $debug);
         $this->boot();
     }
@@ -167,14 +173,8 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         }
 
         $moduleNames = [];
-
-        // check if we need to load the services of a module, this is needed during the installation
-        $request = Request::createFromGlobals();
-
-        if (preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $request->getRequestUri())
-            && $request->query->has('module')
-            && in_array($request->query->get('module'), $this->getAllPossibleModuleNames())) {
-            $moduleNames[] = $request->query->get('module');
+        if ($this->isInstallingModule()) {
+            $moduleNames[] = $this->request->query->get('module');
         }
 
         try {
@@ -193,6 +193,16 @@ abstract class Kernel extends BaseKernel implements KernelInterface
     }
 
     /**
+     * @return bool
+     */
+    private function isInstallingModule()
+    {
+        return preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $this->request->getRequestUri())
+               && $this->request->query->has('module')
+               && in_array($this->request->query->get('module'), $this->getAllPossibleModuleNames());
+    }
+
+    /**
      * @return array
      */
     private function getAllPossibleModuleNames()
@@ -207,5 +217,16 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         }
 
         return $moduleNames;
+    }
+
+    protected function initializeContainer()
+    {
+        // remove the cache dir when installing a module to trigger rebuilding the kernel
+        if ($this->isInstallingModule()) {
+            $fileSystem = new Filesystem();
+            $fileSystem->remove($this->getCacheDir().'/'.$this->getContainerClass().'.php');
+        }
+
+        parent::initializeContainer();
     }
 }
