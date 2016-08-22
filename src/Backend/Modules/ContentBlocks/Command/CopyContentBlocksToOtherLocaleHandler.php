@@ -5,7 +5,6 @@ namespace Backend\Modules\ContentBlocks\Command;
 use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
-use Doctrine\ORM\EntityManager;
 
 final class CopyContentBlocksToOtherLocaleHandler
 {

@@ -6,7 +6,6 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\Event\ContentBlockCreated;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class CreateContentBlockHandler

@@ -5,7 +5,6 @@ namespace Backend\Modules\ContentBlocks\Command;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\Event\ContentBlockUpdated;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class UpdateContentBlockHandler
