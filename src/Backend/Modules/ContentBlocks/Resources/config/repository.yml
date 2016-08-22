@@ -1,5 +1,5 @@
 services:
-    content_blocks.content_block_repository:
+    content_blocks.repository.content_block:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:

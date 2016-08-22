@@ -4,7 +4,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@event_dispatcher"
-            - "@content_blocks.content_block_repository"
+            - "@content_blocks.repository.content_block"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\CreateContentBlock }
 
@@ -20,7 +20,7 @@ services:
         class: Backend\Modules\ContentBlocks\Command\DeleteContentBlockHandler
         arguments:
             - "@event_dispatcher"
-            - "@content_blocks.content_block_repository"
+            - "@content_blocks.repository.content_block"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\DeleteContentBlock }
 
@@ -28,6 +28,6 @@ services:
         class: Backend\Modules\ContentBlocks\Command\CopyContentBlocksToOtherLocaleHandler
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "@content_blocks.content_block_repository"
+            - "@content_blocks.repository.content_block"
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\CopyContentBlocksToOtherLocale }
