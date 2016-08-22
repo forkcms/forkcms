@@ -155,22 +155,6 @@ class Add extends BackendBaseActionAdd
                 }
             }
 
-            // validate avatar
-            if ($this->frm->getField('avatar')->isFilled()) {
-                // correct extension
-                if ($this->frm->getField('avatar')->isAllowedExtension(
-                    array('jpg', 'jpeg', 'gif', 'png'),
-                    BL::err('JPGGIFAndPNGOnly')
-                )
-                ) {
-                    // correct mimetype?
-                    $this->frm->getField('avatar')->isAllowedMimeType(
-                        array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'),
-                        BL::err('JPGGIFAndPNGOnly')
-                    );
-                }
-            }
-
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build settings-array

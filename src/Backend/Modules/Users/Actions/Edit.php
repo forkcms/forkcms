@@ -302,22 +302,6 @@ class Edit extends BackendBaseActionEdit
                 }
             }
 
-            // validate avatar
-            if ($fields['avatar']->isFilled()) {
-                // correct extension
-                if ($fields['avatar']->isAllowedExtension(
-                    array('jpg', 'jpeg', 'gif', 'png'),
-                    BL::err('JPGGIFAndPNGOnly')
-                )
-                ) {
-                    // correct mimetype?
-                    $fields['avatar']->isAllowedMimeType(
-                        array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'),
-                        BL::err('JPGGIFAndPNGOnly')
-                    );
-                }
-            }
-
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build user-array

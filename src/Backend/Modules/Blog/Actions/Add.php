@@ -125,15 +125,6 @@ class Add extends BackendBaseActionAdd
                 $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
             }
 
-            if ($this->imageIsAllowed) {
-                // validate the image
-                if ($this->frm->getField('image')->isFilled()) {
-                    // image extension and mime type
-                    $this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
-                    $this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
-                }
-            }
-
             // validate meta
             $this->meta->validate();
 
