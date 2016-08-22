@@ -76,7 +76,7 @@ class Model
             'SELECT *
              FROM location
              WHERE id = ? AND language = ?',
-            array((int) $id, FRONTEND_LANGUAGE)
+            array((int) $id, LANGUAGE)
         );
     }
 
@@ -89,7 +89,7 @@ class Model
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT * FROM location WHERE language = ? AND show_overview = ?',
-            array(FRONTEND_LANGUAGE, 'Y')
+            array(LANGUAGE, 'Y')
         );
     }
 

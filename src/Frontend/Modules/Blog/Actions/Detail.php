@@ -144,7 +144,7 @@ class Detail extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
+        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed
@@ -174,7 +174,7 @@ class Detail extends FrontendBaseBlock
         $this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
         $this->header->addOpenGraphData(
             'site_name',
-            $this->get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE),
+            $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
             true
         );
         $this->header->addOpenGraphData(
@@ -340,7 +340,7 @@ class Detail extends FrontendBaseBlock
 
                 // build array
                 $comment['post_id'] = $this->record['id'];
-                $comment['language'] = FRONTEND_LANGUAGE;
+                $comment['language'] = LANGUAGE;
                 $comment['created_on'] = FrontendModel::getUTCDate();
                 $comment['author'] = $author;
                 $comment['email'] = $email;

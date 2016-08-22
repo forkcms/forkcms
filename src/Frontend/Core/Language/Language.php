@@ -335,7 +335,7 @@ class Language
     public static function setLocale($language = null, $force = false)
     {
         // redefine
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // validate language
         if (!$force && !in_array($language, self::getActiveLanguages())) {

@@ -42,11 +42,11 @@ class Rss extends \SpoonFeedRSS
         );
 
         $siteTitle = \SpoonFilter::htmlspecialcharsDecode(
-            Model::get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . LANGUAGE)
         );
 
         // set feed properties
-        $this->setLanguage(FRONTEND_LANGUAGE);
+        $this->setLanguage(LANGUAGE);
         $this->setCopyright(\SpoonDate::getDate('Y') . ' ' . $siteTitle);
         $this->setGenerator($siteTitle);
         $this->setImage(SITE_URL . FRONTEND_CORE_URL . '/Layout/images/rss_image.png', $title, $link);

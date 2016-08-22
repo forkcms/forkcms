@@ -157,7 +157,7 @@ class Model extends \Common\Core\Model
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.id = ? AND p.status = ? AND p.language = ?
              LIMIT 1',
-            array($pageId, 'active', FRONTEND_LANGUAGE)
+            array($pageId, 'active', LANGUAGE)
         );
 
         // validate
@@ -243,7 +243,7 @@ class Model extends \Common\Core\Model
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.revision_id = ? AND p.language = ?
              LIMIT 1',
-            array($revisionId, FRONTEND_LANGUAGE)
+            array($revisionId, LANGUAGE)
         );
 
         // validate

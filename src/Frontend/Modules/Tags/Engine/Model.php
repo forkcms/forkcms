@@ -57,7 +57,7 @@ class Model
     public static function get($URL, $language = null)
     {
         // redefine language
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // exists
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
@@ -80,7 +80,7 @@ class Model
              FROM tags AS t
              WHERE t.language = ? AND t.number > 0
              ORDER BY t.tag',
-            array(FRONTEND_LANGUAGE)
+            array(LANGUAGE)
         );
     }
 

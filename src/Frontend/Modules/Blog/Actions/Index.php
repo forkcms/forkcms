@@ -97,7 +97,7 @@ class Index extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE),
                  'href' => $rssLink,
             ),
             true

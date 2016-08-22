@@ -130,7 +130,7 @@ class Model
              FROM mailmotor_groups AS mg
              WHERE mg.is_default = ? AND mg.language = ?
              LIMIT 1',
-            array('Y', FRONTEND_LANGUAGE)
+            array('Y', LANGUAGE)
         );
     }
 

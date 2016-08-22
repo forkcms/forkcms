@@ -166,7 +166,7 @@ class Archive extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
+        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed
@@ -177,7 +177,7 @@ class Archive extends FrontendBaseBlock
         $this->breadcrumb->addElement($this->year);
         if ($this->month !== null) {
             $this->breadcrumb->addElement(
-                \SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true)
+                \SpoonDate::getDate('F', $this->startDate, LANGUAGE, true)
             );
         }
 
@@ -186,7 +186,7 @@ class Archive extends FrontendBaseBlock
         $this->header->setPageTitle($this->year);
         if ($this->month !== null) {
             $this->header->setPageTitle(
-                \SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true)
+                \SpoonDate::getDate('F', $this->startDate, LANGUAGE, true)
             );
         }
 

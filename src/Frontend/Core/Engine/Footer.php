@@ -70,10 +70,10 @@ class Footer extends FrontendBaseObject
     protected function getFacebookHtml($facebookAppId)
     {
         // build correct locale
-        $locale = mb_strtolower(FRONTEND_LANGUAGE) . '_' . mb_strtoupper(FRONTEND_LANGUAGE);
+        $locale = mb_strtolower(LANGUAGE) . '_' . mb_strtoupper(LANGUAGE);
 
         // reform some locale
-        switch (FRONTEND_LANGUAGE) {
+        switch (LANGUAGE) {
             case 'en':
                 $locale = 'en_US';
                 break;

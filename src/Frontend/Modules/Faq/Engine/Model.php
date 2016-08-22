@@ -37,7 +37,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE m.url = ? AND i.language = ? AND i.hidden = ?
              ORDER BY i.sequence',
-            array((string) $url, FRONTEND_LANGUAGE, 'N')
+            array((string) $url, LANGUAGE, 'N')
         );
     }
 
@@ -66,7 +66,7 @@ class Model implements FrontendTagsInterface
                  AND i.id NOT IN (' . implode(',', $excludeIds) . ')
              ORDER BY i.sequence
              LIMIT ?',
-                array((int) $categoryId, FRONTEND_LANGUAGE, 'N', (int) $limit)
+                array((int) $categoryId, LANGUAGE, 'N', (int) $limit)
             );
         } else {
             $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -76,7 +76,7 @@ class Model implements FrontendTagsInterface
                  WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
                  AND i.id NOT IN (' . implode(',', $excludeIds) . ')
              ORDER BY i.sequence',
-                array((int) $categoryId, FRONTEND_LANGUAGE, 'N')
+                array((int) $categoryId, LANGUAGE, 'N')
             );
         }
 
@@ -104,7 +104,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.language = ?
              ORDER BY i.sequence',
-            array(FRONTEND_LANGUAGE)
+            array(LANGUAGE)
         );
 
         // init var
@@ -133,7 +133,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE m.url = ? AND i.language = ?
              ORDER BY i.sequence',
-            array((string) $url, FRONTEND_LANGUAGE)
+            array((string) $url, LANGUAGE)
         );
     }
 
@@ -152,7 +152,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.id = ? AND i.language = ?
              ORDER BY i.sequence',
-            array((int) $id, FRONTEND_LANGUAGE)
+            array((int) $id, LANGUAGE)
         );
     }
 
@@ -217,7 +217,7 @@ class Model implements FrontendTagsInterface
              WHERE i.num_views > 0 AND i.language = ? AND i.hidden = ?
              ORDER BY (i.num_usefull_yes + i.num_usefull_no) DESC
              LIMIT ?',
-            array(FRONTEND_LANGUAGE, 'N', (int) $limit)
+            array(LANGUAGE, 'N', (int) $limit)
         );
 
         $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
@@ -243,7 +243,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.language = ? AND i.category_id = ?
              ORDER BY i.sequence ASC',
-            array(FRONTEND_LANGUAGE, (int) $id)
+            array(LANGUAGE, (int) $id)
         );
 
         $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
@@ -280,7 +280,7 @@ class Model implements FrontendTagsInterface
              WHERE i.language = ? AND i.hidden = ? AND i.id IN(' . implode(',', $relatedIDs) . ')
              ORDER BY i.question
              LIMIT ?',
-            array(FRONTEND_LANGUAGE, 'N', (int) $limit),
+            array(LANGUAGE, 'N', (int) $limit),
             'id'
         );
 
@@ -341,7 +341,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN faq_categories AS c ON c.id = i.category_id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.hidden = ? AND i.language = ? AND i.id IN (' . implode(',', $ids) . ')',
-            array('N', FRONTEND_LANGUAGE),
+            array('N', LANGUAGE),
             'id'
         );
 
