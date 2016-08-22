@@ -163,25 +163,49 @@ abstract class Kernel extends BaseKernel implements KernelInterface
     {
         // on installation all modules should be loaded
         if ($this->environment === 'install') {
-            $finder = new Finder();
-            $directories = $finder->directories()->in(__DIR__ . '/../src/Backend/Modules')->depth(0);
-            $moduleNames = [];
-
-            foreach ($directories->getIterator() as $directory) {
-                $moduleNames[] = $directory->getFilename();
-            }
-
-            return $moduleNames;
+            return $this->getAllPossibleModuleNames();
         }
+
+        $moduleNames = [];
+
+        // check if we need to load the services of a module, this is needed during the installation
+        $request = Request::createFromGlobals();
+
+        if (preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $request->getRequestUri())
+            && $request->query->has('module')
+            && in_array($request->query->get('module'), $this->getAllPossibleModuleNames())) {
+            $moduleNames[] = $request->query->get('module');
+        }
+
         try {
-            return (array) $container->get('database')->getColumn(
-                'SELECT name FROM modules'
+            return array_merge(
+                $moduleNames,
+                (array) $container->get('database')->getColumn(
+                    'SELECT name FROM modules'
+                )
             );
         } catch (\SpoonDatabaseException $e) {
-            return [];
+            return $moduleNames;
         } catch (\PDOException $e) {
             // fork is probably not installed yet
-            return [];
+            return $moduleNames;
         }
+    }
+
+    /**
+     * @return array
+     */
+    private function getAllPossibleModuleNames()
+    {
+        $moduleNames = [];
+        $finder = new Finder();
+
+        $directories = $finder->directories()->in(__DIR__ . '/../src/Backend/Modules')->depth(0);
+
+        foreach ($directories->getIterator() as $directory) {
+            $moduleNames[] = $directory->getFilename();
+        }
+
+        return $moduleNames;
     }
 }
