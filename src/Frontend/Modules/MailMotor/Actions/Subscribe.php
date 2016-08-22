@@ -123,7 +123,7 @@ class Subscribe extends FrontendBaseBlock
                 // fallback for when no mail-engine is chosen in the Backend
                 } catch (NotImplementedException $e) {
                     // mail admin instead
-                    FrontendMailMotorModel::mailAdminToSubscribeSubscriber(
+                    $this->get('mailmotor.not_implemented.subscriber.mailer')->subscribe(
                         $email->getValue(),
                         FRONTEND_LANGUAGE
                     );

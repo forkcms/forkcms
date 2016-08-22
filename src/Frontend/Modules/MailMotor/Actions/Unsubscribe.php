@@ -141,7 +141,7 @@ class Unsubscribe extends FrontendBaseBlock
                 // fallback for when no mail-engine is chosen in the Backend
                 } catch (NotImplementedException $e) {
                     // mail admin instead
-                    FrontendMailMotorModel::mailAdminToUnsubscribeSubscriber(
+                    $this->get('mailmotor.not_implemented.subscriber.mailer')->unsubscribe(
                         $email->getValue(),
                         FRONTEND_LANGUAGE
                     );
