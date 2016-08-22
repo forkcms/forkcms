@@ -27,7 +27,6 @@
         "google/apiclient": "~1.1.2",
         "league/flysystem": "~1.0",
 
-        "flippa-official/errbit-php": "dev-master#b432716d29c2b4ada0f21ccc469ccb046bb60340",
         "sumocoders/sumo-fork-class": "^1.1"
     },
     "require-dev": {
