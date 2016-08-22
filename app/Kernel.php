@@ -185,10 +185,10 @@ abstract class Kernel extends BaseKernel implements KernelInterface
                 )
             );
         } catch (\SpoonDatabaseException $e) {
-            return $moduleNames;
+            return $this->getAllPossibleModuleNames();
         } catch (\PDOException $e) {
             // fork is probably not installed yet
-            return $moduleNames;
+            return $this->getAllPossibleModuleNames();
         }
     }
 
