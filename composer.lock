@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "527018db5e90c4f84a908c597591aa94",
-    "content-hash": "9163038df109595ac8ea5817b756c41b",
+    "hash": "b0087855310e6395adb8d7f215b1d68e",
+    "content-hash": "39a0e2a1fbfb168584c5e07b5a02eab1",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -452,12 +452,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/flippa/errbit-php.git",
-                "reference": "e15eb15ca37963ee7dcc5dae0a70d5420fca85a4"
+                "reference": "b432716d29c2b4ada0f21ccc469ccb046bb60340"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flippa/errbit-php/zipball/e15eb15ca37963ee7dcc5dae0a70d5420fca85a4",
-                "reference": "e15eb15ca37963ee7dcc5dae0a70d5420fca85a4",
+                "url": "https://api.github.com/repos/flippa/errbit-php/zipball/b432716d29c2b4ada0f21ccc469ccb046bb60340",
+                "reference": "b432716d29c2b4ada0f21ccc469ccb046bb60340",
                 "shasum": ""
             },
             "require": {
@@ -476,7 +476,7 @@
             ],
             "description": "Errbit & Airbrake Client for PHP",
             "homepage": "https://github.com/flippa/errbit-php",
-            "time": "2013-05-03 07:04:08"
+            "time": "2013-04-01 21:44:38"
         },
         {
             "name": "google/apiclient",
@@ -1160,21 +1160,21 @@
         },
         {
             "name": "sumocoders/sumo-fork-class",
-            "version": "dev-master",
+            "version": "1.1.1",
             "target-dir": "SumoCoders/SumoForkClass",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sumocoders/Sumo-specific-Fork-stuff.git",
-                "reference": "c3da9e565df295216044baf7ab37b5e3b111f34d"
+                "reference": "e57fa5a30ba4a73736990aeb0220b61bcb77376b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sumocoders/Sumo-specific-Fork-stuff/zipball/c3da9e565df295216044baf7ab37b5e3b111f34d",
-                "reference": "c3da9e565df295216044baf7ab37b5e3b111f34d",
+                "url": "https://api.github.com/repos/sumocoders/Sumo-specific-Fork-stuff/zipball/e57fa5a30ba4a73736990aeb0220b61bcb77376b",
+                "reference": "e57fa5a30ba4a73736990aeb0220b61bcb77376b",
                 "shasum": ""
             },
             "require": {
-                "flippa-official/errbit-php": "dev-master",
+                "flippa-official/errbit-php": "dev-master#b432716d29c2b4ada0f21ccc469ccb046bb60340",
                 "php": ">=5.3.0"
             },
             "type": "library",
@@ -1196,7 +1196,7 @@
             ],
             "description": "Fork is great, but we like to implemented our internal tools into the website we create for our clients",
             "homepage": "https://github.com/sumocoders/Sumo-specific-Fork-stuff",
-            "time": "2016-03-31 12:56:56"
+            "time": "2016-08-22 06:50:14"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3131,8 +3131,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "flippa-official/errbit-php": 20,
-        "sumocoders/sumo-fork-class": 20
+        "flippa-official/errbit-php": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

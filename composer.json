@@ -27,8 +27,7 @@
         "google/apiclient": "~1.1.2",
         "league/flysystem": "~1.0",
 
-        "flippa-official/errbit-php": "dev-master",
-        "sumocoders/sumo-fork-class": "dev-master"
+        "sumocoders/sumo-fork-class": "^1.1"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
