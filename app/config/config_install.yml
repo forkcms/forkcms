@@ -70,6 +70,15 @@ services:
         class: Common\Doctrine\Entity\CreateSchema
         arguments:
             - "@doctrine.orm.entity_manager"
+
+    # dummy service during the installation
+    fork.settings:
+        class: stdClass
+
+    # dummy service during the installation
+    cache.pool:
+        class: stdClass
+
     database:
         class: SpoonDatabase
         arguments:

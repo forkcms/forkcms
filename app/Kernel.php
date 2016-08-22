@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +26,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      * Constructor.
      *
      * @param string $environment The environment
-     * @param bool   $debug       Whether to enable debugging or not
+     * @param bool $debug Whether to enable debugging or not
      *
      * @api
      */
@@ -124,22 +126,13 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      *
      * @throws \RuntimeException
      *
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder The compiled service container
+     * @return ContainerBuilder The compiled service container
      */
     protected function buildContainer()
     {
         $container = parent::buildContainer();
 
-        try {
-            $installedModules = $container->get('database')->getColumn(
-                'SELECT name FROM modules'
-            );
-        } catch (\SpoonDatabaseException $e) {
-            $installedModules = array();
-        } catch (\PDOException $e) {
-            // fork is probably not installed yet
-            $installedModules = array();
-        }
+        $installedModules = $this->getInstalledModules($container);
 
         $container->setParameter('installed_modules', $installedModules);
 
@@ -159,5 +152,36 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         );
 
         return $container;
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     *
+     * @return array
+     */
+    private function getInstalledModules(ContainerBuilder $container)
+    {
+        // on installation all modules should be loaded
+        if ($this->environment === 'install') {
+            $finder = new Finder();
+            $directories = $finder->directories()->in(__DIR__ . '/../src/Backend/Modules')->depth(0);
+            $moduleNames = [];
+
+            foreach ($directories->getIterator() as $directory) {
+                $moduleNames[] = $directory->getFilename();
+            }
+
+            return $moduleNames;
+        }
+        try {
+            return (array) $container->get('database')->getColumn(
+                'SELECT name FROM modules'
+            );
+        } catch (\SpoonDatabaseException $e) {
+            return [];
+        } catch (\PDOException $e) {
+            // fork is probably not installed yet
+            return [];
+        }
     }
 }
