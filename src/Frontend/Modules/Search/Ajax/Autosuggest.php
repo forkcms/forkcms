@@ -11,7 +11,7 @@ namespace Frontend\Modules\Search\Ajax;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 

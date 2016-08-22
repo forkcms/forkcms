@@ -12,7 +12,7 @@ namespace Backend\Core\Engine;
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Base\Object;
-use Frontend\Core\Engine\Language as FrontendLanguage;
+use Frontend\Core\Language\Language as FrontendLanguage;
 use Backend\Core\Language\Language as BackendLanguage;
 
 /**

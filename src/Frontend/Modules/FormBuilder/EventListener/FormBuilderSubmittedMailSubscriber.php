@@ -5,7 +5,7 @@ namespace Frontend\Modules\FormBuilder\EventListener;
 use Common\Mailer\Message;
 use Swift_Mailer;
 use Common\ModulesSettings;
-use Frontend\Core\Engine\Language;
+use Frontend\Core\Language\Language;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 
 /**

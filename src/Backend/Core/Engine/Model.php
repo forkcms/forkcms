@@ -15,7 +15,7 @@ use TijsVerkoyen\Akismet\Akismet;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Engine\Language as FrontendLanguage;
+use Frontend\Core\Language\Language as FrontendLanguage;
 use Backend\Core\Language\Language as BackendLanguage;
 
 /**

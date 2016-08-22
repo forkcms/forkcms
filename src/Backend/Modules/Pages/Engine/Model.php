@@ -18,7 +18,7 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use Frontend\Core\Engine\Language as FrontendLanguage;
+use Frontend\Core\Language\Language as FrontendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the PagesModule

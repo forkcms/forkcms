@@ -12,7 +12,7 @@ namespace Frontend\Modules\Search\Actions;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;

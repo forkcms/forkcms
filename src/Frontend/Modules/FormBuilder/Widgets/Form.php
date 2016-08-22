@@ -5,7 +5,7 @@ namespace Frontend\Modules\FormBuilder\Widgets;
 use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;

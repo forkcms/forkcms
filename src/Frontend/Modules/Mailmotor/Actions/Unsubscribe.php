@@ -7,7 +7,7 @@ use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Modules\Mailmotor\Engine\CMHelper as FrontendMailmotorCMHelper;
 use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
 

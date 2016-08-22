@@ -11,7 +11,7 @@ namespace Backend\Modules\FormBuilder\Engine;
 
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 
 /**
  * In this file we store all generic functions that we will be using in the form_builder module
