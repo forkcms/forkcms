@@ -4,7 +4,7 @@ namespace Common;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\FileSystem\FileSystem;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\DomCrawler\Crawler;
@@ -122,7 +122,7 @@ abstract class WebTestCase extends BaseWebTestCase
      */
     protected function backupParametersFile($kernelDir)
     {
-        $fs = new FileSystem();
+        $fs = new Filesystem();
         if ($fs->exists($kernelDir . '/config/parameters.yml')) {
             $fs->copy(
                 $kernelDir . '/config/parameters.yml',
@@ -141,7 +141,7 @@ abstract class WebTestCase extends BaseWebTestCase
      */
     protected function putParametersFileBack($kernelDir)
     {
-        $fs = new FileSystem();
+        $fs = new Filesystem();
         if ($fs->exists($kernelDir . '/config/parameters.yml~backup')) {
             $fs->copy(
                 $kernelDir . '/config/parameters.yml~backup',
