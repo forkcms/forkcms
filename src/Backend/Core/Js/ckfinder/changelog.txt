@@ -3,6 +3,13 @@ CKFinder Changelog
 http://cksource.com/ckfinder
 Copyright (C) 2007-2015, CKSource - Frederico Knabben. All rights reserved.
 
+
+### Version 2.6.2
+- Fixed issues with HTML5 upload in popup mode on IE.
+
+### Version 2.6.1
+- Fixed minor self-XSS vulnerability.
+
 ### Version 2.6
 Security release:
 - Fixed DOM XSS and reflected XSS vulnerabilities.

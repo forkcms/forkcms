@@ -1,5 +1,5 @@
 <?php
-// Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
+// Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
 // For licensing, see LICENSE.html or http://ckfinder.com/license
 
 //  Defines the object, for the Turkish language. Turkish translation by Abdullah M CEYLAN a.k.a. Kenan Balamir. Updated. Günce BEKTAŞ update tr.js file and translate help folder.
