@@ -39,11 +39,11 @@ class Installer extends ModuleInstaller
         $this->setSetting('Profiles', 'send_mail_for_new_profile_to_profile', false);
 
         // add folders
-        $fs = new Filesystem();
-        $fs->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/source/');
-        $fs->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/240x240/');
-        $fs->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/64x64/');
-        $fs->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/32x32/');
+        $filesystem = new Filesystem();
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/source/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/240x240/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/64x64/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/32x32/');
 
         // module rights
         $this->setModuleRights(1, 'Profiles');

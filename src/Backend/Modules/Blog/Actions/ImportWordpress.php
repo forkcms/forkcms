@@ -35,7 +35,7 @@ class ImportWordpress extends BackendBaseActionEdit
     /**
      * @var Filesystem
      */
-    private $fs;
+    private $filesystem;
 
     /**
      * Execute the action

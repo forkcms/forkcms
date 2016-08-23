@@ -62,10 +62,10 @@ class Templates extends AjaxAction
      */
     private function processFile($file)
     {
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
 
         // if the files doesn't exists we can stop here and just return an empty string
-        if (!$fs->exists($file)) {
+        if (!$filesystem->exists($file)) {
             return array();
         }
 
@@ -88,7 +88,7 @@ class Templates extends AjaxAction
             }
 
             if (isset($template['file'])) {
-                if ($fs->exists(PATH_WWW . $template['file'])) {
+                if ($filesystem->exists(PATH_WWW . $template['file'])) {
                     $template['html'] = file_get_contents(PATH_WWW . $template['file']);
                 }
             }
