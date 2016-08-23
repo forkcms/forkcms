@@ -1,5 +1,5 @@
 services:
-    content_blocks.create_content_block_handler:
+    content_blocks.handler.create_content_block:
         class: Backend\Modules\ContentBlocks\Command\CreateContentBlockHandler
         arguments:
             - "@event_dispatcher"
@@ -7,7 +7,7 @@ services:
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\CreateContentBlock }
 
-    content_blocks.update_content_block_handler:
+    content_blocks.handler.update_content_block:
         class: Backend\Modules\ContentBlocks\Command\UpdateContentBlockHandler
         arguments:
             - "@event_dispatcher"
@@ -15,7 +15,7 @@ services:
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\UpdateContentBlock }
 
-    content_blocks.delete_content_block_handler:
+    content_blocks.handler.delete_content_block:
         class: Backend\Modules\ContentBlocks\Command\DeleteContentBlockHandler
         arguments:
             - "@event_dispatcher"
@@ -23,7 +23,7 @@ services:
         tags:
             - { name: command_handler, handles: Backend\Modules\ContentBlocks\Command\DeleteContentBlock }
 
-    content_blocks.copy_content_blocks_to_other_locale_handler:
+    content_blocks.handler.copy_content_blocks_to_other_locale:
         class: Backend\Modules\ContentBlocks\Command\CopyContentBlocksToOtherLocaleHandler
         arguments:
             - "@content_blocks.repository.content_block"
