@@ -374,11 +374,11 @@
                         <input type="radio" id="template{{ template.id }}" value="{{ template.id }}"
                           name="template_id_chooser"
                           class="inputRadio"{% if template.checked %} checked="checked"{% endif %}{% if template.disabled %} disabled="disabled"{% endif %} />{{ template.label }}
-                      </label>
-                    </div>
 
-                    <div class="templateVisual current">
-                      {{ template.html|raw }}
+                        <div class="templateVisual current">
+                          {{ template.html|raw }}
+                        </div>
+                      </label>
                     </div>
                   </div>
                 </div>

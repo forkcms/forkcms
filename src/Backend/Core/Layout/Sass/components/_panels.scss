@@ -11,6 +11,10 @@
   &.last {
     margin-bottom: 0;
   }
+
+  .nav-tabs a {
+    text-decoration: none;
+  }
 }
 
 .panel-default {

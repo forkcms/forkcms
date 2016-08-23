@@ -22,28 +22,31 @@
           <p>Enter the e-mail address and password you'd like to use to log in.</p>
           {{ form_row(form.email) }}
 
-          {{ form_row(form.password.first) }}
-          <table id="passwordStrengthMeter" class="passwordStrength" data-id="install_login_password_first">
-            <tr>
-              <td class="strength" id="passwordStrength">
-                <p class="strength none">
-                  <span class="label label-default">None</span>
-                </p>
-                <p class="strength weak">
-                  <span class="label label-danger">Weak</span>
-                </p>
-                <p class="strength average">
-                  <span class="label label-warning">Average</span>
-                </p>
-                <p class="strength strong">
-                  <span class="label label-success">Strong</span>
-                </p>
-              </td>
-              <td>
-                <p class="help-block">&nbsp;Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>
-              </td>
-            </tr>
-          </table>
+          <div class="form-group">
+            {{ form_label(form.password.first) }}
+            <table id="passwordStrengthMeter" class="passwordStrength" data-id="install_login_password_first">
+              <tr>
+                <td class="strength" id="passwordStrength">
+                  <p class="strength none">
+                    <span class="label label-default">None</span>
+                  </p>
+                  <p class="strength weak">
+                    <span class="label label-danger">Weak</span>
+                  </p>
+                  <p class="strength average">
+                    <span class="label label-warning">Average</span>
+                  </p>
+                  <p class="strength strong">
+                    <span class="label label-success">Strong</span>
+                  </p>
+                </td>
+                <td>
+                  <p class="help-block">&nbsp;Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>
+                </td>
+              </tr>
+            </table>
+            {{ form_widget(form.password.first) }}
+          </div>
           {{ form_row(form.password.second) }}
         </div>
         <div class="panel-footer">
