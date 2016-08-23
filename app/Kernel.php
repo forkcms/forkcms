@@ -168,7 +168,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
     private function getInstalledModules(ContainerBuilder $container)
     {
         // on installation all modules should be loaded
-        if ($this->environment === 'install') {
+        if ($this->environment === 'install' || $this->environment === 'test') {
             return $this->getAllPossibleModuleNames();
         }
 
