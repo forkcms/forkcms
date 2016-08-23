@@ -23,4 +23,6 @@ ${SCRIPT_PATH}/../app/console cache:clear
 ${SCRIPT_PATH}/../app/console cache:clear --env=prod
 ${SCRIPT_PATH}/../app/console cache:clear --env=install
 
+rm -rf {SCRIPT_PATH}/../app/cache/*
+
 echo 'All done! Cache files removed.'
