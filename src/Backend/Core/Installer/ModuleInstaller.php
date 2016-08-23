@@ -172,10 +172,10 @@ class ModuleInstaller
 
         // invalidate the cache for search
         $finder = new Finder();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
             /** @var $file \SplFileInfo */
-            $fs->remove($file->getRealPath());
+            $filesystem->remove($file->getRealPath());
         }
     }
 

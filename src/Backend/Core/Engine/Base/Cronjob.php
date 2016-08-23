@@ -33,8 +33,8 @@ class Cronjob extends Object
         $path = $this->getCacheDirectory() . $this->getId() . '.busy';
 
         // remove the file
-        $fs = new Filesystem();
-        $fs->remove($path);
+        $filesystem = new Filesystem();
+        $filesystem->remove($path);
     }
 
     /**
@@ -109,14 +109,14 @@ class Cronjob extends Object
         }
 
         // build path
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         $path = $this->getCacheDirectory() . $this->getId() . '.busy';
 
         // init var
         $isBusy = false;
 
         // does the busy file already exists.
-        if ($fs->exists($path)) {
+        if ($filesystem->exists($path)) {
             $isBusy = true;
 
             // grab counter
@@ -141,7 +141,7 @@ class Cronjob extends Object
         ++$counter;
 
         // store content
-        $fs->dumpFile($path, $counter);
+        $filesystem->dumpFile($path, $counter);
 
         // if the cronjob is busy we should NOT proceed
         if ($isBusy) {

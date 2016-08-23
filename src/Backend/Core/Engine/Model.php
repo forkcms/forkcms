@@ -269,11 +269,11 @@ class Model extends \Common\Core\Model
         }
 
         $finder = new Finder();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach ($finder->directories()->in($path) as $directory) {
             $fileName = $directory->getRealPath() . '/' . $thumbnail;
             if (is_file($fileName)) {
-                $fs->remove($fileName);
+                $filesystem->remove($fileName);
             }
         }
     }
@@ -678,18 +678,18 @@ class Model extends \Common\Core\Model
             $fileSizes = $model['fileSizes'];
         }
 
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach ($fileSizes as $sizeDir) {
             $fullPath = FRONTEND_FILES_PATH . '/' . $module .
                         (empty($subDirectory) ? '/' : '/' . $subDirectory . '/') . $sizeDir . '/' . $filename;
             if (is_file($fullPath)) {
-                $fs->remove($fullPath);
+                $filesystem->remove($fullPath);
             }
         }
         $fullPath = FRONTEND_FILES_PATH . '/' . $module .
                     (empty($subDirectory) ? '/' : '/' . $subDirectory . '/') . 'source/' . $filename;
         if (is_file($fullPath)) {
-            $fs->remove($fullPath);
+            $filesystem->remove($fullPath);
         }
     }
 

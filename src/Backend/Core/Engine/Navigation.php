@@ -109,8 +109,8 @@ class Navigation extends Base\Object
         $value .= '?>';
 
         // store
-        $fs = new Filesystem();
-        $fs->dumpFile(
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile(
             self::getCacheDirectory() . 'navigation.php',
             $value
         );

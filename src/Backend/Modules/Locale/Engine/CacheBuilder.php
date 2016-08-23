@@ -138,8 +138,8 @@ class CacheBuilder
      */
     protected function dumpJsonCache($language, $application)
     {
-        $fs = new Filesystem();
-        $fs->dumpFile(
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile(
             constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $language . '.json',
             json_encode($this->buildJsonCache($language, $application))
         );

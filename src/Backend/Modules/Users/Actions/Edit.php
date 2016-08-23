@@ -378,11 +378,11 @@ class Edit extends BackendBaseActionEdit
                         $this->record['settings']['avatar'] != 'no-avatar.jpg' &&
                         $this->record['settings']['avatar'] != ''
                     ) {
-                        $fs = new Filesystem();
-                        $fs->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
+                        $filesystem = new Filesystem();
+                        $filesystem->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
                     }
 
                     // create new filename

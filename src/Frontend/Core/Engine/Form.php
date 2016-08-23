@@ -548,9 +548,9 @@ class FrontendFormImage extends \SpoonFormImage
     public function generateThumbnails($path, $filename)
     {
         // create folder if needed
-        $fs = new Filesystem();
-        if (!$fs->exists($path . '/source')) {
-            $fs->mkdir($path . '/source');
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($path . '/source')) {
+            $filesystem->mkdir($path . '/source');
         }
 
         // move the source file

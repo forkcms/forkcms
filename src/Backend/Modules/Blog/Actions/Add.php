@@ -154,8 +154,8 @@ class Add extends BackendBaseActionAdd
                     $imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
                     // create folders if needed
-                    $fs = new Filesystem();
-                    $fs->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
+                    $filesystem = new Filesystem();
+                    $filesystem->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
 
                     // image provided?
                     if ($this->frm->getField('image')->isFilled()) {
