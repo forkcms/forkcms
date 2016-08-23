@@ -272,6 +272,13 @@ class ContentBlock
     public function prePersist()
     {
         $this->createdOn = $this->editedOn = new DateTime();
+    }
+
+    /**
+     * @ORM\PostPersist
+     */
+    public function postPersist()
+    {
         $this->updateWidget();
     }
 
@@ -281,7 +288,6 @@ class ContentBlock
     public function preUpdate()
     {
         $this->editedOn = new DateTime();
-        $this->updateWidget();
     }
 
     /**
