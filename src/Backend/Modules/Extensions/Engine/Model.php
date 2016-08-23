@@ -198,7 +198,7 @@ class Model
     public static function clearCache()
     {
         $finder = new Finder();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach (
             $finder->files()
                 ->name('*.php')
@@ -208,9 +208,9 @@ class Model
                 ->in(FRONTEND_CACHE_PATH . '/Locale')
             as $file
         ) {
-            $fs->remove($file->getRealPath());
+            $filesystem->remove($file->getRealPath());
         }
-        $fs->remove(Navigation::getCacheDirectory() . 'navigation.php');
+        $filesystem->remove(Navigation::getCacheDirectory() . 'navigation.php');
     }
 
     /**

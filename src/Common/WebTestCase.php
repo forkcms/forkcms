@@ -122,15 +122,15 @@ abstract class WebTestCase extends BaseWebTestCase
      */
     protected function backupParametersFile($kernelDir)
     {
-        $fs = new Filesystem();
-        if ($fs->exists($kernelDir . '/config/parameters.yml')) {
-            $fs->copy(
+        $filesystem = new Filesystem();
+        if ($filesystem->exists($kernelDir . '/config/parameters.yml')) {
+            $filesystem->copy(
                 $kernelDir . '/config/parameters.yml',
                 $kernelDir . '/config/parameters.yml~backup'
             );
         }
-        if ($fs->exists($kernelDir . '/cache/test')) {
-            $fs->remove($kernelDir . '/cache/test');
+        if ($filesystem->exists($kernelDir . '/cache/test')) {
+            $filesystem->remove($kernelDir . '/cache/test');
         }
     }
 
@@ -141,17 +141,17 @@ abstract class WebTestCase extends BaseWebTestCase
      */
     protected function putParametersFileBack($kernelDir)
     {
-        $fs = new Filesystem();
-        if ($fs->exists($kernelDir . '/config/parameters.yml~backup')) {
-            $fs->copy(
+        $filesystem = new Filesystem();
+        if ($filesystem->exists($kernelDir . '/config/parameters.yml~backup')) {
+            $filesystem->copy(
                 $kernelDir . '/config/parameters.yml~backup',
                 $kernelDir . '/config/parameters.yml',
                 true
             );
-            $fs->remove($kernelDir . '/config/parameters.yml~backup');
+            $filesystem->remove($kernelDir . '/config/parameters.yml~backup');
         }
-        if ($fs->exists($kernelDir . '/cache/test')) {
-            $fs->remove($kernelDir . '/cache/test');
+        if ($filesystem->exists($kernelDir . '/cache/test')) {
+            $filesystem->remove($kernelDir . '/cache/test');
         }
     }
 

@@ -119,10 +119,10 @@ class ForkInstaller
     private function deleteCachedData()
     {
         $finder = new Finder();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach ($finder->files()->in(BACKEND_CACHE_PATH)->in(FRONTEND_CACHE_PATH) as $file) {
             /** @var $file \SplFileInfo */
-            $fs->remove($file->getRealPath());
+            $filesystem->remove($file->getRealPath());
         }
     }
 
@@ -306,8 +306,8 @@ class ForkInstaller
             );
 
             // write app/config/parameters.yml
-            $fs = new Filesystem();
-            $fs->dumpFile($destinationFilename, $yamlContent);
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile($destinationFilename, $yamlContent);
         }
     }
 

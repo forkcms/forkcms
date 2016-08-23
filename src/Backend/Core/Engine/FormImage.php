@@ -57,9 +57,9 @@ class FormImage extends \SpoonFormImage
      */
     public function generateThumbnails($path, $filename)
     {
-        $fs = new Filesystem();
-        if (!$fs->exists($path . '/source')) {
-            $fs->mkdir($path . '/source');
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($path . '/source')) {
+            $filesystem->mkdir($path . '/source');
         }
         $this->moveFile($path . '/source/' . $filename);
 

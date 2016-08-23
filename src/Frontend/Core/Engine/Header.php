@@ -564,11 +564,11 @@ class Header extends FrontendBaseObject
         $finalPath = FRONTEND_CACHE_PATH . '/MinifiedCss/' . $fileName;
 
         // check that file does not yet exist or has been updated already
-        $fs = new Filesystem();
-        if (!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
             // create directory if it does not exist
-            if (!$fs->exists(dirname($finalPath))) {
-                $fs->mkdir(dirname($finalPath));
+            if (!$filesystem->exists(dirname($finalPath))) {
+                $filesystem->mkdir(dirname($finalPath));
             }
 
             // minify the file
@@ -593,11 +593,11 @@ class Header extends FrontendBaseObject
         $finalPath = FRONTEND_CACHE_PATH . '/MinifiedJs/' . $fileName;
 
         // check that file does not yet exist or has been updated already
-        $fs = new Filesystem();
-        if (!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
             // create directory if it does not exist
-            if (!$fs->exists(dirname($finalPath))) {
-                $fs->mkdir(dirname($finalPath));
+            if (!$filesystem->exists(dirname($finalPath))) {
+                $filesystem->mkdir(dirname($finalPath));
             }
 
             // minify the file

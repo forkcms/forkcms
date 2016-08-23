@@ -193,8 +193,8 @@ class Autosuggest extends FrontendBaseAJAXAction
         // debug mode = no cache
         if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
-            $fs = new Filesystem();
-            $fs->dumpFile(
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile(
                 $this->cacheFile,
                 "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
                     $this->items,

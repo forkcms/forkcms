@@ -343,11 +343,11 @@ class Language
         }
 
         // validate file, generate it if needed
-        $fs = new Filesystem();
-        if (!$fs->exists(FRONTEND_CACHE_PATH . '/Locale/en.json')) {
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists(FRONTEND_CACHE_PATH . '/Locale/en.json')) {
             self::buildCache('en', 'Frontend');
         }
-        if (!$fs->exists(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.json')) {
+        if (!$filesystem->exists(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.json')) {
             self::buildCache($language, 'Frontend');
         }
 

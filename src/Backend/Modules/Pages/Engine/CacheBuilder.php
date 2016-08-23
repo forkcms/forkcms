@@ -53,9 +53,9 @@ class CacheBuilder
         $navigation = $this->getNavigation($language);
 
         // build file with navigation structure to feed into editor
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         $cachePath = FRONTEND_CACHE_PATH . '/Navigation/';
-        $fs->dumpFile(
+        $filesystem->dumpFile(
             $cachePath . 'editor_link_list_' . $language . '.js',
             $this->dumpEditorLinkList($navigation, $keys, $language)
         );
