@@ -178,18 +178,24 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         }
 
         try {
-            return array_merge(
+            $moduleNames = array_merge(
                 $moduleNames,
                 (array) $container->get('database')->getColumn(
                     'SELECT name FROM modules'
                 )
             );
         } catch (\SpoonDatabaseException $e) {
-            return $this->getAllPossibleModuleNames();
+            $moduleNames = [];
         } catch (\PDOException $e) {
             // fork is probably not installed yet
+            $moduleNames = [];
+        }
+
+        if (empty($moduleNames)) {
             return $this->getAllPossibleModuleNames();
         }
+
+        return $moduleNames;
     }
 
     /**
