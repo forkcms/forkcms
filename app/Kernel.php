@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use PDOException;
+use SpoonDatabaseException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -184,9 +186,9 @@ abstract class Kernel extends BaseKernel implements KernelInterface
                     'SELECT name FROM modules'
                 )
             );
-        } catch (\SpoonDatabaseException $e) {
+        } catch (SpoonDatabaseException $e) {
             $moduleNames = [];
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             // fork is probably not installed yet
             $moduleNames = [];
         }
