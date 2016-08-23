@@ -9,15 +9,14 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
-use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BackendLanguage;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This is the edit-action, it will display a form to edit the mailing contents through an iframe
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class EditMailingIframe extends BackendBaseActionEdit
 {
@@ -37,12 +36,42 @@ class EditMailingIframe extends BackendBaseActionEdit
 
         // does the item exist
         if (BackendMailmotorModel::existsMailing($this->id)) {
+            $this->addAssets();
             parent::execute();
             $this->getData();
             $this->parse();
-            $this->display(BACKEND_MODULES_PATH . '/Mailmotor/Layout/Templates/EditMailingIframe.tpl');
+            $this->display(BACKEND_MODULES_PATH . '/Mailmotor/Layout/Templates/EditMailingIframe.html.twig');
         } else {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
+    }
+
+    /**
+     * Adds required assets
+     */
+    private function addAssets()
+    {
+        // we add iframe css
+        $this->header->addCSS('Iframe.css', 'Mailmotor');
+
+        // we add JS because we need CKEditor
+        $this->header->addJS('ckeditor/ckeditor.js', 'Core', false);
+        $this->header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
+        $this->header->addJS('ckfinder/ckfinder.js', 'Core', false);
+
+        // add the internal link lists-file
+        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js')) {
+            $timestamp = @filemtime(
+                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js'
+            );
+            $this->header->addJS(
+                '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage(
+                ) . '.js?m=' . $timestamp,
+                null,
+                false,
+                true,
+                false
+            );
         }
     }
 
@@ -99,7 +128,7 @@ class EditMailingIframe extends BackendBaseActionEdit
         /*
             I realise this is a bit confusing, so let me elaborate:
 
-            1.	EditMailingIframe.tpl contains a var {$templateHtml}. This is where $this->template['content'] goes.
+            1.	EditMailingIframe.html.twig contains a var {$templateHtml}. This is where $this->template['content'] goes.
 
             2.	Inside $this->template['content'] should be a textarea with a variable {$contentHtml} inside. This will
                 become the editor field which will contain our stored content HTML.

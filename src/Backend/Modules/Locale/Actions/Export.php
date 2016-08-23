@@ -15,10 +15,6 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the export-action, it will create a XML with locale items.
- *
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Stef Bastiaansen <stef.bastiaansen@wijs.be>
  */
 class Export extends BackendBaseActionIndex
 {
@@ -128,7 +124,7 @@ class Export extends BackendBaseActionIndex
         // xml headers
         header('Content-Disposition: attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"');
         header('Content-Type: application/octet-stream;charset=' . $charset);
-        header('Content-Length: ' . strlen($xmlOutput));
+        header('Content-Length: ' . mb_strlen($xmlOutput));
 
         // output XML
         echo $xmlOutput;

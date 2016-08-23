@@ -18,9 +18,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * This is the index-action (default), it will display the overview
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -46,7 +43,7 @@ class Index extends BackendBaseActionIndex
         );
         $this->dataGrid->setHeaderLabels(array(
             'email' => \SpoonFilter::ucfirst(BL::getLabel('Recipient')),
-            'sent_forms' => ''
+            'sent_forms' => '',
         ));
         $this->dataGrid->setSortingColumns(array('name', 'email', 'method', 'sent_forms'), 'name');
         $this->dataGrid->setColumnFunction(
@@ -97,6 +94,7 @@ class Index extends BackendBaseActionIndex
      *
      * @param int $formId Id of the form.
      * @param int $sentForms Amount of sent forms.
+     *
      * @return string
      */
     public static function parseNumForms($formId, $sentForms)

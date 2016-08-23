@@ -1,0 +1,192 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% form add %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}</label>
+        {% form_field title %} {% form_field_error title %}
+        {% if detailURL %}
+          <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl"></span></a>
+        {% endif %}
+        {% if not detailURL %}
+          <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+          </li>
+          <li class="pull-right" role="presentation">
+            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+          </li>
+          <li class="pull-right" role="presentation">
+            <a href="#tabComments" aria-controls="tabComments" role="tab" data-toggle="tab">{{ 'lbl.Comments'|trans|ucfirst }}</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tabContent">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="panel panel-default panel-editor">
+                  <div class="panel-heading">
+                    <p>{{ 'lbl.MainContent'|trans|ucfirst }}
+                      {{ macro.required }}</p>
+                  </div>
+                  <div class="panel-body">
+                    {% form_field text %}
+                  </div>
+                  {% if txtTextError %}
+                    <div class="panel-footer">
+                      {% form_field_error text %}
+                    </div>
+                  {% endif %}
+                </div>
+                {% if imageIsAllowed %}
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <p>{{ 'lbl.Image'|trans|ucfirst }}</p>
+                    </div>
+                    <div class="panel-body">
+                      {% form_field image %} {% form_field_error image %}
+                    </div>
+                  </div>
+                {% endif %}
+                <div class="panel panel-default panel-editor last">
+                  <div class="panel-heading">
+                    <p>
+                      {{ 'lbl.Summary'|trans|ucfirst }}
+                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|ucfirst }}"></abbr><br>
+                    </p>
+                  </div>
+                  <div class="panel-body">
+                    {% form_field introduction %}
+                  </div>
+                  {% if txtIntroductionError %}
+                    <div class="panel-footer">
+                      {% form_field_error introduction %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <p>{{ 'lbl.Status'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <ul class="list-unstyled">
+                        {% for _itr_4 in hidden %}
+                          <li class="radio">
+                            <label for="{{ _itr_4.id }}">{{ _itr_4.rbtHidden|raw }} {{ _itr_4.label }}</label>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    <div class="form-group last">
+                      <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|ucfirst }}</label>
+                      {% form_field publish_on_date %} {% form_field_error publish_on_date %}
+                      <label for="publishOnTime" class="control-label">{{ lbl.At }}</label>
+                      {% form_field publish_on_time %} {% form_field_error publish_on_time %}
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <p>{{ 'lbl.MetaData'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|ucfirst }}</label>
+                      {% form_field category_id %} {% form_field_error category_id %}
+                    </div>
+                    <div class="form-group">
+                      <label for="userId" class="control-label">{{ 'lbl.Author'|trans|ucfirst }}</label>
+                      {% form_field user_id %} {% form_field_error user_id %}
+                    </div>
+                    {% if showTagsIndex %}
+                      <div class="form-group last">
+                        <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
+                        {% form_field tags %} {% form_field_error tags %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabComments">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group last">
+                  <ul class="list-unstyled">
+                    <li class="checkbox">
+                      <label for="allowComments" class="control-label">{% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|ucfirst }}</label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabSEO">
+            {% seo %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <a href="#" id="saveAsDraft" class="btn btn-default">
+            <span class="fa fa-file-o"></span>{{ 'lbl.SaveDraft'|trans|ucfirst }}
+          </a>
+          <button id="addButton" type="submit" name="add" class="btn btn-primary">
+            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="addCategoryDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-title h4">{{ 'lbl.AddCategory'|trans|ucfirst }}</span>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="categoryTitle" class="control-label">
+              {{ 'lbl.Title'|trans|ucfirst }}
+              {{ macro.required }}
+            </label>
+            <input type="text" name="categoryTitle" id="categoryTitle" class="form-control" maxlength="255" />
+            <p class="text-danger" id="categoryTitle'err.r" style="display: none;">{{ 'err.FieldIsRequired'|trans|ucfirst }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+          </button>
+          <button id="addCategorySubmit" type="button" class="btn btn-primary">
+            <span class="fa fa-plus-square"></span>{{ 'lbl.AddCategory'|trans|ucfirst }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endform %}
+
+{% endblock %}

@@ -18,8 +18,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the add-action, it will display a form to create a new group
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class AddGroup extends BackendBaseActionAdd
 {
@@ -99,7 +97,7 @@ class AddGroup extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Groups') . '&report=added&var=' . urlencode(
+                    BackendModel::createURLForAction('Groups') . '&report=added&var=' . rawurlencode(
                         $item['name']
                     ) . '&highlight=id-' . $item['id']
                 );

@@ -1,0 +1,96 @@
+.align-middle {
+  display: table-cell;
+  vertical-align: middle !important;
+}
+
+.table-striped {
+  border: 1px solid $table-border-color;
+
+  > tbody > tr:nth-of-type(even),
+  thead > tr {
+    background-color: $gray-lightest;
+  }
+
+  > tbody > tr:nth-of-type(even):hover,
+  > tbody > tr:nth-of-type(even):focus {
+    &:hover,
+    &:focus {
+      background-color: $table-bg-hover;
+    }
+  }
+}
+
+.table > thead > tr > th {
+  border-width: 1px;
+}
+
+.table > tbody > tr > td.dragAndDropHandle,
+.table > tbody > tr > th.dragAndDropHandle,
+.table > thead > tr > th.dragAndDropHandle {
+  width: 5%;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td {
+  border: 0;
+  vertical-align: middle;
+}
+
+.table {
+  margin-bottom: 0;
+
+  tr {
+
+    td {
+      font-size: $font-size-small;
+
+      &.title a {
+        font-weight: 600;
+      }
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    th {
+      color: $gray;
+      font-size: $font-size-small;
+      font-weight: 600;
+
+      a {
+        color: $text-color;
+
+        &.sorted {
+          color: $brand-primary;
+          position: relative;
+
+          .fa:before {
+            position: absolute;
+          }
+
+          .fa-sort-desc:before {
+            top: 0;
+          }
+
+          .fa-sort-asc:before {
+            bottom: 0;
+          }
+        }
+      }
+    }
+
+    &.grayedOut td {
+      opacity: .6;
+    }
+
+    th + th {
+      border-left: 1px solid $table-border-color;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+}

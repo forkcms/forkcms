@@ -18,8 +18,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -41,7 +39,7 @@ class Add extends BackendBaseActionAdd
     private function loadForm()
     {
         $this->frm = new BackendForm('add');
-        $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->frm->addText('street');
         $this->frm->addText('number');
         $this->frm->addText('zip');
@@ -99,7 +97,7 @@ class Add extends BackendBaseActionAdd
                 // redirect
                 $this->redirect(
                     BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] .
-                    '&report=added&var=' . urlencode($item['title'])
+                    '&report=added&var=' . rawurlencode($item['title'])
                 );
             }
         }

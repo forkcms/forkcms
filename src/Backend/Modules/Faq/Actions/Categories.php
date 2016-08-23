@@ -18,11 +18,6 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This is the categories-action, it will display the overview of faq categories
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author SIESQO <info@siesqo.be>
  */
 class Categories extends BackendBaseActionIndex
 {
@@ -113,6 +108,7 @@ class Categories extends BackendBaseActionIndex
      *
      * @param int $count
      * @param string $link
+     *
      * @return string
      */
     public static function setClickableCount($count, $link)

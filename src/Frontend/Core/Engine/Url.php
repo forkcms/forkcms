@@ -16,10 +16,6 @@ use Common\Cookie as CommonCookie;
 
 /**
  * This class will handle the incoming URL.
- *
- * @author    Tijs Verkoyen <tijs@sumocoders.be>
- * @author    Davy Hellemans <davy.hellemans@netlash.com>
- * @author    Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Url extends \KernelLoader
 {
@@ -104,6 +100,7 @@ class Url extends \KernelLoader
      * Get a page specified by the given index
      *
      * @param int $index The index (0-based).
+     *
      * @return mixed
      */
     public function getPage($index)
@@ -117,7 +114,7 @@ class Url extends \KernelLoader
         }
 
         // fallback
-        return null;
+        return;
     }
 
     /**
@@ -140,6 +137,7 @@ class Url extends \KernelLoader
      * @param string $type         The return type, possible values are:
      *                             bool, boolean, int, integer, float, double, string, array.
      * @param mixed  $defaultValue The value that should be returned if the key is not available.
+     *
      * @return mixed
      */
     public function getParameter($index, $type = 'string', $defaultValue = null)
@@ -162,6 +160,7 @@ class Url extends \KernelLoader
      * Return all the parameters
      *
      * @param bool $includeGET Should the GET-parameters be included?
+     *
      * @return array
      */
     public function getParameters($includeGET = true)
@@ -179,14 +178,15 @@ class Url extends \KernelLoader
      */
     public function getQueryString()
     {
-        return trim((string) $this->request->getRequestUri(), '/');
+        return rtrim((string) $this->request->getRequestUri(), '/');
     }
 
     /**
      * Check if a certain ($_GET) parameter exists
      *
      * @param  mixed   $index The index of the parameter.
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasParameter($index)
     {
@@ -268,8 +268,8 @@ class Url extends \KernelLoader
             // redirect is required
             if ($mustRedirect) {
                 // build URL
-                $URL = rtrim('/' . $language . '/' . $this->getQueryString(), '/');
-
+                // trim the first / from the query string to prevent double slashes
+                $URL = rtrim('/' . $language . '/' . trim($this->getQueryString(), '/'), '/');
                 // when we are just adding the language to the domain, it's a temporary redirect because
                 // Safari keeps the 301 in cache, so the cookie to switch language doesn't work any more
                 $redirectCode = ($URL == '/' . $language ? 302 : 301);
@@ -286,6 +286,7 @@ class Url extends \KernelLoader
 
         // define the language
         defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $language);
+        defined('LANGUAGE') || define('LANGUAGE', $language);
 
         // sets the locale file
         Language::setLocale($language);
@@ -308,7 +309,7 @@ class Url extends \KernelLoader
 
         // remove language from query string
         if ($hasMultiLanguages) {
-            $queryString = trim(substr($queryString, strlen($language)), '/');
+            $queryString = trim(mb_substr($queryString, mb_strlen($language)), '/');
         }
 
         // if it's the homepage AND parameters were given (not allowed!)
@@ -338,7 +339,7 @@ class Url extends \KernelLoader
         }
 
         // set parameters
-        $parameters = trim(substr($startURL, strlen($URL)), '/');
+        $parameters = trim(mb_substr($startURL, mb_strlen($URL)), '/');
 
         // has at least one parameter
         if ($parameters != '') {
@@ -360,8 +361,11 @@ class Url extends \KernelLoader
 
             // remove language
             if ($hasMultiLanguages) {
-                $URL = trim(str_replace('/' . $language, '', $URL), '/');
+                $URL = str_replace('/' . $language, '', $URL);
             }
+
+            // remove the first slash
+            $URL = trim($URL, '/');
 
             // currently not in the homepage
             if ($URL != '') {

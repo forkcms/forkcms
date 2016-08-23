@@ -17,8 +17,6 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * This is the module install-action.
  * It will install the module given via the "module" GET parameter.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class InstallModule extends BackendBaseActionIndex
 {
@@ -49,8 +47,8 @@ class InstallModule extends BackendBaseActionIndex
             BackendExtensionsModel::installModule($this->currentModule);
 
             // remove our container cache after this request
-            $fs = new Filesystem();
-            $fs->remove($this->getContainer()->getParameter('kernel.cache_dir'));
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getContainer()->getParameter('kernel.cache_dir'));
 
             // redirect to index with a success message
             $this->redirect(BackendModel::createURLForAction('Modules') . '&report=module-installed&var=' . $this->currentModule . '&highlight=row-module_' . $this->currentModule);

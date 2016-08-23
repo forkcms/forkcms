@@ -19,9 +19,6 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * This is the module upload-action.
  * It will install a module via a compressed zip file.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class UploadModule extends BackendBaseActionAdd
 {
@@ -80,6 +77,7 @@ class UploadModule extends BackendBaseActionAdd
         // zip file needs to contain some files
         if ($zip->numFiles == 0) {
             $fileFile->addError(BL::getError('FileIsEmpty'));
+
             return;
         }
 
@@ -87,7 +85,7 @@ class UploadModule extends BackendBaseActionAdd
         $allowedDirectories = array(
             'src/Backend/Modules/',
             'src/Frontend/Modules/',
-            'library/external/'
+            'library/external/',
         );
 
         // name of the module we are trying to upload
@@ -100,7 +98,7 @@ class UploadModule extends BackendBaseActionAdd
         $prefix = '';
 
         // check every file in the zip
-        for ($i = 0; $i < $zip->numFiles; $i++) {
+        for ($i = 0; $i < $zip->numFiles; ++$i) {
             // get the file name
             $file = $zip->statIndex($i);
             $fileName = $file['name'];
@@ -112,13 +110,13 @@ class UploadModule extends BackendBaseActionAdd
             // check if the file is in one of the valid directories
             foreach ($allowedDirectories as $directory) {
                 // yay, in a valid directory
-                if (stripos($fileName, $prefix . $directory) === 0) {
+                if (mb_stripos($fileName, $prefix . $directory) === 0) {
                     // we have a library file
                     if ($directory == $prefix . 'library/external/') {
                         // strip the prefix from the filename if necessary
                         $notPrefixedFileName = $fileName;
                         if (!empty($prefix)) {
-                            $notPrefixedFileName = substr($fileName, strlen($prefix));
+                            $notPrefixedFileName = mb_substr($fileName, mb_strlen($prefix));
                         }
 
                         if (!is_file(PATH_WWW . '/' . $fileName)) {
@@ -138,7 +136,7 @@ class UploadModule extends BackendBaseActionAdd
                     $tmpName = $chunks[0];
 
                     // ignore hidden files
-                    if (substr(basename($fileName), 0, 1) == '.') {
+                    if (mb_substr(basename($fileName), 0, 1) == '.') {
                         break;
                     } elseif ($moduleName === null) {
                         // first module we find, store the name
@@ -160,18 +158,21 @@ class UploadModule extends BackendBaseActionAdd
         // after filtering no files left (nothing useful found)
         if (count($files) == 0) {
             $fileFile->addError(BL::getError('FileContentsIsUseless'));
+
             return;
         }
 
         // module already exists on the filesystem
         if (BackendExtensionsModel::existsModule($moduleName)) {
             $fileFile->addError(sprintf(BL::getError('ModuleAlreadyExists'), $moduleName));
+
             return;
         }
 
         // installer in array?
         if (!in_array($prefix . 'src/Backend/Modules/' . $moduleName . '/Installer/Installer.php', $files)) {
             $fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
+
             return;
         }
 
@@ -180,7 +181,7 @@ class UploadModule extends BackendBaseActionAdd
 
         // place all the items in the prefixed folders in the right folders
         if (!empty($prefix)) {
-            $fs = new Filesystem();
+            $filesystem = new Filesystem();
             foreach ($files as &$file) {
                 $fullPath = PATH_WWW . '/' . $file;
                 $newPath = str_replace(
@@ -189,17 +190,17 @@ class UploadModule extends BackendBaseActionAdd
                     $fullPath
                 );
 
-                if ($fs->exists($fullPath) && is_dir($fullPath)) {
-                    $fs->mkdir($newPath);
-                } elseif ($fs->exists($fullPath) && is_file($fullPath)) {
-                    $fs->copy(
+                if ($filesystem->exists($fullPath) && is_dir($fullPath)) {
+                    $filesystem->mkdir($newPath);
+                } elseif ($filesystem->exists($fullPath) && is_file($fullPath)) {
+                    $filesystem->copy(
                         $fullPath,
                         $newPath
                     );
                 }
             }
 
-            $fs->remove(PATH_WWW . '/' . $prefix);
+            $filesystem->remove(PATH_WWW . '/' . $prefix);
         }
 
         // run installer
@@ -214,6 +215,7 @@ class UploadModule extends BackendBaseActionAdd
      * paths.
      *
      * @param $file
+     *
      * @return string
      */
     private function extractPrefix($file)
@@ -223,7 +225,7 @@ class UploadModule extends BackendBaseActionAdd
 
         foreach ($name as $element) {
             if ($element == 'src' || $element == 'library') {
-                return join(PATH_SEPARATOR, $prefix);
+                return implode(PATH_SEPARATOR, $prefix);
             } else {
                 $prefix[] = $element;
             }

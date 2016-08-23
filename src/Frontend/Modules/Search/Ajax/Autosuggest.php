@@ -12,14 +12,11 @@ namespace Frontend\Modules\Search\Ajax;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
  * This is the auto suggest-action, it will output a list of results for a certain search
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Autosuggest extends FrontendBaseAJAXAction
 {
@@ -62,7 +59,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**
@@ -89,7 +86,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         $this->limit = (int) $this->get('fork.settings')->get('Search', 'autosuggest_num_items', 10);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
-                           FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
+                           LANGUAGE . '_' . md5($this->term) . '_' .
                            $this->offset . '_' . $this->limit . '.php';
 
         // load the cached data
@@ -196,8 +193,8 @@ class Autosuggest extends FrontendBaseAJAXAction
         // debug mode = no cache
         if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
-            $fs = new Filesystem();
-            $fs->dumpFile(
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile(
                 $this->cacheFile,
                 "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
                     $this->items,
@@ -218,7 +215,7 @@ class Autosuggest extends FrontendBaseAJAXAction
             $this->items[] = array(
                 'title' => FL::lbl('More'),
                 'text' => FL::msg('MoreResults'),
-                'full_url' => FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term
+                'full_url' => FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term,
             );
         }
 

@@ -18,8 +18,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the add-action, it will display a form to create a new custom field
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class AddCustomField extends BackendBaseActionAdd
 {
@@ -118,7 +116,7 @@ class AddCustomField extends BackendBaseActionAdd
                     $this->redirect(
                         BackendModel::createURLForAction(
                             'CustomFields'
-                        ) . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . urlencode(
+                        ) . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . rawurlencode(
                             $e->getMessage()
                         )
                     );
@@ -128,7 +126,7 @@ class AddCustomField extends BackendBaseActionAdd
                 $this->redirect(
                     BackendModel::createURLForAction(
                         'CustomFields'
-                    ) . '&group_id=' . $this->group['id'] . '&report=added&var=' . urlencode(
+                    ) . '&group_id=' . $this->group['id'] . '&report=added&var=' . rawurlencode(
                         $txtName->getValue()
                     ) . '&highlight=id-' . $this->group['id']
                 );

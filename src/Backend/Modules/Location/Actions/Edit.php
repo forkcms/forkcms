@@ -19,9 +19,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the edit-action, it will display a form to create a new item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -48,8 +45,16 @@ class Edit extends BackendBaseActionEdit
         if ($this->id !== null && BackendLocationModel::exists($this->id)) {
             parent::execute();
 
+            // define Google Maps API key
+            $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+
+            // check Google Maps API key, otherwise redirect to settings
+            if ($apikey === null) {
+                $this->redirect(BackendModel::createURLForAction('Index', 'Settings'));
+            }
+
             // add js
-            $this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
+            $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, null, false, true, false);
 
             $this->loadData();
 
@@ -110,7 +115,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
         $this->frm->addText('street', $this->record['street']);
         $this->frm->addText('number', $this->record['number']);
         $this->frm->addText('zip', $this->record['zip']);
@@ -128,12 +133,12 @@ class Edit extends BackendBaseActionEdit
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
-            'TERRAIN' => BL::lbl('Terrain', $this->getModule())
+            'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
         );
 
         $zoomLevels = array_combine(
-            array_merge(array('auto'), range(3, 18)),
-            array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))
+            array_merge(array('auto'), range(1, 18)),
+            array_merge(array(BL::lbl('Auto', $this->getModule())), range(1, 18))
         );
 
         $this->settingsForm = new BackendForm('settings');
@@ -229,7 +234,7 @@ class Edit extends BackendBaseActionEdit
 
                 // redirect to the overview
                 if ($this->frm->getField('redirect')->getValue() == 'overview') {
-                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['id']);
                 }
                 // redirect to the edit action
                 else {

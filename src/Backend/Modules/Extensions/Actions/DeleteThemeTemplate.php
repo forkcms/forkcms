@@ -15,8 +15,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the delete-action, it will delete a template
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class DeleteThemeTemplate extends BackendBaseActionDelete
 {
@@ -50,7 +48,7 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
 
             // page is deleted, so redirect to the overview
             if ($success) {
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . urlencode($item['label']));
+                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . rawurlencode($item['label']));
             } else {
                 $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
             }

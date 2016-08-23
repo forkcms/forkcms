@@ -199,7 +199,6 @@ a.linkedImage {
 }
 
 #header:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-.ie6 #header, .ie7 #header { zoom: 1; }
 
 	/* Logo */
 
@@ -453,7 +452,6 @@ a.linkedImage {
 }
 
 #main:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-.ie6 #main, .ie7 #main { zoom: 1; }
 
 	/* General module */
 
@@ -464,7 +462,6 @@ a.linkedImage {
 	}
 
 	section:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-	.ie6 section, .ie7 section { zoom: 1; }
 
 		#main .mod .mod,
 		#main section section,
@@ -479,7 +476,6 @@ a.linkedImage {
 		}
 
 		header:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-		.ie6 header, .ie7 header { zoom: 1; }
 
 			#main header {
 				padding-bottom: 10px;
@@ -500,7 +496,6 @@ a.linkedImage {
 				}
 
 				#main header ul:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-				.ie6 #main header ul, .ie7 #main header ul { zoom: 1; }
 
 					#main header li {
 						float: left;
@@ -508,10 +503,8 @@ a.linkedImage {
 					}
 
 		.bd:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-		.ie6 .bd, .ie7 .bd { zoom: 1; }
 
 		.ft:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-		.ie6 .ft, .ie7 .ft { zoom: 1; }
 
 			#main footer p,
 			#main footer ul {
@@ -521,7 +514,6 @@ a.linkedImage {
 			}
 
 			#main footer ul:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-			.ie6 #main footer ul, .ie7 #main footer ul { zoom: 1; }
 
 				#main footer li {
 					float: left;
@@ -539,7 +531,6 @@ a.linkedImage {
 	/* Side navigation */
 
 	.sideNavigation:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-	.ie6 .sideNavigation, .ie7 .sideNavigation { zoom: 1; }
 
 		.sideNavigation h4 {
 			position: absolute;
@@ -758,7 +749,6 @@ a.linkedImage {
 	}
 
 	.pageNavigation:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-	.ie6 .pageNavigation, .ie7 .pageNavigation { zoom: 1; }
 
 		.pageNavigation .previousLink {
 			float: left !important;
@@ -778,7 +768,6 @@ a.linkedImage {
 	}
 
 	.comment:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-	.ie6 .comment, .ie7 .comment { zoom: 1; }
 
 		.comment .imageHolder {
 			float: left;
@@ -818,10 +807,6 @@ a.linkedImage {
 		padding-top: 20px;
 	}
 
-	.ie6 #main .pagination {
-		width: auto;
-	}
-
 		.pagination header {
 			position: absolute;
 			top: -9999px;
@@ -835,19 +820,11 @@ a.linkedImage {
 			left: 50%;
 		}
 
-		.ie6 .pagination .bd {
-			position: static;
-		}
-
 			.pagination ul {
 				padding: 0 0 12px 0;
 				overflow: hidden;
 				position: relative;
 				left: -50%;
-			}
-
-			.ie6 .pagination ul {
-				position: static;
 			}
 
 				.pagination li {
@@ -1151,10 +1128,6 @@ select {
 			left: 0;
 		}
 
-		.ie6 .inputList input {
-			left: -24px;
-		}
-
 		.inputList label {
 			overflow: visible;
 			height: auto;
@@ -1173,22 +1146,16 @@ select {
 }
 
 .visibleFieldset:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-.ie6 .visibleFieldset, .ie7 .visibleFieldset { zoom: 1; }
 
 	legend {
 		font-weight: 700;
 		color: #999;
 	}
 
-		.ie6 legend {
-			margin-bottom: 10px;
-		}
-
 /* Paragraph */
 
 form p { padding: 0 0 12px; }
 form p:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-.ie6 form p, .ie7 form p { zoom: 1; }
 
 /* Labels */
 
@@ -1375,7 +1342,6 @@ label,
 	}
 
 	.alignBlocks:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-	.ie6 .alignBlocks, .ie7 .alignBlocks { zoom: 1; }
 
 		.alignBlocks p {
 			padding: 0 5px;
@@ -1391,7 +1357,6 @@ label,
 	}
 
 	.alignFields:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-	.ie6 .alignFields, .ie7 .alignFields { zoom: 1; }
 
 		.alignFields label {
 			position: absolute;
@@ -1402,13 +1367,6 @@ label,
 		.alignFields input,
 		.alignFields select {
 			float: left;
-		}
-
-		.ie6 .alignFields input,
-		.ie6 .alignFields select,
-		.ie7 .alignFields input,
-		.ie7 .alignFields select {
-			float: none;
 		}
 
 		.alignFields p {
@@ -1423,7 +1381,6 @@ label,
 	}
 
 	.alignButtons:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-	.ie6 .alignButtons, .ie7 .alignButtons { zoom: 1; }
 
 		.alignButtons p {
 			float: left;
@@ -1438,7 +1395,6 @@ label,
 }
 
 .oneLiner:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-.ie6 .oneLiner, .ie7 .oneLiner { zoom: 1; }
 
 	.oneLiner p {
 		float: left;
@@ -1457,10 +1413,6 @@ label,
 
 	.oneLiner .inputList {
 		padding-bottom: 0;
-	}
-
-	.ie6 .oneLiner .inputList input {
-		left: 0;
 	}
 
 		.oneLiner .inputList li {
@@ -1517,7 +1469,6 @@ label,
 	/* InputLists */
 
 	.horizontal .inputList:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-	.ie6 .horizontal .inputList, .ie7 .horizontal .inputList { zoom: 1; }
 
 	.horizontal .inputList ul {
 		float: left;
@@ -1572,7 +1523,6 @@ label,
 	}
 
 	.formSection:after  { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-	.ie6 .formSection, .ie7 .formSection { zoom: 1; }
 
 		.formSection p {
 			padding-bottom: 2px;
@@ -1789,25 +1739,6 @@ button::-moz-focus-inner{ padding: 0; border: 0 }
 	}
 }
 
-.ie6 input.inputSubmit,
-.ie6 input.inputButton,
-.ie6 button {
-	margin-top: -1px;
-	padding: 1px 3px;
-}
-
-.ie7 input.inputSubmit,
-.ie7 input.inputButton,
-.ie7 button {
-	padding: 1px 3px 0 3px;
-}
-
-.ie8 input.inputSubmit,
-.ie8 input.inputButton,
-.ie8 button {
-	padding: 2px 3px;
-}
-
 input.inputSubmit:hover,
 input.inputButton:hover,
 input.buttonHover,
@@ -1863,14 +1794,12 @@ a.button:visited {
 */
 
 .guillotineBugFix { display: none; }
-.ie6 .guillotineBugFix { clear: both; height: 0; font-size: 0; line-height: 0; display: block; }
 
 /*
 	Clearfix
 */
 
 .clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-.ie6 .clearfix, .ie7 .clearfix { zoom: 1; }
 
 /*
 	Print styles

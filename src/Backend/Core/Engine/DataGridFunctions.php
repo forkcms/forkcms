@@ -13,9 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * A set of commonly used functions that will be applied on rows or columns
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class DataGridFunctions
 {
@@ -25,6 +22,7 @@ class DataGridFunctions
      * Formats plain text as HTML, links will be detected, paragraphs will be inserted
      *
      * @param string $var The data to cleanup.
+     *
      * @return string
      */
     public static function cleanupPlainText($var)
@@ -53,6 +51,7 @@ class DataGridFunctions
      *
      * @param float $number   The number to format.
      * @param int   $decimals The number of decimals.
+     *
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -67,6 +66,7 @@ class DataGridFunctions
      * Format a date according the users' settings
      *
      * @param int $timestamp The UNIX-timestamp to format as a human readable date.
+     *
      * @return string
      */
     public static function getDate($timestamp)
@@ -89,6 +89,7 @@ class DataGridFunctions
      * Format a date as a long representation according the users' settings
      *
      * @param int $timestamp The UNIX-timestamp to format as a human readable date.
+     *
      * @return string
      */
     public static function getLongDate($timestamp)
@@ -111,6 +112,7 @@ class DataGridFunctions
      * Format a time according the users' settings
      *
      * @param int $timestamp The UNIX-timestamp to format as a human readable time.
+     *
      * @return string
      */
     public static function getTime($timestamp)
@@ -133,6 +135,7 @@ class DataGridFunctions
      * Get time ago as a string for use in a datagrid
      *
      * @param int $timestamp The UNIX-timestamp to convert in a time-ago-string.
+     *
      * @return string
      */
     public static function getTimeAgo($timestamp)
@@ -145,17 +148,18 @@ class DataGridFunctions
         // get the time ago as a string
         $timeAgo = \SpoonDate::getTimeAgo($timestamp, Language::getInterfaceLanguage(), $format);
 
-        return '<abbr title="' . \SpoonDate::getDate(
+        return '<time data-toggle="tooltip" datetime="' . \SpoonDate::getDate('Y-m-d H:i:s', $timestamp) . '" title="' . \SpoonDate::getDate(
             $format,
             $timestamp,
             Language::getInterfaceLanguage()
-        ) . '">' . $timeAgo . '</abbr>';
+        ) . '">' . $timeAgo . '</time>';
     }
 
     /**
      * Get the HTML for a user to use in a datagrid
      *
      * @param int $id The Id of the user.
+     *
      * @return string
      */
     public static function getUser($id)
@@ -173,34 +177,22 @@ class DataGridFunctions
             $allowed = Authentication::isAllowedAction('Edit', 'Users');
 
             // build html
-            $html = '<div class="dataGridAvatar">' . "\n";
-            $html .= '  <div class="avatar av24">' . "\n";
+            $html = '<div class="fork-data-grid-avatar">' . "\n";
             if ($allowed) {
                 $html .= '     <a href="' .
-                         BackendModel::createURLForAction(
-                             'Edit',
-                             'Users'
-                         ) . '&amp;id=' . $id . '">' . "\n";
+                    BackendModel::createURLForAction(
+                        'Edit',
+                        'Users'
+                    ) . '&amp;id=' . $id . '">' . "\n";
             }
-            $html .= '          <img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
-                     $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+            $html .= '          <img class="img-circle" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
+                $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+
+            $html .= '<span>' . $nickname . '</span>';
             if ($allowed) {
-                $html .= '     </a>' . "\n";
+                $html .= '</a>' . "\n";
             }
             $html .= '  </div>';
-            $html .= '  <p>';
-            if ($allowed) {
-                $html .= '<a href="' .
-                BackendModel::createURLForAction(
-                    'Edit',
-                    'Users'
-                ) . '&amp;id=' . $id . '">';
-            }
-            $html .= $nickname;
-            if ($allowed) {
-                $html .= '</a>';
-            }
-            $html .= '</p>' . "\n" . '</div>';
 
             self::$dataGridUsers[$id] = $html;
         }
@@ -216,11 +208,12 @@ class DataGridFunctions
      * @param string $type The type of column. This is given since some columns can have different meanings than others.
      * @param string $value
      * @param array  $attributes
+     *
      * @return array
      */
     public static function greyOut($type, $value, array $attributes = array())
     {
-        $grayedOutClass = 'grayedOut';
+        $grayedOutClass = 'fork-data-grid-grayed-out grayedOut';
         $greyOut = false;
 
         switch ($type) {
@@ -253,18 +246,38 @@ class DataGridFunctions
     /**
      * Returns an image tag
      *
-     * @param string $path  The path to the image.
-     * @param string $image The filename of the image.
-     * @param string $title The title (will be used as alt).
+     * @param string $path    The path to the image.
+     * @param string $image   The filename of the image.
+     * @param string $title   The title (will be used as alt).
+     * @param string $url     The url
+     * @param int $width   The width for the <img element
+     * @param int $height  The height for the <img element
+     *
      * @return string
      */
-    public static function showImage($path, $image, $title = '')
+    public static function showImage($path, $image, $title = '', $url = null, $width = null, $height = null)
     {
         $path = (string) $path;
         $image = (string) $image;
         $title = (string) $title;
 
-        return '<img src="' . $path . '/' . $image . '" alt="' . $title . '" />';
+        $html = '<img src="' . $path . '/' . $image . '" alt="' . $title . '"';
+
+        if ($width) {
+            $html .= ' width="' . $width . '"';
+        }
+
+        if ($height) {
+            $html .= ' height="' . $height . '"';
+        }
+
+        $html .= ' />';
+
+        if ($url) {
+            $html = '<a href="' . $url . '" title="' . $title . '">' . $html . '</a>';
+        }
+
+        return $html;
     }
 
     /**
@@ -273,6 +286,7 @@ class DataGridFunctions
      * @param string $string    The string to truncate.
      * @param int    $length    The maximumlength for the string.
      * @param bool   $useHellip Should a hellip be appended?
+     *
      * @return string
      */
     public static function truncate($string, $length, $useHellip = true)
@@ -300,5 +314,18 @@ class DataGridFunctions
 
             return \SpoonFilter::htmlspecialchars($string);
         }
+    }
+
+    /**
+     * This is an alias for the template modifier since it can also be used here and people didn't find it.
+     *
+     * @param string|bool $status
+     * @param bool        $reverse show the opposite of the status
+     *
+     * @return string
+     */
+    public static function showBool($status, $reverse = false)
+    {
+        return TemplateModifiers::showBool($status, $reverse);
     }
 }

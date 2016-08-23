@@ -1,0 +1,56 @@
+<div id="fieldHolder-{{ id }}" class="form-group field jsField">
+  <div class="row">
+    {% if plaintext %}
+      <div class="col-md-8">
+        {{ content|raw }}
+      </div>
+    {% endif %}
+    {% if simple %}
+      <div class="col-md-3">
+        <label for="field{{ id }}">
+          {{ label }}
+          {% if required %}
+            {{ macro.required }}
+          {% endif %}
+        </label>
+      </div>
+      <div class="col-md-5">
+        {{ field|raw }}
+      </div>
+    {% endif %}
+    {% if multiple %}
+      <div class="col-md-3">
+        <label for="field{{ id }}">
+          {{ label }}
+          {% if required %}
+            {{ macro.required }}
+          {% endif %}
+        </label>
+      </div>
+      <div class="col-md-5">
+        <ul class="list-unstyled">
+          {% for item in items %}
+            <li class="checkbox">
+              <label for="{{ item.id }}">{{ item.field|raw }} {{ item.label }}</label>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    <div class="col-md-4">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <a class="btn btn-default btn-second btn-icon-only jsFieldEdit" href="#edit-{{ id }}" rel="{{ id }}" title="{{ lbl.Edit }}">
+            <span class="fa fa-pencil fa-fw"></span>
+          </a>
+          <a class="btn btn-danger btn-icon-only jsFieldDelete" href="#delete-{{ id }}" rel="{{ id }}" title="{{ lbl.Delete }}">
+            <span class="fa fa-trash-o fa-fw"></span>
+          </a>
+          <span class="btn btn-default btn-icon-only dragAndDropHandle">
+            <span class="fa fa fa-th fa-fw"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

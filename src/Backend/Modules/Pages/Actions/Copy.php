@@ -18,10 +18,6 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
  * BackendPagesCopy
  * This is the copy-action, it will copy pages from one language to another
  * Remark :    IMPORTANT existing data will be removed, this feature is also experimental!
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Sam Tubbax <sam@sumocoders.be>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Copy extends BackendBaseActionIndex
 {
@@ -57,6 +53,6 @@ class Copy extends BackendBaseActionIndex
         BackendPagesModel::copy($this->from, $this->to);
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('Index') . '&report=copy-added&var=' . urlencode($this->to));
+        $this->redirect(BackendModel::createURLForAction('Index') . '&report=copy-added&var=' . rawurlencode($this->to));
     }
 }

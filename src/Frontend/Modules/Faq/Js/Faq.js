@@ -1,9 +1,5 @@
 /**
  * Interaction for the faq module
- *
- * @author	Annelies Van Extergem <annelies@netlash.com>
- * @author	Jelmer Snoeck <jelmer@siphoc.com>
- * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsFrontend.faq =
 {
@@ -22,8 +18,8 @@ jsFrontend.faq.feedback =
 		// useful status has been changed
 		$('#usefulY, #usefulN').on('click', function()
 		{
-			// get useful status
-			var useful = ($('#usefulY').attr('checked') ? true : false);
+			// init useful status
+			var useful = $("#faqFeedbackForm input[type='radio']:checked").val() === 'Y';
 
 			// show or hide the form
 			if(useful)

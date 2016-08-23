@@ -17,8 +17,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the add-action, it will display a form to create a new synonym
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class AddSynonym extends BackendBaseActionAdd
 {
@@ -44,7 +42,7 @@ class AddSynonym extends BackendBaseActionAdd
 
         // create elements
         $this->frm->addText('term', null, 255);
-        $this->frm->addText('synonym', null, null, 'inputText synonymBox', 'inputTextError synonymBox');
+        $this->frm->addText('synonym', null, null, 'form-control synonymBox', 'form-control danger synonymBox');
     }
 
     /**
@@ -82,7 +80,7 @@ class AddSynonym extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Synonyms') . '&report=added-synonym&var=' . urlencode(
+                    BackendModel::createURLForAction('Synonyms') . '&report=added-synonym&var=' . rawurlencode(
                         $item['term']
                     ) . '&highlight=row-' . $id
                 );

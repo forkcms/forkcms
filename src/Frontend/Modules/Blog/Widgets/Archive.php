@@ -14,8 +14,6 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is a widget with the link to the archive
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Archive extends FrontendBaseWidget
 {
@@ -35,10 +33,10 @@ class Archive extends FrontendBaseWidget
     private function parse()
     {
         // we will cache this widget for 24 hours
-        $this->tpl->cache(FRONTEND_LANGUAGE . '_blogWidgetArchiveCache', (24 * 60 * 60));
+        $this->tpl->cache(LANGUAGE . '_blogWidgetArchiveCache', (24 * 60 * 60));
 
         // if the widget isn't cached, assign the variables
-        if (!$this->tpl->isCached(FRONTEND_LANGUAGE . '_blogWidgetArchiveCache')) {
+        if (!$this->tpl->isCached(LANGUAGE . '_blogWidgetArchiveCache')) {
             // get the numbers
             $this->tpl->assign('widgetBlogArchive', FrontendBlogModel::getArchiveNumbers());
         }

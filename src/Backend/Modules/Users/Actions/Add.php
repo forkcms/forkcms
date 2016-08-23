@@ -19,9 +19,6 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the add-action, it will display a form to create a new user
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -53,13 +50,16 @@ class Add extends BackendBaseActionAdd
 
         // create elements
         // profile
-        $this->frm->addText('email', null, 255);
+        $this->frm
+            ->addText('email', null, 255)
+            ->setAttribute('type', 'email')
+        ;
         $this->frm->addPassword(
             'password',
             null,
             75,
-            'inputText inputPassword passwordGenerator',
-            'inputTextError inputPasswordError passwordGenerator'
+            'form-control passwordGenerator',
+            'form-control danger passwordGenerator'
         )->setAttributes(array('autocomplete' => 'off'));
         $this->frm->addPassword('confirm_password', null, 75)->setAttributes(array('autocomplete' => 'off'));
         $this->frm->addText('name', null, 255);
@@ -155,22 +155,6 @@ class Add extends BackendBaseActionAdd
                 }
             }
 
-            // validate avatar
-            if ($this->frm->getField('avatar')->isFilled()) {
-                // correct extension
-                if ($this->frm->getField('avatar')->isAllowedExtension(
-                    array('jpg', 'jpeg', 'gif', 'png'),
-                    BL::err('JPGGIFAndPNGOnly')
-                )
-                ) {
-                    // correct mimetype?
-                    $this->frm->getField('avatar')->isAllowedMimeType(
-                        array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'),
-                        BL::err('JPGGIFAndPNGOnly')
-                    );
-                }
-            }
-
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build settings-array
@@ -207,9 +191,7 @@ class Add extends BackendBaseActionAdd
                         // loop through widgets inside a module
                         foreach ($module as $widgetKey => $widget) {
                             // if widget present set true
-                            if ($widget['present']) {
-                                $newSequence[$moduleKey][$widgetKey]['present'] = true;
-                            }
+                            $newSequence[$moduleKey][] = $widgetKey;
                         }
                     }
                 }

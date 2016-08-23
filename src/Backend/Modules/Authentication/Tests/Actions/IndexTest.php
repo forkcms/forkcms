@@ -45,6 +45,17 @@ class IndexTest extends WebTestCase
         );
     }
 
+    public function testPrivateContainsRobotsTag()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/private/en/authentication');
+        $this->assertContains(
+            '<meta name="robots" content="noindex, nofollow"',
+            $client->getResponse()->getContent()
+        );
+    }
+
     public function testAuthenticationWithWrongCredentials()
     {
         $client = static::createClient();
@@ -89,7 +100,11 @@ class IndexTest extends WebTestCase
         ));
 
         $this->assertContains(
-            'now editing:',
+            'Dashboard',
+            $client->getResponse()->getContent()
+        );
+        $this->assertContains(
+            'Pages',
             $client->getResponse()->getContent()
         );
 
@@ -122,7 +137,7 @@ class IndexTest extends WebTestCase
         ));
 
         $this->assertContains(
-            'Recently edited',
+            'Now editing',
             $client->getResponse()->getContent()
         );
 
@@ -147,7 +162,7 @@ class IndexTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
 
-        $form = $crawler->selectButton('login')->form();
+        $form = $crawler->selectButton('Log in')->form();
         $this->submitForm($client, $form, array(
             'form' => 'authenticationIndex',
             'backend_email' => 'users-edit-user@fork-cms.com',
@@ -156,7 +171,7 @@ class IndexTest extends WebTestCase
         ));
 
         $this->assertContains(
-            'Users: edit user "Users User"',
+            'Edit profile',
             $client->getResponse()->getContent()
         );
 

@@ -15,9 +15,6 @@ use Backend\Core\Engine\User as BackendUser;
 
 /**
  * In this file we store all generic functions that we will be using in the users module.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Model
 {
@@ -59,6 +56,7 @@ class Model
      * Was a user deleted before?
      *
      * @param string $email The e-mail address to check.
+     *
      * @return bool
      */
     public static function emailDeletedBefore($email)
@@ -78,6 +76,7 @@ class Model
      *
      * @param int  $id     The userId to check for existence.
      * @param bool $active Should the user be active also?
+     *
      * @return bool
      */
     public static function exists($id, $active = true)
@@ -115,6 +114,7 @@ class Model
      *
      * @param string $email The email to check for.
      * @param int    $id    The userId to be ignored.
+     *
      * @return bool
      */
     public static function existsEmail($email, $id = null)
@@ -150,6 +150,7 @@ class Model
      * Get all data for a given user
      *
      * @param int $id The userId to get the data for.
+     *
      * @return array
      */
     public static function get($id)
@@ -199,7 +200,7 @@ class Model
     {
         return array(
             '\n' => '\n',
-            '\r\n' => '\r\n'
+            '\r\n' => '\r\n',
         );
     }
 
@@ -212,7 +213,7 @@ class Model
     {
         return array(
             ';' => ';',
-            ',' => ','
+            ',' => ',',
         );
     }
 
@@ -256,6 +257,7 @@ class Model
      * Get all module action combinations a user has access to
      *
      * @param  int $userId The id of the user
+     *
      * @return array
      */
     public static function getModuleGroupsRightsActions($userId)
@@ -277,6 +279,7 @@ class Model
      * Get the user ID linked to a given email
      *
      * @param string $email The email for the user.
+     *
      * @return int
      */
     public static function getIdByEmail($email)
@@ -317,6 +320,7 @@ class Model
      *
      * @param int    $userId  The id of the user.
      * @param string $setting The name of the setting to get.
+     *
      * @return mixed
      */
     public static function getSetting($userId, $setting)
@@ -384,6 +388,7 @@ class Model
      *
      * @param array $user     The userdata.
      * @param array $settings The settings for the new user.
+     *
      * @return int
      */
     public static function insert(array $user, array $settings)
@@ -400,7 +405,7 @@ class Model
             $userSettings[] = array(
                 'user_id' => $userId,
                 'name' => $key,
-                'value' => serialize($value)
+                'value' => serialize($value),
             );
         }
 
@@ -417,6 +422,7 @@ class Model
      * @param int    $userId  The id of the user.
      * @param string $setting The name of the setting to set.
      * @param string $value   The value of the setting to set.
+     *
      * @return mixed
      */
     public static function setSetting($userId, $setting, $value)
@@ -432,9 +438,11 @@ class Model
 
     /**
      * Restores a user
+     *
      * @later    this method should check if all needed data is present
      *
      * @param string $email The e-mail address of the user to restore.
+     *
      * @return bool
      */
     public static function undoDelete($email)

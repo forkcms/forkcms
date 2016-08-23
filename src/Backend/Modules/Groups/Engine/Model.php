@@ -13,8 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the groups module.
- *
- * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
 class Model
 {
@@ -63,6 +61,7 @@ class Model
      * Check if a group already exists
      *
      * @param string $name
+     *
      * @return bool
      */
     public static function alreadyExists($name)
@@ -135,6 +134,7 @@ class Model
      * Check if a group already exists
      *
      * @param int $id The id to check upon.
+     *
      * @return bool
      */
     public static function exists($id)
@@ -151,6 +151,7 @@ class Model
      * Check if a action permission exists
      *
      * @param array $permission The permission to check upon.
+     *
      * @return bool
      */
     public static function existsActionPermission($permission)
@@ -167,6 +168,7 @@ class Model
      * Check if a module permission exists
      *
      * @param array $permission The permission to check upon.
+     *
      * @return bool
      */
     public static function existsModulePermission($permission)
@@ -183,6 +185,7 @@ class Model
      * Get a group
      *
      * @param int $id The id of the group to fetch.
+     *
      * @return array
      */
     public static function get($id)
@@ -199,6 +202,7 @@ class Model
      * Get group action permissions
      *
      * @param int $id The id of the group.
+     *
      * @return array
      */
     public static function getActionPermissions($id)
@@ -227,6 +231,7 @@ class Model
      * Get all groups of one user
      *
      * @param int $id
+     *
      * @return array
      */
     public static function getGroupsByUser($id)
@@ -268,6 +273,7 @@ class Model
      * Get group module permissions
      *
      * @param int $id The id of the group.
+     *
      * @return array
      */
     public static function getModulePermissions($id)
@@ -285,6 +291,7 @@ class Model
      *
      * @param int $groupId The id of the group of the setting.
      * @param string $name The name of the setting to fetch.
+     *
      * @return array
      */
     public static function getSetting($groupId, $name)
@@ -309,6 +316,7 @@ class Model
      * Get all users in a group
      *
      * @param int $groupId The id of the group.
+     *
      * @return array
      */
     public static function getUsers($groupId)
@@ -372,6 +380,7 @@ class Model
      * Insert a group setting
      *
      * @param array $setting
+     *
      * @return int
      */
     public static function insertSetting($setting)

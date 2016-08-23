@@ -14,8 +14,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * Client for the Fork CMS API.
- *
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Client extends Api
 {
@@ -49,7 +47,7 @@ class Client extends Api
      */
     public function display()
     {
-        $content = $this->tpl->getContent(__DIR__ . '/../Client/Layout/Templates/Index.tpl');
+        $content = $this->tpl->getContent(__DIR__ . '/../Client/Layout/Templates/Index.html.twig');
 
         return new Response($content, 200);
     }
@@ -130,7 +128,7 @@ class Client extends Api
             $parameters[] = array(
                 'name' => $name,
                 'label' => $name . '-' . rand(1, 99999),
-                'optional' => (substr_count($matches[2][$i], '[optional]') > 0),
+                'optional' => (mb_substr_count($matches[2][$i], '[optional]') > 0),
                 'description' => $matches[3][$i]
             );
         }

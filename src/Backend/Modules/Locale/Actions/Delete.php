@@ -17,8 +17,6 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This action will delete a translation
- *
- * @author Lowie Benoot <lowiebenoot@netlash.com>
  */
 class Delete extends BackendBaseActionDelete
 {
@@ -58,7 +56,7 @@ class Delete extends BackendBaseActionDelete
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
             // build redirect URL
-            $redirectUrl = BackendModel::createURLForAction('Index') . '&report=deleted&var=' . urlencode($this->record['name'] . ' (' . strtoupper($this->record['language']) . ')') . $this->filterQuery;
+            $redirectUrl = BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['name'] . ' (' . mb_strtoupper($this->record['language']) . ')') . $this->filterQuery;
 
             // item was deleted, so redirect
             $this->redirect($redirectUrl);

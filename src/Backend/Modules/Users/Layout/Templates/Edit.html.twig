@@ -1,0 +1,316 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+
+{% endblock %}
+
+{% block content %}
+  {% form edit %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="content-block content-block-pb">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tr>
+              <td rowspan="{% if not record.settings.last_failed_login_attempt %}5{% endif %}{% if record.settings.last_failed_login_attempt %}6{% endif %}" class="text-center align-middle">
+                {% if record.settings.avatar %}
+                  <img class="img-circle" src="{{ FRONTEND_FILES_URL }}/backend_users/avatars/128x128/{{ record.settings.avatar }}" alt="" />
+                {% endif %}
+              </td>
+              <th>{{ 'lbl.Name'|trans|ucfirst }}:</th>
+              <td><strong>{{ record.settings.name }} {{ record.settings.surname }}</strong></td>
+            </tr>
+            <tr>
+              <th>{{ 'lbl.Nickname'|trans|ucfirst }}:</th>
+              <td>{{ record.settings.nickname }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'lbl.Email'|trans|ucfirst }}:</th>
+              <td>{{ record.email }}</td>
+            </tr>
+            <tr>
+              <th>{{ 'lbl.LastLogin'|trans|ucfirst }}:</th>
+              <td>
+                {% if record.settings.last_login %}{{ record.settings.last_login|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
+                {% if not record.settings.last_login %}{{ 'lbl.NoPreviousLogin'|trans|ucfirst }}{% endif %}
+              </td>
+            </tr>
+            {% if record.settings.last_failed_login_attempt %}
+              <tr>
+                <th>{{ 'lbl.LastFailedLoginAttempt'|trans|ucfirst }}:</th>
+                <td>{{ record.settings.last_failed_login_attempt|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}</td>
+              </tr>
+            {% endif %}
+            <tr>
+              <th>{{ 'lbl.LastPasswordChange'|trans|ucfirst }}:</th>
+              <td>
+                {% if record.settings.last_password_change %}{{ record.settings.last_password_change|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
+                {% if not record.settings.last_password_change %}{{ 'lbl.Never'|trans|ucfirst }}{% endif %}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#tabProfile" aria-controls="tabProfile" role="tab" data-toggle="tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
+          </li>
+          {% if allowPasswordEdit %}
+            <li role="presentation">
+              <a href="#tabPassword" aria-controls="tabPassword" role="tab" data-toggle="tab">{{ 'lbl.Password'|trans|ucfirst }}</a>
+            </li>
+          {% endif %}
+          <li role="presentation">
+            <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+          </li>
+          {% if allowUserRights %}
+            <li role="presentation">
+              <a href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
+            </li>
+          {% endif %}
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tabProfile">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="content-block">
+                  <div class="form-group">
+                    <label for="email" class="control-label">
+                      {{ 'lbl.Email'|trans|ucfirst }}
+                      {{ macro.required }}
+                    </label>
+                    {% form_field email %} {% form_field_error email %}
+                  </div>
+                  <div class="form-group">
+                    <label for="name" class="control-label">
+                      {{ 'lbl.Name'|trans|ucfirst }}
+                      {{ macro.required }}
+                    </label>
+                    {% form_field name %} {% form_field_error name %}
+                  </div>
+                  <div class="form-group">
+                    <label for="surname" class="control-label">
+                      {{ 'lbl.Surname'|trans|ucfirst }}
+                      {{ macro.required }}
+                    </label>
+                    {% form_field surname %} {% form_field_error surname %}
+                  </div>
+                  <div class="form-group">
+                    <label for="nickname" class="control-label">
+                      {{ 'lbl.Nickname'|trans|ucfirst }}
+                      {{ macro.required }}
+                    </label>
+                    <p class="help-block">{{ 'msg.HelpNickname'|trans }}</p>
+                    {% form_field nickname %} {% form_field_error nickname %}
+                  </div>
+                  <div class="form-group last">
+                    <label for="avatar" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+                    <p class="help-block">{{ 'msg.HelpAvatar'|trans }}</p>
+                    {% form_field avatar %} {% form_field_error avatar %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if allowPasswordEdit %}
+            <div role="tabpanel" class="tab-pane" id="tabPassword">
+              {% if showPasswordStrength %}
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="content-block">
+                      <div class="content-title">
+                        <p>{{ 'lbl.CurrentPassword'|trans|ucfirst }}</p>
+                      </div>
+                      <div class="form-group">
+                        <label>{{ 'lbl.PasswordStrength'|trans|ucfirst }}:</label>
+                      <span class="strength strength-{{ record.settings.password_strength }}">
+                        <span class="label">
+                          {{ passwordStrengthLabel|ucfirst }}
+                        </span>
+                      </span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              {% endif %}
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="content-block">
+                    <div class="content-title">
+                      <p>{{ 'lbl.ChangePassword'|trans|ucfirst }}</p>
+                    </div>
+                    <div class="form-group">
+                      <label for="newPassword" class="control-label">
+                        {{ 'lbl.Password'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      <table id="passwordStrengthMeter" class="passwordStrength" data-id="newPassword">
+                        <tr>
+                          <td class="strength" id="passwordStrength">
+                            <p class="strength none">
+                              <span class="label label-default">None</span>
+                            </p>
+                            <p class="strength weak">
+                              <span class="label label-danger">Weak</span>
+                            </p>
+                            <p class="strength average">
+                              <span class="label label-warning">Average</span>
+                            </p>
+                            <p class="strength strong">
+                              <span class="label label-success">Strong</span>
+                            </p>
+                          </td>
+                          <td>
+                            <p class="help-block">&nbsp;{{ 'msg.HelpStrongPassword'|trans }}</p>
+                          </td>
+                        </tr>
+                      </table>
+                      <div class="row">
+                        <div class="col-md-6">
+                          {% form_field new_password %} {% form_field_error new_password %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group last">
+                      <label for="confirmPassword" class="control-label">
+                        {{ 'lbl.ConfirmPassword'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      <div class="row">
+                        <div class="col-md-6">
+                          {% form_field confirm_password %} {% form_field_error confirm_password %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          <div role="tabpanel" class="tab-pane" id="tabSettings">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="content-block content-block-pb">
+                  <div class="form-group">
+                    <label for="interfaceLanguage" class="control-label">{{ 'lbl.Language'|trans|ucfirst }}</label>
+                    {% form_field interface_language %} {% form_field_error interface_language %}
+                  </div>
+                  <div class="form-group">
+                    <label for="dateFormat" class="control-label">{{ 'lbl.DateFormat'|trans|ucfirst }}</label>
+                    {% form_field date_format %} {% form_field_error date_format %}
+                  </div>
+                  <div class="form-group">
+                    <label for="timeFormat" class="control-label">{{ 'lbl.TimeFormat'|trans|ucfirst }}</label>
+                    {% form_field time_format %} {% form_field_error time_format %}
+                  </div>
+                  <div class="form-group last">
+                    <label for="numberFormat" class="control-label">{{ 'lbl.NumberFormat'|trans|ucfirst }}</label>
+                    {% form_field number_format %} {% form_field_error number_format %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="content-block">
+                  <div class="content-title">
+                    <p>{{ 'lbl.CSV'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="csvSplitCharacter" class="control-label">{{ 'lbl.SplitCharacter'|trans|ucfirst }}</label>
+                    {% form_field csv_split_character %} {% form_field_error csv_split_character %}
+                  </div>
+                  <div class="form-group last">
+                    <label for="csvLineEnding" class="control-label">{{ 'lbl.LineEnding'|trans|ucfirst }}</label>
+                    {% form_field csv_line_ending %} {% form_field_error csv_line_ending %}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          {% if allowUserRights %}
+            <div role="tabpanel" class="tab-pane" id="tabPermissions">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="content-block">
+                    <div class="form-group">
+                      <ul class="list-unstyled">
+                        <li class="checkbox">
+                          <label for="active" class="control-label">{% form_field active %} {% form_field_error active %} {{ 'msg.HelpActive'|trans|ucfirst }}</label>
+                        </li>
+                        <li class="checkbox">
+                          <label for="apiAccess" class="control-label">{% form_field api_access %} {% form_field_error api_access %} {{ 'msg.HelpAPIAccess'|trans|ucfirst }}</label>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="form-group last">
+                      <p>{{ 'lbl.Groups'|trans|ucfirst }}</p>
+                      <ul id="groupList" class="list-unstyled">
+                        {% for group in groups %}
+                          <li class="checkbox">
+                            <label for="{{ group.id }}">{{ group.chkGroups|raw }} {{ group.label }}</label>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                      {% form_field_error groups %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-page-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-left" role="group">
+          {% if showUsersDelete %}
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+              <span class="fa fa-trash-o"></span>
+              {{ 'lbl.Delete'|trans|ucfirst }}
+            </button>
+          {% endif %}
+        </div>
+        <div class="btn-group pull-right" role="group">
+          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+      {% if showUsersDelete %}
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+              </div>
+              <div class="modal-body">
+                <p>{{ 'msg.ConfirmDelete'|trans|format(record.settings.nickname)|raw }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+                </button>
+                <a href="{{ geturl('delete') }}&amp;id={{ record.id }}" class="btn btn-danger">
+                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endform %}
+{% endblock %}
+

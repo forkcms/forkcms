@@ -16,8 +16,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This is the edit-action, it will display a form to edit a mailing's campaign
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class EditMailingCampaign extends BackendBaseActionEdit
 {
@@ -116,7 +114,7 @@ class EditMailingCampaign extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode(
                         $this->record['name']
                     ) . '&highlight=id-' . $item['id']
                 );

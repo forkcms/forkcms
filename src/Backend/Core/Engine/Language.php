@@ -10,14 +10,11 @@ namespace Backend\Core\Engine;
  */
 
 use Common\Cookie as CommonCookie;
-use Backend\Core\Engine\Model;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This class will store the language-dependant content for the Backend, it will also store the
  * current language for the user.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Language
 {
@@ -90,11 +87,26 @@ class Language
         foreach ($languages as $abbreviation) {
             $results[] = array(
                 'value' => $abbreviation,
-                'label' => self::lbl(strtoupper($abbreviation))
+                'label' => self::lbl(mb_strtoupper($abbreviation)),
             );
         }
 
         return $results;
+    }
+
+    public static function getCurrentModule()
+    {
+        if (Model::getContainer()->has('url')) {
+            return Model::get('url')->getModule();
+        }
+
+        if (Model::getContainer()->has('request')
+            && Model::getContainer()->get('request')->query->has('module')
+        ) {
+            return Model::getContainer()->get('request')->query->get('module');
+        }
+
+        return 'Core';
     }
 
     /**
@@ -102,19 +114,14 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function getError($key, $module = null)
     {
         // do we know the module
         if ($module === null) {
-            if (Model::getContainer()->has('url')) {
-                $module = Model::get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
+            $module = self::getCurrentModule();
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -181,19 +188,14 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function getLabel($key, $module = null)
     {
         // do we know the module
         if ($module === null) {
-            if (Model::getContainer()->has('url')) {
-                $module = Model::get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
+            $module = self::getCurrentModule();
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -228,6 +230,7 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function getMessage($key, $module = null)
@@ -380,6 +383,7 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function err($key, $module = null)
@@ -392,6 +396,7 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function lbl($key, $module = null)
@@ -404,6 +409,7 @@ class Language
      *
      * @param string $key    The key to get.
      * @param string $module The module wherein we should search.
+     *
      * @return string
      */
     public static function msg($key, $module = null)

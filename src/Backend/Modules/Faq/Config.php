@@ -13,8 +13,6 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the faq module
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
  */
 class Config extends BackendBaseConfig
 {

@@ -6,8 +6,6 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the extensions module.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 final class Config extends BackendBaseConfig
 {

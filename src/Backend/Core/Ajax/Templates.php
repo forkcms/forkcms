@@ -11,12 +11,9 @@ namespace Backend\Core\Ajax;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\AjaxAction;
-use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This action will generate JS that represents the templates that will be available in CK Editor
- *
- * @author Tijs Verkoyen <tijs@sumocoders.eu>
  */
 class Templates extends AjaxAction
 {
@@ -60,14 +57,15 @@ class Templates extends AjaxAction
      * Process the content of the file.
      *
      * @param string $file The file to process.
-     * @return boolean|array
+     *
+     * @return bool|array
      */
     private function processFile($file)
     {
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
 
         // if the files doesn't exists we can stop here and just return an empty string
-        if (!$fs->exists($file)) {
+        if (!$filesystem->exists($file)) {
             return array();
         }
 
@@ -90,7 +88,7 @@ class Templates extends AjaxAction
             }
 
             if (isset($template['file'])) {
-                if ($fs->exists(PATH_WWW . $template['file'])) {
+                if ($filesystem->exists(PATH_WWW . $template['file'])) {
                     $template['html'] = file_get_contents(PATH_WWW . $template['file']);
                 }
             }

@@ -10,14 +10,11 @@ namespace Frontend\Modules\Search\Ajax;
  */
 
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
  * This is the autocomplete-action, it will output a list of searches that start with a certain string.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Autocomplete extends FrontendBaseAJAXAction
 {
@@ -42,7 +39,7 @@ class Autocomplete extends FrontendBaseAJAXAction
             $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
         } else {
             // get matches
-            $matches = FrontendSearchModel::getStartsWith($term, FRONTEND_LANGUAGE, $limit);
+            $matches = FrontendSearchModel::getStartsWith($term, LANGUAGE, $limit);
 
             // get search url
             $url = FrontendNavigation::getURLForBlock('Search');

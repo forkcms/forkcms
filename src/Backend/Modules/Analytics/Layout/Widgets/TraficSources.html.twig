@@ -1,0 +1,26 @@
+{% if source_graph_data %}
+  <div class="panel panel-default" id="widgetAnalyticsTraficSources">
+    <div class="panel-heading">
+      <h2 class="panel-title">
+        <a href="{{ googleTrafficSourcesURL }}">{{ 'lbl.PageviewsByTrafficSources'|trans|ucfirst }}</a></h2>
+    </div>
+    <div class="panel-body">
+      <div class="options">
+        <div id="dataChartPieChart" class="hidden">
+          <ul class="data">
+            {% for _itr_3 in source_graph_data %}
+              <li><span class="label">{{ _itr_3.ga_medium }}</span><span class="value">{{ _itr_3.ga_pageviews }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div id="chartPieChart">&nbsp;</div>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <div class="buttonHolderRight">
+        <a href="{{ geturl('Index','Analytics') }}" class="button"><span>{{ 'lbl.AllStatistics'|trans|ucfirst }}</span></a>
+      </div>
+    </div>
+  </div>
+{% endif %}

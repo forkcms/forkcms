@@ -1,0 +1,50 @@
+
+{#
+	variables that are available:
+	- {{ widgetProfilesLoginBox }}:
+#}
+
+<section id="profilesLoginBoxWidget" class="mod">
+  <div class="inner">
+    {% if isLoggedIn %}
+      <div class="bd content">
+        {{ 'msg.ProfilesLoggedInAs'|trans|format(profile.display_name, profile.url.dashboard)|raw }} -
+        <a href="{{ profile.url.settings }}">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+      </div>
+    {% endif %}
+
+    {% if not isLoggedIn %}
+      <header class="hd">
+        <h3>{{ 'lbl.Login'|trans|ucfirst }}</h3>
+      </header>
+      <div class="bd content">
+        {% form login %}
+        <fieldset>
+          <p{% if txtEmailError %} class="errorArea"{% endif %}>
+            <label for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+            {% form_field email %} {% form_field_error email %}
+          </p>
+          <p{% if txtPasswordError %} class="errorArea"{% endif %}>
+            <label for="password">{{ 'lbl.Password'|trans|ucfirst }}
+              <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+            </label>
+            {% form_field password %} {% form_field_error password %}
+          </p>
+          <p>
+            <label for="remember">{% form_field remember %} {{ 'lbl.RememberMe'|trans|ucfirst }}</label>
+            {% form_field_error remember %}
+          </p>
+          <p>
+            <input class="inputSubmit" type="submit" value="{{ 'lbl.Login'|trans|ucfirst }}" />
+          </p>
+        </fieldset>
+        {% endform %}
+      </div>
+      <footer class="ft">
+        <p>
+          <a href="{{ geturlforblock('Profiles', 'ForgotPassword') }}" title="{{ 'msg.ForgotPassword'|trans }}">{{ 'msg.ForgotPassword'|trans }}</a>
+        </p>
+      </footer>
+    {% endif %}
+  </div>
+</section>

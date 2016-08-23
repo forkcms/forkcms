@@ -10,7 +10,8 @@ framework:
     csrf_protection: ~
     templating:
         engines: ['twig']
-    session:         ~
+    session:
+        handler_id: ~
 
 # Assetic Configuration
 assetic:
@@ -38,8 +39,4 @@ services:
             - %database.name%
             - %database.port%
         calls:
-            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8' } ] ]
-    mailer:
-        class: Common\Mailer
-        arguments:
-            - "@database"
+            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]

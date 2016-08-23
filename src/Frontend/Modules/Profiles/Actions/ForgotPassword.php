@@ -9,6 +9,7 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -19,9 +20,6 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
 /**
  * Request a reset password email.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class ForgotPassword extends FrontendBaseBlock
 {
@@ -124,12 +122,12 @@ class ForgotPassword extends FrontendBaseBlock
                 // send email
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-                $message = \Common\Mailer\Message::newInstance(FL::getMessage('ForgotPasswordSubject'))
+                $message = Message::newInstance(FL::getMessage('ForgotPasswordSubject'))
                     ->setFrom(array($from['email'] => $from['name']))
                     ->setTo(array($txtEmail->getValue() => ''))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/ForgotPassword.tpl',
+                        '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
                         $mailValues,
                         true
                     )
@@ -137,7 +135,7 @@ class ForgotPassword extends FrontendBaseBlock
                 $this->get('mailer')->send($message);
 
                 // redirect
-                $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
+                $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
             } else {
                 $this->tpl->assign('forgotPasswordHasError', true);
             }

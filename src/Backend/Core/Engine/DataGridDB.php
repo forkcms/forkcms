@@ -13,8 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * A datagrid with a DB-connection as source
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class DataGridDB extends DataGrid
 {
@@ -32,7 +30,7 @@ class DataGridDB extends DataGrid
         // create a new source-object
         $source = new \SpoonDatagridSourceDB(BackendModel::get('database'), array(
             $query,
-            (array) $parameters
+            (array) $parameters,
         ), $results);
 
         parent::__construct($source);

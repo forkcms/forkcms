@@ -1,31 +1,36 @@
 language: php
 
 matrix:
-    include:
-        - php: 5.5
-        - php: 5.6
-        - php: 7
-        - php: hhvm
-    allow_failures:
-        - php: hhvm
+  include:
+    - php: 5.5
+    - php: 5.6
+    - php: 7.0
+    - php: 7.1
+    - php: hhvm
+  allow_failures:
+    - php: hhvm
 
 script:
-    - phpunit --coverage-clover=coverage.clover
+  - phpunit --coverage-clover=coverage.clover
 
 before_script:
-    - composer install
-    - mysql -e 'create database fork_test'
-    - mysql -u travis fork_test < tools/test_db.sql
-    - cp app/config/parameters.yml.travis app/config/parameters.yml
+  - npm install -g bower
+  - composer install
+  - mysql -e 'create database fork_test'
+  - mysql -u travis fork_test < tools/test_db.sql
+  - cp app/config/parameters.yml.travis app/config/parameters.yml
 
 after_success:
-    - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-    - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7" ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7.1" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7.1" ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+
+after_failure:
+  - cat app/logs/test.log
 
 sudo: false
 notifications:
-    slack:
-        secure: V3COyzztWJAlY+f0qS+V4zI5w0tpBSy/G37AzURdyzCe0atT4L+HiRUSHSYj3Yv6Ar9iS8oGhoJGvvmzN1q3pJSiEYR7i9b7gw5Jsu7yqbtioaWLtjToTHsD9vEPE4KCVN/uMGjFxkkCAJRrBI0KcTfe8a34bFAvviLaVTCW6aA=
-        on_success: change
-        on_failure: change
-        on_start: change
+  slack:
+    secure: V3COyzztWJAlY+f0qS+V4zI5w0tpBSy/G37AzURdyzCe0atT4L+HiRUSHSYj3Yv6Ar9iS8oGhoJGvvmzN1q3pJSiEYR7i9b7gw5Jsu7yqbtioaWLtjToTHsD9vEPE4KCVN/uMGjFxkkCAJRrBI0KcTfe8a34bFAvviLaVTCW6aA=
+    on_success: change
+    on_failure: change
+    on_start: change

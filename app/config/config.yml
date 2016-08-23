@@ -11,8 +11,7 @@ framework:
     templating:
         engines: ['twig']
     session:
-        handler_id: session.handler.native_file
-        save_path: "%kernel.root_dir%/sessions"
+      handler_id: ~
 
 # Assetic Configuration
 assetic:
@@ -26,19 +25,20 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
-
 monolog:
     handlers:
         main:
             type:  stream
             path:  %site.path_www%/app/logs/%kernel.environment%.log
-            level: debug
+            level: error
         # swift:
         #     type:       swift_mailer
         #     from_email: %fork.debug_email%
         #     to_email:   %fork.debug_email%
         #     subject:    %site.default_title% %fork.debug_message%
-        #     level:      critical
+        #     level:      error
+        #     formatter:  monolog.formatter.html
+        #     content_type: text/html
 
 swiftmailer:
     transport: "mail"
@@ -54,12 +54,16 @@ services:
             - %database.name%
             - %database.port%
         calls:
-            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8' } ] ]
+            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
+            # The following line removes the ONLY_FULL_GROUP_BY from the sessions sql_mode, it was added in 5.7
+            # and caused some queries to break.
+            - [ execute, [ 'SET sql_mode = REPLACE(@@SESSION.sql_mode, "ONLY_FULL_GROUP_BY", "")'] ]
             - [ setDebug, [ %kernel.debug% ]]
     mailer_configurator:
         class: Common\Mailer\Configurator
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
         arguments:
             - "@fork.settings"
             - "@service_container"
@@ -95,3 +99,10 @@ services:
         class: Common\EventListener\ResponseSecurer
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    templating:
+        class: Frontend\Core\Engine\TwigTemplate
+        arguments:
+            - "@twig"
+            - "@templating.name_parser"
+            - "@templating.locator"

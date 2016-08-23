@@ -15,8 +15,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This action is used to update one or more groups (delete, ...)
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class MassGroupAction extends BackendBaseAction
 {

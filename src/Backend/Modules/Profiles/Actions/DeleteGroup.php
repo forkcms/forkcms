@@ -15,9 +15,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This action will delete a profile group.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class DeleteGroup extends BackendBaseActionDelete
 {
@@ -45,7 +42,7 @@ class DeleteGroup extends BackendBaseActionDelete
 
             // group was deleted, so redirect
             $this->redirect(
-                BackendModel::createURLForAction('Groups') . '&report=deleted&var=' . urlencode($group['name'])
+                BackendModel::createURLForAction('Groups') . '&report=deleted&var=' . rawurlencode($group['name'])
             );
         } else {
             $this->redirect(BackendModel::createURLForAction('Groups') . '&error=non-existing');

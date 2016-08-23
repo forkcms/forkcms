@@ -13,8 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the location module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Installer extends ModuleInstaller
 {
@@ -41,6 +39,7 @@ class Installer extends ModuleInstaller
         $this->setSetting('Location', 'width_widget', 400);
         $this->setSetting('Location', 'height_widget', 300);
         $this->setSetting('Location', 'map_type_widget', 'ROADMAP');
+        $this->setSetting('Location', 'requires_google_maps', true);
 
         // module rights
         $this->setModuleRights(1, 'Location');

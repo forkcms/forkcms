@@ -545,7 +545,7 @@ class CampaignMonitor
 
 			case 'GET':
 				// add the parameters into the querystring
-				if(!empty($parameters)) $url .= '?'. http_build_query($parameters);
+				if(!empty($parameters)) $url .= '?'. http_build_query($parameters, null, '&', PHP_QUERY_RFC3986);
 			break;
 
 			case 'POST':
@@ -1480,7 +1480,7 @@ class CampaignMonitor
 		$results['status'] = $record['State'];
 
 		// check if there are clickedlinks present
-		if(empty($record['CustomFields'])) continue;
+		if(empty($record['CustomFields'])) return array();
 
 		// loop records
 		foreach($record['CustomFields'] as $field)

@@ -1,0 +1,28 @@
+<div id="widgetFaqFeedback" class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title">
+      <a href="{{ geturl('index','faq') }}">{{ 'lbl.Faq'|trans|ucfirst }}: {{ 'lbl.Feedback'|trans|ucfirst }}</a>
+    </h2>
+  </div>
+  {% if faqFeedback %}
+    <div class="panel-body">
+      <table class="table table-striped dataGrid">
+        <tbody>
+          {% for _itr_12 in faqFeedback %}
+            <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+              <td><a href="{{ _itr_12.full_url }}">{{ _itr_12.text|truncate(150) }}</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+  {% if not faqFeedback %}
+    <div class="panel-body">
+      <p>{{ 'msg.NoFeedback'|trans }}</p>
+    </div>
+  {% endif %}
+  <div class="panel-footer">
+    <a href="{{ geturl('index','faq') }}"><span>{{ 'lbl.AllQuestions'|trans|ucfirst }}</span></a>
+  </div>
+</div>

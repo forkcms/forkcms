@@ -21,9 +21,6 @@ use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * Change the settings for the current logged in profile.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Settings extends FrontendBaseBlock
 {
@@ -83,12 +80,12 @@ class Settings extends FrontendBaseBlock
         // gender dropdown values
         $genderValues = array(
             'male' => \SpoonFilter::ucfirst(FL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(FL::getLabel('Female'))
+            'female' => \SpoonFilter::ucfirst(FL::getLabel('Female')),
         );
 
         // birthdate dropdown values
         $days = range(1, 31);
-        $months = \SpoonLocale::getMonths(FRONTEND_LANGUAGE);
+        $months = \SpoonLocale::getMonths(LANGUAGE);
         $years = range(date('Y'), 1900);
 
         // get settings
@@ -116,7 +113,7 @@ class Settings extends FrontendBaseBlock
         $this->frm->addText('city', $this->profile->getSetting('city'));
         $this->frm->addDropdown(
             'country',
-            Intl::getRegionBundle()->getCountryNames(FRONTEND_LANGUAGE),
+            Intl::getRegionBundle()->getCountryNames(LANGUAGE),
             $this->profile->getSetting('country')
         );
         $this->frm->addDropdown('gender', $genderValues, $this->profile->getSetting('gender'));

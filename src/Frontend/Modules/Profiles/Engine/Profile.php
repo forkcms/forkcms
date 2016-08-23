@@ -15,10 +15,6 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
 /**
  * In this file we store all generic functions that we will be using to get and set profile information.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jan Moesen <jan.moesen@netlash.com>
  */
 class Profile
 {
@@ -135,11 +131,12 @@ class Profile
      *
      * @param  string $name         Setting name.
      * @param  string $defaultValue Default value is used when the setting does not exist.
+     *
      * @return mixed
      */
     public function getSetting($name, $defaultValue = null)
     {
-        // if settings array does not exists then get it first
+        // if settings array does not exist then get it first
         if (empty($this->settings)) {
             $this->settings = $this->getSettings();
         }
@@ -193,7 +190,8 @@ class Profile
      * Does this user belong to the group with the given ID?
      *
      * @param  int $groupId Group id.
-     * @return boolean
+     *
+     * @return bool
      */
     public function isInGroup($groupId)
     {
@@ -324,6 +322,9 @@ class Profile
      */
     public function setSetting($name, $value)
     {
+        // make sure we have the current settings in cache
+        $this->getSettings();
+
         // set setting
         FrontendProfilesModel::setSetting($this->getId(), (string) $name, $value);
 
@@ -338,6 +339,9 @@ class Profile
      */
     public function setSettings(array $values)
     {
+        // make sure we have the current settings in cache
+        $this->getSettings();
+
         // set settings
         FrontendProfilesModel::setSettings($this->getId(), $values);
 

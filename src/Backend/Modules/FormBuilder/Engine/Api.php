@@ -15,8 +15,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * In this file we store all generic functions that we will be available through the BaseAPI
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Api
 {
@@ -45,6 +43,7 @@ class Api
      * @param int $id     The id of the form.
      * @param int $limit  The maximum number of items to retrieve.
      * @param int $offset The offset.
+     *
      * @return array
      */
     public static function entriesGet($id, $limit = 30, $offset = 0)
@@ -127,8 +126,8 @@ class Api
                         'field' => array(
                             'name' => $key,
                             'value' => $value,
-                            'guessed_type' => (isset($fieldTypes[$key])) ? $fieldTypes[$key] : 'textbox'
-                        )
+                            'guessed_type' => (isset($fieldTypes[$key])) ? $fieldTypes[$key] : 'textbox',
+                        ),
                     );
                 }
 
@@ -145,6 +144,7 @@ class Api
      * Get a single entry
      *
      * @param int $id The id of the entry.
+     *
      * @return array
      */
     public static function entriesGetById($id)
@@ -202,8 +202,8 @@ class Api
                     'field' => array(
                         'name' => $key,
                         'value' => $value,
-                        'guessed_type' => (isset($fieldTypes[$key])) ? $fieldTypes[$key] : 'textbox'
-                    )
+                        'guessed_type' => (isset($fieldTypes[$key])) ? $fieldTypes[$key] : 'textbox',
+                    ),
                 );
             }
 
@@ -216,6 +216,7 @@ class Api
      *
      * @param int $limit  The maximum number of items to retrieve.
      * @param int $offset The offset.
+     *
      * @return array
      */
     public static function getAll($limit = 30, $offset = 0)

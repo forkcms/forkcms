@@ -15,8 +15,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This action will delete a synonym
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class DeleteSynonym extends BackendBaseActionDelete
 {
@@ -44,7 +42,7 @@ class DeleteSynonym extends BackendBaseActionDelete
 
             // item was deleted, so redirect
             $this->redirect(
-                BackendModel::createURLForAction('Synonyms') . '&report=deleted-synonym&var=' . urlencode(
+                BackendModel::createURLForAction('Synonyms') . '&report=deleted-synonym&var=' . rawurlencode(
                     $this->record['term']
                 )
             );

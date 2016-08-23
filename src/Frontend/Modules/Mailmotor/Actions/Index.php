@@ -10,8 +10,6 @@ use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
 
 /**
  * This is the index-action
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Index extends FrontendBaseBlock
 {
@@ -44,7 +42,7 @@ class Index extends FrontendBaseBlock
         // create a new source-object
         $source = new \SpoonDataGridSourceDB(
             FrontendModel::getContainer()->get('database'),
-            array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE))
+            array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', LANGUAGE))
         );
 
         // create data grid

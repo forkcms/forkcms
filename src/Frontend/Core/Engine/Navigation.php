@@ -16,11 +16,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This class will be used to build the navigation
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Navigation extends FrontendBaseObject
 {
@@ -58,6 +53,7 @@ class Navigation extends FrontendBaseObject
      * @param string $language   The language to use, if not provided we will use the working language.
      * @param array  $parameters GET-parameters to use.
      * @param bool   $urlencode  Should the parameters be urlencoded?
+     *
      * @return string
      */
     public static function getBackendURLForBlock(
@@ -69,7 +65,7 @@ class Navigation extends FrontendBaseObject
     ) {
         $action = (string) $action;
         $module = (string) $module;
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
         $queryString = '';
 
         // add at least one parameter
@@ -84,14 +80,14 @@ class Navigation extends FrontendBaseObject
         foreach ($parameters as $key => $value) {
             // first element
             if ($i == 1) {
-                $queryString .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+                $queryString .= '?' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
             } else {
                 // other elements
-                $queryString .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+                $queryString .= '&amp;' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
             }
 
             // update counter
-            $i++;
+            ++$i;
         }
 
         // build the URL and return it
@@ -102,7 +98,8 @@ class Navigation extends FrontendBaseObject
      * Get the first child for a given parent
      *
      * @param int $pageId The pageID wherefore we should retrieve the first child.
-     * @return integer
+     *
+     * @return int
      */
     public static function getFirstChildId($pageId)
     {
@@ -177,11 +174,13 @@ class Navigation extends FrontendBaseObject
      *
      * @param string $language The language wherefore the navigation should be loaded,
      *                         if not provided we will load the language that was provided in the URL.
+     *
      * @return array
      */
     public static function getKeys($language = null)
     {
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
+
         return BackendPagesModel::getCacheBuilder()->getKeys($language);
     }
 
@@ -190,11 +189,13 @@ class Navigation extends FrontendBaseObject
      *
      * @param string $language The language wherefore the keys should be loaded,
      *                         if not provided we will load the language that was provided in the URL.
+     *
      * @return array
      */
     public static function getNavigation($language = null)
     {
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
+
         return BackendPagesModel::getCacheBuilder()->getNavigation($language);
     }
 
@@ -205,8 +206,9 @@ class Navigation extends FrontendBaseObject
      * @param int    $parentId     The parentID to start of.
      * @param int    $depth        The maximum depth to parse.
      * @param array  $excludeIds   PageIDs to be excluded.
-     * @param string $tpl          The template that will be used.
+     * @param string $template     The template that will be used.
      * @param int    $depthCounter A counter that will hold the current depth.
+     *
      * @return string
      */
     public static function getNavigationHTML(
@@ -214,7 +216,7 @@ class Navigation extends FrontendBaseObject
         $parentId = 0,
         $depth = null,
         $excludeIds = array(),
-        $tpl = '/Core/Layout/Templates/Navigation.tpl',
+        $template = '/Core/Layout/Templates/Navigation.html.twig',
         $depthCounter = 1
     ) {
         // get navigation
@@ -241,7 +243,7 @@ class Navigation extends FrontendBaseObject
             throw new Exception('The parent (' . $parentId . ') doesn\'t exists.');
         }
 
-        // special construction to merge home with it's immediate children
+        // special construction to merge home with its immediate children
         $mergedHome = false;
         while (true) {
             // loop elements
@@ -304,7 +306,7 @@ class Navigation extends FrontendBaseObject
                 }
 
                 // meta and footer subpages have the "page" type
-                if ($type == 'meta' || $type == "footer") {
+                if ($type == 'meta' || $type == 'footer') {
                     $subType = 'page';
                 } else {
                     $subType = $type;
@@ -319,7 +321,7 @@ class Navigation extends FrontendBaseObject
                         $page['page_id'],
                         $depth,
                         $excludeIds,
-                        $tpl,
+                        $template,
                         $depthCounter + 1
                     );
                 } else {
@@ -352,14 +354,11 @@ class Navigation extends FrontendBaseObject
             break;
         }
 
-        // create template
-        $navigationTpl = new Template(false);
-
-        // assign navigation to template
-        $navigationTpl->assign('navigation', $navigation[$type][$parentId]);
-
         // return parsed content
-        return $navigationTpl->getContent(FRONTEND_PATH . (string) $tpl, true, true);
+        return Model::get('templating')->render(
+            $template,
+            array('navigation' => $navigation[$type][$parentId])
+        );
     }
 
     /**
@@ -368,13 +367,14 @@ class Navigation extends FrontendBaseObject
      * @param string $URL      The URL wherefore you want a pageID.
      * @param string $language The language wherefore the pageID should be retrieved,
      *                          if not provided we will load the language that was provided in the URL.
+     *
      * @return int
      */
     public static function getPageId($URL, $language = null)
     {
         // redefine
         $URL = trim((string) $URL, '/');
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // get menu items array
         $keys = self::getKeys($language);
@@ -395,6 +395,7 @@ class Navigation extends FrontendBaseObject
      * Get more info about a page
      *
      * @param int $pageId The pageID wherefore you want more information.
+     *
      * @return string
      */
     public static function getPageInfo($pageId)
@@ -432,12 +433,13 @@ class Navigation extends FrontendBaseObject
      * @param int    $pageId   The pageID wherefore you want the URL.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
+     *
      * @return string
      */
     public static function getURL($pageId, $language = null)
     {
         $pageId = (int) $pageId;
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // init URL
         $URL = (FrontendModel::getContainer()->getParameter('site.multilanguage'))
@@ -466,13 +468,16 @@ class Navigation extends FrontendBaseObject
      * @param string $action   The specific action wherefore the URL should be build.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
+     * @param array $data      An array with keys and values that partially or fully match the data of the block.
+     *                         If it matches multiple versions of that block it will just return the first match.
+     *
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, array $data = null)
     {
         $module = (string) $module;
         $action = ($action !== null) ? (string) $action : null;
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // init var
         $pageIdForURL = null;
@@ -495,9 +500,24 @@ class Navigation extends FrontendBaseObject
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
                         if ($extra['module'] == $module && $extra['action'] == $action) {
+                            // if there is data check if all the requested data matches the extra data
+                            if (isset($extra['data']) && $data !== null
+                                && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                                // It is the correct action but has the wrong data
+                                continue;
+                            }
                             // exact page was found, so return
                             return self::getURL($properties['page_id'], $language);
-                        } elseif ($extra['module'] == $module && $extra['action'] == null) {
+                        }
+
+                        if ($extra['module'] == $module && $extra['action'] == null) {
+                            // if there is data check if all the requested data matches the extra data
+                            if (isset($extra['data']) && $data !== null
+                                && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                                // It is the correct module but has the wrong data
+                                continue;
+                            }
+
                             // correct module but no action
                             // store pageId
                             $pageIdForURL = (int) $pageId;
@@ -528,12 +548,13 @@ class Navigation extends FrontendBaseObject
      * @param int    $id       The id of the extra.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
+     *
      * @return string
      */
     public static function getURLForExtraId($id, $language = null)
     {
         $id = (int) $id;
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // get the menuItems
         $navigation = self::getNavigation($language);

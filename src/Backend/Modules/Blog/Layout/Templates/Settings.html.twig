@@ -1,0 +1,193 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+
+{% endblock %}
+
+{% block content %}
+  {% form settings %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.Pagination'|trans|ucfirst }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="overviewNumberOfItems" class="control-label">{{ 'lbl.ItemsPerPage'|trans|ucfirst }}</label>
+            {% form_field overview_number_of_items %} {% form_field_error overview_number_of_items %}
+          </div>
+          <div class="form-group">
+            <label for="recentArticlesFullNumberOfItems" class="control-label">{{ 'msg.NumItemsInRecentArticlesFull'|trans|ucfirst }}</label>
+            {% form_field recent_articles_full_number_of_items %} {% form_field_error recent_articles_full_number_of_items %}
+          </div>
+          <div class="form-group last">
+            <label for="recentArticlesListNumberOfItems" class="control-label">{{ 'msg.NumItemsInRecentArticlesList'|trans|ucfirst }}</label>
+            {% form_field recent_articles_list_number_of_items %} {% form_field_error recent_articles_list_number_of_items %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.Comments'|trans|ucfirst }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group last">
+            <ul class="list-unstyled">
+              <li class="checkbox">
+                <label for="allowComments" class="control-label">
+                  {% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|ucfirst }}
+                </label>
+              </li>
+              <li class="checkbox">
+                <label for="moderation" class="control-label">
+                  {% form_field moderation %} {{ 'lbl.EnableModeration'|trans|ucfirst }}
+                </label>
+              </li>
+              <li class="checkbox">
+                <label for="spamfilter" class="control-label">
+                  {% form_field spamfilter %} {{ 'lbl.FilterCommentsForSpam'|trans|ucfirst }}
+                </label>
+                <p class="help-block">
+                  {{ 'msg.HelpSpamFilter'|trans|ucfirst }}
+                  {% if noAkismetKey %}
+                    <br />
+                    {{ 'msg.NoAkismetKey'|trans|format(geturl('index','settings')|raw) }}
+                  {% endif %}
+                </p>
+              </li>
+            </ul>
+            <p>{{ 'msg.FollowAllCommentsInRSS'|trans|format(commentsRSSURL)|raw }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if isGod %}
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ 'lbl.Image'|trans|ucfirst }}
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group last">
+              <ul class="list-unstyled">
+                <li class="checkbox">
+                  <label for="showImageForm" class="control-label">
+                    {% form_field show_image_form %} {{ 'msg.ShowImageForm'|trans|ucfirst }}
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.Notifications'|trans|ucfirst }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group last">
+            <ul class="list-unstyled">
+              <li class="checkbox">
+                <label for="notifyByEmailOnNewCommentToModerate" class="control-label">
+                  {% form_field notify_by_email_on_new_comment_to_moderate %} {{ 'msg.NotifyByEmailOnNewCommentToModerate'|trans|ucfirst }}
+                </label>
+              </li>
+              <li class="checkbox">
+                <label for="notifyByEmailOnNewComment" class="control-label">
+                  {% form_field notify_by_email_on_new_comment %} {{ 'msg.NotifyByEmailOnNewComment'|trans|ucfirst }}
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.SEO'|trans|ucfirst }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group last">
+            <p>{{ 'msg.HelpPingServices'|trans|ucfirst }}:</p>
+            <ul class="list-unstyled">
+              <li class="checkbox">
+                <label for="pingServices" class="control-label">
+                  {% form_field ping_services %} {{ 'lbl.PingBlogServices'|trans|ucfirst }}
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.RSSFeed'|trans|ucfirst }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="rssTitle" class="control-label">
+              {{ 'lbl.Title'|trans|ucfirst }}
+              {{ macro.required }}
+            </label>
+            <p class="help-block">{{ 'msg.HelpRSSTitle'|trans|ucfirst }}</p>
+            {% form_field rss_title %} {% form_field_error rss_title %}
+          </div>
+          <div class="form-group">
+            <label for="rssDescription" class="control-label">{{ 'lbl.Description'|trans|ucfirst }}</label>
+            <p class="help-block">{{ 'msg.HelpRSSDescription'|trans|ucfirst }}</p>
+            {% form_field rss_description %} {% form_field_error rss_description %}
+          </div>
+          <div class="form-group last">
+            <p>{{ 'msg.HelpMeta'|trans|ucfirst }}:</p>
+            <ul class="list-unstyled">
+              <li class="checkbox">
+                <label for="rssMeta" class="control-label">{% form_field rss_meta %} {{ 'lbl.MetaInformation'|trans|ucfirst }}</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="save" type="submit" name="save" class="btn btn-primary">
+            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endform %}
+{% endblock %}

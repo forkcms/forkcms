@@ -20,8 +20,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the import-action, it will import records from a CSV file
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class ImportAddresses extends BackendBaseActionEdit
 {
@@ -50,7 +48,7 @@ class ImportAddresses extends BackendBaseActionEdit
         $csv[] = array('email' => $this->get('fork.settings')->get($this->getModule(), 'from_email'));
 
         // download the file
-        BackendCSV::arrayToFile(BACKEND_CACHE_PATH . '/Mailmotor/example.csv', $csv, null, null, ';', '"', true);
+        BackendCSV::arrayToFile(BackendMailmotorModel::getCacheDirectory() . 'example.csv', $csv, null, null, ';', '"', true);
     }
 
     /**
@@ -71,6 +69,7 @@ class ImportAddresses extends BackendBaseActionEdit
      * Reformats a subscriber record with custom fields to the necessary format used in the import.
      *
      * @param array $subscriber The subscriber record as it comes out of the CSV.
+     *
      * @return array
      */
     private function formatSubscriberCSVRow($subscriber)
@@ -129,6 +128,7 @@ class ImportAddresses extends BackendBaseActionEdit
      *
      * @param array $csv     The uploaded CSV file.
      * @param int   $groupID The group ID for which we're importing.
+     *
      * @return array A list with failed subscribers.
      */
     private function processImport($csv, $groupID)
@@ -281,7 +281,7 @@ class ImportAddresses extends BackendBaseActionEdit
                     // write a CSV file to the cache
                     $csvFile = 'import-report-' . CommonUri::getUrl(BackendModel::getUTCDate()) . '.csv';
                     BackendCSV::arrayToFile(
-                        BACKEND_CACHE_PATH . '/Mailmotor/' . $csvFile,
+                        BackendMailmotorModel::getCacheDirectory() . $csvFile,
                         $failedSubscribers,
                         null,
                         null,

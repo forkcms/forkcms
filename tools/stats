@@ -4,8 +4,6 @@
 #
 # @later	find a decent way to run multiple processes at once (maybe use `wait`)
 # @version	1.0.1
-# @author	Yohann Bianchi <nstCactus@gmail.com>
-# @author	Tijs Verkoyen <tijs@sumocoders.be>
 
 SCRIPT_PATH="`dirname \"$0\"`"
 

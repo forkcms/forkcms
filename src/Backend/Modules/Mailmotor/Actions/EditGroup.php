@@ -18,8 +18,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the edit-action, it will display a form to edit a group
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class EditGroup extends BackendBaseActionEdit
 {
@@ -132,7 +130,7 @@ class EditGroup extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Groups') . '&report=edited&var=' . urlencode(
+                    BackendModel::createURLForAction('Groups') . '&report=edited&var=' . rawurlencode(
                         $item['name']
                     ) . '&highlight=id-' . $item['id']
                 );

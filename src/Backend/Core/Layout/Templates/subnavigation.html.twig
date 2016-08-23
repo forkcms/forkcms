@@ -1,0 +1,18 @@
+<ul class="nav navbar-nav navbar-sidebar">
+  {% for mainItem in navigation %}
+    {% for subItem in mainItem.children if mainItem.active %}
+      <li class="nav-item{% if subItem.active %} active{% endif %}">
+        <a href="/private/{{ LANGUAGE }}/{{ subItem.url }}">{{ ('lbl.'~subItem.label)|trans|ucfirst }}</a>
+        {% if subItem.children is defined and subItem.active %}
+          <ul class="nav subnav">
+            {% for item in subItem.children %}
+              <li class="nav-item{% if item.active %} active{% endif %}">
+                <a href="/private/{{ LANGUAGE }}/{{ item.url }}">{{ ('lbl.'~item.label)|trans|ucfirst }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  {% endfor %}
+</ul>

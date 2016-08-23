@@ -1,9 +1,5 @@
 /**
  * Interaction for the installer
- *
- * @author  Tijs Verkoyen <tijs@sumocoders.be>
- * @author  Thomas Deceuninck <thomas@fronto.be>
- * @author  Wouter Sioen <wouter.sioen@wijs.be>
  */
 var jsInstall =
 {
@@ -143,6 +139,8 @@ jsInstall.step3 =
 
     toggleDebugEmail: function()
     {
+        $('#debugEmailHolder').hide();
+
         if ($('#install_modules_different_debug_email').is(':checked')) {
             $('#debugEmailHolder').show();
         }

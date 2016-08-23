@@ -10,15 +10,10 @@ namespace Frontend\Modules\Faq\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
 /**
  * This is the index-action
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Index extends FrontendBaseBlock
 {

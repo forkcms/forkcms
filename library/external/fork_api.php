@@ -127,7 +127,7 @@ class ForkAPI
 		}
 
 		// build URL
-		$url = self::API_URL .'/'. self::API_VERSION .'/rest.php?'. http_build_query($queryStringParameters);
+		$url = self::API_URL .'/'. self::API_VERSION .'/rest.php?'. http_build_query($queryStringParameters, null, '&', PHP_QUERY_RFC3986);
 
 		// use POST?
 		if($usePOST)
@@ -145,7 +145,7 @@ class ForkAPI
 			if(!empty($parameters))
 			{
 				// build querystring
-				$queryString = http_build_query(array('data' => json_encode($parameters)));
+				$queryString = http_build_query(array('data' => json_encode($parameters)), null, '&', PHP_QUERY_RFC3986);
 
 				// prepend
 				$url .= '&'. $queryString;

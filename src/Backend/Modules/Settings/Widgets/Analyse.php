@@ -14,9 +14,6 @@ use Backend\Modules\Settings\Engine\Model as BackendSettingsModel;
 
 /**
  * This widget will analyze the CMS warnings
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Analyse extends BackendBaseWidget
 {

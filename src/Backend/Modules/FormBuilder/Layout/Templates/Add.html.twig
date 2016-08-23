@@ -1,0 +1,102 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+
+{% endblock %}
+
+{% block content %}
+  {% form add %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+          </li>
+          <li role="presentation">
+            <a href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tabGeneral">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label for="name" class="control-label">
+                        {{ 'lbl.Name'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      {% form_field name %} {% form_field_error name %}
+                    </div>
+                    <div class="form-group">
+                      <label for="method" class="control-label">
+                        {{ 'lbl.Method'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      {% form_field method %} {% form_field_error method %}
+                    </div>
+                    <div class="form-group">
+                      <label for="email" class="control-label">
+                        {{ 'lbl.Recipient'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      {% form_field email %} {% form_field_error email %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="panel panel-default panel-editor">
+                  <div class="panel-heading">
+                    <label for="successMessage" class="control-label">
+                      {{ 'lbl.SuccessMessage'|trans|ucfirst }}
+                      {{ macro.required }}<br>
+                    </label>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group last">
+                      {% form_field success_message %}
+                    </div>
+                  </div>
+                  {% if txtSuccessMessageError %}
+                    <div class="panel-footer">
+                      {% form_field_error success_message %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabExtra">
+            <div class="row">
+              <div class="col-md-12">
+                <label for="identifier" class="control-label">
+                  {{ 'lbl.Identifier'|trans|ucfirst }}
+                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpIdentifier'|trans }}"></abbr>
+                </label>
+                {% form_field identifier %} {% form_field_error identifier %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="addButton" type="submit" name="add" class="btn btn-primary">
+            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endform %}
+{% endblock %}

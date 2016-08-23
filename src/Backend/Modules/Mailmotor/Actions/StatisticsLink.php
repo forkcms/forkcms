@@ -19,8 +19,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This page will display the statistical overview of who clicked a certain link in a specified mailing
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class StatisticsLink extends BackendBaseActionIndex
 {
@@ -114,7 +112,7 @@ class StatisticsLink extends BackendBaseActionIndex
         $this->dataGrid = new BackendDataGrid($source);
         $this->dataGrid->setURL(
             BackendModel::createURLForAction(
-            ) . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id'] . '&url=' . urlencode(
+            ) . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id'] . '&url=' . rawurlencode(
                 $this->linkURL
             )
         );
@@ -208,7 +206,7 @@ class StatisticsLink extends BackendBaseActionIndex
                 $this->redirect(
                     BackendModel::createURLForAction('StatisticsLink') . '&url=' . $this->linkURL .
                     '&mailing_id=' . $this->mailing['id'] . '&report=group-added&var=' .
-                    urlencode($item['name']) . '&highlight=id-' . $this->mailing['id']
+                    rawurlencode($item['name']) . '&highlight=id-' . $this->mailing['id']
                 );
             }
         }

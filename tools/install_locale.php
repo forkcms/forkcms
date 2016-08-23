@@ -1,10 +1,7 @@
 <?php
 
-/*
+/**
  * This is a simple script to install a locale file.
- *
- * @author Jelmer Snoeck <jelmer.snoeck@wijs.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 
 require_once __DIR__ . '/../autoload.php';
@@ -48,8 +45,7 @@ else {
 // bootstrap Fork
 define('APPLICATION', 'Backend');
 $kernel = new AppKernel('prod', false);
-$kernel->boot();
-$kernel->defineForkConstants();
+
 if (!defined('PATH_WWW')) {
     define('PATH_WWW', __DIR__ . '/..');
 }
@@ -82,11 +78,13 @@ if (!$results['total'] > 0) {
 } else {
     if ($results['imported'] > 0) {
         echo 'Locale installed successfully' . "\n";
+
         return;
     }
 
     if ($results['imported'] == 0) {
         echo 'No locale was installed. Try adding the overwrite (-o) option.' . "\n";
+
         return;
     }
 }

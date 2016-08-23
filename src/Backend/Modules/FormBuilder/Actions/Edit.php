@@ -19,9 +19,6 @@ use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -77,6 +74,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('textbox_label');
         $this->frm->addText('textbox_value');
         $this->frm->addText('textbox_placeholder');
+        $this->frm->addText('textbox_classname');
         $this->frm->addCheckbox('textbox_required');
         $this->frm->addCheckbox('textbox_reply_to');
         $this->frm->addText('textbox_required_error_message');
@@ -96,6 +94,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addTextarea('textarea_value');
         $this->frm->getField('textarea_value')->setAttribute('cols', 30);
         $this->frm->addText('textarea_placeholder');
+        $this->frm->addText('textarea_classname');
         $this->frm->addCheckbox('textarea_required');
         $this->frm->addText('textarea_required_error_message');
         $this->frm->addDropdown('textarea_validation', array('' => ''));
@@ -112,7 +111,7 @@ class Edit extends BackendBaseActionEdit
                 '2' => '+2',
                 '3' => '+3',
                 '4' => '+4',
-                '5' => '+5'
+                '5' => '+5',
             )
         );
         $this->frm->addDropdown(
@@ -146,10 +145,10 @@ class Edit extends BackendBaseActionEdit
             'datetime_validation',
             array(
                 '' => '',
-                'time' => BL::getLabel('Time')
+                'time' => BL::getLabel('Time'),
             )
         );
-        //$this->frm->addText('datetime_validation_parameter');
+        $this->frm->addText('datetime_classname');
         $this->frm->addText('datetime_error_message');
 
         // dropdown dialog
@@ -158,6 +157,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addDropdown('dropdown_default_value', array('' => ''))->setAttribute('rel', 'dropDownValues');
         $this->frm->addCheckbox('dropdown_required');
         $this->frm->addText('dropdown_required_error_message');
+        $this->frm->addText('dropdown_classname');
 
         // radiobutton dialog
         $this->frm->addText('radiobutton_label');
@@ -165,6 +165,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addDropdown('radiobutton_default_value', array('' => ''))->setAttribute('rel', 'radioButtonValues');
         $this->frm->addCheckbox('radiobutton_required');
         $this->frm->addText('radiobutton_required_error_message');
+        $this->frm->addText('radiobutton_classname');
 
         // checkbox dialog
         $this->frm->addText('checkbox_label');
@@ -172,6 +173,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addDropdown('checkbox_default_value', array('' => ''))->setAttribute('rel', 'checkBoxValues');
         $this->frm->addCheckbox('checkbox_required');
         $this->frm->addText('checkbox_required_error_message');
+        $this->frm->addText('checkbox_classname');
 
         // heading dialog
         $this->frm->addText('heading');
@@ -233,7 +235,8 @@ class Edit extends BackendBaseActionEdit
                 $btn = $this->frm->addButton(
                     'submit_field',
                     \SpoonFilter::htmlspecialcharsDecode($field['settings']['values']),
-                    'button'
+                    'button',
+                    'btn btn-default'
                 );
                 $btn->setAttribute('disabled', 'disabled');
 
@@ -319,7 +322,7 @@ class Edit extends BackendBaseActionEdit
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=edited&var=' .
-                    urlencode($values['name']) . '&highlight=row-' . $id
+                    rawurlencode($values['name']) . '&highlight=row-' . $id
                 );
             }
         }

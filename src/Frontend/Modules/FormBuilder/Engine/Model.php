@@ -6,10 +6,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the form_builder module
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Model
 {
@@ -17,6 +13,7 @@ class Model
      * Get an item.
      *
      * @param string $id The id of the item to fetch.
+     *
      * @return array
      */
     public static function get($id)
@@ -46,6 +43,7 @@ class Model
      * Get all fields of a form.
      *
      * @param int $id The id of the form wherefore we fetch the fields.
+     *
      * @return array
      */
     public static function getFields($id)
@@ -99,6 +97,7 @@ class Model
      * Insert data.
      *
      * @param array $data The data to insert.
+     *
      * @return int
      */
     public static function insertData(array $data)
@@ -110,6 +109,7 @@ class Model
      * Insert data fields.
      *
      * @param array $data The data to insert.
+     *
      * @return int
      */
     public static function insertDataField(array $data)
@@ -125,14 +125,14 @@ class Model
     public static function notifyAdmin(array $data)
     {
         $alert = array(
-            'loc-key' => 'FORMBUILDER_SUBMISSION'
+            'loc-key' => 'FORMBUILDER_SUBMISSION',
         );
 
         // build data
         $data = array(
             'api' => SITE_URL . '/api/1.0',
             'form_id' => $data['form_id'],
-            'id' => $data['entry_id']
+            'id' => $data['entry_id'],
         );
 
         // push it
@@ -143,6 +143,7 @@ class Model
      * Convert a PHP Date to jquery date format
      *
      * @param string $php_format The php date format
+     *
      * @return string The jQuery date format
      */
     public static function convertPHPDateToJquery($php_format)
@@ -180,16 +181,16 @@ class Model
             'H' => '',
             'i' => '',
             's' => '',
-            'u' => ''
+            'u' => '',
         );
-        $jqueryui_format = "";
+        $jqueryui_format = '';
         $escaping = false;
-        for ($i = 0; $i < strlen($php_format); $i++) {
+        for ($i = 0; $i < mb_strlen($php_format); ++$i) {
             $char = $php_format[$i];
             if ($char === '\\') {
                 // PHP date format escaping character
 
-                $i++;
+                ++$i;
                 if ($escaping) {
                     $jqueryui_format .= $php_format[$i];
                 } else {
@@ -208,6 +209,7 @@ class Model
                 }
             }
         }
+
         return $jqueryui_format;
     }
 }

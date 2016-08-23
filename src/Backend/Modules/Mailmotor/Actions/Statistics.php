@@ -19,8 +19,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This page will display the statistical overview of a sent mailing
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Statistics extends BackendBaseActionIndex
 {
@@ -105,7 +103,7 @@ class Statistics extends BackendBaseActionIndex
 
         // map urlencode to clicked links stack
         $this->statistics['clicked_links'] = \SpoonFilter::arrayMapRecursive(
-            'urlencode',
+            'rawurlencode',
             $this->statistics['clicked_links']
         );
 
@@ -119,7 +117,7 @@ class Statistics extends BackendBaseActionIndex
         );
 
         // set headers values
-        $headers['link'] = strtoupper(BL::lbl('URL'));
+        $headers['link'] = mb_strtoupper(BL::lbl('URL'));
         $headers['clicks'] = \SpoonFilter::ucfirst(BL::msg('ClicksAmount'));
 
         // set headers

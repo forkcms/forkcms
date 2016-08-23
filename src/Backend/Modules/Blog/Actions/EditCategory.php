@@ -18,9 +18,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the edit category action, it will display a form to edit an existing category.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class EditCategory extends BackendBaseActionEdit
 {
@@ -63,7 +60,7 @@ class EditCategory extends BackendBaseActionEdit
         $this->frm = new BackendForm('editCategory');
 
         // create elements
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
 
         // meta object
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -118,7 +115,7 @@ class EditCategory extends BackendBaseActionEdit
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' .
-                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                    rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }
         }

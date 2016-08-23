@@ -13,9 +13,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the location module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Model
 {
@@ -24,6 +21,7 @@ class Model
      *
      * @param array $settings
      * @param array $markers
+     *
      * @return string
      */
     public static function buildUrl(array $settings, array $markers = array())
@@ -37,7 +35,7 @@ class Model
         $url .= '&z=' . $settings['zoom_level'];
 
         // set the map type
-        switch (strtolower($settings['map_type'])) {
+        switch (mb_strtolower($settings['map_type'])) {
             case 'roadmap':
                 $url .= '&t=m';
                 break;
@@ -55,7 +53,7 @@ class Model
         $pointers = array();
         // add the markers to the url
         foreach ($markers as $marker) {
-            $pointers[] = urlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
+            $pointers[] = rawurlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
         }
 
         if (!empty($pointers)) {
@@ -69,6 +67,7 @@ class Model
      * Get an item
      *
      * @param int $id The id of the item to fetch.
+     *
      * @return array
      */
     public static function get($id)
@@ -77,7 +76,7 @@ class Model
             'SELECT *
              FROM location
              WHERE id = ? AND language = ?',
-            array((int) $id, FRONTEND_LANGUAGE)
+            array((int) $id, LANGUAGE)
         );
     }
 
@@ -90,7 +89,7 @@ class Model
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT * FROM location WHERE language = ? AND show_overview = ?',
-            array(FRONTEND_LANGUAGE, 'Y')
+            array(LANGUAGE, 'Y')
         );
     }
 
@@ -99,6 +98,7 @@ class Model
      *
      * @param int    $mapId
      * @param string $name
+     *
      * @return mixed
      */
     public static function getMapSetting($mapId, $name)
@@ -121,6 +121,7 @@ class Model
      * Fetch all the settings for a specific map
      *
      * @param int $mapId
+     *
      * @return array
      */
     public static function getMapSettings($mapId)

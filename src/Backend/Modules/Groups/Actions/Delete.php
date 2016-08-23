@@ -15,8 +15,6 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the delete-action, it will delete an item.
- *
- * @author Jeroen Van den Bossche <jeroenvandenbossche@gmail.com>
  */
 class Delete extends BackendBaseActionDelete
 {
@@ -41,11 +39,9 @@ class Delete extends BackendBaseActionDelete
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
             // item was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('Index') . '&report=deleted&var=' . urlencode($this->record['name']));
-        }
-
-        // no item found, redirect to the overview with an error
-        else {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['name']));
+        } else {
+            // no item found, redirect to the overview with an error
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }

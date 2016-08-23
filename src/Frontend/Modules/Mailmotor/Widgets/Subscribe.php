@@ -15,8 +15,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This is a widget with the subscribe form
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Subscribe extends FrontendBaseWidget
 {

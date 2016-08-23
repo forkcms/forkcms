@@ -1,7 +1,5 @@
 /**
  * Interaction for the pages templates
- *
- * @author	Matthias Mullie <forkcms@mullie.eu>
  */
 jsBackend.extensions =
 {
@@ -16,7 +14,7 @@ jsBackend.extensions.themeSelection =
 	init: function()
 	{
 		// store the list items
-		var listItems = $('#installedThemes li');
+		var listItems = $('#installedThemes .js-theme');
 
 		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
 		listItems.on('click', function(e)
@@ -31,10 +29,10 @@ jsBackend.extensions.themeSelection =
 			if(radiobutton.is(':checked'))
 			{
 				// remove the selected state from all other templates
-				listItems.removeClass('selected');
+				listItems.find('.panel').removeClass('panel-primary').addClass('panel-default');
 
 				// add a selected state to the parent
-				radiobutton.parent('li').addClass('selected');
+				radiobutton.closest('.panel').addClass('panel-primary');
 			}
 		});
 	}

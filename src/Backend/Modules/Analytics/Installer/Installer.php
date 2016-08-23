@@ -6,8 +6,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the analytics module
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 class Installer extends ModuleInstaller
 {
@@ -43,23 +41,11 @@ class Installer extends ModuleInstaller
     {
         $this->insertDashboardWidget(
             'Analytics',
-            'RecentVisits',
-            array(
-                'column' => 'middle',
-                'position' => 1,
-                'hidden' => false,
-                'present' => true,
-            )
+            'RecentVisits'
         );
         $this->insertDashboardWidget(
             'Analytics',
-            'TraficSources',
-            array(
-                'column' => 'middle',
-                'position' => 2,
-                'hidden' => false,
-                'present' => true,
-            )
+            'TraficSources'
         );
     }
 }

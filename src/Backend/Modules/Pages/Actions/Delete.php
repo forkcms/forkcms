@@ -17,8 +17,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the delete-action, it will delete a page
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Delete extends BackendBaseActionDelete
 {
@@ -73,7 +71,7 @@ class Delete extends BackendBaseActionDelete
                 $this->redirect(
                     BackendModel::createURLForAction(
                         'Index'
-                    ) . '&id=' . $page['parent_id'] . '&report=deleted&var=' . urlencode($page['title'])
+                    ) . '&id=' . $page['parent_id'] . '&report=deleted&var=' . rawurlencode($page['title'])
                 );
             } else {
                 $this->redirect(BackendModel::createURLForAction('Edit') . '&error=non-existing');

@@ -3,14 +3,11 @@
 namespace Backend\Modules\Faq\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * Reorder questions
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class SequenceQuestions extends BackendBaseAJAXAction
 {
@@ -67,7 +64,7 @@ class SequenceQuestions extends BackendBaseAJAXAction
             }
 
             // success output
-            $this->output(self::OK, null, 'sequence updated');
+            $this->output(self::OK, null, Language::msg('SequenceSaved'));
         }
     }
 }

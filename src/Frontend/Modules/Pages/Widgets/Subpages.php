@@ -16,8 +16,6 @@ use Frontend\Modules\Pages\Engine\Model as FrontendPagesModel;
 
 /**
  * This is a widget which shows the subpages.
- *
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Subpages extends FrontendBaseWidget
 {
@@ -42,8 +40,8 @@ class Subpages extends FrontendBaseWidget
         try {
             $template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
         } catch (FrontendException $e) {
-            // template does not exist; assume subpages_default.tpl
-            $template = FrontendTheme::getPath($widgetTemplatesPath . '/SubpagesDefault.tpl');
+            // template does not exist; assume subpages_default.html.twig
+            $template = FrontendTheme::getPath($widgetTemplatesPath . '/SubpagesDefault.html.twig');
         }
 
         $this->loadTemplate($template);

@@ -11,14 +11,10 @@ namespace Frontend\Modules\Blog\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is the overview-action
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Index extends FrontendBaseBlock
 {
@@ -40,7 +36,7 @@ class Index extends FrontendBaseBlock
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**
@@ -101,8 +97,8 @@ class Index extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
-                 'href' => $rssLink
+                 'title' => $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE),
+                 'href' => $rssLink,
             ),
             true
         );

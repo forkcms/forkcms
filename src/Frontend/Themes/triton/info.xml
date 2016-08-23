@@ -20,7 +20,7 @@
 	</authors>
 	<metanavigation supported="false" />
 	<templates>
-		<template label="Default" path="Core/Layout/Templates/Default.tpl">
+		<template label="Default" path="Core/Layout/Templates/Default.html.twig">
 			<positions>
 				<position name="main" />
 				<position name="left" />
@@ -35,7 +35,7 @@
 				[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]
 			</format>
 		</template>
-		<template label="Home" path="Core/Layout/Templates/Home.tpl">
+		<template label="Home" path="Core/Layout/Templates/Home.html.twig">
 			<positions>
 				<position name="main" />
 				<position name="left" />

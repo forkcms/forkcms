@@ -16,8 +16,6 @@ use Symfony\Component\Finder\Finder;
 /**
  * This is the base-object for config-files.
  * The module-specific config-files can extend the functionality from this class.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Config extends \KernelLoader
 {
@@ -125,9 +123,9 @@ class Config extends \KernelLoader
     {
         // build path to the module
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
 
-        if ($fs->exists($frontendModulePath . '/Actions')) {
+        if ($filesystem->exists($frontendModulePath . '/Actions')) {
             // get regular actions
             $finder = new Finder();
             $finder->name('*.php');
@@ -140,7 +138,7 @@ class Config extends \KernelLoader
             }
         }
 
-        if ($fs->exists($frontendModulePath . '/Ajax')) {
+        if ($filesystem->exists($frontendModulePath . '/Ajax')) {
             // get ajax-actions
             $finder = new Finder();
             $finder->name('*.php');
