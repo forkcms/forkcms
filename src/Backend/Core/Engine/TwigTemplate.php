@@ -71,7 +71,7 @@ class TwigTemplate extends BaseTwigTemplate
         $loader = new Twig_Loader_Filesystem(array(
             BACKEND_MODULES_PATH,
             BACKEND_CORE_PATH,
-            $vendorTwigBridgeDir . '/Resources/Views/Form'
+            $vendorTwigBridgeDir . '/Resources/views/Form'
         ));
 
         $twig = new \Twig_Environment($loader, array(
