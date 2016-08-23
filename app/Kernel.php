@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use PDOException;
-use SpoonDatabaseException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
