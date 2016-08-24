@@ -76,13 +76,34 @@ class FormFile extends \SpoonFormFile
 
         // parse to template
         if ($template !== null) {
-            $template->assign('file' . \SpoonFilter::toCamelCase($this->attributes['name']), $output);
+            $template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
             $template->assign(
-                'file' . \SpoonFilter::toCamelCase($this->attributes['name']) . 'Error',
+                'file' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error',
                 ($this->errors != '') ? '<span class="formError text-danger">' . $this->errors . '</span>' : ''
             );
         }
 
         return $output;
+    }
+
+    /**
+     * This function will return the errors. It is extended so we can do file checks automatically.
+     *
+     * @return string
+     */
+    public function getErrors()
+    {
+        // if the image is bigger then the allowed configuration it won't show up as filled but it is submitted
+        // the empty check is added because otherwise this error is shown like 7 times
+        if ($this->isSubmitted() && isset($_FILES[$this->getName()]['error']) && empty($this->errors)) {
+            $imageError = $_FILES[$this->getName()]['error'];
+            if ($imageError === UPLOAD_ERR_INI_SIZE && empty($this->errors)) {
+                $this->addError(
+                    SpoonFilter::ucfirst(sprintf(Language::err('FileTooBig'), Form::getUploadMaxFileSize()))
+                );
+            }
+        }
+
+        return $this->errors;
     }
 }

@@ -9,6 +9,7 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use SpoonFilter;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -77,6 +78,17 @@ class FormImage extends \SpoonFormImage
         if ($this->isFilled()) {
             $this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), Language::err('JPGGIFAndPNGOnly'));
             $this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), Language::err('JPGGIFAndPNGOnly'));
+        }
+
+        // if the image is bigger then the allowed configuration it won't show up as filled but it is submitted
+        // the empty check is added because otherwise this error is shown like 7 times
+        if ($this->isSubmitted() && isset($_FILES[$this->getName()]['error']) && empty($this->errors)) {
+            $imageError = $_FILES[$this->getName()]['error'];
+            if ($imageError === UPLOAD_ERR_INI_SIZE && empty($this->errors)) {
+                $this->addError(
+                    SpoonFilter::ucfirst(sprintf(Language::err('FileTooBig'), Form::getUploadMaxFileSize()))
+                );
+            }
         }
 
         return $this->errors;
