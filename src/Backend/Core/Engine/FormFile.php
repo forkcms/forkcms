@@ -40,32 +40,6 @@ class FormFile extends \SpoonFormFile
      */
     public function parse($template = null)
     {
-        // get upload_max_filesize
-        $uploadMaxFilesize = ini_get('upload_max_filesize');
-        if ($uploadMaxFilesize === false) {
-            $uploadMaxFilesize = 0;
-        }
-
-        // reformat if defined as an integer
-        if (\SpoonFilter::isInteger($uploadMaxFilesize)) {
-            $uploadMaxFilesize = $uploadMaxFilesize / 1024 . 'MB';
-        }
-
-        // reformat if specified in kB
-        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'K') {
-            $uploadMaxFilesize = mb_substr($uploadMaxFilesize, 0, -1) . 'kB';
-        }
-
-        // reformat if specified in MB
-        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'M') {
-            $uploadMaxFilesize .= 'B';
-        }
-
-        // reformat if specified in GB
-        if (mb_strtoupper(mb_substr($uploadMaxFilesize, -1, 1)) == 'G') {
-            $uploadMaxFilesize .= 'B';
-        }
-
         // name is required
         if ($this->attributes['name'] == '') {
             throw new \SpoonFormException('A name is required for a file field. Please provide a name.');
@@ -89,13 +63,13 @@ class FormFile extends \SpoonFormFile
                            sprintf(
                                Language::getMessage('HelpFileFieldWithMaxFileSize', 'core'),
                                $this->attributes['extension'],
-                               $uploadMaxFilesize
+                               Form::getUploadMaxFileSize()
                            ) . '</p>';
             } else {
                 $output .= '<p class="help-block">' .
                            sprintf(
                                Language::getMessage('HelpMaxFileSize'),
-                               $uploadMaxFilesize
+                               Form::getUploadMaxFileSize()
                            ) . '</p>';
             }
         }
