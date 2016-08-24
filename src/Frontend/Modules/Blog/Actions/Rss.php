@@ -61,9 +61,9 @@ class Rss extends FrontendBaseBlock
     private function parse()
     {
         // get vars
-        $title = (isset($this->settings['rss_title_' . FRONTEND_LANGUAGE])) ? $this->settings['rss_title_' . FRONTEND_LANGUAGE] : $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+        $title = (isset($this->settings['rss_title_' . LANGUAGE])) ? $this->settings['rss_title_' . LANGUAGE] : $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE);
         $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog');
-        $description = (isset($this->settings['rss_description_' . FRONTEND_LANGUAGE])) ? $this->settings['rss_description_' . FRONTEND_LANGUAGE] : null;
+        $description = (isset($this->settings['rss_description_' . LANGUAGE])) ? $this->settings['rss_description_' . LANGUAGE] : null;
 
         // create new rss instance
         $rss = new FrontendRSS($title, $link, $description);
@@ -76,7 +76,7 @@ class Rss extends FrontendBaseBlock
             $description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];
 
             // meta is wanted
-            if ($this->get('fork.settings')->get('Blog', 'rss_meta_' . FRONTEND_LANGUAGE, true)) {
+            if ($this->get('fork.settings')->get('Blog', 'rss_meta_' . LANGUAGE, true)) {
                 // append meta
                 $description .= '<div class="meta">' . "\n";
                 $description .= '	<p><a href="' . $link . '" title="' . $title . '">' . $title . '</a> ' .

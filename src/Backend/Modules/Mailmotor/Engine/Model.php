@@ -59,6 +59,14 @@ class Model
          WHERE mm.status = ? AND mm.campaign_id = ?';
 
     /**
+     * @return string
+     */
+    public static function getCacheDirectory()
+    {
+        return BackendModel::getContainer()->get('kernel.root_dir') . '/Mailmotor/';
+    }
+
+    /**
      * Returns true if every working language has a default group set, false if at least one is missing.
      *
      * @return bool
@@ -391,7 +399,7 @@ class Model
     {
         // set the filename and path
         $filename = 'addresses-' . \SpoonDate::getDate('YmdHi') . '.csv';
-        $path = BACKEND_CACHE_PATH . '/Mailmotor/' . $filename;
+        $path = self::getCacheDirectory() . $filename;
 
         // reformat the created_on date
         if (!empty($emails)) {
@@ -418,7 +426,7 @@ class Model
     {
         // set the filename and path
         $filename = 'addresses-' . \SpoonDate::getDate('YmdHi') . '.csv';
-        $path = BACKEND_CACHE_PATH . '/Mailmotor/' . $filename;
+        $path = self::getCacheDirectory() . $filename;
 
         // fetch the addresses by group
         $records = self::getAddressesByGroupID(array($id));
@@ -1376,16 +1384,16 @@ class Model
     {
         // set the path to the template folders for this language
         $path = BACKEND_MODULES_PATH . '/Mailmotor/Templates/' . $language;
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
 
         // load all templates in the 'templates' folder for this language
-        if (!$fs->exists($path . '/' . $name . '/template.html.twig')) {
+        if (!$filesystem->exists($path . '/' . $name . '/template.html.twig')) {
             throw new \SpoonException(
                 'The template folder "' . $name .
                 '" exists, but no template.html.twig file was found. Please create one.'
             );
         }
-        if (!$fs->exists($path . '/' . $name . '/Css/screen.css')) {
+        if (!$filesystem->exists($path . '/' . $name . '/Css/screen.css')) {
             throw new \SpoonException(
                 'The template folder "' . $name .
                 '" exists, but no screen.css file was found. Please create one in a subfolder "css".'
@@ -1403,10 +1411,10 @@ class Model
                              '/' . $name . '/Css/screen.css';
 
         // check if the template file actually exists
-        if ($fs->exists($record['path_content'])) {
+        if ($filesystem->exists($record['path_content'])) {
             $record['content'] = file_get_contents($record['path_content']);
         }
-        if ($fs->exists($record['path_css'])) {
+        if ($filesystem->exists($record['path_css'])) {
             $record['css'] = file_get_contents($record['path_css']);
         }
 

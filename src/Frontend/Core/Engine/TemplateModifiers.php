@@ -35,13 +35,14 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Format a number
-     *    syntax: {{ $string|formatnumber }}
+     *    syntax: {{ $string|formatnumber($decimals) }}
      *
      * @param float $string The number to format.
+     * @param int $decimals The number of decimals
      *
      * @return string
      */
-    public static function formatNumber($string)
+    public static function formatNumber($string, $decimals = null)
     {
         // redefine
         $string = (float) $string;
@@ -50,7 +51,9 @@ class TemplateModifiers extends BaseTwigModifiers
         $format = FrontendModel::get('fork.settings')->get('Core', 'number_format');
 
         // get amount of decimals
-        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
+        if ($decimals === null) {
+            $decimals = (mb_strpos($string, '.') ? mb_strlen(mb_substr($string, mb_strpos($string, '.') + 1)) : 0);
+        }
 
         // get separators
         $separators = explode('_', $format);
@@ -127,8 +130,8 @@ class TemplateModifiers extends BaseTwigModifiers
                 'time_format'
             ),
             $string,
-            FRONTEND_LANGUAGE
-        ).'">'.\SpoonDate::getTimeAgo($string, FRONTEND_LANGUAGE).'</abbr>';
+            LANGUAGE
+        ).'">'.\SpoonDate::getTimeAgo($string, LANGUAGE).'</abbr>';
     }
 
     /**
@@ -234,7 +237,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
         try {
             // get HTML
-            $return = (string) Navigation::getNavigationHtml(
+            $return = (string) Navigation::getNavigationHTML(
                 $type,
                 $parentID,
                 $endDepth,
@@ -272,20 +275,22 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Get the URL for a give module & action combination
-     *    syntax: {{ geturlforblock($module, $action, $language) }}
+     *    syntax: {{ geturlforblock($module, $action, $language, $data) }}
      *
      * @param string $module   The module wherefore the URL should be build.
      * @param string $action   A specific action wherefore the URL should be build, otherwise the default will be used.
      * @param string $language The language to use, if not provided we will use the loaded language.
+     * @param array $data      An array with keys and values that partially or fully match the data of the block.
+     *                         If it matches multiple versions of that block it will just return the first match.
      *
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, array $data = null)
     {
         $action = ($action !== null) ? (string) $action : null;
         $language = ($language !== null) ? (string) $language : null;
 
-        return Navigation::getURLForBlock((string) $module, $action, $language);
+        return Navigation::getURLForBlock((string) $module, $action, $language, $data);
     }
 
     /**

@@ -302,22 +302,6 @@ class Edit extends BackendBaseActionEdit
                 }
             }
 
-            // validate avatar
-            if ($fields['avatar']->isFilled()) {
-                // correct extension
-                if ($fields['avatar']->isAllowedExtension(
-                    array('jpg', 'jpeg', 'gif', 'png'),
-                    BL::err('JPGGIFAndPNGOnly')
-                )
-                ) {
-                    // correct mimetype?
-                    $fields['avatar']->isAllowedMimeType(
-                        array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'),
-                        BL::err('JPGGIFAndPNGOnly')
-                    );
-                }
-            }
-
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build user-array
@@ -394,11 +378,11 @@ class Edit extends BackendBaseActionEdit
                         $this->record['settings']['avatar'] != 'no-avatar.jpg' &&
                         $this->record['settings']['avatar'] != ''
                     ) {
-                        $fs = new Filesystem();
-                        $fs->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
+                        $filesystem = new Filesystem();
+                        $filesystem->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
                     }
 
                     // create new filename

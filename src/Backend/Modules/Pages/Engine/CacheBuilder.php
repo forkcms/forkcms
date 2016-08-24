@@ -53,9 +53,9 @@ class CacheBuilder
         $navigation = $this->getNavigation($language);
 
         // build file with navigation structure to feed into editor
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         $cachePath = FRONTEND_CACHE_PATH . '/Navigation/';
-        $fs->dumpFile(
+        $filesystem->dumpFile(
             $cachePath . 'editor_link_list_' . $language . '.js',
             $this->dumpEditorLinkList($navigation, $keys, $language)
         );
@@ -274,11 +274,24 @@ class CacheBuilder
     {
         if (empty($this->blocks)) {
             $this->blocks = (array) $this->database->getRecords(
-                'SELECT i.id, i.module, i.action
+                'SELECT i.id, i.module, i.action, i.data
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
                 array('block', 'N'),
                 'id'
+            );
+
+            $this->blocks = array_map(
+                function (array $block) {
+                    if ($block['data'] === null) {
+                        return $block;
+                    }
+
+                    $block['data'] = unserialize($block['data']);
+
+                    return $block;
+                },
+                $this->blocks
             );
         }
 

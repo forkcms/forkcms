@@ -1,3 +1,84 @@
+4.1.1 (2016-08-10)
+------------------
+
+Bugfixes:
+
+* MailMotor: Mailmotor was broken when it wasn't configured yet
+* Core: When switching languages you no longer get Item not found messages
+* Core: Fork CMS now works on mysql 5.7, some queries broke on the default configuration
+
+Enhancements:
+
+* Add extra key-words to composer.json
+* Composer: irc has been removed as support option and slack has been added
+
+
+4.1.0 (2016-08-08)
+------------------
+
+Features:
+
+* Location: added Google Maps API key
+* Core: multiple og:image:width and :height
+* Core: change urlencoding from RFC 1738 to RFC 3986
+* FormBuilder: Anchor added to form widget
+* Location: added zoom-leven 1 and 2
+* Github: added issue and pull request templates
+* Core: added TemplateModifier showBool alias to DataGridFunctions
+* Profiles: added SecurePage widget
+* Core: getUrlForBlock now takes data into account
+* Core: page parameter can now be changed in the pagination query
+* Twig: added a macro for the required asterisk and tooltip
+
+Bugfixes:
+
+* CK Finder: fix non existent service session.handler
+* Profiles: make sure the settings are loaded in cache before a new setting is set
+* Location: fix settings not loading correctly because twig escaped the html
+
+
+4.0.6 (2016-07-29)
+--
+
+Bugfixes:
+
+* Pages: fix casing issue.
+* Core: add missing yaml config to the editorconfig file.
+* Core: make the backend more anysurfer compliant.
+* Pages: make filesystem checks more robust for og:image tags.
+* Faq: use label instead of hardcoded text after sequence success.
+* FormBuilder: only show the success message for the submitted form.
+* Core: fix cache sharing between environments.
+* Core: fix issues on PHP 7.1.
+* Core: fix issues when widgets mixed up content.
+* Core: fix double encoded ampersand in pagination urls.
+* Pages: fix bad contrast when showing hidden page blocks.
+* FormBuilder: fix paragraph and heading that weren't editable.
+* Core: fix template bug in pagination.
+* Core: make sure emails can be themed.
+* Core: make sure diactrics will be showd correctly in twig.
+* Groups: make sure we can hide dashboard widgets for groups.
+
+
+4.0.5 (2016-07-12)
+--
+
+Bugfixes:
+
+* Location: show google maps key when Location is installed.
+* Core: add needed swiftmailer monolog configuration.
+* Core: make the formatCurrency modifier respect the number format.
+* Core: fix deletion of cookies.
+* Core: fix case error.
+* Core: fix "exists" instead of "exist" in exceptions and comments.
+* Core: fix wrong order of twig filters.
+* Core: fix wrong css class on help-blocks.
+* Core: fix link in cookie bar text in the triton theme.
+* Core: use php.ini's default session location.
+* Extensions: fix install button for installed modules.
+* Core: minify module JavaScript files.
+
+
 4.0.4 (2016-07-01)
 --
 

@@ -494,7 +494,7 @@ class Add extends BackendBaseActionAdd
                     $this->redirect(
                         BackendModel::createURLForAction(
                             'Edit'
-                        ) . '&id=' . $page['id'] . '&report=added&var=' . urlencode(
+                        ) . '&id=' . $page['id'] . '&report=added&var=' . rawurlencode(
                             $page['title']
                         ) . '&highlight=row-' . $page['id']
                     );
@@ -503,7 +503,7 @@ class Add extends BackendBaseActionAdd
                     $this->redirect(
                         BackendModel::createURLForAction(
                             'Edit'
-                        ) . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . urlencode(
+                        ) . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . rawurlencode(
                             $page['title']
                         ) . '&highlight=row-' . $page['revision_id'] . '&draft=' . $page['revision_id']
                     );

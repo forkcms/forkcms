@@ -136,7 +136,7 @@ class Profile
      */
     public function getSetting($name, $defaultValue = null)
     {
-        // if settings array does not exists then get it first
+        // if settings array does not exist then get it first
         if (empty($this->settings)) {
             $this->settings = $this->getSettings();
         }
@@ -322,6 +322,9 @@ class Profile
      */
     public function setSetting($name, $value)
     {
+        // make sure we have the current settings in cache
+        $this->getSettings();
+
         // set setting
         FrontendProfilesModel::setSetting($this->getId(), (string) $name, $value);
 
@@ -336,6 +339,9 @@ class Profile
      */
     public function setSettings(array $values)
     {
+        // make sure we have the current settings in cache
+        $this->getSettings();
+
         // set settings
         FrontendProfilesModel::setSettings($this->getId(), $values);
 

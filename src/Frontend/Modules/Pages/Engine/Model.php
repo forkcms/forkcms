@@ -36,14 +36,14 @@ class Model implements FrontendTagsInterface
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')
              ORDER BY i.title ASC',
-            array('active', 'N', FRONTEND_LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            array('active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
         );
 
         // has items
         if (!empty($items)) {
             // reset url
             foreach ($items as &$row) {
-                $row['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+                $row['full_url'] = FrontendNavigation::getURL($row['id'], LANGUAGE);
             }
         }
 
@@ -81,14 +81,14 @@ class Model implements FrontendTagsInterface
              WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
              AND i.language = ? AND i.publish_on <= ?
              ORDER BY i.sequence ASC',
-            array((int) $id, 'active', 'N', FRONTEND_LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            array((int) $id, 'active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
         );
 
         // has items
         if (!empty($items)) {
             // reset url
             foreach ($items as &$row) {
-                $row['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+                $row['full_url'] = FrontendNavigation::getURL($row['id'], LANGUAGE);
             }
         }
 
@@ -123,7 +123,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.id IN (' . implode(', ', $ids) . ') AND p.id NOT IN (' .
             implode(', ', $ignore) . ') AND p.status = ? AND p.hidden = ? AND p.language = ?',
-            array('active', 'N', FRONTEND_LANGUAGE),
+            array('active', 'N', LANGUAGE),
             'id'
         );
 

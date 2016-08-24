@@ -96,9 +96,9 @@ class Installer extends ModuleInstaller
         $this->searchPages();
 
         // create module cache path
-        $fs = new Filesystem();
-        if (!$fs->exists(PATH_WWW . '/src/Frontend/Cache/Search')) {
-            $fs->mkdir(PATH_WWW . '/src/Frontend/Cache/Search');
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists(PATH_WWW . '/src/Frontend/Cache/Search')) {
+            $filesystem->mkdir(PATH_WWW . '/src/Frontend/Cache/Search');
         }
     }
 

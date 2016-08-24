@@ -195,6 +195,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
 
         // define constant
         defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $this->language);
+        defined('LANGUAGE') || define('LANGUAGE', $this->language);
 
         // set the locale (we need this for the labels)
         Language::setLocale($this->language);

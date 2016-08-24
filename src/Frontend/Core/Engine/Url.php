@@ -286,6 +286,7 @@ class Url extends \KernelLoader
 
         // define the language
         defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $language);
+        defined('LANGUAGE') || define('LANGUAGE', $language);
 
         // sets the locale file
         Language::setLocale($language);

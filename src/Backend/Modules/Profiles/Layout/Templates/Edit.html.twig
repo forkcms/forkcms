@@ -15,10 +15,10 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabGeneral" aria-controls="general" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
           </li>
           <li role="presentation">
-            <a href="#tabGroups" aria-controls="groups" role="tab" data-toggle="tab">{{ 'lbl.Groups'|trans|ucfirst }}</a>
+            <a href="#tabGroups" aria-controls="tabGroups" role="tab" data-toggle="tab">{{ 'lbl.Groups'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -39,7 +39,7 @@
                     <div class="form-group">
                       <label for="displayName" class="control-label">
                         {{ 'lbl.DisplayName'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field display_name %} {% form_field_error display_name %}
                     </div>
@@ -175,7 +175,7 @@
         </div>
       </div>
       {% if showProfilesDelete %}
-        <div class="modal fade" id="{% if deleted %}confirmUndelete{% endif %}{% if not deleted %}confirmDelete{% endif %}" tabindex="-1" role="dialog" aria-labelledby="{% if deleted %}{{ 'lbl.Undelete'|trans|ucfirst }}{% endif %}{% if not deleted %}{{ 'lbl.Delete'|trans|ucfirst }}{% endif %}" aria-hidden="true">
+        <div class="modal fade" id="{% if deleted %}confirmUndelete{% endif %}{% if not deleted %}confirmDelete{% endif %}" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -214,7 +214,7 @@
         </div>
       {% endif %}
       {% if showProfilesBlock %}
-        <div class="modal fade" id="{% if blocked %}confirmUnblock{% endif %}{% if not blocked %}confirmBlock{% endif %}" tabindex="-1" role="dialog" aria-labelledby="{% if blocked %}{{ 'lbl.Unblock'|trans|ucfirst }}{% endif %}{% if not blocked %}{{ 'lbl.Block'|trans|ucfirst }}{% endif %}" aria-hidden="true">
+        <div class="modal fade" id="{% if blocked %}confirmUnblock{% endif %}{% if not blocked %}confirmBlock{% endif %}" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

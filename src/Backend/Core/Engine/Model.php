@@ -135,9 +135,9 @@ class Model extends \Common\Core\Model
         foreach ($parameters as $key => $value) {
             // first element
             if ($i == 1) {
-                $queryString .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+                $queryString .= '?' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
             } else {
-                $queryString .= '&' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+                $queryString .= '&' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
             }
 
             ++$i;
@@ -252,9 +252,6 @@ class Model extends \Common\Core\Model
         if (!empty($ids)) {
             // delete extras
             self::getContainer()->get('database')->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
-
-            // invalidate the cache for the module
-            self::invalidateFrontendCache((string) $module, Language::getWorkingLanguage());
         }
     }
 
@@ -272,11 +269,11 @@ class Model extends \Common\Core\Model
         }
 
         $finder = new Finder();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach ($finder->directories()->in($path) as $directory) {
             $fileName = $directory->getRealPath() . '/' . $thumbnail;
             if (is_file($fileName)) {
-                $fs->remove($fileName);
+                $filesystem->remove($fileName);
             }
         }
     }
@@ -681,18 +678,18 @@ class Model extends \Common\Core\Model
             $fileSizes = $model['fileSizes'];
         }
 
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach ($fileSizes as $sizeDir) {
             $fullPath = FRONTEND_FILES_PATH . '/' . $module .
                         (empty($subDirectory) ? '/' : '/' . $subDirectory . '/') . $sizeDir . '/' . $filename;
             if (is_file($fullPath)) {
-                $fs->remove($fullPath);
+                $filesystem->remove($fullPath);
             }
         }
         $fullPath = FRONTEND_FILES_PATH . '/' . $module .
                     (empty($subDirectory) ? '/' : '/' . $subDirectory . '/') . 'source/' . $filename;
         if (is_file($fullPath)) {
-            $fs->remove($fullPath);
+            $filesystem->remove($fullPath);
         }
     }
 
@@ -766,46 +763,20 @@ class Model extends \Common\Core\Model
     }
 
     /**
-     * Invalidate cache
+     * @deprecated: twig doesn't contain this same type of caching out of the box.
+     * Use https://github.com/asm89/twig-cache-extension instead
      *
      * @param string $module   A specific module to clear the cache for.
      * @param string $language The language to use.
      */
     public static function invalidateFrontendCache($module = null, $language = null)
     {
-        $module = ($module !== null) ? (string) $module : null;
-        $language = ($language !== null) ? (string) $language : null;
-
-        // get cache path
-        $path = FRONTEND_CACHE_PATH . '/CachedTemplates';
-
-        if (is_dir($path)) {
-            // build regular expression
-            if ($module !== null) {
-                if ($language === null) {
-                    $regexp = '/' . '(.*)' . $module . '(.*)_cache\.html.twig/i';
-                } else {
-                    $regexp = '/' . $language . '_' . $module . '(.*)_cache\.html.twig/i';
-                }
-            } else {
-                if ($language === null) {
-                    $regexp = '/(.*)_cache\.html.twig/i';
-                } else {
-                    $regexp = '/' . $language . '_(.*)_cache\.html.twig/i';
-                }
-            }
-
-            $finder = new Finder();
-            $fs = new Filesystem();
-            foreach ($finder->files()->name($regexp)->in($path) as $file) {
-                $fs->remove($file->getRealPath());
-            }
-        }
-
-        // clear the php5.5+ opcode cache
-        if (function_exists('opcache_reset')) {
-            opcache_reset();
-        }
+        trigger_error(
+            'invalidateFrontendCache is deprecated since twig does not use the
+            same caching mechanisme. You can use https://github.com/asm89/twig-cache-extension
+            if you want a similar type of template cache.',
+            E_USER_DEPRECATED
+        );
     }
 
     /**

@@ -4,3 +4,7 @@
     <span class="btn-text">{{ label }}</span>
   </a>
 {% endmacro %}
+
+{% macro required() %}
+  <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+{% endmacro %}

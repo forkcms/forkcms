@@ -373,8 +373,8 @@ class Edit extends BackendBaseActionEdit
                     $imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
                     // create folders if needed
-                    $fs = new Filesystem();
-                    $fs->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
+                    $filesystem = new Filesystem();
+                    $filesystem->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
 
                     // If the image should be deleted, only the database entry is refreshed.
                     // The revision should keep its file.
@@ -412,7 +412,7 @@ class Edit extends BackendBaseActionEdit
                         if (preg_replace($regex, '$1', $newName) != preg_replace($regex, '$1', $item['image'])) {
                             // loop folders
                             foreach (BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
-                                $fs->copy($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
+                                $filesystem->copy($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
                             }
 
                             // assign the new name to the database
@@ -460,12 +460,12 @@ class Edit extends BackendBaseActionEdit
 
                     // build URL
                     $redirectUrl = BackendModel::createURLForAction('Index') .
-                                   '&report=edited&var=' . urlencode($item['title']) .
+                                   '&report=edited&var=' . rawurlencode($item['title']) .
                                    '&id=' . $this->id . '&highlight=row-' . $item['revision_id'];
                 } elseif ($item['status'] == 'draft') {
                     // draft: everything is saved, so redirect to the edit action
                     $redirectUrl = BackendModel::createURLForAction('Edit') .
-                                   '&report=saved-as-draft&var=' . urlencode($item['title']) .
+                                   '&report=saved-as-draft&var=' . rawurlencode($item['title']) .
                                    '&id=' . $item['id'] . '&draft=' . $item['revision_id'] .
                                    '&highlight=row-' . $item['revision_id'];
                 }

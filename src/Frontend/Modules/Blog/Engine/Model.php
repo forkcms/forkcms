@@ -47,7 +47,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
              LIMIT 1',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL)
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL)
         );
 
         // unserialize
@@ -92,7 +92,7 @@ class Model implements FrontendTagsInterface
              LIMIT ?, ?',
             array(
                 'active',
-                FRONTEND_LANGUAGE,
+                LANGUAGE,
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
                 (int) $offset,
@@ -169,7 +169,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY c.id',
-            array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'),
+            array(LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'),
             'id'
         );
 
@@ -203,7 +203,7 @@ class Model implements FrontendTagsInterface
              GROUP BY i.id
              ORDER BY i.created_on DESC
              LIMIT ?, ?',
-            array('published', FRONTEND_LANGUAGE, (int) $offset, (int) $limit)
+            array('published', LANGUAGE, (int) $offset, (int) $limit)
         );
     }
 
@@ -218,7 +218,7 @@ class Model implements FrontendTagsInterface
             'SELECT COUNT(i.id) AS count
              FROM blog_posts AS i
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
         );
     }
 
@@ -247,7 +247,7 @@ class Model implements FrontendTagsInterface
              LIMIT ?, ?',
             array(
                 'active',
-                FRONTEND_LANGUAGE,
+                LANGUAGE,
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
                 (string) $categoryURL,
@@ -325,7 +325,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL)
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL)
         );
     }
 
@@ -361,7 +361,7 @@ class Model implements FrontendTagsInterface
              LIMIT ?, ?',
             array(
                 'active',
-                FRONTEND_LANGUAGE,
+                LANGUAGE,
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i', $start),
                 FrontendModel::getUTCDate('Y-m-d H:i', $end),
@@ -442,7 +442,7 @@ class Model implements FrontendTagsInterface
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?',
             array(
                 'active',
-                FRONTEND_LANGUAGE,
+                LANGUAGE,
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i:s', $start),
                 FrontendModel::getUTCDate('Y-m-d H:i:s', $end),
@@ -464,7 +464,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY month',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
         );
 
         // init vars
@@ -554,7 +554,7 @@ class Model implements FrontendTagsInterface
              FROM blog_comments AS c
              WHERE c.post_id = ? AND c.status = ? AND c.language = ?
              ORDER BY c.id ASC',
-            array((int) $id, 'published', FRONTEND_LANGUAGE)
+            array((int) $id, 'published', LANGUAGE)
         );
 
         // loop comments and create gravatar id
@@ -667,7 +667,7 @@ class Model implements FrontendTagsInterface
                 ((i.publish_on = ? AND i.id < ?) OR i.publish_on < ?)
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT 1',
-            array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
+            array($detailLink, $id, 'active', 'N', LANGUAGE, $date, $id, $date)
         );
 
         // get next post
@@ -679,7 +679,7 @@ class Model implements FrontendTagsInterface
                 ((i.publish_on = ? AND i.id > ?) OR i.publish_on > ?)
              ORDER BY i.publish_on ASC, i.id ASC
              LIMIT 1',
-            array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
+            array($detailLink, $id, 'active', 'N', LANGUAGE, $date, $id, $date)
         );
 
         // if empty, unset it
@@ -719,7 +719,7 @@ class Model implements FrontendTagsInterface
              WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC
              LIMIT ?',
-            array('published', 'active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit)
+            array('published', 'active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit)
         );
 
         // validate
@@ -774,7 +774,7 @@ class Model implements FrontendTagsInterface
             implode(',', $relatedIDs) . ')
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT ?',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit),
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit),
             'id'
         );
 
@@ -812,7 +812,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
              LIMIT 1',
-            array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL)
+            array(LANGUAGE, (int) $revision, (string) $URL)
         );
 
         // unserialize
@@ -857,7 +857,7 @@ class Model implements FrontendTagsInterface
                  INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
                  WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
                  GROUP BY i.post_id',
-                array('published', $comment['post_id'], FRONTEND_LANGUAGE, 'active')
+                array('published', $comment['post_id'], LANGUAGE, 'active')
             );
 
             // update num comments
@@ -975,7 +975,7 @@ class Model implements FrontendTagsInterface
                 ->setTo(array($to['email'] => $to['name']))
                 ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                 ->parseHtml(
-                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.html.twig',
+                    '/Core/Layout/Templates/Mails/Notification.html.twig',
                     $variables,
                     true
                 )
@@ -997,7 +997,7 @@ class Model implements FrontendTagsInterface
                 ->setTo(array($to['email'] => $to['name']))
                 ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                 ->parseHtml(
-                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.html.twig',
+                    '/Core/Layout/Templates/Mails/Notification.html.twig',
                     $variables,
                     true
                 )
@@ -1026,7 +1026,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')',
-            array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') . ':00'),
+            array('active', 'N', LANGUAGE, date('Y-m-d H:i') . ':00'),
             'id'
         );
 

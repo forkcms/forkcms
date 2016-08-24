@@ -13,6 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Navigation;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -197,7 +198,7 @@ class Model
     public static function clearCache()
     {
         $finder = new Finder();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach (
             $finder->files()
                 ->name('*.php')
@@ -207,9 +208,9 @@ class Model
                 ->in(FRONTEND_CACHE_PATH . '/Locale')
             as $file
         ) {
-            $fs->remove($file->getRealPath());
+            $filesystem->remove($file->getRealPath());
         }
-        $fs->remove(BACKEND_CACHE_PATH . '/Navigation/navigation.php');
+        $filesystem->remove(Navigation::getCacheDirectory() . 'navigation.php');
     }
 
     /**

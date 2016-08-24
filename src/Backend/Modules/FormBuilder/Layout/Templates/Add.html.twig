@@ -11,10 +11,10 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabGeneral" aria-controls="general" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
           </li>
           <li role="presentation">
-            <a href="#tabExtra" aria-controls="extra" role="tab" data-toggle="tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
+            <a href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -29,21 +29,21 @@
                     <div class="form-group">
                       <label for="name" class="control-label">
                         {{ 'lbl.Name'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field name %} {% form_field_error name %}
                     </div>
                     <div class="form-group">
                       <label for="method" class="control-label">
                         {{ 'lbl.Method'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field method %} {% form_field_error method %}
                     </div>
                     <div class="form-group">
                       <label for="email" class="control-label">
                         {{ 'lbl.Recipient'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       {% form_field email %} {% form_field_error email %}
                     </div>
@@ -55,7 +55,7 @@
                   <div class="panel-heading">
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr><br>
+                      {{ macro.required }}<br>
                     </label>
                   </div>
                   <div class="panel-body">

@@ -9,7 +9,7 @@ var jsFrontend =
 	// init, something like a constructor
 	init: function()
 	{
-		jsFrontend.current.language = jsFrontend.data.get('FRONTEND_LANGUAGE');
+		jsFrontend.current.language = jsFrontend.data.get('LANGUAGE');
 
 		// init stuff
 		jsFrontend.initAjax();
