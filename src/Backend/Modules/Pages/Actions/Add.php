@@ -382,8 +382,8 @@ class Add extends BackendBaseActionAdd
                         'code' => '301',
                     );
                 }
-                if (array_key_exists('banner', $this->templates[$templateId]['data'])) {
-                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['banner']);
+                if (array_key_exists('image', $this->templates[$templateId]['data'])) {
+                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
                 }
 
                 // build page record

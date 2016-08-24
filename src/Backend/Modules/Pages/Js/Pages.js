@@ -569,7 +569,7 @@ jsBackend.pages.template =
 		var i = 0;
 
 		// show or hide the image tab
-		if ('banner' in current.data && current.data.banner) {
+		if ('image' in current.data && current.data.image) {
 			$('.js-page-image-tab').show();
 		} else {
 			$('.js-page-image-tab').hide();

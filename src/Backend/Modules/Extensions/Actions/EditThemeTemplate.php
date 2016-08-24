@@ -75,8 +75,8 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $this->extras = $this->record['data']['default_extras'];
         }
 
-        if (!array_key_exists('banner', $this->record['data'])) {
-            $this->record['data']['banner'] = false;
+        if (!array_key_exists('image', $this->record['data'])) {
+            $this->record['data']['image'] = false;
         }
 
         // assign
@@ -127,7 +127,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
         $this->frm->addCheckbox('default', ($this->record['id'] == $defaultId));
         $this->frm->addCheckbox('overwrite', false);
-        $this->frm->addCheckbox('banner', $this->record['data']['banner']);
+        $this->frm->addCheckbox('image', $this->record['data']['image']);
 
         // if this is the default template we can't alter the active/default state
         if (($this->record['id'] == $defaultId)) {
@@ -359,7 +359,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
                 $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
-                $item['data']['banner'] = $this->frm->getField('banner')->isChecked();
+                $item['data']['image'] = $this->frm->getField('image')->isChecked();
 
                 // serialize
                 $item['data'] = serialize($item['data']);

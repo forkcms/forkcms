@@ -98,7 +98,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->frm->addTextarea('format');
         $this->frm->addCheckbox('active', true);
         $this->frm->addCheckbox('default');
-        $this->frm->addCheckbox('banner');
+        $this->frm->addCheckbox('image');
 
         // init vars
         $positions = array();
@@ -311,7 +311,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
                 $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
-                $item['data']['banner'] = $this->frm->getField('banner')->isChecked();
+                $item['data']['image'] = $this->frm->getField('image')->isChecked();
 
                 // serialize the data
                 $item['data'] = serialize($item['data']);
