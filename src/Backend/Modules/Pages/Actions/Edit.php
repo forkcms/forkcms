@@ -256,7 +256,7 @@ class Edit extends BackendBaseActionEdit
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
             // init some vars
-            $items = array('move', 'children', 'edit', 'delete', 'image');
+            $items = array('move', 'children', 'edit', 'delete');
             $checked = array();
             $values = array();
 
@@ -599,6 +599,7 @@ class Edit extends BackendBaseActionEdit
             if ($this->frm->isCorrect()) {
                 // init var
                 $data = null;
+                $templateId = (int) $this->frm->getField('template_id')->getValue();
 
                 // build data
                 if ($this->frm->getField('is_action')->isChecked()) {
@@ -617,6 +618,9 @@ class Edit extends BackendBaseActionEdit
                         ),
                         'code' => '301',
                     );
+                }
+                if (array_key_exists('banner', $this->templates[$templateId]['data'])) {
+                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['banner']);
                 }
 
                 // build page record
@@ -659,12 +663,7 @@ class Edit extends BackendBaseActionEdit
                         'delete',
                         (array) $this->frm->getField('allow')->getValue()
                     )) ? 'Y' : 'N';
-                    $page['allow_image'] = (in_array(
-                        'image',
-                        (array) $this->frm->getField('allow')->getValue()
-                    )) ? 'Y' : 'N';
                 }
-                $page['image'] = $this->getImage($page['allow_image']);
 
                 // set navigation title
                 if ($page['navigation_title'] == '') {
@@ -752,7 +751,7 @@ class Edit extends BackendBaseActionEdit
      */
     private function getImage($allowImage)
     {
-        $imageFilename = $this->record['image'];
+        $imageFilename = array_key_exists('image', $this->record['data']) ? $this->record['data']['image'] : null;
 
         if (!$this->frm->getField('image')->isFilled() && !$this->frm->getField('remove_image')->isChecked()) {
             return $imageFilename;
@@ -761,11 +760,10 @@ class Edit extends BackendBaseActionEdit
         $imagePath = FRONTEND_FILES_PATH . '/pages/images';
 
         // delete the current image
-        BackendModel::deleteThumbnails($imagePath, $imageFilename);
+        BackendModel::deleteThumbnails($imagePath, (string) $imageFilename);
 
-        if (!$allowImage || (
-                $this->frm->getField('remove_image')->isChecked() && !$this->frm->getField('image')->isFilled()
-            )
+        if (!$allowImage
+            || ($this->frm->getField('remove_image')->isChecked() && !$this->frm->getField('image')->isFilled())
         ) {
             return null;
         }

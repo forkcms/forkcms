@@ -140,7 +140,6 @@ class Add extends BackendBaseActionAdd
                 'children' => true,
                 'edit' => true,
                 'delete' => true,
-                'image' => false,
             );
             $checked = array();
             $values = array();
@@ -362,6 +361,7 @@ class Add extends BackendBaseActionAdd
             if ($this->frm->isCorrect()) {
                 // init var
                 $parentId = 0;
+                $templateId = (int) $this->frm->getField('template_id')->getValue();
                 $data = null;
 
                 // build data
@@ -382,12 +382,15 @@ class Add extends BackendBaseActionAdd
                         'code' => '301',
                     );
                 }
+                if (array_key_exists('banner', $this->templates[$templateId]['data'])) {
+                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['banner']);
+                }
 
                 // build page record
                 $page['id'] = BackendPagesModel::getMaximumPageId() + 1;
                 $page['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $page['parent_id'] = $parentId;
-                $page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
+                $page['template_id'] = $templateId;
                 $page['meta_id'] = (int) $this->meta->save();
                 $page['language'] = BL::getWorkingLanguage();
                 $page['type'] = 'root';
@@ -403,7 +406,6 @@ class Add extends BackendBaseActionAdd
                 $page['allow_children'] = 'Y';
                 $page['allow_edit'] = 'Y';
                 $page['allow_delete'] = 'Y';
-                $page['allow_image'] = 'N';
                 $page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
                 $page['data'] = ($data !== null) ? serialize($data) : null;
 
@@ -424,13 +426,7 @@ class Add extends BackendBaseActionAdd
                         'delete',
                         (array) $this->frm->getField('allow')->getValue()
                     )) ? 'Y' : 'N';
-                    $page['allow_image'] = (in_array(
-                        'image',
-                        (array) $this->frm->getField('allow')->getValue()
-                    )) ? 'Y' : 'N';
                 }
-
-                $page['image'] = $this->getImage($page['allow_image']);
 
                 // set navigation title
                 if ($page['navigation_title'] == '') {
