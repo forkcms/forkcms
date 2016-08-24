@@ -751,7 +751,7 @@ class Edit extends BackendBaseActionEdit
      */
     private function getImage($allowImage)
     {
-        $imageFilename = array_key_exists('image', $this->record['data']) ? $this->record['data']['image'] : null;
+        $imageFilename = array_key_exists('image', (array) $this->record['data']) ? $this->record['data']['image'] : null;
 
         if (!$this->frm->getField('image')->isFilled() && !$this->frm->getField('remove_image')->isChecked()) {
             return $imageFilename;

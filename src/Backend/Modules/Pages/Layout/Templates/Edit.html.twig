@@ -242,8 +242,8 @@
                   {% form_field image %} {% form_field_error image %}
                 </div>
                 <div class="form-group">
-                  {% if item.image %}
-                    <img src="{{ FRONTEND_FILES_URL }}/pages/images/source/{{ item.image }}" class="img-responsive" />
+                  {% if item.data.image %}
+                    <img src="{{ FRONTEND_FILES_URL }}/pages/images/source/{{ item.data.image }}" class="img-responsive" />
                     <label for="removeImage">{% form_field remove_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
                     {% form_field_error remove_image %}
                   {% endif %}

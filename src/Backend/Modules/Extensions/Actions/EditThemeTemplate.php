@@ -75,7 +75,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $this->extras = $this->record['data']['default_extras'];
         }
 
-        if (!array_key_exists('image', $this->record['data'])) {
+        if (!array_key_exists('image', (array) $this->record['data'])) {
             $this->record['data']['image'] = false;
         }
 
