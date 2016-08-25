@@ -11,7 +11,7 @@ namespace Backend\Modules\Profiles\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
 use Symfony\Component\Filesystem\Filesystem;
-use Common\Language;
+use Backend\Core\Engine\Language;
 
 /**
  * Installer for the profiles module.
