@@ -118,28 +118,6 @@ class Model
     }
 
     /**
-     * Notify the admin
-     *
-     * @param array $data
-     */
-    public static function notifyAdmin(array $data)
-    {
-        $alert = array(
-            'loc-key' => 'FORMBUILDER_SUBMISSION',
-        );
-
-        // build data
-        $data = array(
-            'api' => SITE_URL . '/api/1.0',
-            'form_id' => $data['form_id'],
-            'id' => $data['entry_id'],
-        );
-
-        // push it
-        FrontendModel::pushToAppleApp($alert, 1, 'default', $data);
-    }
-
-    /**
      * Convert a PHP Date to jquery date format
      *
      * @param string $php_format The php date format
