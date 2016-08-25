@@ -16,9 +16,6 @@ use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the pages module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class Model implements FrontendTagsInterface
 {
@@ -26,6 +23,7 @@ class Model implements FrontendTagsInterface
      * Fetch a list of items for a list of ids
      *
      * @param array $ids The ids of the items to grab.
+     *
      * @return array
      */
     public static function getForTags(array $ids)
@@ -38,14 +36,14 @@ class Model implements FrontendTagsInterface
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')
              ORDER BY i.title ASC',
-            array('active', 'N', FRONTEND_LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            array('active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
         );
 
         // has items
         if (!empty($items)) {
             // reset url
             foreach ($items as &$row) {
-                $row['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+                $row['full_url'] = FrontendNavigation::getURL($row['id'], LANGUAGE);
             }
         }
 
@@ -58,6 +56,7 @@ class Model implements FrontendTagsInterface
      * Selects the proper part of the full URL to get the item's id from the database.
      *
      * @param FrontendURL $URL The current URL.
+     *
      * @return int
      */
     public static function getIdForTags(FrontendURL $URL)
@@ -69,6 +68,7 @@ class Model implements FrontendTagsInterface
      * Fetch a list of subpages of a page.
      *
      * @param int $id The id of the item to grab the subpages for.
+     *
      * @return array
      */
     public static function getSubpages($id)
@@ -81,14 +81,14 @@ class Model implements FrontendTagsInterface
              WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
              AND i.language = ? AND i.publish_on <= ?
              ORDER BY i.sequence ASC',
-            array((int) $id, 'active', 'N', FRONTEND_LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            array((int) $id, 'active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
         );
 
         // has items
         if (!empty($items)) {
             // reset url
             foreach ($items as &$row) {
-                $row['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+                $row['full_url'] = FrontendNavigation::getURL($row['id'], LANGUAGE);
             }
         }
 
@@ -104,6 +104,7 @@ class Model implements FrontendTagsInterface
      *        - return only the entries that are allowed to be displayed, with their array's index being the entry's id
      *
      * @param array $ids The ids of the found results.
+     *
      * @return array
      */
     public static function search(array $ids)
@@ -122,7 +123,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.id IN (' . implode(', ', $ids) . ') AND p.id NOT IN (' .
             implode(', ', $ignore) . ') AND p.status = ? AND p.hidden = ? AND p.language = ?',
-            array('active', 'N', FRONTEND_LANGUAGE),
+            array('active', 'N', LANGUAGE),
             'id'
         );
 

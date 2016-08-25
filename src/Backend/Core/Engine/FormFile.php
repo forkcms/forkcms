@@ -11,9 +11,6 @@ namespace Backend\Core\Engine;
 
 /**
  * This is our extended version of \SpoonFormFile
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FormFile extends \SpoonFormFile
 {
@@ -37,37 +34,12 @@ class FormFile extends \SpoonFormFile
     /**
      * Parses the html for this filefield.
      *
-     * @param \SpoonTemplate $template The template to parse the element in.
+     * @param TwigTemplate $template The template to parse the element in.
+     *
      * @return string
      */
     public function parse($template = null)
     {
-        // get upload_max_filesize
-        $uploadMaxFilesize = ini_get('upload_max_filesize');
-        if ($uploadMaxFilesize === false) {
-            $uploadMaxFilesize = 0;
-        }
-
-        // reformat if defined as an integer
-        if (\SpoonFilter::isInteger($uploadMaxFilesize)) {
-            $uploadMaxFilesize = $uploadMaxFilesize / 1024 . 'MB';
-        }
-
-        // reformat if specified in kB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'K') {
-            $uploadMaxFilesize = substr($uploadMaxFilesize, 0, -1) . 'kB';
-        }
-
-        // reformat if specified in MB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'M') {
-            $uploadMaxFilesize .= 'B';
-        }
-
-        // reformat if specified in GB
-        if (strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'G') {
-            $uploadMaxFilesize .= 'B';
-        }
-
         // name is required
         if ($this->attributes['name'] == '') {
             throw new \SpoonFormException('A name is required for a file field. Please provide a name.');
@@ -80,37 +52,58 @@ class FormFile extends \SpoonFormFile
         $output .= $this->getAttributesHTML(
             array(
                 '[id]' => $this->attributes['id'],
-                '[name]' => $this->attributes['name']
+                '[name]' => $this->attributes['name'],
             )
         ) . ' />';
 
         // add help txt if needed
         if (!$this->hideHelpTxt) {
             if (isset($this->attributes['extension'])) {
-                $output .= '<span class="helpTxt">' .
+                $output .= '<p class="help-block">' .
                            sprintf(
                                Language::getMessage('HelpFileFieldWithMaxFileSize', 'core'),
                                $this->attributes['extension'],
-                               $uploadMaxFilesize
-                           ) . '</span>';
+                               Form::getUploadMaxFileSize()
+                           ) . '</p>';
             } else {
-                $output .= '<span class="helpTxt">' .
+                $output .= '<p class="help-block">' .
                            sprintf(
                                Language::getMessage('HelpMaxFileSize'),
-                               $uploadMaxFilesize
-                           ) . '</span>';
+                               Form::getUploadMaxFileSize()
+                           ) . '</p>';
             }
         }
 
         // parse to template
         if ($template !== null) {
-            $template->assign('file' . \SpoonFilter::toCamelCase($this->attributes['name']), $output);
+            $template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
             $template->assign(
-                'file' . \SpoonFilter::toCamelCase($this->attributes['name']) . 'Error',
-                ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : ''
+                'file' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error',
+                ($this->errors != '') ? '<span class="formError text-danger">' . $this->errors . '</span>' : ''
             );
         }
 
         return $output;
+    }
+
+    /**
+     * This function will return the errors. It is extended so we can do file checks automatically.
+     *
+     * @return string
+     */
+    public function getErrors()
+    {
+        // if the image is bigger then the allowed configuration it won't show up as filled but it is submitted
+        // the empty check is added because otherwise this error is shown like 7 times
+        if ($this->isSubmitted() && isset($_FILES[$this->getName()]['error']) && empty($this->errors)) {
+            $imageError = $_FILES[$this->getName()]['error'];
+            if ($imageError === UPLOAD_ERR_INI_SIZE && empty($this->errors)) {
+                $this->addError(
+                    SpoonFilter::ucfirst(sprintf(Language::err('FileTooBig'), Form::getUploadMaxFileSize()))
+                );
+            }
+        }
+
+        return $this->errors;
     }
 }

@@ -14,10 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This class defines the frontend, it is the core. Everything starts here.
  * We create all needed instances.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Dave Lens <dave.lens@wijs.be>
  */
 class Frontend extends \KernelLoader implements \ApplicationInterface
 {
@@ -43,7 +39,6 @@ class Frontend extends \KernelLoader implements \ApplicationInterface
     public function initialize()
     {
         new Url($this->getKernel());
-        new Template();
 
         // Load the rest of the page.
         $this->page = new Page($this->getKernel());

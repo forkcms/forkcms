@@ -1,15 +1,21 @@
+# Configuration
+/app/config/parameters.yml
+
+# Libraries
+/vendor/*
+
+# Generated files
 .project
 .cache
+.sass-cache
 .buildpath
 .settings
 .*.swp
 .DS_Store
 /app/cache/*
 /app/logs/*
-/backend/cache/navigation/
-/vendor/
-/app/config/parameters.yml
-/bin/
-/bundles/
-/js/
-/css/
+/app/sessions/*
+/bin/*
+/bundles/*
+/css/*
+/js/*

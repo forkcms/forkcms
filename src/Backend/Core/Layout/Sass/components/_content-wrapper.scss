@@ -1,0 +1,37 @@
+.content {
+  background-color: $body-bg;
+  border-top: 1px solid $gray-lighter;
+  padding: 25px 0;
+
+  .content-title {
+    font-size: $font-size-large;
+    margin-bottom: 20px;
+
+    p {
+      margin: 0;
+    }
+
+    select {
+      display: inline-block;
+      width: auto;
+    }
+
+    .fa {
+      font-size: $font-size-base;
+    }
+  }
+
+  .content-block {
+    &.content-block-p {
+      padding: 40px 0;
+    }
+
+    &.content-block-pt {
+      padding: 40px 0 0;
+    }
+
+    &.content-block-pb {
+      padding: 0 0 40px;
+    }
+  }
+}

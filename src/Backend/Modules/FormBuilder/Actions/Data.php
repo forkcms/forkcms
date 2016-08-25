@@ -19,8 +19,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * This is the data-action it will display the overview of sent data
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Data extends BackendBaseActionIndex
 {
@@ -34,7 +32,7 @@ class Data extends BackendBaseActionIndex
     /**
      * Form id.
      *
-     * @var	int
+     * @var int
      */
     private $id;
 
@@ -191,11 +189,11 @@ class Data extends BackendBaseActionIndex
         $this->dataGrid->setColumnFunction('ucfirst', '[sent_on]', 'sent_on', false);
 
         // add the multicheckbox column
-        $this->dataGrid->setMassActionCheckboxes('checkbox', '[id]');
+        $this->dataGrid->setMassActionCheckboxes('check', '[id]');
 
         // mass action
         $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
-        $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
+        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDelete'));
         $this->dataGrid->setMassAction($ddmMassAction);
     }
 

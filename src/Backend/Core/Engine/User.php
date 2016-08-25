@@ -13,9 +13,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * The class below will handle all stuff relates to the current authenticated user
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class User
 {
@@ -25,6 +22,13 @@ class User
      * @var    int
      */
     private $groupId;
+
+    /**
+     * The groups
+     *
+     * @var array
+     */
+    private $groups = array();
 
     /**
      * Is the user-object a valid one? As in: is the user authenticated
@@ -151,6 +155,7 @@ class User
      *
      * @param string $key          The key for the setting to get.
      * @param mixed  $defaultValue Default value, will be stored if the setting isn't set.
+     *
      * @return mixed
      */
     public function getSetting($key, $defaultValue = null)
@@ -210,6 +215,7 @@ class User
      * Load a user
      *
      * @param int $userId The id of the user to load.
+     *
      * @throws Exception If user cannot be loaded
      */
     public function loadUser($userId)
@@ -243,6 +249,8 @@ class User
         $this->isAuthenticated = true;
         $this->isGod = ($userData['is_god'] == 'Y');
 
+        $this->loadGroups($userData['id']);
+
         // get settings
         $settings = (array) $db->getPairs(
             'SELECT us.name, us.value
@@ -263,9 +271,31 @@ class User
     }
 
     /**
+     * @param int $userId
+     */
+    private function loadGroups($userId)
+    {
+        $this->groups = (array) BackendModel::get('database')->getColumn(
+            'SELECT group_id
+             FROM users_groups
+             WHERE user_id = ?',
+            array((int) $userId)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
      * Load a user by his e-mail adress
      *
      * @param string $email The email of the user to load.
+     *
      * @throws Exception If user cannot be loaded
      */
     public function loadUserByEmail($email)
@@ -296,6 +326,7 @@ class User
         $this->setLastloggedInDate($userData['date']);
         $this->isAuthenticated = true;
         $this->isGod = ($userData['is_god'] == 'Y');
+        $this->loadGroups($userData['id']);
 
         // get settings
         $settings = (array) $db->getPairs(

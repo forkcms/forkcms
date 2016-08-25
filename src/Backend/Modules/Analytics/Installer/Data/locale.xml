@@ -158,6 +158,11 @@
         <translation language="nl"><![CDATA[certificaat (.p12 bestand)]]></translation>
         <translation language="en"><![CDATA[certificate (.p12 file)]]></translation>
       </item>
+      <item type="label" name="MostViewedPages">
+        <translation language="nl"><![CDATA[meest bekeken pagina's]]></translation>
+        <translation language="en"><![CDATA[most viewed pages]]></translation>
+        <translation language="fr"><![CDATA[pages les plus vus]]></translation>
+      </item>
       <item type="error" name="P12Only">
         <translation language="nl"><![CDATA[Enkel p12 bestanden zijn toegelaten.]]></translation>
         <translation language="en"><![CDATA[Only p12 files are allowed.]]></translation>

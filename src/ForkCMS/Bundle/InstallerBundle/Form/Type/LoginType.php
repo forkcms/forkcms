@@ -10,8 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Builds the form to set up login information
- *
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class LoginType extends AbstractType
 {
@@ -26,11 +24,11 @@ class LoginType extends AbstractType
                 'password',
                 'repeated',
                 array(
-                    'type'            => 'password',
+                    'type' => 'password',
                     'invalid_message' => 'The passwords do not match.',
-                    'required'        => true,
-                    'first_options'   => array('label' => 'Password'),
-                    'second_options'  => array('label' => 'Confirm'),
+                    'required' => true,
+                    'first_options' => array('label' => 'Password'),
+                    'second_options' => array('label' => 'Confirm'),
                 )
             )
         ;

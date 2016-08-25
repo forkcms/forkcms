@@ -14,9 +14,6 @@ jsBackend =
 
 /**
  * Handle form functionality
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.controls =
 {
@@ -104,8 +101,8 @@ jsBackend.controls =
 		// strong password
 		if(score >= 4) return 'strong';
 
-		// ok
-		if(score >= 2) return 'ok';
+		// average
+		if(score >= 2) return 'average';
 
 		// fallback
 		return 'weak';

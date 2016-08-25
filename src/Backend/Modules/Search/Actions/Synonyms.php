@@ -18,8 +18,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the synonyms-action, it will display the overview of search synonyms
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Synonyms extends BackendBaseActionIndex
 {

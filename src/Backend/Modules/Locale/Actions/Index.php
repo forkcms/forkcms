@@ -12,7 +12,6 @@ namespace Backend\Modules\Locale\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -20,16 +19,28 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the index-action, it will display an overview of all the translations with an inline edit option.
- *
- * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Stef Bastiaansen <stef.bastiaansen@wijs.be>
  */
 class Index extends BackendBaseActionIndex
 {
     /**
      * @var BackendDataGridArray
      */
-    private $dgActions, $dgErrors, $dgLabels, $dgMessages;
+    private $dgActions;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgErrors;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgLabels;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgMessages;
 
     /**
      * Filter variables
@@ -110,22 +121,13 @@ class Index extends BackendBaseActionIndex
             'lbl' => &$this->dgLabels,
             'msg' => &$this->dgMessages,
             'err' => &$this->dgErrors,
-            'act' => &$this->dgActions
+            'act' => &$this->dgActions,
         );
 
         // loop the datagrids (as references)
         foreach ($dataGrids as $type => &$dataGrid) {
             /** @var $dataGrid BackendDataGridArray */
-            $dataGrid->setSortingColumns(array('module', 'name', 'edited_on', 'application'), 'name');
-
-            $dataGrid->setColumnFunction(
-                array(new BackendDataGridFunctions(), 'getTimeAgo'),
-                array('[edited_on]'),
-                'edited_on',
-                true
-            );
-
-            $dataGrid->setHeaderLabels(array('edited_on' => \SpoonFilter::ucfirst(BL::lbl('Edited'))));
+            $dataGrid->setSortingColumns(array('module', 'name', 'application'), 'name');
 
             // disable paging
             $dataGrid->setPaging(false);
@@ -133,13 +135,13 @@ class Index extends BackendBaseActionIndex
             // set header label for reference code
             $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
-            // add the multi checkbox column
-            $dataGrid->setMassActionCheckboxes('checkbox', '[name]');
-
             // hide the application when only one application is shown
             if ($this->filter['application'] != '') {
                 $dataGrid->setColumnHidden('application');
             }
+
+            // hide edite_on
+            $dataGrid->setColumnHidden('edited_on');
 
             // set column attributes for each language
             foreach ($this->filter['language'] as $lang) {
@@ -152,7 +154,7 @@ class Index extends BackendBaseActionIndex
                     array(
                         'data-id' => '{language: \'' .
                             $lang . '\',application: \'[application]\',module: \'[module]\',name: \'[name]\',type: \'' .
-                            $type . '\'}'
+                            $type . '\'}',
                     )
                 );
 
@@ -168,7 +170,7 @@ class Index extends BackendBaseActionIndex
                 }
 
                 // set header labels
-                $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(strtoupper($lang)))));
+                $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(mb_strtoupper($lang)))));
 
                 // only 1 language selected?
                 if (count($this->filter['language']) == 1) {
@@ -182,17 +184,6 @@ class Index extends BackendBaseActionIndex
                     $dataGrid->setColumnHidden('translation_id');
 
                     // check if this action is allowed
-                    if (BackendAuthentication::isAllowedAction('Edit')) {
-                        // add edit button
-                        $dataGrid->addColumn(
-                            'edit',
-                            null,
-                            BL::lbl('Edit'),
-                            BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
-                        );
-                    }
-
-                    // check if this action is allowed
                     if (BackendAuthentication::isAllowedAction('Add')) {
                         // add copy button
                         $dataGrid->addColumnAction(
@@ -200,6 +191,15 @@ class Index extends BackendBaseActionIndex
                             null,
                             BL::lbl('Copy'),
                             BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
+                        );
+                    }
+
+                    // check if this action is allowed
+                    if (BackendAuthentication::isAllowedAction('Edit')) {
+                        // add edit button
+                        $dataGrid->addColumn(
+                            'edit', null, BL::lbl('Edit'),
+                            BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
                 } else {
@@ -213,7 +213,7 @@ class Index extends BackendBaseActionIndex
                         array(
                             'style' => 'width: ' .
                                 $langWidth .
-                                '%; max-width: '. (600 / count($this->filter['language'])) .'px;'
+                                '%; max-width: '. (600 / count($this->filter['language'])) .'px;',
                         )
                     );
                 }
@@ -232,7 +232,7 @@ class Index extends BackendBaseActionIndex
             array(
                 '' => '-',
                 'Backend' => 'Backend',
-                'Frontend' => 'Frontend'
+                'Frontend' => 'Frontend',
             ),
             $this->filter['application']
         );

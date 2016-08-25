@@ -4,8 +4,6 @@ namespace Frontend\Modules\FormBuilder;
 
 /**
  * A helper class that contains all possible formbuilder events
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 final class FormBuilderEvents
 {

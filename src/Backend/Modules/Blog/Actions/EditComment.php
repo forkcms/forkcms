@@ -17,8 +17,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class EditComment extends BackendBaseActionEdit
 {

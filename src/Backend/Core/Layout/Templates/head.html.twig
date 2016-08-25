@@ -1,0 +1,35 @@
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{% if page_title %}{{ page_title|ucfirst }} - {% endif %}{{ SITE_TITLE }} - Fork CMS</title>
+  <link rel="shortcut icon" href="/src/Backend/favicon.ico" />
+
+  <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro%7COpen+Sans:400,600' rel='stylesheet' type='text/css'>
+
+  {% for cssFile in cssFiles %}
+    <link rel="stylesheet" href="{{ cssFile.file }}" />{{ CRLF }}{{ TAB }}
+  {% endfor %}
+
+  {% for jsFile in jsFiles %}
+    <script src="{{ jsFile.file }}"></script>{{ CRLF }}{{ TAB }}
+  {% endfor %}
+
+  <script>
+    //<![CDATA[
+    {{ jsData|raw }}
+
+    // reports
+    $(function()
+    {
+      {% if form_error %} jsBackend.messages.add('danger', "{{ 'err.FormError'|trans|addslashes }}", '');{% endif %}
+      {% if usingRevision %} jsBackend.messages.add('info', '{{ 'msg.UsingARevision'|trans|addslashes }}', 'alert-static');{% endif %}
+      {% if usingDraft %} jsBackend.messages.add('info', '{{ 'msg.UsingADraft'|trans|addslashes }}', 'alert-static');{% endif %}
+      {% if report %} jsBackend.messages.add('success', '{{ reportMessage|addslashes }}', '');{% endif %}
+      {% if errorMessage %} jsBackend.messages.add('danger', '{{ errorMessage|addslashes }}', '');{% endif %}
+    });
+    //]]>
+  </script>
+</head>

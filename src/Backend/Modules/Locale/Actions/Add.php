@@ -19,17 +19,13 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the add action, it will display a form to add an item to the locale.
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Add extends BackendBaseActionAdd
 {
     /**
      * Filter variables
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 
@@ -115,7 +111,7 @@ class Add extends BackendBaseActionAdd
         $this->filter['value'] = $this->getParameter('value');
 
         // build query for filter
-        $this->filterQuery = '&' . http_build_query($this->filter);
+        $this->filterQuery = '&' . http_build_query($this->filter, null, '&', PHP_QUERY_RFC3986);
     }
 
     /**
@@ -135,7 +131,7 @@ class Add extends BackendBaseActionAdd
                 // allowed regex (a-z and 0-9)
                 if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
                     // first letter does not seem to be a capital one
-                    if (!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
+                    if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
                         $txtName->setError(BL::err('InvalidName'));
                     }
 
@@ -153,7 +149,7 @@ class Add extends BackendBaseActionAdd
             if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if ($this->frm->getField('type')->getValue() == 'act') {
-                    if (urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
+                    if (rawurlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
                         $txtValue->addError(BL::err('InvalidValue'));
                     }
                 }
@@ -182,7 +178,7 @@ class Add extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=added&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
+                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=added&var=' . rawurlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
             }
         }
     }

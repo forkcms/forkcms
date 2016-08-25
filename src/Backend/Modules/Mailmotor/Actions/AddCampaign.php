@@ -17,8 +17,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This is the add-action, it will display a form to create a new campaign
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class AddCampaign extends BackendBaseActionAdd
 {
@@ -73,7 +71,7 @@ class AddCampaign extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Campaigns') . '&report=added&var=' . urlencode(
+                    BackendModel::createURLForAction('Campaigns') . '&report=added&var=' . rawurlencode(
                         $item['name']
                     ) . '&highlight=id-' . $item['id']
                 );

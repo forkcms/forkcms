@@ -1,0 +1,155 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showExtensionsUploadTheme %}
+        {{ macro.buttonIcon( geturl('upload_theme'), 'upload', 'lbl.UploadTheme'|trans|ucfirst) }}
+      {% endif %}
+      {{ macro.buttonIcon( 'http://www.fork-cms.com/extensions/themes', 'eye', 'lbl.FindThemes'|trans|ucfirst, '', 'target=_blank') }}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {% form settingsThemes %}
+  {% if installableThemes %}
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              {{ 'lbl.InstallableThemes'|trans|ucfirst }}
+            </h3>
+          </div>
+          <div class="panel-body">
+            <p class="help-block">{{ 'msg.HelpInstallableThemes'|trans }}</p>
+            <div id="installedThemes" class="selectThumbList row">
+              {% for installableTheme in installableThemes %}
+                <div class="col-md-4">
+                  <div class="panel panel-default">
+                    <label for="{{ installedTheme.id }}">
+                      <div class="panel-heading">
+                        <label for="{{ installedThemes.id }}" class="panel-title">
+                          {{ installableTheme.label|ucfirst }}
+                        </label>
+                      </div>
+                      <div class="panel-body">
+                        <img src="{{ installableTheme.thumbnail }}" class="img-thumbnail" alt="{{ installableTheme.label|ucfirst }}" />
+                      </div>
+                      <div class="panel-footer">
+                        {% if showExtensionsDetailTheme %}
+                          <div class="btn-toolbar">
+                            <div class="btn-group pull-right" role="group">
+                              {% if showExtensionsInstallTheme %}
+                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmInstall{{ installableTheme.value|ucfirst }}">
+                                  <span class="fa fa-file-o"></span>&nbsp;
+                                  {{ 'lbl.Install'|trans|ucfirst }}
+                                </button>
+                              {% endif %}
+                              {% if showExtensionsDetailTheme %}
+                                <a href="{{ geturl('detail_theme') }}&theme={{ installableTheme.value }}" class="btn btn-default" role="button" title="{{ installableTheme.label|ucfirst }}">
+                                  <span class="fa fa-eye"></span>&nbsp;
+                                  <span>{{ 'lbl.Details'|trans|ucfirst }}</span>
+                                </a>
+                              {% endif %}
+                            </div>
+                          </div>
+                          {% if showExtensionsInstallTheme %}
+                            <div class="modal fade" id="confirmInstall{{ installableTheme.value|ucfirst }}" tabindex="-1" role="dialog" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <span class="modal-title h4">{{ 'lbl.Install'|trans|ucfirst }}</span>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>{{ 'msg.ConfirmThemeInstall'|trans }}</p>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                      <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+                                    </button>
+                                    <a href="{{ geturl('install_theme') }}&theme={{ installableTheme.value }}" class="btn btn-primary">
+                                      <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|ucfirst }}
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                        {% endif %}
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ 'lbl.InstalledThemes'|trans|ucfirst }}
+            {{ macro.required }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <p class="help-block">{{ 'msg.HelpThemes'|trans }}</p>
+          {% if rbtInstalledThemesError %}
+            <p class="text-danger">{{ rbtThemesError }}</p>
+          {% endif %}
+          <div id="installedThemes" class="selectThumbList list-unstyled list-inline">
+            <div class="row">
+              {% for installedTheme in installedThemes %}
+                <div class="col-md-4 js-theme">
+                  <div class="panel panel-select {% if installedTheme.selected %}panel-primary{% else %}panel-default{% endif %}">
+                    <label for="{{ installedTheme.id }}">
+                      <span class="hidden">{{ installedTheme.rbtInstalledThemes|raw }}</span>
+
+                      <div class="panel-heading">
+                        <h3 class="panel-title">{{ installedTheme.label|ucfirst }}</h3>
+                      </div>
+                      <div class="panel-body">
+                        <img src="{{ installedTheme.thumbnail }}" class="img-thumbnail" alt="{{ installedTheme.label|ucfirst }}" />
+                      </div>
+                      <div class="panel-footer">
+                        {% if showExtensionsDetailTheme %}
+                          <div class="btn-toolbar">
+                            <div class="btn-group pull-right" role="group">
+                              <a href="{{ geturl('detail_theme') }}&theme={{ installedTheme.value }}" class="btn btn-default" role="button" title="{{ installedTheme.label|ucfirst }}">
+                                <span class="fa fa-eye"></span>&nbsp;
+                                <span>{{ 'lbl.Details'|trans|ucfirst }}</span>
+                              </a>
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+            <span class="fa fa-check"></span>&nbsp;{{ 'lbl.Save'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endform %}
+{% endblock %}
+

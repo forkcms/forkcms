@@ -15,9 +15,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * In this file we store all generic functions that we will be available through the Api
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class Api
 {
@@ -46,6 +43,7 @@ class Api
      * @param string $status The type of comments to get. Possible values are: published, moderation, spam.
      * @param int    $limit  The maximum number of items to retrieve.
      * @param int    $offset The offset.
+     *
      * @return array
      */
     public static function commentsGet($status = null, $limit = 30, $offset = 0)
@@ -127,6 +125,7 @@ class Api
      * Get a single comment
      *
      * @param int $id The id of the comment.
+     *
      * @return array
      */
     public static function commentsGetById($id)
@@ -185,6 +184,7 @@ class Api
      * @param string $authorName    The new author for the comment.
      * @param string $authorEmail   The new email for the comment.
      * @param string $authorWebsite The new website for the comment.
+     *
      * @return null|bool
      */
     public static function commentsUpdate(

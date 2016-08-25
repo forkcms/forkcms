@@ -19,11 +19,6 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the edit-action, it will display a form to edit an item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class EditThemeTemplate extends BackendBaseActionEdit
 {
@@ -168,14 +163,14 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // create array
         $defaultExtras = array(
             '' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
-            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets
+            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
         );
 
         // create default position field
         $position = array();
         $position['i'] = 0;
-        $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'inputText positionName', 'inputTextError positionName');
-        $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'positionBlock', 'positionBlockError');
+        $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'form-control positionName', 'form-control danger positionName');
+        $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'form-control positionBlock', 'form-control positionBlockError');
         $positions[] = $position;
 
         // content has been submitted: re-create submitted content rather than the db-fetched content
@@ -201,11 +196,11 @@ class EditThemeTemplate extends BackendBaseActionEdit
                     $extras[] = (int) $_POST['type_' . $i . '_' . $j];
 
                     // increment counter; go fetch next block
-                    $j++;
+                    ++$j;
                 }
 
                 // increment counter; go fetch next position
-                $i++;
+                ++$i;
 
                 // position already exists -> error
                 if (in_array($name, $this->names)) {
@@ -238,11 +233,11 @@ class EditThemeTemplate extends BackendBaseActionEdit
             // create default position field
             $position = array();
             $position['i'] = $i + 1;
-            $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'inputText positionName', 'inputTextError positionName');
+            $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'form-control positionName', 'form-control danger positionName');
 
             if (isset($this->extras[$name])) {
                 foreach ($this->extras[$name] as $y => $extra) {
-                    $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . $y, $defaultExtras, $extra, false, 'positionBlock', 'positionBlockError');
+                    $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . $y, $defaultExtras, $extra, false, 'form-control positionBlock', 'form-control positionBlockError');
                 }
             }
 
@@ -327,7 +322,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                             // not alphanumeric -> error
                             if (!in_array($cell, $this->names)) {
                                 $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
-                            } elseif (substr_count($html, '"#position-' . $cell . '"') != 1) {
+                            } elseif (mb_substr_count($html, '"#position-' . $cell . '"') != 1) {
                                 // can't build proper html -> error
                                 $errors[] = BL::err('InvalidTemplateSyntax');
                             }
@@ -390,7 +385,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 }
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . rawurlencode($item['label']) . '&highlight=row-' . $item['id']);
             }
         }
     }

@@ -17,11 +17,6 @@ use InvalidArgumentException;
 /**
  * FrontendAJAX
  * This class will handle AJAX-related stuff
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dave Lens <dave.lens@wijs.be>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class Ajax extends \KernelLoader implements \ApplicationInterface
 {
@@ -200,6 +195,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
 
         // define constant
         defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $this->language);
+        defined('LANGUAGE') || define('LANGUAGE', $this->language);
 
         // set the locale (we need this for the labels)
         Language::setLocale($this->language);

@@ -18,7 +18,7 @@ class DatabaseDataCollector extends DataCollector
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = array(
-            'queries'    => $this->database->getQueries(),
+            'queries' => $this->database->getQueries(),
             'queryCount' => count($this->database->getQueries()),
         );
 

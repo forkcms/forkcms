@@ -18,8 +18,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This page will display the overview of custom fields
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class CustomFields extends BackendBaseActionIndex
 {
@@ -92,14 +90,21 @@ class CustomFields extends BackendBaseActionIndex
 
         // add the multicheckbox column
         $this->dataGrid->addColumn(
-            'checkbox',
+            'check',
             '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />',
             '<input type="checkbox" name="fields[]" value="[name]" class="inputCheckbox" /></div>'
         );
-        $this->dataGrid->setColumnsSequence('checkbox');
+        $this->dataGrid->setColumnsSequence('check');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array('delete' => BL::lbl('Delete')),
+            'delete',
+            false,
+            'form-control',
+            'form-control danger'
+        );
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // add styles
@@ -127,6 +132,7 @@ class CustomFields extends BackendBaseActionIndex
      * Sets a link to the campaign statistics if it contains sent mailings
      *
      * @param int $id The ID of the campaign.
+     *
      * @return string
      */
     public function setStatisticsLink($id)

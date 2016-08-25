@@ -15,9 +15,6 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentic
 
 /**
  * This is the index-action, it can be used as a dashboard.
- *
- * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Index extends FrontendBaseBlock
 {

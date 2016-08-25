@@ -16,11 +16,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * In this file we store all generic functions that we will be using in the TagsModule
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Model
 {
@@ -52,6 +47,7 @@ class Model
      * Check if a tag exists.
      *
      * @param int $id The id to check for existence.
+     *
      * @return bool
      */
     public static function exists($id)
@@ -68,6 +64,7 @@ class Model
      * Check if a tag exists
      *
      * @param string $tag The tag to check for existence.
+     *
      * @return bool
      */
     public static function existsTag($tag)
@@ -82,6 +79,7 @@ class Model
      * Get tag record.
      *
      * @param int $id The id of the record to get.
+     *
      * @return array
      */
     public static function get($id)
@@ -95,11 +93,33 @@ class Model
     }
 
     /**
+     * Get all tags.
+     *
+     * @param string $language
+     *
+     * @return array
+     */
+    public static function getAll($language = null)
+    {
+        $language = ($language != null)
+            ? (string) $language
+            : BL::getWorkingLanguage();
+
+        return (array) BackendModel::getContainer()->get('database')->getRecords(
+            'SELECT i.tag AS name
+             FROM tags AS i
+             WHERE i.language = ?',
+            array($language)
+        );
+    }
+
+    /**
      * Get tags that start with the given string
      *
      * @param string $term            The searchstring.
      * @param string $language        The language to use, if not provided
      *                                use the working language.
+     *
      * @return array
      */
     public static function getStartsWith($term, $language = null)
@@ -124,6 +144,7 @@ class Model
      * @param int    $otherId  The id of the record.
      * @param string $type     The type of the returnvalue, possible values are: array, string (tags will be joined by ,).
      * @param string $language The language to use, if not provided the working language will be used.
+     *
      * @return mixed
      */
     public static function getTags($module, $otherId, $type = 'string', $language = null)
@@ -157,6 +178,7 @@ class Model
      *
      * @param string $URL The URL to use as a base.
      * @param int    $id  The ID to ignore.
+     *
      * @return string
      */
     public static function getURL($URL, $id = null)
@@ -216,6 +238,7 @@ class Model
      * @param string $tag      The data for the tag.
      * @param string $language The language wherein the tag will be inserted,
      *                         if not provided the workinglanguage will be used.
+     *
      * @return int
      */
     public static function insert($tag, $language = null)
@@ -281,7 +304,7 @@ class Model
             // loop tags
             foreach ($tags as $key => $tag) {
                 // cleanup
-                $tag = strtolower(trim($tag));
+                $tag = mb_strtolower(trim($tag));
 
                 // unset if the tag is empty
                 if ($tag == '') {

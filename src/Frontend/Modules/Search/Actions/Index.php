@@ -19,8 +19,6 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
  * This action will display a form to search
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Index extends FrontendBaseBlock
 {
@@ -63,7 +61,7 @@ class Index extends FrontendBaseBlock
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**
@@ -97,7 +95,7 @@ class Index extends FrontendBaseBlock
         $this->limit = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
-                           FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
+                           LANGUAGE . '_' . md5($this->term) . '_' .
                            $this->offset . '_' . $this->limit . '.php';
 
         // load the cached data
@@ -207,8 +205,8 @@ class Index extends FrontendBaseBlock
         // debug mode = no cache
         if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
-            $fs = new Filesystem();
-            $fs->dumpFile(
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile(
                 $this->cacheFile,
                 "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
                     $this->items,
@@ -291,7 +289,7 @@ class Index extends FrontendBaseBlock
             // format data
             $this->statistics = array();
             $this->statistics['term'] = $this->term;
-            $this->statistics['language'] = FRONTEND_LANGUAGE;
+            $this->statistics['language'] = LANGUAGE;
             $this->statistics['time'] = FrontendModel::getUTCDate();
             $this->statistics['data'] = serialize(array('server' => $_SERVER));
             $this->statistics['num_results'] = $this->pagination['num_items'];

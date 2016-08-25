@@ -11,9 +11,6 @@ namespace Backend\Core\Engine;
 
 /**
  * This is our implementation of iSpoonDatagridPaging
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class DataGridPaging implements \iSpoonDatagridPaging
 {
@@ -28,6 +25,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
      * @param int    $numPerPage The items per page.
      * @param bool   $debug
      * @param string $compileDirectory
+     *
      * @return string
      */
     public static function getContent(
@@ -93,7 +91,6 @@ class DataGridPaging implements \iSpoonDatagridPaging
             $pagesStart = 1;
             $pagesEnd = 6;
 
-
             if ($numPages == 7) {
                 // when we have 7 pages, show 7 as end
                 $pagesEnd = 7;
@@ -132,7 +129,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
             $pagesFirstEnd = 2;
 
             // loop pages
-            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++) {
+            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // add
                 $pagination['first'][] = array(
                     'url' => str_replace(
@@ -140,13 +137,13 @@ class DataGridPaging implements \iSpoonDatagridPaging
                         array((($numPerPage * $i) - $numPerPage), $order, $sort),
                         $URL
                     ),
-                    'label' => $i
+                    'label' => $i,
                 );
             }
         }
 
         // build array
-        for ($i = $pagesStart; $i <= $pagesEnd; $i++) {
+        for ($i = $pagesStart; $i <= $pagesEnd; ++$i) {
             // init var
             $current = ($i == $currentPage);
 
@@ -158,7 +155,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
                     $URL
                 ),
                 'label' => $i,
-                'current' => $current
+                'current' => $current,
             );
         }
 
@@ -169,7 +166,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
             $pagesLastEnd = $numPages;
 
             // loop pages
-            for ($i = $pagesLastStart; $i <= $pagesLastEnd; $i++) {
+            for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // add
                 $pagination['last'][] = array(
                     'url' => str_replace(
@@ -177,7 +174,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
                         array((($numPerPage * $i) - $numPerPage), $order, $sort),
                         $URL
                     ),
-                    'label' => $i
+                    'label' => $i,
                 );
             }
         }

@@ -14,8 +14,6 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentic
 
 /**
  * This is a widget with a login form
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class LoginLink extends FrontendBaseWidget
 {
@@ -40,9 +38,6 @@ class LoginLink extends FrontendBaseWidget
         // is logged in
         if (FrontendProfilesAuthentication::isLoggedIn()) {
             // get the profile
-            /**
-             * @var FrontendProfilesProfile
-             */
             $profile = FrontendProfilesAuthentication::getProfile();
 
             // assign logged in profile

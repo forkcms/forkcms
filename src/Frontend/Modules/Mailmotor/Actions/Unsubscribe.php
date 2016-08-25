@@ -13,8 +13,6 @@ use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
 
 /**
  * This is the index-action
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Unsubscribe extends FrontendBaseBlock
 {

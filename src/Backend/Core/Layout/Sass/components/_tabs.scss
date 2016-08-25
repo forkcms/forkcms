@@ -1,0 +1,63 @@
+.nav.nav-tabs-xs > li > a {
+  padding: 3px 5px;
+}
+
+.tab-content {
+  background-color: $white;
+  border: 1px solid $gray-lighter;
+  border-radius: 3px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top: 0;
+  margin-bottom: 25px;
+  padding: 30px 25px;
+
+  .tab-pane-title {
+    font-size: $font-size-btn;
+  }
+}
+
+.nav-tabs {
+  .has-error,
+  .active.has-error {
+    a,
+    a:hover,
+    a:focus {
+      -webkit-font-smoothing: antialiased;
+      color: $white;
+      background-color: $alert-danger-bg;
+    }
+  }
+
+  li {
+    a {
+      background-color: $gray-lightest;
+      border: 1px solid $gray-lighter;
+      border-radius: 3px 3px 0 0;
+      color: $gray;
+      font-size: $font-size-small;
+      font-weight: 600;
+      padding: 8px 12px 7px;
+    }
+
+    &.pull-right a {
+       margin-left: 5px;
+       margin-right: 0;
+    }
+
+    &.danger a {
+       background-color: $brand-danger;
+       color: $white;
+    }
+  }
+}
+
+.fork-dashboard-column .nav-tabs li {
+   a {
+     background-color: $gray-lighter;
+   }
+
+  &.active a {
+    background-color: $white;
+  }
+}

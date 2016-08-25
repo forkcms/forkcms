@@ -12,8 +12,6 @@ use Backend\Core\Engine\Authentication;
 
 /**
  * WebTestCase is the base class for functional tests.
- *
- * @author Wouter Sioen <wouter.sioen@gmail.com>
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
@@ -21,11 +19,12 @@ abstract class WebTestCase extends BaseWebTestCase
      * Attempts to guess the kernel location.
      *
      * When the Kernel is located, the file is required.
+     *
      * @todo Remove this when Fork has no custom Kernel class anymore
      *
-     * @return string The Kernel class name
-     *
      * @throws \RuntimeException
+     *
+     * @return string The Kernel class name
      */
     protected static function getKernelClass()
     {
@@ -63,8 +62,6 @@ abstract class WebTestCase extends BaseWebTestCase
         }
 
         static::$kernel = static::createKernel($options);
-        static::$kernel->boot();
-        static::$kernel->defineForkConstants();
 
         $client = static::$kernel->getContainer()->get('test.client');
         $client->setServerParameters($server);
@@ -125,12 +122,15 @@ abstract class WebTestCase extends BaseWebTestCase
      */
     protected function backupParametersFile($kernelDir)
     {
-        $fs = new FileSystem();
-        if ($fs->exists($kernelDir . '/config/parameters.yml')) {
-            $fs->copy(
+        $filesystem = new FileSystem();
+        if ($filesystem->exists($kernelDir . '/config/parameters.yml')) {
+            $filesystem->copy(
                 $kernelDir . '/config/parameters.yml',
                 $kernelDir . '/config/parameters.yml~backup'
             );
+        }
+        if ($filesystem->exists($kernelDir . '/cache/test')) {
+            $filesystem->remove($kernelDir . '/cache/test');
         }
     }
 
@@ -141,14 +141,17 @@ abstract class WebTestCase extends BaseWebTestCase
      */
     protected function putParametersFileBack($kernelDir)
     {
-        $fs = new FileSystem();
-        if ($fs->exists($kernelDir . '/config/parameters.yml~backup')) {
-            $fs->copy(
+        $filesystem = new FileSystem();
+        if ($filesystem->exists($kernelDir . '/config/parameters.yml~backup')) {
+            $filesystem->copy(
                 $kernelDir . '/config/parameters.yml~backup',
                 $kernelDir . '/config/parameters.yml',
                 true
             );
-            $fs->remove($kernelDir . '/config/parameters.yml~backup');
+            $filesystem->remove($kernelDir . '/config/parameters.yml~backup');
+        }
+        if ($filesystem->exists($kernelDir . '/cache/test')) {
+            $filesystem->remove($kernelDir . '/cache/test');
         }
     }
 
@@ -218,6 +221,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Client $client
      * @param string $url
      * @param array  $data
+     *
      * @return Crawler
      */
     protected function requestWithGetParameters(

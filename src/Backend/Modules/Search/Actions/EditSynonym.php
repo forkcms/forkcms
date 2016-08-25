@@ -17,8 +17,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the edit synonym action, it will display a form to edit an existing synonym.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class EditSynonym extends BackendBaseActionEdit
 {
@@ -65,8 +63,8 @@ class EditSynonym extends BackendBaseActionEdit
             'synonym',
             $this->record['synonym'],
             null,
-            'inputText synonymBox',
-            'inputTextError synonymBox'
+            'form-control synonymBox',
+            'form-control danger synonymBox'
         );
     }
 
@@ -119,7 +117,7 @@ class EditSynonym extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Synonyms') . '&report=edited-synonym&var=' . urlencode(
+                    BackendModel::createURLForAction('Synonyms') . '&report=edited-synonym&var=' . rawurlencode(
                         $item['term']
                     ) . '&highlight=row-' . $item['id']
                 );

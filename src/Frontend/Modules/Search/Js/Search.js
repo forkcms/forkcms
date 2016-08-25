@@ -1,8 +1,5 @@
 /**
  * Interaction for the search module
- *
- * @author  Matthias Mullie <forkcms@mullie.eu>
- * @author  Jesse Dobbelaere <jesse@dobbelae.re>
  */
 jsFrontend.search =
 {

@@ -20,9 +20,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the classic fork mailmotor widget
- *
- * @author Dave Lens <dave.lens@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Statistics extends BackendBaseWidget
 {
@@ -33,7 +30,7 @@ class Statistics extends BackendBaseWidget
      */
     public function execute()
     {
-        $this->header->addCSS('widgets.css', 'Mailmotor');
+        $this->header->addCSS('Widgets.css', 'Mailmotor');
         $this->setColumn('right');
         $this->setPosition(1);
         $this->parse();
@@ -73,15 +70,15 @@ class Statistics extends BackendBaseWidget
         $results[] = array('label' => BL::lbl('MailmotorSendDate'), 'value' => $mailing[0]['sent']);
         $results[] = array(
             'label' => BL::lbl('MailmotorSent'),
-            'value' => $stats['recipients'] . ' (' . $stats['recipients_percentage'] . ')'
+            'value' => $stats['recipients'] . ' (' . $stats['recipients_percentage'] . ')',
         );
         $results[] = array(
             'label' => BL::lbl('MailmotorOpened'),
-            'value' => $stats['unique_opens'] . ' (' . $stats['unique_opens_percentage'] . ')'
+            'value' => $stats['unique_opens'] . ' (' . $stats['unique_opens_percentage'] . ')',
         );
         $results[] = array(
             'label' => BL::lbl('MailmotorClicks'),
-            'value' => $stats['clicks_total'] . ' (' . $stats['clicks_percentage'] . ')'
+            'value' => $stats['clicks_total'] . ' (' . $stats['clicks_percentage'] . ')',
         );
 
         // there are some results

@@ -13,8 +13,6 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 
 /**
  * This is the add-action, it will display a form to add a new profile.
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class ExportTemplate extends BackendBaseActionAdd
 {
@@ -30,7 +28,7 @@ class ExportTemplate extends BackendBaseActionAdd
         $fields = array(
             'email',
             'display_name',
-            'password'
+            'password',
         );
 
         // define file

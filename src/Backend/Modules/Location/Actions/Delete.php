@@ -15,8 +15,6 @@ use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
  * This action will delete an item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Delete extends BackendBaseActionDelete
 {
@@ -44,7 +42,7 @@ class Delete extends BackendBaseActionDelete
             // user was deleted, so redirect
             $this->redirect(
                 BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-                urlencode($this->record['title'])
+                rawurlencode($this->record['title'])
             );
         }
 

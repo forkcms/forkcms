@@ -21,11 +21,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the edit-action, it will display a form to alter the user-details and settings
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Siesqo <info@siesqo.be>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -131,7 +126,10 @@ class Edit extends BackendBaseActionEdit
 
         // create elements
         // profile
-        $this->frm->addText('email', $this->record['email'], 255);
+        $this->frm
+            ->addText('email', $this->record['email'], 255)
+            ->setAttribute('type', 'email')
+        ;
         if ($this->user->isGod()) {
             $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
         }
@@ -304,22 +302,6 @@ class Edit extends BackendBaseActionEdit
                 }
             }
 
-            // validate avatar
-            if ($fields['avatar']->isFilled()) {
-                // correct extension
-                if ($fields['avatar']->isAllowedExtension(
-                    array('jpg', 'jpeg', 'gif', 'png'),
-                    BL::err('JPGGIFAndPNGOnly')
-                )
-                ) {
-                    // correct mimetype?
-                    $fields['avatar']->isAllowedMimeType(
-                        array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'),
-                        BL::err('JPGGIFAndPNGOnly')
-                    );
-                }
-            }
-
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build user-array
@@ -339,7 +321,7 @@ class Edit extends BackendBaseActionEdit
                         'users_sessions',
                         'user_id = ?',
                         array(
-                            $this->user->getUserId()
+                            $this->user->getUserId(),
                         )
                     );
                 }
@@ -384,34 +366,6 @@ class Edit extends BackendBaseActionEdit
                 if ($this->allowUserRights) {
                     // get selected groups
                     $groups = $fields['groups']->getChecked();
-
-                    // init var
-                    $newSequence = BackendGroupsModel::getSetting($groups[0], 'dashboard_sequence');
-
-                    // loop through groups and collect all dashboard widget sequences
-                    foreach ($groups as $group) {
-                        $sequences[] = BackendGroupsModel::getSetting(
-                            $group,
-                            'dashboard_sequence'
-                        );
-                    }
-
-                    // loop through sequences
-                    foreach ($sequences as $sequence) {
-                        // loop through modules inside a sequence
-                        foreach ($sequence as $moduleKey => $module) {
-                            // loop through widgets inside a module
-                            foreach ($module as $widgetKey => $widget) {
-                                // if widget present set true
-                                if ($widget['present']) {
-                                    $newSequence[$moduleKey][$widgetKey]['present'] = true;
-                                }
-                            }
-                        }
-                    }
-
-                    // add new sequence to settings
-                    $settings['dashboard_sequence'] = $newSequence;
                 }
 
                 // has the user submitted an avatar?
@@ -424,11 +378,11 @@ class Edit extends BackendBaseActionEdit
                         $this->record['settings']['avatar'] != 'no-avatar.jpg' &&
                         $this->record['settings']['avatar'] != ''
                     ) {
-                        $fs = new Filesystem();
-                        $fs->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
+                        $filesystem = new Filesystem();
+                        $filesystem->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
                     }
 
                     // create new filename

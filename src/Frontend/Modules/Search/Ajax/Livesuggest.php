@@ -12,15 +12,12 @@ namespace Frontend\Modules\Search\Ajax;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception as FrontendException;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Template as FrontendTemplate;
+use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
  * This is the live suggest-action, it will output a list of results for a certain search
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Livesuggest extends FrontendBaseAJAXAction
 {
@@ -63,7 +60,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
-        'num_pages' => null
+        'num_pages' => null,
     );
 
     /**
@@ -81,6 +78,11 @@ class Livesuggest extends FrontendBaseAJAXAction
     private $term = '';
 
     /**
+     * @var TwigTemplate
+     */
+    private $tpl;
+
+    /**
      * Display
      */
     private function display()
@@ -90,7 +92,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         $this->limit = (int) $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
-                           FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
+                           LANGUAGE . '_' . md5($this->term) . '_' .
                            $this->offset . '_' . $this->limit . '.php';
 
         // load the cached data
@@ -105,7 +107,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         // output
         $this->output(
             self::OK,
-            $this->tpl->getContent(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.tpl', false, true)
+            $this->tpl->renderTemplate(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
         );
     }
 
@@ -115,13 +117,13 @@ class Livesuggest extends FrontendBaseAJAXAction
     public function execute()
     {
         parent::execute();
-        $this->loadTemplate();
         $this->validateForm();
         $this->display();
     }
 
     /**
      * Load the cached data
+     *
      * @todo    refactor me
      *
      * @return bool
@@ -134,7 +136,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if ($this->getContainer()->getParameter('kernel.debug')) {
+        if (SPOON_DEBUG) {
             return false;
         }
 
@@ -203,10 +205,10 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if (!$this->getContainer()->getParameter('kernel.debug')) {
+        if (!SPOON_DEBUG) {
             // set cache content
-            $fs = new Filesystem();
-            $fs->dumpFile(
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile(
                 $this->cacheFile,
                 "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
                     $this->items,
@@ -217,19 +219,12 @@ class Livesuggest extends FrontendBaseAJAXAction
     }
 
     /**
-     * Load the template
-     */
-    protected function loadTemplate()
-    {
-        // create template
-        $this->tpl = new FrontendTemplate(false);
-    }
-
-    /**
      * Parse the data into the template
      */
     private function parse()
     {
+        $this->tpl = $this->get('templating');
+
         // no search term = no search
         if (!$this->term) {
             return;
@@ -341,7 +336,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             $pagesFirstEnd = 1;
 
             // loop pages
-            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++) {
+            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;
@@ -355,7 +350,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // build array
-        for ($i = $pagesStart; $i <= $pagesEnd; $i++) {
+        for ($i = $pagesStart; $i <= $pagesEnd; ++$i) {
             // init var
             $current = ($i == $this->pagination['requested_page']);
 
@@ -377,7 +372,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             $pagesLastEnd = $this->pagination['num_pages'];
 
             // loop pages
-            for ($i = $pagesLastStart; $i <= $pagesLastEnd; $i++) {
+            for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
                     $URL = $this->pagination['url'] . '?page=' . $i;

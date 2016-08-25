@@ -7,8 +7,6 @@ use SpoonDatabase;
 
 /**
  * This is our module settings class
- *
- * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class ModulesSettings
 {
@@ -38,6 +36,7 @@ class ModulesSettings
      * @param  string $module       The module wherefore a setting has to be retrieved.
      * @param  string $key          The name of the setting to be retrieved.
      * @param  mixed  $defaultValue A fallback value
+     *
      * @return mixed
      */
     public function get($module, $key, $defaultValue = null)
@@ -118,6 +117,7 @@ class ModulesSettings
      * Get all module settings for a module
      *
      * @param  string $module The module wherefore a setting has to be retrieved.
+     *
      * @return array
      */
     public function getForModule($module)

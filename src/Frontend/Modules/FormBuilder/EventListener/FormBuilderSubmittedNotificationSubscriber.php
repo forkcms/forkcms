@@ -7,8 +7,6 @@ use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 
 /**
  * A Formbuilder submitted event subscriber that will send a notification
- *
- * @author Wouter Sioen <wouter@sumocoders.be>
  */
 final class FormBuilderSubmittedNotificationSubscriber
 {

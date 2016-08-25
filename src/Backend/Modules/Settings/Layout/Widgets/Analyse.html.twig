@@ -1,0 +1,14 @@
+{% if warnings %}
+  <div id="widgetSettingsAnalyse" class="panel panel-default">
+    <div class="panel-heading">
+      <h2 class="panel-title">{{ 'lbl.Analysis'|trans|ucfirst }}</h2>
+    </div>
+    <div class="panel-body">
+      <ul>
+        {% for warning in warnings %}
+          <li>{{ warning.message | raw }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,59 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+
+{% endblock %}
+
+{% block content %}
+  {% form add %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="title" class="control-label">
+          {{ 'lbl.Title'|trans|ucfirst }}
+          {{ macro.required }}
+        </label>
+        {% form_field title %} {% form_field_error title %}
+      </div>
+      <div class="panel panel-default panel-editor">
+        <div class="panel-heading">
+          <label for="text" class="control-label">
+            {{ 'lbl.Content'|trans|ucfirst }}
+            {{ macro.required }}<br>
+          </label>
+        </div>
+        <div class="panel-body">
+          {% form_field text %}
+        </div>
+        {% if txtTextError %}
+          <div class="panel-footer">
+            {% form_field_error text %}
+          </div>
+        {% endif %}
+      </div>
+      {% if ddmTemplate %}
+        <div class="form-group">
+          <label for="template" class="control-label">{{ 'lbl.Template'|trans|ucfirst }}</label>
+          {% form_field template %} {% form_field_error template %}
+        </div>
+      {% endif %}
+      <div class="form-group last">
+        <label for="hidden" class="control-label">{% form_field hidden %} {{ 'lbl.VisibleOnSite'|trans|ucfirst }}</label>
+        {% form_field_error hidden %}
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="addButton" type="submit" name="add" class="btn btn-primary">
+            <span class="fa fa-plus-square"></span>&nbsp;
+            {{ 'lbl.Add'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endform %}
+{% endblock %}

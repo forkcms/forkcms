@@ -15,8 +15,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This action will delete or restore a profile.
- *
- * @author Lester Lievens <lester@netlash.com>
  */
 class Delete extends BackendBaseActionDelete
 {
@@ -46,7 +44,7 @@ class Delete extends BackendBaseActionDelete
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=profile-undeleted&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=profile-undeleted&var=' . rawurlencode(
                         $profile['email']
                     ) . '&highlight=row-' . $profile['id']
                 );
@@ -59,7 +57,7 @@ class Delete extends BackendBaseActionDelete
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=profile-deleted&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=profile-deleted&var=' . rawurlencode(
                         $profile['email']
                     ) . '&highlight=row-' . $profile['id']
                 );

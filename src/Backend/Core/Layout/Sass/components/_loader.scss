@@ -1,0 +1,73 @@
+/* Loader */
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.fork-loader {
+  animation: spin 1s infinite steps(8);
+  display: inline-block;
+  font-size: 12px;
+  height: 5em;
+  margin: 0 .5em;
+  overflow: hidden;
+  position: relative;
+  text-indent: 999em;
+  width: 5em;
+}
+
+.fork-loader.xs {
+  font-size: 3px;
+}
+
+.fork-loader.sm {
+  font-size: 6px;
+}
+
+.fork-loader.md {
+  font-size: 12px;
+}
+
+.fork-loader.lg {
+  font-size: 24px;
+}
+
+.fork-loader:before,
+.fork-loader:after,
+.fork-loader > div:before,
+.fork-loader > div:after {
+  background-color: #eee;
+  border-radius: .2em;
+  box-shadow: 0 3.5em #eee;
+  content: '';
+  height: 1.5em;
+  left: 2.25em;
+  position: absolute;
+  top: 0;
+  transform-origin: 50% 2.5em;
+  width: .5em;
+}
+
+.fork-loader:before {
+  background-color: #555;
+}
+
+.fork-loader:after {
+  background-color: #777;
+  transform: rotate(-45deg);
+}
+
+.fork-loader > div:before {
+  background-color: #999;
+  transform: rotate(-90deg);
+}
+
+.fork-loader > div:after {
+  background-color: #bbb;
+  transform: rotate(-135deg);
+}
+
+#ajaxSpinner {
+  z-index: 5;
+}

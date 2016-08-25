@@ -13,8 +13,6 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the core
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Config extends BackendBaseConfig
 {

@@ -1,0 +1,92 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block actionbar %}
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showExtensionsUploadModule %}
+        {{ macro.buttonIcon( geturl('upload_module'), 'upload', 'lbl.UploadModule'|trans|ucfirst) }}
+      {% endif %}
+      {{ macro.buttonIcon( 'http://www.fork-cms.com/extensions/apps', 'eye', 'lbl.FindModules'|trans|ucfirst, '', 'target=_blank') }}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {% if warnings %}
+    <div class="row fork-module-messages">
+      <div class="col-md-12">
+        <div class="content-block content-block-pb">
+          <div class="content-title">
+            <p>{{ 'msg.ModulesWarnings'|trans|ucfirst }}</p>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li>
+                <strong>{{ warnings.module|raw }}</strong>
+                <ul>
+                  {% for warning in warnings.warnings %}
+                    <li>- {{ warning.message|raw }}</li>
+                  {% endfor %}
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          <p>{{ 'lbl.InstalledModules'|trans|ucfirst }}</p>
+        </div>
+        {% if dataGridInstalledModules %}
+          <div class="table-responsive">
+            {{ dataGridInstalledModules|raw }}
+          </div>
+        {% endif %}
+        {% if not dataGridInstalledModules %}
+          <p>{{ 'msg.NoModulesInstalled'|trans|ucfirst }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% if dataGridInstallableModules %}
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="content-block">
+          <div class="content-title">
+            <p>{{ 'lbl.InstallableModules'|trans|ucfirst }}</p>
+          </div>
+          <div class="table-responsive">
+            {{ dataGridInstallableModules|raw }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <div class="hidden">
+    <div class="modal fade jsConfirmation" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.Install'|trans|ucfirst }}</span>
+          </div>
+          <div class="modal-body">
+            <p class="jsConfirmationMessage"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            </button>
+            <a href="#" class="btn btn-primary jsConfirmationSubmit">
+              <span class="fa fa-check"></span>{{ 'lbl.Install'|trans|ucfirst }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

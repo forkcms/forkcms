@@ -15,8 +15,6 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
 /**
  * This is the save-action, it will save the searched term in the statistics
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Save extends FrontendBaseAJAXAction
 {
@@ -52,7 +50,7 @@ class Save extends FrontendBaseAJAXAction
                 // format data
                 $this->statistics = array();
                 $this->statistics['term'] = $term;
-                $this->statistics['language'] = FRONTEND_LANGUAGE;
+                $this->statistics['language'] = LANGUAGE;
                 $this->statistics['time'] = FrontendModel::getUTCDate();
                 $this->statistics['data'] = serialize(array('server' => $_SERVER));
                 $this->statistics['num_results'] = FrontendSearchModel::getTotal($term);

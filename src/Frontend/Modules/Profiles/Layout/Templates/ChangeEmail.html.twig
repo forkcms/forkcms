@@ -1,0 +1,35 @@
+{# Success #}
+{% if updateEmailSuccess %}
+  <div class="message success"><p>{{ 'msg.UpdateEmailIsSuccess'|trans }}</p></div>
+{% endif %}
+
+{# Error #}
+{% if updateEmailHasFormError %}
+  <div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
+{% endif %}
+
+<section id="updateEmailForm" class="mod">
+  <div class="inner">
+    <div class="bd">
+      {% form updateEmail %}
+      <fieldset>
+        <p{% if txtPasswordError %} class="errorArea"{% endif %}>
+          <label for="password">{{ 'lbl.Password'|trans|ucfirst }}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+          </label>
+          {% form_field password %} {% form_field_error password %}
+        </p>
+        <p{% if txtEmailError %} class="errorArea"{% endif %}>
+          <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
+            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+          </label>
+          {% form_field email %} {% form_field_error email %}
+        </p>
+        <p>
+          <input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
+        </p>
+      </fieldset>
+      {% endform %}
+    </div>
+  </div>
+</section>

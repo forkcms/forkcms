@@ -13,10 +13,6 @@ use Common\Uri as CommonUri;
 
 /**
  * Frontend RSS class.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class Rss extends \SpoonFeedRSS
 {
@@ -46,11 +42,11 @@ class Rss extends \SpoonFeedRSS
         );
 
         $siteTitle = \SpoonFilter::htmlspecialcharsDecode(
-            Model::get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . LANGUAGE)
         );
 
         // set feed properties
-        $this->setLanguage(FRONTEND_LANGUAGE);
+        $this->setLanguage(LANGUAGE);
         $this->setCopyright(\SpoonDate::getDate('Y') . ' ' . $siteTitle);
         $this->setGenerator($siteTitle);
         $this->setImage(SITE_URL . FRONTEND_CORE_URL . '/Layout/images/rss_image.png', $title, $link);
@@ -90,7 +86,7 @@ class Rss extends \SpoonFeedRSS
             array(
                 'utm_source' => 'feed',
                 'utm_medium' => 'rss',
-                'utm_campaign' => CommonUri::getUrl($this->getTitle())
+                'utm_campaign' => CommonUri::getUrl($this->getTitle()),
             )
         );
 

@@ -16,6 +16,14 @@
         <translation language="lt"><![CDATA[aktyvus]]></translation>
         <translation language="el"><![CDATA[Ενεργή]]></translation>
       </item>
+      <item type="label" name="FilterProfiles">
+        <translation language="nl"><![CDATA[filter profielen]]></translation>
+        <translation language="en"><![CDATA[filter profiles]]></translation>
+      </item>
+      <item type="label" name="FilterGroups">
+        <translation language="nl"><![CDATA[filter groepen]]></translation>
+        <translation language="en"><![CDATA[filter groups]]></translation>
+      </item>
       <item type="label" name="AddGroup">
         <translation language="nl"><![CDATA[groep toevoegen]]></translation>
         <translation language="en"><![CDATA[add group]]></translation>
@@ -167,6 +175,10 @@
         <translation language="es"><![CDATA[editar miembro]]></translation>
         <translation language="uk"><![CDATA[Редагувати членство]]></translation>
         <translation language="el"><![CDATA[Μεταβολή μέλους]]></translation>
+      </item>
+      <item type="error" name="EmailMatchesPrevious">
+        <translation language="nl"><![CDATA[Gelieve een nieuw e-mailadres in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please add a new mail address.]]></translation>
       </item>
       <item type="label" name="ExpiresOn">
         <translation language="nl"><![CDATA[vervalt op]]></translation>
@@ -322,6 +334,33 @@
         <translation language="uk"><![CDATA[К-ть користувачів]]></translation>
         <translation language="el"><![CDATA[Πλήθος μελών]]></translation>
       </item>
+      <item type="label" name="NotificationNewProfileToAdmin">
+        <translation language="nl"><![CDATA[Nieuw profiel voor %1$s is toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[New profile for %1$s has been created.]]></translation>
+        <translation language="fr"><![CDATA[Nouveau profil pour %1$s a été créé.]]></translation>
+      </item>
+      <item type="label" name="NotificationNewProfileToProfile">
+        <translation language="nl"><![CDATA[Uw profiel is aangemaakt.]]></translation>
+        <translation language="en"><![CDATA[Your profile has been added.]]></translation>
+        <translation language="fr"><![CDATA[Votre profil a été créé.]]></translation>
+      </item>
+      <item type="label" name="NotificationUpdatedProfileToProfile">
+        <translation language="nl"><![CDATA[Uw profiel is gewijzigd.]]></translation>
+        <translation language="en"><![CDATA[Your profile has been edited.]]></translation>
+        <translation language="fr"><![CDATA[Votre profil est modifié.]]></translation>
+      </item>
+      <item type="label" name="OverwriteProfileNotificationEmail">
+        <translation language="nl"><![CDATA[Gebruik een aangepast e-mailadres.]]></translation>
+        <translation language="en"><![CDATA[Use a custom mail address.]]></translation>
+      </item>
+      <item type="label" name="UpdateEmail">
+        <translation language="nl"><![CDATA[wijzig e-mail]]></translation>
+        <translation language="en"><![CDATA[update e-mail]]></translation>
+      </item>
+      <item type="label" name="NewProfileWillBeNotified">
+        <translation language="nl"><![CDATA[Bij het opslaan zal dit nieuw profiel een e-mail ontvangen met de logingegevens.]]></translation>
+        <translation language="en"><![CDATA[When saving, this new profile will receive an e-mail with the login credentials.]]></translation>
+      </item>
       <item type="label" name="RegisteredOn">
         <translation language="nl"><![CDATA[geregistreerd op]]></translation>
         <translation language="en"><![CDATA[registered on]]></translation>
@@ -334,6 +373,14 @@
         <translation language="es"><![CDATA[registrado en]]></translation>
         <translation language="uk"><![CDATA[Дата реєстрації]]></translation>
         <translation language="el"><![CDATA[Ενεγράφη στις]]></translation>
+      </item>
+      <item type="label" name="SendNewProfileAdminMail">
+        <translation language="nl"><![CDATA[Verzend mail naar administrator als een nieuw profiel toegevoegd is.]]></translation>
+        <translation language="en"><![CDATA[Send mail to administrator on new profile.]]></translation>
+      </item>
+      <item type="label" name="SendNewProfileMail">
+        <translation language="nl"><![CDATA[Verzend mail naar het nieuwe profiel bij aanmaking of wanneer e-mail of wachtwoord gewijzigd wordt.]]></translation>
+        <translation language="en"><![CDATA[Send mail to new profile on creation or when e-mail or password has been changed.]]></translation>
       </item>
       <item type="label" name="Unblock">
         <translation language="nl"><![CDATA[activeer]]></translation>
@@ -360,6 +407,18 @@
         <translation language="es"><![CDATA[rescuperar]]></translation>
         <translation language="uk"><![CDATA[Поновити]]></translation>
         <translation language="el"><![CDATA[Επαναφορά από διαγραφή]]></translation>
+      </item>
+      <item type="label" name="UpdatedProfileWillBeNotified">
+        <translation language="nl"><![CDATA[Indien het e-mailadres of wachtwoord gewijzigd wordt, dan ontvangt dit profiel een e-mail met de nieuwe logingegevens.]]></translation>
+        <translation language="en"><![CDATA[When you change the mail address or password, this profile will receive an e-mail with the new login credentials.]]></translation>
+      </item>
+      <item type="label" name="YourExistingPassword">
+        <translation language="nl"><![CDATA[uw bestaand wachtwoord]]></translation>
+        <translation language="en"><![CDATA[your existing password]]></translation>
+      </item>
+      <item type="message" name="AutoGeneratedPasswordIfEmpty">
+        <translation language="nl"><![CDATA[Indien niet ingevuld, wordt er automatisch een wachtwoord gegenereerd.]]></translation>
+        <translation language="en"><![CDATA[If empty, a password will automatically be generated.]]></translation>
       </item>
       <item type="message" name="ConfirmBlock">
         <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" wil blokkeren?]]></translation>
@@ -445,6 +504,14 @@
         <translation language="es"><![CDATA[¿Estás seguro de que quieres recuperar a "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να επαναφέτε από διαγραφή το "%1$s";]]></translation>
       </item>
+      <item type="message" name="EmailIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een geldig e-mailadres in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please fill in a valid mail address.]]></translation>
+      </item>
+      <item type="message" name="EditProfile">
+        <translation language="nl"><![CDATA[profiel wijzigen van "%1$s"]]></translation>
+        <translation language="en"><![CDATA[editing profile from "%1$s"]]></translation>
+      </item>
       <item type="message" name="GroupAdded">
         <translation language="nl"><![CDATA[De groep werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The group was added.]]></translation>
@@ -516,6 +583,16 @@
         <translation language="hu"><![CDATA[Nincsen már csoport.]]></translation>
         <translation language="es"><![CDATA[No hay grupos aun.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη ομάδες.]]></translation>
+      </item>
+      <item type="message" name="NotificationNewProfileLoginCredentials">
+        <translation language="nl"><![CDATA[<p>Beste,</p><p>vanaf heden kan u inloggen op onze website met volgende gegevens:</p><p>Email: %1$s<br/>Wachtwoord: %2$s</p><p>Log in op <a href="%3$s/nl">%3$s</a></p>]]></translation>
+        <translation language="en"><![CDATA[<p>Dear,</p><p>from now on you can log in to our website with the following information: </p><p>Email: %1$s<br/>Password: %2$s</p><p>Log in on <a href="%3$s/fr">%3$s</a></p>]]></translation>
+        <translation language="fr"><![CDATA[<p>Bonjour,</p><p>Vous pouvez désormais vous connecter à notre site Web avec les informations suivantes: </p><p>E-mail: %1$s<br/>Mot de passe: %2$s</p><p>Connectez-vous sur <a href="%3$s/fr">%3$s</a></p>]]></translation>
+      </item>
+      <item type="message" name="NotificationNewProfileToAdmin">
+        <translation language="nl"><![CDATA[Beste,<br/><br/>er is een nieuw profiel toevoegd:<br/><a href="%3$s" title="Klik om te wijzigen">%1$s - %2$s</a>]]></translation>
+        <translation language="en"><![CDATA[Dear,<br/><br/>a new profile has been added:<br/><a href="%3$s" title="Click to edit">%1$s - %2$s</a>]]></translation>
+        <translation language="fr"><![CDATA[Cher,<br/><br/>il ya un nouveau profil ajoute:<br/><a href="%3$s" title="Cliquez pour modifier">%1$s - %2$s</a>]]></translation>
       </item>
       <item type="message" name="OverwriteExisting">
         <translation language="nl"><![CDATA[Bestaande profielen overschrijven?]]></translation>
@@ -612,6 +689,15 @@
         <translation language="hu"><![CDATA[A "%1$s" profil elmentve.]]></translation>
         <translation language="es"><![CDATA[El perfil "%1$s" fue guardado.]]></translation>
         <translation language="el"><![CDATA[Το προφίλ "%1$s" αποθηκεύτηκε.]]></translation>
+      </item>
+      <item type="message" name="SavedAndNotified">
+        <translation language="nl"><![CDATA[Het profiel "%1$s" werd opgeslagen en verwittigd per mail.]]></translation>
+        <translation language="en"><![CDATA[The profiel "%1$s" was saved and notified by mail.]]></translation>
+        <translation language="fr"><![CDATA[Le profiel "%1$s" a été enregistré et notifié par courrier.]]></translation>
+      </item>
+      <item type="message" name="SavedSettings">
+        <translation language="nl"><![CDATA[Profiel instellingen werden opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[Profile settings were saved.]]></translation>
       </item>
       <item type="error" name="DisplayNameExists">
         <translation language="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
@@ -721,6 +807,12 @@
         <translation language="en"><![CDATA[login link]]></translation>
         <translation language="ru"><![CDATA[войдите ссылку]]></translation>
         <translation language="de"><![CDATA[Login-Link]]></translation>
+      </item>
+      <item type="label" name="SecurePage">
+        <translation language="nl"><![CDATA[beveiligde pagina]]></translation>
+        <translation language="en"><![CDATA[secure page]]></translation>
+        <translation language="fr"><![CDATA[page sécurisée]]></translation>
+        <translation language="de"><![CDATA[sichere Seite]]></translation>
       </item>
     </Core>
   </Backend>

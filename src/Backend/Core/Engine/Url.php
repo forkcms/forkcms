@@ -17,8 +17,6 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * This class will handle the incoming URL.
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Url extends Base\Object
 {
@@ -75,7 +73,7 @@ class Url extends Base\Object
      */
     public function getQueryString()
     {
-        return trim((string)$this->request->getRequestUri(), '/');
+        return trim((string) $this->request->getRequestUri(), '/');
     }
 
     /**
@@ -87,15 +85,15 @@ class Url extends Base\Object
         $queryString = $this->getQueryString();
 
         // find the position of ? (which separates real URL and GET-parameters)
-        $positionQuestionMark = strpos($queryString, '?');
+        $positionQuestionMark = mb_strpos($queryString, '?');
 
         // separate the GET-chunk from the parameters
         $getParameters = '';
         if ($positionQuestionMark === false) {
             $processedQueryString = $queryString;
         } else {
-            $processedQueryString = substr($queryString, 0, $positionQuestionMark);
-            $getParameters = substr($queryString, $positionQuestionMark);
+            $processedQueryString = mb_substr($queryString, 0, $positionQuestionMark);
+            $getParameters = mb_substr($queryString, $positionQuestionMark);
         }
 
         // split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
@@ -159,7 +157,7 @@ class Url extends Base\Object
                     $errorUrl = '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed';
 
                     // add the querystring, it will be processed by the error-handler
-                    $errorUrl .= '&querystring=' . urlencode('/' . $this->getQueryString());
+                    $errorUrl .= '&querystring=' . rawurlencode('/' . $this->getQueryString());
 
                     // redirect to the error page
                     $this->redirect($errorUrl, 307);
@@ -197,7 +195,7 @@ class Url extends Base\Object
         if (!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
             // redirect to login
             $this->redirect(
-                '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . urlencode(
+                '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . rawurlencode(
                     '/' . $this->getQueryString()
                 )
             );
@@ -206,7 +204,7 @@ class Url extends Base\Object
             // if the module is the dashboard redirect to the first allowed module
             if ($module == 'Dashboard') {
                 // require navigation-file
-                require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
+                require_once Navigation::getCacheDirectory() . 'navigation.php';
 
                 // loop the navigation to find the first allowed module
                 foreach ($navigation as $value) {
@@ -228,7 +226,7 @@ class Url extends Base\Object
                                     $finder = new Finder();
                                     $files = $finder->files()->name('*.php')->in(BACKEND_MODULES_PATH . '/' . \SpoonFilter::toCamelCase($module) . '/Actions');
                                     foreach ($files as $file) {
-                                        $moduleAction = substr($file->getFilename(), 0, -4);
+                                        $moduleAction = mb_substr($file->getFilename(), 0, -4);
                                         if (Authentication::isAllowedAction($moduleAction, $module)) {
                                             $this->redirect('/' . NAMED_APPLICATION . '/' . $language . '/' .
                                                 $module . '/' . $moduleAction);
@@ -244,14 +242,14 @@ class Url extends Base\Object
             // the user doesn't have access, redirect to error page
             $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . $language .
-                '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                '/error?type=module-not-allowed&querystring=' . rawurlencode('/' . $this->getQueryString()),
                 307
             );
         } elseif (!Authentication::isAllowedAction($action, $module)) {
             // the user hasn't access, redirect to error page
             $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . $language .
-                '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                '/error?type=action-not-allowed&querystring=' . rawurlencode('/' . $this->getQueryString()),
                 307
             );
         } else {

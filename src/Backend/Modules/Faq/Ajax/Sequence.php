@@ -14,8 +14,6 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * Reorder categories
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
  */
 class Sequence extends BackendBaseAJAXAction
 {
@@ -34,15 +32,16 @@ class Sequence extends BackendBaseAJAXAction
 
         // loop id's and set new sequence
         foreach ($ids as $i => $id) {
-            // build item
-            $item['id'] = (int) $id;
-
-            // change sequence
-            $item['sequence'] = $i + 1;
+            // define category
+            $category = BackendFaqModel::getCategory((int) $id);
 
             // update sequence
-            if (BackendFaqModel::existsCategory($item['id'])) {
-                BackendFaqModel::updateCategory($item);
+            if ($category) {
+                // change sequence
+                $category['sequence'] = $i + 1;
+
+                // update category
+                BackendFaqModel::updateCategory($category);
             }
         }
 

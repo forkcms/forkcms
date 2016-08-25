@@ -7,6 +7,13 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  %site.path_www%/app/logs/%kernel.environment%.log
+            level: debug
+
 services:
     database_collector:
         class: Common\DataCollector\DatabaseDataCollector

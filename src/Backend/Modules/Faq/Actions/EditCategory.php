@@ -19,10 +19,6 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This is the edit category action, it will display a form to edit an existing category.
- *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class EditCategory extends BackendBaseActionEdit
 {
@@ -119,7 +115,7 @@ class EditCategory extends BackendBaseActionEdit
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' .
-                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                    rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }
         }

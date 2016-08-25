@@ -13,8 +13,6 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the tags module
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 final class Config extends BackendBaseConfig
 {

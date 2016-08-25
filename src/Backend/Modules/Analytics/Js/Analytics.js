@@ -1,7 +1,5 @@
 /**
  * Interaction for the analytics module
- *
- * @author  Wouter Sioen <wouter@sumocoders.be>
  */
 jsBackend.analytics =
 {
@@ -10,10 +8,6 @@ jsBackend.analytics =
         // variables
         $chartPieChart = $('#chartPieChart');
         $chartDoubleMetricPerDay = $('#chartDoubleMetricPerDay');
-
-        jsBackend.analytics.charts.init();
-        jsBackend.analytics.chartDoubleMetricPerDay.init();
-        jsBackend.analytics.chartPieChart.init();
     }
 };
 
@@ -25,12 +19,11 @@ jsBackend.analytics.charts =
         {
             Highcharts.setOptions(
             {
-                colors: ['#058DC7', '#50b432', '#ED561B', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
+                colors: ['#2f77d1', '#021b45', '#ED561B', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
                 title: { text: '' },
                 legend:
                 {
                     layout: 'vertical',
-                    backgroundColor: '#FFF',
                     borderWidth: 0,
                     shadow: false,
                     symbolPadding: 12,
@@ -76,7 +69,7 @@ jsBackend.analytics.chartPieChart =
 
         jsBackend.analytics.chartPieChart.chart = new Highcharts.Chart(
         {
-            chart: { renderTo: 'chartPieChart', height: 200, width: containerWidth, margin: [0, 160, 0, 0] },
+            chart: { renderTo: 'chartPieChart', height: 200, width: containerWidth, margin: [0, 160, 0, 0], backgroundColor:'transparent' },
             credits: { enabled: false },
             plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
             tooltip:
@@ -168,7 +161,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 
         jsBackend.analytics.chartDoubleMetricPerDay.chart = new Highcharts.Chart(
         {
-            chart: { renderTo: 'chartDoubleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'line' },
+            chart: { renderTo: 'chartDoubleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'line', backgroundColor:'transparent' },
             xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
             yAxis: { min: 0, max: maxValue, tickInterval: tickInterval, title: { text: '' } },
             credits: { enabled: false },

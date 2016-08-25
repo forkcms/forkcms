@@ -2,10 +2,6 @@
 #
 # This script will remove all cache-files and drop your database.
 #
-# @author	Yohann Bianchi <nstCactus@gmail.com>
-# @author	Tijs Verkoyen <tijs@sumocoders.be>
-# @author <per@wijs.be>
-#
 # @internal This script will spit out warnings for using mysql on the command
 #           line with a password.
 #           If a app/config/parameters.yml is not present, it'll spit out errors
@@ -17,21 +13,16 @@ SCRIPT_PATH="`dirname \"$0\"`"
 . "${SCRIPT_PATH}/functions/extract_from_yml.sh"
 
 clear_file_caches() {
-    rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CachedTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-    rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/MinifiedCss/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/MinifiedJs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Mailmotor/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+
+    rm -rf {SCRIPT_PATH}/../app/cache/*
     return 1;
 }
 
@@ -88,6 +79,7 @@ main() {
 
     ${SCRIPT_PATH}/../app/console cache:clear
     ${SCRIPT_PATH}/../app/console cache:clear --env=prod
+    rm -rf ${SCRIPT_PATH}/../app/cache/install
 
     echo 'All done! Ready for reinstall.'
     return 1;

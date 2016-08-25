@@ -19,8 +19,6 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
  * This page will display the overview of groups
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class Groups extends BackendBaseActionIndex
 {
@@ -75,11 +73,18 @@ class Groups extends BackendBaseActionIndex
         $this->dataGrid->setAttributes(array('id' => 'dgGroups'));
 
         // add the multicheckbox column
-        $this->dataGrid->setMassActionCheckboxes('checkbox', '[id]', BackendMailmotorModel::getDefaultGroupIds());
-        $this->dataGrid->setColumnsSequence('checkbox', 'name', 'created_on', 'language');
+        $this->dataGrid->setMassActionCheckboxes('check', '[id]', BackendMailmotorModel::getDefaultGroupIds());
+        $this->dataGrid->setColumnsSequence('check', 'name', 'created_on', 'language');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array('delete' => BL::lbl('Delete')),
+            'delete',
+            false,
+            'form-control',
+            'form-control danger'
+        );
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // set column functions
@@ -98,7 +103,7 @@ class Groups extends BackendBaseActionIndex
                 BL::lbl('CustomFields'),
                 BackendModel::createURLForAction('CustomFields') . '&amp;group_id=[id]',
                 BL::lbl('CustomFields'),
-                array('class' => 'button icon iconEdit linkButton')
+                array('class' => 'btn btn-default btn-xs')
             );
         }
 
@@ -110,7 +115,7 @@ class Groups extends BackendBaseActionIndex
                 BL::lbl('Export'),
                 BackendModel::createURLForAction('ExportAddresses') . '&amp;id=[id]',
                 BL::lbl('Export'),
-                array('class' => 'button icon iconExport linkButton')
+                array('class' => 'btn btn-default btn-xs')
             );
         }
 

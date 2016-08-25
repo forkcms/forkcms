@@ -17,13 +17,6 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * The base-class for the installer
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class ModuleInstaller
 {
@@ -123,7 +116,7 @@ class ModuleInstaller
             // build item
             $item = array(
                 'name' => $this->module,
-                'installed_on' => gmdate('Y-m-d H:i:s')
+                'installed_on' => gmdate('Y-m-d H:i:s'),
             );
 
             // insert module
@@ -179,10 +172,10 @@ class ModuleInstaller
 
         // invalidate the cache for search
         $finder = new Finder();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
             /** @var $file \SplFileInfo */
-            $fs->remove($file->getRealPath());
+            $filesystem->remove($file->getRealPath());
         }
     }
 
@@ -269,6 +262,7 @@ class ModuleInstaller
      * @param string $language The language abbreviation.
      * @param string $type     The type of locale.
      * @param string $application
+     *
      * @return string
      */
     protected function getLocale($name, $module = 'Core', $language = 'en', $type = 'lbl', $application = 'Backend')
@@ -288,6 +282,7 @@ class ModuleInstaller
      *
      * @param string $module The name of the module.
      * @param string $name   The name of the setting.
+     *
      * @return mixed
      */
     protected function getSetting($module, $name)
@@ -307,6 +302,7 @@ class ModuleInstaller
      *
      * @param string $template
      * @param string $theme
+     *
      * @return int
      */
     protected function getTemplateId($template, $theme = null)
@@ -330,6 +326,7 @@ class ModuleInstaller
      * Get a variable
      *
      * @param string $name
+     *
      * @return mixed
      */
     protected function getVariable($name)
@@ -401,9 +398,8 @@ class ModuleInstaller
      *
      * @param string $module
      * @param string $widget
-     * @param array $data
      */
-    protected function insertDashboardWidget($module, $widget, $data)
+    protected function insertDashboardWidget($module, $widget)
     {
         // get db
         $db = $this->getDB();
@@ -424,7 +420,7 @@ class ModuleInstaller
             $settings['value'] = unserialize($settings['value']);
 
             // add new widget
-            $settings['value'][$module][$widget] = $data;
+            $settings['value'][$module][] = $widget;
 
             // re-serialize value
             $settings['value'] = serialize($settings['value']);
@@ -444,7 +440,7 @@ class ModuleInstaller
             $settings['value'] = unserialize($settings['value']);
 
             // add new widget
-            $settings['value'][$module][$widget] = $data;
+            $settings['value'][$module][] = $widget;
 
             // re-serialize value
             $settings['value'] = serialize($settings['value']);
@@ -469,6 +465,7 @@ class ModuleInstaller
      * @param string $data     Optional data, will be passed in the extra.
      * @param bool   $hidden   Is this extra hidden?
      * @param int    $sequence The sequence for the extra.
+     *
      * @return int
      */
     protected function insertExtra(
@@ -512,7 +509,7 @@ class ModuleInstaller
             'action' => $action,
             'data' => $data,
             'hidden' => $hidden,
-            'sequence' => $sequence
+            'sequence' => $sequence,
         );
 
         // build query
@@ -526,7 +523,7 @@ class ModuleInstaller
             $query .= ' AND data IS NULL';
         }
 
-        // get id (if its already exists)
+        // get id (if it already exists)
         $extraId = (int) $this->getDB()->getVar($query, $parameters);
 
         // doesn't already exist
@@ -552,6 +549,7 @@ class ModuleInstaller
      * @param bool   $urlOverwrite         Should the URL be overwritten?
      * @param string $custom               Any custom meta-data.
      * @param array  $data                 Any custom meta-data.
+     *
      * @return int
      */
     protected function insertMeta(
@@ -576,7 +574,7 @@ class ModuleInstaller
             'url' => CommonUri::getUrl((string) $url, BackendModel::getContainer()->getParameter('kernel.charset')),
             'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
             'custom' => (!is_null($custom) ? (string) $custom : null),
-            'data' => (!is_null($data)) ? serialize($data) : null
+            'data' => (!is_null($data)) ? serialize($data) : null,
         );
 
         return (int) $this->getDB()->insert('meta', $item);
@@ -588,9 +586,11 @@ class ModuleInstaller
      * @param array $revision An array with the revision data.
      * @param array $meta     The meta-data.
      * @param array $block    The blocks.
-     * @return int
+     *
      * @throws \SpoonDatabaseException
      * @throws \SpoonException
+     *
+     * @return int
      */
     protected function insertPage(array $revision, array $meta = null, array $block = null)
     {
@@ -735,7 +735,7 @@ class ModuleInstaller
 
         // loop blocks: get arguments (this function has a variable length
         // argument list, to allow multiple blocks to be added)
-        for ($i = 0; $i < func_num_args() - 2; $i++) {
+        for ($i = 0; $i < func_num_args() - 2; ++$i) {
             // get block
             $block = @func_get_arg($i + 2);
             if ($block === false) {
@@ -844,7 +844,7 @@ class ModuleInstaller
                 'group_id' => $groupId,
                 'module' => $module,
                 'action' => $action,
-                'level' => $level
+                'level' => $level,
             );
 
             $this->getDB()->insert('groups_rights_actions', $item);
@@ -873,7 +873,7 @@ class ModuleInstaller
         ) {
             $item = array(
                 'group_id' => $groupId,
-                'module' => $module
+                'module' => $module,
             );
 
             $this->getDB()->insert('groups_rights_modules', $item);
@@ -888,6 +888,7 @@ class ModuleInstaller
      * @param string $url         Url for the item. If omitted the first child is used.
      * @param array  $selectedFor Set selected when these actions are active.
      * @param int    $sequence    Sequence to use for this item.
+     *
      * @return int
      */
     protected function setNavigation($parentId, $label, $url = '', array $selectedFor = null, $sequence = null)
@@ -930,7 +931,7 @@ class ModuleInstaller
                     'label' => $label,
                     'url' => $url,
                     'selected_for' => $selectedFor,
-                    'sequence' => $sequence
+                    'sequence' => $sequence,
                 )
             );
         }
@@ -977,7 +978,7 @@ class ModuleInstaller
                 $item = array(
                     'module' => $module,
                     'name' => $name,
-                    'value' => $value
+                    'value' => $value,
                 );
 
                 $this->getDB()->insert('modules_settings', $item);

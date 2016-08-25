@@ -16,9 +16,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the search module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Model
 {
@@ -50,6 +47,7 @@ class Model
      * Check if a synonym exists
      *
      * @param int $id The id of the item we're looking for.
+     *
      * @return bool
      */
     public static function existsSynonymById($id)
@@ -68,6 +66,7 @@ class Model
      *
      * @param string $term    The term we're looking for.
      * @param int    $exclude Exclude a certain id.
+     *
      * @return bool
      */
     public static function existsSynonymByTerm($term, $exclude = null)
@@ -110,6 +109,7 @@ class Model
      * Get a synonym
      *
      * @param int $id The id of the item we're looking for.
+     *
      * @return array
      */
     public static function getSynonym($id)
@@ -147,6 +147,7 @@ class Model
      * Insert a synonym
      *
      * @param array $item The data to insert in the db.
+     *
      * @return int
      */
     public static function insertSynonym($item)
@@ -167,9 +168,9 @@ class Model
     public static function invalidateCache()
     {
         $finder = new Finder();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
-            $fs->remove($file->getRealPath());
+            $filesystem->remove($file->getRealPath());
         }
 
         // clear the php5.5+ opcode cache

@@ -16,13 +16,23 @@ use Symfony\Component\HttpKernel\KernelInterface;
 /**
  * The Kernel provides a proper way to load an environment and DI container.
  * It also handles requests and responses.
- *
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Dave Lens <dave.lens@wijs.be>
- * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 abstract class Kernel extends BaseKernel implements KernelInterface
 {
+    /**
+     * Constructor.
+     *
+     * @param string $environment The environment
+     * @param bool   $debug       Whether to enable debugging or not
+     *
+     * @api
+     */
+    public function __construct($environment, $debug)
+    {
+        parent::__construct($environment, $debug);
+        $this->boot();
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -30,18 +40,30 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      */
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
-        if (false === $this->booted) {
-            $this->boot();
-
-            // define Fork constants
-            $this->defineForkConstants();
-        }
+        // boot if it hasn't booted yet
+        $this->boot();
 
         return $this->getHttpKernel()->handle($request, $type, $catch);
     }
 
     /**
+     * Boot and define the Fork Constants.
+     */
+    public function boot()
+    {
+        if ($this->booted) {
+            return;
+        }
+
+        parent::boot();
+
+        // define Fork constants
+        $this->defineForkConstants();
+    }
+
+    /**
      * This will disappear in time in favour of container-driven parameters.
+     *
      * @deprecated
      */
     public function defineForkConstants()
@@ -76,14 +98,32 @@ abstract class Kernel extends BaseKernel implements KernelInterface
 
         defined('ACTION_GROUP_TAG') || define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
         defined('ACTION_RIGHTS_LEVEL') || define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
+
+        defined('BACKEND_PATH') || define('BACKEND_PATH', PATH_WWW . '/src/Backend');
+        defined('BACKEND_CACHE_PATH') || define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
+        defined('BACKEND_CORE_PATH') || define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
+        defined('BACKEND_MODULES_PATH') || define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
+        defined('BACKEND_CORE_URL') || define('BACKEND_CORE_URL', '/src/Backend/Core');
+        defined('BACKEND_CACHE_URL') || define('BACKEND_CACHE_URL', '/src/Backend/Cache');
+
+        defined('FRONTEND_PATH') || define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
+        defined('FRONTEND_CACHE_PATH') || define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
+        defined('FRONTEND_CORE_PATH') || define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
+        defined('FRONTEND_MODULES_PATH') || define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
+        defined('FRONTEND_FILES_PATH') || define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
+        defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/Frontend/Files');
+        defined('FRONTEND_CORE_URL') || define('FRONTEND_CORE_URL', '/src/Frontend/Core');
+        defined('FRONTEND_CACHE_URL') || define('FRONTEND_CACHE_URL', '/src/Frontend/Cache');
+
+        defined('API_CORE_PATH') || define('API_CORE_PATH', PATH_WWW . '/Api');
     }
 
     /**
      * Builds the service container.
      *
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder The compiled service container
-     *
      * @throws \RuntimeException
+     *
+     * @return \Symfony\Component\DependencyInjection\ContainerBuilder The compiled service container
      */
     protected function buildContainer()
     {

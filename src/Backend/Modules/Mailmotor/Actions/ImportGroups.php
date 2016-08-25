@@ -17,8 +17,6 @@ use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the import-action, it will import groups and their subscribers from CampaignMonitor
- *
- * @author Dave Lens <dave.lens@netlash.com>
  */
 class ImportGroups extends BackendBaseActionAdd
 {
@@ -108,7 +106,7 @@ class ImportGroups extends BackendBaseActionAdd
                         array(
                              'name' => $group['name'],
                              'custom_fields' => $group['custom_fields'],
-                             'created_on' => BackendModel::getUTCDate()
+                             'created_on' => BackendModel::getUTCDate(),
                         )
                     );
 

@@ -18,9 +18,6 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the groups-action, it will display the overview of profile groups.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Lester Lievens <lester@netlash.com>
  */
 class Groups extends BackendBaseActionIndex
 {
@@ -103,7 +100,7 @@ class Groups extends BackendBaseActionIndex
                      'offset' => '[offset]',
                      'order' => '[order]',
                      'sort' => '[sort]',
-                     'name' => $this->filter['name']
+                     'name' => $this->filter['name'],
                 ),
                 false
             )
@@ -178,6 +175,7 @@ class Groups extends BackendBaseActionIndex
      *
      * @param int $groupId     Group id.
      * @param int $numProfiles Number of profiles.
+     *
      * @return string
      */
     public static function parseNumProfiles($groupId, $numProfiles)

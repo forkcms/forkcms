@@ -56,7 +56,7 @@ class EditTest extends WebTestCase
 
         $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
         $this->assertContains(
-            'Blog: edit article "Blogpost for functional tests"',
+            'form method="post" action="/private/en/blog/edit?id=1" id="edit"',
             $client->getResponse()->getContent()
         );
 
@@ -76,7 +76,7 @@ class EditTest extends WebTestCase
 
         // our url and our page should contain the new title of our blogpost
         $this->assertContains(
-            '&report=edited&var=Edited+blogpost+for+functional+tests&id=1',
+            '&report=edited&var=Edited%20blogpost%20for%20functional%20tests&id=1',
             $client->getHistory()->current()->getUri()
         );
         $this->assertContains(

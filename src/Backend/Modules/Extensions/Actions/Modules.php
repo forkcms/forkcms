@@ -11,9 +11,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the modules-action, it will display the overview of modules.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Modules extends BackendBaseActionIndex
 {

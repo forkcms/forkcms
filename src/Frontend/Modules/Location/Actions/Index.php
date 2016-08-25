@@ -10,15 +10,10 @@ namespace Frontend\Modules\Location\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the index-action, it has an overview of locations.
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Index extends FrontendBaseBlock
 {
@@ -37,7 +32,14 @@ class Index extends FrontendBaseBlock
      */
     public function execute()
     {
-        $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+        // define Google Maps API key
+        $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+
+        // check Google Maps API key, otherwise show error
+        if ($apikey == null) {
+            trigger_error('Please provide a Google Maps API key.');
+        }
+        $this->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, true, false);
 
         parent::execute();
 

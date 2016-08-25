@@ -14,8 +14,6 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * Get a field via ajax.
- *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class GetField extends BackendBaseAJAXAction
 {
@@ -41,7 +39,6 @@ class GetField extends BackendBaseAJAXAction
                 // get field
                 $field = BackendFormBuilderModel::getField($fieldId);
 
-
                 if ($field['type'] == 'radiobutton') {
                     $values = array();
 
@@ -51,7 +48,6 @@ class GetField extends BackendBaseAJAXAction
 
                     $field['settings']['values'] = $values;
                 }
-
 
                 // success output
                 $this->output(self::OK, array('field' => $field));

@@ -13,9 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class AjaxAction extends Base\Object
 {
@@ -30,8 +27,9 @@ class AjaxAction extends Base\Object
      * Execute the action
      * We will build the classname, require the class and call the execute method.
      *
-     * @return Response
      * @throws Exception
+     *
+     * @return Response
      */
     public function execute()
     {
@@ -76,8 +74,5 @@ class AjaxAction extends Base\Object
 
         // create config-object, the constructor will do some magic
         $this->config = new $configClass($this->getKernel(), $this->getModule());
-
-        // set action
-        $action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'Index';
     }
 }

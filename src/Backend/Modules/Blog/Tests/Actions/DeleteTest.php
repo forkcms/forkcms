@@ -38,7 +38,7 @@ class DeleteTest extends WebTestCase
             $client->getResponse()->getContent()
         );
 
-        $link = $crawler->selectLink('Delete')->link();
+        $link = $crawler->filter('a:contains("Delete")')->link();
         $client->click($link);
 
         // we're now on the delete page of the blogpost with id 1
@@ -59,7 +59,7 @@ class DeleteTest extends WebTestCase
             $client->getHistory()->current()->getUri()
         );
         $this->assertContains(
-            '&report=deleted&var=Blogpost+for+functional+tests',
+            '&report=deleted&var=Blogpost%20for%20functional%20tests',
             $client->getHistory()->current()->getUri()
         );
 

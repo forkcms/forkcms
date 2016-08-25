@@ -10,13 +10,10 @@ namespace Frontend\Modules\Faq\Widgets;
  */
 
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
 /**
  * This is a widget with most read faq-questions
- *
- * @author Jonas De Keukelaere <jonas@sumocoders.be>
  */
 class CategoryList extends FrontendBaseWidget
 {

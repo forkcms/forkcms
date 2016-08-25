@@ -1,7 +1,5 @@
 /**
  * Interaction for the mailmotor
- *
- * @author	Dave Lens <dave@netlash.com>
  */
 jsBackend.mailmotor =
 {
@@ -12,9 +10,9 @@ jsBackend.mailmotor =
 		jsBackend.mailmotor.changeGroup.init();
 		jsBackend.mailmotor.linkAccount.init();
 		jsBackend.mailmotor.resizing.init();
+		jsBackend.mailmotor.step2.init();
 		jsBackend.mailmotor.step3.init();
 		jsBackend.mailmotor.step4.init();
-		jsBackend.mailmotor.templateSelection.init();
 
 		// multiple text box for adding multiple emailaddresses
 		if($('form#add #email').length > 0)
@@ -250,7 +248,7 @@ jsBackend.mailmotor.linkAccount =
 					if(data.data.field)
 					{
 						// add error to the field respective field
-						$('#'+ data.data.field).after('<span class="formError">'+ data.message +'</span>');
+						$('#'+ data.data.field).after('<span class="formError text-danger">'+ data.message +'</span>');
 					}
 				}
 			}
@@ -264,9 +262,6 @@ jsBackend.mailmotor.resizing =
 	{
 		$iframe = $('#contentBox');
 		$iframeBox = $('#iframeBox');
-
-		// make the plain content textarea resizable
-		$('#contentPlain').resizable({ handles: 's' });
 
 		// make the iframe resizable
 		$iframeBox.resizable(
@@ -305,6 +300,36 @@ jsBackend.mailmotor.resizing =
 				$('#iframeOverlay').remove();
 			}
 		});
+	}
+};
+
+jsBackend.mailmotor.step2 =
+{
+	init: function()
+	{
+		// store the list items
+		var listItems = $('#templateSelection .js-template');
+
+		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
+		listItems.on('click', function(e)
+		{
+			// store the object
+			var radiobutton = $(this).find('input:radio:first');
+
+			// set checked
+			radiobutton.prop('checked', true);
+
+			// if the radiobutton is checked
+			if(radiobutton.is(':checked'))
+			{
+				// remove the selected state from all other templates
+				listItems.find('.panel').removeClass('panel-primary').addClass('panel-default');
+
+				// add a selected state to the parent
+				radiobutton.closest('.panel').addClass('panel-primary');
+			}
+		});
+
 	}
 };
 
@@ -369,6 +394,7 @@ jsBackend.mailmotor.step4 =
 		// cache objects
 		$form = $('#step4');
 		$confirmBox = $('#sendMailingConfirmationModal');
+		$confirmBoxSubmit = $('#sendMailingConfirmationSubmit');
 		$sendMailing = $('#sendMailing');
 		oSendDate = $('#sendOnDate');
 		oSendTime = $('#sendOnTime');
@@ -376,35 +402,6 @@ jsBackend.mailmotor.step4 =
 		// store data
 		var sendDate = oSendDate.val();
 		var sendTime = oSendTime.val();
-
-		// initialize the confirmation modal
-		$confirmBox.dialog(
-		{
-			autoOpen: false,
-			draggable: false,
-			width: 500,
-			modal: true,
-			resizable: false,
-			buttons:
-			[
-				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('SendMailing')),
-					click: function()
-					{
-						// send the mailing
-						jsBackend.mailmotor.step4.sendMail();
-					}
-				},
-				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-					click: function()
-					{
-						// close the dialog
-						$(this).dialog('close');
-					}
-				}
-			]
-		});
 
 		// value of date/time has changed
 		$(oSendDate.selector +', '+ oSendTime.selector).on('change', function(e)
@@ -444,7 +441,13 @@ jsBackend.mailmotor.step4 =
 			e.preventDefault();
 
 			// open the dialog
-			$confirmBox.dialog('open');
+			$confirmBox.modal('show');
+		});
+
+		// sendMailing is confirmed
+		$confirmBoxSubmit.on('click', function () {
+			jsBackend.mailmotor.step4.sendMail();
+			$confirmBox.modal('hide');
 		});
 	},
 
@@ -475,7 +478,7 @@ jsBackend.mailmotor.step4 =
 					$confirmBox.dialog('close');
 
 					// show message
-					jsBackend.messages.add('error', data.message);
+					jsBackend.messages.add('danger', data.message);
 				}
 				else
 				{
@@ -529,38 +532,6 @@ jsBackend.mailmotor.step4 =
 					window.location = '/private/'+ jsBackend.current.language +'/'+ jsBackend.current.module +'/index?report=mailing-sent';
 				}
 				// we do not need to handle errors here. These are catched by jsBackend and displayed.
-			}
-		});
-	}
-};
-
-jsBackend.mailmotor.templateSelection =
-{
-	init: function()
-	{
-		// store the list items
-		$listItems = $('#templateSelection li');
-
-		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
-		$listItems.on('click', function(e)
-		{
-			// prevent default
-			e.preventDefault();
-
-			// store the object
-			var radiobutton = $(this).find('input:radio:first');
-
-			// set checked
-			radiobutton.prop('checked', true);
-
-			// if the radiobutton is checked
-			if(radiobutton.is(':checked'))
-			{
-				// remove the selected state from all other templates
-				$listItems.removeClass('selected');
-
-				// add a selected state to the parent
-				radiobutton.parent('li').addClass('selected');
 			}
 		});
 	}

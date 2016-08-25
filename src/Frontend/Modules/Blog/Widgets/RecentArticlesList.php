@@ -10,14 +10,11 @@ namespace Frontend\Modules\Blog\Widgets;
  */
 
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is a widget with recent blog-articles
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class RecentArticlesList extends FrontendBaseWidget
 {
@@ -37,7 +34,7 @@ class RecentArticlesList extends FrontendBaseWidget
     private function parse()
     {
         // get RSS-link
-        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
+        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed into the metaCustom
