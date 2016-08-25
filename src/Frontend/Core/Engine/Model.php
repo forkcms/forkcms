@@ -362,6 +362,8 @@ class Model extends \Common\Core\Model
     /**
      * Push a notification to Apple's notifications-server
      *
+     * @deprecated: no more support for the Fork-app.
+     *
      * @param mixed  $alert             The message/dictionary to send.
      * @param int    $badge             The number for the badge.
      * @param string $sound             The sound that should be played.
@@ -369,6 +371,11 @@ class Model extends \Common\Core\Model
      */
     public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
     {
+        trigger_error(
+            'pushToAppleApp is deprecated since there was never an official Microsoft app.',
+            E_USER_DEPRECATED
+        );
+
         // get ForkAPI-keys
         $publicKey = self::get('fork.settings')->get('Core', 'fork_api_public_key', '');
         $privateKey = self::get('fork.settings')->get('Core', 'fork_api_private_key', '');

@@ -330,6 +330,8 @@ class ForkAPI
 	/**
 	 * Push a notification to apple
 	 *
+	 * @deprecated: no more support for the Fork-app.
+	 *
 	 * @return	array								The device tokens that aren't valid.
 	 * @param	mixed $deviceTokens					The device token(s) for the receiver.
 	 * @param	mixed $alert						The message/dictonary to send.
@@ -339,6 +341,11 @@ class ForkAPI
 	 */
 	public function applePush($deviceTokens, $alert, $badge = null, $sound = null, array $extraDictionaries = null)
 	{
+		trigger_error(
+			'applePush is deprecated since the Fork-app is not maintained anymore.',
+			E_USER_DEPRECATED
+		);
+
 		// build parameters
 		$parameters['device_token'] = (array) $deviceTokens;
 		$parameters['alert'] = $alert;
@@ -370,11 +377,18 @@ class ForkAPI
 	/**
 	 * Register a new/old Apple device within the Fork API
 	 *
+	 * @deprecated: no more support for the Fork-app.
+	 *
 	 * @return	bool
 	 * @param	string $deviceToken		The device token to register.
 	 */
 	public function appleRegisterDevice($deviceToken)
 	{
+		trigger_error(
+			'appleRegisterDevice is deprecated since the Fork-app is not maintained anymore.',
+			E_USER_DEPRECATED
+		);
+
 		// build parameters
 		$parameters['device_token'] = str_replace(' ', '', (string) $deviceToken);
 
@@ -422,6 +436,8 @@ class ForkAPI
 	/**
 	 * Push a notification to microsoft
 	 *
+	 * @deprecated: no more support for the Microsoft-app.
+	 *
 	 * @return	array								The device tokens that aren't valid.
 	 * @param	mixed $channelUri					The channel URI(s) for the receiver.
 	 * @param	string $title						The title for the tile to send.
@@ -435,6 +451,11 @@ class ForkAPI
 	 */
 	public function microsoftPush($channelUri, $title, $count = null, $image = null, $backTitle = null, $backText = null, $backImage = null, $tile = null, $uri = null)
 	{
+		trigger_error(
+			'microsoftPush is deprecated since there was never an official Microsoft app.',
+			E_USER_DEPRECATED
+		);
+
 		// build parameters
 		$parameters['channel_uri'] = (array) $channelUri;
 		$parameters['title'] = (string) $title;
@@ -454,11 +475,18 @@ class ForkAPI
 	/**
 	 * Register a new/old Microsoft device within the Fork API
 	 *
+	 * @deprecated: no more support for the Microsoft-app.
+	 *
 	 * @return	bool
 	 * @param	string $channelUri		The channel uri to register.
 	 */
 	public function microsoftRegisterDevice($channelUri)
 	{
+		trigger_error(
+			'microsoftRegisterDevice is deprecated since there was never an official Microsoft app.',
+			E_USER_DEPRECATED
+		);
+
 		// build parameters
 		$parameters['channel_uri'] = (string) $channelUri;
 
