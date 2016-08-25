@@ -248,7 +248,7 @@ class Form extends \SpoonForm
         }
 
         // reformat if defined as an integer
-        if (\SpoonFilter::isInteger($uploadMaxFileSize)) {
+        if (is_numeric($uploadMaxFileSize)) {
             return $uploadMaxFileSize / 1024 . 'MB';
         }
 
