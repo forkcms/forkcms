@@ -19,7 +19,7 @@ class Detail extends FrontendBaseWidget
     {
         parent::execute();
 
-        $contentBlock = $this->get('content_blocks.repository.content_blocks')->findOneByIdAndLocale(
+        $contentBlock = $this->get('content_blocks.repository.content_block')->findOneByIdAndLocale(
             (int) $this->data['id'],
             Locale::frontendLanguage()
         );
