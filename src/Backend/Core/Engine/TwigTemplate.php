@@ -74,13 +74,13 @@ class TwigTemplate extends BaseTwigTemplate
             $vendorTwigBridgeDir . '/Resources/views/Form'
         ));
 
-        $twig = new \Twig_Environment($loader, array(
+        $twig = new Twig_Environment($loader, array(
             'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
             'debug' => $this->debugMode,
         ));
 
         // connect symphony forms
-        $formEngine = new TwigRendererEngine(array('Layout/Templates/form_layout.html.twig'));
+        $formEngine = new TwigRendererEngine(array('Layout/Templates/FormLayout.html.twig'));
         $formEngine->setEnvironment($twig);
         $twig->addExtension(
             new SymfonyFormExtension(
