@@ -38,6 +38,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
 
         $this->forkSettings = Model::get('fork.settings');
+        // fork has been installed
         if ($this->forkSettings) {
             $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
             $loader = $this->environment->getLoader();
@@ -46,18 +47,18 @@ class TwigTemplate extends BaseTwigTemplate
                 new \Twig_Loader_Filesystem($this->getLoadingFolders()),
             ));
             $this->environment->setLoader($loader);
+
+            // connect symphony forms
+            $formEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'));
+            $formEngine->setEnvironment($this->environment);
+            $this->environment->addExtension(
+                new SymfonyFormExtension(
+                    new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
+                )
+            );
         }
 
         $this->environment->disableStrictVariables();
-
-        // connect symphony forms
-        $formEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'));
-        $formEngine->setEnvironment($this->environment);
-        $this->environment->addExtension(
-            new SymfonyFormExtension(
-                new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
-            )
-        );
 
         // init Form extension
         new FormExtension($this->environment);
