@@ -116,6 +116,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('email', $this->profile['email']);
         $this->frm->addCheckbox('new_password');
         $this->frm->addPassword('password');
+        $this->frm->addPassword('password_double_check');
         $this->frm->addText('display_name', $this->profile['display_name']);
         $this->frm->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
         $this->frm->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'));
@@ -224,6 +225,7 @@ class Edit extends BackendBaseActionEdit
             $txtDisplayName = $this->frm->getField('display_name');
             $chkNewPassword = $this->frm->getField('new_password');
             $txtPassword = $this->frm->getField('password');
+            $txtPasswordDoubleCheck = $this->frm->getField('password_double_check');
             $txtFirstName = $this->frm->getField('first_name');
             $txtLastName = $this->frm->getField('last_name');
             $txtCity = $this->frm->getField('city');
@@ -263,6 +265,13 @@ class Edit extends BackendBaseActionEdit
             // because then if the password field is empty, it will generate a new password
             if ($chkNewPassword->isChecked() && !$this->notifyProfile) {
                 $txtPassword->isFilled(BL::err('FieldIsRequired'));
+                $txtPasswordDoubleCheck->isFilled(BL::err('FieldIsRequired'));
+
+                if ($txtPassword->isFilled() && $txtPasswordDoubleCheck->isFilled()) {
+                    if ($txtPassword->getValue() != $txtPasswordDoubleCheck->getValue()) {
+                        $txtPasswordDoubleCheck->addError(BL::err('PasswordRepeatIsRequired'));
+                    }
+                }
             }
 
             // one of the bday fields are filled in
