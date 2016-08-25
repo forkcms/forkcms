@@ -67,13 +67,20 @@ class ContentBlockType extends AbstractType
             );
         }
 
+
+        $isVisibleOptions = [
+            'label' => 'lbl.VisibleOnSite',
+            'required' => false,
+        ];
+
+        if (!array_key_exists('data', $options)) {
+            $isVisibleOptions['attr']['checked'] = 'checked';
+        }
+
         $builder->add(
             'isVisible',
             CheckboxType::class,
-            [
-                'label' => 'lbl.VisibleOnSite',
-                'required' => false,
-            ]
+            $isVisibleOptions
         );
     }
 
