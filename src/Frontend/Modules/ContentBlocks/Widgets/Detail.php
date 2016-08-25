@@ -3,7 +3,6 @@
 namespace Frontend\Modules\ContentBlocks\Widgets;
 
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
-use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Language\Locale;
 

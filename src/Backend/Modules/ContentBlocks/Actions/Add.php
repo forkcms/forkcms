@@ -12,6 +12,7 @@ namespace Backend\Modules\ContentBlocks\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\ContentBlocks\Command\CreateContentBlock;
+use Backend\Modules\ContentBlocks\Event\ContentBlockCreated;
 use Backend\Modules\ContentBlocks\Form\ContentBlockType;
 
 /**
@@ -48,6 +49,11 @@ class Add extends BackendBaseActionAdd
 
         // The command bus will handle the saving of the content block in the database.
         $this->get('command_bus')->handle($createContentBlock);
+
+        $this->get('event_dispatcher')->dispatch(
+            ContentBlockCreated::EVENT_NAME,
+            new ContentBlockCreated($createContentBlock->contentBlock)
+        );
 
         return $this->redirect(
             BackendModel::createURLForAction(

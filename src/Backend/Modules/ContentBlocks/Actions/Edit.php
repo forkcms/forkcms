@@ -16,6 +16,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language;
 use Backend\Modules\ContentBlocks\Command\UpdateContentBlock;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\Event\ContentBlockUpdated;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\Form\ContentBlockType;
 use Backend\Modules\ContentBlocks\DataGrid\ContentBlockRevisionDataGrid;
@@ -64,6 +65,11 @@ class Edit extends BackendBaseActionEdit
 
         // The command bus will handle the saving of the content block in the database.
         $this->get('command_bus')->handle($updateContentBlock);
+
+        $this->get('event_dispatcher')->dispatch(
+            ContentBlockUpdated::EVENT_NAME,
+            new ContentBlockUpdated($updateContentBlock->contentBlock)
+        );
 
         return $this->redirect(
             BackendModel::createURLForAction(

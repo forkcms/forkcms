@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\Command\DeleteContentBlock;
+use Backend\Modules\ContentBlocks\Event\ContentBlockDeleted;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 
 /**
@@ -39,6 +40,11 @@ class Delete extends BackendBaseActionDelete
 
         // The command bus will handle the saving of the content block in the database.
         $this->get('command_bus')->handle(new DeleteContentBlock($contentBlock));
+
+        $this->get('event_dispatcher')->dispatch(
+            ContentBlockDeleted::EVENT_NAME,
+            new ContentBlockDeleted($contentBlock)
+        );
 
         return $this->redirect(
             BackendModel::createURLForAction(
