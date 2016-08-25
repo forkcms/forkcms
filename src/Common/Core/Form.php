@@ -236,6 +236,39 @@ class Form extends \SpoonForm
         // create and return a time field
         return parent::addTime($name, $value, $class, $classError);
     }
+
+    /**
+     * @return string|null
+     */
+    public static function getUploadMaxFileSize()
+    {
+        $uploadMaxFileSize = ini_get('upload_max_filesize');
+        if ($uploadMaxFileSize === false) {
+            return null;
+        }
+
+        // reformat if defined as an integer
+        if (is_numeric($uploadMaxFileSize)) {
+            return $uploadMaxFileSize / 1024 . 'MB';
+        }
+
+        // reformat if specified in kB
+        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) == 'K') {
+            return mb_substr($uploadMaxFileSize, 0, -1) . 'kB';
+        }
+
+        // reformat if specified in MB
+        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) == 'M') {
+            return $uploadMaxFileSize . 'B';
+        }
+
+        // reformat if specified in GB
+        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) == 'G') {
+            return $uploadMaxFileSize . 'B';
+        }
+
+        return $uploadMaxFileSize;
+    }
 }
 
 /**

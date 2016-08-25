@@ -3437,6 +3437,20 @@
         <translation language="el"><![CDATA[Αυτό το πεδίο είναι υποχρεωτικό]]></translation>
         <translation language="pl"><![CDATA[To pole jest wymagane.]]></translation>
       </item>
+      <item type="error" name="FileTooBig">
+        <translation language="nl"><![CDATA[maximum bestandsgrootte: %1$s]]></translation>
+        <translation language="en"><![CDATA[maximum filesize: %1$s]]></translation>
+        <translation language="hu"><![CDATA[maximális fájlméret: %1$s]]></translation>
+        <translation language="it"><![CDATA[dimensione massima: %1$s]]></translation>
+        <translation language="ru"><![CDATA[максимальный размер: %1$s]]></translation>
+        <translation language="zh"><![CDATA[不大于%1$s]]></translation>
+        <translation language="de"><![CDATA[(maximale Dateigröße: %1$s)]]></translation>
+        <translation language="fr"><![CDATA[taille de fichier maximale: %1$s]]></translation>
+        <translation language="es"><![CDATA[(máximo tamaño del archivo: %1$s)]]></translation>
+        <translation language="lt"><![CDATA[(maksimalus dydis: %1$s)]]></translation>
+        <translation language="sv"><![CDATA[maximal filstorlek: %1$s]]></translation>
+        <translation language="el"><![CDATA[μέγιστο μέγεθος αρχείου: %1$s]]></translation>
+      </item>
       <item type="error" name="FormError">
         <translation language="nl"><![CDATA[Er ging iets mis]]></translation>
         <translation language="en"><![CDATA[Something went wrong]]></translation>
@@ -11425,6 +11439,20 @@
         <translation language="lt"><![CDATA[Būtinas laukas.]]></translation>
         <translation language="sv"><![CDATA[Detta fält är obligatoriskt.]]></translation>
         <translation language="el"><![CDATA[Αυτό το πεδίο είναι υποχρεωτικό.]]></translation>
+      </item>
+      <item type="error" name="FileTooBig">
+        <translation language="nl"><![CDATA[maximum bestandsgrootte: %1$s]]></translation>
+        <translation language="en"><![CDATA[maximum filesize: %1$s]]></translation>
+        <translation language="hu"><![CDATA[maximális fájlméret: %1$s]]></translation>
+        <translation language="it"><![CDATA[dimensione massima: %1$s]]></translation>
+        <translation language="ru"><![CDATA[максимальный размер: %1$s]]></translation>
+        <translation language="zh"><![CDATA[不大于%1$s]]></translation>
+        <translation language="de"><![CDATA[(maximale Dateigröße: %1$s)]]></translation>
+        <translation language="fr"><![CDATA[taille de fichier maximale: %1$s]]></translation>
+        <translation language="es"><![CDATA[(máximo tamaño del archivo: %1$s)]]></translation>
+        <translation language="lt"><![CDATA[(maksimalus dydis: %1$s)]]></translation>
+        <translation language="sv"><![CDATA[maximal filstorlek: %1$s]]></translation>
+        <translation language="el"><![CDATA[μέγιστο μέγεθος αρχείου: %1$s]]></translation>
       </item>
       <item type="error" name="ForkAPIKeys">
         <translation language="nl"><![CDATA[Fork API-keys nog niet geconfigureerd.]]></translation>
