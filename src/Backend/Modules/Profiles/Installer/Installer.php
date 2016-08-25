@@ -11,7 +11,7 @@ namespace Backend\Modules\Profiles\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
 use Symfony\Component\Filesystem\Filesystem;
-use Common\Language;
+use Backend\Core\Engine\Language;
 
 /**
  * Installer for the profiles module.
@@ -157,6 +157,9 @@ class Installer extends ModuleInstaller
                 array('Profiles', $language)
             )
             ) {
+                // We must define the locale we want to insert the page into
+                Language::setLocale($language);
+
                 // activate page
                 $this->insertPage(
                     array(
