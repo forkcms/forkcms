@@ -14,6 +14,7 @@ FileETag MTime Size
 
 	# forbidden folders
 	RewriteRule \.git - [F]
+	RewriteRule vendor/.* - [F]
 	RewriteRule .*\.gitignore - [F]
 	RewriteRule \.editorconfig - [F]
 	RewriteRule \.travis.yml - [F]
