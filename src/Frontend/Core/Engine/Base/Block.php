@@ -82,13 +82,6 @@ class Block extends Object
     private $templatePath;
 
     /**
-     * A reference to the URL-instance
-     *
-     * @var    Url
-     */
-    public $URL;
-
-    /**
      * @param KernelInterface $kernel
      * @param string          $module The name of the module.
      * @param string          $action The name of the action.

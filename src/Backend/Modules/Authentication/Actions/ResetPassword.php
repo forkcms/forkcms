@@ -23,13 +23,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 class ResetPassword extends BackendBaseActionAdd
 {
     /**
-     * Form instance
-     *
-     * @var	BackendForm
-     */
-    protected $frm;
-
-    /**
      * User email
      *
      * @var	$email

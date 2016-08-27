@@ -56,13 +56,6 @@ class Widget extends Object
     public $templatePath;
 
     /**
-     * A reference to the URL-instance
-     *
-     * @var    Url
-     */
-    public $URL;
-
-    /**
      * @param KernelInterface $kernel
      * @param string          $module The module to use.
      * @param string          $action The action to use.
