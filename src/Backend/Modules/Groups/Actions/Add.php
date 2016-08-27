@@ -482,16 +482,6 @@ class Add extends BackendBaseActionAdd
     }
 
     /**
-     * Parse the form
-     *
-     * @todo method is not necessary see the content...
-     */
-    protected function parse()
-    {
-        parent::parse();
-    }
-
-    /**
      * Validate the form
      */
     private function validateForm()
