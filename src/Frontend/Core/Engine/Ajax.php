@@ -139,6 +139,8 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
      * Set action
      *
      * @param string $value The action that should be executed.
+     *
+     * @throws Exception
      */
     public function setAction($value)
     {
@@ -169,6 +171,8 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
      * Set the language
      *
      * @param string $value The (interface-)language, will be used to parse labels.
+     *
+     * @throws Exception
      */
     public function setLanguage($value)
     {
@@ -205,6 +209,8 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
      * Set module
      *
      * @param string $value The module, wherefore an action will be executed.
+     *
+     * @throws Exception
      */
     public function setModule($value)
     {

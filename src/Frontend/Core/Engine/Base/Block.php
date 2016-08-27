@@ -486,6 +486,8 @@ class Block extends Object
      *
      * @param string $URL  The URL whereto will be redirected.
      * @param int    $code The redirect code, default is 302 which means this is a temporary redirect.
+     *
+     * @throws RedirectException
      */
     public function redirect($URL, $code = 302)
     {

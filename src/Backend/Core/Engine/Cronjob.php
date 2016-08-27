@@ -185,6 +185,8 @@ class Cronjob extends Object implements \ApplicationInterface
      *
      * @param string $action The action to load.
      * @param string $module The module to load.
+     *
+     * @throws Exception
      */
     public function setAction($action, $module = null)
     {
@@ -206,6 +208,8 @@ class Cronjob extends Object implements \ApplicationInterface
      * Set language
      *
      * @param string $value The language to load.
+     *
+     * @throws Exception
      */
     public function setLanguage($value)
     {
@@ -233,6 +237,8 @@ class Cronjob extends Object implements \ApplicationInterface
      * We can't rely on the parent setModule function, because a cronjob requires no login
      *
      * @param string $module The module to load.
+     *
+     * @throws Exception
      */
     public function setModule($module)
     {

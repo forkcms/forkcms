@@ -32,7 +32,8 @@ class CacheBuilder
     protected $siteMapId;
 
     /**
-     * @param \SpoonDatabase $database
+     * @param \SpoonDatabase         $database
+     * @param CacheItemPoolInterface $cache
      */
     public function __construct(\SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
@@ -186,6 +187,11 @@ class CacheBuilder
         return $pageData;
     }
 
+    /**
+     * @param $page array
+     * @param $pageData array
+     * @return string
+     */
     protected function getPageTreeType($page, &$pageData)
     {
         // calculate tree-type
@@ -244,6 +250,10 @@ class CacheBuilder
         return $treeType;
     }
 
+    /**
+     * @param $page array
+     * @return array
+     */
     protected function getPageExtraBlocks($page, $pageData)
     {
         // add extras to the page array

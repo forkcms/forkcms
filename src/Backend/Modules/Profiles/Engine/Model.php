@@ -631,9 +631,14 @@ class Model
      * Import CSV data
      *
      * @param array $data The array from the .csv file
-     * @param int[optional] $groupId Adding these profiles to a group
-     * @param bool[optional] $overwriteExisting If set to true, this will overwrite existing profiles
-     * @param return array('count' => array('exists' => 0, 'inserted' => 0));
+     * @param       int   [optional] $groupId Adding these profiles to a group
+     * @param bool  $overwriteExisting
+     *
+     * @return array array('count' => array('exists' => 0, 'inserted' => 0));
+     *
+     * @throws BackendException
+     * @internal param $bool [optional] $overwriteExisting If set to true, this will overwrite existing profiles
+     *
      */
     public static function importCsv($data, $groupId = null, $overwriteExisting = false)
     {

@@ -24,7 +24,7 @@ class FormNode extends \Twig_Node
     }
 
     /**
-     * @param Twig_Compiler $compiler
+     * @param \Twig_Compiler $compiler
      */
     public function compile(\Twig_Compiler $compiler)
     {

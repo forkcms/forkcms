@@ -210,6 +210,7 @@ class Navigation extends FrontendBaseObject
      * @param int    $depthCounter A counter that will hold the current depth.
      *
      * @return string
+     * @throws Exception
      */
     public static function getNavigationHTML(
         $type = 'page',

@@ -326,6 +326,7 @@ class Model extends \Common\Core\Model
      *
      * @return bool|string Will return a boolean, except when we can't decide the status
      *                          (unknown will be returned in that case)
+     * @throws \Exception
      */
     public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
     {
@@ -366,6 +367,8 @@ class Model extends \Common\Core\Model
      * @param int    $badge             The number for the badge.
      * @param string $sound             The sound that should be played.
      * @param array  $extraDictionaries Extra dictionaries.
+     *
+     * @throws Exception
      */
     public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
     {

@@ -16,7 +16,6 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
  * This class will handle AJAX-related stuff
  */
 
-/** @noinspection PhpUndefinedClassInspection */
 class Ajax extends Base\Object implements \ApplicationInterface
 {
     /**

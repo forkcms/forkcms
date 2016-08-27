@@ -179,6 +179,9 @@ class Authentication
         return self::$user;
     }
 
+    /**
+     * @return array
+     */
     public static function getAllowedActions()
     {
         // we will cache everything
@@ -264,6 +267,9 @@ class Authentication
         return false;
     }
 
+    /**
+     * @return array
+     */
     private static function getAlwaysAllowed()
     {
         // always allowed actions (yep, hardcoded, because we don't want other people to fuck up)

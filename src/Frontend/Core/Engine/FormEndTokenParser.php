@@ -8,10 +8,10 @@ namespace Frontend\Core\Engine;
 class FormEndTokenParser extends \Twig_TokenParser
 {
     /**
-     * @param Twig_Token $token Token consumed by the lexer.
+     * @param \Twig_Token $token Token consumed by the lexer.
      *
-     * @return Twig_Node
-     * @throw Twig_Error_Syntax
+     * @return \Twig_Node
+     * @throws \Twig_Error_Syntax
      */
     public function parse(\Twig_Token $token)
     {

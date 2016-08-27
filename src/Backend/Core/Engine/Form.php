@@ -73,6 +73,7 @@ class Form extends \Common\Core\Form
      * @param string $class Class(es) that will be applied on the button.
      *
      * @return \SpoonFormButton
+     * @throws Exception
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
     {
