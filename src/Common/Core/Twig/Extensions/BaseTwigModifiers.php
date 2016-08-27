@@ -263,7 +263,7 @@ class BaseTwigModifiers
             // more characters
             // hellip is seen as 1 char, so remove it from length
             if ($useHellip) {
-                $length = $length - 1;
+                --$length;
             }
 
             // truncate
