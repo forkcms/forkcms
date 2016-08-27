@@ -230,7 +230,7 @@ class Form extends \Common\Core\Form
         }
 
         // create and return a textarea for the editor
-        return $this->addTextArea($name, $value, $class, $classError, $HTML);
+        return $this->addTextarea($name, $value, $class, $classError, $HTML);
     }
 
     /**

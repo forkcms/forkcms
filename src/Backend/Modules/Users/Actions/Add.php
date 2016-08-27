@@ -88,8 +88,8 @@ class Add extends BackendBaseActionAdd
             BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing')
         );
 
-        $this->frm->addDropDown('csv_split_character', BackendUsersModel::getCSVSplitCharacters());
-        $this->frm->addDropDown('csv_line_ending', BackendUsersModel::getCSVLineEndings());
+        $this->frm->addDropdown('csv_split_character', BackendUsersModel::getCSVSplitCharacters());
+        $this->frm->addDropdown('csv_line_ending', BackendUsersModel::getCSVLineEndings());
 
         // permissions
         $this->frm->addCheckbox('active', true);

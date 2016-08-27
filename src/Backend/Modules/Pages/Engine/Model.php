@@ -916,7 +916,7 @@ class Model
                  ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
-        $html .= self::getSubTree($navigation, 1);
+        $html .= self::getSubtree($navigation, 1);
 
         // end
         $html .= '		</li>' . "\n";
@@ -947,7 +947,7 @@ class Model
                              ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                     // insert subtree
-                    $html .= self::getSubTree($navigation, $page['page_id']);
+                    $html .= self::getSubtree($navigation, $page['page_id']);
 
                     // end
                     $html .= '		</li>' . "\n";
@@ -983,7 +983,7 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
-                $html .= self::getSubTree($navigation, $page['page_id']);
+                $html .= self::getSubtree($navigation, $page['page_id']);
 
                 // end
                 $html .= '		</li>' . "\n";
@@ -1018,7 +1018,7 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
-                $html .= self::getSubTree($navigation, $page['page_id']);
+                $html .= self::getSubtree($navigation, $page['page_id']);
 
                 // end
                 $html .= '		</li>' . "\n";
@@ -1117,7 +1117,7 @@ class Model
         }
 
         // get full URL
-        $fullURL = self::getFullUrl($parentId) . '/' . $URL;
+        $fullURL = self::getFullURL($parentId) . '/' . $URL;
 
         // get info about parent page
         $parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());

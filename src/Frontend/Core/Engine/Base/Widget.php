@@ -134,7 +134,7 @@ class Widget extends Object
      */
     public function addJSData($key, $value)
     {
-        $this->header->addJSData($this->getModule(), $key, $value);
+        $this->header->addJsData($this->getModule(), $key, $value);
     }
 
     /**

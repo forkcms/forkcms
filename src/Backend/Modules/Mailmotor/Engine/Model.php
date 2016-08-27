@@ -1437,10 +1437,10 @@ class Model
         foreach ($finder->directories()->in(BACKEND_MODULES_PATH . '/Mailmotor/Templates/' . $language) as $directory) {
             $item = array();
             $item['language'] = $language;
-            $item['value'] = $directory->getBaseName();
+            $item['value'] = $directory->getBasename();
             $item['label'] = BL::lbl(
                 'Template' . \SpoonFilter::toCamelCase(
-                    \SpoonFilter::toCamelCase($directory->getBaseName(), '-'),
+                    \SpoonFilter::toCamelCase($directory->getBasename(), '-'),
                     '_'
                 )
             );

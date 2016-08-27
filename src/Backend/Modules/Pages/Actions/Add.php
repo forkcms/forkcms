@@ -149,7 +149,7 @@ class Add extends BackendBaseActionAdd
         $block['formElements']['chkVisible'] = $this->frm->addCheckbox('block_visible_' . $block['index'], true);
         $block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], 0);
         $block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index'], 'fallback');
-        $block['formElements']['txtHTML'] = $this->frm->addTextArea(
+        $block['formElements']['txtHTML'] = $this->frm->addTextarea(
             'block_html_' . $block['index']
         ); // this is no editor; we'll add the editor in JS
 
@@ -230,7 +230,7 @@ class Add extends BackendBaseActionAdd
                 'block_position_' . $block['index'],
                 $block['position']
             );
-            $block['formElements']['txtHTML'] = $this->frm->addTextArea(
+            $block['formElements']['txtHTML'] = $this->frm->addTextarea(
                 'block_html_' . $block['index'],
                 $block['html']
             ); // this is no editor; we'll add the editor in JS

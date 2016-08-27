@@ -155,7 +155,7 @@ class InstallerController extends Controller
 
     protected function checkInstall()
     {
-        $filesystem = new FileSystem();
+        $filesystem = new Filesystem();
         $kernelDir = $this->container->getParameter('kernel.root_dir');
         $parameterFile = $kernelDir . 'config/parameters.yml';
         if ($filesystem->exists($parameterFile)) {

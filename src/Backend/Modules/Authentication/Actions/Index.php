@@ -266,8 +266,8 @@ class Index extends BackendBaseActionIndex
         $allowedModule = $this->getAllowedModule();
         $allowedAction = $this->getAllowedAction($allowedModule);
         $allowedModuleActionUrl = $allowedModule ?
-            BackendModel::createUrlForAction($allowedAction, $allowedModule) :
-            BackendModel::createUrlForAction('Index', 'Authentication');
+            BackendModel::createURLForAction($allowedAction, $allowedModule) :
+            BackendModel::createURLForAction('Index', 'Authentication');
 
         $userEmail = BackendAuthentication::getUser()->getEmail();
         $this->getContainer()->get('logger')->info(

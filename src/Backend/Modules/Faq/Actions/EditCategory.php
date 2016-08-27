@@ -88,7 +88,7 @@ class EditCategory extends BackendBaseActionEdit
     private function validateForm()
     {
         if ($this->frm->isSubmitted()) {
-            $this->meta->setUrlCallback(
+            $this->meta->setURLCallback(
                 'Backend\Modules\Faq\Engine\Model',
                 'getURLForCategory',
                 array($this->record['id'])

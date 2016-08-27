@@ -306,7 +306,7 @@ class CMHelper
             $password = BackendModel::get('fork.settings')->get('Mailmotor', 'cm_password');
 
             // init CampaignMonitor object
-            $cm = new \CampaignMonitor($url, $username, $password, 60, self::getClientId());
+            $cm = new \CampaignMonitor($url, $username, $password, 60, self::getClientID());
 
             // set CampaignMonitor object reference
             BackendModel::getContainer()->set('campaignmonitor', $cm);

@@ -172,12 +172,12 @@ class Edit extends BackendBaseActionEdit
             $this->user->getSetting('number_format', 'dot_nothing')
         );
 
-        $this->frm->addDropDown(
+        $this->frm->addDropdown(
             'csv_split_character',
             BackendUsersModel::getCSVSplitCharacters(),
             $this->user->getSetting('csv_split_character')
         );
-        $this->frm->addDropDown(
+        $this->frm->addDropdown(
             'csv_line_ending',
             BackendUsersModel::getCSVLineEndings(),
             $this->user->getSetting('csv_line_ending')
