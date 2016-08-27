@@ -82,7 +82,7 @@ class Ajax extends Base\Object implements \ApplicationInterface
         $possibleLanguages = Language::getWorkingLanguages();
 
         // validate
-        if (!in_array($language, array_keys($possibleLanguages))) {
+        if (!array_key_exists($language, $possibleLanguages)) {
             throw new Exception('Language invalid.');
         }
 

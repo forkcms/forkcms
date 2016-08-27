@@ -213,7 +213,7 @@ class Cronjob extends Object implements \ApplicationInterface
         $possibleLanguages = Language::getWorkingLanguages();
 
         // validate
-        if (!in_array($value, array_keys($possibleLanguages))) {
+        if (!array_key_exists($value, $possibleLanguages)) {
             throw new Exception('Invalid language.');
         }
 

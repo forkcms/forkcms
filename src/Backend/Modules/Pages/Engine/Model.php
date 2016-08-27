@@ -1150,7 +1150,7 @@ class Model
         }
 
         // check if it is an application
-        if (in_array(trim($fullURL, '/'), array_keys(\ApplicationRouting::getRoutes()))) {
+        if (array_key_exists(trim($fullURL, '/'), \ApplicationRouting::getRoutes())) {
             // add a number
             $URL = BackendModel::addNumber($URL);
 
