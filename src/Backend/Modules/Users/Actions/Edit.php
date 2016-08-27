@@ -386,7 +386,7 @@ class Edit extends BackendBaseActionEdit
                     }
 
                     // create new filename
-                    $filename = rand(0, 3) . '_' . $user['id'] . '.' . $fields['avatar']->getExtension();
+                    $filename = mt_rand(0, 3) . '_' . $user['id'] . '.' . $fields['avatar']->getExtension();
 
                     // add into settings to update
                     $settings['avatar'] = $filename;

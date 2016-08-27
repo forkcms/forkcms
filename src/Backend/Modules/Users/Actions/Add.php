@@ -218,7 +218,7 @@ class Add extends BackendBaseActionAdd
                 // has the user submitted an avatar?
                 if ($this->frm->getField('avatar')->isFilled()) {
                     // create new filename
-                    $filename = rand(0, 3) . '_' . $user['id'] . '.' . $this->frm->getField('avatar')->getExtension();
+                    $filename = mt_rand(0, 3) . '_' . $user['id'] . '.' . $this->frm->getField('avatar')->getExtension();
 
                     // add into settings to update
                     $settings['avatar'] = $filename;

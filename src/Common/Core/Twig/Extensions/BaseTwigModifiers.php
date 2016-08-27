@@ -99,7 +99,7 @@ class BaseTwigModifiers
         $min = (int) $min;
         $max = (int) $max;
 
-        return rand($min, $max);
+        return mt_rand($min, $max);
     }
 
     /**

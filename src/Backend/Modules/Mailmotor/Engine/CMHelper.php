@@ -1042,7 +1042,7 @@ class CMHelper
         }
 
         // overwrite the name, because the previous one is taken -.-
-        $item['name'] .= ' (#' . rand(0, 999) . ')';
+        $item['name'] .= ' (#' . mt_rand(0, 999) . ')';
 
         // re-insert the mailing in CM
         self::insertMailing($item);
