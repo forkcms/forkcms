@@ -210,7 +210,7 @@ class RequirementsChecker
         );
         $this->checkRequirement(
             'fileSystemBackendModules',
-            self::isWritable($this->rootDir . 'src/Backend/Modules/'),
+            $this->isWritable($this->rootDir . 'src/Backend/Modules/'),
             self::STATUS_WARNING
         );
         $this->checkRequirement(
