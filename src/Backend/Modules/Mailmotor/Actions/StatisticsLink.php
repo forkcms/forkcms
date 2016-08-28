@@ -47,6 +47,13 @@ class StatisticsLink extends BackendBaseActionIndex
     public $linkURL;
 
     /**
+     * The form instance
+     *
+     * @var BackendForm
+     */
+    protected $frm;
+
+    /**
      * Execute the action
      */
     public function execute()

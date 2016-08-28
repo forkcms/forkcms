@@ -66,6 +66,13 @@ class Add extends BackendBaseActionAdd
     private $widgetInstances;
 
     /**
+     * Hidden widgets on dashboard
+     *
+     * @var array
+     */
+    private $hiddenOnDashboard;
+
+    /**
      * Bundle all actions that need to be bundled
      */
     private function bundleActions()

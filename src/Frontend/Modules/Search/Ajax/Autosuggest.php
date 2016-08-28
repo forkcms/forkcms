@@ -77,6 +77,13 @@ class Autosuggest extends FrontendBaseAJAXAction
     private $term = '';
 
     /**
+     * Autosuggested item length
+     *
+     * @var int
+     */
+    private $length;
+
+    /**
      * Display
      */
     private function display()
