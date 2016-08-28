@@ -163,12 +163,12 @@ class Api extends \KernelLoader implements \ApplicationInterface
             }
         } catch (\Exception $e) {
             // if we are debugging we should see the exceptions
-            if ($this->getContainer()->getParameter('kernel.debug')) {
-                if (isset($parameters['debug']) && $parameters['debug'] == 'false') {
-                    // do nothing
-                } else {
-                    throw $e;
-                }
+            if (
+                $this->getContainer()->getParameter('kernel.debug')
+                &&
+                (!isset($parameters['debug']) || $parameters['debug'] === 'true')
+            ) {
+                throw $e;
             }
 
             // output
