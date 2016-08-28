@@ -9,9 +9,8 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Header;
-use Frontend\Core\Engine\Url;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific widget

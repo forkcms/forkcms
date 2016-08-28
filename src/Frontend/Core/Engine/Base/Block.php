@@ -9,14 +9,13 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\TwigTemplate;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;
-use Frontend\Core\Engine\Url;
-use Common\Exception\RedirectException;
+use Frontend\Core\Engine\TwigTemplate;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific block
