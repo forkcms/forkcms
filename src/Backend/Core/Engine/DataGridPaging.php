@@ -50,7 +50,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
         if ($compileDirectory !== null) {
             $tpl->setCompileDirectory($compileDirectory);
         } else {
-            $tpl->setCompileDirectory(dirname(__FILE__));
+            $tpl->setCompileDirectory(__DIR__);
         }
 
         // force compiling

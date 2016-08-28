@@ -438,7 +438,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // init vars
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
-        $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
+        $pathChunks = explode(DIRECTORY_SEPARATOR, trim(__DIR__, DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
         $version = mb_strtolower($version);
@@ -476,7 +476,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // init vars
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
-        $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
+        $pathChunks = explode(DIRECTORY_SEPARATOR, trim(__DIR__, DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
         $version = mb_strtolower($version);

@@ -33,10 +33,10 @@ class Installer extends ModuleInstaller
         $this->installSettings();
 
         // install the DB
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // install locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // install the mailmotor module
         $this->installModule();
