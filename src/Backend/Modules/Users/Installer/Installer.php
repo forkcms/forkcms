@@ -71,7 +71,7 @@ class Installer extends ModuleInstaller
                 unserialize($settings['date_format']) . ' ' . unserialize($settings['time_format'])
             );
             $settings['number_format'] = serialize('dot_nothing');
-            $settings['password_key'] = serialize(uniqid());
+            $settings['password_key'] = serialize(uniqid('', true));
             $settings['password_strength'] = serialize($passwordStrength);
             $settings['current_password_change'] = serialize(time());
             $settings['avatar'] = serialize('god.jpg');

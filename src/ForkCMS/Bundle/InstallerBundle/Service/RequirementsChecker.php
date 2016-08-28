@@ -347,7 +347,7 @@ class RequirementsChecker
         $path = rtrim((string) $path, '/');
 
         // create random file
-        $file = uniqid() . '.tmp';
+        $file = uniqid('', true) . '.tmp';
 
         $return = @file_put_contents($path . '/' . $file, 'temporary file', FILE_APPEND);
 

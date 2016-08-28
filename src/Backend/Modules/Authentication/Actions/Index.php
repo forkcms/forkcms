@@ -215,7 +215,7 @@ class Index extends BackendBaseActionIndex
             // no errors in the form?
             if ($this->frmForgotPassword->isCorrect()) {
                 // generate the key for the reset link and fetch the user ID for this email
-                $key = BackendAuthentication::getEncryptedString($email, uniqid());
+                $key = BackendAuthentication::getEncryptedString($email, uniqid('', true));
 
                 // insert the key and the timestamp into the user settings
                 $userId = BackendUsersModel::getIdByEmail($email);

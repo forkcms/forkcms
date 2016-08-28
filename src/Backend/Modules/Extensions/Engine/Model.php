@@ -913,7 +913,7 @@ class Model
     public static function isWritable($path)
     {
         $path = rtrim((string) $path, '/');
-        $file = uniqid() . '.tmp';
+        $file = uniqid('', true) . '.tmp';
         $return = @file_put_contents($path . '/' . $file, 'temporary file', FILE_APPEND);
         if ($return === false) {
             return false;
