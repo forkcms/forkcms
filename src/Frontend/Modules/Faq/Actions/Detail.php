@@ -49,7 +49,7 @@ class Detail extends FrontendBaseBlock
      *
      * @var    string
      */
-    private $status = null;
+    private $status;
 
     /**
      * Execute the extra
