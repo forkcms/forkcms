@@ -16,6 +16,16 @@ class ContentBlockRepository extends EntityRepository
      */
     public function add(ContentBlock $contentBlock)
     {
+        // make sure the other revisions are archived
+        if ($contentBlock->getStatus()->isActive() && $contentBlock->getId() !== null) {
+            array_map(
+                function (ContentBlock $contentBlock) {
+                    $contentBlock->archive();
+                },
+                (array) $this->findBy(['id' => $contentBlock->getId(), 'locale' => $contentBlock->getLocale()])
+            );
+        }
+
         $this->getEntityManager()->persist($contentBlock);
     }
 

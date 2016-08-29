@@ -326,4 +326,9 @@ class ContentBlock
 
         return self::create($this->id, $this->extraId, $this->locale, $title, $text, $isHidden, $template);
     }
+
+    public function archive()
+    {
+        $this->status = ContentBlockStatus::archived();
+    }
 }
