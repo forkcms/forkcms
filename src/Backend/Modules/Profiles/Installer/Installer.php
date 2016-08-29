@@ -297,6 +297,8 @@ class Installer extends ModuleInstaller
         }
 
         // restore the original locale
-        Language::setLocale($originalLocale);
+        if (!empty($originalLocale)) {
+            Language::setLocale($originalLocale);
+        }
     }
 }
