@@ -181,7 +181,8 @@ class Cronjob extends Object implements \ApplicationInterface
         $this->config = new $configClass($this->getKernel(), $this->getModule());
 
         // set action
-        $this->action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'Index';
+        //@fixme: needs to be removed if not used
+        $action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'Index';
     }
 
     /**
