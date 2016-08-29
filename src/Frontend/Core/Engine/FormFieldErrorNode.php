@@ -24,6 +24,9 @@ class FormFieldErrorNode extends \Twig_Node
         $this->field = $field;
     }
 
+    /**
+     * @param \Twig_Compiler $compiler
+     */
     public function compile(\Twig_Compiler $compiler)
     {
         $writeErrorMessage = 'echo '

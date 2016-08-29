@@ -45,6 +45,9 @@ class Language extends BackendLanguage
         return parent::getCheckboxValues();
     }
 
+    /**
+     * @return string
+     */
     public static function getCurrentModule()
     {
         trigger_error(

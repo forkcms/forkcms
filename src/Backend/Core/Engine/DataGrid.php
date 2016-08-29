@@ -46,9 +46,9 @@ class DataGrid extends \SpoonDataGrid
     );
 
     /**
-     * @param \SpoonDataGridSource $source
+     * @param \SpoonDatagridSource $source
      */
-    public function __construct(\SpoonDataGridSource $source)
+    public function __construct(\SpoonDatagridSource $source)
     {
         parent::__construct($source);
 
@@ -348,7 +348,7 @@ class DataGrid extends \SpoonDataGrid
      * @param string $uniqueId A unique ID that will be uses.
      *
      * @throws Exception
-     * @throws \SpoonDataGridException
+     * @throws \SpoonDatagridException
      */
     public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
     {
@@ -361,7 +361,7 @@ class DataGrid extends \SpoonDataGrid
         if ($this->source->getNumResults() > 0) {
             // column doesn't exist
             if (!isset($this->columns[$column])) {
-                throw new \SpoonDataGridException(
+                throw new \SpoonDatagridException(
                     'The column "' . $column . '" doesn\'t exist, therefore no confirm message/script can be added.'
                 );
             } else {

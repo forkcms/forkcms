@@ -112,13 +112,13 @@ class Model extends \BaseModel
 
         // create temporary pass
         for ($i = 0; $i < $length; ++$i) {
-            $tmp .= ($consonants[rand(0, $consonantsCount - 1)] .
-                $vowels[rand(0, $vowelsCount - 1)]);
+            $tmp .= ($consonants[mt_rand(0, $consonantsCount - 1)] .
+                $vowels[mt_rand(0, $vowelsCount - 1)]);
         }
 
         // reformat the pass
         for ($i = 0; $i < $length; ++$i) {
-            if (rand(0, 1) == 1) {
+            if (mt_rand(0, 1) == 1) {
                 $pass .= mb_strtoupper(mb_substr($tmp, $i, 1));
             } else {
                 $pass .= mb_substr($tmp, $i, 1);

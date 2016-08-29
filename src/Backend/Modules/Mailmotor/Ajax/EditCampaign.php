@@ -35,7 +35,7 @@ class EditCampaign extends BackendBaseAJAXAction
             $this->output(self::BAD_REQUEST, null, 'no name provided');
         } else {
             // get existing id
-            $existingId = BackendMailmotorModel::getCampaignId($name);
+            $existingId = BackendMailmotorModel::getCampaignID($name);
 
             // validate
             if ($existingId !== 0 && $id !== $existingId) {

@@ -8,6 +8,7 @@ namespace Backend\Core\Engine;
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+use SpoonFilter;
 
 use Backend\Core\Language\Language as BackendLanguage;
 use \SpoonFilter;
@@ -40,6 +41,7 @@ class FormFile extends \SpoonFormFile
      * @param TwigTemplate $template The template to parse the element in.
      *
      * @return string
+     * @throws \SpoonFormException
      */
     public function parse($template = null)
     {

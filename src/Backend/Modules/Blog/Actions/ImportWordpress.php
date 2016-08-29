@@ -44,7 +44,7 @@ class ImportWordpress extends BackendBaseActionEdit
     {
         parent::execute();
         set_time_limit(0);
-        $this->fs = new Filesystem();
+        $this->filesystem = new Filesystem();
         $this->loadForm();
         $this->validateForm();
         $this->parse();
@@ -88,7 +88,7 @@ class ImportWordpress extends BackendBaseActionEdit
                 $this->processXML();
 
                 // Remove the file
-                $this->fs->remove(FRONTEND_FILES_PATH . '/wordpress.xml');
+                $this->filesystem->remove(FRONTEND_FILES_PATH . '/wordpress.xml');
 
                 // Everything is saved, so redirect to the overview
                 $this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
@@ -288,7 +288,7 @@ class ImportWordpress extends BackendBaseActionEdit
 
         // Create directory if needed
         if (!file_exists($imagesPath) || !is_dir($imagesPath)) {
-            $this->fs->mkdir($imagesPath);
+            $this->filesystem->mkdir($imagesPath);
         }
 
         $file = (string) $xml->children('wp', true)->attachment_url;
@@ -300,7 +300,7 @@ class ImportWordpress extends BackendBaseActionEdit
 
         // Download the file
         try {
-            $this->fs->dumpFile(
+            $this->filesystem->dumpFile(
                 $imagesPath . '/' . $destinationFile,
                 file_get_contents($file)
             );

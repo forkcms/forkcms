@@ -592,6 +592,7 @@ class Model
      * @param string $theme The theme we want to fetch the templates from.
      *
      * @return array
+     * @throws Exception
      */
     public static function getTemplates($theme = null)
     {
@@ -795,6 +796,8 @@ class Model
      * Install a theme.
      *
      * @param string $theme The name of the theme to be installed.
+     *
+     * @throws Exception
      */
     public static function installTheme($theme)
     {
@@ -813,6 +816,7 @@ class Model
             $item['path'] = $template['path'];
             $item['active'] = 'Y';
             $item['data']['format'] = $template['format'];
+            $item['data']['image'] = $template['image'];
 
             // build positions
             $item['data']['names'] = array();
@@ -913,7 +917,7 @@ class Model
     public static function isWritable($path)
     {
         $path = rtrim((string) $path, '/');
-        $file = uniqid() . '.tmp';
+        $file = uniqid('', true) . '.tmp';
         $return = @file_put_contents($path . '/' . $file, 'temporary file', FILE_APPEND);
         if ($return === false) {
             return false;
@@ -1032,6 +1036,8 @@ class Model
             // template data
             $template['label'] = (string) $templateXML['label'];
             $template['path'] = (string) $templateXML['path'];
+            $template['image'] = isset($templateXML['image'])
+                ? (string) $templateXML['image'] && (string) $templateXML['image'] !== 'false' : false;
             $template['format'] = trim(str_replace(array("\n", "\r", ' '), '', (string) $templateXML->format));
 
             // loop positions

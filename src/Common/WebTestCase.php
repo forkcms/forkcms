@@ -4,7 +4,7 @@ namespace Common;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\FileSystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\DomCrawler\Crawler;

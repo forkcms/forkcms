@@ -74,6 +74,7 @@ class Form extends \Common\Core\Form
      * @param string $class Class(es) that will be applied on the button.
      *
      * @return \SpoonFormButton
+     * @throws Exception
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
     {
@@ -231,7 +232,7 @@ class Form extends \Common\Core\Form
         }
 
         // create and return a textarea for the editor
-        return $this->addTextArea($name, $value, $class, $classError, $HTML);
+        return $this->addTextarea($name, $value, $class, $classError, $HTML);
     }
 
     /**

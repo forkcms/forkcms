@@ -15,6 +15,11 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 class UploadTheme extends BackendBaseActionAdd
 {
     /**
+     * @var array
+     */
+    private $information;
+
+    /**
      * Execute the action.
      */
     public function execute()

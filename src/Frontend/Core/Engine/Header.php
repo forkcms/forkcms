@@ -160,6 +160,7 @@ class Header extends FrontendBaseObject
      * @param string $file         The path to the javascript-file that should be loaded.
      * @param bool   $minify       Should the file be minified?
      * @param bool   $addTimestamp May we add a timestamp for caching purposes?
+     * @param int    $priorityGroup
      */
     public function addJS($file, $minify = true, $addTimestamp = null, $priorityGroup = self::PRIORITY_GROUP_DEFAULT)
     {
@@ -1032,7 +1033,7 @@ class Header extends FrontendBaseObject
 
         // add Twitter Card to the header
         foreach ($data as $d) {
-            static::addMetaData($d);
+            $this->addMetaData($d);
         }
     }
 }

@@ -129,9 +129,11 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param string $string The string that you want to apply this method on.
      *
+     * @return string The string, to translate.
+     *
+     * @throws Exception
      * @throw exception thrown when no 'dot' is found in string
      *
-     * @return string The string, to translate.
      */
     public static function trans($string)
     {
@@ -185,7 +187,7 @@ class TemplateModifiers extends BaseTwigModifiers
             // more characters
             // hellip is seen as 1 char, so remove it from length
             if ($useHellip) {
-                $length = $length - 1;
+                --$length;
             }
 
             // truncate

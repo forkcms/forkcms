@@ -29,6 +29,11 @@
             <label for="label" class="control-label">{{ 'lbl.Label'|trans|ucfirst }}</label>
             {% form_field label %} {% form_field_error label %}
           </div>
+          <ul class="list-unstyled">
+            <li class="checkbox">
+              <label for="image">{% form_field image %} {% form_field_error image %} {{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

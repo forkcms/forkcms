@@ -225,7 +225,10 @@ class Page extends FrontendBaseObject
     /**
      * Get page content
      *
+     * @param $pageId
+     *
      * @return array
+     * @throws RedirectException
      */
     protected function getPageContent($pageId)
     {

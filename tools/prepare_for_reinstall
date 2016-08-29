@@ -21,6 +21,8 @@ clear_file_caches() {
 
     rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+
+    rm -rf {SCRIPT_PATH}/../app/cache/*
     return 1;
 }
 
@@ -77,6 +79,7 @@ main() {
 
     ${SCRIPT_PATH}/../app/console cache:clear
     ${SCRIPT_PATH}/../app/console cache:clear --env=prod
+    rm -rf ${SCRIPT_PATH}/../app/cache/install
 
     echo 'All done! Ready for reinstall.'
     return 1;

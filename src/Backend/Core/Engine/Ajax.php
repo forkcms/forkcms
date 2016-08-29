@@ -17,7 +17,6 @@ use Backend\Core\Language\Language as BackendLanguage;
  * This class will handle AJAX-related stuff
  */
 
-/** @noinspection PhpUndefinedClassInspection */
 class Ajax extends Base\Object implements \ApplicationInterface
 {
     /**
@@ -83,7 +82,7 @@ class Ajax extends Base\Object implements \ApplicationInterface
         $possibleLanguages = BackendLanguage::getWorkingLanguages();
 
         // validate
-        if (!in_array($language, array_keys($possibleLanguages))) {
+        if (!array_key_exists($language, $possibleLanguages)) {
             throw new Exception('Language invalid.');
         }
 

@@ -550,7 +550,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url);
+                return self::getUrl($url);
             }
         } else {
             // get number of profiles with this URL
@@ -568,7 +568,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url, $id);
+                return self::getUrl($url, $id);
             }
         }
 
@@ -631,9 +631,12 @@ class Model
      * Import CSV data
      *
      * @param array $data The array from the .csv file
-     * @param int[optional] $groupId Adding these profiles to a group
-     * @param bool[optional] $overwriteExisting If set to true, this will overwrite existing profiles
-     * @param return array('count' => array('exists' => 0, 'inserted' => 0));
+     * @param null $groupId $groupId Adding these profiles to a group
+     * @param bool $overwriteExisting $overwriteExisting
+     * @return array array('count' => array('exists' => 0, 'inserted' => 0));
+     *
+     * @throws BackendException
+     * @internal param $bool [optional] $overwriteExisting If set to true, this will overwrite existing profiles
      */
     public static function importCsv($data, $groupId = null, $overwriteExisting = false)
     {

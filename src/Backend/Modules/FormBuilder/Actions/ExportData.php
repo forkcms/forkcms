@@ -35,6 +35,13 @@ class ExportData extends BackendBaseAction
     private $filter;
 
     /**
+     * Form id.
+     *
+     * @var int
+     */
+    private $id;
+
+    /**
      * CSV rows.
      *
      * @var	array

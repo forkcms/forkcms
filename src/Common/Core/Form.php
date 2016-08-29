@@ -77,7 +77,6 @@ class Form extends \SpoonForm
     ) {
         $name = (string) $name;
         $values = (array) $values;
-        $selected = ($selected !== null) ? $selected : null;
         $multipleSelection = (bool) $multipleSelection;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-select';
         $classError = ($classError !== null) ? (string) $classError : 'error';

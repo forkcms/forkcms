@@ -72,6 +72,8 @@ class Meta
      * @param int    $metaId        The metaID to load.
      * @param string $baseFieldName The field where the URL should be based on.
      * @param bool   $custom        Add/show custom-meta.
+     *
+     * @throws Exception
      */
     public function __construct(Form $form, $metaId = null, $baseFieldName = 'title', $custom = false)
     {

@@ -149,7 +149,7 @@ class Index extends BackendBaseActionIndex
         // check if allowed to edit
         if (BackendAuthentication::isAllowedAction('Edit', $this->getModule())) {
             // set column URL
-            $this->dgRecentlyEdited->setColumnUrl(
+            $this->dgRecentlyEdited->setColumnURL(
                 'title',
                 BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')

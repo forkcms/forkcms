@@ -1,3 +1,26 @@
+4.1.2 (2016-08-26)
+------------------
+
+Bugfixes:
+
+* Location: fix fetching coordinates.
+* Core: make sure our vendor folder can't be accessed.
+* Core: show file size when uploadeded file size is too big.
+* Core: remove useless variable assignement.
+* Core: change some exit statements to exceptions.
+* Core: update symfony to 2.8.9 (to include security fixes).
+* Core: remove obsolete validation.
+* Installer: remove non existent mailer service.
+* Profiles: replace spoon directory with the filesystem component.
+* Core: improve some UI issues.
+* Core: improve cache handling (during both installation and other places).
+* Core: add the translation for German.
+* Core: protected some more files using htaccess.
+* Search: show "add synonym" link when there are no synonyms yet.
+* Core: fix incorrect language variable.
+* Core: fix pagination labels.
+
+
 4.1.1 (2016-08-10)
 ------------------
 

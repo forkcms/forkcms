@@ -13,6 +13,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class LoginType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -48,6 +51,9 @@ class LoginType extends AbstractType
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -55,6 +61,9 @@ class LoginType extends AbstractType
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'install_login';

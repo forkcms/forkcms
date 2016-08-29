@@ -36,6 +36,13 @@ class Groups extends BackendBaseActionIndex
     private $frm;
 
     /**
+     * Groups data grid.
+     *
+     * @var    BackendDataGridDB
+     */
+    private $dgGroups;
+
+    /**
      * Builds the query for this datagrid.
      *
      * @return array An array with two arguments containing the query and its parameters.

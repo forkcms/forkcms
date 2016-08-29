@@ -766,6 +766,7 @@ class Model
      * @param array $comments The comments attached to this post.
      *
      * @return int
+     * @throws Exception
      */
     public static function insertCompletePost($item, $meta = array(), $tags = array(), $comments = array())
     {
@@ -1202,6 +1203,9 @@ class Model
     /**
      * Update a page revision without generating a new revision.
      * Needed to add an image to a page.
+     *
+     * @param $revision_id
+     * @param $item
      */
     public static function updateRevision($revision_id, $item)
     {

@@ -111,7 +111,7 @@ class Edit extends BackendBaseActionEdit
     private function validateForm()
     {
         if ($this->frm->isSubmitted()) {
-            $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getURL', array($this->record['id']));
+            $this->meta->setURLCallback('Backend\Modules\Faq\Engine\Model', 'getURL', array($this->record['id']));
 
             $this->frm->cleanupFields();
 

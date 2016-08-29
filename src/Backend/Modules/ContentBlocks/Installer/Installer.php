@@ -30,7 +30,7 @@ class Installer extends ModuleInstaller
         $this->addModule('ContentBlocks');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
         $this->setSetting($this->getModule(), 'max_num_revisions', 20);

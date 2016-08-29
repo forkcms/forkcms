@@ -17,7 +17,7 @@ class Installer extends ModuleInstaller
         $this->addModule('Analytics');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // add the needed rights
         $this->setModuleRights(1, $this->getModule());

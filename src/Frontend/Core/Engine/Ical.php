@@ -124,7 +124,7 @@ class FrontendIcalEvent extends \SpoonICalEvent
         // build properties
         $properties['X-GOOGLE-CALENDAR-CONTENT-TITLE'] = $title;
         $properties['X-GOOGLE-CALENDAR-CONTENT-ICON'] = SITE_URL . '/favicon.ico';
-        $properties['X-GOOGLE-CALENDAR-CONTENT-URL'] = $this->getUrl();
+        $properties['X-GOOGLE-CALENDAR-CONTENT-URL'] = $this->getURL();
 
         // set properties
         $this->setXProperties($properties);
@@ -194,6 +194,6 @@ class FrontendIcalEvent extends \SpoonICalEvent
         $url = htmlspecialchars_decode($url);
 
         // call parent
-        parent::setUrl($url);
+        parent::setURL($url);
     }
 }

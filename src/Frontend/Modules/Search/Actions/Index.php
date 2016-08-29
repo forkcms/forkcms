@@ -23,6 +23,13 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 class Index extends FrontendBaseBlock
 {
     /**
+     * The form instance
+     *
+     * @var FrontendForm
+     */
+    protected $frm;
+
+    /**
      * Name of the cache file
      *
      * @var    string

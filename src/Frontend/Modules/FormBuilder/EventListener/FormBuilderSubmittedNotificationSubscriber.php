@@ -7,6 +7,8 @@ use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 
 /**
  * A Formbuilder submitted event subscriber that will send a notification
+ *
+ * @deprecated: no more support for the Fork-app.
  */
 final class FormBuilderSubmittedNotificationSubscriber
 {

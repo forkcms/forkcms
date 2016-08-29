@@ -172,12 +172,12 @@ class Edit extends BackendBaseActionEdit
             $this->user->getSetting('number_format', 'dot_nothing')
         );
 
-        $this->frm->addDropDown(
+        $this->frm->addDropdown(
             'csv_split_character',
             BackendUsersModel::getCSVSplitCharacters(),
             $this->user->getSetting('csv_split_character')
         );
-        $this->frm->addDropDown(
+        $this->frm->addDropdown(
             'csv_line_ending',
             BackendUsersModel::getCSVLineEndings(),
             $this->user->getSetting('csv_line_ending')
@@ -386,7 +386,7 @@ class Edit extends BackendBaseActionEdit
                     }
 
                     // create new filename
-                    $filename = rand(0, 3) . '_' . $user['id'] . '.' . $fields['avatar']->getExtension();
+                    $filename = mt_rand(0, 3) . '_' . $user['id'] . '.' . $fields['avatar']->getExtension();
 
                     // add into settings to update
                     $settings['avatar'] = $filename;

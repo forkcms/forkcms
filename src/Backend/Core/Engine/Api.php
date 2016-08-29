@@ -169,7 +169,7 @@ class Api
             } else {
                 // create the key if needed
                 if ($user->getSetting('api_key', null) == null) {
-                    $user->setSetting('api_key', uniqid());
+                    $user->setSetting('api_key', uniqid('', true));
                 }
 
                 // return the key

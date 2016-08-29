@@ -127,7 +127,7 @@ class Client extends Api
 
             $parameters[] = array(
                 'name' => $name,
-                'label' => $name . '-' . rand(1, 99999),
+                'label' => $name . '-' . mt_rand(1, 99999),
                 'optional' => (mb_substr_count($matches[2][$i], '[optional]') > 0),
                 'description' => $matches[3][$i]
             );

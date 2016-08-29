@@ -88,6 +88,7 @@ class Addresses extends BackendBaseActionIndex
      * @param string $path The full path to the CSV file you wish to download.
      *
      * @return array
+     * @throws BackendException
      */
     private function downloadCSV($path)
     {

@@ -34,6 +34,13 @@ class Detail extends FrontendBaseBlock
     private $results = array();
 
     /**
+     * Used modules
+     *
+     * @var array
+     */
+    private $modules;
+
+    /**
      * Execute the extra
      */
     public function execute()

@@ -101,6 +101,9 @@ class Action extends Object
         );
     }
 
+    /**
+     * @return string
+     */
     protected function getBackendModulePath()
     {
         if ($this->URL->getModule() == 'Core') {

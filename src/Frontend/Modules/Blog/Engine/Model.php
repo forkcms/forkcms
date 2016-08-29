@@ -898,39 +898,6 @@ class Model implements FrontendTagsInterface
             return;
         }
 
-        // build data for push notification
-        if ($comment['status'] == 'moderation') {
-            $key = 'BLOG_COMMENT_MOD';
-        } else {
-            $key = 'BLOG_COMMENT';
-        }
-
-        $author = $comment['author'];
-        if (mb_strlen($author) > 20) {
-            $author = mb_substr($author, 0, 19) . '…';
-        }
-        $text = $comment['text'];
-        if (mb_strlen($text) > 50) {
-            $text = mb_substr($text, 0, 49) . '…';
-        }
-
-        $alert = array(
-            'loc-key' => $key,
-            'loc-args' => array(
-                $author,
-                $text,
-            ),
-        );
-
-        // build data
-        $data = array(
-            'api' => SITE_URL . '/api/1.0',
-            'id' => $comment['id'],
-        );
-
-        // push it
-        FrontendModel::pushToAppleApp($alert, null, 'default', $data);
-
         // get settings
         $notifyByMailOnComment = FrontendModel::get('fork.settings')->get(
             'Blog',

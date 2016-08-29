@@ -824,6 +824,7 @@ class Model
      * @param string $email The emailaddress to get the custom fields for.
      *
      * @return array
+     * @throws \SpoonException
      */
     public static function getCustomFieldsByAddress($email)
     {
@@ -1379,6 +1380,7 @@ class Model
      * @param string $name     The name of the template.
      *
      * @return array
+     * @throws \SpoonException
      */
     public static function getTemplate($language, $name)
     {
@@ -1437,10 +1439,10 @@ class Model
         foreach ($finder->directories()->in(BACKEND_MODULES_PATH . '/Mailmotor/Templates/' . $language) as $directory) {
             $item = array();
             $item['language'] = $language;
-            $item['value'] = $directory->getBaseName();
+            $item['value'] = $directory->getBasename();
             $item['label'] = BL::lbl(
                 'Template' . \SpoonFilter::toCamelCase(
-                    \SpoonFilter::toCamelCase($directory->getBaseName(), '-'),
+                    \SpoonFilter::toCamelCase($directory->getBasename(), '-'),
                     '_'
                 )
             );

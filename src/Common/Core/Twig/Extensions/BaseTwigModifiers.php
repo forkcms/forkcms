@@ -99,7 +99,7 @@ class BaseTwigModifiers
         $min = (int) $min;
         $max = (int) $max;
 
-        return rand($min, $max);
+        return mt_rand($min, $max);
     }
 
     /**
@@ -263,7 +263,7 @@ class BaseTwigModifiers
             // more characters
             // hellip is seen as 1 char, so remove it from length
             if ($useHellip) {
-                $length = $length - 1;
+                --$length;
             }
 
             // truncate
