@@ -71,6 +71,7 @@ class Installer extends ModuleInstaller
                 'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]',
                 'names' => array('main', 'left', 'top', 'advertisement'),
                 'default_extras' => array('top' => array($extras['search_form'])),
+                'image' => false,
             )),
         );
 
@@ -83,6 +84,7 @@ class Installer extends ModuleInstaller
                 'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]',
                 'names' => array('main', 'left', 'right', 'top', 'advertisement'),
                 'default_extras' => array('top' => array($extras['search_form'])),
+                'image' => true,
             )),
         );
 

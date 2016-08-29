@@ -62,6 +62,17 @@
         <translation language="el"><![CDATA[Σίγουρα θέλετε να εγκαταστήσετε αυτό το θέμα;]]></translation>
         <translation language="zh"><![CDATA[你确定要安装这个主题？]]></translation>
       </item>
+      <item type="message" name="ShowImageForm">
+        <translation language="nl"><![CDATA[De gebruiker mag een afbeelding toevoegen.]]></translation>
+        <translation language="en"><![CDATA[The user can upload a file.]]></translation>
+        <translation language="ru"><![CDATA[Пользователь может загрузить файл.]]></translation>
+        <translation language="de"><![CDATA[Der Benutzer kann eine Datei hochladen.]]></translation>
+        <translation language="es"><![CDATA[El usuario puede subir un archivo.]]></translation>
+        <translation language="hu"><![CDATA[A felhasználó tölthet fel fájlt.]]></translation>
+        <translation language="sv"><![CDATA[Användaren kan ladda upp en fil.]]></translation>
+        <translation language="el"><![CDATA[Ο χρήστης μπορεί να ανεβάσει ένα αρχείο.]]></translation>
+        <translation language="zh"><![CDATA[用户可以上传一个文件。]]></translation>
+      </item>
       <item type="message" name="CronjobsInfo">
         <translation language="nl"><![CDATA[
 

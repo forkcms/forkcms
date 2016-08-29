@@ -249,6 +249,10 @@ class Edit extends BackendBaseActionEdit
             $this->record['hidden']
         );
 
+        // image related fields
+        $this->frm->addImage('image');
+        $this->frm->addCheckbox('remove_image');
+
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
             // init some vars
@@ -595,6 +599,7 @@ class Edit extends BackendBaseActionEdit
             if ($this->frm->isCorrect()) {
                 // init var
                 $data = null;
+                $templateId = (int) $this->frm->getField('template_id')->getValue();
 
                 // build data
                 if ($this->frm->getField('is_action')->isChecked()) {
@@ -613,6 +618,9 @@ class Edit extends BackendBaseActionEdit
                         ),
                         'code' => '301',
                     );
+                }
+                if (array_key_exists('image', $this->templates[$templateId]['data'])) {
+                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
                 }
 
                 // build page record
@@ -735,6 +743,35 @@ class Edit extends BackendBaseActionEdit
                 }
             }
         }
+    }
+
+    /**
+     * @param bool $allowImage
+     * @return string|null
+     */
+    private function getImage($allowImage)
+    {
+        $imageFilename = array_key_exists('image', (array) $this->record['data']) ? $this->record['data']['image'] : null;
+
+        if (!$this->frm->getField('image')->isFilled() && !$this->frm->getField('remove_image')->isChecked()) {
+            return $imageFilename;
+        }
+
+        $imagePath = FRONTEND_FILES_PATH . '/pages/images';
+
+        // delete the current image
+        BackendModel::deleteThumbnails($imagePath, (string) $imageFilename);
+
+        if (!$allowImage
+            || ($this->frm->getField('remove_image')->isChecked() && !$this->frm->getField('image')->isFilled())
+        ) {
+            return null;
+        }
+
+        $imageFilename = $this->meta->getURL() . '_' . time() . '.' . $this->frm->getField('image')->getExtension();
+        $this->frm->getField('image')->generateThumbnails($imagePath, $imageFilename);
+
+        return $imageFilename;
     }
 
     /**

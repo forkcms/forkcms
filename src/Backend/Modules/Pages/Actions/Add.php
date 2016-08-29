@@ -123,22 +123,33 @@ class Add extends BackendBaseActionAdd
         $this->frm->addRadiobutton(
             'hidden',
             array(
-                 array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                 array('label' => BL::lbl('Published'), 'value' => 'N'),
+                array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
+                array('label' => BL::lbl('Published'), 'value' => 'N'),
             ),
             'N'
         );
 
+        // image related fields
+        $this->frm->addImage('image');
+
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
             // init some vars
-            $items = array('move', 'children', 'edit', 'delete');
+            $items = array(
+                'move' => true,
+                'children' => true,
+                'edit' => true,
+                'delete' => true,
+            );
             $checked = array();
             $values = array();
 
-            foreach ($items as $value) {
+            foreach ($items as $value => $itemIsChecked) {
                 $values[] = array('label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
-                $checked[] = $value;
+
+                if ($itemIsChecked) {
+                    $checked[] = $value;
+                }
             }
 
             $this->frm->addMultiCheckbox('allow', $values, $checked);
@@ -350,6 +361,7 @@ class Add extends BackendBaseActionAdd
             if ($this->frm->isCorrect()) {
                 // init var
                 $parentId = 0;
+                $templateId = (int) $this->frm->getField('template_id')->getValue();
                 $data = null;
 
                 // build data
@@ -370,12 +382,15 @@ class Add extends BackendBaseActionAdd
                         'code' => '301',
                     );
                 }
+                if (array_key_exists('image', $this->templates[$templateId]['data'])) {
+                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
+                }
 
                 // build page record
                 $page['id'] = BackendPagesModel::getMaximumPageId() + 1;
                 $page['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $page['parent_id'] = $parentId;
-                $page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
+                $page['template_id'] = $templateId;
                 $page['meta_id'] = (int) $this->meta->save();
                 $page['language'] = BL::getWorkingLanguage();
                 $page['type'] = 'root';
@@ -491,6 +506,23 @@ class Add extends BackendBaseActionAdd
                 }
             }
         }
+    }
+
+    /**
+     * @param bool $allowImage
+     * @return string|null
+     */
+    private function getImage($allowImage)
+    {
+        if (!$allowImage || !$this->frm->getField('image')->isFilled()) {
+            return null;
+        }
+
+        $imagePath = FRONTEND_FILES_PATH . '/pages/images';
+        $imageFilename = $this->meta->getURL() . '_' . time() . '.' . $this->frm->getField('image')->getExtension();
+        $this->frm->getField('image')->generateThumbnails($imagePath, $imageFilename);
+
+        return $imageFilename;
     }
 
     /**

@@ -813,6 +813,7 @@ class Model
             $item['path'] = $template['path'];
             $item['active'] = 'Y';
             $item['data']['format'] = $template['format'];
+            $item['data']['image'] = $template['image'];
 
             // build positions
             $item['data']['names'] = array();
@@ -1032,6 +1033,8 @@ class Model
             // template data
             $template['label'] = (string) $templateXML['label'];
             $template['path'] = (string) $templateXML['path'];
+            $template['image'] = isset($templateXML['image'])
+                ? (string) $templateXML['image'] && (string) $templateXML['image'] !== 'false' : false;
             $template['format'] = trim(str_replace(array("\n", "\r", ' '), '', (string) $templateXML->format));
 
             // loop positions
