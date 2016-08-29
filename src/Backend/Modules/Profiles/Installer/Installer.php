@@ -11,7 +11,7 @@ namespace Backend\Modules\Profiles\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Core\Engine\Language;
+use Backend\Core\Language\Language;
 
 /**
  * Installer for the profiles module.
@@ -142,6 +142,8 @@ class Installer extends ModuleInstaller
             'SELECT id FROM modules_extras WHERE module = ? AND action = ?',
             array('search', 'form')
         );
+
+        $originalLocale = Language::getInterfaceLanguage();
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
@@ -293,5 +295,8 @@ class Installer extends ModuleInstaller
                 );
             }
         }
+
+        // restore the original locale
+        Language::setLocale($originalLocale);
     }
 }
