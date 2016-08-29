@@ -42,6 +42,8 @@ class Url extends \KernelLoader
 
     /**
      * @param KernelInterface $kernel
+     *
+     * @throws RedirectException
      */
     public function __construct(KernelInterface $kernel)
     {

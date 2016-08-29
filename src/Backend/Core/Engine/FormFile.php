@@ -38,6 +38,7 @@ class FormFile extends \SpoonFormFile
      * @param TwigTemplate $template The template to parse the element in.
      *
      * @return string
+     * @throws \SpoonFormException
      */
     public function parse($template = null)
     {

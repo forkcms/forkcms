@@ -78,7 +78,7 @@ abstract class BaseTwigTemplate extends TwigEngine
     /**
      * Assign an entire array with keys & values.
      *
-     * @param array            $values This array with keys and values will be used to search and replace in the template file.
+     * @param array $variables This array with keys and values will be used to search and replace in the template file.
      * @param string[optional] $prefix An optional prefix eg. 'lbl' that can be used.
      * @param string[optional] $suffix An optional suffix eg. 'msg' that can be used.
      */
@@ -120,6 +120,8 @@ abstract class BaseTwigTemplate extends TwigEngine
 
     /** @todo Refactor out constants #1106
      * We need to deprecate this asap
+     *
+     * @param $twig
      */
     protected function startGlobals(&$twig)
     {
@@ -215,7 +217,7 @@ abstract class BaseTwigTemplate extends TwigEngine
     /**
      * Should we execute addSlashed on the locale?
      *
-     * @param bool $on Enable addslashes.
+     * @param bool $enabled Enable addslashes.
      */
     public function setAddSlashes($enabled = true)
     {

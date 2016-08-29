@@ -592,6 +592,7 @@ class Model
      * @param string $theme The theme we want to fetch the templates from.
      *
      * @return array
+     * @throws Exception
      */
     public static function getTemplates($theme = null)
     {
@@ -795,6 +796,8 @@ class Model
      * Install a theme.
      *
      * @param string $theme The name of the theme to be installed.
+     *
+     * @throws Exception
      */
     public static function installTheme($theme)
     {

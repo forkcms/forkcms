@@ -94,6 +94,9 @@ class Language
         return $results;
     }
 
+    /**
+     * @return string
+     */
     public static function getCurrentModule()
     {
         if (Model::getContainer()->has('url')) {

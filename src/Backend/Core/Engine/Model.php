@@ -800,6 +800,7 @@ class Model extends \Common\Core\Model
      * @param string $category      An optional category for the site.
      *
      * @return bool If everything went fne true will, otherwise false.
+     * @throws Exception
      */
     public static function ping($pageOrFeedURL = null, $category = null)
     {
@@ -917,6 +918,7 @@ class Model extends \Common\Core\Model
      * @param array  $others    Other data (the variables from $_SERVER).
      *
      * @return bool If everything went fine, true will be returned, otherwise an exception will be triggered.
+     * @throws Exception
      */
     public static function submitHam(
         $userIp,
@@ -980,6 +982,7 @@ class Model extends \Common\Core\Model
      * @param array  $others    Other data (the variables from $_SERVER).
      *
      * @return bool If everything went fine true will be returned, otherwise an exception will be triggered.
+     * @throws Exception
      */
     public static function submitSpam(
         $userIp,

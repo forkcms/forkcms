@@ -80,7 +80,6 @@ class ForkAPI
 	/**
 	 * Default constructor
 	 *
-	 * @return	void
 	 * @param	string[optional] $publicKey		The public-key of the keypair.
 	 * @param	string[optional] $privateKey	The private-key of the keypair.
 	 */
@@ -99,6 +98,7 @@ class ForkAPI
 	 * @param	array[optional] $parameters			The parameters to pass.
 	 * @param	bool[optional] $authenticate		Should we authenticate?
 	 * @param	bool[optional] $usePOST				Should we use POST?
+	 * @throws ForkAPIException
 	 */
 	private function doCall($method, $parameters = array(), $authenticate = true, $usePOST = false)
 	{
@@ -300,6 +300,7 @@ class ForkAPI
 	 * @return	array
 	 * @param	string $siteUrl		The URL of the site.
 	 * @param	string $email		The e-mail adress of the site.
+	 * @throws ForkAPIException
 	 */
 	public function coreRequestKeys($siteUrl, $email)
 	{
@@ -338,6 +339,7 @@ class ForkAPI
 	 * @param	int[optional] $badge				The number for the badge.
 	 * @param	string[optional] $sound				The sound that should be played.
 	 * @param 	array[optional] $extraDictionaries	Extra dictionaries.
+	 * @throws ForkAPIException
 	 */
 	public function applePush($deviceTokens, $alert, $badge = null, $sound = null, array $extraDictionaries = null)
 	{
@@ -405,6 +407,7 @@ class ForkAPI
 	 * Get messages from the server
 	 *
 	 * @return	array
+	 * @throws ForkAPIException
 	 */
 	public function messagesGet()
 	{
@@ -503,6 +506,7 @@ class ForkAPI
 	 * Get the ping services
 	 *
 	 * @return	array
+	 * @throws ForkAPIException
 	 */
 	public function pingGetServices()
 	{
@@ -528,6 +532,7 @@ class ForkAPI
 	 * Get the search engines
 	 *
 	 * @return	array
+	 * @throws ForkAPIException
 	 */
 	public function statisticsGetSearchEngines()
 	{

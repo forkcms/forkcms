@@ -71,6 +71,8 @@ class CMHelper
      * @param int $listId The default list id to use.
      *
      * @return \CampaignMonitor
+     *
+     * @throws FrontendException
      */
     public static function getCM($listId = null)
     {

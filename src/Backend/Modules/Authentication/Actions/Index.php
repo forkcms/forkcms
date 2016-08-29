@@ -280,10 +280,12 @@ class Index extends BackendBaseActionIndex
         );
     }
 
-    /*
-     * Run through the action of a certain module
-     * and find us an action(name) this user is
-     * allowed to access.
+    /**
+     * Run through the action of a certain module and find us an action(name) this user is allowed to access.
+     *
+     * @param $module
+     *
+     * @return bool|string
      */
     private function getAllowedAction($module)
     {
@@ -310,9 +312,10 @@ class Index extends BackendBaseActionIndex
         return $allowedAction;
     }
 
-    /*
-     * Run through the modules and find us a module(name)
-     * this user is allowed to access.
+    /**
+     * Run through the modules and find us a module(name) this user is allowed to access.
+     *
+     * @return bool|string
      */
     private function getAllowedModule()
     {

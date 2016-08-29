@@ -40,8 +40,6 @@ class TwigTemplate extends BaseTwigTemplate
      * Fetch the parsed content from this template.
      *
      * @param string $template      The location of the template file, used to display this template.
-     * @param bool   $customHeaders Are custom headers already set?
-     * @param bool   $parseCustom   Parse custom template.
      *
      * @return string The actual parsed content after executing this template.
      */

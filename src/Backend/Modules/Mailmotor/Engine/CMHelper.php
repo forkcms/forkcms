@@ -286,6 +286,8 @@ class CMHelper
      * Returns the CampaignMonitor object.
      *
      * @return \CampaignMonitor
+     *
+     * @throws BackendException
      */
     public static function getCM()
     {
@@ -418,6 +420,8 @@ class CMHelper
      * @param bool $fetchOpens  If the open-count should be included.
      *
      * @return array
+     *
+     * @throws \SpoonException
      */
     public static function getStatistics($id, $fetchClicks = false, $fetchOpens = false)
     {
@@ -653,6 +657,7 @@ class CMHelper
      * @param string $otherId The id in our tables.
      *
      * @return string
+     * @throws \CampaignMonitorException
      */
     public static function insertCampaignMonitorID($type, $id, $otherId)
     {

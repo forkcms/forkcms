@@ -24,6 +24,11 @@ class RequirementsChecker
 
     private $errors;
 
+    /**
+     * RequirementsChecker constructor.
+     *
+     * @param $rootDir
+     */
     public function __construct($rootDir)
     {
         $this->rootDir = $rootDir;

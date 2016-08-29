@@ -824,6 +824,7 @@ class Model
      * @param string $email The emailaddress to get the custom fields for.
      *
      * @return array
+     * @throws \SpoonException
      */
     public static function getCustomFieldsByAddress($email)
     {
@@ -1379,6 +1380,7 @@ class Model
      * @param string $name     The name of the template.
      *
      * @return array
+     * @throws \SpoonException
      */
     public static function getTemplate($language, $name)
     {

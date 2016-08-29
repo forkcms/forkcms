@@ -116,11 +116,20 @@ class Navigation extends Base\Object
         );
     }
 
+    /**
+     * @param TwigTemplate $template
+     */
     public function parse(TwigTemplate $template)
     {
         $template->assign('navigation', $this->navigation);
     }
 
+    /**
+     * @param array $navigation
+     * @param int   $depth
+     *
+     * @return mixed
+     */
     private function addActiveStateToNavigation($navigation, $depth = 0)
     {
         $selectedKeys = $this->getSelectedKeys();

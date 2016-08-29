@@ -38,6 +38,9 @@ class ForkInstaller
     /**
      * @todo: - make sure the Container doesn't have to be injected
      *        - make sure the Model::setContainer isn't needed anymore
+     *
+     * @param Container $container
+     * @param           $rootDir
      */
     public function __construct(Container $container, $rootDir)
     {

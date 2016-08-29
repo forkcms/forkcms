@@ -17,6 +17,9 @@ use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 
 class InstallerController extends Controller
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function step1Action()
     {
         $this->checkInstall();
@@ -36,6 +39,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function step2Action(Request $request)
     {
         $this->checkInstall();
@@ -61,6 +69,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function step3Action(Request $request)
     {
         $this->checkInstall();
@@ -82,6 +95,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function step4Action(Request $request)
     {
         $this->checkInstall();
@@ -101,6 +119,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function step5Action(Request $request)
     {
         $this->checkInstall();
@@ -120,6 +143,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function step6Action(Request $request)
     {
         $this->checkInstall();
@@ -137,6 +165,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     protected function getInstallationData(Request $request)
     {
         if (!$request->getSession()->has('installation_data')) {
@@ -146,6 +179,9 @@ class InstallerController extends Controller
         return $request->getSession()->get('installation_data');
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function noStepAction()
     {
         $this->checkInstall();

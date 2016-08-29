@@ -198,6 +198,7 @@ class Model
      * @param string $name     The name of the template.
      *
      * @return array
+     * @throws \SpoonException
      */
     public static function getTemplate($language, $name)
     {

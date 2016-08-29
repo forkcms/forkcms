@@ -368,6 +368,8 @@ class Add extends BackendBaseActionAdd
      * Insert the widgets
      *
      * @param \SpoonFormElement[] $widgetPresets The widgets presets.
+     *
+     * @return mixed
      */
     private function insertWidgets($widgetPresets)
     {

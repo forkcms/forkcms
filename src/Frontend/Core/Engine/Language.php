@@ -321,6 +321,8 @@ class Language
      *
      * @param string $language The language to load, if not provided we will load the language based on the URL.
      * @param bool   $force    Force the language, so don't check if the language is active.
+     *
+     * @throws Exception
      */
     public static function setLocale($language = null, $force = false)
     {
