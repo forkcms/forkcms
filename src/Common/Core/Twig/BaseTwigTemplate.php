@@ -78,7 +78,7 @@ abstract class BaseTwigTemplate extends TwigEngine
     /**
      * Assign an entire array with keys & values.
      *
-     * @param array            $variables This array with keys and values will be used to search and replace in the template file.
+     * @param array $variables This array with keys and values will be used to search and replace in the template file.
      * @param string[optional] $prefix An optional prefix eg. 'lbl' that can be used.
      * @param string[optional] $suffix An optional suffix eg. 'msg' that can be used.
      */

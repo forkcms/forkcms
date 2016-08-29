@@ -22,10 +22,8 @@ class ClientFactory
     private $cacheDir;
 
     /**
-     * ClientFactory constructor.
-     *
      * @param ModulesSettings $modulesSettings
-     * @param                 $cacheDir
+     * @param string $cacheDir
      */
     public function __construct(ModulesSettings $modulesSettings, $cacheDir)
     {

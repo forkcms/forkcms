@@ -125,8 +125,8 @@ class Navigation extends Base\Object
     }
 
     /**
-     * @param     $navigation
-     * @param int $depth
+     * @param array $navigation
+     * @param int   $depth
      *
      * @return mixed
      */
