@@ -8,6 +8,7 @@ namespace Backend\Core\Engine;
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+use SpoonFilter;
 
 /**
  * This is our extended version of \SpoonFormFile
