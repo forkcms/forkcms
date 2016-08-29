@@ -66,7 +66,7 @@ class ContentBlockRepository extends EntityRepository
     public function findOneByRevisionIdAndLocale($revisionId, Locale $locale)
     {
         return $this->findOneBy(
-            ['revisionId' => $revisionId, 'status' => ContentBlockStatus::active(), 'locale' => $locale]
+            ['revisionId' => $revisionId, 'locale' => $locale]
         );
     }
 
