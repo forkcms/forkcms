@@ -1,3 +1,28 @@
+4.2.0 (2016-08-29)
+------------------
+
+Features:
+
+* Core: added Doctrine
+* Core: added Symfony Form
+* Core: added SimpleBus as command bus
+* Core: updated CK Finder to 2.6.2
+* Pages: added option to set a banner image on a page
+* Profiles: added check when setting new password that it is typed correctly
+* Profiles: generated pages on install are now translated
+* Core: deprecated the push notifications
+
+Enhancements:
+
+* Core: clean up phpdoc
+* Core: code quality improvements
+
+Bugfixes:
+
+* Faq: added missing locale
+* Core: missing use statement in FormFile
+
+
 4.1.2 (2016-08-26)
 ------------------
 
