@@ -267,10 +267,10 @@ class Edit extends BackendBaseActionEdit
                 $txtPassword->isFilled(BL::err('FieldIsRequired'));
                 $txtPasswordRepeat->isFilled(BL::err('FieldIsRequired'));
 
-                if ($txtPassword->isFilled() && $txtPasswordRepeat->isFilled()) {
-                    if ($txtPassword->getValue() != $txtPasswordRepeat->getValue()) {
-                        $txtPasswordRepeat->addError(BL::err('PasswordRepeatIsRequired'));
-                    }
+                // both password fields are filled in and should match
+                if ($txtPassword->isFilled() && $txtPasswordRepeat->isFilled()
+                    && ($txtPassword->getValue() != $txtPasswordRepeat->getValue())) {
+                    $txtPasswordRepeat->addError(BL::err('PasswordRepeatIsRequired'));
                 }
             }
 
