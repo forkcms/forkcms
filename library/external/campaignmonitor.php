@@ -122,17 +122,17 @@ class CampaignMonitor
 	private $username;
 
 
-	/**
-	 * Class constructor
-	 *
-	 * @param	string $URL						The base URL of your CreateSend site. e.g. http://example.createsend.com/.
-	 * @param	string $username				The username you use to login to Campaign Monitor.
-	 * @param	string $password				The password you use to login to Campaign Monitor.
+    /**
+     * Class constructor
+     *
+     * @param	string $URL						The base URL of your CreateSend site. e.g. http://example.createsend.com/.
+     * @param	string $username				The username you use to login to Campaign Monitor.
+     * @param	string $password				The password you use to login to Campaign Monitor.
      * @param	int[optional] $timeOut			The default timeout
-	 * @param	string[optional] $clientId		The default client ID to use throughout the class.
-	 * @param	string[optional] $listId		The default list ID to use throughout the class.
+     * @param	string[optional] $clientId		The default client ID to use throughout the class.
+     * @param	string[optional] $listId		The default list ID to use throughout the class.
      * @throws CampaignMonitorException
-	 */
+     */
 	public function __construct($URL, $username, $password, $timeOut = 60, $clientId = null, $listId = null)
 	{
 		// check input
