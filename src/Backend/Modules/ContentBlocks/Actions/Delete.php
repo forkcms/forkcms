@@ -11,7 +11,10 @@ namespace Backend\Modules\ContentBlocks\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Core\Language\Locale;
+use Backend\Modules\ContentBlocks\Command\DeleteContentBlock;
+use Backend\Modules\ContentBlocks\Event\ContentBlockDeleted;
+use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 
 /**
  * This is the delete-action, it will delete an item.
@@ -23,28 +26,36 @@ class Delete extends BackendBaseActionDelete
      */
     public function execute()
     {
-        // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        /** @var ContentBlockRepository $contentBlockRepository */
+        $contentBlockRepository = $this->get('content_blocks.repository.content_block');
 
-        // does the item exist
-        if ($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
-            parent::execute();
-            $this->record = (array) BackendContentBlocksModel::get($this->id);
+        $contentBlock = $contentBlockRepository->findOneByIdAndLocale(
+            $this->getParameter('id', 'int'),
+            Locale::workingLocale()
+        );
 
-            // delete item
-            BackendContentBlocksModel::delete($this->id);
-
-            // trigger event
-            BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
-
-            // item was deleted, so redirect
-            $this->redirect(
-                BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-                rawurlencode($this->record['title'])
-            );
-        } else {
-            // no item found, redirect to the overview with an error
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        if ($contentBlock === null) {
+            return $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
         }
+
+        // The command bus will handle the saving of the content block in the database.
+        $this->get('command_bus')->handle(new DeleteContentBlock($contentBlock));
+
+        $this->get('event_dispatcher')->dispatch(
+            ContentBlockDeleted::EVENT_NAME,
+            new ContentBlockDeleted($contentBlock)
+        );
+
+        return $this->redirect(
+            BackendModel::createURLForAction(
+                'Index',
+                null,
+                null,
+                [
+                    'report' => 'deleted',
+                    'var' => $contentBlock->getTitle(),
+                ]
+            )
+        );
     }
 }

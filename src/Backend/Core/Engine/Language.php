@@ -2,96 +2,47 @@
 
 namespace Backend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
-use Common\Cookie as CommonCookie;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
- * This class will store the language-dependant content for the Backend, it will also store the
- * current language for the user.
+ * @deprecated
  */
-class Language
+class Language extends BackendLanguage
 {
     /**
-     * The labels
-     *
-     * @var    array
-     */
-    protected static $err = array();
-    protected static $lbl = array();
-    protected static $msg = array();
-
-    /**
-     * The active languages
-     *
-     * @var    array
-     */
-    protected static $activeLanguages;
-
-    /**
-     * The current interface-language
-     *
-     * @var    string
-     */
-    protected static $currentInterfaceLanguage;
-
-    /**
-     * The current language that the user is working with
-     *
-     * @var    string
-     */
-    protected static $currentWorkingLanguage;
-
-    /**
      * Get the active languages
+     *
+     * @deprecated
      *
      * @return array
      */
     public static function getActiveLanguages()
     {
-        // validate the cache
-        if (empty(self::$activeLanguages)) {
-            // grab from settings
-            $activeLanguages = (array) Model::get('fork.settings')->get('Core', 'active_languages');
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
 
-            // store in cache
-            self::$activeLanguages = $activeLanguages;
-        }
-
-        // return from cache
-        return self::$activeLanguages;
+        return parent::getActiveLanguages();
     }
 
     /**
      * Get all active languages in a format usable by SpoonForm's addRadioButton
      *
+     * @deprecated
+     *
      * @return array
      */
     public static function getCheckboxValues()
     {
-        $languages = self::getActiveLanguages();
-        $results = array();
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
 
-        // stop here if no languages are present
-        if (empty($languages)) {
-            return array();
-        }
-
-        // addRadioButton requires an array with keys 'value' and 'label'
-        foreach ($languages as $abbreviation) {
-            $results[] = array(
-                'value' => $abbreviation,
-                'label' => self::lbl(mb_strtoupper($abbreviation)),
-            );
-        }
-
-        return $results;
+        return parent::getCheckboxValues();
     }
 
     /**
@@ -99,211 +50,202 @@ class Language
      */
     public static function getCurrentModule()
     {
-        if (Model::getContainer()->has('url')) {
-            return Model::get('url')->getModule();
-        }
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
 
-        if (Model::getContainer()->has('request')
-            && Model::getContainer()->get('request')->query->has('module')
-        ) {
-            return Model::getContainer()->get('request')->query->get('module');
-        }
-
-        return 'Core';
+        return parent::getCurrentModule();
     }
 
     /**
      * Get an error from the language-file
      *
-     * @param string $key    The key to get.
+     * @param string $key The key to get.
      * @param string $module The module wherein we should search.
+     *
+     * @deprecated
      *
      * @return string
      */
     public static function getError($key, $module = null)
     {
-        // do we know the module
-        if ($module === null) {
-            $module = self::getCurrentModule();
-        }
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
 
-        $key = \SpoonFilter::toCamelCase((string) $key);
-        $module = (string) $module;
-
-        // check if the error exists
-        if (isset(self::$err[$module][$key])) {
-            return self::$err[$module][$key];
-        }
-
-        // check if the error exists in the Core
-        if (isset(self::$err['Core'][$key])) {
-            return self::$err['Core'][$key];
-        }
-
-        // otherwise return the key in label-format
-        return '{$err' . \SpoonFilter::toCamelCase($module) . $key . '}';
+        return parent::getError($key, $module);
     }
 
     /**
      * Get all the errors from the language-file
      *
+     * @deprecated
+     *
      * @return array
      */
     public static function getErrors()
     {
-        return (array) self::$err;
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
+
+        return parent::getErrors();
     }
 
     /**
      * Get the current interface language
      *
+     * @deprecated
+     *
      * @return string
      */
     public static function getInterfaceLanguage()
     {
-        return self::$currentInterfaceLanguage;
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
+
+        return parent::getInterfaceLanguage();
     }
 
     /**
      * Get all the possible interface languages
      *
+     * @deprecated
+     *
      * @return array
      */
     public static function getInterfaceLanguages()
     {
-        $languages = array();
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
 
-        // grab the languages from the settings & loop language to reset the label
-        foreach ((array) Model::get('fork.settings')->get('Core', 'interface_languages', array('en')) as $key) {
-            // fetch language's translation
-            $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
-        }
-
-        // sort alphabetically
-        asort($languages);
-
-        // return languages
-        return $languages;
+        return parent::getInterfaceLanguages();
     }
 
     /**
      * Get a label from the language-file
      *
-     * @param string $key    The key to get.
+     * @param string $key The key to get.
      * @param string $module The module wherein we should search.
+     *
+     * @deprecated
      *
      * @return string
      */
     public static function getLabel($key, $module = null)
     {
-        // do we know the module
-        if ($module === null) {
-            $module = self::getCurrentModule();
-        }
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
 
-        $key = \SpoonFilter::toCamelCase((string) $key);
-        $module = (string) $module;
-
-        // check if the label exists
-        if (isset(self::$lbl[$module][$key])) {
-            return self::$lbl[$module][$key];
-        }
-
-        // check if the label exists in the Core
-        if (isset(self::$lbl['Core'][$key])) {
-            return self::$lbl['Core'][$key];
-        }
-
-        // otherwise return the key in label-format
-        return '{$lbl' . \SpoonFilter::toCamelCase($module) . $key . '}';
+        return parent::getLabel($key, $module);
     }
 
     /**
      * Get all the labels from the language-file
      *
+     * @deprecated
+     *
      * @return array
      */
     public static function getLabels()
     {
-        return self::$lbl;
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
+
+        return parent::getLabels();
     }
 
     /**
      * Get a message from the language-file
      *
-     * @param string $key    The key to get.
+     * @param string $key The key to get.
      * @param string $module The module wherein we should search.
+     *
+     * @deprecated
      *
      * @return string
      */
     public static function getMessage($key, $module = null)
     {
-        if ($module === null) {
-            if (Model::getContainer()->has('url')) {
-                $module = Model::get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
-        }
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
 
-        $key = \SpoonFilter::toCamelCase((string) $key);
-        $module = (string) $module;
-
-        // check if the message exists
-        if (isset(self::$msg[$module][$key])) {
-            return self::$msg[$module][$key];
-        }
-
-        // check if the message exists in the Core
-        if (isset(self::$msg['Core'][$key])) {
-            return self::$msg['Core'][$key];
-        }
-
-        // otherwise return the key in label-format
-        return '{$msg' . \SpoonFilter::toCamelCase($module) . $key . '}';
+        return parent::getMessage($key, $module);
     }
 
     /**
      * Get the messages
      *
+     * @deprecated
+     *
      * @return array
      */
     public static function getMessages()
     {
-        return self::$msg;
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
+
+        return parent::getMessages();
     }
 
     /**
      * Get the current working language
      *
+     * @deprecated
+     *
      * @return string
      */
     public static function getWorkingLanguage()
     {
-        return self::$currentWorkingLanguage;
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
+
+        return parent::getWorkingLanguage();
     }
 
     /**
      * Get all possible working languages
      *
+     * @deprecated
+     *
      * @return array
      */
     public static function getWorkingLanguages()
     {
-        $languages = array();
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
 
-        // grab the languages from the settings & loop language to reset the label
-        foreach ((array) Model::get('fork.settings')->get('Core', 'languages', array('en')) as $key) {
-            // fetch the language's translation
-            $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
-        }
-
-        // sort alphabetically
-        asort($languages);
-
-        return $languages;
+        return parent::getWorkingLanguages();
     }
 
     /**
@@ -314,61 +256,13 @@ class Language
      */
     public static function setLocale($language)
     {
-        $language = (string) $language;
-
-        // validate file, generate it if needed
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.json')) {
-            BackendLocaleModel::buildCache('en', APPLICATION);
-        }
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $language . '.json')) {
-            BackendLocaleModel::buildCache($language, APPLICATION);
-        }
-
-        // store
-        self::$currentInterfaceLanguage = $language;
-
-        // attempt to set a cookie
-        try {
-            CommonCookie::set('interface_language', $language);
-        } catch (\SpoonCookieException $e) {
-            // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
-        }
-
-        // set English translations, they'll be the fallback
-        $translations = json_decode(
-            file_get_contents(BACKEND_CACHE_PATH . '/Locale/en.json'),
-            true
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
         );
-        self::$err = (array) $translations['err'];
-        self::$lbl = (array) $translations['lbl'];
-        self::$msg = (array) $translations['msg'];
 
-        // overwrite with the requested language's translations
-        $translations = json_decode(
-            file_get_contents(BACKEND_CACHE_PATH . '/Locale/' . $language . '.json'),
-            true
-        );
-        $err = (array) $translations['err'];
-        $lbl = (array) $translations['lbl'];
-        $msg = (array) $translations['msg'];
-        foreach ($err as $module => $translations) {
-            if (!isset(self::$err[$module])) {
-                self::$err[$module] = array();
-            }
-            self::$err[$module] = array_merge(self::$err[$module], $translations);
-        }
-        foreach ($lbl as $module => $translations) {
-            if (!isset(self::$lbl[$module])) {
-                self::$lbl[$module] = array();
-            }
-            self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
-        }
-        foreach ($msg as $module => $translations) {
-            if (!isset(self::$msg[$module])) {
-                self::$msg[$module] = array();
-            }
-            self::$msg[$module] = array_merge(self::$msg[$module], $translations);
-        }
+        parent::setLocale($language);
     }
 
     /**
@@ -378,45 +272,75 @@ class Language
      */
     public static function setWorkingLanguage($language)
     {
-        self::$currentWorkingLanguage = (string) $language;
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
+
+        parent::setWorkingLanguage($language);
     }
 
     /**
      * Get an error from the language-file
      *
-     * @param string $key    The key to get.
+     * @param string $key The key to get.
      * @param string $module The module wherein we should search.
+     *
+     * @deprecated
      *
      * @return string
      */
     public static function err($key, $module = null)
     {
-        return self::getError($key, $module);
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
+
+        return parent::err($key, $module);
     }
 
     /**
      * Get a label from the language-file
      *
-     * @param string $key    The key to get.
+     * @param string $key The key to get.
      * @param string $module The module wherein we should search.
+     *
+     * @deprecated
      *
      * @return string
      */
     public static function lbl($key, $module = null)
     {
-        return self::getLabel($key, $module);
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
+
+        return parent::lbl($key, $module);
     }
 
     /**
      * Get a message from the language-file
      *
-     * @param string $key    The key to get.
+     * @param string $key The key to get.
      * @param string $module The module wherein we should search.
+     *
+     * @deprecated
      *
      * @return string
      */
     public static function msg($key, $module = null)
     {
-        return self::getMessage($key, $module);
+        trigger_error(
+            'Backend\Core\Engine\Language is deprecated.
+             It has been moved to Backend\Core\Language\Language',
+            E_USER_DEPRECATED
+        );
+
+        return parent::msg($key, $module);
     }
 }

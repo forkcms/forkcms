@@ -2,10 +2,18 @@
 
 namespace Backend\Core\Engine;
 
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Frontend\Core\Engine\FormExtension;
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
+use ReflectionClass;
+use Symfony\Bridge\Twig\AppVariable;
+use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Twig_Environment;
+use Twig_Extension_Debug;
+use Twig_Loader_Filesystem;
 
 /*
  * This file is part of Fork CMS.
@@ -55,20 +63,34 @@ class TwigTemplate extends BaseTwigTemplate
 
         $template = str_replace(BACKEND_MODULES_PATH, '', $template);
 
+        // path to TwigBridge library so we can locate the form theme files.
+        $appVariableReflection = new ReflectionClass(AppVariable::class);
+        $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
+
         // render the compiled File
-        $loader = new \Twig_Loader_Filesystem(array(
+        $loader = new Twig_Loader_Filesystem(array(
             BACKEND_MODULES_PATH,
             BACKEND_CORE_PATH,
+            $vendorTwigBridgeDir . '/Resources/views/Form'
         ));
 
-        $twig = new \Twig_Environment($loader, array(
+        $twig = new Twig_Environment($loader, array(
             'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
             'debug' => $this->debugMode,
         ));
 
+        // connect symphony forms
+        $formEngine = new TwigRendererEngine(array('Layout/Templates/FormLayout.html.twig'));
+        $formEngine->setEnvironment($twig);
+        $twig->addExtension(
+            new SymfonyFormExtension(
+                new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
+            )
+        );
+
         // debug options
         if ($this->debugMode === true) {
-            $twig->addExtension(new \Twig_Extension_Debug());
+            $twig->addExtension(new Twig_Extension_Debug());
         }
 
         if (count($this->forms) > 0) {
@@ -77,7 +99,7 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        // should always be included
+        // should always be included, makes it possible to parse SpoonForm in twig
         new FormExtension($twig);
 
         // start the filters / globals
@@ -114,7 +136,7 @@ class TwigTemplate extends BaseTwigTemplate
         }
 
         // we use some abbreviations and common terms, these should also be assigned
-        $this->assign('LANGUAGE', Language::getWorkingLanguage());
+        $this->assign('LANGUAGE', BL::getWorkingLanguage());
 
         // adding parameters
         $this->assign(
@@ -158,7 +180,7 @@ class TwigTemplate extends BaseTwigTemplate
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
-            Model::get('fork.settings')->get('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
     }
 
@@ -237,11 +259,11 @@ class TwigTemplate extends BaseTwigTemplate
     private function parseLabels()
     {
         // grab the current module
-        $currentModule = Language::getCurrentModule();
+        $currentModule = BL::getCurrentModule();
 
-        $errors = Language::getErrors();
-        $labels = Language::getLabels();
-        $messages = Language::getMessages();
+        $errors = BL::getErrors();
+        $labels = BL::getLabels();
+        $messages = BL::getMessages();
 
         // set the begin state
         $realErrors = $errors['Core'];
@@ -321,12 +343,12 @@ class TwigTemplate extends BaseTwigTemplate
         $localeToAssign = array();
 
         // get months
-        $monthsLong = \SpoonLocale::getMonths(Language::getInterfaceLanguage(), false);
-        $monthsShort = \SpoonLocale::getMonths(Language::getInterfaceLanguage(), true);
+        $monthsLong = \SpoonLocale::getMonths(BL::getInterfaceLanguage(), false);
+        $monthsShort = \SpoonLocale::getMonths(BL::getInterfaceLanguage(), true);
 
         // get days
-        $daysLong = \SpoonLocale::getWeekDays(Language::getInterfaceLanguage(), false, 'sunday');
-        $daysShort = \SpoonLocale::getWeekDays(Language::getInterfaceLanguage(), true, 'sunday');
+        $daysLong = \SpoonLocale::getWeekDays(BL::getInterfaceLanguage(), false, 'sunday');
+        $daysShort = \SpoonLocale::getWeekDays(BL::getInterfaceLanguage(), true, 'sunday');
 
         // build labels
         foreach ($monthsLong as $key => $value) {

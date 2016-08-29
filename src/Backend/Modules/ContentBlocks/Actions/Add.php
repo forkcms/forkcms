@@ -10,11 +10,10 @@ namespace Backend\Modules\ContentBlocks\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
-use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Modules\ContentBlocks\Command\CreateContentBlock;
+use Backend\Modules\ContentBlocks\Event\ContentBlockCreated;
+use Backend\Modules\ContentBlocks\Form\ContentBlockType;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -22,79 +21,50 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 class Add extends BackendBaseActionAdd
 {
     /**
-     * The available templates
-     *
-     * @var	array
-     */
-    private $templates = array();
-
-    /**
      * Execute the action
      */
     public function execute()
     {
         parent::execute();
-        $this->templates = BackendContentBlocksModel::getTemplates();
-        $this->loadForm();
-        $this->validateForm();
-        $this->parse();
-        $this->display();
-    }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
-    {
-        $this->frm = new BackendForm('add');
-        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
-        $this->frm->addEditor('text');
-        $this->frm->addCheckbox('hidden', true);
+        $form = $this->createForm(
+            new ContentBlockType(
+                $this->get('fork.settings')->get('Core', 'theme', 'core')
+            )
+        );
 
-        // if we have multiple templates, add a dropdown to select them
-        if (count($this->templates) > 1) {
-            $this->frm->addDropdown('template', array_combine($this->templates, $this->templates));
+        $form->handleRequest($this->get('request'));
+
+        if (!$form->isValid()) {
+            $this->tpl->assign('form', $form->createView());
+
+            $this->parse();
+            $this->display();
+
+            return;
         }
-    }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
-    {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
-            $fields = $this->frm->getFields();
+        /** @var CreateContentBlock $createContentBlock */
+        $createContentBlock = $form->getData();
 
-            // validate fields
-            $fields['title']->isFilled(BL::err('TitleIsRequired'));
-            $fields['text']->isFilled(BL::err('FieldIsRequired'));
+        // The command bus will handle the saving of the content block in the database.
+        $this->get('command_bus')->handle($createContentBlock);
 
-            if ($this->frm->isCorrect()) {
-                // build item
-                $item['id'] = BackendContentBlocksModel::getMaximumId() + 1;
-                $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];
-                $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $fields['title']->getValue();
-                $item['text'] = $fields['text']->getValue();
-                $item['hidden'] = $fields['hidden']->getValue() ? 'N' : 'Y';
-                $item['status'] = 'active';
-                $item['created_on'] = BackendModel::getUTCDate();
-                $item['edited_on'] = BackendModel::getUTCDate();
+        $this->get('event_dispatcher')->dispatch(
+            ContentBlockCreated::EVENT_NAME,
+            new ContentBlockCreated($createContentBlock->contentBlock)
+        );
 
-                // insert the item
-                $item['revision_id'] = BackendContentBlocksModel::insert($item);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
-
-                // everything is saved, so redirect to the overview
-                $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=added&var=' .
-                    rawurlencode($item['title']) . '&highlight=row-' . $item['id']
-                );
-            }
-        }
+        return $this->redirect(
+            BackendModel::createURLForAction(
+                'Index',
+                null,
+                null,
+                [
+                    'report' => 'added',
+                    'var' => $createContentBlock->title,
+                ]
+            )
+        );
     }
 }

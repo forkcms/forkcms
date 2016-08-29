@@ -12,7 +12,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;

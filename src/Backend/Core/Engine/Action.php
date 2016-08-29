@@ -11,6 +11,7 @@ namespace Backend\Core\Engine;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...
@@ -74,7 +75,7 @@ class Action extends Base\Object
         }
 
         // get working languages
-        $languages = Language::getWorkingLanguages();
+        $languages = BackendLanguage::getWorkingLanguages();
         $workingLanguages = array();
 
         // loop languages and build an array that we can assign
@@ -82,7 +83,7 @@ class Action extends Base\Object
             $workingLanguages[] = array(
                 'abbr' => $abbreviation,
                 'label' => $label,
-                'selected' => ($abbreviation == Language::getWorkingLanguage()),
+                'selected' => ($abbreviation == BackendLanguage::getWorkingLanguage()),
             );
         }
 

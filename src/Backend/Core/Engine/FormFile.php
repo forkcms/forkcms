@@ -10,6 +10,9 @@ namespace Backend\Core\Engine;
  */
 use SpoonFilter;
 
+use Backend\Core\Language\Language as BackendLanguage;
+use \SpoonFilter;
+
 /**
  * This is our extended version of \SpoonFormFile
  */
@@ -63,14 +66,14 @@ class FormFile extends \SpoonFormFile
             if (isset($this->attributes['extension'])) {
                 $output .= '<p class="help-block">' .
                            sprintf(
-                               Language::getMessage('HelpFileFieldWithMaxFileSize', 'core'),
+                               BackendLanguage::getMessage('HelpFileFieldWithMaxFileSize', 'core'),
                                $this->attributes['extension'],
                                Form::getUploadMaxFileSize()
                            ) . '</p>';
             } else {
                 $output .= '<p class="help-block">' .
                            sprintf(
-                               Language::getMessage('HelpMaxFileSize'),
+                               BackendLanguage::getMessage('HelpMaxFileSize'),
                                Form::getUploadMaxFileSize()
                            ) . '</p>';
             }
@@ -101,7 +104,7 @@ class FormFile extends \SpoonFormFile
             $imageError = $_FILES[$this->getName()]['error'];
             if ($imageError === UPLOAD_ERR_INI_SIZE && empty($this->errors)) {
                 $this->addError(
-                    SpoonFilter::ucfirst(sprintf(Language::err('FileTooBig'), Form::getUploadMaxFileSize()))
+                    SpoonFilter::ucfirst(sprintf(BackendLanguage::err('FileTooBig'), Form::getUploadMaxFileSize()))
                 );
             }
         }

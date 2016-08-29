@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: doctrine.yml }
 
 framework:
     secret:          %kernel.secret%
@@ -7,11 +8,14 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
+    validation:
+        enable_annotations: true
     csrf_protection: ~
     templating:
         engines: ['twig']
     session:
-      handler_id: ~
+        handler_id: ~
+        storage_id: session.storage.php_bridge
 
 # Assetic Configuration
 assetic:
@@ -44,6 +48,10 @@ swiftmailer:
     transport: "mail"
 
 services:
+    form.type.editor:
+        class: Backend\Form\Type\EditorType
+        tags:
+          - { name: form.type, alias: editor}
     database:
         class: SpoonDatabase
         arguments:

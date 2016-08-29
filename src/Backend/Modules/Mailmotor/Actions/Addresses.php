@@ -14,7 +14,7 @@ use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 

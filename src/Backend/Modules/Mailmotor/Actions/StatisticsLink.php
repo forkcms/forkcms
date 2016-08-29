@@ -12,7 +12,7 @@ namespace Backend\Modules\Mailmotor\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGrid as BackendDataGrid;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;

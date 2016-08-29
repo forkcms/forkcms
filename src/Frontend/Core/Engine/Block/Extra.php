@@ -14,7 +14,7 @@ use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Exception as FrontendException;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 
 /**
  * This class will handle all stuff related to blocks

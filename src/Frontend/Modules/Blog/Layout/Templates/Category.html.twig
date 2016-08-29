@@ -49,8 +49,8 @@
           <div class="bd content">
             {% if item.image %}
               <img src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
-            {% if not item.introduction %}{{ item.text }}{% endif %}
-            {% if item.introduction %}{{ item.introduction }}{% endif %}
+            {% if not item.introduction %}{{ item.text|raw }}{% endif %}
+            {% if item.introduction %}{{ item.introduction|raw }}{% endif %}
           </div>
         </div>
       </article>

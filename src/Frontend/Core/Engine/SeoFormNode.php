@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
-use Backend\Core\Engine\Language as BackendLanguage;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * Twig node for writing the SEO form

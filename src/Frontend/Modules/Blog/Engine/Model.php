@@ -10,7 +10,7 @@ namespace Frontend\Modules\Blog\Engine;
  */
 
 use Common\Mailer\Message;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendURL;

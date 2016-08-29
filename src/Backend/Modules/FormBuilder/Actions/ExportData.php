@@ -10,7 +10,7 @@ namespace Backend\Modules\FormBuilder\Actions;
  */
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;

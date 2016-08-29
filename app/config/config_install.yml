@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters_install.yml }
+    - { resource: doctrine.yml }
 
 framework:
     secret:          %kernel.secret%
@@ -28,7 +29,22 @@ monolog:
             path:  %site.path_www%/app/logs/logs.log
             level: debug
 
+parameters:
+    doctrine.dbal.connection_factory.class: ForkCMS\Bundle\InstallerBundle\Service\InstallerConnectionFactory
+
 services:
+    # dummy service during the installation
+    mailer_configurator:
+        class: stdClass
+
+    # dummy service during the installation
+    fork.settings:
+        class: stdClass
+
+    # dummy service during the installation
+    cache.pool:
+        class: stdClass
+
     database:
         class: SpoonDatabase
         arguments:

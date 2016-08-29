@@ -10,7 +10,7 @@ namespace Backend\Modules\Mailmotor\Engine;
  */
 
 use Backend\Core\Engine\Exception as BackendException;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 

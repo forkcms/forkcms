@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This is our extended version of \SpoonForm
@@ -216,12 +217,12 @@ class Form extends \Common\Core\Form
         $this->header->addJS('ckfinder/ckfinder.js', 'Core', false);
 
         // add the internal link lists-file
-        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {
+        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js')) {
             $timestamp = @filemtime(
-                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js'
+                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js'
             );
             $this->header->addJS(
-                '/src/Frontend/Cache/Navigation/editor_link_list_' . Language::getWorkingLanguage(
+                '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage(
                 ) . '.js?m=' . $timestamp,
                 null,
                 false,

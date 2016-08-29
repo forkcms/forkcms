@@ -14,7 +14,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
@@ -26,7 +26,7 @@ class Data extends BackendBaseActionIndex
     /**
      * Filter variables
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 

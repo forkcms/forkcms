@@ -30,6 +30,9 @@ class InstallerControllerTest extends WebTestCase
 
         // make sure we have a clean slate and our parameters file is backed up
         $this->emptyTestDatabase($client->getContainer()->get('database'));
+
+        // recreate the client with the empty database because we need this in our installer checks
+        $client = static::createClient();
         $this->backupParametersFile($client->getContainer()->getParameter('kernel.root_dir'));
 
         $crawler = $client->request('GET', '/install/2');

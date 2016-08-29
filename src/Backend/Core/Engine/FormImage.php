@@ -11,6 +11,7 @@ namespace Backend\Core\Engine;
 
 use SpoonFilter;
 use Symfony\Component\Filesystem\Filesystem;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This is our extended version of \SpoonFormFile
@@ -76,8 +77,8 @@ class FormImage extends \SpoonFormImage
     {
         // do an image validation
         if ($this->isFilled()) {
-            $this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), Language::err('JPGGIFAndPNGOnly'));
-            $this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), Language::err('JPGGIFAndPNGOnly'));
+            $this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BackendLanguage::err('JPGGIFAndPNGOnly'));
+            $this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), BackendLanguage::err('JPGGIFAndPNGOnly'));
         }
 
         // if the image is bigger then the allowed configuration it won't show up as filled but it is submitted
@@ -86,7 +87,7 @@ class FormImage extends \SpoonFormImage
             $imageError = $_FILES[$this->getName()]['error'];
             if ($imageError === UPLOAD_ERR_INI_SIZE && empty($this->errors)) {
                 $this->addError(
-                    SpoonFilter::ucfirst(sprintf(Language::err('FileTooBig'), Form::getUploadMaxFileSize()))
+                    SpoonFilter::ucfirst(sprintf(BackendLanguage::err('FileTooBig'), Form::getUploadMaxFileSize()))
                 );
             }
         }
@@ -135,16 +136,16 @@ class FormImage extends \SpoonFormImage
         if (!$this->hideHelpTxt) {
             $output .= '<p class="help-block">' .
                         sprintf(
-                            Language::getMessage('HelpImageFieldWithMaxFileSize', 'core'),
+                            BackendLanguage::getMessage('HelpImageFieldWithMaxFileSize', 'core'),
                             Form::getUploadMaxFileSize()
                         ) . '</p>';
         }
 
         // parse to template
         if ($template !== null) {
-            $template->assign('file' . \SpoonFilter::toCamelCase($this->attributes['name']), $output);
+            $template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
             $template->assign(
-                'file' . \SpoonFilter::toCamelCase($this->attributes['name']) . 'Error',
+                'file' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error',
                 ($this->errors != '') ? '<span class="formError text-danger">' . $this->errors . '</span>' : ''
             );
         }

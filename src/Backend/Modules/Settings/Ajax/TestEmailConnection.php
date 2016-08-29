@@ -10,7 +10,7 @@ namespace Backend\Modules\Settings\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Common\Mailer\TransportFactory;
 
 /**
@@ -61,8 +61,7 @@ class TestEmailConnection extends BackendBaseAJAXAction
                 ->setBody(BL::msg('TestMessage'), 'text/plain')
             ;
 
-            $transport =
-                TransportFactory::create(
+            $transport = TransportFactory::create(
                 \SpoonFilter::getPostValue('mailer_type', array('smtp', 'mail'), 'mail'),
                 \SpoonFilter::getPostValue('smtp_server', null, ''),
                 \SpoonFilter::getPostValue('smtp_port', null, ''),
