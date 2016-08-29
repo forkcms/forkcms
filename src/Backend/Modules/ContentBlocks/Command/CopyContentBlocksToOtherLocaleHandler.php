@@ -5,6 +5,7 @@ namespace Backend\Modules\ContentBlocks\Command;
 use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
+use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
 
 final class CopyContentBlocksToOtherLocaleHandler
 {
@@ -27,7 +28,7 @@ final class CopyContentBlocksToOtherLocaleHandler
     public function handle(CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale)
     {
         $fromLocaleContentBlocks = (array) $this->contentBlockRepository->findBy(
-            ['locale' => $copyContentBlocksToOtherLocale->fromLocale]
+            ['locale' => $copyContentBlocksToOtherLocale->fromLocale, 'status' => ContentBlockStatus::active()]
         );
 
         array_map(
