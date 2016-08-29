@@ -4009,6 +4009,23 @@
   </Frontend>
   <Backend>
     <Core>
+      <item type="label" name="ProfileSettings">
+        <translation language="nl"><![CDATA[instellingen]]></translation>
+        <translation language="en"><![CDATA[settings]]></translation>
+        <translation language="fr"><![CDATA[préférences]]></translation>
+        <translation language="hu"><![CDATA[beállítások]]></translation>
+        <translation language="it"><![CDATA[impostazioni]]></translation>
+        <translation language="ru"><![CDATA[Настройки]]></translation>
+        <translation language="zh"><![CDATA[帐户设置]]></translation>
+        <translation language="de"><![CDATA[Einstellungen]]></translation>
+        <translation language="es"><![CDATA[preferencias]]></translation>
+        <translation language="lt"><![CDATA[nustatymai]]></translation>
+        <translation language="uk"><![CDATA[Налаштування]]></translation>
+        <translation language="sv"><![CDATA[inställningar]]></translation>
+        <translation language="el"><![CDATA[ρυθμίσεις]]></translation>
+        <translation language="pl"><![CDATA[ustawienia]]></translation>
+        <translation language="tr"><![CDATA[Profil ayarları]]></translation>
+      </item>
       <item type="label" name="AccountManagement">
         <translation language="nl"><![CDATA[account beheer]]></translation>
         <translation language="en"><![CDATA[account management]]></translation>
