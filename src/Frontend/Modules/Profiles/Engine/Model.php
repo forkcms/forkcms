@@ -332,7 +332,7 @@ class Model
                 $url = FrontendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url);
+                return self::getUrl($url);
             }
         } else {
             // current profile should be excluded
@@ -351,7 +351,7 @@ class Model
                 $url = FrontendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url, $id);
+                return self::getUrl($url, $id);
             }
         }
 

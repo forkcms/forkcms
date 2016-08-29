@@ -12,6 +12,7 @@ namespace Backend\Core\Engine;
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Base\Object;
+use Backend\Core\Config as BackendConfig;
 use Frontend\Core\Engine\Language as FrontendLanguage;
 
 /**
@@ -28,6 +29,11 @@ class Cronjob extends Object implements \ApplicationInterface
      * @var    string
      */
     private $language;
+
+    /**
+     * @var BackendConfig
+     */
+    private $config;
 
     /**
      * @return Response
@@ -175,6 +181,7 @@ class Cronjob extends Object implements \ApplicationInterface
         $this->config = new $configClass($this->getKernel(), $this->getModule());
 
         // set action
+        //@fixme: needs to be removed if not used
         $action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'Index';
     }
 
@@ -213,7 +220,7 @@ class Cronjob extends Object implements \ApplicationInterface
         $possibleLanguages = Language::getWorkingLanguages();
 
         // validate
-        if (!in_array($value, array_keys($possibleLanguages))) {
+        if (!array_key_exists($value, $possibleLanguages)) {
             throw new Exception('Invalid language.');
         }
 

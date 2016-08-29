@@ -210,7 +210,7 @@ class RequirementsChecker
         );
         $this->checkRequirement(
             'fileSystemBackendModules',
-            self::isWritable($this->rootDir . 'src/Backend/Modules/'),
+            $this->isWritable($this->rootDir . 'src/Backend/Modules/'),
             self::STATUS_WARNING
         );
         $this->checkRequirement(
@@ -347,7 +347,7 @@ class RequirementsChecker
         $path = rtrim((string) $path, '/');
 
         // create random file
-        $file = uniqid() . '.tmp';
+        $file = uniqid('', true) . '.tmp';
 
         $return = @file_put_contents($path . '/' . $file, 'temporary file', FILE_APPEND);
 

@@ -550,7 +550,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url);
+                return self::getUrl($url);
             }
         } else {
             // get number of profiles with this URL
@@ -568,7 +568,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url, $id);
+                return self::getUrl($url, $id);
             }
         }
 

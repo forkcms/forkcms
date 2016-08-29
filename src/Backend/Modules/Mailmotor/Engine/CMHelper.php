@@ -306,7 +306,7 @@ class CMHelper
             $password = BackendModel::get('fork.settings')->get('Mailmotor', 'cm_password');
 
             // init CampaignMonitor object
-            $cm = new \CampaignMonitor($url, $username, $password, 60, self::getClientId());
+            $cm = new \CampaignMonitor($url, $username, $password, 60, self::getClientID());
 
             // set CampaignMonitor object reference
             BackendModel::getContainer()->set('campaignmonitor', $cm);
@@ -1042,7 +1042,7 @@ class CMHelper
         }
 
         // overwrite the name, because the previous one is taken -.-
-        $item['name'] .= ' (#' . rand(0, 999) . ')';
+        $item['name'] .= ' (#' . mt_rand(0, 999) . ')';
 
         // re-insert the mailing in CM
         self::insertMailing($item);

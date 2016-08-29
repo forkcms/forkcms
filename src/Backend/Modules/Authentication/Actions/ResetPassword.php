@@ -23,13 +23,6 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 class ResetPassword extends BackendBaseActionAdd
 {
     /**
-     * Form instance
-     *
-     * @var	BackendForm
-     */
-    protected $frm;
-
-    /**
      * User email
      *
      * @var	$email
@@ -155,7 +148,7 @@ class ResetPassword extends BackendBaseActionAdd
                 }
 
                 // redirect to the login form
-                $this->redirect(BackendModel::createUrlForAction('Index', 'Dashboard', null, array('password_reset' => 'success')));
+                $this->redirect(BackendModel::createURLForAction('Index', 'Dashboard', null, array('password_reset' => 'success')));
             }
         }
     }

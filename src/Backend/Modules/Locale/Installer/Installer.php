@@ -22,19 +22,19 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'locale' as a module
         $this->addModule('Locale');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // import core locale
-        $this->importLocale(dirname(dirname(dirname(dirname(__FILE__)))) . '/Core/Installer/Data/locale.xml');
+        $this->importLocale(dirname(dirname(dirname(__DIR__))) . '/Core/Installer/Data/locale.xml');
 
         // import dashboard locale
-        $this->importLocale(dirname(dirname(dirname(__FILE__))) . '/Dashboard/Installer/Data/locale.xml');
+        $this->importLocale(dirname(dirname(__DIR__)) . '/Dashboard/Installer/Data/locale.xml');
 
         // module rights
         $this->setModuleRights(1, 'Locale');

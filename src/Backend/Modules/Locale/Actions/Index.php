@@ -9,8 +9,8 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
@@ -41,6 +41,13 @@ class Index extends BackendBaseActionIndex
      * @var BackendDataGridArray
      */
     private $dgMessages;
+
+    /**
+     * The form instance
+     *
+     * @var BackendForm
+     */
+    protected $frm;
 
     /**
      * Filter variables

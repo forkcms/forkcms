@@ -859,7 +859,7 @@ class Model extends \Common\Core\Model
         foreach ($pingServices['services'] as $service) {
             $client = new \SpoonXMLRPCClient($service['url']);
             $client->setUserAgent('Fork ' . FORK_VERSION);
-            $client->setTimeOut(10);
+            $client->setTimeout(10);
             $client->setPort($service['port']);
 
             try {

@@ -1032,7 +1032,7 @@ class Header extends FrontendBaseObject
 
         // add Twitter Card to the header
         foreach ($data as $d) {
-            static::addMetaData($d);
+            $this->addMetaData($d);
         }
     }
 }

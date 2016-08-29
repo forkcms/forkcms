@@ -10,7 +10,7 @@ namespace Backend\Modules\Mailmotor\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Datagrid as BackendDataGrid;
+use Backend\Core\Engine\DataGrid as BackendDataGrid;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -45,6 +45,13 @@ class StatisticsLink extends BackendBaseActionIndex
      * @var    string
      */
     public $linkURL;
+
+    /**
+     * The form instance
+     *
+     * @var BackendForm
+     */
+    protected $frm;
 
     /**
      * Execute the action

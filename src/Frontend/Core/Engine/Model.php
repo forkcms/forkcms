@@ -305,7 +305,7 @@ class Model extends \Common\Core\Model
         // get/init tracking identifier
         self::$visitorId = CommonCookie::exists('track') && !empty($_COOKIE['track'])
             ? (string) CommonCookie::get('track')
-            : md5(uniqid() . \SpoonSession::getSessionId());
+            : md5(uniqid('', true) . \SpoonSession::getSessionId());
 
         if (!self::get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
             CommonCookie::set('track', self::$visitorId, 86400 * 365);

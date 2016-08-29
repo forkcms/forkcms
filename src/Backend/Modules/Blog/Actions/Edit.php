@@ -225,7 +225,7 @@ class Edit extends BackendBaseActionEdit
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
-        $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getURL', array($this->record['id']));
+        $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURL', array($this->record['id']));
     }
 
     /**

@@ -51,7 +51,7 @@ class GenerateUrl extends BackendBaseAJAXAction
         $this->meta = new BackendMeta($frm, $metaId, $baseFieldName, $custom);
 
         // set callback for generating an unique URL
-        $this->meta->setUrlCallback($className, $methodName, $parameters);
+        $this->meta->setURLCallback($className, $methodName, $parameters);
 
         // fetch generated meta url
         $URL = urldecode($this->meta->generateURL($URL));

@@ -29,6 +29,13 @@ class Themes extends BackendBaseActionIndex
     private $frm;
 
     /**
+     * Theme id.
+     *
+     * @var int
+     */
+    private $id;
+
+    /**
      * List of available themes (installed & installable)
      *
      * @var array

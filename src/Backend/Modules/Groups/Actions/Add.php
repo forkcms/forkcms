@@ -66,6 +66,13 @@ class Add extends BackendBaseActionAdd
     private $widgetInstances;
 
     /**
+     * Hidden widgets on dashboard
+     *
+     * @var array
+     */
+    private $hiddenOnDashboard;
+
+    /**
      * Bundle all actions that need to be bundled
      */
     private function bundleActions()
@@ -479,16 +486,6 @@ class Add extends BackendBaseActionAdd
         $this->frm->addDropdown('manage_groups', array('Deny', 'Allow'));
         $this->tpl->assign('permissions', $permissionBoxes);
         $this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
-    }
-
-    /**
-     * Parse the form
-     *
-     * @todo method is not necessary see the content...
-     */
-    protected function parse()
-    {
-        parent::parse();
     }
 
     /**

@@ -9,15 +9,16 @@ namespace Backend\Modules\Authentication\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\User;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use Common\Mailer\Message;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 /**
  * This is the index-action (default), it will display the login screen
@@ -215,7 +216,7 @@ class Index extends BackendBaseActionIndex
             // no errors in the form?
             if ($this->frmForgotPassword->isCorrect()) {
                 // generate the key for the reset link and fetch the user ID for this email
-                $key = BackendAuthentication::getEncryptedString($email, uniqid());
+                $key = BackendAuthentication::getEncryptedString($email, uniqid('', true));
 
                 // insert the key and the timestamp into the user settings
                 $userId = BackendUsersModel::getIdByEmail($email);
@@ -229,7 +230,7 @@ class Index extends BackendBaseActionIndex
                 // send e-mail to user
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-                $message = \Common\Mailer\Message::newInstance(
+                $message = Message::newInstance(
                         \SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject'))
                     )
                     ->setFrom(array($from['email'] => $from['name']))
@@ -266,8 +267,8 @@ class Index extends BackendBaseActionIndex
         $allowedModule = $this->getAllowedModule();
         $allowedAction = $this->getAllowedAction($allowedModule);
         $allowedModuleActionUrl = $allowedModule ?
-            BackendModel::createUrlForAction($allowedAction, $allowedModule) :
-            BackendModel::createUrlForAction('Index', 'Authentication');
+            BackendModel::createURLForAction($allowedAction, $allowedModule) :
+            BackendModel::createURLForAction('Index', 'Authentication');
 
         $userEmail = BackendAuthentication::getUser()->getEmail();
         $this->getContainer()->get('logger')->info(

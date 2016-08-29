@@ -71,7 +71,7 @@ class Installer extends ModuleInstaller
                 unserialize($settings['date_format']) . ' ' . unserialize($settings['time_format'])
             );
             $settings['number_format'] = serialize('dot_nothing');
-            $settings['password_key'] = serialize(uniqid());
+            $settings['password_key'] = serialize(uniqid('', true));
             $settings['password_strength'] = serialize($passwordStrength);
             $settings['current_password_change'] = serialize(time());
             $settings['avatar'] = serialize('god.jpg');
@@ -178,13 +178,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'users' as a module
         $this->addModule('Users');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
         $this->setSetting('Users', 'default_group', 1);

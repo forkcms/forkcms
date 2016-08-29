@@ -87,7 +87,7 @@ class Index extends BackendBaseActionIndex
                 // loop widgets
                 foreach ($finder->files()->in($pathName . '/Widgets') as $file) {
                     /** @ver $file \SplFileInfo */
-                    $widgetName = $file->getBaseName('.php');
+                    $widgetName = $file->getBasename('.php');
                     $className = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
                     if ($module == 'Core') {
                         $className = 'Backend\\Core\\Widgets\\' . $widgetName;

@@ -32,12 +32,4 @@ class ActionIndex extends Action
     {
         parent::execute();
     }
-
-    /**
-     * Parse to template
-     */
-    protected function parse()
-    {
-        parent::parse();
-    }
 }

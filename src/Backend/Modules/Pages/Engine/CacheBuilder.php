@@ -29,7 +29,7 @@ class CacheBuilder
     protected $cache;
 
     protected $blocks;
-    protected $siteMapId;
+    protected $sitemapId;
 
     /**
      * @param \SpoonDatabase $database

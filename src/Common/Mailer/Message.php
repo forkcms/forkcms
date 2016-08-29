@@ -2,11 +2,10 @@
 
 namespace Common\Mailer;
 
-use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
-use Frontend\Core\Engine\Model;
-use Frontend\Core\Engine\TwigTemplate as FrontendTemplate;
 use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 use Common\Uri;
+use Frontend\Core\Engine\Model;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /**
  * This class will send mails
