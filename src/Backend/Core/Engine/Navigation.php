@@ -13,6 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class will be used to build the navigation
@@ -59,8 +60,8 @@ class Navigation extends Base\Object
         }
 
         // check if editor_link_list_LANGUAGE.js cache file exists
-        if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {
-            BackendPagesModel::buildCache(Language::getWorkingLanguage());
+        if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js')) {
+            BackendPagesModel::buildCache(BackendLanguage::getWorkingLanguage());
         }
 
         $navigation = array();
@@ -109,18 +110,27 @@ class Navigation extends Base\Object
         $value .= '?>';
 
         // store
-        $fs = new Filesystem();
-        $fs->dumpFile(
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile(
             self::getCacheDirectory() . 'navigation.php',
             $value
         );
     }
 
+    /**
+     * @param TwigTemplate $template
+     */
     public function parse(TwigTemplate $template)
     {
         $template->assign('navigation', $this->navigation);
     }
 
+    /**
+     * @param array $navigation
+     * @param int   $depth
+     *
+     * @return mixed
+     */
     private function addActiveStateToNavigation($navigation, $depth = 0)
     {
         $selectedKeys = $this->getSelectedKeys();

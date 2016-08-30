@@ -14,6 +14,21 @@
         <translation language="el"><![CDATA[Νέα ερώτηση]]></translation>
         <translation language="zh"><![CDATA[添加问题]]></translation>
       </item>
+      <item type="label" name="AllCategories">
+        <translation language="nl"><![CDATA[alle categorieën]]></translation>
+        <translation language="en"><![CDATA[all categories]]></translation>
+        <translation language="hu"><![CDATA[minden kategóriában]]></translation>
+        <translation language="it"><![CDATA[tutte le categorie]]></translation>
+        <translation language="ru"><![CDATA[Все категории]]></translation>
+        <translation language="zh"><![CDATA[所有类别]]></translation>
+        <translation language="de"><![CDATA[alle Kategorien]]></translation>
+        <translation language="fr"><![CDATA[toutes les catégories]]></translation>
+        <translation language="es"><![CDATA[todas las categorías]]></translation>
+        <translation language="uk"><![CDATA[всі категорії]]></translation>
+        <translation language="lt"><![CDATA[Visos kategorijos]]></translation>
+        <translation language="sv"><![CDATA[alla kategorier]]></translation>
+        <translation language="el"><![CDATA[Όλες οι κατηγορίες]]></translation>
+      </item>
       <item type="label" name="AddQuestion">
         <translation language="nl"><![CDATA[vraag toevoegen]]></translation>
         <translation language="en"><![CDATA[add question]]></translation>

@@ -10,6 +10,8 @@ namespace Backend\Modules\Profiles\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Symfony\Component\Filesystem\Filesystem;
+use Backend\Core\Language\Language;
 
 /**
  * Installer for the profiles module.
@@ -22,13 +24,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'profiles' as a module
         $this->addModule('Profiles');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
         $this->setSetting('Profiles', 'allow_gravatar', true);
@@ -38,10 +40,11 @@ class Installer extends ModuleInstaller
         $this->setSetting('Profiles', 'send_mail_for_new_profile_to_profile', false);
 
         // add folders
-        \SpoonDirectory::create(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/source/');
-        \SpoonDirectory::create(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/240x240/');
-        \SpoonDirectory::create(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/64x64/');
-        \SpoonDirectory::create(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/32x32/');
+        $filesystem = new Filesystem();
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/source/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/240x240/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/64x64/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/32x32/');
 
         // module rights
         $this->setModuleRights(1, 'Profiles');
@@ -140,6 +143,8 @@ class Installer extends ModuleInstaller
             array('search', 'form')
         );
 
+        $originalLocale = Language::getInterfaceLanguage();
+
         // loop languages
         foreach ($this->getLanguages() as $language) {
             // only add pages if profiles isn't linked anywhere
@@ -154,10 +159,13 @@ class Installer extends ModuleInstaller
                 array('Profiles', $language)
             )
             ) {
+                // We must define the locale we want to insert the page into
+                Language::setLocale($language);
+
                 // activate page
                 $this->insertPage(
                     array(
-                         'title' => 'Activate',
+                         'title' => ucfirst(Language::lbl('Activate')),
                          'type' => 'root',
                          'language' => $language,
                     ),
@@ -169,7 +177,7 @@ class Installer extends ModuleInstaller
                 // forgot password page
                 $this->insertPage(
                     array(
-                         'title' => 'Forgot password',
+                         'title' => ucfirst(Language::lbl('ForgotPassword')),
                          'type' => 'root',
                          'language' => $language,
                     ),
@@ -181,7 +189,7 @@ class Installer extends ModuleInstaller
                 // reset password page
                 $this->insertPage(
                     array(
-                         'title' => 'Reset password',
+                         'title' => ucfirst(Language::lbl('ResetPassword')),
                          'type' => 'root',
                          'language' => $language,
                     ),
@@ -193,7 +201,7 @@ class Installer extends ModuleInstaller
                 // resend activation email page
                 $this->insertPage(
                     array(
-                         'title' => 'Resend activation e-mail',
+                         'title' => ucfirst(Language::lbl('ResendActivation')),
                          'type' => 'root',
                          'language' => $language,
                     ),
@@ -205,7 +213,7 @@ class Installer extends ModuleInstaller
                 // login page
                 $this->insertPage(
                     array(
-                         'title' => 'Login',
+                         'title' => ucfirst(Language::lbl('Login')),
                          'type' => 'root',
                          'language' => $language,
                     ),
@@ -217,7 +225,7 @@ class Installer extends ModuleInstaller
                 // register page
                 $this->insertPage(
                     array(
-                         'title' => 'Register',
+                         'title' => ucfirst(Language::lbl('Register')),
                          'type' => 'root',
                          'language' => $language,
                     ),
@@ -229,7 +237,7 @@ class Installer extends ModuleInstaller
                 // logout page
                 $this->insertPage(
                     array(
-                         'title' => 'Logout',
+                         'title' => ucfirst(Language::lbl('Logout')),
                          'type' => 'root',
                          'language' => $language,
                     ),
@@ -241,7 +249,7 @@ class Installer extends ModuleInstaller
                 // index page
                 $indexPageId = $this->insertPage(
                     array(
-                         'title' => 'Profile',
+                         'title' => ucfirst(Language::lbl('Profile')),
                          'type' => 'root',
                          'language' => $language,
                     ),
@@ -253,7 +261,7 @@ class Installer extends ModuleInstaller
                 // settings page
                 $this->insertPage(
                     array(
-                         'title' => 'Profile settings',
+                         'title' => ucfirst(Language::lbl('ProfileSettings')),
                          'parent_id' => $indexPageId,
                          'language' => $language,
                     ),
@@ -265,7 +273,7 @@ class Installer extends ModuleInstaller
                 // change email page
                 $this->insertPage(
                     array(
-                         'title' => 'Change email',
+                         'title' => ucfirst(Language::lbl('ChangeEmail')),
                          'parent_id' => $indexPageId,
                          'language' => $language,
                     ),
@@ -277,7 +285,7 @@ class Installer extends ModuleInstaller
                 // change password page
                 $this->insertPage(
                     array(
-                         'title' => 'Change password',
+                         'title' => ucfirst(Language::lbl('ChangePassword')),
                          'parent_id' => $indexPageId,
                          'language' => $language,
                     ),
@@ -286,6 +294,11 @@ class Installer extends ModuleInstaller
                     array('extra_id' => $searchId, 'position' => 'top')
                 );
             }
+        }
+
+        // restore the original locale
+        if (!empty($originalLocale)) {
+            Language::setLocale($originalLocale);
         }
     }
 }

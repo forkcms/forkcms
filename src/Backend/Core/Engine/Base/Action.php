@@ -10,9 +10,11 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Backend\Core\Engine\TwigTemplate;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Header;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Url;
 
@@ -99,6 +101,9 @@ class Action extends Object
         );
     }
 
+    /**
+     * @return string
+     */
     protected function getBackendModulePath()
     {
         if ($this->URL->getModule() == 'Core') {
@@ -239,5 +244,19 @@ class Action extends Object
      */
     protected function parse()
     {
+    }
+
+    /**
+     * Creates and returns a Form instance from the type of the form.
+     *
+     * @param string|FormTypeInterface $type The built type of the form
+     * @param mixed $data The initial data for the form
+     * @param array $options Options for the form
+     *
+     * @return Form
+     */
+    public function createForm($type, $data = null, array $options = array())
+    {
+        return $this->get('form.factory')->create($type, $data, $options);
     }
 }

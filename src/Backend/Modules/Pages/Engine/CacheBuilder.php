@@ -29,10 +29,11 @@ class CacheBuilder
     protected $cache;
 
     protected $blocks;
-    protected $siteMapId;
+    protected $sitemapId;
 
     /**
-     * @param \SpoonDatabase $database
+     * @param \SpoonDatabase         $database
+     * @param CacheItemPoolInterface $cache
      */
     public function __construct(\SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
@@ -53,9 +54,9 @@ class CacheBuilder
         $navigation = $this->getNavigation($language);
 
         // build file with navigation structure to feed into editor
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         $cachePath = FRONTEND_CACHE_PATH . '/Navigation/';
-        $fs->dumpFile(
+        $filesystem->dumpFile(
             $cachePath . 'editor_link_list_' . $language . '.js',
             $this->dumpEditorLinkList($navigation, $keys, $language)
         );
@@ -186,6 +187,11 @@ class CacheBuilder
         return $pageData;
     }
 
+    /**
+     * @param $page array
+     * @param $pageData array
+     * @return string
+     */
     protected function getPageTreeType($page, &$pageData)
     {
         // calculate tree-type
@@ -244,6 +250,10 @@ class CacheBuilder
         return $treeType;
     }
 
+    /**
+     * @param $page array
+     * @return array
+     */
     protected function getPageExtraBlocks($page, $pageData)
     {
         // add extras to the page array

@@ -14,7 +14,7 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
@@ -64,6 +64,13 @@ class Add extends BackendBaseActionAdd
      * @var array
      */
     private $widgetInstances;
+
+    /**
+     * Hidden widgets on dashboard
+     *
+     * @var array
+     */
+    private $hiddenOnDashboard;
 
     /**
      * Bundle all actions that need to be bundled
@@ -361,6 +368,8 @@ class Add extends BackendBaseActionAdd
      * Insert the widgets
      *
      * @param \SpoonFormElement[] $widgetPresets The widgets presets.
+     *
+     * @return mixed
      */
     private function insertWidgets($widgetPresets)
     {
@@ -479,16 +488,6 @@ class Add extends BackendBaseActionAdd
         $this->frm->addDropdown('manage_groups', array('Deny', 'Allow'));
         $this->tpl->assign('permissions', $permissionBoxes);
         $this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
-    }
-
-    /**
-     * Parse the form
-     *
-     * @todo method is not necessary see the content...
-     */
-    protected function parse()
-    {
-        parent::parse();
     }
 
     /**

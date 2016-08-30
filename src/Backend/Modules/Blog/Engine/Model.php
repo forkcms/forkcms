@@ -12,7 +12,7 @@ namespace Backend\Modules\Blog\Engine;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
@@ -766,6 +766,7 @@ class Model
      * @param array $comments The comments attached to this post.
      *
      * @return int
+     * @throws Exception
      */
     public static function insertCompletePost($item, $meta = array(), $tags = array(), $comments = array())
     {
@@ -1202,6 +1203,9 @@ class Model
     /**
      * Update a page revision without generating a new revision.
      * Needed to add an image to a page.
+     *
+     * @param $revision_id
+     * @param $item
      */
     public static function updateRevision($revision_id, $item)
     {

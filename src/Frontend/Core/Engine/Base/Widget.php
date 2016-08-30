@@ -9,9 +9,8 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Header;
-use Frontend\Core\Engine\Url;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific widget
@@ -54,13 +53,6 @@ class Widget extends Object
      * @var    string
      */
     public $templatePath;
-
-    /**
-     * A reference to the URL-instance
-     *
-     * @var    Url
-     */
-    public $URL;
 
     /**
      * @param KernelInterface $kernel
@@ -134,7 +126,7 @@ class Widget extends Object
      */
     public function addJSData($key, $value)
     {
-        $this->header->addJSData($this->getModule(), $key, $value);
+        $this->header->addJsData($this->getModule(), $key, $value);
     }
 
     /**

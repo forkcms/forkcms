@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Language\Language;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
@@ -139,6 +140,8 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
      * Set action
      *
      * @param string $value The action that should be executed.
+     *
+     * @throws Exception
      */
     public function setAction($value)
     {
@@ -169,6 +172,8 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
      * Set the language
      *
      * @param string $value The (interface-)language, will be used to parse labels.
+     *
+     * @throws Exception
      */
     public function setLanguage($value)
     {
@@ -195,6 +200,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
 
         // define constant
         defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $this->language);
+        defined('LANGUAGE') || define('LANGUAGE', $this->language);
 
         // set the locale (we need this for the labels)
         Language::setLocale($this->language);
@@ -204,6 +210,8 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
      * Set module
      *
      * @param string $value The module, wherefore an action will be executed.
+     *
+     * @throws Exception
      */
     public function setModule($value)
     {

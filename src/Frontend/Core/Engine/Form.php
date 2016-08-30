@@ -10,7 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 
 /**
  * This is our extended version of SpoonForm.
@@ -62,6 +62,8 @@ class Form extends \Common\Core\Form
      * @param string $class Class(es) that will be applied on the button.
      *
      * @return \SpoonFormButton
+     *
+     * @throws Exception
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
     {
@@ -95,6 +97,8 @@ class Form extends \Common\Core\Form
      * @param string $classError Class(es) that have to be applied when an error occurs on the element.
      *
      * @return FrontendFormDate
+     *
+     * @throws Exception
      */
     public function addDate(
         $name,
@@ -704,9 +708,9 @@ class FrontendFormImage extends \SpoonFormImage
     public function generateThumbnails($path, $filename)
     {
         // create folder if needed
-        $fs = new Filesystem();
-        if (!$fs->exists($path . '/source')) {
-            $fs->mkdir($path . '/source');
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($path . '/source')) {
+            $filesystem->mkdir($path . '/source');
         }
 
         // move the source file

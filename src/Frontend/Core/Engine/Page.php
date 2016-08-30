@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Exception\RedirectException;
+use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -224,7 +225,10 @@ class Page extends FrontendBaseObject
     /**
      * Get page content
      *
+     * @param $pageId
+     *
      * @return array
+     * @throws RedirectException
      */
     protected function getPageContent($pageId)
     {
@@ -332,7 +336,7 @@ class Page extends FrontendBaseObject
                 $temp['url'] = '/' . $language;
                 $temp['label'] = $language;
                 $temp['name'] = Language::msg(mb_strtoupper($language));
-                $temp['current'] = (bool) ($language == FRONTEND_LANGUAGE);
+                $temp['current'] = (bool) ($language == LANGUAGE);
 
                 // add
                 $languages[] = $temp;

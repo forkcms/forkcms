@@ -112,13 +112,13 @@ class Model extends \BaseModel
 
         // create temporary pass
         for ($i = 0; $i < $length; ++$i) {
-            $tmp .= ($consonants[rand(0, $consonantsCount - 1)] .
-                $vowels[rand(0, $vowelsCount - 1)]);
+            $tmp .= ($consonants[mt_rand(0, $consonantsCount - 1)] .
+                $vowels[mt_rand(0, $vowelsCount - 1)]);
         }
 
         // reformat the pass
         for ($i = 0; $i < $length; ++$i) {
-            if (rand(0, 1) == 1) {
+            if (mt_rand(0, 1) == 1) {
                 $pass .= mb_strtoupper(mb_substr($tmp, $i, 1));
             } else {
                 $pass .= mb_substr($tmp, $i, 1);
@@ -183,8 +183,8 @@ class Model extends \BaseModel
     public static function getThumbnailFolders($path, $includeSource = false)
     {
         $return = array();
-        $fs = new Filesystem();
-        if (!$fs->exists($path)) {
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($path)) {
             return $return;
         }
         $finder = new Finder();
@@ -402,9 +402,9 @@ class Model extends \BaseModel
      */
     public static function startProcessingHooks()
     {
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         // is the queue already running?
-        if ($fs->exists(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid')) {
+        if ($filesystem->exists(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid')) {
             // get the pid
             $pid = trim(file_get_contents(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid'));
 
@@ -416,7 +416,7 @@ class Model extends \BaseModel
                 // validate output
                 if ($output == '' || $output === false) {
                     // delete the pid file
-                    $fs->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
+                    $filesystem->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -429,7 +429,7 @@ class Model extends \BaseModel
                 // validate output
                 if ($output === false) {
                     // delete the pid file
-                    $fs->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
+                    $filesystem->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -437,9 +437,9 @@ class Model extends \BaseModel
             } else {
                 // UNIX
                 // check if the process is still running, by checking the proc folder
-                if (!$fs->exists('/proc/' . $pid)) {
+                if (!$filesystem->exists('/proc/' . $pid)) {
                     // delete the pid file
-                    $fs->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
+                    $filesystem->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;

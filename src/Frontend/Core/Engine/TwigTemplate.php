@@ -4,7 +4,10 @@ namespace Frontend\Core\Engine;
 
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 
 /*
  * This file is part of Fork CMS.
@@ -35,6 +38,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
 
         $this->forkSettings = Model::get('fork.settings');
+        // fork has been installed
         if ($this->forkSettings) {
             $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
             $loader = $this->environment->getLoader();
@@ -43,6 +47,15 @@ class TwigTemplate extends BaseTwigTemplate
                 new \Twig_Loader_Filesystem($this->getLoadingFolders()),
             ));
             $this->environment->setLoader($loader);
+
+            // connect symphony forms
+            $formEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'));
+            $formEngine->setEnvironment($this->environment);
+            $this->environment->addExtension(
+                new SymfonyFormExtension(
+                    new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
+                )
+            );
         }
 
         $this->environment->disableStrictVariables();
@@ -135,6 +148,26 @@ class TwigTemplate extends BaseTwigTemplate
                 FRONTEND_MODULES_PATH,
                 FRONTEND_PATH,
                 '/',
+            ),
+            function ($folder) use ($filesystem) {
+                return $filesystem->exists($folder);
+            }
+        );
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return array
+     */
+    private function getFormTemplates($fileName)
+    {
+        $filesystem = new Filesystem();
+
+        return array_filter(
+            array(
+                FRONTEND_PATH . '/Core/Layout/Templates/' . $fileName,
+                $this->themePath . '/Core/Layout/Templates/' . $fileName,
             ),
             function ($folder) use ($filesystem) {
                 return $filesystem->exists($folder);

@@ -28,6 +28,11 @@ class Location extends FrontendBaseWidget
     protected $settings = array();
 
     /**
+     * @var array
+     */
+    private $item;
+
+    /**
      * Execute the extra
      */
     public function execute()

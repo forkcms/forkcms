@@ -12,7 +12,9 @@ namespace Backend\Core\Engine;
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Base\Object;
-use Frontend\Core\Engine\Language as FrontendLanguage;
+use Backend\Core\Config as BackendConfig;
+use Frontend\Core\Language\Language as FrontendLanguage;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class will handle cronjob related stuff
@@ -28,6 +30,11 @@ class Cronjob extends Object implements \ApplicationInterface
      * @var    string
      */
     private $language;
+
+    /**
+     * @var BackendConfig
+     */
+    private $config;
 
     /**
      * @return Response
@@ -175,6 +182,7 @@ class Cronjob extends Object implements \ApplicationInterface
         $this->config = new $configClass($this->getKernel(), $this->getModule());
 
         // set action
+        //@fixme: needs to be removed if not used
         $action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'Index';
     }
 
@@ -185,6 +193,8 @@ class Cronjob extends Object implements \ApplicationInterface
      *
      * @param string $action The action to load.
      * @param string $module The module to load.
+     *
+     * @throws Exception
      */
     public function setAction($action, $module = null)
     {
@@ -206,14 +216,16 @@ class Cronjob extends Object implements \ApplicationInterface
      * Set language
      *
      * @param string $value The language to load.
+     *
+     * @throws Exception
      */
     public function setLanguage($value)
     {
         // get the possible languages
-        $possibleLanguages = Language::getWorkingLanguages();
+        $possibleLanguages = BackendLanguage::getWorkingLanguages();
 
         // validate
-        if (!in_array($value, array_keys($possibleLanguages))) {
+        if (!array_key_exists($value, $possibleLanguages)) {
             throw new Exception('Invalid language.');
         }
 
@@ -221,10 +233,10 @@ class Cronjob extends Object implements \ApplicationInterface
         $this->language = $value;
 
         // set the locale (we need this for the labels)
-        Language::setLocale($this->language);
+        BackendLanguage::setLocale($this->language);
 
         // set working language
-        Language::setWorkingLanguage($this->language);
+        BackendLanguage::setWorkingLanguage($this->language);
     }
 
     /**
@@ -233,6 +245,8 @@ class Cronjob extends Object implements \ApplicationInterface
      * We can't rely on the parent setModule function, because a cronjob requires no login
      *
      * @param string $module The module to load.
+     *
+     * @throws Exception
      */
     public function setModule($module)
     {

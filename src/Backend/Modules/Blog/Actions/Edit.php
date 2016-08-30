@@ -16,7 +16,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Meta as BackendMeta;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
@@ -225,7 +225,7 @@ class Edit extends BackendBaseActionEdit
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
-        $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getURL', array($this->record['id']));
+        $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURL', array($this->record['id']));
     }
 
     /**
@@ -373,8 +373,8 @@ class Edit extends BackendBaseActionEdit
                     $imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
                     // create folders if needed
-                    $fs = new Filesystem();
-                    $fs->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
+                    $filesystem = new Filesystem();
+                    $filesystem->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
 
                     // If the image should be deleted, only the database entry is refreshed.
                     // The revision should keep its file.
@@ -412,7 +412,7 @@ class Edit extends BackendBaseActionEdit
                         if (preg_replace($regex, '$1', $newName) != preg_replace($regex, '$1', $item['image'])) {
                             // loop folders
                             foreach (BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
-                                $fs->copy($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
+                                $filesystem->copy($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
                             }
 
                             // assign the new name to the database

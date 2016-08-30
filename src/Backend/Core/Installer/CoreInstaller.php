@@ -40,7 +40,7 @@ class CoreInstaller extends ModuleInstaller
         }
 
         // import SQL
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add core modules
         $this->addModule('Core');

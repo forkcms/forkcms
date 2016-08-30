@@ -122,17 +122,15 @@ class CampaignMonitor
 	private $username;
 
 
-	/**
-	 * Class constructor
-	 *
-	 * @return	void
-	 * @param	string $URL						The base URL of your CreateSend site. e.g. http://example.createsend.com/.
-	 * @param	string $username				The username you use to login to Campaign Monitor.
-	 * @param	string $password				The password you use to login to Campaign Monitor.
-     * @param	int[optional] $timeOut			The default timeout
-	 * @param	string[optional] $clientId		The default client ID to use throughout the class.
-	 * @param	string[optional] $listId		The default list ID to use throughout the class.
-	 */
+    /**
+     * @param string $URL      The base URL of your CreateSend site. e.g. http://example.createsend.com/.
+     * @param string $username The username you use to login to Campaign Monitor.
+     * @param string $password The password you use to login to Campaign Monitor.
+     * @param int    $timeOut  The default timeout
+     * @param null   $clientId The default client ID to use throughout the class.
+     * @param null   $listId   The default list ID to use throughout the class.
+     * @throws CampaignMonitorException
+     */
 	public function __construct($URL, $username, $password, $timeOut = 60, $clientId = null, $listId = null)
 	{
 		// check input
@@ -246,6 +244,7 @@ class CampaignMonitor
 	 * @param	string $companyName		The client company name.
 	 * @param	string $country			This client’s country.
 	 * @param	string $timezone		Client timezone for tracking and reporting data.
+     * @throws CampaignMonitorException
 	 */
 	public function createClient($companyName, $country, $timezone)
 	{
@@ -277,6 +276,7 @@ class CampaignMonitor
 	 * @param	string[optional] $type		The type of the field to create, possible values are: string, int, text, number, multiSelectOne, multiSelectMany.
 	 * @param	array[optional] $options	The available options for a multi-valued custom field.
 	 * @param	string[optional] $listId	The list ID to create the custom field for
+     * @throws CampaignMonitorException
 	 */
 	public function createCustomField($name, $type = 'text', $options = array(), $listId = null)
 	{
@@ -325,7 +325,7 @@ class CampaignMonitor
 	 * @return	string
 	 * @param	string $title								The title of the list.
 	 * @param	string[optional] $unsubscribePage			The URL to which subscribers will be directed when unsubscribing from the list. If left blank or omitted a generic unsubscribe page is used.
-	 * @param	string[optional] $confirmOptIn				Either true or false depending on whether the list requires email confirmation or not. Please see the help documentation for more details of what this means.
+	 * @param	bool[optional] $confirmOptIn				Either true or false depending on whether the list requires email confirmation or not. Please see the help documentation for more details of what this means.
 	 * @param	string[optional] $confirmationSuccessPage	Successful email confirmations will be redirected to this URL. Ignored if ConfirmOptIn is false. If left blank or omitted a generic confirmation page is used.
 	 * @param	string[optional] $clientId					The client ID.
 	 */
@@ -504,6 +504,7 @@ class CampaignMonitor
 	 * @param	bool[optional] $secure			Do a secure call over https with basic HTTP auth
 	 * @param	bool[optional] $expectJSON		Do we expect JSON.
 	 * @param	bool[optional] $returnHeaders	Should the headers be returned?
+     * @throws CampaignMonitorException
 	 */
 	private function doCall($url, array $parameters = null, $method = 'GET', $secure = false, $expectJSON = true, $returnHeaders = false)
 	{
@@ -1869,7 +1870,6 @@ class CampaignMonitor
 	/**
 	 * Set the default client ID to use
 	 *
-	 * @return	void
 	 * @param	string $id
 	 */
 	public function setClientId($id)
@@ -1881,7 +1881,6 @@ class CampaignMonitor
 	/**
 	 * Set the default list ID to use
 	 *
-	 * @return	void
 	 * @param	string $id
 	 */
 	public function setListId($id)
@@ -1893,7 +1892,6 @@ class CampaignMonitor
 	/**
 	 * Set password
 	 *
-	 * @return	void
 	 * @param	string $password
 	 */
 	private function setPassword($password)
@@ -1905,7 +1903,6 @@ class CampaignMonitor
 	/**
 	 * Set response format
 	 *
-	 * @return	void
 	 * @param	string[optional] $format
 	 */
 	public function setResponseFormat($format = 'json')
@@ -1917,7 +1914,6 @@ class CampaignMonitor
 	/**
 	 * Set the site URL
 	 *
-	 * @return	void
 	 * @param	string $siteURL		The base URL of the site you use to login to Campaign Monitor. e.g. http://example.createsend.com/
 	 */
 	public function setSiteURL($siteURL)
@@ -1929,7 +1925,6 @@ class CampaignMonitor
 	/**
 	 * Set the timeout
 	 *
-	 * @return	void
 	 * @param	int $seconds	The timeout in seconds.
 	 */
 	private function setTimeOut($seconds)
@@ -1941,7 +1936,6 @@ class CampaignMonitor
 	/**
 	 * Set username
 	 *
-	 * @return	void
 	 * @param	string $username
 	 */
 	private function setUsername($username)
@@ -1973,6 +1967,7 @@ class CampaignMonitor
 	 * @return	string
 	 * @param	string $email				The emailaddress.
 	 * @param	string[optional] $listId	The list ID to unsubscribe from
+     * @throws CampaignMonitorException
 	 */
 	public function unsubscribe($email, $listId = null)
 	{
@@ -1998,6 +1993,7 @@ class CampaignMonitor
 	 * @param	string $country				This client's country.
 	 * @param	string $timezone			Client timezone for tracking and reporting data.
 	 * @param	string[optional] $clientId	The client ID to update.
+     * @throws CampaignMonitorException
 	 */
 	public function updateClientBasics($companyName, $country, $timezone, $clientId = null)
 	{

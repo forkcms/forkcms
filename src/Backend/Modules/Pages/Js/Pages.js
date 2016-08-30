@@ -1038,6 +1038,13 @@ jsBackend.pages.template =
 		var current = templates[selected];
 		var i = 0;
 
+		// show or hide the image tab
+		if ('image' in current.data && current.data.image) {
+			$('.js-page-image-tab').show();
+		} else {
+			$('.js-page-image-tab').hide();
+		}
+
 		// hide default (base) block
 		$('#block-0').hide();
 

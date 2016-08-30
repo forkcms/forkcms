@@ -160,6 +160,7 @@ class Header extends FrontendBaseObject
      * @param string $file         The path to the javascript-file that should be loaded.
      * @param bool   $minify       Should the file be minified?
      * @param bool   $addTimestamp May we add a timestamp for caching purposes?
+     * @param int    $priorityGroup
      */
     public function addJS($file, $minify = true, $addTimestamp = null, $priorityGroup = self::PRIORITY_GROUP_DEFAULT)
     {
@@ -564,11 +565,11 @@ class Header extends FrontendBaseObject
         $finalPath = FRONTEND_CACHE_PATH . '/MinifiedCss/' . $fileName;
 
         // check that file does not yet exist or has been updated already
-        $fs = new Filesystem();
-        if (!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
             // create directory if it does not exist
-            if (!$fs->exists(dirname($finalPath))) {
-                $fs->mkdir(dirname($finalPath));
+            if (!$filesystem->exists(dirname($finalPath))) {
+                $filesystem->mkdir(dirname($finalPath));
             }
 
             // minify the file
@@ -593,11 +594,11 @@ class Header extends FrontendBaseObject
         $finalPath = FRONTEND_CACHE_PATH . '/MinifiedJs/' . $fileName;
 
         // check that file does not yet exist or has been updated already
-        $fs = new Filesystem();
-        if (!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
             // create directory if it does not exist
-            if (!$fs->exists(dirname($finalPath))) {
-                $fs->mkdir(dirname($finalPath));
+            if (!$filesystem->exists(dirname($finalPath))) {
+                $filesystem->mkdir(dirname($finalPath));
             }
 
             // minify the file
@@ -646,7 +647,7 @@ class Header extends FrontendBaseObject
         $this->tpl->addGlobal('pageTitle', (string) $this->getPageTitle());
         $this->tpl->addGlobal(
             'siteTitle',
-            (string) $this->get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            (string) $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE)
         );
     }
 
@@ -718,7 +719,7 @@ class Header extends FrontendBaseObject
         }
 
         // store language
-        $this->jsData['FRONTEND_LANGUAGE'] = FRONTEND_LANGUAGE;
+        $this->jsData['LANGUAGE'] = LANGUAGE;
 
         // encode and add
         $jsData = json_encode($this->jsData);
@@ -766,7 +767,7 @@ class Header extends FrontendBaseObject
         // should we add extra open-graph data?
         if ($parseFacebook) {
             // build correct locale
-            switch (FRONTEND_LANGUAGE) {
+            switch (LANGUAGE) {
                 case 'en':
                     $locale = 'en_US';
                     break;
@@ -796,7 +797,7 @@ class Header extends FrontendBaseObject
                     break;
 
                 default:
-                    $locale = mb_strtolower(FRONTEND_LANGUAGE) . '_' . mb_strtoupper(FRONTEND_LANGUAGE);
+                    $locale = mb_strtolower(LANGUAGE) . '_' . mb_strtoupper(LANGUAGE);
             }
 
             $this->addOpenGraphData('locale', $locale);
@@ -998,7 +999,7 @@ class Header extends FrontendBaseObject
             if (empty($value)) {
                 $this->pageTitle = $this->get('fork.settings')->get(
                     'Core',
-                    'site_title_' . FRONTEND_LANGUAGE,
+                    'site_title_' . LANGUAGE,
                     SITE_DEFAULT_TITLE
                 );
             } else {
@@ -1007,7 +1008,7 @@ class Header extends FrontendBaseObject
                     $this->pageTitle = $value . ' -  ' .
                                        $this->get('fork.settings')->get(
                                            'Core',
-                                           'site_title_' . FRONTEND_LANGUAGE,
+                                           'site_title_' . LANGUAGE,
                                            SITE_DEFAULT_TITLE
                                        );
                 } else {
@@ -1049,7 +1050,7 @@ class Header extends FrontendBaseObject
 
         // add Twitter Card to the header
         foreach ($data as $d) {
-            static::addMetaData($d);
+            $this->addMetaData($d);
         }
     }
 }

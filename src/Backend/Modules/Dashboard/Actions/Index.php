@@ -15,7 +15,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Exception as BackendException;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
@@ -87,7 +87,7 @@ class Index extends BackendBaseActionIndex
                 // loop widgets
                 foreach ($finder->files()->in($pathName . '/Widgets') as $file) {
                     /** @ver $file \SplFileInfo */
-                    $widgetName = $file->getBaseName('.php');
+                    $widgetName = $file->getBasename('.php');
                     $className = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
                     if ($module == 'Core') {
                         $className = 'Backend\\Core\\Widgets\\' . $widgetName;

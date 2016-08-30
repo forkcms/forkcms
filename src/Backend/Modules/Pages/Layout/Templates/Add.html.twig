@@ -61,6 +61,9 @@
           <li class="pull-right" role="presentation">
             <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
+          <li class="pull-right js-page-image-tab" role="presentation">
+            <a href="#tabImage" aria-controls="image" role="tab" data-toggle="tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
+          </li>
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabContent">
@@ -167,6 +170,16 @@
                   {% endfor %}
                 </ul>
 
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabImage">
+            <div class="row js-page-image-tab">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="image" class="control-label">{{ 'lbl.Image'|trans|ucfirst }}</label>
+                  {% form_field image %} {% form_field_error image %}
+                </div>
               </div>
             </div>
           </div>
@@ -333,11 +346,11 @@
                         <input type="radio" id="template{{ template.id }}" value="{{ template.id }}"
                           name="template_id_chooser"
                           class="inputRadio"{% if template.checked %} checked="checked"{% endif %}{% if template.disabled %} disabled="disabled"{% endif %} />{{ template.label }}
-                      </label>
-                    </div>
 
-                    <div class="templateVisual current">
-                      {{ template.html|raw }}
+                        <div class="templateVisual">
+                          {{ template.html|raw }}
+                        </div>
+                      </label>
                     </div>
                   </div>
                 </div>

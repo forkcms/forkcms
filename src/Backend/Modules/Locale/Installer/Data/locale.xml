@@ -116,17 +116,173 @@
         <translation language="el"><![CDATA[Μηνύματα]]></translation>
       </item>
       <item type="label" name="NL">
-        <translation language="nl"><![CDATA[nederlands]]></translation>
-        <translation language="en"><![CDATA[dutch]]></translation>
-        <translation language="hu"><![CDATA[holland]]></translation>
-        <translation language="it"><![CDATA[olandese]]></translation>
+        <translation language="nl"><![CDATA[Nederlands]]></translation>
+        <translation language="en"><![CDATA[Dutch]]></translation>
+        <translation language="hu"><![CDATA[Holland]]></translation>
+        <translation language="it"><![CDATA[Olandese]]></translation>
+        <translation language="fr"><![CDATA[Néerlandais]]></translation>
         <translation language="ru"><![CDATA[Голландский]]></translation>
         <translation language="zh"><![CDATA[荷兰语]]></translation>
-        <translation language="de"><![CDATA[niederländisch]]></translation>
-        <translation language="fr"><![CDATA[néerlandais]]></translation>
-        <translation language="es"><![CDATA[holandés]]></translation>
+        <translation language="de"><![CDATA[Niederländisch]]></translation>
+        <translation language="es"><![CDATA[holandes]]></translation>
+        <translation language="lt"><![CDATA[olandiškai]]></translation>
         <translation language="uk"><![CDATA[голандська]]></translation>
+        <translation language="sv"><![CDATA[Holländska]]></translation>
         <translation language="el"><![CDATA[Ολλανδικά]]></translation>
+        <translation language="pl"><![CDATA[Niemiecki]]></translation>
+        <translation language="tr"><![CDATA[Flemenkçe]]></translation>
+      </item>
+      <item type="label" name="UK">
+        <translation language="nl"><![CDATA[Oekraïens]]></translation>
+        <translation language="en"><![CDATA[Ukrainian]]></translation>
+        <translation language="ru"><![CDATA[Украинский]]></translation>
+        <translation language="lt"><![CDATA[Ukrainiečių]]></translation>
+        <translation language="de"><![CDATA[Ukrainisch]]></translation>
+        <translation language="uk"><![CDATA[українська]]></translation>
+        <translation language="es"><![CDATA[Ucraniano]]></translation>
+        <translation language="hu"><![CDATA[ukrán]]></translation>
+        <translation language="sv"><![CDATA[Ukrianska]]></translation>
+        <translation language="el"><![CDATA[Ουκρανικά]]></translation>
+        <translation language="zh"><![CDATA[乌克兰语]]></translation>
+      </item>
+      <item type="label" name="SV">
+        <translation language="nl"><![CDATA[Zweeds]]></translation>
+        <translation language="en"><![CDATA[Swedish]]></translation>
+        <translation language="ru"><![CDATA[Шведский]]></translation>
+        <translation language="lt"><![CDATA[Švediškai]]></translation>
+        <translation language="de"><![CDATA[Schwedisch]]></translation>
+        <translation language="es"><![CDATA[Sueco]]></translation>
+        <translation language="uk"><![CDATA[шведська]]></translation>
+        <translation language="hu"><![CDATA[svéd]]></translation>
+        <translation language="sv"><![CDATA[Svenska]]></translation>
+        <translation language="el"><![CDATA[Σουηδικά]]></translation>
+        <translation language="zh"><![CDATA[瑞典语]]></translation>
+      </item>
+      <item type="label" name="ES">
+        <translation language="nl"><![CDATA[Spaans]]></translation>
+        <translation language="en"><![CDATA[Spanish]]></translation>
+        <translation language="hu"><![CDATA[spanyol]]></translation>
+        <translation language="ru"><![CDATA[Испанский]]></translation>
+        <translation language="it"><![CDATA[Spagnolo]]></translation>
+        <translation language="fr"><![CDATA[Espagnol]]></translation>
+        <translation language="de"><![CDATA[Spanisch]]></translation>
+        <translation language="uk"><![CDATA[іспаньска]]></translation>
+        <translation language="es"><![CDATA[Español]]></translation>
+        <translation language="lt"><![CDATA[Ispaniškai]]></translation>
+        <translation language="sv"><![CDATA[Spanska]]></translation>
+        <translation language="el"><![CDATA[Ισπανικά]]></translation>
+        <translation language="zh"><![CDATA[西班牙语]]></translation>
+        <translation language="pl"><![CDATA[Hiszpański]]></translation>
+        <translation language="tr"><![CDATA[İspanyolca]]></translation>
+      </item>
+      <item type="label" name="RU">
+        <translation language="hu"><![CDATA[orosz]]></translation>
+        <translation language="ru"><![CDATA[Русский]]></translation>
+        <translation language="it"><![CDATA[Russo]]></translation>
+        <translation language="zh"><![CDATA[俄罗斯语]]></translation>
+        <translation language="de"><![CDATA[russisch]]></translation>
+        <translation language="fr"><![CDATA[Russe]]></translation>
+        <translation language="nl"><![CDATA[Russisch]]></translation>
+        <translation language="en"><![CDATA[Russian]]></translation>
+        <translation language="es"><![CDATA[Ruso]]></translation>
+        <translation language="lt"><![CDATA[Rusiškai]]></translation>
+        <translation language="uk"><![CDATA[російська]]></translation>
+        <translation language="sv"><![CDATA[Ryska]]></translation>
+        <translation language="el"><![CDATA[Ρώσσικα]]></translation>
+        <translation language="pl"><![CDATA[Rosyjski]]></translation>
+        <translation language="tr"><![CDATA[Rusca]]></translation>
+      </item>
+      <item type="label" name="LT">
+        <translation language="nl"><![CDATA[Litouws]]></translation>
+        <translation language="en"><![CDATA[Lithuanian]]></translation>
+        <translation language="ru"><![CDATA[Литовский]]></translation>
+        <translation language="de"><![CDATA[Litauisch]]></translation>
+        <translation language="lt"><![CDATA[Lietuviškai]]></translation>
+        <translation language="uk"><![CDATA[литовська]]></translation>
+        <translation language="es"><![CDATA[Lituano]]></translation>
+        <translation language="hu"><![CDATA[litván]]></translation>
+        <translation language="sv"><![CDATA[Litauiska]]></translation>
+        <translation language="el"><![CDATA[Λιθουανικά]]></translation>
+        <translation language="zh"><![CDATA[立陶宛语]]></translation>
+      </item>
+      <item type="label" name="IT">
+        <translation language="hu"><![CDATA[olasz]]></translation>
+        <translation language="ru"><![CDATA[Итальянский]]></translation>
+        <translation language="it"><![CDATA[Italiano]]></translation>
+        <translation language="zh"><![CDATA[意大利语]]></translation>
+        <translation language="de"><![CDATA[Italienisch]]></translation>
+        <translation language="fr"><![CDATA[Italien]]></translation>
+        <translation language="nl"><![CDATA[Italiaans]]></translation>
+        <translation language="en"><![CDATA[Italian]]></translation>
+        <translation language="es"><![CDATA[Italiano]]></translation>
+        <translation language="lt"><![CDATA[Itališkai]]></translation>
+        <translation language="uk"><![CDATA[італійська]]></translation>
+        <translation language="sv"><![CDATA[Italienska]]></translation>
+        <translation language="el"><![CDATA[Ιταλικά]]></translation>
+        <translation language="pl"><![CDATA[Włoski]]></translation>
+        <translation language="tr"><![CDATA[İtalyanca]]></translation>
+      </item>
+      <item type="label" name="HU">
+        <translation language="lt"><![CDATA[Vengriškai.]]></translation>
+        <translation language="hu"><![CDATA[magyar]]></translation>
+        <translation language="ru"><![CDATA[Венгерский]]></translation>
+        <translation language="it"><![CDATA[Ungherese]]></translation>
+        <translation language="de"><![CDATA[Ungarisch]]></translation>
+        <translation language="fr"><![CDATA[Hongrois]]></translation>
+        <translation language="nl"><![CDATA[Hongaars]]></translation>
+        <translation language="en"><![CDATA[Hungarian]]></translation>
+        <translation language="uk"><![CDATA[угорська]]></translation>
+        <translation language="es"><![CDATA[Húngaro]]></translation>
+        <translation language="sv"><![CDATA[Ungerska]]></translation>
+        <translation language="el"><![CDATA[Ουγγρικά]]></translation>
+        <translation language="zh"><![CDATA[匈牙利语]]></translation>
+        <translation language="tr"><![CDATA[Macar]]></translation>
+      </item>
+      <item type="label" name="EL">
+        <translation language="nl"><![CDATA[Grieks]]></translation>
+        <translation language="en"><![CDATA[Greek]]></translation>
+        <translation language="ru"><![CDATA[Греческий]]></translation>
+        <translation language="de"><![CDATA[Griechisch]]></translation>
+        <translation language="lt"><![CDATA[Graikiškai]]></translation>
+        <translation language="uk"><![CDATA[грецька]]></translation>
+        <translation language="es"><![CDATA[Griego]]></translation>
+        <translation language="hu"><![CDATA[görök]]></translation>
+        <translation language="sv"><![CDATA[Grekiska]]></translation>
+        <translation language="el"><![CDATA[Ελληνικά]]></translation>
+        <translation language="zh"><![CDATA[希腊语]]></translation>
+      </item>
+      <item type="label" name="DE">
+        <translation language="nl"><![CDATA[Duits]]></translation>
+        <translation language="en"><![CDATA[German]]></translation>
+        <translation language="hu"><![CDATA[német]]></translation>
+        <translation language="ru"><![CDATA[Немецкий]]></translation>
+        <translation language="it"><![CDATA[Tedesco]]></translation>
+        <translation language="zh"><![CDATA[德语]]></translation>
+        <translation language="fr"><![CDATA[Allemand]]></translation>
+        <translation language="de"><![CDATA[Deutsch]]></translation>
+        <translation language="es"><![CDATA[Alemán]]></translation>
+        <translation language="lt"><![CDATA[Vokiškai]]></translation>
+        <translation language="uk"><![CDATA[німецька]]></translation>
+        <translation language="sv"><![CDATA[Tyska]]></translation>
+        <translation language="el"><![CDATA[Γερμανικά]]></translation>
+        <translation language="pl"><![CDATA[Niemiecki]]></translation>
+        <translation language="tr"><![CDATA[Almanca]]></translation>
+      </item>
+      <item type="label" name="ZH">
+        <translation language="zh"><![CDATA[中文]]></translation>
+        <translation language="ru"><![CDATA[Китайский]]></translation>
+        <translation language="hu"><![CDATA[kínai]]></translation>
+        <translation language="de"><![CDATA[chineisch]]></translation>
+        <translation language="fr"><![CDATA[Chinois]]></translation>
+        <translation language="nl"><![CDATA[Chinees]]></translation>
+        <translation language="en"><![CDATA[Chinese]]></translation>
+        <translation language="it"><![CDATA[cinese]]></translation>
+        <translation language="es"><![CDATA[Chino]]></translation>
+        <translation language="lt"><![CDATA[Kiniečių]]></translation>
+        <translation language="uk"><![CDATA[китайська]]></translation>
+        <translation language="sv"><![CDATA[Kinesiska]]></translation>
+        <translation language="el"><![CDATA[Κινέζικα]]></translation>
+        <translation language="tr"><![CDATA[Çince]]></translation>
       </item>
       <item type="label" name="Types">
         <translation language="nl"><![CDATA[types]]></translation>

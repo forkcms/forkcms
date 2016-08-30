@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\User as BackendUser;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
@@ -172,12 +172,12 @@ class Edit extends BackendBaseActionEdit
             $this->user->getSetting('number_format', 'dot_nothing')
         );
 
-        $this->frm->addDropDown(
+        $this->frm->addDropdown(
             'csv_split_character',
             BackendUsersModel::getCSVSplitCharacters(),
             $this->user->getSetting('csv_split_character')
         );
-        $this->frm->addDropDown(
+        $this->frm->addDropdown(
             'csv_line_ending',
             BackendUsersModel::getCSVLineEndings(),
             $this->user->getSetting('csv_line_ending')
@@ -302,22 +302,6 @@ class Edit extends BackendBaseActionEdit
                 }
             }
 
-            // validate avatar
-            if ($fields['avatar']->isFilled()) {
-                // correct extension
-                if ($fields['avatar']->isAllowedExtension(
-                    array('jpg', 'jpeg', 'gif', 'png'),
-                    BL::err('JPGGIFAndPNGOnly')
-                )
-                ) {
-                    // correct mimetype?
-                    $fields['avatar']->isAllowedMimeType(
-                        array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'),
-                        BL::err('JPGGIFAndPNGOnly')
-                    );
-                }
-            }
-
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build user-array
@@ -394,15 +378,15 @@ class Edit extends BackendBaseActionEdit
                         $this->record['settings']['avatar'] != 'no-avatar.jpg' &&
                         $this->record['settings']['avatar'] != ''
                     ) {
-                        $fs = new Filesystem();
-                        $fs->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
+                        $filesystem = new Filesystem();
+                        $filesystem->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
                     }
 
                     // create new filename
-                    $filename = rand(0, 3) . '_' . $user['id'] . '.' . $fields['avatar']->getExtension();
+                    $filename = mt_rand(0, 3) . '_' . $user['id'] . '.' . $fields['avatar']->getExtension();
 
                     // add into settings to update
                     $settings['avatar'] = $filename;

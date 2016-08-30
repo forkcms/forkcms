@@ -11,7 +11,7 @@ namespace Backend\Modules\Extensions\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
@@ -98,6 +98,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->frm->addTextarea('format');
         $this->frm->addCheckbox('active', true);
         $this->frm->addCheckbox('default');
+        $this->frm->addCheckbox('image');
 
         // init vars
         $positions = array();
@@ -305,11 +306,12 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $item['theme'] = $this->frm->getField('theme')->getValue();
                 $item['label'] = $this->frm->getField('label')->getValue();
                 $item['path'] = 'Core/Layout/Templates/' . $this->frm->getField('file')->getValue();
-                $item['active'] = $this->frm->getField('active')->getChecked() ? 'Y' : 'N';
+                $item['active'] = $this->frm->getField('active')->getActualValue();
                 $item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
                 $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
+                $item['data']['image'] = $this->frm->getField('image')->isChecked();
 
                 // serialize the data
                 $item['data'] = serialize($item['data']);

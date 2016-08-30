@@ -11,6 +11,9 @@ class RedirectException extends \Exception
 {
     protected $response;
 
+    /**
+     * {@inheritdoc}
+     */
     public function __construct($message, Response $response, \Exception $previous = null)
     {
         $this->response = $response;

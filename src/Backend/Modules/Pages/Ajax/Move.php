@@ -10,7 +10,7 @@ namespace Backend\Modules\Pages\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**

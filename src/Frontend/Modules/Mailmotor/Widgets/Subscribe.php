@@ -19,6 +19,13 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 class Subscribe extends FrontendBaseWidget
 {
     /**
+     * The form instance
+     *
+     * @var FrontendForm
+     */
+    protected $frm;
+
+    /**
      * Execute the extra
      */
     public function execute()

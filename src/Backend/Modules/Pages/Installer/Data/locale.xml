@@ -284,6 +284,10 @@
         <translation language="uk"><![CDATA[Сторінку "%1$s" додано.]]></translation>
         <translation language="el"><![CDATA[Η σελίδα "%1$s" προστέθηκε.]]></translation>
       </item>
+      <item type="message" name="HelpImage">
+        <translation language="en"><![CDATA[This image can be used in the template. for example as a header]]></translation>
+        <translation language="nl"><![CDATA[Deze afbeelding kan worden gebruikt in de template. bijvoorbeeld als header]]></translation>
+      </item>
       <item type="message" name="AllowChildren">
         <translation language="nl"><![CDATA[Deze pagina mag subpagina's bevatten.]]></translation>
         <translation language="en"><![CDATA[This page can have subpages.]]></translation>
@@ -323,6 +327,10 @@
         <translation language="hu"><![CDATA[A pozíció az oldalon változtatható.]]></translation>
         <translation language="el"><![CDATA[Η θέση αυτής της σελίδας μπορεί να αλλάξει.]]></translation>
         <translation language="zh"><![CDATA[这个页面的位置可以改变。]]></translation>
+      </item>
+      <item type="message" name="AllowImage">
+        <translation language="nl"><![CDATA[Deze pagina mag een afbeelding hebben.]]></translation>
+        <translation language="en"><![CDATA[This page can have an image.]]></translation>
       </item>
       <item type="message" name="BlockAttached">
         <translation language="nl"><![CDATA[De module <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>

@@ -11,6 +11,7 @@ namespace Frontend\Core\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use Frontend\Core\Language\Language;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
 
@@ -130,8 +131,8 @@ class TemplateModifiers extends BaseTwigModifiers
                 'time_format'
             ),
             $string,
-            FRONTEND_LANGUAGE
-        ).'">'.\SpoonDate::getTimeAgo($string, FRONTEND_LANGUAGE).'</abbr>';
+            LANGUAGE
+        ).'">'.\SpoonDate::getTimeAgo($string, LANGUAGE).'</abbr>';
     }
 
     /**
@@ -321,7 +322,8 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param string $action The action to execute.
      * @param string $id     The widget id (saved in data-column).
      *
-     * @return string|null
+     * @return null|string
+     * @throws Exception
      */
     public static function parseWidget($module, $action, $id = null)
     {
@@ -382,11 +384,12 @@ class TemplateModifiers extends BaseTwigModifiers
      * Get the value for a user-setting
      *    syntax {{ usersetting($setting, $userId) }}
      *
-     * @param string $string     The string passed from the template.
+     * @param string $string  The string passed from the template.
      * @param string $setting The name of the setting you want.
      * @param int    $userId  The userId, if not set by $string.
      *
      * @return string
+     * @throws Exception
      */
     public static function userSetting($string = null, $setting, $userId = null)
     {

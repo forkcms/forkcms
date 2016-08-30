@@ -13,7 +13,7 @@ use Twig_Extension;
  */
 class FormState
 {
-    public static $current = null;
+    public static $current;
 }
 
 class FormExtension

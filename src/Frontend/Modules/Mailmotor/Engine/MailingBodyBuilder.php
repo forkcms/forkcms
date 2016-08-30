@@ -51,6 +51,7 @@ class MailingBodyBuilder
      * @param array $replacements An array of key/value pairs, where key is the string to replace with the value.
      *
      * @return string The generated mailing body.
+     * @throws \Exception
      */
     public function buildBody(array $replacements = null)
     {
