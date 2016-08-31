@@ -10,6 +10,7 @@ use Doctrine\DBAL\DriverManager;
 use ForkCMS\Bundle\InstallerBundle\DBAL\InstallerConnection;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Doctrine\DBAL\Exception\ConnectionException;
 
 class InstallerConnectionFactory extends ConnectionFactory
 {
@@ -27,23 +28,27 @@ class InstallerConnectionFactory extends ConnectionFactory
         EventManager $eventManager = null,
         array $mappingTypes = array()
     ) {
-        // there is no other way since we don't have access to the container, but it works yeey, but I'm still sorry
-        $session = new Session();
+        try {
+            // there is no other way since we don't have access to the container, but it works yeey, but I'm still sorry
+            $session = new Session();
 
-        if (!$session->has('installation_data') || $session->get('installation_data')->getDbHostname() === null) {
+            if (!$session->has('installation_data') || $session->get('installation_data')->getDbHostname() === null) {
+                return $this->getInstallerConnection($params, $config, $eventManager);
+            }
+
+            /** @var InstallationData $installationData */
+            $installationData = $session->get('installation_data');
+            $params['host'] = $installationData->getDbHostname();
+            $params['port'] = $installationData->getDbPort();
+            $params['dbname'] = $installationData->getDbDatabase();
+            $params['user'] = $installationData->getDbUsername();
+            $params['password'] = $installationData->getDbPassword();
+
+            //continue with regular connection creation using new params
+            return parent::createConnection($params, $config, $eventManager, $mappingTypes);
+        } catch (ConnectionException $e) {
             return $this->getInstallerConnection($params, $config, $eventManager);
         }
-
-        /** @var InstallationData $installationData */
-        $installationData = $session->get('installation_data');
-        $params['host'] = $installationData->getDbHostname();
-        $params['port'] = $installationData->getDbPort();
-        $params['dbname'] = $installationData->getDbDatabase();
-        $params['user'] = $installationData->getDbUsername();
-        $params['password'] = $installationData->getDbPassword();
-
-        //continue with regular connection creation using new params
-        return parent::createConnection($params, $config, $eventManager, $mappingTypes);
     }
 
     /**
