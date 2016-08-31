@@ -14,6 +14,7 @@ use Symfony\Component\Finder\Finder;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Common\ExtraType;
 
 /**
  * The base-class for the installer
@@ -459,7 +460,7 @@ class ModuleInstaller
      * Insert an extra
      *
      * @param string $module   The module for the extra.
-     * @param string $type     The type, possible values are: homepage, widget, block.
+     * @param ExtraType|string $type     The type, possible values are: homepage, widget, block.
      * @param string $label    The label for the extra.
      * @param string $action   The action.
      * @param string $data     Optional data, will be passed in the extra.
