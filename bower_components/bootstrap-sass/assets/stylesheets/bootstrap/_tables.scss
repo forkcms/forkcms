@@ -5,6 +5,10 @@
 
 table {
   background-color: $table-bg;
+
+  .fork-data-grid-action {
+      width: 1%;
+  }
 }
 caption {
   padding-top: $table-cell-padding;
