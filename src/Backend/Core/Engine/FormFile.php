@@ -9,9 +9,7 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 use SpoonFilter;
-
 use Backend\Core\Language\Language as BackendLanguage;
-use \SpoonFilter;
 
 /**
  * This is our extended version of \SpoonFormFile
