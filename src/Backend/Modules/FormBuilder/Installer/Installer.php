@@ -62,7 +62,7 @@ class Installer extends ModuleInstaller
             'SELECT id
              FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
-            array('search', 'widget', 'form')
+            array('search', ExtraType::WIDGET, 'form')
         );
 
         // loop languages

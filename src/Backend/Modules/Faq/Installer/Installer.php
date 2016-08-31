@@ -69,7 +69,7 @@ class Installer extends ModuleInstaller
             'modules_extras',
             $extra,
             'id = ? AND module = ? AND type = ? AND action = ?',
-            array($item['extra_id'], 'faq', 'widget', 'category_list')
+            array($item['extra_id'], 'faq', ExtraType::WIDGET, 'category_list')
         );
 
         return $item['id'];

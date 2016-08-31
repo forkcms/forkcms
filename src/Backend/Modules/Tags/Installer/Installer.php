@@ -52,7 +52,7 @@ class Installer extends ModuleInstaller
         // get search extra id
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
-            array('Search', 'widget', 'Form')
+            array('Search', ExtraType::WIDGET, 'Form')
         );
 
         // loop languages
