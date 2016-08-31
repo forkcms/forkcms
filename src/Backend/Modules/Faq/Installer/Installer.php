@@ -10,6 +10,7 @@ namespace Backend\Modules\Faq\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ExtraType;
 
 /**
  * Installer for the faq module
@@ -45,7 +46,7 @@ class Installer extends ModuleInstaller
 
         // build array
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['extra_id'] = $this->insertExtra('Faq', 'widget', 'Faq', 'CategoryList', null, 'N', $sequenceExtra);
+        $item['extra_id'] = $this->insertExtra('Faq', ExtraType::widget(), 'Faq', 'CategoryList', null, 'N', $sequenceExtra);
         $item['language'] = (string) $language;
         $item['title'] = (string) $title;
         $item['sequence'] = 1;
@@ -126,13 +127,13 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Faq', 'DeleteFeedback');
         $this->setActionRights(1, 'Faq', 'Settings');
 
-        $faqId = $this->insertExtra('Faq', 'block', 'Faq');
+        $faqId = $this->insertExtra('Faq', ExtraType::block(), 'Faq');
 
         // Register widgets
         // Category faq widgets will be added on the fly
-        $this->insertExtra('Faq', 'widget', 'MostReadQuestions', 'MostReadQuestions');
-        $this->insertExtra('Faq', 'widget', 'AskOwnQuestion', 'AskOwnQuestion');
-        $this->insertExtra('Faq', 'widget', 'Categories', 'Categories');
+        $this->insertExtra('Faq', ExtraType::widget(), 'MostReadQuestions', 'MostReadQuestions');
+        $this->insertExtra('Faq', ExtraType::widget(), 'AskOwnQuestion', 'AskOwnQuestion');
+        $this->insertExtra('Faq', ExtraType::widget(), 'Categories', 'Categories');
 
         $this->setSetting('Faq', 'overview_num_items_per_category', 0);
         $this->setSetting('Faq', 'most_read_num_items', 0);

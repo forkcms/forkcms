@@ -9,6 +9,7 @@ namespace Backend\Modules\Search\Installer;
  * file that was distributed with this source code.
  */
 
+use Common\ExtraType;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
 
@@ -63,8 +64,8 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Search', 'search/settings');
 
         // add extra's
-        $searchId = $this->insertExtra('Search', 'block', 'Search', null, null, 'N', 2000);
-        $this->insertExtra('Search', 'widget', 'SearchForm', 'Form', null, 'N', 2001);
+        $searchId = $this->insertExtra('Search', ExtraType::block(), 'Search', null, null, 'N', 2000);
+        $this->insertExtra('Search', ExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
 
         // loop languages
         foreach ($this->getLanguages() as $language) {

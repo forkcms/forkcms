@@ -10,6 +10,7 @@ namespace Backend\Modules\Mailmotor\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ExtraType;
 
 /**
  * Installer for the mailmotor module
@@ -160,11 +161,11 @@ class Installer extends ModuleInstaller
     private function installPages()
     {
         // add extra's
-        $sentMailingsID = $this->insertExtra('Mailmotor', 'block', 'SentMailings', null, null, 'N', 3000);
-        $subscribeFormID = $this->insertExtra('Mailmotor', 'block', 'SubscribeForm', 'Subscribe', null, 'N', 3001);
+        $sentMailingsID = $this->insertExtra('Mailmotor', ExtraType::block(), 'SentMailings', null, null, 'N', 3000);
+        $subscribeFormID = $this->insertExtra('Mailmotor', ExtraType::block(), 'SubscribeForm', 'Subscribe', null, 'N', 3001);
         $unsubscribeFormID = $this->insertExtra(
             'Mailmotor',
-            'block',
+            ExtraType::block(),
             'UnsubscribeForm',
             'Unsubscribe',
             null,
@@ -173,7 +174,7 @@ class Installer extends ModuleInstaller
         );
         $widgetSubscribeFormID = $this->insertExtra(
             'Mailmotor',
-            'widget',
+            ExtraType::widget(),
             'SubscribeForm',
             'Subscribe',
             null,

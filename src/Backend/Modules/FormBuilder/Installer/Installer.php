@@ -10,6 +10,7 @@ namespace Backend\Modules\FormBuilder\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ExtraType;
 
 /**
  * Installer for the form_builder module
@@ -140,7 +141,7 @@ class Installer extends ModuleInstaller
             // insert extra
             $extraId = $this->insertExtra(
                 'FormBuilder',
-                'widget',
+                ExtraType::widget(),
                 'FormBuilder',
                 'Form',
                 serialize(

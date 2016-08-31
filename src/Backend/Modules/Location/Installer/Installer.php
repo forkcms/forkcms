@@ -10,6 +10,7 @@ namespace Backend\Modules\Location\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ExtraType;
 
 /**
  * Installer for the location module
@@ -62,6 +63,6 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Location', 'location/settings');
 
         // add extra's
-        $this->insertExtra('Location', 'block', 'Location', null, 'a:1:{s:3:"url";s:34:"/private/location/index?token=true";}', 'N');
+        $this->insertExtra('Location', ExtraType::widget(), 'Location', null, 'a:1:{s:3:"url";s:34:"/private/location/index?token=true";}', 'N');
     }
 }

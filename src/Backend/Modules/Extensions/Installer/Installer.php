@@ -3,6 +3,7 @@
 namespace Backend\Modules\Extensions\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ExtraType;
 
 /**
  * Installer for the extensions module.
@@ -15,7 +16,7 @@ class Installer extends ModuleInstaller
     private function insertExtras()
     {
         // insert extra ids
-        $extras['search_form'] = $this->insertExtra('Search', 'widget', 'SearchForm', 'Form', null, 'N', 2001);
+        $extras['search_form'] = $this->insertExtra('Search', ExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
     }
 
     /**
@@ -59,7 +60,7 @@ class Installer extends ModuleInstaller
          */
 
         // search will be installed by default; already link it to this template
-        $extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
+        $extras['search_form'] = $this->insertExtra('search', ExtraType::widget(), 'SearchForm', 'form', null, 'N', 2001);
 
         // build templates
         $templates['triton']['default'] = array(

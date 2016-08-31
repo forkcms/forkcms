@@ -9,6 +9,7 @@ namespace Backend\Modules\ContentBlocks\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\ExtraType;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
@@ -325,7 +326,7 @@ class Model
 
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
-            'widget',
+            ExtraType::widget(),
             'ContentBlocks',
             'Detail'
         );
