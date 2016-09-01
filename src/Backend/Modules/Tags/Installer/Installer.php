@@ -10,7 +10,7 @@ namespace Backend\Modules\Tags\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ExtraType;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the tags module
@@ -45,14 +45,14 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Tags', 'tags/index', array('tags/edit'));
 
         // add extra
-        $tagsID = $this->insertExtra('Tags', ExtraType::block(), 'Tags', null, null, 'N', 30);
-        $this->insertExtra('Tags', ExtraType::widget(), 'TagCloud', 'TagCloud', null, 'N', 31);
-        $this->insertExtra('Tags', ExtraType::widget(), 'Related', 'Related', null, 'N', 32);
+        $tagsID = $this->insertExtra('Tags', ModuleExtraType::block(), 'Tags', null, null, 'N', 30);
+        $this->insertExtra('Tags', ModuleExtraType::widget(), 'TagCloud', 'TagCloud', null, 'N', 31);
+        $this->insertExtra('Tags', ModuleExtraType::widget(), 'Related', 'Related', null, 'N', 32);
 
         // get search extra id
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
-            array('Search', ExtraType::WIDGET, 'Form')
+            array('Search', ModuleExtraType::WIDGET, 'Form')
         );
 
         // loop languages

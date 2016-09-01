@@ -9,7 +9,7 @@ namespace Backend\Modules\Faq\Engine;
  * file that was distributed with this source code.
  */
 
-use Common\ExtraType;
+use Common\ModuleExtraType;
 use Common\Uri as CommonUri;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -465,7 +465,7 @@ class Model
 
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
-            ExtraType::widget(),
+            ModuleExtraType::widget(),
             'Faq',
             'CategoryList'
         );

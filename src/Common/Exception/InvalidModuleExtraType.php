@@ -2,10 +2,10 @@
 
 namespace Common\Exception;
 
-use Common\ExtraType;
+use Common\ModuleExtraType;
 use Exception;
 
-final class InvalidExtraType extends Exception
+final class InvalidModuleExtraType extends Exception
 {
     /**
      * @param string $type
@@ -17,7 +17,7 @@ final class InvalidExtraType extends Exception
             sprintf(
                 '%s is not a valid module extra type. Possible options are %s',
                 $type,
-                implode(', ', ExtraType::getPossibleTypes())
+                implode(', ', ModuleExtraType::getPossibleTypes())
             )
         );
     }

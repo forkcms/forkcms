@@ -10,7 +10,7 @@ namespace Backend\Modules\Profiles\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ExtraType;
+use Common\ModuleExtraType;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
 
@@ -98,35 +98,35 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Profiles', 'profiles/settings');
 
         // add extra
-        $activateId = $this->insertExtra('Profiles', ExtraType::block(), 'Activate', 'Activate', null, 'N', 5000);
+        $activateId = $this->insertExtra('Profiles', ModuleExtraType::block(), 'Activate', 'Activate', null, 'N', 5000);
         $forgotPasswordId = $this->insertExtra(
             'Profiles',
-            ExtraType::block(),
+            ModuleExtraType::block(),
             'ForgotPassword',
             'ForgotPassword',
             null,
             'N',
             5001
         );
-        $indexId = $this->insertExtra('Profiles', ExtraType::block(), 'Dashboard', null, null, 'N', 5002);
-        $loginId = $this->insertExtra('Profiles', ExtraType::block(), 'Login', 'Login', null, 'N', 5003);
-        $logoutId = $this->insertExtra('Profiles', ExtraType::block(), 'Logout', 'Logout', null, 'N', 5004);
-        $changeEmailId = $this->insertExtra('Profiles', ExtraType::block(), 'ChangeEmail', 'ChangeEmail', null, 'N', 5005);
+        $indexId = $this->insertExtra('Profiles', ModuleExtraType::block(), 'Dashboard', null, null, 'N', 5002);
+        $loginId = $this->insertExtra('Profiles', ModuleExtraType::block(), 'Login', 'Login', null, 'N', 5003);
+        $logoutId = $this->insertExtra('Profiles', ModuleExtraType::block(), 'Logout', 'Logout', null, 'N', 5004);
+        $changeEmailId = $this->insertExtra('Profiles', ModuleExtraType::block(), 'ChangeEmail', 'ChangeEmail', null, 'N', 5005);
         $changePasswordId = $this->insertExtra(
             'Profiles',
-            ExtraType::block(),
+            ModuleExtraType::block(),
             'ChangePassword',
             'ChangePassword',
             null,
             'N',
             5006
         );
-        $settingsId = $this->insertExtra('Profiles', ExtraType::block(), 'Settings', 'Settings', null, 'N', 5007);
-        $registerId = $this->insertExtra('Profiles', ExtraType::block(), 'Register', 'Register', null, 'N', 5008);
-        $resetPasswordId = $this->insertExtra('Profiles', ExtraType::block(), 'ResetPassword', 'ResetPassword', null, 'N', 5008);
+        $settingsId = $this->insertExtra('Profiles', ModuleExtraType::block(), 'Settings', 'Settings', null, 'N', 5007);
+        $registerId = $this->insertExtra('Profiles', ModuleExtraType::block(), 'Register', 'Register', null, 'N', 5008);
+        $resetPasswordId = $this->insertExtra('Profiles', ModuleExtraType::block(), 'ResetPassword', 'ResetPassword', null, 'N', 5008);
         $resendActivationId = $this->insertExtra(
             'Profiles',
-            ExtraType::block(),
+            ModuleExtraType::block(),
             'ResendActivation',
             'ResendActivation',
             null,
@@ -134,9 +134,9 @@ class Installer extends ModuleInstaller
             5009
         );
 
-        $this->insertExtra('Profiles', ExtraType::widget(), 'LoginBox', 'LoginBox', null, 'N', 5010);
-        $this->insertExtra('Profiles', ExtraType::widget(), 'LoginLink', 'LoginLink', null, 'N', 5011);
-        $this->insertExtra('Profiles', ExtraType::widget(), 'SecurePage', 'SecurePage', null, 'N', 5012);
+        $this->insertExtra('Profiles', ModuleExtraType::widget(), 'LoginBox', 'LoginBox', null, 'N', 5010);
+        $this->insertExtra('Profiles', ModuleExtraType::widget(), 'LoginLink', 'LoginLink', null, 'N', 5011);
+        $this->insertExtra('Profiles', ModuleExtraType::widget(), 'SecurePage', 'SecurePage', null, 'N', 5012);
 
         // get search widget id
         $searchId = (int) $this->getDB()->getVar(

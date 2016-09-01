@@ -6,7 +6,7 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
-use Common\ExtraType;
+use Common\ModuleExtraType;
 
 final class CopyContentBlocksToOtherLocaleHandler
 {
@@ -58,7 +58,7 @@ final class CopyContentBlocksToOtherLocaleHandler
     private function getNewExtraId()
     {
         return Model::insertExtra(
-            ExtraType::widget(),
+            ModuleExtraType::widget(),
             'ContentBlocks',
             'Detail'
         );

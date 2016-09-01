@@ -5,7 +5,7 @@ namespace Backend\Modules\ContentBlocks\Command;
 use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
-use Common\ExtraType;
+use Common\ModuleExtraType;
 
 final class CreateContentBlockHandler
 {
@@ -46,7 +46,7 @@ final class CreateContentBlockHandler
     private function getNewExtraId()
     {
         return Model::insertExtra(
-            ExtraType::widget(),
+            ModuleExtraType::widget(),
             'ContentBlocks',
             'Detail'
         );

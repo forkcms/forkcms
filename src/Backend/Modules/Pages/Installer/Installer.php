@@ -10,7 +10,7 @@ namespace Backend\Modules\Pages\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ExtraType;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the pages module
@@ -37,14 +37,14 @@ class Installer extends ModuleInstaller
     private function insertPages()
     {
         // get extra ids
-        $extras['search'] = $this->insertExtra('Search', ExtraType::block(), 'Search', null, null, 'N', 2000);
-        $extras['search_form'] = $this->insertExtra('Search', ExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
-        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', ExtraType::widget(), 'Sitemap', 'Sitemap', null, 'N', 1);
-        $this->insertExtra('Pages', ExtraType::widget(), 'Navigation', 'PreviousNextNavigation');
+        $extras['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, 'N', 2000);
+        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
+        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', ModuleExtraType::widget(), 'Sitemap', 'Sitemap', null, 'N', 1);
+        $this->insertExtra('Pages', ModuleExtraType::widget(), 'Navigation', 'PreviousNextNavigation');
 
         $extras['subpages_widget'] = $this->insertExtra(
             'Pages',
-            ExtraType::widget(),
+            ModuleExtraType::widget(),
             'Subpages',
             'Subpages',
             serialize(array('template' => 'SubpagesDefault.html.twig')),
@@ -156,10 +156,10 @@ class Installer extends ModuleInstaller
     private function installExampleData()
     {
         // insert/get extra ids
-        $extras['blog_block'] = $this->insertExtra('Blog', ExtraType::block(), 'Blog', null, null, 'N', 1000);
+        $extras['blog_block'] = $this->insertExtra('Blog', ModuleExtraType::block(), 'Blog', null, null, 'N', 1000);
         $extras['blog_widget_recent_comments'] = $this->insertExtra(
             'Blog',
-            ExtraType::widget(),
+            ModuleExtraType::widget(),
             'RecentComments',
             'RecentComments',
             null,
@@ -168,17 +168,17 @@ class Installer extends ModuleInstaller
         );
         $extras['blog_widget_categories'] = $this->insertExtra(
             'Blog',
-            ExtraType::widget(),
+            ModuleExtraType::widget(),
             'Categories',
             'Categories',
             null,
             'N',
             1002
         );
-        $extras['blog_widget_archive'] = $this->insertExtra('Blog', ExtraType::widget(), 'Archive', 'Archive', null, 'N', 1003);
+        $extras['blog_widget_archive'] = $this->insertExtra('Blog', ModuleExtraType::widget(), 'Archive', 'Archive', null, 'N', 1003);
         $extras['blog_widget_recent_articles_full'] = $this->insertExtra(
             'Blog',
-            ExtraType::widget(),
+            ModuleExtraType::widget(),
             'RecentArticlesFull',
             'RecentArticlesFull',
             null,
@@ -187,19 +187,19 @@ class Installer extends ModuleInstaller
         );
         $extras['blog_widget_recent_articles_list'] = $this->insertExtra(
             'Blog',
-            ExtraType::widget(),
+            ModuleExtraType::widget(),
             'RecentArticlesList',
             'RecentArticlesList',
             null,
             'N',
             1005
         );
-        $extras['search'] = $this->insertExtra('Search', ExtraType::block(), 'Search', null, null, 'N', 2000);
-        $extras['search_form'] = $this->insertExtra('Search', ExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
-        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', ExtraType::widget(), 'Sitemap', 'Sitemap', null, 'N', 1);
+        $extras['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, 'N', 2000);
+        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
+        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', ModuleExtraType::widget(), 'Sitemap', 'Sitemap', null, 'N', 1);
         $extras['subpages_widget'] = $this->insertExtra(
             'Pages',
-            ExtraType::widget(),
+            ModuleExtraType::widget(),
             'Subpages',
             'Subpages',
             serialize(array('template' => 'SubpagesDefault.html.twig')),

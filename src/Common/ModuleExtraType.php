@@ -2,9 +2,9 @@
 
 namespace Common;
 
-use Common\Exception\InvalidExtraType;
+use Common\Exception\InvalidModuleExtraType;
 
-final class ExtraType
+final class ModuleExtraType
 {
     const BLOCK = 'block';
     const HOMEPAGE = 'homepage';
@@ -15,12 +15,12 @@ final class ExtraType
 
     /**
      * @param string $type
-     * @throws InvalidExtraType
+     * @throws InvalidModuleExtraType
      */
     public function __construct($type)
     {
         if (!in_array($type, self::getPossibleTypes())) {
-            throw InvalidExtraType::withType($type);
+            throw InvalidModuleExtraType::withType($type);
         }
 
         $this->type = $type;
