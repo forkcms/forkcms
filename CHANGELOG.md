@@ -1,3 +1,12 @@
+4.2.1 (2016-08-31)
+------------------
+
+Bugfixes:
+
+* Blog: dashboard widget link fixed
+* Core: fix duplicate use statements
+
+
 4.2.0 (2016-08-29)
 ------------------
 
