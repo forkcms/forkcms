@@ -9,6 +9,7 @@ namespace Backend\Modules\ContentBlocks\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\ContentBlocks\Command\CreateContentBlock;
@@ -46,6 +47,7 @@ class Add extends BackendBaseActionAdd
 
         /** @var CreateContentBlock $createContentBlock */
         $createContentBlock = $form->getData();
+        $createContentBlock->userId = Authentication::getUser()->getUserId();
 
         // The command bus will handle the saving of the content block in the database.
         $this->get('command_bus')->handle($createContentBlock);
