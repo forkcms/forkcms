@@ -18,7 +18,7 @@ var jsBackend =
         // set some properties
         jsBackend.debug = jsBackend.data.get('debug');
         jsBackend.current.language = chunks[2];
-        if (!navigator.cookieEnabled) $('#noCookies').addClass('active');
+        if (!navigator.cookieEnabled) $('#noCookies').addClass('active').css('display', 'block');
         if (typeof chunks[3] == 'undefined') jsBackend.current.module = null;
         else jsBackend.current.module = utils.string.ucfirst(utils.string.camelCase(chunks[3]));
         if (typeof chunks[4] == 'undefined') jsBackend.current.action = null;
