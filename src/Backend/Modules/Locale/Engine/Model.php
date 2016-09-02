@@ -603,7 +603,7 @@ class Model
                     // attributes
                     $attributes = $item->attributes();
                     $type = \SpoonFilter::getValue($attributes['type'], $possibleTypes, '');
-                    $name = \SpoonFilter::getValue($attributes['name'], null, '');
+                    $name = ucfirst(\SpoonFilter::getValue($attributes['name'], null, ''));
 
                     // missing attributes
                     if ($type == '' || $name == '') {
