@@ -28,7 +28,7 @@ class Index extends BackendBaseActionIndex
     /**
      * Form instances
      *
-     * @var	BackendForm
+     * @var BackendForm
      */
     private $frm;
     private $frmForgotPassword;
@@ -231,16 +231,15 @@ class Index extends BackendBaseActionIndex
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message = Message::newInstance(
-                        \SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject'))
-                    )
+                    \SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject'))
+                )
                     ->setFrom(array($from['email'] => $from['name']))
                     ->setTo(array($email))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                         '/Authentication/Layout/Templates/Mails/ResetPassword.html.twig',
+                        '/Authentication/Layout/Templates/Mails/ResetPassword.html.twig',
                         $variables
-                    )
-                ;
+                    );
                 $this->get('mailer')->send($message);
 
                 // clear post-values

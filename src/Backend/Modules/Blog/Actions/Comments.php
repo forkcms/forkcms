@@ -25,7 +25,7 @@ class Comments extends BackendBaseActionIndex
     /**
      * DataGrids
      *
-     * @var	BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgPublished;
     private $dgModeration;

@@ -27,21 +27,21 @@ class Edit extends BackendBaseActionEdit
     /**
      * The authenticated user
      *
-     * @var    BackendUser
+     * @var BackendUser
      */
     private $authenticatedUser;
 
     /**
      * Can only edit his own profile
      *
-     * @var    bool
+     * @var bool
      */
     private $allowUserRights;
 
     /**
      * The user
      *
-     * @var    BackendUser
+     * @var BackendUser
      */
     private $user;
 
@@ -59,10 +59,9 @@ class Edit extends BackendBaseActionEdit
         // When this is the case the user will be redirected to the index action of this module.
         // An action to which he may not have any user rights.
         // Redirect to the user's own profile instead to avoid unnessary words.
-        if (
-            $this->id === null &&
-            $error === null &&
-            $this->authenticatedUser->getUserId()
+        if ($this->id === null
+            && $error === null
+            && $this->authenticatedUser->getUserId()
         ) {
             $this->redirect(
                 BackendModel::createURLForAction(
@@ -106,9 +105,8 @@ class Edit extends BackendBaseActionEdit
         );
 
         // redirect to error page when not allowed to edit other profiles
-        if (
-            !$this->authenticatedUser->isGod() &&
-            ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('Add'))
+        if (!$this->authenticatedUser->isGod()
+            && ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('Add'))
         ) {
             $this->redirect(BackendModel::createURLForAction('Error') . '&type=not-allowed');
         }
@@ -276,9 +274,8 @@ class Edit extends BackendBaseActionEdit
             }
 
             // required fields
-            if (
-                $this->user->isGod() && $fields['email']->getValue() != '' &&
-                $this->user->getEmail() != $fields['email']->getValue()
+            if ($this->user->isGod() && $fields['email']->getValue() != ''
+                && $this->user->getEmail() != $fields['email']->getValue()
             ) {
                 $fields['email']->addError(BL::err('CantChangeGodsEmail'));
             }
@@ -374,9 +371,8 @@ class Edit extends BackendBaseActionEdit
                     $avatarsPath = FRONTEND_FILES_PATH . '/backend_users/avatars';
 
                     // delete old avatar if it isn't the default-image
-                    if (
-                        $this->record['settings']['avatar'] != 'no-avatar.jpg' &&
-                        $this->record['settings']['avatar'] != ''
+                    if ($this->record['settings']['avatar'] != 'no-avatar.jpg'
+                        && $this->record['settings']['avatar'] != ''
                     ) {
                         $filesystem = new Filesystem();
                         $filesystem->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);

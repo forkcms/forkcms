@@ -486,9 +486,17 @@ class Model
         $statsClickedLinksBy = isset($records[0]['clicked_links_by']) ? $records[0]['clicked_links_by'] : array();
 
         // unset multi-dimensional arrays
-        unset($records[0]['clicked_links'], $records[0]['clicked_links_by'], $records[0]['opens'],
-        $records[0]['clicks'], $records[0]['clicks_percentage'], $records[0]['clicks_total'],
-        $records[0]['recipients_total'], $records[0]['recipients_percentage'], $records[0]['online_version']);
+        unset(
+            $records[0]['clicked_links'],
+            $records[0]['clicked_links_by'],
+            $records[0]['opens'],
+            $records[0]['clicks'],
+            $records[0]['clicks_percentage'],
+            $records[0]['clicks_total'],
+            $records[0]['recipients_total'],
+            $records[0]['recipients_percentage'],
+            $records[0]['online_version']
+        );
 
         // set columns
         $columns = array();
@@ -543,8 +551,13 @@ class Model
         $records[] = BackendMailmotorCMHelper::getStatisticsByCampaignID($id);
 
         // unset some records
-        unset($records[0]['opens'], $records[0]['clicks'], $records[0]['clicks_percentage'],
-        $records[0]['recipients_total'], $records[0]['recipients_percentage']);
+        unset(
+            $records[0]['opens'],
+            $records[0]['clicks'],
+            $records[0]['clicks_percentage'],
+            $records[0]['recipients_total'],
+            $records[0]['recipients_percentage']
+        );
 
         // set columns
         $columns = array();

@@ -12,21 +12,21 @@ final class Config extends BackendBaseConfig
     /**
      * The default action
      *
-     * @var	string
+     * @var string
      */
     protected $defaultAction = 'Modules';
 
     /**
      * The disabled actions
      *
-     * @var	array
+     * @var array
      */
     protected $disabledActions = array();
 
     /**
      * The disabled AJAX-actions
      *
-     * @var	array
+     * @var array
      */
     protected $disabledAJAXActions = array();
 }

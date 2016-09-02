@@ -199,15 +199,12 @@ class Model
     {
         $finder = new Finder();
         $filesystem = new Filesystem();
-        foreach (
-            $finder->files()
-                ->name('*.php')
-                ->name('*.js')
-                ->in(BACKEND_CACHE_PATH . '/Locale')
-                ->in(FRONTEND_CACHE_PATH . '/Navigation')
-                ->in(FRONTEND_CACHE_PATH . '/Locale')
-            as $file
-        ) {
+        foreach ($finder->files()
+                     ->name('*.php')
+                     ->name('*.js')
+                     ->in(BACKEND_CACHE_PATH . '/Locale')
+                     ->in(FRONTEND_CACHE_PATH . '/Navigation')
+                     ->in(FRONTEND_CACHE_PATH . '/Locale') as $file) {
             $filesystem->remove($file->getRealPath());
         }
         $filesystem->remove(Navigation::getCacheDirectory() . 'navigation.php');
@@ -624,9 +621,8 @@ class Model
             // any extras?
             if (isset($row['data']['default_extras'])) {
                 foreach ($row['data']['default_extras'] as $value) {
-                    if (
-                        \SpoonFilter::isInteger($value) &&
-                        isset($extras[$value]) && $extras[$value]['type'] == 'block'
+                    if (\SpoonFilter::isInteger($value)
+                        && isset($extras[$value]) && $extras[$value]['type'] == 'block'
                     ) {
                         $row['has_block'] = true;
                     }

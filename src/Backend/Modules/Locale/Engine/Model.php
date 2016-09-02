@@ -645,10 +645,8 @@ class Model
                         $locale['edited_on'] = $date;
 
                         // check if translation does not yet exist, or if the translation can be overridden
-                        if (!in_array(
-                                $application . $module . $type . $language . $name,
-                                $currentLocale
-                            ) || $overwriteConflicts
+                        if (!in_array($application . $module . $type . $language . $name, $currentLocale)
+                            || $overwriteConflicts
                         ) {
                             $db->execute(
                                 'INSERT INTO locale (user_id, language, application, module, type, name, value, edited_on)

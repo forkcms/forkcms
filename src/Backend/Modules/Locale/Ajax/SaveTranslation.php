@@ -75,20 +75,14 @@ class SaveTranslation extends BackendBaseAJAXAction
 
                 // update in db
                 BackendLocaleModel::update($item);
-            }
-
-            // doesn't exist yet
-            else {
+            } else {
                 // insert in db
                 BackendLocaleModel::insert($item);
             }
 
             // output OK
             $this->output(self::OK);
-        }
-
-        // output the error
-        else {
+        } else {
             $this->output(self::ERROR, null, $error);
         }
     }

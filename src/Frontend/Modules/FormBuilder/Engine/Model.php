@@ -70,7 +70,7 @@ class Model
             'SELECT i.field_id, i.type, i.parameter, i.error_message
              FROM forms_fields_validation AS i
              WHERE i.field_id IN (' . implode(', ', $idPlaceHolders) . ')',
-             array_keys($fields)
+            array_keys($fields)
         );
 
         // loop fields to add extra parameters

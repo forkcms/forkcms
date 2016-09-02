@@ -23,14 +23,14 @@ class ExportData extends BackendBaseAction
     /**
      * CSV column headers.
      *
-     * @var	array
+     * @var array
      */
     private $columnHeaders = array();
 
     /**
      * The filter.
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 
@@ -44,14 +44,14 @@ class ExportData extends BackendBaseAction
     /**
      * CSV rows.
      *
-     * @var	array
+     * @var array
      */
     private $rows = array();
 
     /**
      * Builds the query for this datagrid.
      *
-     * @return array		An array with two arguments containing the query and its parameters.
+     * @return array An array with two arguments containing the query and its parameters.
      */
     private function buildQuery()
     {

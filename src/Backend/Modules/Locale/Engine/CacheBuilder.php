@@ -79,10 +79,8 @@ class CacheBuilder
         // init var
         $json = array();
         foreach ($this->types as $type) {
-
             // loop locale
             foreach ($this->locale as $i => $item) {
-
                 // types match
                 if ($item['type'] == $type) {
                     if ($application == 'Backend') {
