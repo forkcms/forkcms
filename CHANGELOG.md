@@ -1,3 +1,24 @@
+4.2.2 (2016-09-02)
+------------------
+
+Bugfixes:
+
+* Core: Fix ckeditor in bootstrap modal
+* Core: Add simple-bus/doctrine-orm-bridge to fix assetic errors 
+* Core: Bugfix phpcs failing module tests
+* Locale: Make sure the names of the translations start with a capital letter
+* ContentBlocks: Make sure that extra things added to the data of a content block aren't lost when updating
+* ContentBlocks: Remove the tightly coupling between authentication and content blocks
+* Twig: Show warning that cookies are required in the backend
+* Twig: Make sure the real data is loaded when using the template modifier parsewidget
+* Installer: Fix deselecting modules during installation
+* Installer: Make sure we can return in the installer
+
+Enhancements:
+
+* Core: Style fixes
+
+
 4.2.1 (2016-08-31)
 ------------------
 
