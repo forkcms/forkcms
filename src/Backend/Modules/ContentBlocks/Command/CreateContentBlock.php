@@ -45,6 +45,11 @@ final class CreateContentBlock
     public $contentBlock;
 
     /**
+     * @var int
+     */
+    public $userId;
+
+    /**
      * @param Locale|null $language
      */
     public function __construct(Locale $language = null)
