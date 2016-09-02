@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\ContentBlocks\Entity;
 
-use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
@@ -139,6 +138,7 @@ class ContentBlock
 
     /**
      * @param int $id
+     * @param int $userId
      * @param int $extraId The id of the module extra
      * @param string $locale
      * @param string $title
@@ -150,6 +150,7 @@ class ContentBlock
      */
     public static function create(
         $id,
+        $userId,
         $extraId,
         $locale,
         $title,
@@ -159,7 +160,7 @@ class ContentBlock
     ) {
         return new self(
             $id,
-            Authentication::getUser()->getUserId(),
+            $userId,
             $extraId,
             $template,
             $locale,
@@ -327,7 +328,16 @@ class ContentBlock
     {
         $this->status = ContentBlockStatus::archived();
 
-        return self::create($this->id, $this->extraId, $this->locale, $title, $text, $isHidden, $template);
+        return self::create(
+            $this->id,
+            $this->userId,
+            $this->extraId,
+            $this->locale,
+            $title,
+            $text,
+            $isHidden,
+            $template
+        );
     }
 
     public function archive()

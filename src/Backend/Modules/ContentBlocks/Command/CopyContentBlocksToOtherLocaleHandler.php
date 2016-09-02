@@ -37,6 +37,7 @@ final class CopyContentBlocksToOtherLocaleHandler
 
                 $otherLocaleContentBlock = ContentBlock::create(
                     $this->contentBlockRepository->getNextIdForLanguage($copyContentBlocksToOtherLocale->toLocale),
+                    $contentBlock->getUserId(),
                     $copyContentBlocksToOtherLocale->extraIdMap[$contentBlock->getExtraId()],
                     $copyContentBlocksToOtherLocale->toLocale,
                     $contentBlock->getTitle(),
