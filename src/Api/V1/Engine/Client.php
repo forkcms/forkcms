@@ -61,7 +61,6 @@ class Client extends Api
         $modules = BackendModel::getModules();
 
         foreach ($modules as &$module) {
-
             // class names of the API file are always based on the name o/t module
             $className = 'Backend\\Modules\\' . $module . '\\Engine\\Api';
             if ($module == 'Core') {
