@@ -71,7 +71,8 @@ class Import extends BackendBaseActionAdd
             if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
                 if ($fileFile->isAllowedExtension(
                     array('csv'),
-                    sprintf(BL::getError('ExtensionNotAllowed'), 'csv'))
+                    sprintf(BL::getError('ExtensionNotAllowed'), 'csv')
+                )
                 ) {
                     $csv = Csv::fileToArray($fileFile->getTempFileName());
                     if ($csv === false) {

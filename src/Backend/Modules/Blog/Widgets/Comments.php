@@ -20,7 +20,7 @@ class Comments extends BackendBaseWidget
     /**
      * The comments
      *
-     * @var	array
+     * @var array
      */
     private $comments;
 

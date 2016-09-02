@@ -446,21 +446,21 @@ class CMHelper
             $stats['clicks_total'] = 0;
 
             // add percentages to these stats
-            $stats['bounces_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(
-                                                                                 ($stats['bounces'] / $stats['recipients_total']) * 100
-                                                                             ) . '%';
-            $stats['recipients_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(
-                                                                                    ($stats['recipients'] / $stats['recipients_total']) * 100
-                                                                                ) . '%';
-            $stats['unique_opens_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(
-                                                                                      ($stats['unique_opens'] / $stats['recipients']) * 100
-                                                                                  ) . '%';
-            $stats['unopens_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(
-                                                                                 ($stats['unopens'] / $stats['recipients']) * 100
-                                                                             ) . '%';
-            $stats['clicks_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(
-                                                                                ($stats['clicks'] / $stats['recipients']) * 100
-                                                                            ) . '%';
+            $stats['bounces_percentage'] = ($stats['recipients'] == 0)
+                ? 0
+                : floor(($stats['bounces'] / $stats['recipients_total']) * 100) . '%';
+            $stats['recipients_percentage'] = ($stats['recipients'] == 0)
+                ? 0
+                : ceil(($stats['recipients'] / $stats['recipients_total']) * 100) . '%';
+            $stats['unique_opens_percentage'] = ($stats['recipients'] == 0)
+                ? 0
+                : ceil(($stats['unique_opens'] / $stats['recipients']) * 100) . '%';
+            $stats['unopens_percentage'] = ($stats['recipients'] == 0)
+                ? 0
+                : floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
+            $stats['clicks_percentage'] = ($stats['recipients'] == 0)
+                ? 0
+                : ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
 
             // fetch clicks or not?
             if ($fetchClicks) {

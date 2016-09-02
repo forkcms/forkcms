@@ -78,9 +78,8 @@ class Model
      */
     public static function deleteCategoryAllowed($id)
     {
-        if (
-            !BackendModel::get('fork.settings')->get('Faq', 'allow_multiple_categories', true) &&
-            self::getCategoryCount() == 1
+        if (!BackendModel::get('fork.settings')->get('Faq', 'allow_multiple_categories', true)
+            && self::getCategoryCount() == 1
         ) {
             return false;
         } else {

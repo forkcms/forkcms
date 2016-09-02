@@ -24,7 +24,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 class Edit extends BackendBaseActionEdit
 {
     /**
-     * @var	array
+     * @var array
      */
     private $feedback;
 

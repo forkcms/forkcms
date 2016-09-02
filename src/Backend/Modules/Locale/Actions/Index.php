@@ -205,7 +205,9 @@ class Index extends BackendBaseActionIndex
                     if (BackendAuthentication::isAllowedAction('Edit')) {
                         // add edit button
                         $dataGrid->addColumn(
-                            'edit', null, BL::lbl('Edit'),
+                            'edit',
+                            null,
+                            BL::lbl('Edit'),
                             BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }

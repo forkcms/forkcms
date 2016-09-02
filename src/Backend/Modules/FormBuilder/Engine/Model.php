@@ -86,19 +86,26 @@ class Model
         do {
             ++$id;
             $identifier = 'form' . $id;
-        }
+        } while (self::identifierExist($identifier));
 
-            // @todo refactor me...
-            // keep trying till it's unique
-        while ((int) BackendModel::getContainer()->get('database')->getVar(
+        return $identifier;
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return bool
+     */
+    private static function identifierExist($identifier)
+    {
+        return (int) BackendModel::getContainer()->get('database')
+            ->getVar(
                 'SELECT 1
                  FROM forms AS i
                  WHERE i.identifier = ?
                  LIMIT 1',
                 $identifier
-            ) > 0);
-
-        return $identifier;
+            ) > 0;
     }
 
     /**

@@ -39,7 +39,7 @@ class DetailModule extends BackendBaseActionIndex
     /**
      * List of warnings.
      *
-     * @var	array
+     * @var array
      */
     private $warnings = array();
 

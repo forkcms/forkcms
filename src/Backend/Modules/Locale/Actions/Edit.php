@@ -25,7 +25,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Filter variables
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 
@@ -50,10 +50,7 @@ class Edit extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
-        }
-
-        // no item found or the user is not god , throw an exceptions, because somebody is fucking with our URL
-        else {
+        } else {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
@@ -134,10 +131,7 @@ class Edit extends BackendBaseActionEdit
                     // first letter does not seem to be a capital one
                     if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
                         $txtName->setError(BL::err('InvalidName'));
-                    }
-
-                    // syntax is completely fine
-                    else {
+                    } else {
                         // check if exists
                         if (BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue(), $this->id)) {
                             $txtName->setError(BL::err('AlreadyExists'));

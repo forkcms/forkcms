@@ -23,7 +23,7 @@ class Delete extends BackendBaseActionDelete
     /**
      * Filter variables
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 
@@ -60,10 +60,7 @@ class Delete extends BackendBaseActionDelete
 
             // item was deleted, so redirect
             $this->redirect($redirectUrl);
-        }
-
-        // something went wrong
-        else {
+        } else {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }

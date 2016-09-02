@@ -25,7 +25,7 @@ class Index extends BackendBaseActionIndex
     /**
      * The dataGrids
      *
-     * @var	array
+     * @var array
      */
     private $dataGrids;
 

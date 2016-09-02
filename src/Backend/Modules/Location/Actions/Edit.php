@@ -65,10 +65,7 @@ class Edit extends BackendBaseActionEdit
 
             $this->parse();
             $this->display();
-        }
-
-        // no item found, throw an exception, because somebody is fucking with our URL
-        else {
+        } else {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
@@ -215,10 +212,7 @@ class Edit extends BackendBaseActionEdit
                     // define latitude and longitude
                     $item['lat'] = $coordinates['latitude'];
                     $item['lng'] = $coordinates['longitude'];
-                }
-
-                // old values are still good
-                else {
+                } else {
                     $item['lat'] = $this->record['lat'];
                     $item['lng'] = $this->record['lng'];
                 }
@@ -235,9 +229,7 @@ class Edit extends BackendBaseActionEdit
                 // redirect to the overview
                 if ($this->frm->getField('redirect')->getValue() == 'overview') {
                     $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['id']);
-                }
-                // redirect to the edit action
-                else {
+                } else {
                     $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&report=edited');
                 }
             }

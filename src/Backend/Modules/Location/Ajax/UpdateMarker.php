@@ -33,10 +33,7 @@ class UpdateMarker extends BackendBaseAJAXAction
         // validate id
         if ($itemId == 0) {
             $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
-        }
-
-        // validated
-        else {
+        } else {
             //update
             $updateData = array(
                 'id' => $itemId,

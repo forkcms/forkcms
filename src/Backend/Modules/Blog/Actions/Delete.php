@@ -22,7 +22,7 @@ class Delete extends BackendBaseActionDelete
     /**
      * The id of the category where is filtered on
      *
-     * @var	int
+     * @var int
      */
     private $categoryId;
 

@@ -25,14 +25,14 @@ class EditThemeTemplate extends BackendBaseActionEdit
     /**
      * The position's default extras.
      *
-     * @var	array
+     * @var array
      */
     private $extras = array();
 
     /**
      * The position's names.
      *
-     * @var	array
+     * @var array
      */
     private $names = array();
 

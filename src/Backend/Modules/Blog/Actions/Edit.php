@@ -32,14 +32,14 @@ class Edit extends BackendBaseActionEdit
     /**
      * The id of the category where is filtered on
      *
-     * @var	int
+     * @var int
      */
     private $categoryId;
 
     /**
      * DataGrid for the drafts
      *
-     * @var	BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgDrafts;
 
@@ -441,7 +441,6 @@ class Edit extends BackendBaseActionEdit
 
                 // active
                 if ($item['status'] == 'active') {
-
                     // edit search index
                     BackendSearchModel::saveIndex(
                         $this->getModule(),
