@@ -12,15 +12,13 @@ var jsBackend =
 
     // init, something like a constructor
     init: function () {
-        // variables
-        var $body = $('body');
-
         // get url and split into chunks
         var chunks = document.location.pathname.split('/');
 
         // set some properties
         jsBackend.debug = jsBackend.data.get('debug');
         jsBackend.current.language = chunks[2];
+        if (!navigator.cookieEnabled) $('#noCookies').addClass('active').css('display', 'block');
         if (typeof chunks[3] == 'undefined') jsBackend.current.module = null;
         else jsBackend.current.module = utils.string.ucfirst(utils.string.camelCase(chunks[3]));
         if (typeof chunks[4] == 'undefined') jsBackend.current.action = null;

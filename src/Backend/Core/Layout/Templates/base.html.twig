@@ -53,20 +53,6 @@
   {% include "/Layout/Templates/footer.html.twig" %}
 </div>
 
-<div id="messaging">
-  <noscript>
-    <div class="formMessage alert alert-danger alert-main">
-      <p>{{ 'err.JavascriptNotEnabled'|trans|ucfirst }}</p>
-    </div>
-  </noscript>
-  <div id="noCookies" class="formMessage alert alert-danger alert-main" style="display: none;">
-    <p>{{ 'err.CookiesNotEnabled'|trans|ucfirst }}</p>
-  </div>
-</div>
-<div id="ajaxSpinner" style="position: fixed; top: 10px; right: 10px; display: none;">
-  <img src="/src/Backend/Core/Layout/images/spinner.gif" width="16" height="16" alt="loading" />
-</div>
-
 <div class="hidden">
   <div class="modal fade jsConfirmation" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
