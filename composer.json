@@ -28,7 +28,8 @@
         "league/flysystem": "~1.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
-        "simple-bus/symfony-bridge": "^4.1"
+        "simple-bus/symfony-bridge": "^4.1",
+        "simple-bus/doctrine-orm-bridge": "^4.0"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
