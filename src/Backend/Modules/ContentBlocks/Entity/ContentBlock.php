@@ -299,17 +299,20 @@ class ContentBlock
 
         // update data for the extra
         // @TODO replace this with an implementation with doctrine
-        Model::updateExtra(
-            $this->extraId,
-            'data',
-            [
-                'id' => $this->id,
-                'extra_label' => $this->title,
-                'language' => (string) $this->locale,
-                'edit_url' => $editUrl,
-                'custom_template' => $this->template,
-            ]
-        );
+        $extras = Model::getExtras([$this->extraId]);
+        $extra = reset($extras);
+        $data = [
+            'id' => $this->id,
+            'language' => (string) $this->locale,
+            'edit_url' => $editUrl,
+        ];
+        if (isset($extra['data'])) {
+            $data = $data + (array) $extra['data'];
+        }
+        $data['custom_template'] = $this->template;
+        $data['extra_label'] = $this->title;
+
+        Model::updateExtra($this->extraId, 'data', $data);
     }
 
     /**
