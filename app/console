@@ -40,5 +40,5 @@ $backend = new BackendInit($kernel);
 $backend->initialize('Console');
 
 $application = new Application($kernel);
-$application->add(new \Common\Command\ImportLocaleCommand());
+$application->add(new \Console\Locale\ImportLocaleCommand());
 $application->run($input);
