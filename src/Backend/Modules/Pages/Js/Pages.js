@@ -708,6 +708,11 @@ jsBackend.pages.extras =
 		html += '</div>';
 		html += '</div>';
 
+        html += '<div class="form-group">';
+        html += '<label for="alt' + key + '">Alt attribute</label>';
+        html += '<input class="form-control" type="text" id="alt' + key + '" value="' + alt +  '" />';
+        html += '</div>';
+
 		html += '<div class="checkbox">';
 		html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
 		html += '</div>';
@@ -863,9 +868,11 @@ jsBackend.pages.extras =
 
 		if ($element.is('[data-ft-type="image"]')) {
 			var $img = $placeholder.find('#user-template-image-' + key + ' img');
+            var alt = $placeholder.find('#alt' + key).val();
 			var $visible = $placeholder.find('#user-template-image-' + key + ' input[type=checkbox]');
 
 			$element.attr('src', $img.attr('src'));
+            $element.attr('alt', alt);
 			if ($visible.is(':checked')) {
 				$element.attr('style', 'display: block;');
 			} else {
