@@ -143,7 +143,7 @@ class Detail extends FrontendBaseBlock
     {
         $this->breadcrumb->addElement($this->mailing['name']);
         $this->header->setPageTitle($this->mailing['name']);
-        $this->tpl->assign('hideContentTitle', true);
+        $this->tpl->assignGlobal('hideContentTitle', true);
         $this->tpl->assign('body', $this->getEmailBody());
     }
 }

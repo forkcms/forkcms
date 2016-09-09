@@ -78,6 +78,15 @@ abstract class BaseTwigTemplate extends TwigEngine
     }
 
     /**
+     * @param string $key
+     * @param mixed $value
+     */
+    public function assignGlobal($key, $value)
+    {
+        $this->environment->addGlobal($key, $value);
+    }
+
+    /**
      * Assign an entire array with keys & values.
      *
      * @param array $variables This array with keys and values will be used to search and replace in the template file.
