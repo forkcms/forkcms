@@ -6,11 +6,17 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <h1>
+    {% if page.id == 1 %}
+      <h1>
+        <a href="/" class="navbar-brand">
+          {{ siteTitle }}
+        </a>
+      </h1>
+    {% else %}
       <a href="/" class="navbar-brand">
         {{ siteTitle }}
       </a>
-    </h1>
+    {% endif %}
   </div>
 
   <div class="collapse navbar-collapse navbar-page-collapse">
