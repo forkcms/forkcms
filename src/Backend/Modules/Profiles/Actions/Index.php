@@ -144,7 +144,8 @@ class Index extends BackendBaseActionIndex
 
         // add the mass action controls
         $this->dgProfiles->setMassActionCheckboxes('check', '[id]');
-        $ddmMassAction = new \SpoonFormDropdown('action',
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
             array(
                 'addToGroup' => BL::getLabel('AddToGroup'),
                 'delete' => BL::getLabel('Delete'),

@@ -25,7 +25,7 @@ class ThemeTemplates extends BackendBaseActionEdit
     /**
      * All available themes
      *
-     * @var	array
+     * @var array
      */
     private $availableThemes;
 
@@ -37,7 +37,7 @@ class ThemeTemplates extends BackendBaseActionEdit
     /**
      * The current selected theme
      *
-     * @var	string
+     * @var string
      */
     private $selectedTheme;
 

@@ -77,9 +77,8 @@ class Index extends BackendBaseActionIndex
             $pathName = BACKEND_MODULES_PATH . '/' . $module;
 
             // you have sufficient rights?
-            if (
-                BackendAuthentication::isAllowedModule($module) &&
-                $filesystem->exists($pathName . '/Widgets')
+            if (BackendAuthentication::isAllowedModule($module)
+                && $filesystem->exists($pathName . '/Widgets')
             ) {
                 $finder = new Finder();
                 $finder->name('*.php');

@@ -71,7 +71,6 @@ class Edit extends BackendBaseActionEdit
 
         // loop modules
         foreach ($modules as $module) {
-
             // build class name
             $className = 'Backend\\Modules\\' . $module . '\\Engine\\Model';
             if ($module == 'Core') {

@@ -16,6 +16,10 @@
 .panel-body {
   padding: $panel-body-padding;
   @include clearfix;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
 
 // Optional heading

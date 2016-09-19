@@ -258,4 +258,33 @@ class Widget extends FrontendBaseObject
     {
         $this->module = (string) $module;
     }
+
+    /**
+     * @param KernelInterface $kernel
+     * @param string $module The module to load.
+     * @param string $action The action to load.
+     * @param int|null $id This is not the modules_extra id but the id of the item itself
+     *
+     * @return string|null if we have data it is still serialised since it will be unserialized in the constructor
+     */
+    public static function getForId(KernelInterface $kernel, $module, $action, $id = null)
+    {
+        $query = 'SELECT data FROM modules_extras WHERE type = :widget AND module = :module AND action = :action';
+        $parameters = [
+            'widget' => 'widget',
+            'module' => $module,
+            'action' => $action,
+        ];
+        if (is_numeric($id)) {
+            $query .= ' AND data LIKE :data';
+            $parameters['data'] = '%s:2:"id";i:' . (int) $id . ';%';
+        }
+
+        return new self(
+            $kernel,
+            $module,
+            $action,
+            $kernel->getContainer()->get('database')->getVar($query, $parameters)
+        );
+    }
 }

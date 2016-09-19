@@ -25,14 +25,14 @@ class ResetPassword extends BackendBaseActionAdd
     /**
      * User email
      *
-     * @var	$email
+     * @var $email
      */
     private $email;
 
     /**
      * Reset password key
      *
-     * @var	$key
+     * @var $key
      */
     private $key;
 

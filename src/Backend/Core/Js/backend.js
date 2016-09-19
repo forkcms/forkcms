@@ -12,15 +12,13 @@ var jsBackend =
 
     // init, something like a constructor
     init: function () {
-        // variables
-        var $body = $('body');
-
         // get url and split into chunks
         var chunks = document.location.pathname.split('/');
 
         // set some properties
         jsBackend.debug = jsBackend.data.get('debug');
         jsBackend.current.language = chunks[2];
+        if (!navigator.cookieEnabled) $('#noCookies').addClass('active').css('display', 'block');
         if (typeof chunks[3] == 'undefined') jsBackend.current.module = null;
         else jsBackend.current.module = utils.string.ucfirst(utils.string.camelCase(chunks[3]));
         if (typeof chunks[4] == 'undefined') jsBackend.current.action = null;
@@ -380,6 +378,8 @@ jsBackend.ckeditor =
             // load the editors
             jsBackend.ckeditor.load();
         }
+
+        jsBackend.ckeditor.fallBackBootstrapModals();
     },
 
     destroy: function () {
@@ -593,6 +593,18 @@ jsBackend.ckeditor =
 
         // force the content check
         jsBackend.ckeditor.checkContent({editor: evt.editor, forced: true});
+    },
+
+    fallBackBootstrapModals: function() {
+        $.fn.modal.Constructor.prototype.enforceFocus = function() {
+            var modal_this;
+            modal_this = this;
+            $(document).on('focusin.modal', function(e) {
+                if (modal_this.$element[0] !== e.target && !modal_this.$element.has(e.target).length && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select') && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')) {
+                    modal_this.$element.focus();
+                }
+            });
+        };
     }
 };
 

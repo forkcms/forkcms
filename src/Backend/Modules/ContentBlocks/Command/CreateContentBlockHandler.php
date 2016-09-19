@@ -28,6 +28,7 @@ final class CreateContentBlockHandler
     {
         $createContentBlock->contentBlock = ContentBlock::create(
             $this->contentBlockRepository->getNextIdForLanguage($createContentBlock->language),
+            $createContentBlock->userId,
             $this->getNewExtraId(),
             $createContentBlock->language,
             $createContentBlock->title,

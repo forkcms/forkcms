@@ -199,15 +199,12 @@ class Model
     {
         $finder = new Finder();
         $filesystem = new Filesystem();
-        foreach (
-            $finder->files()
-                ->name('*.php')
-                ->name('*.js')
-                ->in(BACKEND_CACHE_PATH . '/Locale')
-                ->in(FRONTEND_CACHE_PATH . '/Navigation')
-                ->in(FRONTEND_CACHE_PATH . '/Locale')
-            as $file
-        ) {
+        foreach ($finder->files()
+                     ->name('*.php')
+                     ->name('*.js')
+                     ->in(BACKEND_CACHE_PATH . '/Locale')
+                     ->in(FRONTEND_CACHE_PATH . '/Navigation')
+                     ->in(FRONTEND_CACHE_PATH . '/Locale') as $file) {
             $filesystem->remove($file->getRealPath());
         }
         $filesystem->remove(Navigation::getCacheDirectory() . 'navigation.php');
@@ -624,9 +621,8 @@ class Model
             // any extras?
             if (isset($row['data']['default_extras'])) {
                 foreach ($row['data']['default_extras'] as $value) {
-                    if (
-                        \SpoonFilter::isInteger($value) &&
-                        isset($extras[$value]) && $extras[$value]['type'] == 'block'
+                    if (\SpoonFilter::isInteger($value)
+                        && isset($extras[$value]) && $extras[$value]['type'] == 'block'
                     ) {
                         $row['has_block'] = true;
                     }
@@ -668,8 +664,11 @@ class Model
 
         $finder = new Finder();
         foreach ($finder->directories()->in(FRONTEND_PATH . '/Themes')->depth(0) as $directory) {
+            $pathInfoXml = PATH_WWW . '/src/Frontend/Themes/' . $directory->getBasename() . '/info.xml';
+            if (!is_file($pathInfoXml)) {
+                throw new Exception('info.xml is missing for the theme ' . $directory->getBasename());
+            }
             try {
-                $pathInfoXml = PATH_WWW . '/src/Frontend/Themes/' . $directory->getBasename() . '/info.xml';
                 $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
                 $information = self::processThemeXml($infoXml);
                 if (!$information) {

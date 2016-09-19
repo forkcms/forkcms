@@ -327,10 +327,13 @@ class TemplateModifiers extends BaseTwigModifiers
      */
     public static function parseWidget($module, $action, $id = null)
     {
-        $data = $id !== null ? serialize(array('id' => $id)) : null;
-
         // create new widget instance and return parsed content
-        $extra = new FrontendBlockWidget(Model::get('kernel'), $module, $action, $data);
+        $extra = FrontendBlockWidget::getForId(
+            Model::get('kernel'),
+            $module,
+            $action,
+            $id
+        );
 
         // set parseWidget because we will need it to skip setting headers in the display
         Model::getContainer()->set('parseWidget', true);

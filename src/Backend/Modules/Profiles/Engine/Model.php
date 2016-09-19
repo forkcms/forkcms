@@ -31,7 +31,7 @@ class Model
     /**
      * Browse groups for datagrid.
      *
-     * @var    string
+     * @var string
      */
     const QRY_DATAGRID_BROWSE_PROFILE_GROUPS =
         'SELECT gr.id, g.name AS group_name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on

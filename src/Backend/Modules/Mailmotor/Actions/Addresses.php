@@ -28,7 +28,7 @@ class Addresses extends BackendBaseActionIndex
     /**
      * Filter variables
      *
-     * @var    array
+     * @var array
      */
     private $filter;
 
@@ -40,14 +40,14 @@ class Addresses extends BackendBaseActionIndex
     /**
      * The passed group record
      *
-     * @var    array
+     * @var array
      */
     private $group;
 
     /**
      * Builds the query for this datagrid
      *
-     * @return array        An array with two arguments containing the query and its parameters.
+     * @return array An array with two arguments containing the query and its parameters.
      */
     private function buildQuery()
     {
@@ -181,10 +181,13 @@ class Addresses extends BackendBaseActionIndex
         $this->dataGrid->setColumnsSequence('check');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array(
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array(
                 'export' => BL::lbl('Export'),
                 'delete' => BL::lbl('Delete'),
-            ), 'delete',
+            ),
+            'delete',
             false,
             'form-control',
             'form-control danger'

@@ -70,9 +70,9 @@ class Model
     public static function existsTag($tag)
     {
         return (BackendModel::getContainer()->get('database')->getVar(
-                    'SELECT i.tag FROM tags AS i  WHERE i.tag = ?',
-                    array((string) $tag)
-                ) != '');
+            'SELECT i.tag FROM tags AS i  WHERE i.tag = ?',
+            array((string) $tag)
+        ) != '');
     }
 
     /**

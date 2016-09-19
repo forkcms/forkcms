@@ -342,10 +342,10 @@ class Model
                 'extra_label' => $item['title'],
                 'language' => $item['language'],
                 'edit_url' => BackendModel::createURLForAction(
-                        'Edit',
-                        'ContentBlocks',
-                        $item['language']
-                    ) . '&id=' . $item['id'],
+                    'Edit',
+                    'ContentBlocks',
+                    $item['language']
+                ) . '&id=' . $item['id'],
                 'custom_template' => $item['template'],
             )
         );

@@ -444,8 +444,9 @@ class Index extends BackendBaseActionIndex
      */
     public static function setCampaignLink($id, $name)
     {
-        return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction(
-                'Index'
-            ) . '&amp;campaign=' . $id . '">' . $name . '</a>' : \SpoonFilter::ucfirst(BL::lbl('NoCampaign'));
+        return !empty($name)
+            ? '<a href="' . SITE_URL . BackendModel::createURLForAction('Index')
+              . '&amp;campaign=' . $id . '">' . $name . '</a>'
+            : \SpoonFilter::ucfirst(BL::lbl('NoCampaign'));
     }
 }
