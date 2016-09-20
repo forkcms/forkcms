@@ -623,13 +623,12 @@ class DataGrid extends \SpoonDataGrid
      */
     private function decideIcon($name)
     {
-        $icon = null;
         $name = mb_strtolower($name);
 
-        if (isset($this->mapIcons[$name])) {
-            $icon = $this->mapIcons[$name];
+        if (!isset($this->mapIcons[$name])) {
+            return null;
         }
 
-        return $icon;
+        return $this->mapIcons[$name];
     }
 }
