@@ -79,12 +79,34 @@ jsBackend.FormBuilder.Fields =
             jsBackend.FormBuilder.Fields.defaultErrorMessages = defaultErrorMessages;
         }
 
+        // submit detection handler for the main form and modal field form
+        jsBackend.FormBuilder.Fields.bindFromSubmit();
+
         // bind
         jsBackend.FormBuilder.Fields.bindDialogs();
         jsBackend.FormBuilder.Fields.bindValidation();
         jsBackend.FormBuilder.Fields.bindEdit();
         jsBackend.FormBuilder.Fields.bindDelete();
         jsBackend.FormBuilder.Fields.bindDragAndDrop();
+    },
+
+    /**
+     * Bind the form submit action
+     */
+    bindFromSubmit: function () {
+        $("#edit").submit(function (e) {
+            // check if a modal window is already open
+            $('.jsFieldDialog').each(function () {
+                // if a modal window is open we prevent the event from propagating
+                if ($(this).css('display') != 'none') {
+                    e.preventDefault();
+                    $(this).find('.jsFieldDialogSubmit').trigger('click');
+                    return false;
+                }
+            });
+            // continue processing with the default browser submit handler
+            return true;
+        });
     },
 
     /**
