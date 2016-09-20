@@ -177,7 +177,7 @@ class Form extends FrontendBaseWidget
                     }
 
                     // create element
-                    $ddm = $this->frm->addDropdown($item['name'], $values, $defaultIndex);
+                    $ddm = $this->frm->addDropdown($item['name'], $values, $defaultIndex, false, $item['classname']);
 
                     // empty default element
                     $ddm->setDefaultElement('');
@@ -191,7 +191,7 @@ class Form extends FrontendBaseWidget
                     $item['html'] = $ddm->parse();
                 } elseif ($field['type'] == 'radiobutton') {
                     // create element
-                    $rbt = $this->frm->addRadiobutton($item['name'], $values, $defaultValues);
+                    $rbt = $this->frm->addRadiobutton($item['name'], $values, $defaultValues, $item['classname']);
 
                     // get content
                     $item['html'] = $rbt->parse();
@@ -205,13 +205,13 @@ class Form extends FrontendBaseWidget
                     }
 
                     // create element
-                    $chk = $this->frm->addMultiCheckbox($item['name'], $newValues, $defaultValues);
+                    $chk = $this->frm->addMultiCheckbox($item['name'], $newValues, $defaultValues, $item['classname']);
 
                     // get content
                     $item['html'] = $chk->parse();
                 } elseif ($field['type'] == 'textbox') {
                     // create element
-                    $txt = $this->frm->addText($item['name'], $defaultValues);
+                    $txt = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname']);
 
                     // add required attribute
                     if ($item['required']) {
@@ -252,7 +252,7 @@ class Form extends FrontendBaseWidget
                         // Convert the php date format to a jquery date format
                         $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery($this->get('fork.settings')->get('Core', 'date_format_short'));
 
-                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield')->setAttributes(
+                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield ' . $item['classname'])->setAttributes(
                             array(
                                 'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
@@ -261,7 +261,7 @@ class Form extends FrontendBaseWidget
                             )
                         );
                     } else {
-                        $datetime = $this->frm->addText($item['name'], $defaultValues)->setAttributes(array('type' => 'time'));
+                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname'])->setAttributes(array('type' => 'time'));
                     }
 
                     // add required attribute
@@ -273,7 +273,7 @@ class Form extends FrontendBaseWidget
                     $item['html'] = $datetime->parse();
                 } elseif ($field['type'] == 'textarea') {
                     // create element
-                    $txt = $this->frm->addTextarea($item['name'], $defaultValues);
+                    $txt = $this->frm->addTextarea($item['name'], $defaultValues, $item['classname']);
                     $txt->setAttribute('cols', 30);
 
                     // add required attribute
