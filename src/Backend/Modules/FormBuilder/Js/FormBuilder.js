@@ -99,13 +99,10 @@ jsBackend.FormBuilder.Fields =
             $('.jsFieldDialog').each(function () {
                 // if a modal window is open we prevent the event from propagating
                 if ($(this).css('display') != 'none') {
-                    e.preventDefault();
                     $(this).find('.jsFieldDialogSubmit').trigger('click');
                     return false;
                 }
             });
-            // continue processing with the default browser submit handler
-            return true;
         });
     },
 
