@@ -65,6 +65,11 @@ jsBackend.FormBuilder.Fields =
     paramsSequence: '',
 
     /**
+     * Is set to true while an edit AJAX request has been sent to server
+     */
+    lockEditRequest: false,
+
+    /**
      * Initialization
      */
     init: function () {
@@ -329,6 +334,14 @@ jsBackend.FormBuilder.Fields =
             // prevent default
             e.preventDefault();
 
+            // checking if a request has been sent to load field that needs to be edited
+            if (jsBackend.FormBuilder.Fields.lockEditRequest) {
+                return;
+            }
+
+            // else we lock editing and continue processing the request
+            jsBackend.FormBuilder.Fields.lockEditRequest = true;
+
             // get id
             var id = $(this).attr('rel');
 
@@ -570,6 +583,9 @@ jsBackend.FormBuilder.Fields =
                         if (data.code != 200 && jsBackend.debug) {
                             alert(data.message);
                         }
+
+                        // unlocks editing whatever server response is
+                        jsBackend.FormBuilder.Fields.lockEditRequest = false;
                     }
                 });
             }
