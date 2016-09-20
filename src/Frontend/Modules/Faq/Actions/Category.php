@@ -35,7 +35,7 @@ class Category extends FrontendBaseBlock
     {
         parent::execute();
 
-        $this->tpl->assign('hideContentTitle', true);
+        $this->tpl->assignGlobal('hideContentTitle', true);
         $this->getData();
         $this->loadTemplate();
         $this->parse();

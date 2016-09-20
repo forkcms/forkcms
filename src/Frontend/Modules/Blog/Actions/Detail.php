@@ -57,7 +57,7 @@ class Detail extends FrontendBaseBlock
     public function execute()
     {
         parent::execute();
-        $this->tpl->assign('hideContentTitle', true);
+        $this->tpl->assignGlobal('hideContentTitle', true);
         $this->loadTemplate();
         $this->getData();
         $this->loadForm();

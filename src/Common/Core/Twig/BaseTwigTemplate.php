@@ -2,7 +2,9 @@
 
 namespace Common\Core\Twig;
 
+use Common\ModulesSettings;
 use Symfony\Bundle\TwigBundle\TwigEngine;
+use Twig_Environment;
 
 /*
  * This file is part of Fork CMS.
@@ -53,7 +55,7 @@ abstract class BaseTwigTemplate extends TwigEngine
     protected $variables = array();
 
     /**
-     * @var Fork settings
+     * @var ModulesSettings
      */
     protected $forkSettings;
 
@@ -73,6 +75,15 @@ abstract class BaseTwigTemplate extends TwigEngine
 
         // in all other cases
         $this->variables[$key] = $values;
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     */
+    public function assignGlobal($key, $value)
+    {
+        $this->environment->addGlobal($key, $value);
     }
 
     /**
@@ -121,7 +132,7 @@ abstract class BaseTwigTemplate extends TwigEngine
     /** @todo Refactor out constants #1106
      * We need to deprecate this asap
      *
-     * @param $twig
+     * @param Twig_Environment $twig
      */
     protected function startGlobals(&$twig)
     {
@@ -141,9 +152,6 @@ abstract class BaseTwigTemplate extends TwigEngine
 
         // get all defined constants
         $constants = get_defined_constants(true);
-
-        // init var
-        $realConstants = array();
 
         // remove protected constants aka constants that should not be used in the template
         foreach ($constants['user'] as $key => $value) {
