@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "02b14f95307fa8e23ffc9cd43f0c7f2e",
-    "content-hash": "f6eac660f9848c87939c7e77c5588e19",
+    "hash": "8c7ae885e4c7ed4c751fb7768629fc9c",
+    "content-hash": "349b6c93dfaac4b1255f9077a703bb4e",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1277,28 +1277,29 @@
         },
         {
             "name": "matthiasmullie/scrapbook",
-            "version": "1.0.7",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/scrapbook.git",
-                "reference": "99de55d603f5234d825d7a03ca09670ef3573109"
+                "reference": "6b739a845321a17c4a02128ddf428a1c2eea89b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/99de55d603f5234d825d7a03ca09670ef3573109",
-                "reference": "99de55d603f5234d825d7a03ca09670ef3573109",
+                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/6b739a845321a17c4a02128ddf428a1c2eea89b6",
+                "reference": "6b739a845321a17c4a02128ddf428a1c2eea89b6",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
+                "php": "^5.3|^7.0",
                 "psr/cache": "~1.0"
             },
             "provide": {
                 "psr/cache-implementation": "~1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8",
-                "satooshi/php-coveralls": "dev-master"
+                "cache/integration-tests": "dev-master",
+                "fabpot/php-cs-fixer": "~1.0",
+                "phpunit/phpunit": "~4.8"
             },
             "suggest": {
                 "ext-apc": ">=3.1.1",
@@ -1357,7 +1358,7 @@
                 "transactional",
                 "value"
             ],
-            "time": "2015-12-23 09:18:58"
+            "time": "2016-05-09 18:41:33"
         },
         {
             "name": "monolog/monolog",
