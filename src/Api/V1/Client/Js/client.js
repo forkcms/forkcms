@@ -19,7 +19,7 @@ jsClient =
 	},
 
 	eoo: true
-}
+};
 
 jsClient.controls =
 {
@@ -70,7 +70,7 @@ jsClient.controls =
 	},
 
 	eoo: true
-}
+};
 
 jsClient.parameters =
 {
@@ -80,12 +80,12 @@ jsClient.parameters =
 		var method = object.parents('.method').find('a[rel]').attr('rel');
 
 		// loop all the text fields in the active form
-		object.parents('form').find('.input-text').each(function(index, item)
+		object.parents('form').find('.input-text').each(function(index)
 		{
 			var self = $(this);
 
 			// prepare for the http query by setting 'name=value'
-			parameters.push(self.attr('name') +'='+ self.attr('value'));
+			parameters.push(self.attr('name') +'='+ self.val());
 		});
 
 		parameters.push('method='+ method);
@@ -97,14 +97,14 @@ jsClient.parameters =
 	},
 
 	eoo: true
-}
+};
 
 jsClient.ajax =
 {
 	init: function()
 	{
 		// a call was initialized
-		$('.submit').live('click', jsClient.ajax.submitFormHandler);
+		$('.submit').click(jsClient.ajax.submitFormHandler);
 	},
 
 	submitFormHandler: function(e)
@@ -160,6 +160,6 @@ jsClient.ajax =
 	},
 
 	eoo: true
-}
+};
 
 $(document).ready(jsClient.init);
