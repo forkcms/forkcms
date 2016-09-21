@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8c7ae885e4c7ed4c751fb7768629fc9c",
-    "content-hash": "349b6c93dfaac4b1255f9077a703bb4e",
+    "hash": "89d0c62b158e605b80663009c5a92952",
+    "content-hash": "ce4b30ef7327705aa37b7ad7477dd883",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1277,16 +1277,16 @@
         },
         {
             "name": "matthiasmullie/scrapbook",
-            "version": "1.2.2",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/scrapbook.git",
-                "reference": "6b739a845321a17c4a02128ddf428a1c2eea89b6"
+                "reference": "00f658d024244b001e635fc868fa3882d6e11090"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/6b739a845321a17c4a02128ddf428a1c2eea89b6",
-                "reference": "6b739a845321a17c4a02128ddf428a1c2eea89b6",
+                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/00f658d024244b001e635fc868fa3882d6e11090",
+                "reference": "00f658d024244b001e635fc868fa3882d6e11090",
                 "shasum": ""
             },
             "require": {
@@ -1294,7 +1294,8 @@
                 "psr/cache": "~1.0"
             },
             "provide": {
-                "psr/cache-implementation": "~1.0"
+                "psr/cache-implementation": "~1.0",
+                "psr/simplecache-implementation": "~1.0"
             },
             "require-dev": {
                 "cache/integration-tests": "dev-master",
@@ -1312,7 +1313,8 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "MatthiasMullie\\Scrapbook\\": "src/"
+                    "MatthiasMullie\\Scrapbook\\": "src/",
+                    "Psr\\SimpleCache\\": "src/Psr16/psr-simplecache/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1345,8 +1347,11 @@
                 "mysql",
                 "postgresql",
                 "protection",
+                "psr-16",
                 "psr-6",
                 "psr-cache",
+                "psr-simplecache",
+                "psr16",
                 "psr6",
                 "redis",
                 "rollback",
@@ -1358,7 +1363,7 @@
                 "transactional",
                 "value"
             ],
-            "time": "2016-05-09 18:41:33"
+            "time": "2016-09-20 16:00:05"
         },
         {
             "name": "monolog/monolog",
