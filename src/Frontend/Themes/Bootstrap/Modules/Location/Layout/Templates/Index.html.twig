@@ -3,11 +3,10 @@
   - {{ locationItems }}: contains data about all locations
   - {{ locationSettings }}: contains this module's settings
 #}
-
 {% if locationItems %}
-  <div id="locationIndex" class="row location">
+  <div id="locationIndex" class="location">
     {# @remark: do not remove the parseMap-class, it is used by JS #}
-    <div id="map" class="parseMap col-xs-12 well" style="height: {{ locationSettings.height }}px;">
+    <div id="map" class="parseMap" style="height: {{ locationSettings.height }}px;">
       <span class="hideText">{{ 'lbl.Loading'|trans|capitalize }}</span>
     </div>
 
