@@ -10,7 +10,7 @@ parameters:
 
     fork.debug_email:       <debug-email>
     fork.debug_message:     'Internal error.'
-    fork.version:           '4.2.2'
+    fork.version:           '4.2.3'
 
     site.protocol:          <site-protocol>
     site.domain:            <site-domain>
