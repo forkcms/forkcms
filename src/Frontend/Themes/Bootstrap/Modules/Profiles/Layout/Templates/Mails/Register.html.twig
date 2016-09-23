@@ -1,6 +1,6 @@
 <html>
   <head>
-    {* do NOT remove the UTF-8 part *}
+    {# do NOT remove the UTF-8 part #}
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>{{ 'msg.RegisterSubject'|trans }}</title>
     <style>
@@ -45,10 +45,10 @@
                   <tr>
                     <td width="24"></td>
                     <td width="532">
-                      <h2>{{ 'msg.RegisterSubject'|raw }}</h2>
-                      <p>{{ 'msg.RegisterSalutation'|raw }}</p>
-                      <p>{{ 'msg.RegisterBody'|format(SITE_URL, activationUrl) }}</p>
-                      <p>{{ 'msg.RegisterClosure'|raw }}</p>
+                      <h2>{{ 'msg.RegisterSubject'|trans|raw }}</h2>
+                      <p>{{ 'msg.RegisterSalutation'|trans|raw }}</p>
+                      <p>{{ 'msg.RegisterBody'|trans|format(SITE_URL, activationUrl)|raw }}</p>
+                      <p>{{ 'msg.RegisterClosure'|trans|raw }}</p>
                     </td>
                     <td width="24"></td>
                   </tr>
