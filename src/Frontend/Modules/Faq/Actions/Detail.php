@@ -59,7 +59,7 @@ class Detail extends FrontendBaseBlock
         parent::execute();
 
         // hide contentTitle, in the template the title is wrapped with an inverse-option
-        $this->tpl->assign('hideContentTitle', true);
+        $this->tpl->assignGlobal('hideContentTitle', true);
 
         $this->loadTemplate();
         $this->getData();

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "02b14f95307fa8e23ffc9cd43f0c7f2e",
-    "content-hash": "f6eac660f9848c87939c7e77c5588e19",
+    "hash": "89d0c62b158e605b80663009c5a92952",
+    "content-hash": "ce4b30ef7327705aa37b7ad7477dd883",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1310,28 +1310,30 @@
         },
         {
             "name": "matthiasmullie/scrapbook",
-            "version": "1.0.7",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/scrapbook.git",
-                "reference": "99de55d603f5234d825d7a03ca09670ef3573109"
+                "reference": "00f658d024244b001e635fc868fa3882d6e11090"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/99de55d603f5234d825d7a03ca09670ef3573109",
-                "reference": "99de55d603f5234d825d7a03ca09670ef3573109",
+                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/00f658d024244b001e635fc868fa3882d6e11090",
+                "reference": "00f658d024244b001e635fc868fa3882d6e11090",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
+                "php": "^5.3|^7.0",
                 "psr/cache": "~1.0"
             },
             "provide": {
-                "psr/cache-implementation": "~1.0"
+                "psr/cache-implementation": "~1.0",
+                "psr/simplecache-implementation": "~1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8",
-                "satooshi/php-coveralls": "dev-master"
+                "cache/integration-tests": "dev-master",
+                "fabpot/php-cs-fixer": "~1.0",
+                "phpunit/phpunit": "~4.8"
             },
             "suggest": {
                 "ext-apc": ">=3.1.1",
@@ -1344,7 +1346,8 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "MatthiasMullie\\Scrapbook\\": "src/"
+                    "MatthiasMullie\\Scrapbook\\": "src/",
+                    "Psr\\SimpleCache\\": "src/Psr16/psr-simplecache/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1377,8 +1380,11 @@
                 "mysql",
                 "postgresql",
                 "protection",
+                "psr-16",
                 "psr-6",
                 "psr-cache",
+                "psr-simplecache",
+                "psr16",
                 "psr6",
                 "redis",
                 "rollback",
@@ -1390,7 +1396,7 @@
                 "transactional",
                 "value"
             ],
-            "time": "2015-12-23 09:18:58"
+            "time": "2016-09-20 16:00:05"
         },
         {
             "name": "monolog/monolog",

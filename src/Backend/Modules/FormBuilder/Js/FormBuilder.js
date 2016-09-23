@@ -65,6 +65,11 @@ jsBackend.FormBuilder.Fields =
     paramsSequence: '',
 
     /**
+     * Is set to true while an edit AJAX request has been sent to server
+     */
+    lockEditRequest: false,
+
+    /**
      * Initialization
      */
     init: function () {
@@ -79,12 +84,31 @@ jsBackend.FormBuilder.Fields =
             jsBackend.FormBuilder.Fields.defaultErrorMessages = defaultErrorMessages;
         }
 
+        // submit detection handler for the main form and modal field form
+        jsBackend.FormBuilder.Fields.bindFromSubmit();
+
         // bind
         jsBackend.FormBuilder.Fields.bindDialogs();
         jsBackend.FormBuilder.Fields.bindValidation();
         jsBackend.FormBuilder.Fields.bindEdit();
         jsBackend.FormBuilder.Fields.bindDelete();
         jsBackend.FormBuilder.Fields.bindDragAndDrop();
+    },
+
+    /**
+     * Bind the form submit action
+     */
+    bindFromSubmit: function () {
+        $("#edit").submit(function (e) {
+            // check if a modal window is already open
+            $('.jsFieldDialog').each(function () {
+                // if a modal window is open we prevent the event from propagating
+                if ($(this).css('display') != 'none') {
+                    $(this).find('.jsFieldDialogSubmit').trigger('click');
+                    return false;
+                }
+            });
+        });
     },
 
     /**
@@ -328,6 +352,14 @@ jsBackend.FormBuilder.Fields =
         $(document).on('click', '.jsFieldEdit', function (e) {
             // prevent default
             e.preventDefault();
+
+            // checking if a request has been sent to load field that needs to be edited
+            if (jsBackend.FormBuilder.Fields.lockEditRequest) {
+                return;
+            }
+
+            // else we lock editing and continue processing the request
+            jsBackend.FormBuilder.Fields.lockEditRequest = true;
 
             // get id
             var id = $(this).attr('rel');
@@ -576,6 +608,9 @@ jsBackend.FormBuilder.Fields =
                         if (data.code != 200 && jsBackend.debug) {
                             alert(data.message);
                         }
+
+                        // unlocks editing whatever server response is
+                        jsBackend.FormBuilder.Fields.lockEditRequest = false;
                     }
                 });
             }

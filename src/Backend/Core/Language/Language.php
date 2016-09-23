@@ -97,6 +97,11 @@ class Language
 
     public static function getCurrentModule()
     {
+        // Needed to make it possible to use the backend language in the console.
+        if (defined('APPLICATION') && APPLICATION === 'Console') {
+            return 'Core';
+        }
+
         if (Model::getContainer()->has('url')) {
             return Model::get('url')->getModule();
         }
@@ -319,7 +324,11 @@ class Language
             BackendLocaleModel::buildCache('en', APPLICATION);
         }
         if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $language . '.json')) {
-            BackendLocaleModel::buildCache($language, APPLICATION);
+            // if you use the language in the console act like it is in the backend
+            BackendLocaleModel::buildCache(
+                $language,
+                (defined('APPLICATION') && APPLICATION === 'Console') ? 'Backend' : APPLICATION
+            );
         }
 
         // store
@@ -327,7 +336,10 @@ class Language
 
         // attempt to set a cookie
         try {
-            CommonCookie::set('interface_language', $language);
+            // Needed to make it possible to use the backend language in the console.
+            if (defined('APPLICATION') && APPLICATION !== 'Console') {
+                CommonCookie::set('interface_language', $language);
+            }
         } catch (\SpoonCookieException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }

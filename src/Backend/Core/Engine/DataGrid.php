@@ -113,11 +113,14 @@ class DataGrid extends \SpoonDataGrid
         $image = null,
         $sequence = null
     ) {
+        // make sure we use a lowercased column in all checks
+        $lowercasedName = mb_strtolower($name);
+
         $icon = $this->decideIcon($name);
 
         // known actions that should have a button
         if (in_array(
-            $name,
+            $lowercasedName,
             array('add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install')
         )
         ) {
@@ -132,7 +135,7 @@ class DataGrid extends \SpoonDataGrid
             $URL = null;
         }
 
-        if (in_array($name, array('use_revision', 'use_draft'))) {
+        if (in_array($lowercasedName, array('use_revision', 'use_draft'))) {
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
@@ -149,7 +152,7 @@ class DataGrid extends \SpoonDataGrid
 
         // known actions
         if (in_array(
-            $name,
+            $lowercasedName,
             array(
                 'add',
                 'edit',
@@ -620,12 +623,12 @@ class DataGrid extends \SpoonDataGrid
      */
     private function decideIcon($name)
     {
-        $icon = null;
+        $name = mb_strtolower($name);
 
-        if (isset($this->mapIcons[$name])) {
-            $icon = $this->mapIcons[$name];
+        if (!isset($this->mapIcons[$name])) {
+            return null;
         }
 
-        return $icon;
+        return $this->mapIcons[$name];
     }
 }

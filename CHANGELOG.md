@@ -1,3 +1,21 @@
+4.2.3 (2016-09-23)
+------------------
+
+Bugfixes:
+
+* Api: fixed the build in client
+* Console: fix using backend language
+* FormBuilder: prevent editing multiple fields at the same time
+* FormBuilder: submit the field when hitting enter
+* FormBuilder: fix classes not applied to form fields
+* Core: fix button detection of datagrid columns was case sensitive
+* Installer: fix extensions module not installed as first module
+* Twig: fix hide page title
+* SpoonLibrary: updated to fix price check on text field
+* Core: made the explanation better when the info.xml is missing
+* Core: updated matthiasmullie/scrapbook to fix errors with redis
+
+
 4.2.2 (2016-09-02)
 ------------------
 
