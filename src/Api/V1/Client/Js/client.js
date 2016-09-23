@@ -104,7 +104,7 @@ jsClient.ajax =
 	init: function()
 	{
 		// a call was initialized
-		$('.submit').click(jsClient.ajax.submitFormHandler);
+		$('.submit').on('click', jsClient.ajax.submitFormHandler);
 	},
 
 	submitFormHandler: function(e)

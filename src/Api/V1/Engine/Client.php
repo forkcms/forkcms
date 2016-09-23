@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Model as BackendModel;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
+use Twig_Template;
 
 /**
  * Client for the Fork CMS API.
@@ -20,7 +21,7 @@ use Twig_Loader_Filesystem;
 class Client extends Api
 {
     /**
-     * @var TwigTemplate
+     * @var Twig_Template
      */
     private $tpl;
 
