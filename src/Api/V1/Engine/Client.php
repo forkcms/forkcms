@@ -11,6 +11,9 @@ namespace Api\V1\Engine;
 
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Model as BackendModel;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
+use Twig_Template;
 
 /**
  * Client for the Fork CMS API.
@@ -18,9 +21,19 @@ use Backend\Core\Engine\Model as BackendModel;
 class Client extends Api
 {
     /**
-     * @var \SpoonTemplate
+     * @var Twig_Template
      */
     private $tpl;
+
+    /**
+     * @var string
+     */
+    private $url;
+
+    /**
+     * @var array
+     */
+    private $languages;
 
     /**
      * @var array
@@ -33,23 +46,28 @@ class Client extends Api
      */
     public function initialize()
     {
-        $this->tpl = new \SpoonTemplate();
-        $this->tpl->setForceCompile(true);
-        $this->tpl->setCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
+        $this->initializeTwig();
 
+        $this->url = SITE_URL . str_replace('client/', 'index.php', $_SERVER['REQUEST_URI']);
+
+        $this->loadLanguages();
         $this->loadModules();
-        $this->parse();
         $this->display();
     }
 
-    /**
-     * @return Response
-     */
-    public function display()
+    private function initializeTwig()
     {
-        $content = $this->tpl->getContent(__DIR__ . '/../Client/Layout/Templates/Index.html.twig');
+        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../Client/Layout/Templates/');
+        $twig = new Twig_Environment($loader);
 
-        return new Response($content, 200);
+        $this->tpl = $twig->loadTemplate('index.html.twig');
+    }
+
+    protected function loadLanguages()
+    {
+        $settings = BackendModel::getContainer()->get('fork.settings');
+
+        $this->languages = $settings->get('Core', 'languages', array('en'));
     }
 
     /**
@@ -136,14 +154,16 @@ class Client extends Api
     }
 
     /**
-     * Parse the data into the template
+     * @return Response
      */
-    protected function parse()
+    public function display()
     {
-        // the URL to call the API
-        $url = SITE_URL . str_replace('client/', 'index.php', $_SERVER['REQUEST_URI']);
+        $content = $this->tpl->render(array(
+            'url' => $this->url,
+            'languages' => $this->languages,
+            'modules' => $this->modules
+        ));
 
-        $this->tpl->assign('url', $url);
-        $this->tpl->assign('modules', $this->modules);
+        return new Response($content, 200);
     }
 }
