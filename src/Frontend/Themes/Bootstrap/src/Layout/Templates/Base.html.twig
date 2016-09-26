@@ -75,20 +75,23 @@
   {% endblock %}
 </head>
 <body class="{{ FRONTEND_LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
-  {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+  <div id="root">
+    {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-  {% block notifications %}
-    {% include 'Core/Layout/Templates/Notifications.html.twig' %}
-  {% endblock %}
+    {% block notifications %}
+      {% include 'Core/Layout/Templates/Notifications.html.twig' %}
+    {% endblock %}
 
-  {% block navigation %}
-    {% include 'Core/Layout/Templates/Navbar.html.twig' %}
-  {% endblock %}
+    {% block navigation %}
+      {% include 'Core/Layout/Templates/Navbar.html.twig' %}
+    {% endblock %}
 
-  {# Main content #}
-  {% block main %}
+    {# Main content #}
+    {% block main %}
 
-  {% endblock %}
+    {% endblock %}
+    <div id="root-footer"></div>
+  </div>
 
   {% block footer %}
     {% include 'Core/Layout/Templates/Footer.html.twig' %}
