@@ -5,20 +5,24 @@
 #}
 
 {% if widgetLocationItem %}
-  <div class="locationLocationWidget well location">
+  <div class="location location-widget">
     {# @remark: do not remove the parseMap-class, it is used by JS #}
-    <div id="map{{ widgetLocationItem.id }}" class="parseMap well" style="height: {{ widgetLocationSettings.height }}px;">
+    <div id="map{{ widgetLocationItem.id }}" class="parseMap" style="height: {{ widgetLocationSettings.height }}px;">
       <span class="hideText">{{ 'lbl.Loading'|trans|capitalize }}</span>
     </div>
 
     {% if widgetLocationSettings.full_url %}
-      <a href="{{ widgetLocationSettings.maps_url }}" class="btn btn-small pull-right" target="_blank">
-        {{ 'lbl.ViewLargeMap'|trans|capitalize }}<span class="hideText"> {{ 'lbl.For'|trans }} {{ widgetLocationItem.title }}</span>
-      </a>
+      <div class="row">
+        <div class="col-xs-12">
+          <a href="{{ widgetLocationSettings.maps_url }}" class="btn pull-right" target="_blank">
+            {{ 'lbl.ViewLargeMap'|trans|capitalize }}<span class="hideText"> {{ 'lbl.For'|trans }} {{ widgetLocationItem.title }}</span>
+          </a>
+        </div>
+      </div>
     {% endif %}
 
     {% if widgetLocationSettings.directions %}
-      <aside id="locationSearch{{ widgetLocationItem.id }}" role="complementary">
+      <div id="locationSearch{{ widgetLocationItem.id }}">
         <form method="get" action="#">
           <div class="form-group">
             <label class="control-label" for="locationSearchAddress{{ widgetLocationItem.id }}">
@@ -38,7 +42,7 @@
             </div>
           </div>
         </form>
-      </aside>
+      </div>
     {% endif %}
 
     {# @remark: do not remove the id #}
