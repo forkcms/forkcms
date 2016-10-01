@@ -519,10 +519,10 @@ class spoon2twig
         $filedata = $this->pregReplaceSprintf('/{{ err(.*?) }}/i', '{{ err.%s }}', $filedata);
         $filedata = $this->pregReplaceSprintf('/{{ act(.*?) }}/i', '{{ act.%s }}', $filedata);
 
-        $filedata = $this->pregReplaceSprintf('/lbl.(.*?)[!^|]/i', "'lbl.%s'|trans|", $filedata);
-        $filedata = $this->pregReplaceSprintf('/act.(.*?)[!^|]/i', "'act.%s'|trans|", $filedata);
-        $filedata = $this->pregReplaceSprintf('/msg.(.*?)[!^|]/i', "'msg.%s'|trans|", $filedata);
-        $filedata = $this->pregReplaceSprintf('/err.(.*?)[!^|]/i', "'err.%s'|trans|", $filedata);
+        $filedata = $this->pregReplaceSprintf('/{{ lbl.(.*?)[!^|]/i', "{{ 'lbl.%s'|trans|", $filedata);
+        $filedata = $this->pregReplaceSprintf('/{{ act.(.*?)[!^|]/i', "{{ 'act.%s'|trans|", $filedata);
+        $filedata = $this->pregReplaceSprintf('/{{ msg.(.*?)[!^|]/i', "{{ 'msg.%s'|trans|", $filedata);
+        $filedata = $this->pregReplaceSprintf('/{{ err.(.*?)[!^|]/i', "{{ 'err.%s'|trans|", $filedata);
 
         return $filedata;
     }
