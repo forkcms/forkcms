@@ -541,7 +541,6 @@ class spoon2twig
         // string replacers
         $filedata = str_replace('*}', '#}', $filedata); // comments
         $filedata = str_replace('{*', '{#', $filedata); // comments
-        $filedata = str_replace('|ucfirst', '|capitalize', $filedata);
         $filedata = str_replace('.tpl', $this->extension, $filedata);
         $filedata = str_replace("\t", '  ', $filedata);
 
