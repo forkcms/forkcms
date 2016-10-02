@@ -50,7 +50,7 @@ class spoon2twig
         $input = (string) $argv[1];
         $source = $this->getCorrectSourceVersion();
 
-        $path['templates'] = array('/Layout/Templates', '/Layout/Widgets');
+        $path['templates'] = array('/Layout/Templates', '/Layout/Widgets', '/Layout/Templates/Mails');
 
         if ($input === '-all') {
             $path['base'] = array('Frontend/Themes', 'Backend/Modules', 'Frontend/Modules', 'Frontend');
