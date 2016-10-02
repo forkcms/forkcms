@@ -97,6 +97,8 @@ class spoon2twig
                 $infoXml
             );
             $infoXml = preg_replace('|(path=.+)\.tpl|', '$1.html.twig', $infoXml);
+            // prevent invalid xml
+            $this->start = '';
             $this->write($themeInfoXmlPath, $infoXml);
 
             return;
