@@ -529,9 +529,9 @@ class spoon2twig
         $filedata = $this->pregReplaceSprintf('/\|substring:(.*?)}/', '|slice(%s) }', $filedata, 'comma');
         $filedata = $this->pregReplaceSprintf('/\|sprintf:(.*?)}/', '|format(%s)|raw }', $filedata);
         $filedata = $this->pregReplaceSprintf('/\|usersetting:(.*?)}/', '|usersetting(%s) }', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\var|geturlforblock:(.*?)}/', 'geturlforblock(%s) }', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\var|getnavigation:(.*?)}/', 'getnavigation(%s)|raw }', $filedata, 'comma');
-        $filedata = $this->pregReplaceSprintf('/\var|getsubnavigation:(.*?)}/', 'getsubnavigation(%s)|raw }', $filedata, 'comma');
+        $filedata = $this->pregReplaceSprintf('/var\|geturlforblock:(.*?)}/', 'geturlforblock(%s) }', $filedata, 'comma');
+        $filedata = $this->pregReplaceSprintf('/var\|getnavigation:(.*?)}/', 'getnavigation(%s)|raw }', $filedata, 'comma');
+        $filedata = $this->pregReplaceSprintf('/var\|getsubnavigation:(.*?)}/', 'getsubnavigation(%s)|raw }', $filedata, 'comma');
         $filedata = str_replace('/\|getmainnavigation}/', '|getmainnavigation|raw }', $filedata);
         $filedata = $this->pregReplaceSprintf('/\|truncate:(.*?)}/', '|truncate(%s) }', $filedata);
         $filedata = $this->pregReplaceSprintf('/\|geturl:(.*?)}/', '|geturl(%s) }', $filedata, 'comma');
