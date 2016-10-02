@@ -157,6 +157,63 @@ class spoon2twig
     }
 
     /**
+     * @param string $basePath
+     * @param array $path
+     * @param string $theme
+     *
+     * @return array
+     */
+    private function findThemeFiles($basePath, array $path, $theme)
+    {
+        $source = $this->getCorrectSourceVersion();
+        $excludes = array('.', '..', '.DS_Store');
+        $themePath = $source . $basePath . '/' . $theme;
+        $templates = array();
+
+        if (!is_dir($this->webroot . $themePath)) {
+            return array();
+        }
+
+        $directories = array_map(
+            function ($directory) {
+                return '/Modules/' . $directory;
+            },
+            array_diff(scandir($themePath . '/Modules'), $excludes)
+        );
+        $directories[] = '/Core';
+
+        foreach ($directories as $directory) {
+            foreach ($path['templates'] as $templateDirectory) {
+                $possibleTemplateDirectory = $themePath . $directory . $templateDirectory;
+
+                if (!is_dir($possibleTemplateDirectory)) {
+                    continue;
+                }
+
+                $foundTemplates = array_diff(scandir($possibleTemplateDirectory), $excludes);
+
+                if (empty($foundTemplates)) {
+                    continue;
+                }
+
+                // make sure we only have spoon templates
+                $foundTemplates = array_filter(
+                    $foundTemplates,
+                    function ($template) {
+                        return strpos($template, '.tpl');
+                    }
+                );
+
+                foreach ($foundTemplates as $template) {
+                    $templates[] = $possibleTemplateDirectory . '/' . $template;
+                }
+            }
+        }
+
+        return $templates;
+    }
+
+    /**
      * Find files in given paths
      *
      * @param  string $BPath  pas
@@ -167,6 +224,11 @@ class spoon2twig
      */
     private function findFiles($BPath, array $path, $input = null)
     {
+        // themes work differently so we fetch their files in a seperate method
+        if ($BPath === 'Frontend/Themes') {
+            return $this->findThemeFiles($BPath, $path, $input);
+        }
+
         $templatePaths = array();
         $source = $this->getCorrectSourceVersion();
         $excludes = array('.', '..', '.DS_Store');
@@ -195,19 +257,6 @@ class spoon2twig
             }
 
             foreach ($tpls as $tpl) {
-                // theme exception
-                if ($BPath === 'Frontend/Themes') {
-                    $themeModule = $possiblePath . '/' . $tpl . '/Modules';
-                    $tplsh = array_diff(scandir($themeModule), $excludes);
-
-                    if (is_array($tplsh)) {
-                        foreach ($tplsh as $themeModuleName) {
-                            $path['templates'][] = '/Modules/' . $themeModuleName . '/Layout/Templates';
-                            $path['templates'][] = '/Modules/' . $themeModuleName . '/Layout/Widgets';
-                        }
-                    }
-                }
-
                 foreach ($path['templates'] as $template) {
                     $possibletpl = $possiblePath . '/' . $tpl . $template;
                     if (is_dir($this->webroot . $possibletpl)) {
@@ -243,7 +292,7 @@ class spoon2twig
             if ($force === true) {
                 $this->write($templatePath, $this->ruleParser($this->getFile($templatePath)));
             } else {
-                if (!file_exists(str_replace('.html.twig', $this->extension, $templatePath))) {
+                if (!file_exists(str_replace('.tpl', $this->extension, $templatePath))) {
                     $this->write($templatePath, $this->ruleParser($this->getFile($templatePath)));
                 } else {
                     $excluded[] = $templatePath;
@@ -292,7 +341,7 @@ class spoon2twig
     {
         if (empty($this->errors)) {
             // OUR OUTPUT CODE
-            $input = str_replace('.html.twig', $this->extension, $input);
+            $input = str_replace('.tpl', $this->extension, $input);
             $file = $this->webroot . $input;
             $inputPath = pathinfo($input);
 
@@ -481,7 +530,7 @@ class spoon2twig
         $filedata = str_replace('*}', '#}', $filedata); // comments
         $filedata = str_replace('{*', '{#', $filedata); // comments
         $filedata = str_replace('|ucfirst', '|capitalize', $filedata);
-        $filedata = str_replace('.html.twig', $this->extension, $filedata);
+        $filedata = str_replace('.tpl', $this->extension, $filedata);
         $filedata = str_replace("\t", '  ', $filedata);
 
         // raw converter
