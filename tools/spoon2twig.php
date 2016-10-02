@@ -544,6 +544,10 @@ class spoon2twig
         $filedata = str_replace('.tpl', $this->extension, $filedata);
         $filedata = str_replace("\t", '  ', $filedata);
 
+        // replace deprecated stuff for the positions
+        $filedata = str_replace("BlockIsHTML", 'BlockIsEditor', $filedata);
+        $filedata = str_replace(".blockContent", '.html|raw', $filedata);
+
         // raw converter
         $filedata = str_replace('siteHTMLHeader', 'siteHTMLHeader|raw', $filedata);
         $filedata = str_replace('siteHTMLFooter', 'siteHTMLFooter|raw', $filedata);
