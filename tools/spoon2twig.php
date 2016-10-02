@@ -149,10 +149,10 @@ class spoon2twig
     {
         foreach ($path['base'] as $BPath) {
             $templatePaths = $this->findFiles($BPath, $path, $input);
-        }
 
-        if (!empty($templatePaths)) {
-            $this->buildFiles($templatePaths, $force);
+            if (!empty($templatePaths)) {
+                $this->buildFiles($templatePaths, $force);
+            }
         }
     }
 
