@@ -89,6 +89,16 @@ class spoon2twig
             }
             $this->convertAllFiles($force, $path, $input);
 
+            $themeInfoXmlPath = $source.'Frontend/Themes/'.$input.'/info.xml';
+            $infoXml = $this->getFile($themeInfoXmlPath);
+            $infoXml = preg_replace(
+                '|<minimum_version>(\d)+\..*<\/minimum_version>|',
+                '<minimum_version>4.0.0</minimum_version>',
+                $infoXml
+            );
+            $infoXml = preg_replace('|(path=.+)\.tpl|', '$1.html.twig', $infoXml);
+            $this->write($themeInfoXmlPath, $infoXml);
+
             return;
         }
 
