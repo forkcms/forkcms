@@ -31,7 +31,7 @@ class spoon2twig
     /**
      * Start Converter
      *
-     * @param  array $arguments A list of arguments from php command line
+     * @param array $arguments A list of arguments from php command line
      */
     public function start(array $arguments)
     {
@@ -122,7 +122,7 @@ class spoon2twig
     /**
      * Error or notice collector
      *
-     * @param  string $message
+     * @param string $message
      */
     public function error($message)
     {
@@ -144,7 +144,9 @@ class spoon2twig
     /**
      * Stamps the time it takes from start to finnish
      *
-     * @param  int $int how precise you wish to measure
+     * @param int $int how precise you wish to measure
+     *
+     * @return float
      */
     public function timestamp($int = null)
     {
@@ -155,7 +157,9 @@ class spoon2twig
      * Project file converter
      * Will locate ever file in the project and convert in automagicly
      *
-     * @param  bool $force allow forced overwrite
+     * @param bool $force allow forced overwrite
+     * @param array $path
+     * @param string|null $input
      */
     public function convertAllFiles($force, $path, $input = null)
     {
@@ -228,11 +232,11 @@ class spoon2twig
     /**
      * Find files in given paths
      *
-     * @param  string $basePath pas
-     * @param  array $path base & theme template paths
-     * @param  string $input argument
+     * @param string $basePath pas
+     * @param array $path base & theme template paths
+     * @param string $input argument
      *
-     * @return array        found files
+     * @return array found files
      */
     private function findFiles($basePath, array $path, $input = null)
     {
@@ -294,8 +298,8 @@ class spoon2twig
     /**
      * Builds new Files from a paths array
      *
-     * @param  array $templatePaths paths array
-     * @param  bool $force forced
+     * @param array $templatePaths paths array
+     * @param bool $force forced
      */
     private function buildFiles(array $templatePaths, $force = false)
     {
@@ -346,8 +350,8 @@ class spoon2twig
     /**
      * Write saves to content to a new file
      *
-     * @param  string $input file full path
-     * @param  string $fileData file content
+     * @param string $input file full path
+     * @param string $fileData file content
      */
     public function write($input, $fileData)
     {
@@ -367,9 +371,9 @@ class spoon2twig
     /**
      * Return the file content of a given file
      *
-     * @param  string $input file full path
+     * @param string $input file full path
      *
-     * @return string        file content
+     * @return string file content
      */
     public function getFile($input)
     {
@@ -387,7 +391,7 @@ class spoon2twig
     /**
      * File checker
      *
-     * @param  string $file file full path
+     * @param string $file file full path
      *
      * @return bool
      */
@@ -406,11 +410,11 @@ class spoon2twig
      * Combines 2 function into one that's more ideal for parsing
      * as it string replaces any found matches with a new given value
      *
-     * @param  string $regex the regex
-     * @param  string $format the replace value
-     * @param  string $fileData file content
+     * @param string $regex the regex
+     * @param string $format the replace value
+     * @param string $fileData file content
      *
-     * @return string           if successful returns file content with replaced data
+     * @return string if successful returns file content with replaced data
      */
     public function pregReplaceSprintf($regex, $format, $fileData, $extra = null)
     {
@@ -435,9 +439,9 @@ class spoon2twig
     /**
      * Converts a noun until it's ready
      *
-     * @param  string $noun a noun
+     * @param string $noun a noun
      *
-     * @return string       converted noun
+     * @return string converted noun
      */
     public function dePluralize($noun)
     {
@@ -465,6 +469,11 @@ class spoon2twig
         return $noun;
     }
 
+    /**
+     * @param string $input
+     *
+     * @return string
+     */
     public function fromCamelToSnake($input)
     {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
@@ -476,6 +485,11 @@ class spoon2twig
         return implode('_', $ret);
     }
 
+    /**
+     * @param string $input
+     *
+     * @return string
+     */
     public function comma($input)
     {
         return str_replace(':', ',', $input);
@@ -484,9 +498,9 @@ class spoon2twig
     /**
      * Iteration Converter
      *
-     * @param  string $fileData file to convert
+     * @param string $fileData file to convert
      *
-     * @return string           file in converted form
+     * @return string file in converted form
      */
     public function pregReplaceIterations($fileData)
     {
