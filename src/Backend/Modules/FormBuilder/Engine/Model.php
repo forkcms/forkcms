@@ -468,7 +468,7 @@ class Model
     public static function getLocale($name, $type = 'label', $application = 'Backend')
     {
         $name = \SpoonFilter::toCamelCase($name);
-        $class = \SpoonFilter::ucfirst($application) . '\Core\Engine\Language';
+        $class = \SpoonFilter::ucfirst($application) . '\Core\Language\Language';
         $function = 'get' . \SpoonFilter::ucfirst($type);
 
         // execute and return value
