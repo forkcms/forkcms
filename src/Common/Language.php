@@ -16,7 +16,7 @@ final class Language
      */
     public static function get()
     {
-        return APPLICATION . '\Core\Engine\Language';
+        return APPLICATION . '\Core\Language\Language';
     }
 
     /**
