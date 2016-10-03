@@ -528,7 +528,13 @@ class spoon2twig
         return $fileData;
     }
 
-    /** STRING CONVERSIONS START HERE **/
+    /**
+     * The actual conversion
+     *
+     * @param string $fileData
+     *
+     * @return string
+     */
     public function ruleParser($fileData)
     {
         // Exceptions
@@ -575,7 +581,6 @@ class spoon2twig
         $fileData = str_replace('*}', '#}', $fileData); // comments
         $fileData = str_replace('{*', '{#', $fileData); // comments
         $fileData = str_replace('.tpl', $this->extension, $fileData);
-        $fileData = str_replace("\t", '  ', $fileData);
 
         // replace deprecated stuff for the positions
         $fileData = str_replace('BlockIsHTML', 'BlockIsEditor', $fileData);
@@ -589,7 +594,7 @@ class spoon2twig
         $fileData = str_replace('blockContent', 'blockContent|raw', $fileData);
 
         // includes
-        $fileData = $this->pregReplaceSprintf('/{include:(.*)}/i', '{%% include "%s" %%}', $fileData); // for includes
+        $fileData = $this->pregReplaceSprintf('/{include:(.*?)}/i', '{%% include "%s" %%}', $fileData); // for includes
 
         // operators
         $fileData = $this->pregReplaceSprintf('/{option:!(.*?)}/i', '{%% if not %s %%}', $fileData);
@@ -614,18 +619,19 @@ class spoon2twig
         $fileData = $this->pregReplaceSprintf('/{cache:(.*?)}/i', '{# cache(%s) #}', $fileData);
 
         // labels
-        $fileData = $this->pregReplaceSprintf('/{{ lbl(.*?) }}/i', '{{ lbl.%s }}', $fileData);
-        $fileData = $this->pregReplaceSprintf('/{{ msg(.*?) }}/i', '{{ msg.%s }}', $fileData);
-        $fileData = $this->pregReplaceSprintf('/{{ err(.*?) }}/i', '{{ err.%s }}', $fileData);
-        $fileData = $this->pregReplaceSprintf('/{{ act(.*?) }}/i', '{{ act.%s }}', $fileData);
+        $fileData = $this->pregReplaceSprintf('/lbl(.*?)[!^|]/i', "'lbl.%s'|trans|", $fileData);
+        $fileData = $this->pregReplaceSprintf('/msg(.*?)[!^|]/i', "'msg.%s'|trans|", $fileData);
+        $fileData = $this->pregReplaceSprintf('/err(.*?)[!^|]/i', "'err.%s'|trans|", $fileData);
+        $fileData = $this->pregReplaceSprintf('/act(.*?)[!^|]/i', "'act.%s'|trans|", $fileData);
 
-        $fileData = $this->pregReplaceSprintf('/{{ lbl.(.*?)[!^|\s}]/i', "{{ 'lbl.%s'|trans|", $fileData);
-        $fileData = $this->pregReplaceSprintf('/{{ act.(.*?)[!^|\s}]/i', "{{ 'act.%s'|trans|", $fileData);
-        $fileData = $this->pregReplaceSprintf('/{{ msg.(.*?)[!^|\s}]/i', "{{ 'msg.%s'|trans|", $fileData);
-        $fileData = $this->pregReplaceSprintf('/{{ err.(.*?)[!^|\s}]/i', "{{ 'err.%s'|trans|", $fileData);
+        $fileData = $this->pregReplaceSprintf('/{{ lbl([\w]+) }}/i', "{{ 'lbl.%s'|trans }}", $fileData);
+        $fileData = $this->pregReplaceSprintf('/{{ act([\w]+) }}/i', "{{ 'act.%s'|trans }}", $fileData);
+        $fileData = $this->pregReplaceSprintf('/{{ msg([\w]+) }}/i', "{{ 'msg.%s'|trans }}", $fileData);
+        $fileData = $this->pregReplaceSprintf('/{{ err([\w]+) }}/i', "{{ 'err.%s'|trans }}", $fileData);
 
-        // make sure we don't have trailing pipes
-        $fileData = $this->pregReplaceSprintf('/trans\|([\s}])/i', 'trans%s', $fileData);
+        // tabs spaces
+        $fileData = str_replace("\t", "    ", $fileData);
+        $fileData = str_replace("    ", "  ", $fileData);
 
         return $fileData;
     }
