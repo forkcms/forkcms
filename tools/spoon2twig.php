@@ -578,8 +578,8 @@ class spoon2twig
         $fileData = str_replace("\t", '  ', $fileData);
 
         // replace deprecated stuff for the positions
-        $fileData = str_replace("BlockIsHTML", 'BlockIsEditor', $fileData);
-        $fileData = str_replace(".blockContent", '.html|raw', $fileData);
+        $fileData = str_replace('BlockIsHTML', 'BlockIsEditor', $fileData);
+        $fileData = str_replace('.blockContent', '.html|raw', $fileData);
 
         // raw converter
         $fileData = str_replace('siteHTMLHeader', 'siteHTMLHeader|raw', $fileData);
@@ -625,7 +625,7 @@ class spoon2twig
         $fileData = $this->pregReplaceSprintf('/{{ err.(.*?)[!^|\s}]/i', "{{ 'err.%s'|trans|", $fileData);
 
         // make sure we don't have trailing pipes
-        $fileData = $this->pregReplaceSprintf('/trans\|([\s}])/i', "trans%s", $fileData);
+        $fileData = $this->pregReplaceSprintf('/trans\|([\s}])/i', 'trans%s', $fileData);
 
         return $fileData;
     }
