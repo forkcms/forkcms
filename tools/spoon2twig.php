@@ -25,13 +25,13 @@ class spoon2twig
     public function __construct()
     {
         $this->startTime = microtime(true);
-        $this->webroot = __DIR__.'/../';
+        $this->webroot = __DIR__ . '/../';
     }
 
     /**
      * Start Converter
      *
-     * @param  array $argv  A list of arguments from php command line
+     * @param  array $argv A list of arguments from php command line
      */
     public function start(array $argv)
     {
@@ -69,8 +69,8 @@ class spoon2twig
         if ($this->type['module']) {
             $input = ucfirst($input);
             $path['base'] = array('Backend/Modules', 'Frontend/Modules');
-            if (!is_dir($this->webroot.$source.'Frontend/Modules/'.$input)) {
-                $this->error('unknown module folder '.$input);
+            if (!is_dir($this->webroot . $source . 'Frontend/Modules/' . $input)) {
+                $this->error('unknown module folder ' . $input);
 
                 return;
             }
@@ -82,14 +82,14 @@ class spoon2twig
         if ($this->type['theme']) {
             $input = strtolower($input);
             $path['base'] = array('Frontend/Themes');
-            if (!is_dir($this->webroot.$source.'Frontend/Themes/'.$input)) {
-                $this->error('unknown theme folder '.$input);
+            if (!is_dir($this->webroot . $source . 'Frontend/Themes/' . $input)) {
+                $this->error('unknown theme folder ' . $input);
 
                 return;
             }
             $this->convertAllFiles($force, $path, $input);
 
-            $themeInfoXmlPath = $source.'Frontend/Themes/'.$input.'/info.xml';
+            $themeInfoXmlPath = $source . 'Frontend/Themes/' . $input . '/info.xml';
             $infoXml = $this->getFile($themeInfoXmlPath);
             $infoXml = preg_replace(
                 '|<minimum_version>(\d)+\..*<\/minimum_version>|',
@@ -136,7 +136,7 @@ class spoon2twig
     {
         if ($this->errors) {
             foreach ($this->errors as $error) {
-                echo $error .  PHP_EOL;
+                echo $error . PHP_EOL;
             }
         }
     }
@@ -228,9 +228,9 @@ class spoon2twig
     /**
      * Find files in given paths
      *
-     * @param  string $BPath  pas
-     * @param  array  $path   base & themeplate paths
-     * @param  string $input  argument
+     * @param  string $BPath pas
+     * @param  array $path base & themeplate paths
+     * @param  string $input argument
      *
      * @return array        found files
      */
@@ -255,14 +255,14 @@ class spoon2twig
             }
 
             // core tpl
-            $coreTplPath = $this->webroot .$possiblePath .'/../Core/Layout/Templates';
+            $coreTplPath = $this->webroot . $possiblePath . '/../Core/Layout/Templates';
             if (is_dir($coreTplPath)) {
                 $coreTpls = array_diff(scandir($coreTplPath), $excludes);
                 if (!empty($coreTpls)) {
                     // append full path
                     foreach ($coreTpls as $coreTpl) {
                         if (strpos($coreTpl, '.html.twig') !== false) {
-                            $templatePaths[] = $possiblePath .'/../Core/Layout/Templates/' . $coreTpl;
+                            $templatePaths[] = $possiblePath . '/../Core/Layout/Templates/' . $coreTpl;
                         }
                     }
                 }
@@ -294,8 +294,8 @@ class spoon2twig
     /**
      * Builds new Files from a paths array
      *
-     * @param  array   $templatePaths paths array
-     * @param  bool $force         forced
+     * @param  array $templatePaths paths array
+     * @param  bool $force forced
      */
     private function buildFiles(array $templatePaths, $force = false)
     {
@@ -346,7 +346,7 @@ class spoon2twig
     /**
      * Write saves to content to a new file
      *
-     * @param  string $input    file full path
+     * @param  string $input file full path
      * @param  string $filedata file content
      */
     public function write($input, $filedata)
@@ -357,10 +357,10 @@ class spoon2twig
             $file = $this->webroot . $input;
             $inputPath = pathinfo($input);
 
-            file_put_contents($file, $this->start.$filedata);
+            file_put_contents($file, $this->start . $filedata);
             $time = $this->timestamp(2) - $this->previousTimeStamp;
             $this->previousTimeStamp = $this->timestamp(2);
-            echo $inputPath['basename']. ' done in ' . $time . ' milliseconds' . PHP_EOL;
+            echo $inputPath['basename'] . ' done in ' . $time . ' milliseconds' . PHP_EOL;
         }
     }
 
@@ -387,7 +387,7 @@ class spoon2twig
     /**
      * File checker
      *
-     * @param  string  $file file full path
+     * @param  string $file file full path
      *
      * @return bool
      */
@@ -406,8 +406,8 @@ class spoon2twig
      * Combines 2 function into one that's more ideal for parsing
      * as it string replaces any found matches with a new given value
      *
-     * @param  string $regex    the regex
-     * @param  string $format   the replace value
+     * @param  string $regex the regex
+     * @param  string $format the replace value
      * @param  string $filedata file content
      *
      * @return string           if successful returns file content with replaced data
@@ -458,7 +458,7 @@ class spoon2twig
         } elseif (substr($noun, -1) == 's') {
             $noun = substr($noun, 0, -1);
         } else {
-            $noun = '_itr_'.$this->interationNr;
+            $noun = '_itr_' . $this->interationNr;
             ++$this->interationNr;
         }
 
@@ -497,10 +497,14 @@ class spoon2twig
                 $new_val = $this->dePluralize($value);
 
                 $prev_match = $match[0];
-                $match[0] = str_replace('{iteration:'.$value.'}', '{% for '. $new_val . ' in ' . $value . '_ %}', $match[0]);
-                $match[0] = str_replace('{/iteration:'.$value.'}', '{% endfor %}', $match[0]);
+                $match[0] = str_replace(
+                    '{iteration:' . $value . '}',
+                    '{% for ' . $new_val . ' in ' . $value . '_ %}',
+                    $match[0]
+                );
+                $match[0] = str_replace('{/iteration:' . $value . '}', '{% endfor %}', $match[0]);
                 $match[0] = str_replace($value, $new_val, $match[0]);
-                $match[0] = str_replace($new_val.'_', $value, $match[0]);
+                $match[0] = str_replace($new_val . '_', $value, $match[0]);
                 $filedata = str_replace($prev_match, $match[0], $filedata);
 
                 return $this->pregReplaceIterations($filedata);
@@ -529,9 +533,24 @@ class spoon2twig
         $filedata = $this->pregReplaceSprintf('/\|substring:(.*?)}/', '|slice(%s) }', $filedata, 'comma');
         $filedata = $this->pregReplaceSprintf('/\|sprintf:(.*?)}/', '|format(%s)|raw }', $filedata);
         $filedata = $this->pregReplaceSprintf('/\|usersetting:(.*?)}/', '|usersetting(%s) }', $filedata);
-        $filedata = $this->pregReplaceSprintf('/var\|geturlforblock:(.*?)}/', 'geturlforblock(%s) }', $filedata, 'comma');
-        $filedata = $this->pregReplaceSprintf('/var\|getnavigation:(.*?)}/', 'getnavigation(%s)|raw }', $filedata, 'comma');
-        $filedata = $this->pregReplaceSprintf('/var\|getsubnavigation:(.*?)}/', 'getsubnavigation(%s)|raw }', $filedata, 'comma');
+        $filedata = $this->pregReplaceSprintf(
+            '/var\|geturlforblock:(.*?)}/',
+            'geturlforblock(%s) }',
+            $filedata,
+            'comma'
+        );
+        $filedata = $this->pregReplaceSprintf(
+            '/var\|getnavigation:(.*?)}/',
+            'getnavigation(%s)|raw }',
+            $filedata,
+            'comma'
+        );
+        $filedata = $this->pregReplaceSprintf(
+            '/var\|getsubnavigation:(.*?)}/',
+            'getsubnavigation(%s)|raw }',
+            $filedata,
+            'comma'
+        );
         $filedata = str_replace('/\|getmainnavigation}/', '|getmainnavigation|raw }', $filedata);
         $filedata = $this->pregReplaceSprintf('/\|truncate:(.*?)}/', '|truncate(%s) }', $filedata);
         $filedata = $this->pregReplaceSprintf('/\|geturl:(.*?)}/', '|geturl(%s) }', $filedata, 'comma');
@@ -560,7 +579,11 @@ class spoon2twig
 
         // operators
         $filedata = $this->pregReplaceSprintf('/{option:!(.*?)}/i', '{%% if not %s %%}', $filedata);
-        $filedata = $this->pregReplaceSprintf('/{\/option:(.*?)}/i', '{%% endif %%}', $filedata); // for {option: variable }
+        $filedata = $this->pregReplaceSprintf(
+            '/{\/option:(.*?)}/i',
+            '{%% endif %%}',
+            $filedata
+        ); // for {option: variable }
         $filedata = $this->pregReplaceSprintf('/{option:(.*?)}/i', '{%% if %s %%}', $filedata);
 
         //form values values are lowercase
