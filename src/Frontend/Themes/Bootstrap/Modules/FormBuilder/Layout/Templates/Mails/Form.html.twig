@@ -40,10 +40,10 @@
 											<tr>
 												<td valign="top">
 													<div>
-														<h3>{{ 'msg.FormBuilderSubject'|printf({{ name}}) }}</h3>
+														<h3>{{ 'msg.FormBuilderSubject'|format(name) }}</h3>
 														<p>
 															<strong>{{ 'lbl.SentOn'|capitalize }}</strong><br>
-															{{ sentOn|date(dateFormatLong, LANGUAGE) }}
+															{{ sentOn|spoondate(dateFormatLong, LANGUAGE) }}
 														</p>
 														{% for field in fields %}
 															<p>
