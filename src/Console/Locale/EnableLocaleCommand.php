@@ -5,6 +5,7 @@ namespace Console\Locale;
 use Common\ModulesSettings;
 use Exception;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -47,16 +48,26 @@ class EnableLocaleCommand extends Command
     /** @var string */
     private $defaultInterfaceLocale;
 
+    /** @var array */
+    private $installedModules;
+
     /**
      * @param ModulesSettings $settings
+     * @param array $installedModules
      * @param string|null $name
      */
-    public function __construct(ModulesSettings $settings, $name = null)
+    public function __construct(ModulesSettings $settings, array $installedModules, $name = null)
     {
         parent::__construct($name);
 
         $this->settings = $settings;
-        $this->installedModules = $installedModules;
+        // some core modules don't have locale so we remove them to prevent showing errors we know of
+        $this->installedModules = array_filter(
+            $installedModules,
+            function ($installedModule) {
+                return !in_array($installedModule, ['Error', 'Core', 'Authentication']);
+            }
+        );
     }
 
     /**
@@ -138,7 +149,37 @@ class EnableLocaleCommand extends Command
      */
     private function installWorkingLocale($force = false)
     {
-        // @TODO
+        $installLocaleCommand = $this->getApplication()->find('forkcms:locale:import');
+        $installBackendLocaleCommandArguments = [
+            '-f' => PATH_WWW . '/src/Backend/Core/Installer/Data/locale.xml',
+            '-o' => $force,
+            '-l' => $this->workingLocale,
+        ];
+        $this->formatter->note('Installing Core locale');
+        $installLocaleCommand->run(new ArrayInput($installBackendLocaleCommandArguments), $this->output);
+
+        foreach ($this->installedModules as $installedModule) {
+            $installModuleLocaleCommandArguments = [
+                '-m' => $installedModule,
+                '-o' => $force,
+                '-l' => $this->workingLocale,
+            ];
+
+            $this->formatter->note('Installing ' . $installedModule . ' locale');
+            try {
+                $installLocaleCommand->run(new ArrayInput($installModuleLocaleCommandArguments), $this->output);
+            } catch (Exception $exception) {
+                $this->formatter->error($installedModule . ': skipped because ' . $exception->getMessage());
+            }
+        }
+
+        if (!array_key_exists($this->workingLocale, $this->installedLocale)) {
+            // add the working locale to the installed locale
+            $this->installedLocale = array_flip($this->installedLocale);
+            $this->installedLocale[] = $this->workingLocale;
+            $this->settings->set('Core', 'languages', $this->installedLocale);
+            $this->installedLocale = array_flip($this->installedLocale);
+        }
     }
 
     private function selectWorkingLocale()
