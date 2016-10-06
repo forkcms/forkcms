@@ -93,6 +93,50 @@ class EnableLocaleCommand extends Command
 
         $this->showLocaleOverview();
         $this->selectWorkingLocale();
+        if (!$this->askToInstall()) {
+            return;
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    private function askToInstall()
+    {
+        if (array_key_exists($this->workingLocale, $this->installedLocale)) {
+            $reinstallLocale = $this->formatter->confirm(
+                'The locale is already installed, would you like to reinstall and overwrite the current translations?',
+                false
+            );
+
+            if (!$reinstallLocale) {
+                return true;
+            }
+
+            $this->installWorkingLocale(true);
+
+            return true;
+        }
+
+        $install = $this->formatter->confirm(
+            'Would you like to install this locale?'
+        );
+
+        if (!$install) {
+            return false;
+        }
+
+        $this->installWorkingLocale();
+
+        return true;
+    }
+
+    /**
+     * @param bool $force
+     */
+    private function installWorkingLocale($force = false)
+    {
+        // @TODO
     }
 
     private function selectWorkingLocale()
