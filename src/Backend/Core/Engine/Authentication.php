@@ -253,7 +253,7 @@ class Authentication
             return true;
         }
 
-        $allowedActions = self::getAllowedActions();
+        self::getAllowedActions();
 
         // do we know a level for this action
         if (isset($allowedActions[$module][$action])) {
