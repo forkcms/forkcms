@@ -148,7 +148,10 @@ class EnableLocaleCommand extends Command
         $this->settings->set('Core', 'active_languages', $this->enabledLocale);
         $this->enabledLocale = array_flip($this->enabledLocale);
 
-        $makeDefault = $this->formatter->confirm('Would you like to make this locale the default locale for visitors?', false);
+        $makeDefault = $this->formatter->confirm(
+            'Would you like to make this locale the default locale for visitors?',
+            false
+        );
 
         if (!$makeDefault) {
             return true;
@@ -175,7 +178,10 @@ class EnableLocaleCommand extends Command
         $this->settings->set('Core', 'interface_languages', $this->interfaceLocale);
         $this->interfaceLocale = array_flip($this->interfaceLocale);
 
-        $makeDefault = $this->formatter->confirm('Would you like to make this locale the default interface locale?', false);
+        $makeDefault = $this->formatter->confirm(
+            'Would you like to make this locale the default interface locale?',
+            false
+        );
 
         if (!$makeDefault) {
             return;
@@ -215,7 +221,7 @@ class EnableLocaleCommand extends Command
 
         $this->installWorkingLocale();
 
-        $this->formatter->note('Copying pages from the default locale to the current locale');
+        $this->formatter->writeln('<info>Copying pages from the default locale to the current locale</info>');
         BackendPagesModel::copy($this->defaultEnabledLocale, $this->workingLocale);
 
         return true;
@@ -232,7 +238,7 @@ class EnableLocaleCommand extends Command
             '-o' => $force,
             '-l' => $this->workingLocale,
         ];
-        $this->formatter->note('Installing Core locale');
+        $this->formatter->writeln('<info>Installing Core locale</info>');
         $installLocaleCommand->run(new ArrayInput($installBackendLocaleCommandArguments), $this->output);
 
         foreach ($this->installedModules as $installedModule) {
@@ -242,7 +248,7 @@ class EnableLocaleCommand extends Command
                 '-l' => $this->workingLocale,
             ];
 
-            $this->formatter->note('Installing ' . $installedModule . ' locale');
+            $this->formatter->writeln('<info>Installing ' . $installedModule . ' locale</info>');
             try {
                 $installLocaleCommand->run(new ArrayInput($installModuleLocaleCommandArguments), $this->output);
             } catch (Exception $exception) {
