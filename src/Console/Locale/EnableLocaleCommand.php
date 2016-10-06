@@ -2,6 +2,8 @@
 
 namespace Console\Locale;
 
+use Backend\Core\Engine\Authentication;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Common\ModulesSettings;
 use Exception;
 use Symfony\Component\Console\Command\Command;
@@ -212,6 +214,9 @@ class EnableLocaleCommand extends Command
         }
 
         $this->installWorkingLocale();
+
+        $this->formatter->note('Copying pages from the default locale to the current locale');
+        BackendPagesModel::copy($this->defaultEnabledLocale, $this->workingLocale);
 
         return true;
     }
