@@ -227,6 +227,14 @@ class EnableLocaleCommand extends Command
             $this->formatter->error('Failed to login, please try again');
         }
 
+        if (!Authentication::isAllowedAction('Copy', 'Pages')) {
+            $this->formatter->error(
+                'Your profile doesn\'t have the permission to execute the action Copy of the Pages module'
+            );
+
+            return false;
+        }
+
         $this->installWorkingLocale();
 
         $this->formatter->writeln('<info>Copying pages from the default locale to the current locale</info>');
