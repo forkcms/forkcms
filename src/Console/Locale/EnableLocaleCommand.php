@@ -219,6 +219,14 @@ class EnableLocaleCommand extends Command
             return false;
         }
 
+        $this->formatter->writeln(
+            '<info>Before you can enable a new locale you need to authenticate to be able to create the pages</info>'
+        );
+
+        while (!Authentication::loginUser($this->formatter->ask('Login'), $this->formatter->askHidden('Password'))) {
+            $this->formatter->error('Failed to login, please try again');
+        }
+
         $this->installWorkingLocale();
 
         $this->formatter->writeln('<info>Copying pages from the default locale to the current locale</info>');
