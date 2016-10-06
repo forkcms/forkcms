@@ -110,6 +110,32 @@ class EnableLocaleCommand extends Command
             return;
         }
         $this->askToAddInterfaceLocale();
+        $this->askToMakeTheLocaleAccessibleToVisitors();
+    }
+
+    private function askToMakeTheLocaleAccessibleToVisitors()
+    {
+        $makeAccessible = $this->formatter->confirm(
+            'Would you like to make this locale accessible to visitors?'
+        );
+
+        if (!$makeAccessible) {
+            return;
+        }
+
+        $this->enabledLocale = array_flip($this->enabledLocale);
+        $this->enabledLocale[] = $this->workingLocale;
+        $this->settings->set('Core', 'active_languages', $this->enabledLocale);
+        $this->enabledLocale = array_flip($this->enabledLocale);
+
+        $makeDefault = $this->formatter->confirm('Would you like to make this locale the default locale for visitors?');
+
+        if (!$makeDefault) {
+            return;
+        }
+
+        $this->defaultEnabledLocale = $this->workingLocale;
+        $this->settings->set('Core', 'default_language', $this->workingLocale);
     }
 
     private function askToAddInterfaceLocale()
