@@ -92,16 +92,16 @@ class EnableLocaleCommand extends Command
         $this->output->writeln($this->formatter->title('Fork CMS locale enable'));
 
         $this->showLanguageOverview();
+        $this->selectWorkingLanguage();
     }
 
-    private function showLanguageOverview()
+    private function selectWorkingLanguage()
     {
-        $installedLanguages = array_flip($this->settings->get('Core', 'languages'));
-        $interfaceLanguages = array_flip($this->settings->get('Core', 'interface_languages'));
-        $enabledLanguages = array_flip($this->settings->get('Core', 'languages'));
-        $redirectLanguages = array_flip($this->settings->get('Core', 'languages'));
-        $defaultEnabledLanguage = $this->settings->get('Core', 'default_language');
-        $defaultInterfaceLanguage = $this->settings->get('Core', 'default_interface_language');
+        $this->workingLocale = $this->formatter->choice(
+            'What language would you like to configure',
+            $this->getInstallableLanguages()
+        );
+    }
 
     private function showLanguageOverview()
     {
