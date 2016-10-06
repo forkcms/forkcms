@@ -82,8 +82,8 @@ class EnableLocaleCommand extends Command
     {
         $this->installedLocale = array_flip($this->settings->get('Core', 'languages'));
         $this->interfaceLocale = array_flip($this->settings->get('Core', 'interface_languages'));
-        $this->enabledLocale = array_flip($this->settings->get('Core', 'languages'));
-        $this->redirectLocale = array_flip($this->settings->get('Core', 'languages'));
+        $this->enabledLocale = array_flip($this->settings->get('Core', 'active_languages'));
+        $this->redirectLocale = array_flip($this->settings->get('Core', 'redirect_languages'));
         $this->defaultEnabledLocale = $this->settings->get('Core', 'default_language');
         $this->defaultInterfaceLocale = $this->settings->get('Core', 'default_interface_language');
 
