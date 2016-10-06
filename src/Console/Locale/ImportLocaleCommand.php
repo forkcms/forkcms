@@ -19,11 +19,12 @@ class ImportLocaleCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('locale:import')
-             ->setDescription('Import locale translations')
-             ->addOption('overwrite', 'o', InputOption::VALUE_OPTIONAL, 'Overwrite the existing locale', true)
-             ->addOption('file', 'f', InputOption::VALUE_OPTIONAL, 'Path to the locale file')
-             ->addOption('module', 'm', InputOption::VALUE_OPTIONAL, 'Name of the module that contains the locale');
+        $this->setName('forkcms:locale:import')
+            ->setAliases(['locale:import'])
+            ->setDescription('Import locale translations')
+            ->addOption('overwrite', 'o', InputOption::VALUE_OPTIONAL, 'Overwrite the existing locale', true)
+            ->addOption('file', 'f', InputOption::VALUE_OPTIONAL, 'Path to the locale file')
+            ->addOption('module', 'm', InputOption::VALUE_OPTIONAL, 'Name of the module that contains the locale');
     }
 
     /**
