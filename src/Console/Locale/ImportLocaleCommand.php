@@ -22,15 +22,16 @@ class ImportLocaleCommand extends Command
         $this->setName('forkcms:locale:import')
             ->setAliases(['locale:import'])
             ->setDescription('Import locale translations')
-            ->addOption('overwrite', 'o', InputOption::VALUE_OPTIONAL, 'Overwrite the existing locale', true)
+            ->addOption('overwrite', 'o', InputOption::VALUE_OPTIONAL, 'Overwrite the existing translations', true)
             ->addOption('file', 'f', InputOption::VALUE_OPTIONAL, 'Path to the locale file')
-            ->addOption('module', 'm', InputOption::VALUE_OPTIONAL, 'Name of the module that contains the locale');
+            ->addOption('module', 'm', InputOption::VALUE_OPTIONAL, 'Name of the module that contains the translations')
+            ->addOption('locale', 'l', InputOption::VALUE_OPTIONAL, 'Only install for a specific locale');
     }
 
     /**
      * Execute the command.
      *
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
      * @throws Exception
@@ -42,6 +43,7 @@ class ImportLocaleCommand extends Command
         // Get input values
         $fileOption = $input->getOption('file');
         $moduleOption = $input->getOption('module');
+        $localeOption = $input->getOption('locale');
         $overwriteOption = $input->hasOption('overwrite') ? true : false;
 
         if (!isset($fileOption) && !isset($moduleOption)) {
@@ -58,17 +60,18 @@ class ImportLocaleCommand extends Command
 
         // Import locale
         $output->writeln('<info>Importing locale....</info>');
-        $this->importLocale($localePath, $overwriteOption, $output);
+        $this->importLocale($localePath, $overwriteOption, $output, $localeOption);
     }
 
     /**
      * @param string $localePath
      * @param bool $overwrite
      * @param OutputInterFace $output
+     * @param string|null $specificLocale
      *
      * @throws Exception
      */
-    private function importLocale($localePath, $overwrite, OutputInterface $output)
+    private function importLocale($localePath, $overwrite, OutputInterface $output, $specificLocale = null)
     {
         // Load the xml from the file
         $xmlData = @simplexml_load_file($localePath);
@@ -79,7 +82,13 @@ class ImportLocaleCommand extends Command
         }
 
         // Everything ok, let's import the locale
-        $results = BackendLocaleModel::importXML($xmlData, $overwrite, null, null, 1);
+        $results = BackendLocaleModel::importXML(
+            $xmlData,
+            $overwrite,
+            isset($specificLocale) ? [$specificLocale] : null,
+            isset($specificLocale) ? [$specificLocale] : null,
+            1
+        );
 
         if ($results['total'] < 0) {
             $output->writeln('<error>Something went wrong during import.</error>');
