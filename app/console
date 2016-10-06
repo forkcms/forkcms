@@ -41,10 +41,12 @@ $backend->initialize('Console');
 
 $application = new Application($kernel);
 $application->add(new \Console\Locale\ImportLocaleCommand());
-$application->add(
-    new \Console\Locale\EnableLocaleCommand(
-        $kernel->getContainer()->get('fork.settings'),
-        $kernel->getContainer()->getParameter('installed_modules')
-    )
-);
+if ($kernel->getContainer()->getParameter('site.multilanguage')) {
+    $application->add(
+        new \Console\Locale\EnableLocaleCommand(
+            $kernel->getContainer()->get('fork.settings'),
+            $kernel->getContainer()->getParameter('installed_modules')
+        )
+    );
+}
 $application->run($input);
