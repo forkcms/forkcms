@@ -110,7 +110,25 @@ class EnableLocaleCommand extends Command
             return;
         }
         $this->askToAddInterfaceLocale();
-        $this->askToMakeTheLocaleAccessibleToVisitors();
+        if ($this->askToMakeTheLocaleAccessibleToVisitors()) {
+            $this->askToEnableTheLocaleForRedirecting();
+        }
+    }
+
+    private function askToEnableTheLocaleForRedirecting()
+    {
+        $enableRedirect = $this->formatter->confirm(
+            'Would you like to redirect visitors based on their browser locale to this locale?'
+        );
+
+        if (!$enableRedirect) {
+            return false;
+        }
+
+        $this->redirectLocale = array_flip($this->redirectLocale);
+        $this->redirectLocale[] = $this->workingLocale;
+        $this->settings->set('Core', 'redirect_languages', $this->redirectLocale);
+        $this->redirectLocale = array_flip($this->redirectLocale);
     }
 
     private function askToMakeTheLocaleAccessibleToVisitors()
@@ -120,7 +138,7 @@ class EnableLocaleCommand extends Command
         );
 
         if (!$makeAccessible) {
-            return;
+            return false;
         }
 
         $this->enabledLocale = array_flip($this->enabledLocale);
@@ -131,11 +149,13 @@ class EnableLocaleCommand extends Command
         $makeDefault = $this->formatter->confirm('Would you like to make this locale the default locale for visitors?');
 
         if (!$makeDefault) {
-            return;
+            return true;
         }
 
         $this->defaultEnabledLocale = $this->workingLocale;
         $this->settings->set('Core', 'default_language', $this->workingLocale);
+
+        return true;
     }
 
     private function askToAddInterfaceLocale()
