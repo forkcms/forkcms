@@ -30,22 +30,22 @@ class EnableLocaleCommand extends Command
     private $workingLocale;
 
     /** @var string */
-    private $installedLanguages;
+    private $installedLocale;
 
     /** @var string */
-    private $interfaceLanguages;
+    private $interfaceLocale;
 
     /** @var string */
-    private $enabledLanguages;
+    private $enabledLocale;
 
     /** @var string */
-    private $redirectLanguages;
+    private $redirectLocale;
 
     /** @var string */
-    private $defaultEnabledLanguage;
+    private $defaultEnabledLocale;
 
     /** @var string */
-    private $defaultInterfaceLanguage;
+    private $defaultInterfaceLocale;
 
     /**
      * @param ModulesSettings $settings
@@ -56,12 +56,12 @@ class EnableLocaleCommand extends Command
         parent::__construct($name);
 
         $this->settings = $settings;
-        $this->installedLanguages = array_flip($this->settings->get('Core', 'languages'));
-        $this->interfaceLanguages = array_flip($this->settings->get('Core', 'interface_languages'));
-        $this->enabledLanguages = array_flip($this->settings->get('Core', 'languages'));
-        $this->redirectLanguages = array_flip($this->settings->get('Core', 'languages'));
-        $this->defaultEnabledLanguage = $this->settings->get('Core', 'default_language');
-        $this->defaultInterfaceLanguage = $this->settings->get('Core', 'default_interface_language');
+        $this->installedLocale = array_flip($this->settings->get('Core', 'languages'));
+        $this->interfaceLocale = array_flip($this->settings->get('Core', 'interface_languages'));
+        $this->enabledLocale = array_flip($this->settings->get('Core', 'languages'));
+        $this->redirectLocale = array_flip($this->settings->get('Core', 'languages'));
+        $this->defaultEnabledLocale = $this->settings->get('Core', 'default_language');
+        $this->defaultInterfaceLocale = $this->settings->get('Core', 'default_interface_language');
     }
 
     /**
@@ -91,63 +91,63 @@ class EnableLocaleCommand extends Command
 
         $this->output->writeln($this->formatter->title('Fork CMS locale enable'));
 
-        $this->showLanguageOverview();
-        $this->selectWorkingLanguage();
+        $this->showLocaleOverview();
+        $this->selectWorkingLocale();
     }
 
-    private function selectWorkingLanguage()
+    private function selectWorkingLocale()
     {
         $this->workingLocale = $this->formatter->choice(
-            'What language would you like to configure',
-            $this->getInstallableLanguages()
+            'What locale would you like to configure',
+            $this->getInstallableLocale()
         );
     }
 
-    private function showLanguageOverview()
+    private function showLocaleOverview()
     {
-        $languages = array_map(
-            function ($language, $key) {
+        $locale = array_map(
+            function ($locale, $key) {
                 $enabledMessage = null;
                 $interfaceMessage = null;
 
-                if ($this->defaultEnabledLanguage === $key) {
+                if ($this->defaultEnabledLocale === $key) {
                     $enabledMessage = ' (default)';
                 }
 
-                if ($this->defaultInterfaceLanguage === $key) {
+                if ($this->defaultInterfaceLocale === $key) {
                     $interfaceMessage = ' (default)';
                 }
 
                 return [
                     'key' => $key,
-                    'language' => $language,
-                    'installed' => array_key_exists($key, $this->installedLanguages) ? 'Y' : 'N',
-                    'interface' => (array_key_exists($key, $this->interfaceLanguages) ? 'Y' : 'N') . $interfaceMessage,
-                    'enabled' => (array_key_exists($key, $this->enabledLanguages) ? 'Y' : 'N') . $enabledMessage,
-                    'redirect' => array_key_exists($key, $this->redirectLanguages) ? 'Y' : 'N',
+                    'locale' => $locale,
+                    'installed' => array_key_exists($key, $this->installedLocale) ? 'Y' : 'N',
+                    'interface' => (array_key_exists($key, $this->interfaceLocale) ? 'Y' : 'N') . $interfaceMessage,
+                    'enabled' => (array_key_exists($key, $this->enabledLocale) ? 'Y' : 'N') . $enabledMessage,
+                    'redirect' => array_key_exists($key, $this->redirectLocale) ? 'Y' : 'N',
                 ];
             },
-            $this->getInstallableLanguages(),
-            array_keys($this->getInstallableLanguages())
+            $this->getInstallableLocale(),
+            array_keys($this->getInstallableLocale())
         );
 
         $this->formatter->listing(
             [
-                "key:\t\tThe identifier of the language",
-                "language:\tThe name of the language",
-                "installed:\tPossible languages to use as interface, enabled or redirect language",
-                "interface:\tLanguages that the user in the backend can use for the interface",
-                "enabled:\tLanguages that are accessible for visitors",
-                "redirect:\tLanguages that people may automatically be redirected to based upon their browser language",
+                "key:\t\tThe identifier of the locale",
+                "locale:\tThe name of the locale",
+                "installed:\tPossible locale to use as interface, enabled or redirect locale",
+                "interface:\tLocale that the user in the backend can use for the interface",
+                "enabled:\tLocale that are accessible for visitors",
+                "redirect:\tLocale that people may automatically be redirected to based upon their browser locale",
             ]
         );
-        $this->formatter->table(['key', 'language', 'installed', 'interface', 'enabled', 'redirect'], $languages);
+        $this->formatter->table(['key', 'locale', 'installed', 'interface', 'enabled', 'redirect'], $locale);
     }
 
     /**
      * @return array
      */
-    private function getInstallableLanguages()
+    private function getInstallableLocale()
     {
         return [
             'en' => 'English',
