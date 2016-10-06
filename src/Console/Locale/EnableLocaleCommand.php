@@ -146,7 +146,7 @@ class EnableLocaleCommand extends Command
         $this->settings->set('Core', 'active_languages', $this->enabledLocale);
         $this->enabledLocale = array_flip($this->enabledLocale);
 
-        $makeDefault = $this->formatter->confirm('Would you like to make this locale the default locale for visitors?');
+        $makeDefault = $this->formatter->confirm('Would you like to make this locale the default locale for visitors?', false);
 
         if (!$makeDefault) {
             return true;
@@ -173,7 +173,7 @@ class EnableLocaleCommand extends Command
         $this->settings->set('Core', 'interface_languages', $this->interfaceLocale);
         $this->interfaceLocale = array_flip($this->interfaceLocale);
 
-        $makeDefault = $this->formatter->confirm('Would you like to make this locale the default interface locale?');
+        $makeDefault = $this->formatter->confirm('Would you like to make this locale the default interface locale?', false);
 
         if (!$makeDefault) {
             return;
