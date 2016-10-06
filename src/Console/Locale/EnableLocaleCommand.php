@@ -56,12 +56,7 @@ class EnableLocaleCommand extends Command
         parent::__construct($name);
 
         $this->settings = $settings;
-        $this->installedLocale = array_flip($this->settings->get('Core', 'languages'));
-        $this->interfaceLocale = array_flip($this->settings->get('Core', 'interface_languages'));
-        $this->enabledLocale = array_flip($this->settings->get('Core', 'languages'));
-        $this->redirectLocale = array_flip($this->settings->get('Core', 'languages'));
-        $this->defaultEnabledLocale = $this->settings->get('Core', 'default_language');
-        $this->defaultInterfaceLocale = $this->settings->get('Core', 'default_interface_language');
+        $this->installedModules = $installedModules;
     }
 
     /**
@@ -85,6 +80,13 @@ class EnableLocaleCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->installedLocale = array_flip($this->settings->get('Core', 'languages'));
+        $this->interfaceLocale = array_flip($this->settings->get('Core', 'interface_languages'));
+        $this->enabledLocale = array_flip($this->settings->get('Core', 'languages'));
+        $this->redirectLocale = array_flip($this->settings->get('Core', 'languages'));
+        $this->defaultEnabledLocale = $this->settings->get('Core', 'default_language');
+        $this->defaultInterfaceLocale = $this->settings->get('Core', 'default_interface_language');
+
         $this->input = $input;
         $this->output = $output;
         $this->formatter = new SymfonyStyle($input, $output);
