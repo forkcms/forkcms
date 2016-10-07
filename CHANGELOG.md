@@ -1,3 +1,25 @@
+4.2.4 (2016-10-07)
+------------------
+
+Bugfixes:
+
+* FormBuilder: use the new instead of the deprecated language class
+* Core: Common\Language didn't use the new language class yet
+* ContentBlocks: When copying pages from one to another locale all the new content blocks got the same id
+* Tools: spoon2twig : fix conversion spoon_date
+* Tools: spoon2twig : fix conversion substring
+* Tools: spoon2twig : fix geturlforblock
+* Tools: spoon2twig : fix getnavigation
+* Tools: spoon2twig : fix getsubnavigation
+* Tools: spoon2twig : fix words like contact being detected as an action
+* Tools: spoon2twig : fix Mail subdirectory not converting
+* Tools: spoon2twig : fix converting positions
+* Tools: spoon2twig : ucfirst is no longer replaced with capitalize since it is not the same and has been added to fork
+* Tools: spoon2twig : fix multiple translations on the same line messing things up
+* Github: point to slack instead of irc for support
+* Extensions: fix install link on detail page of a module
+* Core: Fix word-wrap problem in tooltips
+
 4.2.3 (2016-09-23)
 ------------------
 
