@@ -2,6 +2,7 @@
 
 namespace Common;
 
+use Common\Core\Model;
 use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
 use Symfony\Component\Translation\IdentityTranslator;
@@ -21,10 +22,13 @@ final class Language extends IdentityTranslator
      */
     public static function get()
     {
-        $application = APPLICATION;
+        $application = 'Backend';
 
-        if ($application === 'Console' || $application === 'Api') {
-            $application = 'Backend';
+        if (Model::has('request')
+            && Model::get('request')->attributes->has('application')
+            && Model::get('request')->attributes->get('application') === 'Frontend'
+        ) {
+            $application = 'Frontend';
         }
 
         return $application . '\Core\Language\Language';
