@@ -23,7 +23,7 @@ final class Language extends IdentityTranslator
     {
         $application = APPLICATION;
 
-        if ($application === 'Console') {
+        if ($application === 'Console' || $application === 'Api') {
             $application = 'Backend';
         }
 
