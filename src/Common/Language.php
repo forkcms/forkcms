@@ -114,18 +114,24 @@ final class Language extends IdentityTranslator
      */
     public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
-        if (strpos($id, '.') === false) {
-            parent::trans($id, $parameters, $domain, $locale);
+        // we are not in a normal fork context
+        if (!defined('APPLICATION')) {
+            return parent::trans($id, $parameters, $domain, $locale);
         }
-        list($action, $string) = explode('.', $id, 2);
 
         $possibleActions = ['lbl', 'err', 'msg'];
         if (self::get() === FrontendLanguage::class) {
             $possibleActions[] = 'act';
         }
 
+        if (!preg_match('/(' . implode('|', $possibleActions) . ')./', $id)) {
+            return parent::trans($id, $parameters, $domain, $locale);
+        }
+
+        list($action, $string) = explode('.', $id, 2);
+
         if (!in_array($action, $possibleActions)) {
-            parent::trans($id, $parameters, $domain, $locale);
+            return parent::trans($id, $parameters, $domain, $locale);
         }
 
         $translatedString = self::$action($string);
