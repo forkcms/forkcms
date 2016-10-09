@@ -131,8 +131,14 @@ final class Language extends IdentityTranslator
         $translatedString = self::$action($string);
 
         // we couldn't translate it, let the parent have a go
-        if ($translatedString === '{$' . $action . $string . '}') {
-            return parent::trans($id, $parameters, $domain, $locale);
+        if (preg_match('/\{\$' . $action . '.*' . $string . '\}/', $translatedString)) {
+            $parentTranslatedString = parent::trans($id, $parameters, $domain, $locale);
+            // If the parent couldn't translate return our default
+            if ($id === $parentTranslatedString) {
+                return $translatedString;
+            }
+
+            return $parentTranslatedString;
         }
 
         return $translatedString;
