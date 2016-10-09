@@ -64,3 +64,15 @@
 {%- block label_asterisk -%}
   <abbr title="{{ 'lbl.RequiredField'|trans({}, translation_domain)|ucfirst }}">*</abbr>
 {%- endblock label_asterisk -%}
+
+{% block form_errors -%}
+  {% if errors|length > 0 -%}
+    {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+    <ul class="list-unstyled">
+        {%- for error in errors -%}
+          <li class="formError"><span class="fa fa-exclamation-triangle"></span> {{ error.message }}</li>
+        {%- endfor -%}
+    </ul>
+    {% if form.parent %}</span>{% else %}</div>{% endif %}
+  {%- endif %}
+{%- endblock form_errors %}
