@@ -2,7 +2,7 @@
 
 {% block form_label %}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
-    {% if label is not sameas(false) %}
+    {% if label is not same as(false) %}
       {% if label is empty %}
         {% set label = id|trans({}, translation_domain)|capitalize %}
       {% else %}
@@ -35,12 +35,12 @@
 
 
 {% block help_label_tooltip %}
-  <span class="help-block{% if help_label_tooltip.icon is not sameas(false) %} inline{% endif %}">
+  <span class="help-block{% if help_label_tooltip.icon is not same as(false) %} inline{% endif %}">
     <a href="#" data-toggle="tooltip" data-placement="{{ help_label_tooltip.placement }}" data-title="{{ help_label_tooltip.title|trans({}, translation_domain) }}">
-      {% if help_label_tooltip.icon is not sameas(false) %}
+      {% if help_label_tooltip.icon is not same as(false) %}
         <i class="fa fa-question"></i>
       {% endif %}
-      {% if help_label_tooltip.text is not sameas(null) %}
+      {% if help_label_tooltip.text is not same as(null) %}
         <span class="text-muted">{{ help_label_tooltip.text }}</span>
       {% endif %}
     </a>
@@ -48,12 +48,12 @@
 {% endblock help_label_tooltip %}
 
 {% block help_label_popover %}
-  <span class="help-block{% if help_label_popover.icon is not sameas(false) %} inline{% endif %}">
+  <span class="help-block{% if help_label_popover.icon is not same as(false) %} inline{% endif %}">
     <a href="#" data-toggle="popover" data-trigger="hover" data-placement="{{ help_label_popover.placement }}" data-title="{{ help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ help_label_popover.content|trans({}, translation_domain) }}">
-      {% if help_label_popover.icon is not sameas(false) %}
+      {% if help_label_popover.icon is not same as(false) %}
         <i class="fa fa-question"></i>
       {% endif %}
-      {% if help_label_popover.text is not sameas(null) %}
+      {% if help_label_popover.text is not same as(null) %}
         <span class="text-muted">{{ help_label_popover.text }}</span>
       {% endif %}
     </a>
