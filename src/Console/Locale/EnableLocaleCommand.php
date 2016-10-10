@@ -88,8 +88,6 @@ class EnableLocaleCommand extends Command
      * @param OutputInterface $output
      *
      * @throws Exception
-     *
-     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -117,6 +115,9 @@ class EnableLocaleCommand extends Command
         }
     }
 
+    /**
+     * @return bool
+     */
     private function askToEnableTheLocaleForRedirecting()
     {
         $enableRedirect = $this->formatter->confirm(
@@ -133,6 +134,9 @@ class EnableLocaleCommand extends Command
         $this->redirectLocale = array_flip($this->redirectLocale);
     }
 
+    /**
+     * @return bool
+     */
     private function askToMakeTheLocaleAccessibleToVisitors()
     {
         $makeAccessible = $this->formatter->confirm(

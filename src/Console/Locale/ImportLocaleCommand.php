@@ -35,8 +35,6 @@ class ImportLocaleCommand extends Command
      * @param OutputInterface $output
      *
      * @throws Exception
-     *
-     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
