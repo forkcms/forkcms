@@ -56,7 +56,6 @@ class ApplicationRouting extends Controller
     {
         defined('APPLICATION') || define('APPLICATION', 'Backend');
         defined('NAMED_APPLICATION') || define('NAMED_APPLICATION', 'private');
-        $request->attributes->set('application', 'Backend');
 
         $applicationClass = $this->initializeBackend('Backend');
         $application = new $applicationClass($this->container->get('kernel'));
@@ -74,7 +73,6 @@ class ApplicationRouting extends Controller
     public function backendAjaxController(Request $request)
     {
         defined('APPLICATION') || define('APPLICATION', 'Backend');
-        $request->attributes->set('application', 'Backend');
 
         $applicationClass = $this->initializeBackend('BackendAjax');
         $application = new $applicationClass($this->container->get('kernel'));
@@ -92,7 +90,6 @@ class ApplicationRouting extends Controller
     public function backendCronjobController(Request $request)
     {
         defined('APPLICATION') || define('APPLICATION', 'Backend');
-        $request->attributes->set('application', 'Backend');
 
         $applicationClass = $this->initializeBackend('BackendCronjob');
         $application = new $applicationClass($this->container->get('kernel'));
@@ -111,7 +108,6 @@ class ApplicationRouting extends Controller
     public function frontendController(Request $request, $route)
     {
         defined('APPLICATION') || define('APPLICATION', 'Frontend');
-        $request->attributes->set('application', 'Frontend');
 
         $applicationClass = $this->initializeFrontend('Frontend');
         $application = new $applicationClass($this->container->get('kernel'));
@@ -129,7 +125,6 @@ class ApplicationRouting extends Controller
     public function frontendAjaxController(Request $request)
     {
         defined('APPLICATION') || define('APPLICATION', 'Frontend');
-        $request->attributes->set('application', 'Frontend');
 
         $applicationClass = $this->initializeFrontend('FrontendAjax');
         $application = new $applicationClass($this->container->get('kernel'));
@@ -149,7 +144,6 @@ class ApplicationRouting extends Controller
     public function apiController(Request $request, $version, $client)
     {
         defined('APPLICATION') || define('APPLICATION', 'Api');
-        $request->attributes->set('application', 'Api');
 
         $applicationClass = $this->initializeAPI('Api', $request);
         $application = new $applicationClass($this->container->get('kernel'));
