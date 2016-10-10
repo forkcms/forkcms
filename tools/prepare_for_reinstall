@@ -51,7 +51,7 @@ clear_database() {
 
     for t in $tables
     do
-        $mysql_command -e "drop table $t"
+        $mysql_command -e "SET FOREIGN_KEY_CHECKS = 0;drop table $t;"
     done
 
     return 1;
