@@ -118,11 +118,6 @@ final class Language extends IdentityTranslator
      */
     public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
-        // we are not in a normal fork context
-        if (!defined('APPLICATION')) {
-            return parent::trans($id, $parameters, $domain, $locale);
-        }
-
         $possibleActions = ['lbl', 'err', 'msg'];
         if (self::get() === FrontendLanguage::class) {
             $possibleActions[] = 'act';
