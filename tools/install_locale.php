@@ -2,8 +2,15 @@
 
 /**
  * This is a simple script to install a locale file.
+ *
+ * @deprecated
  */
 
+trigger_error(
+    'This script is deprecated
+     Use app/console forkcms:locale:import instead',
+    E_USER_DEPRECATED
+);
 require_once __DIR__ . '/../autoload.php';
 require_once __DIR__ . '/../app/AppKernel.php';
 require_once __DIR__ . '/../app/KernelLoader.php';
