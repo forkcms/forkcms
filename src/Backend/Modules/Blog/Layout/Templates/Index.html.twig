@@ -5,7 +5,7 @@
     <div class="btn-group" role="group">
       {% if showBlogAdd %}
         {% if filterCategory %}
-          {{ macro.buttonIcon( geturl('add', null, '&category=#{filterCategory.id}'), 'plus-square', 'lbl.Add'|trans|ucfirst) }}
+          {{ macro.buttonIcon( geturl('add', null, '&category='~filterCategory.id), 'plus-square', 'lbl.Add'|trans|ucfirst) }}
         {% endif %}
         {% if not filterCategory %}
           {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|ucfirst) }}
