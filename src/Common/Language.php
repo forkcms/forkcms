@@ -26,7 +26,7 @@ final class Language extends IdentityTranslator
 
         if (Model::has('request')
             && Model::get('request')->attributes->has('_route')
-            && strpos(Model::get('request')->attributes->get('_route'), 'frontend') === 0
+            && stripos(Model::get('request')->attributes->get('_route'), 'frontend') === 0
         ) {
             $application = 'Frontend';
         }
