@@ -20,6 +20,8 @@ doctrine:
         types:
             enum_bool: Common\Doctrine\Type\EnumBoolType
             locale: Common\Doctrine\Type\LocaleType
+            datetime: Common\Doctrine\Type\UTCDateTimeType
+            datetimetz: Common\Doctrine\Type\UTCDateTimeType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
