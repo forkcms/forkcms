@@ -329,24 +329,24 @@ class TemplateModifiers extends BaseTwigModifiers
     {
         // create new widget instance and return parsed content
         $extra = FrontendBlockWidget::getForId(
-            Model::get('kernel'),
+            FrontendModel::get('kernel'),
             $module,
             $action,
             $id
         );
 
         // set parseWidget because we will need it to skip setting headers in the display
-        Model::getContainer()->set('parseWidget', true);
+        FrontendModel::getContainer()->set('parseWidget', true);
 
         try {
             $extra->execute();
             $content = $extra->getContent();
-            Model::getContainer()->set('parseWidget', null);
+            FrontendModel::getContainer()->set('parseWidget', null);
 
             return $content;
         } catch (Exception $e) {
             // if we are debugging, we want to see the exception
-            if (Model::getContainer()->getParameter('kernel.debug')) {
+            if (FrontendModel::getContainer()->getParameter('kernel.debug')) {
                 throw $e;
             }
 
