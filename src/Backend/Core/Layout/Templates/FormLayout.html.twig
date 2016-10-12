@@ -4,9 +4,9 @@
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
     {% if label is not sameas(false) %}
       {% if label is empty %}
-        {% set label = id|trans({}, translation_domain)|capitalize %}
+        {% set label = id|trans({}, translation_domain)|ucfirst %}
       {% else %}
-        {% set label = label|trans({}, translation_domain)|capitalize %}
+        {% set label = label|trans({}, translation_domain)|ucfirst %}
       {% endif %}
       {% if not compound %}
         {% set label_attr = label_attr|merge({'for': id}) %}
