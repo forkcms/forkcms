@@ -33,6 +33,30 @@
   {% endif %}
 {% endblock form_label %}
 
+{% block checkbox_radio_label %}
+  {% if widget is defined %}
+    {% if required %}
+      {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
+    {% endif %}
+    {% if parent_label_class is defined %}
+      {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class)|trim}) %}
+    {% endif %}
+    {% if label is not same as(false) and label is empty %}
+      {%- if label_format is not empty -%}
+        {% set label = label_format|replace({
+        '%name%': name,
+        '%id%': id,
+        }) %}
+      {%- else -%}
+        {% set label = name|humanize %}
+      {%- endif -%}
+    {% endif %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+    {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst) -}}{% if required %}{{- block('label_asterisk') }}{% endif %}
+    </label>
+  {% endif %}
+{% endblock checkbox_radio_label %}
+
 
 {% block help_label_tooltip %}
   <span class="help-block{% if help_label_tooltip.icon is not sameas(false) %} inline{% endif %}">
