@@ -17,7 +17,7 @@
       {% endif %}
       {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
       <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-      {{ label }}{{- block('label_asterisk') }}
+      {{ label }}{% if required  %}{{- block('label_asterisk') }}{% endif %}
       {% if help_label %}
         {{ block('help_label') }}
       {% endif %}
