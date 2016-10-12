@@ -27,6 +27,13 @@ doctrine:
             default:
                 connection: default
                 auto_mapping: true
+                mappings:
+                    common:
+                        type: annotation
+                        is_bundle: false
+                        dir: %kernel.root_dir%/../src/Common/Doctrine/Entity
+                        alias: Common
+                        prefix: Common\Doctrine\Entity
 
 doctrine_orm_bridge:
     entity_manager: default
