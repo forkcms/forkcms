@@ -15,9 +15,9 @@
     <header role="banner">
       <h3>
       {% if archive.month %}
-        {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|date('F Y',LANGUAGE) ) }}
+        {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|spoondate('F Y',LANGUAGE) ) }}
       {% else %}
-        {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|date('Y') ) }}
+        {{ 'msg.ArticlesFor'|trans|capitalize|format(archive.start_date|spoondate('Y') ) }}
       {% endif %}
       </h3>
     </header>
@@ -34,7 +34,7 @@
           {% for item in items %}
             <tr {% if item.first %}class="firstChild"{% endif %}>
               <td class="date muted">
-                <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">{{ item.publish_on|date(dateFormatShort,LANGUAGE ) }}</time>
+                <time itemprop="datePublished" datetime="{{ item.publish_on|spoondate('Y-m-d\TH,i,s' ) }}">{{ item.publish_on|spoondate(dateFormatShort,LANGUAGE ) }}</time>
               </td>
               <td class="title"><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></td>
               {% if allowComments %}
