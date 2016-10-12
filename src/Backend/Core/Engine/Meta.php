@@ -445,44 +445,6 @@ class Meta
 
         $update = (bool) $update;
 
-        // get meta keywords
-        if ($this->frm->getField('meta_keywords_overwrite')->isChecked()) {
-            $keywords = $this->frm->getField('meta_keywords')->getValue();
-        } else {
-            $keywords = $this->frm->getField($this->baseFieldName)->getValue();
-        }
-
-        // get meta description
-        if ($this->frm->getField('meta_description_overwrite')->isChecked()) {
-            $description = $this->frm->getField('meta_description')->getValue();
-        } else {
-            $description = $this->frm->getField($this->baseFieldName)->getValue();
-        }
-
-        // get page title
-        if ($this->frm->getField('page_title_overwrite')->isChecked()) {
-            $title = $this->frm->getField('page_title')->getValue();
-        } else {
-            $title = $this->frm->getField($this->baseFieldName)->getValue();
-        }
-
-        // get URL
-        if ($this->frm->getField('url_overwrite')->isChecked()) {
-            $URL = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
-        } else {
-            $URL = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue());
-        }
-
-        // get the real URL
-        $URL = $this->generateURL($URL);
-
-        // get meta custom
-        if ($this->custom && $this->frm->getField('meta_custom')->isFilled()) {
-            $custom = $this->frm->getField('meta_custom')->getValue(true);
-        } else {
-            $custom = null;
-        }
-
         //serialize data for save
         if (!empty($this->data['data'])) {
             $this->data['data'] = serialize($this->data['data']);
