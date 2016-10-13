@@ -55,6 +55,10 @@ services:
         class: Backend\Form\Type\EditorType
         tags:
           - { name: form.type, alias: editor}
+    form.type.meta:
+        class: Backend\Form\Type\MetaType
+        tags:
+          - { name: form.type, alias: meta}
     database:
         class: SpoonDatabase
         arguments:

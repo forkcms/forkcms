@@ -160,7 +160,7 @@ class Meta
             return;
         }
 
-        $this->data = array();
+        $this->data = [];
     }
 
     /**
@@ -188,6 +188,32 @@ class Meta
     }
 
     /**
+     * Used in the transformer of the Symfony form type for this entity
+     *
+     * @param array $metaData
+     *
+     * @return self
+     */
+    public static function fromFormData(array $metaData)
+    {
+        return new self(
+            $metaData['keywords'],
+            $metaData['keywordsOverwrite'],
+            $metaData['description'],
+            $metaData['descriptionOverwrite'],
+            $metaData['title'],
+            $metaData['titleOverwrite'],
+            $metaData['url'],
+            $metaData['urlOverwrite'],
+            $metaData['custom'],
+            [
+                'seo_index' => SEOIndex::fromString($metaData['SEOIndex']),
+                'seo_follow' => SEOFollow::fromString($metaData['SEOFollow']),
+            ]
+        );
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -204,7 +230,7 @@ class Meta
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isKeywordsOverwrite()
     {
@@ -220,7 +246,7 @@ class Meta
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDescriptionOverwrite()
     {
@@ -236,7 +262,7 @@ class Meta
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isTitleOverwrite()
     {
@@ -252,7 +278,7 @@ class Meta
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isUrlOverwrite()
     {
