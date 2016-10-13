@@ -9,6 +9,7 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Doctrine\Entity\Meta as MetaEntity;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
@@ -438,6 +439,8 @@ class Meta
      * @throws Exception If no meta id was provided.
      *
      * @return int
+     *
+     * @deprecated just use the entity for doctrine
      */
     public function save($update = false)
     {
@@ -586,5 +589,15 @@ class Meta
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return MetaEntity
+     */
+    public function getMetaEntity()
+    {
+        $this->validate();
+
+        return MetaEntity::fromBackendMeta($this);
     }
 }
