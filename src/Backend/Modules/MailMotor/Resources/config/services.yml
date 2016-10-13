@@ -1,6 +1,0 @@
-services:
-    mailmotor.not_implemented.subscriber.mailer:
-        class: Frontend\Modules\MailMotor\Utils\NotImplementedSubscriberMailer
-        arguments:
-            - "@mailer"
-            - "@fork.settings"
