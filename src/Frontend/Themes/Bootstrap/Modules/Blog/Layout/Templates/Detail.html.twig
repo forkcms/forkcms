@@ -34,7 +34,7 @@ variables that are available:
         <div class="col-md-6">
           <span class="hideText">{{ 'msg.WrittenBy'|trans|capitalize|format('') }} </span>{{ item.user_id|usersetting('nickname' ) }}
           <span class="hideText">{{ 'lbl.On'|trans }}</span>
-          <time itemprop="datePublished" datetime="{{ item.publish_on|spoondate('Y-m-d\TH,i,s' ) }}">{{ item.publish_on|spoondate(dateFormatLong,LANGUAGE ) }}</time>
+          <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">{{ item.publish_on|spoondate(dateFormatLong,LANGUAGE ) }}</time>
         </div>
 
         <div class="col-md-6 metaExtra" role="contentinfo">
@@ -111,7 +111,7 @@ variables that are available:
               {% if comment.website %}<a href="{{ comment.website }}" itemprop="url">{% endif %}
               <span itemprop="creator name">{{ comment.author }}</span>{% if comment.website %}</a>{% endif %}
               <span class="hideText">{{ 'lbl.Wrote'|trans }}</span>
-              <time class="muted" itemprop="commentTime" datetime="{{ comment.created_on|spoondate('Y-m-d\TH,i,s' ) }}">{{ comment.created_on|timeago|raw }}</time>
+              <time class="muted" itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH,i,s' ) }}">{{ comment.created_on|timeago|raw }}</time>
             </div>
             <div class="commentText content" itemprop="commentText">
               {{ comment.text|raw }}
