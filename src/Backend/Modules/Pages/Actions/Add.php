@@ -13,7 +13,7 @@ use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
@@ -123,22 +123,33 @@ class Add extends BackendBaseActionAdd
         $this->frm->addRadiobutton(
             'hidden',
             array(
-                 array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                 array('label' => BL::lbl('Published'), 'value' => 'N'),
+                array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
+                array('label' => BL::lbl('Published'), 'value' => 'N'),
             ),
             'N'
         );
 
+        // image related fields
+        $this->frm->addImage('image');
+
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
             // init some vars
-            $items = array('move', 'children', 'edit', 'delete');
+            $items = array(
+                'move' => true,
+                'children' => true,
+                'edit' => true,
+                'delete' => true,
+            );
             $checked = array();
             $values = array();
 
-            foreach ($items as $value) {
+            foreach ($items as $value => $itemIsChecked) {
                 $values[] = array('label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
-                $checked[] = $value;
+
+                if ($itemIsChecked) {
+                    $checked[] = $value;
+                }
             }
 
             $this->frm->addMultiCheckbox('allow', $values, $checked);
@@ -149,7 +160,7 @@ class Add extends BackendBaseActionAdd
         $block['formElements']['chkVisible'] = $this->frm->addCheckbox('block_visible_' . $block['index'], true);
         $block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], 0);
         $block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index'], 'fallback');
-        $block['formElements']['txtHTML'] = $this->frm->addTextArea(
+        $block['formElements']['txtHTML'] = $this->frm->addTextarea(
             'block_html_' . $block['index']
         ); // this is no editor; we'll add the editor in JS
 
@@ -230,7 +241,7 @@ class Add extends BackendBaseActionAdd
                 'block_position_' . $block['index'],
                 $block['position']
             );
-            $block['formElements']['txtHTML'] = $this->frm->addTextArea(
+            $block['formElements']['txtHTML'] = $this->frm->addTextarea(
                 'block_html_' . $block['index'],
                 $block['html']
             ); // this is no editor; we'll add the editor in JS
@@ -350,6 +361,7 @@ class Add extends BackendBaseActionAdd
             if ($this->frm->isCorrect()) {
                 // init var
                 $parentId = 0;
+                $templateId = (int) $this->frm->getField('template_id')->getValue();
                 $data = null;
 
                 // build data
@@ -370,12 +382,15 @@ class Add extends BackendBaseActionAdd
                         'code' => '301',
                     );
                 }
+                if (array_key_exists('image', $this->templates[$templateId]['data'])) {
+                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
+                }
 
                 // build page record
                 $page['id'] = BackendPagesModel::getMaximumPageId() + 1;
                 $page['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $page['parent_id'] = $parentId;
-                $page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
+                $page['template_id'] = $templateId;
                 $page['meta_id'] = (int) $this->meta->save();
                 $page['language'] = BL::getWorkingLanguage();
                 $page['type'] = 'root';
@@ -475,7 +490,7 @@ class Add extends BackendBaseActionAdd
                     $this->redirect(
                         BackendModel::createURLForAction(
                             'Edit'
-                        ) . '&id=' . $page['id'] . '&report=added&var=' . urlencode(
+                        ) . '&id=' . $page['id'] . '&report=added&var=' . rawurlencode(
                             $page['title']
                         ) . '&highlight=row-' . $page['id']
                     );
@@ -484,13 +499,30 @@ class Add extends BackendBaseActionAdd
                     $this->redirect(
                         BackendModel::createURLForAction(
                             'Edit'
-                        ) . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . urlencode(
+                        ) . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . rawurlencode(
                             $page['title']
                         ) . '&highlight=row-' . $page['revision_id'] . '&draft=' . $page['revision_id']
                     );
                 }
             }
         }
+    }
+
+    /**
+     * @param bool $allowImage
+     * @return string|null
+     */
+    private function getImage($allowImage)
+    {
+        if (!$allowImage || !$this->frm->getField('image')->isFilled()) {
+            return null;
+        }
+
+        $imagePath = FRONTEND_FILES_PATH . '/pages/images';
+        $imageFilename = $this->meta->getURL() . '_' . time() . '.' . $this->frm->getField('image')->getExtension();
+        $this->frm->getField('image')->generateThumbnails($imagePath, $imageFilename);
+
+        return $imageFilename;
     }
 
     /**

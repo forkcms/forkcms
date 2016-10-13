@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Api\V1\Engine\Api as BaseAPI;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * In this file we store all generic functions that we will be available through the API
@@ -168,7 +169,7 @@ class Api
             } else {
                 // create the key if needed
                 if ($user->getSetting('api_key', null) == null) {
-                    $user->setSetting('api_key', uniqid());
+                    $user->setSetting('api_key', uniqid('', true));
                 }
 
                 // return the key
@@ -188,7 +189,7 @@ class Api
             $info = array();
 
             // get all languages
-            $languages = Language::getActiveLanguages();
+            $languages = BackendLanguage::getActiveLanguages();
             $default = Model::get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
 
             // loop languages

@@ -104,11 +104,11 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         $this->addModule('Faq');
 
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         $this->makeSearchable('Faq');
         $this->setModuleRights(1, 'Faq');

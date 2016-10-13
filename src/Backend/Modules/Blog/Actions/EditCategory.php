@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Meta as BackendMeta;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
@@ -66,7 +66,7 @@ class EditCategory extends BackendBaseActionEdit
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
-        $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getURLForCategory', array($this->record['id']));
+        $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURLForCategory', array($this->record['id']));
     }
 
     /**
@@ -115,7 +115,7 @@ class EditCategory extends BackendBaseActionEdit
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' .
-                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                    rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }
         }

@@ -2,6 +2,8 @@
 
 namespace Common\Core;
 
+use Common\Exception\InvalidInitTypeException;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -37,7 +39,7 @@ abstract class Init extends \KernelLoader
 
         // check if this is a valid type
         if (!in_array($type, $this->allowedTypes)) {
-            exit('Invalid init-type');
+            throw new InvalidInitTypeException($type, $this->allowedTypes);
         }
         $this->type = $type;
 

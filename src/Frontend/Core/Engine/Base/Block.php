@@ -9,14 +9,13 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\TwigTemplate;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;
-use Frontend\Core\Engine\Url;
-use Common\Exception\RedirectException;
+use Frontend\Core\Engine\TwigTemplate;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific block
@@ -80,13 +79,6 @@ class Block extends Object
      * @var    string
      */
     private $templatePath;
-
-    /**
-     * A reference to the URL-instance
-     *
-     * @var    Url
-     */
-    public $URL;
 
     /**
      * @param KernelInterface $kernel
@@ -162,7 +154,7 @@ class Block extends Object
      */
     public function addJSData($key, $value)
     {
-        $this->header->addJSData($this->getModule(), $key, $value);
+        $this->header->addJsData($this->getModule(), $key, $value);
     }
 
     /**
@@ -283,8 +275,12 @@ class Block extends Object
 
     /**
      * Parse pagination
+     *
+     * @param string $query_parameter
+     *
+     * @throws Exception
      */
-    protected function parsePagination()
+    protected function parsePagination($query_parameter = 'page')
     {
         $pagination = null;
         $showFirstPages = false;
@@ -374,9 +370,9 @@ class Block extends Object
         if ($this->pagination['requested_page'] > 1) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
+                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
+                $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
             }
 
             // set
@@ -402,9 +398,9 @@ class Block extends Object
             for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?page=' . $i;
+                    $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                    $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
                 }
 
                 // add
@@ -419,9 +415,9 @@ class Block extends Object
 
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . $i;
+                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
             }
 
             // add
@@ -438,9 +434,9 @@ class Block extends Object
             for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?page=' . $i;
+                    $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                    $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
                 }
 
                 // add
@@ -452,9 +448,9 @@ class Block extends Object
         if ($this->pagination['requested_page'] < $this->pagination['num_pages']) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
+                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
+                $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
             }
 
             // set
@@ -482,6 +478,8 @@ class Block extends Object
      *
      * @param string $URL  The URL whereto will be redirected.
      * @param int    $code The redirect code, default is 302 which means this is a temporary redirect.
+     *
+     * @throws RedirectException
      */
     public function redirect($URL, $code = 302)
     {

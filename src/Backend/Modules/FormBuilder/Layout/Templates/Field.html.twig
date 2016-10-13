@@ -10,7 +10,7 @@
         <label for="field{{ id }}">
           {{ label }}
           {% if required %}
-            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+            {{ macro.required }}
           {% endif %}
         </label>
       </div>
@@ -23,7 +23,7 @@
         <label for="field{{ id }}">
           {{ label }}
           {% if required %}
-            <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+            {{ macro.required }}
           {% endif %}
         </label>
       </div>
@@ -47,7 +47,7 @@
             <span class="fa fa-trash-o fa-fw"></span>
           </a>
           <span class="btn btn-default btn-icon-only dragAndDropHandle">
-            <span class="fa fa fa-th fa-fw"></span>
+            <span class="fa fa-reorder fa-fw"></span>
           </span>
         </div>
       </div>

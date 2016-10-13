@@ -10,7 +10,7 @@ namespace Backend\Modules\Location\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
@@ -33,10 +33,7 @@ class UpdateMarker extends BackendBaseAJAXAction
         // validate id
         if ($itemId == 0) {
             $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
-        }
-
-        // validated
-        else {
+        } else {
             //update
             $updateData = array(
                 'id' => $itemId,

@@ -11,7 +11,7 @@ namespace Backend\Modules\Search\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
@@ -117,7 +117,7 @@ class EditSynonym extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Synonyms') . '&report=edited-synonym&var=' . urlencode(
+                    BackendModel::createURLForAction('Synonyms') . '&report=edited-synonym&var=' . rawurlencode(
                         $item['term']
                     ) . '&highlight=row-' . $item['id']
                 );

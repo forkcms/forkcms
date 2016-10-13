@@ -37,22 +37,22 @@ class Installer extends ModuleInstaller
             $avatar64x64 = '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';
             $avatar32x32 = '/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAYEBAQFBAYFBQYJBgUGCQsIBgYICwwKCgsKCgwQDAwMDAwMEAwODxAPDgwTExQUExMcGxsbHCAgICAgICAgICD/2wBDAQcHBw0MDRgQEBgaFREVGiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICD/wAARCAAgACADAREAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABwYIBf/EACsQAAICAQIFBAEEAwAAAAAAAAECAwQFBhEABxIhMRMiI0EUMkJRYjNxsf/EABkBAAMBAQEAAAAAAAAAAAAAAAMEBQIGAP/EACcRAAEDBAIBAgcAAAAAAAAAAAEAAgMEERIhMUEFIlETMkNhYqGx/9oADAMBAAIRAxEAPwBd1Bm1xmDzV+Svt+BUllsM/T6khrwGWIORsQC3j7HHNwRZWB1/U05yxbe5081Ll6S42pr8Mkm/x15mhiUH9qxpsoA4viBgFraS2S1Fye5jZXWOlMdmZ7rS5DDQvTyVLZfnn7BbMkh9wYxDwPvfhCqFiiN91eQx5OxkJQd54W96vI3tA3I6Ytu/b+3HqSLM5FYlJGlj7W/OPm1ee9pjJl8dFKHr28U9dRMVYbFXZ19TwPrbhmOnYPVz91oZHQU7hOXmTyVCC4sRaNmPXGp6JNlOzfqBA8cDkr2tdiqcPiHPYHXtfpNPK/HZ3GtJiNKYWrSW2yPYzF+zLO3WnYdEaxhSR32UrtvxhlQ2XraHW0PwBzdO2D6sLh5IL99rFwyrHJb+wG3YHuz+Bue7H/g4ZpiP2pkiMuYNXEZ2pm1BE+o5HEWIlkhTrgesAy2I32L+mxU9R+h54lxEg/imC/E3HKOMflreJ3qWBFHLY91doyWg3bb1CjDfdQd+FpI966XYRS5NBPe0kcrxaTHZC8bnVEfhrtGpQI0fySfqALbp+76/3wSL0hSfLG9gqGjmFs5RKNf5UqL+Shk3d36wAqEnzsfP3xuNxCiH2WcNYc58jdpCpg3kgntwSQ5O6B0hhZ2M0MCHqIDEDqlJ63/qO3FaOmtyg5KpwFFtQ6arXHhia56MT+kjArJ6a+mZFU90l9vu2Pu+u/lOuhsch2rfiq76b+BwqPR0WZ01pzJay3rtiJJoqn4lpmWKaMSrBMP4j7vv1n+O443Rw32UPzE+8Grsya+0lj9RVYI6k+IztpDUmh6W/wAtdDtH0AyKrk+xl7HurKWB4bkomO+XSiNkIX//2Q==';
 
-            $fs = new Filesystem();
+            $filesystem = new Filesystem();
 
             // store files
-            $fs->dumpFile(
+            $filesystem->dumpFile(
                 PATH_WWW . '/src/Frontend/Files/backend_users/avatars/source/god.jpg',
                 base64_decode($avatar124x124)
             );
-            $fs->dumpFile(
+            $filesystem->dumpFile(
                 PATH_WWW . '/src/Frontend/Files/backend_users/avatars/128x128/god.jpg',
                 base64_decode($avatar124x124)
             );
-            $fs->dumpFile(
+            $filesystem->dumpFile(
                 PATH_WWW . '/src/Frontend/Files/backend_users/avatars/64x64/god.jpg',
                 base64_decode($avatar64x64)
             );
-            $fs->dumpFile(
+            $filesystem->dumpFile(
                 PATH_WWW . '/src/Frontend/Files/backend_users/avatars/32x32/god.jpg',
                 base64_decode($avatar32x32)
             );
@@ -71,7 +71,7 @@ class Installer extends ModuleInstaller
                 unserialize($settings['date_format']) . ' ' . unserialize($settings['time_format'])
             );
             $settings['number_format'] = serialize('dot_nothing');
-            $settings['password_key'] = serialize(uniqid());
+            $settings['password_key'] = serialize(uniqid('', true));
             $settings['password_strength'] = serialize($passwordStrength);
             $settings['current_password_change'] = serialize(time());
             $settings['avatar'] = serialize('god.jpg');
@@ -178,13 +178,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'users' as a module
         $this->addModule('Users');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
         $this->setSetting('Users', 'default_group', 1);

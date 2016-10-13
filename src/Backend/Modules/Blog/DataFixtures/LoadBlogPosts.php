@@ -4,6 +4,9 @@ namespace Backend\Modules\Blog\DataFixtures;
 
 class LoadBlogPosts
 {
+    /**
+     * @param \SpoonDatabase $database
+     */
     public function load(\SpoonDatabase $database)
     {
         $metaId = $database->insert(

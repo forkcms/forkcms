@@ -1,3 +1,143 @@
+4.2.2 (2016-09-02)
+------------------
+
+Bugfixes:
+
+* Core: Fix ckeditor in bootstrap modal
+* Core: Add simple-bus/doctrine-orm-bridge to fix assetic errors 
+* Core: Bugfix phpcs failing module tests
+* Locale: Make sure the names of the translations start with a capital letter
+* ContentBlocks: Make sure that extra things added to the data of a content block aren't lost when updating
+* ContentBlocks: Remove the tightly coupling between authentication and content blocks
+* Twig: Show warning that cookies are required in the backend
+* Twig: Make sure the real data is loaded when using the template modifier parsewidget
+* Installer: Fix deselecting modules during installation
+* Installer: Make sure we can return in the installer
+
+Enhancements:
+
+* Core: Style fixes
+
+
+4.2.1 (2016-08-31)
+------------------
+
+Bugfixes:
+
+* Blog: dashboard widget link fixed
+* Core: fix duplicate use statements
+
+
+4.2.0 (2016-08-29)
+------------------
+
+Features:
+
+* Core: added Doctrine
+* Core: added Symfony Form
+* Core: added SimpleBus as command bus
+* Core: updated CK Finder to 2.6.2
+* Pages: added option to set a banner image on a page
+* Profiles: added check when setting new password that it is typed correctly
+* Profiles: generated pages on install are now translated
+* Core: deprecated the push notifications
+
+Enhancements:
+
+* Core: clean up phpdoc
+* Core: code quality improvements
+
+Bugfixes:
+
+* Faq: added missing locale
+* Core: missing use statement in FormFile
+
+
+4.1.2 (2016-08-26)
+------------------
+
+Bugfixes:
+
+* Location: fix fetching coordinates.
+* Core: make sure our vendor folder can't be accessed.
+* Core: show file size when uploadeded file size is too big.
+* Core: remove useless variable assignement.
+* Core: change some exit statements to exceptions.
+* Core: update symfony to 2.8.9 (to include security fixes).
+* Core: remove obsolete validation.
+* Installer: remove non existent mailer service.
+* Profiles: replace spoon directory with the filesystem component.
+* Core: improve some UI issues.
+* Core: improve cache handling (during both installation and other places).
+* Core: add the translation for German.
+* Core: protected some more files using htaccess.
+* Search: show "add synonym" link when there are no synonyms yet.
+* Core: fix incorrect language variable.
+* Core: fix pagination labels.
+
+
+4.1.1 (2016-08-10)
+------------------
+
+Bugfixes:
+
+* MailMotor: Mailmotor was broken when it wasn't configured yet
+* Core: When switching languages you no longer get Item not found messages
+* Core: Fork CMS now works on mysql 5.7, some queries broke on the default configuration
+
+Enhancements:
+
+* Add extra key-words to composer.json
+* Composer: irc has been removed as support option and slack has been added
+
+
+4.1.0 (2016-08-08)
+------------------
+
+Features:
+
+* Location: added Google Maps API key
+* Core: multiple og:image:width and :height
+* Core: change urlencoding from RFC 1738 to RFC 3986
+* FormBuilder: Anchor added to form widget
+* Location: added zoom-leven 1 and 2
+* Github: added issue and pull request templates
+* Core: added TemplateModifier showBool alias to DataGridFunctions
+* Profiles: added SecurePage widget
+* Core: getUrlForBlock now takes data into account
+* Core: page parameter can now be changed in the pagination query
+* Twig: added a macro for the required asterisk and tooltip
+
+Bugfixes:
+
+* CK Finder: fix non existent service session.handler
+* Profiles: make sure the settings are loaded in cache before a new setting is set
+* Location: fix settings not loading correctly because twig escaped the html
+
+
+4.0.6 (2016-07-29)
+--
+
+Bugfixes:
+
+* Pages: fix casing issue.
+* Core: add missing yaml config to the editorconfig file.
+* Core: make the backend more anysurfer compliant.
+* Pages: make filesystem checks more robust for og:image tags.
+* Faq: use label instead of hardcoded text after sequence success.
+* FormBuilder: only show the success message for the submitted form.
+* Core: fix cache sharing between environments.
+* Core: fix issues on PHP 7.1.
+* Core: fix issues when widgets mixed up content.
+* Core: fix double encoded ampersand in pagination urls.
+* Pages: fix bad contrast when showing hidden page blocks.
+* FormBuilder: fix paragraph and heading that weren't editable.
+* Core: fix template bug in pagination.
+* Core: make sure emails can be themed.
+* Core: make sure diactrics will be showd correctly in twig.
+* Groups: make sure we can hide dashboard widgets for groups.
+
+
 4.0.5 (2016-07-12)
 --
 

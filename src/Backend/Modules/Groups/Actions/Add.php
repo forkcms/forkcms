@@ -14,7 +14,7 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
@@ -36,13 +36,6 @@ class Add extends BackendBaseActionAdd
      * @var array
      */
     private $actions = array();
-
-    /**
-     * The dashboard sequence
-     *
-     * @var array
-     */
-    private $dashboardSequence;
 
     /**
      * The id of the new group
@@ -71,6 +64,13 @@ class Add extends BackendBaseActionAdd
      * @var array
      */
     private $widgetInstances;
+
+    /**
+     * Hidden widgets on dashboard
+     *
+     * @var array
+     */
+    private $hiddenOnDashboard;
 
     /**
      * Bundle all actions that need to be bundled
@@ -368,68 +368,45 @@ class Add extends BackendBaseActionAdd
      * Insert the widgets
      *
      * @param \SpoonFormElement[] $widgetPresets The widgets presets.
+     *
+     * @return mixed
      */
     private function insertWidgets($widgetPresets)
     {
+        // empty dashboard sequence
+        $this->hiddenOnDashboard = array();
+
         // loop through all widgets
         foreach ($this->widgetInstances as $widget) {
             if (!BackendModel::isModuleInstalled($widget['module'])) {
                 continue;
             }
 
-            // create instance
-            $instance = new $widget['className']($this->getKernel());
-
-            // execute instance
-            $instance->execute();
-
-            // create module array if no existence
-            if (!isset($this->dashboardSequence[$widget['module']])) {
-                $this->dashboardSequence[$widget['module']] = array();
-            }
-
-            // create dashboard sequence
-            $this->dashboardSequence[$widget['module']] += array(
-                $widget['widget'] => array(
-                    'column' => $instance->getColumn(),
-                    'position' => (int) $instance->getPosition(),
-                    'hidden' => false,
-                    'present' => false,
-                ),
-            );
-
-            // loop through selected widgets
             foreach ($widgetPresets as $preset) {
-                // if selected
-                if ($preset->getChecked()) {
-                    // get the preset module name
-                    $presetModule = str_replace('widgets_', '', str_replace($widget['widget'], '', $preset->getName()));
+                if ($preset->getAttribute('id') !== 'widgets' . $widget['module'] . $widget['widget']) {
+                    continue;
+                }
 
-                    // if the preset module name matches the widget module name
-                    if ($presetModule == $widget['module']) {
-                        // remove widgets_[modulename] prefix
-                        $selected = str_replace('widgets_' . $widget['module'], '', $preset->getName());
-
-                        // if right widget set visible
-                        if ($selected == $widget['widget']) {
-                            $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
-                        }
+                if (!$preset->getChecked()) {
+                    if (!isset($this->hiddenOnDashboard[$widget['module']])) {
+                        $this->hiddenOnDashboard[$widget['module']] = array();
                     }
+                    $this->hiddenOnDashboard[$widget['module']][] = $widget['widget'];
                 }
             }
         }
 
         // build group
-        $group['name'] = $this->frm->getField('name')->getValue();
+        $userGroup['name'] = $this->frm->getField('name')->getValue();
 
         // build setting
-        $setting['name'] = 'dashboard_sequence';
-        $setting['value'] = serialize($this->dashboardSequence);
+        $setting['name'] = 'hidden_on_dashboard';
+        $setting['value'] = serialize($this->hiddenOnDashboard);
 
-        // insert group and settings
-        $group['id'] = BackendGroupsModel::insert($group, $setting);
+        // insert group
+        $userGroup['id'] = BackendGroupsModel::insert($userGroup, $setting);
 
-        return $group;
+        return $userGroup;
     }
 
     /**
@@ -445,9 +422,9 @@ class Add extends BackendBaseActionAdd
             // loop through widgets
             foreach ($this->widgets as $j => $widget) {
                 // add widget checkboxes
-                $widgetBoxes[$j]['check'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['checkbox_name'])->parse() . '</span>';
+                $widgetBoxes[$j]['check'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['checkbox_name'], true)->parse() . '</span>';
                 $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BL::lbl($widget['module_name']));
-                $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['label']) . '">' . $widget['label'] . '</label>';
+                $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['checkbox_name']) . '">' . $widget['label'] . '</label>';
                 $widgetBoxes[$j]['description'] = $widget['description'];
             }
         }
@@ -511,16 +488,6 @@ class Add extends BackendBaseActionAdd
         $this->frm->addDropdown('manage_groups', array('Deny', 'Allow'));
         $this->tpl->assign('permissions', $permissionBoxes);
         $this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
-    }
-
-    /**
-     * Parse the form
-     *
-     * @todo method is not necessary see the content...
-     */
-    protected function parse()
-    {
-        parent::parse();
     }
 
     /**
@@ -588,7 +555,7 @@ class Add extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $group));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
+                $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
             }
         }
     }

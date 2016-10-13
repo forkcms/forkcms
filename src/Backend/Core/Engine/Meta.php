@@ -11,6 +11,7 @@ namespace Backend\Core\Engine;
 
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class represents a META-object
@@ -71,6 +72,8 @@ class Meta
      * @param int    $metaId        The metaID to load.
      * @param string $baseFieldName The field where the URL should be based on.
      * @param bool   $custom        Add/show custom-meta.
+     *
+     * @throws Exception
      */
     public function __construct(Form $form, $metaId = null, $baseFieldName = 'title', $custom = false)
     {
@@ -363,7 +366,7 @@ class Meta
 
         // advanced SEO
         $indexValues = array(
-            array('value' => 'none', 'label' => Language::getLabel('None')),
+            array('value' => 'none', 'label' => BackendLanguage::getLabel('None')),
             array('value' => 'index', 'label' => 'index'),
             array('value' => 'noindex', 'label' => 'noindex'),
         );
@@ -373,7 +376,7 @@ class Meta
             (isset($this->data['data']['seo_index'])) ? $this->data['data']['seo_index'] : 'none'
         );
         $followValues = array(
-            array('value' => 'none', 'label' => Language::getLabel('None')),
+            array('value' => 'none', 'label' => BackendLanguage::getLabel('None')),
             array('value' => 'follow', 'label' => 'follow'),
             array('value' => 'nofollow', 'label' => 'nofollow'),
         );
@@ -529,29 +532,29 @@ class Meta
     {
         // page title overwrite is checked
         if ($this->frm->getField('page_title_overwrite')->isChecked()) {
-            $this->frm->getField('page_title')->isFilled(Language::err('FieldIsRequired'));
+            $this->frm->getField('page_title')->isFilled(BackendLanguage::err('FieldIsRequired'));
         }
 
         // meta description overwrite is checked
         if ($this->frm->getField('meta_description_overwrite')->isChecked()) {
-            $this->frm->getField('meta_description')->isFilled(Language::err('FieldIsRequired'));
+            $this->frm->getField('meta_description')->isFilled(BackendLanguage::err('FieldIsRequired'));
         }
 
         // meta keywords overwrite is checked
         if ($this->frm->getField('meta_keywords_overwrite')->isChecked()) {
-            $this->frm->getField('meta_keywords')->isFilled(Language::err('FieldIsRequired'));
+            $this->frm->getField('meta_keywords')->isFilled(BackendLanguage::err('FieldIsRequired'));
         }
 
         // URL overwrite is checked
         if ($this->frm->getField('url_overwrite')->isChecked()) {
-            $this->frm->getField('url')->isFilled(Language::err('FieldIsRequired'));
+            $this->frm->getField('url')->isFilled(BackendLanguage::err('FieldIsRequired'));
             $URL = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
             $generatedUrl = $this->generateURL($URL);
 
             // check if urls are different
             if (CommonUri::getUrl($URL) != $generatedUrl) {
                 $this->frm->getField('url')->addError(
-                    Language::err('URLAlreadyExists')
+                    BackendLanguage::err('URLAlreadyExists')
                 );
             }
         }

@@ -13,8 +13,9 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Navigation;
 use Backend\Core\Engine\Exception;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -197,19 +198,16 @@ class Model
     public static function clearCache()
     {
         $finder = new Finder();
-        $fs = new Filesystem();
-        foreach (
-            $finder->files()
-                ->name('*.php')
-                ->name('*.js')
-                ->in(BACKEND_CACHE_PATH . '/Locale')
-                ->in(FRONTEND_CACHE_PATH . '/Navigation')
-                ->in(FRONTEND_CACHE_PATH . '/Locale')
-            as $file
-        ) {
-            $fs->remove($file->getRealPath());
+        $filesystem = new Filesystem();
+        foreach ($finder->files()
+                     ->name('*.php')
+                     ->name('*.js')
+                     ->in(BACKEND_CACHE_PATH . '/Locale')
+                     ->in(FRONTEND_CACHE_PATH . '/Navigation')
+                     ->in(FRONTEND_CACHE_PATH . '/Locale') as $file) {
+            $filesystem->remove($file->getRealPath());
         }
-        $fs->remove(BACKEND_CACHE_PATH . '/Navigation/navigation.php');
+        $filesystem->remove(Navigation::getCacheDirectory() . 'navigation.php');
     }
 
     /**
@@ -591,6 +589,7 @@ class Model
      * @param string $theme The theme we want to fetch the templates from.
      *
      * @return array
+     * @throws Exception
      */
     public static function getTemplates($theme = null)
     {
@@ -622,9 +621,8 @@ class Model
             // any extras?
             if (isset($row['data']['default_extras'])) {
                 foreach ($row['data']['default_extras'] as $value) {
-                    if (
-                        \SpoonFilter::isInteger($value) &&
-                        isset($extras[$value]) && $extras[$value]['type'] == 'block'
+                    if (\SpoonFilter::isInteger($value)
+                        && isset($extras[$value]) && $extras[$value]['type'] == 'block'
                     ) {
                         $row['has_block'] = true;
                     }
@@ -666,8 +664,11 @@ class Model
 
         $finder = new Finder();
         foreach ($finder->directories()->in(FRONTEND_PATH . '/Themes')->depth(0) as $directory) {
+            $pathInfoXml = PATH_WWW . '/src/Frontend/Themes/' . $directory->getBasename() . '/info.xml';
+            if (!is_file($pathInfoXml)) {
+                throw new Exception('info.xml is missing for the theme ' . $directory->getBasename());
+            }
             try {
-                $pathInfoXml = PATH_WWW . '/src/Frontend/Themes/' . $directory->getBasename() . '/info.xml';
                 $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
                 $information = self::processThemeXml($infoXml);
                 if (!$information) {
@@ -794,6 +795,8 @@ class Model
      * Install a theme.
      *
      * @param string $theme The name of the theme to be installed.
+     *
+     * @throws Exception
      */
     public static function installTheme($theme)
     {
@@ -812,6 +815,7 @@ class Model
             $item['path'] = $template['path'];
             $item['active'] = 'Y';
             $item['data']['format'] = $template['format'];
+            $item['data']['image'] = $template['image'];
 
             // build positions
             $item['data']['names'] = array();
@@ -912,7 +916,7 @@ class Model
     public static function isWritable($path)
     {
         $path = rtrim((string) $path, '/');
-        $file = uniqid() . '.tmp';
+        $file = uniqid('', true) . '.tmp';
         $return = @file_put_contents($path . '/' . $file, 'temporary file', FILE_APPEND);
         if ($return === false) {
             return false;
@@ -1031,6 +1035,8 @@ class Model
             // template data
             $template['label'] = (string) $templateXML['label'];
             $template['path'] = (string) $templateXML['path'];
+            $template['image'] = isset($templateXML['image'])
+                ? (string) $templateXML['image'] && (string) $templateXML['image'] !== 'false' : false;
             $template['format'] = trim(str_replace(array("\n", "\r", ' '), '', (string) $templateXML->format));
 
             // loop positions

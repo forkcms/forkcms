@@ -12,7 +12,7 @@ namespace Backend\Modules\Extensions\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -181,7 +181,7 @@ class UploadModule extends BackendBaseActionAdd
 
         // place all the items in the prefixed folders in the right folders
         if (!empty($prefix)) {
-            $fs = new Filesystem();
+            $filesystem = new Filesystem();
             foreach ($files as &$file) {
                 $fullPath = PATH_WWW . '/' . $file;
                 $newPath = str_replace(
@@ -190,17 +190,17 @@ class UploadModule extends BackendBaseActionAdd
                     $fullPath
                 );
 
-                if ($fs->exists($fullPath) && is_dir($fullPath)) {
-                    $fs->mkdir($newPath);
-                } elseif ($fs->exists($fullPath) && is_file($fullPath)) {
-                    $fs->copy(
+                if ($filesystem->exists($fullPath) && is_dir($fullPath)) {
+                    $filesystem->mkdir($newPath);
+                } elseif ($filesystem->exists($fullPath) && is_file($fullPath)) {
+                    $filesystem->copy(
                         $fullPath,
                         $newPath
                     );
                 }
             }
 
-            $fs->remove(PATH_WWW . '/' . $prefix);
+            $filesystem->remove(PATH_WWW . '/' . $prefix);
         }
 
         // run installer

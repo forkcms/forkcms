@@ -12,7 +12,7 @@ namespace Backend\Modules\Blog\Engine;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
@@ -194,9 +194,6 @@ class Model
         foreach ($ids as $id) {
             BackendTagsModel::saveTags($id, '', 'Blog');
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -221,9 +218,6 @@ class Model
 
             // update category for the posts that might be in this category
             $db->update('blog_posts', array('category_id' => null), 'category_id = ?', array($id));
-
-            // invalidate the cache for blog
-            BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
         }
     }
 
@@ -281,9 +275,6 @@ class Model
         if (!empty($itemIds)) {
             self::reCalculateCommentCount($itemIds);
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -308,9 +299,6 @@ class Model
         if (!empty($itemIds)) {
             self::reCalculateCommentCount($itemIds);
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -755,9 +743,6 @@ class Model
         // insert and return the new revision id
         $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
 
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
-
         // return the new revision id
         return $item['revision_id'];
     }
@@ -781,6 +766,7 @@ class Model
      * @param array $comments The comments attached to this post.
      *
      * @return int
+     * @throws Exception
      */
     public static function insertCompletePost($item, $meta = array(), $tags = array(), $comments = array())
     {
@@ -926,9 +912,6 @@ class Model
 
         // create category
         $item['id'] = $db->insert('blog_categories', $item);
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         // return the id
         return $item['id'];
@@ -1118,9 +1101,6 @@ class Model
         // insert new version
         $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
 
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
-
         // return the new revision id
         return $item['revision_id'];
     }
@@ -1149,9 +1129,6 @@ class Model
             // update the meta
             $db->update('meta', $meta, 'id = ?', array((int) $category['meta_id']));
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         return $updated;
     }
@@ -1220,17 +1197,15 @@ class Model
 
             // recalculate the comment count
             self::reCalculateCommentCount($itemIds);
-
-            // invalidate the cache for blog
-            foreach ($languages as $language) {
-                BackendModel::invalidateFrontendCache('Blog', $language);
-            }
         }
     }
 
     /**
      * Update a page revision without generating a new revision.
      * Needed to add an image to a page.
+     *
+     * @param $revision_id
+     * @param $item
      */
     public static function updateRevision($revision_id, $item)
     {

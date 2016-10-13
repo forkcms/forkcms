@@ -12,7 +12,7 @@ namespace Backend\Modules\Profiles\Actions;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
@@ -112,7 +112,7 @@ class EditGroup extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Groups') . '&report=group-saved&var=' . urlencode(
+                    BackendModel::createURLForAction('Groups') . '&report=group-saved&var=' . rawurlencode(
                         $values['name']
                     ) . '&highlight=row-' . $this->id
                 );

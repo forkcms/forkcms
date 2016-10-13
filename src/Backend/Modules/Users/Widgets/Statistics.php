@@ -11,7 +11,7 @@ namespace Backend\Modules\Users\Widgets;
 
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 
 /**
  * This widget will show the statistics of the authenticated user.

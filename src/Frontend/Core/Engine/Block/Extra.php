@@ -14,7 +14,7 @@ use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Exception as FrontendException;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 
 /**
  * This class will handle all stuff related to blocks
@@ -169,7 +169,7 @@ class Extra extends FrontendBaseObject
                 $actionParameter = \SpoonFilter::toCamelCase($actionParameter);
                 foreach ($this->config->getPossibleActions() as $actionName) {
                     // get action that should be passed as parameter
-                    $actionURL = \SpoonFilter::toCamelCase(urlencode(FL::act(\SpoonFilter::toCamelCase($actionName))));
+                    $actionURL = \SpoonFilter::toCamelCase(rawurlencode(FL::act(\SpoonFilter::toCamelCase($actionName))));
 
                     // the action is the requested one
                     if ($actionURL == $actionParameter) {

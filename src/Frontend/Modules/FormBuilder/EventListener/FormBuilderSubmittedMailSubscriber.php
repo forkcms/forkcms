@@ -5,7 +5,7 @@ namespace Frontend\Modules\FormBuilder\EventListener;
 use Common\Mailer\Message;
 use Swift_Mailer;
 use Common\ModulesSettings;
-use Frontend\Core\Engine\Language;
+use Frontend\Core\Language\Language;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 
 /**
@@ -49,7 +49,7 @@ final class FormBuilderSubmittedMailSubscriber
             $fieldData = $this->getEmailFields($event->getData());
             $message = Message::newInstance(sprintf(Language::getMessage('FormBuilderSubject'), $form['name']))
                 ->parseHtml(
-                    FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.html.twig',
+                    '/FormBuilder/Layout/Templates/Mails/Form.html.twig',
                     array(
                         'sentOn' => time(),
                         'name' => $form['name'],

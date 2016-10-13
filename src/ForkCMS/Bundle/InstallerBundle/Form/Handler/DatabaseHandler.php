@@ -10,6 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DatabaseHandler
 {
+    /**
+     * @param Form    $form
+     * @param Request $request
+     *
+     * @return bool
+     */
     public function process(Form $form, Request $request)
     {
         if (!$request->isMethod('POST')) {
@@ -25,6 +31,12 @@ class DatabaseHandler
         return false;
     }
 
+    /**
+     * @param Form    $form
+     * @param Request $request
+     *
+     * @return bool
+     */
     public function processValidForm(Form $form, Request $request)
     {
         $request->getSession()->set('installation_data', $form->getData());

@@ -71,7 +71,7 @@ class Model
              FROM groups AS i
              WHERE i.name = ?',
             array((string) $name)
-            );
+        );
     }
 
     /**

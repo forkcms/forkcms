@@ -10,11 +10,12 @@ namespace Backend\Modules\ContentBlocks\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\TemplateModifiers;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Core\Language\Locale;
+use Backend\Modules\ContentBlocks\DataGrid\ContentBlockDataGrid;
 
 /**
  * This is the index-action (default), it will display the overview
@@ -33,29 +34,22 @@ class Index extends BackendBaseActionIndex
     }
 
     /**
-     * Load the datagrids
+     * Load the datagrid
      */
     private function loadDataGrid()
     {
-        $this->dataGrid = new BackendDataGridDB(
-            BackendContentBlocksModel::QRY_BROWSE,
-            array('active', BL::getWorkingLanguage())
-        );
-        $this->dataGrid->setSortingColumns(array('title'));
+        $this->dataGrid = new ContentBlockDataGrid(Locale::workingLocale());
+        $this->dataGrid->setSortingColumns(['title']);
+
+        // show the hidden status
+        $this->dataGrid->addColumn('isHidden', ucfirst(BL::lbl('VisibleOnSite')), '[hidden]');
+        $this->dataGrid->setColumnFunction([TemplateModifiers::class, 'showBool'], ['[hidden]', true], 'isHidden');
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
-            $this->dataGrid->setColumnURL(
-                'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
-            );
-            $this->dataGrid->addColumn(
-                'edit',
-                null,
-                BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
-                BL::lbl('Edit')
-            );
+            $editUrl = BackendModel::createURLForAction('Edit', null, null, ['id' => '[id]'], false);
+            $this->dataGrid->setColumnURL('title', $editUrl);
+            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), $editUrl, BL::lbl('Edit'));
         }
     }
 

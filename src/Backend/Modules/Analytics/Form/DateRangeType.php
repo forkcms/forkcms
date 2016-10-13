@@ -3,7 +3,7 @@
 namespace Backend\Modules\Analytics\Form;
 
 use Backend\Core\Engine\Form;
-use Backend\Core\Engine\Language;
+use Backend\Core\Language\Language;
 use Backend\Core\Engine\TwigTemplate;
 use Backend\Core\Engine\Model;
 use Backend\Modules\Analytics\DateRange\DateRange;

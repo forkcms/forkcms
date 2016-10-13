@@ -9,17 +9,16 @@ namespace Backend\Modules\Groups\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Finder\Finder;
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\User as BackendUser;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This is the edit-action, it will display a form to edit a group
@@ -45,7 +44,7 @@ class Edit extends BackendBaseActionEdit
      *
      * @var array
      */
-    private $dashboardSequence = array();
+    private $hiddenOnDashboard = array();
 
     /**
      * The users datagrid
@@ -206,7 +205,7 @@ class Edit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id');
 
         // get dashboard sequence
-        $this->dashboardSequence = BackendGroupsModel::getSetting($this->id, 'dashboard_sequence');
+        $this->hiddenOnDashboard = BackendGroupsModel::getSetting($this->id, 'hidden_on_dashboard');
 
         // get the record
         $this->record = BackendGroupsModel::get($this->id);
@@ -313,13 +312,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm = new BackendForm('edit');
 
         // get selected permissions
-        $modulePermissions = BackendGroupsModel::getModulePermissions($this->id);
         $actionPermissions = BackendGroupsModel::getActionPermissions($this->id);
-
-        // add selected modules to array
-        foreach ($modulePermissions as $permission) {
-            $selectedModules[] = $permission['module'];
-        }
 
         // loop through modules
         foreach ($this->modules as $key => $module) {
@@ -327,17 +320,19 @@ class Edit extends BackendBaseActionEdit
             if (isset($this->widgets)) {
                 // loop through widgets
                 foreach ($this->widgets as $j => $widget) {
-                    // widget is present?
-                    if (isset($this->dashboardSequence[$module['value']][$widget['value']]['present']) &&
-                        $this->dashboardSequence[$module['value']][$widget['value']]['present'] === true &&
-                        $widget['checkbox_name'] == $module['value'] . $widget['value']) {
+                    if ($widget['checkbox_name'] != $module['value'] . $widget['value']) {
+                        continue;
+                    }
+
+                    if (!isset($this->hiddenOnDashboard[$module['value']]) ||
+                        !in_array($widget['value'], $this->hiddenOnDashboard[$module['value']])) {
                         $selectedWidgets[$j] = $widget['checkbox_name'];
                     }
 
                     // add widget checkboxes
                     $widgetBoxes[$j]['check'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['checkbox_name'], isset($selectedWidgets[$j]) ? $selectedWidgets[$j] : null)->parse() . '</span>';
                     $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BL::lbl($widget['module_name']));
-                    $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['label']) . '">' . $widget['label'] . '</label>';
+                    $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['checkbox_name']) . '">' . $widget['label'] . '</label>';
                     $widgetBoxes[$j]['description'] = $widget['description'];
                 }
             }
@@ -538,23 +533,7 @@ class Edit extends BackendBaseActionEdit
     private function updateWidgets($widgetPresets)
     {
         // empty dashboard sequence
-        $this->dashboardSequence = array();
-
-        // get users
-        $users = BackendGroupsModel::getUsers($this->id);
-
-        // loop through users and create objects
-        foreach ($users as $user) {
-            $userObjects[] = new BackendUser($user['id']);
-        }
-
-        // any users present?
-        if (!empty($userObjects)) {
-            // loop through user objects and get all sequences
-            foreach ($userObjects as $user) {
-                $userSequences[$user->getUserId()] = $user->getSetting('dashboard_sequence');
-            }
-        }
+        $this->hiddenOnDashboard = array();
 
         // loop through all widgets
         foreach ($this->widgetInstances as $widget) {
@@ -562,44 +541,16 @@ class Edit extends BackendBaseActionEdit
                 continue;
             }
 
-            // create instance
-            $instance = new $widget['className']($this->getKernel());
-
-            // execute instance
-            $instance->execute();
-
-            // create module array if no existence
-            if (!isset($this->dashboardSequence[$widget['module']])) {
-                $this->dashboardSequence[$widget['module']] = array();
-            }
-
-            // create dashboard sequence
-            $this->dashboardSequence[$widget['module']] += array(
-                $widget['widget'] => array(
-                    'column' => $instance->getColumn(),
-                    'position' => (int) $instance->getPosition(),
-                    'hidden' => false,
-                    'present' => false,
-                ),
-            );
-
-            // loop through selected widgets
             foreach ($widgetPresets as $preset) {
-                // if selected
-                if ($preset->getChecked()) {
-                    // get the preset module name
-                    $presetModule = str_replace('widgets_', '', str_replace($widget['widget'], '', $preset->getName()));
+                if ($preset->getAttribute('id') !== 'widgets' . $widget['module'] . $widget['widget']) {
+                    continue;
+                }
 
-                    // if the preset module name matches the widget module name
-                    if ($presetModule == $widget['module']) {
-                        // remove widgets_[modulename] prefix
-                        $selected = str_replace('widgets_' . $widget['module'], '', $preset->getName());
-
-                        // if right widget set visible
-                        if ($selected == $widget['widget']) {
-                            $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
-                        }
+                if (!$preset->getChecked()) {
+                    if (!isset($this->hiddenOnDashboard[$widget['module']])) {
+                        $this->hiddenOnDashboard[$widget['module']] = array();
                     }
+                    $this->hiddenOnDashboard[$widget['module']][] = $widget['widget'];
                 }
             }
         }
@@ -610,81 +561,11 @@ class Edit extends BackendBaseActionEdit
 
         // build setting
         $setting['group_id'] = $this->id;
-        $setting['name'] = 'dashboard_sequence';
-        $setting['value'] = serialize($this->dashboardSequence);
+        $setting['name'] = 'hidden_on_dashboard';
+        $setting['value'] = serialize($this->hiddenOnDashboard);
 
         // update group
         BackendGroupsModel::update($userGroup, $setting);
-
-        // loop through all widgets
-        foreach ($this->widgetInstances as $widget) {
-            // loop through users
-            foreach ($users as $user) {
-                // unset visible if already present
-                if (isset($userSequences[$user['id']][$widget['module']][$widget['widget']])) {
-                    $userSequences[$user['id']][$widget['module']][$widget['widget']]['present'] = false;
-                }
-
-                // get groups for user
-                $groups = BackendGroupsModel::getGroupsByUser($user['id']);
-
-                // loop through groups
-                foreach ($groups as $group) {
-                    // get group sequence
-                    $groupSequence = BackendGroupsModel::getSetting($group['id'], 'dashboard_sequence');
-
-                    // loop through selected widgets
-                    foreach ($widgetPresets as $preset) {
-                        // if selected
-                        if ($preset->getChecked()) {
-                            // convert camelcasing to underscore notation
-                            $selected = str_replace('widgets_', '', $preset->getName());
-
-                            // if selected is the right widget
-                            if ($selected == $widget['widget']) {
-                                // set widgets visible
-                                $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
-
-                                // usersequence has widget?
-                                if (isset($userSequences[$user['id']][$widget['module']][$widget['widget']])) {
-                                    // set visible
-                                    $userSequences[$user['id']][$widget['module']][$widget['widget']]['present'] = true;
-                                } else {
-                                    // assign module if not yet present
-                                    if (!isset($userSequences[$user['id']][$widget['module']])) {
-                                        $userSequences[$user['id']][$widget['module']] = array();
-                                    }
-
-                                    // add widget
-                                    $userSequences[$user['id']][$widget['module']] += array(
-                                        $widget['widget'] => array(
-                                            'column' => $instance->getColumn(),
-                                            'position' => (int) $instance->getPosition(),
-                                            'hidden' => false,
-                                            'present' => true,
-                                        ),
-                                    );
-                                }
-                            }
-                        }
-
-                        // widget in visible in other group?
-                        if ($groupSequence[$widget['module']][$widget['widget']]['present']) {
-                            // set visible
-                            $userSequences[$user['id']][$widget['module']][$widget['widget']]['present'] = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        // any users present?
-        if (!empty($userObjects)) {
-            // loop through users and update sequence
-            foreach ($userObjects as $user) {
-                $user->setSetting('dashboard_sequence', $userSequences[$user->getUserId()]);
-            }
-        }
 
         return $userGroup;
     }
@@ -755,7 +636,7 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $group));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
+                $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
             }
         }
     }

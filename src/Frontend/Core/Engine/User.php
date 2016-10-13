@@ -125,6 +125,8 @@ class User
      * Load the data for the given user
      *
      * @param int $userId The users id in the backend.
+     *
+     * @throws Exception
      */
     public function loadUser($userId)
     {

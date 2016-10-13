@@ -11,7 +11,7 @@ namespace Backend\Modules\Tags\Ajax;
 
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**

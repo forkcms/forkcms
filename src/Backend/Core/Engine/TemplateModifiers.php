@@ -11,6 +11,7 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This is our class with custom modifiers.
@@ -97,7 +98,7 @@ class TemplateModifiers extends BaseTwigModifiers
         $format = Authentication::getUser()->getSetting('time_format');
 
         // format the date
-        return \SpoonDate::getDate($format, (int) $var, Language::getInterfaceLanguage());
+        return \SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -113,8 +114,8 @@ class TemplateModifiers extends BaseTwigModifiers
      */
     public static function getURL($action = null, $module = null, $suffix = null, $language = null)
     {
-        if (!in_array($language, Language::getActiveLanguages())) {
-            $language = Language::getWorkingLanguage();
+        if (!in_array($language, BackendLanguage::getActiveLanguages())) {
+            $language = BackendLanguage::getWorkingLanguage();
         }
 
         $action = ($action !== null) ? (string) $action : null;
@@ -128,9 +129,11 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param string $string The string that you want to apply this method on.
      *
+     * @return string The string, to translate.
+     *
+     * @throws Exception
      * @throw exception thrown when no 'dot' is found in string
      *
-     * @return string The string, to translate.
      */
     public static function trans($string)
     {
@@ -139,7 +142,7 @@ class TemplateModifiers extends BaseTwigModifiers
         }
         list($action, $string) = explode('.', $string);
 
-        return Language::$action($string);
+        return BackendLanguage::$action($string);
     }
 
     /**
@@ -152,7 +155,7 @@ class TemplateModifiers extends BaseTwigModifiers
      */
     public static function toLabel($value)
     {
-        return \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
+        return \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
     }
 
     /**
@@ -184,7 +187,7 @@ class TemplateModifiers extends BaseTwigModifiers
             // more characters
             // hellip is seen as 1 char, so remove it from length
             if ($useHellip) {
-                $length = $length - 1;
+                --$length;
             }
 
             // truncate

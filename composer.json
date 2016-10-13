@@ -1,7 +1,15 @@
 {
     "name": "forkcms/forkcms",
     "description": "Fork is an open source CMS that will rock your world.",
-    "keywords": ["cms"],
+    "keywords": [
+        "cms",
+        "fork",
+        "fork cms",
+        "content management system",
+        "symfony",
+        "blog",
+        "php"
+    ],
     "homepage": "http://www.fork-cms.com/",
     "license": "MIT",
     "require": {
@@ -18,8 +26,15 @@
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
         "league/flysystem": "~1.0",
+<<<<<<< HEAD
         "mailmotor/mailchimp-bundle": "^1.5",
         "mailmotor/mailmotor-bundle": "^1.7"
+=======
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.5",
+        "simple-bus/symfony-bridge": "^4.1",
+        "simple-bus/doctrine-orm-bridge": "^4.0"
+>>>>>>> upstream/master
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
@@ -30,7 +45,7 @@
         "bin-dir": "bin"
     },
     "support": {
-        "irc": "irc://irc.freenode.org/forkcms",
+        "forum": "https://fork-cms.herokuapp.com",
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {

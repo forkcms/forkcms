@@ -10,7 +10,7 @@ namespace Frontend\Modules\Tags\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
@@ -32,6 +32,13 @@ class Detail extends FrontendBaseBlock
      * @var array
      */
     private $results = array();
+
+    /**
+     * Used modules
+     *
+     * @var array
+     */
+    private $modules;
 
     /**
      * Execute the extra

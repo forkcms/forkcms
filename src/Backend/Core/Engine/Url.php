@@ -12,8 +12,10 @@ namespace Backend\Core\Engine;
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 use Backend\Core\Engine\Model as BackendModel;
 use Common\Cookie as CommonCookie;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\Finder;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class will handle the incoming URL.
@@ -105,7 +107,11 @@ class Url extends Base\Object
         // get the language, this will always be in front
         $language = '';
         if (isset($chunks[1]) && $chunks[1] != '') {
-            $language = \SpoonFilter::getValue($chunks[1], array_keys(Language::getWorkingLanguages()), '');
+            $language = \SpoonFilter::getValue(
+                $chunks[1],
+                array_keys(BackendLanguage::getWorkingLanguages()),
+                ''
+            );
         }
 
         // no language provided?
@@ -157,7 +163,7 @@ class Url extends Base\Object
                     $errorUrl = '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed';
 
                     // add the querystring, it will be processed by the error-handler
-                    $errorUrl .= '&querystring=' . urlencode('/' . $this->getQueryString());
+                    $errorUrl .= '&querystring=' . rawurlencode('/' . $this->getQueryString());
 
                     // redirect to the error page
                     $this->redirect($errorUrl, 307);
@@ -176,7 +182,7 @@ class Url extends Base\Object
 
             $this->setModule($module);
             $this->setAction($action);
-            Language::setWorkingLanguage($language);
+            BackendLanguage::setWorkingLanguage($language);
         } else {
             $this->processRegularRequest($module, $action, $language);
         }
@@ -195,7 +201,7 @@ class Url extends Base\Object
         if (!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
             // redirect to login
             $this->redirect(
-                '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . urlencode(
+                '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . rawurlencode(
                     '/' . $this->getQueryString()
                 )
             );
@@ -204,7 +210,7 @@ class Url extends Base\Object
             // if the module is the dashboard redirect to the first allowed module
             if ($module == 'Dashboard') {
                 // require navigation-file
-                require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
+                require_once Navigation::getCacheDirectory() . 'navigation.php';
 
                 // loop the navigation to find the first allowed module
                 foreach ($navigation as $value) {
@@ -242,19 +248,19 @@ class Url extends Base\Object
             // the user doesn't have access, redirect to error page
             $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . $language .
-                '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                '/error?type=module-not-allowed&querystring=' . rawurlencode('/' . $this->getQueryString()),
                 307
             );
         } elseif (!Authentication::isAllowedAction($action, $module)) {
             // the user hasn't access, redirect to error page
             $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . $language .
-                '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                '/error?type=action-not-allowed&querystring=' . rawurlencode('/' . $this->getQueryString()),
                 307
             );
         } else {
             // set the working language, this is not the interface language
-            Language::setWorkingLanguage($language);
+            BackendLanguage::setWorkingLanguage($language);
 
             $this->setLocale();
             $this->setModule($module);
@@ -269,7 +275,7 @@ class Url extends Base\Object
     {
         $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
         $locale = $default;
-        $possibleLocale = array_keys(Language::getInterfaceLanguages());
+        $possibleLocale = array_keys(BackendLanguage::getInterfaceLanguages());
 
         // is the user authenticated
         if (Authentication::getUser()->isAuthenticated()) {
@@ -284,6 +290,6 @@ class Url extends Base\Object
             $locale = $default;
         }
 
-        Language::setLocale($locale);
+        BackendLanguage::setLocale($locale);
     }
 }

@@ -433,8 +433,9 @@ class InstallationData
      */
     public function removeModule($module)
     {
-        if (!in_array($module, $this->modules)) {
-            unset($this->modules[$module]);
+        $index = array_search($module, $this->modules);
+        if ($index !== false) {
+            unset($this->modules[$index]);
         }
     }
 

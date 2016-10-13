@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
-use Backend\Core\Engine\Language as BackendLanguage;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * Twig node for writing the SEO form
@@ -24,7 +24,7 @@ class SeoFormNode extends \Twig_Node
     }
 
     /**
-     * @param Twig_Compiler $compiler
+     * @param \Twig_Compiler $compiler
      */
     public function compile(\Twig_Compiler $compiler)
     {
@@ -40,9 +40,9 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'<div class="form-group">\';')
             ->write('echo \'<ul class="list-unstyled checkboxTextFieldCombo">\';')
             ->write('echo \'<li class="checkbox">\';')
-            ->write('echo "<label for=\"pageTitleOverwrite\" class=\"visuallyHidden\">";')
+            ->write('echo "<p><label for=\"pageTitleOverwrite\" class=\"visuallyHidden\">";')
             ->write($this->getField('page_title_overwrite'))
-            ->write('echo "<p>' . $this->lbl('PageTitle') . '</p></label>";')
+            ->write('echo "' . $this->lbl('PageTitle') . '</label></p>";')
             ->write($this->getError('page_title'))
             ->write($this->getField('page_title'))
             ->write('echo "<p class=\"help-block\">' . $this->msg('HelpPageTitle') . '</p>";')
@@ -55,9 +55,9 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'<div class="form-group last">\';')
             ->write('echo \'<ul class="list-unstyled checkboxTextFieldCombo">\';')
             ->write('echo \'<li class="checkbox">\';')
-            ->write('echo "<label for=\"navigationTitleOverwrite\" class=\"visuallyHidden\">";')
+            ->write('echo "<p><label for=\"navigationTitleOverwrite\" class=\"visuallyHidden\">";')
             ->write($this->getField('navigation_title_overwrite'))
-            ->write('echo "<p>' . $this->lbl('NavigationTitle') . '</p></label>";')
+            ->write('echo "' . $this->lbl('NavigationTitle') . '</label></p>";')
             ->write($this->getError('navigation_title'))
             ->write($this->getField('navigation_title'))
             ->write('echo "<p class=\"help-block\">' . $this->msg('HelpNavigationTitle') . '</p>";')
@@ -81,9 +81,9 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'<div class="form-group">\';')
             ->write('echo \'<ul class="list-unstyled checkboxTextFieldCombo">\';')
             ->write('echo \'<li class="checkbox">\';')
-            ->write('echo "<label for=\"metaDescriptionOverwrite\" class=\"visuallyHidden\">";')
+            ->write('echo "<p><label for=\"metaDescriptionOverwrite\" class=\"visuallyHidden\">";')
             ->write($this->getField('meta_description_overwrite'))
-            ->write('echo "<p>' . $this->lbl('Description') . '</p></label>";')
+            ->write('echo "' . $this->lbl('Description') . '</label></p>";')
             ->write($this->getError('meta_description'))
             ->write($this->getField('meta_description'))
             ->write('echo "<p class=\"help-block\">' . $this->msg('HelpMetaDescription') . '</p>";')
@@ -93,9 +93,9 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'<div class="form-group">\';')
             ->write('echo \'<ul class="list-unstyled checkboxTextFieldCombo">\';')
             ->write('echo \'<li class="checkbox">\';')
-            ->write('echo "<label for=\"metaKeywordsOverwrite\" class=\"visuallyHidden\">";')
+            ->write('echo "<p><label for=\"metaKeywordsOverwrite\" class=\"visuallyHidden\">";')
             ->write($this->getField('meta_keywords_overwrite'))
-            ->write('echo "<p>' . $this->lbl('Keywords') . '</p></label>";')
+            ->write('echo "' . $this->lbl('Keywords') . '</label></p>";')
             ->write($this->getError('meta_keywords'))
             ->write($this->getField('meta_keywords'))
             ->write('echo "<p class=\"help-block\">' . $this->msg('HelpMetaKeywords') . '</p>";')
@@ -122,9 +122,9 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'<div class="form-group last">\';')
             ->write('echo \'<ul class="list-unstyled checkboxTextFieldCombo">\';')
             ->write('echo \'<li class="checkbox">\';')
-            ->write('echo "<label for=\"urlOverwrite\" class=\"visuallyHidden\">";')
+            ->write('echo "<p><label for=\"urlOverwrite\" class=\"visuallyHidden\">";')
             ->write($this->getField('url_overwrite'))
-            ->write('echo "<p>' . $this->lbl('URL') . '</p></label>";')
+            ->write('echo "' . $this->lbl('URL') . '</label></p>";')
             ->write('echo \'<div class="form-inline">\';');
 
         $compiler
@@ -217,31 +217,62 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</div>\';');
     }
 
+    /**
+     * @param $label string
+     *
+     * @return string
+     */
     private function lbl($label)
     {
         return ucfirst(BackendLanguage::getLabel($label));
     }
 
+    /**
+     * @param $message string
+     *
+     * @return string
+     */
     private function msg($message)
     {
         return BackendLanguage::getMessage($message);
     }
 
+    /**
+     * @param $variable
+     *
+     * @return string
+     */
     private function hasVariable($variable)
     {
         return "isset(\$context['{$variable}']) && !empty(\$context['{$variable}'])";
     }
 
+    /**
+     * @param $variable
+     * @param $as
+     *
+     * @return string
+     */
     private function loopTroughField($variable, $as)
     {
         return "foreach (\$context['{$variable}'] as {$as}) {";
     }
 
+    /**
+     * @param $variable
+     *
+     * @return string
+     */
     private function getVariable($variable)
     {
         return "echo \$context['{$variable}'];";
     }
 
+    /**
+     * @param $fieldName
+     *
+     * @return string
+     */
     private function getField($fieldName)
     {
         $frm = "\$context['form_{$this->form}']";
@@ -249,6 +280,11 @@ class SeoFormNode extends \Twig_Node
         return 'echo ' . $frm . "->getField('" . $fieldName . "')->parse();";
     }
 
+    /**
+     * @param $fieldName
+     *
+     * @return string
+     */
     private function hasField($fieldName)
     {
         $frm = "\$context['form_{$this->form}']";
@@ -256,11 +292,21 @@ class SeoFormNode extends \Twig_Node
         return $frm . "->existsField('" . $fieldName . "')";
     }
 
+    /**
+     * @param $fieldName
+     *
+     * @return string
+     */
     private function hasError($fieldName)
     {
         return "\$context['form_{$this->form}']->getField('" . $fieldName . "')->getErrors() ";
     }
 
+    /**
+     * @param $fieldName
+     *
+     * @return string
+     */
     private function getError($fieldName)
     {
         return "echo \$context['form_{$this->form}']->getField('" . $fieldName . "')->getErrors() "

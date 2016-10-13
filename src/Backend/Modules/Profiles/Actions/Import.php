@@ -11,7 +11,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Backend\Core\Engine\Csv;
@@ -71,7 +71,8 @@ class Import extends BackendBaseActionAdd
             if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
                 if ($fileFile->isAllowedExtension(
                     array('csv'),
-                    sprintf(BL::getError('ExtensionNotAllowed'), 'csv'))
+                    sprintf(BL::getError('ExtensionNotAllowed'), 'csv')
+                )
                 ) {
                     $csv = Csv::fileToArray($fileFile->getTempFileName());
                     if ($csv === false) {

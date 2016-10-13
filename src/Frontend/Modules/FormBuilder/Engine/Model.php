@@ -70,7 +70,7 @@ class Model
             'SELECT i.field_id, i.type, i.parameter, i.error_message
              FROM forms_fields_validation AS i
              WHERE i.field_id IN (' . implode(', ', $idPlaceHolders) . ')',
-             array_keys($fields)
+            array_keys($fields)
         );
 
         // loop fields to add extra parameters
@@ -115,28 +115,6 @@ class Model
     public static function insertDataField(array $data)
     {
         return FrontendModel::getContainer()->get('database')->insert('forms_data_fields', $data);
-    }
-
-    /**
-     * Notify the admin
-     *
-     * @param array $data
-     */
-    public static function notifyAdmin(array $data)
-    {
-        $alert = array(
-            'loc-key' => 'FORMBUILDER_SUBMISSION',
-        );
-
-        // build data
-        $data = array(
-            'api' => SITE_URL . '/api/1.0',
-            'form_id' => $data['form_id'],
-            'id' => $data['entry_id'],
-        );
-
-        // push it
-        FrontendModel::pushToAppleApp($alert, 1, 'default', $data);
     }
 
     /**

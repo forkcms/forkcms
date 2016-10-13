@@ -10,13 +10,15 @@ namespace Backend\Modules\Pages\Engine;
  */
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Locale;
+use Backend\Modules\ContentBlocks\Command\CopyContentBlocksToOtherLocale;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use Frontend\Core\Engine\Language as FrontendLanguage;
+use Frontend\Core\Language\Language as FrontendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the PagesModule
@@ -102,7 +104,9 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // copy contentBlocks and get copied contentBlockIds
-        $contentBlockIds = BackendContentBlocksModel::copy($from, $to);
+        $copyContentBlocks = new CopyContentBlocksToOtherLocale(Locale::fromString($to), Locale::fromString($from));
+        BackendModel::get('command_bus')->handle($copyContentBlocks);
+        $contentBlockIds = $copyContentBlocks->extraIdMap;
 
         // define old block ids
         $contentBlockOldIds = array_keys($contentBlockIds);
@@ -916,7 +920,7 @@ class Model
                  ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
-        $html .= self::getSubTree($navigation, 1);
+        $html .= self::getSubtree($navigation, 1);
 
         // end
         $html .= '		</li>' . "\n";
@@ -947,7 +951,7 @@ class Model
                              ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                     // insert subtree
-                    $html .= self::getSubTree($navigation, $page['page_id']);
+                    $html .= self::getSubtree($navigation, $page['page_id']);
 
                     // end
                     $html .= '		</li>' . "\n";
@@ -983,7 +987,7 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
-                $html .= self::getSubTree($navigation, $page['page_id']);
+                $html .= self::getSubtree($navigation, $page['page_id']);
 
                 // end
                 $html .= '		</li>' . "\n";
@@ -1018,7 +1022,7 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
-                $html .= self::getSubTree($navigation, $page['page_id']);
+                $html .= self::getSubtree($navigation, $page['page_id']);
 
                 // end
                 $html .= '		</li>' . "\n";
@@ -1117,7 +1121,7 @@ class Model
         }
 
         // get full URL
-        $fullURL = self::getFullUrl($parentId) . '/' . $URL;
+        $fullURL = self::getFullURL($parentId) . '/' . $URL;
 
         // get info about parent page
         $parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
@@ -1150,7 +1154,7 @@ class Model
         }
 
         // check if it is an application
-        if (in_array(trim($fullURL, '/'), array_keys(\ApplicationRouting::getRoutes()))) {
+        if (array_key_exists(trim($fullURL, '/'), \ApplicationRouting::getRoutes())) {
             // add a number
             $URL = BackendModel::addNumber($URL);
 
@@ -1531,7 +1535,7 @@ class Model
             // skip domain name
             $domain = array_shift($URLChunks);
             foreach ($URLChunks as &$URLChunk) {
-                $URLChunk = urlencode($URLChunk);
+                $URLChunk = rawurlencode($URLChunk);
             }
             $redirectURL = $matches[1] . '://' . $domain . '/' . implode('/', $URLChunks);
         }
