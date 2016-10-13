@@ -3,6 +3,8 @@
 namespace Common\Doctrine\Entity;
 
 use Backend\Core\Engine\Meta as BackendMeta;
+use Common\Doctrine\ValueObject\SEOFollow;
+use Common\Doctrine\ValueObject\SEOIndex;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -271,5 +273,21 @@ class Meta
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return SEOIndex
+     */
+    public function getSEOIndex()
+    {
+        return SEOIndex::fromString($this->data['seo_index']);
+    }
+
+    /**
+     * @return SEOFollow
+     */
+    public function getSEOFollow()
+    {
+        return SEOFollow::fromString($this->data['seo_follow']);
     }
 }
