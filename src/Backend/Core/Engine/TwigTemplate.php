@@ -9,6 +9,7 @@ use Common\Core\Twig\Extensions\TwigFilters;
 use ReflectionClass;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Twig_Environment;
@@ -87,6 +88,9 @@ class TwigTemplate extends BaseTwigTemplate
                 new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
             )
         );
+
+        $twigTranslationExtensionClass = Model::getContainer()->getParameter('twig.extension.trans.class');
+        $twig->addExtension(new $twigTranslationExtensionClass(Model::get('translator')));
 
         // debug options
         if ($this->debugMode === true) {

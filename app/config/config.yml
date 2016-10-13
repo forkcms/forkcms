@@ -2,6 +2,9 @@ imports:
     - { resource: parameters.yml }
     - { resource: doctrine.yml }
 
+parameters:
+    translator.identity.class: Common\Language
+
 framework:
     secret:          %kernel.secret%
     router:
