@@ -166,7 +166,7 @@ class MetaType extends AbstractType
         };
     }
 
-    private function getOverwritableFields()
+    protected function getOverwritableFields()
     {
         return ['title', 'description', 'keywords', 'url'];
     }
