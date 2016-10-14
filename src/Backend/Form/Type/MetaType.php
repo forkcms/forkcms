@@ -29,31 +29,19 @@ class MetaType extends AbstractType
                 TextType::class,
                 ['label' => 'lbl.PageTitle', 'label_attr' => ['class' => 'sr-only']]
             )
-            ->add(
-                'titleOverwrite',
-                CheckboxType::class,
-                ['label' => 'lbl.PageTitle', 'required' => false]
-            )
+            ->add('titleOverwrite', CheckboxType::class, ['label' => 'lbl.PageTitle', 'required' => false])
             ->add(
                 'description',
                 TextType::class,
                 ['label' => 'lbl.Description', 'label_attr' => ['class' => 'sr-only']]
             )
-            ->add(
-                'descriptionOverwrite',
-                CheckboxType::class,
-                ['label' => 'lbl.Description', 'required' => false]
-            )
+            ->add('descriptionOverwrite', CheckboxType::class, ['label' => 'lbl.Description', 'required' => false])
             ->add(
                 'keywords',
                 TextType::class,
                 ['label' => 'lbl.Keywords', 'label_attr' => ['class' => 'sr-only']]
             )
-            ->add(
-                'keywordsOverwrite',
-                CheckboxType::class,
-                ['label' => 'lbl.Keywords', 'required' => false]
-            )
+            ->add('keywordsOverwrite', CheckboxType::class, ['label' => 'lbl.Keywords', 'required' => false])
             ->add(
                 'url',
                 TextType::class,
@@ -64,54 +52,8 @@ class MetaType extends AbstractType
                 ]
             )
             ->add('urlOverwrite', CheckboxType::class, ['label' => 'lbl.URL', 'required' => false])
-            ->add(
-                'SEOIndex',
-                ChoiceType::class,
-                [
-                    'expanded' => true,
-                    'multiple' => false,
-                    'choices' => array_combine(
-                        SEOIndex::getPossibleValues(),
-                        SEOIndex::getPossibleValues()
-                    ),
-                    'choice_label' => function ($SEOIndex) {
-                        if ($SEOIndex === SEOIndex::NONE) {
-                            return 'lbl.' . ucfirst($SEOIndex);
-                        }
-
-                        return $SEOIndex;
-                    },
-                    'data' => SEOIndex::NONE,
-                    'choice_translation_domain' => true,
-                    'required' => false,
-                    'placeholder' => false,
-                    'label_attr' => ['class' => 'radio-list'],
-                ]
-            )
-            ->add(
-                'SEOFollow',
-                ChoiceType::class,
-                [
-                    'expanded' => true,
-                    'multiple' => false,
-                    'choices' => array_combine(
-                        SEOFollow::getPossibleValues(),
-                        SEOFollow::getPossibleValues()
-                    ),
-                    'choice_label' => function ($SEOFollow) {
-                        if ($SEOFollow === SEOFollow::NONE) {
-                            return 'lbl.' . ucfirst($SEOFollow);
-                        }
-
-                        return $SEOFollow;
-                    },
-                    'data' => SEOFollow::NONE,
-                    'choice_translation_domain' => true,
-                    'required' => false,
-                    'placeholder' => false,
-                    'label_attr' => ['class' => 'radio-list'],
-                ]
-            )
+            ->add('SEOIndex', ChoiceType::class, $this->getSEOIndexChoiceTypeOptions())
+            ->add('SEOFollow', ChoiceType::class, $this->getSEOFollowChoiceTypeOptions())
             ->addModelTransformer(
                 new CallbackTransformer($this->getMetaTransformFunction(), $this->getMetaReverseTransformFunction())
             )
@@ -124,6 +66,60 @@ class MetaType extends AbstractType
                 ['label' => 'lbl.ExtraMetaTags', 'required' => false, 'attr' => ['rows' => 5, 'cols' => 62]]
             );
         }
+    }
+
+    /**
+     * @return array
+     */
+    private function getSEOIndexChoiceTypeOptions()
+    {
+        return [
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => array_combine(
+                SEOIndex::getPossibleValues(),
+                SEOIndex::getPossibleValues()
+            ),
+            'choice_label' => function ($SEOIndex) {
+                if ($SEOIndex === SEOIndex::NONE) {
+                    return 'lbl.' . ucfirst($SEOIndex);
+                }
+
+                return $SEOIndex;
+            },
+            'data' => SEOIndex::NONE,
+            'choice_translation_domain' => true,
+            'required' => false,
+            'placeholder' => false,
+            'label_attr' => ['class' => 'radio-list'],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getSEOFollowChoiceTypeOptions()
+    {
+        return [
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => array_combine(
+                SEOFollow::getPossibleValues(),
+                SEOFollow::getPossibleValues()
+            ),
+            'choice_label' => function ($SEOFollow) {
+                if ($SEOFollow === SEOFollow::NONE) {
+                    return 'lbl.' . ucfirst($SEOFollow);
+                }
+
+                return $SEOFollow;
+            },
+            'data' => SEOFollow::NONE,
+            'choice_translation_domain' => true,
+            'required' => false,
+            'placeholder' => false,
+            'label_attr' => ['class' => 'radio-list'],
+        ];
     }
 
     /**
