@@ -2,16 +2,21 @@
 
 namespace Backend\Form\Type;
 
+use Closure;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\ValueObject\SEOFollow;
 use Common\Doctrine\ValueObject\SEOIndex;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MetaType extends AbstractType
@@ -109,7 +114,8 @@ class MetaType extends AbstractType
             )
             ->addModelTransformer(
                 new CallbackTransformer($this->getMetaTransformFunction(), $this->getMetaReverseTransformFunction())
-            );
+            )
+            ->addEventListener(FormEvents::SUBMIT, $this->getSubmitEventFunction($options['base_field_name']));
 
         if ($options['custom_meta_tags']) {
             $builder->add(
@@ -120,6 +126,54 @@ class MetaType extends AbstractType
         }
     }
 
+    /**
+     * @param string $baseFieldName
+     *
+     * @return Closure
+     */
+    private function getSubmitEventFunction($baseFieldName)
+    {
+        return function (FormEvent $event) use ($baseFieldName) {
+            $metaForm = $event->getForm();
+            $metaData = $event->getData();
+            $parentForm = $metaForm->getParent();
+            if ($parentForm === null) {
+                throw new LogicException(
+                    'The MetaType is not a stand alone type, it needs to be used in a parent form'
+                );
+            }
+
+            if (!$parentForm->has($baseFieldName)) {
+                throw new InvalidArgumentException('The base_field_name does not exist in the parent form');
+            }
+
+            $defaultValue = $parentForm->get($baseFieldName)->getData();
+
+            $overwritableFields = $this->getOverwritableFields();
+            array_walk(
+                $overwritableFields,
+                function ($fieldName) use ($metaForm, $defaultValue, &$metaData) {
+                    if ($metaForm->get($fieldName . 'Overwrite')->getData()) {
+                        // we are overwriting it so we don't need to set the fallback
+                        return;
+                    }
+
+                    $metaData[$fieldName] = $defaultValue;
+                }
+            );
+
+            $event->setData($metaData);
+        };
+    }
+
+    private function getOverwritableFields()
+    {
+        return ['title', 'description', 'keywords', 'url'];
+    }
+
+    /**
+     * @return Closure
+     */
     private function getMetaTransformFunction()
     {
         return function ($meta) {
@@ -143,6 +197,9 @@ class MetaType extends AbstractType
         };
     }
 
+    /**
+     * @return Closure
+     */
     private function getMetaReverseTransformFunction()
     {
         return function ($metaData) {
