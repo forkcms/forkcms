@@ -107,7 +107,7 @@
       <div class="panel panel-default">
         <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.Titles'|trans|ucfirst }}</p></div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group last">
             <ul class="list-unstyled checkboxTextFieldCombo">
               <li class="checkbox">
                 <p>
@@ -141,7 +141,7 @@
               </li>
             </ul>
           </div>
-          <div class="form-group">
+          <div class="form-group{% if not form.custom_meta_tags %} last{% endif %}">
             <ul class="list-unstyled checkboxTextFieldCombo">
               <li class="checkbox">
                 <p>
@@ -154,12 +154,14 @@
               </li>
             </ul>
           </div>
+          {% if form.custom_meta_tags %}
           <div class="form-group last">
             {{ form_label(form.custom) }}
             {{ form_widget(form.custom) }}
             {{ form_errors(form.custom) }}
             <p class="help-block">{{ 'msg.HelpMetaCustom'|trans|raw }}</p>
           </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -168,7 +170,7 @@
       <div class="panel panel-default">
         <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.URL'|trans|ucfirst }}</p></div>
         <div class="panel-body">
-          <div class="form-group">
+          <div class="form-group last">
             <ul class="list-unstyled checkboxTextFieldCombo">
               <li class="checkbox">
                 <p>

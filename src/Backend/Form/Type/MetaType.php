@@ -50,11 +50,6 @@ class MetaType extends AbstractType
                 ['label' => 'lbl.Keywords', 'required' => false]
             )
             ->add(
-                'custom',
-                TextareaType::class,
-                ['label' => 'lbl.ExtraMetaTags', 'required' => false, 'attr' => ['rows' => 5, 'cols' => 62]]
-            )
-            ->add(
                 'url',
                 TextType::class,
                 [
@@ -115,6 +110,14 @@ class MetaType extends AbstractType
             ->addModelTransformer(
                 new CallbackTransformer($this->getMetaTransformFunction(), $this->getMetaReverseTransformFunction())
             );
+
+        if ($options['custom_meta_tags']) {
+            $builder->add(
+                'custom',
+                TextareaType::class,
+                ['label' => 'lbl.ExtraMetaTags', 'required' => false, 'attr' => ['rows' => 5, 'cols' => 62]]
+            );
+        }
     }
 
     private function getMetaTransformFunction()
@@ -149,9 +152,11 @@ class MetaType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired(['base_field_name', 'custom_meta_tags']);
         $resolver->setDefaults(
             [
                 'label' => false,
+                'custom_meta_tags' => false,
             ]
         );
     }
