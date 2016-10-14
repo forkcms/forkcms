@@ -205,7 +205,7 @@ class Meta
             $metaData['titleOverwrite'],
             $metaData['url'],
             $metaData['urlOverwrite'],
-            $metaData['custom'],
+            array_key_exists('custom', $metaData) ? $metaData['custom'] : null,
             [
                 'seo_index' => SEOIndex::fromString($metaData['SEOIndex']),
                 'seo_follow' => SEOFollow::fromString($metaData['SEOFollow']),
