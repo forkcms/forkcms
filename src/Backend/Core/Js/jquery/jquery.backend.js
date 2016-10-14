@@ -10,7 +10,25 @@
 	$.fn.doMeta = function(options)
 	{
 		// define defaults
-		var defaults = {};
+		var defaults = {
+			metaIdSelector: '#metaId',
+			pageTitleSelector: '#pageTitle',
+			pageTitleOverwriteSelector: '#pageTitleOverwrite',
+			navigationTitleSelector: '#navigationTitle',
+			navigationTitleOverwriteSelector: '#navigationTitleOverwrite',
+			metaDescriptionSelector: '#metaDescription',
+			metaDescriptionOverwriteSelector: '#metaDescriptionOverwrite',
+			metaKeywordsSelector: '#metaKeywords',
+			metaKeywordsOverwriteSelector: '#metaKeywordsOverwrite',
+			urlSelector: '#url',
+			urlOverwriteSelector: '#urlOverwrite',
+			generatedUrlSelector: '#generatedUrl',
+			baseFieldNameSelector: '#baseFieldName',
+			customSelector: '#custom',
+			classNameSelector: '#className',
+			methodNameSelector: '#methodName',
+			parametersSelector: '#parameters',
+		};
 
 		// extend options
 		options = $.extend(defaults, options);
@@ -19,16 +37,16 @@
 		return this.each(function()
 		{
 			// variables
-			$element = $(this);
-			$pageTitle = $('#pageTitle');
-			$pageTitleOverwrite = $('#pageTitleOverwrite');
-			$navigationTitle = $('#navigationTitle');
-			$navigationTitleOverwrite = $('#navigationTitleOverwrite');
-			$metaDescription = $('#metaDescription');
-			$metaDescriptionOverwrite = $('#metaDescriptionOverwrite');
-			$metaKeywords = $('#metaKeywords');
-			$metaKeywordsOverwrite = $('#metaKeywordsOverwrite');
-			$urlOverwrite = $('#urlOverwrite');
+			var $element = $(this);
+			var $pageTitle = $(options.pageTitleSelector);
+			var $pageTitleOverwrite = $(options.pageTitleOverwriteSelector);
+			var $navigationTitle = $(options.navigationTitleSelector);
+			var $navigationTitleOverwrite = $(options.navigationTitleOverwriteSelector);
+			var $metaDescription = $(options.metaDescriptionSelector);
+			var $metaDescriptionOverwrite = $(options.metaDescriptionOverwriteSelector);
+			var $metaKeywords = $(options.metaKeywordsSelector);
+			var $metaKeywordsOverwrite = $(options.metaKeywordsOverwriteSelector);
+			var $urlOverwrite = $(options.urlOverwriteSelector);
 
 			// bind keypress
 			$element.bind('keyup', calculateMeta);
@@ -75,24 +93,24 @@
 					{
 						fork: { module: 'Core', action: 'GenerateUrl' },
 						url: url,
-						metaId: $('#metaId').val(),
-						baseFieldName: $('#baseFieldName').val(),
-						custom: $('#custom').val(),
-						className: $('#className').val(),
-						methodName: $('#methodName').val(),
-						parameters: $('#parameters').val()
+						metaId: $(options.metaIdSelector).val(),
+						baseFieldName: $(options.baseFieldNameSelector).val(),
+						custom: $(options.customSelector).val(),
+						className: $(options.classNameSelector).val(),
+						methodName: $(options.methodNameSelector).val(),
+						parameters: $(options.parametersSelector).val()
 					},
 					success: function(data, textStatus)
 					{
 						url = data.data;
-						$('#url').val(url);
-						$('#generatedUrl').html(url);
+						$(options.urlOverwriteSelector).val(url);
+						$(options.generatedUrlSelector).html(url);
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown)
 					{
 						url = utils.string.urlDecode(utils.string.urlise(url));
-						$('#url').val(url);
-						$('#generatedUrl').html(url);
+						$(options.urlOverwriteSelector).val(url);
+						$(options.generatedUrlSelector).html(url);
 					}
 				});
 			}
