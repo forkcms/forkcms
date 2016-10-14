@@ -27,7 +27,7 @@
 			customSelector: '#custom',
 			classNameSelector: '#className',
 			methodNameSelector: '#methodName',
-			parametersSelector: '#parameters',
+			parametersSelector: '#parameters'
 		};
 
 		// extend options
