@@ -102,6 +102,23 @@ class TemplateModifiers extends BaseTwigModifiers
     }
 
     /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdatetime }}
+     *
+     * @param int $var The UNIX-timestamp to format.
+     *
+     * @return string
+     */
+    public static function formatDateTime($var)
+    {
+        // get setting
+        $format = Authentication::getUser()->getSetting('datetime_format');
+
+        // format the date
+        return \SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+    }
+
+    /**
      * Format a UNIX-timestamp as time
      * syntax: {{ $var|formattime }}
      *
