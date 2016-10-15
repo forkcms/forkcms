@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Exception\RedirectException;
+use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Common\Cookie as CommonCookie;
@@ -42,6 +43,8 @@ class Url extends \KernelLoader
 
     /**
      * @param KernelInterface $kernel
+     *
+     * @throws RedirectException
      */
     public function __construct(KernelInterface $kernel)
     {
@@ -286,6 +289,7 @@ class Url extends \KernelLoader
 
         // define the language
         defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $language);
+        defined('LANGUAGE') || define('LANGUAGE', $language);
 
         // sets the locale file
         Language::setLocale($language);

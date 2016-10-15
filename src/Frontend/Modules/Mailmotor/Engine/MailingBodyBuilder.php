@@ -51,6 +51,7 @@ class MailingBodyBuilder
      * @param array $replacements An array of key/value pairs, where key is the string to replace with the value.
      *
      * @return string The generated mailing body.
+     * @throws \Exception
      */
     public function buildBody(array $replacements = null)
     {
@@ -214,7 +215,7 @@ class MailingBodyBuilder
         $params['utm_campaign'] = $utm['campaign'];
 
         // build google vars query
-        $googleQuery = http_build_query($params);
+        $googleQuery = http_build_query($params, null, '&', PHP_QUERY_RFC3986);
 
         // reserve search vars
         $search = array();

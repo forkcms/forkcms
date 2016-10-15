@@ -3,7 +3,7 @@
 namespace Frontend\Modules\Mailmotor\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
@@ -28,7 +28,7 @@ class Index extends FrontendBaseBlock
     public function execute()
     {
         parent::execute();
-        $this->tpl->assign('hideContentTitle', true);
+        $this->tpl->assignGlobal('hideContentTitle', true);
         $this->loadTemplate();
         $this->loadDataGrid();
         $this->parseDataGrid();
@@ -42,7 +42,7 @@ class Index extends FrontendBaseBlock
         // create a new source-object
         $source = new \SpoonDataGridSourceDB(
             FrontendModel::getContainer()->get('database'),
-            array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE))
+            array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', LANGUAGE))
         );
 
         // create data grid

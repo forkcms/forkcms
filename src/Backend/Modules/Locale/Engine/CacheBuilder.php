@@ -79,10 +79,8 @@ class CacheBuilder
         // init var
         $json = array();
         foreach ($this->types as $type) {
-
             // loop locale
             foreach ($this->locale as $i => $item) {
-
                 // types match
                 if ($item['type'] == $type) {
                     if ($application == 'Backend') {
@@ -138,8 +136,8 @@ class CacheBuilder
      */
     protected function dumpJsonCache($language, $application)
     {
-        $fs = new Filesystem();
-        $fs->dumpFile(
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile(
             constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $language . '.json',
             json_encode($this->buildJsonCache($language, $application))
         );

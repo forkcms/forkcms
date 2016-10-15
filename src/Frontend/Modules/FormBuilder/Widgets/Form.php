@@ -5,7 +5,7 @@ namespace Frontend\Modules\FormBuilder\Widgets;
 use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
@@ -30,6 +30,13 @@ class Form extends FrontendBaseWidget
      * @var FrontendForm
      */
     private $frm;
+
+    /**
+     * Form name
+     *
+     * @var string
+     */
+    private $formName;
 
     /**
      * The form item.
@@ -78,7 +85,7 @@ class Form extends FrontendBaseWidget
 
         // single language
         if ($this->getContainer()->getParameter('site.multilanguage')) {
-            $action = FRONTEND_LANGUAGE . '/' . $action;
+            $action = LANGUAGE . '/' . $action;
         }
 
         // add to action
@@ -86,7 +93,7 @@ class Form extends FrontendBaseWidget
             $action .= '/' . implode('/', $moduleParameters);
         }
         if (count($getParameters) > 0) {
-            $action .= '?' . http_build_query($getParameters);
+            $action .= '?' . http_build_query($getParameters, null, '&', PHP_QUERY_RFC3986);
         }
 
         // remove trailing slash
@@ -117,10 +124,6 @@ class Form extends FrontendBaseWidget
             $this->validateForm();
             $this->parse();
         }
-
-        return $this->tpl->getContent(
-            FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Widgets/' . $this->getAction() . '.html.twig'
-        );
     }
 
     /**
@@ -130,6 +133,9 @@ class Form extends FrontendBaseWidget
     {
         // fetch the item
         $this->item = FrontendFormBuilderModel::get((int) $this->data['id']);
+
+        // define form name
+        $this->formName = 'form' . $this->item['id'];
     }
 
     /**
@@ -171,7 +177,7 @@ class Form extends FrontendBaseWidget
                     }
 
                     // create element
-                    $ddm = $this->frm->addDropdown($item['name'], $values, $defaultIndex);
+                    $ddm = $this->frm->addDropdown($item['name'], $values, $defaultIndex, false, $item['classname']);
 
                     // empty default element
                     $ddm->setDefaultElement('');
@@ -185,7 +191,7 @@ class Form extends FrontendBaseWidget
                     $item['html'] = $ddm->parse();
                 } elseif ($field['type'] == 'radiobutton') {
                     // create element
-                    $rbt = $this->frm->addRadiobutton($item['name'], $values, $defaultValues);
+                    $rbt = $this->frm->addRadiobutton($item['name'], $values, $defaultValues, $item['classname']);
 
                     // get content
                     $item['html'] = $rbt->parse();
@@ -199,13 +205,13 @@ class Form extends FrontendBaseWidget
                     }
 
                     // create element
-                    $chk = $this->frm->addMultiCheckbox($item['name'], $newValues, $defaultValues);
+                    $chk = $this->frm->addMultiCheckbox($item['name'], $newValues, $defaultValues, $item['classname']);
 
                     // get content
                     $item['html'] = $chk->parse();
                 } elseif ($field['type'] == 'textbox') {
                     // create element
-                    $txt = $this->frm->addText($item['name'], $defaultValues);
+                    $txt = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname']);
 
                     // add required attribute
                     if ($item['required']) {
@@ -246,7 +252,7 @@ class Form extends FrontendBaseWidget
                         // Convert the php date format to a jquery date format
                         $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery($this->get('fork.settings')->get('Core', 'date_format_short'));
 
-                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield')->setAttributes(
+                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield ' . $item['classname'])->setAttributes(
                             array(
                                 'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
@@ -255,7 +261,7 @@ class Form extends FrontendBaseWidget
                             )
                         );
                     } else {
-                        $datetime = $this->frm->addText($item['name'], $defaultValues)->setAttributes(array('type' => 'time'));
+                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname'])->setAttributes(array('type' => 'time'));
                     }
 
                     // add required attribute
@@ -267,7 +273,7 @@ class Form extends FrontendBaseWidget
                     $item['html'] = $datetime->parse();
                 } elseif ($field['type'] == 'textarea') {
                     // create element
-                    $txt = $this->frm->addTextarea($item['name'], $defaultValues);
+                    $txt = $this->frm->addTextarea($item['name'], $defaultValues, $item['classname']);
                     $txt->setAttribute('cols', 30);
 
                     // add required attribute
@@ -303,6 +309,7 @@ class Form extends FrontendBaseWidget
         $formName = 'form' . $this->item['id'];
         $this->tpl->assign('formName', $formName);
         $this->tpl->assign('formAction', $this->createAction() . '#' . $formName);
+        $this->tpl->assign('successMessage', false);
 
         // got fields
         if (!empty($this->fieldsHTML)) {
@@ -360,8 +367,7 @@ class Form extends FrontendBaseWidget
     private function parseSuccessMessage()
     {
         // form name
-        $formName = 'form' . $this->item['id'];
-        $this->tpl->assign('formName', $formName);
+        $this->tpl->assign('formName', $this->formName);
         $this->tpl->assign('successMessage', $this->item['success_message']);
     }
 
@@ -504,6 +510,7 @@ class Form extends FrontendBaseWidget
                 $redirect = SITE_URL . $this->URL->getQueryString();
                 $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
                 $redirect .= 'identifier=' . $this->item['identifier'];
+                $redirect .= '#' . $this->formName;
 
                 throw new RedirectException(
                     'Redirect',

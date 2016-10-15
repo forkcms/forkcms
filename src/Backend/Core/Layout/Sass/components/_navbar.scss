@@ -363,6 +363,10 @@
       }
     }
 
+    .dropdown-toggle:focus {
+        outline: 5px auto -webkit-focus-ring-color;
+    }
+
     &.open .fa-angle-right {
       transform: rotate(-90deg);
       transition: all 250ms;
@@ -379,6 +383,12 @@
   .dropdown {
     display: inline-block;
     float: none;
+
+    a {
+      position: relative;
+      display: block;
+      line-height: 20px;
+    }
 
     .dropdown-toggle {
       border: 1px solid $gray-lighter;

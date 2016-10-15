@@ -11,9 +11,12 @@ use InvalidArgumentException;
  */
 final class Language
 {
+    /**
+     * @return string
+     */
     public static function get()
     {
-        return APPLICATION . '\Core\Engine\Language';
+        return APPLICATION . '\Core\Language\Language';
     }
 
     /**

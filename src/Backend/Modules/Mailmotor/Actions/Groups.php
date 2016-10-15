@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
@@ -73,7 +73,7 @@ class Groups extends BackendBaseActionIndex
         $this->dataGrid->setAttributes(array('id' => 'dgGroups'));
 
         // add the multicheckbox column
-        $this->dataGrid->setMassActionCheckboxes('check', '[id]', BackendMailmotorModel::getDefaultGroupIds());
+        $this->dataGrid->setMassActionCheckboxes('check', '[id]', BackendMailmotorModel::getDefaultGroupIDs());
         $this->dataGrid->setColumnsSequence('check', 'name', 'created_on', 'language');
 
         // add mass action dropdown

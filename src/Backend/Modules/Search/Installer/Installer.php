@@ -23,13 +23,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'search' as a module
         $this->addModule('Search');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
         $this->setSetting('Search', 'overview_num_items', 10);
@@ -96,9 +96,9 @@ class Installer extends ModuleInstaller
         $this->searchPages();
 
         // create module cache path
-        $fs = new Filesystem();
-        if (!$fs->exists(PATH_WWW . '/src/Frontend/Cache/Search')) {
-            $fs->mkdir(PATH_WWW . '/src/Frontend/Cache/Search');
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists(PATH_WWW . '/src/Frontend/Cache/Search')) {
+            $filesystem->mkdir(PATH_WWW . '/src/Frontend/Cache/Search');
         }
     }
 

@@ -39,7 +39,7 @@ class Autocomplete extends FrontendBaseAJAXAction
             $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
         } else {
             // get matches
-            $matches = FrontendSearchModel::getStartsWith($term, FRONTEND_LANGUAGE, $limit);
+            $matches = FrontendSearchModel::getStartsWith($term, LANGUAGE, $limit);
 
             // get search url
             $url = FrontendNavigation::getURLForBlock('Search');

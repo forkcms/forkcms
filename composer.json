@@ -1,7 +1,15 @@
 {
     "name": "forkcms/forkcms",
     "description": "Fork is an open source CMS that will rock your world.",
-    "keywords": ["cms"],
+    "keywords": [
+        "cms",
+        "fork",
+        "fork cms",
+        "content management system",
+        "symfony",
+        "blog",
+        "php"
+    ],
     "homepage": "http://www.fork-cms.com/",
     "license": "MIT",
     "require": {
@@ -9,7 +17,7 @@
         "tijsverkoyen/akismet": "1.1.*",
         "tijsverkoyen/css-to-inline-styles": "1.5.*",
         "matthiasmullie/minify": "~1.3",
-        "matthiasmullie/scrapbook": "~1.0.3",
+        "matthiasmullie/scrapbook": "^1.3",
         "symfony/symfony": "^2.7",
         "symfony/assetic-bundle": "^2.7",
         "symfony/swiftmailer-bundle": "^2.3",
@@ -17,7 +25,11 @@
         "spoon/library": "^2.3",
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
-        "league/flysystem": "~1.0"
+        "league/flysystem": "~1.0",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.5",
+        "simple-bus/symfony-bridge": "^4.1",
+        "simple-bus/doctrine-orm-bridge": "^4.0"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
@@ -28,7 +40,7 @@
         "bin-dir": "bin"
     },
     "support": {
-        "irc": "irc://irc.freenode.org/forkcms",
+        "forum": "https://fork-cms.herokuapp.com",
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {

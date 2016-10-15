@@ -10,7 +10,7 @@ namespace Backend\Modules\Error\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 
 /**
  * This is the index-action (default), it will display an error depending on a given parameters

@@ -45,7 +45,7 @@ class Breadcrumb extends FrontendBaseObject
 
         // init vars
         $items = array();
-        $errorURL = Navigation::getUrl(404);
+        $errorURL = Navigation::getURL(404);
 
         // loop pages
         while (!empty($pages)) {
@@ -59,7 +59,7 @@ class Breadcrumb extends FrontendBaseObject
                 // only add pages that aren't direct actions
                 if ($pageInfo['tree_type'] != 'direct_action') {
                     // get URL
-                    $pageURL = Navigation::getUrl($menuId);
+                    $pageURL = Navigation::getURL($menuId);
 
                     // if this is the error-page, so we won't show an URL.
                     if ($pageURL == $errorURL) {
@@ -142,6 +142,6 @@ class Breadcrumb extends FrontendBaseObject
     public function parse()
     {
         // assign
-        $this->tpl->assign('breadcrumb', $this->items);
+        $this->tpl->addGlobal('breadcrumb', $this->items);
     }
 }

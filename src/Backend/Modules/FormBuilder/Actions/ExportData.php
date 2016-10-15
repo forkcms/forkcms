@@ -10,7 +10,7 @@ namespace Backend\Modules\FormBuilder\Actions;
  */
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
@@ -23,28 +23,35 @@ class ExportData extends BackendBaseAction
     /**
      * CSV column headers.
      *
-     * @var	array
+     * @var array
      */
     private $columnHeaders = array();
 
     /**
      * The filter.
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 
     /**
+     * Form id.
+     *
+     * @var int
+     */
+    private $id;
+
+    /**
      * CSV rows.
      *
-     * @var	array
+     * @var array
      */
     private $rows = array();
 
     /**
      * Builds the query for this datagrid.
      *
-     * @return array		An array with two arguments containing the query and its parameters.
+     * @return array An array with two arguments containing the query and its parameters.
      */
     private function buildQuery()
     {

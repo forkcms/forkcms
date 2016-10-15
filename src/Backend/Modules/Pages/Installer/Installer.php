@@ -67,7 +67,7 @@ class Installer extends ModuleInstaller
                          'allow_delete' => 'N',
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
 
@@ -80,7 +80,7 @@ class Installer extends ModuleInstaller
                          'language' => $language,
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sitemap.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sitemap.txt'),
                     array('extra_id' => $extras['sitemap_widget_sitemap']),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
@@ -95,7 +95,7 @@ class Installer extends ModuleInstaller
                     ),
                     array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
                     array(
-                         'html' => dirname(__FILE__) . '/Data/' . $language .
+                         'html' => __DIR__ . '/Data/' . $language .
                                    '/disclaimer.txt',
                     ),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
@@ -112,7 +112,7 @@ class Installer extends ModuleInstaller
                          'allow_delete' => 'N',
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/404.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/404.txt'),
                     array('extra_id' => $extras['sitemap_widget_sitemap']),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
@@ -126,13 +126,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'pages' as a module
         $this->addModule('Pages');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // import data
         $this->importData();
@@ -226,7 +226,7 @@ class Installer extends ModuleInstaller
                          'allow_delete' => 'N',
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
                     array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
                     array('extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'right'),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
@@ -267,8 +267,8 @@ class Installer extends ModuleInstaller
                          'language' => $language,
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample2.txt'),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
 
@@ -280,8 +280,8 @@ class Installer extends ModuleInstaller
                          'language' => $language,
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample2.txt'),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
 
@@ -293,8 +293,8 @@ class Installer extends ModuleInstaller
                          'language' => $language,
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample2.txt'),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
 
@@ -308,7 +308,7 @@ class Installer extends ModuleInstaller
                     ),
                     array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
                     array(
-                         'html' => dirname(__FILE__) . '/Data/' . $language . '/lorem_ipsum.txt',
+                         'html' => __DIR__ . '/Data/' . $language . '/lorem_ipsum.txt',
                     ),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );

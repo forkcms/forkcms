@@ -15,7 +15,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
@@ -249,6 +249,10 @@ class Edit extends BackendBaseActionEdit
             $this->record['hidden']
         );
 
+        // image related fields
+        $this->frm->addImage('image');
+        $this->frm->addCheckbox('remove_image');
+
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
             // init some vars
@@ -271,7 +275,7 @@ class Edit extends BackendBaseActionEdit
         $block['formElements']['chkVisible'] = $this->frm->addCheckbox('block_visible_' . $block['index'], true);
         $block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], 0);
         $block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index'], 'fallback');
-        $block['formElements']['txtHTML'] = $this->frm->addTextArea(
+        $block['formElements']['txtHTML'] = $this->frm->addTextarea(
             'block_html_' . $block['index'],
             ''
         ); // this is no editor; we'll add the editor in JS
@@ -358,7 +362,7 @@ class Edit extends BackendBaseActionEdit
                 'block_position_' . $block['index'],
                 $block['position']
             );
-            $block['formElements']['txtHTML'] = $this->frm->addTextArea(
+            $block['formElements']['txtHTML'] = $this->frm->addTextarea(
                 'block_html_' . $block['index'],
                 $block['html']
             ); // this is no editor; we'll add the editor in JS
@@ -595,6 +599,7 @@ class Edit extends BackendBaseActionEdit
             if ($this->frm->isCorrect()) {
                 // init var
                 $data = null;
+                $templateId = (int) $this->frm->getField('template_id')->getValue();
 
                 // build data
                 if ($this->frm->getField('is_action')->isChecked()) {
@@ -613,6 +618,9 @@ class Edit extends BackendBaseActionEdit
                         ),
                         'code' => '301',
                     );
+                }
+                if (array_key_exists('image', $this->templates[$templateId]['data'])) {
+                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
                 }
 
                 // build page record
@@ -719,7 +727,7 @@ class Edit extends BackendBaseActionEdit
                     $this->redirect(
                         BackendModel::createURLForAction(
                             'Edit'
-                        ) . '&id=' . $page['id'] . '&report=edited&var=' . urlencode(
+                        ) . '&id=' . $page['id'] . '&report=edited&var=' . rawurlencode(
                             $page['title']
                         ) . '&highlight=row-' . $page['id']
                     );
@@ -728,13 +736,42 @@ class Edit extends BackendBaseActionEdit
                     $this->redirect(
                         BackendModel::createURLForAction(
                             'Edit'
-                        ) . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . urlencode(
+                        ) . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . rawurlencode(
                             $page['title']
                         ) . '&highlight=row-' . $page['id'] . '&draft=' . $page['revision_id']
                     );
                 }
             }
         }
+    }
+
+    /**
+     * @param bool $allowImage
+     * @return string|null
+     */
+    private function getImage($allowImage)
+    {
+        $imageFilename = array_key_exists('image', (array) $this->record['data']) ? $this->record['data']['image'] : null;
+
+        if (!$this->frm->getField('image')->isFilled() && !$this->frm->getField('remove_image')->isChecked()) {
+            return $imageFilename;
+        }
+
+        $imagePath = FRONTEND_FILES_PATH . '/pages/images';
+
+        // delete the current image
+        BackendModel::deleteThumbnails($imagePath, (string) $imageFilename);
+
+        if (!$allowImage
+            || ($this->frm->getField('remove_image')->isChecked() && !$this->frm->getField('image')->isFilled())
+        ) {
+            return null;
+        }
+
+        $imageFilename = $this->meta->getURL() . '_' . time() . '.' . $this->frm->getField('image')->getExtension();
+        $this->frm->getField('image')->generateThumbnails($imagePath, $imageFilename);
+
+        return $imageFilename;
     }
 
     /**

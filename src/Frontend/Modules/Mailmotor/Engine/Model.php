@@ -130,7 +130,7 @@ class Model
              FROM mailmotor_groups AS mg
              WHERE mg.is_default = ? AND mg.language = ?
              LIMIT 1',
-            array('Y', FRONTEND_LANGUAGE)
+            array('Y', LANGUAGE)
         );
     }
 
@@ -198,21 +198,22 @@ class Model
      * @param string $name     The name of the template.
      *
      * @return array
+     * @throws \SpoonException
      */
     public static function getTemplate($language, $name)
     {
         // set the path to the template folders for this language
         $path = PATH_WWW . '/src/Backend/Modules/Mailmotor/Templates/' . $language;
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
 
         // load all templates in the 'templates' folder for this language
-        if (!$fs->exists($path . '/' . $name . '/template.html.twig')) {
+        if (!$filesystem->exists($path . '/' . $name . '/template.html.twig')) {
             throw new \SpoonException(
                 'The template folder "' . $name . '" exists, but no
                 template.html.twig file was found. Please create one.'
             );
         }
-        if (!$fs->exists($path . '/' . $name . '/Css/screen.css')) {
+        if (!$filesystem->exists($path . '/' . $name . '/Css/screen.css')) {
             throw new \SpoonException(
                 'The template folder "' . $name . '" exists, but no screen.css
                 file was found. Please create one in a subfolder "css".'
@@ -229,10 +230,10 @@ class Model
                              $language . '/' . $name . '/Css/screen.css';
 
         // check if the template file actually exists
-        if ($fs->exists($record['path_content'])) {
+        if ($filesystem->exists($record['path_content'])) {
             $record['content'] = file_get_contents($record['path_content']);
         }
-        if ($fs->exists($record['path_css'])) {
+        if ($filesystem->exists($record['path_css'])) {
             $record['css'] = file_get_contents($record['path_css']);
         }
 

@@ -33,12 +33,6 @@ class ApplicationRouting extends Controller
         'api' => 'Api',
     );
 
-    public function __construct()
-    {
-        // this class is used in most Fork applications to bubble down the Kernel object
-        require_once __DIR__ . '/ApplicationInterface.php';
-    }
-
     /**
      * Get the possible routes
      *

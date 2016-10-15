@@ -10,7 +10,7 @@ namespace Backend\Modules\Mailmotor\Engine;
  */
 
 use Backend\Core\Engine\Exception as BackendException;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
@@ -286,6 +286,8 @@ class CMHelper
      * Returns the CampaignMonitor object.
      *
      * @return \CampaignMonitor
+     *
+     * @throws BackendException
      */
     public static function getCM()
     {
@@ -306,7 +308,7 @@ class CMHelper
             $password = BackendModel::get('fork.settings')->get('Mailmotor', 'cm_password');
 
             // init CampaignMonitor object
-            $cm = new \CampaignMonitor($url, $username, $password, 60, self::getClientId());
+            $cm = new \CampaignMonitor($url, $username, $password, 60, self::getClientID());
 
             // set CampaignMonitor object reference
             BackendModel::getContainer()->set('campaignmonitor', $cm);
@@ -418,6 +420,8 @@ class CMHelper
      * @param bool $fetchOpens  If the open-count should be included.
      *
      * @return array
+     *
+     * @throws \SpoonException
      */
     public static function getStatistics($id, $fetchClicks = false, $fetchOpens = false)
     {
@@ -442,21 +446,21 @@ class CMHelper
             $stats['clicks_total'] = 0;
 
             // add percentages to these stats
-            $stats['bounces_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(
-                                                                                 ($stats['bounces'] / $stats['recipients_total']) * 100
-                                                                             ) . '%';
-            $stats['recipients_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(
-                                                                                    ($stats['recipients'] / $stats['recipients_total']) * 100
-                                                                                ) . '%';
-            $stats['unique_opens_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(
-                                                                                      ($stats['unique_opens'] / $stats['recipients']) * 100
-                                                                                  ) . '%';
-            $stats['unopens_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(
-                                                                                 ($stats['unopens'] / $stats['recipients']) * 100
-                                                                             ) . '%';
-            $stats['clicks_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(
-                                                                                ($stats['clicks'] / $stats['recipients']) * 100
-                                                                            ) . '%';
+            $stats['bounces_percentage'] = ($stats['recipients'] == 0)
+                ? 0
+                : floor(($stats['bounces'] / $stats['recipients_total']) * 100) . '%';
+            $stats['recipients_percentage'] = ($stats['recipients'] == 0)
+                ? 0
+                : ceil(($stats['recipients'] / $stats['recipients_total']) * 100) . '%';
+            $stats['unique_opens_percentage'] = ($stats['recipients'] == 0)
+                ? 0
+                : ceil(($stats['unique_opens'] / $stats['recipients']) * 100) . '%';
+            $stats['unopens_percentage'] = ($stats['recipients'] == 0)
+                ? 0
+                : floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
+            $stats['clicks_percentage'] = ($stats['recipients'] == 0)
+                ? 0
+                : ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
 
             // fetch clicks or not?
             if ($fetchClicks) {
@@ -653,6 +657,7 @@ class CMHelper
      * @param string $otherId The id in our tables.
      *
      * @return string
+     * @throws \CampaignMonitorException
      */
     public static function insertCampaignMonitorID($type, $id, $otherId)
     {
@@ -1042,7 +1047,7 @@ class CMHelper
         }
 
         // overwrite the name, because the previous one is taken -.-
-        $item['name'] .= ' (#' . rand(0, 999) . ')';
+        $item['name'] .= ' (#' . mt_rand(0, 999) . ')';
 
         // re-insert the mailing in CM
         self::insertMailing($item);

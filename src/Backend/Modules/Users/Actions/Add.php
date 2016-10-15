@@ -12,7 +12,7 @@ namespace Backend\Modules\Users\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
@@ -88,8 +88,8 @@ class Add extends BackendBaseActionAdd
             BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing')
         );
 
-        $this->frm->addDropDown('csv_split_character', BackendUsersModel::getCSVSplitCharacters());
-        $this->frm->addDropDown('csv_line_ending', BackendUsersModel::getCSVLineEndings());
+        $this->frm->addDropdown('csv_split_character', BackendUsersModel::getCSVSplitCharacters());
+        $this->frm->addDropdown('csv_line_ending', BackendUsersModel::getCSVLineEndings());
 
         // permissions
         $this->frm->addCheckbox('active', true);
@@ -155,22 +155,6 @@ class Add extends BackendBaseActionAdd
                 }
             }
 
-            // validate avatar
-            if ($this->frm->getField('avatar')->isFilled()) {
-                // correct extension
-                if ($this->frm->getField('avatar')->isAllowedExtension(
-                    array('jpg', 'jpeg', 'gif', 'png'),
-                    BL::err('JPGGIFAndPNGOnly')
-                )
-                ) {
-                    // correct mimetype?
-                    $this->frm->getField('avatar')->isAllowedMimeType(
-                        array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'),
-                        BL::err('JPGGIFAndPNGOnly')
-                    );
-                }
-            }
-
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build settings-array
@@ -184,7 +168,7 @@ class Add extends BackendBaseActionAdd
                 $settings['number_format'] = $this->frm->getField('number_format')->getValue();
                 $settings['csv_split_character'] = $this->frm->getField('csv_split_character')->getValue();
                 $settings['csv_line_ending'] = $this->frm->getField('csv_line_ending')->getValue();
-                $settings['password_key'] = uniqid();
+                $settings['password_key'] = uniqid('', true);
                 $settings['current_password_change'] = time();
                 $settings['avatar'] = 'no-avatar.gif';
                 $settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
@@ -234,7 +218,7 @@ class Add extends BackendBaseActionAdd
                 // has the user submitted an avatar?
                 if ($this->frm->getField('avatar')->isFilled()) {
                     // create new filename
-                    $filename = rand(0, 3) . '_' . $user['id'] . '.' . $this->frm->getField('avatar')->getExtension();
+                    $filename = mt_rand(0, 3) . '_' . $user['id'] . '.' . $this->frm->getField('avatar')->getExtension();
 
                     // add into settings to update
                     $settings['avatar'] = $filename;

@@ -10,7 +10,7 @@ namespace Backend\Modules\Tags\Engine;
  */
 
 use Common\Uri as CommonUri;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
@@ -70,9 +70,9 @@ class Model
     public static function existsTag($tag)
     {
         return (BackendModel::getContainer()->get('database')->getVar(
-                    'SELECT i.tag FROM tags AS i  WHERE i.tag = ?',
-                    array((string) $tag)
-                ) != '');
+            'SELECT i.tag FROM tags AS i  WHERE i.tag = ?',
+            array((string) $tag)
+        ) != '');
     }
 
     /**

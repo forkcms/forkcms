@@ -10,11 +10,18 @@ class DatabaseDataCollector extends DataCollector
 {
     private $database;
 
+    /**
+     * DatabaseDataCollector constructor.
+     * @param \SpoonDatabase $database
+     */
     public function __construct(\SpoonDatabase $database)
     {
         $this->database = $database;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = array(
@@ -27,11 +34,17 @@ class DatabaseDataCollector extends DataCollector
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getQueryCount()
     {
         return $this->data['queryCount'];
     }
 
+    /**
+     * @return mixed
+     */
     public function getQueries()
     {
         return $this->data['queries'];

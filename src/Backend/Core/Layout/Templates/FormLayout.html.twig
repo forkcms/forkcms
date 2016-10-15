@@ -1,0 +1,78 @@
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+{% block form_label %}
+  {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
+    {% if label is not sameas(false) %}
+      {% if label is empty %}
+        {% set label = id|trans({}, translation_domain)|capitalize %}
+      {% else %}
+        {% set label = label|trans({}, translation_domain)|capitalize %}
+      {% endif %}
+      {% if not compound %}
+        {% set label_attr = label_attr|merge({'for': id}) %}
+      {% endif %}
+      {% set label_attr_class = '' %}
+      {% if horizontal %}
+        {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
+      {% endif %}
+      {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
+      <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+      {{ label }}{{- block('label_asterisk') }}
+      {% if help_label %}
+        {{ block('help_label') }}
+      {% endif %}
+      {% if help_label_tooltip.title %}
+        {{ block('help_label_tooltip') }}
+      {% endif %}
+      {% if help_label_popover.title %}
+        {{ block('help_label_popover') }}
+      {% endif %}
+      </label>
+
+    {% endif %}
+  {% endif %}
+{% endblock form_label %}
+
+
+{% block help_label_tooltip %}
+  <span class="help-block{% if help_label_tooltip.icon is not sameas(false) %} inline{% endif %}">
+    <a href="#" data-toggle="tooltip" data-placement="{{ help_label_tooltip.placement }}" data-title="{{ help_label_tooltip.title|trans({}, translation_domain) }}">
+      {% if help_label_tooltip.icon is not sameas(false) %}
+        <i class="fa fa-question"></i>
+      {% endif %}
+      {% if help_label_tooltip.text is not sameas(null) %}
+        <span class="text-muted">{{ help_label_tooltip.text }}</span>
+      {% endif %}
+    </a>
+  </span>
+{% endblock help_label_tooltip %}
+
+{% block help_label_popover %}
+  <span class="help-block{% if help_label_popover.icon is not sameas(false) %} inline{% endif %}">
+    <a href="#" data-toggle="popover" data-trigger="hover" data-placement="{{ help_label_popover.placement }}" data-title="{{ help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ help_label_popover.content|trans({}, translation_domain) }}">
+      {% if help_label_popover.icon is not sameas(false) %}
+        <i class="fa fa-question"></i>
+      {% endif %}
+      {% if help_label_popover.text is not sameas(null) %}
+        <span class="text-muted">{{ help_label_popover.text }}</span>
+      {% endif %}
+    </a>
+  </span>
+{% endblock help_label_popover %}
+
+
+{%- block label_asterisk -%}
+  <abbr title="{{ 'lbl.RequiredField'|trans({}, translation_domain)|ucfirst }}">*</abbr>
+{%- endblock label_asterisk -%}
+
+{% block form_errors -%}
+  {% if errors|length > 0 -%}
+    {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+    <ul class="list-unstyled">
+        {%- for error in errors -%}
+          <li class="formError"><span class="fa fa-exclamation-triangle"></span> {{ error.message }}</li>
+        {%- endfor -%}
+    </ul>
+    {% if form.parent %}</span>{% else %}</div>{% endif %}
+  {%- endif %}
+{%- endblock form_errors %}

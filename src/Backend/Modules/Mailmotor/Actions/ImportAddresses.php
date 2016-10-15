@@ -13,7 +13,7 @@ use Common\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
@@ -48,7 +48,7 @@ class ImportAddresses extends BackendBaseActionEdit
         $csv[] = array('email' => $this->get('fork.settings')->get($this->getModule(), 'from_email'));
 
         // download the file
-        BackendCSV::arrayToFile(BACKEND_CACHE_PATH . '/Mailmotor/example.csv', $csv, null, null, ';', '"', true);
+        BackendCSV::arrayToFile(BackendMailmotorModel::getCacheDirectory() . 'example.csv', $csv, null, null, ';', '"', true);
     }
 
     /**
@@ -281,7 +281,7 @@ class ImportAddresses extends BackendBaseActionEdit
                     // write a CSV file to the cache
                     $csvFile = 'import-report-' . CommonUri::getUrl(BackendModel::getUTCDate()) . '.csv';
                     BackendCSV::arrayToFile(
-                        BACKEND_CACHE_PATH . '/Mailmotor/' . $csvFile,
+                        BackendMailmotorModel::getCacheDirectory() . $csvFile,
                         $failedSubscribers,
                         null,
                         null,

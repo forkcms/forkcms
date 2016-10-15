@@ -163,12 +163,10 @@ class Api extends \KernelLoader implements \ApplicationInterface
             }
         } catch (\Exception $e) {
             // if we are debugging we should see the exceptions
-            if ($this->getContainer()->getParameter('kernel.debug')) {
-                if (isset($parameters['debug']) && $parameters['debug'] == 'false') {
-                    // do nothing
-                } else {
-                    throw $e;
-                }
+            if ($this->getContainer()->getParameter('kernel.debug')
+                && (!isset($parameters['debug']) || $parameters['debug'] === 'true')
+            ) {
+                throw $e;
             }
 
             // output
@@ -438,7 +436,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // init vars
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
-        $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
+        $pathChunks = explode(DIRECTORY_SEPARATOR, trim(__DIR__, DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
         $version = mb_strtolower($version);
@@ -476,7 +474,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // init vars
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
-        $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
+        $pathChunks = explode(DIRECTORY_SEPARATOR, trim(__DIR__, DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
         $version = mb_strtolower($version);

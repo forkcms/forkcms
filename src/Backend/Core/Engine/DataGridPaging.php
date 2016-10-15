@@ -9,6 +9,8 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Language\Language as BackendLanguage;
+
 /**
  * This is our implementation of iSpoonDatagridPaging
  */
@@ -50,7 +52,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
         if ($compileDirectory !== null) {
             $tpl->setCompileDirectory($compileDirectory);
         } else {
-            $tpl->setCompileDirectory(dirname(__FILE__));
+            $tpl->setCompileDirectory(__DIR__);
         }
 
         // force compiling
@@ -197,9 +199,9 @@ class DataGridPaging implements \iSpoonDatagridPaging
         $tpl->assign('pagination', $pagination);
 
         // assign labels
-        $tpl->assign('previousLabel', Language::lbl('PreviousPage'));
-        $tpl->assign('nextLabel', Language::lbl('NextPage'));
-        $tpl->assign('goToLabel', Language::lbl('GoToPage'));
+        $tpl->assign('previousLabel', BackendLanguage::lbl('PreviousPage'));
+        $tpl->assign('nextLabel', BackendLanguage::lbl('NextPage'));
+        $tpl->assign('goToLabel', BackendLanguage::lbl('GoToPage'));
 
         return $tpl->getContent(BACKEND_CORE_PATH . '/Layout/Templates/DatagridPaging.tpl');
     }

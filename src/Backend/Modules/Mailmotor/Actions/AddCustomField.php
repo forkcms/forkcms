@@ -11,7 +11,7 @@ namespace Backend\Modules\Mailmotor\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
@@ -116,7 +116,7 @@ class AddCustomField extends BackendBaseActionAdd
                     $this->redirect(
                         BackendModel::createURLForAction(
                             'CustomFields'
-                        ) . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . urlencode(
+                        ) . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . rawurlencode(
                             $e->getMessage()
                         )
                     );
@@ -126,7 +126,7 @@ class AddCustomField extends BackendBaseActionAdd
                 $this->redirect(
                     BackendModel::createURLForAction(
                         'CustomFields'
-                    ) . '&group_id=' . $this->group['id'] . '&report=added&var=' . urlencode(
+                    ) . '&group_id=' . $this->group['id'] . '&report=added&var=' . rawurlencode(
                         $txtName->getValue()
                     ) . '&highlight=id-' . $this->group['id']
                 );

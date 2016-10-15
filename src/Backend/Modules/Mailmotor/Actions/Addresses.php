@@ -14,7 +14,7 @@ use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
@@ -28,7 +28,7 @@ class Addresses extends BackendBaseActionIndex
     /**
      * Filter variables
      *
-     * @var    array
+     * @var array
      */
     private $filter;
 
@@ -40,14 +40,14 @@ class Addresses extends BackendBaseActionIndex
     /**
      * The passed group record
      *
-     * @var    array
+     * @var array
      */
     private $group;
 
     /**
      * Builds the query for this datagrid
      *
-     * @return array        An array with two arguments containing the query and its parameters.
+     * @return array An array with two arguments containing the query and its parameters.
      */
     private function buildQuery()
     {
@@ -88,6 +88,7 @@ class Addresses extends BackendBaseActionIndex
      * @param string $path The full path to the CSV file you wish to download.
      *
      * @return array
+     * @throws BackendException
      */
     private function downloadCSV($path)
     {
@@ -180,10 +181,13 @@ class Addresses extends BackendBaseActionIndex
         $this->dataGrid->setColumnsSequence('check');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array(
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array(
                 'export' => BL::lbl('Export'),
                 'delete' => BL::lbl('Delete'),
-            ), 'delete',
+            ),
+            'delete',
             false,
             'form-control',
             'form-control danger'
@@ -254,7 +258,7 @@ class Addresses extends BackendBaseActionIndex
 
             // we should download the file
             if ($download) {
-                $this->downloadCSV(BACKEND_CACHE_PATH . '/Mailmotor/' . $csv);
+                $this->downloadCSV(BackendMailmotorModel::getCacheDirectory() . $csv);
             }
         }
 

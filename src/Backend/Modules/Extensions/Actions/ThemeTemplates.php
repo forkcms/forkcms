@@ -14,7 +14,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
@@ -25,7 +25,7 @@ class ThemeTemplates extends BackendBaseActionEdit
     /**
      * All available themes
      *
-     * @var	array
+     * @var array
      */
     private $availableThemes;
 
@@ -37,7 +37,7 @@ class ThemeTemplates extends BackendBaseActionEdit
     /**
      * The current selected theme
      *
-     * @var	string
+     * @var string
      */
     private $selectedTheme;
 
@@ -112,6 +112,6 @@ class ThemeTemplates extends BackendBaseActionEdit
         $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
         // assign the selected theme, so we can propagate it to the add/edit actions.
-        $this->tpl->assign('selectedTheme', urlencode($this->selectedTheme));
+        $this->tpl->assign('selectedTheme', rawurlencode($this->selectedTheme));
     }
 }

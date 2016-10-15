@@ -3,7 +3,7 @@
 namespace Backend\Modules\Extensions\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
@@ -17,28 +17,28 @@ class DetailTheme extends BackendBaseActionIndex
     /**
      * Theme we request the details of.
      *
-     * @var    string
+     * @var string
      */
     private $currentTheme;
 
     /**
      * Datagrids.
      *
-     * @var    BackendDataGridArray
+     * @var BackendDataGridArray
      */
     private $dataGridTemplates;
 
     /**
      * Information fetched from the info.xml.
      *
-     * @var    array
+     * @var array
      */
     private $information = array();
 
     /**
      * List of warnings.
      *
-     * @var    array
+     * @var array
      */
     private $warnings = array();
 
@@ -161,10 +161,9 @@ class DetailTheme extends BackendBaseActionIndex
         // data grids
         $this->tpl->assign(
             'dataGridTemplates',
-            (isset($this->dataGridTemplates) && $this->dataGridTemplates->getNumResults() > 0) ?
-                $this->dataGridTemplates->getContent() :
-                false
-            )
-        ;
+            (isset($this->dataGridTemplates) && $this->dataGridTemplates->getNumResults() > 0)
+                ? $this->dataGridTemplates->getContent()
+                : false
+        );
     }
 }

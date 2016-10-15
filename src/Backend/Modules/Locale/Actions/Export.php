@@ -21,21 +21,21 @@ class Export extends BackendBaseActionIndex
     /**
      * Filter variables.
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 
     /**
      * Locale items.
      *
-     * @var	array
+     * @var array
      */
     private $locale;
 
     /**
      * Builds the query for this datagrid.
      *
-     * @return array		An array with two arguments containing the query and its parameters.
+     * @return array An array with two arguments containing the query and its parameters.
      */
     private function buildQuery()
     {
@@ -95,7 +95,6 @@ class Export extends BackendBaseActionIndex
 
         // filter checkboxes
         if ($this->filter['ids']) {
-
             // make really sure we are working with integers
             foreach ($this->filter['ids'] as &$id) {
                 $id = (int) $id;

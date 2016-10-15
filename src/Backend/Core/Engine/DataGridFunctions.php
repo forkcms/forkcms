@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * A set of commonly used functions that will be applied on rows or columns
@@ -82,7 +83,7 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('date_format');
 
         // format the date according the user his settings
-        return \SpoonDate::getDate($format, $timestamp, Language::getInterfaceLanguage());
+        return \SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -105,7 +106,7 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('datetime_format');
 
         // format the date according the user his settings
-        return \SpoonDate::getDate($format, $timestamp, Language::getInterfaceLanguage());
+        return \SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -128,7 +129,7 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('time_format');
 
         // format the date according the user his settings
-        return \SpoonDate::getDate($format, $timestamp, Language::getInterfaceLanguage());
+        return \SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -146,12 +147,12 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('datetime_format');
 
         // get the time ago as a string
-        $timeAgo = \SpoonDate::getTimeAgo($timestamp, Language::getInterfaceLanguage(), $format);
+        $timeAgo = \SpoonDate::getTimeAgo($timestamp, BackendLanguage::getInterfaceLanguage(), $format);
 
         return '<time data-toggle="tooltip" datetime="' . \SpoonDate::getDate('Y-m-d H:i:s', $timestamp) . '" title="' . \SpoonDate::getDate(
             $format,
             $timestamp,
-            Language::getInterfaceLanguage()
+            BackendLanguage::getInterfaceLanguage()
         ) . '">' . $timeAgo . '</time>';
     }
 
@@ -301,7 +302,7 @@ class DataGridFunctions
             // more characters
             // hellip is seen as 1 char, so remove it from length
             if ($useHellip) {
-                $length = $length - 1;
+                --$length;
             }
 
             // get the amount of requested characters
@@ -314,5 +315,18 @@ class DataGridFunctions
 
             return \SpoonFilter::htmlspecialchars($string);
         }
+    }
+
+    /**
+     * This is an alias for the template modifier since it can also be used here and people didn't find it.
+     *
+     * @param string|bool $status
+     * @param bool        $reverse show the opposite of the status
+     *
+     * @return string
+     */
+    public static function showBool($status, $reverse = false)
+    {
+        return TemplateModifiers::showBool($status, $reverse);
     }
 }

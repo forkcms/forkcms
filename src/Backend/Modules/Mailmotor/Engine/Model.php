@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Csv as BackendCSV;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
@@ -57,6 +57,14 @@ class Model
          FROM mailmotor_mailings AS mm
          INNER JOIN mailmotor_campaigns AS mc ON mc.id = mm.campaign_id
          WHERE mm.status = ? AND mm.campaign_id = ?';
+
+    /**
+     * @return string
+     */
+    public static function getCacheDirectory()
+    {
+        return BackendModel::getContainer()->get('kernel.root_dir') . '/Mailmotor/';
+    }
 
     /**
      * Returns true if every working language has a default group set, false if at least one is missing.
@@ -391,7 +399,7 @@ class Model
     {
         // set the filename and path
         $filename = 'addresses-' . \SpoonDate::getDate('YmdHi') . '.csv';
-        $path = BACKEND_CACHE_PATH . '/Mailmotor/' . $filename;
+        $path = self::getCacheDirectory() . $filename;
 
         // reformat the created_on date
         if (!empty($emails)) {
@@ -418,7 +426,7 @@ class Model
     {
         // set the filename and path
         $filename = 'addresses-' . \SpoonDate::getDate('YmdHi') . '.csv';
-        $path = BACKEND_CACHE_PATH . '/Mailmotor/' . $filename;
+        $path = self::getCacheDirectory() . $filename;
 
         // fetch the addresses by group
         $records = self::getAddressesByGroupID(array($id));
@@ -478,9 +486,17 @@ class Model
         $statsClickedLinksBy = isset($records[0]['clicked_links_by']) ? $records[0]['clicked_links_by'] : array();
 
         // unset multi-dimensional arrays
-        unset($records[0]['clicked_links'], $records[0]['clicked_links_by'], $records[0]['opens'],
-        $records[0]['clicks'], $records[0]['clicks_percentage'], $records[0]['clicks_total'],
-        $records[0]['recipients_total'], $records[0]['recipients_percentage'], $records[0]['online_version']);
+        unset(
+            $records[0]['clicked_links'],
+            $records[0]['clicked_links_by'],
+            $records[0]['opens'],
+            $records[0]['clicks'],
+            $records[0]['clicks_percentage'],
+            $records[0]['clicks_total'],
+            $records[0]['recipients_total'],
+            $records[0]['recipients_percentage'],
+            $records[0]['online_version']
+        );
 
         // set columns
         $columns = array();
@@ -535,8 +551,13 @@ class Model
         $records[] = BackendMailmotorCMHelper::getStatisticsByCampaignID($id);
 
         // unset some records
-        unset($records[0]['opens'], $records[0]['clicks'], $records[0]['clicks_percentage'],
-        $records[0]['recipients_total'], $records[0]['recipients_percentage']);
+        unset(
+            $records[0]['opens'],
+            $records[0]['clicks'],
+            $records[0]['clicks_percentage'],
+            $records[0]['recipients_total'],
+            $records[0]['recipients_percentage']
+        );
 
         // set columns
         $columns = array();
@@ -816,6 +837,7 @@ class Model
      * @param string $email The emailaddress to get the custom fields for.
      *
      * @return array
+     * @throws \SpoonException
      */
     public static function getCustomFieldsByAddress($email)
     {
@@ -1371,21 +1393,22 @@ class Model
      * @param string $name     The name of the template.
      *
      * @return array
+     * @throws \SpoonException
      */
     public static function getTemplate($language, $name)
     {
         // set the path to the template folders for this language
         $path = BACKEND_MODULES_PATH . '/Mailmotor/Templates/' . $language;
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
 
         // load all templates in the 'templates' folder for this language
-        if (!$fs->exists($path . '/' . $name . '/template.html.twig')) {
+        if (!$filesystem->exists($path . '/' . $name . '/template.html.twig')) {
             throw new \SpoonException(
                 'The template folder "' . $name .
                 '" exists, but no template.html.twig file was found. Please create one.'
             );
         }
-        if (!$fs->exists($path . '/' . $name . '/Css/screen.css')) {
+        if (!$filesystem->exists($path . '/' . $name . '/Css/screen.css')) {
             throw new \SpoonException(
                 'The template folder "' . $name .
                 '" exists, but no screen.css file was found. Please create one in a subfolder "css".'
@@ -1403,10 +1426,10 @@ class Model
                              '/' . $name . '/Css/screen.css';
 
         // check if the template file actually exists
-        if ($fs->exists($record['path_content'])) {
+        if ($filesystem->exists($record['path_content'])) {
             $record['content'] = file_get_contents($record['path_content']);
         }
-        if ($fs->exists($record['path_css'])) {
+        if ($filesystem->exists($record['path_css'])) {
             $record['css'] = file_get_contents($record['path_css']);
         }
 
@@ -1429,10 +1452,10 @@ class Model
         foreach ($finder->directories()->in(BACKEND_MODULES_PATH . '/Mailmotor/Templates/' . $language) as $directory) {
             $item = array();
             $item['language'] = $language;
-            $item['value'] = $directory->getBaseName();
+            $item['value'] = $directory->getBasename();
             $item['label'] = BL::lbl(
                 'Template' . \SpoonFilter::toCamelCase(
-                    \SpoonFilter::toCamelCase($directory->getBaseName(), '-'),
+                    \SpoonFilter::toCamelCase($directory->getBasename(), '-'),
                     '_'
                 )
             );

@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
@@ -125,15 +125,6 @@ class Add extends BackendBaseActionAdd
                 $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
             }
 
-            if ($this->imageIsAllowed) {
-                // validate the image
-                if ($this->frm->getField('image')->isFilled()) {
-                    // image extension and mime type
-                    $this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
-                    $this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
-                }
-            }
-
             // validate meta
             $this->meta->validate();
 
@@ -163,8 +154,8 @@ class Add extends BackendBaseActionAdd
                     $imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
                     // create folders if needed
-                    $fs = new Filesystem();
-                    $fs->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
+                    $filesystem = new Filesystem();
+                    $filesystem->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
 
                     // image provided?
                     if ($this->frm->getField('image')->isFilled()) {
@@ -199,10 +190,10 @@ class Add extends BackendBaseActionAdd
                     }
 
                     // everything is saved, so redirect to the overview
-                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $item['revision_id']);
+                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['revision_id']);
                 } elseif ($item['status'] == 'draft') {
                     // draft: everything is saved, so redirect to the edit action
-                    $this->redirect(BackendModel::createURLForAction('Edit') . '&report=saved-as-draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
+                    $this->redirect(BackendModel::createURLForAction('Edit') . '&report=saved-as-draft&var=' . rawurlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
                 }
             }
         }

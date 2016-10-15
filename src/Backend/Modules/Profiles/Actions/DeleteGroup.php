@@ -42,7 +42,7 @@ class DeleteGroup extends BackendBaseActionDelete
 
             // group was deleted, so redirect
             $this->redirect(
-                BackendModel::createURLForAction('Groups') . '&report=deleted&var=' . urlencode($group['name'])
+                BackendModel::createURLForAction('Groups') . '&report=deleted&var=' . rawurlencode($group['name'])
             );
         } else {
             $this->redirect(BackendModel::createURLForAction('Groups') . '&error=non-existing');

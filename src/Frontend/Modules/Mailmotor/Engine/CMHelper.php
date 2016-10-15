@@ -71,6 +71,8 @@ class CMHelper
      * @param int $listId The default list id to use.
      *
      * @return \CampaignMonitor
+     *
+     * @throws FrontendException
      */
     public static function getCM($listId = null)
     {
@@ -94,7 +96,7 @@ class CMHelper
             $password = FrontendModel::get('fork.settings')->get('Mailmotor', 'cm_password');
 
             // init CampaignMonitor object
-            $cm = new \CampaignMonitor($url, $username, $password, 5, self::getClientId());
+            $cm = new \CampaignMonitor($url, $username, $password, 5, self::getClientID());
 
             // set CampaignMonitor object reference
             FrontendModel::getContainer()->set('campaignmonitor', $cm);

@@ -25,7 +25,7 @@ class Installer extends ModuleInstaller
         $this->addModule('Settings');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // module rights
         $this->setModuleRights(1, 'Settings');

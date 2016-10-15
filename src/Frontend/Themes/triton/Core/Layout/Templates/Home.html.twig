@@ -4,7 +4,7 @@
 {% include "Core/Layout/Templates/Cookies.html.twig" %}
 
 <div id="topWrapper">
-  <header id="header">
+  <header id="header" {% if page.data.image %}style="background-image:url({{ FRONTEND_FILES_URL~'/pages/images/source/'~page.data.image }})" {% endif %}>
     <div class="container">
 
       {# Logo #}

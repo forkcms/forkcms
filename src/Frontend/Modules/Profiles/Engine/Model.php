@@ -139,7 +139,7 @@ class Model
             $avatar = 'http://www.gravatar.com/avatar/' . $hash;
 
             // when email not exists, it has to show our custom no-avatar image
-            $avatar .= '?d=' . urlencode(SITE_URL . $avatarPath) . 'no-avatar.gif';
+            $avatar .= '?d=' . rawurlencode(SITE_URL . $avatarPath) . 'no-avatar.gif';
         } elseif (empty($avatar)) {
             // define avatar as not found
             $avatar = SITE_URL . $avatarPath . 'no-avatar.gif';
@@ -332,7 +332,7 @@ class Model
                 $url = FrontendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url);
+                return self::getUrl($url);
             }
         } else {
             // current profile should be excluded
@@ -351,7 +351,7 @@ class Model
                 $url = FrontendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url, $id);
+                return self::getUrl($url, $id);
             }
         }
 
@@ -415,7 +415,7 @@ class Model
         }
 
         // no need to add this if its empty
-        $queryString = ($queryString != '') ? '?queryString=' . urlencode($queryString) : '';
+        $queryString = ($queryString != '') ? '?queryString=' . rawurlencode($queryString) : '';
 
         // useful urls
         $tpl->assign('loginUrl', FrontendNavigation::getURLForBlock('Profiles', 'Login') . $queryString);

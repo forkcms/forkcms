@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
@@ -444,8 +444,9 @@ class Index extends BackendBaseActionIndex
      */
     public static function setCampaignLink($id, $name)
     {
-        return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction(
-                'Index'
-            ) . '&amp;campaign=' . $id . '">' . $name . '</a>' : \SpoonFilter::ucfirst(BL::lbl('NoCampaign'));
+        return !empty($name)
+            ? '<a href="' . SITE_URL . BackendModel::createURLForAction('Index')
+              . '&amp;campaign=' . $id . '">' . $name . '</a>'
+            : \SpoonFilter::ucfirst(BL::lbl('NoCampaign'));
     }
 }

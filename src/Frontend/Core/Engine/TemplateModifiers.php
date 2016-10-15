@@ -11,6 +11,7 @@ namespace Frontend\Core\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use Frontend\Core\Language\Language;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
 
@@ -130,8 +131,8 @@ class TemplateModifiers extends BaseTwigModifiers
                 'time_format'
             ),
             $string,
-            FRONTEND_LANGUAGE
-        ).'">'.\SpoonDate::getTimeAgo($string, FRONTEND_LANGUAGE).'</abbr>';
+            LANGUAGE
+        ).'">'.\SpoonDate::getTimeAgo($string, LANGUAGE).'</abbr>';
     }
 
     /**
@@ -275,20 +276,22 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Get the URL for a give module & action combination
-     *    syntax: {{ geturlforblock($module, $action, $language) }}
+     *    syntax: {{ geturlforblock($module, $action, $language, $data) }}
      *
      * @param string $module   The module wherefore the URL should be build.
      * @param string $action   A specific action wherefore the URL should be build, otherwise the default will be used.
      * @param string $language The language to use, if not provided we will use the loaded language.
+     * @param array $data      An array with keys and values that partially or fully match the data of the block.
+     *                         If it matches multiple versions of that block it will just return the first match.
      *
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, array $data = null)
     {
         $action = ($action !== null) ? (string) $action : null;
         $language = ($language !== null) ? (string) $language : null;
 
-        return Navigation::getURLForBlock((string) $module, $action, $language);
+        return Navigation::getURLForBlock((string) $module, $action, $language, $data);
     }
 
     /**
@@ -319,14 +322,18 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param string $action The action to execute.
      * @param string $id     The widget id (saved in data-column).
      *
-     * @return string|null
+     * @return null|string
+     * @throws Exception
      */
     public static function parseWidget($module, $action, $id = null)
     {
-        $data = $id !== null ? serialize(array('id' => $id)) : null;
-
         // create new widget instance and return parsed content
-        $extra = new FrontendBlockWidget(Model::get('kernel'), $module, $action, $data);
+        $extra = FrontendBlockWidget::getForId(
+            Model::get('kernel'),
+            $module,
+            $action,
+            $id
+        );
 
         // set parseWidget because we will need it to skip setting headers in the display
         Model::getContainer()->set('parseWidget', true);
@@ -380,11 +387,12 @@ class TemplateModifiers extends BaseTwigModifiers
      * Get the value for a user-setting
      *    syntax {{ usersetting($setting, $userId) }}
      *
-     * @param string $string     The string passed from the template.
+     * @param string $string  The string passed from the template.
      * @param string $setting The name of the setting you want.
      * @param int    $userId  The userId, if not set by $string.
      *
      * @return string
+     * @throws Exception
      */
     public static function userSetting($string = null, $setting, $userId = null)
     {

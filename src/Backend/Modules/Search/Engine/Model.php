@@ -11,7 +11,7 @@ namespace Backend\Modules\Search\Engine;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -168,9 +168,9 @@ class Model
     public static function invalidateCache()
     {
         $finder = new Finder();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
-            $fs->remove($file->getRealPath());
+            $filesystem->remove($file->getRealPath());
         }
 
         // clear the php5.5+ opcode cache

@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
@@ -25,14 +25,14 @@ class EditThemeTemplate extends BackendBaseActionEdit
     /**
      * The position's default extras.
      *
-     * @var	array
+     * @var array
      */
     private $extras = array();
 
     /**
      * The position's names.
      *
-     * @var	array
+     * @var array
      */
     private $names = array();
 
@@ -73,6 +73,10 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $this->extras = $this->record['data']['default_extras_' . BL::getWorkingLanguage()];
         } elseif (isset($this->record['data']['default_extras'])) {
             $this->extras = $this->record['data']['default_extras'];
+        }
+
+        if (!array_key_exists('image', (array) $this->record['data'])) {
+            $this->record['data']['image'] = false;
         }
 
         // assign
@@ -123,6 +127,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
         $this->frm->addCheckbox('default', ($this->record['id'] == $defaultId));
         $this->frm->addCheckbox('overwrite', false);
+        $this->frm->addCheckbox('image', $this->record['data']['image']);
 
         // if this is the default template we can't alter the active/default state
         if (($this->record['id'] == $defaultId)) {
@@ -346,7 +351,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $item['theme'] = $this->frm->getField('theme')->getValue();
                 $item['label'] = $this->frm->getField('label')->getValue();
                 $item['path'] = 'Core/Layout/Templates/' . $this->frm->getField('file')->getValue();
-                $item['active'] = $this->frm->getField('active')->getChecked() ? 'Y' : 'N';
+                $item['active'] = $this->frm->getField('active')->getActualValue();
 
                 // copy data from previous version, otherwise default_extras from other languages are overwritten
                 $item['data'] = $this->record['data'];
@@ -354,6 +359,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
                 $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
+                $item['data']['image'] = $this->frm->getField('image')->isChecked();
 
                 // serialize
                 $item['data'] = serialize($item['data']);
@@ -385,7 +391,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 }
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . rawurlencode($item['label']) . '&highlight=row-' . $item['id']);
             }
         }
     }

@@ -38,9 +38,6 @@ class LoginLink extends FrontendBaseWidget
         // is logged in
         if (FrontendProfilesAuthentication::isLoggedIn()) {
             // get the profile
-            /**
-             * @var FrontendProfilesProfile
-             */
             $profile = FrontendProfilesAuthentication::getProfile();
 
             // assign logged in profile

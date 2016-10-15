@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
@@ -149,7 +149,7 @@ class Index extends BackendBaseActionIndex
         // check if allowed to edit
         if (BackendAuthentication::isAllowedAction('Edit', $this->getModule())) {
             // set column URL
-            $this->dgRecentlyEdited->setColumnUrl(
+            $this->dgRecentlyEdited->setColumnURL(
                 'title',
                 BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')

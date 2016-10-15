@@ -177,5 +177,5 @@ If you want to learn more about the possibilities of squashing, you can find a l
 If you need some more help, or if you want to discuss about a feature, you can do this in multiple ways.
 
 * Create a GitHub issue <https://github.com/forkcms/forkcms/issues>
-* Join us on IRC: #forkcms on irc.freenode.net
+* Join us on Slack: <https://fork-cms.herokuapp.com>
 * Create a WIP pull request. We can discuss how we can work further on it.

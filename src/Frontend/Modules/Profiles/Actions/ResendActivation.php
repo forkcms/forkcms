@@ -12,7 +12,7 @@ namespace Frontend\Modules\Profiles\Actions;
 use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -127,7 +127,7 @@ class ResendActivation extends FrontendBaseBlock
                     ->setTo(array($profile->getEmail() => ''))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.html.twig',
+                        '/Profiles/Layout/Templates/Mails/Register.html.twig',
                         $mailValues,
                         true
                     )

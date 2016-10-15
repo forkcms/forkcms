@@ -29,6 +29,11 @@
             <label for="label" class="control-label">{{ 'lbl.Label'|trans|ucfirst }}</label>
             {% form_field label %} {% form_field_error label %}
           </div>
+          <ul class="list-unstyled">
+            <li class="checkbox">
+              <label for="image">{% form_field image %} {% form_field_error image %} {{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -193,7 +198,7 @@
         </div>
       </div>
       {% if showExtensionsDeleteThemeTemplate %}
-        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
