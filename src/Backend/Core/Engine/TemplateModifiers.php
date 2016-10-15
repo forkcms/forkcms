@@ -92,6 +92,23 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
+    public static function formatDate($var)
+    {
+        // get setting
+        $format = Authentication::getUser()->getSetting('date_format');
+
+        // format the date
+        return \SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+    }
+
+    /**
+     * Format a UNIX-timestamp as time
+     * syntax: {{ $var|formattime }}
+     *
+     * @param int $var The UNIX-timestamp to format.
+     *
+     * @return string
+     */
     public static function formatTime($var)
     {
         // get setting
