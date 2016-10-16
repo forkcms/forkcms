@@ -23,7 +23,7 @@
 			urlSelector: '#url',
 			urlOverwriteSelector: '#urlOverwrite',
 			generatedUrlSelector: '#generatedUrl',
-			baseFieldNameSelector: '#baseFieldName',
+			baseFieldSelector: '#baseFieldName',
 			customSelector: '#custom',
 			classNameSelector: '#className',
 			methodNameSelector: '#methodName',
@@ -94,7 +94,7 @@
 						fork: { module: 'Core', action: 'GenerateUrl' },
 						url: url,
 						metaId: $(options.metaIdSelector).val(),
-						baseFieldName: $(options.baseFieldNameSelector).val(),
+						baseFieldName: $(options.baseFieldSelector).val(),
 						custom: $(options.customSelector).val(),
 						className: $(options.classNameSelector).val(),
 						methodName: $(options.methodNameSelector).val(),
@@ -103,13 +103,13 @@
 					success: function(data, textStatus)
 					{
 						url = data.data;
-						$(options.urlOverwriteSelector).val(url);
+						$(options.urlSelector).val(url);
 						$(options.generatedUrlSelector).html(url);
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown)
 					{
 						url = utils.string.urlDecode(utils.string.urlise(url));
-						$(options.urlOverwriteSelector).val(url);
+						$(options.urlSelector).val(url);
 						$(options.generatedUrlSelector).html(url);
 					}
 				});

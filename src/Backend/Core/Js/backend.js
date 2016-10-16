@@ -1265,6 +1265,7 @@ jsBackend.forms =
 
         $metaTabs.each(function () {
             var possibleOptions = [
+                'baseFieldSelector',
                 'metaIdSelector',
                 'pageTitleSelector',
                 'pageTitleOverwriteSelector',
@@ -1277,12 +1278,11 @@ jsBackend.forms =
                 'urlSelector',
                 'urlOverwriteSelector',
                 'generatedUrlSelector',
-                'baseFieldNameSelector',
                 'customSelector',
                 'classNameSelector',
                 'methodNameSelector',
                 'parametersSelector'
-            ]
+            ];
             var options = {};
 
             // only add the options that have been set
@@ -1292,7 +1292,7 @@ jsBackend.forms =
                 }
             }
 
-            $(this.dataset.metaFieldSelector).doMeta(options)
+            $(this.dataset.baseFieldSelector).doMeta(options)
         });
     },
 
