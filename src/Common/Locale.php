@@ -87,4 +87,9 @@ abstract class Locale implements Serializable
     {
         $this->locale = $locale;
     }
+
+    public function equals(Locale $locale)
+    {
+        return $this->locale === $locale->locale;
+    }
 }
