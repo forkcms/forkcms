@@ -74,7 +74,6 @@ abstract class Locale implements Serializable
      */
     public function serialize()
     {
-
         return $this->locale;
     }
 
