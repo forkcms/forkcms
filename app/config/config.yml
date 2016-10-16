@@ -59,6 +59,7 @@ services:
         class: Backend\Form\Type\MetaType
         arguments:
           - "@repository.meta"
+          - "@translator"
         tags:
           - { name: form.type, alias: meta}
     database:

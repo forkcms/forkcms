@@ -24,21 +24,27 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class MetaType extends AbstractType
 {
     /** @var MetaRepository */
     private $metaRepository;
 
+    /** @var TranslatorInterface */
+    private $translator;
+
     /** @var Meta[] */
     private $meta;
 
     /**
      * @param MetaRepository $metaRepository
+     * @param TranslatorInterface $translator
      */
-    public function __construct(MetaRepository $metaRepository)
+    public function __construct(MetaRepository $metaRepository, TranslatorInterface $translator)
     {
         $this->metaRepository = $metaRepository;
+        $this->translator = $translator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -190,7 +196,7 @@ class MetaType extends AbstractType
             );
 
             if ($generatedUrl !== $metaData['url'] && $metaData['urlOverwrite']) {
-                $metaForm->get('url')->addError(new FormError('err.URLAlreadyExists'));
+                $metaForm->get('url')->addError(new FormError($this->translator->trans('err.URLAlreadyExists')));
                 $event->setData($metaData);
 
                 return;
