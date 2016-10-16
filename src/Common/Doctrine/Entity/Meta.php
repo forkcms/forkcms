@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="meta")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Common\Doctrine\Repository\MetaRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Meta

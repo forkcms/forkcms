@@ -57,6 +57,8 @@ services:
           - { name: form.type, alias: editor}
     form.type.meta:
         class: Backend\Form\Type\MetaType
+        arguments:
+          - "@repository.meta"
         tags:
           - { name: form.type, alias: meta}
     database:

@@ -44,3 +44,9 @@ services:
         class: Common\Doctrine\Entity\CreateSchema
         arguments:
             - "@doctrine.orm.entity_manager"
+
+    repository.meta:
+        class: Common\Doctrine\Repository\MetaRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Common\Doctrine\Entity\Meta
