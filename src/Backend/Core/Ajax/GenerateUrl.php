@@ -19,11 +19,6 @@ use Backend\Core\Engine\Meta as BackendMeta;
 class GenerateUrl extends BackendBaseAJAXAction
 {
     /**
-     * @var BackendMeta
-     */
-    private $meta;
-
-    /**
      * Execute the action
      */
     public function execute()
@@ -31,30 +26,17 @@ class GenerateUrl extends BackendBaseAJAXAction
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        // create bogus form
-        $frm = new BackendForm('meta');
-
         // get parameters
         $URL = \SpoonFilter::getPostValue('url', null, '', 'string');
-        $metaId = \SpoonFilter::getPostValue('meta_id', null, null);
-        $baseFieldName = \SpoonFilter::getPostValue('baseFieldName', null, '', 'string');
-        $custom = \SpoonFilter::getPostValue('custom', null, false, 'bool');
         $className = \SpoonFilter::getPostValue('className', null, '', 'string');
         $methodName = \SpoonFilter::getPostValue('methodName', null, '', 'string');
         $parameters = \SpoonFilter::getPostValue('parameters', null, '', 'string');
 
         // cleanup values
-        $metaId = $metaId ? (int) $metaId : null;
         $parameters = @unserialize($parameters);
 
-        // meta object
-        $this->meta = new BackendMeta($frm, $metaId, $baseFieldName, $custom);
-
-        // set callback for generating an unique URL
-        $this->meta->setURLCallback($className, $methodName, $parameters);
-
         // fetch generated meta url
-        $URL = urldecode($this->meta->generateURL($URL));
+        $URL = urldecode($this->get('repository.meta')->generateURL($URL, $className, $methodName, $parameters));
 
         // output
         $this->output(self::OK, $URL);

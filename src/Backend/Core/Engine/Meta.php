@@ -69,10 +69,10 @@ class Meta
     protected $URL;
 
     /**
-     * @param Form   $form          An instance of Form, the elements will be parsed in here.
-     * @param int    $metaId        The metaID to load.
+     * @param Form $form An instance of Form, the elements will be parsed in here.
+     * @param int $metaId The metaID to load.
      * @param string $baseFieldName The field where the URL should be based on.
-     * @param bool   $custom        Add/show custom-meta.
+     * @param bool $custom Add/show custom-meta.
      *
      * @throws Exception
      */
@@ -118,35 +118,17 @@ class Meta
      * @throws Exception When the function does not exist
      *
      * @return string
+     *
+     * @deprecated use the generateUrl method on the meta repository
      */
     public function generateURL($URL)
     {
-        $class = $this->callback['class'];
-        if (BackendModel::getContainer()->has($class)) {
-            $class = BackendModel::getContainer()->get($class);
-        }
-
-        // validate (check if the function exists)
-        if (!is_callable(array($class, $this->callback['method']))) {
-            throw new Exception('The callback-method doesn\'t exist.');
-        }
-
-        // when using ->getValue() in SpoonFormText fields the function is using htmlentities(),
-        // so we must decode it again first!
-        $URL = \SpoonFilter::htmlentitiesDecode($URL);
-
-        // build parameters for use in the callback
-        $parameters[] = CommonUri::getUrl($URL);
-
-        // add parameters set by user
-        if (!empty($this->callback['parameters'])) {
-            foreach ($this->callback['parameters'] as $parameter) {
-                $parameters[] = $parameter;
-            }
-        }
-
-        // get the real url
-        return call_user_func_array(array($class, $this->callback['method']), $parameters);
+        return  Model::get('repository.meta')->generateURL(
+            $URL,
+            $this->callback['class'],
+            $this->callback['method'],
+            $this->callback['parameters']
+        );
     }
 
     /**
@@ -323,14 +305,12 @@ class Meta
             if (!isset($_POST['seo_index'])) {
                 $_POST['seo_index'] = (isset($this->data['data']['seo_index'])) ?
                     $this->data['data']['seo_index'] :
-                    'none'
-                ;
+                    'none';
             }
             if (!isset($_POST['seo_follow'])) {
                 $_POST['seo_follow'] = (isset($this->data['data']['seo_follow'])) ?
                     $this->data['data']['seo_follow'] :
-                    'none'
-                ;
+                    'none';
             }
         }
 

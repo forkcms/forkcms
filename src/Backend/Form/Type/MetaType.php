@@ -4,8 +4,10 @@ namespace Backend\Form\Type;
 
 use Closure;
 use Common\Doctrine\Entity\Meta;
+use Common\Doctrine\Repository\MetaRepository;
 use Common\Doctrine\ValueObject\SEOFollow;
 use Common\Doctrine\ValueObject\SEOIndex;
+use SpoonFilter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
@@ -16,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
@@ -24,8 +27,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MetaType extends AbstractType
 {
+    /** @var MetaRepository */
+    private $metaRepository;
+
     /** @var Meta[] */
     private $meta;
+
+    /**
+     * @param MetaRepository $metaRepository
+     */
+    public function __construct(MetaRepository $metaRepository)
+    {
+        $this->metaRepository = $metaRepository;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -168,6 +182,21 @@ class MetaType extends AbstractType
                 }
             );
 
+            $generatedUrl = $this->metaRepository->generateURL(
+                SpoonFilter::htmlspecialcharsDecode($metaData['url']),
+                $metaForm->getConfig()->getOption('generate_url_callback_class'),
+                $metaForm->getConfig()->getOption('generate_url_callback_method'),
+                $metaForm->getConfig()->getOption('generate_url_callback_parameters')
+            );
+
+            if ($generatedUrl !== $metaData['url'] && $metaData['urlOverwrite']) {
+                $metaForm->get('url')->addError(new FormError('err.URLAlreadyExists'));
+                $event->setData($metaData);
+
+                return;
+            }
+
+            $metaData['url'] = $generatedUrl;
             $event->setData($metaData);
         };
     }
@@ -270,7 +299,7 @@ class MetaType extends AbstractType
                 'label' => false,
                 'custom_meta_tags' => false,
                 'generated_url_selector' => '#generatedUrl',
-                'generate_url_callback_parameters' => serialize([]),
+                'generate_url_callback_parameters' => [],
             ]
         );
     }
@@ -303,6 +332,6 @@ class MetaType extends AbstractType
         $view->vars['custom_meta_tags'] = $options['custom_meta_tags'];
         $view->vars['generate_url_callback_class'] = $options['generate_url_callback_class'];
         $view->vars['generate_url_callback_method'] = $options['generate_url_callback_method'];
-        $view->vars['generate_url_callback_parameters'] = $options['generate_url_callback_parameters'];
+        $view->vars['generate_url_callback_parameters'] = serialize($options['generate_url_callback_parameters']);
     }
 }
