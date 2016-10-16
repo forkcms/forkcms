@@ -133,6 +133,42 @@ class Meta
     }
 
     /**
+     * @param string $keywords
+     * @param bool $keywordsOverwrite
+     * @param string $description
+     * @param bool $descriptionOverwrite
+     * @param string $title
+     * @param bool $titleOverwrite
+     * @param string $url
+     * @param bool $urlOverwrite
+     * @param string $custom
+     * @param array $data
+     */
+    public function update(
+        $keywords,
+        $keywordsOverwrite,
+        $description,
+        $descriptionOverwrite,
+        $title,
+        $titleOverwrite,
+        $url,
+        $urlOverwrite,
+        $custom,
+        array $data
+    ) {
+        $this->keywords = $keywords;
+        $this->keywordsOverwrite = $keywordsOverwrite;
+        $this->description = $description;
+        $this->descriptionOverwrite = $descriptionOverwrite;
+        $this->title = $title;
+        $this->titleOverwrite = $titleOverwrite;
+        $this->url = $url;
+        $this->urlOverwrite = $urlOverwrite;
+        $this->custom = $custom;
+        $this->data = $data;
+    }
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -194,7 +230,7 @@ class Meta
      *
      * @return self
      */
-    public static function fromFormData(array $metaData)
+    public static function updateWithFormData(array $metaData)
     {
         return new self(
             $metaData['keywords'],
@@ -209,7 +245,8 @@ class Meta
             [
                 'seo_index' => SEOIndex::fromString($metaData['SEOIndex']),
                 'seo_follow' => SEOFollow::fromString($metaData['SEOFollow']),
-            ]
+            ],
+            (int) $metaData['id']
         );
     }
 

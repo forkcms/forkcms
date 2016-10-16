@@ -24,6 +24,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MetaType extends AbstractType
 {
+    /** @var Meta[] */
+    private $meta;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -184,6 +187,8 @@ class MetaType extends AbstractType
                 return;
             }
 
+            $this->meta[$meta->getId()] = $meta;
+
             return [
                 'id' => $meta->getId(),
                 'title' => $meta->getTitle(),
@@ -207,7 +212,44 @@ class MetaType extends AbstractType
     private function getMetaReverseTransformFunction()
     {
         return function ($metaData) {
-            return Meta::fromFormData($metaData);
+            $metaId = null ? null : (int) $metaData['id'];
+
+            if ($metaId === null || !$this->meta[$metaId] instanceof Meta) {
+                return new Meta(
+                    $metaData['keywords'],
+                    $metaData['keywordsOverwrite'],
+                    $metaData['description'],
+                    $metaData['descriptionOverwrite'],
+                    $metaData['title'],
+                    $metaData['titleOverwrite'],
+                    $metaData['url'],
+                    $metaData['urlOverwrite'],
+                    array_key_exists('custom', $metaData) ? $metaData['custom'] : null,
+                    [
+                        'seo_index' => SEOIndex::fromString($metaData['SEOIndex']),
+                        'seo_follow' => SEOFollow::fromString($metaData['SEOFollow']),
+                    ],
+                    $metaData['id'] = $metaId
+                );
+            }
+
+            $this->meta[$metaId]->update(
+                $metaData['keywords'],
+                $metaData['keywordsOverwrite'],
+                $metaData['description'],
+                $metaData['descriptionOverwrite'],
+                $metaData['title'],
+                $metaData['titleOverwrite'],
+                $metaData['url'],
+                $metaData['urlOverwrite'],
+                array_key_exists('custom', $metaData) ? $metaData['custom'] : null,
+                [
+                    'seo_index' => SEOIndex::fromString($metaData['SEOIndex']),
+                    'seo_follow' => SEOFollow::fromString($metaData['SEOFollow']),
+                ]
+            );
+
+            return $this->meta[$metaId];
         };
     }
 
