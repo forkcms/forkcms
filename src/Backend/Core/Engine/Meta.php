@@ -452,9 +452,9 @@ class Meta
      * REMARK: this method has to be public and static
      * REMARK: if you specify arguments they will be appended
      *
-     * @param string $className  Name of the class to use.
+     * @param string $className Name of the class to use.
      * @param string $methodName Name of the method to use.
-     * @param array  $parameters Parameters to parse, they will be passed after ours.
+     * @param array $parameters Parameters to parse, they will be passed after ours.
      */
     public function setURLCallback($className, $methodName, $parameters = array())
     {

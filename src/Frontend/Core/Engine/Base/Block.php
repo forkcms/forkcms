@@ -83,9 +83,9 @@ class Block extends Object
 
     /**
      * @param KernelInterface $kernel
-     * @param string          $module The name of the module.
-     * @param string          $action The name of the action.
-     * @param string          $data   The data that should be available in this block.
+     * @param string $module The name of the module.
+     * @param string $action The name of the action.
+     * @param string $data The data that should be available in this block.
      */
     public function __construct(KernelInterface $kernel, $module, $action, $data = null)
     {
@@ -105,10 +105,10 @@ class Block extends Object
     /**
      * Add a CSS file into the array
      *
-     * @param string $file          The path for the CSS-file that should be loaded.
-     * @param bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param bool   $minify        Should the CSS be minified?
-     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
+     * @param string $file The path for the CSS-file that should be loaded.
+     * @param bool $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param bool $minify Should the CSS be minified?
+     * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
     public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
     {
@@ -128,10 +128,10 @@ class Block extends Object
     /**
      * Add a javascript file into the array
      *
-     * @param string $file          The path to the javascript-file that should be loaded.
-     * @param bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param bool   $minify        Should the file be minified?
-     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
+     * @param string $file The path to the javascript-file that should be loaded.
+     * @param bool $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param bool $minify Should the file be minified?
+     * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
     public function addJS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
     {
@@ -150,8 +150,8 @@ class Block extends Object
     /**
      * Add data that should be available in JS
      *
-     * @param string $key   The key whereunder the value will be stored.
-     * @param mixed  $value The value to pass.
+     * @param string $key The key whereunder the value will be stored.
+     * @param mixed $value The value to pass.
      */
     public function addJSData($key, $value)
     {
@@ -254,8 +254,8 @@ class Block extends Object
     /**
      * Load the template
      *
-     * @param string $path      The path for the template to use.
-     * @param bool   $overwrite Should the template overwrite the default?
+     * @param string $path The path for the template to use.
+     * @param bool $overwrite Should the template overwrite the default?
      */
     protected function loadTemplate($path = null, $overwrite = false)
     {
@@ -477,8 +477,8 @@ class Block extends Object
     /**
      * Redirect to a given URL
      *
-     * @param string $URL  The URL whereto will be redirected.
-     * @param int    $code The redirect code, default is 302 which means this is a temporary redirect.
+     * @param string $URL The URL whereto will be redirected.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
      *
      * @throws RedirectException
      */
