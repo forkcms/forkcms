@@ -102,7 +102,28 @@
 {%- endblock form_errors %}
 
 {%- block meta_widget -%}
-  <div role="tabpanel" class="tab-pane active" id="tabSEO">
+  {% set customId = form.vars.id ~ '_custom' %}
+  {% set classId = form.vars.id ~ '_class' %}
+  {% set methodId = form.vars.id ~ '_method' %}
+  {% set parametersId = form.vars.id ~ '_parameters' %}
+  <div
+    class="js-do-meta-automatically"
+    data-base-field-selector="{{ base_field_selector }}"
+    data-meta-id-selector="{{ '#' ~ form.id.vars.id }}"
+    data-page-title-selector="{{ '#' ~ form.title.vars.id }}"
+    data-page-title-overwrite-selector="{{ '#' ~ form.titleOverwrite.vars.id }}"
+    data-meta-description-selector="{{ '#' ~ form.description.vars.id }}"
+    data-meta-description-overwrite-selector="{{ '#' ~ form.descriptionOverwrite.vars.id }}"
+    data-meta-keywords-selector="{{ '#' ~ form.keywords.vars.id }}"
+    data-meta-keywords-overwrite-selector="{{ '#' ~ form.keywordsOverwrite.vars.id }}"
+    data-url-selector="{{ '#' ~ form.url.vars.id }}"
+    data-url-overwrite-selector="{{ '#' ~ form.urlOverwrite.vars.id }}"
+    data-generated-url-selector="{{ form.vars.generated_url_selector }}"
+    data-custom-selector="{{ '#' ~ customId }}"
+    data-class-name-selector="{{ '#' ~ classId }}"
+    data-method-name-selector="{{ '#' ~ methodId }}"
+    data-parameters-selector="{{ '#' ~ parametersId }}"
+  >
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.Titles'|trans|ucfirst }}</p></div>
@@ -214,5 +235,9 @@
       </div>
     </div>
   </div>
+  <input type="hidden" id="{{ customId }}" value="{{ custom_meta_tags ? '1' : '0' }}">
+  <input type="hidden" id="{{ classId }}" value="{{ generate_url_callback_class }}">
+  <input type="hidden" id="{{ methodId }}" value="{{ generate_url_callback_method }}">
+  <input type="hidden" id="{{ parametersId }}" value="{{ generate_url_callback_parameters }}">
   {{ form_rest(form) }}
 {%- endblock meta_widget -%}

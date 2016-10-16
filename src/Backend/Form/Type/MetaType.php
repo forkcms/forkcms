@@ -12,11 +12,14 @@ use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MetaType extends AbstractType
@@ -24,6 +27,10 @@ class MetaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add(
+                'id',
+                HiddenType::class
+            )
             ->add(
                 'title',
                 TextType::class,
@@ -178,6 +185,7 @@ class MetaType extends AbstractType
             }
 
             return [
+                'id' => $meta->getId(),
                 'title' => $meta->getTitle(),
                 'titleOverwrite' => $meta->isTitleOverwrite(),
                 'description' => $meta->getDescription(),
@@ -205,21 +213,24 @@ class MetaType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(['base_field_name', 'custom_meta_tags']);
+        $resolver->setRequired(
+            [
+                'base_field_name',
+                'custom_meta_tags',
+                'generated_url_selector',
+                'generate_url_callback_class',
+                'generate_url_callback_method',
+                'generate_url_callback_parameters',
+            ]
+        );
         $resolver->setDefaults(
             [
                 'label' => false,
                 'custom_meta_tags' => false,
+                'generated_url_selector' => '#generatedUrl',
+                'generate_url_callback_parameters' => serialize([]),
             ]
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 
     /**
@@ -228,5 +239,28 @@ class MetaType extends AbstractType
     public function getBlockPrefix()
     {
         return 'meta';
+    }
+
+    /**
+     * @param FormView $view
+     * @param FormInterface $form
+     * @param array $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        if ($view->parent === null) {
+            throw new LogicException(
+                'The MetaType is not a stand alone type, it needs to be used in a parent form'
+            );
+        }
+
+        if (!isset($view->parent->children[$options['base_field_name']])) {
+            throw new InvalidArgumentException('The base_field_name does not exist in the parent form');
+        }
+        $view->vars['base_field_selector'] = '#' . $view->parent->children[$options['base_field_name']]->vars['id'];
+        $view->vars['custom_meta_tags'] = $options['custom_meta_tags'];
+        $view->vars['generate_url_callback_class'] = $options['generate_url_callback_class'];
+        $view->vars['generate_url_callback_method'] = $options['generate_url_callback_method'];
+        $view->vars['generate_url_callback_parameters'] = $options['generate_url_callback_parameters'];
     }
 }
