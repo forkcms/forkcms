@@ -85,6 +85,6 @@ abstract class Locale implements Serializable
      */
     public function unserialize($locale)
     {
-        return self::fromString($locale);
+        $this->locale = $locale;
     }
 }
