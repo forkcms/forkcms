@@ -338,12 +338,22 @@ class Meta
         return $this->data;
     }
 
+    public function hasSEOIndex()
+    {
+        return array_key_exists('seo_index', $this->data);
+    }
+
     /**
      * @return SEOIndex
      */
     public function getSEOIndex()
     {
         return SEOIndex::fromString($this->data['seo_index']);
+    }
+
+    public function hasSEOFollow()
+    {
+        return array_key_exists('seo_follow', $this->data);
     }
 
     /**

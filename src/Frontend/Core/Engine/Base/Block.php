@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Common\Doctrine\Entity\Meta;
 use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
@@ -543,5 +544,25 @@ class Block extends Object
     protected function setTemplatePath($path)
     {
         $this->templatePath = (string) $path;
+    }
+
+    /**
+     * @param Meta $meta
+     */
+    protected function setMeta(Meta $meta)
+    {
+        $this->header->setPageTitle($meta->getTitle(), $meta->isTitleOverwrite());
+        $this->header->addMetaDescription($meta->getDescription(), $meta->isDescriptionOverwrite());
+        $this->header->addMetaKeywords($meta->getKeywords(), $meta->isKeywordsOverwrite());
+        if ($meta->hasSEOFollow()) {
+            $this->header->addMetaData(
+                ['name' => 'robots', 'content' => $meta->getSEOFollow()]
+            );
+        }
+        if ($meta->hasSEOIndex()) {
+            $this->header->addMetaData(
+                ['name' => 'robots', 'content' => $meta->getSEOIndex()]
+            );
+        }
     }
 }
