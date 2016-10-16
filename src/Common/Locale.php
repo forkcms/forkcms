@@ -3,8 +3,9 @@
 namespace Common;
 
 use InvalidArgumentException;
+use Serializable;
 
-abstract class Locale
+abstract class Locale implements Serializable
 {
     /**
      * @var string
@@ -66,5 +67,24 @@ abstract class Locale
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+
+        return $this->locale;
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return Locale
+     */
+    public function unserialize($locale)
+    {
+        return self::fromString($locale);
     }
 }
