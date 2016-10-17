@@ -36,7 +36,7 @@ class GenerateUrl extends BackendBaseAJAXAction
         $parameters = @unserialize($parameters);
 
         // fetch generated meta url
-        $URL = urldecode($this->get('repository.meta')->generateURL($URL, $className, $methodName, $parameters));
+        $URL = urldecode($this->get('fork.repository.meta')->generateURL($URL, $className, $methodName, $parameters));
 
         // output
         $this->output(self::OK, $URL);

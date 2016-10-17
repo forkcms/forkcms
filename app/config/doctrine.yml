@@ -45,7 +45,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
 
-    repository.meta:
+    fork.repository.meta:
         class: Common\Doctrine\Repository\MetaRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:

@@ -123,7 +123,7 @@ class Meta
      */
     public function generateURL($URL)
     {
-        return  Model::get('repository.meta')->generateURL(
+        return  Model::get('fork.repository.meta')->generateURL(
             $URL,
             $this->callback['class'],
             $this->callback['method'],
