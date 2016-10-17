@@ -12,7 +12,7 @@ class MetaRepository
     /**
      * Generate an url, using the predefined callback.
      *
-     * @param string $URL The base-url to start from.
+     * @param string $url The base-url to start from.
      * @param string $class The Fully Qualified Class Name or service name
      * @param string $method The method that needs to be called
      * @param array $parameters The parameters for the callback
@@ -21,7 +21,7 @@ class MetaRepository
      *
      * @return string
      */
-    public function generateURL($URL, $class, $method, array $parameters = [])
+    public function generateURL($url, $class, $method, array $parameters = [])
     {
         // check if the class is a service
         if (Model::getContainer()->has($class)) {
@@ -35,11 +35,11 @@ class MetaRepository
 
         // when using ->getValue() in SpoonFormText fields the function is using htmlentities(),
         // so we must decode it again first!
-        $URL = SpoonFilter::htmlentitiesDecode($URL);
+        $url = SpoonFilter::htmlentitiesDecode($url);
 
         $actualParameters = [];
         // build parameters for use in the callback
-        $actualParameters[] = Uri::getUrl($URL);
+        $actualParameters[] = Uri::getUrl($url);
 
         // add parameters set by user
         if (!empty($parameters)) {

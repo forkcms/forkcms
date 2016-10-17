@@ -27,7 +27,7 @@ class GenerateUrl extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $URL = \SpoonFilter::getPostValue('url', null, '', 'string');
+        $url = \SpoonFilter::getPostValue('url', null, '', 'string');
         $className = \SpoonFilter::getPostValue('className', null, '', 'string');
         $methodName = \SpoonFilter::getPostValue('methodName', null, '', 'string');
         $parameters = \SpoonFilter::getPostValue('parameters', null, '', 'string');
@@ -36,9 +36,9 @@ class GenerateUrl extends BackendBaseAJAXAction
         $parameters = @unserialize($parameters);
 
         // fetch generated meta url
-        $URL = urldecode($this->get('fork.repository.meta')->generateURL($URL, $className, $methodName, $parameters));
+        $url = urldecode($this->get('fork.repository.meta')->generateURL($url, $className, $methodName, $parameters));
 
         // output
-        $this->output(self::OK, $URL);
+        $this->output(self::OK, $url);
     }
 }

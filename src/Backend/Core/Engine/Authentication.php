@@ -230,10 +230,10 @@ class Authentication
         $alwaysAllowed = self::getAlwaysAllowed();
 
         // grab the URL from the reference
-        $URL = BackendModel::get('url');
+        $url = BackendModel::get('url');
 
-        $action = ($action !== null) ? (string) $action : $URL->getAction();
-        $module = \SpoonFilter::toCamelCase(($module !== null) ? (string) $module : $URL->getModule());
+        $action = ($action !== null) ? (string) $action : $url->getAction();
+        $module = \SpoonFilter::toCamelCase(($module !== null) ? (string) $module : $url->getModule());
 
         // is this action an action that doesn't require authentication?
         if (isset($alwaysAllowed[$module][$action])) {

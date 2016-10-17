@@ -371,20 +371,20 @@ class Block extends Object
         if ($this->pagination['requested_page'] > 1) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
+                $url = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
             } else {
-                $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
+                $url = $this->pagination['url'] . '&' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
             }
 
             // set
             $pagination['show_previous'] = true;
-            $pagination['previous_url'] = $URL . $anchor;
+            $pagination['previous_url'] = $url . $anchor;
 
             // flip ahead
             $this->header->addLink(
                 array(
                     'rel' => 'prev',
-                    'href' => SITE_URL . $URL . $anchor,
+                    'href' => SITE_URL . $url . $anchor,
                 )
             );
         }
@@ -399,13 +399,13 @@ class Block extends Object
             for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
+                    $url = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
+                    $url = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
                 }
 
                 // add
-                $pagination['first'][] = array('url' => $URL . $anchor, 'label' => $i);
+                $pagination['first'][] = array('url' => $url . $anchor, 'label' => $i);
             }
         }
 
@@ -416,13 +416,13 @@ class Block extends Object
 
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
+                $url = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
             } else {
-                $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
+                $url = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
             }
 
             // add
-            $pagination['pages'][] = array('url' => $URL . $anchor, 'label' => $i, 'current' => $current);
+            $pagination['pages'][] = array('url' => $url . $anchor, 'label' => $i, 'current' => $current);
         }
 
         // show last pages?
@@ -435,13 +435,13 @@ class Block extends Object
             for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
+                    $url = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
+                    $url = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
                 }
 
                 // add
-                $pagination['last'][] = array('url' => $URL . $anchor, 'label' => $i);
+                $pagination['last'][] = array('url' => $url . $anchor, 'label' => $i);
             }
         }
 
@@ -449,20 +449,20 @@ class Block extends Object
         if ($this->pagination['requested_page'] < $this->pagination['num_pages']) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
+                $url = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
             } else {
-                $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
+                $url = $this->pagination['url'] . '&' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
             }
 
             // set
             $pagination['show_next'] = true;
-            $pagination['next_url'] = $URL . $anchor;
+            $pagination['next_url'] = $url . $anchor;
 
             // flip ahead
             $this->header->addLink(
                 array(
                     'rel' => 'next',
-                    'href' => SITE_URL . $URL . $anchor,
+                    'href' => SITE_URL . $url . $anchor,
                 )
             );
         }
@@ -477,14 +477,14 @@ class Block extends Object
     /**
      * Redirect to a given URL
      *
-     * @param string $URL The URL whereto will be redirected.
+     * @param string $url The URL whereto will be redirected.
      * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
      *
      * @throws RedirectException
      */
-    public function redirect($URL, $code = 302)
+    public function redirect($url, $code = 302)
     {
-        $response = new RedirectResponse($URL, $code);
+        $response = new RedirectResponse($url, $code);
 
         throw new RedirectException('Redirect', $response);
     }

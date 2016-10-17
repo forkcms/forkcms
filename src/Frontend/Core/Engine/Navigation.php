@@ -366,23 +366,23 @@ class Navigation extends FrontendBaseObject
     /**
      * Get a menuId for an specified URL
      *
-     * @param string $URL      The URL wherefore you want a pageID.
+     * @param string $url      The URL wherefore you want a pageID.
      * @param string $language The language wherefore the pageID should be retrieved,
      *                          if not provided we will load the language that was provided in the URL.
      *
      * @return int
      */
-    public static function getPageId($URL, $language = null)
+    public static function getPageId($url, $language = null)
     {
         // redefine
-        $URL = trim((string) $URL, '/');
+        $url = trim((string) $url, '/');
         $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // get menu items array
         $keys = self::getKeys($language);
 
         // get key
-        $key = array_search($URL, $keys);
+        $key = array_search($url, $keys);
 
         // return 404 if we don't known a valid Id
         if ($key === false) {
@@ -444,7 +444,7 @@ class Navigation extends FrontendBaseObject
         $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // init URL
-        $URL = (FrontendModel::getContainer()->getParameter('site.multilanguage'))
+        $url = (FrontendModel::getContainer()->getParameter('site.multilanguage'))
             ? '/' . $language . '/'
             : '/'
         ;
@@ -456,11 +456,11 @@ class Navigation extends FrontendBaseObject
         if (!isset($keys[$pageId])) {
             return self::getURL(404, $language);
         } else {
-            $URL .= $keys[$pageId];
+            $url .= $keys[$pageId];
         }
 
         // return the URL
-        return urldecode($URL);
+        return urldecode($url);
     }
 
     /**
@@ -535,13 +535,13 @@ class Navigation extends FrontendBaseObject
         }
 
         // build URL
-        $URL = self::getURL($pageIdForURL, $language);
+        $url = self::getURL($pageIdForURL, $language);
 
         // append action
-        $URL .= '/' . Language::act(\SpoonFilter::toCamelCase($action));
+        $url .= '/' . Language::act(\SpoonFilter::toCamelCase($action));
 
         // return the URL
-        return $URL;
+        return $url;
     }
 
     /**

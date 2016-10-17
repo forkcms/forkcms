@@ -71,14 +71,14 @@ class Rss extends \SpoonFeedRSS
     /**
      * Set the image for the feed.
      *
-     * @param string $URL         URL of the image.
+     * @param string $url         URL of the image.
      * @param string $title       Title of the image.
      * @param string $link        Link of the image.
      * @param int    $width       Width of the image.
      * @param int    $height      Height of the image.
      * @param string $description Description of the image.
      */
-    public function setImage($URL, $title, $link, $width = null, $height = null, $description = null)
+    public function setImage($url, $title, $link, $width = null, $height = null, $description = null)
     {
         // add UTM-parameters
         $link = Model::addURLParameters(
@@ -91,6 +91,6 @@ class Rss extends \SpoonFeedRSS
         );
 
         // call the parent
-        parent::setImage($URL, $title, $link, $width, $height, $description);
+        parent::setImage($url, $title, $link, $width, $height, $description);
     }
 }

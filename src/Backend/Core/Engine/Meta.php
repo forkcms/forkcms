@@ -113,7 +113,7 @@ class Meta
     /**
      * Generate an url, using the predefined callback.
      *
-     * @param string $URL The base-url to start from.
+     * @param string $url The base-url to start from.
      *
      * @throws Exception When the function does not exist
      *
@@ -121,10 +121,10 @@ class Meta
      *
      * @deprecated use the generateUrl method on the meta repository
      */
-    public function generateURL($URL)
+    public function generateURL($url)
     {
         return  Model::get('fork.repository.meta')->generateURL(
-            $URL,
+            $url,
             $this->callback['class'],
             $this->callback['method'],
             $this->callback['parameters']
@@ -493,11 +493,11 @@ class Meta
         // URL overwrite is checked
         if ($this->frm->getField('url_overwrite')->isChecked()) {
             $this->frm->getField('url')->isFilled(BackendLanguage::err('FieldIsRequired'));
-            $URL = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
-            $generatedUrl = $this->generateURL($URL);
+            $url = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
+            $generatedUrl = $this->generateURL($url);
 
             // check if urls are different
-            if (CommonUri::getUrl($URL) != $generatedUrl) {
+            if (CommonUri::getUrl($url) != $generatedUrl) {
                 $this->frm->getField('url')->addError(
                     BackendLanguage::err('URLAlreadyExists')
                 );
@@ -525,13 +525,13 @@ class Meta
             );
 
             // get URL
-            $URL = $this->frm->getField('url_overwrite')->getActualValue(
+            $url = $this->frm->getField('url_overwrite')->getActualValue(
                 \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue()),
                 \SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue())
             );
 
             // get the real URL
-            $URL = $this->generateURL($URL);
+            $url = $this->generateURL($url);
 
             // get meta custom
             if ($this->custom && $this->frm->getField('meta_custom')->isFilled()) {
@@ -547,7 +547,7 @@ class Meta
             $this->data['description_overwrite'] = $this->frm->getField('meta_description_overwrite')->getActualValue();
             $this->data['title'] = $title;
             $this->data['title_overwrite'] = $this->frm->getField('page_title_overwrite')->getActualValue();
-            $this->data['url'] = $URL;
+            $this->data['url'] = $url;
             $this->data['url_overwrite'] = $this->frm->getField('url_overwrite')->getActualValue();
             $this->data['custom'] = $custom;
             if ($this->frm->getField('seo_index')->getValue() == 'none') {

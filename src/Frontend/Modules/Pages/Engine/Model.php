@@ -55,13 +55,13 @@ class Model implements FrontendTagsInterface
      * Get the id of an item by the full URL of the current page.
      * Selects the proper part of the full URL to get the item's id from the database.
      *
-     * @param FrontendURL $URL The current URL.
+     * @param FrontendURL $url The current URL.
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $URL)
+    public static function getIdForTags(FrontendURL $url)
     {
-        return FrontendNavigation::getPageId($URL->getQueryString());
+        return FrontendNavigation::getPageId($url->getQueryString());
     }
 
     /**

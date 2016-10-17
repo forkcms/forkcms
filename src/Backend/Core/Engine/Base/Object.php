@@ -137,14 +137,14 @@ class Object extends \KernelLoader
     /**
      * Redirect to a given URL
      *
-     * @param string $URL The URL to redirect to.
+     * @param string $url The URL to redirect to.
      * @param int    $code The redirect code, default is 302 which means this is a temporary redirect.
      *
      * @throws RedirectException
      */
-    public function redirect($URL, $code = 302)
+    public function redirect($url, $code = 302)
     {
-        $response = new RedirectResponse($URL, $code);
+        $response = new RedirectResponse($url, $code);
 
         throw new RedirectException('Redirect', $response);
     }
