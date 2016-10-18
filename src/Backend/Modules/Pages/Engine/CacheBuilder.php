@@ -181,7 +181,7 @@ class CacheBuilder
             'has_children' => (bool) ($page['has_children'] == 'Y'),
         );
 
-        $pageData['extra_blocks'] = $this->getPageExtraBlocks($page, $pageData);
+        $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);
         $pageData['tree_type'] = $this->getPageTreeType($page, $pageData);
 
         return $pageData;
@@ -254,7 +254,7 @@ class CacheBuilder
      * @param $page array
      * @return array
      */
-    protected function getPageExtraBlocks($page, $pageData)
+    protected function getPageExtraBlocks($page)
     {
         // add extras to the page array
         if ($page['extra_ids'] !== null) {
