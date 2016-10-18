@@ -242,7 +242,7 @@ class Model
             }
 
             // insert the blocks
-            self::insertBlocks($blocks, $hasBlock);
+            self::insertBlocks($blocks);
 
             // init var
             $text = '';
