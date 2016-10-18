@@ -235,16 +235,11 @@ class UploadModule extends BackendBaseActionAdd
      */
     private function isWritable()
     {
-        // check if writable
         if (!BackendExtensionsModel::isWritable(FRONTEND_MODULES_PATH)) {
             return false;
         }
-        if (!BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH)) {
-            return false;
-        }
 
-        // everything is writeable
-        return true;
+        return BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH);
     }
 
     /**
