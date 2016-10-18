@@ -46,7 +46,7 @@ class Location extends FrontendBaseWidget
         }
         $this->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, true, false);
         $this->addJS(FrontendLocationModel::getPathToMapStyles(false), true);
-//'LocationMapStyles.js'
+
         parent::execute();
 
         $this->loadTemplate();
