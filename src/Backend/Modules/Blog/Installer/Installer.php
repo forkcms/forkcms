@@ -62,13 +62,6 @@ class Installer extends ModuleInstaller
      */
     private function insertWidget()
     {
-        $comments = array(
-            'column' => 'right',
-            'position' => 1,
-            'hidden' => false,
-            'present' => true,
-        );
-
         $this->insertDashboardWidget('Blog', 'Comments');
     }
 
