@@ -74,7 +74,7 @@ class CacheBuilder
             return $item->get();
         }
 
-        list($keys, $navigation) = $this->getData($language);
+        $keys = $this->getData($language)[0];
         $item->set($keys);
         $this->cache->save($item);
 
@@ -93,7 +93,7 @@ class CacheBuilder
             return $item->get();
         }
 
-        list($keys, $navigation) = $this->getData($language);
+        $navigation = $this->getData($language)[1];
         $item->set($navigation);
         $this->cache->save($item);
 
