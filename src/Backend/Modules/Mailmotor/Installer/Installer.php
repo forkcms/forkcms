@@ -171,7 +171,7 @@ class Installer extends ModuleInstaller
             'N',
             3002
         );
-        $widgetSubscribeFormID = $this->insertExtra(
+        $this->insertExtra(
             'Mailmotor',
             'widget',
             'SubscribeForm',
