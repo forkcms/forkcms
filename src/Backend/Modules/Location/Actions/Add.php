@@ -11,15 +11,13 @@ namespace Backend\Modules\Location\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the add-action, it will display a form to create a new item
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -99,7 +97,7 @@ class Add extends BackendBaseActionAdd
                 // redirect
                 $this->redirect(
                     BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] .
-                    '&report=added&var=' . urlencode($item['title'])
+                    '&report=added&var=' . rawurlencode($item['title'])
                 );
             }
         }

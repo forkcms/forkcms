@@ -10,13 +10,11 @@ namespace Backend\Modules\Location\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
  * This is an ajax handler that will set a new position for a certain map
- *
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class SaveLiveLocation extends BackendBaseAJAXAction
 {

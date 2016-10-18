@@ -10,12 +10,10 @@ namespace Frontend\Modules\Location\Engine;
  */
 
 use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Theme as FrontendTheme;
 
 /**
  * In this file we store all generic functions that we will be using in the location module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Model
 {
@@ -56,7 +54,7 @@ class Model
         $pointers = array();
         // add the markers to the url
         foreach ($markers as $marker) {
-            $pointers[] = urlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
+            $pointers[] = rawurlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
         }
 
         if (!empty($pointers)) {
@@ -79,7 +77,7 @@ class Model
             'SELECT *
              FROM location
              WHERE id = ? AND language = ?',
-            array((int) $id, FRONTEND_LANGUAGE)
+            array((int) $id, LANGUAGE)
         );
     }
 
@@ -92,7 +90,7 @@ class Model
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT * FROM location WHERE language = ? AND show_overview = ?',
-            array(FRONTEND_LANGUAGE, 'Y')
+            array(LANGUAGE, 'Y')
         );
     }
 
@@ -141,5 +139,33 @@ class Model
         }
 
         return $mapSettings;
+    }
+
+    /**
+     * Get path to map styles
+     *
+     * @param boolean $backend
+     */
+    public static function getPathToMapStyles($backend = true)
+    {
+        $path = 'src/Frontend';
+        $jsFile = 'Location/Js/LocationMapStyles.js';
+        $moveToPath = '../../../../..';
+
+        // User can override the map styles in the frontend
+        if (file_exists($path . '/Themes/' . FrontendTheme::getTheme() . '/Modules/' . $jsFile)) {
+            if ($backend) {
+                return $moveToPath . '/' . $path . '/Themes/' . FrontendTheme::getTheme() . '/Modules/' . $jsFile;
+            } else {
+                return '/' . $path . '/Themes/' . FrontendTheme::getTheme() . '/Modules/' . $jsFile;
+            }
+        // Otherwise use default
+        } else {
+            if ($backend) {
+                return $moveToPath . '/' . $path . '/Modules/' . $jsFile;
+            } else {
+                return '/' . $path . '/Modules/' . $jsFile;
+            }
+        }
     }
 }

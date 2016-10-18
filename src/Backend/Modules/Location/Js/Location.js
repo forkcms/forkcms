@@ -1,8 +1,5 @@
 /**
  * Interaction for the location module
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 jsBackend.location =
 {
@@ -25,6 +22,7 @@ jsBackend.location =
 			// if the zoom level or map type changes in the dropdown, the map needs to change
 			$('#zoomLevel').bind('change', function() { jsBackend.location.setMapZoom($('#zoomLevel').val()); });
 			$('#mapType').bind('change', jsBackend.location.setMapTerrain);
+			$('#mapStyle').bind('change', jsBackend.location.setMapStyle);
 
 			// the panning save option
 			$('#saveLiveData').bind('click', function(e)
@@ -164,6 +162,13 @@ jsBackend.location =
 	},
 
 	// this will set the terrain type of the map to the dropdown
+	setMapStyle: function()
+	{
+		jsBackend.location.style = $('#mapStyle').val();
+		jsBackend.location.map.setOptions({'styles': MAPS_CONFIG[jsBackend.location.style]});
+	},
+
+	// this will set the terrain type of the map to the dropdown
 	setMapTerrain: function()
 	{
 		jsBackend.location.type = $('#mapType').val();
@@ -189,7 +194,8 @@ jsBackend.location =
 		var options =
 		{
 			center: new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng),
-			mapTypeId: eval('google.maps.MapTypeId.' + mapOptions.type)
+			mapTypeId: eval('google.maps.MapTypeId.' + mapOptions.type),
+			styles: MAPS_CONFIG[mapOptions.style]
 		};
 
 		// create map

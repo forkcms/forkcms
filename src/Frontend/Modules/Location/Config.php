@@ -13,22 +13,20 @@ use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Config extends FrontendBaseConfig
 {
     /**
      * The default action
      *
-     * @var	string
+     * @var string
      */
     protected $defaultAction = 'Index';
 
     /**
      * The disabled actions
      *
-     * @var	array
+     * @var array
      */
     protected $disabledActions = array();
 }

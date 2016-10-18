@@ -13,8 +13,6 @@ use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the location module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Installer extends ModuleInstaller
 {
@@ -24,13 +22,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'location' as a module
         $this->addModule('Location');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
         $this->setSetting('Location', 'zoom_level', 'auto');
@@ -41,6 +39,7 @@ class Installer extends ModuleInstaller
         $this->setSetting('Location', 'width_widget', 400);
         $this->setSetting('Location', 'height_widget', 300);
         $this->setSetting('Location', 'map_type_widget', 'ROADMAP');
+        $this->setSetting('Location', 'requires_google_maps', true);
 
         // module rights
         $this->setModuleRights(1, 'Location');

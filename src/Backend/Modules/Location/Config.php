@@ -13,22 +13,20 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the location module
- *
- * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Config extends BackendBaseConfig
 {
     /**
      * The default action
      *
-     * @var	string
+     * @var string
      */
     protected $defaultAction = 'Index';
 
     /**
      * The disabled actions
      *
-     * @var	array
+     * @var array
      */
     protected $disabledActions = array();
 }
