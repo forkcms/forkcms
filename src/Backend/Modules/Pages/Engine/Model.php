@@ -220,7 +220,6 @@ class Model
 
             // init var
             $blocks = array();
-            $hasBlock = ($sourceData['has_extra'] == 'Y');
 
             // get the blocks
             $sourceBlocks = self::getBlocks($id, null, $from);
