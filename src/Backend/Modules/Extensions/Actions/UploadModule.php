@@ -91,9 +91,6 @@ class UploadModule extends BackendBaseActionAdd
         // name of the module we are trying to upload
         $moduleName = null;
 
-        // there are some complications
-        $warnings = array();
-
         // has the module zip one level of folders too much?
         $prefix = '';
 
