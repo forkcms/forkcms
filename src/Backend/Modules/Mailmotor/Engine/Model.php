@@ -483,7 +483,6 @@ class Model
 
         // fetch separate arrays
         $statsClickedLinks = isset($records[0]['clicked_links']) ? $records[0]['clicked_links'] : array();
-        $statsClickedLinksBy = isset($records[0]['clicked_links_by']) ? $records[0]['clicked_links_by'] : array();
 
         // unset multi-dimensional arrays
         unset(
