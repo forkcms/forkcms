@@ -713,7 +713,7 @@ class Model
                 $values['starts_on'] = BackendModel::getUTCDate();
 
                 // insert values
-                $id = self::insertProfileGroup($values);
+                self::insertProfileGroup($values);
             }
         }
 
