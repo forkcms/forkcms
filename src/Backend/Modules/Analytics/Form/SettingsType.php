@@ -24,7 +24,7 @@ final class SettingsType
     {
         // we don't even have a auth config file yet, let the user upload it
         if ($settings->get('Analytics', 'certificate') === null) {
-            $this->form = new SettingsStepAuthConfigFileType($name, $settings, $googleServiceAnalytics);
+            $this->form = new SettingsStepAuthConfigFileType($name, $settings);
 
             return;
         }
