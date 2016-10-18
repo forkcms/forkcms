@@ -797,11 +797,10 @@ class Model
      *
      * @param array  $navigation The navigation array.
      * @param int    $parentId   The id of the parent.
-     * @param string $html       A holder for the generated HTML.
      *
      * @return string
      */
-    public static function getSubtree($navigation, $parentId, $html = '')
+    public static function getSubtree($navigation, $parentId)
     {
         $navigation = (array) $navigation;
         $parentId = (int) $parentId;
@@ -827,7 +826,7 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // get childs
-                $html .= self::getSubtree($navigation, $page['page_id'], $html);
+                $html .= self::getSubtree($navigation, $page['page_id']);
 
                 // end
                 $html .= '</li>' . "\n";
