@@ -113,16 +113,8 @@ class UploadModule extends BackendBaseActionAdd
                 if (mb_stripos($fileName, $prefix . $directory) === 0) {
                     // we have a library file
                     if ($directory == $prefix . 'library/external/') {
-                        // strip the prefix from the filename if necessary
-                        $notPrefixedFileName = $fileName;
-                        if (!empty($prefix)) {
-                            $notPrefixedFileName = mb_substr($fileName, mb_strlen($prefix));
-                        }
-
                         if (!is_file(PATH_WWW . '/' . $fileName)) {
                             $files[] = $fileName;
-                        } else {
-                            $warnings[] = sprintf(BL::getError('LibraryFileAlreadyExists'), $fileName);
                         }
                         break;
                     }
@@ -204,7 +196,7 @@ class UploadModule extends BackendBaseActionAdd
         }
 
         // run installer
-        BackendExtensionsModel::installModule($moduleName, $warnings);
+        BackendExtensionsModel::installModule($moduleName);
 
         // return the files
         return $moduleName;
