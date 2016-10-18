@@ -14,11 +14,11 @@ class InstallerControllerTest extends WebTestCase
         $client->followRedirect();
 
         // we should be redirected to the first step
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/install/1',
             $client->getHistory()->current()->getUri()
         );
@@ -68,11 +68,11 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // we should be redirected to step 3
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/install/3',
             $client->getHistory()->current()->getUri()
         );
@@ -93,11 +93,11 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // we should be redirected to step 4
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/install/4',
             $client->getHistory()->current()->getUri()
         );
@@ -116,7 +116,7 @@ class InstallerControllerTest extends WebTestCase
         // first submit with incorrect data
         $form = $crawler->selectButton('Next')->form();
         $crawler = $client->submit($form, array());
-        $this->assertGreaterThan(
+        self::assertGreaterThan(
             0,
             $crawler->filter('div.errorMessage:contains("Problem with database credentials")')->count()
         );
@@ -137,11 +137,11 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // we should be redirected to step 5
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/install/5',
             $client->getHistory()->current()->getUri()
         );
@@ -169,15 +169,15 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // we should be redirected to step 6
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/install/6',
             $client->getHistory()->current()->getUri()
         );
-        $this->assertGreaterThan(
+        self::assertGreaterThan(
             0,
             $crawler->filter('h2:contains("Installation complete")')->count()
         );
