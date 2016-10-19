@@ -9,6 +9,7 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
@@ -44,6 +45,18 @@ class EditMailingIframe extends BackendBaseActionEdit
         } else {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
+    }
+
+    /**
+     * @return Response
+     */
+    public function getContent()
+    {
+        return new Response(
+            $this->content,
+            200,
+            ['X-Frame-Options' => 'sameorigin']
+        );
     }
 
     /**
