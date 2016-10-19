@@ -526,15 +526,17 @@ class Model
         // set the filename and path
         $filename = 'statistics-' . \SpoonDate::getDate('YmdHi') . '.csv';
 
-        // set headers for download
-        header('Content-type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-
-        // output the CSV string
-        echo $csv;
-
-        // exit here
-        exit;
+        throw new RedirectException(
+            'export statistics for a mailing',
+            new Response(
+                $csv,
+                Response::HTTP_OK,
+                [
+                    'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                    'Content-Type' => 'application/octet-stream;',
+                ]
+            )
+        );
     }
 
     /**
