@@ -33,7 +33,7 @@ $parametersFile = dirname(__FILE__) . '/app/config/parameters.yml';
 $request = Request::createFromGlobals();
 if (!file_exists($parametersFile)) {
     $env = 'install';
-    if (substr($request->getRequestURI(), 0, 8) != '/install') {
+    if (strpos($request->getRequestUri(), '/install') !== 0) {
         // check .htaccess
         if (!file_exists('.htaccess') && !isset($_GET['skiphtaccess'])) {
             echo 'Your install is missing the .htaccess file. Make sure you show
