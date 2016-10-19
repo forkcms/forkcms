@@ -53,21 +53,31 @@ class EnableLocaleCommand extends Command
     /** @var array */
     private $installedModules;
 
+    /** @var bool */
+    private $multiLanguageIsEnabled;
+
     /**
      * @param ModulesSettings $settings
      * @param array $installedModules
+     * @param bool $multiLanguageIsEnabled
      * @param string|null $name
      */
-    public function __construct(ModulesSettings $settings, array $installedModules, $name = null)
-    {
+    public function __construct(
+        ModulesSettings $settings,
+        array $installedModules,
+        $multiLanguageIsEnabled,
+        $name = null
+    ) {
         parent::__construct($name);
 
         $this->settings = $settings;
+        $this->multiLanguageIsEnabled = $multiLanguageIsEnabled;
+
         // some core modules don't have locale so we remove them to prevent showing errors we know of
         $this->installedModules = array_filter(
             $installedModules,
             function ($installedModule) {
-                return !in_array($installedModule, ['Error', 'Core', 'Authentication']);
+                return !in_array($installedModule, ['Error', 'Core', 'Authentication'], true);
             }
         );
     }
@@ -91,16 +101,27 @@ class EnableLocaleCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->input = $input;
+        $this->output = $output;
+        $this->formatter = new SymfonyStyle($input, $output);
+
+        if (!$this->multiLanguageIsEnabled) {
+            $this->formatter->error(
+                [
+                    'site.multilanguage should be set to true in parameters.yml.',
+                    'Warning: All your urls will change from example.com/page to example.com/[locale]/page',
+                ]
+            );
+
+            return;
+        }
+
         $this->installedLocale = array_flip($this->settings->get('Core', 'languages'));
         $this->interfaceLocale = array_flip($this->settings->get('Core', 'interface_languages'));
         $this->enabledLocale = array_flip($this->settings->get('Core', 'active_languages'));
         $this->redirectLocale = array_flip($this->settings->get('Core', 'redirect_languages'));
         $this->defaultEnabledLocale = $this->settings->get('Core', 'default_language');
         $this->defaultInterfaceLocale = $this->settings->get('Core', 'default_interface_language');
-
-        $this->input = $input;
-        $this->output = $output;
-        $this->formatter = new SymfonyStyle($input, $output);
 
         $this->output->writeln($this->formatter->title('Fork CMS locale enable'));
 
@@ -115,9 +136,6 @@ class EnableLocaleCommand extends Command
         }
     }
 
-    /**
-     * @return bool
-     */
     private function askToEnableTheLocaleForRedirecting()
     {
         $enableRedirect = $this->formatter->confirm(
@@ -125,7 +143,7 @@ class EnableLocaleCommand extends Command
         );
 
         if (!$enableRedirect) {
-            return false;
+            return;
         }
 
         $this->redirectLocale = array_flip($this->redirectLocale);
