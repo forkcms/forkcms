@@ -12,6 +12,7 @@ namespace Backend\Modules\Locale\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the export-action, it will create a XML with locale items.
@@ -113,21 +114,22 @@ class Export extends BackendBaseActionIndex
     /**
      * Create the XML based on the locale items.
      */
-    private function createXML()
+    public function getContent()
     {
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
 
         // create XML
         $xmlOutput = BackendLocaleModel::createXMLForExport($this->locale);
 
-        // xml headers
-        header('Content-Disposition: attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"');
-        header('Content-Type: application/octet-stream;charset=' . $charset);
-        header('Content-Length: ' . mb_strlen($xmlOutput));
-
-        // output XML
-        echo $xmlOutput;
-        exit;
+        return new Response(
+            $xmlOutput,
+            Response::HTTP_OK,
+            [
+                'Content-Disposition' => 'attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"',
+                'Content-Type' => 'application/octet-stream;charset=' . $charset,
+                'Content-Length' => '' . mb_strlen($xmlOutput),
+            ]
+        );
     }
 
     /**
@@ -138,7 +140,6 @@ class Export extends BackendBaseActionIndex
         parent::execute();
         $this->setFilter();
         $this->setItems();
-        $this->createXML();
     }
 
     /**
