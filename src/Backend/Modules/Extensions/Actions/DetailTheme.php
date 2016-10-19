@@ -152,7 +152,7 @@ class DetailTheme extends BackendBaseActionIndex
         $this->tpl->assign('warnings', $this->warnings);
         $this->tpl->assign('information', $this->information);
         $this->tpl->assign(
-            'showExtensionsInstallTheme',
+            'showInstallButton',
             !BackendExtensionsModel::isThemeInstalled($this->currentTheme) && BackendAuthentication::isAllowedAction(
                 'InstallTheme'
             )
