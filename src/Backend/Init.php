@@ -9,15 +9,23 @@ namespace Backend;
  * file that was distributed with this source code.
  */
 
+use SpoonFilter;
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This class will initiate the backend-application
  */
 class Init extends \Common\Core\Init
 {
     /**
-     * {@inheritdoc}
+     * @param KernelInterface $kernel
      */
-    protected $allowedTypes = array('Backend', 'BackendAjax', 'BackendCronjob', 'Console');
+    public function __construct(KernelInterface $kernel)
+    {
+        $this->allowedTypes = array('Backend', 'BackendAjax', 'BackendCronjob', 'Console');
+
+        parent::__construct($kernel);
+    }
 
     /**
      * {@inheritdoc}
@@ -26,6 +34,6 @@ class Init extends \Common\Core\Init
     {
         parent::initialize($type);
 
-        \SpoonFilter::disableMagicQuotes();
+        SpoonFilter::disableMagicQuotes();
     }
 }
