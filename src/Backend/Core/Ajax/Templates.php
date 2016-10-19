@@ -39,16 +39,19 @@ class Templates extends AjaxAction
         foreach ($files as $file) {
             $this->processFile($file);
         }
+    }
 
-        throw new RedirectException(
-            'CKEditor templates',
-            new Response(
-                'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n" . json_encode(
-                    $this->templates
-                ) . "\n" . '});',
-                Response::HTTP_OK,
-                ['Content-type' => 'text/javascript']
-            )
+    /**
+     * @return Response
+     */
+    public function getContent()
+    {
+        return new Response(
+            'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n" . json_encode(
+                $this->templates
+            ) . "\n" . '});',
+            Response::HTTP_OK,
+            ['Content-type' => 'text/javascript']
         );
     }
 
