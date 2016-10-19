@@ -8,7 +8,7 @@
  */
 
 // CLI/Nginx/Cron: We need to set the "current working directory" to this folder
-chdir(dirname(__FILE__));
+chdir(__DIR__);
 
 // vendors not installed
 if (!is_dir(__DIR__ . '/vendor')) {
@@ -29,7 +29,7 @@ $env = getenv('FORK_ENV') ?: 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
 
 // Fork has not yet been installed
-$parametersFile = dirname(__FILE__) . '/app/config/parameters.yml';
+$parametersFile = __DIR__ . '/app/config/parameters.yml';
 $request = Request::createFromGlobals();
 if (!file_exists($parametersFile)) {
     $env = 'install';
