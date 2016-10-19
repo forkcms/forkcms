@@ -8,7 +8,7 @@ use PHPUnit_Framework_TestCase;
 
 class TemplateModifiersTest extends PHPUnit_Framework_TestCase
 {
-    public function test_stripnewlines()
+    public function testStripNewlines()
     {
         self::assertEquals(
             'Foo Bar',
@@ -26,7 +26,7 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function test_truncate()
+    public function testTruncate()
     {
         $containerMock = $this
             ->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')
