@@ -183,12 +183,9 @@ class Message extends \Swift_Message
      */
     private function cssToInlineStyles($html)
     {
-        $charset = Model::getContainer()->getParameter('kernel.charset');
-
         $cssToInlineStyles = new CssToInlineStyles();
         $cssToInlineStyles->setHTML($html);
         $cssToInlineStyles->setUseInlineStylesBlock(true);
-        $cssToInlineStyles->setEncoding($charset);
 
         return (string) $cssToInlineStyles->convert();
     }
