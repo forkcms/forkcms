@@ -17,6 +17,8 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Common\Exception\RedirectException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This page will display the overview of addresses
@@ -89,6 +91,7 @@ class Addresses extends BackendBaseActionIndex
      *
      * @return array
      * @throws BackendException
+     * @throws RedirectException
      */
     private function downloadCSV($path)
     {
@@ -104,17 +107,18 @@ class Addresses extends BackendBaseActionIndex
         $explodedFilename = explode('/', $path);
         $filename = end($explodedFilename);
 
-        // set headers for download
-        header('Content-type: application/csv; charset=' . $charset);
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Pragma: no-cache');
-
-        // get the file contents
-        $content = file_get_contents($path);
-
-        // output the file contents
-        echo $content;
-        exit;
+        throw new RedirectException(
+            'export addresses',
+            new Response(
+                file_get_contents($path),
+                Response::HTTP_OK,
+                [
+                    'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                    'Content-Type' => 'application/csv; charset=' . $charset,
+                    'Pragma' => 'no-cache',
+                ]
+            )
+        );
     }
 
     /**
