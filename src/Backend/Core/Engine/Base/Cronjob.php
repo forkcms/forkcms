@@ -9,6 +9,7 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\ExitException;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
@@ -145,7 +146,7 @@ class Cronjob extends Object
 
         // if the cronjob is busy we should NOT proceed
         if ($isBusy) {
-            exit;
+            throw new ExitException('The cronjob is still busy');
         }
     }
 
