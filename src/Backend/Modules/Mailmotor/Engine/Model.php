@@ -63,7 +63,7 @@ class Model
      */
     public static function getCacheDirectory()
     {
-        return BackendModel::getContainer()->get('kernel.root_dir') . '/Mailmotor/';
+        return BackendModel::getContainer()->getParameter('kernel.root_dir') . '/Mailmotor/';
     }
 
     /**
