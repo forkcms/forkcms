@@ -22,7 +22,7 @@ class IndexTest extends WebTestCase
         $client->request('GET', '/private/en/blog/index');
 
         // we should get redirected to authentication with a reference to blog index in our url
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fblog%2Findex',
             $client->getHistory()->current()->getUri()
         );
@@ -34,17 +34,17 @@ class IndexTest extends WebTestCase
         $this->login();
 
         $client->request('GET', '/private/en/blog/index');
-        $this->assertContains(
+        self::assertContains(
             'Blogpost for functional tests',
             $client->getResponse()->getContent()
         );
 
         // some stuff we also want to see on the blog index
-        $this->assertContains(
+        self::assertContains(
             'Add article',
             $client->getResponse()->getContent()
         );
-        $this->assertContains(
+        self::assertContains(
             'Published articles',
             $client->getResponse()->getContent()
         );

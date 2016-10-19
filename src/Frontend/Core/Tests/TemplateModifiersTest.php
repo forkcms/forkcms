@@ -10,17 +10,17 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
 {
     public function test_format_float()
     {
-        $this->assertEquals(
+        self::assertEquals(
             '1.2344',
             TemplateModifiers::formatFloat(1.2344, 4)
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             '1.234',
             TemplateModifiers::formatFloat(1.2344, 3)
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             '1',
             TemplateModifiers::formatFloat(1.2344, 0)
         );
@@ -28,17 +28,17 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
 
     public function test_stripnewlines()
     {
-        $this->assertEquals(
+        self::assertEquals(
             'Foo Bar',
             TemplateModifiers::stripNewlines("Foo\nBar")
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'Foo Bar',
             TemplateModifiers::stripNewlines("Foo\rBar")
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'Foo Bar',
             TemplateModifiers::stripNewlines("Foo\r\nBar")
         );
@@ -52,46 +52,46 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
             ->getMock()
         ;
 
-        $containerMock->expects($this->any())
+        $containerMock->expects(self::any())
             ->method('getParameter')
             ->with('kernel.charset')
-            ->will($this->returnValue('UTF-8'))
+            ->will(self::returnValue('UTF-8'))
         ;
 
         FrontendModel::setContainer($containerMock);
 
-        $this->assertEquals(
+        self::assertEquals(
             TemplateModifiers::truncate('foo bar baz qux', 3, false, true),
             'foo'
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             TemplateModifiers::truncate('foo bar baz qux', 4, false, true),
             'foo'
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             TemplateModifiers::truncate('foo bar baz qux', 8, false, true),
             'foo bar'
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             TemplateModifiers::truncate('foo bar baz qux', 100, false, true),
             'foo bar baz qux'
         );
 
         // Hellip
-        $this->assertEquals(
+        self::assertEquals(
             TemplateModifiers::truncate('foo bar baz qux', 5, true, true),
             'foo…'
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             TemplateModifiers::truncate('foo bar baz qux', 14, true, true),
             'foo bar baz…'
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             TemplateModifiers::truncate('foo bar baz qux', 15, true, true),
             'foo bar baz qux'
         );
