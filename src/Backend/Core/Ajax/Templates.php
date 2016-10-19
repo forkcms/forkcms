@@ -9,8 +9,10 @@ namespace Backend\Core\Ajax;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\RedirectException;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\AjaxAction;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This action will generate JS that represents the templates that will be available in CK Editor
@@ -41,16 +43,16 @@ class Templates extends AjaxAction
             $templates = array_merge($templates, $this->processFile($file));
         }
 
-        // set headers
-        header('Content-type: text/javascript');
-
-        // output the templates
-        if (!empty($templates)) {
-            echo 'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n";
-            echo json_encode($templates) . "\n";
-            echo '});';
-        }
-        exit;
+        throw new RedirectException(
+            'CKEditor templates',
+            new Response(
+                'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n" . json_encode(
+                    $templates
+                ) . "\n" . '});',
+                Response::HTTP_OK,
+                ['Content-type' => 'text/javascript']
+            )
+        );
     }
 
     /**
