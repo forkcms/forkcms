@@ -161,7 +161,7 @@ jsBackend.location =
 		$('#zoomLevel').val(jsBackend.location.zoomLevel);
 	},
 
-	// this will set the terrain type of the map to the dropdown
+	// this will set the theme style of the map to the dropdown
 	setMapStyle: function()
 	{
 		jsBackend.location.style = $('#mapStyle').val();
