@@ -9,6 +9,7 @@ namespace Backend\Modules\Mailmotor\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\RedirectException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -16,6 +17,7 @@ use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * In this file we store all generic functions that we will be using in the mailmotor module
@@ -595,12 +597,17 @@ class Model
                     );
         }
 
-        // set headers for download
-        header('Content-type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-
-        echo $csv;
-        exit;
+        throw new RedirectException(
+            'export statistics for the campain',
+            new Response(
+                $csv,
+                Response::HTTP_OK,
+                [
+                    'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                    'Content-Type' => 'application/octet-stream;',
+                ]
+            )
+        );
     }
 
     /**
