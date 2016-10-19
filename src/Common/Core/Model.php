@@ -304,9 +304,16 @@ class Model extends \BaseModel
      * @param mixed  $callback    The callback that should be executed when the event is triggered.
      *
      * @throws \Exception          When the callback is invalid
+     *
+     * @deprecated use the symfony event dispatcher instead
      */
     public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
     {
+        trigger_error(
+            'Deprecated, all events will be replaced with symfony events',
+            E_USER_DEPRECATED
+        );
+
         // validate
         if (!is_callable($callback)) {
             throw new \Exception('Invalid callback!');
@@ -351,6 +358,8 @@ class Model extends \BaseModel
      * @param string $module    The module that triggers the event.
      * @param string $eventName The name of the event.
      * @param mixed  $data      The data that should be send to subscribers.
+     *
+     * @deprecated use the symfony event dispatcher instead
      */
     public static function triggerEvent($module, $eventName, $data = null)
     {
@@ -399,6 +408,8 @@ class Model extends \BaseModel
 
     /**
      * Start processing the hooks
+     *
+     * @deprecated use the symfony event dispatcher instead
      */
     public static function startProcessingHooks()
     {
@@ -487,6 +498,8 @@ class Model extends \BaseModel
      * @param string $eventModule The module that triggers the event.
      * @param string $eventName   The name of the event.
      * @param string $module      The module that subscribes to the event.
+     *
+     * @deprecated use the symfony event dispatcher instead
      */
     public static function unsubscribeFromEvent($eventModule, $eventName, $module)
     {
