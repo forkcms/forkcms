@@ -154,8 +154,8 @@ class EditMailingIframe extends BackendBaseActionEdit
             // search values
             $search = array();
             $search[] = 'body';
-            $search[] = '{$contentHtml}';
-            $search[] = '{$siteURL}';
+            $search[] = '{{ contentHtml|raw }}';
+            $search[] = '{{ siteURL }}';
             $search[] = '&quot;';
 
             // replace values
