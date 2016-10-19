@@ -19,16 +19,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Templates extends AjaxAction
 {
+    /** @var array */
+    private $templates;
+
     /**
      * Execute the action
      */
     public function execute()
     {
-        // call parent, this will probably add some general CSS/JS or other required files
-        parent::execute();
-
-        // init vars
-        $templates = array();
+        $this->templates = [];
         $theme = $this->get('fork.settings')->get('Core', 'theme');
         $files[] = BACKEND_PATH . '/Core/Layout/EditorTemplates/templates.js';
         $themePath = FRONTEND_PATH . '/Themes/' . $theme . '/Core/Layout/EditorTemplates/templates.js';
@@ -37,17 +36,15 @@ class Templates extends AjaxAction
             $files[] = $themePath;
         }
 
-        // loop all files
         foreach ($files as $file) {
-            // process file
-            $templates = array_merge($templates, $this->processFile($file));
+            $this->processFile($file);
         }
 
         throw new RedirectException(
             'CKEditor templates',
             new Response(
                 'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n" . json_encode(
-                    $templates
+                    $this->templates
                 ) . "\n" . '});',
                 Response::HTTP_OK,
                 ['Content-type' => 'text/javascript']
@@ -59,16 +56,14 @@ class Templates extends AjaxAction
      * Process the content of the file.
      *
      * @param string $file The file to process.
-     *
-     * @return bool|array
      */
     private function processFile($file)
     {
         $filesystem = new Filesystem();
 
-        // if the files doesn't exists we can stop here and just return an empty string
+        // if the files doesn't exists we can stop here
         if (!$filesystem->exists($file)) {
-            return array();
+            return;
         }
 
         // fetch content from file
@@ -77,22 +72,18 @@ class Templates extends AjaxAction
 
         // skip invalid JSON
         if ($json === false || $json === null) {
-            return array();
+            return;
         }
 
-        $return = array();
-
         // loop templates
-        foreach ($json as $template) {
+        foreach ((array) $json as $template) {
             // skip items without a title
             if (!isset($template['title'])) {
                 continue;
             }
 
-            if (isset($template['file'])) {
-                if ($filesystem->exists(PATH_WWW . $template['file'])) {
-                    $template['html'] = file_get_contents(PATH_WWW . $template['file']);
-                }
+            if (isset($template['file']) && $filesystem->exists(PATH_WWW . $template['file'])) {
+                $template['html'] = file_get_contents(PATH_WWW . $template['file']);
             }
 
             // skip items without HTML
@@ -108,14 +99,12 @@ class Templates extends AjaxAction
             }
 
             $temp['title'] = $template['title'];
-            $temp['description'] = (isset($template['description'])) ? $template['description'] : '';
+            $temp['description'] = isset($template['description']) ? $template['description'] : '';
             $temp['image'] = $image;
             $temp['html'] = $template['html'];
 
             // add the template
-            $return[] = $temp;
+            $this->templates[] = $temp;
         }
-
-        return $return;
     }
 }
