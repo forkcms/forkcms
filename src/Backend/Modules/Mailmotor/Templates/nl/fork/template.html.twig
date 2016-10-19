@@ -10,13 +10,13 @@
           <td align="center" valign="top">
             <table border="0" cellpadding="0" cellspacing="0" width="540" style="background-color:#ffffff;" bgcolor="#ffffff">
               <tr>
-                <td height="72" valign="center" bgcolor="#fafafa" background="{$siteURL}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/header.gif" style="background: #fafafa url({$siteURL}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/header.gif);background-repeat: repeat-y no-repeat;">
+                <td height="72" valign="center" bgcolor="#fafafa" background="{{ siteURL }}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/header.gif" style="background: #fafafa url({{ siteURL }}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/header.gif);background-repeat: repeat-y no-repeat;">
                   <table id="header" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td width="32">
                       </td>
                       <td width="476">
-                        <h2><a href="{$siteURL}">Fork 2.0.0 test</a></h2>
+                        <h2><a href="{{ siteURL }}">Fork 2.0.0 test</a></h2>
                         <p class="small">Is deze nieuwsbrief onleesbaar? Bekijk de <a id="onlineVersionURL" href="#">online versie</a>.</p>
                       </td>
                       <td width="32">
@@ -56,7 +56,7 @@
                       <td width="277" valign="top">
                       <!-- editor -->
                         <textarea id="contentHtml" name="content_html" cols="62" rows="5" class="inputEditorNewsletter">
-                          {$contentHtml}
+                          {{ contentHtml }}
                         </textarea>
                       <!-- /editor -->
                       </td>
@@ -108,7 +108,7 @@
                 </td>
               </tr>
               <tr>
-                <td height="40" valign="center" bgcolor="#fafafa" background="{$siteURL}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/footer.gif" style="background: #fafafa url({$siteURL}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/footer.gif) no-repeat;">
+                <td height="40" valign="center" bgcolor="#fafafa" background="{{ siteURL }}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/footer.gif" style="background: #fafafa url({{ siteURL }}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/footer.gif) no-repeat;">
                   <table id="footer" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td width="32">
