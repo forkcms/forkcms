@@ -42,6 +42,9 @@ class EditMailingIframe extends BackendBaseActionEdit
             $this->getData();
             $this->parse();
             $this->display(BACKEND_MODULES_PATH . '/Mailmotor/Layout/Templates/EditMailingIframe.html.twig');
+            if ($this->getContainer()->has('profiler')) {
+                $this->get('profiler')->disable();
+            }
         } else {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
