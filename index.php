@@ -21,6 +21,7 @@ if (!is_dir(__DIR__ . '/vendor')) {
 
 require_once __DIR__ . '/autoload.php';
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
@@ -35,7 +36,7 @@ if (!file_exists($parametersFile)) {
     $env = 'install';
     if (strpos($request->getRequestUri(), '/install') !== 0) {
         // check .htaccess
-        if (!file_exists('.htaccess') && !isset($_GET['skiphtaccess'])) {
+        if (!$request->query->has('skiphtaccess') && !file_exists('.htaccess')) {
             echo 'Your install is missing the .htaccess file. Make sure you show
                  hidden files while uploading Fork CMS. Read the article about
                  <a href="http://www.fork-cms.com/community/documentation/detail/installation/webservers">webservers</a>
@@ -61,7 +62,7 @@ if ($debug) {
 
 $kernel = new AppKernel($env, $debug);
 $response = $kernel->handle($request);
-if ($response->getCharset() === null && $kernel->getContainer() != null) {
+if ($response->getCharset() === null && $kernel->getContainer() instanceof ContainerInterface) {
     $response->setCharset(
         $kernel->getContainer()->getParameter('kernel.charset')
     );
