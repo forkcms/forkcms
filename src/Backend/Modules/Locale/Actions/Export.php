@@ -137,7 +137,6 @@ class Export extends BackendBaseActionIndex
      */
     public function execute()
     {
-        parent::execute();
         $this->setFilter();
         $this->setItems();
     }
