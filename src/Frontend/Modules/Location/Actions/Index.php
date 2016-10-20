@@ -40,6 +40,7 @@ class Index extends FrontendBaseBlock
             trigger_error('Please provide a Google Maps API key.');
         }
         $this->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, true, false);
+        $this->addJS(FrontendLocationModel::getPathToMapStyles(false), true);
 
         parent::execute();
 

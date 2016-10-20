@@ -10,6 +10,7 @@ namespace Frontend\Modules\Location\Engine;
  */
 
 use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Theme as FrontendTheme;
 
 /**
  * In this file we store all generic functions that we will be using in the location module
@@ -138,5 +139,33 @@ class Model
         }
 
         return $mapSettings;
+    }
+
+    /**
+     * Get path to map styles
+     *
+     * @param boolean $backend
+     * @return string
+     */
+    public static function getPathToMapStyles($backend = true)
+    {
+        $path = 'src/Frontend';
+        $jsFile = 'Location/Js/LocationMapStyles.js';
+        $moveToPath = '../../../../..';
+
+        // User can override the map styles in the frontend
+        if (file_exists($path . '/Themes/' . FrontendTheme::getTheme() . '/Modules/' . $jsFile)) {
+            if ($backend) {
+                return $moveToPath . '/' . $path . '/Themes/' . FrontendTheme::getTheme() . '/Modules/' . $jsFile;
+            }
+
+            return '/' . $path . '/Themes/' . FrontendTheme::getTheme() . '/Modules/' . $jsFile;
+        }
+
+        if ($backend) {
+            return $moveToPath . '/' . $path . '/Modules/' . $jsFile;
+        }
+
+        return '/' . $path . '/Modules/' . $jsFile;
     }
 }

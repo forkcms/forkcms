@@ -16,6 +16,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the index-action (default), it will display the overview of location items
@@ -40,6 +41,7 @@ class Index extends BackendBaseActionIndex
      */
     public function execute()
     {
+        $this->header->addJS(FrontendLocationModel::getPathToMapStyles(), true);
         parent::execute();
 
         // define Google Maps API key
@@ -79,6 +81,9 @@ class Index extends BackendBaseActionIndex
         // load the settings from the general settings
         if (empty($this->settings)) {
             $this->settings = $this->get('fork.settings')->getForModule('Location');
+
+            $this->settings['map_type'] = $this->settings['map_type_widget'];
+            $this->settings['map_style'] = isset($this->settings['map_style_widget']) ? $this->settings['map_style_widget'] : 'standard';
 
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
@@ -130,6 +135,12 @@ class Index extends BackendBaseActionIndex
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
         );
+        $mapStyles = array(
+            'standard' => BL::lbl('Default', $this->getModule()),
+            'custom' => BL::lbl('Custom', $this->getModule()),
+            'gray' => BL::lbl('Gray', $this->getModule()),
+            'blue' => BL::lbl('Blue', $this->getModule()),
+        );
 
         $zoomLevels = array_combine(
             array_merge(array('auto'), range(1, 18)),
@@ -144,6 +155,11 @@ class Index extends BackendBaseActionIndex
         $this->form->addText('width', $this->settings['width']);
         $this->form->addText('height', $this->settings['height']);
         $this->form->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
+        $this->form->addDropdown(
+            'map_style',
+            $mapStyles,
+            isset($this->settings['map_style']) ? $this->settings['map_style'] : null
+        );
     }
 
     /**

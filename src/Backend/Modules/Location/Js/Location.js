@@ -6,7 +6,7 @@ jsBackend.location =
 	// base values
 	bounds: null, center: null, centerLat: null, centerLng: null, height: null,
 	map: null, mapId: null, showDirections: false, showLink: false, showOverview: true,
-	type: null, width: null, zoomLevel: null,
+	type: null, style: null, width: null, zoomLevel: null,
 
 	init: function()
 	{
@@ -22,6 +22,7 @@ jsBackend.location =
 			// if the zoom level or map type changes in the dropdown, the map needs to change
 			$('#zoomLevel').bind('change', function() { jsBackend.location.setMapZoom($('#zoomLevel').val()); });
 			$('#mapType').bind('change', jsBackend.location.setMapTerrain);
+			$('#mapStyle').bind('change', jsBackend.location.setMapStyle);
 
 			// the panning save option
 			$('#saveLiveData').bind('click', function(e)
@@ -75,6 +76,7 @@ jsBackend.location =
 		// get the live data
 		jsBackend.location.zoomLevel = jsBackend.location.map.getZoom();
 		jsBackend.location.type = jsBackend.location.map.getMapTypeId();
+		jsBackend.location.style = jsBackend.location.getMapStyle();
 		jsBackend.location.center = jsBackend.location.map.getCenter();
 		jsBackend.location.centerLat = jsBackend.location.center.lat();
 		jsBackend.location.centerLng = jsBackend.location.center.lng();
@@ -87,6 +89,14 @@ jsBackend.location =
 		jsBackend.location.showDirections = ($('#directions').attr('checked') == 'checked');
 		jsBackend.location.showLink = ($('#fullUrl').attr('checked') == 'checked');
 		jsBackend.location.showOverview = ($('#markerOverview').attr('checked') == 'checked');
+	},
+
+	/**
+	 * Get map style
+	 */
+	getMapStyle: function()
+	{
+		return $('#mapStyle').find('option:selected').val();
 	},
 
 	// this will refresh the page and display a certain message
@@ -109,6 +119,7 @@ jsBackend.location =
 				fork: { module: 'Location', action: 'SaveLiveLocation' },
 				zoom: jsBackend.location.zoomLevel,
 				type: jsBackend.location.type,
+				style: jsBackend.location.style,
 				centerLat: jsBackend.location.centerLat,
 				centerLng: jsBackend.location.centerLng,
 				height: jsBackend.location.height,
@@ -150,6 +161,13 @@ jsBackend.location =
 		$('#zoomLevel').val(jsBackend.location.zoomLevel);
 	},
 
+	// this will set the theme style of the map to the dropdown
+	setMapStyle: function()
+	{
+		jsBackend.location.style = $('#mapStyle').val();
+		jsBackend.location.map.setOptions({'styles': MAPS_CONFIG[jsBackend.location.style]});
+	},
+
 	// this will set the terrain type of the map to the dropdown
 	setMapTerrain: function()
 	{
@@ -176,7 +194,8 @@ jsBackend.location =
 		var options =
 		{
 			center: new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng),
-			mapTypeId: eval('google.maps.MapTypeId.' + mapOptions.type)
+			mapTypeId: eval('google.maps.MapTypeId.' + mapOptions.type),
+			styles: MAPS_CONFIG[mapOptions.style]
 		};
 
 		// create map

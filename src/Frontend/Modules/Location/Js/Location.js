@@ -27,13 +27,15 @@ jsFrontend.location =
 		// define some variables we will need
 		var suffix = (id == '') ? '' : '_' + id;
 		var mapId = (id == '') ? 'general' : id;
+		var mapStyle = (jsFrontend.data.get('Location.settings' + suffix + '.map_style'));
 
 		// build the options
 		var options =
 		{
 			zoom: (jsFrontend.data.get('Location.settings' + suffix + '.zoom_level') == 'auto') ? 0 : parseInt(jsFrontend.data.get('Location.settings' + suffix + '.zoom_level')),
 			center: new google.maps.LatLng(jsFrontend.data.get('Location.settings' + suffix + '.center.lat'), jsFrontend.data.get('Location.settings' + suffix + '.center.lng')),
-			mapTypeId: google.maps.MapTypeId[jsFrontend.data.get('Location.settings' + suffix + '.map_type')]
+			mapTypeId: google.maps.MapTypeId[jsFrontend.data.get('Location.settings' + suffix + '.map_type')],
+			styles: MAPS_CONFIG[mapStyle]
 		};
 
 		// create map
