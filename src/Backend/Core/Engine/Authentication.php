@@ -256,9 +256,9 @@ class Authentication
         $allowedActions = self::getAllowedActions();
 
         // do we know a level for this action
-        if (isset(self::$allowedActions[$module][$action])) {
+        if (isset($allowedActions[$module][$action])) {
             // is the level greater than zero? aka: do we have access?
-            if ((int) self::$allowedActions[$module][$action] > 0) {
+            if ((int) $allowedActions[$module][$action] > 0) {
                 return true;
             }
         }

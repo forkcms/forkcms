@@ -1184,9 +1184,6 @@ class Model
             // get the ids
             $itemIds = array_keys($items);
 
-            // get the unique languages
-            $languages = array_unique(array_values($items));
-
             // update records
             BackendModel::getContainer()->get('database')->execute(
                 'UPDATE blog_comments

@@ -171,7 +171,7 @@ class Installer extends ModuleInstaller
             'N',
             3002
         );
-        $widgetSubscribeFormID = $this->insertExtra(
+        $this->insertExtra(
             'Mailmotor',
             'widget',
             'SubscribeForm',
@@ -231,9 +231,6 @@ class Installer extends ModuleInstaller
     {
         // add 'blog' as a module
         $this->addModule('Mailmotor');
-
-        // get email from the session
-        $email = \SpoonSession::exists('email') ? \SpoonSession::get('email') : null;
 
         // get from/replyTo Core settings
         $from = $this->getSetting('Core', 'mailer_from');

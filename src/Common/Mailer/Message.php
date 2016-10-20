@@ -148,22 +148,16 @@ class Message extends \Swift_Message
      */
     private function getTemplateContent($template, $variables = null)
     {
-        // new template instance
-        $tpl = null;
-
         // with the strpos we check if it is a frontend template, in that case we use the frontend template to prevent
         // errors that the template could not be found. This way we don't have a backwards compatibility break.
-        if (APPLICATION === 'Backend' && strpos($template, FRONTEND_CORE_PATH) === false) {
-            $tpl = new BackendTemplate(false);
-        } else {
+        if (APPLICATION !== 'Backend' || strpos($template, FRONTEND_CORE_PATH) !== false) {
             return Model::get('templating')->render(
                 $template,
                 $variables
             );
         }
 
-        // set some options
-        $tpl->setForceCompile();
+        $tpl = new BackendTemplate(false);
 
         // variables were set
         if (!empty($variables)) {

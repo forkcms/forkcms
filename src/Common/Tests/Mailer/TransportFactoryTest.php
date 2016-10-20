@@ -12,7 +12,7 @@ class TransportFactoryTest extends PHPUnit_Framework_TestCase
 {
     public function testCreatesMailTransportByDefault()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             'Swift_MailTransport',
             TransportFactory::create()
         );
@@ -20,7 +20,7 @@ class TransportFactoryTest extends PHPUnit_Framework_TestCase
 
     public function testCreatesSmtpTransportIfWanted()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             'Swift_SmtpTransport',
             TransportFactory::create('smtp')
         );
@@ -29,13 +29,13 @@ class TransportFactoryTest extends PHPUnit_Framework_TestCase
     public function testEncryptionCanBeSet()
     {
         $transport = TransportFactory::create('smtp', null, null, null, null, 'ssl');
-        $this->assertEquals(
+        self::assertEquals(
             'ssl',
             $transport->getEncryption()
         );
 
         $transport = TransportFactory::create('smtp', null, null, null, null, 'tls');
-        $this->assertEquals(
+        self::assertEquals(
             'tls',
             $transport->getEncryption()
         );

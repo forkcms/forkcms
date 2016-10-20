@@ -580,7 +580,7 @@ class InstallationData
      */
     public function isValid()
     {
-        if (
+        return !(
             empty($this->dbHostname)
             || empty($this->dbUsername)
             || empty($this->dbDatabase)
@@ -595,10 +595,6 @@ class InstallationData
 
             || empty($this->email)
             || empty($this->password)
-        ) {
-            return false;
-        }
-
-        return true;
+        );
     }
 }

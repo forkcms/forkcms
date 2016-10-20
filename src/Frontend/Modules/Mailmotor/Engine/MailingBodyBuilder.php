@@ -57,7 +57,6 @@ class MailingBodyBuilder
     {
         $templateHtml = $this->getTemplateContent();
         $editorHtml = $this->getEditorContent();
-        $css = $this->getCSS();
 
         if (empty($templateHtml)) {
             throw new \Exception('No valid template HTML was set.');

@@ -97,20 +97,18 @@ class Form extends \SpoonForm
      * @param array  $values     The values for the checkboxes.
      * @param mixed  $checked    Should the checkboxes be checked?
      * @param string $class      Class(es) that will be applied on the element.
-     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
      * @return \SpoonFormMultiCheckbox
      */
-    public function addMultiCheckbox($name, array $values, $checked = null, $class = null, $classError = null)
+    public function addMultiCheckbox($name, array $values, $checked = null, $class = null)
     {
         $name = (string) $name;
         $values = (array) $values;
         $checked = ($checked !== null) ? (array) $checked : null;
         $class = ($class !== null) ? (string) $class : 'fork-form-multi-checkbox';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a multi checkbox
-        return parent::addMultiCheckbox($name, $values, $checked, $class, $classError);
+        return parent::addMultiCheckbox($name, $values, $checked, $class);
     }
 
     /**
@@ -151,20 +149,18 @@ class Form extends \SpoonForm
      * @param array  $values     The possible values for the radio button.
      * @param string $checked    Should the element be checked?
      * @param string $class      Class(es) that will be applied on the element.
-     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
      * @return \SpoonFormRadiobutton
      */
-    public function addRadiobutton($name, array $values, $checked = null, $class = null, $classError = null)
+    public function addRadiobutton($name, array $values, $checked = null, $class = null)
     {
         $name = (string) $name;
         $values = (array) $values;
         $checked = ($checked !== null) ? (string) $checked : null;
         $class = ($class !== null) ? (string) $class : 'fork-form-radio';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a radio button
-        return parent::addRadiobutton($name, $values, $checked, $class, $classError);
+        return parent::addRadiobutton($name, $values, $checked, $class);
     }
 
     /**

@@ -315,9 +315,6 @@ class Add extends BackendBaseActionAdd
             $module = $bits[1];
             $group = $bits[3];
 
-            // create new item
-            $moduleItem = array('group_id' => $this->id, 'module' => $module);
-
             // loop through actions
             foreach ($this->actions[$module] as $moduleAction) {
                 // permission checked?

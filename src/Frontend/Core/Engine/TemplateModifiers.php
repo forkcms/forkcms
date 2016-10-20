@@ -137,19 +137,17 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Get a given field for a page-record
-     *    syntax: {{ getpageinfo($pageId, $field, $language) }}
+     *    syntax: {{ $pageId|getpageinfo($field) }}
      *
      * @param int    $pageId   The id of the page to build the URL for.
      * @param string $field    The field to get.
-     * @param string $language The language to use, if not provided we will use the loaded language.
      *
      * @return string
      */
-    public static function getPageInfo($pageId, $field = 'title', $language = null)
+    public static function getPageInfo($pageId, $field = 'title')
     {
         // redefine
         $field = (string) $field;
-        $language = ($language !== null) ? (string) $language : null;
 
         // get page
         $page = Navigation::getPageInfo((int) $pageId);

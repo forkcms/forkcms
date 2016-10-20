@@ -19,11 +19,11 @@ class IndexTest extends WebTestCase
         );
 
         $client->request('GET', '/en/blog');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Blogpost for functional tests',
             $client->getResponse()->getContent()
         );
