@@ -30,6 +30,7 @@ var jsBackend =
 
         // init stuff
         jsBackend.initAjax();
+        jsBackend.addModalEvents();
         jsBackend.balloons.init();
         jsBackend.controls.init();
         jsBackend.effects.init();
@@ -45,6 +46,21 @@ var jsBackend =
 
         // do not move, should be run as the last item.
         if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning();
+    },
+
+    addModalEvents: function () {
+        var $modals = $('[role=dialog].modal');
+
+        if ($modals.length === 0) {
+            return;
+        }
+
+        $modals.on('shown.bs.modal', function () {
+            $('#ajaxSpinner').addClass('light');
+        });
+        $modals.on('hide.bs.modal', function () {
+            $('#ajaxSpinner').removeClass('light');
+        });
     },
 
     // init ajax
