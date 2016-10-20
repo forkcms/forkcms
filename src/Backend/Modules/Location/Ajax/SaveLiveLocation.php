@@ -30,7 +30,17 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         // get parameters
         $itemId = \SpoonFilter::getPostValue('id', null, null, 'int');
         $zoomLevel = trim(\SpoonFilter::getPostValue('zoom', null, 'auto'));
-        $mapType = mb_strtoupper(trim(\SpoonFilter::getPostValue('type', array('roadmap', 'satellite', 'hybrid', 'terrain'), 'roadmap')));
+        $mapType = strtoupper(trim(\SpoonFilter::getPostValue(
+            'type',
+            array(
+                'roadmap',
+                'satellite',
+                'hybrid',
+                'terrain',
+                'street_view'
+            ),
+            'roadmap'
+        )));
         $mapStyle = trim(\SpoonFilter::getPostValue('style', array('standard', 'custom', 'gray', 'blue'), 'standard'));
         $centerLat = \SpoonFilter::getPostValue('centerLat', null, 1, 'float');
         $centerlng = \SpoonFilter::getPostValue('centerLng', null, 1, 'float');

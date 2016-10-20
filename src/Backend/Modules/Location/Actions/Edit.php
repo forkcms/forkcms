@@ -134,6 +134,7 @@ class Edit extends BackendBaseActionEdit
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
+            'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
         );
         $mapStyles = array(
             'standard' => BL::lbl('Default', $this->getModule()),
