@@ -580,9 +580,9 @@ class Model implements FrontendTagsInterface
             'SELECT i.title, m.url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
-             WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $ids) . ')
+             WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $ids) . ') AND i.publish_on <= ?
              ORDER BY i.publish_on DESC',
-            array('active', 'N')
+            array('active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
         );
 
         // has items
@@ -719,7 +719,7 @@ class Model implements FrontendTagsInterface
              WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC
              LIMIT ?',
-            array('published', 'active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit)
+            array('published', 'active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit)
         );
 
         // validate
