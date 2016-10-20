@@ -10,6 +10,8 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Common\Exception\RedirectException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is our extended version of SpoonFileCSV
@@ -19,10 +21,10 @@ class Csv extends \SpoonFileCSV
     /**
      * Output a CSV-file as a download
      *
-     * @param string $filename       The name of the file.
-     * @param array  $array          The array to convert.
-     * @param array  $columns        The column names you want to use.
-     * @param array  $excludeColumns The columns you want to exclude.
+     * @param string $filename The name of the file.
+     * @param array $array The array to convert.
+     * @param array $columns The column names you want to use.
+     * @param array $excludeColumns The columns you want to exclude.
      */
     public static function outputCSV($filename, array $array, array $columns = null, array $excludeColumns = null)
     {
@@ -43,13 +45,18 @@ class Csv extends \SpoonFileCSV
 
         // set headers for download
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
-        header('Content-type: application/csv; charset=' . $charset);
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Content-Length: ' . mb_strlen($csv));
-        header('Pragma: no-cache');
-
-        // output the CSV
-        echo $csv;
-        exit;
+        throw new RedirectException(
+            'Return the csv data',
+            new Response(
+                $csv,
+                Response::HTTP_OK,
+                [
+                    'Content-type' => 'application/csv; charset=' . $charset,
+                    'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                    'Content-Length' => mb_strlen($csv),
+                    'Pragma' => 'no-cache',
+                ]
+            )
+        );
     }
 }

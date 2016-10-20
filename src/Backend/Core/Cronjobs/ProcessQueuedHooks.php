@@ -9,6 +9,7 @@ namespace Backend\Core\Cronjobs;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\ExitException;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\Cronjob;
 use Backend\Core\Engine\Exception;
@@ -123,8 +124,7 @@ class ProcessQueuedHooks extends Cronjob
                 $filesystem = new Filesystem();
                 $filesystem->remove($this->getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
 
-                // stop the script
-                exit;
+                throw new ExitException('All hooks have been processed');
             }
         }
     }
