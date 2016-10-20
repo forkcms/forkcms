@@ -154,6 +154,18 @@
         <translation language="uk"><![CDATA[Супутник]]></translation>
         <translation language="el"><![CDATA[Δορυφορικός]]></translation>
       </item>
+      <item type="label" name="StreetView">
+        <translation language="nl"><![CDATA[street view]]></translation>
+        <translation language="en"><![CDATA[street view]]></translation>
+        <translation language="it"><![CDATA[street view]]></translation>
+        <translation language="ru"><![CDATA[street view]]></translation>
+        <translation language="zh"><![CDATA[street view]]></translation>
+        <translation language="de"><![CDATA[street view]]></translation>
+        <translation language="fr"><![CDATA[street view]]></translation>
+        <translation language="hu"><![CDATA[street view]]></translation>
+        <translation language="es"><![CDATA[street view]]></translation>
+        <translation language="uk"><![CDATA[street view]]></translation>
+      </item>
       <item type="label" name="Terrain">
         <translation language="nl"><![CDATA[terrein]]></translation>
         <translation language="en"><![CDATA[terrain]]></translation>
