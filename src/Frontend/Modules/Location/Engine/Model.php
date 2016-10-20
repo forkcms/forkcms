@@ -145,6 +145,7 @@ class Model
      * Get path to map styles
      *
      * @param boolean $backend
+     * @return string
      */
     public static function getPathToMapStyles($backend = true)
     {
