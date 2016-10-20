@@ -189,9 +189,9 @@
               <li>Ga naar de <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
               <li>Zorg dat je aangemeld bent met een Google account die toegang heeft op de gewenste analytics account.</li>
               <li>Kies een project in de header of maak een nieuw aan.</li>
-              <li>Klik in de zijbalk op <strong>Bibliotheek</strong></li>
+              <li>Klik op <strong>Bibliotheek</strong> in de zijbalk.</li>
               <li>Ga naar de <strong>Analytics API</strong> door er op te klikken in de <strong>Andere populaire API's</strong> categorie of door het te typen in de zoekbalk.</li>
-              <li>Als je de API not niet geactiveerd hebt kan je dit doen door onder de header op <strong>INSCHAKELEN</strong> te klikken.<li>
+              <li>Als je de API nog niet geactiveerd hebt kan je dit doen door onder de header op <strong>INSCHAKELEN</strong> te klikken.<li>
             </ol>
           </p>
           <p>Toegangsgegevens aanmaken voor Fork CMS.</p>
@@ -199,7 +199,7 @@
             <ol>
               <li>Kies in de zijbalk aan de linkerkant <strong>Inloggegevens</strong>.</li>
               <li>Klik op <strong>Inloggegevens maken</strong> en kies <strong>Serviceaccountsleutel</strong> in de dropdown.</li>
-              <li>Maak een nieuw serviceaccount aan met de rol <strong>Project - Editor</strong> en <strong>P12</strong> as type sleutel.</li>
+              <li>Maak een nieuw serviceaccount aan met de rol <strong>Project - Editor</strong> en <strong>P12</strong> als type sleutel.</li>
               <li>Download na het opslaan het gegenereerde certificaat (p12 file).</li>
               <li>Ga terug naar de <strong>Inloggegevens</strong> pagina en klik op <strong>Serviceaccounts beheren</strong>.</li>
               <li>Kopieer de <strong>Serviceaccount-ID</strong> van het net aangemaakte account. Het zou er ongeveer als volgt moeten uitzien <code>name@spheric-passkey-123456.iam.gserviceaccount.com</code></li>
@@ -217,7 +217,7 @@
               <li>Make sure you're logged in with a Google account that has access to the wanted Analytics account.</li>
               <li>Select a project in the header, or create a new one.</li>
               <li>Click on <strong>Library</strong> in the sidebar on the left.</li>
-              <li>Go to the <strong>Analytics API</strong> page by clicking on it in the <strong>Other popular API's</strong> category or typing it in the seach bar.</li>
+              <li>Go to the <strong>Analytics API</strong> page by clicking on it in the <strong>Other popular API's</strong> category or typing it in the search bar.</li>
               <li>You can enable the API if you haven't done that yet by clicking on <strong>ENABLE API</strong> underneath the header.<li>
             </ol>
           </p>
