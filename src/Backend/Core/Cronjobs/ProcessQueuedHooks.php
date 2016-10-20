@@ -17,6 +17,10 @@ use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the cronjob that processes the queued hooks.
+ *
+ * @deprecated use the symfony event dispatcher instead
+ *
+ * When removing this the table in the database should also be removed
  */
 class ProcessQueuedHooks extends Cronjob
 {
@@ -25,6 +29,11 @@ class ProcessQueuedHooks extends Cronjob
      */
     public function execute()
     {
+        trigger_error(
+            'Deprecated, you should use the symfony event dispatcher',
+            E_USER_DEPRECATED
+        );
+
         // no timelimit
         set_time_limit(0);
 
