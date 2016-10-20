@@ -202,7 +202,7 @@
               <li>Maak een nieuw serviceaccount aan met de rol <strong>Project - Editor</strong> en <strong>P12</strong> als type sleutel.</li>
               <li>Download na het opslaan het gegenereerde certificaat (p12 file).</li>
               <li>Ga terug naar de <strong>Inloggegevens</strong> pagina en klik op <strong>Serviceaccounts beheren</strong>.</li>
-              <li>Kopieer de <strong>Serviceaccount-ID</strong> van het net aangemaakte account. Het zou er ongeveer als volgt moeten uitzien <code>name@spheric-passkey-123456.iam.gserviceaccount.com</code></li>
+              <li>Kopieer de <strong>Serviceaccount-ID</strong> van de net aangemaakte account. Het zou er ongeveer als volgt moeten uitzien <code>name@spheric-passkey-123456.iam.gserviceaccount.com</code></li>
               <li>Log in in Google Analytics and voeg leesrechten toe voor het gegenereerde emailadres in de developer console.</li>
               <li>Haal een kop koffie, en kom daarna terug. Het kan even duren voor de koppeling tot stand is gekomen.</li>
             </ol>
