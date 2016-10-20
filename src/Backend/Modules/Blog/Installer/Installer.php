@@ -10,6 +10,7 @@ namespace Backend\Modules\Blog\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the blog module
@@ -137,18 +138,18 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Blog', 'blog/settings');
 
         // add extra's
-        $blogId = $this->insertExtra('Blog', 'block', 'Blog', null, null, 'N', 1000);
-        $this->insertExtra('Blog', 'widget', 'RecentComments', 'RecentComments', null, 'N', 1001);
-        $this->insertExtra('Blog', 'widget', 'Categories', 'Categories', null, 'N', 1002);
-        $this->insertExtra('Blog', 'widget', 'Archive', 'Archive', null, 'N', 1003);
-        $this->insertExtra('Blog', 'widget', 'RecentArticlesFull', 'RecentArticlesFull', null, 'N', 1004);
-        $this->insertExtra('Blog', 'widget', 'RecentArticlesList', 'RecentArticlesList', null, 'N', 1005);
+        $blogId = $this->insertExtra('Blog', ModuleExtraType::block(), 'Blog', null, null, 'N', 1000);
+        $this->insertExtra('Blog', ModuleExtraType::widget(), 'RecentComments', 'RecentComments', null, 'N', 1001);
+        $this->insertExtra('Blog', ModuleExtraType::widget(), 'Categories', 'Categories', null, 'N', 1002);
+        $this->insertExtra('Blog', ModuleExtraType::widget(), 'Archive', 'Archive', null, 'N', 1003);
+        $this->insertExtra('Blog', ModuleExtraType::widget(), 'RecentArticlesFull', 'RecentArticlesFull', null, 'N', 1004);
+        $this->insertExtra('Blog', ModuleExtraType::widget(), 'RecentArticlesList', 'RecentArticlesList', null, 'N', 1005);
 
         // get search extra id
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
-            array('Search', 'widget', 'Form')
+            array('Search', ModuleExtraType::WIDGET, 'Form')
         );
 
         // loop languages

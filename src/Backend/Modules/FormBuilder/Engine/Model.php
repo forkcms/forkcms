@@ -11,6 +11,7 @@ namespace Backend\Modules\FormBuilder\Engine;
 
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Common\ModuleExtraType;
 use Frontend\Core\Language\Language as FL;
 
 /**
@@ -506,7 +507,7 @@ class Model
 
         // insert extra
         BackendModel::insertExtra(
-            'widget',
+            ModuleExtraType::widget(),
             'FormBuilder',
             'Form',
             'FormBuilder',
