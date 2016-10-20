@@ -410,28 +410,6 @@ class TemplateModifiers extends BaseTwigModifiers
     }
 
     /**
-     * Translate a string.
-     *    syntax {{ $string|trans }}
-     *
-     * @param string $string The string that you want to apply this method on.
-     *
-     * @return string The string, to translate.
-     */
-    public static function trans($string)
-    {
-        if (strpos($string, '.') === false) {
-            return $string;
-        }
-        list($action, $string) = explode('.', $string);
-
-        if (!in_array($action, array('lbl', 'act', 'err', 'msg'))) {
-            return $string;
-        }
-
-        return Language::$action($string);
-    }
-
-    /**
      * Formats plain text as HTML, links will be detected, paragraphs will be inserted
      *    syntax: {{ $string|cleanupPlainText }}.
      *

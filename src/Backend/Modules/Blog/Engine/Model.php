@@ -631,14 +631,14 @@ class Model
     /**
      * Retrieve the unique URL for an item
      *
-     * @param string $URL The URL to base on.
+     * @param string $url The URL to base on.
      * @param int    $id  The id of the item to ignore.
      *
      * @return string
      */
-    public static function getURL($URL, $id = null)
+    public static function getURL($url, $id = null)
     {
-        $URL = (string) $URL;
+        $url = (string) $url;
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -652,12 +652,12 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL)
+                array(BL::getWorkingLanguage(), $url)
             )
             ) {
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
-                return self::getURL($URL);
+                return self::getURL($url);
             }
         } else {
             // current category should be excluded
@@ -667,30 +667,30 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL, $id)
+                array(BL::getWorkingLanguage(), $url, $id)
             )
             ) {
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
-                return self::getURL($URL, $id);
+                return self::getURL($url, $id);
             }
         }
 
-        return $URL;
+        return $url;
     }
 
     /**
      * Retrieve the unique URL for a category
      *
-     * @param string $URL The string whereon the URL will be based.
+     * @param string $url The string whereon the URL will be based.
      * @param int    $id  The id of the category to ignore.
      *
      * @return string
      */
-    public static function getURLForCategory($URL, $id = null)
+    public static function getURLForCategory($url, $id = null)
     {
         // redefine URL
-        $URL = (string) $URL;
+        $url = (string) $url;
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -704,12 +704,12 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL)
+                array(BL::getWorkingLanguage(), $url)
             )
             ) {
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($URL);
+                return self::getURLForCategory($url);
             }
         } else {
             // current category should be excluded
@@ -719,16 +719,16 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL, $id)
+                array(BL::getWorkingLanguage(), $url, $id)
             )
             ) {
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($URL, $id);
+                return self::getURLForCategory($url, $id);
             }
         }
 
-        return $URL;
+        return $url;
     }
 
     /**

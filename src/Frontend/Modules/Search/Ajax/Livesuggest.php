@@ -310,14 +310,14 @@ class Livesuggest extends FrontendBaseAJAXAction
         if ($this->pagination['requested_page'] > 1) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
+                $url = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
+                $url = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
             }
 
             // set
             $pagination['show_previous'] = true;
-            $pagination['previous_url'] = $URL;
+            $pagination['previous_url'] = $url;
         }
 
         // show first pages?
@@ -330,13 +330,13 @@ class Livesuggest extends FrontendBaseAJAXAction
             for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?page=' . $i;
+                    $url = $this->pagination['url'] . '?page=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                    $url = $this->pagination['url'] . '&amp;page=' . $i;
                 }
 
                 // add
-                $pagination['first'][] = array('url' => $URL, 'label' => $i);
+                $pagination['first'][] = array('url' => $url, 'label' => $i);
             }
         }
 
@@ -347,13 +347,13 @@ class Livesuggest extends FrontendBaseAJAXAction
 
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . $i;
+                $url = $this->pagination['url'] . '?page=' . $i;
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                $url = $this->pagination['url'] . '&amp;page=' . $i;
             }
 
             // add
-            $pagination['pages'][] = array('url' => $URL, 'label' => $i, 'current' => $current);
+            $pagination['pages'][] = array('url' => $url, 'label' => $i, 'current' => $current);
         }
 
         // show last pages?
@@ -366,13 +366,13 @@ class Livesuggest extends FrontendBaseAJAXAction
             for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?page=' . $i;
+                    $url = $this->pagination['url'] . '?page=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                    $url = $this->pagination['url'] . '&amp;page=' . $i;
                 }
 
                 // add
-                $pagination['last'][] = array('url' => $URL, 'label' => $i);
+                $pagination['last'][] = array('url' => $url, 'label' => $i);
             }
         }
 
@@ -380,14 +380,14 @@ class Livesuggest extends FrontendBaseAJAXAction
         if ($this->pagination['requested_page'] < $this->pagination['num_pages']) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
+                $url = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
+                $url = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
             }
 
             // set
             $pagination['show_next'] = true;
-            $pagination['next_url'] = $URL;
+            $pagination['next_url'] = $url;
         }
 
         // multiple pages

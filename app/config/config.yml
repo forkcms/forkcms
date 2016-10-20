@@ -2,6 +2,9 @@ imports:
     - { resource: parameters.yml }
     - { resource: doctrine.yml }
 
+parameters:
+    translator.identity.class: Common\Language
+
 framework:
     secret:          %kernel.secret%
     router:
@@ -52,6 +55,13 @@ services:
         class: Backend\Form\Type\EditorType
         tags:
           - { name: form.type, alias: editor}
+    form.type.meta:
+        class: Backend\Form\Type\MetaType
+        arguments:
+          - "@fork.repository.meta"
+          - "@translator"
+        tags:
+          - { name: form.type, alias: meta}
     database:
         class: SpoonDatabase
         arguments:

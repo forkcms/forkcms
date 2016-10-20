@@ -149,7 +149,7 @@ class CacheBuilder
         // init URLs
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
         $languageURL = ($hasMultiLanguages) ? '/' . $language . '/' : '/';
-        $URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+        $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
         // home is special
         if ($page['id'] == 1) {
@@ -160,7 +160,7 @@ class CacheBuilder
         }
 
         // add it
-        $keys[$page['id']] = trim($URL . '/' . $page['url'], '/');
+        $keys[$page['id']] = trim($url . '/' . $page['url'], '/');
 
         // unserialize
         if (isset($page['meta_data'])) {

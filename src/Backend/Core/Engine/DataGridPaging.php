@@ -19,7 +19,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
     /**
      * Builds & returns the pagination
      *
-     * @param string $URL
+     * @param string $url
      * @param int    $offset
      * @param string $order      The name of the column to sort on.
      * @param string $sort       The sorting method, possible values are: asc, desc.
@@ -31,7 +31,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
      * @return string
      */
     public static function getContent(
-        $URL,
+        $url,
         $offset,
         $order,
         $sort,
@@ -120,7 +120,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
             $pagination['previous_url'] = str_replace(
                 array('[offset]', '[order]', '[sort]'),
                 array(($offset - $numPerPage), $order, $sort),
-                $URL
+                $url
             );
         }
 
@@ -137,7 +137,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
                     'url' => str_replace(
                         array('[offset]', '[order]', '[sort]'),
                         array((($numPerPage * $i) - $numPerPage), $order, $sort),
-                        $URL
+                        $url
                     ),
                     'label' => $i,
                 );
@@ -154,7 +154,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
                 'url' => str_replace(
                     array('[offset]', '[order]', '[sort]'),
                     array((($numPerPage * $i) - $numPerPage), $order, $sort),
-                    $URL
+                    $url
                 ),
                 'label' => $i,
                 'current' => $current,
@@ -174,7 +174,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
                     'url' => str_replace(
                         array('[offset]', '[order]', '[sort]'),
                         array((($numPerPage * $i) - $numPerPage), $order, $sort),
-                        $URL
+                        $url
                     ),
                     'label' => $i,
                 );
@@ -188,7 +188,7 @@ class DataGridPaging implements \iSpoonDatagridPaging
             $pagination['next_url'] = str_replace(
                 array('[offset]', '[order]', '[sort]'),
                 array(($offset + $numPerPage), $order, $sort),
-                $URL
+                $url
             );
         }
 

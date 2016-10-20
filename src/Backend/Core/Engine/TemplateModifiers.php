@@ -125,27 +125,6 @@ class TemplateModifiers extends BaseTwigModifiers
     }
 
     /**
-     * Translate a string.
-     *
-     * @param string $string The string that you want to apply this method on.
-     *
-     * @return string The string, to translate.
-     *
-     * @throws Exception
-     * @throw exception thrown when no 'dot' is found in string
-     *
-     */
-    public static function trans($string)
-    {
-        if (strpos($string, '.') === false) {
-            throw new Exception('translation needs a dot character in : '.$string);
-        }
-        list($action, $string) = explode('.', $string);
-
-        return BackendLanguage::$action($string);
-    }
-
-    /**
      * Convert this string into a well formed label.
      *  syntax: {$var|tolabel}.
      *

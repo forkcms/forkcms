@@ -601,18 +601,18 @@ class Model
 
         // available in generated file?
         if (isset($keys[$id])) {
-            $URL = $keys[$id];
+            $url = $keys[$id];
         } elseif ($id == 0) {
             // parent id 0 hasn't an url
-            $URL = '/';
+            $url = '/';
 
             // multilanguages?
             if ($hasMultiLanguages) {
-                $URL = '/' . BL::getWorkingLanguage();
+                $url = '/' . BL::getWorkingLanguage();
             }
 
             // return the unique URL!
-            return $URL;
+            return $url;
         } else {
             // not available
             return false;
@@ -620,14 +620,14 @@ class Model
 
         // if the is available in multiple languages we should add the current lang
         if ($hasMultiLanguages) {
-            $URL = '/' . BL::getWorkingLanguage() . '/' . $URL;
+            $url = '/' . BL::getWorkingLanguage() . '/' . $url;
         } else {
             // just prepend with slash
-            $URL = '/' . $URL;
+            $url = '/' . $url;
         }
 
         // return the unique URL!
-        return urldecode($URL);
+        return urldecode($url);
     }
 
     /**
@@ -743,19 +743,19 @@ class Model
                 $parentID = (int) $page['parent_id'];
 
                 // get URL for parent
-                $URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+                $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
                 // add it
-                $keys[$pageID] = trim($URL . '/' . $page['url'], '/');
+                $keys[$pageID] = trim($url . '/' . $page['url'], '/');
 
                 // add to sequences
                 if ($page['type'] == 'footer') {
                     $sequences['footer'][(string) trim(
-                        $URL . '/' . $page['url'],
+                        $url . '/' . $page['url'],
                         '/'
                     )] = $pageID;
                 } else {
-                    $sequences['pages'][(string) trim($URL . '/' . $page['url'], '/')] = $pageID;
+                    $sequences['pages'][(string) trim($url . '/' . $page['url'], '/')] = $pageID;
                 }
 
                 // get URL for parent
@@ -1052,16 +1052,16 @@ class Model
     /**
      * Get an unique URL for a page
      *
-     * @param string $URL      The URL to base on.
+     * @param string $url      The URL to base on.
      * @param int    $id       The id to ignore.
      * @param int    $parentId The parent for the page to create an url for.
      * @param bool   $isAction Is this page an action.
      *
      * @return string
      */
-    public static function getURL($URL, $id = null, $parentId = 0, $isAction = false)
+    public static function getURL($url, $id = null, $parentId = 0, $isAction = false)
     {
-        $URL = (string) $URL;
+        $url = (string) $url;
         $parentIds = array((int) $parentId);
 
         // 0, 1, 2, 3, 4 are all top levels, so we should place them on the same level
@@ -1088,14 +1088,14 @@ class Model
                  WHERE i.parent_id IN(' . implode(',', $parentIds) . ') AND i.status = ? AND m.url = ?
                     AND i.language = ?
                  LIMIT 1',
-                array('active', $URL, BL::getWorkingLanguage())
+                array('active', $url, BL::getWorkingLanguage())
             )
             ) {
                 // add a number
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($URL, null, $parentId, $isAction);
+                return self::getURL($url, null, $parentId, $isAction);
             }
         } else {
             // one item should be ignored
@@ -1107,19 +1107,19 @@ class Model
                  WHERE i.parent_id IN(' . implode(',', $parentIds) . ') AND i.status = ?
                     AND m.url = ? AND i.id != ? AND i.language = ?
                  LIMIT 1',
-                array('active', $URL, $id, BL::getWorkingLanguage())
+                array('active', $url, $id, BL::getWorkingLanguage())
             )
             ) {
                 // add a number
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($URL, $id, $parentId, $isAction);
+                return self::getURL($url, $id, $parentId, $isAction);
             }
         }
 
         // get full URL
-        $fullURL = self::getFullURL($parentId) . '/' . $URL;
+        $fullURL = self::getFullURL($parentId) . '/' . $url;
 
         // get info about parent page
         $parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
@@ -1133,35 +1133,35 @@ class Model
             $actions = FrontendLanguage::getActions();
 
             // if the new URL conflicts with an action we should rebuild the URL
-            if (in_array($URL, $actions)) {
+            if (in_array($url, $actions)) {
                 // add a number
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($URL, $id, $parentId, $isAction);
+                return self::getURL($url, $id, $parentId, $isAction);
             }
         }
 
         // check if folder exists
         if (is_dir(PATH_WWW . '/' . $fullURL) || is_file(PATH_WWW . '/' . $fullURL)) {
             // add a number
-            $URL = BackendModel::addNumber($URL);
+            $url = BackendModel::addNumber($url);
 
             // recall this method, but with a new URL
-            return self::getURL($URL, $id, $parentId, $isAction);
+            return self::getURL($url, $id, $parentId, $isAction);
         }
 
         // check if it is an application
         if (array_key_exists(trim($fullURL, '/'), \ApplicationRouting::getRoutes())) {
             // add a number
-            $URL = BackendModel::addNumber($URL);
+            $url = BackendModel::addNumber($url);
 
             // recall this method, but with a new URL
-            return self::getURL($URL, $id, $parentId, $isAction);
+            return self::getURL($url, $id, $parentId, $isAction);
         }
 
         // return the unique URL!
-        return $URL;
+        return $url;
     }
 
     /**
