@@ -19,11 +19,11 @@ class ArchiveTest extends WebTestCase
         );
 
         $client->request('GET', '/en/blog/archive/2015/02');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Blogpost for functional tests',
             $client->getResponse()->getContent()
         );
@@ -34,11 +34,11 @@ class ArchiveTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/en/blog/archive/2015');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Blogpost for functional tests',
             $client->getResponse()->getContent()
         );

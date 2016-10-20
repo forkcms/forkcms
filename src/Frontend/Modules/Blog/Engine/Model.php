@@ -25,11 +25,11 @@ class Model implements FrontendTagsInterface
     /**
      * Get an item
      *
-     * @param string $URL The URL for the item.
+     * @param string $url The URL for the item.
      *
      * @return array
      */
-    public static function get($URL)
+    public static function get($url)
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
@@ -47,7 +47,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
              LIMIT 1',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL)
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), (string) $url)
         );
 
         // unserialize
@@ -94,7 +94,7 @@ class Model implements FrontendTagsInterface
                 'active',
                 LANGUAGE,
                 'N',
-                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                FrontendModel::getUTCDate('Y-m-d H:i'),
                 (int) $offset,
                 (int) $limit,
             ),
@@ -169,7 +169,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY c.id',
-            array(LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'),
+            array(LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i')),
             'id'
         );
 
@@ -218,7 +218,7 @@ class Model implements FrontendTagsInterface
             'SELECT COUNT(i.id) AS count
              FROM blog_posts AS i
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'))
         );
     }
 
@@ -249,7 +249,7 @@ class Model implements FrontendTagsInterface
                 'active',
                 LANGUAGE,
                 'N',
-                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                FrontendModel::getUTCDate('Y-m-d H:i'),
                 (string) $categoryURL,
                 (int) $offset,
                 (int) $limit,
@@ -313,11 +313,11 @@ class Model implements FrontendTagsInterface
     /**
      * Get the number of items in a given category
      *
-     * @param string $URL The URL for the category.
+     * @param string $url The URL for the category.
      *
      * @return int
      */
-    public static function getAllForCategoryCount($URL)
+    public static function getAllForCategoryCount($url)
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT COUNT(i.id) AS count
@@ -325,7 +325,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL)
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), (string) $url)
         );
     }
 
@@ -464,7 +464,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY month',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'))
         );
 
         // init vars
@@ -580,9 +580,9 @@ class Model implements FrontendTagsInterface
             'SELECT i.title, m.url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
-             WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $ids) . ')
+             WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $ids) . ') AND i.publish_on <= ?
              ORDER BY i.publish_on DESC',
-            array('active', 'N')
+            array('active', 'N', FrontendModel::getUTCDate('Y-m-d H:i'))
         );
 
         // has items
@@ -613,14 +613,14 @@ class Model implements FrontendTagsInterface
      * Get the id of an item by the full URL of the current page.
      * Selects the proper part of the full URL to get the item's id from the database.
      *
-     * @param FrontendURL $URL The current URL.
+     * @param FrontendURL $url The current URL.
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $URL)
+    public static function getIdForTags(FrontendURL $url)
     {
         // select the proper part of the full URL
-        $itemURL = (string) $URL->getParameter(1);
+        $itemURL = (string) $url->getParameter(1);
 
         // return the item
         return self::get($itemURL);
@@ -719,7 +719,7 @@ class Model implements FrontendTagsInterface
              WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC
              LIMIT ?',
-            array('published', 'active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit)
+            array('published', 'active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit)
         );
 
         // validate
@@ -774,7 +774,7 @@ class Model implements FrontendTagsInterface
             implode(',', $relatedIDs) . ')
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT ?',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit),
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit),
             'id'
         );
 
@@ -789,12 +789,12 @@ class Model implements FrontendTagsInterface
     /**
      * Get a revision for an item
      *
-     * @param string $URL      The URL for the item to get.
+     * @param string $url      The URL for the item to get.
      * @param int    $revision The revisionID.
      *
      * @return array
      */
-    public static function getRevision($URL, $revision)
+    public static function getRevision($url, $revision)
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.image,
@@ -812,7 +812,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
              LIMIT 1',
-            array(LANGUAGE, (int) $revision, (string) $URL)
+            array(LANGUAGE, (int) $revision, (string) $url)
         );
 
         // unserialize
@@ -911,7 +911,7 @@ class Model implements FrontendTagsInterface
         );
 
         // create URLs
-        $URL = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' .
+        $url = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' .
                $comment['post_url'] . '#comment-' . $comment['id'];
         $backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'Blog') . '#tabModeration';
 
@@ -924,13 +924,13 @@ class Model implements FrontendTagsInterface
             if ($comment['status'] == 'moderation') {
                 $variables['message'] = vsprintf(
                     FL::msg('BlogEmailNotificationsNewCommentToModerate'),
-                    array($comment['author'], $URL, $comment['post_title'], $backendURL)
+                    array($comment['author'], $url, $comment['post_title'], $backendURL)
                 );
             } elseif ($comment['status'] == 'published') {
                 // comment was published
                 $variables['message'] = vsprintf(
                     FL::msg('BlogEmailNotificationsNewComment'),
-                    array($comment['author'], $URL, $comment['post_title'])
+                    array($comment['author'], $url, $comment['post_title'])
                 );
             }
 
@@ -953,7 +953,7 @@ class Model implements FrontendTagsInterface
             // set variables
             $variables['message'] = vsprintf(
                 FL::msg('BlogEmailNotificationsNewCommentToModerate'),
-                array($comment['author'], $URL, $comment['post_title'], $backendURL)
+                array($comment['author'], $url, $comment['post_title'], $backendURL)
             );
 
             $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
@@ -993,7 +993,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')',
-            array('active', 'N', LANGUAGE, date('Y-m-d H:i') . ':00'),
+            array('active', 'N', LANGUAGE, date('Y-m-d H:i')),
             'id'
         );
 

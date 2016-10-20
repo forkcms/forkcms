@@ -1,3 +1,62 @@
+4.3.0 (2016-10-20)
+------------------
+
+Features:
+
+* Core: Make it possible to define other values for the headers X-Frame-Options, X-XSS-Protection and X-Content-Type-Options
+* Core: The jquery function doMeta is now configurable
+* Core: Locale ValueObject is now serializable
+* Core: Add method to compare Locale
+* Core: Set meta settings on module action by passing the meta entity to the method setMeta
+* Core: Entity for the Metadata
+* Core: Symfony form type for meta
+* Core: Module Extra type value object
+* Core: Make our translations available in the translator service
+* Core: Base ValueObject and symfony form type for the uploading of files and images
+* Console: Added a command to enable a locale
+* Location: Integrated Street View
+* Location: Integrated google map styles
+
+Deprecations:
+
+* Core: The service entity.create_schema is now deprecated in favour of fork.entity.create_schema
+* Core: Deprecated our own event system in favour of symfony events
+* Tools: Deprecated tools/spoon2twig in favour of using external tools
+* Tools: Deprecated tools/install_locale in favour of app/console forkcms:locale:import
+
+Enhancements:
+
+* Core: Use FrontendModel everywhere in the Frontend TemplateModifiers instead of mixing it with Model
+* Core: Remove the usage of deprecated code
+* Core: Update outdated composer packages
+* Core: Refactor out exit statements
+* Core: Replaced dirname(\_\_FILE\_\_) with \_\_DIR\_\_
+* Core: Remove unused code found by scrutinizer
+* Core: Use font awesome as ajax spinner
+* Core: Use margin instead of padding to space the icon from the text in a button
+* Core: Update the schema instead of ignoring when the schema for the table already exists
+* Core: Replaced the deprecated twig comparator sameas with same as
+* Core: Updated CKEditor to 4.5.10
+* Mailmotor: Don't show the debug toolbar in the edit email iframe
+* Installer: Use font awesome as ajax spinner
+* Analytics: Update the explanation to link a google analytics account since google has revamped the interface (again...)
+
+Bugfixes:
+
+* Core: Fix Symfony form errors font colour
+* Core: Fix loading external css files in the frontend with the addCss method
+* Blog: Fix add link on the blog index page when filtering on a category
+* Tools: prepare_for_reinstall : Ignore foreign keys when deleting the tables
+* Triton: Fix the minimum version
+* Doctrine: Fix timezone issues
+* Extensions: Fix install button not hiding on the detail page of a theme
+* Mailmotor: Fix example templates (they weren't converted to twig yet)
+* Mailmotor: Fix template not loading in iframe
+* Mailmotor: Catch the CampaignMonitor exceptions so the ajax save returns nice error messages
+* Tags: Hide the published blog posts on the tag detail if the publish date hasn't passed yet
+* FormBuilder: Fix editing a form of the FormBuilder removes the edit_link on the page editor
+
+
 4.2.4 (2016-10-07)
 ------------------
 

@@ -261,7 +261,7 @@ class Index extends BackendBaseActionIndex
         );
         $this->frm->addDropdown(
             'module',
-            BackendModel::getModulesForDropDown(false),
+            BackendModel::getModulesForDropDown(),
             $this->filter['module']
         );
         $this->frm->getField('module')->setDefaultElement('-');

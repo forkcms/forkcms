@@ -2,11 +2,11 @@
 
 {% block form_label %}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
-    {% if label is not sameas(false) %}
+    {% if label is not same as(false) %}
       {% if label is empty %}
-        {% set label = id|trans({}, translation_domain)|capitalize %}
+        {% set label = id|trans({}, translation_domain)|ucfirst %}
       {% else %}
-        {% set label = label|trans({}, translation_domain)|capitalize %}
+        {% set label = label|trans({}, translation_domain)|ucfirst %}
       {% endif %}
       {% if not compound %}
         {% set label_attr = label_attr|merge({'for': id}) %}
@@ -17,7 +17,7 @@
       {% endif %}
       {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
       <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-      {{ label }}{{- block('label_asterisk') }}
+      {{ label }}{% if required %}{{- block('label_asterisk') }}{% endif %}
       {% if help_label %}
         {{ block('help_label') }}
       {% endif %}
@@ -33,14 +33,38 @@
   {% endif %}
 {% endblock form_label %}
 
+{% block checkbox_radio_label %}
+  {% if widget is defined %}
+    {% if required %}
+      {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
+    {% endif %}
+    {% if parent_label_class is defined %}
+      {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class)|trim}) %}
+    {% endif %}
+    {% if label is not same as(false) and label is empty %}
+      {%- if label_format is not empty -%}
+        {% set label = label_format|replace({
+        '%name%': name,
+        '%id%': id,
+        }) %}
+      {%- else -%}
+        {% set label = name|humanize %}
+      {%- endif -%}
+    {% endif %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+    {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst) -}}{% if required %}{{- block('label_asterisk') }}{% endif %}
+    </label>
+  {% endif %}
+{% endblock checkbox_radio_label %}
+
 
 {% block help_label_tooltip %}
-  <span class="help-block{% if help_label_tooltip.icon is not sameas(false) %} inline{% endif %}">
+  <span class="help-block{% if help_label_tooltip.icon is not same as(false) %} inline{% endif %}">
     <a href="#" data-toggle="tooltip" data-placement="{{ help_label_tooltip.placement }}" data-title="{{ help_label_tooltip.title|trans({}, translation_domain) }}">
-      {% if help_label_tooltip.icon is not sameas(false) %}
+      {% if help_label_tooltip.icon is not same as(false) %}
         <i class="fa fa-question"></i>
       {% endif %}
-      {% if help_label_tooltip.text is not sameas(null) %}
+      {% if help_label_tooltip.text is not same as(null) %}
         <span class="text-muted">{{ help_label_tooltip.text }}</span>
       {% endif %}
     </a>
@@ -48,12 +72,12 @@
 {% endblock help_label_tooltip %}
 
 {% block help_label_popover %}
-  <span class="help-block{% if help_label_popover.icon is not sameas(false) %} inline{% endif %}">
+  <span class="help-block{% if help_label_popover.icon is not same as(false) %} inline{% endif %}">
     <a href="#" data-toggle="popover" data-trigger="hover" data-placement="{{ help_label_popover.placement }}" data-title="{{ help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ help_label_popover.content|trans({}, translation_domain) }}">
-      {% if help_label_popover.icon is not sameas(false) %}
+      {% if help_label_popover.icon is not same as(false) %}
         <i class="fa fa-question"></i>
       {% endif %}
-      {% if help_label_popover.text is not sameas(null) %}
+      {% if help_label_popover.text is not same as(null) %}
         <span class="text-muted">{{ help_label_popover.text }}</span>
       {% endif %}
     </a>
@@ -64,3 +88,156 @@
 {%- block label_asterisk -%}
   <abbr title="{{ 'lbl.RequiredField'|trans({}, translation_domain)|ucfirst }}">*</abbr>
 {%- endblock label_asterisk -%}
+
+{% block form_errors -%}
+  {% if errors|length > 0 -%}
+    {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+    <ul class="list-unstyled">
+        {%- for error in errors -%}
+          <li class="formError"><span class="fa fa-exclamation-triangle"></span> {{ error.message }}</li>
+        {%- endfor -%}
+    </ul>
+    {% if form.parent %}</span>{% else %}</div>{% endif %}
+  {%- endif %}
+{%- endblock form_errors %}
+
+{%- block meta_widget -%}
+  {% set customId = form.vars.id ~ '_custom' %}
+  {% set classId = form.vars.id ~ '_class' %}
+  {% set methodId = form.vars.id ~ '_method' %}
+  {% set parametersId = form.vars.id ~ '_parameters' %}
+  <div
+    class="js-do-meta-automatically"
+    data-base-field-selector="{{ base_field_selector }}"
+    data-meta-id-selector="{{ '#' ~ form.id.vars.id }}"
+    data-page-title-selector="{{ '#' ~ form.title.vars.id }}"
+    data-page-title-overwrite-selector="{{ '#' ~ form.titleOverwrite.vars.id }}"
+    data-meta-description-selector="{{ '#' ~ form.description.vars.id }}"
+    data-meta-description-overwrite-selector="{{ '#' ~ form.descriptionOverwrite.vars.id }}"
+    data-meta-keywords-selector="{{ '#' ~ form.keywords.vars.id }}"
+    data-meta-keywords-overwrite-selector="{{ '#' ~ form.keywordsOverwrite.vars.id }}"
+    data-url-selector="{{ '#' ~ form.url.vars.id }}"
+    data-url-overwrite-selector="{{ '#' ~ form.urlOverwrite.vars.id }}"
+    data-generated-url-selector="{{ form.vars.generated_url_selector }}"
+    data-custom-selector="{{ '#' ~ customId }}"
+    data-class-name-selector="{{ '#' ~ classId }}"
+    data-method-name-selector="{{ '#' ~ methodId }}"
+    data-parameters-selector="{{ '#' ~ parametersId }}"
+  >
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.Titles'|trans|ucfirst }}</p></div>
+        <div class="panel-body">
+          <div class="form-group last">
+            <ul class="list-unstyled checkboxTextFieldCombo">
+              <li class="checkbox">
+                <p>
+                  {{ form_widget(form.titleOverwrite) }}
+                </p>
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+                {{ form_errors(form.title) }}
+                <p class="help-block">{{ 'msg.HelpPageTitle'|trans|raw }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.MetaInformation'|trans|ucfirst }}</p></div>
+        <div class="panel-body">
+          <div class="form-group">
+            <ul class="list-unstyled checkboxTextFieldCombo">
+              <li class="checkbox">
+                <p>
+                  {{ form_widget(form.descriptionOverwrite) }}
+                </p>
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+                {{ form_errors(form.description) }}
+                <p class="help-block">{{ 'msg.HelpMetaDescription'|trans|raw }}</p>
+              </li>
+            </ul>
+          </div>
+          <div class="form-group{% if not form.custom_meta_tags %} last{% endif %}">
+            <ul class="list-unstyled checkboxTextFieldCombo">
+              <li class="checkbox">
+                <p>
+                  {{ form_widget(form.keywordsOverwrite) }}
+                </p>
+                {{ form_label(form.keywords) }}
+                {{ form_widget(form.keywords) }}
+                {{ form_errors(form.keywords) }}
+                <p class="help-block">{{ 'msg.HelpMetaKeywords'|trans|raw }}</p>
+              </li>
+            </ul>
+          </div>
+          {% if form.custom_meta_tags %}
+          <div class="form-group last">
+            {{ form_label(form.custom) }}
+            {{ form_widget(form.custom) }}
+            {{ form_errors(form.custom) }}
+            <p class="help-block">{{ 'msg.HelpMetaCustom'|trans|raw }}</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.URL'|trans|ucfirst }}</p></div>
+        <div class="panel-body">
+          <div class="form-group last">
+            <ul class="list-unstyled checkboxTextFieldCombo">
+              <li class="checkbox">
+                <p>
+                  {{ form_widget(form.urlOverwrite) }}
+                </p>
+                {{ form_label(form.url) }}
+                <div class="form-inline">
+                  <span id="urlFirstPart">{{ SITE_URL }}/ </span>{{ form_widget(form.url) }}
+                </div>
+                {{ form_errors(form.url) }}
+                <p class="help-block">{{ 'msg.HelpMetaURL'|trans|raw }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.SEO'|trans|ucfirst }}</p></div>
+        <div class="panel-body">
+          <div class="col-md-6">
+            <div class="form-inline">
+              <div class="form-group last"><p><b>{{ 'lbl.Index'|trans|ucfirst }}</b></p>
+                <div class="inputListHorizontal">
+                  {{ form_widget(form.SEOIndex) }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-inline">
+              <div class="form-group last"><p><b>{{ 'lbl.Follow'|trans|ucfirst }}</b></p>
+                <div class="inputListHorizontal">
+                  {{ form_widget(form.SEOFollow) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" id="{{ customId }}" value="{{ custom_meta_tags ? '1' : '0' }}">
+  <input type="hidden" id="{{ classId }}" value="{{ generate_url_callback_class }}">
+  <input type="hidden" id="{{ methodId }}" value="{{ generate_url_callback_method }}">
+  <input type="hidden" id="{{ parametersId }}" value="{{ generate_url_callback_parameters }}">
+  {{ form_rest(form) }}
+{%- endblock meta_widget -%}

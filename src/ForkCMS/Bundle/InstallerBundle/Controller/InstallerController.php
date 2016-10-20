@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Controller;
 
+use Common\Exception\ExitException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use Symfony\Component\HttpFoundation\Response;
 
 class InstallerController extends Controller
 {
@@ -195,9 +197,14 @@ class InstallerController extends Controller
         $kernelDir = $this->container->getParameter('kernel.root_dir');
         $parameterFile = $kernelDir . 'config/parameters.yml';
         if ($filesystem->exists($parameterFile)) {
-            exit('This Fork has already been installed. To reinstall, delete
+            throw new ExitException(
+                'This Fork has already been installed. To reinstall, delete
+                 parameters.yml from the ' . $kernelDir . 'config/ directory.',
+                'This Fork has already been installed. To reinstall, delete
                  parameters.yml from the ' . $kernelDir . 'config/ directory. To log in,
-                 <a href="/private">click here</a>.');
+                 <a href="/private">click here</a>.',
+                Response::HTTP_FORBIDDEN
+            );
         }
     }
 }

@@ -18,11 +18,11 @@ class CategoryTest extends WebTestCase
         );
 
         $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringStartsWith(
+        self::assertStringStartsWith(
             'BlogCategory for tests',
             $crawler->filter('title')->text()
         );
@@ -41,19 +41,19 @@ class CategoryTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
 
-        $this->assertContains('Blogpost for functional tests', $client->getResponse()->getContent());
+        self::assertContains('Blogpost for functional tests', $client->getResponse()->getContent());
         $link = $crawler->selectLink('Blogpost for functional tests')->link();
         $crawler = $client->click($link);
 
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/en/blog/detail/blogpost-for-functional-tests',
             $client->getHistory()->current()->getUri()
         );
-        $this->assertStringStartsWith(
+        self::assertStringStartsWith(
             'Blogpost for functional tests',
             $crawler->filter('title')->text()
         );

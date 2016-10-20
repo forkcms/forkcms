@@ -17,13 +17,6 @@ use Backend\Core\Engine\Model as BackendModel;
 class User
 {
     /**
-     * The group id
-     *
-     * @var    int
-     */
-    private $groupId;
-
-    /**
      * The groups
      *
      * @var array
@@ -113,11 +106,18 @@ class User
     /**
      * Get groupid
      *
-     * @return int
+     * @return null
+     *
+     * @deprecated
      */
     public function getGroupId()
     {
-        return $this->groupId;
+        trigger_error(
+            'This is not used anymore, use the getGroups method to get all the groups the user belongs to',
+            E_USER_DEPRECATED
+        );
+
+        return null;
     }
 
     /**
@@ -356,16 +356,6 @@ class User
     private function setEmail($value)
     {
         $this->email = (string) $value;
-    }
-
-    /**
-     * Set groupid
-     *
-     * @param int $value The id of the group.
-     */
-    private function setGroupId($value)
-    {
-        $this->groupId = (int) $value;
     }
 
     /**

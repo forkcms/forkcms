@@ -110,7 +110,6 @@ class ChangePassword extends FrontendBaseBlock
             // get fields
             $txtOldPassword = $this->frm->getField('old_password');
             $txtNewPassword = $this->frm->getField('new_password');
-            $txtVerifyNewPassword = $this->frm->getField('verify_new_password');
 
             // old password filled in?
             if ($txtOldPassword->isFilled(FL::getError('PasswordIsRequired'))) {

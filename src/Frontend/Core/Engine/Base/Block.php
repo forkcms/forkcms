@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Common\Doctrine\Entity\Meta;
 use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
@@ -82,9 +83,9 @@ class Block extends Object
 
     /**
      * @param KernelInterface $kernel
-     * @param string          $module The name of the module.
-     * @param string          $action The name of the action.
-     * @param string          $data   The data that should be available in this block.
+     * @param string $module The name of the module.
+     * @param string $action The name of the action.
+     * @param string $data The data that should be available in this block.
      */
     public function __construct(KernelInterface $kernel, $module, $action, $data = null)
     {
@@ -104,10 +105,10 @@ class Block extends Object
     /**
      * Add a CSS file into the array
      *
-     * @param string $file          The path for the CSS-file that should be loaded.
-     * @param bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param bool   $minify        Should the CSS be minified?
-     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
+     * @param string $file The path for the CSS-file that should be loaded.
+     * @param bool $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param bool $minify Should the CSS be minified?
+     * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
     public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
     {
@@ -127,10 +128,10 @@ class Block extends Object
     /**
      * Add a javascript file into the array
      *
-     * @param string $file          The path to the javascript-file that should be loaded.
-     * @param bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param bool   $minify        Should the file be minified?
-     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
+     * @param string $file The path to the javascript-file that should be loaded.
+     * @param bool $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param bool $minify Should the file be minified?
+     * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
     public function addJS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
     {
@@ -149,8 +150,8 @@ class Block extends Object
     /**
      * Add data that should be available in JS
      *
-     * @param string $key   The key whereunder the value will be stored.
-     * @param mixed  $value The value to pass.
+     * @param string $key The key whereunder the value will be stored.
+     * @param mixed $value The value to pass.
      */
     public function addJSData($key, $value)
     {
@@ -253,8 +254,8 @@ class Block extends Object
     /**
      * Load the template
      *
-     * @param string $path      The path for the template to use.
-     * @param bool   $overwrite Should the template overwrite the default?
+     * @param string $path The path for the template to use.
+     * @param bool $overwrite Should the template overwrite the default?
      */
     protected function loadTemplate($path = null, $overwrite = false)
     {
@@ -370,20 +371,20 @@ class Block extends Object
         if ($this->pagination['requested_page'] > 1) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
+                $url = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
             } else {
-                $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
+                $url = $this->pagination['url'] . '&' . $query_parameter . '=' . ($this->pagination['requested_page'] - 1);
             }
 
             // set
             $pagination['show_previous'] = true;
-            $pagination['previous_url'] = $URL . $anchor;
+            $pagination['previous_url'] = $url . $anchor;
 
             // flip ahead
             $this->header->addLink(
                 array(
                     'rel' => 'prev',
-                    'href' => SITE_URL . $URL . $anchor,
+                    'href' => SITE_URL . $url . $anchor,
                 )
             );
         }
@@ -398,13 +399,13 @@ class Block extends Object
             for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
+                    $url = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
+                    $url = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
                 }
 
                 // add
-                $pagination['first'][] = array('url' => $URL . $anchor, 'label' => $i);
+                $pagination['first'][] = array('url' => $url . $anchor, 'label' => $i);
             }
         }
 
@@ -415,13 +416,13 @@ class Block extends Object
 
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
+                $url = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
             } else {
-                $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
+                $url = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
             }
 
             // add
-            $pagination['pages'][] = array('url' => $URL . $anchor, 'label' => $i, 'current' => $current);
+            $pagination['pages'][] = array('url' => $url . $anchor, 'label' => $i, 'current' => $current);
         }
 
         // show last pages?
@@ -434,13 +435,13 @@ class Block extends Object
             for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
+                    $url = $this->pagination['url'] . '?' . $query_parameter . '=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
+                    $url = $this->pagination['url'] . '&' . $query_parameter . '=' . $i;
                 }
 
                 // add
-                $pagination['last'][] = array('url' => $URL . $anchor, 'label' => $i);
+                $pagination['last'][] = array('url' => $url . $anchor, 'label' => $i);
             }
         }
 
@@ -448,20 +449,20 @@ class Block extends Object
         if ($this->pagination['requested_page'] < $this->pagination['num_pages']) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
+                $url = $this->pagination['url'] . '?' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
             } else {
-                $URL = $this->pagination['url'] . '&' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
+                $url = $this->pagination['url'] . '&' . $query_parameter . '=' . ($this->pagination['requested_page'] + 1);
             }
 
             // set
             $pagination['show_next'] = true;
-            $pagination['next_url'] = $URL . $anchor;
+            $pagination['next_url'] = $url . $anchor;
 
             // flip ahead
             $this->header->addLink(
                 array(
                     'rel' => 'next',
-                    'href' => SITE_URL . $URL . $anchor,
+                    'href' => SITE_URL . $url . $anchor,
                 )
             );
         }
@@ -476,14 +477,14 @@ class Block extends Object
     /**
      * Redirect to a given URL
      *
-     * @param string $URL  The URL whereto will be redirected.
-     * @param int    $code The redirect code, default is 302 which means this is a temporary redirect.
+     * @param string $url The URL whereto will be redirected.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
      *
      * @throws RedirectException
      */
-    public function redirect($URL, $code = 302)
+    public function redirect($url, $code = 302)
     {
-        $response = new RedirectResponse($URL, $code);
+        $response = new RedirectResponse($url, $code);
 
         throw new RedirectException('Redirect', $response);
     }
@@ -543,5 +544,25 @@ class Block extends Object
     protected function setTemplatePath($path)
     {
         $this->templatePath = (string) $path;
+    }
+
+    /**
+     * @param Meta $meta
+     */
+    protected function setMeta(Meta $meta)
+    {
+        $this->header->setPageTitle($meta->getTitle(), $meta->isTitleOverwrite());
+        $this->header->addMetaDescription($meta->getDescription(), $meta->isDescriptionOverwrite());
+        $this->header->addMetaKeywords($meta->getKeywords(), $meta->isKeywordsOverwrite());
+        if ($meta->hasSEOFollow()) {
+            $this->header->addMetaData(
+                ['name' => 'robots', 'content' => $meta->getSEOFollow()]
+            );
+        }
+        if ($meta->hasSEOIndex()) {
+            $this->header->addMetaData(
+                ['name' => 'robots', 'content' => $meta->getSEOIndex()]
+            );
+        }
     }
 }

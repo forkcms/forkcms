@@ -5,6 +5,7 @@ namespace Common\Doctrine\Entity;
 use Doctrine\DBAL\Exception\TableExistsException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\ORM\Tools\ToolsException;
 
 class CreateSchema
 {
@@ -33,6 +34,8 @@ class CreateSchema
      * Adds new doctrine entities in the database
      *
      * @param array $entityClasses
+     *
+     * @throws ToolsException
      */
     public function forEntityClasses(array $entityClasses)
     {
@@ -47,7 +50,22 @@ class CreateSchema
                 )
             );
         } catch (TableExistsException $tableExists) {
-            // do nothing because it already exists in the database
+            $schemaTool->updateSchema(
+                array_map(
+                    [$this->entityManager, 'getClassMetadata'],
+                    $entityClasses
+                )
+            );
+        } catch (ToolsException $toolsException) {
+            if (!$toolsException->getPrevious() instanceof TableExistsException) {
+                throw $toolsException;
+            }
+            $schemaTool->updateSchema(
+                array_map(
+                    [$this->entityManager, 'getClassMetadata'],
+                    $entityClasses
+                )
+            );
         }
     }
 }

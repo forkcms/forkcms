@@ -10,7 +10,7 @@ namespace Backend\Modules\Mailmotor\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Exception;
+use CampaignMonitorException;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
@@ -94,7 +94,7 @@ class SaveContent extends BackendBaseAJAXAction
 
                     try {
                         BackendMailmotorCMHelper::saveMailingDraft($item);
-                    } catch (Exception $e) {
+                    } catch (CampaignMonitorException $e) {
                         // CM did not receive a valid URL
                         if (mb_strpos($e->getMessage(), 'HTML Content URL Required')) {
                             $message = BL::err('HTMLContentURLRequired', $this->getModule());

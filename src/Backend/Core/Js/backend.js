@@ -30,6 +30,7 @@ var jsBackend =
 
         // init stuff
         jsBackend.initAjax();
+        jsBackend.addModalEvents();
         jsBackend.balloons.init();
         jsBackend.controls.init();
         jsBackend.effects.init();
@@ -45,6 +46,21 @@ var jsBackend =
 
         // do not move, should be run as the last item.
         if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning();
+    },
+
+    addModalEvents: function () {
+        var $modals = $('[role=dialog].modal');
+
+        if ($modals.length === 0) {
+            return;
+        }
+
+        $modals.on('shown.bs.modal', function () {
+            $('#ajaxSpinner').addClass('light');
+        });
+        $modals.on('hide.bs.modal', function () {
+            $('#ajaxSpinner').removeClass('light');
+        });
     },
 
     // init ajax
@@ -339,10 +355,10 @@ jsBackend.ckeditor =
         entities_latin: false,
 
         // load some extra plugins
-        extraPlugins: 'stylesheetparser,MediaEmbed',
+        extraPlugins: 'stylesheetparser,mediaembed',
 
         // remove useless plugins
-        removePlugins: 'a11yhelp,bidi,about,elementspath,find,flash,forms,newpage,pagebreak,preview,print,scayt',
+        removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
 
         // templates
         templates_files: [],
@@ -1254,6 +1270,46 @@ jsBackend.forms =
         jsBackend.forms.datefields();
         jsBackend.forms.submitWithLinks();
         jsBackend.forms.tagsInput();
+        jsBackend.forms.meta();
+    },
+
+    meta: function() {
+        var $metaTabs = $('.js-do-meta-automatically');
+        if ($metaTabs.length === 0) {
+            return;
+        }
+
+        $metaTabs.each(function () {
+            var possibleOptions = [
+                'baseFieldSelector',
+                'metaIdSelector',
+                'pageTitleSelector',
+                'pageTitleOverwriteSelector',
+                'navigationTitleSelector',
+                'navigationTitleOverwriteSelector',
+                'metaDescriptionSelector',
+                'metaDescriptionOverwriteSelector',
+                'metaKeywordsSelector',
+                'metaKeywordsOverwriteSelector',
+                'urlSelector',
+                'urlOverwriteSelector',
+                'generatedUrlSelector',
+                'customSelector',
+                'classNameSelector',
+                'methodNameSelector',
+                'parametersSelector'
+            ];
+            var options = {};
+
+            // only add the options that have been set
+            for (var i = 0, length = possibleOptions.length; i < length; i++) {
+                if (typeof this.dataset[possibleOptions[i]] !== 'undefined') {
+                    options[possibleOptions[i]] = this.dataset[possibleOptions[i]];
+                }
+            }
+
+            $(this.dataset.baseFieldSelector).doMeta(options)
+        });
     },
 
     datefields: function () {

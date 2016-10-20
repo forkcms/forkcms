@@ -151,7 +151,8 @@ class Themes extends BackendBaseActionIndex
                     if (empty($newTemplates)) {
                         // templates do not yet exist; don't switch
                         $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-templates-available');
-                        exit;
+    
+                        return;
                     }
 
                     // fetch current default template

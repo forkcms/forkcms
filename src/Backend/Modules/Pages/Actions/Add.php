@@ -551,12 +551,6 @@ class Add extends BackendBaseActionAdd
      */
     private function showTags()
     {
-        if (!Authentication::isAllowedAction('Edit', 'Tags')
-            || !Authentication::isAllowedAction('GetAllTags', 'Tags')
-        ) {
-            return false;
-        }
-
-        return true;
+        return Authentication::isAllowedAction('Edit', 'Tags') && Authentication::isAllowedAction('GetAllTags', 'Tags');
     }
 }

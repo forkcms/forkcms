@@ -11,6 +11,7 @@ namespace Backend\Modules\Location\Engine;
 
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Common\ModuleExtraType;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**
@@ -209,7 +210,7 @@ class Model
 
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
-            'widget',
+            ModuleExtraType::widget(),
             'Location'
         );
 

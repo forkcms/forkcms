@@ -10,27 +10,27 @@ class CoreTest extends ApiTestCase
     {
         $client = static::createClient();
         $request = $client->request('GET', '/api');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             '400',
             $request->filter('fork')->attr('status_code')
         );
-        $this->assertEquals(
+        self::assertEquals(
             'error',
             $request->filter('fork')->attr('status')
         );
-        $this->assertEquals(
+        self::assertEquals(
             trim(file_get_contents(__DIR__ . '/../../../../../VERSION.md')),
             $request->filter('fork')->attr('version')
         );
-        $this->assertNotEmpty(
+        self::assertNotEmpty(
             $request->filter('fork')->attr('endpoint')
         );
-        $this->assertEquals(
+        self::assertEquals(
             'No method-parameter provided.',
             $request->filter('message')->text()
         );
@@ -50,23 +50,23 @@ class CoreTest extends ApiTestCase
             )
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             '200',
             $request->filter('fork')->attr('status_code')
         );
-        $this->assertEquals(
+        self::assertEquals(
             'ok',
             $request->filter('fork')->attr('status')
         );
-        $this->assertNotEmpty(
+        self::assertNotEmpty(
             $request->filter('fork')->attr('version')
         );
-        $this->assertNotEmpty(
+        self::assertNotEmpty(
             $request->filter('fork')->attr('endpoint')
         );
     }
@@ -82,11 +82,11 @@ class CoreTest extends ApiTestCase
             )
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Invalid method.',
             $client->getResponse()->getContent()
         );
@@ -106,11 +106,11 @@ class CoreTest extends ApiTestCase
             )
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertEquals(
+        self::assertEquals(
             '54f0fb1222403',
             $request->filter('api_key')->text()
         );
@@ -132,16 +132,16 @@ class CoreTest extends ApiTestCase
             $data
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertCount(
+        self::assertCount(
             1,
             $request->filter('languages')
         );
 
-        $this->assertGreaterThanOrEqual(
+        self::assertGreaterThanOrEqual(
             1,
             $request->filter('languages > language')->count()
         );
@@ -150,17 +150,17 @@ class CoreTest extends ApiTestCase
 
         $request->filter('languages > language')->each(
             function ($language) use ($that) {
-                $that->assertNotEmpty(
+                self::assertNotEmpty(
                     $language->attr('language')
                 );
-                $that->assertNotEmpty(
+                self::assertNotEmpty(
                     $language->attr('is_default')
                 );
-                $that->assertEquals(
+                self::assertEquals(
                     'My website',
                     $language->filter('title')->text()
                 );
-                $that->assertNotEmpty(
+                self::assertNotEmpty(
                     $language->filter('url')->text()
                 );
             }

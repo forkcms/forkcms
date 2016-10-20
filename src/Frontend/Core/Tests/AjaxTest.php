@@ -11,11 +11,11 @@ class AjaxTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/frontend/ajax');
-        $this->assertEquals(
+        self::assertEquals(
             500,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Module not correct',
             $client->getResponse()->getContent()
         );
@@ -26,11 +26,11 @@ class AjaxTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/frontend/ajax?action=Test');
-        $this->assertEquals(
+        self::assertEquals(
             500,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Module not correct',
             $client->getResponse()->getContent()
         );
@@ -41,11 +41,11 @@ class AjaxTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/frontend/ajax?module=Test');
-        $this->assertEquals(
+        self::assertEquals(
             500,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Module not correct',
             $client->getResponse()->getContent()
         );
@@ -56,11 +56,11 @@ class AjaxTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/frontend/ajax?module=Blog');
-        $this->assertEquals(
+        self::assertEquals(
             500,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Internal error',
             $client->getResponse()->getContent()
         );
@@ -71,11 +71,11 @@ class AjaxTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/frontend/ajax?module=Blog&action=Test');
-        $this->assertEquals(
+        self::assertEquals(
             500,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Internal error',
             $client->getResponse()->getContent()
         );

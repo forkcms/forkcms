@@ -28,7 +28,7 @@ class IndexTest extends WebTestCase
         $this->loadFixtures($client);
 
         $client->request('GET', '/private');
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/private/en/authentication?querystring=%2Fprivate%2Fen',
             $client->getHistory()->current()->getUri()
         );
@@ -39,7 +39,7 @@ class IndexTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/private/en/authentication');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -50,7 +50,7 @@ class IndexTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/private/en/authentication');
-        $this->assertContains(
+        self::assertContains(
             '<meta name="robots" content="noindex, nofollow"',
             $client->getResponse()->getContent()
         );
@@ -61,7 +61,7 @@ class IndexTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/private/en/authentication');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -74,7 +74,7 @@ class IndexTest extends WebTestCase
         ));
 
         // result should not yet be found
-        $this->assertContains(
+        self::assertContains(
             'Your e-mail and password combination is incorrect.',
             $client->getResponse()->getContent()
         );
@@ -86,7 +86,7 @@ class IndexTest extends WebTestCase
         $client->setMaxRedirects(2);
 
         $crawler = $client->request('GET', '/private/en/authentication');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -99,11 +99,11 @@ class IndexTest extends WebTestCase
             'form_token' => $form['form_token']->getValue(),
         ));
 
-        $this->assertContains(
+        self::assertContains(
             'Dashboard',
             $client->getResponse()->getContent()
         );
-        $this->assertContains(
+        self::assertContains(
             'Pages',
             $client->getResponse()->getContent()
         );
@@ -123,7 +123,7 @@ class IndexTest extends WebTestCase
         $client->setMaxRedirects(2);
 
         $crawler = $client->request('GET', '/private/en/authentication');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -136,7 +136,7 @@ class IndexTest extends WebTestCase
             'form_token' => $form['form_token']->getValue(),
         ));
 
-        $this->assertContains(
+        self::assertContains(
             'Now editing',
             $client->getResponse()->getContent()
         );
@@ -157,7 +157,7 @@ class IndexTest extends WebTestCase
         $client->setMaxRedirects(2);
 
         $crawler = $client->request('GET', '/private/en/authentication');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -170,7 +170,7 @@ class IndexTest extends WebTestCase
             'form_token' => $form['form_token']->getValue(),
         ));
 
-        $this->assertContains(
+        self::assertContains(
             'Edit profile',
             $client->getResponse()->getContent()
         );

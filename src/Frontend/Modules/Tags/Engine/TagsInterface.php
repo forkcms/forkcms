@@ -30,9 +30,9 @@ interface TagsInterface
      * Get the id of an item by the full URL of the current page.
      * Selects the proper part of the full URL to get the item's id from the database.
      *
-     * @param FrontendURL $URL The current URL.
+     * @param FrontendURL $url The current URL.
      *
      * @return int The id that corresponds with the given full URL.
      */
-    public static function getIdForTags(FrontendURL $URL);
+    public static function getIdForTags(FrontendURL $url);
 }

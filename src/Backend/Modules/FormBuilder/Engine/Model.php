@@ -11,6 +11,7 @@ namespace Backend\Modules\FormBuilder\Engine;
 
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Common\ModuleExtraType;
 use Frontend\Core\Language\Language as FL;
 
 /**
@@ -506,7 +507,7 @@ class Model
 
         // insert extra
         BackendModel::insertExtra(
-            'widget',
+            ModuleExtraType::widget(),
             'FormBuilder',
             'Form',
             'FormBuilder',
@@ -565,7 +566,12 @@ class Model
 
         // build array
         $extra['data'] = serialize(
-            array('language' => BL::getWorkingLanguage(), 'extra_label' => $values['name'], 'id' => $id)
+            array(
+                'language' => BL::getWorkingLanguage(),
+                'extra_label' => $values['name'],
+                'id' => $id,
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $id,
+            )
         );
 
         // update extra

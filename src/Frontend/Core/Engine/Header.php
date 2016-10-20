@@ -132,7 +132,11 @@ class Header extends FrontendBaseObject
         $file = (string) $file;
         $minify = (bool) $minify;
         $addTimestamp = (bool) $addTimestamp;
-        $file = Theme::getPath($file);
+
+        // get file path
+        if (mb_substr($file, 0, 4) != 'http') {
+            $file = Theme::getPath($file);
+        }
 
         // no minifying when debugging
         if ($this->getContainer()->getParameter('kernel.debug')) {

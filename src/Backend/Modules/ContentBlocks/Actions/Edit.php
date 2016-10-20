@@ -54,7 +54,7 @@ class Edit extends BackendBaseActionEdit
         if (!$form->isValid()) {
             $this->tpl->assign('form', $form->createView());
 
-            $this->parse($this->contentBlock);
+            $this->parse();
             $this->display();
 
             return;

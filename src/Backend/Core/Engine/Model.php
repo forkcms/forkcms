@@ -97,14 +97,14 @@ class Model extends \Common\Core\Model
         // checking if we have an url, because in a cronjob we don't have one
         if (self::getContainer()->has('url')) {
             // grab the URL from the reference
-            $URL = self::getContainer()->get('url');
+            $url = self::getContainer()->get('url');
 
             // redefine
             if ($action === null) {
-                $action = $URL->getAction();
+                $action = $url->getAction();
             }
             if ($module === null) {
-                $module = $URL->getModule();
+                $module = $url->getModule();
             }
         }
 
@@ -591,7 +591,7 @@ class Model extends \Common\Core\Model
         $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
         // init URL
-        $URL = (self::getContainer()->getParameter('site.multilanguage')) ? '/' . $language . '/' : '/';
+        $url = (self::getContainer()->getParameter('site.multilanguage')) ? '/' . $language . '/' : '/';
 
         // get the menuItems
         $keys = self::getKeys($language);
@@ -600,11 +600,11 @@ class Model extends \Common\Core\Model
         if (!isset($keys[$pageId])) {
             return self::getURL(404, $language);
         } else {
-            $URL .= $keys[$pageId];
+            $url .= $keys[$pageId];
         }
 
         // return the unique URL!
-        return urldecode($URL);
+        return urldecode($url);
     }
 
     /**
@@ -652,16 +652,16 @@ class Model extends \Common\Core\Model
             return self::getURL(404, $language);
         }
 
-        $URL = self::getURL($pageIdForURL, $language);
+        $url = self::getURL($pageIdForURL, $language);
 
         // set locale with force
         FrontendLanguage::setLocale($language, true);
 
         // append action
-        $URL .= '/' . urldecode(FrontendLanguage::act(\SpoonFilter::toCamelCase($action)));
+        $url .= '/' . urldecode(FrontendLanguage::act(\SpoonFilter::toCamelCase($action)));
 
         // return the unique URL!
-        return $URL;
+        return $url;
     }
 
     /**

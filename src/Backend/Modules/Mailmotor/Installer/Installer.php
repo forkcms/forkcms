@@ -10,6 +10,7 @@ namespace Backend\Modules\Mailmotor\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the mailmotor module
@@ -160,20 +161,20 @@ class Installer extends ModuleInstaller
     private function installPages()
     {
         // add extra's
-        $sentMailingsID = $this->insertExtra('Mailmotor', 'block', 'SentMailings', null, null, 'N', 3000);
-        $subscribeFormID = $this->insertExtra('Mailmotor', 'block', 'SubscribeForm', 'Subscribe', null, 'N', 3001);
+        $sentMailingsID = $this->insertExtra('Mailmotor', ModuleExtraType::block(), 'SentMailings', null, null, 'N', 3000);
+        $subscribeFormID = $this->insertExtra('Mailmotor', ModuleExtraType::block(), 'SubscribeForm', 'Subscribe', null, 'N', 3001);
         $unsubscribeFormID = $this->insertExtra(
             'Mailmotor',
-            'block',
+            ModuleExtraType::block(),
             'UnsubscribeForm',
             'Unsubscribe',
             null,
             'N',
             3002
         );
-        $widgetSubscribeFormID = $this->insertExtra(
+        $this->insertExtra(
             'Mailmotor',
-            'widget',
+            ModuleExtraType::widget(),
             'SubscribeForm',
             'Subscribe',
             null,
@@ -184,7 +185,7 @@ class Installer extends ModuleInstaller
         // get search extra id
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
-            array('Search', 'widget', 'Form')
+            array('Search', ModuleExtraType::WIDGET, 'Form')
         );
 
         // loop languages
@@ -231,9 +232,6 @@ class Installer extends ModuleInstaller
     {
         // add 'blog' as a module
         $this->addModule('Mailmotor');
-
-        // get email from the session
-        $email = \SpoonSession::exists('email') ? \SpoonSession::get('email') : null;
 
         // get from/replyTo Core settings
         $from = $this->getSetting('Core', 'mailer_from');

@@ -7,9 +7,17 @@
  * file that was distributed with this source code.
  */
 
+trigger_error(
+    'This script is deprecated
+     If you want to convert a spoon template to twig its better to take a look at
+     https://github.com/Thijzer/ConverterCollection or http://spoon2twig.jessedobbelae.re/',
+    E_USER_DEPRECATED
+);
 /**
  * The Spoon2Twig Convert is a command line file converter
  * to rebuild your old templates to new twig compatible templates
+ *
+ * @deprecated
  */
 class spoon2twig
 {

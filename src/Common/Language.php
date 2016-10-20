@@ -2,21 +2,36 @@
 
 namespace Common;
 
+use Common\Core\Model;
+use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
+use Symfony\Component\Translation\IdentityTranslator;
 
 /**
  * This class will make it possible to have 1 function to get the correct language class.
  * This is useful for when you want to use the same code in the Back- and Frontend.
  * For instance in a trait.
+ *
+ * @TODO switch our translation system to completely work with symfony instead of overriding methods to make it run
+ * on our system
  */
-final class Language
+final class Language extends IdentityTranslator
 {
     /**
      * @return string
      */
     public static function get()
     {
-        return APPLICATION . '\Core\Language\Language';
+        $application = 'Backend';
+
+        if (Model::has('request')
+            && Model::get('request')->attributes->has('_route')
+            && stripos(Model::get('request')->attributes->get('_route'), 'frontend') === 0
+        ) {
+            $application = 'Frontend';
+        }
+
+        return $application . '\Core\Language\Language';
     }
 
     /**
@@ -96,5 +111,41 @@ final class Language
     public static function msg($key)
     {
         return self::callLanguageFunction('msg', [$key]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function trans($id, array $parameters = [], $domain = null, $locale = null)
+    {
+        $possibleActions = ['lbl', 'err', 'msg'];
+        if (self::get() === FrontendLanguage::class) {
+            $possibleActions[] = 'act';
+        }
+
+        if (!preg_match('/(' . implode('|', $possibleActions) . ')./', $id)) {
+            return parent::trans($id, $parameters, $domain, $locale);
+        }
+
+        list($action, $string) = explode('.', $id, 2);
+
+        if (!in_array($action, $possibleActions)) {
+            return parent::trans($id, $parameters, $domain, $locale);
+        }
+
+        $translatedString = self::$action($string);
+
+        // we couldn't translate it, let the parent have a go
+        if (preg_match('/\{\$' . $action . '.*' . $string . '\}/', $translatedString)) {
+            $parentTranslatedString = parent::trans($id, $parameters, $domain, $locale);
+            // If the parent couldn't translate return our default
+            if ($id === $parentTranslatedString) {
+                return $translatedString;
+            }
+
+            return $parentTranslatedString;
+        }
+
+        return $translatedString;
     }
 }

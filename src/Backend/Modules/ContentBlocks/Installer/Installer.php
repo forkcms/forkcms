@@ -24,7 +24,7 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // add the schema of the entity to the database
-        Model::get('entity.create_schema')->forEntityClass(ContentBlock::class);
+        Model::get('fork.entity.create_schema')->forEntityClass(ContentBlock::class);
 
         // add 'content_blocks' as a module
         $this->addModule('ContentBlocks');

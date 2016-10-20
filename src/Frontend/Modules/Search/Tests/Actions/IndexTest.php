@@ -19,7 +19,7 @@ class IndexTest extends WebTestCase
         );
 
         $client->request('GET', '/en/search');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -30,13 +30,13 @@ class IndexTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/en/search');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
 
         // result should not yet be found
-        $this->assertEquals(
+        self::assertEquals(
             0,
             $crawler->filter('html:contains("Blogpost for functional tests")')->count()
         );
@@ -47,7 +47,7 @@ class IndexTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/en/search');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -58,7 +58,7 @@ class IndexTest extends WebTestCase
         $this->submitForm($client, $form, array('form' => 'search'));
 
         // result should not yet be found
-        $this->assertContains(
+        self::assertContains(
             'The searchterm is required.',
             $client->getResponse()->getContent()
         );
@@ -69,7 +69,7 @@ class IndexTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/en/search');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -83,7 +83,7 @@ class IndexTest extends WebTestCase
         ));
 
         // result should not yet be found
-        $this->assertContains(
+        self::assertContains(
             'Blogpost for functional tests',
             $client->getResponse()->getContent()
         );

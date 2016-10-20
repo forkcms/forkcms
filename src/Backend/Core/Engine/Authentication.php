@@ -230,10 +230,10 @@ class Authentication
         $alwaysAllowed = self::getAlwaysAllowed();
 
         // grab the URL from the reference
-        $URL = BackendModel::get('url');
+        $url = BackendModel::get('url');
 
-        $action = ($action !== null) ? (string) $action : $URL->getAction();
-        $module = \SpoonFilter::toCamelCase(($module !== null) ? (string) $module : $URL->getModule());
+        $action = ($action !== null) ? (string) $action : $url->getAction();
+        $module = \SpoonFilter::toCamelCase(($module !== null) ? (string) $module : $url->getModule());
 
         // is this action an action that doesn't require authentication?
         if (isset($alwaysAllowed[$module][$action])) {
@@ -256,9 +256,9 @@ class Authentication
         $allowedActions = self::getAllowedActions();
 
         // do we know a level for this action
-        if (isset(self::$allowedActions[$module][$action])) {
+        if (isset($allowedActions[$module][$action])) {
             // is the level greater than zero? aka: do we have access?
-            if ((int) self::$allowedActions[$module][$action] > 0) {
+            if ((int) $allowedActions[$module][$action] > 0) {
                 return true;
             }
         }
@@ -445,6 +445,7 @@ class Authentication
 
             // update/instantiate the value for the logged_in container.
             BackendModel::getContainer()->set('logged_in', true);
+            self::$user = new User($userId);
 
             // return result
             return true;

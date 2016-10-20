@@ -54,8 +54,8 @@ class Ajax extends Base\Object implements \ApplicationInterface
 
         try {
             // create URL instance, since the template modifiers need this object
-            $URL = new Url($this->getKernel());
-            $URL->setModule($module);
+            $url = new Url($this->getKernel());
+            $url->setModule($module);
 
             $this->setModule($module);
             $this->setAction($action);

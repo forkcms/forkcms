@@ -321,14 +321,14 @@ class Model extends \Common\Core\Model
      * @param string $permaLink The permanent location of the entry the comment was submitted to.
      * @param string $author    Commenter's name.
      * @param string $email     Commenter's email address.
-     * @param string $URL       Commenter's URL.
+     * @param string $url       Commenter's URL.
      * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
      *
      * @return bool|string Will return a boolean, except when we can't decide the status
      *                          (unknown will be returned in that case)
      * @throws \Exception
      */
-    public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
+    public static function isSpam($content, $permaLink, $author = null, $email = null, $url = null, $type = 'comment')
     {
         // get some settings
         $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
@@ -348,7 +348,7 @@ class Model extends \Common\Core\Model
         // try it, to decide if the item is spam
         try {
             // check with Akismet if the item is spam
-            return $akismet->isSpam($content, $author, $email, $URL, $permaLink, $type);
+            return $akismet->isSpam($content, $author, $email, $url, $permaLink, $type);
         } catch (\Exception $e) {
             // in debug mode we want to see exceptions, otherwise the fallback will be triggered
             if (self::getContainer()->getParameter('kernel.debug')) {
