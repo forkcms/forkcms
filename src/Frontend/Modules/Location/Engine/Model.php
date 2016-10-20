@@ -157,16 +157,15 @@ class Model
         if (file_exists($path . '/Themes/' . FrontendTheme::getTheme() . '/Modules/' . $jsFile)) {
             if ($backend) {
                 return $moveToPath . '/' . $path . '/Themes/' . FrontendTheme::getTheme() . '/Modules/' . $jsFile;
-            } else {
-                return '/' . $path . '/Themes/' . FrontendTheme::getTheme() . '/Modules/' . $jsFile;
             }
-        // Otherwise use default
-        } else {
-            if ($backend) {
-                return $moveToPath . '/' . $path . '/Modules/' . $jsFile;
-            } else {
-                return '/' . $path . '/Modules/' . $jsFile;
-            }
+
+            return '/' . $path . '/Themes/' . FrontendTheme::getTheme() . '/Modules/' . $jsFile;
         }
+
+        if ($backend) {
+            return $moveToPath . '/' . $path . '/Modules/' . $jsFile;
+        }
+
+        return '/' . $path . '/Modules/' . $jsFile;
     }
 }
