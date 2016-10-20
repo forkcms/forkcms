@@ -12,8 +12,8 @@
             <table id="box" border="0" cellpadding="0" cellspacing="0" width="580">
               <tr>
                 <td colspan="3">
-                  <a href="{$siteURL}" border="0">
-                    <img src="{$siteURL}/src/Backend/Modules/Mailmotor/Templates/nl/default/images/newsletter_header.gif" width="580" height="108" alt="" border="0" />
+                  <a href="{{ siteURL }}" border="0">
+                    <img src="{{ siteURL }}/src/Backend/Modules/Mailmotor/Templates/nl/default/images/newsletter_header.gif" width="580" height="108" alt="" border="0" />
                   </a>
                 </td>
               </tr>
@@ -27,7 +27,7 @@
                 <td width="532">
                   <!-- editor -->
                     <textarea id="contentHtml" name="content_html" cols="62" rows="5" class="inputEditorNewsletter">
-                      {$contentHtml}
+                      {{ contentHtml|raw }}
                     </textarea>
                   <!-- /editor -->
                 </td>
@@ -47,7 +47,7 @@
         </tr>
         <tr>
           <td colspan="3">
-            <p><small>Wens je deze nieuwsbrief niet meer te ontvangen? <a id="unsubscribeURL" href="#">Schrijf je uit</a> op de website.</small></p>
+            <p><small>Do you no longer wish to receive this newsletter? <a id="unsubscribeURL" href="#">Unsubscribe</a> on our website.</small></p>
           </td>
         </tr>
         <tr>

@@ -3,7 +3,7 @@
     <td>
       <!-- editor -->
         <textarea id="contentHtml" name="content_html" cols="62" rows="5" class="inputEditorNewsletter">
-          {$contentHtml}
+          {{ contentHtml|raw }}
         </textarea>
       <!-- /editor -->
     </td>
@@ -14,7 +14,7 @@
   </tr>
   <tr>
     <td>
-      <p><small>Ne voulez-vous plus recevoir ce bulletin d'email? <a id="unsubscribeURL" href="#">D&eacute;sinscrivez-vous</a> sur notre site web.</small></p>
+      <p><small>Do you no longer wish to receive this newsletter? <a id="unsubscribeURL" href="#">Unsubscribe</a> on our website.</small></p>
     </td>
   </tr>
 </table>

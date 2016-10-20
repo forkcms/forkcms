@@ -23,7 +23,7 @@
 
   <script type="text/javascript">
     //<![CDATA[
-    {{ jsData }}
+    {{ jsData|raw }}
 
     // reports
     $(function()
@@ -35,8 +35,7 @@
       {% if errorMessage %}jsBackend.messages.add('danger', '{{ errorMessage|addslashes }}');{% endif %}
     });
 
-    var variables = [];
-    variables =
+    var variables =
     {
       mailingId: '{{ mailing.id }}',
       templateCSSPath: '{{ template.path_css }}',
@@ -52,6 +51,6 @@
   </script>
 </head>
 <body id="content" class="edit addEdit">
-{{ templateHtml }}
+{{ templateHtml|raw }}
 </body>
 </html>
