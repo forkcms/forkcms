@@ -445,6 +445,7 @@ class Authentication
 
             // update/instantiate the value for the logged_in container.
             BackendModel::getContainer()->set('logged_in', true);
+            self::$user = new User($userId);
 
             // return result
             return true;

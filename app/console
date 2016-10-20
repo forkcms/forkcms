@@ -11,6 +11,7 @@ require_once __DIR__ . '/../autoload.php';
 require_once __DIR__ . '/AppKernel.php';
 require_once __DIR__ . '/BaseModel.php';
 
+use Common\ModulesSettings;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
@@ -40,5 +41,14 @@ $backend = new BackendInit($kernel);
 $backend->initialize('Console');
 
 $application = new Application($kernel);
-$application->add(new \Common\Command\ImportLocaleCommand());
+$application->add(new \Console\Locale\ImportLocaleCommand());
+if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
+    $application->add(
+        new \Console\Locale\EnableLocaleCommand(
+            $kernel->getContainer()->get('fork.settings'),
+            $kernel->getContainer()->getParameter('installed_modules'),
+            $kernel->getContainer()->getParameter('site.multilanguage')
+        )
+    );
+}
 $application->run($input);
