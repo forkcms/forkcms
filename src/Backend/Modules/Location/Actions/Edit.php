@@ -93,7 +93,7 @@ class Edit extends BackendBaseActionEdit
             $this->settings['width'] = $settings['width_widget'];
             $this->settings['height'] = $settings['height_widget'];
             $this->settings['map_type'] = $settings['map_type_widget'];
-            $this->settings['map_style'] = (isset($settings['map_style_widget'])) ? $settings['map_style_widget'] : 'standard';
+            $this->settings['map_style'] = isset($settings['map_style_widget']) ? $settings['map_style_widget'] : 'standard';
             $this->settings['zoom_level'] = $settings['zoom_level_widget'];
             $this->settings['center']['lat'] = $this->record['lat'];
             $this->settings['center']['lng'] = $this->record['lng'];
