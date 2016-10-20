@@ -158,8 +158,7 @@ class Edit extends BackendBaseActionEdit
         $this->settingsForm->addDropdown(
             'map_style',
             $mapStyles,
-            (isset($this->settings['map_style']))
-                ? $this->settings['map_style'] : null
+            isset($this->settings['map_style']) ? $this->settings['map_style'] : null
         );
         $this->settingsForm->addCheckbox('full_url', $this->settings['full_url']);
         $this->settingsForm->addCheckbox('directions', $this->settings['directions']);
