@@ -149,7 +149,7 @@ class TwigTemplate extends BaseTwigTemplate
         );
 
         // check on url object
-        if(class_exists('url')) {
+        if (class_exists('url')) {
 
             $url = Model::get('url');
 
@@ -391,7 +391,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->assign('timestamp', time());
 
         // check on url object
-        if(class_exists('url')) {
+        if (class_exists('url')) {
 
             // assign body ID
             $url = Model::get('url');
