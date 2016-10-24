@@ -241,7 +241,8 @@ class Model
                  FROM faq_categories AS i
                  LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND i.language = p.language
                  WHERE i.language = ?
-                 GROUP BY i.id',
+                 GROUP BY i.id
+                 ORDER BY i.sequence',
                 array(BL::getWorkingLanguage())
             );
         }
