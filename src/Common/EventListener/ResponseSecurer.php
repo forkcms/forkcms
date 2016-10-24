@@ -14,13 +14,16 @@ class ResponseSecurer
      */
     public function onKernelResponse(FilterResponseEvent $event)
     {
-        // provides clickjacking protection
-        $event->getResponse()->headers->set('X-Frame-Options', 'deny');
+        $headers = [
+            'X-Frame-Options' => 'deny',
+            'X-XSS-Protection' => '1; mode=block',
+            'X-Content-Type-Options' => 'nosniff',
+        ];
 
-        // enables the XSS filter built into most recent browsers
-        $event->getResponse()->headers->set('X-XSS-Protection', '1; mode=block');
-
-        // prevents IE and Chrome from MIME-sniffing
-        $event->getResponse()->headers->set('X-Content-Type-Options', 'nosniff');
+        foreach ($headers as $header => $value) {
+            if (!$event->getResponse()->headers->has($header)) {
+                $event->getResponse()->headers->set($header, $value);
+            }
+        }
     }
 }

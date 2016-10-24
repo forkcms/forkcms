@@ -10,21 +10,21 @@ final class UpdateContentBlock
     /**
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="err.FieldIsRequired")
      */
     public $title;
 
     /**
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="err.FieldIsRequired")
      */
     public $template = ContentBlock::DEFAULT_TEMPLATE;
 
     /**
      * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="err.FieldIsRequired")
      */
     public $text;
 

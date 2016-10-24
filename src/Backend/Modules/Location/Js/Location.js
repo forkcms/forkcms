@@ -5,8 +5,8 @@ jsBackend.location =
 {
 	// base values
 	bounds: null, center: null, centerLat: null, centerLng: null, height: null,
-	map: null, mapId: null, showDirections: false, showLink: false, showOverview: true,
-	type: null, width: null, zoomLevel: null,
+	map: null, mapId: null, panorama: null, showDirections: false, showLink: false, showOverview: true,
+	type: null, style: null, width: null, zoomLevel: null,
 
 	init: function()
 	{
@@ -22,6 +22,7 @@ jsBackend.location =
 			// if the zoom level or map type changes in the dropdown, the map needs to change
 			$('#zoomLevel').bind('change', function() { jsBackend.location.setMapZoom($('#zoomLevel').val()); });
 			$('#mapType').bind('change', jsBackend.location.setMapTerrain);
+			$('#mapStyle').bind('change', jsBackend.location.setMapStyle);
 
 			// the panning save option
 			$('#saveLiveData').bind('click', function(e)
@@ -35,6 +36,13 @@ jsBackend.location =
 		}
 	},
 
+	/**
+	 * Add marker to the map
+	 *
+	 * @param object map
+	 * @param object bounds
+	 * @param object object
+	 */
 	addMarker: function(map, bounds, object)
 	{
 		position = new google.maps.LatLng(object.lat, object.lng);
@@ -70,11 +78,15 @@ jsBackend.location =
 		});
 	},
 
+	/**
+	 * Get map data
+	 */
 	getMapData: function()
 	{
 		// get the live data
 		jsBackend.location.zoomLevel = jsBackend.location.map.getZoom();
 		jsBackend.location.type = jsBackend.location.map.getMapTypeId();
+		jsBackend.location.style = jsBackend.location.getMapStyle();
 		jsBackend.location.center = jsBackend.location.map.getCenter();
 		jsBackend.location.centerLat = jsBackend.location.center.lat();
 		jsBackend.location.centerLng = jsBackend.location.center.lng();
@@ -89,6 +101,35 @@ jsBackend.location =
 		jsBackend.location.showOverview = ($('#markerOverview').attr('checked') == 'checked');
 	},
 
+	/**
+	 * Panorama visibility changed
+	 */
+	panoramaVisibilityChanged: function(e)
+	{
+		// panorama is now invisible
+		if(!jsBackend.location.panorama.getVisible())
+		{
+			// select default map type
+			$('#mapType option:first-child').attr("selected", "selected");
+
+			// set map terrain
+			jsBackend.location.setMapTerrain();
+		}
+	},
+
+	/**
+	 * Refresh page refresh the page and display a certain message
+	 *
+	 * @param string message
+	 */
+	/**
+	 * Get map style
+	 */
+	getMapStyle: function()
+	{
+		return $('#mapStyle').find('option:selected').val();
+	},
+
 	// this will refresh the page and display a certain message
 	refreshPage: function(message)
 	{
@@ -100,6 +141,9 @@ jsBackend.location =
 		window.location = reloadLocation;
 	},
 
+	/**
+	 * Save live data will save the setting in database
+	 */
 	saveLiveData: function()
 	{
 		$.ajax(
@@ -109,6 +153,7 @@ jsBackend.location =
 				fork: { module: 'Location', action: 'SaveLiveLocation' },
 				zoom: jsBackend.location.zoomLevel,
 				type: jsBackend.location.type,
+				style: jsBackend.location.style,
 				centerLat: jsBackend.location.centerLat,
 				centerLng: jsBackend.location.centerLng,
 				height: jsBackend.location.height,
@@ -136,28 +181,65 @@ jsBackend.location =
 		});
 	},
 
-	// this will set the terrain type of the map to the dropdown
+	/**
+	 * Set dropdown terrain will set the terrain type of the map to the dropdown
+	 */
 	setDropdownTerrain: function()
 	{
 		jsBackend.location.getMapData();
 		$('#mapType').val(jsBackend.location.type.toUpperCase());
 	},
 
-	// this will set the zoom level of the map to the dropdown
+	/**
+	 * Set dropdown zoom will set the zoom level of the map to the dropdown
+	 */
 	setDropdownZoom: function()
 	{
 		jsBackend.location.getMapData();
 		$('#zoomLevel').val(jsBackend.location.zoomLevel);
 	},
 
-	// this will set the terrain type of the map to the dropdown
-	setMapTerrain: function()
+	// this will set the theme style of the map to the dropdown
+	setMapStyle: function()
 	{
-		jsBackend.location.type = $('#mapType').val();
-		jsBackend.location.map.setMapTypeId(jsBackend.location.type.toLowerCase());
+		jsBackend.location.style = $('#mapStyle').val();
+		jsBackend.location.map.setOptions({'styles': MAPS_CONFIG[jsBackend.location.style]});
 	},
 
-	// this will set the zoom level of the map to the dropdown
+  /**
+   * Set map terrain will set the terrain type of the map to the dropdown
+   */
+	setMapTerrain: function()
+	{
+		// init previous type
+		var previousType = jsBackend.location.type.toLowerCase();
+
+		// redefine type
+		jsBackend.location.type = $('#mapType').val().toLowerCase();
+
+		// do something when we have street view
+		if(previousType == 'street_view' || jsBackend.location.type == 'street_view')
+		{
+			// init showPanorama if not yet initialised
+			if(jsBackend.location.panorama == null)
+			{
+				// init panorama street view
+				jsBackend.location.showPanorama();
+			}
+
+			// toggle visiblity
+			jsBackend.location.panorama.setVisible((jsBackend.location.type == 'street_view'));
+		}
+
+		// set map type
+		jsBackend.location.map.setMapTypeId(jsBackend.location.type);
+	},
+
+	/**
+	 * Set map zoom will set the zoom level of the map to the dropdown
+	 *
+	 * @param int zoomlevel
+	 */
 	setMapZoom: function(zoomlevel)
 	{
 		jsBackend.location.zoomLevel = zoomlevel;
@@ -167,20 +249,34 @@ jsBackend.location =
 		else jsBackend.location.map.setZoom(parseInt(zoomlevel));
 	},
 
+	/**
+	 * Show map
+	 */
 	showMap: function()
 	{
 		// create boundaries
 		jsBackend.location.bounds = new google.maps.LatLngBounds();
 
-		// set options
+		// define type if not already set
+		if(jsBackend.location.type == null) jsBackend.location.type = mapOptions.type;
+
+		// define options
 		var options =
 		{
 			center: new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng),
-			mapTypeId: eval('google.maps.MapTypeId.' + mapOptions.type)
+			mapTypeId: eval('google.maps.MapTypeId.' + jsBackend.location.type),
+      styles: MAPS_CONFIG[mapOptions.style]
 		};
 
 		// create map
 		jsBackend.location.map = new google.maps.Map(document.getElementById('map'), options);
+
+		// we want street view
+		if(jsBackend.location.type == 'STREET_VIEW')
+		{
+			jsBackend.location.showPanorama();
+			jsBackend.location.panorama.setVisible(true);
+		}
 
 		// loop the markers
 		for(var i in markers)
@@ -193,7 +289,33 @@ jsBackend.location =
 		jsBackend.location.setMapZoom(mapOptions.zoom);
 	},
 
-	// this will re-set the position of a marker
+	/**
+	 * Show panorama - adds panorama to the map
+	 */
+	showPanorama: function()
+	{
+		// get street view data from map
+		jsBackend.location.panorama = jsBackend.location.map.getStreetView();
+
+		// define position
+		jsBackend.location.panorama.setPosition(new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng));
+
+		// define heading (horizontal °) and pitch (vertical °)
+		jsBackend.location.panorama.setPov({
+			heading: 200,
+			pitch: 8,
+			zoom: 1
+		});
+
+		// bind event listeners (possible functions: pano_changed, position_changed, pov_changed, links_changed, visible_changed)
+		google.maps.event.addListener(jsBackend.location.panorama, 'visible_changed', jsBackend.location.panoramaVisibilityChanged);
+	},
+
+	/**
+	 * Update marker will re-set the position of a marker
+	 *
+	 * @param object marker
+	 */
 	updateMarker: function(marker)
 	{
 		jsBackend.location.getMapData();

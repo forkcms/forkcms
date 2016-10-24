@@ -20,7 +20,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             $this->getModulesSettingsMock()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             1,
             $connector->getPageViews(
                 strtotime('-1 day', mktime(0, 0, 0)),
@@ -37,7 +37,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             $this->getModulesSettingsMock()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             2,
             $connector->getVisitors(
                 strtotime('-1 day', mktime(0, 0, 0)),
@@ -54,7 +54,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             $this->getModulesSettingsMock()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             3.14,
             $connector->getPagesPerVisit(
                 strtotime('-1 day', mktime(0, 0, 0)),
@@ -71,7 +71,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             $this->getModulesSettingsMock()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             1.02,
             $connector->getTimeOnSite(
                 strtotime('-1 day', mktime(0, 0, 0)),
@@ -88,7 +88,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             $this->getModulesSettingsMock()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             78.23,
             $connector->getNewSessionsPercentage(
                 strtotime('-1 day', mktime(0, 0, 0)),
@@ -105,7 +105,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             $this->getModulesSettingsMock()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             23.25,
             $connector->getBounceRate(
                 strtotime('-1 day', mktime(0, 0, 0)),
@@ -124,7 +124,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             $this->getModulesSettingsMock()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             array(
                 array(
                     'ga_date' => '1431295200',
@@ -152,7 +152,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             $this->getModulesSettingsMock()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             array(
                 array(
                     'ga_medium' => '(none)',
@@ -178,7 +178,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             $this->getModulesSettingsMock()
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             array(
                 array(
                     'ga_pagePath' => '/en',
@@ -259,7 +259,7 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
         );
 
         $dataGateway->method('get')
-            ->will($this->onConsecutiveCalls(
+            ->will(self::onConsecutiveCalls(
                 $metricsReturnMock,
                 $visitGraphDataMock,
                 $pageViewsDataMock,

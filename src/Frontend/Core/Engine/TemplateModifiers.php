@@ -137,19 +137,17 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Get a given field for a page-record
-     *    syntax: {{ getpageinfo($pageId, $field, $language) }}
+     *    syntax: {{ $pageId|getpageinfo($field) }}
      *
      * @param int    $pageId   The id of the page to build the URL for.
      * @param string $field    The field to get.
-     * @param string $language The language to use, if not provided we will use the loaded language.
      *
      * @return string
      */
-    public static function getPageInfo($pageId, $field = 'title', $language = null)
+    public static function getPageInfo($pageId, $field = 'title')
     {
         // redefine
         $field = (string) $field;
-        $language = ($language !== null) ? (string) $language : null;
 
         // get page
         $page = Navigation::getPageInfo((int) $pageId);
@@ -329,24 +327,24 @@ class TemplateModifiers extends BaseTwigModifiers
     {
         // create new widget instance and return parsed content
         $extra = FrontendBlockWidget::getForId(
-            Model::get('kernel'),
+            FrontendModel::get('kernel'),
             $module,
             $action,
             $id
         );
 
         // set parseWidget because we will need it to skip setting headers in the display
-        Model::getContainer()->set('parseWidget', true);
+        FrontendModel::getContainer()->set('parseWidget', true);
 
         try {
             $extra->execute();
             $content = $extra->getContent();
-            Model::getContainer()->set('parseWidget', null);
+            FrontendModel::getContainer()->set('parseWidget', null);
 
             return $content;
         } catch (Exception $e) {
             // if we are debugging, we want to see the exception
-            if (Model::getContainer()->getParameter('kernel.debug')) {
+            if (FrontendModel::getContainer()->getParameter('kernel.debug')) {
                 throw $e;
             }
 
@@ -409,28 +407,6 @@ class TemplateModifiers extends BaseTwigModifiers
 
         // return
         return (string) $user->getSetting($setting);
-    }
-
-    /**
-     * Translate a string.
-     *    syntax {{ $string|trans }}
-     *
-     * @param string $string The string that you want to apply this method on.
-     *
-     * @return string The string, to translate.
-     */
-    public static function trans($string)
-    {
-        if (strpos($string, '.') === false) {
-            return $string;
-        }
-        list($action, $string) = explode('.', $string);
-
-        if (!in_array($action, array('lbl', 'act', 'err', 'msg'))) {
-            return $string;
-        }
-
-        return Language::$action($string);
     }
 
     /**

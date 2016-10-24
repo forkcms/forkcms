@@ -18,7 +18,7 @@ class DetailTest extends WebTestCase
         );
 
         $crawler = $client->request('GET', '/en/blog');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -26,15 +26,15 @@ class DetailTest extends WebTestCase
         $link = $crawler->selectLink('Blogpost for functional tests')->link();
         $crawler = $client->click($link);
 
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/en/blog/detail/blogpost-for-functional-tests',
             $client->getHistory()->current()->getUri()
         );
-        $this->assertStringStartsWith(
+        self::assertStringStartsWith(
             'Blogpost for functional tests',
             $crawler->filter('title')->text()
         );

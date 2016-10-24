@@ -50,8 +50,8 @@ class Breadcrumb extends FrontendBaseObject
         // loop pages
         while (!empty($pages)) {
             // init vars
-            $URL = implode('/', $pages);
-            $menuId = Navigation::getPageId($URL);
+            $url = implode('/', $pages);
+            $menuId = Navigation::getPageId($url);
             $pageInfo = Navigation::getPageInfo($menuId);
 
             // do we know something about the page
@@ -88,11 +88,11 @@ class Breadcrumb extends FrontendBaseObject
      * Add an element
      *
      * @param string $title The label that will be used in the breadcrumb.
-     * @param string $URL   The URL for this item.
+     * @param string $url   The URL for this item.
      */
-    public function addElement($title, $URL = null)
+    public function addElement($title, $url = null)
     {
-        $this->items[] = array('title' => (string) $title, 'url' => $URL);
+        $this->items[] = array('title' => (string) $title, 'url' => $url);
     }
 
     /**

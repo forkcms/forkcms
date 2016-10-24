@@ -11,6 +11,7 @@ require_once __DIR__ . '/../autoload.php';
 require_once __DIR__ . '/AppKernel.php';
 require_once __DIR__ . '/BaseModel.php';
 
+use Common\ModulesSettings;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
@@ -21,7 +22,7 @@ $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?:
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
 
 // Fork has not yet been installed
-$parametersFile = dirname(__FILE__) . '/config/parameters.yml';
+$parametersFile = __DIR__ . '/config/parameters.yml';
 if (!file_exists($parametersFile)) {
     $env = 'install';
 }
@@ -40,5 +41,14 @@ $backend = new BackendInit($kernel);
 $backend->initialize('Console');
 
 $application = new Application($kernel);
-$application->add(new \Common\Command\ImportLocaleCommand());
+$application->add(new \Console\Locale\ImportLocaleCommand());
+if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
+    $application->add(
+        new \Console\Locale\EnableLocaleCommand(
+            $kernel->getContainer()->get('fork.settings'),
+            $kernel->getContainer()->getParameter('installed_modules'),
+            $kernel->getContainer()->getParameter('site.multilanguage')
+        )
+    );
+}
 $application->run($input);

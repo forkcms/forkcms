@@ -18,7 +18,7 @@ class DetailTest extends WebTestCase
         );
 
         $crawler = $client->request('GET', '/en/faq');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -26,15 +26,15 @@ class DetailTest extends WebTestCase
         $link = $crawler->selectLink('Is this a working test?')->link();
         $crawler = $client->click($link);
 
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/en/faq/detail/is-this-a-working-test',
             $client->getHistory()->current()->getUri()
         );
-        $this->assertStringStartsWith(
+        self::assertStringStartsWith(
             'Is this a working test?',
             $crawler->filter('title')->text()
         );

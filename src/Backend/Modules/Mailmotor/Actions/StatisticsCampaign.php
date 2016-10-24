@@ -79,7 +79,7 @@ class StatisticsCampaign extends BackendBaseActionIndex
         $this->campaign = BackendMailmotorModel::getCampaign($this->id);
 
         // fetch the statistics
-        $this->statistics = BackendMailmotorCMHelper::getStatisticsByCampaignID($this->id, true);
+        $this->statistics = BackendMailmotorCMHelper::getStatisticsByCampaignID($this->id);
 
         // no stats found
         if ($this->statistics === false || empty($this->statistics)) {

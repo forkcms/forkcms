@@ -20,6 +20,9 @@ doctrine:
         types:
             enum_bool: Common\Doctrine\Type\EnumBoolType
             locale: Common\Doctrine\Type\LocaleType
+            datetime: Common\Doctrine\Type\UTCDateTimeType
+            datetimetz: Common\Doctrine\Type\UTCDateTimeType
+            time: Common\Doctrine\Type\UTCDateTimeType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -27,13 +30,31 @@ doctrine:
             default:
                 connection: default
                 auto_mapping: true
+                mappings:
+                    common:
+                        type: annotation
+                        is_bundle: false
+                        dir: %kernel.root_dir%/../src/Common/Doctrine/Entity
+                        alias: Common
+                        prefix: Common\Doctrine\Entity
 
 doctrine_orm_bridge:
     entity_manager: default
     connection: default
 
 services:
-    entity.create_schema:
+    fork.entity.create_schema:
         class: Common\Doctrine\Entity\CreateSchema
         arguments:
             - "@doctrine.orm.entity_manager"
+    entity.create_schema:
+        deprecated: The service %service_id% is deprecated and is replaced by fork.entity.create_schema
+        class: Common\Doctrine\Entity\CreateSchema
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    fork.repository.meta:
+        class: Common\Doctrine\Repository\MetaRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Common\Doctrine\Entity\Meta

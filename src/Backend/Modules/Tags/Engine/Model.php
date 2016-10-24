@@ -176,14 +176,14 @@ class Model
     /**
      * Get a unique URL for a tag
      *
-     * @param string $URL The URL to use as a base.
+     * @param string $url The URL to use as a base.
      * @param int    $id  The ID to ignore.
      *
      * @return string
      */
-    public static function getURL($URL, $id = null)
+    public static function getURL($url, $id = null)
     {
-        $URL = CommonUri::getUrl((string) $URL);
+        $url = CommonUri::getUrl((string) $url);
         $language = BL::getWorkingLanguage();
 
         // get db
@@ -197,16 +197,16 @@ class Model
                  FROM tags AS i
                  WHERE i.url = ? AND i.language = ?
                  LIMIT 1',
-                array($URL, $language)
+                array($url, $language)
             );
 
             // there are items so, call this method again.
             if ($number != 0) {
                 // add a number
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new url
-                $URL = self::getURL($URL, $id);
+                $url = self::getURL($url, $id);
             }
         } else {
             // specific id given
@@ -216,20 +216,20 @@ class Model
                  FROM tags AS i
                  WHERE i.url = ? AND i.language = ? AND i.id != ?
                  LIMIT 1',
-                array($URL, $language, $id)
+                array($url, $language, $id)
             );
 
             // there are items so, call this method again.
             if ($number != 0) {
                 // add a number
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new url
-                $URL = self::getURL($URL, $id);
+                $url = self::getURL($url, $id);
             }
         }
 
-        return $URL;
+        return $url;
     }
 
     /**

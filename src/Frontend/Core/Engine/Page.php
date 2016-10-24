@@ -280,13 +280,13 @@ class Page extends FrontendBaseObject
             // validate the child
             if ($firstChildId !== false) {
                 // build URL
-                $URL = Navigation::getURL($firstChildId);
+                $url = Navigation::getURL($firstChildId);
 
                 // redirect
                 throw new RedirectException(
                     'Redirect',
                     new RedirectResponse(
-                        $URL,
+                        $url,
                         301
                     )
                 );

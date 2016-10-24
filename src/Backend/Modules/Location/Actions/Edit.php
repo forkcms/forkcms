@@ -16,6 +16,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\Intl\Intl as Intl;
+use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the edit-action, it will display a form to create a new item
@@ -43,6 +44,7 @@ class Edit extends BackendBaseActionEdit
 
         // does the item exists
         if ($this->id !== null && BackendLocationModel::exists($this->id)) {
+            $this->header->addJS(FrontendLocationModel::getPathToMapStyles(), true);
             parent::execute();
 
             // define Google Maps API key
@@ -91,6 +93,7 @@ class Edit extends BackendBaseActionEdit
             $this->settings['width'] = $settings['width_widget'];
             $this->settings['height'] = $settings['height_widget'];
             $this->settings['map_type'] = $settings['map_type_widget'];
+            $this->settings['map_style'] = isset($settings['map_style_widget']) ? $settings['map_style_widget'] : 'standard';
             $this->settings['zoom_level'] = $settings['zoom_level_widget'];
             $this->settings['center']['lat'] = $this->record['lat'];
             $this->settings['center']['lng'] = $this->record['lng'];
@@ -131,6 +134,13 @@ class Edit extends BackendBaseActionEdit
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
+            'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
+        );
+        $mapStyles = array(
+            'standard' => BL::lbl('Default', $this->getModule()),
+            'custom' => BL::lbl('Custom', $this->getModule()),
+            'gray' => BL::lbl('Gray', $this->getModule()),
+            'blue' => BL::lbl('Blue', $this->getModule()),
         );
 
         $zoomLevels = array_combine(
@@ -146,6 +156,11 @@ class Edit extends BackendBaseActionEdit
         $this->settingsForm->addText('width', $this->settings['width']);
         $this->settingsForm->addText('height', $this->settings['height']);
         $this->settingsForm->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
+        $this->settingsForm->addDropdown(
+            'map_style',
+            $mapStyles,
+            isset($this->settings['map_style']) ? $this->settings['map_style'] : null
+        );
         $this->settingsForm->addCheckbox('full_url', $this->settings['full_url']);
         $this->settingsForm->addCheckbox('directions', $this->settings['directions']);
         $this->settingsForm->addCheckbox('marker_overview', ($this->record['show_overview'] == 'Y'));

@@ -650,9 +650,6 @@ class Model
                 throw new BackendException('The .csv file should have the following columns; "email", "password" and "display_name".');
             }
 
-            // init $insert
-            $values = array();
-
             // define exists
             $exists = self::existsByEmail($item['email']);
 
@@ -716,7 +713,7 @@ class Model
                 $values['starts_on'] = BackendModel::getUTCDate();
 
                 // insert values
-                $id = self::insertProfileGroup($values);
+                self::insertProfileGroup($values);
             }
         }
 

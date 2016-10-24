@@ -74,7 +74,7 @@ class CacheBuilder
             return $item->get();
         }
 
-        list($keys, $navigation) = $this->getData($language);
+        $keys = $this->getData($language)[0];
         $item->set($keys);
         $this->cache->save($item);
 
@@ -93,7 +93,7 @@ class CacheBuilder
             return $item->get();
         }
 
-        list($keys, $navigation) = $this->getData($language);
+        $navigation = $this->getData($language)[1];
         $item->set($navigation);
         $this->cache->save($item);
 
@@ -149,7 +149,7 @@ class CacheBuilder
         // init URLs
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
         $languageURL = ($hasMultiLanguages) ? '/' . $language . '/' : '/';
-        $URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+        $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
         // home is special
         if ($page['id'] == 1) {
@@ -160,7 +160,7 @@ class CacheBuilder
         }
 
         // add it
-        $keys[$page['id']] = trim($URL . '/' . $page['url'], '/');
+        $keys[$page['id']] = trim($url . '/' . $page['url'], '/');
 
         // unserialize
         if (isset($page['meta_data'])) {
@@ -181,7 +181,7 @@ class CacheBuilder
             'has_children' => (bool) ($page['has_children'] == 'Y'),
         );
 
-        $pageData['extra_blocks'] = $this->getPageExtraBlocks($page, $pageData);
+        $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);
         $pageData['tree_type'] = $this->getPageTreeType($page, $pageData);
 
         return $pageData;
@@ -254,7 +254,7 @@ class CacheBuilder
      * @param $page array
      * @return array
      */
-    protected function getPageExtraBlocks($page, $pageData)
+    protected function getPageExtraBlocks($page)
     {
         // add extras to the page array
         if ($page['extra_ids'] !== null) {

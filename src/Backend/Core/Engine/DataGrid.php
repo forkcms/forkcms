@@ -99,7 +99,7 @@ class DataGrid extends \SpoonDataGrid
      * @param string $name     The name for the new column.
      * @param string $label    The label for the column.
      * @param string $value    The value for the column.
-     * @param string $URL      The URL for the link inside the column.
+     * @param string $url      The URL for the link inside the column.
      * @param string $title    A title for the image inside the column.
      * @param string $image    An URL to the image inside the column.
      * @param int    $sequence The sequence for the column.
@@ -108,7 +108,7 @@ class DataGrid extends \SpoonDataGrid
         $name,
         $label = null,
         $value = null,
-        $URL = null,
+        $url = null,
         $title = null,
         $image = null,
         $sequence = null
@@ -126,29 +126,29 @@ class DataGrid extends \SpoonDataGrid
         ) {
             // rebuild value, it should have special markup
             $value =
-                '<a href="' . $URL . '" class="btn btn-default btn-xs pull-right">' .
+                '<a href="' . $url . '" class="btn btn-default btn-xs pull-right">' .
                 ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
                 $value .
                 '</a>';
 
             // reset URL
-            $URL = null;
+            $url = null;
         }
 
         if (in_array($lowercasedName, array('use_revision', 'use_draft'))) {
             // rebuild value, it should have special markup
             $value =
-                '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
+                '<a href="' . $url . '" class="btn btn-default btn-xs">' .
                 ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
                 $value .
                 '</a>';
 
             // reset URL
-            $URL = null;
+            $url = null;
         }
 
         // add the column
-        parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
+        parent::addColumn($name, $label, $value, $url, $title, $image, $sequence);
 
         // known actions
         if (in_array(
@@ -181,7 +181,7 @@ class DataGrid extends \SpoonDataGrid
      * @param string $name             The name for the new column.
      * @param string $label            The label for the column.
      * @param string $value            The value for the column.
-     * @param string $URL              The URL for the link inside the column.
+     * @param string $url              The URL for the link inside the column.
      * @param string $title            The title for the link inside the column.
      * @param array  $anchorAttributes The attributes for the anchor inside the column.
      * @param string $image            An URL to the image inside the column.
@@ -191,7 +191,7 @@ class DataGrid extends \SpoonDataGrid
         $name,
         $label = null,
         $value = null,
-        $URL = null,
+        $url = null,
         $title = null,
         $anchorAttributes = null,
         $image = null,
@@ -214,7 +214,7 @@ class DataGrid extends \SpoonDataGrid
 
         // rebuild value
         $value =
-            '<a href="' . $URL . '"' . $attributes . '>' .
+            '<a href="' . $url . '"' . $attributes . '>' .
             ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
             $value .
             '</a>';
@@ -369,10 +369,10 @@ class DataGrid extends \SpoonDataGrid
                 );
             } else {
                 // get URL
-                $URL = $this->columns[$column]->getURL();
+                $url = $this->columns[$column]->getURL();
 
                 // URL provided?
-                if ($URL != '') {
+                if ($url != '') {
                     // grab current value
                     $currentValue = $this->columns[$column]->getValue();
 
@@ -380,7 +380,7 @@ class DataGrid extends \SpoonDataGrid
                     $this->columns[$column]->setURL(null);
 
                     // set the value
-                    $this->columns[$column]->setValue('<a href="' . $URL . '" class="">' . $currentValue . '</a>');
+                    $this->columns[$column]->setValue('<a href="' . $url . '" class="">' . $currentValue . '</a>');
                 }
 
                 // generate id
@@ -602,15 +602,15 @@ class DataGrid extends \SpoonDataGrid
     /**
      * Sets an URL, optionally only appending the provided piece
      *
-     * @param string $URL    The URL to set.
+     * @param string $url    The URL to set.
      * @param bool   $append Should it be appended to the existing URL.
      */
-    public function setURL($URL, $append = false)
+    public function setURL($url, $append = false)
     {
         if ($append) {
-            parent::setURL(parent::getURL() . $URL);
+            parent::setURL(parent::getURL() . $url);
         } else {
-            parent::setURL($URL);
+            parent::setURL($url);
         }
     }
 

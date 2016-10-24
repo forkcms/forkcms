@@ -252,16 +252,6 @@ class Model
     }
 
     /**
-     * Grab labels found in the backend navigation.
-     *
-     * @return array
-     */
-    private static function getLabelsFromBackendNavigation()
-    {
-        return (array) BackendModel::getContainer()->get('database')->getColumn('SELECT label FROM backend_navigation');
-    }
-
-    /**
      * Get the languages for a multicheckbox.
      *
      * @param bool $includeInterfaceLanguages Should we also get the interfacelanguages?

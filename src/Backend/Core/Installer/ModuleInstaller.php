@@ -14,6 +14,7 @@ use Symfony\Component\Finder\Finder;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Common\ModuleExtraType;
 
 /**
  * The base-class for the installer
@@ -459,7 +460,7 @@ class ModuleInstaller
      * Insert an extra
      *
      * @param string $module   The module for the extra.
-     * @param string $type     The type, possible values are: homepage, widget, block.
+     * @param ModuleExtraType|string $type     The type, possible values are: homepage, widget, block.
      * @param string $label    The label for the extra.
      * @param string $action   The action.
      * @param string $data     Optional data, will be passed in the extra.
@@ -571,7 +572,7 @@ class ModuleInstaller
             'description_overwrite' => ($descriptionOverwrite && $descriptionOverwrite !== 'N' ? 'Y' : 'N'),
             'title' => (string) $title,
             'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
-            'url' => CommonUri::getUrl((string) $url, BackendModel::getContainer()->getParameter('kernel.charset')),
+            'url' => CommonUri::getUrl((string) $url),
             'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
             'custom' => (!is_null($custom) ? (string) $custom : null),
             'data' => (!is_null($data)) ? serialize($data) : null,

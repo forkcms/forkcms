@@ -10,6 +10,7 @@ namespace Backend\Modules\FormBuilder\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the form_builder module
@@ -61,7 +62,7 @@ class Installer extends ModuleInstaller
             'SELECT id
              FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
-            array('search', 'widget', 'form')
+            array('search', ModuleExtraType::WIDGET, 'form')
         );
 
         // loop languages
@@ -140,7 +141,7 @@ class Installer extends ModuleInstaller
             // insert extra
             $extraId = $this->insertExtra(
                 'FormBuilder',
-                'widget',
+                ModuleExtraType::widget(),
                 'FormBuilder',
                 'Form',
                 serialize(

@@ -19,11 +19,11 @@ class IndexTest extends WebTestCase
         );
 
         $client->request('GET', '/en/faq');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Faq for tests',
             $client->getResponse()->getContent()
         );
@@ -34,11 +34,11 @@ class IndexTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/en/faq');
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+        self::assertContains(
             'Is this a working test?',
             $client->getResponse()->getContent()
         );

@@ -26,8 +26,8 @@
                 <div class="form-group">
                   {% form_field mailer_type %} {% form_field_error mailer_type %}
                   <a id="testEmailConnection" href="#">{{ 'msg.SendTestMail'|trans|ucfirst }}</a>
-                  <span id="testEmailConnectionSpinner" style="display: none;">
-                    <img style="margin-top: 3px;" src="/src/Backend/Core/Layout/images/spinner.gif" width="12px" height="12px" alt="loading" />
+                  <span id="testEmailConnectionSpinner" style="display: none; padding-top: 3px;">
+                    <i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i>
                   </span>
                 </div>
                 <span id="testEmailConnectionError" style="display: none;" class="alert alert-danger">{{ 'err.ErrorWhileSendingEmail'|trans }}</span>
