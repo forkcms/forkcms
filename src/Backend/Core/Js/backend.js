@@ -358,7 +358,7 @@ jsBackend.ckeditor =
         extraPlugins: 'stylesheetparser,mediaembed',
 
         // remove useless plugins
-        removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
+        removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools',
 
         // templates
         templates_files: [],
