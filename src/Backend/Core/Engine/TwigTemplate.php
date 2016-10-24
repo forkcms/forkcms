@@ -149,8 +149,7 @@ class TwigTemplate extends BaseTwigTemplate
         );
 
         // check on url object
-        if (class_exists('url')) {
-
+        if (Model::getContainer()->has('url')) {
             $url = Model::get('url');
 
             if ($url instanceof Url) {
@@ -174,7 +173,6 @@ class TwigTemplate extends BaseTwigTemplate
                     );
                 }
             }
-
         }
 
         // is the user object filled?
@@ -391,9 +389,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->assign('timestamp', time());
 
         // check on url object
-        if (class_exists('url')) {
-
-            // assign body ID
+        if (Model::getContainer()->has('url')) {
             $url = Model::get('url');
 
             if ($url instanceof Url) {
