@@ -7,6 +7,9 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Exception;
+use Symfony\Component\Filesystem\Filesystem;
+use ZipArchive;
 
 /**
  * This is the theme upload-action.
@@ -14,10 +17,28 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
  */
 class UploadTheme extends BackendBaseActionAdd
 {
+    const INFO_FILE = 'info.xml';
+    const IGNORE_LIST = ['__MACOSX'];
+
     /**
      * @var array
      */
-    private $information;
+    private $info;
+
+    /**
+     * @var string
+     */
+    private $infoFilePath;
+
+    /**
+     * @var string
+     */
+    private $themeName;
+
+    /**
+     * @var string
+     */
+    private $parentFolderName;
 
     /**
      * Execute the action.
@@ -87,68 +108,45 @@ class UploadTheme extends BackendBaseActionAdd
                 // only zip files allowed
                 if ($fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
                     // create ziparchive instance
-                    $zip = new \ZipArchive();
+                    $zip = new ZipArchive();
 
                     // try and open it
                     if ($zip->open($fileFile->getTempFileName()) === true) {
                         // zip file needs to contain some files
                         if ($zip->numFiles > 0) {
-                            // get first entry (= the theme folder)
-                            $file = $zip->statIndex(0);
+                            $infoXml = $this->findInfoFileInZip($zip);
 
-                            // name of the module we are trying to upload
-                            $themeName = trim($file['name'], '/');
-
-                            // find info.xml
-                            $infoXml = $zip->getFromName($themeName . '/info.xml');
-
-                            // add error if info.xml is not found
+                            // Throw error if info.xml is not found
                             if ($infoXml === false) {
-                                $fileFile->addError(sprintf(BL::getError('NoInformationFile'), $themeName));
-                            } else {
-                                // parse xml
-                                try {
-                                    // load info.xml
-                                    $infoXml = @new \SimpleXMLElement($infoXml, LIBXML_NOCDATA, false);
+                                return $fileFile->addError(sprintf(BL::getError('NoInformationFile')));
+                            }
 
-                                    // convert xml to useful array
-                                    $this->information = BackendExtensionsModel::processThemeXml($infoXml);
+                            // parse xml
+                            try {
+                                // load info.xml
+                                $infoXml = @new \SimpleXMLElement($infoXml, LIBXML_NOCDATA, false);
 
-                                    // empty data (nothing useful)
-                                    if (empty($this->information)) {
-                                        $fileFile->addError(BL::getMessage('InformationFileIsEmpty'));
-                                    }
+                                // convert xml to useful array
+                                $this->info = BackendExtensionsModel::processThemeXml($infoXml);
 
-                                    // check if theme name in info.xml matches folder name
-                                    if ($this->information['name'] != $themeName) {
-                                        $fileFile->addError(BL::err('ThemeNameDoesntMatch'));
-                                    }
-                                } catch (\Exception $e) {
-                                    // warning that the information file is corrupt
-                                    $fileFile->addError(BL::getMessage('InformationFileCouldNotBeLoaded'));
+                                // empty data (nothing useful)
+                                if (empty($this->info)) {
+                                    $fileFile->addError(BL::getMessage('InformationFileIsEmpty'));
                                 }
+
+                                // Define the theme name, based on the info.xml file.
+                                $this->themeName = $this->info['name'];
+                            } catch (Exception $e) {
+                                // warning that the information file is corrupt
+                                $fileFile->addError(BL::getMessage('InformationFileCouldNotBeLoaded'));
                             }
 
                             // wow wow, you are trying to upload an already existing theme
-                            if (BackendExtensionsModel::existsTheme($themeName)) {
-                                $fileFile->addError(sprintf(BL::getError('ThemeAlreadyExists'), $themeName));
+                            if (BackendExtensionsModel::existsTheme($this->themeName)) {
+                                $fileFile->addError(sprintf(BL::getError('ThemeAlreadyExists'), $this->themeName));
                             }
 
-                            // list of validated files (these files will actually be unpacked)
-                            $files = array();
-
-                            // check every file in the zip
-                            for ($i = 0; $i < $zip->numFiles; ++$i) {
-                                // get the file name
-                                $file = $zip->statIndex($i);
-                                $fileName = $file['name'];
-
-                                // yay, in a valid directory
-                                if (mb_stripos($fileName, $themeName . '/') === 0) {
-                                    // valid file, add to extraction-list
-                                    $files[] = $fileName;
-                                }
-                            }
+                            $files = $this->getValidatedFilesList($zip);
                         } else {
                             // empty zip file
                             $fileFile->addError(BL::getError('FileIsEmpty'));
@@ -160,17 +158,122 @@ class UploadTheme extends BackendBaseActionAdd
                 }
             }
 
-            // passed all validation
+            // Passed all validation
             if ($this->frm->isCorrect()) {
-                // unpack module files
-                $zip->extractTo(FRONTEND_PATH . '/Themes', $files);
+                // Unpack the zip. If the files were not found inside a parent directory, we create the theme directory.
+                $themePath = FRONTEND_PATH . '/Themes';
+                if ($this->parentFolderName === null) {
+                    $themePath .= "/{$this->themeName}";
+                }
+                $zip->extractTo($themePath, $files);
 
-                // run installer
-                BackendExtensionsModel::installTheme($themeName);
+                // Rename the original name of the parent folder from the zip to the correct theme foldername.
+                $fs = new Filesystem();
+                $parentZipFolderPath = $themePath . '/' . $this->parentFolderName;
+                if (
+                    $this->parentFolderName !== $this->themeName &&
+                    $this->parentFolderName !== null &&
+                    $fs->exists($parentZipFolderPath)
+                ) {
+                    $fs->rename($parentZipFolderPath, "$themePath/{$this->themeName}");
+                }
 
-                // redirect with fireworks
-                $this->redirect(BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $themeName);
+                // Run installer
+                BackendExtensionsModel::installTheme($this->themeName);
+
+                // Redirect with fireworks
+                $this->redirect(BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $this->themeName);
             }
         }
+    }
+
+    /**
+     * Two ideal situations possible: we have a zip with files including info.xml, or we have a zip with the theme-folder.
+     *
+     * @param ZipArchive $zip
+     * @return string
+     */
+    private function findInfoFileInZip(ZipArchive $zip)
+    {
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            if (mb_stripos($zip->getNameIndex($i), self::INFO_FILE) !== false) {
+                $infoFile = $zip->statIndex($i);
+
+                // Check that the file is not found inside a directory to ignore.
+                if ($this->checkIfPathContainsIgnoredWord($infoFile['name'])) {
+                    continue;
+                }
+
+                $this->infoFilePath = $infoFile['name'];
+                $this->info = $zip->getFromName($infoFile['name']);
+                break;
+            }
+        }
+
+        return $this->info;
+    }
+
+    /**
+     * Create a list of files. These are the files that will actuall be unpacked to the Themes folder.
+     * Either we have a zip that contains 1 parent directory with files inside (directory not necessarily named like
+     * the theme) and we extract those files. Or we have a zip that directly contains the theme files and we should
+     * prepend them with the theme folder.
+     *
+     * @param ZipArchive $zip
+     * @return String[]
+     */
+    private function getValidatedFilesList($zip)
+    {
+        $this->parentFolderName = $this->extractFolderNameBasedOnInfoFile($this->infoFilePath);
+
+        // Check every file in the zip
+        $files = array();
+        for ($i = 0; $i < $zip->numFiles; ++$i) {
+            // Get the file name
+            $file = $zip->statIndex($i);
+            $fileName = $file['name'];
+
+            // We skip all the files that are outside of the theme folder or on the ignore list.
+            if (
+                $this->checkIfPathContainsIgnoredWord($fileName) ||
+                (!empty($this->parentFolderName) && mb_stripos($fileName, $this->parentFolderName) !== 0)
+            ) {
+                continue;
+            }
+
+            $files[] = $fileName;
+        }
+
+        return $files;
+    }
+
+    /**
+     * @param string $infoFilePath
+     * @return string
+     */
+    private function extractFolderNameBasedOnInfoFile($infoFilePath)
+    {
+        $pathParts = explode('/', $infoFilePath);
+
+        if (count($pathParts) > 1) {
+            return $pathParts[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $path
+     * @return bool Path contains a to-be-ignored word.
+     */
+    private function checkIfPathContainsIgnoredWord($path)
+    {
+        foreach(self::IGNORE_LIST as $ignoreItem) {
+            if (mb_stripos($path, $ignoreItem) !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
