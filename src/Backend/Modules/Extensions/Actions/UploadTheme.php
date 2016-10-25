@@ -268,7 +268,7 @@ class UploadTheme extends BackendBaseActionAdd
      */
     private function checkIfPathContainsIgnoredWord($path)
     {
-        foreach(self::IGNORE_LIST as $ignoreItem) {
+        foreach (self::IGNORE_LIST as $ignoreItem) {
             if (mb_stripos($path, $ignoreItem) !== false) {
                 return true;
             }
