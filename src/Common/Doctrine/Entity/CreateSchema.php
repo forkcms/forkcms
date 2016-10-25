@@ -50,22 +50,12 @@ class CreateSchema
                 )
             );
         } catch (TableExistsException $tableExists) {
-            $schemaTool->updateSchema(
-                array_map(
-                    [$this->entityManager, 'getClassMetadata'],
-                    $entityClasses
-                )
-            );
+            // do nothing
         } catch (ToolsException $toolsException) {
             if (!$toolsException->getPrevious() instanceof TableExistsException) {
                 throw $toolsException;
             }
-            $schemaTool->updateSchema(
-                array_map(
-                    [$this->entityManager, 'getClassMetadata'],
-                    $entityClasses
-                )
-            );
+            // do nothing
         }
     }
 }
