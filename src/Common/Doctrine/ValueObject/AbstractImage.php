@@ -52,8 +52,14 @@ abstract class AbstractImage extends AbstractFile
     public function getWebPath($subDirectory = null)
     {
         $file = $this->getAbsolutePath($subDirectory);
+
         if (is_file($file) && file_exists($file)) {
-            return FRONTEND_FILES_URL . '/' . $this->getTrimmedUploadDir() . '/' . $this->fileName;
+            $webPath = FRONTEND_FILES_URL . '/' . $this->getTrimmedUploadDir() . '/';
+            if ($subDirectory !== null) {
+                $webPath .= $subDirectory . '/';
+            }
+
+            return $webPath . $this->fileName;
         }
 
         return static::FALLBACK_IMAGE;
