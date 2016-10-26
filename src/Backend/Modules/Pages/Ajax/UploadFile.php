@@ -45,11 +45,6 @@ class UploadFile extends AjaxAction
      */
     private function getFileContentFromRequest(Request $request)
     {
-        // if our browser support file uploads over xml http, it will be in the request content
-        if ($request->isXmlHttpRequest()) {
-            return $request->getContent();
-        }
-
         // ajax uploaders fallback to submitting a form with the file in the fields.
         $uploadedFiles = $request->files->all();
         if (count($uploadedFiles) === 1) {
@@ -71,11 +66,6 @@ class UploadFile extends AjaxAction
      */
     private function getFileNameFromRequest(Request $request)
     {
-        // if our browser support file uploads over xml http, it will be in the request content
-        if ($request->isXmlHttpRequest()) {
-            return $request->get('file');
-        }
-
         // ajax uploaders fallback to submitting a form with the file in the fields.
         $uploadedFiles = $request->files->all();
         if (count($uploadedFiles) === 1) {
