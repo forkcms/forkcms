@@ -34,7 +34,7 @@ variables that are available:
             <div class="col-md-6">
               <span class="hideText">{{ 'msg.WrittenBy'|trans|capitalize|format('') }} </span>{{ item.user_id|usersetting('nickname' ) }}
               <span class="hideText">{{ 'lbl.On'|trans }}</span>
-              <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s') }}">{{ item.publish_on|date(dateFormatLong,LANGUAGE) }}</time>
+              <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s') }}">{{ item.publish_on|spoondate(dateFormatLong,LANGUAGE) }}</time>
             </div>
             <div class="col-md-6 metaExtra">
               <span class="hideText">{{ 'lbl.InThe'|trans }} </span>{{ 'lbl.Category'|trans }}:
