@@ -271,8 +271,15 @@ class Edit extends BackendBaseActionEdit
                 foreach ($groupItems as $key => $item) {
                     $groups[] = array('label' => $item, 'value' => $key);
                 }
+                // set checked values
+                $checkValues = array();
+                if(!empty(isset($this->record['data']['auth_groups']))){
+                    foreach($this->record['data']['auth_groups'] as $group) {
+                        $checkValues[] = $group;
+                    }
+                }
                 // add multi checkbox
-                $this->frm->addMultiCheckbox('auth_groups', $groups);
+                $this->frm->addMultiCheckbox('auth_groups', $groups,$checkValues);
             }
         }
 

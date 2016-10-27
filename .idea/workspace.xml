@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e56f81d-4baf-4fb2-887b-7b34e5261f4a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.htaccess" afterPath="$PROJECT_DIR$/.htaccess" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php" afterPath="$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Backend/Modules/Pages/Js/Pages.js" afterPath="$PROJECT_DIR$/src/Backend/Modules/Pages/Js/Pages.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig" afterPath="$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig" />
     </list>
     <ignored path="fork.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Edit.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Edit.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1136">
-              <caret line="274" column="57" selection-start-line="274" selection-start-column="46" selection-end-line="274" selection-end-column="57" />
+            <state relative-caret-position="-2080">
+              <caret line="279" column="17" selection-start-line="279" selection-start-column="17" selection-end-line="279" selection-end-column="17" />
               <folding>
                 <element signature="e#221#260#0#PHP" expanded="true" />
               </folding>
@@ -86,13 +83,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Edit.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Edit.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1344">
-              <caret line="261" column="15" selection-start-line="261" selection-start-column="15" selection-end-line="261" selection-end-column="15" />
+            <state relative-caret-position="672">
+              <caret line="247" column="51" selection-start-line="247" selection-start-column="51" selection-end-line="247" selection-end-column="51" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+                <marker date="1477593700885" expanded="true" signature="1216:23505" placeholder="{% block content ...%}" />
+                <marker date="1477593700885" expanded="true" signature="10406:11528" placeholder="{% if authentication ...%}" />
+                <marker date="1477593700885" expanded="true" signature="10839:11426" placeholder="{% if authGroups ...%}" />
+                <marker date="1477593700885" expanded="true" signature="11099:11345" placeholder="{% for item in authGroups ...%}" />
               </folding>
             </state>
           </provider>
@@ -136,8 +137,8 @@
         <option value="$PROJECT_DIR$/.htaccess" />
         <option value="$PROJECT_DIR$/src/Backend/Modules/Pages/Engine/Model.php" />
         <option value="$PROJECT_DIR$/src/Backend/Modules/Pages/Js/Pages.js" />
-        <option value="$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php" />
         <option value="$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig" />
+        <option value="$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php" />
       </list>
     </option>
   </component>
@@ -426,12 +427,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1477584126009</updated>
-      <workItem from="1477584127161" duration="5080000" />
+      <workItem from="1477584127161" duration="5795000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5080000" />
+    <option name="totallyTimeSpent" value="5795000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-16" y="-16" width="3872" height="2092" extended-state="6" />
@@ -538,22 +539,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php">
+    <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1136">
-          <caret line="274" column="57" selection-start-line="274" selection-start-column="46" selection-end-line="274" selection-end-column="57" />
+        <state relative-caret-position="672">
+          <caret line="247" column="51" selection-start-line="247" selection-start-column="51" selection-end-line="247" selection-end-column="51" />
           <folding>
-            <element signature="e#221#260#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+            <marker date="1477593700885" expanded="true" signature="1216:23505" placeholder="{% block content ...%}" />
+            <marker date="1477593700885" expanded="true" signature="10406:11528" placeholder="{% if authentication ...%}" />
+            <marker date="1477593700885" expanded="true" signature="10839:11426" placeholder="{% if authGroups ...%}" />
+            <marker date="1477593700885" expanded="true" signature="11099:11345" placeholder="{% for item in authGroups ...%}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1344">
-          <caret line="261" column="15" selection-start-line="261" selection-start-column="15" selection-end-line="261" selection-end-column="15" />
+        <state relative-caret-position="-2080">
+          <caret line="279" column="17" selection-start-line="279" selection-start-column="17" selection-end-line="279" selection-end-column="17" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+            <element signature="e#221#260#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
