@@ -22,7 +22,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This is the edit-action, it will display a form to update an item
@@ -265,7 +264,7 @@ class Edit extends BackendBaseActionEdit
             // add checkbox for auth_required
             $this->frm->addCheckbox('auth_required', $auth_required);
             // get all groups and parse them in key value pair
-            $groupItems = BackendProfilesModel::getGroups();
+            $groupItems = \Backend\Modules\Profiles\Engine\Model::getGroups();
             if(!empty($groupItems)) {
                 $groups = array();
                 foreach ($groupItems as $key => $item) {

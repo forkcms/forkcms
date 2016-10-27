@@ -18,6 +18,7 @@ use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * Frontend page class, this class will handle everything on a page
@@ -108,6 +109,35 @@ class Page extends FrontendBaseObject
 
         if (empty($this->record)) {
             $this->record = Model::getPage(404);
+        }
+
+
+        // authentication
+        if(BackendModel::isModuleInstalled('Profiles') && isset($this->record['data']['auth_required'])) {
+            $data = $this->record['data'];
+            // is auth required and is profile logged in
+            if($data['auth_required']){
+                if(!\Frontend\Modules\Profiles\Engine\Authentication::isLoggedIn()) {
+                    // redirect to login page
+                    $queryString = $this->URL->getQueryString();
+                    throw new RedirectException(
+                        'Redirect',
+                        new RedirectResponse(Navigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $queryString)
+                    );
+                }
+                // specific groups for auth?
+                if(!empty($data['auth_groups'])) {
+                    $inGroup = false;
+                    foreach($data['auth_groups'] as $group) {
+                        if(\Frontend\Modules\Profiles\Engine\Authentication::getProfile()->isInGroup($group)) {
+                            $inGroup = true;
+                        }
+                    }
+                    if(!$inGroup) {
+                        $this->record = Model::getPage(404);
+                    }
+                }
+            }
         }
 
         // we need to set the correct id
