@@ -92,3 +92,5 @@ FileETag MTime Size
 	# browser issues
 	mod_gzip_item_exclude reqheader "User-agent: Mozilla/4.0[678]"
 </IfModule>
+
+SetEnv FORK_DEBUG 1

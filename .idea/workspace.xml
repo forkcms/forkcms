@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig" line="246" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3e56f81d-4baf-4fb2-887b-7b34e5261f4a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.htaccess" afterPath="$PROJECT_DIR$/.htaccess" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php" afterPath="$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Backend/Modules/Pages/Js/Pages.js" afterPath="$PROJECT_DIR$/src/Backend/Modules/Pages/Js/Pages.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig" afterPath="$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig" />
+    </list>
+    <ignored path="fork.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="fork" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="Edit.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1136">
+              <caret line="274" column="57" selection-start-line="274" selection-start-column="46" selection-end-line="274" selection-end-column="57" />
+              <folding>
+                <element signature="e#221#260#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Model.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Engine/Model.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1092">
+              <caret line="446" column="50" selection-start-line="446" selection-start-column="50" selection-end-line="446" selection-end-column="50" />
+              <folding>
+                <marker date="1477586347600" expanded="true" signature="959:1156" placeholder="SELECT i.id,... pages" />
+                <marker date="1477586347600" expanded="true" signature="1208:1592" placeholder="SELECT i.id,... pages" />
+                <marker date="1477586347600" expanded="true" signature="1366:1531" placeholder="SELECT MAX(i... pages" />
+                <marker date="1477586347600" expanded="true" signature="1638:1846" placeholder="SELECT i.id,... pages" />
+                <marker date="1477586347600" expanded="true" signature="1907:2115" placeholder="SELECT i.id,... pages" />
+                <marker date="1477586347600" expanded="true" signature="2161:2282" placeholder="SELECT i.id,... pages_templates" />
+                <marker date="1477586347600" expanded="true" signature="3936:4025" placeholder="SELECT id FR... pages" />
+                <marker date="1477586347600" expanded="true" signature="4373:4485" placeholder="SELECT i.rev... pages" />
+                <marker date="1477586347600" expanded="true" signature="4648:4756" placeholder="SELECT i.met... pages" />
+                <marker date="1477586347600" expanded="true" signature="5760:5849" placeholder="SELECT id FR... pages" />
+                <marker date="1477586347600" expanded="true" signature="6114:6179" placeholder="SELECT * FRO... meta" />
+                <marker date="1477586347600" expanded="true" signature="12268:12364" placeholder="SELECT i.rev... pages" />
+                <marker date="1477586347600" expanded="true" signature="12493:12585" placeholder="SELECT i.met... pages" />
+                <marker date="1477586347600" expanded="true" signature="13651:13779" placeholder="SELECT 1 FRO... pages" />
+                <marker date="1477586347600" expanded="true" signature="14724:15315" placeholder="SELECT i.*, pages" />
+                <marker date="1477586347600" expanded="true" signature="17236:17548" placeholder="SELECT b.*, pages_blocks" />
+                <marker date="1477586347600" expanded="true" signature="17974:18236" placeholder="SELECT i.id modules_tags" />
+                <marker date="1477586347600" expanded="true" signature="18998:19167" placeholder="SELECT i.id pages" />
+                <marker date="1477586347600" expanded="true" signature="21091:21203" placeholder="SELECT revis... pages" />
+                <marker date="1477586347600" expanded="true" signature="21497:21536" placeholder="SELECT MAX(i... pages_blocks" />
+                <marker date="1477586347600" expanded="true" signature="22058:22111" placeholder="SELECT MAX(i... pages" />
+                <marker date="1477586347600" expanded="true" signature="23119:23224" placeholder="SELECT MAX(i... pages" />
+                <marker date="1477586347600" expanded="true" signature="27840:28738" placeholder="SELECT i.id,... pages" />
+                <marker date="1477586347600" expanded="true" signature="35572:35838" placeholder="SELECT 1 FRO... pages" />
+                <marker date="1477586347600" expanded="true" signature="36336:36616" placeholder="SELECT 1 FRO... pages" />
+                <marker date="1477586347600" expanded="true" signature="42045:42168" placeholder="SELECT MAX(i... pages" />
+                <marker date="1477586347600" expanded="true" signature="42753:42896" placeholder="SELECT i.seq... pages" />
+                <marker date="1477586347600" expanded="true" signature="43127:43256" placeholder="UPDATE pages... " />
+                <marker date="1477586347600" expanded="true" signature="43843:43983" placeholder="SELECT i.seq... pages" />
+                <marker date="1477586347600" expanded="true" signature="44207:44335" placeholder="UPDATE pages... " />
+                <marker date="1477586347600" expanded="true" signature="44842:44908" placeholder="SELECT url F... meta" />
+                <marker date="1477586347600" expanded="true" signature="46503:46657" placeholder="SELECT i.rev... pages" />
+                <marker date="1477586347600" expanded="true" signature="46982:47152" placeholder="SELECT i.rev... pages" />
+                <marker date="1477586347600" expanded="true" signature="48451:48539" placeholder="SELECT * FRO... pages" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Edit.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1344">
+              <caret line="261" column="15" selection-start-line="261" selection-start-column="15" selection-end-line="261" selection-end-column="15" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".htaccess" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.htaccess">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1543">
+              <caret line="95" column="19" selection-start-line="95" selection-start-column="19" selection-end-line="95" selection-end-column="19" />
+              <folding>
+                <marker date="1477584820853" expanded="true" signature="361:1796" placeholder="&lt;IfModule mod_rewrite.c&gt;" />
+                <marker date="1477584820853" expanded="true" signature="1824:2011" placeholder="&lt;IfModule mod_expires.c&gt;" />
+                <marker date="1477584820853" expanded="true" signature="2032:2534" placeholder="&lt;IfModule mod_deflate.c&gt;" />
+                <marker date="1477584820853" expanded="true" signature="2555:3183" placeholder="&lt;IfModule mod_gzip.c&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Pages.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Js/Pages.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1077">
+              <caret line="459" column="22" selection-start-line="459" selection-start-column="22" selection-end-line="459" selection-end-column="22" />
+              <folding>
+                <marker date="1477592750863" expanded="true" signature="5201:5215" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/.htaccess" />
+        <option value="$PROJECT_DIR$/src/Backend/Modules/Pages/Engine/Model.php" />
+        <option value="$PROJECT_DIR$/src/Backend/Modules/Pages/Js/Pages.js" />
+        <option value="$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php" />
+        <option value="$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" />
+  <component name="JsBuildToolPackageJson" detection-done="true" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
+  <component name="PhpServers">
+    <servers />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-16" />
+    <option name="y" value="-16" />
+    <option name="width" value="3872" />
+    <option name="height" value="2092" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Backend" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Backend" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Backend" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pages" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Backend" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pages" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Layout" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Templates" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Backend" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pages" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Js" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Backend" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pages" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Engine" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Backend" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pages" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Actions" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e56f81d-4baf-4fb2-887b-7b34e5261f4a" name="Default" comment="" />
+      <created>1477584126009</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1477584126009</updated>
+      <workItem from="1477584127161" duration="5080000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="5080000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-16" y="-16" width="3872" height="2092" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25320855" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/.htaccess">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1543">
+          <caret line="95" column="19" selection-start-line="95" selection-start-column="19" selection-end-line="95" selection-end-column="19" />
+          <folding>
+            <marker date="1477584820853" expanded="true" signature="361:1796" placeholder="&lt;IfModule mod_rewrite.c&gt;" />
+            <marker date="1477584820853" expanded="true" signature="1824:2011" placeholder="&lt;IfModule mod_expires.c&gt;" />
+            <marker date="1477584820853" expanded="true" signature="2032:2534" placeholder="&lt;IfModule mod_deflate.c&gt;" />
+            <marker date="1477584820853" expanded="true" signature="2555:3183" placeholder="&lt;IfModule mod_gzip.c&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Engine/Model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1092">
+          <caret line="446" column="50" selection-start-line="446" selection-start-column="50" selection-end-line="446" selection-end-column="50" />
+          <folding>
+            <marker date="1477586347600" expanded="true" signature="959:1156" placeholder="SELECT i.id,... pages" />
+            <marker date="1477586347600" expanded="true" signature="1208:1592" placeholder="SELECT i.id,... pages" />
+            <marker date="1477586347600" expanded="true" signature="1366:1531" placeholder="SELECT MAX(i... pages" />
+            <marker date="1477586347600" expanded="true" signature="1638:1846" placeholder="SELECT i.id,... pages" />
+            <marker date="1477586347600" expanded="true" signature="1907:2115" placeholder="SELECT i.id,... pages" />
+            <marker date="1477586347600" expanded="true" signature="2161:2282" placeholder="SELECT i.id,... pages_templates" />
+            <marker date="1477586347600" expanded="true" signature="3936:4025" placeholder="SELECT id FR... pages" />
+            <marker date="1477586347600" expanded="true" signature="4373:4485" placeholder="SELECT i.rev... pages" />
+            <marker date="1477586347600" expanded="true" signature="4648:4756" placeholder="SELECT i.met... pages" />
+            <marker date="1477586347600" expanded="true" signature="5760:5849" placeholder="SELECT id FR... pages" />
+            <marker date="1477586347600" expanded="true" signature="6114:6179" placeholder="SELECT * FRO... meta" />
+            <marker date="1477586347600" expanded="true" signature="12268:12364" placeholder="SELECT i.rev... pages" />
+            <marker date="1477586347600" expanded="true" signature="12493:12585" placeholder="SELECT i.met... pages" />
+            <marker date="1477586347600" expanded="true" signature="13651:13779" placeholder="SELECT 1 FRO... pages" />
+            <marker date="1477586347600" expanded="true" signature="14724:15315" placeholder="SELECT i.*, pages" />
+            <marker date="1477586347600" expanded="true" signature="17236:17548" placeholder="SELECT b.*, pages_blocks" />
+            <marker date="1477586347600" expanded="true" signature="17974:18236" placeholder="SELECT i.id modules_tags" />
+            <marker date="1477586347600" expanded="true" signature="18998:19167" placeholder="SELECT i.id pages" />
+            <marker date="1477586347600" expanded="true" signature="21091:21203" placeholder="SELECT revis... pages" />
+            <marker date="1477586347600" expanded="true" signature="21497:21536" placeholder="SELECT MAX(i... pages_blocks" />
+            <marker date="1477586347600" expanded="true" signature="22058:22111" placeholder="SELECT MAX(i... pages" />
+            <marker date="1477586347600" expanded="true" signature="23119:23224" placeholder="SELECT MAX(i... pages" />
+            <marker date="1477586347600" expanded="true" signature="27840:28738" placeholder="SELECT i.id,... pages" />
+            <marker date="1477586347600" expanded="true" signature="35572:35838" placeholder="SELECT 1 FRO... pages" />
+            <marker date="1477586347600" expanded="true" signature="36336:36616" placeholder="SELECT 1 FRO... pages" />
+            <marker date="1477586347600" expanded="true" signature="42045:42168" placeholder="SELECT MAX(i... pages" />
+            <marker date="1477586347600" expanded="true" signature="42753:42896" placeholder="SELECT i.seq... pages" />
+            <marker date="1477586347600" expanded="true" signature="43127:43256" placeholder="UPDATE pages... " />
+            <marker date="1477586347600" expanded="true" signature="43843:43983" placeholder="SELECT i.seq... pages" />
+            <marker date="1477586347600" expanded="true" signature="44207:44335" placeholder="UPDATE pages... " />
+            <marker date="1477586347600" expanded="true" signature="44842:44908" placeholder="SELECT url F... meta" />
+            <marker date="1477586347600" expanded="true" signature="46503:46657" placeholder="SELECT i.rev... pages" />
+            <marker date="1477586347600" expanded="true" signature="46982:47152" placeholder="SELECT i.rev... pages" />
+            <marker date="1477586347600" expanded="true" signature="48451:48539" placeholder="SELECT * FRO... pages" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Js/Pages.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1077">
+          <caret line="459" column="22" selection-start-line="459" selection-start-column="22" selection-end-line="459" selection-end-column="22" />
+          <folding>
+            <marker date="1477592750863" expanded="true" signature="5201:5215" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1136">
+          <caret line="274" column="57" selection-start-line="274" selection-start-column="46" selection-end-line="274" selection-end-column="57" />
+          <folding>
+            <element signature="e#221#260#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Layout/Templates/Edit.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1344">
+          <caret line="261" column="15" selection-start-line="261" selection-start-column="15" selection-end-line="261" selection-end-column="15" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

@@ -49,6 +49,8 @@ jsBackend.pages.extras =
 
 		// make the default position sortable
 		jsBackend.pages.extras.sortable($('#templateVisualFallback div.linkedBlocks'));
+
+		$('#authRequired').on('change', jsBackend.pages.extras.showGroups);
 	},
 
 	// store the extra for real
@@ -446,6 +448,16 @@ jsBackend.pages.extras =
 
 			$('#confirmDeleteBlock').modal('show');
 		}
+	},
+
+	// show the groups for authentication
+	showGroups: function(e)
+	{
+		// save element to variable
+		var element = $(this);
+		var list = $('#groupList');
+
+		list.toggle();
 	},
 
 	// re-order blocks
