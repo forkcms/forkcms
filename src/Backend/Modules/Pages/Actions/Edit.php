@@ -657,6 +657,12 @@ class Edit extends BackendBaseActionEdit
                     $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
                 }
 
+                if($this->frm->getField('auth_required')->isChecked()) {
+                    $data['auth_required'] = true;
+                    // check for groups
+                    $data['auth_groups'] = $this->frm->getField('auth_groups')->getValue();
+                }
+
                 // build page record
                 $page['id'] = $this->record['id'];
                 $page['user_id'] = BackendAuthentication::getUser()->getUserId();

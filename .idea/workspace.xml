@@ -29,8 +29,8 @@
       <file leaf-file-name="Edit.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2080">
-              <caret line="279" column="17" selection-start-line="279" selection-start-column="17" selection-end-line="279" selection-end-column="17" />
+            <state relative-caret-position="1308">
+              <caret line="666" column="24" selection-start-line="666" selection-start-column="24" selection-end-line="666" selection-end-column="24" />
               <folding>
                 <element signature="e#221#260#0#PHP" expanded="true" />
               </folding>
@@ -413,6 +413,33 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -427,12 +454,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1477584126009</updated>
-      <workItem from="1477584127161" duration="5795000" />
+      <workItem from="1477584127161" duration="6597000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5795000" />
+    <option name="totallyTimeSpent" value="6597000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-16" y="-16" width="3872" height="2092" extended-state="6" />
@@ -555,8 +582,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Backend/Modules/Pages/Actions/Edit.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2080">
-          <caret line="279" column="17" selection-start-line="279" selection-start-column="17" selection-end-line="279" selection-end-column="17" />
+        <state relative-caret-position="1308">
+          <caret line="666" column="24" selection-start-line="666" selection-start-column="24" selection-end-line="666" selection-end-column="24" />
           <folding>
             <element signature="e#221#260#0#PHP" expanded="true" />
           </folding>
