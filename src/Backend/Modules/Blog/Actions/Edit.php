@@ -449,6 +449,7 @@ class Edit extends BackendBaseActionEdit
                     );
 
                     // ping
+                    // @TODO remove this when the api is kicked out
                     if ($this->get('fork.settings')->get($this->URL->getModule(), 'ping_services', false)) {
                         BackendModel::ping(
                             SITE_URL .

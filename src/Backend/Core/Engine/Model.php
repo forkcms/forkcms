@@ -802,6 +802,8 @@ class Model extends \Common\Core\Model
      *
      * @return bool If everything went fne true will, otherwise false.
      * @throws Exception
+     *
+     * @deprecated
      */
     public static function ping($pageOrFeedURL = null, $category = null)
     {

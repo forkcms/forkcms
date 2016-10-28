@@ -17,6 +17,8 @@ use Backend\Core\Engine\User as BackendUser;
 
 /**
  * This class defines the API.
+ *
+ * @deprecated
  */
 class Api extends \KernelLoader implements \ApplicationInterface
 {
