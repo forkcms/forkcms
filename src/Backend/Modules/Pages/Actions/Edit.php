@@ -255,30 +255,30 @@ class Edit extends BackendBaseActionEdit
 
         // page auth related fields
         // check if profiles module is installed
-        if(BackendModel::isModuleInstalled('Profiles')) {
+        if (BackendModel::isModuleInstalled('Profiles')) {
             // check data for auth_required
             $auth_required = false;
-            if(isset($this->record['data']['auth_required']) && $this->record['data']['auth_required']) {
+            if (isset($this->record['data']['auth_required']) && $this->record['data']['auth_required']) {
                 $auth_required = true;
             }
             // add checkbox for auth_required
             $this->frm->addCheckbox('auth_required', $auth_required);
             // get all groups and parse them in key value pair
             $groupItems = \Backend\Modules\Profiles\Engine\Model::getGroups();
-            if(!empty($groupItems)) {
+            if (!empty($groupItems)) {
                 $groups = array();
                 foreach ($groupItems as $key => $item) {
                     $groups[] = array('label' => $item, 'value' => $key);
                 }
                 // set checked values
                 $checkValues = array();
-                if(!empty(isset($this->record['data']['auth_groups']))){
-                    foreach($this->record['data']['auth_groups'] as $group) {
+                if (!empty(isset($this->record['data']['auth_groups']))){
+                    foreach ($this->record['data']['auth_groups'] as $group) {
                         $checkValues[] = $group;
                     }
                 }
                 // add multi checkbox
-                $this->frm->addMultiCheckbox('auth_groups', $groups,$checkValues);
+                $this->frm->addMultiCheckbox('auth_groups', $groups, $checkValues);
             }
         }
 
@@ -656,7 +656,7 @@ class Edit extends BackendBaseActionEdit
                     $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
                 }
 
-                if($this->frm->getField('auth_required')->isChecked()) {
+                if ($this->frm->getField('auth_required')->isChecked()) {
                     $data['auth_required'] = true;
                     // check for groups
                     $data['auth_groups'] = $this->frm->getField('auth_groups')->getValue();

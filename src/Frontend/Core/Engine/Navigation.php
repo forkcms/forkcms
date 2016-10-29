@@ -285,27 +285,27 @@ class Navigation extends FrontendBaseObject
                 }
 
                 // authentication
-                if(isset($page['data'])) {
+                if (isset($page['data'])) {
                     // unserialize data
                     $page['data'] = unserialize($page['data']);
                     // if auth_required isset and is true
-                    if(isset($page['data']['auth_required']) && $page['data']['auth_required']) {
+                    if (isset($page['data']['auth_required']) && $page['data']['auth_required']) {
                         // is profile logged? unset
-                        if(!FrontendAuthentication::isLoggedIn()) {
+                        if (!FrontendAuthentication::isLoggedIn()) {
                             unset($navigation[$type][$parentId][$id]);
                             continue;
                         }
                         // check if group auth is set
-                        if(!empty($page['data']['auth_groups'])) {
+                        if (!empty($page['data']['auth_groups'])) {
                             $inGroup = false;
                             // loop group and set value true if one is found
-                            foreach($page['data']['auth_groups'] as $group) {
+                            foreach ($page['data']['auth_groups'] as $group) {
                                 if(FrontendAuthentication::getProfile()->isInGroup($group)) {
                                     $inGroup = true;
                                 }
                             }
                             // unset page if not in any of the groups
-                            if(!$inGroup) {
+                            if (!$inGroup) {
                                 unset($navigation[$type][$parentId][$id]);
                             }
                         }

@@ -113,11 +113,11 @@ class Page extends FrontendBaseObject
 
 
         // authentication
-        if(BackendModel::isModuleInstalled('Profiles') && isset($this->record['data']['auth_required'])) {
+        if (BackendModel::isModuleInstalled('Profiles') && isset($this->record['data']['auth_required'])) {
             $data = $this->record['data'];
             // is auth required and is profile logged in
-            if($data['auth_required']){
-                if(!\Frontend\Modules\Profiles\Engine\Authentication::isLoggedIn()) {
+            if ($data['auth_required']){
+                if (!\Frontend\Modules\Profiles\Engine\Authentication::isLoggedIn()) {
                     // redirect to login page
                     $queryString = $this->URL->getQueryString();
                     throw new RedirectException(
@@ -126,14 +126,14 @@ class Page extends FrontendBaseObject
                     );
                 }
                 // specific groups for auth?
-                if(!empty($data['auth_groups'])) {
+                if (!empty($data['auth_groups'])) {
                     $inGroup = false;
-                    foreach($data['auth_groups'] as $group) {
-                        if(\Frontend\Modules\Profiles\Engine\Authentication::getProfile()->isInGroup($group)) {
+                    foreach ($data['auth_groups'] as $group) {
+                        if (\Frontend\Modules\Profiles\Engine\Authentication::getProfile()->isInGroup($group)) {
                             $inGroup = true;
                         }
                     }
-                    if(!$inGroup) {
+                    if (!$inGroup) {
                         $this->record = Model::getPage(404);
                     }
                 }
