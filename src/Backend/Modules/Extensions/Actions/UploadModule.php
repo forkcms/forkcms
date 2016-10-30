@@ -35,10 +35,7 @@ class UploadModule extends BackendBaseActionAdd
             $this->tpl->assign('zlibIsMissing', true);
         }
 
-        // \ZipArchive class is required for module upload
-        if (!class_exists('\ZipArchive')) {
-            $this->tpl->assign('ZipArchiveIsMissing', true);
-        } elseif (!$this->isWritable()) {
+        if (!$this->isWritable()) {
             // we need write rights to upload files
             $this->tpl->assign('notWritable', true);
         } else {
