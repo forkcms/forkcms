@@ -36,7 +36,6 @@ class UploadThemeTest extends WebTestCase
         $this->logout();
         $this->client = static::createClient();
         $this->client->setMaxRedirects(1);
-        $this->loadFixtures($this->client);
         $this->client->request('GET', self::URL_UPLOAD_THEME);
 
         $this->login();
@@ -53,7 +52,6 @@ class UploadThemeTest extends WebTestCase
     {
         // Generate zip with no info.xml
         $this->fileName = tempnam(sys_get_temp_dir(), 'Theme');
-        echo $this->fileName;
         $filePath = $this->fileName . '.zip';
         $archive = new ZipArchive;
         $archive->open($filePath, ZipArchive::CREATE);
@@ -160,11 +158,10 @@ class UploadThemeTest extends WebTestCase
      */
     protected function tearDown()
     {
-        parent::tearDown();
         $fs = new Filesystem();
 
         // Clear the $_FILES
-        $_FILES['file'] = [];
+        $_FILES = [];
 
         // Remove the generated zip file
         if ($this->fileName !== null && file_exists("{$this->fileName}.zip")) {
@@ -173,5 +170,8 @@ class UploadThemeTest extends WebTestCase
 
         // Remove the uploaded theme folder
         $fs->remove(FRONTEND_PATH . '/Themes/' . self::THEME_NAME);
+
+        $this->logout();
+        parent::tearDown();
     }
 }

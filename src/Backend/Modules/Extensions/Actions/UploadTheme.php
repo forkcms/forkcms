@@ -18,7 +18,8 @@ use ZipArchive;
 class UploadTheme extends BackendBaseActionAdd
 {
     const INFO_FILE = 'info.xml';
-    const IGNORE_LIST = ['__MACOSX'];
+
+    private $ignoreList = ['__MACOSX'];
 
     /**
      * @var array
@@ -270,7 +271,7 @@ class UploadTheme extends BackendBaseActionAdd
      */
     private function checkIfPathContainsIgnoredWord($path)
     {
-        foreach (self::IGNORE_LIST as $ignoreItem) {
+        foreach ($this->ignoreList as $ignoreItem) {
             if (mb_stripos($path, $ignoreItem) !== false) {
                 return true;
             }
