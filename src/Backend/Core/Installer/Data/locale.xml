@@ -3499,6 +3499,20 @@
         <translation language="el"><![CDATA[Λανθασμένος Κωδικός.]]></translation>
         <translation language="pl"><![CDATA[złe hasło]]></translation>
       </item>
+      <item type="error" name="InvalidValue">
+        <translation language="nl"><![CDATA[Ongeldige waarde.]]></translation>
+        <translation language="en"><![CDATA[Invalid value.]]></translation>
+        <translation language="hu"><![CDATA[Helytelen érték.]]></translation>
+        <translation language="ru"><![CDATA[Неверное значение.]]></translation>
+        <translation language="it"><![CDATA[Valore non valido.]]></translation>
+        <translation language="zh"><![CDATA[无效的值。]]></translation>
+        <translation language="fr"><![CDATA[Valeur incorrecte.]]></translation>
+        <translation language="de"><![CDATA[Ungültiger Wert.]]></translation>
+        <translation language="es"><![CDATA[Valor no válido.]]></translation>
+        <translation language="lt"><![CDATA[Neteisinga reikšmė.]]></translation>
+        <translation language="sv"><![CDATA[Ogiltigt värde.]]></translation>
+        <translation language="el"><![CDATA[Μη έγκυρη τιμή.]]></translation>
+      </item>
       <item type="error" name="InvalidPrice">
         <translation language="nl"><![CDATA[Gelieve een geldig bedrag in te geven.]]></translation>
         <translation language="en"><![CDATA[Please insert a valid price.]]></translation>
