@@ -19,6 +19,7 @@ before_script:
   - mysql -e 'create database fork_test'
   - mysql -u travis fork_test < tools/test_db.sql
   - cp app/config/parameters.yml.travis app/config/parameters.yml
+  - mysql -e "SET GLOBAL wait_timeout = 3600" # try to avoid mysql has gone away errors
 
 after_success:
   - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7.1" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi

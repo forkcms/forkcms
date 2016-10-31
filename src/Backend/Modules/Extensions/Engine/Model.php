@@ -1029,6 +1029,7 @@ class Model
         }
 
         // templates
+        $information['templates'] = array();
         foreach ($xml->xpath('/theme/templates/template') as $templateXML) {
             $template = array();
 
