@@ -116,7 +116,7 @@ class Page extends FrontendBaseObject
         if (BackendModel::isModuleInstalled('Profiles') && isset($this->record['data']['auth_required'])) {
             $data = $this->record['data'];
             // is auth required and is profile logged in
-            if ($data['auth_required']){
+            if ($data['auth_required']) {
                 if (!\Frontend\Modules\Profiles\Engine\Authentication::isLoggedIn()) {
                     // redirect to login page
                     $queryString = $this->URL->getQueryString();

@@ -272,7 +272,7 @@ class Edit extends BackendBaseActionEdit
                 }
                 // set checked values
                 $checkValues = array();
-                if (!empty(isset($this->record['data']['auth_groups']))){
+                if (!empty(isset($this->record['data']['auth_groups']))) {
                     foreach ($this->record['data']['auth_groups'] as $group) {
                         $checkValues[] = $group;
                     }

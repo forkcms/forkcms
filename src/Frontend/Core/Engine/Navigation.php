@@ -300,7 +300,7 @@ class Navigation extends FrontendBaseObject
                             $inGroup = false;
                             // loop group and set value true if one is found
                             foreach ($page['data']['auth_groups'] as $group) {
-                                if(FrontendAuthentication::getProfile()->isInGroup($group)) {
+                                if (FrontendAuthentication::getProfile()->isInGroup($group)) {
                                     $inGroup = true;
                                 }
                             }
