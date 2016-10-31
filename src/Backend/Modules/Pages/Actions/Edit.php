@@ -588,7 +588,6 @@ class Edit extends BackendBaseActionEdit
 
         // assign if profiles module is installed
         $this->tpl->assign('authentication', BackendModel::isModuleInstalled('Profiles'));
-
     }
 
     /**
