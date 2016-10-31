@@ -174,6 +174,7 @@ jsFrontend.forms =
 	{
 		jsFrontend.forms.placeholders();
 		jsFrontend.forms.datefields();
+		jsFrontend.forms.validation();
 		jsFrontend.forms.filled();
 	},
 
@@ -304,6 +305,23 @@ jsFrontend.forms =
 				});
 			}
 		}
+	},
+
+	validation: function()
+	{
+		$('input, textarea, select').each(function() {
+			var $input = $(this),
+				options = {};
+
+			// Check for custom error messages
+			$.each($input.data(), function(key, value) {
+				if (key.indexOf('error') < 0) return;
+				key = key.replace('error', '').toLowerCase();
+				options[key] = value;
+			});
+
+			$input.html5validation(options);
+		});
 	},
 
 	// placeholder fallback for browsers that don't support placeholder
