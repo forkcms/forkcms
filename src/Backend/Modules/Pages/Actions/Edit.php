@@ -22,6 +22,7 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This is the edit-action, it will display a form to update an item
@@ -257,28 +258,28 @@ class Edit extends BackendBaseActionEdit
         // check if profiles module is installed
         if (BackendModel::isModuleInstalled('Profiles')) {
             // check data for auth_required
-            $auth_required = false;
+            $authRequired = false;
             if (isset($this->record['data']['auth_required']) && $this->record['data']['auth_required']) {
-                $auth_required = true;
+                $authRequired = true;
             }
             // add checkbox for auth_required
-            $this->frm->addCheckbox('auth_required', $auth_required);
+            $this->frm->addCheckbox('auth_required', $authRequired);
             // get all groups and parse them in key value pair
-            $groupItems = \Backend\Modules\Profiles\Engine\Model::getGroups();
+            $groupItems = BackendProfilesModel::getGroups();
             if (!empty($groupItems)) {
                 $groups = array();
                 foreach ($groupItems as $key => $item) {
                     $groups[] = array('label' => $item, 'value' => $key);
                 }
                 // set checked values
-                $checkValues = array();
-                if (!empty(isset($this->record['data']['auth_groups']))) {
+                $checkedGroups = array();
+                if (is_array($this->record['data']['auth_groups'])) {
                     foreach ($this->record['data']['auth_groups'] as $group) {
-                        $checkValues[] = $group;
+                        $checkedGroups[] = $group;
                     }
                 }
                 // add multi checkbox
-                $this->frm->addMultiCheckbox('auth_groups', $groups, $checkValues);
+                $this->frm->addMultiCheckbox('auth_groups', $groups, $checkedGroups);
             }
         }
 
@@ -587,7 +588,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
 
         // assign if profiles module is installed
-        $this->tpl->assign('authentication', BackendModel::isModuleInstalled('Profiles'));
+        $this->tpl->assign('showAuthenticationTab', BackendModel::isModuleInstalled('Profiles'));
     }
 
     /**

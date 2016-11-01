@@ -19,6 +19,7 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Backend\Core\Engine\Model as BackendModel;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
 
 /**
  * Frontend page class, this class will handle everything on a page
@@ -117,7 +118,7 @@ class Page extends FrontendBaseObject
             $data = $this->record['data'];
             // is auth required and is profile logged in
             if ($data['auth_required']) {
-                if (!\Frontend\Modules\Profiles\Engine\Authentication::isLoggedIn()) {
+                if (!FrontendAuthenticationModel::isLoggedIn()) {
                     // redirect to login page
                     $queryString = $this->URL->getQueryString();
                     throw new RedirectException(
@@ -129,7 +130,7 @@ class Page extends FrontendBaseObject
                 if (!empty($data['auth_groups'])) {
                     $inGroup = false;
                     foreach ($data['auth_groups'] as $group) {
-                        if (\Frontend\Modules\Profiles\Engine\Authentication::getProfile()->isInGroup($group)) {
+                        if (FrontendAuthenticationModel::getProfile()->isInGroup($group)) {
                             $inGroup = true;
                         }
                     }
