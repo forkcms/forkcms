@@ -257,13 +257,11 @@ class Edit extends BackendBaseActionEdit
         // page auth related fields
         // check if profiles module is installed
         if (BackendModel::isModuleInstalled('Profiles')) {
-            // check data for auth_required
-            $authRequired = false;
-            if (isset($this->record['data']['auth_required']) && $this->record['data']['auth_required']) {
-                $authRequired = true;
-            }
             // add checkbox for auth_required
-            $this->frm->addCheckbox('auth_required', $authRequired);
+            $this->frm->addCheckbox(
+                'auth_required',
+                isset($this->record['data']['auth_required']) && $this->record['data']['auth_required']
+            );
             // get all groups and parse them in key value pair
             $groupItems = BackendProfilesModel::getGroups();
             if (!empty($groupItems)) {
