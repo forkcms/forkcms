@@ -454,8 +454,7 @@ jsBackend.pages.extras =
 	showGroups: function(e)
 	{
 		// save element to variable
-		var authenticationGroups = $('.js-authentication-groups');
-		authenticationGroups.toggle();
+		$('.js-authentication-groups').toggle();
 	},
 
 	// re-order blocks
