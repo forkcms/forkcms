@@ -34,6 +34,11 @@ FileETag MTime Size
 	RewriteRule src/Backend/Cache/CompiledTemplates - [F]
 	RewriteRule src/Backend/Cache/Locale/.*\.php - [F]
 
+	# redirect all trafic to https
+	# RewriteCond %{SERVER_PORT} 80
+	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
+	# RewriteRule ^(.*)$ https://www.<domain>.be/$1 [R=301,L]
+
 	# one url to rule them all
 	# RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
 	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
