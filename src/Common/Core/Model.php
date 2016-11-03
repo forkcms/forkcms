@@ -464,7 +464,7 @@ class Model extends \BaseModel
         $errStr = '';
         $defaultPort = 80;
         if ($parts['scheme'] == 'https') {
-            $defaultPort = 433;
+            $defaultPort = 443;
         }
 
         // open the socket
