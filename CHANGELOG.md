@@ -1,3 +1,24 @@
+4.3.1 (2016-11-04)
+------------------
+
+Bugfixes:
+
+* Core: FIX send mail by a Cronjob / URL object not available
+* Core: Remove devtools plugin from CKEditor
+* Core: Remove updating the schema when it already exists
+* Core: Fix web path of images if they are in a subdirectory
+* Core: Fix ck plugin errors
+* Core: https port fix
+* Authentication: Fix Authentication::isAllowedAction
+* Blog: Fix error's not showing when adding categories on the blog add or edit action
+* Extensions: Fix themes from github couldn't be uploaded
+* FAQ: Correct order in the index action for categories
+* Location: Fix incorrect use of $this->header->addJS
+* Core: Remove server root from loading dirs for templates
+* Core: Fix twig issues with latest bugfix release of symfony 2.8
+* Installer: Validate the backend credentials
+
+
 4.3.0 (2016-10-20)
 ------------------
 
