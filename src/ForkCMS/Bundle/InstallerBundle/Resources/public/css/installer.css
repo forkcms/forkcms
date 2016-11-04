@@ -2,3 +2,8 @@
 #installer h3 {
 	float: none;
 }
+
+.help-block.errorMessage,
+.has-error .control-label {
+	color: #d0021b;
+}
