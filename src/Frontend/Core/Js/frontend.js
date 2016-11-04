@@ -85,11 +85,13 @@ jsFrontend.cookieBar =
 		}
 
 		$cookieBar.on('click', '#cookieBarAgree', function(e) {
+            e.preventDefault();
 			utils.cookies.setCookie('cookie_bar_agree', 'b:1;');
 			utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
 			$cookieBar.hide();
 		});
 		$cookieBar.on('click', '#cookieBarDisagree', function(e) {
+            e.preventDefault();
 			utils.cookies.setCookie('cookie_bar_agree', 'b:0;');
 			utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
 			$cookieBar.hide();
