@@ -2,6 +2,8 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * This object contains all fork data
  */
@@ -116,6 +118,9 @@ class InstallationData
      * The backend login email for the GOD user
      *
      * @var string
+     *
+     * @Assert\NotBlank(groups={"login"})
+     * @Assert\Email(groups={"login"})
      */
     protected $email;
 
@@ -123,6 +128,8 @@ class InstallationData
      * The backend password for the GOD user
      *
      * @var string
+     *
+     * @Assert\NotBlank(groups={"login"})
      */
     protected $password;
 

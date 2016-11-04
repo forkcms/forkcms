@@ -22,7 +22,7 @@
           <p>Enter the e-mail address and password you'd like to use to log in.</p>
           {{ form_row(form.email) }}
 
-          <div class="form-group">
+          <div class="form-group{% if form.password.first.vars.errors|length %} has-error{% endif %}">
             {{ form_label(form.password.first) }}
             <table id="passwordStrengthMeter" class="passwordStrength" data-id="install_login_password_first">
               <tr>
@@ -46,6 +46,7 @@
               </tr>
             </table>
             {{ form_widget(form.password.first) }}
+            {{ form_errors(form.password.first) }}
           </div>
           {{ form_row(form.password.second) }}
         </div>

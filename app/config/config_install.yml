@@ -13,6 +13,8 @@ framework:
         engines: ['twig']
     session:
         handler_id: ~
+    validation:
+        enable_annotations: true
 
 # Assetic Configuration
 assetic:
