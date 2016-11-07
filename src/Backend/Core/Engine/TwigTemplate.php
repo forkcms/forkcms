@@ -146,12 +146,6 @@ class TwigTemplate extends BaseTwigTemplate
         // we use some abbreviations and common terms, these should also be assigned
         $this->assign('LANGUAGE', BL::getWorkingLanguage());
 
-        // adding parameters
-        $this->assign(
-            'SITE_MULTILANGUAGE',
-            Model::getContainer()->getParameter('site.multilanguage')
-        );
-
         // check on url object
         if (Model::getContainer()->has('url')) {
             $url = Model::get('url');
