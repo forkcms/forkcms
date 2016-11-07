@@ -743,6 +743,34 @@ jsBackend.pages.extras =
 		return html;
 	},
 
+    /**
+     * Creates the html for an image background field
+     */
+    getImageBackgroundFieldHtml: function(src, label, key)
+     {
+         var html = '<div class="panel panel-default" id="user-template-image-background-' + key + '">';
+
+         html += '<div class="panel-heading">';
+         html += '<h3 class="panel-title">' + label + '</h3>';
+         html += '</div>';
+
+         html += '<div class="panel-body clearfix">';
+
+         html += '<div class="form-group thumbnail">';
+         html += '<img class="img-responsive"' + ' src="' + src + '" />';
+         html += '<div class="caption" id="ajax-upload-' + key + '">';
+         html += '<label>' + label + '</label>';
+         html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
+         html += '</div>';
+         html += '</div>';
+
+         html += '</div>';
+
+         html += '</div>';
+
+         return html;
+     },
+
 	/**
 	 * Checks if an element is some kind of special field that should have form
 	 * fields and builds the html for it
@@ -789,7 +817,7 @@ jsBackend.pages.extras =
 			);
 
 			// attach an ajax uploader to the field
-			new ss.SimpleUpload({
+            jsBackend.pages.extras.uploaders.push(new ss.SimpleUpload({
 				button: 'ajax-upload-' + key,
 				url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
 				name: 'file',
@@ -808,17 +836,19 @@ jsBackend.pages.extras =
 						'/src/Frontend/Files/UserTemplate/' + response.data
 					);
 
-					// send a request to remove the old image.
-					$.ajax({
-						data:
-						{
-							fork: { module: 'Pages', action: 'RemoveUploadedFile' },
-							file: oldImage,
-							type: 'UserTemplate'
-						}
-					});
+                    // send a request to remove the old image if the old image doesn't have the same name
+                    if (oldImage !== response.data) {
+                        $.ajax({
+                            data:
+                            {
+                                fork: { module: 'Pages', action: 'RemoveUploadedFile' },
+                                file: oldImage,
+                                type: 'UserTemplate'
+                            }
+                        });
+                    }
 				}
-			});
+			}));
 
 			// handle the "show image" checkbox
 			$('#user-template-image-' + key + ' input[type=checkbox]').on('click', function(e) {
@@ -827,6 +857,53 @@ jsBackend.pages.extras =
 
 			return;
 		}
+
+        // replace image background
+        if ($element.is('[data-ft-type="image-background"]')) {
+            $placeholder.append(
+                jsBackend.pages.extras.getImageBackgroundFieldHtml(
+                    $element.attr('data-src'),
+                    $element.data('ft-label'),
+                    key
+                )
+            );
+
+            // attach an ajax uploader to the field
+            jsBackend.pages.extras.uploaders.push(new ss.SimpleUpload({
+                button: 'ajax-upload-' + key,
+                url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
+                name: 'file',
+                responseType: 'json',
+                onComplete: function(filename, response) {
+                    if (!response) {
+                        alert(filename + 'upload failed');
+                        return false;
+                    }
+
+                    // cache the old image variable, we'll want to remove it to keep our filesystem clean
+                    var oldImage = $('#user-template-image-background-' + key + ' img').attr('src');
+
+                    $('#user-template-image-background-' + key + ' img').attr(
+                        'src',
+                        '/src/Frontend/Files/UserTemplate/' + response.data
+                    );
+
+                    // send a request to remove the old image if the old image doesn't have the same name
+                    if (oldImage !== response.data) {
+                        $.ajax({
+                            data: {
+                                fork: {module: 'Pages', action: 'RemoveUploadedFile'},
+                                file: oldImage,
+                                type: 'UserTemplate'
+                            }
+                        });
+                    }
+                }
+            }));
+
+            return;
+        }
+
 
 		// replace editor
 		if ($element.is('[data-ft-type="editor"]')) {
@@ -900,6 +977,15 @@ jsBackend.pages.extras =
 
 			return;
 		}
+
+        if ($element.is('[data-ft-type="image-background"]')) {
+            var $img = $placeholder.find('#user-template-image-background-' + key + ' img');
+
+            $element.attr('data-src', $img.attr('src'));
+            $element.css('background-image', 'url("' + $img.attr('src') + '")');
+
+            return;
+        }
 
 		if ($element.is('[data-ft-type="editor"]')) {
 			var $textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]');
