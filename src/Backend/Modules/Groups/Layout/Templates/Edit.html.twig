@@ -105,7 +105,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showGroupsDelete %}
+          {% if showGroupsDelete and allowGroupsDelete %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
               <span class="fa fa-trash-o"></span>{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
@@ -117,7 +117,7 @@
           </button>
         </div>
       </div>
-      {% if showGroupsDelete %}
+      {% if showGroupsDelete and allowGroupsDelete %}
         <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
