@@ -148,27 +148,30 @@ class TwigTemplate extends BaseTwigTemplate
             Model::getContainer()->getParameter('site.multilanguage')
         );
 
-        $url = Model::get('url');
+        // check on url object
+        if (Model::getContainer()->has('url')) {
+            $url = Model::get('url');
 
-        if ($url instanceof Url) {
-            // assign the current module
-            $this->assign('MODULE', $url->getModule());
+            if ($url instanceof Url) {
+                // assign the current module
+                $this->assign('MODULE', $url->getModule());
 
-            // assign the current action
-            if ($url->getAction() != '') {
-                $this->assign('ACTION', $url->getAction());
-            }
+                // assign the current action
+                if ($url->getAction() != '') {
+                    $this->assign('ACTION', $url->getAction());
+                }
 
-            if ($url->getModule() == 'Core') {
-                $this->assign(
-                    'BACKEND_MODULE_PATH',
-                    BACKEND_PATH . '/' . $url->getModule()
-                );
-            } else {
-                $this->assign(
-                    'BACKEND_MODULE_PATH',
-                    BACKEND_MODULES_PATH . '/' . $url->getModule()
-                );
+                if ($url->getModule() == 'Core') {
+                    $this->assign(
+                        'BACKEND_MODULE_PATH',
+                        BACKEND_PATH . '/' . $url->getModule()
+                    );
+                } else {
+                    $this->assign(
+                        'BACKEND_MODULE_PATH',
+                        BACKEND_MODULES_PATH . '/' . $url->getModule()
+                    );
+                }
             }
         }
 
@@ -385,22 +388,25 @@ class TwigTemplate extends BaseTwigTemplate
         // assign current timestamp
         $this->assign('timestamp', time());
 
-        // assign body ID
-        $url = Model::get('url');
-        if ($url instanceof Url) {
-            $this->assign('bodyID', \SpoonFilter::toCamelCase($url->getModule(), '_', true));
+        // check on url object
+        if (Model::getContainer()->has('url')) {
+            $url = Model::get('url');
 
-            // build classes
-            $bodyClass = \SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true);
+            if ($url instanceof Url) {
+                $this->assign('bodyID', \SpoonFilter::toCamelCase($url->getModule(), '_', true));
 
-            // special occasions
-            if ($url->getAction() == 'add' || $url->getAction() == 'edit'
-            ) {
-                $bodyClass = $url->getModule() . 'AddEdit';
+                // build classes
+                $bodyClass = \SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true);
+
+                // special occasions
+                if ($url->getAction() == 'add' || $url->getAction() == 'edit'
+                ) {
+                    $bodyClass = $url->getModule() . 'AddEdit';
+                }
+
+                // assign
+                $this->assign('bodyClass', $bodyClass);
             }
-
-            // assign
-            $this->assign('bodyClass', $bodyClass);
         }
 
         if (Model::has('navigation')) {
