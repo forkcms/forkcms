@@ -73,7 +73,7 @@ abstract class BaseTwigTemplate extends TwigEngine
             return;
         }
 
-        if (isset($this->variables[$key]) && strpos($key, 'show') == 0) {
+        if (array_key_exists($key, $this->variables) && strpos($key, 'show') == 0) {
             throw new \Exception('The variable "' . $key . '" you are trying to assign is already automatically generated based on the "action rights of the user" and therefore can\'t be overwritten.');
         }
 
