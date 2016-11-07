@@ -22,3 +22,7 @@ parameters:
 
     action.group_tag:       <action-group-tag>
     action.rights_level:    <action-rights-level>
+
+    mailmotor.mail_engine:  'mailchimp'
+    mailmotor.api_key:      xxx # enter your mailchimp api_key here
+    mailmotor.list_id:      xxx # enter the mailchimp default list_id here
