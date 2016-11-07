@@ -17,6 +17,7 @@ use Backend\Core\Engine\Navigation;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\TwigTemplate;
 
 /**
  * In this file we store all generic functions that we will be using in the extensions module.
@@ -126,7 +127,7 @@ class Model
             }
         }
 
-        $templating = BackendModel::get('template');
+        $templating = new TwigTemplate();
         $templating->assign('table', $htmlContent);
         $html = $templating->getContent('Extensions/Layout/Templates/Templates.html.twig');
 
