@@ -12,14 +12,58 @@ namespace Frontend\Core\Engine;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Frontend\Core\Language\Language;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
+use \SpoonDate;
 
 /**
  * Contains all Frontend-related custom modifiers
  */
 class TemplateModifiers extends BaseTwigModifiers
 {
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdate }}
+     *
+     * @param int $var The UNIX-timestamp to format or \DateTime
+     *
+     * @return string
+     */
+    public static function formatDate($var)
+    {
+        // get setting
+        $format = FrontendModel::get('fork.settings')->get('Core', 'date_format_short');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, (string) Locale::frontendLanguage());
+    }
+
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdatetime }}
+     *
+     * @param int $var The UNIX-timestamp to format or \DateTime
+     *
+     * @return string
+     */
+    public static function formatDateTime($var)
+    {
+        // get setting
+        $format = FrontendModel::get('fork.settings')->get('Core', 'date_format_long');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, (string) Locale::frontendLanguage());
+    }
+
     /**
      * Format a number as a float
      *    syntax: {{ $number|formatfloat($decimals) }}
@@ -64,6 +108,27 @@ class TemplateModifiers extends BaseTwigModifiers
 
         // format the number
         return number_format($string, $decimals, $decimalSeparator, $thousandsSeparator);
+    }
+
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdate }}
+     *
+     * @param int $var The UNIX-timestamp to format or \DateTime
+     *
+     * @return string
+     */
+    public static function formatTime($var)
+    {
+        // get setting
+        $format = FrontendModel::get('fork.settings')->get('Core', 'time_format');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, (string) Locale::frontendLanguage());
     }
 
     /**
@@ -131,8 +196,8 @@ class TemplateModifiers extends BaseTwigModifiers
                 'time_format'
             ),
             $string,
-            LANGUAGE
-        ).'">'.\SpoonDate::getTimeAgo($string, LANGUAGE).'</abbr>';
+            (string) Locale::frontendLanguage()
+        ).'">'.\SpoonDate::getTimeAgo($string, (string) Locale::frontendLanguage()).'</abbr>';
     }
 
     /**
