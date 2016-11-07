@@ -73,6 +73,10 @@ abstract class BaseTwigTemplate extends TwigEngine
             return;
         }
 
+        if (isset($this->variables[$key]) && strpos($key, 'show') == 0) {
+            throw new \Exception('The variable "' . $key . '" you are trying to assign is already automatically generated based on the "action rights of the user" and therefore can\'t be overwritten.');
+        }
+
         // in all other cases
         $this->variables[$key] = $values;
     }
@@ -105,7 +109,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         // merge the variables array_merge might be to slow for bigger sites
         // as array_merge tend to slow down at +100 keys
         foreach ($variables as $key => $val) {
-            $this->variables[$key] = $val;
+            $this->assign($key, $val);
         }
     }
 
