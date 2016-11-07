@@ -34,6 +34,8 @@ jsBackend.pages =
  */
 jsBackend.pages.extras =
 {
+	uploaders: [],
+	counter: 0,
 	// init, something like a constructor
 	init: function()
 	{
@@ -50,9 +52,26 @@ jsBackend.pages.extras =
 		$(document).on('click', '.showEditor', jsBackend.pages.extras.editContent);
 		$(document).on('click', '.editUserTemplate', jsBackend.pages.extras.editUserTemplate);
 		$(document).on('click', '.toggleVisibility', jsBackend.pages.extras.toggleVisibility);
+		$('.modal').on('scroll', jsBackend.pages.extras.modalScrolledHandler);
 
 		// make the default position sortable
 		jsBackend.pages.extras.sortable($('#templateVisualFallback div.linkedBlocks'));
+	},
+
+	// handle stuff when scroll inside a modal
+	modalScrolledHandler: function(event)
+	{
+		jsBackend.pages.extras.counter++;
+
+		// skip 9 out of 10 scrolls
+		if (jsBackend.pages.extras.counter % 10 !== 0) {
+		    return false;
+		}
+
+		// update the positions on each uploader
+		$.each(jsBackend.pages.extras.uploaders, function(index, uploader) {
+		    uploader.updatePosition();
+		});
 	},
 
 	// store the extra for real
