@@ -541,6 +541,9 @@ class Edit extends BackendBaseActionEdit
             $showDelete = false;
         }
 
+        // show delete button
+        $this->tpl->assign('allowPagesDelete', $showDelete);
+
         // assign template
         $this->tpl->assignArray($this->templates[$this->record['template_id']], 'template');
 
