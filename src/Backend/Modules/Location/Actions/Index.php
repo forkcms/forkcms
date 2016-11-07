@@ -41,7 +41,7 @@ class Index extends BackendBaseActionIndex
      */
     public function execute()
     {
-        $this->header->addJS(FrontendLocationModel::getPathToMapStyles(), true);
+        $this->header->addJS(FrontendLocationModel::getPathToMapStyles());
         parent::execute();
 
         // define Google Maps API key

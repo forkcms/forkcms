@@ -42,10 +42,12 @@ class TwigTemplate extends BaseTwigTemplate
         if ($this->forkSettings) {
             $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
             $loader = $this->environment->getLoader();
-            $loader = new \Twig_Loader_Chain(array(
-                $loader,
-                new \Twig_Loader_Filesystem($this->getLoadingFolders()),
-            ));
+            $loader = new \Twig_Loader_Chain(
+                array(
+                    $loader,
+                    new \Twig_Loader_Filesystem($this->getLoadingFolders()),
+                )
+            );
             $this->environment->setLoader($loader);
 
             // connect symphony forms
@@ -80,6 +82,7 @@ class TwigTemplate extends BaseTwigTemplate
         if (strpos($template, FRONTEND_MODULES_PATH) !== false) {
             return str_replace(FRONTEND_MODULES_PATH . '/', '', $template);
         }
+
         // else it's in the theme folder
         return str_replace($this->themePath . '/', '', $template);
     }
@@ -98,7 +101,7 @@ class TwigTemplate extends BaseTwigTemplate
     /**
      * Fetch the parsed content from this template.
      *
-     * @param string $template      The location of the template file, used to display this template.
+     * @param string $template The location of the template file, used to display this template.
      *
      * @return string The actual parsed content after executing this template.
      */
@@ -147,7 +150,6 @@ class TwigTemplate extends BaseTwigTemplate
                 $this->themePath,
                 FRONTEND_MODULES_PATH,
                 FRONTEND_PATH,
-                '/',
             ),
             function ($folder) use ($filesystem) {
                 return $filesystem->exists($folder);

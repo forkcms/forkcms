@@ -229,11 +229,10 @@ class Authentication
     {
         $alwaysAllowed = self::getAlwaysAllowed();
 
-        // grab the URL from the reference
-        $url = BackendModel::get('url');
-
-        $action = ($action !== null) ? (string) $action : $url->getAction();
-        $module = \SpoonFilter::toCamelCase(($module !== null) ? (string) $module : $url->getModule());
+        // The url should only be taken from the container if the action and or module isn't set
+        // This way we can use the command also in the a console command
+        $action = ($action !== null) ? (string) $action : BackendModel::get('url')->getAction();
+        $module = \SpoonFilter::toCamelCase(($module !== null) ? (string) $module : BackendModel::get('url')->getModule());
 
         // is this action an action that doesn't require authentication?
         if (isset($alwaysAllowed[$module][$action])) {

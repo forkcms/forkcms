@@ -44,7 +44,7 @@ class Edit extends BackendBaseActionEdit
 
         // does the item exists
         if ($this->id !== null && BackendLocationModel::exists($this->id)) {
-            $this->header->addJS(FrontendLocationModel::getPathToMapStyles(), true);
+            $this->header->addJS(FrontendLocationModel::getPathToMapStyles());
             parent::execute();
 
             // define Google Maps API key

@@ -9,7 +9,6 @@ use Common\Core\Twig\Extensions\TwigFilters;
 use ReflectionClass;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
-use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Twig_Environment;
@@ -48,7 +47,7 @@ class TwigTemplate extends BaseTwigTemplate
     /**
      * Fetch the parsed content from this template.
      *
-     * @param string $template      The location of the template file, used to display this template.
+     * @param string $template The location of the template file, used to display this template.
      *
      * @return string The actual parsed content after executing this template.
      */
@@ -69,16 +68,21 @@ class TwigTemplate extends BaseTwigTemplate
         $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
 
         // render the compiled File
-        $loader = new Twig_Loader_Filesystem(array(
-            BACKEND_MODULES_PATH,
-            BACKEND_CORE_PATH,
-            $vendorTwigBridgeDir . '/Resources/views/Form'
-        ));
+        $loader = new Twig_Loader_Filesystem(
+            array(
+                BACKEND_MODULES_PATH,
+                BACKEND_CORE_PATH,
+                $vendorTwigBridgeDir . '/Resources/views/Form',
+            )
+        );
 
-        $twig = new Twig_Environment($loader, array(
-            'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
-            'debug' => $this->debugMode,
-        ));
+        $twig = new Twig_Environment(
+            $loader,
+            array(
+                'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
+                'debug' => $this->debugMode,
+            )
+        );
 
         // connect symphony forms
         $formEngine = new TwigRendererEngine(array('Layout/Templates/FormLayout.html.twig'));
@@ -99,7 +103,7 @@ class TwigTemplate extends BaseTwigTemplate
 
         if (count($this->forms) > 0) {
             foreach ($this->forms as $form) {
-                $twig->addGlobal('form_'.$form->getName(), $form);
+                $twig->addGlobal('form_' . $form->getName(), $form);
             }
         }
 
