@@ -4,9 +4,9 @@
 			<h3>{{ 'lbl.UnsubscribeFromNewsletter'|trans|capitalize }}</h3>
 		</div>
 		<div class="bd">
-			{% if mailMotorUnsubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>{% endif %}
-			{% if mailMotorUnsubscribeHasError %}<div class="message error"><p>{{ 'err.UnsubscribeFailed'|trans }}</p></div>{% endif %}
-			{% if mailMotorUnsubscribeIsSuccess %}<div class="message success"><p>{{ 'msg.UnsubscribeSuccess'|trans }}</p></div>{% endif %}
+			{% if mailMotorUnsubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans|raw }}</p></div>{% endif %}
+			{% if mailMotorUnsubscribeHasError %}<div class="message error"><p>{{ 'err.UnsubscribeFailed'|trans|raw }}</p></div>{% endif %}
+			{% if mailMotorUnsubscribeIsSuccess %}<div class="message success"><p>{{ 'msg.UnsubscribeSuccess'|trans|raw }}</p></div>{% endif %}
 
 			{% if not mailMotorUnsubscribeHideForm %}
 				{% form mailMotorUnsubscribeForm %}

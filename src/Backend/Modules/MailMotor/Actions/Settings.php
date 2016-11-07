@@ -16,7 +16,7 @@ use Backend\Core\Engine\Model;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * This is the settings-action (default), 
+ * This is the settings-action (default),
  * it will be used to couple your "mail-engine" account
  *
  * @author Jeroen Desloovere <jeroen@siesqo.be>
@@ -87,23 +87,23 @@ final class Settings extends ActionIndex
             ->addDropdown(
                 'mail_engine',
                 $ddmValuesForMailEngines,
-                $this->getSetting('mail_engine')
+                $this->get('fork.settings')->get($this->URL->getModule(), 'mail_engine')
             )
             ->setDefaultElement(ucfirst(Language::lbl('None')))
         ;
         $this->form->addText(
             'api_key',
-            $this->getSetting('api_key')
+            $this->get('fork.settings')->get($this->URL->getModule(), 'api_key')
         );
         $this->form->addText(
             'list_id',
-            $this->getSetting('list_id')
+            $this->get('fork.settings')->get($this->URL->getModule(), 'list_id')
         );
 
         // Other settings
         $this->form->addCheckbox(
             'overwrite_interests',
-            $this->getSetting('overwrite_interests')
+            $this->get('fork.settings')->get($this->URL->getModule(), 'overwrite_interests')
         );
     }
 
@@ -132,23 +132,23 @@ final class Settings extends ActionIndex
             $listId = $fields['list_id']->getValue();
             $overwriteInterests = $fields['overwrite_interests']->isChecked();
 
-            if ($mailEngine !== '') {
+            if ($mailEngine !== null) {
                 $fields['api_key']->isFilled(Language::err('FieldIsRequired'));
                 $fields['list_id']->isFilled(Language::err('FieldIsRequired'));
             }
 
             if ($this->form->isCorrect()) {
                 // set our settings
-                $this->setSetting('mail_engine', $mailEngine);
-                $this->setSetting('overwrite_interests', $overwriteInterests);
+                $this->get('fork.settings')->set($this->URL->getModule(), 'mail_engine', $mailEngine);
+                $this->get('fork.settings')->set($this->URL->getModule(), 'overwrite_interests', $overwriteInterests);
 
                 // mail engine is empty
                 if ($mailEngine == '') {
-                    $this->deleteSetting('api_key');
-                    $this->deleteSetting('list_id');
+                    $this->get('fork.settings')->delete($this->URL->getModule(), 'api_key');
+                    $this->get('fork.settings')->delete($this->URL->getModule(), 'list_id');
                 } else {
-                    $this->setSetting('api_key', $apiKey);
-                    $this->setSetting('list_id', $listId);
+                    $this->get('fork.settings')->set($this->URL->getModule(), 'api_key', $apiKey);
+                    $this->get('fork.settings')->set($this->URL->getModule(), 'list_id', $listId);
                 }
 
                 /**
@@ -174,49 +174,5 @@ final class Settings extends ActionIndex
                 );
             }
         }
-    }
-
-    /**
-     * Get setting
-     *
-     * @param string $key
-     * @param string $defaultValue
-     * @return string
-     */
-    private function getSetting($key, $defaultValue = null)
-    {
-        return $this->get('fork.settings')->get(
-            $this->URL->getModule(),
-            $key,
-            $defaultValue
-        );
-    }
-
-    /**
-     * Delete setting
-     *
-     * @param string $key
-     */
-    private function deleteSetting($key)
-    {
-        $this->get('fork.settings')->delete(
-            $this->URL->getModule(),
-            $key
-        );
-    }
-
-    /**
-     * Set setting
-     *
-     * @param string $key
-     * @param string $value
-     */
-    private function setSetting($key, $value)
-    {
-        $this->get('fork.settings')->set(
-            $this->URL->getModule(),
-            $key,
-            $value
-        );
     }
 }

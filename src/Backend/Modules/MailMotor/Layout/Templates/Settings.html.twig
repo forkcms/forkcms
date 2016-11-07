@@ -1,0 +1,52 @@
+{% extends '/Layout/Templates/base.html.twig' %}
+
+{% block content %}
+  {% form settings %}
+    <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+          {{ 'lbl.Settings'|trans|capitalize }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <p>
+              <label for="mailEngine">{{ 'lbl.MailEngine'|trans|capitalize }}</label>
+              {% form_field_error mail_engine %} {% form_field mail_engine %}
+            </p>
+          </div>
+          <div class="form-group">
+            <p class="mail-engine-selected" style="display: none;">
+              <label for="apiKey">{{ 'lbl.ApiKey'|trans|capitalize }}</label>
+              {% form_field_error api_key %} {% form_field api_key %}
+            </p>
+          </div>
+          <div class="form-group">
+            <p class="mail-engine-selected" style="display: none;">
+              <label for="listId">{{ 'lbl.ListId'|trans|capitalize }}</label>
+              {% form_field_error list_id %} {% form_field list_id %}
+            </p>
+          </div>
+          <div class="form-group">
+            <p>
+              <label for="overwriteInterests">{% form_field overwrite_interests %} {{ 'msg.OverwriteInterests'|trans|ucfirst }}</label>
+              {% form_field_error overwrite_interests %}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="row fork-module-actions">
+      <div class="col-md-12">
+        <div class="btn-toolbar">
+          <div class="btn-group pull-right" role="group">
+            <button id="save" type="submit" name="save" class="btn btn-primary">{{ 'lbl.Save'|trans|capitalize }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endform %}
+{% endblock %}
