@@ -93,13 +93,11 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $deleteAllowed = false;
         } elseif ($inUse) {
             $deleteAllowed = false;
-        } elseif (!BackendAuthentication::isAllowedAction('DeleteThemeTemplate')) {
-            $deleteAllowed = false;
         }
 
         // assign
         $this->tpl->assign('inUse', $inUse);
-        $this->tpl->assign('showExtensionsDeleteThemeTemplate', $deleteAllowed);
+        $this->tpl->assign('allowExtensionsDeleteThemeTemplate', $deleteAllowed);
     }
 
     /**
