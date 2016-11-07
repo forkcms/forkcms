@@ -196,8 +196,6 @@ abstract class AbstractFile
     }
 
     /**
-     * Returns a string representation of the child.
-     *
      * @return string
      */
     public function __toString()
