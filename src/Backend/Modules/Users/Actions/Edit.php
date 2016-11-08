@@ -214,8 +214,8 @@ class Edit extends BackendBaseActionEdit
 
         // only allow deletion of other users
         $this->tpl->assign(
-            'showUsersDelete',
-            $this->authenticatedUser->getUserId() != $this->id && BackendAuthentication::isAllowedAction('Delete')
+            'allowUsersDelete',
+            $this->authenticatedUser->getUserId() != $this->id
         );
 
         // assign

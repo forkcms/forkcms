@@ -80,8 +80,8 @@ class EditCategory extends BackendBaseActionEdit
 
         // delete allowed?
         $this->tpl->assign(
-            'showBlogDeleteCategory',
-            BackendBlogModel::deleteCategoryAllowed($this->id) && BackendModel::createURLForAction('DeleteCategory')
+            'allowBlogDeleteCategory',
+            BackendBlogModel::deleteCategoryAllowed($this->id)
         );
     }
 

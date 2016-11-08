@@ -1,7 +1,7 @@
 {% extends '/Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
-  {% if showFaqAddCategory %}
+  {% if showFaqAddCategory and allowFaqAddCategory %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon( geturl('add_category'), 'plus-square', 'lbl.AddCategory'|trans|ucfirst) }}
