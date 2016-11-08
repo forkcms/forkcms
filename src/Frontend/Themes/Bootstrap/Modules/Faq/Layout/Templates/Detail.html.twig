@@ -44,33 +44,35 @@
         {% if spam %}
           {{ alerts.alert('danger', 'err.FeedbackSpam'|trans) }}
         {% endif %}
-        {% form feedback %}
-          <div class="row">
-            <div class="col-xs-12 well">
-              {{ hidQuestionId|raw }}
-              <div class="options form-inline">
-                <div class="col-md-3">
-                  {{ 'msg.Feedback'|trans|capitalize }}
+        {% if form_feedback %}
+          {% form feedback %}
+            <div class="row">
+              <div class="col-xs-12 well">
+                {{ hidQuestionId|raw }}
+                <div class="options form-inline">
+                  <div class="col-md-3">
+                    {{ 'msg.Feedback'|trans|capitalize }}
+                  </div>
+                  <div class="col-md-9">
+                    {% for answer in useful %}
+                      <div class="col-md-2">
+                        <label for="{{ answer.id }}">{{ answer.rbtUseful|raw }} {{ answer.label|capitalize }}</label>
+                      </div>
+                    {% endfor %}
+                  </div>
                 </div>
-                <div class="col-md-9">
-                  {% for answer in useful %}
-                    <div class="col-md-2">
-                      <label for="{{ answer.id }}">{{ answer.rbtUseful|raw }} {{ answer.label|capitalize }}</label>
-                    </div>
-                  {% endfor %}
-                </div>
-              </div>
 
-              <div id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
-                <div class="form-group{% if txtMessageError %} has-error{% endif %}">
-                  <label class="control-label" for="message">{{ 'msg.HowToImprove'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-                  {% form_field_error message %} {% form_field message %}
+                <div id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
+                  <div class="form-group{% if txtMessageError %} has-error{% endif %}">
+                    <label class="control-label" for="message">{{ 'msg.HowToImprove'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+                    {% form_field_error message %} {% form_field message %}
+                  </div>
+                  <input class="btn btn-default" type="submit" name="comment" value="{{ 'lbl.Send'|trans|capitalize }}" />
                 </div>
-                <input class="btn btn-default" type="submit" name="comment" value="{{ 'lbl.Send'|trans|capitalize }}" />
               </div>
             </div>
-          </div>
-        {% endform %}
+          {% endform %}
+        {% endif %}
       </aside>
     {% endif %}
   </article>
