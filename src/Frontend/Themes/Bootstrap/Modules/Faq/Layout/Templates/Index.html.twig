@@ -4,14 +4,14 @@
 #}
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-<div id="faqIndex" class="faq">
+<div id="faqIndex" class="faq" itemscope itemtype="http://schema.org/Question">
   {% if not faqCategories %}
     {{ alerts.alert('info', 'msg.FaqNoItems'|trans) }}
   {% else %}
     {% for category in faqCategories %}
       <header class="module-header">
         {% if allowMultipleCategories %}
-          <h2 id="{{ category.url }}"><a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h2>
+          <h2 id="{{ category.url }}" itemprop="genre"><a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h2>
         {% else %}
           <h2>{{ 'lbl.Category'|trans|capitalize }}</h2>
         {% endif %}

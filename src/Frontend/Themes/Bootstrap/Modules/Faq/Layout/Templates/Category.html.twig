@@ -3,9 +3,9 @@
   - {{ questions }}: contains all questions inside this category
 #}
 
-<section id="faqCategory" class="faq faq-category">
+<section id="faqCategory" class="faq faq-category" itemscope itemtype="http://schema.org/Question">
   <header class="module-header">
-    <h1>{{ category.title }}</h1>
+    <h1 itemprop="genre">{{ category.title }}</h1>
   </header>
   <div class="module-body">
     {% if questions %}
