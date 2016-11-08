@@ -65,8 +65,8 @@ class PreviousNextNavigation extends FrontendBaseWidget
             $pages = $navigation['page'][$pageInfo['parent_id']];
 
             // unset the hidden pages
-            foreach($pages as $id => $page) {
-                if($page['hidden']) {
+            foreach ($pages as $id => $page) {
+                if ($page['hidden']) {
                     unset($pages[$id]);
                 }
             }
