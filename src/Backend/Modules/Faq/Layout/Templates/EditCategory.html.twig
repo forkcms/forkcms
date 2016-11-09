@@ -27,7 +27,7 @@
               {% form_field title %} {% form_field_error title %}
               {% if detailURL %}
                 <a href="{{ detailURL }}">
-                  <small>{{ detailURL }}/<span id="generatedUrl"></span></small>
+                  <small>{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></small>
                 </a>      {% endif %}
               {% if not detailURL %}
                 <p class="alert alert-warning alert-xs">
