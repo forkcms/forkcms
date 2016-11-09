@@ -385,14 +385,14 @@ class TemplateModifiers extends BaseTwigModifiers
      * Get the value for a user-setting
      *    syntax {{ usersetting($setting, $userId) }}
      *
-     * @param string $string  The string passed from the template.
+     * @param string|null $string  The string passed from the template.
      * @param string $setting The name of the setting you want.
      * @param int    $userId  The userId, if not set by $string.
      *
      * @return string
      * @throws Exception
      */
-    public static function userSetting($string = null, $setting, $userId = null)
+    public static function userSetting($string, $setting, $userId = null)
     {
         $userId = ($string !== null) ? (int) $string : (int) $userId;
         $setting = (string) $setting;

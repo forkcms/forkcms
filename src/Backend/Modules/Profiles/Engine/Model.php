@@ -841,14 +841,14 @@ class Model
      * Send mail
      *
      * @param string $subject
-     * @param string $templatePath
+     * @param string|null $templatePath
      * @param array $variables
      * @param string $toEmail
      * @param string $toDisplayName
      */
     protected static function sendMail(
         $subject,
-        $templatePath = null,
+        $templatePath,
         $variables,
         $toEmail,
         $toDisplayName = null
