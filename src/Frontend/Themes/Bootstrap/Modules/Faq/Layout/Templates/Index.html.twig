@@ -13,7 +13,7 @@
         {% if allowMultipleCategories %}
           <h2 id="{{ category.url }}" itemprop="genre"><a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h2>
         {% else %}
-          <h2>{{ 'lbl.Category'|trans|capitalize }}</h2>
+          <h2>{{ 'lbl.Category'|trans|ucfirst }}</h2>
         {% endif %}
       </header>
       <div class="module-body">
