@@ -3,25 +3,26 @@
   - {{ faqCategories }}: contains all categories, along with all questions inside a category
 #}
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
-{% if not faqCategories %}
-  <div id="faqIndex" class="faq">
+
+<div id="faqIndex" class="faq" itemscope itemtype="http://schema.org/Question">
+  {% if not faqCategories %}
     {{ alerts.alert('info', 'msg.FaqNoItems'|trans) }}
-  </div>
-{% else %}
-  <div id="faqIndex" class="faq">
+  {% else %}
     {% for category in faqCategories %}
-      <section>
+      <header class="module-header">
         {% if allowMultipleCategories %}
-          <header role="banner">
-            <h2 id="{{ category.url }}"><a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h2>
-          </header>
+          <h2 id="{{ category.url }}" itemprop="genre"><a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h2>
+        {% else %}
+          <h2>{{ 'lbl.Category'|trans|ucfirst }}</h2>
         {% endif %}
-      <ul>
-        {% for question in category.questions %}
-          <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
-        {% endfor %}
-      </ul>
-      </section>
+      </header>
+      <div class="module-body">
+        <ul>
+          {% for question in category.questions %}
+            <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
     {% endfor %}
-  </div>
-{% endif %}
+  {% endif %}
+</div>
