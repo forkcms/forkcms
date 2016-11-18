@@ -359,7 +359,7 @@ jsBackend.mailmotor.step3 =
                 // set variables
                 var subject = $('#subject').val();
                 var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
-                var textareaValue = $iframe[0].contentWindow.getEditorContent();
+                var textareaValue = $iframe[0].contentWindow.document.querySelector('.inputEditorNewsletter').value;
 
                 // make the call
                 $.ajax(
