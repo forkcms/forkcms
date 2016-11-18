@@ -69,8 +69,8 @@ class Detail extends FrontendBaseBlock
 
         // define the key/value replacements to assign in to the mailing body
         $replacements = array(
-            '{$siteURL}' => SITE_URL,
-            'src="/"' => 'src="' . SITE_URL . '/',
+            '{{ siteURL }}' => SITE_URL,
+            'src="/' => 'src="' . SITE_URL . '/',
             '{$css}' => $template['css'],
         );
 
