@@ -47,6 +47,7 @@ class Index extends FrontendBaseBlock
 
         // create data grid
         $this->dataGrid = new \SpoonDataGrid($source);
+        $this->dataGrid->setPagingClass(\SpoonDatagridPaging::class);
         $this->dataGrid->setCompileDirectory(FRONTEND_CACHE_PATH . '/CompiledTemplates');
 
         // set hidden columns
