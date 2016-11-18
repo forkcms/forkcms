@@ -40,7 +40,7 @@ class Index extends FrontendBaseBlock
     private function loadDataGrid()
     {
         // create a new source-object
-        $source = new \SpoonDataGridSourceDB(
+        $source = new \SpoonDatagridSourceDB(
             FrontendModel::getContainer()->get('database'),
             array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', LANGUAGE))
         );
