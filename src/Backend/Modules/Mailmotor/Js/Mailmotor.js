@@ -79,7 +79,7 @@ jsBackend.mailmotor.chartPieChart =
 
         var chart = new Highcharts.Chart(
         {
-            chart: { renderTo: 'chartPieChart', height: 200, margin: [0, 160, 0, 0]    },
+            chart: { renderTo: 'chartPieChart', height: 200, margin: [0, 160, 0, 0]	},
             credits: { enabled: false },
             plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
             tooltip:
