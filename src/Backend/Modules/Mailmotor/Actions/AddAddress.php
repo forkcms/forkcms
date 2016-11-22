@@ -24,7 +24,7 @@ class AddAddress extends BackendBaseActionAdd
     /**
      * The given group ID
      *
-     * @var    int
+     * @var int
      */
     private $groupId;
 

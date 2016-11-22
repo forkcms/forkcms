@@ -19,12 +19,12 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 class Category extends FrontendBaseBlock
 {
     /**
-     * @var    array
+     * @var array
      */
     private $questions;
 
     /**
-     * @var    array
+     * @var array
      */
     private $record;
 

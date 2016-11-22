@@ -23,28 +23,28 @@ class EditAddress extends BackendBaseActionEdit
     /**
      * The custom fields
      *
-     * @var    array
+     * @var array
      */
     private $customFields = array();
 
     /**
      * The e-mail parameter
      *
-     * @var    string
+     * @var string
      */
     private $email;
 
     /**
      * The passed group record
      *
-     * @var    array
+     * @var array
      */
     private $group;
 
     /**
      * The subscriptions this e-mail is part of
      *
-     * @var    array
+     * @var array
      */
     private $subscriptions;
 

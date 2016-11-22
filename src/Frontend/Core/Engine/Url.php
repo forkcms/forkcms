@@ -23,7 +23,7 @@ class Url extends \KernelLoader
     /**
      * The pages
      *
-     * @var    array
+     * @var array
      */
     private $pages = array();
 
@@ -37,7 +37,7 @@ class Url extends \KernelLoader
     /**
      * The parameters
      *
-     * @var    array
+     * @var array
      */
     private $parameters = array();
 

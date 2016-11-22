@@ -2,47 +2,47 @@
  * Interaction for the profiles module
  */
 jsFrontend.profiles = {
-	/**
-	 * Kind of constructor
-	 */
-	init: function()
-	{
-		jsFrontend.profiles.showPassword();
-	},
+    /**
+     * Kind of constructor
+     */
+    init: function()
+    {
+        jsFrontend.profiles.showPassword();
+    },
 
-	/**
-	 * Make possible to show passwords in clear text
-	 */
-	showPassword: function()
-	{
-		// checkbox showPassword is clicked
-		$('#showPassword').on('click', function()
-		{
-			// checkbox is checked
-			if($(this).is(':checked'))
-			{
-				// clone password and change type
-				$('.showPasswordInput').clone().attr('type', 'input').insertAfter($('.showPasswordInput'));
-				$('.showVerifyPasswordInput').clone().attr('type', 'input').insertAfter($('.showVerifyPasswordInput'));
+    /**
+     * Make possible to show passwords in clear text
+     */
+    showPassword: function()
+    {
+        // checkbox showPassword is clicked
+        $('#showPassword').on('click', function()
+        {
+            // checkbox is checked
+            if($(this).is(':checked'))
+            {
+                // clone password and change type
+                $('.showPasswordInput').clone().attr('type', 'input').insertAfter($('.showPasswordInput'));
+                $('.showVerifyPasswordInput').clone().attr('type', 'input').insertAfter($('.showVerifyPasswordInput'));
 
-				// remove original
-				$('.showPasswordInput:first').remove();
-				$('.showVerifyPasswordInput:first').remove();
-			}
+                // remove original
+                $('.showPasswordInput:first').remove();
+                $('.showVerifyPasswordInput:first').remove();
+            }
 
-			// checkbox not checked
-			else
-			{
-				// clone password and change type
-				$('.showPasswordInput').clone().attr('type', 'password').insertAfter($('.showPasswordInput'));
-				$('.showVerifyPasswordInput').clone().attr('type', 'password').insertAfter($('.showVerifyPasswordInput'));
+            // checkbox not checked
+            else
+            {
+                // clone password and change type
+                $('.showPasswordInput').clone().attr('type', 'password').insertAfter($('.showPasswordInput'));
+                $('.showVerifyPasswordInput').clone().attr('type', 'password').insertAfter($('.showVerifyPasswordInput'));
 
-				// remove original
-				$('.showPasswordInput:first').remove();
-				$('.showVerifyPasswordInput:first').remove();
-			}
-		});
-	}
+                // remove original
+                $('.showPasswordInput:first').remove();
+                $('.showVerifyPasswordInput:first').remove();
+            }
+        });
+    }
 };
 
 $(jsFrontend.profiles.init);

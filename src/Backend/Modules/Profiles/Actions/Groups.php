@@ -24,7 +24,7 @@ class Groups extends BackendBaseActionIndex
     /**
      * Filter variables.
      *
-     * @var    array
+     * @var array
      */
     private $filter;
 
@@ -38,7 +38,7 @@ class Groups extends BackendBaseActionIndex
     /**
      * Groups data grid.
      *
-     * @var    BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgGroups;
 

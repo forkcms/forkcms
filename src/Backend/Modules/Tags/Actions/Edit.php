@@ -25,7 +25,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * DataGrid with the articles linked to the current tag
      *
-     * @var    BackendDataGridArray
+     * @var BackendDataGridArray
      */
     protected $dgUsage;
 

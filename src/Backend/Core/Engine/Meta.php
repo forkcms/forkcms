@@ -22,49 +22,49 @@ class Meta
     /**
      * The name of the field we should use to generate default-values
      *
-     * @var    string
+     * @var string
      */
     protected $baseFieldName;
 
     /**
      * The callback method
      *
-     * @var    array
+     * @var array
      */
     protected $callback = array();
 
     /**
      * Do we need meta custom
      *
-     * @var    bool
+     * @var bool
      */
     protected $custom;
 
     /**
      * The data, when a existing meta-record is loaded
      *
-     * @var    array
+     * @var array
      */
     protected $data;
 
     /**
      * The form instance
      *
-     * @var    Form
+     * @var Form
      */
     protected $frm;
 
     /**
      * The id, when an existing meta-record is loaded
      *
-     * @var    int
+     * @var int
      */
     protected $id;
 
     /**
      * The URL-instance
      *
-     * @var    Url
+     * @var Url
      */
     protected $URL;
 

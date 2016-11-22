@@ -20,7 +20,7 @@ class Form extends \Common\Core\Form
     /**
      * Show the global error
      *
-     * @var    bool
+     * @var bool
      */
     private $useGlobalError = true;
 
@@ -139,7 +139,7 @@ class Form extends \Common\Core\Form
             throw new Exception('A datefield with type "range" should have 2 valid date-parameters.');
         }
 
-        // @later	get preferred mask & first day
+        // @later get preferred mask & first day
         $mask = 'd/m/Y';
         $firstday = 1;
 

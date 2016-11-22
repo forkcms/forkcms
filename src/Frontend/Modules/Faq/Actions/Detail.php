@@ -33,21 +33,21 @@ class Detail extends FrontendBaseBlock
     /**
      * The faq
      *
-     * @var    array
+     * @var array
      */
     private $record;
 
     /**
      * The settings
      *
-     * @var    array
+     * @var array
      */
     private $settings;
 
     /**
      * The status of the form
      *
-     * @var    string
+     * @var string
      */
     private $status;
 

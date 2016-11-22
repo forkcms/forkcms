@@ -40,7 +40,7 @@ class ForkInstaller
      *        - make sure the Model::setContainer isn't needed anymore
      *
      * @param Container $container
-     * @param           $rootDir
+     * @param        $rootDir
      */
     public function __construct(Container $container, $rootDir)
     {

@@ -20,21 +20,21 @@ class Authentication
     /**
      * All allowed modules
      *
-     * @var    array
+     * @var array
      */
     private static $allowedActions = array();
 
     /**
      * All allowed modules
      *
-     * @var    array
+     * @var array
      */
     private static $allowedModules = array();
 
     /**
      * A user object for the current authenticated user
      *
-     * @var    User
+     * @var User
      */
     private static $user;
 

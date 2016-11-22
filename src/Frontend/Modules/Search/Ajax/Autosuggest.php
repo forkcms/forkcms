@@ -23,28 +23,28 @@ class Autosuggest extends FrontendBaseAJAXAction
     /**
      * Name of the cache file
      *
-     * @var    string
+     * @var string
      */
     private $cacheFile;
 
     /**
      * The items
      *
-     * @var    array
+     * @var array
      */
     private $items;
 
     /**
      * Limit of data to fetch
      *
-     * @var    int
+     * @var int
      */
     private $limit;
 
     /**
      * Offset of data to fetch
      *
-     * @var    int
+     * @var int
      */
     private $offset;
 
@@ -52,7 +52,7 @@ class Autosuggest extends FrontendBaseAJAXAction
      * The pagination array
      * It will hold all needed parameters, some of them need initialization.
      *
-     * @var    array
+     * @var array
      */
     protected $pagination = array(
         'limit' => 20,
@@ -65,7 +65,7 @@ class Autosuggest extends FrontendBaseAJAXAction
     /**
      * The requested page
      *
-     * @var    int
+     * @var int
      */
     private $requestedPage;
 

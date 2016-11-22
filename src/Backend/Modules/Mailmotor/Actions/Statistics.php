@@ -28,21 +28,21 @@ class Statistics extends BackendBaseActionIndex
     /**
      * The given mailing ID
      *
-     * @var    int
+     * @var int
      */
     private $id;
 
     /**
      * The mailing record
      *
-     * @var    array
+     * @var array
      */
     private $mailing;
 
     /**
      * The statistics record
      *
-     * @var    array
+     * @var array
      */
     private $statistics;
 

@@ -17,7 +17,7 @@ class Theme
     /**
      * The current active theme's name
      *
-     * @var    string
+     * @var string
      */
     private static $theme;
 

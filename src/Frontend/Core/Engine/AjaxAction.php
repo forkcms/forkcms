@@ -20,7 +20,7 @@ class AjaxAction extends FrontendBaseAJAXAction
     /**
      * The config file
      *
-     * @var    Base\Config
+     * @var Base\Config
      */
     protected $config;
 

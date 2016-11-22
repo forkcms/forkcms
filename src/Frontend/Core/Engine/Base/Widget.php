@@ -22,35 +22,35 @@ class Widget extends Object
     /**
      * The current action
      *
-     * @var    string
+     * @var string
      */
     protected $action;
 
     /**
      * The data
      *
-     * @var    mixed
+     * @var mixed
      */
     protected $data;
 
     /**
      * The header object
      *
-     * @var    Header
+     * @var Header
      */
     protected $header;
 
     /**
      * The current module
      *
-     * @var    string
+     * @var string
      */
     protected $module;
 
     /**
      * Path to the template
      *
-     * @var    string
+     * @var string
      */
     public $templatePath;
 

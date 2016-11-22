@@ -26,7 +26,7 @@ class ImportAddresses extends BackendBaseActionEdit
     /**
      * The passed group ID
      *
-     * @var    int
+     * @var int
      */
     private $groupId;
 

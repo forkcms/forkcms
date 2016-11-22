@@ -28,56 +28,56 @@ class Block extends Object
     /**
      * The current action
      *
-     * @var    string
+     * @var string
      */
     protected $action;
 
     /**
      * The breadcrumb object
      *
-     * @var    Breadcrumb
+     * @var Breadcrumb
      */
     protected $breadcrumb;
 
     /**
      * The data
      *
-     * @var    mixed
+     * @var mixed
      */
     protected $data;
 
     /**
      * The header object
      *
-     * @var    Header
+     * @var Header
      */
     protected $header;
 
     /**
      * The current module
      *
-     * @var    string
+     * @var string
      */
     protected $module;
 
     /**
      * Should the current template be replaced with the blocks one?
      *
-     * @var    bool
+     * @var bool
      */
     private $overwrite;
 
     /**
      * Pagination array
      *
-     * @var    array
+     * @var array
      */
     protected $pagination;
 
     /**
      * The path of the template to include, or that replaced the current one
      *
-     * @var    string
+     * @var string
      */
     private $templatePath;
 

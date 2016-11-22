@@ -19,7 +19,7 @@ class RssItem extends \SpoonFeedRSSItem
     /**
      * Initial values for UTM-parameters
      *
-     * @var    array
+     * @var array
      */
     private $utm = array('utm_source' => 'feed', 'utm_medium' => 'rss');
 

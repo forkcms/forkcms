@@ -21,9 +21,9 @@ class FormImage extends \SpoonFormImage
     /**
      * Constructor.
      *
-     * @param    string            $name          The name.
-     * @param    string [optional] $class         The CSS-class to be used.
-     * @param    string [optional] $classError    The CSS-class to be used when there is an error.
+     * @param string            $name          The name.
+     * @param string [optional] $class         The CSS-class to be used.
+     * @param string [optional] $classError    The CSS-class to be used when there is an error.
      *
      * @see      SpoonFormFile::__construct()
      */
@@ -39,7 +39,7 @@ class FormImage extends \SpoonFormImage
     /**
      * Should the helpTxt span be hidden when parsing the field?
      *
-     * @var    bool
+     * @var bool
      */
     private $hideHelpTxt = false;
 
