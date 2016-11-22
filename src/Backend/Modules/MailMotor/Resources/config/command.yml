@@ -1,0 +1,7 @@
+services:
+  mail_motor.handler.save_settings:
+    class: Backend\Modules\MailMotor\Command\SaveSettingsHandler
+    arguments:
+      - "@fork.settings"
+    tags:
+      - { name: command_handler, handles: Backend\Modules\MailMotor\Command\SaveSettings }

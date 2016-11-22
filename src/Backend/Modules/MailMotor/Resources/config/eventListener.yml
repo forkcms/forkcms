@@ -1,0 +1,7 @@
+services:
+  mail_motor.listener.settings_saved:
+    class: Backend\Modules\MailMotor\EventListener\SettingsSavedListener
+    arguments:
+      - "%kernel.cache_dir%"
+    tags:
+      - { name: kernel.event_listener, event: mail_motor.event.settings_saved, method: onSettingsSavedEvent }

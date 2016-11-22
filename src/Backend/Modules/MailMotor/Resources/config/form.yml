@@ -1,0 +1,7 @@
+services:
+  mail_motor.form.settings:
+    class: Backend\Modules\MailMotor\Form\SettingsType
+    arguments:
+      - "@=service('service_container').getServiceIds()"
+    tags:
+        - {name: 'form.type'}
