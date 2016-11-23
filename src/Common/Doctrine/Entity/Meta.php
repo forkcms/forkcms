@@ -175,6 +175,8 @@ class Meta
     public function serialiseData()
     {
         if (!empty($this->data)) {
+            $this->data['seo_index'] = (string) $this->data['seo_index'];
+            $this->data['seo_follow'] = (string) $this->data['seo_follow'];
             $this->data = serialize($this->data);
 
             return;
@@ -191,7 +193,16 @@ class Meta
     public function unSerialiseData()
     {
         if ($this->data !== null) {
+            // backwards compatible fix for when the seo is saved with the serialized value objects
+            // @TODO remove this for fork 5
+            $this->data = preg_replace(
+                '$O\\:3[67]\\:"Common\\\\Doctrine\\\\ValueObject\\\\(?:(?:SEOIndex)|(?:SEOFollow))"\\:1\\:{s\\:4[68]\\:"\\x00Common\\\\Doctrine\\\\ValueObject\\\\(?:(?:SEOIndex)|(?:SEOFollow))\\x00(?:(?:SEOIndex)|(?:SEOFollow))";(s\\:\d+\\:".+?";)}$',
+                '$1',
+                $this->data
+            );
             $this->data = unserialize($this->data);
+            $this->data['seo_index'] = SEOIndex::fromString($this->data['seo_index']);
+            $this->data['seo_follow'] = SEOFollow::fromString($this->data['seo_follow']);
 
             return;
         }

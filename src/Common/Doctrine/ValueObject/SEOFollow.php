@@ -2,6 +2,8 @@
 
 namespace Common\Doctrine\ValueObject;
 
+use Serializable;
+
 final class SEOFollow
 {
     const NONE = 'none';
