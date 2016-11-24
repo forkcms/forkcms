@@ -175,8 +175,12 @@ class Meta
     public function serialiseData()
     {
         if (!empty($this->data)) {
-            $this->data['seo_index'] = (string) $this->data['seo_index'];
-            $this->data['seo_follow'] = (string) $this->data['seo_follow'];
+            if (array_key_exists('seo_index', $this->data)) {
+                $this->data['seo_index'] = (string) $this->data['seo_index'];
+            }
+            if (array_key_exists('seo_follow', $this->data)) {
+                $this->data['seo_follow'] = (string) $this->data['seo_follow'];
+            }
             $this->data = serialize($this->data);
 
             return;
@@ -201,8 +205,12 @@ class Meta
                 $this->data
             );
             $this->data = unserialize($this->data);
-            $this->data['seo_index'] = SEOIndex::fromString($this->data['seo_index']);
-            $this->data['seo_follow'] = SEOFollow::fromString($this->data['seo_follow']);
+            if (array_key_exists('seo_index', $this->data)) {
+                $this->data['seo_index'] = SEOIndex::fromString($this->data['seo_index']);
+            }
+            if (array_key_exists('seo_follow', $this->data)) {
+                $this->data['seo_follow'] = SEOFollow::fromString($this->data['seo_follow']);
+            }
 
             return;
         }
@@ -355,10 +363,14 @@ class Meta
     }
 
     /**
-     * @return SEOIndex
+     * @return SEOIndex|null
      */
     public function getSEOIndex()
     {
+        if (!$this->hasSEOIndex()) {
+            return;
+        }
+
         return SEOIndex::fromString($this->data['seo_index']);
     }
 
@@ -368,10 +380,14 @@ class Meta
     }
 
     /**
-     * @return SEOFollow
+     * @return SEOFollow|null
      */
     public function getSEOFollow()
     {
+        if (!$this->hasSEOFollow()) {
+            return;
+        }
+
         return SEOFollow::fromString($this->data['seo_follow']);
     }
 }
