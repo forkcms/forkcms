@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>Faq</name>
-	<version>2.0.1</version>
+	<version>2.0.2</version>
 	<requirements>
 		<minimum_version>3.0.0</minimum_version>
 	</requirements>
