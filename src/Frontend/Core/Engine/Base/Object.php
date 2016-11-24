@@ -28,7 +28,7 @@ class Object extends \KernelLoader
     /**
      * URL instance
      *
-     * @var    Url
+     * @var Url
      */
     protected $URL;
 

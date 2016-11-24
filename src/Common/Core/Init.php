@@ -19,7 +19,7 @@ abstract class Init extends \KernelLoader
     /**
      * Current type
      *
-     * @var    string
+     * @var string
      */
     protected $type;
 

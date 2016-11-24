@@ -20,7 +20,7 @@ class FrontendIcal extends \SpoonICal
     /**
      * The title
      *
-     * @var    string
+     * @var string
      */
     private $title;
 
@@ -90,7 +90,7 @@ class FrontendIcalEvent extends \SpoonICalEvent
     /**
      * Initial values for UTM-parameters
      *
-     * @var    array
+     * @var array
      */
     private $utm = array('utm_source' => 'feed', 'utm_medium' => 'ical');
 

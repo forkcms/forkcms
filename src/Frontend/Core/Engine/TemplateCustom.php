@@ -24,7 +24,7 @@ class TemplateCustom
     /**
      * Template instance
      *
-     * @var    Template
+     * @var Template
      */
     private $tpl;
 

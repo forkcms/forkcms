@@ -31,21 +31,21 @@ class Edit extends BackendBaseActionEdit
     /**
      * The blocks linked to this page
      *
-     * @var    array
+     * @var array
      */
     private $blocksContent = array();
 
     /**
      * DataGrid for the drafts
      *
-     * @var    BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgDrafts;
 
     /**
      * The extras
      *
-     * @var    array
+     * @var array
      */
     private $extras = array();
 
@@ -59,14 +59,14 @@ class Edit extends BackendBaseActionEdit
     /**
      * The positions
      *
-     * @var    array
+     * @var array
      */
     private $positions = array();
 
     /**
      * The template data
      *
-     * @var    array
+     * @var array
      */
     private $templates = array();
 

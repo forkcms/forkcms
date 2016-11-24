@@ -26,7 +26,7 @@ class CustomFields extends BackendBaseActionIndex
     /**
      * The group record
      *
-     * @var    array
+     * @var array
      */
     private $group;
 

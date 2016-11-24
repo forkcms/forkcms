@@ -26,7 +26,7 @@ class Model extends \Common\Core\Model
     /**
      * Allowed module extras types
      *
-     * @var    array
+     * @var array
      */
     private static $allowedExtras = array('homepage', 'block', 'widget');
 

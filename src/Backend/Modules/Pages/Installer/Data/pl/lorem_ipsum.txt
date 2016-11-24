@@ -46,9 +46,9 @@
 <ol>
 <li>Ordered list 01</li>
 <li>Ordered list 02</li>
-<li>Ordered list 03 		 		<ol>
+<li>Ordered list 03                  <ol>
 <li>Ordered list inside list level 2</li>
-<li>Ordered list inside list level 2 				<ol>
+<li>Ordered list inside list level 2                 <ol>
 <li>Ordered list inside list level 3</li>
 <li>Ordered list inside list level 3</li>
 </ol> </li>

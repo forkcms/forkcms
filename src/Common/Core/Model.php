@@ -22,7 +22,7 @@ class Model extends \BaseModel
     /**
      * Cached modules
      *
-     * @var    array
+     * @var array
      */
     protected static $modules = array();
 

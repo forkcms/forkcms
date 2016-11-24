@@ -141,7 +141,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * Truncate a string
      *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}
      *
-     * @param string $var         The string passed from the template.
+     * @param string $var      The string passed from the template.
      * @param int    $length      The maximum length of the truncated string.
      * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
      * @param bool   $closestWord Truncate on exact length or on closest word?

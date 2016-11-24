@@ -22,14 +22,14 @@ class MassAddressAction extends BackendBaseAction
     /**
      * The passed e-mails
      *
-     * @var    array
+     * @var array
      */
     private $emails;
 
     /**
      * The group ID we have to perform the actions for
      *
-     * @var    int
+     * @var int
      */
     private $groupId;
 

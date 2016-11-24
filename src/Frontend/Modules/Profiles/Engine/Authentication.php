@@ -22,42 +22,42 @@ class Authentication
     /**
      * The login credentials are correct and the profile is active.
      *
-     * @var    string
+     * @var string
      */
     const LOGIN_ACTIVE = 'active';
 
     /**
      * The login credentials are correct, but the profile is inactive.
      *
-     * @var    string
+     * @var string
      */
     const LOGIN_INACTIVE = 'inactive';
 
     /**
      * The login credentials are correct, but the profile has been deleted.
      *
-     * @var    string
+     * @var string
      */
     const LOGIN_DELETED = 'deleted';
 
     /**
      * The login credentials are correct, but the profile has been blocked.
      *
-     * @var    string
+     * @var string
      */
     const LOGIN_BLOCKED = 'blocked';
 
     /**
      * The login credentials are incorrect or the profile does not exist.
      *
-     * @var    string
+     * @var string
      */
     const LOGIN_INVALID = 'invalid';
 
     /**
      * The current logged in profile.
      *
-     * @var    FrontendProfilesProfile
+     * @var FrontendProfilesProfile
      */
     private static $profile;
 

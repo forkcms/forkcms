@@ -26,7 +26,7 @@ class Index extends BackendBaseActionIndex
     /**
      * Filter variables.
      *
-     * @var    array
+     * @var array
      */
     private $filter;
 

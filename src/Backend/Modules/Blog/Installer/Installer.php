@@ -20,7 +20,7 @@ class Installer extends ModuleInstaller
     /**
      * Default category id
      *
-     * @var    int
+     * @var int
      */
     private $defaultCategoryId;
 

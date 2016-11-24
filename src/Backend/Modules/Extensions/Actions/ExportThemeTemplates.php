@@ -23,14 +23,14 @@ class ExportThemeTemplates extends ActionEdit
     /**
      * All available themes
      *
-     * @var    array
+     * @var array
      */
     private $availableThemes;
 
     /**
      * The current selected theme
      *
-     * @var    string
+     * @var string
      */
     private $selectedTheme;
 

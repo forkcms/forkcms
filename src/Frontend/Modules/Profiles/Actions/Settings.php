@@ -27,7 +27,7 @@ class Settings extends FrontendBaseBlock
     /**
      * FrontendForm instance.
      *
-     * @var    FrontendForm
+     * @var FrontendForm
      */
     private $frm;
 

@@ -21,21 +21,21 @@ class Settings extends BackendBaseActionEdit
     /**
      * Holds true if the CM account exists
      *
-     * @var    bool
+     * @var bool
      */
     private $accountLinked = false;
 
     /**
      * The client ID
      *
-     * @var    string
+     * @var string
      */
     private $clientID;
 
     /**
      * The forms used on this page
      *
-     * @var    BackendForm
+     * @var BackendForm
      */
     private $frmAccount;
     private $frmClient;
@@ -44,7 +44,7 @@ class Settings extends BackendBaseActionEdit
     /**
      * Mailmotor settings
      *
-     * @var    array
+     * @var array
      */
     private $settings = array();
 

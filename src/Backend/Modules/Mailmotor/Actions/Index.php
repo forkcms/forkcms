@@ -30,28 +30,28 @@ class Index extends BackendBaseActionIndex
     /**
      * The active campaign
      *
-     * @var    array
+     * @var array
      */
     private $campaign = array();
 
     /**
      * DataGrids
      *
-     * @var    BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgQueuedMailings;
 
     /**
      * DataGrids
      *
-     * @var    BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgSentMailings;
 
     /**
      * DataGrids
      *
-     * @var    BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgUnsentMailings;
 

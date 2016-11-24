@@ -41,42 +41,42 @@ class Page extends FrontendBaseObject
     /**
      * Footer instance
      *
-     * @var    Footer
+     * @var Footer
      */
     protected $footer;
 
     /**
      * Header instance
      *
-     * @var    Header
+     * @var Header
      */
     protected $header;
 
     /**
      * The current pageId
      *
-     * @var    int
+     * @var int
      */
     protected $pageId;
 
     /**
      * Content of the page
      *
-     * @var    array
+     * @var array
      */
     protected $record = array();
 
     /**
      * The path of the template to show
      *
-     * @var    string
+     * @var string
      */
     protected $templatePath;
 
     /**
      * The statuscode
      *
-     * @var    int
+     * @var int
      */
     protected $statusCode = 200;
 
@@ -299,7 +299,7 @@ class Page extends FrontendBaseObject
     /**
      * Get the content of the page
      *
-     * @return    array
+     * @return array
      */
     public function getRecord()
     {

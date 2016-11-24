@@ -29,21 +29,21 @@ class StatisticsCampaign extends BackendBaseActionIndex
     /**
      * The given campaign ID
      *
-     * @var    int
+     * @var int
      */
     private $id;
 
     /**
      * The campaign record
      *
-     * @var    array
+     * @var array
      */
     private $campaign;
 
     /**
      * The statistics record
      *
-     * @var    array
+     * @var array
      */
     private $statistics;
 

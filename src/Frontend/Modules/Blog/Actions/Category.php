@@ -22,14 +22,14 @@ class Category extends FrontendBaseBlock
     /**
      * The articles
      *
-     * @var    array
+     * @var array
      */
     private $items;
 
     /**
      * The requested category
      *
-     * @var    array
+     * @var array
      */
     private $category;
 
@@ -37,7 +37,7 @@ class Category extends FrontendBaseBlock
      * The pagination array
      * It will hold all needed parameters, some of them need initialization
      *
-     * @var    array
+     * @var array
      */
     protected $pagination = array(
         'limit' => 10,

@@ -18,7 +18,7 @@ class Index extends FrontendBaseBlock
     /**
      * The data grid object
      *
-     * @var    \SpoonDataGrid
+     * @var \SpoonDataGrid
      */
     private $dataGrid;
 

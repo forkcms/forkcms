@@ -20,7 +20,7 @@ class Form extends FrontendBaseWidget
     /**
      * Fields in HTML form.
      *
-     * @var    array
+     * @var array
      */
     private $fieldsHTML;
 
@@ -41,7 +41,7 @@ class Form extends FrontendBaseWidget
     /**
      * The form item.
      *
-     * @var    array
+     * @var array
      */
     private $item;
 

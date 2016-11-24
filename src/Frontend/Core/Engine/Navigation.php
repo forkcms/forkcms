@@ -30,7 +30,7 @@ class Navigation extends FrontendBaseObject
     /**
      * The selected pageIds
      *
-     * @var    array
+     * @var array
      */
     private static $selectedPageIds = array();
 

@@ -27,7 +27,7 @@ class Cronjob extends Object implements \ApplicationInterface
     private $cronjob;
 
     /**
-     * @var    string
+     * @var string
      */
     private $language;
 

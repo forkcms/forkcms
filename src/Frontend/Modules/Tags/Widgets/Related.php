@@ -21,21 +21,21 @@ class Related extends FrontendBaseWidget
     /**
      * Records to exclude
      *
-     * @var        array
+     * @var     array
      */
     private $exclude = array();
 
     /**
      * Tags on this page
      *
-     * @var        array
+     * @var     array
      */
     private $tags = array();
 
     /**
      * Related records
      *
-     * @var        array
+     * @var     array
      */
     private $related = array();
 

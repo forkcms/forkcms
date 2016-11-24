@@ -519,11 +519,11 @@ jsBackend.ckeditor =
                             CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
                             CKEDITOR.dialog.getCurrent().getContentElement('info', 'linkType').setValue('url');
                             CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
-						}
-					}
-				]
-			});
-		}
+                        }
+                    }
+                ]
+            });
+        }
 
         // specific stuff for the table-dialog
         if (evt.data.name == 'table') {
@@ -1206,7 +1206,7 @@ jsBackend.forms =
 
     // init, something like a constructor
     init: function () {
-        jsBackend.forms.placeholders();	// make sure this is done before focusing the first field
+        jsBackend.forms.placeholders(); // make sure this is done before focusing the first field
         jsBackend.forms.focusFirstField();
         jsBackend.forms.datefields();
         jsBackend.forms.submitWithLinks();
@@ -1265,18 +1265,18 @@ jsBackend.forms =
         $inputDatefieldTill = $('.inputDatefieldTill');
         $inputDatefieldRange = $('.inputDatefieldRange');
 
-		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
-		{
-			dayNames: dayNames,
-			dayNamesMin: dayNamesMin,
-			dayNamesShort: dayNamesShort,
-			hideIfNoPrevNext: true,
-			monthNames: monthNames,
-			monthNamesShort: monthNamesShort,
-			nextText: jsBackend.locale.lbl('Next'),
-			prevText: jsBackend.locale.lbl('Previous'),
-			showAnim: 'slideDown'
-		});
+        $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
+        {
+            dayNames: dayNames,
+            dayNamesMin: dayNamesMin,
+            dayNamesShort: dayNamesShort,
+            hideIfNoPrevNext: true,
+            monthNames: monthNames,
+            monthNamesShort: monthNamesShort,
+            nextText: jsBackend.locale.lbl('Next'),
+            prevText: jsBackend.locale.lbl('Previous'),
+            showAnim: 'slideDown'
+        });
 
         // the default, nothing special
         $inputDatefieldNormal.each(function () {

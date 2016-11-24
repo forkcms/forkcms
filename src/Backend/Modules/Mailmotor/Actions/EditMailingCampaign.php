@@ -22,7 +22,7 @@ class EditMailingCampaign extends BackendBaseActionEdit
     /**
      * Campaign ID
      *
-     * @var    int
+     * @var int
      */
     private $campaigns;
 

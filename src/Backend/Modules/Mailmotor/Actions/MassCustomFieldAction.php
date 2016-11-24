@@ -22,14 +22,14 @@ class MassCustomFieldAction extends BackendBaseAction
     /**
      * The passed fields
      *
-     * @var    array
+     * @var array
      */
     private $fields;
 
     /**
      * The group record
      *
-     * @var    array
+     * @var array
      */
     private $group;
 

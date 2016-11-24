@@ -30,35 +30,35 @@ class Widget extends FrontendBaseObject
     /**
      * The config file
      *
-     * @var    Config
+     * @var Config
      */
     private $config;
 
     /**
      * The data that was passed by the extra
      *
-     * @var    mixed
+     * @var mixed
      */
     private $data;
 
     /**
      * The current module
      *
-     * @var    string
+     * @var string
      */
     private $module;
 
     /**
      * The extra object
      *
-     * @var    FrontendBaseWidget
+     * @var FrontendBaseWidget
      */
     private $object;
 
     /**
      * The block's output
      *
-     * @var    string
+     * @var string
      */
     private $output;
 

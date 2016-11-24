@@ -144,12 +144,13 @@ class EditMailingIframe extends BackendBaseActionEdit
         /*
             I realise this is a bit confusing, so let me elaborate:
 
-            1.	EditMailingIframe.html.twig contains a var {$templateHtml}. This is where $this->template['content'] goes.
+            1. EditMailingIframe.html.twig contains a var {$templateHtml}.
+               This is where $this->template['content'] goes.
 
-            2.	Inside $this->template['content'] should be a textarea with a variable {$contentHtml} inside. This will
-                become the editor field which will contain our stored content HTML.
+            2. Inside $this->template['content'] should be a textarea with a variable {$contentHtml} inside.
+               This will become the editor field which will contain our stored content HTML.
 
-            3.	We need everything inside the <body> tags so we don't end up with two <body>s.
+            3. We need everything inside the <body> tags so we don't end up with two <body>s.
         */
 
         // find the body element

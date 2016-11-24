@@ -24,7 +24,7 @@ class SaveContent extends BackendBaseAJAXAction
     /**
      * The mailing record
      *
-     * @var    array
+     * @var array
      */
     private $mailing;
 

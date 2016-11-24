@@ -307,7 +307,7 @@ class Model
     public static function get($id)
     {
         $return = (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT f.*	FROM forms AS f WHERE f.id = ?',
+            'SELECT f.* FROM forms AS f WHERE f.id = ?',
             (int) $id
         );
 

@@ -26,56 +26,56 @@ class User
     /**
      * Is the user-object a valid one? As in: is the user authenticated
      *
-     * @var    bool
+     * @var bool
      */
     private $isAuthenticated = false;
 
     /**
      * Is the authenticated user a god?
      *
-     * @var    bool
+     * @var bool
      */
     private $isGod = false;
 
     /**
      * Last timestamp the user logged in
      *
-     * @var    int
+     * @var int
      */
     private $lastLoggedInDate;
 
     /**
      * The secret key for the user
      *
-     * @var    string
+     * @var string
      */
     private $secretKey;
 
     /**
      * The session id for the user
      *
-     * @var    string
+     * @var string
      */
     private $sessionId;
 
     /**
      * All settings
      *
-     * @var    array
+     * @var array
      */
     private $settings = array();
 
     /**
      * The users id
      *
-     * @var    int
+     * @var int
      */
     private $userId;
 
     /**
      * The email
      *
-     * @var    string
+     * @var string
      */
     private $email;
 

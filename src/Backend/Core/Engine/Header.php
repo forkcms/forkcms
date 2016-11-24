@@ -36,21 +36,21 @@ class Header extends Base\Object
     /**
      * All added JS-files
      *
-     * @var    array
+     * @var array
      */
     private $jsFiles = array();
 
     /**
      * Template instance
      *
-     * @var    Template
+     * @var Template
      */
     private $tpl;
 
     /**
      * URL-instance
      *
-     * @var    Url
+     * @var Url
      */
     private $URL;
 
