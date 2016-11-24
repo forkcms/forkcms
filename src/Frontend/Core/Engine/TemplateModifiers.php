@@ -454,4 +454,17 @@ class TemplateModifiers extends BaseTwigModifiers
     {
         return count($data);
     }
+
+    /**
+     * Convert this string into a well formed label.
+     *  syntax: {{ var|tolabel }}.
+     *
+     * @param string $value The value to convert to a label.
+     *
+     * @return string
+     */
+    public static function toLabel($value)
+    {
+        return \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
+    }
 }
