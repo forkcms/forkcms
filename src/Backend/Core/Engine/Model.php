@@ -610,13 +610,16 @@ class Model extends \Common\Core\Model
     /**
      * Get the URL for a give module & action combination
      *
-     * @param string $module   The module to get the URL for.
-     * @param string $action   The action to get the URL for.
-     * @param string $language The language to use, if not provided we will use the working language.
+     * @param string $module   The module wherefore the URL should be build.
+     * @param string $action   The specific action wherefore the URL should be build.
+     * @param string $language The language wherein the URL should be retrieved,
+     *                         if not provided we will load the language that was provided in the URL.
+     * @param array $data      An array with keys and values that partially or fully match the data of the block.
+     *                         If it matches multiple versions of that block it will just return the first match.
      *
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, array $data = null)
     {
         $module = (string) $module;
         $action = ($action !== null) ? (string) $action : null;
@@ -625,22 +628,52 @@ class Model extends \Common\Core\Model
         $pageIdForURL = null;
         $navigation = self::getNavigation($language);
 
+        $dataMatch = false;
         // loop types
         foreach ($navigation as $level) {
+            // loop level
             foreach ($level as $pages) {
+                // loop pages
                 foreach ($pages as $pageId => $properties) {
-                    // only process pages with extra_blocks
+                    // only process pages with extra_blocks that are visible
                     if (!isset($properties['extra_blocks']) || $properties['hidden']) {
                         continue;
                     }
 
                     // loop extras
                     foreach ($properties['extra_blocks'] as $extra) {
-                        if ($extra['module'] == $module && $extra['action'] == $action) {
+                        // direct link?
+                        if ($extra['module'] == $module && $extra['action'] == $action  && $extra['action'] !== null) {
+                            // if there is data check if all the requested data matches the extra data
+                            if (isset($extra['data']) && $data !== null
+                                && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                                // It is the correct action but has the wrong data
+                                continue;
+                            }
                             // exact page was found, so return
                             return self::getURL($properties['page_id'], $language);
-                        } elseif ($extra['module'] == $module && $extra['action'] == null) {
-                            $pageIdForURL = (int) $pageId;
+                        }
+
+                        if ($extra['module'] == $module && $extra['action'] == null) {
+                            // if there is data check if all the requested data matches the extra data
+                            if (isset($extra['data']) && $data !== null) {
+                                if (array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                                    // It is the correct module but has the wrong data
+                                    continue;
+                                }
+
+                                $pageIdForURL = (int) $pageId;
+                                $dataMatch = true;
+                            }
+
+                            if ($extra['data'] === null && $data === null) {
+                                $pageIdForURL = (int) $pageId;
+                                $dataMatch = true;
+                            }
+
+                            if (!$dataMatch) {
+                                $pageIdForURL = (int) $pageId;
+                            }
                         }
                     }
                 }
@@ -658,7 +691,9 @@ class Model extends \Common\Core\Model
         FrontendLanguage::setLocale($language, true);
 
         // append action
-        $url .= '/' . urldecode(FrontendLanguage::act(\SpoonFilter::toCamelCase($action)));
+        if ($action !== null) {
+            $url .= '/' . urldecode(FrontendLanguage::act(\SpoonFilter::toCamelCase($action)));
+        }
 
         // return the unique URL!
         return $url;
