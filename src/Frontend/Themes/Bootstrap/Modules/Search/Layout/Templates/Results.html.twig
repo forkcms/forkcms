@@ -20,9 +20,9 @@
               </h3>
             </header>
             {% if not result.introduction %}
-              <div itemprop="description">{{ result.text|truncate(200)|cleanupplaintext }}</div>
+              <div itemprop="description">{{ result.text|truncate(200)|cleanupplaintext|raw }}</div>
             {% else %}
-              <div itemprop="description">{{ result.introduction }}</div>
+              <div itemprop="description">{{ result.introduction|raw }}</div>
             {% endif %}
           </section>
         {% endfor %}
