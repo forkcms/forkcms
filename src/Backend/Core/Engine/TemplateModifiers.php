@@ -126,7 +126,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Convert this string into a well formed label.
-     *  syntax: {$var|tolabel}.
+     *  syntax: {{ var|tolabel }}.
      *
      * @param string $value The value to convert to a label.
      *
