@@ -9,6 +9,8 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\RedirectException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Header;
@@ -158,5 +160,20 @@ class Widget extends \KernelLoader
     protected function setPosition($position)
     {
         $this->position = (int) $position;
+    }
+
+    /**
+     * Redirect to a given URL
+     *
+     * @param string $url The URL whereto will be redirected.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
+     *
+     * @throws RedirectException
+     */
+    public function redirect($url, $code = 302)
+    {
+        $response = new RedirectResponse($url, $code);
+
+        throw new RedirectException('Redirect', $response);
     }
 }
