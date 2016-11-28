@@ -26,14 +26,14 @@ class StatisticsBounces extends BackendBaseActionIndex
     /**
      * The list with bounces
      *
-     * @var    array
+     * @var array
      */
     private $bounces;
 
     /**
      * The given mailing record
      *
-     * @var    array
+     * @var array
      */
     private $mailing;
 

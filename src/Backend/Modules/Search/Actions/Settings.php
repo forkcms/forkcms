@@ -23,14 +23,14 @@ class Settings extends BackendBaseActionEdit
     /**
      * List of modules
      *
-     * @var    array
+     * @var array
      */
     private $modules = array();
 
     /**
      * Settings per module
      *
-     * @var    array
+     * @var array
      */
     private $settings = array();
 

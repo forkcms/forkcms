@@ -26,7 +26,7 @@ class Model
     /**
      * Overview of templates.
      *
-     * @var    string
+     * @var string
      */
     const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
                                   FROM themes_templates AS i
@@ -36,7 +36,7 @@ class Model
     /**
      * Modules which are part of the core and can not be managed.
      *
-     * @var    array
+     * @var array
      */
     private static $ignoredModules = array(
         'Authentication',
@@ -281,7 +281,7 @@ class Model
     public static function existsTemplate($id)
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.id FROM themes_templates AS i	WHERE i.id = ?',
+            'SELECT i.id FROM themes_templates AS i WHERE i.id = ?',
             array((int) $id)
         );
     }

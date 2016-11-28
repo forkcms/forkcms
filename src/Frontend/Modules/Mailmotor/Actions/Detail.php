@@ -15,26 +15,26 @@ class Detail extends FrontendBaseBlock
     /**
      * Whether this is CM requesting the information
      *
-     * @var    bool
+     * @var bool
      */
     private $forCM = false;
 
     /**
      * The ID of the mailing record in our database
      *
-     * @var    int
+     * @var int
      */
     private $id;
 
     /**
-     * @var    array
+     * @var array
      */
     private $mailing;
 
     /**
      * The type of content to base the body on.
      *
-     * @var    string can be 'html' or 'plain'
+     * @var string can be 'html' or 'plain'
      */
     private $type;
 

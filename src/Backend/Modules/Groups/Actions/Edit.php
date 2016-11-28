@@ -418,7 +418,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('groupName', $this->record['name']);
 
         // only allow deletion of empty groups
-        $this->tpl->assign('showGroupsDelete', $this->dataGridUsers->getNumResults() == 0 && BackendAuthentication::isAllowedAction('Delete'));
+        $this->tpl->assign('allowGroupsDelete', $this->dataGridUsers->getNumResults() == 0);
     }
 
     /**

@@ -22,7 +22,7 @@ class Detail extends FrontendBaseBlock
     /**
      * The tag
      *
-     * @var    array
+     * @var array
      */
     private $record = array();
 

@@ -24,7 +24,7 @@ class CommentsRss extends FrontendBaseBlock
     /**
      * The comments
      *
-     * @var    array
+     * @var array
      */
     private $items;
 

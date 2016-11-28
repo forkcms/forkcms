@@ -12,7 +12,7 @@
         <label for="title" class="control-label">{{ 'lbl.Question'|trans|ucfirst }}</label>
         {% form_field title %} {% form_field_error title %}
         {% if detailURL %}
-          <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
+          <a class="site-url" href="{{ detailURL }}/{{ item.url }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
         {% endif %}
         {% if not detailURL %}
           <p class="alert alert-warning alert-xs">

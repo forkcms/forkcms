@@ -19,21 +19,21 @@ class Unsubscribe extends FrontendBaseBlock
     /**
      * The email address passed to this page
      *
-     * @var    string
+     * @var string
      */
     private $email;
 
     /**
      * FrontendForm instance
      *
-     * @var    FrontendForm
+     * @var FrontendForm
      */
     private $frm;
 
     /**
      * The group passed to this page
      *
-     * @var    int
+     * @var int
      */
     private $group;
 

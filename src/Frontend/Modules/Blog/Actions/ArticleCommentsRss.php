@@ -31,7 +31,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
     /**
      * The comments
      *
-     * @var    array
+     * @var array
      */
     private $items;
 

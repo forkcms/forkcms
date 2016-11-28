@@ -26,21 +26,21 @@ class Index extends BackendBaseActionIndex
     /**
      * The category where is filtered on
      *
-     * @var    array
+     * @var array
      */
     private $category;
 
     /**
      * The id of the category where is filtered on
      *
-     * @var    int
+     * @var int
      */
     private $categoryId;
 
     /**
      * DataGrids
      *
-     * @var    BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgDrafts;
     private $dgPosts;

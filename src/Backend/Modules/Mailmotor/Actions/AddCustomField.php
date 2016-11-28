@@ -24,7 +24,7 @@ class AddCustomField extends BackendBaseActionAdd
     /**
      * The group record
      *
-     * @var    array
+     * @var array
      */
     private $group;
 

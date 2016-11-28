@@ -27,7 +27,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Groups data grid.
      *
-     * @var    BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgGroups;
 

@@ -21,56 +21,56 @@ class Profile
     /**
      * The display name.
      *
-     * @var    string
+     * @var string
      */
     private $displayName;
 
     /**
      * The profile email.
      *
-     * @var    string
+     * @var string
      */
     private $email;
 
     /**
      * The groups this profile belongs to, if any. The keys are the group IDs, the values the HTML-escaped group names.
      *
-     * @var    array
+     * @var array
      */
     protected $groups;
 
     /**
      * The profile id.
      *
-     * @var    int
+     * @var int
      */
     private $id;
 
     /**
      * The profile register date (unix timestamp).
      *
-     * @var    int
+     * @var int
      */
     private $registeredOn;
 
     /**
      * The profile settings.
      *
-     * @var    array
+     * @var array
      */
     private $settings = array();
 
     /**
      * The profile status.
      *
-     * @var    string
+     * @var string
      */
     private $status;
 
     /**
      * The profile url.
      *
-     * @var    string
+     * @var string
      */
     private $url;
 

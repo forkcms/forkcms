@@ -24,14 +24,14 @@ class Edit extends BackendBaseActionEdit
     /**
      * Bool that represents if the plain-text box should be shown
      *
-     * @var    bool
+     * @var bool
      */
     private $showPlainTextBox = true;
 
     /**
      * The step ID
      *
-     * @var    int
+     * @var int
      */
     private $stepId;
 

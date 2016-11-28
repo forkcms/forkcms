@@ -15,6 +15,8 @@ use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\TwigTemplate;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -28,56 +30,56 @@ class Block extends Object
     /**
      * The current action
      *
-     * @var    string
+     * @var string
      */
     protected $action;
 
     /**
      * The breadcrumb object
      *
-     * @var    Breadcrumb
+     * @var Breadcrumb
      */
     protected $breadcrumb;
 
     /**
      * The data
      *
-     * @var    mixed
+     * @var mixed
      */
     protected $data;
 
     /**
      * The header object
      *
-     * @var    Header
+     * @var Header
      */
     protected $header;
 
     /**
      * The current module
      *
-     * @var    string
+     * @var string
      */
     protected $module;
 
     /**
      * Should the current template be replaced with the blocks one?
      *
-     * @var    bool
+     * @var bool
      */
     private $overwrite;
 
     /**
      * Pagination array
      *
-     * @var    array
+     * @var array
      */
     protected $pagination;
 
     /**
      * The path of the template to include, or that replaced the current one
      *
-     * @var    string
+     * @var string
      */
     private $templatePath;
 
@@ -564,5 +566,19 @@ class Block extends Object
                 ['name' => 'robots', 'content' => $meta->getSEOIndex()]
             );
         }
+    }
+
+    /**
+     * Creates and returns a Form instance from the type of the form.
+     *
+     * @param string|FormTypeInterface $type The built type of the form
+     * @param mixed $data The initial data for the form
+     * @param array $options Options for the form
+     *
+     * @return Form
+     */
+    public function createForm($type, $data = null, array $options = array())
+    {
+        return $this->get('form.factory')->create($type, $data, $options);
     }
 }

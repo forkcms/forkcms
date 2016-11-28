@@ -23,14 +23,14 @@ class ImportGroups extends BackendBaseActionAdd
     /**
      * CampaignMonitor object
      *
-     * @var    \CampaignMonitor
+     * @var \CampaignMonitor
      */
     private $cm;
 
     /**
      * All external groups
      *
-     * @var    array
+     * @var array
      */
     private $externalGroups = array();
 

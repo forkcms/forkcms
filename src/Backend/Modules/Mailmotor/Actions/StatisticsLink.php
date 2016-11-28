@@ -28,21 +28,21 @@ class StatisticsLink extends BackendBaseActionIndex
     /**
      * The given mailing record
      *
-     * @var    array
+     * @var array
      */
     private $mailing;
 
     /**
      * The statistics record
      *
-     * @var    array
+     * @var array
      */
     private $statistics;
 
     /**
      * The given link URL
      *
-     * @var    string
+     * @var string
      */
     public $linkURL;
 

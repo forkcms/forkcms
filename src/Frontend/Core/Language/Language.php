@@ -22,7 +22,7 @@ class Language
     /**
      * Locale arrays
      *
-     * @var    array
+     * @var array
      */
     private static $act = array();
     private static $err = array();
@@ -32,7 +32,7 @@ class Language
     /**
      * Locale fallback arrays
      *
-     * @var    array
+     * @var array
      */
     private static $fallbackAct = array();
     private static $fallbackErr = array();
@@ -42,7 +42,7 @@ class Language
     /**
      * The possible languages
      *
-     * @var    array
+     * @var array
      */
     private static $languages = array('active' => array(), 'possible_redirect' => array());
 

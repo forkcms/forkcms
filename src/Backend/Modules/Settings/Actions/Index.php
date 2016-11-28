@@ -25,14 +25,14 @@ class Index extends BackendBaseActionIndex
     /**
      * The form instance
      *
-     * @var    BackendForm
+     * @var BackendForm
      */
     private $frm;
 
     /**
      * Should we show boxes for their API keys
      *
-     * @var    bool
+     * @var bool
      */
     private $needsAkismet;
     private $needsGoogleMaps;

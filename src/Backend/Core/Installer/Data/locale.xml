@@ -643,17 +643,17 @@
       </item>
       <item type="label" name="IAgree">
         <translation language="nl"><![CDATA[ik ga akkoord]]></translation>
-      	<translation language="en"><![CDATA[I agree]]></translation>
-      	<translation language="fr"><![CDATA[je suis d'accord]]></translation>
-      	<translation language="de"><![CDATA[ich bin einverstanden]]></translation>
-      	<translation language="es"><![CDATA[estoy de acuerdo]]></translation>
+        <translation language="en"><![CDATA[I agree]]></translation>
+        <translation language="fr"><![CDATA[je suis d'accord]]></translation>
+        <translation language="de"><![CDATA[ich bin einverstanden]]></translation>
+        <translation language="es"><![CDATA[estoy de acuerdo]]></translation>
       </item>
       <item type="label" name="IDisagree">
         <translation language="nl"><![CDATA[ik ga niet akkoord]]></translation>
-      	<translation language="en"><![CDATA[I disagree]]></translation>
-      	<translation language="fr"><![CDATA[je ne suis pas d'accord]]></translation>
-      	<translation language="de"><![CDATA[ich bin nicht einverstanden]]></translation>
-      	<translation language="es"><![CDATA[no estoy de acuerdo]]></translation>
+        <translation language="en"><![CDATA[I disagree]]></translation>
+        <translation language="fr"><![CDATA[je ne suis pas d'accord]]></translation>
+        <translation language="de"><![CDATA[ich bin nicht einverstanden]]></translation>
+        <translation language="es"><![CDATA[no estoy de acuerdo]]></translation>
       </item>
       <item type="label" name="In">
         <translation language="nl"><![CDATA[in]]></translation>
@@ -11097,7 +11097,7 @@
         <translation language="el"><![CDATA[Το "%1$s" αποθηκεύτηκε ως πρόχειρο.]]></translation>
         <translation language="uk"><![CDATA["%1$s" збережено як чернетку]]></translation>
         <translation language="tr"><![CDATA["%1$s" taslak olarak kaydedildi.]]></translation>
-        <translation language="pl"><![CDATA[	"%1$s" zapisany jako szkic.]]></translation>
+        <translation language="pl"><![CDATA[  "%1$s" zapisany jako szkic.]]></translation>
       </item>
       <item type="message" name="SequenceSaved">
         <translation language="nl"><![CDATA[Volgorde opgeslagen.]]></translation>

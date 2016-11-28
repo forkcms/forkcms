@@ -51,7 +51,7 @@ class Header extends FrontendBaseObject
     /**
      * The added css-files
      *
-     * @var    array
+     * @var array
      */
     private $cssFiles = array();
 
@@ -65,35 +65,35 @@ class Header extends FrontendBaseObject
     /**
      * The added js-files
      *
-     * @var    array
+     * @var array
      */
     private $jsFiles = array();
 
     /**
      * The links
      *
-     * @var    array
+     * @var array
      */
     private $links = array();
 
     /**
      * Meta data
      *
-     * @var    array
+     * @var array
      */
     private $meta = array();
 
     /**
      * The custom meta data
      *
-     * @var    string
+     * @var string
      */
     private $metaCustom = '';
 
     /**
      * Page title
      *
-     * @var    string
+     * @var string
      */
     private $pageTitle;
 
