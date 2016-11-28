@@ -36,7 +36,7 @@ final class Settings extends ActionIndex
         parent::execute();
 
         $form = $this->createForm(
-            $this->get('mail_motor.form.settings'),
+            $this->get('mailmotor.form.settings'),
             new SaveSettings($this->get('fork.settings'))
         );
 
@@ -54,7 +54,7 @@ final class Settings extends ActionIndex
         /** @var SaveSettings $settings */
         $settings = $form->getData();
 
-        // The command bus will handle the saving of the content block in the database.
+        // The command bus will handle the saving of the settings in the database.
         $this->get('command_bus')->handle($settings);
 
         $this->get('event_dispatcher')->dispatch(

@@ -23,6 +23,8 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
+        $this->addModule('MailMotor', 'The module that allows you to insert/delete subscribers to/from your mailinglist.');
+
         // install settings
         $this->installSettings();
 
@@ -45,10 +47,10 @@ class Installer extends ModuleInstaller
     private function installModule()
     {
         // module rights
-        $this->setModuleRights(1, 'MailMotor');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'MailMotor', 'Settings');
+        $this->setActionRights(1, $this->getModule(), 'Settings');
     }
 
     /**
@@ -68,9 +70,9 @@ class Installer extends ModuleInstaller
     private function installPages()
     {
         // add extra's
-        $subscribeId = $this->insertExtra('MailMotor', 'block', 'SubscribeForm', 'Subscribe', null, 'N', 3001);
-        $unsubscribeId = $this->insertExtra('MailMotor', 'block', 'UnsubscribeForm', 'Unsubscribe', null, 'N', 3002);
-        $this->insertExtra('MailMotor', 'widget', 'SubscribeForm', 'Subscribe', null, 'N', 3003);
+        $subscribeId = $this->insertExtra($this->getModule(), 'block', 'SubscribeForm', 'Subscribe', null, 'N', 3001);
+        $unsubscribeId = $this->insertExtra($this->getModule(), 'block', 'UnsubscribeForm', 'Unsubscribe', null, 'N', 3002);
+        $this->insertExtra($this->getModule(), 'widget', 'SubscribeForm', 'Subscribe', null, 'N', 3003);
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
@@ -117,13 +119,10 @@ class Installer extends ModuleInstaller
      */
     private function installSettings()
     {
-        // add 'MailMotor' as a module
-        $this->addModule('MailMotor', 'The module that allows you to insert/delete subscribers to/from your mailinglist.');
-
-        // module settings
-        $this->setSetting('MailMotor', 'mail_engine', null);
-        $this->setSetting('MailMotor', 'api_key', null);
-        $this->setSetting('MailMotor', 'list_id', null);
-        $this->setSetting('MailMotor', 'overwrite_interests', true);
+        $this->setSetting($this->getModule(), 'mail_engine', null);
+        $this->setSetting($this->getModule(), 'api_key', null);
+        $this->setSetting($this->getModule(), 'list_id', null);
+        $this->setSetting($this->getModule(), 'overwrite_interests', false);
+        $this->setSetting($this->getModule(), 'automatically_subscribe_from_form_builder_submitted_form', false);
     }
 }

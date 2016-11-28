@@ -22,6 +22,12 @@
             </item>
         </Core>
         <MailMotor>
+            <item type="message" name="AutomaticallySubscribeFromFormBuilderSubmittedForm">
+                <translation language="de"><![CDATA[Auto-Antwort-E-Mail-Adressen zu eingereichten Formbuilder -Anwendungen in der Mailing-Liste hinzuzufügen.]]></translation>
+                <translation language="en"><![CDATA[Auto-reply-to email addresses submitted FormBuilder add applications in the mailing list.]]></translation>
+                <translation language="fr"><![CDATA[Auto-réponse à envoyer les adresses présentées FormBuilder ajouter des applications dans la liste de diffusion.]]></translation>
+                <translation language="nl"><![CDATA[Automatisch reply-to e-mailadressen van ingezonden FormBuilder aanvragen toevoegen in de mailing lijst.]]></translation>
+            </item>
             <item type="label" name="ApiKey">
                 <translation language="de"><![CDATA[API key]]></translation>
                 <translation language="en"><![CDATA[API key]]></translation>
@@ -56,19 +62,19 @@
     </Backend>
     <Frontend>
         <Core>
-            <item type="error" name="AlreadySubscribed">
+            <item type="error" name="EmailAlreadySubscribedInMailingList">
                 <translation language="de"><![CDATA[Diese E-Mail-Adresse ist bereits für den Newsletter eingetragen.]]></translation>
                 <translation language="en"><![CDATA[This e-mail address is already subscribed to the newsletter.]]></translation>
                 <translation language="fr"><![CDATA[Cette adresse e-mail est déjà abonné à la newsletter.]]></translation>
                 <translation language="nl"><![CDATA[Dit e-mailadres is reeds ingeschreven op de nieuwsbrief.]]></translation>
             </item>
-            <item type="error" name="AlreadyUnsubscribed">
+            <item type="error" name="EmailIsAlreadyUnsubscribedInMailingList">
                 <translation language="de"><![CDATA[Diese E-Mail-Adresse bereits abbestellt Newsletter]]></translation>
                 <translation language="en"><![CDATA[This e-mail address is already unsubscribed from the newsletter]]></translation>
                 <translation language="fr"><![CDATA[Cette adresse e-mail est déjà désabonné de la newsletter]]></translation>
                 <translation language="nl"><![CDATA[Dit e-mailadres is reeds uitschreven uit de nieuwsbrief.]]></translation>
             </item>
-            <item type="error" name="EmailNotInDatabase">
+            <item type="error" name="EmailNotExistsInMailingList">
                 <translation language="de"><![CDATA[Diese E-Mail-Adresse nicht in der Datenbank vorhanden.]]></translation>
                 <translation language="en"><![CDATA[This e-mail address does not exist in the database.]]></translation>
                 <translation language="fr"><![CDATA[Cette adresse e-mail ne existe pas dans la base de données.]]></translation>
@@ -80,7 +86,7 @@
                 <translation language="fr"><![CDATA[intérêts]]></translation>
                 <translation language="nl"><![CDATA[interesses]]></translation>
             </item>
-            <item type="error" name="InterestsIsRequired">
+            <item type="error" name="MailingListInterestsIsRequired">
                 <translation language="de"><![CDATA[Bitte wählen Sie einen oder mehrere Interessen.]]></translation>
                 <translation language="en"><![CDATA[Please select one or more interests.]]></translation>
                 <translation language="fr"><![CDATA[S'il vous plaît sélectionner un ou plusieurs intérêts.]]></translation>
@@ -135,10 +141,10 @@
                 <translation language="nl"><![CDATA[Bedankt voor uw inschrijving, wij zullen u toevoegen in onze mailinglijst.]]></translation>
             </item>
             <item type="message" name="SubscribeSuccessForDoubleOptIn">
-                <translation language="de"><![CDATA[<strong>PRÜFEN per Mail Ihre E-Mail-Adresse</strong><br/><br/>Innerhalb von 10 Minuten CONFIRM erhalten Sie eine E-Mail von uns erhalten.<br/>Sie müssen den Bestätigungslink um Ihr Abonnement zu bestätigen.<br/>Ansonsten Ihre E-Mail-Adresse wird nicht auf unserer Mailingliste hinzugefügt werden.<br/>Vergessen Sie nicht, Ihre SPAM-Box zu überprüfen.]]></translation>
-                <translation language="en"><![CDATA[<strong>CHECK YOUR MAILBOX TO CONFIRM YOUR MAIL ADDRESS</strong><br/><br/>Within 10 minutes you will receive a mail from us.<br/>You need to click the confirmation link to confirm your subscription.<br/>Otherwise your mail address will not be added to our mailing list.<br/> Don't forget to check your SPAM-box.]]></translation>
-                <translation language="fr"><![CDATA[<Strong>VÉRIFIER VOTRE BOÎTE POUR CONFIRMER VOTRE ADRESSE MAIL</strong><br/><br/>Dans les 10 minutes, vous recevrez un mail de notre part.<br/>Vous devez cliquer sur le lien de confirmation pour confirmer votre abonnement.<br/>Sinon, votre adresse e-mail ne sera pas ajouté à notre liste de diffusion.<br/>Ne pas oublier de vérifier votre boîte SPAM.]]></translation>
-                <translation language="nl"><![CDATA[<strong>CONTROLEER UW MAILBOX OM UW E-MAILADRES TE BEVESTIGEN</strong><br/><br/>Binnen 10 minuten ontvangt u van ons een e-mail.<br/>Gelieve te klikken op de bevestigingslink om uw inschrijving te bevestigen.<br/>Anders wordt uw e-mailadres niet op onze mailinglijst toegevoegd.<br/>Vergeet niet om in uw SPAM-box te kijken.]]></translation>
+                <translation language="de"><![CDATA[<strong>PRÜFEN per Mail Ihre E-Mail-Adresse</strong><br/>Innerhalb von 10 Minuten CONFIRM erhalten Sie eine E-Mail von uns erhalten.<br/>Sie müssen den Bestätigungslink um Ihr Abonnement zu bestätigen.<br/>Ansonsten Ihre E-Mail-Adresse wird nicht auf unserer Mailingliste hinzugefügt werden.<br/>Vergessen Sie nicht, Ihre SPAM-Box zu überprüfen.]]></translation>
+                <translation language="en"><![CDATA[<strong>CHECK YOUR MAILBOX TO CONFIRM YOUR MAIL ADDRESS</strong><br/>Within 10 minutes you will receive a mail from us.<br/>You need to click the confirmation link to confirm your subscription.<br/>Otherwise your mail address will not be added to our mailing list.<br/> Don't forget to check your SPAM-box.]]></translation>
+                <translation language="fr"><![CDATA[<Strong>VÉRIFIER VOTRE BOÎTE POUR CONFIRMER VOTRE ADRESSE MAIL</strong><br/>Dans les 10 minutes, vous recevrez un mail de notre part.<br/>Vous devez cliquer sur le lien de confirmation pour confirmer votre abonnement.<br/>Sinon, votre adresse e-mail ne sera pas ajouté à notre liste de diffusion.<br/>Ne pas oublier de vérifier votre boîte SPAM.]]></translation>
+                <translation language="nl"><![CDATA[<strong>CONTROLEER UW MAILBOX OM UW E-MAILADRES TE BEVESTIGEN</strong><br/>Binnen de 10 minuten ontvangt u van ons een e-mail.<br/>Gelieve te klikken op de bevestigingslink om uw inschrijving te bevestigen,<br/>anders wordt uw e-mailadres niet op onze mailinglijst toegevoegd.<br/>Het kan soms zijn dat deze mail in uw SPAM-box terecht is gekomen.]]></translation>
             </item>
             <item type="action" name="Unsubscribe">
                 <translation language="de"><![CDATA[abmelden]]></translation>

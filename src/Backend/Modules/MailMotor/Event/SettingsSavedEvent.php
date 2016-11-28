@@ -20,7 +20,7 @@ final class SettingsSavedEvent extends Event
     /**
      * @var string The name the listener needs to listen to to catch this event.
      */
-    const EVENT_NAME = 'mail_motor.event.settings_saved';
+    const EVENT_NAME = 'mailmotor.event.settings_saved';
 
     /**
      * @var SaveSettings

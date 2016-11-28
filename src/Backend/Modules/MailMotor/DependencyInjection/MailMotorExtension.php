@@ -36,8 +36,8 @@ class MailMotorExtension extends Extension implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        // we have the service fork.settings
-        if ($container->has('fork.settings')) {
+        // we have the service fork.settings and it's not empty
+        if ($container->has('fork.settings') && !is_a($container->get('fork.settings'), 'stdClass')) {
             // we must set these parameters to be usable
             $container->setParameter(
                 'mailmotor.mail_engine',
@@ -51,8 +51,8 @@ class MailMotorExtension extends Extension implements CompilerPassInterface
                 'mailmotor.list_id',
                 $container->get('fork.settings')->get('MailMotor', 'list_id')
             );
-            // when in fork cms installer, we don't have the service fork.settings
-            // but we must set the parameters
+        // when in fork cms installer, we don't have the service fork.settings
+        // but we must set the parameters
         } else {
             // we must set these parameters to be usable
             $container->setParameter('mailmotor.mail_engine', 'not_implemented');

@@ -9,15 +9,9 @@
 			{% if mailMotorUnsubscribeIsSuccess %}<div class="message success"><p>{{ 'msg.UnsubscribeSuccess'|trans|raw }}</p></div>{% endif %}
 
 			{% if not mailMotorUnsubscribeHideForm %}
-				{% form mailMotorUnsubscribeForm %}
-					<p{% if txtEmailError %} class="errorArea"{% endif %}>
-						<label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
-						{% form_field_error email %} {% form_field email %}
-					</p>
-					<p>
-						<input id="send" class="inputSubmit btn" type="submit" name="send" value="{{ 'lbl.Unsubscribe'|trans|capitalize }}" />
-					</p>
-				{% endform %}
+				{{ form_start(form) }}
+				{{ form_rest(form) }}
+				{{ form_end(form) }}
 			{% endif %}
 		</div>
 	</div>

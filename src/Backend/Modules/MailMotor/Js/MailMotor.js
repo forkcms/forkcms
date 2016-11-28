@@ -12,12 +12,11 @@ jsBackend.MailMotor =
 
 jsBackend.MailMotor.controls =
 {
-	// init, something like a constructor
 	init: function()
 	{
 		// stop here because mail engine not found
-		if ($('#settings_mailEngine').length == 0) {
-			return false;
+		if ($('#settings_mailEngine').length === 0) {
+			return;
 		}
 
 		// bind change to mailEngine dropdown

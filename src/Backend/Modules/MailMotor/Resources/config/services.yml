@@ -1,4 +1,5 @@
 imports:
   - { resource: command.yml }
   - { resource: form.yml }
+  - { resource: validator.yml }
   - { resource: eventListener.yml }

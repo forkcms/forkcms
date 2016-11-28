@@ -1,7 +1,18 @@
 services:
-  mail_motor.form.settings:
+  mailmotor.form.settings:
     class: Backend\Modules\MailMotor\Form\SettingsType
     arguments:
       - "@=service('service_container').getServiceIds()"
     tags:
         - {name: 'form.type'}
+  mailmotor.form.subscription:
+    class: Frontend\Modules\MailMotor\Form\SubscribeType
+    arguments:
+      - "@mailmotor.subscriber"
+      - "@fork.settings"
+    tags:
+      - {name: 'form.type'}
+  mailmotor.form.unsubscription:
+    class: Frontend\Modules\MailMotor\Form\UnsubscribeType
+    tags:
+      - {name: 'form.type'}

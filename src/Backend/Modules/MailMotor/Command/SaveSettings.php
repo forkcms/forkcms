@@ -37,10 +37,13 @@ final class SaveSettings
 
     /**
      * @var boolean
-     *
-     * @Assert\NotBlank(message="err.FieldIsRequired")
      */
     public $overwriteInterests;
+
+    /**
+     * @var boolean
+     */
+    public $automaticallySubscribeFromFormBuilderSubmittedForm;
 
     /**
      * @param ModulesSettings $modulesSettings
@@ -65,5 +68,9 @@ final class SaveSettings
         // Define overwrite interests
         $this->overwriteInterests = isset($settings['overwrite_interests'])
             ? (bool) $settings['overwrite_interests'] : null;
+
+        // Define automatically subscribe from form builder submitted form
+        $this->automaticallySubscribeFromFormBuilderSubmittedForm = isset($settings['automatically_subscribe_from_form_builder_submitted_form'])
+            ? (bool) $settings['automatically_subscribe_from_form_builder_submitted_form'] : false;
     }
 }

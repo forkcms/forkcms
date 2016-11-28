@@ -88,6 +88,21 @@ class SettingsType extends AbstractType
             CheckboxType::class,
             $overwriteInterests
         );
+
+        $automaticallySubscribeFromFormBuilderSubmittedForm = [
+            'label' => 'msg.AutomaticallySubscribeFromFormBuilderSubmittedForm',
+            'required' => false,
+        ];
+
+        if (!array_key_exists('data', $options)) {
+            $automaticallySubscribeFromFormBuilderSubmittedForm['attr']['checked'] = 'checked';
+        }
+
+        $builder->add(
+            'automaticallySubscribeFromFormBuilderSubmittedForm',
+            CheckboxType::class,
+            $automaticallySubscribeFromFormBuilderSubmittedForm
+        );
     }
 
     /**

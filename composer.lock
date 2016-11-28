@@ -1483,16 +1483,16 @@
         },
         {
             "name": "mailmotor/mailmotor-bundle",
-            "version": "1.7.1",
+            "version": "1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/mailmotor-bundle.git",
-                "reference": "81a40d7147413253335884e134a32b73eb24c568"
+                "reference": "3557274bb0a32b5e45cf0008fbdc4d8b655be385"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/81a40d7147413253335884e134a32b73eb24c568",
-                "reference": "81a40d7147413253335884e134a32b73eb24c568",
+                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/3557274bb0a32b5e45cf0008fbdc4d8b655be385",
+                "reference": "3557274bb0a32b5e45cf0008fbdc4d8b655be385",
                 "shasum": ""
             },
             "require": {
@@ -1527,7 +1527,7 @@
                 "bundle",
                 "php"
             ],
-            "time": "2016-05-26 09:51:07"
+            "time": "2016-11-22 14:22:32"
         },
         {
             "name": "matthiasmullie/minify",
