@@ -64,7 +64,7 @@ final class SubscribeFromFormBuilderSubmittedForm
             }
 
             // Define language
-            $language = (isset($form['language']))
+            $language = array_key_exists('language', $form)
                 ? $form['language'] : $this->modulesSettings->get('Core', 'default_language', 'en');
 
             // We subscribe the replyTo email
