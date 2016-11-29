@@ -2,7 +2,7 @@
   <div class="inner">
     <div class="bd">
       {% if dataGrid %}
-        {{ dataGrid }}
+        {{ dataGrid|raw }}
       {% endif %}
 
       {% if not dataGrid %}

@@ -40,13 +40,14 @@ class Index extends FrontendBaseBlock
     private function loadDataGrid()
     {
         // create a new source-object
-        $source = new \SpoonDataGridSourceDB(
+        $source = new \SpoonDatagridSourceDB(
             FrontendModel::getContainer()->get('database'),
             array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', LANGUAGE))
         );
 
         // create data grid
         $this->dataGrid = new \SpoonDataGrid($source);
+        $this->dataGrid->setPagingClass(\SpoonDatagridPaging::class);
         $this->dataGrid->setCompileDirectory(FRONTEND_CACHE_PATH . '/CompiledTemplates');
 
         // set hidden columns

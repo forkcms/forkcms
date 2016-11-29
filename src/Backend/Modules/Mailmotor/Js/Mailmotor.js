@@ -79,7 +79,7 @@ jsBackend.mailmotor.chartPieChart =
 
         var chart = new Highcharts.Chart(
         {
-            chart: { renderTo: 'chartPieChart', height: 200, margin: [0, 160, 0, 0]    },
+            chart: { renderTo: 'chartPieChart', height: 200, margin: [0, 160, 0, 0]	},
             credits: { enabled: false },
             plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
             tooltip:
@@ -359,7 +359,7 @@ jsBackend.mailmotor.step3 =
                 // set variables
                 var subject = $('#subject').val();
                 var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
-                var textareaValue = $iframe[0].contentWindow.getEditorContent();
+                var textareaValue = $iframe[0].contentWindow.document.querySelector('.inputEditorNewsletter').value;
 
                 // make the call
                 $.ajax(
