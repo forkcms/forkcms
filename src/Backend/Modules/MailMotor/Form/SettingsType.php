@@ -112,12 +112,11 @@ class SettingsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => SaveSettings::class,
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
-                if($data->mailEngine != 'not_implemented') {
+                if ($data->mailEngine != 'not_implemented') {
                     return array('Default', 'mail_engine_selected');
-                }
-                else {
+                } else {
                     return array('Default');
                 }
             },

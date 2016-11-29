@@ -71,7 +71,6 @@ final class SubscriptionHandler
             }
         // Fallback for when no mail-engine is chosen in the Backend
         } catch (NotImplementedException $e) {
-
         }
 
         // Subscribing the user, will dispatch an event

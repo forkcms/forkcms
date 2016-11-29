@@ -31,7 +31,7 @@ final class UnsubscriptionHandler
 
     /**
      * Handle
-     * 
+     *
      * @param Unsubscription $unsubscription
      */
     public function handle(Unsubscription $unsubscription)

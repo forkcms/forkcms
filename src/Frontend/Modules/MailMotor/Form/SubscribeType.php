@@ -70,7 +70,7 @@ class SubscribeType extends AbstractType
             ]
         );
 
-        if (!empty($this->interests)){
+        if (!empty($this->interests)) {
             $builder->add(
                 'interests',
                 ChoiceType::class,
@@ -113,7 +113,6 @@ class SubscribeType extends AbstractType
             }
         // Fallback for when no mail-engine is chosen in the Backend
         } catch (NotImplementedException $e) {
-
         }
 
         return $interests;
@@ -126,7 +125,7 @@ class SubscribeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Subscription::class,
-            'validation_groups' => function(FormInterface $form) {
+            'validation_groups' => function (FormInterface $form) {
                 // Define overwrite interests
                 $overwriteInterests = $this->modulesSettings->get('MailMotor', 'overwrite_interests', true);
                 if (!empty($this->interests) && $overwriteInterests) {
