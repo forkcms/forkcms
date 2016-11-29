@@ -37,6 +37,8 @@ class AppKernel extends Kernel
             new SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
             new SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle(),
             new SimpleBus\SymfonyBridge\SimpleBusEventBusBundle(),
+            new MailMotor\Bundle\MailMotorBundle\MailMotorMailMotorBundle(),
+            new MailMotor\Bundle\MailChimpBundle\MailMotorMailChimpBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
