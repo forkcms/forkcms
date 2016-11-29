@@ -22,13 +22,6 @@ use Backend\Modules\MailMotor\Event\SettingsSavedEvent;
 final class Settings extends ActionIndex
 {
     /**
-     * The form instance
-     *
-     * @var Form
-     */
-    private $form;
-
-    /**
      * Execute
      */
     public function execute()
