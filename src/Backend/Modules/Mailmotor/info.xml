@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>Mailmotor</name>
+	<version>3.0.0</version>
+	<requirements>
+		<minimum_version>4.0.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[This MailMotor module can subscribe/unsubscribe members from your mail engine of choice.<br>F.e.: MailChimp, CampaignMonitor, ... You can easily create your own adapter for a mail engine.<br><br><a href="https://github.com/mailmotor/mailmotor-bundle">More information about this module</a>.]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[SIESQO]]></name>
+			<url><![CDATA[http://www.siesqo.be]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Jeroen Desloovere]]></name>
+			<url><![CDATA[http://www.jeroendesloovere.be]]></url>
+		</author>
+	</authors>
+	<events>
+	</events>
+</module>

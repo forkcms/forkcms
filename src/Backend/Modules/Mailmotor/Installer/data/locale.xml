@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+    <Backend>
+        <Core>
+            <item type="label" name="MailMotor">
+                <translation language="de"><![CDATA[mailmotor]]></translation>
+                <translation language="en"><![CDATA[mailmotor]]></translation>
+                <translation language="fr"><![CDATA[mailmotor]]></translation>
+                <translation language="nl"><![CDATA[mailmotor]]></translation>
+            </item>
+            <item type="label" name="SubscribeForm">
+                <translation language="de"><![CDATA[abonnieren Form]]></translation>
+                <translation language="en"><![CDATA[subscribe form]]></translation>
+                <translation language="fr"><![CDATA[formulaire d'abonnement]]></translation>
+                <translation language="nl"><![CDATA[subscribe form]]></translation>
+            </item>
+            <item type="label" name="UnsubscribeForm">
+                <translation language="de"><![CDATA[Abmeldeformular]]></translation>
+                <translation language="en"><![CDATA[unsubscribe form]]></translation>
+                <translation language="fr"><![CDATA[formulaire de désabonnement]]></translation>
+                <translation language="nl"><![CDATA[unsubscribe form]]></translation>
+            </item>
+        </Core>
+        <MailMotor>
+            <item type="message" name="AutomaticallySubscribeFromFormBuilderSubmittedForm">
+                <translation language="de"><![CDATA[Auto-Antwort-E-Mail-Adressen zu eingereichten Formbuilder -Anwendungen in der Mailing-Liste hinzuzufügen.]]></translation>
+                <translation language="en"><![CDATA[Auto-reply-to email addresses submitted FormBuilder add applications in the mailing list.]]></translation>
+                <translation language="fr"><![CDATA[Auto-réponse à envoyer les adresses présentées FormBuilder ajouter des applications dans la liste de diffusion.]]></translation>
+                <translation language="nl"><![CDATA[Automatisch reply-to e-mailadressen van ingezonden FormBuilder aanvragen toevoegen in de mailing lijst.]]></translation>
+            </item>
+            <item type="label" name="ApiKey">
+                <translation language="de"><![CDATA[API key]]></translation>
+                <translation language="en"><![CDATA[API key]]></translation>
+                <translation language="fr"><![CDATA[API key]]></translation>
+                <translation language="nl"><![CDATA[API key]]></translation>
+            </item>
+            <item type="label" name="ListId">
+                <translation language="de"><![CDATA[list id]]></translation>
+                <translation language="en"><![CDATA[list id]]></translation>
+                <translation language="fr"><![CDATA[list id]]></translation>
+                <translation language="nl"><![CDATA[list id]]></translation>
+            </item>
+            <item type="label" name="MailEngine">
+                <translation language="de"><![CDATA[mail engine]]></translation>
+                <translation language="en"><![CDATA[mail engine]]></translation>
+                <translation language="fr"><![CDATA[mail engine]]></translation>
+                <translation language="nl"><![CDATA[mail engine]]></translation>
+            </item>
+            <item type="label" name="None">
+                <translation language="de"><![CDATA[Keine]]></translation>
+                <translation language="en"><![CDATA[none]]></translation>
+                <translation language="fr"><![CDATA[aucun]]></translation>
+                <translation language="nl"><![CDATA[geen]]></translation>
+            </item>
+            <item type="message" name="OverwriteInterests">
+                <translation language="de"><![CDATA[Wenn jemand abonniert sind, ihre aktuellen Interessen überschreiben .]]></translation>
+                <translation language="en"><![CDATA[When somebody re-subscribes, overwrite their current interests.]]></translation>
+                <translation language="fr"><![CDATA[Quand quelqu'un re-souscrit, remplacer leurs intérêts actuels.]]></translation>
+                <translation language="nl"><![CDATA[Als iemand zich opnieuw inschrijft, gebruik dan z'n nieuwe interesses (en verwijder de oude interesses).]]></translation>
+            </item>
+        </MailMotor>
+    </Backend>
+    <Frontend>
+        <Core>
+            <item type="error" name="EmailAlreadySubscribedInMailingList">
+                <translation language="de"><![CDATA[Diese E-Mail-Adresse ist bereits für den Newsletter eingetragen.]]></translation>
+                <translation language="en"><![CDATA[This e-mail address is already subscribed to the newsletter.]]></translation>
+                <translation language="fr"><![CDATA[Cette adresse e-mail est déjà abonné à la newsletter.]]></translation>
+                <translation language="nl"><![CDATA[Dit e-mailadres is reeds ingeschreven op de nieuwsbrief.]]></translation>
+            </item>
+            <item type="error" name="EmailIsAlreadyUnsubscribedInMailingList">
+                <translation language="de"><![CDATA[Diese E-Mail-Adresse bereits abbestellt Newsletter]]></translation>
+                <translation language="en"><![CDATA[This e-mail address is already unsubscribed from the newsletter]]></translation>
+                <translation language="fr"><![CDATA[Cette adresse e-mail est déjà désabonné de la newsletter]]></translation>
+                <translation language="nl"><![CDATA[Dit e-mailadres is reeds uitschreven uit de nieuwsbrief.]]></translation>
+            </item>
+            <item type="error" name="EmailNotExistsInMailingList">
+                <translation language="de"><![CDATA[Diese E-Mail-Adresse nicht in der Datenbank vorhanden.]]></translation>
+                <translation language="en"><![CDATA[This e-mail address does not exist in the database.]]></translation>
+                <translation language="fr"><![CDATA[Cette adresse e-mail ne existe pas dans la base de données.]]></translation>
+                <translation language="nl"><![CDATA[Dit e-mailadres bestaat niet in onze database.]]></translation>
+            </item>
+            <item type="label" name="Interests">
+                <translation language="de"><![CDATA[Interessen]]></translation>
+                <translation language="en"><![CDATA[interests]]></translation>
+                <translation language="fr"><![CDATA[intérêts]]></translation>
+                <translation language="nl"><![CDATA[interesses]]></translation>
+            </item>
+            <item type="error" name="MailingListInterestsIsRequired">
+                <translation language="de"><![CDATA[Bitte wählen Sie einen oder mehrere Interessen.]]></translation>
+                <translation language="en"><![CDATA[Please select one or more interests.]]></translation>
+                <translation language="fr"><![CDATA[S'il vous plaît sélectionner un ou plusieurs intérêts.]]></translation>
+                <translation language="nl"><![CDATA[Gelieve één of meerdere interesses aan te duiden.]]></translation>
+            </item>
+            <item type="label" name="MailTitleSubscribeSubscriber">
+                <translation language="de"><![CDATA[Bitte melden Sie sich "%1$s" (%2$s) aus der Mailing-Liste.]]></translation>
+                <translation language="en"><![CDATA[Please subscribe "%1$s" (%2$s) to the mailing list.]]></translation>
+                <translation language="fr"><![CDATA[S'il vous plaît vous abonner "%1$s" (%2$s) de la liste de diffusion.]]></translation>
+                <translation language="nl"><![CDATA[Gelieve "%1$s" (%2$s) in te schrijven op de mailinglijst.]]></translation>
+            </item>
+            <item type="label" name="MailTitleUnsubscribeSubscriber">
+                <translation language="de"><![CDATA[Bitte abmelden "%1$s" (%2$s) aus der Mailing-Liste.]]></translation>
+                <translation language="en"><![CDATA[Please unsubscribe "%1$s" (%2$s) from the mailing list.]]></translation>
+                <translation language="fr"><![CDATA[S'il vous plaît vous désabonner "%1$s" (%2$s) de la liste de diffusion.]]></translation>
+                <translation language="nl"><![CDATA[Gelieve "%1$s" (%2$s) uit te schrijven op de mailinglijst.]]></translation>
+            </item>
+            <item type="label" name="Newsletter">
+                <translation language="de"><![CDATA[Rundschreiben]]></translation>
+                <translation language="en"><![CDATA[newsletter]]></translation>
+                <translation language="fr"><![CDATA[bulletin]]></translation>
+                <translation language="nl"><![CDATA[nieuwsbrief]]></translation>
+            </item>
+            <item type="action" name="Subscribe">
+                <translation language="de"><![CDATA[Abonnieren]]></translation>
+                <translation language="en"><![CDATA[subscribe]]></translation>
+                <translation language="fr"><![CDATA[s'abonner]]></translation>
+                <translation language="nl"><![CDATA[inschrijven]]></translation>
+            </item>
+            <item type="label" name="Subscribe">
+                <translation language="de"><![CDATA[subscribe]]></translation>
+                <translation language="en"><![CDATA[subscribe]]></translation>
+                <translation language="fr"><![CDATA[subscribe]]></translation>
+                <translation language="nl"><![CDATA[inschrijven]]></translation>
+            </item>
+            <item type="label" name="SubscribeToNewsletter">
+                <translation language="de"><![CDATA[Newsletter abonnieren]]></translation>
+                <translation language="en"><![CDATA[subscribe to newsletter]]></translation>
+                <translation language="fr"><![CDATA[s'inscrire à la Newsletter]]></translation>
+                <translation language="nl"><![CDATA[inschrijven op nieuwsbrief]]></translation>
+            </item>
+            <item type="error" name="SubscribeFailed">
+                <translation language="de"><![CDATA[Anmeldung fehlgeschlagen]]></translation>
+                <translation language="en"><![CDATA[Subscribing failed]]></translation>
+                <translation language="fr"><![CDATA[abonnant échoué]]></translation>
+                <translation language="nl"><![CDATA[Het inschrijven is niet gelukt]]></translation>
+            </item>
+            <item type="message" name="SubscribeSuccess">
+                <translation language="de"><![CDATA[Vielen Dank für Ihre Anmeldung, werden wir Sie in unsere Mailingliste hinzuzufügen.]]></translation>
+                <translation language="en"><![CDATA[Thanks for signing up, we will add you to our mailing list.]]></translation>
+                <translation language="fr"><![CDATA[Merci de votre inscription, nous vous ajouterons à notre liste de diffusion.]]></translation>
+                <translation language="nl"><![CDATA[Bedankt voor uw inschrijving, wij zullen u toevoegen in onze mailinglijst.]]></translation>
+            </item>
+            <item type="message" name="SubscribeSuccessForDoubleOptIn">
+                <translation language="de"><![CDATA[<strong>PRÜFEN per Mail Ihre E-Mail-Adresse</strong><br/>Innerhalb von 10 Minuten CONFIRM erhalten Sie eine E-Mail von uns erhalten.<br/>Sie müssen den Bestätigungslink um Ihr Abonnement zu bestätigen.<br/>Ansonsten Ihre E-Mail-Adresse wird nicht auf unserer Mailingliste hinzugefügt werden.<br/>Vergessen Sie nicht, Ihre SPAM-Box zu überprüfen.]]></translation>
+                <translation language="en"><![CDATA[<strong>CHECK YOUR MAILBOX TO CONFIRM YOUR MAIL ADDRESS</strong><br/>Within 10 minutes you will receive a mail from us.<br/>You need to click the confirmation link to confirm your subscription.<br/>Otherwise your mail address will not be added to our mailing list.<br/> Don't forget to check your SPAM-box.]]></translation>
+                <translation language="fr"><![CDATA[<Strong>VÉRIFIER VOTRE BOÎTE POUR CONFIRMER VOTRE ADRESSE MAIL</strong><br/>Dans les 10 minutes, vous recevrez un mail de notre part.<br/>Vous devez cliquer sur le lien de confirmation pour confirmer votre abonnement.<br/>Sinon, votre adresse e-mail ne sera pas ajouté à notre liste de diffusion.<br/>Ne pas oublier de vérifier votre boîte SPAM.]]></translation>
+                <translation language="nl"><![CDATA[<strong>CONTROLEER UW MAILBOX OM UW E-MAILADRES TE BEVESTIGEN</strong><br/>Binnen de 10 minuten ontvangt u van ons een e-mail.<br/>Gelieve te klikken op de bevestigingslink om uw inschrijving te bevestigen,<br/>anders wordt uw e-mailadres niet op onze mailinglijst toegevoegd.<br/>Het kan soms zijn dat deze mail in uw SPAM-box terecht is gekomen.]]></translation>
+            </item>
+            <item type="action" name="Unsubscribe">
+                <translation language="de"><![CDATA[abmelden]]></translation>
+                <translation language="en"><![CDATA[unsubscribe]]></translation>
+                <translation language="fr"><![CDATA[desinscrire]]></translation>
+                <translation language="nl"><![CDATA[uitschrijven]]></translation>
+            </item>
+            <item type="label" name="Unsubscribe">
+                <translation language="de"><![CDATA[Abmelden]]></translation>
+                <translation language="en"><![CDATA[unsubscribe]]></translation>
+                <translation language="fr"><![CDATA[désinscrire]]></translation>
+                <translation language="nl"><![CDATA[uitschrijven]]></translation>
+            </item>
+            <item type="label" name="UnsubscribeFromNewsletter">
+                <translation language="de"><![CDATA[Newsletter abbestellen]]></translation>
+                <translation language="en"><![CDATA[unsubscribe from newsletter]]></translation>
+                <translation language="fr"><![CDATA[désabonner de la newsletter]]></translation>
+                <translation language="nl"><![CDATA[uitschrijven op nieuwsbrief]]></translation>
+            </item>
+            <item type="error" name="UnsubscribeFailed">
+                <translation language="de"><![CDATA[Abmeldung fehlgeschlagen]]></translation>
+                <translation language="en"><![CDATA[Unsubscribing failed]]></translation>
+                <translation language="fr"><![CDATA[La désinscription a échoué]]></translation>
+                <translation language="nl"><![CDATA[Het uitschrijven is niet gelukt]]></translation>
+            </item>
+            <item type="message" name="UnsubscribeSuccess">
+                <translation language="de"><![CDATA[Sie haben sich erfolgreich vom Newsletter abgemeldet.]]></translation>
+                <translation language="en"><![CDATA[You have successfully unsubscribed from the newsletter.]]></translation>
+                <translation language="fr"><![CDATA[Vous êtes désabonné de la newsletter succès.]]></translation>
+                <translation language="nl"><![CDATA[Je bent met succes uitgeschreven uit de nieuwsbrief.]]></translation>
+            </item>
+        </Core>
+    </Frontend>
+</locale>
