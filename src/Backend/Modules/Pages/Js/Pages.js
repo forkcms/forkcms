@@ -47,9 +47,11 @@ jsBackend.pages.extras =
         $(document).on('click', '.showEditor', jsBackend.pages.extras.editContent);
         $(document).on('click', '.toggleVisibility', jsBackend.pages.extras.toggleVisibility);
 
-        // make the default position sortable
-        jsBackend.pages.extras.sortable($('#templateVisualFallback div.linkedBlocks'));
-    },
+		    // make the default position sortable
+		    jsBackend.pages.extras.sortable($('#templateVisualFallback div.linkedBlocks'));
+
+        $('#authRequired').on('change', jsBackend.pages.extras.showGroups);
+	},
 
     // store the extra for real
     addBlock: function(selectedExtraId, selectedPosition)
@@ -446,6 +448,13 @@ jsBackend.pages.extras =
 
             $('#confirmDeleteBlock').modal('show');
         }
+    },
+
+    // show the groups for authentication
+    showGroups: function(e)
+    {
+        // save element to variable
+        $('.js-authentication-groups').toggle();
     },
 
     // re-order blocks
