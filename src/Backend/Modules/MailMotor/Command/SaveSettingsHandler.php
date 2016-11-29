@@ -43,12 +43,13 @@ final class SaveSettingsHandler
         $this->modulesSettings->set($module, 'automatically_subscribe_from_form_builder_submitted_form', $settings->automaticallySubscribeFromFormBuilderSubmittedForm);
 
         // mail engine is empty
-        if ($settings->mailEngine == '') {
+        if ($settings->mailEngine === '') {
             $this->modulesSettings->delete($module, 'api_key');
             $this->modulesSettings->delete($module, 'list_id');
-        } else {
-            $this->modulesSettings->set($module, 'api_key', $settings->apiKey);
-            $this->modulesSettings->set($module, 'list_id', $settings->listId);
+            return;
         }
+
+        $this->modulesSettings->set($module, 'api_key', $settings->apiKey);
+        $this->modulesSettings->set($module, 'list_id', $settings->listId);
     }
 }
