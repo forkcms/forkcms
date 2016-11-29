@@ -54,23 +54,23 @@ final class SaveSettings
         $settings = $modulesSettings->getForModule('MailMotor');
 
         // Define mail engine
-        $this->mailEngine = isset($settings['mail_engine'])
+        $this->mailEngine = array_key_exists('mail_engine', $settings)
             ? $settings['mail_engine'] : null;
 
         // Define api key
-        $this->apiKey = isset($settings['api_key'])
+        $this->apiKey = array_key_exists('api_key', $settings)
             ? $settings['api_key'] : null;
 
         // Define list id
-        $this->listId = isset($settings['list_id'])
+        $this->listId = array_key_exists('list_id', $settings)
             ? $settings['list_id'] : null;
 
         // Define overwrite interests
-        $this->overwriteInterests = isset($settings['overwrite_interests'])
+        $this->overwriteInterests = array_key_exists('overwrite_interests', $settings)
             ? (bool) $settings['overwrite_interests'] : null;
 
         // Define automatically subscribe from form builder submitted form
-        $this->automaticallySubscribeFromFormBuilderSubmittedForm = isset($settings['automatically_subscribe_from_form_builder_submitted_form'])
+        $this->automaticallySubscribeFromFormBuilderSubmittedForm = array_key_exists('automatically_subscribe_from_form_builder_submitted_form', $settings)
             ? (bool) $settings['automatically_subscribe_from_form_builder_submitted_form'] : false;
     }
 }
