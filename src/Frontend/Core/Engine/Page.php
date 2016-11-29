@@ -166,7 +166,7 @@ class Page extends FrontendBaseObject
         $this->tpl->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
         // hide the cookiebar from within the code to prevent flickering
-        $this->tpl->assign(
+        $this->tpl->addGlobal(
             'cookieBarHide',
             (!$this->get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar())
         );
