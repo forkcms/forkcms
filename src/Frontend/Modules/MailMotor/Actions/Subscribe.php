@@ -48,7 +48,7 @@ class Subscribe extends FrontendBaseBlock
         if (!$form->isValid()) {
             $this->tpl->assign('form', $form->createView());
 
-            $this->tpl->assign('mailMotorUnsubscriptionHasFormError', true);
+            $this->tpl->assign('mailMotorSubscribeHasFormError', true);
 
             $this->loadTemplate();
             $this->parse();

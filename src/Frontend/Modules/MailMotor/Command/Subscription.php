@@ -17,7 +17,7 @@ final class Subscription
     /**
      * @var string
      *
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="err.FieldIsRequired")
      * @Assert\Email
      * @MailingListAssert\EmailSubscription
      */

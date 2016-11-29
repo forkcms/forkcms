@@ -56,7 +56,7 @@ class Unsubscribe extends FrontendBaseBlock
         if (!$form->isValid()) {
             $this->tpl->assign('form', $form->createView());
 
-            $this->tpl->assign('mailMotorUnsubscriptionHasFormError', true);
+            $this->tpl->assign('mailMotorUnsubscribeHasFormError', true);
 
             $this->loadTemplate();
             $this->parse();
