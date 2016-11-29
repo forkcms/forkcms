@@ -57,7 +57,7 @@ class Unsubscribe extends FrontendBaseBlock
             $this->tpl->assign('form', $form->createView());
 
             if ($form->isSubmitted()) {
-                $this->tpl->assign('mailMotorUnsubscribeHasFormError', true);
+                $this->tpl->assign('mailmotorUnsubscribeHasFormError', true);
             }
 
             $this->loadTemplate();
@@ -88,7 +88,7 @@ class Unsubscribe extends FrontendBaseBlock
                 'Unsubscribe'
             )
             . '?unsubscribed=true'
-            . '#mailMotorUnsubscriptionForm'
+            . '#mailmotorUnsubscribeForm'
         );
     }
 
@@ -118,10 +118,10 @@ class Unsubscribe extends FrontendBaseBlock
         // form was unsubscribed?
         if ($this->URL->getParameter('unsubscribed') == 'true') {
             // show message
-            $this->tpl->assign('mailMotorUnsubscribeIsSuccess', true);
+            $this->tpl->assign('mailmotorUnsubscribeIsSuccess', true);
 
             // hide form
-            $this->tpl->assign('mailMotorUnsubscribeHideForm', true);
+            $this->tpl->assign('mailmotorUnsubscribeHideForm', true);
         }
     }
 }
