@@ -2,7 +2,7 @@
 <locale>
     <Backend>
         <Core>
-            <item type="label" name="MailMotor">
+            <item type="label" name="Mailmotor">
                 <translation language="de"><![CDATA[mailmotor]]></translation>
                 <translation language="en"><![CDATA[mailmotor]]></translation>
                 <translation language="fr"><![CDATA[mailmotor]]></translation>
@@ -21,7 +21,7 @@
                 <translation language="nl"><![CDATA[unsubscribe form]]></translation>
             </item>
         </Core>
-        <MailMotor>
+        <Mailmotor>
             <item type="message" name="AutomaticallySubscribeFromFormBuilderSubmittedForm">
                 <translation language="de"><![CDATA[Auto-Antwort-E-Mail-Adressen zu eingereichten Formbuilder -Anwendungen in der Mailing-Liste hinzuzufügen.]]></translation>
                 <translation language="en"><![CDATA[Auto-reply-to email addresses submitted FormBuilder add applications in the mailing list.]]></translation>
@@ -58,7 +58,7 @@
                 <translation language="fr"><![CDATA[Quand quelqu'un re-souscrit, remplacer leurs intérêts actuels.]]></translation>
                 <translation language="nl"><![CDATA[Als iemand zich opnieuw inschrijft, gebruik dan z'n nieuwe interesses (en verwijder de oude interesses).]]></translation>
             </item>
-        </MailMotor>
+        </Mailmotor>
     </Backend>
     <Frontend>
         <Core>
