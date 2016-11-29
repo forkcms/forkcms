@@ -135,6 +135,7 @@ class Index extends BackendBaseActionIndex
         );
 
         // api keys
+        // @TODO should be removed when the api is kicked out
         $this->frm->addText('fork_api_public_key', $this->get('fork.settings')->get('Core', 'fork_api_public_key', null));
         $this->frm->addText(
             'fork_api_private_key',
@@ -440,6 +441,7 @@ class Index extends BackendBaseActionIndex
                 );
 
                 // api keys
+                // @TODO should be removed when the api is kicked out
                 $this->get('fork.settings')->set(
                     'Core',
                     'fork_api_public_key',

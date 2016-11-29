@@ -14,6 +14,8 @@ use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * In this file we store all generic functions that we will be available through the API
+ *
+ * @deprecated
  */
 class Api
 {
@@ -25,6 +27,11 @@ class Api
      */
     public static function appleAddDevice($token, $email)
     {
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
+
         if (BaseAPI::isAuthorized()) {
             $token = str_replace(' ', '', (string) $token);
 
@@ -87,6 +94,11 @@ class Api
      */
     public static function appleRemoveDevice($token, $email)
     {
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
+
         if (BaseAPI::isAuthorized()) {
             // redefine
             $token = str_replace(' ', '', (string) $token);
@@ -132,6 +144,11 @@ class Api
      */
     public static function getAPIKey($email, $password)
     {
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
+
         $email = (string) $email;
         $password = (string) $password;
 
@@ -185,6 +202,11 @@ class Api
      */
     public static function getInfo()
     {
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
+
         if (BaseAPI::isAuthorized()) {
             $info = array();
 
@@ -223,6 +245,11 @@ class Api
      */
     public static function microsoftAddDevice($uri, $email)
     {
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
+
         if (BaseAPI::isAuthorized()) {
             // redefine
             $uri = (string) $uri;
@@ -286,6 +313,11 @@ class Api
      */
     public static function microsoftRemoveDevice($uri, $email)
     {
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
+
         if (BaseAPI::isAuthorized()) {
             // redefine
             $uri = (string) $uri;

@@ -215,6 +215,7 @@ class CoreInstaller extends ModuleInstaller
             );
         }
 
+        // @TODO this should be removed when the api is kicked out
         // create new instance
         require_once PATH_LIBRARY . '/external/fork_api.php';
         $api = new \ForkAPI();
