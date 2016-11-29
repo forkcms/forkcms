@@ -4,6 +4,7 @@ namespace Common\Doctrine\ValueObject;
 
 use Backend\Core\Engine\Model;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * The following things are mandatory to use this class.
@@ -86,9 +87,10 @@ abstract class AbstractImage extends AbstractFile
      */
     public function upload()
     {
+        $file = $this->getFile();
         parent::upload();
 
-        if (static::GENERATE_THUMBNAILS && $this->getFile() !== null) {
+        if (static::GENERATE_THUMBNAILS && $file instanceof UploadedFile) {
             Model::generateThumbnails(
                 FRONTEND_FILES_PATH . '/' . $this->getTrimmedUploadDir(),
                 $this->getAbsolutePath('source')
