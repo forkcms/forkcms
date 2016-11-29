@@ -10,7 +10,6 @@ namespace Backend\Modules\MailMotor\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex;
-use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MailMotor\Command\SaveSettings;
 use Backend\Modules\MailMotor\Event\SettingsSavedEvent;

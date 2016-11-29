@@ -12,7 +12,6 @@ namespace Frontend\Modules\MailMotor\EventListener;
 use Common\Language;
 use Common\Mailer\Message;
 use Frontend\Modules\MailMotor\Event\NotImplementedUnsubscribedEvent;
-use MailMotor\Bundle\MailMotorBundle\Event\MailMotorUnsubscribedEvent;
 use Swift_Mailer;
 use Common\ModulesSettings;
 

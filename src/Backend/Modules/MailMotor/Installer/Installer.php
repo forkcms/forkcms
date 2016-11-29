@@ -10,8 +10,6 @@ namespace Backend\Modules\MailMotor\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller as ModuleInstaller;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Modules\MailMotor\Engine\ApiCall as ApiCall;
 
 /**
  * Installer for the MailMotor module
