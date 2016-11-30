@@ -72,7 +72,7 @@
                 <translation language="de"><![CDATA[Diese E-Mail-Adresse bereits abbestellt Newsletter]]></translation>
                 <translation language="en"><![CDATA[This e-mail address is already unsubscribed from the newsletter]]></translation>
                 <translation language="fr"><![CDATA[Cette adresse e-mail est déjà désabonné de la newsletter]]></translation>
-                <translation language="nl"><![CDATA[Dit e-mailadres is reeds uitschreven uit de nieuwsbrief.]]></translation>
+                <translation language="nl"><![CDATA[Dit e-mailadres is reeds uitgeschreven uit de nieuwsbrief.]]></translation>
             </item>
             <item type="error" name="EmailNotExistsInMailingList">
                 <translation language="de"><![CDATA[Diese E-Mail-Adresse nicht in der Datenbank vorhanden.]]></translation>
