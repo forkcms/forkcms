@@ -62,9 +62,9 @@ final class SubscriptionHandler
                         $interests[$categoryChildId] = in_array($categoryChildId, $subscription->interests);
                     }
                 }
-            } else {
+            } elseif (!empty($subscription->interests)) {
                 // Loop checked interests
-                foreach ($checkedInterests as $checkedInterestId) {
+                foreach ($subscription->interests as $checkedInterestId) {
                     // Add interest
                     $interests[$checkedInterestId] = true;
                 }
