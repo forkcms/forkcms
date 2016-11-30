@@ -16,7 +16,7 @@
             {% if pagination.first %}
               {% for pagination in pagination.first %}
                 <li>
-                <a href="{{ pagination.first.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.first.label }}">{{ pagination.first.label }}</a>
+                <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">{{ pagination.label }}</a>
                 </li>{% endfor %}
               <li class="ellipsis"><span>&hellip;</span></li>
             {% endif %}
@@ -36,7 +36,7 @@
               <li class="ellipsis"><span>&hellip;</span></li>
               {% for pagination in pagination.last %}
                 <li>
-                <a href="{{ pagination.last.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.last.label }}">{{ pagination.last.label }}</a>
+                <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">{{ pagination.label }}</a>
                 </li>{% endfor %}
             {% endif %}
 
