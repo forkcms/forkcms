@@ -20,18 +20,18 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="street" class="control-label">
-              {{ 'lbl.Street'|trans|ucfirst }}
-              {{ macro.required }}
-            </label>
-            {% form_field street %} {% form_field_error street %}
-          </div>
-          <div class="form-group">
             <label for="number" class="control-label">
               {{ 'lbl.Number'|trans|ucfirst }}
               {{ macro.required }}
             </label>
             {% form_field number %} {% form_field_error number %}
+          </div>
+          <div class="form-group">
+            <label for="street" class="control-label">
+              {{ 'lbl.Street'|trans|ucfirst }}
+              {{ macro.required }}
+            </label>
+            {% form_field street %} {% form_field_error street %}
           </div>
           <div class="form-group">
             <label for="zip" class="control-label">
@@ -191,7 +191,7 @@
         lat: {{ item.lat }},
         lng: {{ item.lng }},
         title: '{{ item.title }}',
-        text: '<p>{{ item.street }} {{ item.number }}</p><p>{{ item.zip }} {{ item.city }}</p>',
+        text: '<p>{{ item.number }} {{ item.street }}</p><p>{{ item.zip }} {{ item.city }}</p>',
         dragable: true
       });
     {% endif %}
