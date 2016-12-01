@@ -97,18 +97,26 @@ abstract class AbstractFile
      * Sets file.
      *
      * @param UploadedFile $file
+     *
+     * @return static
      */
     public function setFile(UploadedFile $file = null)
     {
+        if ($file === null) {
+            return $this;
+        }
+
         $this->file = $file;
         // check if we have an old image path
-        if (!isset($this->fileName)) {
-            return;
+        if ($this->fileName === null) {
+            return $this;
         }
 
         // store the old name to delete after the update
         $this->oldFileName = $this->fileName;
         $this->fileName = null;
+
+        return clone $this;
     }
 
     /**
