@@ -22,13 +22,6 @@ use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 class Unsubscribe extends FrontendBaseBlock
 {
     /**
-     * FrontendForm instance
-     *
-     * @var	FrontendForm
-     */
-    private $frm;
-
-    /**
      * Execute the extra
      *
      * @return void
@@ -114,7 +107,7 @@ class Unsubscribe extends FrontendBaseBlock
     private function parse()
     {
         // form was unsubscribed?
-        if ($this->URL->getParameter('unsubscribed') == 'true') {
+        if ($this->URL->getParameter('unsubscribed') === 'true') {
             // show message
             $this->tpl->assign('mailmotorUnsubscribeIsSuccess', true);
 
