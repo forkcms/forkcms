@@ -161,23 +161,32 @@ abstract class AbstractFile
      */
     public function upload()
     {
+        // check if we have an old image
+        if ($this->oldFileName !== null) {
+            $this->removeOldFile();
+        }
+
         if ($this->getFile() === null) {
             return;
         }
 
         $this->writeFileToDisk();
 
-        // check if we have an old image
-        if (isset($this->oldPath)) {
-            // delete the old image
-            $oldFile = $this->getUploadRootDir() . '/' . $this->oldPath;
-            if (is_file($oldFile) && file_exists($oldFile)) {
-                unlink($oldFile);
-            }
-            // clear the $this->oldPath image path
-            $this->oldPath = null;
-        }
         $this->file = null;
+    }
+
+    /**
+     * This will remove the old file, can be extended to add extra functionality
+     */
+    protected function removeOldFile()
+    {
+        // delete the old file
+        $oldFile = $this->getUploadRootDir() . '/' . $this->oldFileName;
+        if (is_file($oldFile) && file_exists($oldFile)) {
+            unlink($oldFile);
+        }
+
+        $this->oldFileName = null;
     }
 
     /**
@@ -219,5 +228,14 @@ abstract class AbstractFile
     public static function fromString($fileName)
     {
         return new static($fileName);
+    }
+
+    /**
+     * The next time doctrine saves this to the database the file will be removed
+     */
+    public function markForDeletion()
+    {
+        $this->oldFileName = $this->fileName;
+        $this->fileName = null;
     }
 }
