@@ -18,8 +18,6 @@ use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
  * This is the Unsubscription-action for Mailmotor
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Unsubscribe extends FrontendBaseBlock
 {

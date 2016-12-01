@@ -14,8 +14,6 @@ use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Config extends FrontendBaseConfig
 {

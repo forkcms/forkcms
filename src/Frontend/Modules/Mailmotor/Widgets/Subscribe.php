@@ -13,8 +13,6 @@ use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 
 /**
  * This is a widget with the Subscribe form
- *
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Subscribe extends FrontendBaseWidget
 {
