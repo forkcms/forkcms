@@ -42,6 +42,10 @@ abstract class AbstractImage extends AbstractFile
      */
     public function getAbsolutePath($subDirectory = null)
     {
+        if (self::GENERATE_THUMBNAILS && $subDirectory === null) {
+            $subDirectory = 'source';
+        }
+
         return $this->fileName === null ? null : $this->getUploadRootDir($subDirectory) . '/' . $this->fileName;
     }
 
@@ -52,6 +56,10 @@ abstract class AbstractImage extends AbstractFile
      */
     public function getWebPath($subDirectory = null)
     {
+        if (self::GENERATE_THUMBNAILS && $subDirectory === null) {
+            $subDirectory = 'source';
+        }
+
         $file = $this->getAbsolutePath($subDirectory);
 
         if (is_file($file) && file_exists($file)) {
@@ -76,7 +84,7 @@ abstract class AbstractImage extends AbstractFile
         // the absolute directory path where uploaded
         // documents should be saved
         if ($subDirectory !== null) {
-            return FRONTEND_FILES_PATH . '/' . $this->getTrimmedUploadDir() . '/' . $subDirectory;
+            return parent::getUploadRootDir() . '/' . $subDirectory;
         }
 
         return parent::getUploadRootDir();
@@ -99,11 +107,25 @@ abstract class AbstractImage extends AbstractFile
     }
 
     /**
+     * This will remove the old image and if needed the generated thumbnails
+     */
+    protected function removeOldFile()
+    {
+        if (static::GENERATE_THUMBNAILS && is_dir($this->getUploadRootDir())) {
+            Model::deleteThumbnails($this->getUploadRootDir(), $this->oldFileName);
+
+            return;
+        }
+
+        parent::removeOldFile();
+    }
+
+    /**
      * This function should be called for the life cycle event @ORM\PostRemove()
      */
     public function remove()
     {
-        if (static::GENERATE_THUMBNAILS) {
+        if (static::GENERATE_THUMBNAILS && is_dir($this->getUploadRootDir())) {
             Model::deleteThumbnails($this->getUploadRootDir(), $this->fileName);
 
             return;
