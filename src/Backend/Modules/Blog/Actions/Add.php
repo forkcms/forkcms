@@ -184,12 +184,6 @@ class Add extends BackendBaseActionAdd
                     // add search index
                     BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
-                    // ping
-                    // @TODO remove this when the api is kicked out
-                    if ($this->get('fork.settings')->get($this->getModule(), 'ping_services', false)) {
-                        BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('Blog', 'Detail') . '/' . $this->meta->getURL());
-                    }
-
                     // everything is saved, so redirect to the overview
                     $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['revision_id']);
                 } elseif ($item['status'] == 'draft') {
