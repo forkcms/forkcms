@@ -1,25 +1,33 @@
-<section id="subscribeIndex" class="mod">
-  <div class="inner">
-    <div class="bd">
-      {% if subscribeHasFormError %}
-        <div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>{% endif %}
-      {% if subscribeHasError %}
-        <div class="message error"><p>{{ 'err.SubscribeFailed'|trans }}</p></div>{% endif %}
-      {% if subscribeIsSuccess %}
-        <div class="message success"><p>{{ 'msg.SubscribeSuccess'|trans }}</p></div>{% endif %}
+{#
+    The variables that are available to use:
+    - $mailMotorSubscribeHasFormError
+    - $mailMotorSubscribeHasError
+    - $mailMotorSubscribeIsSuccess
+    - $mailMotorSubscribeHideForm
+    - $mailMotorSubscribe
+#}
 
-      {% if not subscribeHideForm %}
-        {% form subscribe %}
-        <p{% if txtEmailError %} class="errorArea"{% endif %}>
-          <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
-            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          {% form_field email %} {% form_field_error email %}
-        </p>
-        <p>
-          <input id="send" class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Send'|trans|ucfirst }}" />
-        </p>
-        {% endform %}
+<div id="mailmotorSubscribeForm" class="mod">
+  <div class="inner">
+    <div class="hd">
+      <h3>{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
+    </div>
+    <div class="bd">
+      {% if mailmotorSubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans|raw }}</p></div>{% endif %}
+      {% if mailmotorSubscribeHasError %}<div class="message error"><p>{{ 'err.SubscribeFailed'|trans|raw }}</p></div>{% endif %}
+      {% if mailmotorSubscribeIsSuccess %}
+        <div class="message success">
+          {% if mailmotorSubscribeHasDoubleOptIn %}{{ 'msg.SubscribeSuccessForDoubleOptIn'|trans|raw }}{% endif %}
+          {% if not mailmotorSubscribeHasDoubleOptIn %}{{ 'msg.SubscribeSuccess'|trans|raw }}{% endif %}
+        </div>
       {% endif %}
+
+      {% if not mailmotorSubscribeHideForm %}
+        {{ form_start(form) }}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+      {% endif %}
+
     </div>
   </div>
-</section>
+</div>

@@ -2,159 +2,126 @@
 
 namespace Frontend\Modules\Mailmotor\Actions;
 
+/*
+ * This file is part of the Fork CMS Mailmotor Module from SIESQO.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Language\Language as FL;
-use Frontend\Modules\Mailmotor\Engine\CMHelper as FrontendMailmotorCMHelper;
-use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
+use Frontend\Modules\Mailmotor\Command\Unsubscription;
+use Frontend\Modules\Mailmotor\Event\NotImplementedUnsubscribedEvent;
+use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
- * This is the index-action
+ * This is the Unsubscription-action for Mailmotor
+ *
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Unsubscribe extends FrontendBaseBlock
 {
     /**
-     * The email address passed to this page
-     *
-     * @var string
-     */
-    private $email;
-
-    /**
      * FrontendForm instance
      *
-     * @var FrontendForm
+     * @var	FrontendForm
      */
     private $frm;
 
     /**
-     * The group passed to this page
-     *
-     * @var int
-     */
-    private $group;
-
-    /**
      * Execute the extra
+     *
+     * @return void
      */
     public function execute()
     {
-        // check if an email was given
-        $this->group = \SpoonFilter::getGetValue('group', null, '');
-        $this->email = urldecode(\SpoonFilter::getGetValue('email', null, ''));
+        parent::execute();
 
-        $this->loadTemplate();
-        $this->loadForm();
-        $this->validateForm();
-        $this->parse();
+        // Define email from the unsubscribe widget
+        $email = $this->getEmail();
+
+        // Create the form
+        $form = $this->createForm(
+            $this->get('mailmotor.form.unsubscription'),
+            new Unsubscription(
+                $email,
+                FRONTEND_LANGUAGE
+            )
+        );
+
+        $form->handleRequest($this->get('request'));
+
+        if (!$form->isValid()) {
+            $this->tpl->assign('form', $form->createView());
+
+            if ($form->isSubmitted()) {
+                $this->tpl->assign('mailmotorUnsubscribeHasFormError', true);
+            }
+
+            $this->loadTemplate();
+            $this->parse();
+
+            return;
+        }
+
+        /** @var Unsubscription $unsubscription */
+        $unsubscription = $form->getData();
+
+        try {
+            // The command bus will handle the unsubscription
+            $this->get('command_bus')->handle($unsubscription);
+        // fallback for when no mail-engine is chosen in the Backend
+        } catch (NotImplementedException $e) {
+            $this->get('event_dispatcher')->dispatch(
+                NotImplementedUnsubscribedEvent::EVENT_NAME,
+                new NotImplementedUnsubscribedEvent(
+                    $unsubscription
+                )
+            );
+        }
+
+        return $this->redirect(
+            FrontendNavigation::getURLForBlock(
+                'Mailmotor',
+                'Unsubscribe'
+            )
+            . '?unsubscribed=true'
+            . '#mailmotorUnsubscribeForm'
+        );
     }
 
     /**
-     * Load the form
+     * Get email
      */
-    private function loadForm()
+    public function getEmail()
     {
-        // create the form
-        $this->frm = new FrontendForm('unsubscribe', null, null, 'unsubscribeForm');
+        // define email
+        $email = null;
 
-        // create & add elements
-        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+        // request contains an email
+        if ($this->get('request')->request->get('email') != null) {
+            $email = $this->get('request')->request->get('email');
+        }
+
+        return $email;
     }
 
     /**
      * Parse the data into the template
+     *
+     * @return void
      */
     private function parse()
     {
-        // form was sent?
-        if ($this->URL->getParameter('sent') == 'true') {
+        // form was unsubscribed?
+        if ($this->URL->getParameter('unsubscribed') == 'true') {
             // show message
-            $this->tpl->assign('unsubscribeIsSuccess', true);
+            $this->tpl->assign('mailmotorUnsubscribeIsSuccess', true);
 
             // hide form
-            $this->tpl->assign('unsubscribeHideForm', true);
-        }
-
-        // unsubscribe was issued for a specific group/address
-        if (\SpoonFilter::isEmail($this->email) && FrontendMailmotorModel::existsGroup($this->group)) {
-            // unsubscribe the address from this group
-            if (FrontendMailmotorModel::unsubscribe($this->email, $this->group)) {
-                // hide form
-                $this->tpl->assign('unsubscribeHideForm', true);
-
-                // show message
-                $this->tpl->assign('unsubscribeIsSuccess', true);
-            } else {
-                // unsubscribe failed, show an error
-                $this->tpl->assign('unsubscribeHasError', true);
-            }
-        }
-
-        // parse the form
-        $this->frm->parse($this->tpl);
-    }
-
-    /**
-     * Validate the form
-     */
-    private function validateForm()
-    {
-        // is the form submitted
-        if ($this->frm->isSubmitted()) {
-            // get values
-            $email = $this->frm->getField('email');
-
-            // validate required fields
-            if ($email->isEmail(FL::err('EmailIsInvalid'))) {
-                // email does not exist
-                if (!FrontendMailmotorModel::exists($email->getValue())) {
-                    $email->addError(
-                        FL::err('EmailNotInDatabase')
-                    );
-                }
-
-                // user is already unsubscribed
-                if (!FrontendMailmotorModel::isSubscribed($email->getValue(), $this->group)) {
-                    $email->addError(
-                        FL::err('AlreadyUnsubscribed')
-                    );
-                }
-            }
-
-            // no errors and email address does not exist
-            if ($this->frm->isCorrect()) {
-                try {
-                    // unsubscribe the user from our default group
-                    if (!FrontendMailmotorCMHelper::unsubscribe(
-                        $email->getValue(),
-                        $this->group
-                    )
-                    ) {
-                        throw new FrontendException('Could not unsubscribe');
-                    }
-
-                    // trigger event
-                    FrontendModel::triggerEvent('Mailmotor', 'after_unsubscribe', array('email' => $email->getValue()));
-
-                    // redirect
-                    $this->redirect(
-                        FrontendNavigation::getURLForBlock('Mailmotor', 'Unsubscribe') . '?sent=true#unsubscribeForm'
-                    );
-                } catch (\Exception $e) {
-                    // when debugging we need to see the exceptions
-                    if ($this->getContainer()->getParameter('kernel.debug')) {
-                        throw $e;
-                    }
-
-                    // show error
-                    $this->tpl->assign('unsubscribeHasError', true);
-                }
-            } else {
-                $this->tpl->assign('unsubscribeHasFormError', true);
-            }
+            $this->tpl->assign('mailmotorUnsubscribeHideForm', true);
         }
     }
 }
