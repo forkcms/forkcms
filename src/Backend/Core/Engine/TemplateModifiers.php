@@ -12,12 +12,55 @@ namespace Backend\Core\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
 use Backend\Core\Language\Language as BackendLanguage;
+use \SpoonDate;
 
 /**
  * This is our class with custom modifiers.
  */
 class TemplateModifiers extends BaseTwigModifiers
 {
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdate }}
+     *
+     * @param int $var The UNIX-timestamp to format.
+     *
+     * @return string
+     */
+    public static function formatDate($var)
+    {
+        // get setting
+        $format = Authentication::getUser()->getSetting('date_format');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+    }
+
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdatetime }}
+     *
+     * @param int $var The UNIX-timestamp to format.
+     *
+     * @return string
+     */
+    public static function formatDateTime($var)
+    {
+        // get setting
+        $format = Authentication::getUser()->getSetting('datetime_format');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+    }
+
     /**
      * Format a number as a float
      * syntax: {$var|formatfloat}
@@ -97,8 +140,12 @@ class TemplateModifiers extends BaseTwigModifiers
         // get setting
         $format = Authentication::getUser()->getSetting('time_format');
 
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
         // format the date
-        return \SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+        return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
