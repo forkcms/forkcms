@@ -30,7 +30,7 @@ abstract class AbstractFile
     /**
      * @var string
      */
-    protected $oldPath;
+    protected $oldFileName;
 
     /**
      * @param string $fileName
@@ -107,7 +107,7 @@ abstract class AbstractFile
         }
 
         // store the old name to delete after the update
-        $this->oldPath = $this->fileName;
+        $this->oldFileName = $this->fileName;
         $this->fileName = null;
     }
 
