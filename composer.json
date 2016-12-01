@@ -30,8 +30,9 @@
         "doctrine/orm": "^2.5",
         "simple-bus/symfony-bridge": "^4.1",
         "simple-bus/doctrine-orm-bridge": "^4.0",
-        "mailmotor/mailmotor-bundle": "^1.7",
-        "mailmotor/mailchimp-bundle": "^1.5"
+        "mailmotor/mailchimp-bundle": "^2.0",
+        "mailmotor/campaignmonitor-bundle": "^1.0",
+        "mailmotor/mailmotor-bundle": "^2.0"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
