@@ -40,6 +40,7 @@ class AppKernel extends Kernel
             new Backend\Modules\Mailmotor\Mailmotor,
             new MailMotor\Bundle\MailMotorBundle\MailMotorMailMotorBundle(),
             new MailMotor\Bundle\MailChimpBundle\MailMotorMailChimpBundle(),
+            new MailMotor\Bundle\CampaignMonitorBundle\MailMotorCampaignMonitorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
