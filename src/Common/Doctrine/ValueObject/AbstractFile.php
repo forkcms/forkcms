@@ -213,6 +213,8 @@ abstract class AbstractFile
     }
 
     /**
+     * Returns a string representation of the image.
+     *
      * @return string
      */
     public function __toString()
