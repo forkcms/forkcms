@@ -84,7 +84,7 @@ abstract class AbstractImage extends AbstractFile
         // the absolute directory path where uploaded
         // documents should be saved
         if ($subDirectory !== null) {
-            return FRONTEND_FILES_PATH . '/' . $this->getTrimmedUploadDir() . '/' . $subDirectory;
+            return parent::getUploadRootDir() . '/' . $subDirectory;
         }
 
         return parent::getUploadRootDir();
