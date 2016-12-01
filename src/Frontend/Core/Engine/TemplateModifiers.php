@@ -11,6 +11,7 @@ namespace Frontend\Core\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
 use \SpoonDate;
@@ -38,7 +39,7 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // format the date
-        return SpoonDate::getDate($format, (int) $var, LANGUAGE);
+        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
     }
 
     /**
@@ -59,7 +60,7 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // format the date
-        return SpoonDate::getDate($format, (int) $var, LANGUAGE);
+        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
     }
 
     /**
@@ -126,7 +127,7 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // format the date
-        return SpoonDate::getDate($format, (int) $var, LANGUAGE);
+        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
     }
 
     /**
@@ -194,8 +195,8 @@ class TemplateModifiers extends BaseTwigModifiers
                 'time_format'
             ),
             $string,
-            LANGUAGE
-        ).'">'.\SpoonDate::getTimeAgo($string, LANGUAGE).'</abbr>';
+            Locale::frontendLanguage()
+        ).'">'.\SpoonDate::getTimeAgo($string, Locale::frontendLanguage()).'</abbr>';
     }
 
     /**
