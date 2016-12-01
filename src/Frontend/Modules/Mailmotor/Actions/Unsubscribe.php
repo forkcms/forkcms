@@ -12,6 +12,7 @@ namespace Frontend\Modules\Mailmotor\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Mailmotor\Command\Unsubscription;
 use Frontend\Modules\Mailmotor\Event\NotImplementedUnsubscribedEvent;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
@@ -37,8 +38,8 @@ class Unsubscribe extends FrontendBaseBlock
         $form = $this->createForm(
             $this->get('mailmotor.form.unsubscription'),
             new Unsubscription(
-                $email,
-                FRONTEND_LANGUAGE
+                Locale::frontendLanguage(),
+                $email
             )
         );
 

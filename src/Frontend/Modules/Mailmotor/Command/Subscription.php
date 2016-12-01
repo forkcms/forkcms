@@ -9,6 +9,7 @@ namespace Frontend\Modules\Mailmotor\Command;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Language\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 use Frontend\Modules\Mailmotor\Validator\Constraints as MailingListAssert;
 
@@ -24,9 +25,9 @@ final class Subscription
     public $email;
 
     /**
-     * @var string
+     * @var Locale
      */
-    public $language;
+    public $locale;
 
     /**
      * @var array
@@ -36,14 +37,14 @@ final class Subscription
     public $interests;
 
     /**
-     * @param mixed null|string $email
-     * @param string $language
+     * @param Locale $locale
+     * @param null|string $email
      */
     public function __construct(
-        $email = null,
-        $language
+        Locale $locale,
+        $email = null
     ) {
-        $this->language = $language;
+        $this->locale = $locale;
         $this->email = $email;
     }
 }
