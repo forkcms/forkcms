@@ -73,7 +73,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(), $this->record['module']);
         $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
         $this->frm->addText('name', $this->record['name']);
-        $this->frm->addTextarea('value', $this->record['value'], 'inputText', 'inputTextError', true);
+        $this->frm->addTextarea('value', $this->record['value'], null, null, true);
         $this->frm->addDropdown('language', BL::getWorkingLanguages(), $this->record['language']);
     }
 

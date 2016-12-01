@@ -22,7 +22,7 @@ class Language
     /**
      * The labels
      *
-     * @var    array
+     * @var array
      */
     protected static $err = array();
     protected static $lbl = array();
@@ -31,21 +31,21 @@ class Language
     /**
      * The active languages
      *
-     * @var    array
+     * @var array
      */
     protected static $activeLanguages;
 
     /**
      * The current interface-language
      *
-     * @var    string
+     * @var string
      */
     protected static $currentInterfaceLanguage;
 
     /**
      * The current language that the user is working with
      *
-     * @var    string
+     * @var string
      */
     protected static $currentWorkingLanguage;
 

@@ -19,7 +19,7 @@ class FormFile extends \SpoonFormFile
     /**
      * Should the helpTxt span be hidden when parsing the field?
      *
-     * @var    bool
+     * @var bool
      */
     private $hideHelpTxt = false;
 

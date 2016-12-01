@@ -40,7 +40,7 @@ class ForkInstaller
      *        - make sure the Model::setContainer isn't needed anymore
      *
      * @param Container $container
-     * @param           $rootDir
+     * @param        $rootDir
      */
     public function __construct(Container $container, $rootDir)
     {
@@ -358,7 +358,7 @@ class ForkInstaller
             'default_language' => $data->getDefaultLanguage(),
             'default_interface_language' => $data->getDefaultInterfaceLanguage(),
             'spoon_debug_email' => $data->getEmail(),
-            'api_email' => $data->getEmail(),
+            'api_email' => $data->getEmail(), // can be removed after the api is kicked out
             'site_domain' => (isset($_SERVER['HTTP_HOST'])) ?
                 $_SERVER['HTTP_HOST'] :
                 'fork.local',

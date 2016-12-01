@@ -23,6 +23,7 @@ doctrine:
             datetime: Common\Doctrine\Type\UTCDateTimeType
             datetimetz: Common\Doctrine\Type\UTCDateTimeType
             time: Common\Doctrine\Type\UTCDateTimeType
+            date: Common\Doctrine\Type\UTCDateTimeType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"

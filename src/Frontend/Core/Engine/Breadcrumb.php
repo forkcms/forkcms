@@ -20,7 +20,7 @@ class Breadcrumb extends FrontendBaseObject
     /**
      * The items in the breadcrumb
      *
-     * @var    array
+     * @var array
      */
     private $items = array();
 

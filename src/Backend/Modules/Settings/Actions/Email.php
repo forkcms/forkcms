@@ -29,7 +29,7 @@ class Email extends BackendBaseActionIndex
     /**
      * The form instance
      *
-     * @var    BackendForm
+     * @var BackendForm
      */
     private $frm;
 

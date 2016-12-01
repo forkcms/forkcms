@@ -1,50 +1,47 @@
 /*
-
-	Default stylesheet for the editor
+    Default stylesheet for the editor
     
-	@package      backend
-	@subpackage   core
-
-	@since        2.0
-
+    @package backend
+    @subpackage core
+    @since 2.0
 */
 
 body {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
-	height: 100%;
-	height: expression((window) && ((document.documentElement.clientHeight - 6) + "px"));
-	cursor: text;
-	padding: 6px;
-	height: auto;
-	width: auto;
-	margin: 0;
-	background: #FFF;
-	color: #000;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 100%;
+    height: expression((window) && ((document.documentElement.clientHeight - 6) + "px"));
+    cursor: text;
+    padding: 6px;
+    height: auto;
+    width: auto;
+    margin: 0;
+    background: #FFF;
+    color: #000;
 }
 
 html {
-	height: auto;
-	width: auto;
+    height: auto;
+    width: auto;
 }
 
 img {
-	max-width: 100%;
-	height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 table {
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
 
 table, th, td {
-	border: 1px dotted #999;
+    border: 1px dotted #999;
 }
 
 /*
-	Editor defaults edited
+    Editor defaults edited
 */
 
 acronym { border-bottom: 1px dotted #CCC; cursor:help; }

@@ -128,6 +128,14 @@ class ModulesSettings
             return $settings[$module];
         }
 
+        // try again after clearing the cache
+        $this->cache->deleteItem('settings');
+
+        $settings = $this->getSettings();
+
+        if (isset($settings[$module])) {
+            return $settings[$module];
+        }
         return array();
     }
 

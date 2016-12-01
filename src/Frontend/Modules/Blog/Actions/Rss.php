@@ -25,14 +25,14 @@ class Rss extends FrontendBaseBlock
     /**
      * The articles
      *
-     * @var    array
+     * @var array
      */
     private $items;
 
     /**
      * The settings
      *
-     * @var    array
+     * @var array
      */
     private $settings;
 
@@ -79,7 +79,7 @@ class Rss extends FrontendBaseBlock
             if ($this->get('fork.settings')->get('Blog', 'rss_meta_' . LANGUAGE, true)) {
                 // append meta
                 $description .= '<div class="meta">' . "\n";
-                $description .= '	<p><a href="' . $link . '" title="' . $title . '">' . $title . '</a> ' .
+                $description .= '    <p><a href="' . $link . '" title="' . $title . '">' . $title . '</a> ' .
                                 sprintf(
                                     FL::msg('WrittenBy'),
                                     FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname')
@@ -90,7 +90,7 @@ class Rss extends FrontendBaseBlock
                 // any tags
                 if (isset($item['tags'])) {
                     // append tags-paragraph
-                    $description .= '	<p>' . \SpoonFilter::ucfirst(FL::lbl('Tags')) . ': ';
+                    $description .= '    <p>' . \SpoonFilter::ucfirst(FL::lbl('Tags')) . ': ';
                     $first = true;
 
                     // loop tags

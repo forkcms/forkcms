@@ -29,7 +29,7 @@ class Add extends BackendBaseActionAdd
     /**
      * The blocks linked to this page
      *
-     * @var    array
+     * @var array
      */
     private $blocksContent = array();
 
@@ -43,21 +43,21 @@ class Add extends BackendBaseActionAdd
     /**
      * The positions
      *
-     * @var    array
+     * @var array
      */
     private $positions = array();
 
     /**
      * The extras
      *
-     * @var    array
+     * @var array
      */
     private $extras = array();
 
     /**
      * The template data
      *
-     * @var    array
+     * @var array
      */
     private $templates = array();
 

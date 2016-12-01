@@ -192,6 +192,7 @@ class Edit extends BackendBaseActionEdit
                     'active'
                 )->setAttribute('disabled', 'disabled');
             }
+            // @TODO remove this when the api is kicked out
             $this->frm->addCheckbox(
                 'api_access',
                 (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y')
@@ -334,6 +335,7 @@ class Edit extends BackendBaseActionEdit
                 $settings['number_format'] = $fields['number_format']->getValue();
                 $settings['csv_split_character'] = $fields['csv_split_character']->getValue();
                 $settings['csv_line_ending'] = $fields['csv_line_ending']->getValue();
+                // @TODO remove this when the api is kicked out
                 $settings['api_access'] = ($this->allowUserRights) ? (bool) $fields['api_access']->getChecked(
                 ) : $this->record['settings']['api_access'];
 

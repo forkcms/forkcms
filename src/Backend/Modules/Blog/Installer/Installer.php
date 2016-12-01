@@ -20,7 +20,7 @@ class Installer extends ModuleInstaller
     /**
      * Default category id
      *
-     * @var    int
+     * @var int
      */
     private $defaultCategoryId;
 
@@ -85,7 +85,8 @@ class Installer extends ModuleInstaller
         $this->setSetting('Blog', 'requires_akismet', true);
         $this->setSetting('Blog', 'spamfilter', false);
         $this->setSetting('Blog', 'moderation', true);
-        $this->setSetting('Blog', 'ping_services', true);
+        // @TODO remove this when the api is kicked out
+        $this->setSetting('Blog', 'ping_services', false);
         $this->setSetting('Blog', 'overview_num_items', 10);
         $this->setSetting('Blog', 'recent_articles_full_num_items', 3);
         $this->setSetting('Blog', 'recent_articles_list_num_items', 5);

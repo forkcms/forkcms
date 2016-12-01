@@ -94,7 +94,7 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
         $url404 = BackendModel::getURL(404);
         if ($url404 != $url) {
             $this->tpl->assign('detailURL', SITE_URL . $url);

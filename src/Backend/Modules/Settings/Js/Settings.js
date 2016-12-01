@@ -3,82 +3,82 @@
  */
 jsBackend.settings =
 {
-	init: function()
-	{
-		$('#facebookAdminIds').multipleTextbox(
-		{
-			emptyMessage: utils.string.ucfirst(jsBackend.locale.msg('NoAdminIds')),
-			addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
-			removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
-			canAddNew: true
-		});
+    init: function()
+    {
+        $('#facebookAdminIds').multipleTextbox(
+        {
+            emptyMessage: utils.string.ucfirst(jsBackend.locale.msg('NoAdminIds')),
+            addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+            removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
+            canAddNew: true
+        });
 
-		$('#testEmailConnection').on('click', jsBackend.settings.testEmailConnection);
+        $('#testEmailConnection').on('click', jsBackend.settings.testEmailConnection);
 
-		$('#activeLanguages input:checkbox').on('change', jsBackend.settings.changeActiveLanguage).change();
-	},
+        $('#activeLanguages input:checkbox').on('change', jsBackend.settings.changeActiveLanguage).change();
+    },
 
-	changeActiveLanguage: function(e)
-	{
-		var $this = $(this);
+    changeActiveLanguage: function(e)
+    {
+        var $this = $(this);
 
-		// only go on if the item isn't disabled by default
-		if(!$this.attr('disabled'))
-		{
-			// grab other element
-			var $other = $('#' + $this.attr('id').replace('active_', 'redirect_'));
+        // only go on if the item isn't disabled by default
+        if(!$this.attr('disabled'))
+        {
+            // grab other element
+            var $other = $('#' + $this.attr('id').replace('active_', 'redirect_'));
 
-			if($this.is(':checked')) $other.attr('disabled', false);
-			else $other.attr('checked', false).attr('disabled', true);
-		}
-	},
+            if($this.is(':checked')) $other.attr('disabled', false);
+            else $other.attr('checked', false).attr('disabled', true);
+        }
+    },
 
-	testEmailConnection: function(e)
-	{
-		// prevent default
-		e.preventDefault();
+    testEmailConnection: function(e)
+    {
+        // prevent default
+        e.preventDefault();
 
-		$spinner = $('#testEmailConnectionSpinner');
-		$error = $('#testEmailConnectionError');
-		$success = $('#testEmailConnectionSuccess');
-		$email = $('#settingsEmail');
+        $spinner = $('#testEmailConnectionSpinner');
+        $error = $('#testEmailConnectionError');
+        $success = $('#testEmailConnectionSuccess');
+        $email = $('#settingsEmail');
 
-		// show spinner
-		$spinner.show();
+        // show spinner
+        $spinner.show();
 
-		// hide previous results
-		$error.hide();
-		$success.hide();
+        // hide previous results
+        $error.hide();
+        $success.hide();
 
-		// fetch email parameters
-		var settings = {};
-		$.each($email.serializeArray(), function() { settings[this.name] = this.value; });
+        // fetch email parameters
+        var settings = {};
+        $.each($email.serializeArray(), function() { settings[this.name] = this.value; });
 
-		// make the call
-		$.ajax(
-		{
-			data: $.extend({ fork: { action: 'TestEmailConnection' } }, settings),
-			success: function(data, textStatus)
-			{
-				// hide spinner
-				$spinner.hide();
+        // make the call
+        $.ajax(
+        {
+            data: $.extend({ fork: { action: 'TestEmailConnection' } }, settings),
+            success: function(data, textStatus)
+            {
+                // hide spinner
+                $spinner.hide();
 
-				// show success
-				if(data.code == 200) {
-					jsBackend.messages.add('success', jsBackend.locale.msg('TestWasSent'), '');
-				}
-				else jsBackend.messages.add('danger', jsBackend.locale.err('ErrorWhileSendingEmail'), '');
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown)
-			{
-				// hide spinner
-				$spinner.hide();
+                // show success
+                if(data.code == 200) {
+                    jsBackend.messages.add('success', jsBackend.locale.msg('TestWasSent'), '');
+                }
+                else jsBackend.messages.add('danger', jsBackend.locale.err('ErrorWhileSendingEmail'), '');
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown)
+            {
+                // hide spinner
+                $spinner.hide();
 
-				// show error
-				jsBackend.messages.add('danger', jsBackend.locale.err('ErrorWhileSendingEmail'), '');
-			}
-		});
-	}
+                // show error
+                jsBackend.messages.add('danger', jsBackend.locale.err('ErrorWhileSendingEmail'), '');
+            }
+        });
+    }
 };
 
 $(jsBackend.settings.init);

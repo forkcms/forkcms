@@ -173,7 +173,7 @@
 
             // append the button
             $(this).closest('.input-group input').after(
-                '		<a href="#" data-id="' + id + '" class="generatePasswordButton btn btn-default input-group-addon"><span>' + options.generateLabel + '</span></a>'
+                '        <a href="#" data-id="' + id + '" class="generatePasswordButton btn btn-default input-group-addon"><span>' + options.generateLabel + '</span></a>'
             );
 
             $('.generatePasswordButton').live('click', generatePassword);
@@ -531,12 +531,12 @@
             // build replace html
             var html =
                 '<div class="form-inline form-group keyValueWrapper">' +
-                '	<div class="form-group input-group">' +
-                '		<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-                '	    <a href="#" id="addButton-' + id + '" class="btn btn-primary input-group-addon">' +
+                '    <div class="form-group input-group">' +
+                '        <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+                '        <a href="#" id="addButton-' + id + '" class="btn btn-primary input-group-addon">' +
                 '           <span class="fa fa-plus-square"></span>' +
-                (options.showIconOnly?'':'	        <span>' + options.addLabel + '</span>') +
-                '	    </a>' +
+                (options.showIconOnly?'':'            <span>' + options.addLabel + '</span>') +
+                '        </a>' +
                 '   </div>' +
                 '</div>' +
                 '<div class="form-inline form-group">' +
@@ -721,7 +721,7 @@
                     {
                         var humanValue = elements[i].split(options.secondSplitChar)[1];
 
-                        html += '	<li><span><strong>' + humanValue + '</strong>' + '		<a href="#" class="deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + '	</li>';
+                        html += '    <li><span><strong>' + humanValue + '</strong>'+ '        <a href="#" class="deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + '    </li>';
                     }
 
                     // end html
@@ -826,8 +826,8 @@
             });
 
             // build replace html
-            var html = 	'<div class="form-inline form-group tagsWrapper">' +
-                        '	<div class="form-group input-group">' +
+            var html =     '<div class="form-inline form-group tagsWrapper">' +
+                        '    <div class="form-group input-group">' +
                         '       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
                         '       <a href="#" id="addButton-' + id + '" class="btn btn-default btn-second btn-xs input-group-addon">' +
                         '           <span class="fa fa-plus-square"></span>' +
@@ -1011,10 +1011,10 @@
                     {
                         var value = utils.string.stripForTag(elements[i]);
 
-                        html += '	<li class="list-group-item">' +
-                                '		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash"></span></a></span>' +
+                        html += '    <li class="list-group-item">' +
+                                '        <a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash"></span></a></span>' +
                                 '       <span><strong>' + value + '</strong>' +
-                                '	</li>';
+                                '    </li>';
                     }
 
                     // end html
@@ -1106,29 +1106,29 @@
             }
 
             // build replace html
-            var html =	'<div class="multipleSelectWrapper">' +
-                        '	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' +
-                        '	<div class="oneLiner">' +
-                        '		<p>' +
-                        '			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
+            var html =    '<div class="multipleSelectWrapper">' +
+                        '    <div id="elementList-' + id + '" class="multipleSelectList">' + '    </div>' +
+                        '    <div class="oneLiner">' +
+                        '        <p>' +
+                        '            <select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
 
             for(var i = 0; i < possibleOptions.length; i++)
             {
-                html +=	'				<option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
+                html +=    '                <option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
             }
 
-            html +=		'			</select>' +
-                        '		</p>' +
-                        '		<div class="buttonHolder">' +
-                        '			<a href="#" id="addButton-' + id + '" class="button icon iconAdd';
+            html +=        '            </select>' +
+                        '        </p>' +
+                        '        <div class="buttonHolder">' +
+                        '            <a href="#" id="addButton-' + id + '" class="button icon iconAdd';
 
             if(options.showIconOnly) html += ' iconOnly';
 
-            html += 	'">' +
-                        '				<span>' + options.addLabel + '</span>' +
-                        '			</a>' +
-                        '		</div>' +
-                        '	</div>' +
+            html +=     '">' +
+                        '                <span>' + options.addLabel + '</span>' +
+                        '            </a>' +
+                        '        </div>' +
+                        '    </div>' +
                         '</div>';
 
             // hide current element
@@ -1224,14 +1224,14 @@
                     // loop elements
                     for(var i in elements)
                     {
-                        html += '	<li class="oneLiner">' +
-                                '		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' +
-                                '		<div class="buttonHolder">' +
-                                '			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
-                                '				<span>' + options.removeLabel + '</span></a>' +
-                                '			</a>' +
-                                '		</div>' +
-                                '	</li>';
+                        html += '    <li class="oneLiner">' +
+                                '        <p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' +
+                                '        <div class="buttonHolder">' +
+                                '            <a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+                                '                <span>' + options.removeLabel + '</span></a>' +
+                                '            </a>' +
+                                '        </div>' +
+                                '    </li>';
 
                         // remove from dropdown
                         $('#addValue-' + id + ' option[value=' + elements[i] + ']').prop('disabled', true);
@@ -1549,13 +1549,13 @@
                     // loop elements
                     for(var i in elements)
                     {
-                        html += '	<li class="form-group input-group">' +
-                                '	    <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
-                                '		<a href="#" class="btn btn-danger input-group-addon deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+                        html += '    <li class="form-group input-group">' +
+                                '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
+                                '        <a href="#" class="btn btn-danger input-group-addon deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
                                 '           <span class="fa fa-trash"></span>' +
-                                '			<span>' + options.removeLabel + '</span>' +
-                                '		</a>' +
-                                '	</li>';
+                                '            <span>' + options.removeLabel + '</span>' +
+                                '        </a>' +
+                                '    </li>';
                     }
 
                     // end html
