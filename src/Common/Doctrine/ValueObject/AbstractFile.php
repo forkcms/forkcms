@@ -57,7 +57,7 @@ abstract class AbstractFile
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getWebPath()
     {
@@ -66,7 +66,7 @@ abstract class AbstractFile
             return FRONTEND_FILES_URL . '/' . $this->getTrimmedUploadDir() . '/' . $this->fileName;
         }
 
-        return;
+        return '';
     }
 
     /**
