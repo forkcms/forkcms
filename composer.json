@@ -37,7 +37,8 @@
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
         "phpunit/phpunit": "~4.5",
-        "symfony/var-dumper": "^2.7"
+        "symfony/var-dumper": "^2.7",
+        "squizlabs/php_codesniffer": "^2.7"
     },
     "config": {
         "bin-dir": "bin"

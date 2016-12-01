@@ -7,7 +7,7 @@ use PHPUnit_Framework_TestCase;
 
 class DataGridFunctionsTest extends PHPUnit_Framework_TestCase
 {
-    public function test_showImage()
+    public function testShowImage()
     {
         $path = '/src/Frontend/Files/Media/Backend/01';
         $imageName = 'image-01.jpg';

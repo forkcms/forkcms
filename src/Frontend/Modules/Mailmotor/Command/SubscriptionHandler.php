@@ -76,7 +76,7 @@ final class SubscriptionHandler
         // Subscribing the user, will dispatch an event
         $this->subscriber->subscribe(
             $subscription->email,
-            $subscription->language,
+            (string) $subscription->locale,
             $mergeFields,
             $interests
         );

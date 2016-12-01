@@ -428,11 +428,11 @@ class DataGrid extends \SpoonDataGrid
      * Sets the column function to be executed for every row
      *
      * @param mixed $function  The function to execute.
-     * @param mixed $arguments The arguments to pass to the function.
+     * @param mixed|null $arguments The arguments to pass to the function.
      * @param mixed $columns   The column wherein the result will be printed.
      * @param bool  $overwrite Should the original value be overwritten.
      */
-    public function setColumnFunction($function, $arguments = null, $columns, $overwrite = true)
+    public function setColumnFunction($function, $arguments, $columns, $overwrite = true)
     {
         // call the parent
         parent::setColumnFunction($function, $arguments, $columns, $overwrite);

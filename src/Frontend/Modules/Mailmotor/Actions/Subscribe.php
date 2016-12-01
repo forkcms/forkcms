@@ -11,6 +11,7 @@ namespace Frontend\Modules\Mailmotor\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Mailmotor\Command\Subscription;
 use Frontend\Modules\Mailmotor\Event\NotImplementedSubscribedEvent;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
@@ -36,8 +37,8 @@ class Subscribe extends FrontendBaseBlock
         $form = $this->createForm(
             $this->get('mailmotor.form.subscription'),
             new Subscription(
-                $email,
-                FRONTEND_LANGUAGE
+                Locale::frontendLanguage(),
+                $email
             )
         );
 

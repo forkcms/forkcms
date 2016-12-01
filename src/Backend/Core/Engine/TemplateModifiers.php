@@ -195,7 +195,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
+    public static function truncate($var, $length, $useHellip = true, $closestWord = false)
     {
         // init vars
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
