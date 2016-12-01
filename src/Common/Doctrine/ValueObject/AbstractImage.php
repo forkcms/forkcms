@@ -42,6 +42,10 @@ abstract class AbstractImage extends AbstractFile
      */
     public function getAbsolutePath($subDirectory = null)
     {
+        if (self::GENERATE_THUMBNAILS && $subDirectory === null) {
+            $subDirectory = 'source';
+        }
+
         return $this->fileName === null ? null : $this->getUploadRootDir($subDirectory) . '/' . $this->fileName;
     }
 
@@ -52,6 +56,10 @@ abstract class AbstractImage extends AbstractFile
      */
     public function getWebPath($subDirectory = null)
     {
+        if (self::GENERATE_THUMBNAILS && $subDirectory === null) {
+            $subDirectory = 'source';
+        }
+
         $file = $this->getAbsolutePath($subDirectory);
 
         if (is_file($file) && file_exists($file)) {
