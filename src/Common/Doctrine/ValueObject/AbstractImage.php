@@ -125,7 +125,7 @@ abstract class AbstractImage extends AbstractFile
      */
     public function remove()
     {
-        if (static::GENERATE_THUMBNAILS) {
+        if (static::GENERATE_THUMBNAILS && is_dir($this->getUploadRootDir())) {
             Model::deleteThumbnails($this->getUploadRootDir(), $this->fileName);
 
             return;
