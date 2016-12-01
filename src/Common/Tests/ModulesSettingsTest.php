@@ -81,7 +81,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
         ;
 
         $databaseMock
-            ->expects(self::once())
+            ->expects(self::atLeastOnce())
             ->method('getRecords')
             ->willReturn(array(
                 array(
