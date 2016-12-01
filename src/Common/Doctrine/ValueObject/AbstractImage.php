@@ -107,6 +107,20 @@ abstract class AbstractImage extends AbstractFile
     }
 
     /**
+     * This will remove the old image and if needed the generated thumbnails
+     */
+    protected function removeOldFile()
+    {
+        if (static::GENERATE_THUMBNAILS && is_dir($this->getUploadRootDir())) {
+            Model::deleteThumbnails($this->getUploadRootDir(), $this->oldFileName);
+
+            return;
+        }
+
+        parent::removeOldFile();
+    }
+
+    /**
      * This function should be called for the life cycle event @ORM\PostRemove()
      */
     public function remove()
