@@ -654,9 +654,9 @@ class Header extends FrontendBaseObject
             foreach ($existingCSSFiles as $file) {
                 if ($file['add_timestamp'] !== false) {
                     $file['file'] .= (mb_strpos(
-                                          $file['file'],
-                                          '?'
-                                      ) !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                        $file['file'],
+                        '?'
+                    ) !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
                 }
                 $cssFiles[] = $file;
             }
@@ -676,8 +676,7 @@ class Header extends FrontendBaseObject
         $webPropertyId = $this->get('fork.settings')->get('Analytics', 'web_property_id', null);
 
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
-        if (
-            $webPropertyId != '' &&
+        if ($webPropertyId != '' &&
             mb_strpos($siteHTMLHeader, $webPropertyId) === false &&
             mb_strpos($siteHTMLFooter, $webPropertyId) === false
         ) {
@@ -821,9 +820,9 @@ class Header extends FrontendBaseObject
                 } else {
                     // add last modified time
                     $modifiedTime = (mb_strpos(
-                                         $file['file'],
-                                         '?'
-                                     ) !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                        $file['file'],
+                        '?'
+                    ) !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
                     $file = array('file' => $file['file'] . $modifiedTime);
                 }
 

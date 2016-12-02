@@ -10,6 +10,9 @@ use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
+use SpoonFormAttributes;
+use SpoonFormMultiCheckbox;
+use SpoonFormRadiobutton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -148,6 +151,7 @@ class Form extends FrontendBaseWidget
 
         // exists and has fields
         if (!empty($this->item) && !empty($this->item['fields'])) {
+            //dump($this->item['fields'] );die;
             // loop fields
             foreach ($this->item['fields'] as $field) {
                 // init
@@ -157,6 +161,7 @@ class Form extends FrontendBaseWidget
                 $item['placeholder'] = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
                 $item['classname'] = (isset($field['settings']['classname']) ? $field['settings']['classname'] : null);
                 $item['required'] = isset($field['validations']['required']);
+                $item['validations'] = isset($field['validations']) ? $field['validations'] : [];
                 $item['html'] = '';
 
                 // form values
@@ -187,6 +192,7 @@ class Form extends FrontendBaseWidget
                         $ddm->setAttribute('required', null);
                     }
 
+                    $this->setCustomHTML5ErrorMessages($item, $ddm);
                     // get content
                     $item['html'] = $ddm->parse();
                 } elseif ($field['type'] == 'radiobutton') {
@@ -217,12 +223,17 @@ class Form extends FrontendBaseWidget
                     if ($item['required']) {
                         $txt->setAttribute('required', null);
                     }
-                    if (isset($field['validations']['email'])) {
+                    if (isset($item['validations']['email'])) {
                         $txt->setAttribute('type', 'email');
+                    }
+                    if (isset($item['validations']['numeric'])) {
+                        $txt->setAttribute('type', 'number');
                     }
                     if ($item['placeholder']) {
                         $txt->setAttribute('placeholder', $item['placeholder']);
                     }
+
+                    $this->setCustomHTML5ErrorMessages($item, $txt);
 
                     // get content
                     $item['html'] = $txt->parse();
@@ -269,6 +280,8 @@ class Form extends FrontendBaseWidget
                         $datetime->setAttribute('required', null);
                     }
 
+                    $this->setCustomHTML5ErrorMessages($item, $datetime);
+
                     // get content
                     $item['html'] = $datetime->parse();
                 } elseif ($field['type'] == 'textarea') {
@@ -284,6 +297,8 @@ class Form extends FrontendBaseWidget
                         $txt->setAttribute('placeholder', $item['placeholder']);
                     }
 
+                    $this->setCustomHTML5ErrorMessages($item, $txt);
+
                     // get content
                     $item['html'] = $txt->parse();
                 } elseif ($field['type'] == 'heading') {
@@ -297,6 +312,20 @@ class Form extends FrontendBaseWidget
                 // add to list
                 $this->fieldsHTML[] = $item;
             }
+        }
+    }
+
+    /**
+     * @param array $item
+     * @param SpoonFormAttributes $formField
+     */
+    private function setCustomHTML5ErrorMessages(array $item, SpoonFormAttributes $formField)
+    {
+        foreach ($item['validations'] as $validation) {
+            $formField->setAttribute(
+                'data-error-' . $validation['type'],
+                $validation['error_message']
+            );
         }
     }
 

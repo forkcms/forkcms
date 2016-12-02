@@ -448,15 +448,6 @@ class Edit extends BackendBaseActionEdit
                         array('title' => $item['title'], 'text' => $item['text'])
                     );
 
-                    // ping
-                    if ($this->get('fork.settings')->get($this->URL->getModule(), 'ping_services', false)) {
-                        BackendModel::ping(
-                            SITE_URL .
-                            BackendModel::getURLForBlock($this->URL->getModule(), 'detail') .
-                            '/' . $this->meta->getURL()
-                        );
-                    }
-
                     // build URL
                     $redirectUrl = BackendModel::createURLForAction('Index') .
                                    '&report=edited&var=' . rawurlencode($item['title']) .

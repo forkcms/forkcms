@@ -1,17 +1,19 @@
-<section id="subscribeFormWidget" class="mod">
+<section id="mailmotorSubscribeFormWidget" class="mod">
   <div class="inner">
+    <div class="hd">
+      <h3 class="title">{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
+    </div>
     <div class="bd">
-      {% form subscribe %}
-      <input type="hidden" name="form_token" id="formToken" value="{{ formToken }}" />
-      <p>
-        <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
-          <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-        {% form_field email %} {% form_field_error email %}
-      </p>
-      <p>
-        <input id="send" class="inputSubmit" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans|ucfirst }}" />
-      </p>
-      {% endform %}
+      <form action="{{ geturlforblock('Mailmotor', 'Subscribe' ) }}" method="post">
+        <input type="hidden" name="form" value="mailMotorSubscribeForm" />
+        <p>
+          <label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <input type="text" value="" id="email" name="email" class="inputText" placeholder="{{ 'lbl.YourEmail'|trans|capitalize }}" />
+        </p>
+        <p>
+          <input id="send" class="inputSubmit btn" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans|capitalize }}" />
+        </p>
+      </form>
     </div>
   </div>
 </section>

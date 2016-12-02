@@ -3,437 +3,66 @@
 namespace Backend\Modules\Mailmotor\Actions;
 
 /*
- * This file is part of Fork CMS.
+ * This file is part of the Fork CMS Mailmotor Module from SIESQO.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+use Backend\Core\Engine\Base\ActionIndex;
+use Backend\Core\Engine\Model;
+use Backend\Modules\Mailmotor\Command\SaveSettings;
+use Backend\Modules\Mailmotor\Event\SettingsSavedEvent;
 
-class Settings extends BackendBaseActionEdit
+/**
+ * This is the settings-action (default),
+ * it will be used to couple your "mail-engine" account
+ */
+final class Settings extends ActionIndex
 {
     /**
-     * Holds true if the CM account exists
-     *
-     * @var bool
-     */
-    private $accountLinked = false;
-
-    /**
-     * The client ID
-     *
-     * @var string
-     */
-    private $clientID;
-
-    /**
-     * The forms used on this page
-     *
-     * @var BackendForm
-     */
-    private $frmAccount;
-    private $frmClient;
-    private $frmGeneral;
-
-    /**
-     * Mailmotor settings
-     *
-     * @var array
-     */
-    private $settings = array();
-
-    /**
-     * Attempts to create a client
-     *
-     * @param array $record The client record to create.
-     *
-     * @return mixed
-     */
-    private function createClient($record)
-    {
-        // get the account settings
-        $url = $this->get('fork.settings')->get($this->getModule(), 'cm_url');
-        $username = $this->get('fork.settings')->get($this->getModule(), 'cm_username');
-        $password = $this->get('fork.settings')->get($this->getModule(), 'cm_password');
-
-        // create a client
-        try {
-            // fetch complete list of timezones as pairs
-            $timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
-
-            // init CampaignMonitor object
-            $cm = new \CampaignMonitor($url, $username, $password, 10);
-
-            // create client
-            $clientID = $cm->createClient($record['company_name'], $record['country'], $timezones[$record['timezone']]);
-
-            // store ID in a setting
-            if (!empty($clientID)) {
-                $this->get('fork.settings')->set($this->getModule(), 'cm_client_id', $clientID);
-            }
-        } catch (\Exception $e) {
-            // add an error to the email field
-            $this->redirect(
-                BackendModel::createURLForAction('Settings') . '&error=campaign-monitor-error&var=' . $e->getMessage(
-                ) . '#tabSettingsClient'
-            );
-        }
-    }
-
-    /**
-     * Execute the action
+     * Execute
      */
     public function execute()
     {
-        // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        $this->getData();
-        $this->loadAccountForm();
-        $this->loadClientForm();
-        $this->loadGeneralForm();
-        $this->validateAccountForm();
-        $this->validateClientForm();
-        $this->validateGeneralForm();
-        $this->parse();
-        $this->display();
-    }
+        $form = $this->createForm(
+            $this->get('mailmotor.form.settings'),
+            new SaveSettings($this->get('fork.settings'))
+        );
 
-    /**
-     * Get all necessary data
-     */
-    private function getData()
-    {
-        // define mailmotor settings
-        $this->settings = $this->get('fork.settings')->getForModule($this->getModule());
+        $form->handleRequest($this->get('request'));
 
-        // check if an account was linked already and/or client ID was set
-        $this->accountLinked = BackendMailmotorCMHelper::checkAccount();
-        $this->clientID = BackendMailmotorCMHelper::getClientID();
-    }
+        if (!$form->isValid()) {
+            $this->tpl->assign('form', $form->createView());
 
-    /**
-     * Loads the account settings form
-     */
-    private function loadAccountForm()
-    {
-        // init account settings form
-        $this->frmAccount = new BackendForm('settingsAccount');
+            $this->parse();
+            $this->display();
 
-        // add fields for campaignmonitor API
-        $this->frmAccount->addText('url', $this->settings['cm_url']);
-        $this->frmAccount->addText('username', $this->settings['cm_username']);
-        $this->frmAccount->addPassword('password', $this->settings['cm_password']);
-
-        if ($this->accountLinked) {
-            $this->frmAccount->getField('url')->setAttributes(array('disabled' => 'disabled'));
-            $this->frmAccount->getField('username')->setAttributes(array('disabled' => 'disabled'));
-            $this->frmAccount->getField('password')->setAttributes(array('disabled' => 'disabled'));
-        }
-    }
-
-    /**
-     * Loads the client settings form
-     */
-    private function loadClientForm()
-    {
-        // init account settings form
-        $this->frmClient = new BackendForm('settingsClient');
-
-        // an account was successfully made
-        if ($this->accountLinked) {
-            // get all clients linked to the active account
-            $clients = BackendMailmotorCMHelper::getClientsAsPairs();
-
-            // add field for client ID
-            $this->frmClient->addDropdown('client_id', $clients, $this->clientID);
+            return;
         }
 
-        // account was made
-        if ($this->accountLinked) {
-            // fetch CM countries
-            $countries = BackendMailmotorCMHelper::getCountriesAsPairs();
+        /** @var SaveSettings $settings */
+        $settings = $form->getData();
 
-            // fetch CM timezones
-            $timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
+        // The command bus will handle the saving of the settings in the database.
+        $this->get('command_bus')->handle($settings);
 
-            // add fields for campaignmonitor client ID
-            $this->frmClient->addText('company_name', $this->settings['cm_client_company_name']);
-            $this->frmClient->addDropdown('countries', $countries, $this->settings['cm_client_country']);
-            $this->frmClient->addDropdown('timezones', $timezones, $this->settings['cm_client_timezone']);
-        }
+        $this->get('event_dispatcher')->dispatch(
+            SettingsSavedEvent::EVENT_NAME,
+            new SettingsSavedEvent($settings)
+        );
 
-        // sender info
-        $this->frmClient->addText('from_name', $this->settings['from_name']);
-        $this->frmClient->addText('from_email', $this->settings['from_email']);
-
-        // reply to address
-        $this->frmClient->addText('reply_to_email', $this->settings['reply_to_email']);
-
-        // add fields for comments
-        $this->frmClient->addCheckbox('plain_text_editable', $this->settings['plain_text_editable']);
-    }
-
-    /**
-     * Loads the general settings form
-     */
-    private function loadGeneralForm()
-    {
-        // init account settings form
-        $this->frmGeneral = new BackendForm('settingsGeneral');
-
-        // sender info
-        $this->frmGeneral->addText('from_name', $this->settings['from_name']);
-        $this->frmGeneral->addText('from_email', $this->settings['from_email']);
-
-        // reply to address
-        $this->frmGeneral->addText('reply_to_email', $this->settings['reply_to_email']);
-
-        // add fields for comments
-        $this->frmGeneral->addCheckbox('plain_text_editable', $this->settings['plain_text_editable']);
-
-        // user is god
-        if (BackendAuthentication::getUser()->isGod()) {
-            // price per email
-            $this->frmGeneral->addText('price_per_email', $this->settings['price_per_email']);
-
-            // price per campaign
-            $this->frmGeneral->addText('price_per_campaign', $this->settings['price_per_campaign']);
-        }
-    }
-
-    /**
-     * Parse the form
-     */
-    protected function parse()
-    {
-        parent::parse();
-
-        // parse settings in template
-        $this->tpl->assign('account', $this->accountLinked);
-
-        // parse client ID
-        if ($this->accountLinked && !empty($this->settings['cm_client_id'])) {
-            $this->tpl->assign(
-                'clientId',
-                $this->settings['cm_client_id']
-            );
-        }
-
-        // parse god status
-        $this->tpl->assign('userIsGod', BackendAuthentication::getUser()->isGod());
-
-        // add all forms to template
-        $this->frmAccount->parse($this->tpl);
-        $this->frmClient->parse($this->tpl);
-        $this->frmGeneral->parse($this->tpl);
-    }
-
-    /**
-     * Updates a client record.
-     *
-     * @param array $record The client record to update.
-     *
-     * @return mixed
-     */
-    private function updateClient($record)
-    {
-        // get the account settings
-        $url = $this->get('fork.settings')->get($this->getModule(), 'cm_url');
-        $username = $this->get('fork.settings')->get($this->getModule(), 'cm_username');
-        $password = $this->get('fork.settings')->get($this->getModule(), 'cm_password');
-
-        // try and update the client info
-        try {
-            // fetch complete list of timezones as pairs
-            $timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
-
-            // init CampaignMonitor object
-            $cm = new \CampaignMonitor($url, $username, $password, 10, $this->clientID);
-
-            // update the client
-            $cm->updateClientBasics($record['company_name'], $record['country'], $timezones[$record['timezone']]);
-        } catch (\Exception $e) {
-            // add an error to the email field
-            $this->redirect(
-                BackendModel::createURLForAction('Settings') . '&error=campaign-monitor-error&var=' . $e->getMessage(
-                ) . '#tabSettingsClient'
-            );
-        }
-    }
-
-    /**
-     * Validates the account tab. On successful validation it will unlink an existing campaignmonitor account.
-     */
-    private function validateAccountForm()
-    {
-        // form is submitted
-        if ($this->frmAccount->isSubmitted()) {
-            // form is validated
-            if ($this->frmAccount->isCorrect()) {
-                // unlink the account and client ID
-                $this->get('fork.settings')->set($this->getModule(), 'cm_account', false);
-                $this->get('fork.settings')->set($this->getModule(), 'cm_url', null);
-                $this->get('fork.settings')->set($this->getModule(), 'cm_username', null);
-                $this->get('fork.settings')->set($this->getModule(), 'cm_password', null);
-                $this->get('fork.settings')->set($this->getModule(), 'cm_client_id', null);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
-
-                // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=unlinked#tabSettingsAccount');
-            }
-        }
-    }
-
-    /**
-     * Validates the client tab
-     */
-    private function validateClientForm()
-    {
-        // form is submitted
-        if ($this->frmClient->isSubmitted()) {
-            $this->frmClient->getField('company_name')->isFilled(BL::err('FieldIsRequired'));
-            $this->frmClient->getField('countries')->isFilled(BL::err('FieldIsRequired'));
-            $this->frmClient->getField('timezones')->isFilled(BL::err('FieldIsRequired'));
-
-            // form is validated
-            if ($this->frmClient->isCorrect()) {
-                // get the client settings from the install
-                $client = array();
-                $client['company_name'] = $this->frmClient->getField('company_name')->getValue();
-                $client['country'] = $this->frmClient->getField('countries')->getValue();
-                $client['timezone'] = $this->frmClient->getField('timezones')->getValue();
-
-                // client ID was not yet set OR the user wants a new client created
-                if ($this->frmClient->getField('client_id')->getValue() == '0') {
-                    // attempt to create the client
-                    $this->createClient($client);
-
-                    // store the client info in our database
-                    $this->get('fork.settings')->set(
-                        $this->getModule(),
-                        'cm_client_company_name',
-                        $client['company_name']
-                    );
-                    $this->get('fork.settings')->set($this->getModule(), 'cm_client_country', $client['country']);
-                    $this->get('fork.settings')->set($this->getModule(), 'cm_client_timezone', $client['timezone']);
-
-                    // trigger event
-                    BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
-
-                    // redirect to a custom success message
-                    $this->redirect(
-                        BackendModel::createURLForAction(
-                            'Settings'
-                        ) . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue()
-                    );
-                } else {
-                    // overwrite the client ID
-                    $this->clientID = $this->frmClient->getField('client_id')->getValue();
-
-                    // update the client record
-                    $this->updateClient($client);
-
-                    // store the client info in our database
-                    $this->get('fork.settings')->set(
-                        $this->getModule(),
-                        'cm_client_company_name',
-                        $client['company_name']
-                    );
-                    $this->get('fork.settings')->set($this->getModule(), 'cm_client_country', $client['country']);
-                    $this->get('fork.settings')->set($this->getModule(), 'cm_client_timezone', $client['timezone']);
-
-                    // update the client ID in settings
-                    $this->get('fork.settings')->set($this->getModule(), 'cm_client_id', $this->clientID);
-
-                    // trigger event
-                    BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
-
-                    // redirect to the settings page
-                    $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved#tabSettingsClient');
-                }
-            }
-        }
-    }
-
-    /**
-     * Validates the general tab
-     */
-    private function validateGeneralForm()
-    {
-        // form is submitted
-        if ($this->frmGeneral->isSubmitted()) {
-            // validate required fields
-            $this->frmGeneral->getField('from_name')->isFilled(BL::getError('FieldIsRequired'));
-            $this->frmGeneral->getField('from_email')->isEmail(BL::getError('EmailIsInvalid'));
-            $this->frmGeneral->getField('reply_to_email')->isEmail(BL::getError('EmailIsInvalid'));
-
-            // user is god
-            if (BackendAuthentication::getUser()->isGod()) {
-                if ($this->frmGeneral->getField('price_per_email')->isFilled(BL::err('FieldIsRequired'))) {
-                    $this->frmGeneral->getField('price_per_email')->isFloat(BL::err('InvalidPrice'));
-                }
-
-                if ($this->frmGeneral->getField('price_per_campaign')->isFilled(BL::err('FieldIsRequired'))) {
-                    $this->frmGeneral->getField('price_per_campaign')->isFloat(BL::err('InvalidPrice'));
-                }
-            }
-
-            // form is validated
-            if ($this->frmGeneral->isCorrect()) {
-                // set sender info
-                $this->get('fork.settings')->set(
-                    $this->getModule(),
-                    'from_name',
-                    $this->frmGeneral->getField('from_name')->getValue()
-                );
-                $this->get('fork.settings')->set(
-                    $this->getModule(),
-                    'from_email',
-                    $this->frmGeneral->getField('from_email')->getValue()
-                );
-                $this->get('fork.settings')->set(
-                    $this->getModule(),
-                    'reply_to_email',
-                    $this->frmGeneral->getField('reply_to_email')->getValue()
-                );
-                $this->get('fork.settings')->set(
-                    $this->getModule(),
-                    'plain_text_editable',
-                    $this->frmGeneral->getField('plain_text_editable')->getValue()
-                );
-
-                // user is god?
-                if (BackendAuthentication::getUser()->isGod()) {
-                    // set price per email
-                    $this->get('fork.settings')->set(
-                        $this->getModule(),
-                        'price_per_email',
-                        $this->frmGeneral->getField('price_per_email')->getValue()
-                    );
-
-                    // set price per campaign
-                    $this->get('fork.settings')->set(
-                        $this->getModule(),
-                        'price_per_campaign',
-                        $this->frmGeneral->getField('price_per_campaign')->getValue()
-                    );
-                }
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_saved_general_settings');
-
-                // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved#tabGeneral');
-            }
-        }
+        return $this->redirect(
+            Model::createURLForAction(
+                'Settings',
+                null,
+                null,
+                [
+                    'report' => 'saved',
+                ]
+            )
+        );
     }
 }

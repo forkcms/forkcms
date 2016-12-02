@@ -17,6 +17,8 @@ use Twig_Template;
 
 /**
  * Client for the Fork CMS API.
+ *
+ * @deprecated
  */
 class Client extends Api
 {
