@@ -490,23 +490,40 @@ class Page extends FrontendBaseObject
             );
         }
 
-        // get languages
-        $activeLanguages = Language::getActiveLanguages();
+        // Multi language is activated
+        if ($this->getContainer()->getParameter('site.multilanguage')) {
+            $links = array();
 
-        // loop active languages
-        foreach ($activeLanguages as $language) {
-            // Define url
-            $url = Navigation::getURL($this->pageId, $language);
+            // Get languages
+            $activeLanguages = Language::getActiveLanguages();
 
-            // Convert relative to absolute url
-            if (substr($url, 0, 1) == '/') {
-                $url = SITE_URL . $url;
+            // Loop active languages
+            foreach ($activeLanguages as $language) {
+                // Define url
+                $url = Navigation::getURL($this->pageId, $language);
+
+                // Ignore 404 links
+                if ($url === Navigation::getURL(404, $language)) {
+                    continue;
+                }
+
+                // Convert relative to absolute url
+                if (substr($url, 0, 1) == '/') {
+                    $url = SITE_URL . $url;
+                }
+
+                $links[$language] = $url;
             }
 
-            // Add hreflang
-            $this->header->addLink(
-                array('rel' => 'alternate', 'hreflang' => $language, 'href' => $url)
-            );
+            // We must only add links if we have more then one
+            if (count($links) > 1) {
+                foreach ($links as $language => $url) {
+                    // Add hreflang
+                    $this->header->addLink(
+                        array('rel' => 'alternate', 'hreflang' => $language, 'href' => $url)
+                    );
+                }
+            }
         }
 
         // create navigation instance
