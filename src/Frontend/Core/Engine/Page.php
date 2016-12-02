@@ -490,6 +490,22 @@ class Page extends FrontendBaseObject
             );
         }
 
+        // get languages
+        $activeLanguages = Language::getActiveLanguages();
+
+        // loop active languages
+        foreach($activeLanguages as $language)
+        {
+            // Define url
+            $url = Navigation::getURL($this->pageId, $language);
+
+            // Convert relative to absolute url
+            if(substr($url, 0, 1) == '/') $url = SITE_URL . $url;
+
+            // Add hreflang
+            $this->header->addLink(array('rel' => 'alternate', 'hreflang' => $language, 'href' => $url));
+        }
+
         // create navigation instance
         new Navigation($this->getKernel());
 
