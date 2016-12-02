@@ -1,21 +1,17 @@
 /*
+    Stylesheet for <>
 
-	Stylesheet for <>
-
-	Media:      screen, projection
-	Copyright:  Company <http://www.company.com>
-	author:     Name <name@domain.com>
-
+    Media: screen, projection
+    Copyright: Company <http://www.company.com>
+    author: Name <name@domain.com>
 */
 
 @media print {
-	/*
+    /*
+        Stylesheet for <>
 
-		Stylesheet for <>
-
-		Media:      print
-		Copyright:  Company <http://www.company.com>
-		author:     Name <name@domain.com>
-
-	*/
+        Media: print
+        Copyright: Company <http://www.company.com>
+        author: Name <name@domain.com>
+    */
 }

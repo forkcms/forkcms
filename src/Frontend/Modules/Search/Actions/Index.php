@@ -32,28 +32,28 @@ class Index extends FrontendBaseBlock
     /**
      * Name of the cache file
      *
-     * @var    string
+     * @var string
      */
     private $cacheFile;
 
     /**
      * The items
      *
-     * @var    array
+     * @var array
      */
     private $items;
 
     /**
      * Limit of data to fetch
      *
-     * @var    int
+     * @var int
      */
     private $limit;
 
     /**
      * Offset of data to fetch
      *
-     * @var    int
+     * @var int
      */
     private $offset;
 
@@ -61,7 +61,7 @@ class Index extends FrontendBaseBlock
      * The pagination array
      * It will hold all needed parameters, some of them need initialization.
      *
-     * @var    array
+     * @var array
      */
     protected $pagination = array(
         'limit' => 20,
@@ -74,7 +74,7 @@ class Index extends FrontendBaseBlock
     /**
      * The requested page
      *
-     * @var    int
+     * @var int
      */
     private $requestedPage;
 
@@ -88,7 +88,7 @@ class Index extends FrontendBaseBlock
     /**
      * Search statistics
      *
-     * @var    array
+     * @var array
      */
     private $statistics;
 

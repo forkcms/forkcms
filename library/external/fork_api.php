@@ -25,6 +25,8 @@
  *
  * @copyright		Copyright (c) 2008, Tijs Verkoyen. All rights reserved.
  * @license			BSD License
+ *
+ * @deprecated
  */
 class ForkAPI
 {
@@ -82,6 +84,8 @@ class ForkAPI
 	 *
 	 * @param	string[optional] $publicKey		The public-key of the keypair.
 	 * @param	string[optional] $privateKey	The private-key of the keypair.
+     *
+     * @deprecated
 	 */
 	public function __construct($publicKey = null, $privateKey = null)
 	{
@@ -248,6 +252,8 @@ class ForkAPI
 	 *
 	 * @return	void
 	 * @param	string $key		The private key.
+     *
+     * @deprecated
 	 */
 	public function setPrivateKey($key)
 	{
@@ -260,6 +266,8 @@ class ForkAPI
 	 *
 	 * @return	void
 	 * @param	string $key		The public key.
+     *
+     * @deprecated
 	 */
 	public function setPublicKey($key)
 	{
@@ -276,6 +284,10 @@ class ForkAPI
 	 */
 	public function setTimeOut($seconds)
 	{
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
 		$this->timeOut = (int) $seconds;
 	}
 
@@ -289,6 +301,10 @@ class ForkAPI
 	 */
 	public function setUserAgent($userAgent)
 	{
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
 		$this->userAgent = (string) $userAgent;
 	}
 
@@ -304,6 +320,10 @@ class ForkAPI
 	 */
 	public function coreRequestKeys($siteUrl, $email)
 	{
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
 		// build parameters
 		$parameters['site_url'] = (string) $siteUrl;
 		$parameters['email'] = (string) $email;
@@ -411,6 +431,10 @@ class ForkAPI
 	 */
 	public function messagesGet()
 	{
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
 		// make the call
 		$response = $this->doCall('messages.get');
 
@@ -507,6 +531,8 @@ class ForkAPI
 	 *
 	 * @return	array
 	 * @throws ForkAPIException
+     *
+     * @deprecated
 	 */
 	public function pingGetServices()
 	{
@@ -536,6 +562,10 @@ class ForkAPI
 	 */
 	public function statisticsGetSearchEngines()
 	{
+        trigger_error(
+            'The api is deprecated and will be removed in version 5',
+            E_USER_DEPRECATED
+        );
 		// make the call
 		$response = $this->doCall('statistics.getSearchEngines');
 
@@ -568,6 +598,8 @@ class ForkAPI
  * ForkAPI Exception class
  *
  * @author	Tijs Verkoyen <php-fork-api@verkoyen.eu>
+ *
+ * @deprecated
  */
 class ForkAPIException extends Exception
 {

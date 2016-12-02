@@ -21,7 +21,7 @@ class Seo extends BackendBaseActionIndex
     /**
      * The form instance
      *
-     * @var    BackendForm
+     * @var BackendForm
      */
     private $frm;
 

@@ -30,6 +30,9 @@
         "doctrine/orm": "^2.5",
         "simple-bus/symfony-bridge": "^4.1",
         "simple-bus/doctrine-orm-bridge": "^4.0",
+        "mailmotor/mailchimp-bundle": "^2.0",
+        "mailmotor/campaignmonitor-bundle": "^1.0",
+        "mailmotor/mailmotor-bundle": "^2.0",
 
         "flippa-official/errbit-php": "dev-master#b432716d29c2b4ada0f21ccc469ccb046bb60340",
         "sumocoders/sumo-fork-class": "^1.1"
@@ -37,7 +40,8 @@
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
         "phpunit/phpunit": "~4.5",
-        "symfony/var-dumper": "^2.7"
+        "symfony/var-dumper": "^2.7",
+        "squizlabs/php_codesniffer": "^2.7"
     },
     "config": {
         "bin-dir": "bin"

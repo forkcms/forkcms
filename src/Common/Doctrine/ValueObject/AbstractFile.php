@@ -20,7 +20,7 @@ abstract class AbstractFile
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $fileName = null;
+    protected $fileName;
 
     /**
      * @var UploadedFile
@@ -30,7 +30,7 @@ abstract class AbstractFile
     /**
      * @var string
      */
-    protected $oldPath;
+    protected $oldFileName;
 
     /**
      * @param string $fileName
@@ -57,7 +57,7 @@ abstract class AbstractFile
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getWebPath()
     {
@@ -66,7 +66,7 @@ abstract class AbstractFile
             return FRONTEND_FILES_URL . '/' . $this->getTrimmedUploadDir() . '/' . $this->fileName;
         }
 
-        return;
+        return '';
     }
 
     /**
@@ -97,18 +97,26 @@ abstract class AbstractFile
      * Sets file.
      *
      * @param UploadedFile $file
+     *
+     * @return static
      */
     public function setFile(UploadedFile $file = null)
     {
+        if ($file === null) {
+            return $this;
+        }
+
         $this->file = $file;
         // check if we have an old image path
-        if (!isset($this->fileName)) {
-            return;
+        if ($this->fileName === null) {
+            return $this;
         }
 
         // store the old name to delete after the update
-        $this->oldPath = $this->fileName;
+        $this->oldFileName = $this->fileName;
         $this->fileName = null;
+
+        return clone $this;
     }
 
     /**
@@ -153,23 +161,32 @@ abstract class AbstractFile
      */
     public function upload()
     {
+        // check if we have an old image
+        if ($this->oldFileName !== null) {
+            $this->removeOldFile();
+        }
+
         if ($this->getFile() === null) {
             return;
         }
 
         $this->writeFileToDisk();
 
-        // check if we have an old image
-        if (isset($this->oldPath)) {
-            // delete the old image
-            $oldFile = $this->getUploadRootDir() . '/' . $this->oldPath;
-            if (is_file($oldFile) && file_exists($oldFile)) {
-                unlink($oldFile);
-            }
-            // clear the $this->oldPath image path
-            $this->oldPath = null;
-        }
         $this->file = null;
+    }
+
+    /**
+     * This will remove the old file, can be extended to add extra functionality
+     */
+    protected function removeOldFile()
+    {
+        // delete the old file
+        $oldFile = $this->getUploadRootDir() . '/' . $this->oldFileName;
+        if (is_file($oldFile) && file_exists($oldFile)) {
+            unlink($oldFile);
+        }
+
+        $this->oldFileName = null;
     }
 
     /**
@@ -196,6 +213,8 @@ abstract class AbstractFile
     }
 
     /**
+     * Returns a string representation of the image.
+     *
      * @return string
      */
     public function __toString()
@@ -211,5 +230,14 @@ abstract class AbstractFile
     public static function fromString($fileName)
     {
         return new static($fileName);
+    }
+
+    /**
+     * The next time doctrine saves this to the database the file will be removed
+     */
+    public function markForDeletion()
+    {
+        $this->oldFileName = $this->fileName;
+        $this->fileName = null;
     }
 }

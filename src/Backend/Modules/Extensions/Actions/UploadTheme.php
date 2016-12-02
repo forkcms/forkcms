@@ -106,8 +106,7 @@ class UploadTheme extends BackendBaseActionAdd
         $zipFiles = null;
 
         // Validate the file. Check if the file field is filled and if it's a zip.
-        if (
-            $fileFile->isFilled(BL::err('FieldIsRequired')) &&
+        if ($fileFile->isFilled(BL::err('FieldIsRequired')) &&
             $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))
         ) {
             // Create ziparchive instance
@@ -174,8 +173,7 @@ class UploadTheme extends BackendBaseActionAdd
             // Rename the original name of the parent folder from the zip to the correct theme foldername.
             $fs = new Filesystem();
             $parentZipFolderPath = $themePath . '/' . $this->parentFolderName;
-            if (
-                $this->parentFolderName !== $this->themeName &&
+            if ($this->parentFolderName !== $this->themeName &&
                 $this->parentFolderName !== null &&
                 $fs->exists($parentZipFolderPath)
             ) {
@@ -237,8 +235,7 @@ class UploadTheme extends BackendBaseActionAdd
             $fileName = $file['name'];
 
             // We skip all the files that are outside of the theme folder or on the ignore list.
-            if (
-                $this->checkIfPathContainsIgnoredWord($fileName) ||
+            if ($this->checkIfPathContainsIgnoredWord($fileName) ||
                 (!empty($this->parentFolderName) && mb_stripos($fileName, $this->parentFolderName) !== 0)
             ) {
                 continue;

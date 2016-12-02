@@ -12,12 +12,55 @@ namespace Backend\Core\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
 use Backend\Core\Language\Language as BackendLanguage;
+use \SpoonDate;
 
 /**
  * This is our class with custom modifiers.
  */
 class TemplateModifiers extends BaseTwigModifiers
 {
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdate }}
+     *
+     * @param int $var The UNIX-timestamp to format.
+     *
+     * @return string
+     */
+    public static function formatDate($var)
+    {
+        // get setting
+        $format = Authentication::getUser()->getSetting('date_format');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+    }
+
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdatetime }}
+     *
+     * @param int $var The UNIX-timestamp to format.
+     *
+     * @return string
+     */
+    public static function formatDateTime($var)
+    {
+        // get setting
+        $format = Authentication::getUser()->getSetting('datetime_format');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+    }
+
     /**
      * Format a number as a float
      * syntax: {$var|formatfloat}
@@ -97,8 +140,12 @@ class TemplateModifiers extends BaseTwigModifiers
         // get setting
         $format = Authentication::getUser()->getSetting('time_format');
 
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
         // format the date
-        return \SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+        return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -126,7 +173,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Convert this string into a well formed label.
-     *  syntax: {$var|tolabel}.
+     *  syntax: {{ var|tolabel }}.
      *
      * @param string $value The value to convert to a label.
      *
@@ -141,14 +188,14 @@ class TemplateModifiers extends BaseTwigModifiers
      * Truncate a string
      *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}
      *
-     * @param string $var         The string passed from the template.
+     * @param string $var      The string passed from the template.
      * @param int    $length      The maximum length of the truncated string.
      * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
      * @param bool   $closestWord Truncate on exact length or on closest word?
      *
      * @return string
      */
-    public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
+    public static function truncate($var, $length, $useHellip = true, $closestWord = false)
     {
         // init vars
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');

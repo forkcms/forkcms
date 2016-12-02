@@ -21,14 +21,14 @@ class Action extends Base\Object
     /**
      * The config file
      *
-     * @var    Base\Config
+     * @var Base\Config
      */
     private $config;
 
     /**
      * BackendTemplate
      *
-     * @var    Template
+     * @var Template
      */
     public $tpl;
 

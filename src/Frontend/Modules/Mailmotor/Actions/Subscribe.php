@@ -2,123 +2,120 @@
 
 namespace Frontend\Modules\Mailmotor\Actions;
 
+/*
+ * This file is part of the Fork CMS Mailmotor Module from SIESQO.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Exception as FrontendException;
-use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
-use Frontend\Modules\Mailmotor\Engine\CMHelper as FrontendMailmotorCMHelper;
-use Common\Exception\RedirectException as RedirectException;
+use Frontend\Core\Language\Locale;
+use Frontend\Modules\Mailmotor\Command\Subscription;
+use Frontend\Modules\Mailmotor\Event\NotImplementedSubscribedEvent;
+use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
- * This is the subscribe-action
+ * This is the Subscribe-action for the Mailmotor
  */
 class Subscribe extends FrontendBaseBlock
 {
     /**
-     * FrontendForm instance
-     *
-     * @var    FrontendForm
-     */
-    private $frm;
-
-    /**
      * Execute the extra
+     *
+     * @return void
      */
     public function execute()
     {
-        $this->loadTemplate();
-        $this->loadForm();
-        $this->validateForm();
-        $this->parse();
+        parent::execute();
+
+        // Define email from the subscribe widget
+        $email = $this->getEmail();
+
+        // Create the form
+        $form = $this->createForm(
+            $this->get('mailmotor.form.subscription'),
+            new Subscription(
+                Locale::frontendLanguage(),
+                $email
+            )
+        );
+
+        $form->handleRequest($this->get('request'));
+
+        if (!$form->isValid()) {
+            $this->tpl->assign('form', $form->createView());
+
+            if ($form->isSubmitted()) {
+                $this->tpl->assign('mailmotorSubscribeHasFormError', true);
+            }
+
+            $this->loadTemplate();
+            $this->parse();
+
+            return;
+        }
+
+        $redirectLink = FrontendNavigation::getURLForBlock(
+            'Mailmotor',
+            'Subscribe'
+        ) . '?subscribed=true';
+
+        /** @var Subscription $subscription */
+        $subscription = $form->getData();
+
+        try {
+            // The command bus will handle the unsubscription
+            $this->get('command_bus')->handle($subscription);
+        } catch (NotImplementedException $e) {
+            // fallback for when no mail-engine is chosen in the Backend
+            $this->get('event_dispatcher')->dispatch(
+                NotImplementedSubscribedEvent::EVENT_NAME,
+                new NotImplementedSubscribedEvent(
+                    $subscription
+                )
+            );
+
+            $redirectLink .= '&double-opt-in=false';
+        }
+
+        $redirectLink .= '#mailmotorSubscribeForm';
+
+        return $this->redirect($redirectLink);
     }
 
     /**
-     * Load the form
+     * Get email
      */
-    private function loadForm()
+    public function getEmail()
     {
-        // create the form
-        $this->frm = new FrontendForm('subscribe', null, null, 'subscribeForm');
+        // define email
+        $email = null;
 
-        // create & add elements
-        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+        // request contains an email
+        if ($this->get('request')->request->get('email') != null) {
+            $email = $this->get('request')->request->get('email');
+        }
+
+        return $email;
     }
 
     /**
      * Parse the data into the template
+     *
+     * @return void
      */
     private function parse()
     {
-        // form was sent?
-        if ($this->URL->getParameter('sent') == 'true') {
+        // form was subscribed?
+        if ($this->URL->getParameter('subscribed') == 'true') {
             // show message
-            $this->tpl->assign('subscribeIsSuccess', true);
+            $this->tpl->assign('mailmotorSubscribeIsSuccess', true);
+            $this->tpl->assign('mailmotorSubscribeHasDoubleOptIn', ($this->URL->getParameter('double-opt-in', 'string', 'true') === 'true'));
 
             // hide form
-            $this->tpl->assign('subscribeHideForm', true);
-        }
-
-        // parse the form
-        $this->frm->parse($this->tpl);
-    }
-
-    /**
-     * Validate the form
-     */
-    private function validateForm()
-    {
-        // is the form submitted
-        if ($this->frm->isSubmitted()) {
-            // validate required fields
-            $email = $this->frm->getField('email');
-
-            // validate required fields
-            if ($email->isEmail(FL::err('EmailIsInvalid'))) {
-                if (FrontendMailmotorModel::isSubscribed($email->getValue())) {
-                    $email->addError(
-                        FL::err('AlreadySubscribed')
-                    );
-                }
-            }
-
-            // no errors
-            if ($this->frm->isCorrect()) {
-                try {
-                    // subscribe the user to our default group
-                    if (!FrontendMailmotorCMHelper::subscribe(
-                        $email->getValue()
-                    )
-                    ) {
-                        throw new FrontendException('Could not subscribe');
-                    }
-
-                    // trigger event
-                    FrontendModel::triggerEvent('Mailmotor', 'after_subscribe', array('email' => $email->getValue()));
-
-                    // redirect
-                    $this->redirect(
-                        FrontendNavigation::getURLForBlock('Mailmotor', 'Subscribe') . '?sent=true#subscribeForm'
-                    );
-                } catch (\Exception $e) {
-                    // make sure RedirectExceptions get thrown
-                    if ($e instanceof RedirectException) {
-                        throw $e;
-                    }
-
-                    // when debugging we need to see the exceptions
-                    if ($this->getContainer()->getParameter('kernel.debug')) {
-                        throw $e;
-                    }
-
-                    // show error
-                    $this->tpl->assign('subscribeHasError', true);
-                }
-            } else {
-                $this->tpl->assign('subscribeHasFormError', true);
-            }
+            $this->tpl->assign('mailmotorSubscribeHideForm', true);
         }
     }
 }

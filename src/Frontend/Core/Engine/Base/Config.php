@@ -22,42 +22,42 @@ class Config extends \KernelLoader
     /**
      * The default action
      *
-     * @var    string
+     * @var string
      */
     protected $defaultAction = 'Index';
 
     /**
      * The disabled actions
      *
-     * @var    array
+     * @var array
      */
     protected $disabledActions = array();
 
     /**
      * The disabled AJAX-actions
      *
-     * @var    array
+     * @var array
      */
     protected $disabledAJAXActions = array();
 
     /**
      * The current loaded module
      *
-     * @var    string
+     * @var string
      */
     protected $module;
 
     /**
      * All the possible actions
      *
-     * @var    array
+     * @var array
      */
     protected $possibleActions = array();
 
     /**
      * All the possible AJAX actions
      *
-     * @var    array
+     * @var array
      */
     protected $possibleAJAXActions = array();
 

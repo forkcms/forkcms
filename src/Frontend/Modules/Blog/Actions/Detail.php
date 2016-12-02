@@ -26,7 +26,7 @@ class Detail extends FrontendBaseBlock
     /**
      * The comments
      *
-     * @var    array
+     * @var array
      */
     private $comments;
 
@@ -40,14 +40,14 @@ class Detail extends FrontendBaseBlock
     /**
      * The blogpost
      *
-     * @var    array
+     * @var array
      */
     private $record;
 
     /**
      * The settings
      *
-     * @var    array
+     * @var array
      */
     private $settings;
 

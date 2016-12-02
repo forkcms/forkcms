@@ -18,6 +18,8 @@ use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use Backend\Core\Engine\Model as BackendModel;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
 
 /**
  * Frontend page class, this class will handle everything on a page
@@ -41,42 +43,42 @@ class Page extends FrontendBaseObject
     /**
      * Footer instance
      *
-     * @var    Footer
+     * @var Footer
      */
     protected $footer;
 
     /**
      * Header instance
      *
-     * @var    Header
+     * @var Header
      */
     protected $header;
 
     /**
      * The current pageId
      *
-     * @var    int
+     * @var int
      */
     protected $pageId;
 
     /**
      * Content of the page
      *
-     * @var    array
+     * @var array
      */
     protected $record = array();
 
     /**
      * The path of the template to show
      *
-     * @var    string
+     * @var string
      */
     protected $templatePath;
 
     /**
      * The statuscode
      *
-     * @var    int
+     * @var int
      */
     protected $statusCode = 200;
 
@@ -108,6 +110,35 @@ class Page extends FrontendBaseObject
 
         if (empty($this->record)) {
             $this->record = Model::getPage(404);
+        }
+
+
+        // authentication
+        if (BackendModel::isModuleInstalled('Profiles') && isset($this->record['data']['auth_required'])) {
+            $data = $this->record['data'];
+            // is auth required and is profile logged in
+            if ($data['auth_required']) {
+                if (!FrontendAuthenticationModel::isLoggedIn()) {
+                    // redirect to login page
+                    $queryString = $this->URL->getQueryString();
+                    throw new RedirectException(
+                        'Redirect',
+                        new RedirectResponse(Navigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $queryString)
+                    );
+                }
+                // specific groups for auth?
+                if (!empty($data['auth_groups'])) {
+                    $inGroup = false;
+                    foreach ($data['auth_groups'] as $group) {
+                        if (FrontendAuthenticationModel::getProfile()->isInGroup($group)) {
+                            $inGroup = true;
+                        }
+                    }
+                    if (!$inGroup) {
+                        $this->record = Model::getPage(404);
+                    }
+                }
+            }
         }
 
         // we need to set the correct id
@@ -166,7 +197,7 @@ class Page extends FrontendBaseObject
         $this->tpl->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
         // hide the cookiebar from within the code to prevent flickering
-        $this->tpl->assign(
+        $this->tpl->addGlobal(
             'cookieBarHide',
             (!$this->get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar())
         );
@@ -299,7 +330,7 @@ class Page extends FrontendBaseObject
     /**
      * Get the content of the page
      *
-     * @return    array
+     * @return array
      */
     public function getRecord()
     {

@@ -22,7 +22,7 @@ class Model
 
         // get form
         $form = (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.id, i.method, i.name, i.email, i.success_message, i.identifier
+            'SELECT i.id, i.language, i.method, i.name, i.email, i.success_message, i.identifier
              FROM forms AS i
              WHERE i.id = ?',
             $id

@@ -1,3 +1,49 @@
+4.4.0 (2016-12-02)
+------------------
+
+Bugfixes:
+
+* Core: Fix styling when page detail buttons stand on two lines
+* Core: Change "showModuleAction" variables to "allowModuleAction"
+* Core: Prevent scroll to top after click a cookievar button
+* Core: Add missing createForm method in the frontend
+* Core: Get url for block fixes when checking with data
+* Core: Also use UTCDateTimeType for date
+* Core: Serialize bug in meta entity SEOFollow and SEOIndex
+* Core: Add missing implementation of the tolabel filter to the frontend
+* Core: The variable cookieBarHide should be global
+* Core: Fix errors when clear text was passed to the translator
+* Core: Fix abstractImage thumbnails not generating
+* Core: Fix pagination last and first url and label
+* Core: Format template modifiers
+* FormBuilder: Fix mailing form shows html
+* Pages: Fix previous/next navigation for hidden pages
+* FAQ: Fix faq category detail link in backend
+* Locale: Remove old classes on the textarea of locale edit
+
+Features:
+
+* Core: Add redirect method to widgets
+* Core: Custom html5 validation
+* Page: Authentication options with the profiles module
+* MailMotor: Completely revamped module. Now also with MailChimp
+
+Deprecations:
+
+* Api: Fully deprecated
+
+Enhancements:
+
+* Core: Allow html in the alerts in the backend
+* Core: Removed duplicate for "SITE_MULTILANGUAGE"
+* Core: Tabs to spaces
+* Core: Improve https support
+* Core: Abstract file and image updates
+* Core: Code style
+* ContentBlocks: Renaming "getName()" to "getBlockPrefix()"
+* FormBuilder: Make the language available in the frontend for formbuilder
+
+
 4.3.1 (2016-11-04)
 ------------------
 

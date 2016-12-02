@@ -1,9 +1,9 @@
 {#
-	variables that are available:
-	- {{ item }}: contains data about the post
-	- {{ comments }}: contains an array with the comments for the post, each element contains data about the comment.
-	- {{ commentsCount }}: contains a variable with the number of comments for this blog post.
-	- {{ navigation }}: contains an array with data for previous and next post
+  variables that are available:
+  - {{ item }}: contains data about the post
+  - {{ comments }}: contains an array with the comments for the post, each element contains data about the comment.
+  - {{ commentsCount }}: contains a variable with the number of comments for this blog post.
+  - {{ navigation }}: contains an array with data for previous and next post
 #}
 <div id="blogDetail">
   <article class="mod article" itemscope itemtype="http://schema.org/Blog">
@@ -29,10 +29,10 @@
             {% if item.tags %}
               {{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Tags'|trans }}
               <span itemprop="keywords">
-								{% for tag in item.tags %}
+                {% for tag in item.tags %}
                   <a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
                 {% endfor %}
-							</span>
+              </span>
             {% endif %}
           </li>
           {# Comments #}

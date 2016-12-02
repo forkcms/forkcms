@@ -19,7 +19,7 @@ class AjaxAction extends Base\Object
     /**
      * The config file
      *
-     * @var    Base\Config
+     * @var Base\Config
      */
     private $config;
 

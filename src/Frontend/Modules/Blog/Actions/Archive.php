@@ -22,21 +22,21 @@ class Archive extends FrontendBaseBlock
     /**
      * The articles
      *
-     * @var    array
+     * @var array
      */
     private $items;
 
     /**
      * The dates for the archive
      *
-     * @var    int
+     * @var int
      */
     private $startDate;
 
     /**
      * The dates for the archive
      *
-     * @var    int
+     * @var int
      */
     private $endDate;
 
@@ -44,7 +44,7 @@ class Archive extends FrontendBaseBlock
      * The pagination array
      * It will hold all needed parameters, some of them need initialization
      *
-     * @var    array
+     * @var array
      */
     protected $pagination = array(
         'limit' => 10,
@@ -57,14 +57,14 @@ class Archive extends FrontendBaseBlock
     /**
      * The requested year
      *
-     * @var    int
+     * @var int
      */
     private $year;
 
     /**
      * The requested month
      *
-     * @var    int
+     * @var int
      */
     private $month;
 

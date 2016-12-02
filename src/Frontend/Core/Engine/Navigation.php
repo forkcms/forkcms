@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
 
 /**
  * This class will be used to build the navigation
@@ -30,7 +31,7 @@ class Navigation extends FrontendBaseObject
     /**
      * The selected pageIds
      *
-     * @var    array
+     * @var array
      */
     private static $selectedPageIds = array();
 
@@ -283,6 +284,34 @@ class Navigation extends FrontendBaseObject
                     continue;
                 }
 
+                // authentication
+                if (isset($page['data'])) {
+                    // unserialize data
+                    $page['data'] = unserialize($page['data']);
+                    // if auth_required isset and is true
+                    if (isset($page['data']['auth_required']) && $page['data']['auth_required']) {
+                        // is profile logged? unset
+                        if (!FrontendAuthentication::isLoggedIn()) {
+                            unset($navigation[$type][$parentId][$id]);
+                            continue;
+                        }
+                        // check if group auth is set
+                        if (!empty($page['data']['auth_groups'])) {
+                            $inGroup = false;
+                            // loop group and set value true if one is found
+                            foreach ($page['data']['auth_groups'] as $group) {
+                                if (FrontendAuthentication::getProfile()->isInGroup($group)) {
+                                    $inGroup = true;
+                                }
+                            }
+                            // unset page if not in any of the groups
+                            if (!$inGroup) {
+                                unset($navigation[$type][$parentId][$id]);
+                            }
+                        }
+                    }
+                }
+
                 // some ids should be excluded
                 if (in_array($page['page_id'], (array) $excludeIds)) {
                     unset($navigation[$type][$parentId][$id]);
@@ -487,6 +516,7 @@ class Navigation extends FrontendBaseObject
         // get the menuItems
         $navigation = self::getNavigation($language);
 
+        $dataMatch = false;
         // loop types
         foreach ($navigation as $level) {
             // loop level
@@ -501,7 +531,7 @@ class Navigation extends FrontendBaseObject
                     // loop extras
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ($extra['module'] == $module && $extra['action'] == $action) {
+                        if ($extra['module'] == $module && $extra['action'] == $action  && $extra['action'] !== null) {
                             // if there is data check if all the requested data matches the extra data
                             if (isset($extra['data']) && $data !== null
                                 && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
@@ -514,15 +544,24 @@ class Navigation extends FrontendBaseObject
 
                         if ($extra['module'] == $module && $extra['action'] == null) {
                             // if there is data check if all the requested data matches the extra data
-                            if (isset($extra['data']) && $data !== null
-                                && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
-                                // It is the correct module but has the wrong data
-                                continue;
+                            if (isset($extra['data']) && $data !== null) {
+                                if (array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                                    // It is the correct module but has the wrong data
+                                    continue;
+                                }
+
+                                $pageIdForURL = (int) $pageId;
+                                $dataMatch = true;
                             }
 
-                            // correct module but no action
-                            // store pageId
-                            $pageIdForURL = (int) $pageId;
+                            if ($extra['data'] === null && $data === null) {
+                                $pageIdForURL = (int) $pageId;
+                                $dataMatch = true;
+                            }
+
+                            if (!$dataMatch) {
+                                $pageIdForURL = (int) $pageId;
+                            }
                         }
                     }
                 }
@@ -538,7 +577,9 @@ class Navigation extends FrontendBaseObject
         $url = self::getURL($pageIdForURL, $language);
 
         // append action
-        $url .= '/' . Language::act(\SpoonFilter::toCamelCase($action));
+        if ($action !== null) {
+            $url .= '/' . Language::act(\SpoonFilter::toCamelCase($action));
+        }
 
         // return the URL
         return $url;

@@ -26,9 +26,10 @@
               </label>
               {% form_field title %} {% form_field_error title %}
               {% if detailURL %}
-                <a href="{{ detailURL }}">
-                  <small>{{ detailURL }}/<span id="generatedUrl"></span></small>
-                </a>      {% endif %}
+                <a href="{{ detailURL }}/{{ item.url }}">
+                  <small>{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></small>
+                </a>
+              {% endif %}
               {% if not detailURL %}
                 <p class="alert alert-warning alert-xs">
                   <span class="fa fa-exclamation-triangle"></span>{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>

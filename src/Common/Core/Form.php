@@ -20,14 +20,14 @@ class Form extends \SpoonForm
     /**
      * The header instance
      *
-     * @var    Header
+     * @var Header
      */
     protected $header;
 
     /**
      * The URL instance
      *
-     * @var    Url
+     * @var Url
      */
     protected $URL;
 

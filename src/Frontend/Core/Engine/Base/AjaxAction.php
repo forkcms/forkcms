@@ -25,7 +25,7 @@ class AjaxAction extends \KernelLoader
     /**
      * The current action
      *
-     * @var    string
+     * @var string
      */
     protected $action;
 
@@ -37,7 +37,7 @@ class AjaxAction extends \KernelLoader
     /**
      * The current module
      *
-     * @var    string
+     * @var string
      */
     protected $module;
 

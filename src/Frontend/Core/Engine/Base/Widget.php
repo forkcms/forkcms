@@ -9,7 +9,11 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Header;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -22,35 +26,35 @@ class Widget extends Object
     /**
      * The current action
      *
-     * @var    string
+     * @var string
      */
     protected $action;
 
     /**
      * The data
      *
-     * @var    mixed
+     * @var mixed
      */
     protected $data;
 
     /**
      * The header object
      *
-     * @var    Header
+     * @var Header
      */
     protected $header;
 
     /**
      * The current module
      *
-     * @var    string
+     * @var string
      */
     protected $module;
 
     /**
      * Path to the template
      *
-     * @var    string
+     * @var string
      */
     public $templatePath;
 
@@ -275,5 +279,34 @@ class Widget extends Object
     protected function setTemplatePath($path)
     {
         $this->templatePath = (string) $path;
+    }
+
+    /**
+     * Redirect to a given URL
+     *
+     * @param string $url The URL whereto will be redirected.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
+     *
+     * @throws RedirectException
+     */
+    public function redirect($url, $code = 302)
+    {
+        $response = new RedirectResponse($url, $code);
+
+        throw new RedirectException('Redirect', $response);
+    }
+
+    /**
+     * Creates and returns a Form instance from the type of the form.
+     *
+     * @param string|FormTypeInterface $type The built type of the form
+     * @param mixed $data The initial data for the form
+     * @param array $options Options for the form
+     *
+     * @return Form
+     */
+    public function createForm($type, $data = null, array $options = array())
+    {
+        return $this->get('form.factory')->create($type, $data, $options);
     }
 }

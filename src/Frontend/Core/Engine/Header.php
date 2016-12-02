@@ -51,7 +51,7 @@ class Header extends FrontendBaseObject
     /**
      * The added css-files
      *
-     * @var    array
+     * @var array
      */
     private $cssFiles = array();
 
@@ -65,35 +65,35 @@ class Header extends FrontendBaseObject
     /**
      * The added js-files
      *
-     * @var    array
+     * @var array
      */
     private $jsFiles = array();
 
     /**
      * The links
      *
-     * @var    array
+     * @var array
      */
     private $links = array();
 
     /**
      * Meta data
      *
-     * @var    array
+     * @var array
      */
     private $meta = array();
 
     /**
      * The custom meta data
      *
-     * @var    string
+     * @var string
      */
     private $metaCustom = '';
 
     /**
      * Page title
      *
-     * @var    string
+     * @var string
      */
     private $pageTitle;
 
@@ -668,9 +668,9 @@ class Header extends FrontendBaseObject
             foreach ($existingCSSFiles as $file) {
                 if ($file['add_timestamp'] !== false) {
                     $file['file'] .= (mb_strpos(
-                                          $file['file'],
-                                          '?'
-                                      ) !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                        $file['file'],
+                        '?'
+                    ) !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
                 }
                 $cssFiles[] = $file;
             }
@@ -693,8 +693,7 @@ class Header extends FrontendBaseObject
         $webPropertyId = $this->get('fork.settings')->get('Analytics', 'web_property_id', null);
 
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
-        if (
-            $webPropertyId != '' &&
+        if ($webPropertyId != '' &&
             mb_strpos($siteHTMLHeader, $webPropertyId) === false &&
             mb_strpos($siteHTMLFooter, $webPropertyId) === false
         ) {
@@ -838,9 +837,9 @@ class Header extends FrontendBaseObject
                 } else {
                     // add last modified time
                     $modifiedTime = (mb_strpos(
-                                         $file['file'],
-                                         '?'
-                                     ) !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                        $file['file'],
+                        '?'
+                    ) !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
                     $file = array('file' => $file['file'] . $modifiedTime);
                 }
 

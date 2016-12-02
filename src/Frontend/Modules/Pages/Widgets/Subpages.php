@@ -22,7 +22,7 @@ class Subpages extends FrontendBaseWidget
     /**
      * The items.
      *
-     * @var    array
+     * @var array
      */
     private $items;
 

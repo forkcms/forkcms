@@ -22,7 +22,7 @@ class PreviousNextNavigation extends FrontendBaseWidget
     /**
      * The items.
      *
-     * @var    array
+     * @var array
      */
     private $navigation;
 

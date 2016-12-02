@@ -629,7 +629,7 @@ jsBackend.FormBuilder.Fields =
             // init
             jsBackend.FormBuilder.Fields.handleValidation(wrapper);
 
-            // on change	@todo	test me plz.
+            // on change @todo test me plz.
             $(wrapper).find('select:first').on('change', function () {
                 jsBackend.FormBuilder.Fields.handleValidation(wrapper);
             });

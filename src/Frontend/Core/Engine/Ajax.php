@@ -24,7 +24,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
     /**
      * The action
      *
-     * @var    string
+     * @var string
      */
     private $action;
 
@@ -36,14 +36,14 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
     /**
      * The language
      *
-     * @var    string
+     * @var string
      */
     private $language;
 
     /**
      * The module
      *
-     * @var    string
+     * @var string
      */
     private $module;
 

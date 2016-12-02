@@ -31,49 +31,49 @@ class Extra extends FrontendBaseObject
     /**
      * The config file
      *
-     * @var    Config
+     * @var Config
      */
     private $config;
 
     /**
      * The data that was passed by the extra
      *
-     * @var    mixed
+     * @var mixed
      */
     private $data;
 
     /**
      * The current module
      *
-     * @var    string
+     * @var string
      */
     private $module;
 
     /**
      * The extra object
      *
-     * @var    FrontendBaseBlock
+     * @var FrontendBaseBlock
      */
     private $object;
 
     /**
      * The block's output
      *
-     * @var    string
+     * @var string
      */
     private $output;
 
     /**
      * Should the template overwrite the current one
      *
-     * @var    bool
+     * @var bool
      */
     protected $overwrite = false;
 
     /**
      * The path for the template
      *
-     * @var    string
+     * @var string
      */
     protected $templatePath = '';
 
