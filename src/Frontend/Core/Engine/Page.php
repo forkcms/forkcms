@@ -494,8 +494,7 @@ class Page extends FrontendBaseObject
         $activeLanguages = Language::getActiveLanguages();
 
         // loop active languages
-        foreach ($activeLanguages as $language)
-        {
+        foreach ($activeLanguages as $language) {
             // Define url
             $url = Navigation::getURL($this->pageId, $language);
 
