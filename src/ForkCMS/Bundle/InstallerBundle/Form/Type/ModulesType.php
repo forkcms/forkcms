@@ -17,6 +17,9 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class ModulesType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -75,6 +78,9 @@ class ModulesType extends AbstractType
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -82,6 +88,9 @@ class ModulesType extends AbstractType
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'install_modules';

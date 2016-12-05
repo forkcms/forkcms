@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Exception\RedirectException;
+use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -17,6 +18,8 @@ use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use Backend\Core\Engine\Model as BackendModel;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
 
 /**
  * Frontend page class, this class will handle everything on a page
@@ -40,42 +43,42 @@ class Page extends FrontendBaseObject
     /**
      * Footer instance
      *
-     * @var    Footer
+     * @var Footer
      */
     protected $footer;
 
     /**
      * Header instance
      *
-     * @var    Header
+     * @var Header
      */
     protected $header;
 
     /**
      * The current pageId
      *
-     * @var    int
+     * @var int
      */
     protected $pageId;
 
     /**
      * Content of the page
      *
-     * @var    array
+     * @var array
      */
     protected $record = array();
 
     /**
      * The path of the template to show
      *
-     * @var    string
+     * @var string
      */
     protected $templatePath;
 
     /**
      * The statuscode
      *
-     * @var    int
+     * @var int
      */
     protected $statusCode = 200;
 
@@ -107,6 +110,35 @@ class Page extends FrontendBaseObject
 
         if (empty($this->record)) {
             $this->record = Model::getPage(404);
+        }
+
+
+        // authentication
+        if (BackendModel::isModuleInstalled('Profiles') && isset($this->record['data']['auth_required'])) {
+            $data = $this->record['data'];
+            // is auth required and is profile logged in
+            if ($data['auth_required']) {
+                if (!FrontendAuthenticationModel::isLoggedIn()) {
+                    // redirect to login page
+                    $queryString = $this->URL->getQueryString();
+                    throw new RedirectException(
+                        'Redirect',
+                        new RedirectResponse(Navigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $queryString)
+                    );
+                }
+                // specific groups for auth?
+                if (!empty($data['auth_groups'])) {
+                    $inGroup = false;
+                    foreach ($data['auth_groups'] as $group) {
+                        if (FrontendAuthenticationModel::getProfile()->isInGroup($group)) {
+                            $inGroup = true;
+                        }
+                    }
+                    if (!$inGroup) {
+                        $this->record = Model::getPage(404);
+                    }
+                }
+            }
         }
 
         // we need to set the correct id
@@ -160,24 +192,12 @@ class Page extends FrontendBaseObject
      */
     public function display()
     {
-        // parse header
-        $this->header->parse();
-
-        // parse breadcrumb
-        $this->breadcrumb->parse();
-
-        // parse languages
-        $this->parseLanguages();
-
-        // parse footer
-        $this->footer->parse();
-
         // assign the id so we can use it as an option
-        $this->tpl->assign('isPage' . $this->pageId, true);
-        $this->tpl->assign('isChildOfPage' . $this->record['parent_id'], true);
+        $this->tpl->addGlobal('isPage' . $this->pageId, true);
+        $this->tpl->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
         // hide the cookiebar from within the code to prevent flickering
-        $this->tpl->assign(
+        $this->tpl->addGlobal(
             'cookieBarHide',
             (!$this->get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar())
         );
@@ -193,6 +213,18 @@ class Page extends FrontendBaseObject
                 array()
             );
         }
+
+        // parse header
+        $this->header->parse();
+
+        // parse breadcrumb
+        $this->breadcrumb->parse();
+
+        // parse languages
+        $this->parseLanguages();
+
+        // parse footer
+        $this->footer->parse();
 
         // output
         return new Response(
@@ -224,7 +256,10 @@ class Page extends FrontendBaseObject
     /**
      * Get page content
      *
+     * @param $pageId
+     *
      * @return array
+     * @throws RedirectException
      */
     protected function getPageContent($pageId)
     {
@@ -276,13 +311,13 @@ class Page extends FrontendBaseObject
             // validate the child
             if ($firstChildId !== false) {
                 // build URL
-                $URL = Navigation::getURL($firstChildId);
+                $url = Navigation::getURL($firstChildId);
 
                 // redirect
                 throw new RedirectException(
                     'Redirect',
                     new RedirectResponse(
-                        $URL,
+                        $url,
                         301
                     )
                 );
@@ -295,7 +330,7 @@ class Page extends FrontendBaseObject
     /**
      * Get the content of the page
      *
-     * @return    array
+     * @return array
      */
     public function getRecord()
     {
@@ -332,7 +367,7 @@ class Page extends FrontendBaseObject
                 $temp['url'] = '/' . $language;
                 $temp['label'] = $language;
                 $temp['name'] = Language::msg(mb_strtoupper($language));
-                $temp['current'] = (bool) ($language == FRONTEND_LANGUAGE);
+                $temp['current'] = (bool) ($language == LANGUAGE);
 
                 // add
                 $languages[] = $temp;
@@ -340,7 +375,7 @@ class Page extends FrontendBaseObject
 
             // assign
             if (count($languages) > 1) {
-                $this->tpl->assign('languages', $languages);
+                $this->tpl->addGlobal('languages', $languages);
             }
         }
     }
@@ -362,6 +397,8 @@ class Page extends FrontendBaseObject
             foreach ($blocks as $i => $block) {
                 // check for extras that need to be reparsed
                 if (isset($block['extra'])) {
+                    $block['extra']->execute();
+
                     // fetch extra-specific variables
                     if (isset($positions[$position][$i]['variables'])) {
                         $extraVariables = $positions[$position][$i]['variables'];
@@ -413,16 +450,12 @@ class Page extends FrontendBaseObject
 
             // all extras extend FrontendBaseObject, which extends KernelLoader
             $extra->setKernel($this->getKernel());
-            $extra->execute();
 
             // overwrite the template
             if (is_callable(array($extra, 'getOverwrite')) && $extra->getOverwrite()
             ) {
                 $this->templatePath = $extra->getTemplatePath();
             }
-
-            // assign the variables from this extra to the main template
-            $this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
         }
     }
 
@@ -463,7 +496,7 @@ class Page extends FrontendBaseObject
         // assign content
         $pageInfo = Navigation::getPageInfo($this->record['id']);
         $this->record['has_children'] = $pageInfo['has_children'];
-        $this->tpl->assign('page', $this->record);
+        $this->tpl->addGlobal('page', $this->record);
 
         // set template path
         $this->templatePath = $this->record['template_path'];

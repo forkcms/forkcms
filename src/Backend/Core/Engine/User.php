@@ -17,65 +17,65 @@ use Backend\Core\Engine\Model as BackendModel;
 class User
 {
     /**
-     * The group id
+     * The groups
      *
-     * @var    int
+     * @var array
      */
-    private $groupId;
+    private $groups = array();
 
     /**
      * Is the user-object a valid one? As in: is the user authenticated
      *
-     * @var    bool
+     * @var bool
      */
     private $isAuthenticated = false;
 
     /**
      * Is the authenticated user a god?
      *
-     * @var    bool
+     * @var bool
      */
     private $isGod = false;
 
     /**
      * Last timestamp the user logged in
      *
-     * @var    int
+     * @var int
      */
     private $lastLoggedInDate;
 
     /**
      * The secret key for the user
      *
-     * @var    string
+     * @var string
      */
     private $secretKey;
 
     /**
      * The session id for the user
      *
-     * @var    string
+     * @var string
      */
     private $sessionId;
 
     /**
      * All settings
      *
-     * @var    array
+     * @var array
      */
     private $settings = array();
 
     /**
      * The users id
      *
-     * @var    int
+     * @var int
      */
     private $userId;
 
     /**
      * The email
      *
-     * @var    string
+     * @var string
      */
     private $email;
 
@@ -106,11 +106,18 @@ class User
     /**
      * Get groupid
      *
-     * @return int
+     * @return null
+     *
+     * @deprecated
      */
     public function getGroupId()
     {
-        return $this->groupId;
+        trigger_error(
+            'This is not used anymore, use the getGroups method to get all the groups the user belongs to',
+            E_USER_DEPRECATED
+        );
+
+        return null;
     }
 
     /**
@@ -242,6 +249,8 @@ class User
         $this->isAuthenticated = true;
         $this->isGod = ($userData['is_god'] == 'Y');
 
+        $this->loadGroups($userData['id']);
+
         // get settings
         $settings = (array) $db->getPairs(
             'SELECT us.name, us.value
@@ -259,6 +268,27 @@ class User
         if (!isset($this->settings['nickname']) || $this->settings['nickname'] == '') {
             $this->setSetting('nickname', $this->settings['name'] . ' ' . $this->settings['surname']);
         }
+    }
+
+    /**
+     * @param int $userId
+     */
+    private function loadGroups($userId)
+    {
+        $this->groups = (array) BackendModel::get('database')->getColumn(
+            'SELECT group_id
+             FROM users_groups
+             WHERE user_id = ?',
+            array((int) $userId)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 
     /**
@@ -296,6 +326,7 @@ class User
         $this->setLastloggedInDate($userData['date']);
         $this->isAuthenticated = true;
         $this->isGod = ($userData['is_god'] == 'Y');
+        $this->loadGroups($userData['id']);
 
         // get settings
         $settings = (array) $db->getPairs(
@@ -325,16 +356,6 @@ class User
     private function setEmail($value)
     {
         $this->email = (string) $value;
-    }
-
-    /**
-     * Set groupid
-     *
-     * @param int $value The id of the group.
-     */
-    private function setGroupId($value)
-    {
-        $this->groupId = (int) $value;
     }
 
     /**

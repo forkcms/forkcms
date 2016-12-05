@@ -4,6 +4,8 @@ namespace Common;
 
 /**
  * ApiTestCase is the base class for functional tests.
+ *
+ * @deprecated
  */
 abstract class ApiTestCase extends WebTestCase
 {

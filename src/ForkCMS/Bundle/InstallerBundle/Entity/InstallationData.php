@@ -2,6 +2,8 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * This object contains all fork data
  */
@@ -116,6 +118,9 @@ class InstallationData
      * The backend login email for the GOD user
      *
      * @var string
+     *
+     * @Assert\NotBlank(groups={"login"})
+     * @Assert\Email(groups={"login"})
      */
     protected $email;
 
@@ -123,6 +128,8 @@ class InstallationData
      * The backend password for the GOD user
      *
      * @var string
+     *
+     * @Assert\NotBlank(groups={"login"})
      */
     protected $password;
 
@@ -433,8 +440,9 @@ class InstallationData
      */
     public function removeModule($module)
     {
-        if (!in_array($module, $this->modules)) {
-            unset($this->modules[$module]);
+        $index = array_search($module, $this->modules);
+        if ($index !== false) {
+            unset($this->modules[$index]);
         }
     }
 
@@ -579,7 +587,7 @@ class InstallationData
      */
     public function isValid()
     {
-        if (
+        return !(
             empty($this->dbHostname)
             || empty($this->dbUsername)
             || empty($this->dbDatabase)
@@ -594,10 +602,6 @@ class InstallationData
 
             || empty($this->email)
             || empty($this->password)
-        ) {
-            return false;
-        }
-
-        return true;
+        );
     }
 }

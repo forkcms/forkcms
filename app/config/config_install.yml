@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters_install.yml }
+    - { resource: doctrine.yml }
 
 framework:
     secret:          %kernel.secret%
@@ -12,6 +13,8 @@ framework:
         engines: ['twig']
     session:
         handler_id: ~
+    validation:
+        enable_annotations: true
 
 # Assetic Configuration
 assetic:
@@ -28,7 +31,22 @@ monolog:
             path:  %site.path_www%/app/logs/logs.log
             level: debug
 
+parameters:
+    doctrine.dbal.connection_factory.class: ForkCMS\Bundle\InstallerBundle\Service\InstallerConnectionFactory
+
 services:
+    # dummy service during the installation
+    mailer_configurator:
+        class: stdClass
+
+    # dummy service during the installation
+    fork.settings:
+        class: stdClass
+
+    # dummy service during the installation
+    cache.pool:
+        class: stdClass
+
     database:
         class: SpoonDatabase
         arguments:
@@ -40,7 +58,3 @@ services:
             - %database.port%
         calls:
             - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
-    mailer:
-        class: Common\Mailer
-        arguments:
-            - "@database"

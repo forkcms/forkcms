@@ -10,7 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 
 /**
  * This is our extended version of SpoonForm.
@@ -62,6 +62,8 @@ class Form extends \Common\Core\Form
      * @param string $class Class(es) that will be applied on the button.
      *
      * @return \SpoonFormButton
+     *
+     * @throws Exception
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
     {
@@ -94,7 +96,9 @@ class Form extends \Common\Core\Form
      * @param string $class      Class(es) that have to be applied on the element.
      * @param string $classError Class(es) that have to be applied when an error occurs on the element.
      *
-     * @return FrontendFormDate
+     * @return FormDate
+     *
+     * @throws Exception
      */
     public function addDate(
         $name,
@@ -172,7 +176,7 @@ class Form extends \Common\Core\Form
         }
 
         // create a datefield
-        $this->add(new FrontendFormDate($name, $value, $mask, $class, $classError));
+        $this->add(new FormDate($name, $value, $mask, $class, $classError));
 
         // set attributes
         parent::getField($name)->setAttributes($attributes);
@@ -207,7 +211,7 @@ class Form extends \Common\Core\Form
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
-     * @return FrontendFormImage
+     * @return FormImage
      */
     public function addImage($name, $class = null, $classError = null)
     {
@@ -216,7 +220,7 @@ class Form extends \Common\Core\Form
         $classError = ($classError !== null) ? (string) $classError : 'inputFileError inputImageError';
 
         // add element
-        $this->add(new FrontendFormImage($name, $class, $classError));
+        $this->add(new FormImage($name, $class, $classError));
 
         return $this->getField($name);
     }
@@ -406,173 +410,5 @@ class Form extends \Common\Core\Form
         if ($this->isSubmitted() && !$this->isCorrect()) {
             $tpl->assign('formError', true);
         }
-    }
-}
-
-/**
- * This is our extended version of \SpoonFormDate
- */
-class FrontendFormDate extends \SpoonFormDate
-{
-    /**
-     * Checks if this field is correctly submitted.
-     *
-     * @param string $error The error message to set.
-     *
-     * @return bool
-     */
-    public function isValid($error = null)
-    {
-        // call parent (let them do the hard word)
-        $return = parent::isValid($error);
-
-        // already errors detect, no more further testing is needed
-        if ($return === false) {
-            return false;
-        }
-
-        // define long mask
-        $longMask = str_replace(array('d', 'm', 'y', 'Y'), array('dd', 'mm', 'yy', 'yyyy'), $this->mask);
-
-        // post/get data
-        $data = $this->getMethod(true);
-
-        // init some vars
-        $year = (mb_strpos($longMask, 'yyyy') !== false) ? mb_substr(
-            $data[$this->attributes['name']],
-            mb_strpos($longMask, 'yyyy'),
-            4
-        ) : mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'yy'), 2);
-        $month = mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'mm'), 2);
-        $day = mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'dd'), 2);
-
-        // validate datefields that have a from-date set
-        if (mb_strpos($this->attributes['class'], 'inputDatefieldFrom') !== false) {
-            // process from date
-            $fromDateChunks = explode('-', $this->attributes['data-startdate']);
-            $fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
-
-            // process given date
-            $givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
-
-            // compare dates
-            if ($givenDateTimestamp < $fromDateTimestamp) {
-                if ($error !== null) {
-                    $this->setError($error);
-                }
-
-                return false;
-            }
-        } elseif (mb_strpos($this->attributes['class'], 'inputDatefieldTill') !== false) {
-            // process till date
-            $tillDateChunks = explode('-', $this->attributes['data-enddate']);
-            $tillDateTimestamp = mktime(12, 00, 00, $tillDateChunks[1], $tillDateChunks[2], $tillDateChunks[0]);
-
-            // process given date
-            $givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
-
-            // compare dates
-            if ($givenDateTimestamp > $tillDateTimestamp) {
-                if ($error !== null) {
-                    $this->setError($error);
-                }
-
-                return false;
-            }
-        } elseif (mb_strpos($this->attributes['class'], 'inputDatefieldRange') !== false) {
-            // process from date
-            $fromDateChunks = explode('-', $this->attributes['data-startdate']);
-            $fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
-
-            // process till date
-            $tillDateChunks = explode('-', $this->attributes['data-enddate']);
-            $tillDateTimestamp = mktime(12, 00, 00, $tillDateChunks[1], $tillDateChunks[2], $tillDateChunks[0]);
-
-            // process given date
-            $givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
-
-            // compare dates
-            if ($givenDateTimestamp < $fromDateTimestamp || $givenDateTimestamp > $tillDateTimestamp) {
-                if ($error !== null) {
-                    $this->setError($error);
-                }
-
-                return false;
-            }
-        }
-
-        /**
-         * When the code reaches the point, it means no errors have occurred
-         * and truth will out!
-         */
-
-        return true;
-    }
-}
-
-/**
- * This is our extended version of \SpoonFormImage
- */
-class FrontendFormImage extends \SpoonFormImage
-{
-    /**
-     * Constructor.
-     *
-     * @param    string            $name          The name.
-     * @param    string [optional] $class         The CSS-class to be used.
-     * @param    string [optional] $classError    The CSS-class to be used when there is an error.
-     *
-     * @see      SpoonFormFile::__construct()
-     */
-    public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
-    {
-        // call the parent
-        parent::__construct($name, $class, $classError);
-
-        // mime type hinting
-        $this->setAttribute('accept', 'image/*');
-    }
-
-    /**
-     * Generate thumbnails based on the folders in the path
-     * Use
-     *  - 128x128 as folder name to generate an image that where the width will be 128px and the height will be 128px
-     *  - 128x as folder name to generate an image that where the width will be 128px,
-     *      the height will be calculated based on the aspect ratio.
-     *  - x128 as folder name to generate an image that where the width will be 128px,
-     *      the height will be calculated based on the aspect ratio.
-     *
-     * @param string $path
-     * @param string $filename
-     */
-    public function generateThumbnails($path, $filename)
-    {
-        // create folder if needed
-        $fs = new Filesystem();
-        if (!$fs->exists($path . '/source')) {
-            $fs->mkdir($path . '/source');
-        }
-
-        // move the source file
-        $this->moveFile($path . '/source/' . $filename);
-
-        // generate the thumbnails
-        Model::generateThumbnails($path, $path . '/source/' . $filename);
-    }
-
-    /**
-     * This function will return the errors. It is extended so we can do image checks automatically.
-     *
-     * @return string
-     */
-    public function getErrors()
-    {
-        // do an image validation
-        if ($this->isFilled()) {
-            $this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), FL::err('JPGGIFAndPNGOnly'));
-            $this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), FL::err('JPGGIFAndPNGOnly'));
-        }
-
-        return $this->errors;
     }
 }

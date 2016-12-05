@@ -13,7 +13,7 @@ use Common\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
@@ -25,7 +25,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Filter variables
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 
@@ -50,10 +50,7 @@ class Edit extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
-        }
-
-        // no item found or the user is not god , throw an exceptions, because somebody is fucking with our URL
-        else {
+        } else {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
@@ -76,7 +73,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(), $this->record['module']);
         $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
         $this->frm->addText('name', $this->record['name']);
-        $this->frm->addTextarea('value', $this->record['value'], null, 'inputText', 'inputTextError', true);
+        $this->frm->addTextarea('value', $this->record['value'], null, null, true);
         $this->frm->addDropdown('language', BL::getWorkingLanguages(), $this->record['language']);
     }
 
@@ -134,10 +131,7 @@ class Edit extends BackendBaseActionEdit
                     // first letter does not seem to be a capital one
                     if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
                         $txtName->setError(BL::err('InvalidName'));
-                    }
-
-                    // syntax is completely fine
-                    else {
+                    } else {
                         // check if exists
                         if (BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue(), $this->id)) {
                             $txtName->setError(BL::err('AlreadyExists'));
@@ -150,7 +144,7 @@ class Edit extends BackendBaseActionEdit
             if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if ($this->frm->getField('type')->getValue() == 'act') {
-                    if (urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
+                    if (rawurlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
                         $txtValue->addError(BL::err('InvalidValue'));
                     }
                 }
@@ -180,7 +174,7 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
+                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=edited&var=' . rawurlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
             }
         }
     }

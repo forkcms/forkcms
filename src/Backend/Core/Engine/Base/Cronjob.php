@@ -9,6 +9,7 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\ExitException;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
@@ -30,12 +31,19 @@ class Cronjob extends Object
      */
     protected function clearBusyFile()
     {
-        // build path
-        $path = BACKEND_CACHE_PATH . '/Cronjobs/' . $this->getId() . '.busy';
+        $path = $this->getCacheDirectory() . $this->getId() . '.busy';
 
         // remove the file
-        $fs = new Filesystem();
-        $fs->remove($path);
+        $filesystem = new Filesystem();
+        $filesystem->remove($path);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCacheDirectory()
+    {
+        return BackendModel::getContainer()->getParameter('kernel.cache_dir') . '/cronjobs/';
     }
 
     public function execute()
@@ -102,14 +110,14 @@ class Cronjob extends Object
         }
 
         // build path
-        $fs = new Filesystem();
-        $path = BACKEND_CACHE_PATH . '/Cronjobs/' . $this->getId() . '.busy';
+        $filesystem = new Filesystem();
+        $path = $this->getCacheDirectory() . $this->getId() . '.busy';
 
         // init var
         $isBusy = false;
 
         // does the busy file already exists.
-        if ($fs->exists($path)) {
+        if ($filesystem->exists($path)) {
             $isBusy = true;
 
             // grab counter
@@ -134,11 +142,11 @@ class Cronjob extends Object
         ++$counter;
 
         // store content
-        $fs->dumpFile($path, $counter);
+        $filesystem->dumpFile($path, $counter);
 
         // if the cronjob is busy we should NOT proceed
         if ($isBusy) {
-            exit;
+            throw new ExitException('The cronjob is still busy');
         }
     }
 

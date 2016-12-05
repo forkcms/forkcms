@@ -22,7 +22,7 @@ class Model extends \BaseModel
     /**
      * Cached modules
      *
-     * @var    array
+     * @var array
      */
     protected static $modules = array();
 
@@ -112,13 +112,13 @@ class Model extends \BaseModel
 
         // create temporary pass
         for ($i = 0; $i < $length; ++$i) {
-            $tmp .= ($consonants[rand(0, $consonantsCount - 1)] .
-                $vowels[rand(0, $vowelsCount - 1)]);
+            $tmp .= ($consonants[mt_rand(0, $consonantsCount - 1)] .
+                $vowels[mt_rand(0, $vowelsCount - 1)]);
         }
 
         // reformat the pass
         for ($i = 0; $i < $length; ++$i) {
-            if (rand(0, 1) == 1) {
+            if (mt_rand(0, 1) == 1) {
                 $pass .= mb_strtoupper(mb_substr($tmp, $i, 1));
             } else {
                 $pass .= mb_substr($tmp, $i, 1);
@@ -183,8 +183,8 @@ class Model extends \BaseModel
     public static function getThumbnailFolders($path, $includeSource = false)
     {
         $return = array();
-        $fs = new Filesystem();
-        if (!$fs->exists($path)) {
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($path)) {
             return $return;
         }
         $finder = new Finder();
@@ -304,9 +304,16 @@ class Model extends \BaseModel
      * @param mixed  $callback    The callback that should be executed when the event is triggered.
      *
      * @throws \Exception          When the callback is invalid
+     *
+     * @deprecated use the symfony event dispatcher instead
      */
     public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
     {
+        trigger_error(
+            'Deprecated, all events will be replaced with symfony events',
+            E_USER_DEPRECATED
+        );
+
         // validate
         if (!is_callable($callback)) {
             throw new \Exception('Invalid callback!');
@@ -351,6 +358,8 @@ class Model extends \BaseModel
      * @param string $module    The module that triggers the event.
      * @param string $eventName The name of the event.
      * @param mixed  $data      The data that should be send to subscribers.
+     *
+     * @deprecated use the symfony event dispatcher instead
      */
     public static function triggerEvent($module, $eventName, $data = null)
     {
@@ -399,14 +408,16 @@ class Model extends \BaseModel
 
     /**
      * Start processing the hooks
+     *
+     * @deprecated use the symfony event dispatcher instead
      */
     public static function startProcessingHooks()
     {
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         // is the queue already running?
-        if ($fs->exists(BACKEND_CACHE_PATH . '/Hooks/pid')) {
+        if ($filesystem->exists(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid')) {
             // get the pid
-            $pid = trim(file_get_contents(BACKEND_CACHE_PATH . '/Hooks/pid'));
+            $pid = trim(file_get_contents(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid'));
 
             // running on windows?
             if (mb_strtolower(mb_substr(php_uname('s'), 0, 3)) == 'win') {
@@ -416,7 +427,7 @@ class Model extends \BaseModel
                 // validate output
                 if ($output == '' || $output === false) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                    $filesystem->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -429,7 +440,7 @@ class Model extends \BaseModel
                 // validate output
                 if ($output === false) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                    $filesystem->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -437,9 +448,9 @@ class Model extends \BaseModel
             } else {
                 // UNIX
                 // check if the process is still running, by checking the proc folder
-                if (!$fs->exists('/proc/' . $pid)) {
+                if (!$filesystem->exists('/proc/' . $pid)) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
+                    $filesystem->remove(self::getContainer()->getParameter('kernel.cache_dir') . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -453,7 +464,7 @@ class Model extends \BaseModel
         $errStr = '';
         $defaultPort = 80;
         if ($parts['scheme'] == 'https') {
-            $defaultPort = 433;
+            $defaultPort = 443;
         }
 
         // open the socket
@@ -487,6 +498,8 @@ class Model extends \BaseModel
      * @param string $eventModule The module that triggers the event.
      * @param string $eventName   The name of the event.
      * @param string $module      The module that subscribes to the event.
+     *
+     * @deprecated use the symfony event dispatcher instead
      */
     public static function unsubscribeFromEvent($eventModule, $eventName, $module)
     {

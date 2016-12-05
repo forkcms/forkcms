@@ -12,10 +12,11 @@ namespace Backend\Modules\Location\Actions;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\Intl\Intl as Intl;
+use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the edit-action, it will display a form to create a new item
@@ -43,10 +44,19 @@ class Edit extends BackendBaseActionEdit
 
         // does the item exists
         if ($this->id !== null && BackendLocationModel::exists($this->id)) {
+            $this->header->addJS(FrontendLocationModel::getPathToMapStyles());
             parent::execute();
 
+            // define Google Maps API key
+            $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+
+            // check Google Maps API key, otherwise redirect to settings
+            if ($apikey === null) {
+                $this->redirect(BackendModel::createURLForAction('Index', 'Settings'));
+            }
+
             // add js
-            $this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
+            $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, null, false, true, false);
 
             $this->loadData();
 
@@ -57,10 +67,7 @@ class Edit extends BackendBaseActionEdit
 
             $this->parse();
             $this->display();
-        }
-
-        // no item found, throw an exception, because somebody is fucking with our URL
-        else {
+        } else {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
@@ -86,6 +93,7 @@ class Edit extends BackendBaseActionEdit
             $this->settings['width'] = $settings['width_widget'];
             $this->settings['height'] = $settings['height_widget'];
             $this->settings['map_type'] = $settings['map_type_widget'];
+            $this->settings['map_style'] = isset($settings['map_style_widget']) ? $settings['map_style_widget'] : 'standard';
             $this->settings['zoom_level'] = $settings['zoom_level_widget'];
             $this->settings['center']['lat'] = $this->record['lat'];
             $this->settings['center']['lng'] = $this->record['lng'];
@@ -126,11 +134,18 @@ class Edit extends BackendBaseActionEdit
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
+            'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
+        );
+        $mapStyles = array(
+            'standard' => BL::lbl('Default', $this->getModule()),
+            'custom' => BL::lbl('Custom', $this->getModule()),
+            'gray' => BL::lbl('Gray', $this->getModule()),
+            'blue' => BL::lbl('Blue', $this->getModule()),
         );
 
         $zoomLevels = array_combine(
-            array_merge(array('auto'), range(3, 18)),
-            array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))
+            array_merge(array('auto'), range(1, 18)),
+            array_merge(array(BL::lbl('Auto', $this->getModule())), range(1, 18))
         );
 
         $this->settingsForm = new BackendForm('settings');
@@ -141,6 +156,11 @@ class Edit extends BackendBaseActionEdit
         $this->settingsForm->addText('width', $this->settings['width']);
         $this->settingsForm->addText('height', $this->settings['height']);
         $this->settingsForm->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
+        $this->settingsForm->addDropdown(
+            'map_style',
+            $mapStyles,
+            isset($this->settings['map_style']) ? $this->settings['map_style'] : null
+        );
         $this->settingsForm->addCheckbox('full_url', $this->settings['full_url']);
         $this->settingsForm->addCheckbox('directions', $this->settings['directions']);
         $this->settingsForm->addCheckbox('marker_overview', ($this->record['show_overview'] == 'Y'));
@@ -207,10 +227,7 @@ class Edit extends BackendBaseActionEdit
                     // define latitude and longitude
                     $item['lat'] = $coordinates['latitude'];
                     $item['lng'] = $coordinates['longitude'];
-                }
-
-                // old values are still good
-                else {
+                } else {
                     $item['lat'] = $this->record['lat'];
                     $item['lng'] = $this->record['lng'];
                 }
@@ -226,10 +243,8 @@ class Edit extends BackendBaseActionEdit
 
                 // redirect to the overview
                 if ($this->frm->getField('redirect')->getValue() == 'overview') {
-                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
-                }
-                // redirect to the edit action
-                else {
+                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['id']);
+                } else {
                     $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&report=edited');
                 }
             }

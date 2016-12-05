@@ -11,7 +11,7 @@ namespace Frontend\Modules\Search\Ajax;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 
@@ -23,28 +23,28 @@ class Autosuggest extends FrontendBaseAJAXAction
     /**
      * Name of the cache file
      *
-     * @var    string
+     * @var string
      */
     private $cacheFile;
 
     /**
      * The items
      *
-     * @var    array
+     * @var array
      */
     private $items;
 
     /**
      * Limit of data to fetch
      *
-     * @var    int
+     * @var int
      */
     private $limit;
 
     /**
      * Offset of data to fetch
      *
-     * @var    int
+     * @var int
      */
     private $offset;
 
@@ -52,7 +52,7 @@ class Autosuggest extends FrontendBaseAJAXAction
      * The pagination array
      * It will hold all needed parameters, some of them need initialization.
      *
-     * @var    array
+     * @var array
      */
     protected $pagination = array(
         'limit' => 20,
@@ -65,7 +65,7 @@ class Autosuggest extends FrontendBaseAJAXAction
     /**
      * The requested page
      *
-     * @var    int
+     * @var int
      */
     private $requestedPage;
 
@@ -77,6 +77,13 @@ class Autosuggest extends FrontendBaseAJAXAction
     private $term = '';
 
     /**
+     * Autosuggested item length
+     *
+     * @var int
+     */
+    private $length;
+
+    /**
      * Display
      */
     private function display()
@@ -86,7 +93,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         $this->limit = (int) $this->get('fork.settings')->get('Search', 'autosuggest_num_items', 10);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
-                           FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
+                           LANGUAGE . '_' . md5($this->term) . '_' .
                            $this->offset . '_' . $this->limit . '.php';
 
         // load the cached data
@@ -193,8 +200,8 @@ class Autosuggest extends FrontendBaseAJAXAction
         // debug mode = no cache
         if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
-            $fs = new Filesystem();
-            $fs->dumpFile(
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile(
                 $this->cacheFile,
                 "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
                     $this->items,

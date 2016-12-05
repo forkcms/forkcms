@@ -3,6 +3,7 @@
 namespace Backend\Modules\Faq\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Language\Language;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
@@ -63,7 +64,7 @@ class SequenceQuestions extends BackendBaseAJAXAction
             }
 
             // success output
-            $this->output(self::OK, null, 'sequence updated');
+            $this->output(self::OK, null, Language::msg('SequenceSaved'));
         }
     }
 }

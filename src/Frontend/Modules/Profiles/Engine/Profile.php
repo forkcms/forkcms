@@ -21,56 +21,56 @@ class Profile
     /**
      * The display name.
      *
-     * @var    string
+     * @var string
      */
     private $displayName;
 
     /**
      * The profile email.
      *
-     * @var    string
+     * @var string
      */
     private $email;
 
     /**
      * The groups this profile belongs to, if any. The keys are the group IDs, the values the HTML-escaped group names.
      *
-     * @var    array
+     * @var array
      */
     protected $groups;
 
     /**
      * The profile id.
      *
-     * @var    int
+     * @var int
      */
     private $id;
 
     /**
      * The profile register date (unix timestamp).
      *
-     * @var    int
+     * @var int
      */
     private $registeredOn;
 
     /**
      * The profile settings.
      *
-     * @var    array
+     * @var array
      */
     private $settings = array();
 
     /**
      * The profile status.
      *
-     * @var    string
+     * @var string
      */
     private $status;
 
     /**
      * The profile url.
      *
-     * @var    string
+     * @var string
      */
     private $url;
 
@@ -136,7 +136,7 @@ class Profile
      */
     public function getSetting($name, $defaultValue = null)
     {
-        // if settings array does not exists then get it first
+        // if settings array does not exist then get it first
         if (empty($this->settings)) {
             $this->settings = $this->getSettings();
         }
@@ -322,6 +322,9 @@ class Profile
      */
     public function setSetting($name, $value)
     {
+        // make sure we have the current settings in cache
+        $this->getSettings();
+
         // set setting
         FrontendProfilesModel::setSetting($this->getId(), (string) $name, $value);
 
@@ -336,6 +339,9 @@ class Profile
      */
     public function setSettings(array $values)
     {
+        // make sure we have the current settings in cache
+        $this->getSettings();
+
         // set settings
         FrontendProfilesModel::setSettings($this->getId(), $values);
 

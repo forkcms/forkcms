@@ -9,24 +9,17 @@ namespace Frontend\Modules\ContentBlocks;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+use Frontend\Core\Engine\Base\Config as BaseConfig;
 
 /**
  * This is the configuration-object
  */
-class Config extends FrontendBaseConfig
+class Config extends BaseConfig
 {
     /**
      * The default action
      *
-     * @var	string
+     * @var string
      */
     protected $defaultAction = 'Detail';
-
-    /**
-     * The disabled actions
-     *
-     * @var	array
-     */
-    protected $disabledActions = array();
 }

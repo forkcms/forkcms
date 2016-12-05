@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\User as BackendUser;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
@@ -27,21 +27,21 @@ class Edit extends BackendBaseActionEdit
     /**
      * The authenticated user
      *
-     * @var    BackendUser
+     * @var BackendUser
      */
     private $authenticatedUser;
 
     /**
      * Can only edit his own profile
      *
-     * @var    bool
+     * @var bool
      */
     private $allowUserRights;
 
     /**
      * The user
      *
-     * @var    BackendUser
+     * @var BackendUser
      */
     private $user;
 
@@ -59,10 +59,9 @@ class Edit extends BackendBaseActionEdit
         // When this is the case the user will be redirected to the index action of this module.
         // An action to which he may not have any user rights.
         // Redirect to the user's own profile instead to avoid unnessary words.
-        if (
-            $this->id === null &&
-            $error === null &&
-            $this->authenticatedUser->getUserId()
+        if ($this->id === null
+            && $error === null
+            && $this->authenticatedUser->getUserId()
         ) {
             $this->redirect(
                 BackendModel::createURLForAction(
@@ -106,9 +105,8 @@ class Edit extends BackendBaseActionEdit
         );
 
         // redirect to error page when not allowed to edit other profiles
-        if (
-            !$this->authenticatedUser->isGod() &&
-            ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('Add'))
+        if (!$this->authenticatedUser->isGod()
+            && ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('Add'))
         ) {
             $this->redirect(BackendModel::createURLForAction('Error') . '&type=not-allowed');
         }
@@ -172,12 +170,12 @@ class Edit extends BackendBaseActionEdit
             $this->user->getSetting('number_format', 'dot_nothing')
         );
 
-        $this->frm->addDropDown(
+        $this->frm->addDropdown(
             'csv_split_character',
             BackendUsersModel::getCSVSplitCharacters(),
             $this->user->getSetting('csv_split_character')
         );
-        $this->frm->addDropDown(
+        $this->frm->addDropdown(
             'csv_line_ending',
             BackendUsersModel::getCSVLineEndings(),
             $this->user->getSetting('csv_line_ending')
@@ -194,6 +192,7 @@ class Edit extends BackendBaseActionEdit
                     'active'
                 )->setAttribute('disabled', 'disabled');
             }
+            // @TODO remove this when the api is kicked out
             $this->frm->addCheckbox(
                 'api_access',
                 (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y')
@@ -216,8 +215,8 @@ class Edit extends BackendBaseActionEdit
 
         // only allow deletion of other users
         $this->tpl->assign(
-            'showUsersDelete',
-            $this->authenticatedUser->getUserId() != $this->id && BackendAuthentication::isAllowedAction('Delete')
+            'allowUsersDelete',
+            $this->authenticatedUser->getUserId() != $this->id
         );
 
         // assign
@@ -276,9 +275,8 @@ class Edit extends BackendBaseActionEdit
             }
 
             // required fields
-            if (
-                $this->user->isGod() && $fields['email']->getValue() != '' &&
-                $this->user->getEmail() != $fields['email']->getValue()
+            if ($this->user->isGod() && $fields['email']->getValue() != ''
+                && $this->user->getEmail() != $fields['email']->getValue()
             ) {
                 $fields['email']->addError(BL::err('CantChangeGodsEmail'));
             }
@@ -299,22 +297,6 @@ class Edit extends BackendBaseActionEdit
                 if ($fields['new_password']->getValue() !== $fields['confirm_password']->getValue()
                 ) {
                     $fields['confirm_password']->addError(BL::err('ValuesDontMatch'));
-                }
-            }
-
-            // validate avatar
-            if ($fields['avatar']->isFilled()) {
-                // correct extension
-                if ($fields['avatar']->isAllowedExtension(
-                    array('jpg', 'jpeg', 'gif', 'png'),
-                    BL::err('JPGGIFAndPNGOnly')
-                )
-                ) {
-                    // correct mimetype?
-                    $fields['avatar']->isAllowedMimeType(
-                        array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'),
-                        BL::err('JPGGIFAndPNGOnly')
-                    );
                 }
             }
 
@@ -353,6 +335,7 @@ class Edit extends BackendBaseActionEdit
                 $settings['number_format'] = $fields['number_format']->getValue();
                 $settings['csv_split_character'] = $fields['csv_split_character']->getValue();
                 $settings['csv_line_ending'] = $fields['csv_line_ending']->getValue();
+                // @TODO remove this when the api is kicked out
                 $settings['api_access'] = ($this->allowUserRights) ? (bool) $fields['api_access']->getChecked(
                 ) : $this->record['settings']['api_access'];
 
@@ -390,19 +373,18 @@ class Edit extends BackendBaseActionEdit
                     $avatarsPath = FRONTEND_FILES_PATH . '/backend_users/avatars';
 
                     // delete old avatar if it isn't the default-image
-                    if (
-                        $this->record['settings']['avatar'] != 'no-avatar.jpg' &&
-                        $this->record['settings']['avatar'] != ''
+                    if ($this->record['settings']['avatar'] != 'no-avatar.jpg'
+                        && $this->record['settings']['avatar'] != ''
                     ) {
-                        $fs = new Filesystem();
-                        $fs->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
-                        $fs->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
+                        $filesystem = new Filesystem();
+                        $filesystem->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
+                        $filesystem->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
                     }
 
                     // create new filename
-                    $filename = rand(0, 3) . '_' . $user['id'] . '.' . $fields['avatar']->getExtension();
+                    $filename = mt_rand(0, 3) . '_' . $user['id'] . '.' . $fields['avatar']->getExtension();
 
                     // add into settings to update
                     $settings['avatar'] = $filename;

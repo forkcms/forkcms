@@ -6,7 +6,3 @@ services:
             - "@fork.settings"
         tags:
             - { name: kernel.event_listener, event: form.submitted, method: onFormSubmitted }
-    formbuilder.submitted.notifier:
-        class: Frontend\Modules\FormBuilder\EventListener\FormBuilderSubmittedNotificationSubscriber
-        tags:
-            - { name: kernel.event_listener, event: form.submitted, method: onFormSubmitted }

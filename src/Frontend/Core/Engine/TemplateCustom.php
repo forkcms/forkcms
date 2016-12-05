@@ -9,15 +9,22 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+trigger_error(
+    'You should use the twig templating service',
+    E_USER_DEPRECATED
+);
+
 /**
  * Add all custom stuff here.
+ *
+ * @deprecated
  */
 class TemplateCustom
 {
     /**
      * Template instance
      *
-     * @var    Template
+     * @var Template
      */
     private $tpl;
 

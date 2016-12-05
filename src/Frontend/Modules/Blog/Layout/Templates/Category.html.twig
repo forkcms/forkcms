@@ -1,7 +1,7 @@
 {#
-	variables that are available:
-	- {{ category }}: contains data about the category
-	- {{ items }}: contains an array with all posts, each element contains data about the post
+  variables that are available:
+  - {{ category }}: contains data about the category
+  - {{ items }}: contains an array with all posts, each element contains data about the post
 #}
 
 {% if items %}
@@ -49,8 +49,8 @@
           <div class="bd content">
             {% if item.image %}
               <img src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
-            {% if not item.introduction %}{{ item.text }}{% endif %}
-            {% if item.introduction %}{{ item.introduction }}{% endif %}
+            {% if not item.introduction %}{{ item.text|raw }}{% endif %}
+            {% if item.introduction %}{{ item.introduction|raw }}{% endif %}
           </div>
         </div>
       </article>

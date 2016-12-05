@@ -10,7 +10,7 @@ namespace Frontend\Modules\Blog\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
@@ -22,14 +22,14 @@ class Category extends FrontendBaseBlock
     /**
      * The articles
      *
-     * @var    array
+     * @var array
      */
     private $items;
 
     /**
      * The requested category
      *
-     * @var    array
+     * @var array
      */
     private $category;
 
@@ -37,7 +37,7 @@ class Category extends FrontendBaseBlock
      * The pagination array
      * It will hold all needed parameters, some of them need initialization
      *
-     * @var    array
+     * @var array
      */
     protected $pagination = array(
         'limit' => 10,
@@ -119,7 +119,7 @@ class Category extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
+        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed

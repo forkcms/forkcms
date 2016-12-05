@@ -33,12 +33,6 @@ class ApplicationRouting extends Controller
         'api' => 'Api',
     );
 
-    public function __construct()
-    {
-        // this class is used in most Fork applications to bubble down the Kernel object
-        require_once __DIR__ . '/ApplicationInterface.php';
-    }
-
     /**
      * Get the possible routes
      *
@@ -52,13 +46,9 @@ class ApplicationRouting extends Controller
     /**
      * Runs the backend
      *
-     * @param Request $request
-     * @param string  $module
-     * @param string  $action
-     *
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function backendController(Request $request, $module, $action)
+    public function backendController()
     {
         defined('APPLICATION') || define('APPLICATION', 'Backend');
         defined('NAMED_APPLICATION') || define('NAMED_APPLICATION', 'private');
@@ -72,11 +62,9 @@ class ApplicationRouting extends Controller
     /**
      * Runs the backend ajax requests
      *
-     * @param Request $request
-     *
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function backendAjaxController(Request $request)
+    public function backendAjaxController()
     {
         defined('APPLICATION') || define('APPLICATION', 'Backend');
 
@@ -89,11 +77,9 @@ class ApplicationRouting extends Controller
     /**
      * Runs the cronjobs
      *
-     * @param Request $request
-     *
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function backendCronjobController(Request $request)
+    public function backendCronjobController()
     {
         defined('APPLICATION') || define('APPLICATION', 'Backend');
 
@@ -106,12 +92,9 @@ class ApplicationRouting extends Controller
     /**
      * Runs the frontend requests
      *
-     * @param Request $request
-     * @param string  $route
-     *
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function frontendController(Request $request, $route)
+    public function frontendController()
     {
         defined('APPLICATION') || define('APPLICATION', 'Frontend');
 
@@ -124,11 +107,9 @@ class ApplicationRouting extends Controller
     /**
      * Runs the frontend ajax requests
      *
-     * @param Request $request
-     *
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function frontendAjaxController(Request $request)
+    public function frontendAjaxController()
     {
         defined('APPLICATION') || define('APPLICATION', 'Frontend');
 
@@ -142,12 +123,10 @@ class ApplicationRouting extends Controller
      * Runs the api requests
      *
      * @param Request $request
-     * @param string  $version
-     * @param string  $client
      *
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function apiController(Request $request, $version, $client)
+    public function apiController(Request $request)
     {
         defined('APPLICATION') || define('APPLICATION', 'Api');
 

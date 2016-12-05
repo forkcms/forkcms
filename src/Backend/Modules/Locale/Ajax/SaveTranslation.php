@@ -12,7 +12,7 @@ namespace Backend\Modules\Locale\Ajax;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
@@ -51,7 +51,7 @@ class SaveTranslation extends BackendBaseAJAXAction
 
         // in case this is a 'act' type, there are special rules concerning possible values
         if ($type == 'act' && !isset($error)) {
-            if (urlencode($value) != CommonUri::getUrl($value)) {
+            if (rawurlencode($value) != CommonUri::getUrl($value)) {
                 $error = BL::err('InvalidActionValue', $this->getModule());
             }
         }
@@ -75,20 +75,14 @@ class SaveTranslation extends BackendBaseAJAXAction
 
                 // update in db
                 BackendLocaleModel::update($item);
-            }
-
-            // doesn't exist yet
-            else {
+            } else {
                 // insert in db
                 BackendLocaleModel::insert($item);
             }
 
             // output OK
             $this->output(self::OK);
-        }
-
-        // output the error
-        else {
+        } else {
             $this->output(self::ERROR, null, $error);
         }
     }

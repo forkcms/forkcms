@@ -12,7 +12,7 @@ namespace Frontend\Modules\Faq\Widgets;
 use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
@@ -33,7 +33,7 @@ class AskOwnQuestion extends FrontendBaseWidget
      *
      * @var string
      */
-    private $status = null;
+    private $status;
 
     /**
      * Execute the extra
@@ -124,7 +124,7 @@ class AskOwnQuestion extends FrontendBaseWidget
                     ->setTo(array($to['email'] => $to['name']))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/OwnQuestion.html.twig',
+                        '/Faq/Layout/Templates/Mails/OwnQuestion.html.twig',
                         $variables,
                         true
                     )

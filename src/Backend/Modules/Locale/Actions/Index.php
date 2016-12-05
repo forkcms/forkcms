@@ -9,11 +9,11 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
@@ -25,7 +25,29 @@ class Index extends BackendBaseActionIndex
     /**
      * @var BackendDataGridArray
      */
-    private $dgActions, $dgErrors, $dgLabels, $dgMessages;
+    private $dgActions;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgErrors;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgLabels;
+
+    /**
+     * @var BackendDataGridArray
+     */
+    private $dgMessages;
+
+    /**
+     * The form instance
+     *
+     * @var BackendForm
+     */
+    protected $frm;
 
     /**
      * Filter variables
@@ -183,7 +205,9 @@ class Index extends BackendBaseActionIndex
                     if (BackendAuthentication::isAllowedAction('Edit')) {
                         // add edit button
                         $dataGrid->addColumn(
-                            'edit', null, BL::lbl('Edit'),
+                            'edit',
+                            null,
+                            BL::lbl('Edit'),
                             BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
@@ -237,7 +261,7 @@ class Index extends BackendBaseActionIndex
         );
         $this->frm->addDropdown(
             'module',
-            BackendModel::getModulesForDropDown(false),
+            BackendModel::getModulesForDropDown(),
             $this->filter['module']
         );
         $this->frm->getField('module')->setDefaultElement('-');

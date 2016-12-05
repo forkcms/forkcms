@@ -9,7 +9,10 @@
   > tbody > tr:nth-of-type(even),
   thead > tr {
     background-color: $gray-lightest;
+  }
 
+  > tbody > tr:nth-of-type(even):hover,
+  > tbody > tr:nth-of-type(even):focus {
     &:hover,
     &:focus {
       background-color: $table-bg-hover;
@@ -46,8 +49,7 @@
         font-weight: 600;
       }
 
-      a:hover,
-      a:focus {
+      a {
         text-decoration: none;
       }
     }

@@ -10,7 +10,7 @@ namespace Backend\Modules\Blog\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Model as BackendModel;
@@ -26,21 +26,21 @@ class Index extends BackendBaseActionIndex
     /**
      * The category where is filtered on
      *
-     * @var    array
+     * @var array
      */
     private $category;
 
     /**
      * The id of the category where is filtered on
      *
-     * @var    int
+     * @var int
      */
     private $categoryId;
 
     /**
      * DataGrids
      *
-     * @var    BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgDrafts;
     private $dgPosts;

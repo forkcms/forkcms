@@ -28,11 +28,24 @@ class Location extends FrontendBaseWidget
     protected $settings = array();
 
     /**
+     * @var array
+     */
+    private $item;
+
+    /**
      * Execute the extra
      */
     public function execute()
     {
-        $this->addJS('https://maps.google.com/maps/api/js?sensor=true', true, false);
+        // define Google Maps API key
+        $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+
+        // check Google Maps API key, otherwise show error
+        if ($apikey == null) {
+            trigger_error('Please provide a Google Maps API key.');
+        }
+        $this->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, true, false);
+        $this->addJS(FrontendLocationModel::getPathToMapStyles(false), true);
 
         parent::execute();
 
@@ -55,6 +68,7 @@ class Location extends FrontendBaseWidget
             $this->settings['width'] = $settings['width_widget'];
             $this->settings['height'] = $settings['height_widget'];
             $this->settings['map_type'] = $settings['map_type_widget'];
+            $this->settings['map_style'] = isset($settings['map_style_widget']) ? $settings['map_style_widget'] : 'standard';
             $this->settings['zoom_level'] = $settings['zoom_level_widget'];
             $this->settings['center']['lat'] = $this->item['lat'];
             $this->settings['center']['lng'] = $this->item['lng'];

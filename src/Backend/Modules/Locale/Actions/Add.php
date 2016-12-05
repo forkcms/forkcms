@@ -13,7 +13,7 @@ use Common\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
@@ -60,16 +60,10 @@ class Add extends BackendBaseActionAdd
             if (!empty($translation)) {
                 // we are copying the given translation
                 $isCopy = true;
-            }
-
-            // this translation doesn't exist
-            else {
+            } else {
                 $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing' . $this->filterQuery);
             }
-        }
-
-        // not copying
-        else {
+        } else {
             $isCopy = false;
         }
 
@@ -111,7 +105,7 @@ class Add extends BackendBaseActionAdd
         $this->filter['value'] = $this->getParameter('value');
 
         // build query for filter
-        $this->filterQuery = '&' . http_build_query($this->filter);
+        $this->filterQuery = '&' . http_build_query($this->filter, null, '&', PHP_QUERY_RFC3986);
     }
 
     /**
@@ -133,12 +127,16 @@ class Add extends BackendBaseActionAdd
                     // first letter does not seem to be a capital one
                     if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
                         $txtName->setError(BL::err('InvalidName'));
-                    }
-
-                    // syntax is completely fine
-                    else {
+                    } else {
                         // this name already exists in this language
-                        if (BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue())) {
+                        if (BackendLocaleModel::existsByName(
+                            $txtName->getValue(),
+                            $this->frm->getField('type')->getValue(),
+                            $this->frm->getField('module')->getValue(),
+                            $this->frm->getField('language')->getValue(),
+                            $this->frm->getField('application')->getValue()
+                        )
+                        ) {
                             $txtName->setError(BL::err('AlreadyExists'));
                         }
                     }
@@ -149,7 +147,7 @@ class Add extends BackendBaseActionAdd
             if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if ($this->frm->getField('type')->getValue() == 'act') {
-                    if (urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
+                    if (rawurlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
                         $txtValue->addError(BL::err('InvalidValue'));
                     }
                 }
@@ -178,7 +176,7 @@ class Add extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=added&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
+                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=added&var=' . rawurlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
             }
         }
     }

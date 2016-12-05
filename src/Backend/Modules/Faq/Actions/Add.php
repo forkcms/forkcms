@@ -12,7 +12,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
@@ -72,7 +72,7 @@ class Add extends BackendBaseActionAdd
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables
@@ -129,7 +129,7 @@ class Add extends BackendBaseActionAdd
                 );
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=added&var=' .
-                    urlencode($item['question']) . '&highlight=' . $item['id']
+                    rawurlencode($item['question']) . '&highlight=' . $item['id']
                 );
             }
         }

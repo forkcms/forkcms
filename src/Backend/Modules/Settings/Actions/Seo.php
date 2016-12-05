@@ -11,7 +11,7 @@ namespace Backend\Modules\Settings\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 
 /**
  * This is the SEO-action, it will display a form to set SEO settings
@@ -21,7 +21,7 @@ class Seo extends BackendBaseActionIndex
     /**
      * The form instance
      *
-     * @var    BackendForm
+     * @var BackendForm
      */
     private $frm;
 

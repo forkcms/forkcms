@@ -11,12 +11,56 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
+use Backend\Core\Language\Language as BackendLanguage;
+use \SpoonDate;
 
 /**
  * This is our class with custom modifiers.
  */
 class TemplateModifiers extends BaseTwigModifiers
 {
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdate }}
+     *
+     * @param int $var The UNIX-timestamp to format.
+     *
+     * @return string
+     */
+    public static function formatDate($var)
+    {
+        // get setting
+        $format = Authentication::getUser()->getSetting('date_format');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+    }
+
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdatetime }}
+     *
+     * @param int $var The UNIX-timestamp to format.
+     *
+     * @return string
+     */
+    public static function formatDateTime($var)
+    {
+        // get setting
+        $format = Authentication::getUser()->getSetting('datetime_format');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+    }
+
     /**
      * Format a number as a float
      * syntax: {$var|formatfloat}
@@ -50,21 +94,24 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Format a number
-     * syntax: {$var|formatnumber}
+     *    syntax: {{ $string|formatnumber($decimals) }}
      *
-     * @param float $var The number to format.
+     * @param float $number The number to format.
+     * @param int $decimals The number of decimals
      *
      * @return string
      */
-    public static function formatNumber($var)
+    public static function formatNumber($number, $decimals = null)
     {
-        $var = (float) $var;
+        $number = (float) $number;
 
         // get setting
         $format = Authentication::getUser()->getSetting('number_format', 'dot_nothing');
 
         // get amount of decimals
-        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
+        if ($decimals === null) {
+            $decimals = (mb_strpos($number, '.') ? mb_strlen(mb_substr($number, mb_strpos($number, '.') + 1)) : 0);
+        }
 
         // get separators
         $separators = explode('_', $format);
@@ -77,7 +124,7 @@ class TemplateModifiers extends BaseTwigModifiers
         );
 
         // format the number
-        return number_format($var, $decimals, $decimalSeparator, $thousandsSeparator);
+        return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
     }
 
     /**
@@ -93,8 +140,12 @@ class TemplateModifiers extends BaseTwigModifiers
         // get setting
         $format = Authentication::getUser()->getSetting('time_format');
 
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
         // format the date
-        return \SpoonDate::getDate($format, (int) $var, Language::getInterfaceLanguage());
+        return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -110,8 +161,8 @@ class TemplateModifiers extends BaseTwigModifiers
      */
     public static function getURL($action = null, $module = null, $suffix = null, $language = null)
     {
-        if (!in_array($language, Language::getActiveLanguages())) {
-            $language = Language::getWorkingLanguage();
+        if (!in_array($language, BackendLanguage::getActiveLanguages())) {
+            $language = BackendLanguage::getWorkingLanguage();
         }
 
         $action = ($action !== null) ? (string) $action : null;
@@ -121,27 +172,8 @@ class TemplateModifiers extends BaseTwigModifiers
     }
 
     /**
-     * Translate a string.
-     *
-     * @param string $string The string that you want to apply this method on.
-     *
-     * @throw exception thrown when no 'dot' is found in string
-     *
-     * @return string The string, to translate.
-     */
-    public static function trans($string)
-    {
-        if (strpos($string, '.') === false) {
-            throw new Exception('translation needs a dot character in : '.$string);
-        }
-        list($action, $string) = explode('.', $string);
-
-        return Language::$action($string);
-    }
-
-    /**
      * Convert this string into a well formed label.
-     *  syntax: {$var|tolabel}.
+     *  syntax: {{ var|tolabel }}.
      *
      * @param string $value The value to convert to a label.
      *
@@ -149,21 +181,21 @@ class TemplateModifiers extends BaseTwigModifiers
      */
     public static function toLabel($value)
     {
-        return \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
+        return \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
     }
 
     /**
      * Truncate a string
      *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}
      *
-     * @param string $var         The string passed from the template.
+     * @param string $var      The string passed from the template.
      * @param int    $length      The maximum length of the truncated string.
      * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
      * @param bool   $closestWord Truncate on exact length or on closest word?
      *
      * @return string
      */
-    public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
+    public static function truncate($var, $length, $useHellip = true, $closestWord = false)
     {
         // init vars
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
@@ -181,7 +213,7 @@ class TemplateModifiers extends BaseTwigModifiers
             // more characters
             // hellip is seen as 1 char, so remove it from length
             if ($useHellip) {
-                $length = $length - 1;
+                --$length;
             }
 
             // truncate

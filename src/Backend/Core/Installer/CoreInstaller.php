@@ -40,7 +40,7 @@ class CoreInstaller extends ModuleInstaller
         }
 
         // import SQL
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add core modules
         $this->addModule('Core');
@@ -215,6 +215,7 @@ class CoreInstaller extends ModuleInstaller
             );
         }
 
+        // @TODO this should be removed when the api is kicked out
         // create new instance
         require_once PATH_LIBRARY . '/external/fork_api.php';
         $api = new \ForkAPI();

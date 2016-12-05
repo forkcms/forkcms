@@ -37,7 +37,24 @@ class BaseTwigModifiers
             default:
         }
 
-        return $currency.'&nbsp;'.number_format((float) $string, $decimals, ',', '&nbsp;');
+        return $currency.'&nbsp;'.static::formatNumber($string, $decimals);
+    }
+
+    /**
+     * Fallback for if our parent functions don't implement this method
+     *
+     * @param string $number
+     * @param int $decimals
+     *
+     * @return string
+     */
+    public static function formatNumber($number, $decimals = null)
+    {
+        if ($decimals === null) {
+            $decimals = 2;
+        }
+
+        return number_format((float) $number, $decimals, ',', '&nbsp;');
     }
 
     /**
@@ -82,12 +99,12 @@ class BaseTwigModifiers
         $min = (int) $min;
         $max = (int) $max;
 
-        return rand($min, $max);
+        return mt_rand($min, $max);
     }
 
     /**
      * Convert a multi line string into a string without newlines so it can be handles by JS
-     * 		syntax: {{ $string|stripnewlines }}.
+     *    syntax: {{ $string|stripnewlines }}.
      *
      * @param string $string The variable that should be processed.
      *
@@ -100,7 +117,7 @@ class BaseTwigModifiers
 
     /**
      * Transform the string to uppercase.
-     * 		syntax: {{ $string|uppercase }}.
+     *    syntax: {{ $string|uppercase }}.
      *
      * @param string $string The string that you want to apply this method on.
      *
@@ -113,7 +130,7 @@ class BaseTwigModifiers
 
     /**
      * Makes this string lowercase.
-     * 		syntax: {{ $string|lowercase }}.
+     *    syntax: {{ $string|lowercase }}.
      *
      *
      * @param string $string The string that you want to apply this method on.
@@ -127,7 +144,7 @@ class BaseTwigModifiers
 
     /**
      * snakeCase Converter.
-     * 		syntax: {{ $string|snakecase }}.
+     *    syntax: {{ $string|snakecase }}.
      *
      * @internal Untested, Needs testing
      *
@@ -142,7 +159,7 @@ class BaseTwigModifiers
 
     /**
      * CamelCase Converter.
-     * 		syntax: {{ $string|camelcase }}.
+     *    syntax: {{ $string|camelcase }}.
      *
      * @internal Untested, Needs testing
      *
@@ -165,7 +182,7 @@ class BaseTwigModifiers
 
     /**
      * Formats a language specific date.
-     * 		syntax: {{ $timestamp|spoondate($format, $language) }}.
+     *    syntax: {{ $timestamp|spoondate($format, $language) }}.
      *
      * @param mixed            $timestamp The timestamp or date that you want to apply the format to.
      * @param string[optional] $format    The optional format that you want to apply on the provided timestamp.
@@ -185,7 +202,7 @@ class BaseTwigModifiers
 
     /**
      * Shows a v or x to indicate the boolean state (Y|N, j|n, true|false).
-     * 		syntax: {{ showbool($status, $reverse) }}.
+     *    syntax: {{ showbool($status, $reverse) }}.
      *
      * @param string|bool $status
      * @param bool        $reverse show the opposite of the status
@@ -231,7 +248,7 @@ class BaseTwigModifiers
      *
      * @return string
      */
-    public static function truncate($string = null, $length, $useHellip = true, $closestWord = false)
+    public static function truncate($string, $length, $useHellip = true, $closestWord = false)
     {
         // remove special chars, all of them, also the ones that shouldn't be there.
         $string = \SpoonFilter::htmlentitiesDecode($string, null, ENT_QUOTES);
@@ -246,7 +263,7 @@ class BaseTwigModifiers
             // more characters
             // hellip is seen as 1 char, so remove it from length
             if ($useHellip) {
-                $length = $length - 1;
+                --$length;
             }
 
             // truncate

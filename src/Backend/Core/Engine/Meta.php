@@ -9,8 +9,10 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Doctrine\Entity\Meta as MetaEntity;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class represents a META-object
@@ -20,57 +22,59 @@ class Meta
     /**
      * The name of the field we should use to generate default-values
      *
-     * @var    string
+     * @var string
      */
     protected $baseFieldName;
 
     /**
      * The callback method
      *
-     * @var    array
+     * @var array
      */
     protected $callback = array();
 
     /**
      * Do we need meta custom
      *
-     * @var    bool
+     * @var bool
      */
     protected $custom;
 
     /**
      * The data, when a existing meta-record is loaded
      *
-     * @var    array
+     * @var array
      */
     protected $data;
 
     /**
      * The form instance
      *
-     * @var    Form
+     * @var Form
      */
     protected $frm;
 
     /**
      * The id, when an existing meta-record is loaded
      *
-     * @var    int
+     * @var int
      */
     protected $id;
 
     /**
      * The URL-instance
      *
-     * @var    Url
+     * @var Url
      */
     protected $URL;
 
     /**
-     * @param Form   $form          An instance of Form, the elements will be parsed in here.
-     * @param int    $metaId        The metaID to load.
+     * @param Form $form An instance of Form, the elements will be parsed in here.
+     * @param int $metaId The metaID to load.
      * @param string $baseFieldName The field where the URL should be based on.
-     * @param bool   $custom        Add/show custom-meta.
+     * @param bool $custom Add/show custom-meta.
+     *
+     * @throws Exception
      */
     public function __construct(Form $form, $metaId = null, $baseFieldName = 'title', $custom = false)
     {
@@ -109,40 +113,22 @@ class Meta
     /**
      * Generate an url, using the predefined callback.
      *
-     * @param string $URL The base-url to start from.
+     * @param string $url The base-url to start from.
      *
      * @throws Exception When the function does not exist
      *
      * @return string
+     *
+     * @deprecated use the generateUrl method on the meta repository
      */
-    public function generateURL($URL)
+    public function generateURL($url)
     {
-        $class = $this->callback['class'];
-        if (BackendModel::getContainer()->has($class)) {
-            $class = BackendModel::getContainer()->get($class);
-        }
-
-        // validate (check if the function exists)
-        if (!is_callable(array($class, $this->callback['method']))) {
-            throw new Exception('The callback-method doesn\'t exist.');
-        }
-
-        // when using ->getValue() in SpoonFormText fields the function is using htmlentities(),
-        // so we must decode it again first!
-        $URL = \SpoonFilter::htmlentitiesDecode($URL);
-
-        // build parameters for use in the callback
-        $parameters[] = CommonUri::getUrl($URL);
-
-        // add parameters set by user
-        if (!empty($this->callback['parameters'])) {
-            foreach ($this->callback['parameters'] as $parameter) {
-                $parameters[] = $parameter;
-            }
-        }
-
-        // get the real url
-        return call_user_func_array(array($class, $this->callback['method']), $parameters);
+        return  Model::get('fork.repository.meta')->generateURL(
+            $url,
+            $this->callback['class'],
+            $this->callback['method'],
+            $this->callback['parameters']
+        );
     }
 
     /**
@@ -319,14 +305,12 @@ class Meta
             if (!isset($_POST['seo_index'])) {
                 $_POST['seo_index'] = (isset($this->data['data']['seo_index'])) ?
                     $this->data['data']['seo_index'] :
-                    'none'
-                ;
+                    'none';
             }
             if (!isset($_POST['seo_follow'])) {
                 $_POST['seo_follow'] = (isset($this->data['data']['seo_follow'])) ?
                     $this->data['data']['seo_follow'] :
-                    'none'
-                ;
+                    'none';
             }
         }
 
@@ -363,7 +347,7 @@ class Meta
 
         // advanced SEO
         $indexValues = array(
-            array('value' => 'none', 'label' => Language::getLabel('None')),
+            array('value' => 'none', 'label' => BackendLanguage::getLabel('None')),
             array('value' => 'index', 'label' => 'index'),
             array('value' => 'noindex', 'label' => 'noindex'),
         );
@@ -373,7 +357,7 @@ class Meta
             (isset($this->data['data']['seo_index'])) ? $this->data['data']['seo_index'] : 'none'
         );
         $followValues = array(
-            array('value' => 'none', 'label' => Language::getLabel('None')),
+            array('value' => 'none', 'label' => BackendLanguage::getLabel('None')),
             array('value' => 'follow', 'label' => 'follow'),
             array('value' => 'nofollow', 'label' => 'nofollow'),
         );
@@ -435,50 +419,14 @@ class Meta
      * @throws Exception If no meta id was provided.
      *
      * @return int
+     *
+     * @deprecated just use the entity for doctrine
      */
     public function save($update = false)
     {
         $this->validate();
 
         $update = (bool) $update;
-
-        // get meta keywords
-        if ($this->frm->getField('meta_keywords_overwrite')->isChecked()) {
-            $keywords = $this->frm->getField('meta_keywords')->getValue();
-        } else {
-            $keywords = $this->frm->getField($this->baseFieldName)->getValue();
-        }
-
-        // get meta description
-        if ($this->frm->getField('meta_description_overwrite')->isChecked()) {
-            $description = $this->frm->getField('meta_description')->getValue();
-        } else {
-            $description = $this->frm->getField($this->baseFieldName)->getValue();
-        }
-
-        // get page title
-        if ($this->frm->getField('page_title_overwrite')->isChecked()) {
-            $title = $this->frm->getField('page_title')->getValue();
-        } else {
-            $title = $this->frm->getField($this->baseFieldName)->getValue();
-        }
-
-        // get URL
-        if ($this->frm->getField('url_overwrite')->isChecked()) {
-            $URL = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
-        } else {
-            $URL = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue());
-        }
-
-        // get the real URL
-        $URL = $this->generateURL($URL);
-
-        // get meta custom
-        if ($this->custom && $this->frm->getField('meta_custom')->isFilled()) {
-            $custom = $this->frm->getField('meta_custom')->getValue(true);
-        } else {
-            $custom = null;
-        }
 
         //serialize data for save
         if (!empty($this->data['data'])) {
@@ -504,9 +452,9 @@ class Meta
      * REMARK: this method has to be public and static
      * REMARK: if you specify arguments they will be appended
      *
-     * @param string $className  Name of the class to use.
+     * @param string $className Name of the class to use.
      * @param string $methodName Name of the method to use.
-     * @param array  $parameters Parameters to parse, they will be passed after ours.
+     * @param array $parameters Parameters to parse, they will be passed after ours.
      */
     public function setURLCallback($className, $methodName, $parameters = array())
     {
@@ -529,29 +477,29 @@ class Meta
     {
         // page title overwrite is checked
         if ($this->frm->getField('page_title_overwrite')->isChecked()) {
-            $this->frm->getField('page_title')->isFilled(Language::err('FieldIsRequired'));
+            $this->frm->getField('page_title')->isFilled(BackendLanguage::err('FieldIsRequired'));
         }
 
         // meta description overwrite is checked
         if ($this->frm->getField('meta_description_overwrite')->isChecked()) {
-            $this->frm->getField('meta_description')->isFilled(Language::err('FieldIsRequired'));
+            $this->frm->getField('meta_description')->isFilled(BackendLanguage::err('FieldIsRequired'));
         }
 
         // meta keywords overwrite is checked
         if ($this->frm->getField('meta_keywords_overwrite')->isChecked()) {
-            $this->frm->getField('meta_keywords')->isFilled(Language::err('FieldIsRequired'));
+            $this->frm->getField('meta_keywords')->isFilled(BackendLanguage::err('FieldIsRequired'));
         }
 
         // URL overwrite is checked
         if ($this->frm->getField('url_overwrite')->isChecked()) {
-            $this->frm->getField('url')->isFilled(Language::err('FieldIsRequired'));
-            $URL = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
-            $generatedUrl = $this->generateURL($URL);
+            $this->frm->getField('url')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $url = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
+            $generatedUrl = $this->generateURL($url);
 
             // check if urls are different
-            if (CommonUri::getUrl($URL) != $generatedUrl) {
+            if (CommonUri::getUrl($url) != $generatedUrl) {
                 $this->frm->getField('url')->addError(
-                    Language::err('URLAlreadyExists')
+                    BackendLanguage::err('URLAlreadyExists')
                 );
             }
         }
@@ -577,13 +525,13 @@ class Meta
             );
 
             // get URL
-            $URL = $this->frm->getField('url_overwrite')->getActualValue(
+            $url = $this->frm->getField('url_overwrite')->getActualValue(
                 \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue()),
                 \SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue())
             );
 
             // get the real URL
-            $URL = $this->generateURL($URL);
+            $url = $this->generateURL($url);
 
             // get meta custom
             if ($this->custom && $this->frm->getField('meta_custom')->isFilled()) {
@@ -599,7 +547,7 @@ class Meta
             $this->data['description_overwrite'] = $this->frm->getField('meta_description_overwrite')->getActualValue();
             $this->data['title'] = $title;
             $this->data['title_overwrite'] = $this->frm->getField('page_title_overwrite')->getActualValue();
-            $this->data['url'] = $URL;
+            $this->data['url'] = $url;
             $this->data['url_overwrite'] = $this->frm->getField('url_overwrite')->getActualValue();
             $this->data['custom'] = $custom;
             if ($this->frm->getField('seo_index')->getValue() == 'none') {
@@ -621,5 +569,15 @@ class Meta
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return MetaEntity
+     */
+    public function getMetaEntity()
+    {
+        $this->validate();
+
+        return MetaEntity::fromBackendMeta($this);
     }
 }

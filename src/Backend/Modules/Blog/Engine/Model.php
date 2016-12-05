@@ -12,7 +12,7 @@ namespace Backend\Modules\Blog\Engine;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
@@ -194,9 +194,6 @@ class Model
         foreach ($ids as $id) {
             BackendTagsModel::saveTags($id, '', 'Blog');
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -221,9 +218,6 @@ class Model
 
             // update category for the posts that might be in this category
             $db->update('blog_posts', array('category_id' => null), 'category_id = ?', array($id));
-
-            // invalidate the cache for blog
-            BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
         }
     }
 
@@ -281,9 +275,6 @@ class Model
         if (!empty($itemIds)) {
             self::reCalculateCommentCount($itemIds);
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -308,9 +299,6 @@ class Model
         if (!empty($itemIds)) {
             self::reCalculateCommentCount($itemIds);
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -643,14 +631,14 @@ class Model
     /**
      * Retrieve the unique URL for an item
      *
-     * @param string $URL The URL to base on.
+     * @param string $url The URL to base on.
      * @param int    $id  The id of the item to ignore.
      *
      * @return string
      */
-    public static function getURL($URL, $id = null)
+    public static function getURL($url, $id = null)
     {
-        $URL = (string) $URL;
+        $url = (string) $url;
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -664,12 +652,12 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL)
+                array(BL::getWorkingLanguage(), $url)
             )
             ) {
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
-                return self::getURL($URL);
+                return self::getURL($url);
             }
         } else {
             // current category should be excluded
@@ -679,30 +667,30 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL, $id)
+                array(BL::getWorkingLanguage(), $url, $id)
             )
             ) {
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
-                return self::getURL($URL, $id);
+                return self::getURL($url, $id);
             }
         }
 
-        return $URL;
+        return $url;
     }
 
     /**
      * Retrieve the unique URL for a category
      *
-     * @param string $URL The string whereon the URL will be based.
+     * @param string $url The string whereon the URL will be based.
      * @param int    $id  The id of the category to ignore.
      *
      * @return string
      */
-    public static function getURLForCategory($URL, $id = null)
+    public static function getURLForCategory($url, $id = null)
     {
         // redefine URL
-        $URL = (string) $URL;
+        $url = (string) $url;
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -716,12 +704,12 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL)
+                array(BL::getWorkingLanguage(), $url)
             )
             ) {
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($URL);
+                return self::getURLForCategory($url);
             }
         } else {
             // current category should be excluded
@@ -731,16 +719,16 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL, $id)
+                array(BL::getWorkingLanguage(), $url, $id)
             )
             ) {
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($URL, $id);
+                return self::getURLForCategory($url, $id);
             }
         }
 
-        return $URL;
+        return $url;
     }
 
     /**
@@ -754,9 +742,6 @@ class Model
     {
         // insert and return the new revision id
         $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         // return the new revision id
         return $item['revision_id'];
@@ -781,6 +766,7 @@ class Model
      * @param array $comments The comments attached to this post.
      *
      * @return int
+     * @throws Exception
      */
     public static function insertCompletePost($item, $meta = array(), $tags = array(), $comments = array())
     {
@@ -926,9 +912,6 @@ class Model
 
         // create category
         $item['id'] = $db->insert('blog_categories', $item);
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         // return the id
         return $item['id'];
@@ -1118,9 +1101,6 @@ class Model
         // insert new version
         $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
 
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
-
         // return the new revision id
         return $item['revision_id'];
     }
@@ -1149,9 +1129,6 @@ class Model
             // update the meta
             $db->update('meta', $meta, 'id = ?', array((int) $category['meta_id']));
         }
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         return $updated;
     }
@@ -1207,9 +1184,6 @@ class Model
             // get the ids
             $itemIds = array_keys($items);
 
-            // get the unique languages
-            $languages = array_unique(array_values($items));
-
             // update records
             BackendModel::getContainer()->get('database')->execute(
                 'UPDATE blog_comments
@@ -1220,17 +1194,15 @@ class Model
 
             // recalculate the comment count
             self::reCalculateCommentCount($itemIds);
-
-            // invalidate the cache for blog
-            foreach ($languages as $language) {
-                BackendModel::invalidateFrontendCache('Blog', $language);
-            }
         }
     }
 
     /**
      * Update a page revision without generating a new revision.
      * Needed to add an image to a page.
+     *
+     * @param $revision_id
+     * @param $item
      */
     public static function updateRevision($revision_id, $item)
     {

@@ -14,7 +14,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Symfony\Component\Intl\Intl as Intl;
@@ -27,7 +27,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Groups data grid.
      *
-     * @var    BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgGroups;
 
@@ -116,6 +116,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('email', $this->profile['email']);
         $this->frm->addCheckbox('new_password');
         $this->frm->addPassword('password');
+        $this->frm->addPassword('password_repeat');
         $this->frm->addText('display_name', $this->profile['display_name']);
         $this->frm->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
         $this->frm->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'));
@@ -224,6 +225,7 @@ class Edit extends BackendBaseActionEdit
             $txtDisplayName = $this->frm->getField('display_name');
             $chkNewPassword = $this->frm->getField('new_password');
             $txtPassword = $this->frm->getField('password');
+            $txtPasswordRepeat = $this->frm->getField('password_repeat');
             $txtFirstName = $this->frm->getField('first_name');
             $txtLastName = $this->frm->getField('last_name');
             $txtCity = $this->frm->getField('city');
@@ -263,6 +265,13 @@ class Edit extends BackendBaseActionEdit
             // because then if the password field is empty, it will generate a new password
             if ($chkNewPassword->isChecked() && !$this->notifyProfile) {
                 $txtPassword->isFilled(BL::err('FieldIsRequired'));
+                $txtPasswordRepeat->isFilled(BL::err('FieldIsRequired'));
+
+                // both password fields are filled in and should match
+                if ($txtPassword->isFilled() && $txtPasswordRepeat->isFilled()
+                    && ($txtPassword->getValue() != $txtPasswordRepeat->getValue())) {
+                    $txtPasswordRepeat->addError(BL::err('PasswordRepeatIsRequired'));
+                }
             }
 
             // one of the bday fields are filled in
@@ -333,9 +342,9 @@ class Edit extends BackendBaseActionEdit
                     $values['display_name'] : $this->profile['display_name'];
 
                 $redirectUrl = BackendModel::createURLForAction('Index') .
-                    '&var=' . urlencode($values['email']) .
+                    '&var=' . rawurlencode($values['email']) .
                     '&highlight=row-' . $this->id .
-                    '&var=' . urlencode($displayName) .
+                    '&var=' . rawurlencode($displayName) .
                     '&report='
                 ;
 

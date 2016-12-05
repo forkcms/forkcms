@@ -19,7 +19,7 @@ class AjaxAction extends Base\Object
     /**
      * The config file
      *
-     * @var    Base\Config
+     * @var Base\Config
      */
     private $config;
 
@@ -74,8 +74,5 @@ class AjaxAction extends Base\Object
 
         // create config-object, the constructor will do some magic
         $this->config = new $configClass($this->getKernel(), $this->getModule());
-
-        // set action
-        $action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'Index';
     }
 }

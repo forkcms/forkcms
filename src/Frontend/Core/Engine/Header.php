@@ -51,7 +51,7 @@ class Header extends FrontendBaseObject
     /**
      * The added css-files
      *
-     * @var    array
+     * @var array
      */
     private $cssFiles = array();
 
@@ -65,35 +65,35 @@ class Header extends FrontendBaseObject
     /**
      * The added js-files
      *
-     * @var    array
+     * @var array
      */
     private $jsFiles = array();
 
     /**
      * The links
      *
-     * @var    array
+     * @var array
      */
     private $links = array();
 
     /**
      * Meta data
      *
-     * @var    array
+     * @var array
      */
     private $meta = array();
 
     /**
      * The custom meta data
      *
-     * @var    string
+     * @var string
      */
     private $metaCustom = '';
 
     /**
      * Page title
      *
-     * @var    string
+     * @var string
      */
     private $pageTitle;
 
@@ -132,7 +132,11 @@ class Header extends FrontendBaseObject
         $file = (string) $file;
         $minify = (bool) $minify;
         $addTimestamp = (bool) $addTimestamp;
-        $file = Theme::getPath($file);
+
+        // get file path
+        if (mb_substr($file, 0, 4) != 'http') {
+            $file = Theme::getPath($file);
+        }
 
         // no minifying when debugging
         if ($this->getContainer()->getParameter('kernel.debug')) {
@@ -160,6 +164,7 @@ class Header extends FrontendBaseObject
      * @param string $file         The path to the javascript-file that should be loaded.
      * @param bool   $minify       Should the file be minified?
      * @param bool   $addTimestamp May we add a timestamp for caching purposes?
+     * @param int    $priorityGroup
      */
     public function addJS($file, $minify = true, $addTimestamp = null, $priorityGroup = self::PRIORITY_GROUP_DEFAULT)
     {
@@ -251,8 +256,9 @@ class Header extends FrontendBaseObject
      * @param array $attributes The attributes to parse.
      * @param bool  $overwrite  Should we overwrite the current value?
      * @param mixed $uniqueKeys Which keys can we use to decide if an item is unique.
+     * @param mixed $additionalKey This additional key helps you to create your own custom unique keys if required.
      */
-    public function addMetaData(array $attributes, $overwrite = false, $uniqueKeys = null)
+    public function addMetaData(array $attributes, $overwrite = false, $uniqueKeys = null, $additionalKey = null)
     {
         $overwrite = (bool) $overwrite;
         $uniqueKeys = (array) $uniqueKeys;
@@ -272,6 +278,12 @@ class Header extends FrontendBaseObject
             if (isset($attributes[$key])) {
                 $uniqueKey .= $attributes[$key] . '|';
             }
+        }
+
+        // Sometimes we want to add an extra key, because the uniqueKeys are not enough,
+        // f.e.: when using multiple og:image:width meta elements
+        if ($additionalKey !== null) {
+            $uniqueKey .= $additionalKey;
         }
 
         // is the metadata already available?
@@ -330,20 +342,27 @@ class Header extends FrontendBaseObject
         $this->addMetaData(array('property' => 'og:' . $key, 'content' => $value), $overwrite, 'property');
     }
 
+
     /**
      * Add Open Graph image
      *
      * @param string $image     The path to the image.
      * @param bool   $overwrite Should we overwrite the previous value?
+     * @param integer $width    The width of the image.
+     * @param integer $height   The height of the image.
      */
-    public function addOpenGraphImage($image, $overwrite = false)
+    public function addOpenGraphImage($image, $overwrite = false, $width = 0, $height = 0)
     {
+        // recast width and height
+        $width = (int) $width;
+        $height = (int) $height;
+
         // remove site url from path
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (mb_substr($image, 0, 7) != SITE_PROTOCOL . '://') {
-            if (!is_file(PATH_WWW . $image)) {
+        if (mb_substr($image, 0, 7) != 'http://' && mb_substr($image, 0, 8) != 'https://') {
+            if (!is_file(PATH_WWW . strtok($image, '?'))) {
                 return;
             }
             $image = SITE_URL . $image;
@@ -360,6 +379,24 @@ class Header extends FrontendBaseObject
                 array('property' => 'og:image:secure_url', 'content' => $image),
                 $overwrite,
                 array('property', 'content')
+            );
+        }
+
+        if ($width !== 0) {
+            $this->addMetaData(
+                array('property' => 'og:image:width', 'content' => $width),
+                $overwrite,
+                array('property', 'content'),
+                $image
+            );
+        }
+
+        if ($height !== 0) {
+            $this->addMetaData(
+                array('property' => 'og:image:height', 'content' => $height),
+                $overwrite,
+                array('property', 'content'),
+                $image
             );
         }
     }
@@ -532,11 +569,11 @@ class Header extends FrontendBaseObject
         $finalPath = FRONTEND_CACHE_PATH . '/MinifiedCss/' . $fileName;
 
         // check that file does not yet exist or has been updated already
-        $fs = new Filesystem();
-        if (!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
             // create directory if it does not exist
-            if (!$fs->exists(dirname($finalPath))) {
-                $fs->mkdir(dirname($finalPath));
+            if (!$filesystem->exists(dirname($finalPath))) {
+                $filesystem->mkdir(dirname($finalPath));
             }
 
             // minify the file
@@ -561,11 +598,11 @@ class Header extends FrontendBaseObject
         $finalPath = FRONTEND_CACHE_PATH . '/MinifiedJs/' . $fileName;
 
         // check that file does not yet exist or has been updated already
-        $fs = new Filesystem();
-        if (!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
             // create directory if it does not exist
-            if (!$fs->exists(dirname($finalPath))) {
-                $fs->mkdir(dirname($finalPath));
+            if (!$filesystem->exists(dirname($finalPath))) {
+                $filesystem->mkdir(dirname($finalPath));
             }
 
             // minify the file
@@ -597,10 +634,10 @@ class Header extends FrontendBaseObject
         $this->parseJS();
         $this->parseCustomHeaderHTMLAndGoogleAnalytics();
 
-        $this->tpl->assign('pageTitle', (string) $this->getPageTitle());
-        $this->tpl->assign(
+        $this->tpl->addGlobal('pageTitle', (string) $this->getPageTitle());
+        $this->tpl->addGlobal(
             'siteTitle',
-            (string) $this->get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            (string) $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE)
         );
     }
 
@@ -617,15 +654,15 @@ class Header extends FrontendBaseObject
             foreach ($existingCSSFiles as $file) {
                 if ($file['add_timestamp'] !== false) {
                     $file['file'] .= (mb_strpos(
-                                          $file['file'],
-                                          '?'
-                                      ) !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                        $file['file'],
+                        '?'
+                    ) !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
                 }
                 $cssFiles[] = $file;
             }
         }
 
-        $this->tpl->assign('cssFiles', $cssFiles);
+        $this->tpl->addGlobal('cssFiles', $cssFiles);
     }
 
     /**
@@ -639,8 +676,7 @@ class Header extends FrontendBaseObject
         $webPropertyId = $this->get('fork.settings')->get('Analytics', 'web_property_id', null);
 
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
-        if (
-            $webPropertyId != '' &&
+        if ($webPropertyId != '' &&
             mb_strpos($siteHTMLHeader, $webPropertyId) === false &&
             mb_strpos($siteHTMLFooter, $webPropertyId) === false
         ) {
@@ -669,14 +705,14 @@ class Header extends FrontendBaseObject
         }
 
         // store language
-        $this->jsData['FRONTEND_LANGUAGE'] = FRONTEND_LANGUAGE;
+        $this->jsData['LANGUAGE'] = LANGUAGE;
 
         // encode and add
         $jsData = json_encode($this->jsData);
         $siteHTMLHeader .= "\n" . '<script>var jsData = ' . $jsData . '</script>';
 
         // assign site wide html
-        $this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));
+        $this->tpl->addGlobal('siteHTMLHeader', trim($siteHTMLHeader));
     }
 
     /**
@@ -717,7 +753,7 @@ class Header extends FrontendBaseObject
         // should we add extra open-graph data?
         if ($parseFacebook) {
             // build correct locale
-            switch (FRONTEND_LANGUAGE) {
+            switch (LANGUAGE) {
                 case 'en':
                     $locale = 'en_US';
                     break;
@@ -747,7 +783,7 @@ class Header extends FrontendBaseObject
                     break;
 
                 default:
-                    $locale = mb_strtolower(FRONTEND_LANGUAGE) . '_' . mb_strtoupper(FRONTEND_LANGUAGE);
+                    $locale = mb_strtolower(LANGUAGE) . '_' . mb_strtoupper(LANGUAGE);
             }
 
             $this->addOpenGraphData('locale', $locale);
@@ -784,9 +820,9 @@ class Header extends FrontendBaseObject
                 } else {
                     // add last modified time
                     $modifiedTime = (mb_strpos(
-                                         $file['file'],
-                                         '?'
-                                     ) !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                        $file['file'],
+                        '?'
+                    ) !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
                     $file = array('file' => $file['file'] . $modifiedTime);
                 }
 
@@ -800,7 +836,7 @@ class Header extends FrontendBaseObject
             }
         }
 
-        $this->tpl->assign('jsFiles', $jsFiles);
+        $this->tpl->addGlobal('jsFiles', $jsFiles);
     }
 
     /**
@@ -828,8 +864,8 @@ class Header extends FrontendBaseObject
             $link .= '>' . "\n";
         }
 
-        $this->tpl->assign('meta', $meta . "\n" . $link);
-        $this->tpl->assign('metaCustom', $this->getMetaCustom());
+        $this->tpl->addGlobal('meta', $meta . "\n" . $link);
+        $this->tpl->addGlobal('metaCustom', $this->getMetaCustom());
     }
 
     /**
@@ -880,7 +916,7 @@ class Header extends FrontendBaseObject
 
                 // add GET-params
                 if (!empty($addToUrl)) {
-                    $url .= '?' . http_build_query($addToUrl);
+                    $url .= '?' . http_build_query($addToUrl, null, '&', PHP_QUERY_RFC3986);
                 }
             }
         }
@@ -949,7 +985,7 @@ class Header extends FrontendBaseObject
             if (empty($value)) {
                 $this->pageTitle = $this->get('fork.settings')->get(
                     'Core',
-                    'site_title_' . FRONTEND_LANGUAGE,
+                    'site_title_' . LANGUAGE,
                     SITE_DEFAULT_TITLE
                 );
             } else {
@@ -958,7 +994,7 @@ class Header extends FrontendBaseObject
                     $this->pageTitle = $value . ' -  ' .
                                        $this->get('fork.settings')->get(
                                            'Core',
-                                           'site_title_' . FRONTEND_LANGUAGE,
+                                           'site_title_' . LANGUAGE,
                                            SITE_DEFAULT_TITLE
                                        );
                 } else {
@@ -1000,7 +1036,7 @@ class Header extends FrontendBaseObject
 
         // add Twitter Card to the header
         foreach ($data as $d) {
-            static::addMetaData($d);
+            $this->addMetaData($d);
         }
     }
 }

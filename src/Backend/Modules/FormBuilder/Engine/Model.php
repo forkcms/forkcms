@@ -9,9 +9,10 @@ namespace Backend\Modules\FormBuilder\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Engine\Language as FL;
+use Common\ModuleExtraType;
+use Frontend\Core\Language\Language as FL;
 
 /**
  * In this file we store all generic functions that we will be using in the form_builder module
@@ -86,19 +87,26 @@ class Model
         do {
             ++$id;
             $identifier = 'form' . $id;
-        }
+        } while (self::identifierExist($identifier));
 
-            // @todo refactor me...
-            // keep trying till it's unique
-        while ((int) BackendModel::getContainer()->get('database')->getVar(
+        return $identifier;
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return bool
+     */
+    private static function identifierExist($identifier)
+    {
+        return (int) BackendModel::getContainer()->get('database')
+            ->getVar(
                 'SELECT 1
                  FROM forms AS i
                  WHERE i.identifier = ?
                  LIMIT 1',
                 $identifier
-            ) > 0);
-
-        return $identifier;
+            ) > 0;
     }
 
     /**
@@ -299,7 +307,7 @@ class Model
     public static function get($id)
     {
         $return = (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT f.*	FROM forms AS f WHERE f.id = ?',
+            'SELECT f.* FROM forms AS f WHERE f.id = ?',
             (int) $id
         );
 
@@ -461,7 +469,7 @@ class Model
     public static function getLocale($name, $type = 'label', $application = 'Backend')
     {
         $name = \SpoonFilter::toCamelCase($name);
-        $class = \SpoonFilter::ucfirst($application) . '\Core\Engine\Language';
+        $class = \SpoonFilter::ucfirst($application) . '\Core\Language\Language';
         $function = 'get' . \SpoonFilter::ucfirst($type);
 
         // execute and return value
@@ -499,7 +507,7 @@ class Model
 
         // insert extra
         BackendModel::insertExtra(
-            'widget',
+            ModuleExtraType::widget(),
             'FormBuilder',
             'Form',
             'FormBuilder',
@@ -558,7 +566,12 @@ class Model
 
         // build array
         $extra['data'] = serialize(
-            array('language' => BL::getWorkingLanguage(), 'extra_label' => $values['name'], 'id' => $id)
+            array(
+                'language' => BL::getWorkingLanguage(),
+                'extra_label' => $values['name'],
+                'id' => $id,
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $id,
+            )
         );
 
         // update extra

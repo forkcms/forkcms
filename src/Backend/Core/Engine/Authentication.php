@@ -20,21 +20,21 @@ class Authentication
     /**
      * All allowed modules
      *
-     * @var    array
+     * @var array
      */
     private static $allowedActions = array();
 
     /**
      * All allowed modules
      *
-     * @var    array
+     * @var array
      */
     private static $allowedModules = array();
 
     /**
      * A user object for the current authenticated user
      *
-     * @var    User
+     * @var User
      */
     private static $user;
 
@@ -179,6 +179,9 @@ class Authentication
         return self::$user;
     }
 
+    /**
+     * @return array
+     */
     public static function getAllowedActions()
     {
         // we will cache everything
@@ -226,11 +229,10 @@ class Authentication
     {
         $alwaysAllowed = self::getAlwaysAllowed();
 
-        // grab the URL from the reference
-        $URL = BackendModel::get('url');
-
-        $action = ($action !== null) ? (string) $action : $URL->getAction();
-        $module = \SpoonFilter::toCamelCase(($module !== null) ? (string) $module : $URL->getModule());
+        // The url should only be taken from the container if the action and or module isn't set
+        // This way we can use the command also in the a console command
+        $action = ($action !== null) ? (string) $action : BackendModel::get('url')->getAction();
+        $module = \SpoonFilter::toCamelCase(($module !== null) ? (string) $module : BackendModel::get('url')->getModule());
 
         // is this action an action that doesn't require authentication?
         if (isset($alwaysAllowed[$module][$action])) {
@@ -253,9 +255,9 @@ class Authentication
         $allowedActions = self::getAllowedActions();
 
         // do we know a level for this action
-        if (isset(self::$allowedActions[$module][$action])) {
+        if (isset($allowedActions[$module][$action])) {
             // is the level greater than zero? aka: do we have access?
-            if ((int) self::$allowedActions[$module][$action] > 0) {
+            if ((int) $allowedActions[$module][$action] > 0) {
                 return true;
             }
         }
@@ -264,6 +266,9 @@ class Authentication
         return false;
     }
 
+    /**
+     * @return array
+     */
     private static function getAlwaysAllowed()
     {
         // always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
@@ -439,6 +444,7 @@ class Authentication
 
             // update/instantiate the value for the logged_in container.
             BackendModel::getContainer()->set('logged_in', true);
+            self::$user = new User($userId);
 
             // return result
             return true;

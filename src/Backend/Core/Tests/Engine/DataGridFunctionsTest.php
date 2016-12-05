@@ -7,7 +7,7 @@ use PHPUnit_Framework_TestCase;
 
 class DataGridFunctionsTest extends PHPUnit_Framework_TestCase
 {
-    public function test_showImage()
+    public function testShowImage()
     {
         $path = '/src/Frontend/Files/Media/Backend/01';
         $imageName = 'image-01.jpg';
@@ -16,7 +16,7 @@ class DataGridFunctionsTest extends PHPUnit_Framework_TestCase
         $width = 100;
         $height = 100;
 
-        $this->assertEquals(
+        self::assertEquals(
             '<a href="' . $url . '" title="' . $title . '"><img src="' . $path . '/' . $imageName . '" alt="' . $title . '" width="' . $width . '" height="' . $height . '" /></a>',
             DataGridFunctions::showImage(
                 $path,
@@ -28,7 +28,7 @@ class DataGridFunctionsTest extends PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             '<img src="' . $path . '/' . $imageName . '" alt="' . $title . '" />',
             DataGridFunctions::showImage(
                 $path,

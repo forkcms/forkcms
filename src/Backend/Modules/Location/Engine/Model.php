@@ -9,8 +9,9 @@ namespace Backend\Modules\Location\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Common\ModuleExtraType;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**
@@ -138,10 +139,8 @@ class Model
         // define address
         $address = implode(' ', $item);
 
-        // define url
-        $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=false';
-
-        // define result
+        // fetch the geo coordinates
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . rawurlencode($address);
         $geocodes = json_decode(file_get_contents($url), true);
 
         // return coordinates latitude/longitude
@@ -211,7 +210,7 @@ class Model
 
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
-            'widget',
+            ModuleExtraType::widget(),
             'Location'
         );
 

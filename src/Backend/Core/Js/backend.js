@@ -12,15 +12,13 @@ var jsBackend =
 
     // init, something like a constructor
     init: function () {
-        // variables
-        var $body = $('body');
-
         // get url and split into chunks
         var chunks = document.location.pathname.split('/');
 
         // set some properties
         jsBackend.debug = jsBackend.data.get('debug');
         jsBackend.current.language = chunks[2];
+        if (!navigator.cookieEnabled) $('#noCookies').addClass('active').css('display', 'block');
         if (typeof chunks[3] == 'undefined') jsBackend.current.module = null;
         else jsBackend.current.module = utils.string.ucfirst(utils.string.camelCase(chunks[3]));
         if (typeof chunks[4] == 'undefined') jsBackend.current.action = null;
@@ -32,6 +30,7 @@ var jsBackend =
 
         // init stuff
         jsBackend.initAjax();
+        jsBackend.addModalEvents();
         jsBackend.balloons.init();
         jsBackend.controls.init();
         jsBackend.effects.init();
@@ -47,6 +46,21 @@ var jsBackend =
 
         // do not move, should be run as the last item.
         if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning();
+    },
+
+    addModalEvents: function () {
+        var $modals = $('[role=dialog].modal');
+
+        if ($modals.length === 0) {
+            return;
+        }
+
+        $modals.on('shown.bs.modal', function () {
+            $('#ajaxSpinner').addClass('light');
+        });
+        $modals.on('hide.bs.modal', function () {
+            $('#ajaxSpinner').removeClass('light');
+        });
     },
 
     // init ajax
@@ -341,10 +355,10 @@ jsBackend.ckeditor =
         entities_latin: false,
 
         // load some extra plugins
-        extraPlugins: 'stylesheetparser,MediaEmbed',
+        extraPlugins: 'stylesheetparser,mediaembed',
 
         // remove useless plugins
-        removePlugins: 'a11yhelp,bidi,about,elementspath,find,flash,forms,newpage,pagebreak,preview,print,scayt',
+        removePlugins: 'a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools',
 
         // templates
         templates_files: [],
@@ -352,7 +366,6 @@ jsBackend.ckeditor =
 
         // custom vars
         editorType: 'default',
-        showClickToEdit: false,
         toggleToolbar: false
     },
 
@@ -380,6 +393,8 @@ jsBackend.ckeditor =
             // load the editors
             jsBackend.ckeditor.load();
         }
+
+        jsBackend.ckeditor.fallBackBootstrapModals();
     },
 
     destroy: function () {
@@ -400,7 +415,6 @@ jsBackend.ckeditor =
         // specific config for the newsletter
         var newsletterConfig = $.extend({}, jsBackend.ckeditor.defaultConfig,
             {
-                showClickToEdit: false,
                 toolbar: 'Newsletter',
                 toolbarStartupExpanded: true,
                 toggleToolbar: false
@@ -412,14 +426,6 @@ jsBackend.ckeditor =
     },
 
     callback: function (element) {
-        if ($(element).ckeditorGet().config.showClickToEdit) {
-            // add the click to edit div
-            if (!$(element).prev().hasClass('clickToEdit')) $(element).before('<div class="clickToEdit"><span>' + jsBackend.locale.msg('ClickToEdit') + '</span></div>');
-        }
-
-        // add the optionsRTE-class if it isn't present
-        if (!$(element).parent('div, p').hasClass('optionsRTE')) $(element).parent('div, p').addClass('optionsRTE');
-
         // add the CKFinder
         CKFinder.setupCKEditor(null,
             {
@@ -513,11 +519,11 @@ jsBackend.ckeditor =
                             CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
                             CKEDITOR.dialog.getCurrent().getContentElement('info', 'linkType').setValue('url');
                             CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
-						}
-					}
-				]
-			});
-		}
+                        }
+                    }
+                ]
+            });
+        }
 
         // specific stuff for the table-dialog
         if (evt.data.name == 'table') {
@@ -538,61 +544,24 @@ jsBackend.ckeditor =
         }
     },
 
-    onBlur: function (evt) {
-        // current element
-        var $currentElement = $(document.activeElement);
-        var outsideEditor = true;
-
-        // check if the current active elements is an element related to an editor
-        if (typeof $currentElement.attr('id') != 'undefined' && $currentElement.attr('id').indexOf('cke_') >= 0) outsideEditor = false;
-        else if (typeof $currentElement.attr('class') != 'undefined' && $currentElement.attr('class').indexOf('cke_') >= 0) outsideEditor = false;
-
-        // focus outside the editor?
-        if (outsideEditor) {
-            if (evt.editor.config.showClickToEdit) {
-                // show the click to edit
-                $('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
-            }
-
-            if (evt.editor.config.toggleToolbar) {
-                // hide the toolbar
-                $toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
-                $collapser = $('#cke_top_' + evt.editor.name + ' .cke_toolbox_collapser');
-                if ($toolbox.is(':visible')) {
-                    $toolbox.hide();
-                    $collapser.addClass('cke_toolbox_collapser_min');
-                }
-            }
-        }
-
-        // check the content
-        jsBackend.ckeditor.checkContent(evt);
-    },
-
-    onFocus: function (evt) {
-        if (evt.editor.config.showClickToEdit) {
-            // hide the click to edit
-            $('#cke_' + evt.editor.name).siblings('div.clickToEdit').hide();
-        }
-
-        if (evt.editor.config.toggleToolbar) {
-            // show the toolbar
-            $toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
-            $collapser = $('#cke_top_' + evt.editor.name + ' .cke_toolbox_collapser');
-            if ($toolbox.is(':hidden')) {
-                $toolbox.show();
-                $collapser.removeClass('cke_toolbox_collapser_min');
-            }
-        }
-    },
-
     onReady: function (evt) {
         // bind on blur and focus
-        evt.editor.on('blur', jsBackend.ckeditor.onBlur);
-        evt.editor.on('focus', jsBackend.ckeditor.onFocus);
+        evt.editor.on('blur', jsBackend.ckeditor.checkContent);
 
         // force the content check
         jsBackend.ckeditor.checkContent({editor: evt.editor, forced: true});
+    },
+
+    fallBackBootstrapModals: function() {
+        $.fn.modal.Constructor.prototype.enforceFocus = function() {
+            var modal_this;
+            modal_this = this;
+            $(document).on('focusin.modal', function(e) {
+                if (modal_this.$element[0] !== e.target && !modal_this.$element.has(e.target).length && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select') && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')) {
+                    modal_this.$element.focus();
+                }
+            });
+        };
     }
 };
 
@@ -1237,11 +1206,51 @@ jsBackend.forms =
 
     // init, something like a constructor
     init: function () {
-        jsBackend.forms.placeholders();	// make sure this is done before focusing the first field
+        jsBackend.forms.placeholders(); // make sure this is done before focusing the first field
         jsBackend.forms.focusFirstField();
         jsBackend.forms.datefields();
         jsBackend.forms.submitWithLinks();
         jsBackend.forms.tagsInput();
+        jsBackend.forms.meta();
+    },
+
+    meta: function() {
+        var $metaTabs = $('.js-do-meta-automatically');
+        if ($metaTabs.length === 0) {
+            return;
+        }
+
+        $metaTabs.each(function () {
+            var possibleOptions = [
+                'baseFieldSelector',
+                'metaIdSelector',
+                'pageTitleSelector',
+                'pageTitleOverwriteSelector',
+                'navigationTitleSelector',
+                'navigationTitleOverwriteSelector',
+                'metaDescriptionSelector',
+                'metaDescriptionOverwriteSelector',
+                'metaKeywordsSelector',
+                'metaKeywordsOverwriteSelector',
+                'urlSelector',
+                'urlOverwriteSelector',
+                'generatedUrlSelector',
+                'customSelector',
+                'classNameSelector',
+                'methodNameSelector',
+                'parametersSelector'
+            ];
+            var options = {};
+
+            // only add the options that have been set
+            for (var i = 0, length = possibleOptions.length; i < length; i++) {
+                if (typeof this.dataset[possibleOptions[i]] !== 'undefined') {
+                    options[possibleOptions[i]] = this.dataset[possibleOptions[i]];
+                }
+            }
+
+            $(this.dataset.baseFieldSelector).doMeta(options)
+        });
     },
 
     datefields: function () {
@@ -1256,18 +1265,18 @@ jsBackend.forms =
         $inputDatefieldTill = $('.inputDatefieldTill');
         $inputDatefieldRange = $('.inputDatefieldRange');
 
-		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
-		{
-			dayNames: dayNames,
-			dayNamesMin: dayNamesMin,
-			dayNamesShort: dayNamesShort,
-			hideIfNoPrevNext: true,
-			monthNames: monthNames,
-			monthNamesShort: monthNamesShort,
-			nextText: jsBackend.locale.lbl('Next'),
-			prevText: jsBackend.locale.lbl('Previous'),
-			showAnim: 'slideDown'
-		});
+        $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
+        {
+            dayNames: dayNames,
+            dayNamesMin: dayNamesMin,
+            dayNamesShort: dayNamesShort,
+            hideIfNoPrevNext: true,
+            monthNames: monthNames,
+            monthNamesShort: monthNamesShort,
+            nextText: jsBackend.locale.lbl('Next'),
+            prevText: jsBackend.locale.lbl('Previous'),
+            showAnim: 'slideDown'
+        });
 
         // the default, nothing special
         $inputDatefieldNormal.each(function () {

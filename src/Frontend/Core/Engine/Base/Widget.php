@@ -9,9 +9,12 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpKernel\KernelInterface;
+use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Header;
-use Frontend\Core\Engine\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific widget
@@ -23,44 +26,37 @@ class Widget extends Object
     /**
      * The current action
      *
-     * @var    string
+     * @var string
      */
     protected $action;
 
     /**
      * The data
      *
-     * @var    mixed
+     * @var mixed
      */
     protected $data;
 
     /**
      * The header object
      *
-     * @var    Header
+     * @var Header
      */
     protected $header;
 
     /**
      * The current module
      *
-     * @var    string
+     * @var string
      */
     protected $module;
 
     /**
      * Path to the template
      *
-     * @var    string
+     * @var string
      */
     public $templatePath;
-
-    /**
-     * A reference to the URL-instance
-     *
-     * @var    Url
-     */
-    public $URL;
 
     /**
      * @param KernelInterface $kernel
@@ -134,7 +130,7 @@ class Widget extends Object
      */
     public function addJSData($key, $value)
     {
-        $this->header->addJSData($this->getModule(), $key, $value);
+        $this->header->addJsData($this->getModule(), $key, $value);
     }
 
     /**
@@ -151,12 +147,22 @@ class Widget extends Object
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, null, Header::PRIORITY_GROUP_WIDGET);
+            $this->header->addJS(
+                $frontendModuleURL . '/' . $this->getModule() . '.js',
+                true,
+                true,
+                Header::PRIORITY_GROUP_WIDGET
+            );
         }
 
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, null, Header::PRIORITY_GROUP_WIDGET);
+            $this->header->addJS(
+                $frontendModuleURL . '/' . $this->getAction() . '.js',
+                true,
+                true,
+                Header::PRIORITY_GROUP_WIDGET
+            );
         }
     }
 
@@ -273,5 +279,34 @@ class Widget extends Object
     protected function setTemplatePath($path)
     {
         $this->templatePath = (string) $path;
+    }
+
+    /**
+     * Redirect to a given URL
+     *
+     * @param string $url The URL whereto will be redirected.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
+     *
+     * @throws RedirectException
+     */
+    public function redirect($url, $code = 302)
+    {
+        $response = new RedirectResponse($url, $code);
+
+        throw new RedirectException('Redirect', $response);
+    }
+
+    /**
+     * Creates and returns a Form instance from the type of the form.
+     *
+     * @param string|FormTypeInterface $type The built type of the form
+     * @param mixed $data The initial data for the form
+     * @param array $options Options for the form
+     *
+     * @return Form
+     */
+    public function createForm($type, $data = null, array $options = array())
+    {
+        return $this->get('form.factory')->create($type, $data, $options);
     }
 }

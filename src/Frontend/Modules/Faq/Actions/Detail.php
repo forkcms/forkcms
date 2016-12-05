@@ -12,7 +12,7 @@ namespace Frontend\Modules\Faq\Actions;
 use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
@@ -33,23 +33,23 @@ class Detail extends FrontendBaseBlock
     /**
      * The faq
      *
-     * @var    array
+     * @var array
      */
     private $record;
 
     /**
      * The settings
      *
-     * @var    array
+     * @var array
      */
     private $settings;
 
     /**
      * The status of the form
      *
-     * @var    string
+     * @var string
      */
-    private $status = null;
+    private $status;
 
     /**
      * Execute the extra
@@ -59,7 +59,7 @@ class Detail extends FrontendBaseBlock
         parent::execute();
 
         // hide contentTitle, in the template the title is wrapped with an inverse-option
-        $this->tpl->assign('hideContentTitle', true);
+        $this->tpl->assignGlobal('hideContentTitle', true);
 
         $this->loadTemplate();
         $this->getData();
@@ -275,7 +275,7 @@ class Detail extends FrontendBaseBlock
                             ->setTo(array($to['email'] => $to['name']))
                             ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                             ->parseHtml(
-                                FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/Feedback.html.twig',
+                                '/Faq/Layout/Templates/Mails/Feedback.html.twig',
                                 $variables,
                                 true
                             )

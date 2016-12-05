@@ -4,6 +4,9 @@ namespace Backend\Modules\Faq\DataFixtures;
 
 class LoadFaqQuestions
 {
+    /**
+     * @param \SpoonDatabase $database
+     */
     public function load(\SpoonDatabase $database)
     {
         $metaId = $database->insert(

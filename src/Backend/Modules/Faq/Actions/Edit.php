@@ -11,7 +11,7 @@ namespace Backend\Modules\Faq\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
@@ -24,7 +24,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 class Edit extends BackendBaseActionEdit
 {
     /**
-     * @var	array
+     * @var array
      */
     private $feedback;
 
@@ -94,7 +94,7 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
         $url404 = BackendModel::getURL(404);
         if ($url404 != $url) {
             $this->tpl->assign('detailURL', SITE_URL . $url);
@@ -111,7 +111,7 @@ class Edit extends BackendBaseActionEdit
     private function validateForm()
     {
         if ($this->frm->isSubmitted()) {
-            $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getURL', array($this->record['id']));
+            $this->meta->setURLCallback('Backend\Modules\Faq\Engine\Model', 'getURL', array($this->record['id']));
 
             $this->frm->cleanupFields();
 
@@ -153,7 +153,7 @@ class Edit extends BackendBaseActionEdit
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=saved&var=' .
-                    urlencode($item['question']) . '&highlight=' . $item['id']
+                    rawurlencode($item['question']) . '&highlight=' . $item['id']
                 );
             }
         }

@@ -1,0 +1,61 @@
+# Doctrine Configuration
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver: pdo_%database.driver%
+                host: %database.host%
+                port: %database.port%
+                dbname: %database.name%
+                user: %database.user%
+                password: %database.password%
+                charset: utf8mb4
+                default_table_options:
+                    charset: utf8mb4
+                    collate: utf8mb4_unicode_ci
+                mapping_types:
+                    # Remove when we don't have legacy tables anymore
+                    enum: string
+        types:
+            enum_bool: Common\Doctrine\Type\EnumBoolType
+            locale: Common\Doctrine\Type\LocaleType
+            datetime: Common\Doctrine\Type\UTCDateTimeType
+            datetimetz: Common\Doctrine\Type\UTCDateTimeType
+            time: Common\Doctrine\Type\UTCDateTimeType
+            date: Common\Doctrine\Type\UTCDateTimeType
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        entity_managers:
+            default:
+                connection: default
+                auto_mapping: true
+                mappings:
+                    common:
+                        type: annotation
+                        is_bundle: false
+                        dir: %kernel.root_dir%/../src/Common/Doctrine/Entity
+                        alias: Common
+                        prefix: Common\Doctrine\Entity
+
+doctrine_orm_bridge:
+    entity_manager: default
+    connection: default
+
+services:
+    fork.entity.create_schema:
+        class: Common\Doctrine\Entity\CreateSchema
+        arguments:
+            - "@doctrine.orm.entity_manager"
+    entity.create_schema:
+        deprecated: The service %service_id% is deprecated and is replaced by fork.entity.create_schema
+        class: Common\Doctrine\Entity\CreateSchema
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    fork.repository.meta:
+        class: Common\Doctrine\Repository\MetaRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Common\Doctrine\Entity\Meta

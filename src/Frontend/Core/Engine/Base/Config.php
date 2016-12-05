@@ -22,42 +22,42 @@ class Config extends \KernelLoader
     /**
      * The default action
      *
-     * @var    string
+     * @var string
      */
     protected $defaultAction = 'Index';
 
     /**
      * The disabled actions
      *
-     * @var    array
+     * @var array
      */
     protected $disabledActions = array();
 
     /**
      * The disabled AJAX-actions
      *
-     * @var    array
+     * @var array
      */
     protected $disabledAJAXActions = array();
 
     /**
      * The current loaded module
      *
-     * @var    string
+     * @var string
      */
     protected $module;
 
     /**
      * All the possible actions
      *
-     * @var    array
+     * @var array
      */
     protected $possibleActions = array();
 
     /**
      * All the possible AJAX actions
      *
-     * @var    array
+     * @var array
      */
     protected $possibleAJAXActions = array();
 
@@ -123,9 +123,9 @@ class Config extends \KernelLoader
     {
         // build path to the module
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
 
-        if ($fs->exists($frontendModulePath . '/Actions')) {
+        if ($filesystem->exists($frontendModulePath . '/Actions')) {
             // get regular actions
             $finder = new Finder();
             $finder->name('*.php');
@@ -138,7 +138,7 @@ class Config extends \KernelLoader
             }
         }
 
-        if ($fs->exists($frontendModulePath . '/Ajax')) {
+        if ($filesystem->exists($frontendModulePath . '/Ajax')) {
             // get ajax-actions
             $finder = new Finder();
             $finder->name('*.php');

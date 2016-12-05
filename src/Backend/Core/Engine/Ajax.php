@@ -11,12 +11,12 @@ namespace Backend\Core\Engine;
 
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class will handle AJAX-related stuff
  */
 
-/** @noinspection PhpUndefinedClassInspection */
 class Ajax extends Base\Object implements \ApplicationInterface
 {
     /**
@@ -54,8 +54,8 @@ class Ajax extends Base\Object implements \ApplicationInterface
 
         try {
             // create URL instance, since the template modifiers need this object
-            $URL = new Url($this->getKernel());
-            $URL->setModule($module);
+            $url = new Url($this->getKernel());
+            $url->setModule($module);
 
             $this->setModule($module);
             $this->setAction($action);
@@ -79,15 +79,15 @@ class Ajax extends Base\Object implements \ApplicationInterface
     public function setLanguage($language)
     {
         // get the possible languages
-        $possibleLanguages = Language::getWorkingLanguages();
+        $possibleLanguages = BackendLanguage::getWorkingLanguages();
 
         // validate
-        if (!in_array($language, array_keys($possibleLanguages))) {
+        if (!array_key_exists($language, $possibleLanguages)) {
             throw new Exception('Language invalid.');
         }
 
         // set working language
-        Language::setWorkingLanguage($language);
+        BackendLanguage::setWorkingLanguage($language);
     }
 
     /**
@@ -102,6 +102,6 @@ class Ajax extends Base\Object implements \ApplicationInterface
         }
 
         // set interface language
-        Language::setLocale(Authentication::getUser()->getSetting('interface_language'));
+        BackendLanguage::setLocale(Authentication::getUser()->getSetting('interface_language'));
     }
 }

@@ -16,19 +16,19 @@
             {% if pagination.first %}
               {% for pagination in pagination.first %}
                 <li>
-                <a href="{{ pagination.first.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.first.label }}">{{ pagination.first.label }}</a>
+                <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">{{ pagination.label }}</a>
                 </li>{% endfor %}
               <li class="ellipsis"><span>&hellip;</span></li>
             {% endif %}
 
             {% for pagination in pagination.pages %}
-              <li{% if pagination.pages.current %} class="currentPage"{% endif %}>
-                {% if not pagination.pages.current %}
-                <a href="{{ pagination.pages.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.pages.label }}">{% endif %}
-                  {% if pagination.pages.current %}<span>{% endif %}
-                    {{ pagination.pages.label }}
-                    {% if pagination.pages.current %}</span>{% endif %}
-                  {% if not pagination.pages.current %}</a>{% endif %}
+              <li{% if pagination.current %} class="currentPage"{% endif %}>
+                {% if not pagination.current %}
+                <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">{% endif %}
+                  {% if pagination.current %}<span>{% endif %}
+                    {{ pagination.label }}
+                    {% if pagination.current %}</span>{% endif %}
+                  {% if not pagination.current %}</a>{% endif %}
               </li>
             {% endfor %}
 
@@ -36,7 +36,7 @@
               <li class="ellipsis"><span>&hellip;</span></li>
               {% for pagination in pagination.last %}
                 <li>
-                <a href="{{ pagination.last.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.last.label }}">{{ pagination.last.label }}</a>
+                <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">{{ pagination.label }}</a>
                 </li>{% endfor %}
             {% endif %}
 

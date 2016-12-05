@@ -31,11 +31,11 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
             new Pool(new MemoryStore())
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'triton',
             $modulesSettings->get('Core', 'theme')
         );
-        $this->assertEquals(
+        self::assertEquals(
             'triton',
             $modulesSettings->get('Core', 'theme', 'test')
         );
@@ -48,7 +48,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
             new Pool(new MemoryStore())
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             'default_value',
             $modulesSettings->get('Test', 'Blub', 'default_value')
         );
@@ -61,13 +61,13 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
             new Pool(new MemoryStore())
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             array(
                 'theme' => 'triton',
             ),
             $modulesSettings->getForModule('Core')
         );
-        $this->assertEquals(
+        self::assertEquals(
             array(),
             $modulesSettings->getForModule('Fake')
         );
@@ -81,7 +81,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
         ;
 
         $databaseMock
-            ->expects($this->once())
+            ->expects(self::atLeastOnce())
             ->method('getRecords')
             ->willReturn(array(
                 array(

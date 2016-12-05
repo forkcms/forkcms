@@ -808,6 +808,12 @@
         <translation language="ru"><![CDATA[войдите ссылку]]></translation>
         <translation language="de"><![CDATA[Login-Link]]></translation>
       </item>
+      <item type="label" name="SecurePage">
+        <translation language="nl"><![CDATA[beveiligde pagina]]></translation>
+        <translation language="en"><![CDATA[secure page]]></translation>
+        <translation language="fr"><![CDATA[page sécurisée]]></translation>
+        <translation language="de"><![CDATA[sichere Seite]]></translation>
+      </item>
     </Core>
   </Backend>
   <Frontend>

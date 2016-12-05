@@ -12,7 +12,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
@@ -96,11 +96,7 @@ class Categories extends BackendBaseActionIndex
         $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('AddCategory') && $this->multipleCategoriesAllowed) {
-            $this->tpl->assign('showFaqAddCategory', true);
-        } else {
-            $this->tpl->assign('showFaqAddCategory', false);
-        }
+        $this->tpl->assign('allowFaqAddCategory', $this->multipleCategoriesAllowed);
     }
 
     /**

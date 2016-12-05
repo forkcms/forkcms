@@ -17,28 +17,28 @@ class User
     /**
      * An array that will store all user objects
      *
-     * @var    array
+     * @var array
      */
     private static $cache = array();
 
     /**
      * All settings
      *
-     * @var    array
+     * @var array
      */
     private $settings = array();
 
     /**
      * The users id
      *
-     * @var    int
+     * @var int
      */
     private $userId;
 
     /**
      * The email
      *
-     * @var    string
+     * @var string
      */
     private $email;
 
@@ -125,6 +125,8 @@ class User
      * Load the data for the given user
      *
      * @param int $userId The users id in the backend.
+     *
+     * @throws Exception
      */
     public function loadUser($userId)
     {

@@ -29,10 +29,11 @@ class CacheBuilder
     protected $cache;
 
     protected $blocks;
-    protected $siteMapId;
+    protected $sitemapId;
 
     /**
-     * @param \SpoonDatabase $database
+     * @param \SpoonDatabase         $database
+     * @param CacheItemPoolInterface $cache
      */
     public function __construct(\SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
@@ -53,9 +54,9 @@ class CacheBuilder
         $navigation = $this->getNavigation($language);
 
         // build file with navigation structure to feed into editor
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         $cachePath = FRONTEND_CACHE_PATH . '/Navigation/';
-        $fs->dumpFile(
+        $filesystem->dumpFile(
             $cachePath . 'editor_link_list_' . $language . '.js',
             $this->dumpEditorLinkList($navigation, $keys, $language)
         );
@@ -73,7 +74,7 @@ class CacheBuilder
             return $item->get();
         }
 
-        list($keys, $navigation) = $this->getData($language);
+        $keys = $this->getData($language)[0];
         $item->set($keys);
         $this->cache->save($item);
 
@@ -92,7 +93,7 @@ class CacheBuilder
             return $item->get();
         }
 
-        list($keys, $navigation) = $this->getData($language);
+        $navigation = $this->getData($language)[1];
         $item->set($navigation);
         $this->cache->save($item);
 
@@ -148,7 +149,7 @@ class CacheBuilder
         // init URLs
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
         $languageURL = ($hasMultiLanguages) ? '/' . $language . '/' : '/';
-        $URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+        $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
         // home is special
         if ($page['id'] == 1) {
@@ -159,7 +160,7 @@ class CacheBuilder
         }
 
         // add it
-        $keys[$page['id']] = trim($URL . '/' . $page['url'], '/');
+        $keys[$page['id']] = trim($url . '/' . $page['url'], '/');
 
         // unserialize
         if (isset($page['meta_data'])) {
@@ -180,12 +181,17 @@ class CacheBuilder
             'has_children' => (bool) ($page['has_children'] == 'Y'),
         );
 
-        $pageData['extra_blocks'] = $this->getPageExtraBlocks($page, $pageData);
+        $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);
         $pageData['tree_type'] = $this->getPageTreeType($page, $pageData);
 
         return $pageData;
     }
 
+    /**
+     * @param $page array
+     * @param $pageData array
+     * @return string
+     */
     protected function getPageTreeType($page, &$pageData)
     {
         // calculate tree-type
@@ -244,7 +250,11 @@ class CacheBuilder
         return $treeType;
     }
 
-    protected function getPageExtraBlocks($page, $pageData)
+    /**
+     * @param $page array
+     * @return array
+     */
+    protected function getPageExtraBlocks($page)
     {
         // add extras to the page array
         if ($page['extra_ids'] !== null) {
@@ -274,11 +284,24 @@ class CacheBuilder
     {
         if (empty($this->blocks)) {
             $this->blocks = (array) $this->database->getRecords(
-                'SELECT i.id, i.module, i.action
+                'SELECT i.id, i.module, i.action, i.data
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
                 array('block', 'N'),
                 'id'
+            );
+
+            $this->blocks = array_map(
+                function (array $block) {
+                    if ($block['data'] === null) {
+                        return $block;
+                    }
+
+                    $block['data'] = unserialize($block['data']);
+
+                    return $block;
+                },
+                $this->blocks
             );
         }
 

@@ -7,11 +7,15 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Backend\DependencyInjection\BackendExtension;
 
 /**
  * The Kernel provides a proper way to load an environment and DI container.
@@ -19,16 +23,21 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 abstract class Kernel extends BaseKernel implements KernelInterface
 {
+    /** @var Request We need this to check if a module is being installed */
+    private $request;
+
     /**
      * Constructor.
      *
      * @param string $environment The environment
-     * @param bool   $debug       Whether to enable debugging or not
+     * @param bool $debug Whether to enable debugging or not
      *
      * @api
      */
     public function __construct($environment, $debug)
     {
+        $this->request = Request::createFromGlobals();
+
         parent::__construct($environment, $debug);
         $this->boot();
     }
@@ -84,8 +93,8 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         defined('SPOON_DEBUG_MESSAGE') || define('SPOON_DEBUG_MESSAGE', $container->getParameter('fork.debug_message'));
         defined('SPOON_CHARSET') || define('SPOON_CHARSET', $container->getParameter('kernel.charset'));
 
-        defined('PATH_WWW') || define('PATH_WWW', $container->getParameter('site.path_www'));
-        defined('PATH_LIBRARY') || define('PATH_LIBRARY', $container->getParameter('site.path_library'));
+        defined('PATH_WWW') || define('PATH_WWW', realpath($container->getParameter('site.path_www')));
+        defined('PATH_LIBRARY') || define('PATH_LIBRARY', realpath($container->getParameter('site.path_library')));
 
         defined('SITE_DEFAULT_LANGUAGE') || define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
         defined('SITE_DEFAULT_TITLE') || define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
@@ -123,39 +132,107 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      *
      * @throws \RuntimeException
      *
-     * @return \Symfony\Component\DependencyInjection\ContainerBuilder The compiled service container
+     * @return ContainerBuilder The compiled service container
      */
     protected function buildContainer()
     {
         $container = parent::buildContainer();
 
-        try {
-            $installedModules = $container->get('database')->getColumn(
-                'SELECT name FROM modules'
-            );
-        } catch (\SpoonDatabaseException $e) {
-            $installedModules = array();
-        } catch (\PDOException $e) {
-            // fork is probably not installed yet
-            $installedModules = array();
-        }
+        $installedModules = $this->getInstalledModules($container);
 
         $container->setParameter('installed_modules', $installedModules);
 
-        $extensions = array();
         foreach ($installedModules as $module) {
             $class = 'Backend\\Modules\\' . $module . '\\DependencyInjection\\' . $module . 'Extension';
 
             if (class_exists($class)) {
-                $extension = new $class();
-                $container->registerExtension($extension);
-                $extensions[] = $extension->getAlias();
+                $container->registerExtension(new $class());
             }
         }
 
+        $container->registerExtension(new BackendExtension());
+
         // ensure these extensions are implicitly loaded
-        $container->getCompilerPassConfig()->setMergePass(new MergeExtensionConfigurationPass(array_keys($container->getExtensions())));
+        $container->getCompilerPassConfig()->setMergePass(
+            new MergeExtensionConfigurationPass(array_keys($container->getExtensions()))
+        );
 
         return $container;
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     *
+     * @return array
+     */
+    private function getInstalledModules(ContainerBuilder $container)
+    {
+        // on installation all modules should be loaded
+        if ($this->environment === 'install' || $this->environment === 'test') {
+            return $this->getAllPossibleModuleNames();
+        }
+
+        $moduleNames = [];
+        if ($this->isInstallingModule()) {
+            $moduleNames[] = $this->request->query->get('module');
+        }
+
+        try {
+            $moduleNames = array_merge(
+                $moduleNames,
+                (array) $container->get('database')->getColumn(
+                    'SELECT name FROM modules'
+                )
+            );
+        } catch (SpoonDatabaseException $e) {
+            $moduleNames = [];
+        } catch (PDOException $e) {
+            // fork is probably not installed yet
+            $moduleNames = [];
+        }
+
+        if (empty($moduleNames)) {
+            return $this->getAllPossibleModuleNames();
+        }
+
+        return $moduleNames;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isInstallingModule()
+    {
+        return preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $this->request->getRequestUri())
+               && $this->request->query->has('module')
+               && in_array($this->request->query->get('module'), $this->getAllPossibleModuleNames());
+    }
+
+    /**
+     * @return array
+     */
+    private function getAllPossibleModuleNames()
+    {
+        $moduleNames = [];
+        $finder = new Finder();
+
+        $directories = $finder->directories()->in(__DIR__ . '/../src/Backend/Modules')->depth(0);
+
+        foreach ($directories->getIterator() as $directory) {
+            $moduleNames[] = $directory->getFilename();
+        }
+
+        return $moduleNames;
+    }
+
+    protected function initializeContainer()
+    {
+        // remove the cache dir when installing a module to trigger rebuilding the kernel
+        if ($this->isInstallingModule()) {
+            $fileSystem = new Filesystem();
+            $fileSystem->remove($this->getCacheDir().'/'.$this->getContainerClass().'.php');
+        }
+
+        parent::initializeContainer();
     }
 }

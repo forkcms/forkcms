@@ -10,7 +10,7 @@ namespace Backend\Modules\Extensions\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
@@ -27,6 +27,13 @@ class Themes extends BackendBaseActionIndex
      * @var BackendForm
      */
     private $frm;
+
+    /**
+     * Theme id.
+     *
+     * @var int
+     */
+    private $id;
 
     /**
      * List of available themes (installed & installable)
@@ -144,7 +151,8 @@ class Themes extends BackendBaseActionIndex
                     if (empty($newTemplates)) {
                         // templates do not yet exist; don't switch
                         $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-templates-available');
-                        exit;
+    
+                        return;
                     }
 
                     // fetch current default template

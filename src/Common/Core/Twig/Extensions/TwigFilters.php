@@ -36,7 +36,6 @@ class TwigFilters
         $twig->addFilter(new Twig_SimpleFilter('formatcurrency', $app.'::formatCurrency', ['is_safe' => ['html']]));
         $twig->addFilter(new Twig_SimpleFilter('usersetting', $app.'::userSetting'));
         $twig->addFilter(new Twig_SimpleFilter('uppercase', $app.'::uppercase'));
-        $twig->addFilter(new Twig_SimpleFilter('trans', $app.'::trans'));
         $twig->addFilter(new Twig_SimpleFilter('rand', $app.'::random'));
         $twig->addFilter(new Twig_SimpleFilter('formatfloat', $app.'::formatFloat'));
         $twig->addFilter(new Twig_SimpleFilter('truncate', $app.'::truncate'));
@@ -50,6 +49,7 @@ class TwigFilters
         // exposed PHP functions
 
         $twig->addFilter(new Twig_SimpleFilter('urlencode', 'urlencode'));
+        $twig->addFilter(new Twig_SimpleFilter('rawurlencode', 'rawurlencode'));
         $twig->addFilter(new Twig_SimpleFilter('striptags', 'strip_tags'));
         $twig->addFilter(new Twig_SimpleFilter('addslashes', 'addslashes'));
         $twig->addFilter(new Twig_SimpleFilter('count', 'count'));

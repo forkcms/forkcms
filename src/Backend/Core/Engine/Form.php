@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This is our extended version of \SpoonForm
@@ -19,7 +20,7 @@ class Form extends \Common\Core\Form
     /**
      * Show the global error
      *
-     * @var    bool
+     * @var bool
      */
     private $useGlobalError = true;
 
@@ -73,6 +74,7 @@ class Form extends \Common\Core\Form
      * @param string $class Class(es) that will be applied on the button.
      *
      * @return \SpoonFormButton
+     * @throws Exception
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
     {
@@ -137,7 +139,7 @@ class Form extends \Common\Core\Form
             throw new Exception('A datefield with type "range" should have 2 valid date-parameters.');
         }
 
-        // @later	get preferred mask & first day
+        // @later get preferred mask & first day
         $mask = 'd/m/Y';
         $firstday = 1;
 
@@ -215,12 +217,12 @@ class Form extends \Common\Core\Form
         $this->header->addJS('ckfinder/ckfinder.js', 'Core', false);
 
         // add the internal link lists-file
-        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {
+        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js')) {
             $timestamp = @filemtime(
-                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js'
+                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js'
             );
             $this->header->addJS(
-                '/src/Frontend/Cache/Navigation/editor_link_list_' . Language::getWorkingLanguage(
+                '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage(
                 ) . '.js?m=' . $timestamp,
                 null,
                 false,
@@ -230,7 +232,7 @@ class Form extends \Common\Core\Form
         }
 
         // create and return a textarea for the editor
-        return $this->addTextArea($name, $value, $class, $classError, $HTML);
+        return $this->addTextarea($name, $value, $class, $classError, $HTML);
     }
 
     /**

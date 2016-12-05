@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Controller;
 
+use Common\Exception\ExitException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,9 +15,13 @@ use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use Symfony\Component\HttpFoundation\Response;
 
 class InstallerController extends Controller
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function step1Action()
     {
         $this->checkInstall();
@@ -36,6 +41,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function step2Action(Request $request)
     {
         $this->checkInstall();
@@ -61,6 +71,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function step3Action(Request $request)
     {
         $this->checkInstall();
@@ -82,6 +97,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function step4Action(Request $request)
     {
         $this->checkInstall();
@@ -101,6 +121,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function step5Action(Request $request)
     {
         $this->checkInstall();
@@ -120,6 +145,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function step6Action(Request $request)
     {
         $this->checkInstall();
@@ -137,6 +167,11 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     protected function getInstallationData(Request $request)
     {
         if (!$request->getSession()->has('installation_data')) {
@@ -146,6 +181,9 @@ class InstallerController extends Controller
         return $request->getSession()->get('installation_data');
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function noStepAction()
     {
         $this->checkInstall();
@@ -155,13 +193,18 @@ class InstallerController extends Controller
 
     protected function checkInstall()
     {
-        $fs = new FileSystem();
+        $filesystem = new Filesystem();
         $kernelDir = $this->container->getParameter('kernel.root_dir');
         $parameterFile = $kernelDir . 'config/parameters.yml';
-        if ($fs->exists($parameterFile)) {
-            exit('This Fork has already been installed. To reinstall, delete
+        if ($filesystem->exists($parameterFile)) {
+            throw new ExitException(
+                'This Fork has already been installed. To reinstall, delete
+                 parameters.yml from the ' . $kernelDir . 'config/ directory.',
+                'This Fork has already been installed. To reinstall, delete
                  parameters.yml from the ' . $kernelDir . 'config/ directory. To log in,
-                 <a href="/private">click here</a>.');
+                 <a href="/private">click here</a>.',
+                Response::HTTP_FORBIDDEN
+            );
         }
     }
 }

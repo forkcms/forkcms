@@ -10,7 +10,7 @@ namespace Backend\Modules\Blog\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
@@ -25,7 +25,7 @@ class Comments extends BackendBaseActionIndex
     /**
      * DataGrids
      *
-     * @var	BackendDataGridDB
+     * @var BackendDataGridDB
      */
     private $dgPublished;
     private $dgModeration;
@@ -36,18 +36,18 @@ class Comments extends BackendBaseActionIndex
      *
      * @param string $text The comment.
      * @param string $title The title for the blogarticle.
-     * @param string $URL The URL for the blogarticle.
+     * @param string $url The URL for the blogarticle.
      * @param int $id The id of the comment.
      *
      * @return string
      */
-    public static function addPostData($text, $title, $URL, $id)
+    public static function addPostData($text, $title, $url, $id)
     {
         // reset URL
-        $URL = BackendModel::getURLForBlock('Blog', 'Detail') . '/' . $URL . '#comment-' . $id;
+        $url = BackendModel::getURLForBlock('Blog', 'Detail') . '/' . $url . '#comment-' . $id;
 
         // build HTML
-        return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $URL, $title) . '</em></p>' . "\n" . (string) $text;
+        return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $url, $title) . '</em></p>' . "\n" . (string) $text;
     }
 
     /**

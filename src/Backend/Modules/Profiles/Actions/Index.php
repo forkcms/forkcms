@@ -14,7 +14,7 @@ use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
@@ -26,7 +26,7 @@ class Index extends BackendBaseActionIndex
     /**
      * Filter variables.
      *
-     * @var    array
+     * @var array
      */
     private $filter;
 
@@ -144,7 +144,8 @@ class Index extends BackendBaseActionIndex
 
         // add the mass action controls
         $this->dgProfiles->setMassActionCheckboxes('check', '[id]');
-        $ddmMassAction = new \SpoonFormDropdown('action',
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
             array(
                 'addToGroup' => BL::getLabel('AddToGroup'),
                 'delete' => BL::getLabel('Delete'),

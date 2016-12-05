@@ -19,12 +19,12 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 class Category extends FrontendBaseBlock
 {
     /**
-     * @var    array
+     * @var array
      */
     private $questions;
 
     /**
-     * @var    array
+     * @var array
      */
     private $record;
 
@@ -35,7 +35,7 @@ class Category extends FrontendBaseBlock
     {
         parent::execute();
 
-        $this->tpl->assign('hideContentTitle', true);
+        $this->tpl->assignGlobal('hideContentTitle', true);
         $this->getData();
         $this->loadTemplate();
         $this->parse();

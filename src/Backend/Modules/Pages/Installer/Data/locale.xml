@@ -268,6 +268,10 @@
         <translation language="uk"><![CDATA[Сторінку "%1$s" додано.]]></translation>
         <translation language="el"><![CDATA[Η σελίδα "%1$s" προστέθηκε.]]></translation>
       </item>
+      <item type="message" name="HelpImage">
+        <translation language="en"><![CDATA[This image can be used in the template. for example as a header]]></translation>
+        <translation language="nl"><![CDATA[Deze afbeelding kan worden gebruikt in de template. bijvoorbeeld als header]]></translation>
+      </item>
       <item type="message" name="AllowChildren">
         <translation language="nl"><![CDATA[Deze pagina mag subpagina's bevatten.]]></translation>
         <translation language="en"><![CDATA[This page can have subpages.]]></translation>
@@ -307,6 +311,10 @@
         <translation language="hu"><![CDATA[A pozíció az oldalon változtatható.]]></translation>
         <translation language="el"><![CDATA[Η θέση αυτής της σελίδας μπορεί να αλλάξει.]]></translation>
         <translation language="zh"><![CDATA[这个页面的位置可以改变。]]></translation>
+      </item>
+      <item type="message" name="AllowImage">
+        <translation language="nl"><![CDATA[Deze pagina mag een afbeelding hebben.]]></translation>
+        <translation language="en"><![CDATA[This page can have an image.]]></translation>
       </item>
       <item type="message" name="BlockAttached">
         <translation language="nl"><![CDATA[De module <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
@@ -611,6 +619,18 @@
         <translation language="hu"><![CDATA[Nem kapcsolható össze a modul a honlappal.]]></translation>
         <translation language="es"><![CDATA[No puedes vincular un módulo a la página principal.]]></translation>
         <translation language="el"><![CDATA[Δεν επιτρέπεται να συνδέσετε μία ενότητα με την Αρχική Σελίδα.]]></translation>
+      </item>
+      <item type="message" name="AuthRequired">
+        <translation language="nl"><![CDATA[Gebruikers moeten ingelogd zijn om deze pagina te bekijken.]]></translation>
+        <translation language="en"><![CDATA[Users need to be logged to view this page.]]></translation>
+        <translation language="it"><![CDATA[Gli utenti hanno bisogno di essere iscritto per poter vedere questa pagina.]]></translation>
+        <translation language="ru"><![CDATA[Пользователи должны быть зарегистрированы для просмотра этой страницы.]]></translation>
+        <translation language="zh"><![CDATA[需要記錄用戶才能查看此頁面。]]></translation>
+        <translation language="de"><![CDATA[Benutzer müssen angemeldet sein, um diese Seite anzuzeigen.]]></translation>
+        <translation language="fr"><![CDATA[Les utilisateurs doivent être connecté pour afficher cette page.]]></translation>
+        <translation language="hu"><![CDATA[A felhasználók be kell jelentkeznie az oldal megtekintéséhez.]]></translation>
+        <translation language="es"><![CDATA[Los usuarios tienen que iniciar sesión para ver esta página.]]></translation>
+        <translation language="el"><![CDATA[Οι χρήστες πρέπει να είστε συνδεδεμένοι για να δείτε αυτή τη σελίδα.]]></translation>
       </item>
     </Pages>
   </Backend>

@@ -20,7 +20,7 @@ class Index extends FrontendBaseBlock
     /**
      * List of tags
      *
-     * @var    array
+     * @var array
      */
     private $tags = array();
 

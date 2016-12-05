@@ -10,13 +10,18 @@ namespace Backend\Modules\Error\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
+use Common\Exception\ExitException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the index-action (default), it will display an error depending on a given parameters
  */
 class Index extends BackendBaseActionIndex
 {
+    /** @var int */
+    private $statusCode;
+
     /**
      * Execute the action
      */
@@ -41,11 +46,14 @@ class Index extends BackendBaseActionIndex
         switch ($errorType) {
             case 'module-not-allowed':
             case 'action-not-allowed':
-                header('HTTP/1.1 403 Forbidden');
+                $this->statusCode = Response::HTTP_FORBIDDEN;
                 break;
 
             case 'not-found':
-                header('HTTP/1.1 404 Not Found');
+                $this->statusCode = Response::HTTP_NOT_FOUND;
+                break;
+            default:
+                $this->statusCode = Response::HTTP_BAD_REQUEST;
                 break;
         }
 
@@ -59,18 +67,27 @@ class Index extends BackendBaseActionIndex
 
             // if the file has an extension it is a non-existing-file
             if ($extension != '' && $extension != $chunks[0]) {
-                // set correct headers
-                header('HTTP/1.1 404 Not Found');
-
                 // give a nice error, so we can detect which file is missing
-                echo 'Requested file (' . htmlspecialchars($this->getParameter('querystring')) . ') not found.';
-
-                // stop script execution
-                exit;
+                throw new ExitException(
+                    'File not found',
+                    'Requested file (' . htmlspecialchars($this->getParameter('querystring')) . ') not found.',
+                    Response::HTTP_NOT_FOUND
+                );
             }
         }
 
         // assign the correct message into the template
         $this->tpl->assign('message', BL::err(\SpoonFilter::toCamelCase(htmlspecialchars($errorType), '-')));
+    }
+
+    /**
+     * @return Response
+     */
+    public function getContent()
+    {
+        return new Response(
+            $this->content,
+            $this->statusCode
+        );
     }
 }

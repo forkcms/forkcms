@@ -58,24 +58,32 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+            <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
           <li class="pull-right" role="presentation">
-            <a href="#tabSettings" aria-controls="settings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+            <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
           </li>
-          <li class="pull-right" role="presentation">
-            <a href="#tabRedirect" aria-controls="redirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
-          </li>
-          {% if showTags %}
+          {% if showAuthenticationTab %}
             <li class="pull-right" role="presentation">
-              <a href="#tabTags" aria-controls="tags" role="tab" data-toggle="tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
+              <a href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
             </li>
           {% endif %}
           <li class="pull-right" role="presentation">
-            <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+            <a href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
+          </li>
+          {% if showTags %}
+            <li class="pull-right" role="presentation">
+              <a href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
+            </li>
+          {% endif %}
+          <li class="pull-right" role="presentation">
+            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
           <li class="pull-right" role="presentation">
-            <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+            <a href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+          </li>
+          <li class="pull-right js-page-image-tab" role="presentation">
+            <a href="#tabImage" aria-controls="image" role="tab" data-toggle="tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -231,6 +239,48 @@
               </div>
             </div>
           </div>
+          {% if showAuthenticationTab %}
+          <div role="tabpanel" class="tab-pane" id="tabAuthentication">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <li class="checkbox">
+                    <label for="authRequired" class="control-label">{% form_field auth_required %} {{ 'msg.AuthRequired'|trans|ucfirst }}</label>
+                  </li>
+                  {% if authGroups %}
+                  <div class="js-authentication-groups" {% if not item.data.auth_required %} style="display: none;"{% endif %}>
+                    <h4>{{ 'lbl.Groups'|trans|ucfirst }}</h4>
+                    <ul class="list-unstyled">
+                      {% for item in authGroups %}
+                        <li class="checkbox">
+                          <label for="{{ item.id }}">{{ item.chkAuthGroups|raw }} {{ item.label }}</label>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          <div role="tabpanel" class="tab-pane" id="tabImage">
+            <div class="row js-page-image-tab">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="image" class="control-label">{{ 'lbl.Image'|trans|ucfirst }}</label>
+                  {% form_field image %} {% form_field_error image %}
+                </div>
+                <div class="form-group">
+                  {% if item.data.image %}
+                    <img src="{{ FRONTEND_FILES_URL }}/pages/images/source/{{ item.data.image }}" class="img-responsive" />
+                    <label for="removeImage">{% form_field remove_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
+                    {% form_field_error remove_image %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
           {% if showTags %}
             <div role="tabpanel" class="tab-pane" id="tabTags">
               <div class="row">
@@ -252,7 +302,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showPagesDelete %}
+          {% if showPagesDelete and allowPagesDelete %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
               <span class="fa fa-trash-o"></span>
               {{ 'lbl.Delete'|trans|ucfirst }}
@@ -302,7 +352,7 @@
   </div>
 
   {# Dialog to select the content (editor, module or widget). Do not change the ID! #}
-  <div class="modal fade" id="addBlock" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.ChooseContent'|trans|ucfirst }}"
+  <div class="modal fade" id="addBlock" tabindex="-1" role="dialog"
     aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -352,7 +402,7 @@
 
   {# Dialog to select another template. Do not change the ID! #}
   <div class="modal fade" id="changeTemplate" tabindex="-1" role="dialog"
-    aria-labelledby="{{ 'lbl.ChooseATemplate'|trans|ucfirst }}" aria-hidden="true">
+    aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -374,11 +424,11 @@
                         <input type="radio" id="template{{ template.id }}" value="{{ template.id }}"
                           name="template_id_chooser"
                           class="inputRadio"{% if template.checked %} checked="checked"{% endif %}{% if template.disabled %} disabled="disabled"{% endif %} />{{ template.label }}
-                      </label>
-                    </div>
 
-                    <div class="templateVisual current">
-                      {{ template.html|raw }}
+                        <div class="templateVisual current">
+                          {{ template.html|raw }}
+                        </div>
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -399,7 +449,7 @@
   </div>
 
   {# Dialog to confirm block removal. Do not change the ID! #}
-  <div class="modal fade" id="confirmDeleteBlock" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.DeleteBlock'|trans|ucfirst }}" aria-hidden="true">
+  <div class="modal fade" id="confirmDeleteBlock" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -420,7 +470,7 @@
   </div>
 
   {# Text editor block #}
-  <div class="modal fade" id="blockHtml" role="dialog" aria-labelledby="{{ 'lbl.Editor'|trans|ucfirst }}" aria-hidden="true">
+  <div class="modal fade" id="blockHtml" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -453,7 +503,7 @@
 
   {# Page delete confirm block #}
   {% if item %}
-    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

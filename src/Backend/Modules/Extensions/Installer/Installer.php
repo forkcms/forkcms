@@ -3,6 +3,7 @@
 namespace Backend\Modules\Extensions\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the extensions module.
@@ -15,7 +16,7 @@ class Installer extends ModuleInstaller
     private function insertExtras()
     {
         // insert extra ids
-        $extras['search_form'] = $this->insertExtra('Search', 'widget', 'SearchForm', 'Form', null, 'N', 2001);
+        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
     }
 
     /**
@@ -59,7 +60,7 @@ class Installer extends ModuleInstaller
          */
 
         // search will be installed by default; already link it to this template
-        $extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
+        $extras['search_form'] = $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, 'N', 2001);
 
         // build templates
         $templates['triton']['default'] = array(
@@ -71,6 +72,7 @@ class Installer extends ModuleInstaller
                 'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]',
                 'names' => array('main', 'left', 'top', 'advertisement'),
                 'default_extras' => array('top' => array($extras['search_form'])),
+                'image' => false,
             )),
         );
 
@@ -83,6 +85,7 @@ class Installer extends ModuleInstaller
                 'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]',
                 'names' => array('main', 'left', 'right', 'top', 'advertisement'),
                 'default_extras' => array('top' => array($extras['search_form'])),
+                'image' => true,
             )),
         );
 
@@ -110,13 +113,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'extensions' as a module
         $this->addModule('Extensions');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // insert extras
         $this->insertExtras();

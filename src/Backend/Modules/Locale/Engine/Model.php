@@ -11,7 +11,7 @@ namespace Backend\Modules\Locale\Engine;
 
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -40,7 +40,7 @@ class Model
      */
     public static function buildURLQueryByFilter($filter)
     {
-        $query = http_build_query($filter);
+        $query = http_build_query($filter, null, '&', PHP_QUERY_RFC3986);
         if ($query != '') {
             $query = '&' . $query;
         }
@@ -249,16 +249,6 @@ class Model
              WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?',
             array($name, $type, $module, $language, $application)
         );
-    }
-
-    /**
-     * Grab labels found in the backend navigation.
-     *
-     * @return array
-     */
-    private static function getLabelsFromBackendNavigation()
-    {
-        return (array) BackendModel::getContainer()->get('database')->getColumn('SELECT label FROM backend_navigation');
     }
 
     /**
@@ -603,7 +593,7 @@ class Model
                     // attributes
                     $attributes = $item->attributes();
                     $type = \SpoonFilter::getValue($attributes['type'], $possibleTypes, '');
-                    $name = \SpoonFilter::getValue($attributes['name'], null, '');
+                    $name = ucfirst(\SpoonFilter::getValue($attributes['name'], null, ''));
 
                     // missing attributes
                     if ($type == '' || $name == '') {
@@ -645,10 +635,8 @@ class Model
                         $locale['edited_on'] = $date;
 
                         // check if translation does not yet exist, or if the translation can be overridden
-                        if (!in_array(
-                                $application . $module . $type . $language . $name,
-                                $currentLocale
-                            ) || $overwriteConflicts
+                        if (!in_array($application . $module . $type . $language . $name, $currentLocale)
+                            || $overwriteConflicts
                         ) {
                             $db->execute(
                                 'INSERT INTO locale (user_id, language, application, module, type, name, value, edited_on)

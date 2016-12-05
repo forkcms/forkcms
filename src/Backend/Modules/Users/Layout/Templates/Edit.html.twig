@@ -58,19 +58,19 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabProfile" aria-controls="profile" role="tab" data-toggle="tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
+            <a href="#tabProfile" aria-controls="tabProfile" role="tab" data-toggle="tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
           </li>
           {% if allowPasswordEdit %}
             <li role="presentation">
-              <a href="#tabPassword" aria-controls="password" role="tab" data-toggle="tab">{{ 'lbl.Password'|trans|ucfirst }}</a>
+              <a href="#tabPassword" aria-controls="tabPassword" role="tab" data-toggle="tab">{{ 'lbl.Password'|trans|ucfirst }}</a>
             </li>
           {% endif %}
           <li role="presentation">
-            <a href="#tabSettings" aria-controls="settings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+            <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
           </li>
           {% if allowUserRights %}
             <li role="presentation">
-              <a href="#tabPermissions" aria-controls="permissions" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
+              <a href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
             </li>
           {% endif %}
         </ul>
@@ -82,28 +82,28 @@
                   <div class="form-group">
                     <label for="email" class="control-label">
                       {{ 'lbl.Email'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     {% form_field email %} {% form_field_error email %}
                   </div>
                   <div class="form-group">
                     <label for="name" class="control-label">
                       {{ 'lbl.Name'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     {% form_field name %} {% form_field_error name %}
                   </div>
                   <div class="form-group">
                     <label for="surname" class="control-label">
                       {{ 'lbl.Surname'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     {% form_field surname %} {% form_field_error surname %}
                   </div>
                   <div class="form-group">
                     <label for="nickname" class="control-label">
                       {{ 'lbl.Nickname'|trans|ucfirst }}
-                      <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                      {{ macro.required }}
                     </label>
                     <p class="help-block">{{ 'msg.HelpNickname'|trans }}</p>
                     {% form_field nickname %} {% form_field_error nickname %}
@@ -148,7 +148,7 @@
                     <div class="form-group">
                       <label for="newPassword" class="control-label">
                         {{ 'lbl.Password'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <table id="passwordStrengthMeter" class="passwordStrength" data-id="newPassword">
                         <tr>
@@ -180,7 +180,7 @@
                     <div class="form-group last">
                       <label for="confirmPassword" class="control-label">
                         {{ 'lbl.ConfirmPassword'|trans|ucfirst }}
-                        <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+                        {{ macro.required }}
                       </label>
                       <div class="row">
                         <div class="col-md-6">
@@ -274,7 +274,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showUsersDelete %}
+          {% if showUsersDelete and allowUsersDelete %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
               <span class="fa fa-trash-o"></span>
               {{ 'lbl.Delete'|trans|ucfirst }}
@@ -287,8 +287,8 @@
           </button>
         </div>
       </div>
-      {% if showUsersDelete %}
-        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+      {% if showUsersDelete and allowUsersDelete %}
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

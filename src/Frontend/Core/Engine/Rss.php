@@ -42,11 +42,11 @@ class Rss extends \SpoonFeedRSS
         );
 
         $siteTitle = \SpoonFilter::htmlspecialcharsDecode(
-            Model::get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . LANGUAGE)
         );
 
         // set feed properties
-        $this->setLanguage(FRONTEND_LANGUAGE);
+        $this->setLanguage(LANGUAGE);
         $this->setCopyright(\SpoonDate::getDate('Y') . ' ' . $siteTitle);
         $this->setGenerator($siteTitle);
         $this->setImage(SITE_URL . FRONTEND_CORE_URL . '/Layout/images/rss_image.png', $title, $link);
@@ -71,14 +71,14 @@ class Rss extends \SpoonFeedRSS
     /**
      * Set the image for the feed.
      *
-     * @param string $URL         URL of the image.
+     * @param string $url         URL of the image.
      * @param string $title       Title of the image.
      * @param string $link        Link of the image.
      * @param int    $width       Width of the image.
      * @param int    $height      Height of the image.
      * @param string $description Description of the image.
      */
-    public function setImage($URL, $title, $link, $width = null, $height = null, $description = null)
+    public function setImage($url, $title, $link, $width = null, $height = null, $description = null)
     {
         // add UTM-parameters
         $link = Model::addURLParameters(
@@ -91,6 +91,6 @@ class Rss extends \SpoonFeedRSS
         );
 
         // call the parent
-        parent::setImage($URL, $title, $link, $width, $height, $description);
+        parent::setImage($url, $title, $link, $width, $height, $description);
     }
 }

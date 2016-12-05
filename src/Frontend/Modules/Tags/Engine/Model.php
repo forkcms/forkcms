@@ -49,22 +49,22 @@ class Model
     /**
      * Get the tag for a given URL
      *
-     * @param string        $URL The URL to get the tag for.
+     * @param string        $url The URL to get the tag for.
      * @param string $language
      *
      * @return array
      */
-    public static function get($URL, $language = null)
+    public static function get($url, $language = null)
     {
         // redefine language
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // exists
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT id, language, tag AS name, number, url
              FROM tags
              WHERE url = ? AND language = ?',
-            array((string) $URL, $language)
+            array((string) $url, $language)
         );
     }
 
@@ -80,7 +80,7 @@ class Model
              FROM tags AS t
              WHERE t.language = ? AND t.number > 0
              ORDER BY t.tag',
-            array(FRONTEND_LANGUAGE)
+            array(LANGUAGE)
         );
     }
 
@@ -180,17 +180,17 @@ class Model
     /**
      * Get the tag-id for a given URL
      *
-     * @param string $URL The URL to get the id for.
+     * @param string $url The URL to get the id for.
      *
      * @return int
      */
-    public static function getIdByURL($URL)
+    public static function getIdByURL($url)
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT id
              FROM tags
              WHERE url = ?',
-            array((string) $URL)
+            array((string) $url)
         );
     }
 

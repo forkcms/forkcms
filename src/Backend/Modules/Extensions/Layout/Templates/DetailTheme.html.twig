@@ -29,7 +29,7 @@
               </h3>
             </div>
             <div class="panel-body">
-              <p>{{ information.description }}</p>
+              <p>{{ information.description|raw }}</p>
             </div>
           </div>
         {% endif %}
@@ -96,7 +96,7 @@
       </div>
     </div>
   {% endif %}
-  {% if showExtensionsInstallTheme %}
+  {% if showInstallButton %}
     <div class="row fork-module-actions">
       <div class="col-md-12">
         <div class="btn-toolbar">
@@ -106,7 +106,7 @@
             </button>
           </div>
         </div>
-        <div class="modal fade" id="confirmInstall" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Install'|trans|ucfirst }}" aria-hidden="true">
+        <div class="modal fade" id="confirmInstall" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

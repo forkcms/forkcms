@@ -9,8 +9,9 @@ namespace Backend\Modules\Faq\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\ModuleExtraType;
 use Common\Uri as CommonUri;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
@@ -66,7 +67,6 @@ class Model
             $db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
 
             BackendModel::deleteExtraById($item['extra_id']);
-            BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
         }
     }
 
@@ -79,9 +79,8 @@ class Model
      */
     public static function deleteCategoryAllowed($id)
     {
-        if (
-            !BackendModel::get('fork.settings')->get('Faq', 'allow_multiple_categories', true) &&
-            self::getCategoryCount() == 1
+        if (!BackendModel::get('fork.settings')->get('Faq', 'allow_multiple_categories', true)
+            && self::getCategoryCount() == 1
         ) {
             return false;
         } else {
@@ -242,7 +241,8 @@ class Model
                  FROM faq_categories AS i
                  LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND i.language = p.language
                  WHERE i.language = ?
-                 GROUP BY i.id',
+                 GROUP BY i.id
+                 ORDER BY i.sequence',
                 array(BL::getWorkingLanguage())
             );
         }
@@ -265,8 +265,9 @@ class Model
     public static function getCategory($id)
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*
+            'SELECT i.*, m.url
              FROM faq_categories AS i
+             INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.id = ? AND i.language = ?',
             array((int) $id, BL::getWorkingLanguage())
         );
@@ -443,8 +444,6 @@ class Model
     {
         $insertId = BackendModel::getContainer()->get('database')->insert('faq_questions', $item);
 
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
-
         return $insertId;
     }
 
@@ -467,7 +466,7 @@ class Model
 
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
-            'widget',
+            ModuleExtraType::widget(),
             'Faq',
             'CategoryList'
         );
@@ -490,8 +489,6 @@ class Model
             )
         );
 
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
-
         return $item['id'];
     }
 
@@ -508,7 +505,6 @@ class Model
             'id = ?',
             array((int) $item['id'])
         );
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
     }
 
     /**
@@ -532,8 +528,5 @@ class Model
                 'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id'],
             )
         );
-
-        // invalidate faq
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
     }
 }

@@ -24,28 +24,28 @@ class Livesuggest extends FrontendBaseAJAXAction
     /**
      * Name of the cache file
      *
-     * @var    string
+     * @var string
      */
     private $cacheFile;
 
     /**
      * The items
      *
-     * @var    array
+     * @var array
      */
     private $items;
 
     /**
      * Limit of data to fetch
      *
-     * @var    int
+     * @var int
      */
     private $limit;
 
     /**
      * Offset of data to fetch
      *
-     * @var    int
+     * @var int
      */
     private $offset;
 
@@ -53,7 +53,7 @@ class Livesuggest extends FrontendBaseAJAXAction
      * The pagination array
      * It will hold all needed parameters, some of them need initialization.
      *
-     * @var    array
+     * @var array
      */
     protected $pagination = array(
         'limit' => 20,
@@ -66,7 +66,7 @@ class Livesuggest extends FrontendBaseAJAXAction
     /**
      * The requested page
      *
-     * @var    int
+     * @var int
      */
     private $requestedPage;
 
@@ -92,7 +92,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         $this->limit = (int) $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
-                           FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
+                           LANGUAGE . '_' . md5($this->term) . '_' .
                            $this->offset . '_' . $this->limit . '.php';
 
         // load the cached data
@@ -207,8 +207,8 @@ class Livesuggest extends FrontendBaseAJAXAction
         // debug mode = no cache
         if (!SPOON_DEBUG) {
             // set cache content
-            $fs = new Filesystem();
-            $fs->dumpFile(
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile(
                 $this->cacheFile,
                 "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
                     $this->items,
@@ -253,25 +253,16 @@ class Livesuggest extends FrontendBaseAJAXAction
         switch (true) {
             case (!isset($this->pagination['limit'])):
                 throw new FrontendException('no limit in the pagination-property.');
-                break;
             case (!isset($this->pagination['offset'])):
                 throw new FrontendException('no offset in the pagination-property.');
-                break;
             case (!isset($this->pagination['requested_page'])):
                 throw new FrontendException('no requested_page available in the pagination-property.');
-                break;
             case (!isset($this->pagination['num_items'])):
                 throw new FrontendException('no num_items available in the pagination-property.');
-                break;
             case (!isset($this->pagination['num_pages'])):
                 throw new FrontendException('no num_pages available in the pagination-property.');
-                break;
             case (!isset($this->pagination['url'])):
                 throw new FrontendException('no URL available in the pagination-property.');
-                break;
-            // default:
-            //     # code...
-            //     break;
         }
 
         // should we use a questionmark or an ampersand
@@ -319,14 +310,14 @@ class Livesuggest extends FrontendBaseAJAXAction
         if ($this->pagination['requested_page'] > 1) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
+                $url = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
+                $url = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
             }
 
             // set
             $pagination['show_previous'] = true;
-            $pagination['previous_url'] = $URL;
+            $pagination['previous_url'] = $url;
         }
 
         // show first pages?
@@ -339,13 +330,13 @@ class Livesuggest extends FrontendBaseAJAXAction
             for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?page=' . $i;
+                    $url = $this->pagination['url'] . '?page=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                    $url = $this->pagination['url'] . '&amp;page=' . $i;
                 }
 
                 // add
-                $pagination['first'][] = array('url' => $URL, 'label' => $i);
+                $pagination['first'][] = array('url' => $url, 'label' => $i);
             }
         }
 
@@ -356,13 +347,13 @@ class Livesuggest extends FrontendBaseAJAXAction
 
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . $i;
+                $url = $this->pagination['url'] . '?page=' . $i;
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                $url = $this->pagination['url'] . '&amp;page=' . $i;
             }
 
             // add
-            $pagination['pages'][] = array('url' => $URL, 'label' => $i, 'current' => $current);
+            $pagination['pages'][] = array('url' => $url, 'label' => $i, 'current' => $current);
         }
 
         // show last pages?
@@ -375,13 +366,13 @@ class Livesuggest extends FrontendBaseAJAXAction
             for ($i = $pagesLastStart; $i <= $pagesLastEnd; ++$i) {
                 // build URL
                 if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?page=' . $i;
+                    $url = $this->pagination['url'] . '?page=' . $i;
                 } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                    $url = $this->pagination['url'] . '&amp;page=' . $i;
                 }
 
                 // add
-                $pagination['last'][] = array('url' => $URL, 'label' => $i);
+                $pagination['last'][] = array('url' => $url, 'label' => $i);
             }
         }
 
@@ -389,14 +380,14 @@ class Livesuggest extends FrontendBaseAJAXAction
         if ($this->pagination['requested_page'] < $this->pagination['num_pages']) {
             // build URL
             if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
+                $url = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
+                $url = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
             }
 
             // set
             $pagination['show_next'] = true;
-            $pagination['next_url'] = $URL;
+            $pagination['next_url'] = $url;
         }
 
         // multiple pages

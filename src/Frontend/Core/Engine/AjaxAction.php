@@ -18,25 +18,11 @@ use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 class AjaxAction extends FrontendBaseAJAXAction
 {
     /**
-     * The current action
-     *
-     * @var    string
-     */
-    protected $action;
-
-    /**
      * The config file
      *
-     * @var    Base\Config
+     * @var Base\Config
      */
     protected $config;
-
-    /**
-     * The current module
-     *
-     * @var    string
-     */
-    protected $module;
 
     /**
      * @param KernelInterface $kernel

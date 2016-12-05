@@ -10,15 +10,15 @@ class InstallerControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/install');
-        $crawler = $client->followRedirect();
+        $client->request('GET', '/install');
+        $client->followRedirect();
 
         // we should be redirected to the first step
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/install/1',
             $client->getHistory()->current()->getUri()
         );
@@ -30,13 +30,16 @@ class InstallerControllerTest extends WebTestCase
 
         // make sure we have a clean slate and our parameters file is backed up
         $this->emptyTestDatabase($client->getContainer()->get('database'));
+
+        // recreate the client with the empty database because we need this in our installer checks
+        $client = static::createClient();
         $this->backupParametersFile($client->getContainer()->getParameter('kernel.root_dir'));
 
         $crawler = $client->request('GET', '/install/2');
         $crawler = $this->runTroughStep2($crawler, $client);
         $crawler = $this->runTroughStep3($crawler, $client);
         $crawler = $this->runTroughStep4($crawler, $client);
-        $crawler = $this->runTroughStep5($crawler, $client);
+        $this->runTroughStep5($crawler, $client);
 
         // put back our parameters file
         $this->putParametersFileBack($client->getContainer()->getParameter('kernel.root_dir'));
@@ -54,7 +57,7 @@ class InstallerControllerTest extends WebTestCase
         $form['install_languages[languages][0]']->tick();
         $form['install_languages[languages][1]']->tick();
         $form['install_languages[languages][2]']->tick();
-        $crawler = $client->submit(
+        $client->submit(
             $form,
             array(
                 'install_languages[language_type]' => 'multiple',
@@ -65,11 +68,11 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // we should be redirected to step 3
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/install/3',
             $client->getHistory()->current()->getUri()
         );
@@ -86,15 +89,15 @@ class InstallerControllerTest extends WebTestCase
     private function runTroughStep3($crawler, $client)
     {
         $form = $crawler->selectButton('Next')->form();
-        $crawler = $client->submit($form, array());
+        $client->submit($form, array());
         $crawler = $client->followRedirect();
 
         // we should be redirected to step 4
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/install/4',
             $client->getHistory()->current()->getUri()
         );
@@ -113,7 +116,7 @@ class InstallerControllerTest extends WebTestCase
         // first submit with incorrect data
         $form = $crawler->selectButton('Next')->form();
         $crawler = $client->submit($form, array());
-        $this->assertGreaterThan(
+        self::assertGreaterThan(
             0,
             $crawler->filter('div.errorMessage:contains("Problem with database credentials")')->count()
         );
@@ -121,7 +124,7 @@ class InstallerControllerTest extends WebTestCase
         // submit with correct database credentials
         $form = $crawler->selectButton('Next')->form();
         $container = $client->getContainer();
-        $crawler = $client->submit(
+        $client->submit(
             $form,
             array(
                 'install_database[dbHostname]' => $container->getParameter('database.host'),
@@ -134,11 +137,11 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // we should be redirected to step 5
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/install/5',
             $client->getHistory()->current()->getUri()
         );
@@ -155,8 +158,7 @@ class InstallerControllerTest extends WebTestCase
     private function runTroughStep5($crawler, $client)
     {
         $form = $crawler->selectButton('Finish installation')->form();
-        $container = $client->getContainer();
-        $crawler = $client->submit(
+        $client->submit(
             $form,
             array(
                 'install_login[email]' => 'test@test.com',
@@ -167,15 +169,15 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // we should be redirected to step 6
-        $this->assertEquals(
+        self::assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringEndsWith(
+        self::assertStringEndsWith(
             '/install/6',
             $client->getHistory()->current()->getUri()
         );
-        $this->assertGreaterThan(
+        self::assertGreaterThan(
             0,
             $crawler->filter('h2:contains("Installation complete")')->count()
         );

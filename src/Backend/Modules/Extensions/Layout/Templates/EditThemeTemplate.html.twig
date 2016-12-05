@@ -29,6 +29,11 @@
             <label for="label" class="control-label">{{ 'lbl.Label'|trans|ucfirst }}</label>
             {% form_field label %} {% form_field_error label %}
           </div>
+          <ul class="list-unstyled">
+            <li class="checkbox">
+              <label for="image">{% form_field image %} {% form_field_error image %} {{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -180,7 +185,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showExtensionsDeleteThemeTemplate %}
+          {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
               <span class="fa fa-trash-o"></span>{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
@@ -192,8 +197,8 @@
           </button>
         </div>
       </div>
-      {% if showExtensionsDeleteThemeTemplate %}
-        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+      {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

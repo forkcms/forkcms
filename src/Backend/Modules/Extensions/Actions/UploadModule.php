@@ -12,7 +12,7 @@ namespace Backend\Modules\Extensions\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -35,10 +35,7 @@ class UploadModule extends BackendBaseActionAdd
             $this->tpl->assign('zlibIsMissing', true);
         }
 
-        // \ZipArchive class is required for module upload
-        if (!class_exists('\ZipArchive')) {
-            $this->tpl->assign('ZipArchiveIsMissing', true);
-        } elseif (!$this->isWritable()) {
+        if (!$this->isWritable()) {
             // we need write rights to upload files
             $this->tpl->assign('notWritable', true);
         } else {
@@ -91,9 +88,6 @@ class UploadModule extends BackendBaseActionAdd
         // name of the module we are trying to upload
         $moduleName = null;
 
-        // there are some complications
-        $warnings = array();
-
         // has the module zip one level of folders too much?
         $prefix = '';
 
@@ -113,16 +107,8 @@ class UploadModule extends BackendBaseActionAdd
                 if (mb_stripos($fileName, $prefix . $directory) === 0) {
                     // we have a library file
                     if ($directory == $prefix . 'library/external/') {
-                        // strip the prefix from the filename if necessary
-                        $notPrefixedFileName = $fileName;
-                        if (!empty($prefix)) {
-                            $notPrefixedFileName = mb_substr($fileName, mb_strlen($prefix));
-                        }
-
                         if (!is_file(PATH_WWW . '/' . $fileName)) {
                             $files[] = $fileName;
-                        } else {
-                            $warnings[] = sprintf(BL::getError('LibraryFileAlreadyExists'), $fileName);
                         }
                         break;
                     }
@@ -181,7 +167,7 @@ class UploadModule extends BackendBaseActionAdd
 
         // place all the items in the prefixed folders in the right folders
         if (!empty($prefix)) {
-            $fs = new Filesystem();
+            $filesystem = new Filesystem();
             foreach ($files as &$file) {
                 $fullPath = PATH_WWW . '/' . $file;
                 $newPath = str_replace(
@@ -190,21 +176,21 @@ class UploadModule extends BackendBaseActionAdd
                     $fullPath
                 );
 
-                if ($fs->exists($fullPath) && is_dir($fullPath)) {
-                    $fs->mkdir($newPath);
-                } elseif ($fs->exists($fullPath) && is_file($fullPath)) {
-                    $fs->copy(
+                if ($filesystem->exists($fullPath) && is_dir($fullPath)) {
+                    $filesystem->mkdir($newPath);
+                } elseif ($filesystem->exists($fullPath) && is_file($fullPath)) {
+                    $filesystem->copy(
                         $fullPath,
                         $newPath
                     );
                 }
             }
 
-            $fs->remove(PATH_WWW . '/' . $prefix);
+            $filesystem->remove(PATH_WWW . '/' . $prefix);
         }
 
         // run installer
-        BackendExtensionsModel::installModule($moduleName, $warnings);
+        BackendExtensionsModel::installModule($moduleName);
 
         // return the files
         return $moduleName;
@@ -243,16 +229,11 @@ class UploadModule extends BackendBaseActionAdd
      */
     private function isWritable()
     {
-        // check if writable
         if (!BackendExtensionsModel::isWritable(FRONTEND_MODULES_PATH)) {
             return false;
         }
-        if (!BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH)) {
-            return false;
-        }
 
-        // everything is writeable
-        return true;
+        return BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH);
     }
 
     /**

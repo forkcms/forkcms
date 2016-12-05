@@ -12,13 +12,8 @@ namespace Backend\Modules\Extensions\Actions;
 use Backend\Core\Engine\Base\ActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model;
-
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
+use SpoonFilter;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Exports templates in the selected theme, for ease when packaging themes.
@@ -28,32 +23,21 @@ class ExportThemeTemplates extends ActionEdit
     /**
      * All available themes
      *
-     * @var    array
+     * @var array
      */
     private $availableThemes;
 
     /**
      * The current selected theme
      *
-     * @var    string
+     * @var string
      */
     private $selectedTheme;
 
     /**
-     * Execute the action
-     */
-    public function execute()
-    {
-        parent::execute();
-        $this->loadData();
-        $this->parse();
-        $this->display();
-    }
-
-    /**
      * Load the selected theme, falling back to default if none specified.
      */
-    private function loadData()
+    public function execute()
     {
         // get data
         $this->selectedTheme = $this->getParameter('theme', 'string');
@@ -64,7 +48,7 @@ class ExportThemeTemplates extends ActionEdit
         }
 
         // determine selected theme, based upon submitted form or default theme
-        $this->selectedTheme = \SpoonFilter::getValue(
+        $this->selectedTheme = SpoonFilter::getValue(
             $this->selectedTheme,
             array_keys($this->availableThemes),
             $this->get('fork.settings')->get('Core', 'theme', 'core')
@@ -72,17 +56,19 @@ class ExportThemeTemplates extends ActionEdit
     }
 
     /**
-     * Export the templates as XML.
+     * @return Response
      */
-    protected function parse()
+    public function getContent()
     {
-        $xml = Model::createTemplateXmlForExport($this->selectedTheme);
-
         $filename = 'templates_' . BackendModel::getUTCDate('d-m-Y') . '.xml';
-        header('Content-type: text/xml');
-        header('Content-disposition: attachment; filename="' . $filename . '"');
 
-        echo $xml;
-        exit;
+        return new Response(
+            Model::createTemplateXmlForExport($this->selectedTheme),
+            Response::HTTP_OK,
+            [
+                'Content-type' => 'text/xml',
+                'Content-disposition' => 'attachment; filename="' . $filename . '"',
+            ]
+        );
     }
 }

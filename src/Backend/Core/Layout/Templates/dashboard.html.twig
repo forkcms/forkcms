@@ -28,22 +28,8 @@
   </div>
 </div>
 
-<div id="messaging">
-  <noscript>
-    <div class="formMessage errorMessage">
-      <p>{{ err.JavascriptNotEnabled }}</p>
-    </div>
-  </noscript>
-  <div id="noCookies" class="formMessage errorMessage" style="display: none;">
-    <p>{{ err.CookiesNotEnabled }}</p>
-  </div>
-</div>
-<div id="ajaxSpinner" style="position: fixed; top: 10px; right: 10px; display: none;">
-  <img src="/src/Backend/Core/Layout/images/spinner.gif" width="16" height="16" alt="loading" />
-</div>
-
 <div class="hidden">
-  <div class="modal fade jsConfirmation" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+  <div class="modal fade jsConfirmation" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

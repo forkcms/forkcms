@@ -11,6 +11,6 @@
 
   <h3>{{ 'lbl.Content'|trans|ucfirst }}</h3>
   {% for field in fields %}
-    <p><strong>{{ field.label }}:</strong><br /> {{ field.value }}</p>
+    <p><strong>{{ field.label }}:</strong><br /> {{ field.value|raw }}</p>
   {% endfor %}
 {% endblock %}

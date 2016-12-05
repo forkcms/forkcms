@@ -20,7 +20,7 @@ class Breadcrumb extends FrontendBaseObject
     /**
      * The items in the breadcrumb
      *
-     * @var    array
+     * @var array
      */
     private $items = array();
 
@@ -45,13 +45,13 @@ class Breadcrumb extends FrontendBaseObject
 
         // init vars
         $items = array();
-        $errorURL = Navigation::getUrl(404);
+        $errorURL = Navigation::getURL(404);
 
         // loop pages
         while (!empty($pages)) {
             // init vars
-            $URL = implode('/', $pages);
-            $menuId = Navigation::getPageId($URL);
+            $url = implode('/', $pages);
+            $menuId = Navigation::getPageId($url);
             $pageInfo = Navigation::getPageInfo($menuId);
 
             // do we know something about the page
@@ -59,7 +59,7 @@ class Breadcrumb extends FrontendBaseObject
                 // only add pages that aren't direct actions
                 if ($pageInfo['tree_type'] != 'direct_action') {
                     // get URL
-                    $pageURL = Navigation::getUrl($menuId);
+                    $pageURL = Navigation::getURL($menuId);
 
                     // if this is the error-page, so we won't show an URL.
                     if ($pageURL == $errorURL) {
@@ -88,11 +88,11 @@ class Breadcrumb extends FrontendBaseObject
      * Add an element
      *
      * @param string $title The label that will be used in the breadcrumb.
-     * @param string $URL   The URL for this item.
+     * @param string $url   The URL for this item.
      */
-    public function addElement($title, $URL = null)
+    public function addElement($title, $url = null)
     {
-        $this->items[] = array('title' => (string) $title, 'url' => $URL);
+        $this->items[] = array('title' => (string) $title, 'url' => $url);
     }
 
     /**
@@ -142,6 +142,6 @@ class Breadcrumb extends FrontendBaseObject
     public function parse()
     {
         // assign
-        $this->tpl->assign('breadcrumb', $this->items);
+        $this->tpl->addGlobal('breadcrumb', $this->items);
     }
 }

@@ -4,7 +4,10 @@ namespace Frontend\Core\Engine;
 
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 
 /*
  * This file is part of Fork CMS.
@@ -35,14 +38,26 @@ class TwigTemplate extends BaseTwigTemplate
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
 
         $this->forkSettings = Model::get('fork.settings');
+        // fork has been installed
         if ($this->forkSettings) {
             $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
             $loader = $this->environment->getLoader();
-            $loader = new \Twig_Loader_Chain(array(
-                $loader,
-                new \Twig_Loader_Filesystem($this->getLoadingFolders()),
-            ));
+            $loader = new \Twig_Loader_Chain(
+                array(
+                    $loader,
+                    new \Twig_Loader_Filesystem($this->getLoadingFolders()),
+                )
+            );
             $this->environment->setLoader($loader);
+
+            // connect symphony forms
+            $formEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'));
+            $formEngine->setEnvironment($this->environment);
+            $this->environment->addExtension(
+                new SymfonyFormExtension(
+                    new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
+                )
+            );
         }
 
         $this->environment->disableStrictVariables();
@@ -67,14 +82,26 @@ class TwigTemplate extends BaseTwigTemplate
         if (strpos($template, FRONTEND_MODULES_PATH) !== false) {
             return str_replace(FRONTEND_MODULES_PATH . '/', '', $template);
         }
+
         // else it's in the theme folder
         return str_replace($this->themePath . '/', '', $template);
     }
 
     /**
+     * Adds a global variable to the template
+     *
+     * @param string $name
+     * @param mixed $value
+     */
+    public function addGlobal($name, $value)
+    {
+        $this->environment->addGlobal($name, $value);
+    }
+
+    /**
      * Fetch the parsed content from this template.
      *
-     * @param string $template      The location of the template file, used to display this template.
+     * @param string $template The location of the template file, used to display this template.
      *
      * @return string The actual parsed content after executing this template.
      */
@@ -82,10 +109,14 @@ class TwigTemplate extends BaseTwigTemplate
     {
         $template = $this->getPath($template);
 
-        return $this->render(
+        $content = $this->render(
             $template,
             $this->variables
         );
+
+        $this->variables = array();
+
+        return $content;
     }
 
     /**
@@ -119,7 +150,26 @@ class TwigTemplate extends BaseTwigTemplate
                 $this->themePath,
                 FRONTEND_MODULES_PATH,
                 FRONTEND_PATH,
-                '/',
+            ),
+            function ($folder) use ($filesystem) {
+                return $filesystem->exists($folder);
+            }
+        );
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return array
+     */
+    private function getFormTemplates($fileName)
+    {
+        $filesystem = new Filesystem();
+
+        return array_filter(
+            array(
+                FRONTEND_PATH . '/Core/Layout/Templates/' . $fileName,
+                $this->themePath . '/Core/Layout/Templates/' . $fileName,
             ),
             function ($folder) use ($filesystem) {
                 return $filesystem->exists($folder);

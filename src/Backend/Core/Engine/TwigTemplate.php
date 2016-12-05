@@ -2,10 +2,18 @@
 
 namespace Backend\Core\Engine;
 
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Frontend\Core\Engine\FormExtension;
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
+use ReflectionClass;
+use Symfony\Bridge\Twig\AppVariable;
+use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Twig_Environment;
+use Twig_Extension_Debug;
+use Twig_Loader_Filesystem;
 
 /*
  * This file is part of Fork CMS.
@@ -39,9 +47,7 @@ class TwigTemplate extends BaseTwigTemplate
     /**
      * Fetch the parsed content from this template.
      *
-     * @param string $template      The location of the template file, used to display this template.
-     * @param bool   $customHeaders Are custom headers already set?
-     * @param bool   $parseCustom   Parse custom template.
+     * @param string $template The location of the template file, used to display this template.
      *
      * @return string The actual parsed content after executing this template.
      */
@@ -57,29 +63,51 @@ class TwigTemplate extends BaseTwigTemplate
 
         $template = str_replace(BACKEND_MODULES_PATH, '', $template);
 
-        // render the compiled File
-        $loader = new \Twig_Loader_Filesystem(array(
-            BACKEND_MODULES_PATH,
-            BACKEND_CORE_PATH,
-        ));
+        // path to TwigBridge library so we can locate the form theme files.
+        $appVariableReflection = new ReflectionClass(AppVariable::class);
+        $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
 
-        $twig = new \Twig_Environment($loader, array(
-            'cache' => BACKEND_CACHE_PATH.'/CachedTemplates/Twig_'.($this->debugMode ? 'dev/' : 'prod/'),
-            'debug' => $this->debugMode,
-        ));
+        // render the compiled File
+        $loader = new Twig_Loader_Filesystem(
+            array(
+                BACKEND_MODULES_PATH,
+                BACKEND_CORE_PATH,
+                $vendorTwigBridgeDir . '/Resources/views/Form',
+            )
+        );
+
+        $twig = new Twig_Environment(
+            $loader,
+            array(
+                'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
+                'debug' => $this->debugMode,
+            )
+        );
+
+        // connect symphony forms
+        $formEngine = new TwigRendererEngine(array('Layout/Templates/FormLayout.html.twig'));
+        $formEngine->setEnvironment($twig);
+        $twig->addExtension(
+            new SymfonyFormExtension(
+                new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
+            )
+        );
+
+        $twigTranslationExtensionClass = Model::getContainer()->getParameter('twig.extension.trans.class');
+        $twig->addExtension(new $twigTranslationExtensionClass(Model::get('translator')));
 
         // debug options
         if ($this->debugMode === true) {
-            $twig->addExtension(new \Twig_Extension_Debug());
+            $twig->addExtension(new Twig_Extension_Debug());
         }
 
         if (count($this->forms) > 0) {
             foreach ($this->forms as $form) {
-                $twig->addGlobal('form_'.$form->getName(), $form);
+                $twig->addGlobal('form_' . $form->getName(), $form);
             }
         }
 
-        // should always be included
+        // should always be included, makes it possible to parse SpoonForm in twig
         new FormExtension($twig);
 
         // start the filters / globals
@@ -116,35 +144,32 @@ class TwigTemplate extends BaseTwigTemplate
         }
 
         // we use some abbreviations and common terms, these should also be assigned
-        $this->assign('LANGUAGE', Language::getWorkingLanguage());
+        $this->assign('LANGUAGE', BL::getWorkingLanguage());
 
-        // adding parameters
-        $this->assign(
-            'SITE_MULTILANGUAGE',
-            Model::getContainer()->getParameter('site.multilanguage')
-        );
+        // check on url object
+        if (Model::getContainer()->has('url')) {
+            $url = Model::get('url');
 
-        $url = Model::get('url');
+            if ($url instanceof Url) {
+                // assign the current module
+                $this->assign('MODULE', $url->getModule());
 
-        if ($url instanceof Url) {
-            // assign the current module
-            $this->assign('MODULE', $url->getModule());
+                // assign the current action
+                if ($url->getAction() != '') {
+                    $this->assign('ACTION', $url->getAction());
+                }
 
-            // assign the current action
-            if ($url->getAction() != '') {
-                $this->assign('ACTION', $url->getAction());
-            }
-
-            if ($url->getModule() == 'Core') {
-                $this->assign(
-                    'BACKEND_MODULE_PATH',
-                    BACKEND_PATH . '/' . $url->getModule()
-                );
-            } else {
-                $this->assign(
-                    'BACKEND_MODULE_PATH',
-                    BACKEND_MODULES_PATH . '/' . $url->getModule()
-                );
+                if ($url->getModule() == 'Core') {
+                    $this->assign(
+                        'BACKEND_MODULE_PATH',
+                        BACKEND_PATH . '/' . $url->getModule()
+                    );
+                } else {
+                    $this->assign(
+                        'BACKEND_MODULE_PATH',
+                        BACKEND_MODULES_PATH . '/' . $url->getModule()
+                    );
+                }
             }
         }
 
@@ -160,7 +185,7 @@ class TwigTemplate extends BaseTwigTemplate
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
-            Model::get('fork.settings')->get('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
     }
 
@@ -239,11 +264,11 @@ class TwigTemplate extends BaseTwigTemplate
     private function parseLabels()
     {
         // grab the current module
-        $currentModule = Language::getCurrentModule();
+        $currentModule = BL::getCurrentModule();
 
-        $errors = Language::getErrors();
-        $labels = Language::getLabels();
-        $messages = Language::getMessages();
+        $errors = BL::getErrors();
+        $labels = BL::getLabels();
+        $messages = BL::getMessages();
 
         // set the begin state
         $realErrors = $errors['Core'];
@@ -323,12 +348,12 @@ class TwigTemplate extends BaseTwigTemplate
         $localeToAssign = array();
 
         // get months
-        $monthsLong = \SpoonLocale::getMonths(Language::getInterfaceLanguage(), false);
-        $monthsShort = \SpoonLocale::getMonths(Language::getInterfaceLanguage(), true);
+        $monthsLong = \SpoonLocale::getMonths(BL::getInterfaceLanguage(), false);
+        $monthsShort = \SpoonLocale::getMonths(BL::getInterfaceLanguage(), true);
 
         // get days
-        $daysLong = \SpoonLocale::getWeekDays(Language::getInterfaceLanguage(), false, 'sunday');
-        $daysShort = \SpoonLocale::getWeekDays(Language::getInterfaceLanguage(), true, 'sunday');
+        $daysLong = \SpoonLocale::getWeekDays(BL::getInterfaceLanguage(), false, 'sunday');
+        $daysShort = \SpoonLocale::getWeekDays(BL::getInterfaceLanguage(), true, 'sunday');
 
         // build labels
         foreach ($monthsLong as $key => $value) {
@@ -361,22 +386,25 @@ class TwigTemplate extends BaseTwigTemplate
         // assign current timestamp
         $this->assign('timestamp', time());
 
-        // assign body ID
-        $url = Model::get('url');
-        if ($url instanceof Url) {
-            $this->assign('bodyID', \SpoonFilter::toCamelCase($url->getModule(), '_', true));
+        // check on url object
+        if (Model::getContainer()->has('url')) {
+            $url = Model::get('url');
 
-            // build classes
-            $bodyClass = \SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true);
+            if ($url instanceof Url) {
+                $this->assign('bodyID', \SpoonFilter::toCamelCase($url->getModule(), '_', true));
 
-            // special occasions
-            if ($url->getAction() == 'add' || $url->getAction() == 'edit'
-            ) {
-                $bodyClass = $url->getModule() . 'AddEdit';
+                // build classes
+                $bodyClass = \SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true);
+
+                // special occasions
+                if ($url->getAction() == 'add' || $url->getAction() == 'edit'
+                ) {
+                    $bodyClass = $url->getModule() . 'AddEdit';
+                }
+
+                // assign
+                $this->assign('bodyClass', $bodyClass);
             }
-
-            // assign
-            $this->assign('bodyClass', $bodyClass);
         }
 
         if (Model::has('navigation')) {

@@ -12,7 +12,7 @@ namespace Backend\Modules\Profiles\Engine;
 use Common\Mailer\Message;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Exception as BackendException;
 
@@ -31,7 +31,7 @@ class Model
     /**
      * Browse groups for datagrid.
      *
-     * @var    string
+     * @var string
      */
     const QRY_DATAGRID_BROWSE_PROFILE_GROUPS =
         'SELECT gr.id, g.name AS group_name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on
@@ -550,7 +550,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url);
+                return self::getUrl($url);
             }
         } else {
             // get number of profiles with this URL
@@ -568,7 +568,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url, $id);
+                return self::getUrl($url, $id);
             }
         }
 
@@ -631,9 +631,12 @@ class Model
      * Import CSV data
      *
      * @param array $data The array from the .csv file
-     * @param int[optional] $groupId Adding these profiles to a group
-     * @param bool[optional] $overwriteExisting If set to true, this will overwrite existing profiles
-     * @param return array('count' => array('exists' => 0, 'inserted' => 0));
+     * @param null $groupId $groupId Adding these profiles to a group
+     * @param bool $overwriteExisting $overwriteExisting
+     * @return array array('count' => array('exists' => 0, 'inserted' => 0));
+     *
+     * @throws BackendException
+     * @internal param $bool [optional] $overwriteExisting If set to true, this will overwrite existing profiles
      */
     public static function importCsv($data, $groupId = null, $overwriteExisting = false)
     {
@@ -646,9 +649,6 @@ class Model
             if (!isset($item['email']) || !isset($item['display_name']) || !isset($item['password'])) {
                 throw new BackendException('The .csv file should have the following columns; "email", "password" and "display_name".');
             }
-
-            // init $insert
-            $values = array();
 
             // define exists
             $exists = self::existsByEmail($item['email']);
@@ -670,7 +670,7 @@ class Model
                 'url' => self::getUrl($item['display_name']),
             );
 
-            // does not exists
+            // does not exist
             if (!$exists) {
                 // import
                 $id = self::insert($values);
@@ -713,7 +713,7 @@ class Model
                 $values['starts_on'] = BackendModel::getUTCDate();
 
                 // insert values
-                $id = self::insertProfileGroup($values);
+                self::insertProfileGroup($values);
             }
         }
 
@@ -841,14 +841,14 @@ class Model
      * Send mail
      *
      * @param string $subject
-     * @param string $templatePath
+     * @param string|null $templatePath
      * @param array $variables
      * @param string $toEmail
      * @param string $toDisplayName
      */
     protected static function sendMail(
         $subject,
-        $templatePath = null,
+        $templatePath,
         $variables,
         $toEmail,
         $toDisplayName = null

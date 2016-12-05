@@ -13,7 +13,7 @@ use Common\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
@@ -25,7 +25,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * DataGrid with the articles linked to the current tag
      *
-     * @var    BackendDataGridArray
+     * @var BackendDataGridArray
      */
     protected $dgUsage;
 
@@ -71,7 +71,6 @@ class Edit extends BackendBaseActionEdit
 
         // loop modules
         foreach ($modules as $module) {
-
             // build class name
             $className = 'Backend\\Modules\\' . $module . '\\Engine\\Model';
             if ($module == 'Core') {
@@ -162,7 +161,7 @@ class Edit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode(
                         $item['tag']
                     ) . '&highlight=row-' . $item['id']
                 );

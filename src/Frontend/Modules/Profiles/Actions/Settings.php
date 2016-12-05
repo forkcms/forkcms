@@ -11,7 +11,7 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -27,7 +27,7 @@ class Settings extends FrontendBaseBlock
     /**
      * FrontendForm instance.
      *
-     * @var    FrontendForm
+     * @var FrontendForm
      */
     private $frm;
 
@@ -85,7 +85,7 @@ class Settings extends FrontendBaseBlock
 
         // birthdate dropdown values
         $days = range(1, 31);
-        $months = \SpoonLocale::getMonths(FRONTEND_LANGUAGE);
+        $months = \SpoonLocale::getMonths(LANGUAGE);
         $years = range(date('Y'), 1900);
 
         // get settings
@@ -113,7 +113,7 @@ class Settings extends FrontendBaseBlock
         $this->frm->addText('city', $this->profile->getSetting('city'));
         $this->frm->addDropdown(
             'country',
-            Intl::getRegionBundle()->getCountryNames(FRONTEND_LANGUAGE),
+            Intl::getRegionBundle()->getCountryNames(LANGUAGE),
             $this->profile->getSetting('country')
         );
         $this->frm->addDropdown('gender', $genderValues, $this->profile->getSetting('gender'));

@@ -188,17 +188,21 @@
             <ol>
               <li>Ga naar de <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
               <li>Zorg dat je aangemeld bent met een Google account die toegang heeft op de gewenste analytics account.</li>
-              <li>Kies een project of maak een nieuw aan.</li>
-              <li>Klik in de zijbalk op <strong>APIs &amp; auth</strong>. Kies daaronder <strong>APIs</strong>. Kies <strong>Enabled APIs</strong> om te zien welke API's er ingeschakeld zijn. Controleer of the Analytics API tussen de ingeschakelde API's staat. Indien de Analytics API niet aanwezig is, klik dan op de <strong>Enable API</strong> knop voor deze API.</li>
+              <li>Kies een project in de header of maak een nieuw aan.</li>
+              <li>Klik op <strong>Bibliotheek</strong> in de zijbalk.</li>
+              <li>Ga naar de <strong>Analytics API</strong> door er op te klikken in de <strong>Andere populaire API's</strong> categorie of door het te typen in de zoekbalk.</li>
+              <li>Als je de API nog niet geactiveerd hebt kan je dit doen door onder de header op <strong>INSCHAKELEN</strong> te klikken.<li>
             </ol>
           </p>
           <p>Toegangsgegevens aanmaken voor Fork CMS.</p>
           <p>
             <ol>
-              <li>Kies in de zijbalk aan de linkerkant <strong>Credentials.</strong></li>
-              <li>Klik op deze pagina op New credentials onder de credentials tab.</li>
-              <li>Kies <strong>Service account</strong> in de dropdown.</li>
+              <li>Kies in de zijbalk aan de linkerkant <strong>Inloggegevens</strong>.</li>
+              <li>Klik op <strong>Inloggegevens maken</strong> en kies <strong>Serviceaccountsleutel</strong> in de dropdown.</li>
+              <li>Maak een nieuw serviceaccount aan met de rol <strong>Project - Editor</strong> en <strong>P12</strong> als type sleutel.</li>
               <li>Download na het opslaan het gegenereerde certificaat (p12 file).</li>
+              <li>Ga terug naar de <strong>Inloggegevens</strong> pagina en klik op <strong>Serviceaccounts beheren</strong>.</li>
+              <li>Kopieer de <strong>Serviceaccount-ID</strong> van de net aangemaakte account. Het zou er ongeveer als volgt moeten uitzien <code>name@spheric-passkey-123456.iam.gserviceaccount.com</code></li>
               <li>Log in in Google Analytics and voeg leesrechten toe voor het gegenereerde emailadres in de developer console.</li>
               <li>Haal een kop koffie, en kom daarna terug. Het kan even duren voor de koppeling tot stand is gekomen.</li>
             </ol>
@@ -211,17 +215,21 @@
             <ol>
               <li>Go to the <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
               <li>Make sure you're logged in with a Google account that has access to the wanted Analytics account.</li>
-              <li>Select a project, or create a new one.</li>
-              <li>In the sidebar on the left, expand <strong>APIs &amp; auth</strong>. Next, click <strong>APIs</strong>. Select the <strong>Enabled APIs</strong> link in the API section to see a list of all your enabled APIs. Make sure that the Google Analytics API is on the list of enabled APIs. If you have not enabled it, select the API from the list of APIs, then select the <strong>Enable API</strong> button for the API.</li>
+              <li>Select a project in the header, or create a new one.</li>
+              <li>Click on <strong>Library</strong> in the sidebar on the left.</li>
+              <li>Go to the <strong>Analytics API</strong> page by clicking on it in the <strong>Other popular API's</strong> category or typing it in the search bar.</li>
+              <li>You can enable the API if you haven't done that yet by clicking on <strong>ENABLE API</strong> underneath the header.<li>
             </ol>
           </p>
           <p>Creating credentials for Fork CMS.</p>
           <p>
             <ol>
-              <li>In the sidebar on the left, select <strong>Credentials.</strong></li>
-              <li>From the Credentials page, click New credentials under the Credentials tab to create your OAuth 2.0 credentials.</li>
-              <li>Select <strong>Service account key</strong> in the dropdown.</li>
+              <li>In the sidebar on the left, select <strong>Credentials</strong>.</li>
+              <li>Click on <strong>Create credentials</strong> and select <strong>Service account key</strong> in the dropdown.</li>
+              <li>Create a new serviceaccount with the role <strong>Project - Editor</strong> and <strong>P12</strong> as Key type.</li>
               <li>Download the generated certificate (.p12 file).</li>
+              <li>Go back to the <strong>Credentials</strong> page and click on <strong>Manage service accounts</strong></li>
+              <li>Copy the <strong>Service account ID</strong> of the newly created account. It should look something like <code>name@spheric-passkey-123456.iam.gserviceaccount.com</code></li>
               <li>Login to analytics and add read rights to the wanted analytics profile to the generated emailadress from the developer console.</li>
               <li>Grab a cup of coffee, and come back to Fork in some minutes. It can take some time before the coupling is fully done.</li>
             </ol>

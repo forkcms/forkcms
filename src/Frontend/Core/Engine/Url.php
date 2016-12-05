@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Exception\RedirectException;
+use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Common\Cookie as CommonCookie;
@@ -22,7 +23,7 @@ class Url extends \KernelLoader
     /**
      * The pages
      *
-     * @var    array
+     * @var array
      */
     private $pages = array();
 
@@ -36,12 +37,14 @@ class Url extends \KernelLoader
     /**
      * The parameters
      *
-     * @var    array
+     * @var array
      */
     private $parameters = array();
 
     /**
      * @param KernelInterface $kernel
+     *
+     * @throws RedirectException
      */
     public function __construct(KernelInterface $kernel)
     {
@@ -269,23 +272,22 @@ class Url extends \KernelLoader
             if ($mustRedirect) {
                 // build URL
                 // trim the first / from the query string to prevent double slashes
-                $URL = rtrim('/' . $language . '/' . trim($this->getQueryString(), '/'), '/');
+                $url = rtrim('/' . $language . '/' . trim($this->getQueryString(), '/'), '/');
                 // when we are just adding the language to the domain, it's a temporary redirect because
                 // Safari keeps the 301 in cache, so the cookie to switch language doesn't work any more
-                $redirectCode = ($URL == '/' . $language ? 302 : 301);
+                $redirectCode = ($url == '/' . $language ? 302 : 301);
 
                 // set header & redirect
                 throw new RedirectException(
                     'Redirect',
-                    new RedirectResponse(
-                        $URL, $redirectCode
-                    )
+                    new RedirectResponse($url, $redirectCode)
                 );
             }
         }
 
         // define the language
         defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $language);
+        defined('LANGUAGE') || define('LANGUAGE', $language);
 
         // sets the locale file
         Language::setLocale($language);
@@ -294,16 +296,16 @@ class Url extends \KernelLoader
         $keys = Navigation::getKeys();
 
         // rebuild our URL, but without the language parameter. (it's tripped earlier)
-        $URL = implode('/', $chunks);
-        $startURL = $URL;
+        $url = implode('/', $chunks);
+        $startURL = $url;
 
         // loop until we find the URL in the list of pages
-        while (!in_array($URL, $keys)) {
+        while (!in_array($url, $keys)) {
             // remove the last chunk
             array_pop($chunks);
 
             // redefine the URL
-            $URL = implode('/', $chunks);
+            $url = implode('/', $chunks);
         }
 
         // remove language from query string
@@ -312,23 +314,23 @@ class Url extends \KernelLoader
         }
 
         // if it's the homepage AND parameters were given (not allowed!)
-        if ($URL == '' && $queryString != '') {
+        if ($url == '' && $queryString != '') {
             // get 404 URL
-            $URL = Navigation::getURL(404);
+            $url = Navigation::getURL(404);
 
             // remove language
             if ($hasMultiLanguages) {
-                $URL = str_replace('/' . $language, '', $URL);
+                $url = str_replace('/' . $language, '', $url);
             }
         }
 
         // set pages
-        $URL = trim($URL, '/');
+        $url = trim($url, '/');
 
         // currently not in the homepage
-        if ($URL != '') {
+        if ($url != '') {
             // explode in pages
-            $pages = explode('/', $URL);
+            $pages = explode('/', $url);
 
             // reset pages
             $this->setPages($pages);
@@ -338,7 +340,7 @@ class Url extends \KernelLoader
         }
 
         // set parameters
-        $parameters = trim(mb_substr($startURL, mb_strlen($URL)), '/');
+        $parameters = trim(mb_substr($startURL, mb_strlen($url)), '/');
 
         // has at least one parameter
         if ($parameters != '') {
@@ -356,20 +358,20 @@ class Url extends \KernelLoader
         // invalid page, or parameters but no extra
         if ($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra'])) {
             // get 404 URL
-            $URL = Navigation::getURL(404);
+            $url = Navigation::getURL(404);
 
             // remove language
             if ($hasMultiLanguages) {
-                $URL = str_replace('/' . $language, '', $URL);
+                $url = str_replace('/' . $language, '', $url);
             }
 
             // remove the first slash
-            $URL = trim($URL, '/');
+            $url = trim($url, '/');
 
             // currently not in the homepage
-            if ($URL != '') {
+            if ($url != '') {
                 // explode in pages
-                $pages = explode('/', $URL);
+                $pages = explode('/', $url);
 
                 // reset pages
                 $this->setPages($pages);

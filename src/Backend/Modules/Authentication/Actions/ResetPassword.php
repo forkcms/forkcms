@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\User as BackendUser;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
@@ -23,23 +23,16 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 class ResetPassword extends BackendBaseActionAdd
 {
     /**
-     * Form instance
-     *
-     * @var	BackendForm
-     */
-    protected $frm;
-
-    /**
      * User email
      *
-     * @var	$email
+     * @var $email
      */
     private $email;
 
     /**
      * Reset password key
      *
-     * @var	$key
+     * @var $key
      */
     private $key;
 
@@ -155,7 +148,7 @@ class ResetPassword extends BackendBaseActionAdd
                 }
 
                 // redirect to the login form
-                $this->redirect(BackendModel::createUrlForAction('Index', 'Dashboard', null, array('password_reset' => 'success')));
+                $this->redirect(BackendModel::createURLForAction('Index', 'Dashboard', null, array('password_reset' => 'success')));
             }
         }
     }

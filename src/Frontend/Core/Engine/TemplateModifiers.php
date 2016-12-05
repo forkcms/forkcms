@@ -11,14 +11,58 @@ namespace Frontend\Core\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
+use \SpoonDate;
 
 /**
  * Contains all Frontend-related custom modifiers
  */
 class TemplateModifiers extends BaseTwigModifiers
 {
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdate }}
+     *
+     * @param int $var The UNIX-timestamp to format or \DateTime
+     *
+     * @return string
+     */
+    public static function formatDate($var)
+    {
+        // get setting
+        $format = FrontendModel::get('fork.settings')->get('Core', 'date_format_short');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
+    }
+
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdatetime }}
+     *
+     * @param int $var The UNIX-timestamp to format or \DateTime
+     *
+     * @return string
+     */
+    public static function formatDateTime($var)
+    {
+        // get setting
+        $format = FrontendModel::get('fork.settings')->get('Core', 'date_format_long');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
+    }
+
     /**
      * Format a number as a float
      *    syntax: {{ $number|formatfloat($decimals) }}
@@ -35,13 +79,14 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Format a number
-     *    syntax: {{ $string|formatnumber }}
+     *    syntax: {{ $string|formatnumber($decimals) }}
      *
      * @param float $string The number to format.
+     * @param int $decimals The number of decimals
      *
      * @return string
      */
-    public static function formatNumber($string)
+    public static function formatNumber($string, $decimals = null)
     {
         // redefine
         $string = (float) $string;
@@ -50,7 +95,9 @@ class TemplateModifiers extends BaseTwigModifiers
         $format = FrontendModel::get('fork.settings')->get('Core', 'number_format');
 
         // get amount of decimals
-        $decimals = (mb_strpos($var, '.') ? mb_strlen(mb_substr($var, mb_strpos($var, '.') + 1)) : 0);
+        if ($decimals === null) {
+            $decimals = (mb_strpos($string, '.') ? mb_strlen(mb_substr($string, mb_strpos($string, '.') + 1)) : 0);
+        }
 
         // get separators
         $separators = explode('_', $format);
@@ -60,6 +107,27 @@ class TemplateModifiers extends BaseTwigModifiers
 
         // format the number
         return number_format($string, $decimals, $decimalSeparator, $thousandsSeparator);
+    }
+
+    /**
+     * Format a UNIX-timestamp as a date
+     * syntax: {{ $var|formatdate }}
+     *
+     * @param int $var The UNIX-timestamp to format or \DateTime
+     *
+     * @return string
+     */
+    public static function formatTime($var)
+    {
+        // get setting
+        $format = FrontendModel::get('fork.settings')->get('Core', 'time_format');
+
+        if ($var instanceof \DateTime) {
+            $var = $var->getTimestamp();
+        }
+
+        // format the date
+        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
     }
 
     /**
@@ -127,25 +195,23 @@ class TemplateModifiers extends BaseTwigModifiers
                 'time_format'
             ),
             $string,
-            FRONTEND_LANGUAGE
-        ).'">'.\SpoonDate::getTimeAgo($string, FRONTEND_LANGUAGE).'</abbr>';
+            Locale::frontendLanguage()
+        ).'">'.\SpoonDate::getTimeAgo($string, Locale::frontendLanguage()).'</abbr>';
     }
 
     /**
      * Get a given field for a page-record
-     *    syntax: {{ getpageinfo($pageId, $field, $language) }}
+     *    syntax: {{ $pageId|getpageinfo($field) }}
      *
      * @param int    $pageId   The id of the page to build the URL for.
      * @param string $field    The field to get.
-     * @param string $language The language to use, if not provided we will use the loaded language.
      *
      * @return string
      */
-    public static function getPageInfo($pageId, $field = 'title', $language = null)
+    public static function getPageInfo($pageId, $field = 'title')
     {
         // redefine
         $field = (string) $field;
-        $language = ($language !== null) ? (string) $language : null;
 
         // get page
         $page = Navigation::getPageInfo((int) $pageId);
@@ -234,7 +300,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
         try {
             // get HTML
-            $return = (string) Navigation::getNavigationHtml(
+            $return = (string) Navigation::getNavigationHTML(
                 $type,
                 $parentID,
                 $endDepth,
@@ -272,20 +338,22 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Get the URL for a give module & action combination
-     *    syntax: {{ geturlforblock($module, $action, $language) }}
+     *    syntax: {{ geturlforblock($module, $action, $language, $data) }}
      *
      * @param string $module   The module wherefore the URL should be build.
      * @param string $action   A specific action wherefore the URL should be build, otherwise the default will be used.
      * @param string $language The language to use, if not provided we will use the loaded language.
+     * @param array $data      An array with keys and values that partially or fully match the data of the block.
+     *                         If it matches multiple versions of that block it will just return the first match.
      *
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, array $data = null)
     {
         $action = ($action !== null) ? (string) $action : null;
         $language = ($language !== null) ? (string) $language : null;
 
-        return Navigation::getURLForBlock((string) $module, $action, $language);
+        return Navigation::getURLForBlock((string) $module, $action, $language, $data);
     }
 
     /**
@@ -316,27 +384,31 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param string $action The action to execute.
      * @param string $id     The widget id (saved in data-column).
      *
-     * @return string|null
+     * @return null|string
+     * @throws Exception
      */
     public static function parseWidget($module, $action, $id = null)
     {
-        $data = $id !== null ? serialize(array('id' => $id)) : null;
-
         // create new widget instance and return parsed content
-        $extra = new FrontendBlockWidget(Model::get('kernel'), $module, $action, $data);
+        $extra = FrontendBlockWidget::getForId(
+            FrontendModel::get('kernel'),
+            $module,
+            $action,
+            $id
+        );
 
         // set parseWidget because we will need it to skip setting headers in the display
-        Model::getContainer()->set('parseWidget', true);
+        FrontendModel::getContainer()->set('parseWidget', true);
 
         try {
             $extra->execute();
             $content = $extra->getContent();
-            Model::getContainer()->set('parseWidget', null);
+            FrontendModel::getContainer()->set('parseWidget', null);
 
             return $content;
         } catch (Exception $e) {
             // if we are debugging, we want to see the exception
-            if (Model::getContainer()->getParameter('kernel.debug')) {
+            if (FrontendModel::getContainer()->getParameter('kernel.debug')) {
                 throw $e;
             }
 
@@ -377,13 +449,14 @@ class TemplateModifiers extends BaseTwigModifiers
      * Get the value for a user-setting
      *    syntax {{ usersetting($setting, $userId) }}
      *
-     * @param string $string     The string passed from the template.
+     * @param string|null $string  The string passed from the template.
      * @param string $setting The name of the setting you want.
      * @param int    $userId  The userId, if not set by $string.
      *
      * @return string
+     * @throws Exception
      */
-    public static function userSetting($string = null, $setting, $userId = null)
+    public static function userSetting($string, $setting, $userId = null)
     {
         $userId = ($string !== null) ? (int) $string : (int) $userId;
         $setting = (string) $setting;
@@ -398,28 +471,6 @@ class TemplateModifiers extends BaseTwigModifiers
 
         // return
         return (string) $user->getSetting($setting);
-    }
-
-    /**
-     * Translate a string.
-     *    syntax {{ $string|trans }}
-     *
-     * @param string $string The string that you want to apply this method on.
-     *
-     * @return string The string, to translate.
-     */
-    public static function trans($string)
-    {
-        if (strpos($string, '.') === false) {
-            return $string;
-        }
-        list($action, $string) = explode('.', $string);
-
-        if (!in_array($action, array('lbl', 'act', 'err', 'msg'))) {
-            return $string;
-        }
-
-        return Language::$action($string);
     }
 
     /**
@@ -466,5 +517,18 @@ class TemplateModifiers extends BaseTwigModifiers
     public static function count(array $data)
     {
         return count($data);
+    }
+
+    /**
+     * Convert this string into a well formed label.
+     *  syntax: {{ var|tolabel }}.
+     *
+     * @param string $value The value to convert to a label.
+     *
+     * @return string
+     */
+    public static function toLabel($value)
+    {
+        return \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
     }
 }

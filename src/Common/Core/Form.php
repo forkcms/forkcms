@@ -20,14 +20,14 @@ class Form extends \SpoonForm
     /**
      * The header instance
      *
-     * @var    Header
+     * @var Header
      */
     protected $header;
 
     /**
      * The URL instance
      *
-     * @var    Url
+     * @var Url
      */
     protected $URL;
 
@@ -77,7 +77,6 @@ class Form extends \SpoonForm
     ) {
         $name = (string) $name;
         $values = (array) $values;
-        $selected = ($selected !== null) ? $selected : null;
         $multipleSelection = (bool) $multipleSelection;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-select';
         $classError = ($classError !== null) ? (string) $classError : 'error';
@@ -98,20 +97,18 @@ class Form extends \SpoonForm
      * @param array  $values     The values for the checkboxes.
      * @param mixed  $checked    Should the checkboxes be checked?
      * @param string $class      Class(es) that will be applied on the element.
-     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
      * @return \SpoonFormMultiCheckbox
      */
-    public function addMultiCheckbox($name, array $values, $checked = null, $class = null, $classError = null)
+    public function addMultiCheckbox($name, array $values, $checked = null, $class = null)
     {
         $name = (string) $name;
         $values = (array) $values;
         $checked = ($checked !== null) ? (array) $checked : null;
         $class = ($class !== null) ? (string) $class : 'fork-form-multi-checkbox';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a multi checkbox
-        return parent::addMultiCheckbox($name, $values, $checked, $class, $classError);
+        return parent::addMultiCheckbox($name, $values, $checked, $class);
     }
 
     /**
@@ -152,20 +149,18 @@ class Form extends \SpoonForm
      * @param array  $values     The possible values for the radio button.
      * @param string $checked    Should the element be checked?
      * @param string $class      Class(es) that will be applied on the element.
-     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
      * @return \SpoonFormRadiobutton
      */
-    public function addRadiobutton($name, array $values, $checked = null, $class = null, $classError = null)
+    public function addRadiobutton($name, array $values, $checked = null, $class = null)
     {
         $name = (string) $name;
         $values = (array) $values;
         $checked = ($checked !== null) ? (string) $checked : null;
         $class = ($class !== null) ? (string) $class : 'fork-form-radio';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a radio button
-        return parent::addRadiobutton($name, $values, $checked, $class, $classError);
+        return parent::addRadiobutton($name, $values, $checked, $class);
     }
 
     /**
@@ -180,7 +175,7 @@ class Form extends \SpoonForm
      *
      * @return \SpoonFormText
      */
-    public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
+    public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = true)
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
@@ -204,7 +199,7 @@ class Form extends \SpoonForm
      *
      * @return \SpoonFormTextarea
      */
-    public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
+    public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = true)
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
@@ -236,23 +231,37 @@ class Form extends \SpoonForm
         // create and return a time field
         return parent::addTime($name, $value, $class, $classError);
     }
-}
 
-/**
- * This is our extended version of \SpoonFormCheckbox
- */
-class CommonFormCheckbox extends \SpoonFormCheckbox
-{
     /**
-     * Returns the value corresponding with the state of the checkbox
-     *
-     * @param mixed $checked the return value when checked
-     * @param mixed $notChecked the return value when not checked
-     *
-     * @return string
+     * @return string|null
      */
-    public function getActualValue($checked = 'Y', $notChecked = 'N')
+    public static function getUploadMaxFileSize()
     {
-        return $this->isChecked() ? $checked : $notChecked;
+        $uploadMaxFileSize = ini_get('upload_max_filesize');
+        if ($uploadMaxFileSize === false) {
+            return null;
+        }
+
+        // reformat if defined as an integer
+        if (is_numeric($uploadMaxFileSize)) {
+            return $uploadMaxFileSize / 1024 . 'MB';
+        }
+
+        // reformat if specified in kB
+        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) == 'K') {
+            return mb_substr($uploadMaxFileSize, 0, -1) . 'kB';
+        }
+
+        // reformat if specified in MB
+        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) == 'M') {
+            return $uploadMaxFileSize . 'B';
+        }
+
+        // reformat if specified in GB
+        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) == 'G') {
+            return $uploadMaxFileSize . 'B';
+        }
+
+        return $uploadMaxFileSize;
     }
 }

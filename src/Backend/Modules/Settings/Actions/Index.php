@@ -12,7 +12,7 @@ namespace Backend\Modules\Settings\Actions;
 use TijsVerkoyen\Akismet\Akismet;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Settings\Engine\Model as BackendSettingsModel;
@@ -25,14 +25,14 @@ class Index extends BackendBaseActionIndex
     /**
      * The form instance
      *
-     * @var    BackendForm
+     * @var BackendForm
      */
     private $frm;
 
     /**
      * Should we show boxes for their API keys
      *
-     * @var    bool
+     * @var bool
      */
     private $needsAkismet;
     private $needsGoogleMaps;
@@ -135,6 +135,7 @@ class Index extends BackendBaseActionIndex
         );
 
         // api keys
+        // @TODO should be removed when the api is kicked out
         $this->frm->addText('fork_api_public_key', $this->get('fork.settings')->get('Core', 'fork_api_public_key', null));
         $this->frm->addText(
             'fork_api_private_key',
@@ -440,6 +441,7 @@ class Index extends BackendBaseActionIndex
                 );
 
                 // api keys
+                // @TODO should be removed when the api is kicked out
                 $this->get('fork.settings')->set(
                     'Core',
                     'fork_api_public_key',

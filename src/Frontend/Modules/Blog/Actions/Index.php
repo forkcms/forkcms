@@ -21,7 +21,7 @@ class Index extends FrontendBaseBlock
     /**
      * The articles
      *
-     * @var    array
+     * @var array
      */
     private $items;
 
@@ -29,7 +29,7 @@ class Index extends FrontendBaseBlock
      * The pagination array
      * It will hold all needed parameters, some of them need initialization.
      *
-     * @var    array
+     * @var array
      */
     protected $pagination = array(
         'limit' => 10,
@@ -97,7 +97,7 @@ class Index extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE),
                  'href' => $rssLink,
             ),
             true

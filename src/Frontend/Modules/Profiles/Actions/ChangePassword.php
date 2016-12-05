@@ -11,7 +11,7 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -25,7 +25,7 @@ class ChangePassword extends FrontendBaseBlock
     /**
      * FrontendForm instance.
      *
-     * @var    FrontendForm
+     * @var FrontendForm
      */
     private $frm;
 
@@ -110,7 +110,6 @@ class ChangePassword extends FrontendBaseBlock
             // get fields
             $txtOldPassword = $this->frm->getField('old_password');
             $txtNewPassword = $this->frm->getField('new_password');
-            $txtVerifyNewPassword = $this->frm->getField('verify_new_password');
 
             // old password filled in?
             if ($txtOldPassword->isFilled(FL::getError('PasswordIsRequired'))) {

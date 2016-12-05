@@ -33,6 +33,14 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new ForkCMS\Bundle\InstallerBundle\ForkCMSInstallerBundle(),
+            new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
+            new SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle(),
+            new SimpleBus\SymfonyBridge\SimpleBusEventBusBundle(),
+            new Backend\Modules\Mailmotor\Mailmotor,
+            new MailMotor\Bundle\MailMotorBundle\MailMotorMailMotorBundle(),
+            new MailMotor\Bundle\MailChimpBundle\MailMotorMailChimpBundle(),
+            new MailMotor\Bundle\CampaignMonitorBundle\MailMotorCampaignMonitorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

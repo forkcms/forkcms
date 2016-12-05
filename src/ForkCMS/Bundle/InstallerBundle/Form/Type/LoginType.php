@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
+use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -13,6 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class LoginType extends AbstractType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -48,13 +52,20 @@ class LoginType extends AbstractType
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
+            'data_class' => InstallationData::class,
+            'validation_groups' => 'login',
         ));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'install_login';

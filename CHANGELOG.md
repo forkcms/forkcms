@@ -1,3 +1,328 @@
+4.4.0 (2016-12-02)
+------------------
+
+Bugfixes:
+
+* Core: Fix styling when page detail buttons stand on two lines
+* Core: Change "showModuleAction" variables to "allowModuleAction"
+* Core: Prevent scroll to top after click a cookievar button
+* Core: Add missing createForm method in the frontend
+* Core: Get url for block fixes when checking with data
+* Core: Also use UTCDateTimeType for date
+* Core: Serialize bug in meta entity SEOFollow and SEOIndex
+* Core: Add missing implementation of the tolabel filter to the frontend
+* Core: The variable cookieBarHide should be global
+* Core: Fix errors when clear text was passed to the translator
+* Core: Fix abstractImage thumbnails not generating
+* Core: Fix pagination last and first url and label
+* Core: Format template modifiers
+* FormBuilder: Fix mailing form shows html
+* Pages: Fix previous/next navigation for hidden pages
+* FAQ: Fix faq category detail link in backend
+* Locale: Remove old classes on the textarea of locale edit
+
+Features:
+
+* Core: Add redirect method to widgets
+* Core: Custom html5 validation
+* Page: Authentication options with the profiles module
+* MailMotor: Completely revamped module. Now also with MailChimp
+
+Deprecations:
+
+* Api: Fully deprecated
+
+Enhancements:
+
+* Core: Allow html in the alerts in the backend
+* Core: Removed duplicate for "SITE_MULTILANGUAGE"
+* Core: Tabs to spaces
+* Core: Improve https support
+* Core: Abstract file and image updates
+* Core: Code style
+* ContentBlocks: Renaming "getName()" to "getBlockPrefix()"
+* FormBuilder: Make the language available in the frontend for formbuilder
+
+
+4.3.1 (2016-11-04)
+------------------
+
+Bugfixes:
+
+* Core: FIX send mail by a Cronjob / URL object not available
+* Core: Remove devtools plugin from CKEditor
+* Core: Remove updating the schema when it already exists
+* Core: Fix web path of images if they are in a subdirectory
+* Core: Fix ck plugin errors
+* Core: https port fix
+* Authentication: Fix Authentication::isAllowedAction
+* Blog: Fix error's not showing when adding categories on the blog add or edit action
+* Extensions: Fix themes from github couldn't be uploaded
+* FAQ: Correct order in the index action for categories
+* Location: Fix incorrect use of $this->header->addJS
+* Core: Remove server root from loading dirs for templates
+* Core: Fix twig issues with latest bugfix release of symfony 2.8
+* Installer: Validate the backend credentials
+
+
+4.3.0 (2016-10-20)
+------------------
+
+Features:
+
+* Core: Make it possible to define other values for the headers X-Frame-Options, X-XSS-Protection and X-Content-Type-Options
+* Core: The jquery function doMeta is now configurable
+* Core: Locale ValueObject is now serializable
+* Core: Add method to compare Locale
+* Core: Set meta settings on module action by passing the meta entity to the method setMeta
+* Core: Entity for the Metadata
+* Core: Symfony form type for meta
+* Core: Module Extra type value object
+* Core: Make our translations available in the translator service
+* Core: Base ValueObject and symfony form type for the uploading of files and images
+* Console: Added a command to enable a locale
+* Location: Integrated Street View
+* Location: Integrated google map styles
+
+Deprecations:
+
+* Core: The service entity.create_schema is now deprecated in favour of fork.entity.create_schema
+* Core: Deprecated our own event system in favour of symfony events
+* Tools: Deprecated tools/spoon2twig in favour of using external tools
+* Tools: Deprecated tools/install_locale in favour of app/console forkcms:locale:import
+
+Enhancements:
+
+* Core: Use FrontendModel everywhere in the Frontend TemplateModifiers instead of mixing it with Model
+* Core: Remove the usage of deprecated code
+* Core: Update outdated composer packages
+* Core: Refactor out exit statements
+* Core: Replaced dirname(\_\_FILE\_\_) with \_\_DIR\_\_
+* Core: Remove unused code found by scrutinizer
+* Core: Use font awesome as ajax spinner
+* Core: Use margin instead of padding to space the icon from the text in a button
+* Core: Update the schema instead of ignoring when the schema for the table already exists
+* Core: Replaced the deprecated twig comparator sameas with same as
+* Core: Updated CKEditor to 4.5.10
+* Mailmotor: Don't show the debug toolbar in the edit email iframe
+* Installer: Use font awesome as ajax spinner
+* Analytics: Update the explanation to link a google analytics account since google has revamped the interface (again...)
+
+Bugfixes:
+
+* Core: Fix Symfony form errors font colour
+* Core: Fix loading external css files in the frontend with the addCss method
+* Blog: Fix add link on the blog index page when filtering on a category
+* Tools: prepare_for_reinstall : Ignore foreign keys when deleting the tables
+* Triton: Fix the minimum version
+* Doctrine: Fix timezone issues
+* Extensions: Fix install button not hiding on the detail page of a theme
+* Mailmotor: Fix example templates (they weren't converted to twig yet)
+* Mailmotor: Fix template not loading in iframe
+* Mailmotor: Catch the CampaignMonitor exceptions so the ajax save returns nice error messages
+* Tags: Hide the published blog posts on the tag detail if the publish date hasn't passed yet
+* FormBuilder: Fix editing a form of the FormBuilder removes the edit_link on the page editor
+
+
+4.2.4 (2016-10-07)
+------------------
+
+Bugfixes:
+
+* FormBuilder: use the new instead of the deprecated language class
+* Core: Common\Language didn't use the new language class yet
+* ContentBlocks: When copying pages from one to another locale all the new content blocks got the same id
+* Tools: spoon2twig : fix conversion spoon_date
+* Tools: spoon2twig : fix conversion substring
+* Tools: spoon2twig : fix geturlforblock
+* Tools: spoon2twig : fix getnavigation
+* Tools: spoon2twig : fix getsubnavigation
+* Tools: spoon2twig : fix words like contact being detected as an action
+* Tools: spoon2twig : fix Mail subdirectory not converting
+* Tools: spoon2twig : fix converting positions
+* Tools: spoon2twig : ucfirst is no longer replaced with capitalize since it is not the same and has been added to fork
+* Tools: spoon2twig : fix multiple translations on the same line messing things up
+* Github: point to slack instead of irc for support
+* Extensions: fix install link on detail page of a module
+* Core: Fix word-wrap problem in tooltips
+
+4.2.3 (2016-09-23)
+------------------
+
+Bugfixes:
+
+* Api: fixed the build in client
+* Console: fix using backend language
+* FormBuilder: prevent editing multiple fields at the same time
+* FormBuilder: submit the field when hitting enter
+* FormBuilder: fix classes not applied to form fields
+* Core: fix button detection of datagrid columns was case sensitive
+* Installer: fix extensions module not installed as first module
+* Twig: fix hide page title
+* SpoonLibrary: updated to fix price check on text field
+* Core: made the explanation better when the info.xml is missing
+* Core: updated matthiasmullie/scrapbook to fix errors with redis
+
+
+4.2.2 (2016-09-02)
+------------------
+
+Bugfixes:
+
+* Core: Fix ckeditor in bootstrap modal
+* Core: Add simple-bus/doctrine-orm-bridge to fix assetic errors 
+* Core: Bugfix phpcs failing module tests
+* Locale: Make sure the names of the translations start with a capital letter
+* ContentBlocks: Make sure that extra things added to the data of a content block aren't lost when updating
+* ContentBlocks: Remove the tightly coupling between authentication and content blocks
+* Twig: Show warning that cookies are required in the backend
+* Twig: Make sure the real data is loaded when using the template modifier parsewidget
+* Installer: Fix deselecting modules during installation
+* Installer: Make sure we can return in the installer
+
+Enhancements:
+
+* Core: Style fixes
+
+
+4.2.1 (2016-08-31)
+------------------
+
+Bugfixes:
+
+* Blog: dashboard widget link fixed
+* Core: fix duplicate use statements
+
+
+4.2.0 (2016-08-29)
+------------------
+
+Features:
+
+* Core: added Doctrine
+* Core: added Symfony Form
+* Core: added SimpleBus as command bus
+* Core: updated CK Finder to 2.6.2
+* Pages: added option to set a banner image on a page
+* Profiles: added check when setting new password that it is typed correctly
+* Profiles: generated pages on install are now translated
+* Core: deprecated the push notifications
+
+Enhancements:
+
+* Core: clean up phpdoc
+* Core: code quality improvements
+
+Bugfixes:
+
+* Faq: added missing locale
+* Core: missing use statement in FormFile
+
+
+4.1.2 (2016-08-26)
+------------------
+
+Bugfixes:
+
+* Location: fix fetching coordinates.
+* Core: make sure our vendor folder can't be accessed.
+* Core: show file size when uploadeded file size is too big.
+* Core: remove useless variable assignement.
+* Core: change some exit statements to exceptions.
+* Core: update symfony to 2.8.9 (to include security fixes).
+* Core: remove obsolete validation.
+* Installer: remove non existent mailer service.
+* Profiles: replace spoon directory with the filesystem component.
+* Core: improve some UI issues.
+* Core: improve cache handling (during both installation and other places).
+* Core: add the translation for German.
+* Core: protected some more files using htaccess.
+* Search: show "add synonym" link when there are no synonyms yet.
+* Core: fix incorrect language variable.
+* Core: fix pagination labels.
+
+
+4.1.1 (2016-08-10)
+------------------
+
+Bugfixes:
+
+* MailMotor: Mailmotor was broken when it wasn't configured yet
+* Core: When switching languages you no longer get Item not found messages
+* Core: Fork CMS now works on mysql 5.7, some queries broke on the default configuration
+
+Enhancements:
+
+* Add extra key-words to composer.json
+* Composer: irc has been removed as support option and slack has been added
+
+
+4.1.0 (2016-08-08)
+------------------
+
+Features:
+
+* Location: added Google Maps API key
+* Core: multiple og:image:width and :height
+* Core: change urlencoding from RFC 1738 to RFC 3986
+* FormBuilder: Anchor added to form widget
+* Location: added zoom-leven 1 and 2
+* Github: added issue and pull request templates
+* Core: added TemplateModifier showBool alias to DataGridFunctions
+* Profiles: added SecurePage widget
+* Core: getUrlForBlock now takes data into account
+* Core: page parameter can now be changed in the pagination query
+* Twig: added a macro for the required asterisk and tooltip
+
+Bugfixes:
+
+* CK Finder: fix non existent service session.handler
+* Profiles: make sure the settings are loaded in cache before a new setting is set
+* Location: fix settings not loading correctly because twig escaped the html
+
+
+4.0.6 (2016-07-29)
+--
+
+Bugfixes:
+
+* Pages: fix casing issue.
+* Core: add missing yaml config to the editorconfig file.
+* Core: make the backend more anysurfer compliant.
+* Pages: make filesystem checks more robust for og:image tags.
+* Faq: use label instead of hardcoded text after sequence success.
+* FormBuilder: only show the success message for the submitted form.
+* Core: fix cache sharing between environments.
+* Core: fix issues on PHP 7.1.
+* Core: fix issues when widgets mixed up content.
+* Core: fix double encoded ampersand in pagination urls.
+* Pages: fix bad contrast when showing hidden page blocks.
+* FormBuilder: fix paragraph and heading that weren't editable.
+* Core: fix template bug in pagination.
+* Core: make sure emails can be themed.
+* Core: make sure diactrics will be showd correctly in twig.
+* Groups: make sure we can hide dashboard widgets for groups.
+
+
+4.0.5 (2016-07-12)
+--
+
+Bugfixes:
+
+* Location: show google maps key when Location is installed.
+* Core: add needed swiftmailer monolog configuration.
+* Core: make the formatCurrency modifier respect the number format.
+* Core: fix deletion of cookies.
+* Core: fix case error.
+* Core: fix "exists" instead of "exist" in exceptions and comments.
+* Core: fix wrong order of twig filters.
+* Core: fix wrong css class on help-blocks.
+* Core: fix link in cookie bar text in the triton theme.
+* Core: use php.ini's default session location.
+* Extensions: fix install button for installed modules.
+* Core: minify module JavaScript files.
+
+
 4.0.4 (2016-07-01)
 --
 

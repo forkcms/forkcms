@@ -18,7 +18,7 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 class Index extends FrontendBaseBlock
 {
     /**
-     * @var    array
+     * @var array
      */
     private $items = array();
 

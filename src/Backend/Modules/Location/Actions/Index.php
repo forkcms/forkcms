@@ -13,9 +13,10 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the index-action (default), it will display the overview of location items
@@ -40,10 +41,19 @@ class Index extends BackendBaseActionIndex
      */
     public function execute()
     {
+        $this->header->addJS(FrontendLocationModel::getPathToMapStyles());
         parent::execute();
 
+        // define Google Maps API key
+        $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+
+        // check Google Maps API key, otherwise redirect to settings
+        if ($apikey === null) {
+            $this->redirect(BackendModel::createURLForAction('Index', 'Settings'));
+        }
+
         // add js
-        $this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
+        $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, null, false, true, false);
 
         $this->loadData();
 
@@ -71,6 +81,9 @@ class Index extends BackendBaseActionIndex
         // load the settings from the general settings
         if (empty($this->settings)) {
             $this->settings = $this->get('fork.settings')->getForModule('Location');
+
+            $this->settings['map_type'] = $this->settings['map_type_widget'];
+            $this->settings['map_style'] = isset($this->settings['map_style_widget']) ? $this->settings['map_style_widget'] : 'standard';
 
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
@@ -121,11 +134,18 @@ class Index extends BackendBaseActionIndex
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
+            'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
+        );
+        $mapStyles = array(
+            'standard' => BL::lbl('Default', $this->getModule()),
+            'custom' => BL::lbl('Custom', $this->getModule()),
+            'gray' => BL::lbl('Gray', $this->getModule()),
+            'blue' => BL::lbl('Blue', $this->getModule()),
         );
 
         $zoomLevels = array_combine(
-            array_merge(array('auto'), range(3, 18)),
-            array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))
+            array_merge(array('auto'), range(1, 18)),
+            array_merge(array(BL::lbl('Auto', $this->getModule())), range(1, 18))
         );
 
         $this->form = new BackendForm('settings');
@@ -136,6 +156,11 @@ class Index extends BackendBaseActionIndex
         $this->form->addText('width', $this->settings['width']);
         $this->form->addText('height', $this->settings['height']);
         $this->form->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
+        $this->form->addDropdown(
+            'map_style',
+            $mapStyles,
+            isset($this->settings['map_style']) ? $this->settings['map_style'] : null
+        );
     }
 
     /**

@@ -8,7 +8,7 @@
  */
 
 // CLI/Nginx/Cron: We need to set the "current working directory" to this folder
-chdir(dirname(__FILE__));
+chdir(__DIR__);
 
 // vendors not installed
 if (!is_dir(__DIR__ . '/vendor')) {
@@ -16,11 +16,12 @@ if (!is_dir(__DIR__ . '/vendor')) {
          installed you should run: <code>composer install</code>. If you
          don\'t have composer installed you really should, see
          http://getcomposer.org for more information';
-    exit;
+    return;
 }
 
 require_once __DIR__ . '/autoload.php';
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
@@ -29,23 +30,23 @@ $env = getenv('FORK_ENV') ?: 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
 
 // Fork has not yet been installed
-$parametersFile = dirname(__FILE__) . '/app/config/parameters.yml';
+$parametersFile = __DIR__ . '/app/config/parameters.yml';
 $request = Request::createFromGlobals();
 if (!file_exists($parametersFile)) {
     $env = 'install';
-    if (substr($request->getRequestURI(), 0, 8) != '/install') {
+    if (strpos($request->getRequestUri(), '/install') !== 0) {
         // check .htaccess
-        if (!file_exists('.htaccess') && !isset($_GET['skiphtaccess'])) {
+        if (!$request->query->has('skiphtaccess') && !file_exists('.htaccess')) {
             echo 'Your install is missing the .htaccess file. Make sure you show
                  hidden files while uploading Fork CMS. Read the article about
                  <a href="http://www.fork-cms.com/community/documentation/detail/installation/webservers">webservers</a>
                  for further information. <a href="?skiphtaccess">Skip .htaccess
                  check</a>';
-            exit;
+            return;
         }
 
         header('Location: /install');
-        exit;
+        return;
     }
 }
 
@@ -61,7 +62,7 @@ if ($debug) {
 
 $kernel = new AppKernel($env, $debug);
 $response = $kernel->handle($request);
-if ($response->getCharset() === null && $kernel->getContainer() != null) {
+if ($response->getCharset() === null && $kernel->getContainer() instanceof ContainerInterface) {
     $response->setCharset(
         $kernel->getContainer()->getParameter('kernel.charset')
     );

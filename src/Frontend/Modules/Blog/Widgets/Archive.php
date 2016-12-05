@@ -32,13 +32,6 @@ class Archive extends FrontendBaseWidget
      */
     private function parse()
     {
-        // we will cache this widget for 24 hours
-        $this->tpl->cache(FRONTEND_LANGUAGE . '_blogWidgetArchiveCache', (24 * 60 * 60));
-
-        // if the widget isn't cached, assign the variables
-        if (!$this->tpl->isCached(FRONTEND_LANGUAGE . '_blogWidgetArchiveCache')) {
-            // get the numbers
-            $this->tpl->assign('widgetBlogArchive', FrontendBlogModel::getArchiveNumbers());
-        }
+        $this->tpl->assign('widgetBlogArchive', FrontendBlogModel::getArchiveNumbers());
     }
 }

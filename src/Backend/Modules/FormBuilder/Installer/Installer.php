@@ -10,6 +10,7 @@ namespace Backend\Modules\FormBuilder\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the form_builder module
@@ -22,13 +23,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add as a module
         $this->addModule('FormBuilder');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // module rights
         $this->setModuleRights(1, 'FormBuilder');
@@ -61,7 +62,7 @@ class Installer extends ModuleInstaller
             'SELECT id
              FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
-            array('search', 'widget', 'form')
+            array('search', ModuleExtraType::WIDGET, 'form')
         );
 
         // loop languages
@@ -140,7 +141,7 @@ class Installer extends ModuleInstaller
             // insert extra
             $extraId = $this->insertExtra(
                 'FormBuilder',
-                'widget',
+                ModuleExtraType::widget(),
                 'FormBuilder',
                 'Form',
                 serialize(

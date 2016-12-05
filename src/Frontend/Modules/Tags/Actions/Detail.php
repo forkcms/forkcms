@@ -10,7 +10,7 @@ namespace Frontend\Modules\Tags\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
@@ -22,7 +22,7 @@ class Detail extends FrontendBaseBlock
     /**
      * The tag
      *
-     * @var    array
+     * @var array
      */
     private $record = array();
 
@@ -34,13 +34,20 @@ class Detail extends FrontendBaseBlock
     private $results = array();
 
     /**
+     * Used modules
+     *
+     * @var array
+     */
+    private $modules;
+
+    /**
      * Execute the extra
      */
     public function execute()
     {
         parent::execute();
 
-        $this->tpl->assign('hideContentTitle', true);
+        $this->tpl->assignGlobal('hideContentTitle', true);
         $this->loadTemplate();
         $this->getData();
         $this->parse();

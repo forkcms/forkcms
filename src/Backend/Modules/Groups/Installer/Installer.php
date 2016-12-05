@@ -50,13 +50,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'settings' as a module
         $this->addModule('Groups');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // module rights
         $this->setModuleRights(1, 'Groups');

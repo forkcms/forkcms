@@ -38,6 +38,9 @@ class ForkInstaller
     /**
      * @todo: - make sure the Container doesn't have to be injected
      *        - make sure the Model::setContainer isn't needed anymore
+     *
+     * @param Container $container
+     * @param        $rootDir
      */
     public function __construct(Container $container, $rootDir)
     {
@@ -119,10 +122,10 @@ class ForkInstaller
     private function deleteCachedData()
     {
         $finder = new Finder();
-        $fs = new Filesystem();
+        $filesystem = new Filesystem();
         foreach ($finder->files()->in(BACKEND_CACHE_PATH)->in(FRONTEND_CACHE_PATH) as $file) {
             /** @var $file \SplFileInfo */
-            $fs->remove($file->getRealPath());
+            $filesystem->remove($file->getRealPath());
         }
     }
 
@@ -306,8 +309,8 @@ class ForkInstaller
             );
 
             // write app/config/parameters.yml
-            $fs = new Filesystem();
-            $fs->dumpFile($destinationFilename, $yamlContent);
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile($destinationFilename, $yamlContent);
         }
     }
 
@@ -355,7 +358,7 @@ class ForkInstaller
             'default_language' => $data->getDefaultLanguage(),
             'default_interface_language' => $data->getDefaultInterfaceLanguage(),
             'spoon_debug_email' => $data->getEmail(),
-            'api_email' => $data->getEmail(),
+            'api_email' => $data->getEmail(), // can be removed after the api is kicked out
             'site_domain' => (isset($_SERVER['HTTP_HOST'])) ?
                 $_SERVER['HTTP_HOST'] :
                 'fork.local',

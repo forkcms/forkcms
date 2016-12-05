@@ -11,7 +11,7 @@
       <div class="form-group">
         <label for="name" class="control-label">
           {{ 'lbl.Name'|trans|ucfirst }}
-          <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+          {{ macro.required }}
         </label>
         {% form_field name %} {% form_field_error name %}
       </div>
@@ -35,7 +35,7 @@
         </div>
       </div>
       {% if showProfilesDeleteGroup %}
-        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{{ 'lbl.Delete'|trans|ucfirst }}" aria-hidden="true">
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">

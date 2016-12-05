@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see license.txt or http://cksource.com/ckfinder/license
  *
  * The software, this file and its contents are subject to the CKFinder
@@ -231,6 +231,7 @@ CKFinder.addPlugin( 'fileeditor', function( api )
 							id : 'htmlLoader',
 							html : '' +
 							'<style type="text/css">' +
+							'#fileArea .CodeMirror-cursor {border-left: 1px solid black; border-right: none;width: 0;}' +
 							'#fileArea .CodeMirror {background:white;height: '+ cssHeight +'px;}' +
 							'#fileArea .CodeMirror-scroll {height:' + cssHeight + 'px; width:' + cssWidth + 'px;margin-bottom:0;}' +
 							'#fileArea .CodeMirror .cm-tab {white-space:pre;}' +

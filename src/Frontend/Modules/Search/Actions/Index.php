@@ -12,7 +12,7 @@ namespace Frontend\Modules\Search\Actions;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
@@ -23,30 +23,37 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 class Index extends FrontendBaseBlock
 {
     /**
+     * The form instance
+     *
+     * @var FrontendForm
+     */
+    protected $frm;
+
+    /**
      * Name of the cache file
      *
-     * @var    string
+     * @var string
      */
     private $cacheFile;
 
     /**
      * The items
      *
-     * @var    array
+     * @var array
      */
     private $items;
 
     /**
      * Limit of data to fetch
      *
-     * @var    int
+     * @var int
      */
     private $limit;
 
     /**
      * Offset of data to fetch
      *
-     * @var    int
+     * @var int
      */
     private $offset;
 
@@ -54,7 +61,7 @@ class Index extends FrontendBaseBlock
      * The pagination array
      * It will hold all needed parameters, some of them need initialization.
      *
-     * @var    array
+     * @var array
      */
     protected $pagination = array(
         'limit' => 20,
@@ -67,7 +74,7 @@ class Index extends FrontendBaseBlock
     /**
      * The requested page
      *
-     * @var    int
+     * @var int
      */
     private $requestedPage;
 
@@ -81,7 +88,7 @@ class Index extends FrontendBaseBlock
     /**
      * Search statistics
      *
-     * @var    array
+     * @var array
      */
     private $statistics;
 
@@ -95,7 +102,7 @@ class Index extends FrontendBaseBlock
         $this->limit = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
-                           FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
+                           LANGUAGE . '_' . md5($this->term) . '_' .
                            $this->offset . '_' . $this->limit . '.php';
 
         // load the cached data
@@ -205,8 +212,8 @@ class Index extends FrontendBaseBlock
         // debug mode = no cache
         if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
-            $fs = new Filesystem();
-            $fs->dumpFile(
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile(
                 $this->cacheFile,
                 "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
                     $this->items,
@@ -289,7 +296,7 @@ class Index extends FrontendBaseBlock
             // format data
             $this->statistics = array();
             $this->statistics['term'] = $this->term;
-            $this->statistics['language'] = FRONTEND_LANGUAGE;
+            $this->statistics['language'] = LANGUAGE;
             $this->statistics['time'] = FrontendModel::getUTCDate();
             $this->statistics['data'] = serialize(array('server' => $_SERVER));
             $this->statistics['num_results'] = $this->pagination['num_items'];

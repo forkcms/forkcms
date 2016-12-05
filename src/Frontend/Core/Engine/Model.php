@@ -20,7 +20,7 @@ class Model extends \Common\Core\Model
     /**
      * Visitor id from tracking cookie
      *
-     * @var    string
+     * @var string
      */
     private static $visitorId;
 
@@ -48,7 +48,7 @@ class Model extends \Common\Core\Model
         }
 
         // build query string
-        $queryString = http_build_query($parameters, null, '&amp;');
+        $queryString = http_build_query($parameters, null, '&amp;', PHP_QUERY_RFC3986);
         if (mb_strpos($url, '?') !== false) {
             $url .= '&' . $queryString . $hash;
         } else {
@@ -157,7 +157,7 @@ class Model extends \Common\Core\Model
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.id = ? AND p.status = ? AND p.language = ?
              LIMIT 1',
-            array($pageId, 'active', FRONTEND_LANGUAGE)
+            array($pageId, 'active', LANGUAGE)
         );
 
         // validate
@@ -243,7 +243,7 @@ class Model extends \Common\Core\Model
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.revision_id = ? AND p.language = ?
              LIMIT 1',
-            array($revisionId, FRONTEND_LANGUAGE)
+            array($revisionId, LANGUAGE)
         );
 
         // validate
@@ -305,7 +305,7 @@ class Model extends \Common\Core\Model
         // get/init tracking identifier
         self::$visitorId = CommonCookie::exists('track') && !empty($_COOKIE['track'])
             ? (string) CommonCookie::get('track')
-            : md5(uniqid() . \SpoonSession::getSessionId());
+            : md5(uniqid('', true) . \SpoonSession::getSessionId());
 
         if (!self::get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
             CommonCookie::set('track', self::$visitorId, 86400 * 365);
@@ -321,13 +321,14 @@ class Model extends \Common\Core\Model
      * @param string $permaLink The permanent location of the entry the comment was submitted to.
      * @param string $author    Commenter's name.
      * @param string $email     Commenter's email address.
-     * @param string $URL       Commenter's URL.
+     * @param string $url       Commenter's URL.
      * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
      *
      * @return bool|string Will return a boolean, except when we can't decide the status
      *                          (unknown will be returned in that case)
+     * @throws \Exception
      */
-    public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
+    public static function isSpam($content, $permaLink, $author = null, $email = null, $url = null, $type = 'comment')
     {
         // get some settings
         $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
@@ -347,7 +348,7 @@ class Model extends \Common\Core\Model
         // try it, to decide if the item is spam
         try {
             // check with Akismet if the item is spam
-            return $akismet->isSpam($content, $author, $email, $URL, $permaLink, $type);
+            return $akismet->isSpam($content, $author, $email, $url, $permaLink, $type);
         } catch (\Exception $e) {
             // in debug mode we want to see exceptions, otherwise the fallback will be triggered
             if (self::getContainer()->getParameter('kernel.debug')) {
@@ -362,13 +363,22 @@ class Model extends \Common\Core\Model
     /**
      * Push a notification to Apple's notifications-server
      *
+     * @deprecated: no more support for the Fork-app.
+     *
      * @param mixed  $alert             The message/dictionary to send.
      * @param int    $badge             The number for the badge.
      * @param string $sound             The sound that should be played.
      * @param array  $extraDictionaries Extra dictionaries.
+     *
+     * @throws Exception
      */
     public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
     {
+        trigger_error(
+            'pushToAppleApp is deprecated since there was never an official Microsoft app.',
+            E_USER_DEPRECATED
+        );
+
         // get ForkAPI-keys
         $publicKey = self::get('fork.settings')->get('Core', 'fork_api_public_key', '');
         $privateKey = self::get('fork.settings')->get('Core', 'fork_api_private_key', '');

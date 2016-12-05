@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -24,7 +24,7 @@ class Groups extends BackendBaseActionIndex
     /**
      * Filter variables.
      *
-     * @var    array
+     * @var array
      */
     private $filter;
 
@@ -34,6 +34,13 @@ class Groups extends BackendBaseActionIndex
      * @var BackendForm
      */
     private $frm;
+
+    /**
+     * Groups data grid.
+     *
+     * @var BackendDataGridDB
+     */
+    private $dgGroups;
 
     /**
      * Builds the query for this datagrid.

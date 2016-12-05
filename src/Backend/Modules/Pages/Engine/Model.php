@@ -10,13 +10,15 @@ namespace Backend\Modules\Pages\Engine;
  */
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Locale;
+use Backend\Modules\ContentBlocks\Command\CopyContentBlocksToOtherLocale;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use Frontend\Core\Engine\Language as FrontendLanguage;
+use Frontend\Core\Language\Language as FrontendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the PagesModule
@@ -102,7 +104,9 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // copy contentBlocks and get copied contentBlockIds
-        $contentBlockIds = BackendContentBlocksModel::copy($from, $to);
+        $copyContentBlocks = new CopyContentBlocksToOtherLocale(Locale::fromString($to), Locale::fromString($from));
+        BackendModel::get('command_bus')->handle($copyContentBlocks);
+        $contentBlockIds = $copyContentBlocks->extraIdMap;
 
         // define old block ids
         $contentBlockOldIds = array_keys($contentBlockIds);
@@ -216,7 +220,6 @@ class Model
 
             // init var
             $blocks = array();
-            $hasBlock = ($sourceData['has_extra'] == 'Y');
 
             // get the blocks
             $sourceBlocks = self::getBlocks($id, null, $from);
@@ -238,7 +241,7 @@ class Model
             }
 
             // insert the blocks
-            self::insertBlocks($blocks, $hasBlock);
+            self::insertBlocks($blocks);
 
             // init var
             $text = '';
@@ -598,18 +601,18 @@ class Model
 
         // available in generated file?
         if (isset($keys[$id])) {
-            $URL = $keys[$id];
+            $url = $keys[$id];
         } elseif ($id == 0) {
             // parent id 0 hasn't an url
-            $URL = '/';
+            $url = '/';
 
             // multilanguages?
             if ($hasMultiLanguages) {
-                $URL = '/' . BL::getWorkingLanguage();
+                $url = '/' . BL::getWorkingLanguage();
             }
 
             // return the unique URL!
-            return $URL;
+            return $url;
         } else {
             // not available
             return false;
@@ -617,14 +620,14 @@ class Model
 
         // if the is available in multiple languages we should add the current lang
         if ($hasMultiLanguages) {
-            $URL = '/' . BL::getWorkingLanguage() . '/' . $URL;
+            $url = '/' . BL::getWorkingLanguage() . '/' . $url;
         } else {
             // just prepend with slash
-            $URL = '/' . $URL;
+            $url = '/' . $url;
         }
 
         // return the unique URL!
-        return urldecode($URL);
+        return urldecode($url);
     }
 
     /**
@@ -740,19 +743,19 @@ class Model
                 $parentID = (int) $page['parent_id'];
 
                 // get URL for parent
-                $URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+                $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
                 // add it
-                $keys[$pageID] = trim($URL . '/' . $page['url'], '/');
+                $keys[$pageID] = trim($url . '/' . $page['url'], '/');
 
                 // add to sequences
                 if ($page['type'] == 'footer') {
                     $sequences['footer'][(string) trim(
-                        $URL . '/' . $page['url'],
+                        $url . '/' . $page['url'],
                         '/'
                     )] = $pageID;
                 } else {
-                    $sequences['pages'][(string) trim($URL . '/' . $page['url'], '/')] = $pageID;
+                    $sequences['pages'][(string) trim($url . '/' . $page['url'], '/')] = $pageID;
                 }
 
                 // get URL for parent
@@ -793,11 +796,10 @@ class Model
      *
      * @param array  $navigation The navigation array.
      * @param int    $parentId   The id of the parent.
-     * @param string $html       A holder for the generated HTML.
      *
      * @return string
      */
-    public static function getSubtree($navigation, $parentId, $html = '')
+    public static function getSubtree($navigation, $parentId)
     {
         $navigation = (array) $navigation;
         $parentId = (int) $parentId;
@@ -814,7 +816,7 @@ class Model
                 $html .= '<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '	<a href="' .
+                $html .= '    <a href="' .
                          BackendModel::createURLForAction(
                              'Edit',
                              null,
@@ -823,7 +825,7 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // get childs
-                $html .= self::getSubtree($navigation, $page['page_id'], $html);
+                $html .= self::getSubtree($navigation, $page['page_id']);
 
                 // end
                 $html .= '</li>' . "\n";
@@ -902,12 +904,12 @@ class Model
         // start HTML
         $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
         $html .= '<div class="clearfix" data-tree="main">' . "\n";
-        $html .= '	<ul>' . "\n";
-        $html .= '		<li id="page-1" rel="home">';
+        $html .= '    <ul>' . "\n";
+        $html .= '        <li id="page-1" rel="home">';
 
         // create homepage anchor from title
         $homePage = self::get(1);
-        $html .= '			<a href="' .
+        $html .= '            <a href="' .
                  BackendModel::createURLForAction(
                      'Edit',
                      null,
@@ -916,11 +918,11 @@ class Model
                  ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
-        $html .= self::getSubTree($navigation, 1);
+        $html .= self::getSubtree($navigation, 1);
 
         // end
-        $html .= '		</li>' . "\n";
-        $html .= '	</ul>' . "\n";
+        $html .= '        </li>' . "\n";
+        $html .= '    </ul>' . "\n";
         $html .= '</div>' . "\n";
 
         // only show meta if needed
@@ -928,17 +930,17 @@ class Model
             // meta pages
             $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
             $html .= '<div class="clearfix" data-tree="meta">' . "\n";
-            $html .= '	<ul>' . "\n";
+            $html .= '    <ul>' . "\n";
 
             // are there any meta pages
             if (isset($navigation['meta'][0]) && !empty($navigation['meta'][0])) {
                 // loop the items
                 foreach ($navigation['meta'][0] as $page) {
                     // start
-                    $html .= '		<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                    $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                     // insert link
-                    $html .= '			<a href="' .
+                    $html .= '            <a href="' .
                              BackendModel::createURLForAction(
                                  'Edit',
                                  null,
@@ -947,15 +949,15 @@ class Model
                              ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                     // insert subtree
-                    $html .= self::getSubTree($navigation, $page['page_id']);
+                    $html .= self::getSubtree($navigation, $page['page_id']);
 
                     // end
-                    $html .= '		</li>' . "\n";
+                    $html .= '        </li>' . "\n";
                 }
             }
 
             // end
-            $html .= '	</ul>' . "\n";
+            $html .= '    </ul>' . "\n";
             $html .= '</div>' . "\n";
         }
 
@@ -964,17 +966,17 @@ class Model
 
         // start
         $html .= '<div class="clearfix" data-tree="footer">' . "\n";
-        $html .= '	<ul>' . "\n";
+        $html .= '    <ul>' . "\n";
 
         // are there any footer pages
         if (isset($navigation['footer'][0]) && !empty($navigation['footer'][0])) {
             // loop the items
             foreach ($navigation['footer'][0] as $page) {
                 // start
-                $html .= '		<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '			<a href="' .
+                $html .= '            <a href="' .
                          BackendModel::createURLForAction(
                              'Edit',
                              null,
@@ -983,15 +985,15 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
-                $html .= self::getSubTree($navigation, $page['page_id']);
+                $html .= self::getSubtree($navigation, $page['page_id']);
 
                 // end
-                $html .= '		</li>' . "\n";
+                $html .= '        </li>' . "\n";
             }
         }
 
         // end
-        $html .= '	</ul>' . "\n";
+        $html .= '    </ul>' . "\n";
         $html .= '</div>' . "\n";
 
         // are there any root pages
@@ -1001,15 +1003,15 @@ class Model
 
             // start
             $html .= '<div class="clearfix" data-tree="root">' . "\n";
-            $html .= '	<ul>' . "\n";
+            $html .= '    <ul>' . "\n";
 
             // loop the items
             foreach ($navigation['root'][0] as $page) {
                 // start
-                $html .= '		<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '			<a href="' .
+                $html .= '            <a href="' .
                          BackendModel::createURLForAction(
                              'Edit',
                              null,
@@ -1018,14 +1020,14 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
-                $html .= self::getSubTree($navigation, $page['page_id']);
+                $html .= self::getSubtree($navigation, $page['page_id']);
 
                 // end
-                $html .= '		</li>' . "\n";
+                $html .= '        </li>' . "\n";
             }
 
             // end
-            $html .= '	</ul>' . "\n";
+            $html .= '    </ul>' . "\n";
             $html .= '</div>' . "\n";
         }
 
@@ -1050,16 +1052,16 @@ class Model
     /**
      * Get an unique URL for a page
      *
-     * @param string $URL      The URL to base on.
+     * @param string $url      The URL to base on.
      * @param int    $id       The id to ignore.
      * @param int    $parentId The parent for the page to create an url for.
      * @param bool   $isAction Is this page an action.
      *
      * @return string
      */
-    public static function getURL($URL, $id = null, $parentId = 0, $isAction = false)
+    public static function getURL($url, $id = null, $parentId = 0, $isAction = false)
     {
-        $URL = (string) $URL;
+        $url = (string) $url;
         $parentIds = array((int) $parentId);
 
         // 0, 1, 2, 3, 4 are all top levels, so we should place them on the same level
@@ -1086,14 +1088,14 @@ class Model
                  WHERE i.parent_id IN(' . implode(',', $parentIds) . ') AND i.status = ? AND m.url = ?
                     AND i.language = ?
                  LIMIT 1',
-                array('active', $URL, BL::getWorkingLanguage())
+                array('active', $url, BL::getWorkingLanguage())
             )
             ) {
                 // add a number
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($URL, null, $parentId, $isAction);
+                return self::getURL($url, null, $parentId, $isAction);
             }
         } else {
             // one item should be ignored
@@ -1105,19 +1107,19 @@ class Model
                  WHERE i.parent_id IN(' . implode(',', $parentIds) . ') AND i.status = ?
                     AND m.url = ? AND i.id != ? AND i.language = ?
                  LIMIT 1',
-                array('active', $URL, $id, BL::getWorkingLanguage())
+                array('active', $url, $id, BL::getWorkingLanguage())
             )
             ) {
                 // add a number
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($URL, $id, $parentId, $isAction);
+                return self::getURL($url, $id, $parentId, $isAction);
             }
         }
 
         // get full URL
-        $fullURL = self::getFullUrl($parentId) . '/' . $URL;
+        $fullURL = self::getFullURL($parentId) . '/' . $url;
 
         // get info about parent page
         $parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
@@ -1131,35 +1133,35 @@ class Model
             $actions = FrontendLanguage::getActions();
 
             // if the new URL conflicts with an action we should rebuild the URL
-            if (in_array($URL, $actions)) {
+            if (in_array($url, $actions)) {
                 // add a number
-                $URL = BackendModel::addNumber($URL);
+                $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($URL, $id, $parentId, $isAction);
+                return self::getURL($url, $id, $parentId, $isAction);
             }
         }
 
         // check if folder exists
         if (is_dir(PATH_WWW . '/' . $fullURL) || is_file(PATH_WWW . '/' . $fullURL)) {
             // add a number
-            $URL = BackendModel::addNumber($URL);
+            $url = BackendModel::addNumber($url);
 
             // recall this method, but with a new URL
-            return self::getURL($URL, $id, $parentId, $isAction);
+            return self::getURL($url, $id, $parentId, $isAction);
         }
 
         // check if it is an application
-        if (in_array(trim($fullURL, '/'), array_keys(\ApplicationRouting::getRoutes()))) {
+        if (array_key_exists(trim($fullURL, '/'), \ApplicationRouting::getRoutes())) {
             // add a number
-            $URL = BackendModel::addNumber($URL);
+            $url = BackendModel::addNumber($url);
 
             // recall this method, but with a new URL
-            return self::getURL($URL, $id, $parentId, $isAction);
+            return self::getURL($url, $id, $parentId, $isAction);
         }
 
         // return the unique URL!
-        return $URL;
+        return $url;
     }
 
     /**
@@ -1531,7 +1533,7 @@ class Model
             // skip domain name
             $domain = array_shift($URLChunks);
             foreach ($URLChunks as &$URLChunk) {
-                $URLChunk = urlencode($URLChunk);
+                $URLChunk = rawurlencode($URLChunk);
             }
             $redirectURL = $matches[1] . '://' . $domain . '/' . implode('/', $URLChunks);
         }

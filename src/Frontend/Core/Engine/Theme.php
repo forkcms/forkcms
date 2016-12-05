@@ -17,7 +17,7 @@ class Theme
     /**
      * The current active theme's name
      *
-     * @var    string
+     * @var string
      */
     private static $theme;
 
@@ -28,6 +28,7 @@ class Theme
      * @param string $file Path to the file.
      *
      * @return string Path to the (theme) file.
+     * @throws Exception
      */
     public static function getPath($file)
     {
@@ -53,7 +54,7 @@ class Theme
 
         // check if the file exists
         if (!is_file(PATH_WWW . str_replace(PATH_WWW, '', $file))) {
-            throw new Exception('The template (' . $file . ') does not exists.');
+            throw new Exception('The template (' . $file . ') does not exist.');
         }
 
         // return template path

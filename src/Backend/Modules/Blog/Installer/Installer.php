@@ -10,6 +10,7 @@ namespace Backend\Modules\Blog\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the blog module
@@ -19,7 +20,7 @@ class Installer extends ModuleInstaller
     /**
      * Default category id
      *
-     * @var    int
+     * @var int
      */
     private $defaultCategoryId;
 
@@ -62,13 +63,6 @@ class Installer extends ModuleInstaller
      */
     private function insertWidget()
     {
-        $comments = array(
-            'column' => 'right',
-            'position' => 1,
-            'hidden' => false,
-            'present' => true,
-        );
-
         $this->insertDashboardWidget('Blog', 'Comments');
     }
 
@@ -78,20 +72,21 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'blog' as a module
         $this->addModule('Blog');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
         $this->setSetting('Blog', 'allow_comments', true);
         $this->setSetting('Blog', 'requires_akismet', true);
         $this->setSetting('Blog', 'spamfilter', false);
         $this->setSetting('Blog', 'moderation', true);
-        $this->setSetting('Blog', 'ping_services', true);
+        // @TODO remove this when the api is kicked out
+        $this->setSetting('Blog', 'ping_services', false);
         $this->setSetting('Blog', 'overview_num_items', 10);
         $this->setSetting('Blog', 'recent_articles_full_num_items', 3);
         $this->setSetting('Blog', 'recent_articles_list_num_items', 5);
@@ -144,18 +139,18 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Blog', 'blog/settings');
 
         // add extra's
-        $blogId = $this->insertExtra('Blog', 'block', 'Blog', null, null, 'N', 1000);
-        $this->insertExtra('Blog', 'widget', 'RecentComments', 'RecentComments', null, 'N', 1001);
-        $this->insertExtra('Blog', 'widget', 'Categories', 'Categories', null, 'N', 1002);
-        $this->insertExtra('Blog', 'widget', 'Archive', 'Archive', null, 'N', 1003);
-        $this->insertExtra('Blog', 'widget', 'RecentArticlesFull', 'RecentArticlesFull', null, 'N', 1004);
-        $this->insertExtra('Blog', 'widget', 'RecentArticlesList', 'RecentArticlesList', null, 'N', 1005);
+        $blogId = $this->insertExtra('Blog', ModuleExtraType::block(), 'Blog', null, null, 'N', 1000);
+        $this->insertExtra('Blog', ModuleExtraType::widget(), 'RecentComments', 'RecentComments', null, 'N', 1001);
+        $this->insertExtra('Blog', ModuleExtraType::widget(), 'Categories', 'Categories', null, 'N', 1002);
+        $this->insertExtra('Blog', ModuleExtraType::widget(), 'Archive', 'Archive', null, 'N', 1003);
+        $this->insertExtra('Blog', ModuleExtraType::widget(), 'RecentArticlesFull', 'RecentArticlesFull', null, 'N', 1004);
+        $this->insertExtra('Blog', ModuleExtraType::widget(), 'RecentArticlesList', 'RecentArticlesList', null, 'N', 1005);
 
         // get search extra id
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
-            array('Search', 'widget', 'Form')
+            array('Search', ModuleExtraType::WIDGET, 'Form')
         );
 
         // loop languages

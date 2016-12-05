@@ -10,6 +10,7 @@ namespace Backend\Modules\Pages\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the pages module
@@ -36,14 +37,14 @@ class Installer extends ModuleInstaller
     private function insertPages()
     {
         // get extra ids
-        $extras['search'] = $this->insertExtra('Search', 'block', 'Search', null, null, 'N', 2000);
-        $extras['search_form'] = $this->insertExtra('Search', 'widget', 'SearchForm', 'Form', null, 'N', 2001);
-        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', 'widget', 'Sitemap', 'Sitemap', null, 'N', 1);
-        $this->insertExtra('Pages', 'widget', 'Navigation', 'PreviousNextNavigation');
+        $extras['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, 'N', 2000);
+        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
+        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', ModuleExtraType::widget(), 'Sitemap', 'Sitemap', null, 'N', 1);
+        $this->insertExtra('Pages', ModuleExtraType::widget(), 'Navigation', 'PreviousNextNavigation');
 
         $extras['subpages_widget'] = $this->insertExtra(
             'Pages',
-            'widget',
+            ModuleExtraType::widget(),
             'Subpages',
             'Subpages',
             serialize(array('template' => 'SubpagesDefault.html.twig')),
@@ -67,7 +68,7 @@ class Installer extends ModuleInstaller
                          'allow_delete' => 'N',
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
 
@@ -80,7 +81,7 @@ class Installer extends ModuleInstaller
                          'language' => $language,
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sitemap.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sitemap.txt'),
                     array('extra_id' => $extras['sitemap_widget_sitemap']),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
@@ -95,7 +96,7 @@ class Installer extends ModuleInstaller
                     ),
                     array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
                     array(
-                         'html' => dirname(__FILE__) . '/Data/' . $language .
+                         'html' => __DIR__ . '/Data/' . $language .
                                    '/disclaimer.txt',
                     ),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
@@ -112,7 +113,7 @@ class Installer extends ModuleInstaller
                          'allow_delete' => 'N',
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/404.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/404.txt'),
                     array('extra_id' => $extras['sitemap_widget_sitemap']),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
@@ -126,13 +127,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'pages' as a module
         $this->addModule('Pages');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // import data
         $this->importData();
@@ -155,10 +156,10 @@ class Installer extends ModuleInstaller
     private function installExampleData()
     {
         // insert/get extra ids
-        $extras['blog_block'] = $this->insertExtra('Blog', 'block', 'Blog', null, null, 'N', 1000);
+        $extras['blog_block'] = $this->insertExtra('Blog', ModuleExtraType::block(), 'Blog', null, null, 'N', 1000);
         $extras['blog_widget_recent_comments'] = $this->insertExtra(
             'Blog',
-            'widget',
+            ModuleExtraType::widget(),
             'RecentComments',
             'RecentComments',
             null,
@@ -167,17 +168,17 @@ class Installer extends ModuleInstaller
         );
         $extras['blog_widget_categories'] = $this->insertExtra(
             'Blog',
-            'widget',
+            ModuleExtraType::widget(),
             'Categories',
             'Categories',
             null,
             'N',
             1002
         );
-        $extras['blog_widget_archive'] = $this->insertExtra('Blog', 'widget', 'Archive', 'Archive', null, 'N', 1003);
+        $extras['blog_widget_archive'] = $this->insertExtra('Blog', ModuleExtraType::widget(), 'Archive', 'Archive', null, 'N', 1003);
         $extras['blog_widget_recent_articles_full'] = $this->insertExtra(
             'Blog',
-            'widget',
+            ModuleExtraType::widget(),
             'RecentArticlesFull',
             'RecentArticlesFull',
             null,
@@ -186,19 +187,19 @@ class Installer extends ModuleInstaller
         );
         $extras['blog_widget_recent_articles_list'] = $this->insertExtra(
             'Blog',
-            'widget',
+            ModuleExtraType::widget(),
             'RecentArticlesList',
             'RecentArticlesList',
             null,
             'N',
             1005
         );
-        $extras['search'] = $this->insertExtra('Search', 'block', 'Search', null, null, 'N', 2000);
-        $extras['search_form'] = $this->insertExtra('Search', 'widget', 'SearchForm', 'Form', null, 'N', 2001);
-        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', 'widget', 'Sitemap', 'Sitemap', null, 'N', 1);
+        $extras['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, 'N', 2000);
+        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
+        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', ModuleExtraType::widget(), 'Sitemap', 'Sitemap', null, 'N', 1);
         $extras['subpages_widget'] = $this->insertExtra(
             'Pages',
-            'widget',
+            ModuleExtraType::widget(),
             'Subpages',
             'Subpages',
             serialize(array('template' => 'SubpagesDefault.html.twig')),
@@ -226,7 +227,7 @@ class Installer extends ModuleInstaller
                          'allow_delete' => 'N',
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
                     array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
                     array('extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'right'),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
@@ -267,8 +268,8 @@ class Installer extends ModuleInstaller
                          'language' => $language,
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample2.txt'),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
 
@@ -280,8 +281,8 @@ class Installer extends ModuleInstaller
                          'language' => $language,
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample2.txt'),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
 
@@ -293,8 +294,8 @@ class Installer extends ModuleInstaller
                          'language' => $language,
                     ),
                     null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
+                    array('html' => __DIR__ . '/Data/' . $language . '/sample2.txt'),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
 
@@ -308,7 +309,7 @@ class Installer extends ModuleInstaller
                     ),
                     array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
                     array(
-                         'html' => dirname(__FILE__) . '/Data/' . $language . '/lorem_ipsum.txt',
+                         'html' => __DIR__ . '/Data/' . $language . '/lorem_ipsum.txt',
                     ),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );

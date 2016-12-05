@@ -11,6 +11,8 @@ namespace Api\V1;
 
 /**
  * This class will initiate the API.
+ *
+ * @deprecated
  */
 class Init extends \Common\Core\Init
 {
@@ -28,7 +30,7 @@ class Init extends \Common\Core\Init
 
         // check if this is a valid type
         if (!in_array($type, $this->allowedTypes)) {
-            exit('Invalid init-type');
+            throw new InvalidInitTypeException($type, $this->allowedTypes);
         }
 
         // set type

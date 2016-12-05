@@ -9,6 +9,7 @@ namespace Backend\Modules\Search\Installer;
  * file that was distributed with this source code.
  */
 
+use Common\ModuleExtraType;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
 
@@ -23,13 +24,13 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
 
         // add 'search' as a module
         $this->addModule('Search');
 
         // import locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
         $this->setSetting('Search', 'overview_num_items', 10);
@@ -63,8 +64,8 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Search', 'search/settings');
 
         // add extra's
-        $searchId = $this->insertExtra('Search', 'block', 'Search', null, null, 'N', 2000);
-        $this->insertExtra('Search', 'widget', 'SearchForm', 'Form', null, 'N', 2001);
+        $searchId = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, 'N', 2000);
+        $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
@@ -96,9 +97,9 @@ class Installer extends ModuleInstaller
         $this->searchPages();
 
         // create module cache path
-        $fs = new Filesystem();
-        if (!$fs->exists(PATH_WWW . '/src/Frontend/Cache/Search')) {
-            $fs->mkdir(PATH_WWW . '/src/Frontend/Cache/Search');
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists(PATH_WWW . '/src/Frontend/Cache/Search')) {
+            $filesystem->mkdir(PATH_WWW . '/src/Frontend/Cache/Search');
         }
     }
 

@@ -12,7 +12,7 @@ namespace Frontend\Modules\Profiles\Actions;
 use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -26,7 +26,7 @@ class ForgotPassword extends FrontendBaseBlock
     /**
      * FrontendForm instance.
      *
-     * @var    FrontendForm
+     * @var FrontendForm
      */
     private $frm;
 
@@ -127,7 +127,7 @@ class ForgotPassword extends FrontendBaseBlock
                     ->setTo(array($txtEmail->getValue() => ''))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
+                        '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
                         $mailValues,
                         true
                     )
