@@ -57,5 +57,4 @@ If you use the command line, you can run the following command in your document 
 
 - Slack: <https://fork-cms.herokuapp.com/>
 
-
 _The Fork CMS team_
