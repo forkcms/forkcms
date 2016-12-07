@@ -654,7 +654,7 @@ class Edit extends BackendBaseActionEdit
                     $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
                 }
 
-                if ($this->frm->getField('auth_required')->isChecked()) {
+                if (BackendModel::isModuleInstalled('Profiles') && $this->frm->getField('auth_required')->isChecked()) {
                     $data['auth_required'] = true;
                     // check for groups
                     $data['auth_groups'] = $this->frm->getField('auth_groups')->getValue();
