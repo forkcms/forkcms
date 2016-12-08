@@ -88,7 +88,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
             $request->request->has('fork') ? $request->request->get('fork') : $request->query->get('fork')
         );
 
-        if ($language == '') {
+        if ($language === '') {
             $language = SITE_DEFAULT_LANGUAGE;
         }
 
