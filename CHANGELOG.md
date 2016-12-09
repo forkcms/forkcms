@@ -1,3 +1,10 @@
+4.4.1 (2017-xx-yy)
+------------------
+
+Bugfixes:
+
+* Pages: Fix exception in Authentication option when profiles module is not installed
+
 4.4.0 (2016-12-02)
 ------------------
 
@@ -25,7 +32,7 @@ Features:
 
 * Core: Add redirect method to widgets
 * Core: Custom html5 validation
-* Page: Authentication options with the profiles module
+* Pages: Authentication options with the profiles module
 * MailMotor: Completely revamped module. Now also with MailChimp
 
 Deprecations:
