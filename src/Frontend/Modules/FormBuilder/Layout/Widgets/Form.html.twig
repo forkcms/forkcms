@@ -45,7 +45,7 @@
                 </p>
                 <ul>
                   {% for html in field.html %}
-                    <li><label for="{{ html.id }}">{{ html.field|raw }} {{ html.label }}</label></li>
+                    <li><label for="{{ html.id }}">{{ html.field|raw }} {{ html.label|raw }}</label></li>
                   {% endfor %}
                 </ul>
                 {% if field.error %}<span class="formError inlineError">{{ field.error }}</span>{% endif %}
