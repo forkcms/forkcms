@@ -58,7 +58,7 @@ final class NewNotImplementedMailingListSubscription
         $title = sprintf(
             Language::lbl('MailTitleSubscribeSubscriber'),
             $event->getSubscription()->email,
-            strtoupper($event->getSubscription()->language)
+            strtoupper((string) $event->getSubscription()->locale)
         );
 
         // define sender/receiver(s)
