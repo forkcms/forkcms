@@ -59,7 +59,8 @@ class Ajax extends Base\Object implements \ApplicationInterface
         $request = $this->get('request');
 
         list($module, $action, $language) = $this->splitUpForkData(
-            $request->request->has('fork') ? $request->request->get('fork') : $request->query->get('fork')
+            $request->request->has('fork')
+                ? (array) $request->request->get('fork') : (array) $request->query->get('fork')
         );
 
         if ($language === '') {
