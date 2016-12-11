@@ -9,7 +9,7 @@ namespace Backend\Modules\Mailmotor\Installer;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\ModuleInstaller as ModuleInstaller;
+use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the Mailmotor module
