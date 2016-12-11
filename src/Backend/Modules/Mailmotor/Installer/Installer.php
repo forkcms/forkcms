@@ -27,7 +27,7 @@ class Installer extends ModuleInstaller
         $this->installSettings();
 
         // install locale
-        $this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         // install the mailmotor module
         $this->installModule();
