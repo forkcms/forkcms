@@ -659,7 +659,9 @@ class Edit extends BackendBaseActionEdit
                     // get all groups and parse them in key value pair
                     $groupItems = BackendProfilesModel::getGroups();
                     // check for groups
-                    if(!empty($groupItems)) $data['auth_groups'] = $this->frm->getField('auth_groups')->getValue();
+                    if(!empty($groupItems)) {
+                        $data['auth_groups'] = $this->frm->getField('auth_groups')->getValue();
+                    }
                 }
 
                 // build page record
