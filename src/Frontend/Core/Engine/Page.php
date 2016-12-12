@@ -490,6 +490,9 @@ class Page extends FrontendBaseObject
             );
         }
 
+        // create navigation instance
+        new Navigation($this->getKernel());
+
         // Multi language is activated
         if ($this->getContainer()->getParameter('site.multilanguage')) {
             $links = array();
@@ -525,9 +528,6 @@ class Page extends FrontendBaseObject
                 }
             }
         }
-
-        // create navigation instance
-        new Navigation($this->getKernel());
 
         // assign content
         $pageInfo = Navigation::getPageInfo($this->record['id']);
