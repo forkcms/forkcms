@@ -58,7 +58,7 @@ final class NewNotImplementedMailingListUnsubscription
         $title = sprintf(
             Language::lbl('MailTitleUnsubscribeSubscriber'),
             $event->getUnsubscription()->email,
-            strtoupper($event->getUnsubscription()->language)
+            strtoupper((string) $event->getUnsubscription()->locale)
         );
 
         // define sender/receiver(s)

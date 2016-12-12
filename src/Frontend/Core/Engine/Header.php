@@ -915,7 +915,7 @@ class Header extends FrontendBaseObject
                 $url .= ':' . $urlChunks['port'];
             }
             if (isset($urlChunks['path'])) {
-                $url .= '/' . $urlChunks['path'];
+                $url .= $urlChunks['path'];
             }
 
             // any items provided through GET?
