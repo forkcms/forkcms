@@ -9,7 +9,7 @@ namespace Backend\Modules\Mailmotor\Installer;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\ModuleInstaller as ModuleInstaller;
+use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the Mailmotor module
@@ -27,7 +27,7 @@ class Installer extends ModuleInstaller
         $this->installSettings();
 
         // install locale
-        $this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         // install the mailmotor module
         $this->installModule();
