@@ -503,7 +503,7 @@ class Page extends FrontendBaseObject
                 $url = Navigation::getURL($this->pageId, $language);
 
                 // Ignore 404 links
-                if ($url === Navigation::getURL(404, $language)) {
+                if (($this->pageId !== 404) && ($url === Navigation::getURL(404, $language))) {
                     continue;
                 }
 
