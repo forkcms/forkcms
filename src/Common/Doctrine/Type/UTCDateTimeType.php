@@ -52,6 +52,9 @@ class UTCDateTimeType extends DateTimeType
             );
         }
 
+        // set time zone
+        $dateTime->setTimezone(new DateTimeZone(date_default_timezone_get()));
+
         return $dateTime;
     }
 
