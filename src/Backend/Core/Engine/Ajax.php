@@ -32,6 +32,20 @@ class Ajax extends Base\Object implements \ApplicationInterface
         return $this->ajaxAction->execute();
     }
 
+    /**
+     * @param array $forkData
+     *
+     * @return array
+     */
+    private function splitUpForkData(array $forkData)
+    {
+        return [
+            isset($forkData['module']) ? $forkData['module'] : '',
+            isset($forkData['action']) ? $forkData['action'] : '',
+            isset($forkData['language']) ? $forkData['language'] : '',
+        ];
+    }
+
     public function initialize()
     {
         // check if the user is logged in
@@ -42,15 +56,17 @@ class Ajax extends Base\Object implements \ApplicationInterface
             define('NAMED_APPLICATION', 'BackendAjax');
         }
 
-        // get values from the GET-parameters
-        $module = (isset($_GET['fork']['module'])) ? $_GET['fork']['module'] : '';
-        $action = (isset($_GET['fork']['action'])) ? $_GET['fork']['action'] : '';
-        $language = (isset($_GET['fork']['language'])) ? $_GET['fork']['language'] : SITE_DEFAULT_LANGUAGE;
+        $request = $this->get('request');
 
-        // overrule the values with the ones provided through POST
-        $module = (isset($_POST['fork']['module'])) ? $_POST['fork']['module'] : $module;
-        $action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
-        $language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
+        list($module, $action, $language) = $this->splitUpForkData(
+            $request->request->has('fork')
+                ? (array) $request->request->get('fork')
+                : ($request->query->has('fork') ? (array) $request->query->get('fork') : $request->query->all())
+        );
+
+        if ($language === '') {
+            $language = SITE_DEFAULT_LANGUAGE;
+        }
 
         try {
             // create URL instance, since the template modifiers need this object

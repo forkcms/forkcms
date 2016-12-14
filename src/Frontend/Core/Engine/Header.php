@@ -223,7 +223,7 @@ class Header extends FrontendBaseObject
         $uniqueKeys = (array) $uniqueKeys;
 
         if ($uniqueKeys == null) {
-            $uniqueKeys = array('rel', 'type', 'title');
+            $uniqueKeys = array('rel', 'hreflang', 'type', 'title');
         }
 
         // stop if the content is empty

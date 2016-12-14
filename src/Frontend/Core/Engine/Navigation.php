@@ -482,14 +482,16 @@ class Navigation extends FrontendBaseObject
         $keys = self::getKeys($language);
 
         // get the URL, if it doesn't exist return 404
-        if (!isset($keys[$pageId])) {
+        if (!isset($keys[$pageId]) && $pageId !== 404) {
             return self::getURL(404, $language);
-        } else {
-            $url .= $keys[$pageId];
+        }
+
+        if (empty($keys)) {
+            return urldecode($url . 404);
         }
 
         // return the URL
-        return urldecode($url);
+        return urldecode($url . $keys[$pageId]);
     }
 
     /**

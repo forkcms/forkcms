@@ -272,7 +272,7 @@ class Edit extends BackendBaseActionEdit
                 }
                 // set checked values
                 $checkedGroups = array();
-                if (is_array($this->record['data']['auth_groups'])) {
+                if (isset($this->record['data']['auth_groups']) && is_array($this->record['data']['auth_groups'])) {
                     foreach ($this->record['data']['auth_groups'] as $group) {
                         $checkedGroups[] = $group;
                     }
@@ -675,8 +675,12 @@ class Edit extends BackendBaseActionEdit
 
                 if (BackendModel::isModuleInstalled('Profiles') && $this->frm->getField('auth_required')->isChecked()) {
                     $data['auth_required'] = true;
+                    // get all groups and parse them in key value pair
+                    $groupItems = BackendProfilesModel::getGroups();
                     // check for groups
-                    $data['auth_groups'] = $this->frm->getField('auth_groups')->getValue();
+                    if (!empty($groupItems)) {
+                        $data['auth_groups'] = $this->frm->getField('auth_groups')->getValue();
+                    }
                 }
 
                 // build page record
