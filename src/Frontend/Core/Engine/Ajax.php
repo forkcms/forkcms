@@ -63,6 +63,20 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
     }
 
     /**
+     * @param array $forkData
+     *
+     * @return array
+     */
+    private function splitUpForkData(array $forkData)
+    {
+        return [
+            isset($forkData['module']) ? $forkData['module'] : '',
+            isset($forkData['action']) ? $forkData['action'] : '',
+            isset($forkData['language']) ? $forkData['language'] : '',
+        ];
+    }
+
+    /**
      * This method exists because the service container needs to be set before
      * the request's functionality gets loaded.
      */
@@ -70,19 +84,13 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
     {
         $request = $this->getContainer()->get('request');
 
-        // get vars
-        if ($request->request->has('fork')) {
-            $post = $request->request->get('fork');
-            $module = isset($post['module']) ? $post['module'] : '';
-            $action = isset($post['action']) ? $post['action'] : '';
-            $language = isset($post['language']) ? $post['language'] : '';
-        } else {
-            $module = $request->query->get('module');
-            $action = $request->query->get('action');
-            $language = $request->query->get('language');
-        }
+        list($module, $action, $language) = $this->splitUpForkData(
+            $request->request->has('fork')
+                ? (array) $request->request->get('fork')
+                : $request->query->has('fork') ? (array) $request->query->get('fork') : $request->query->all()
+        );
 
-        if ($language == '') {
+        if ($language === '') {
             $language = SITE_DEFAULT_LANGUAGE;
         }
 
