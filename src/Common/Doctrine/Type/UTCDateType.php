@@ -6,9 +6,9 @@ use DateTime;
 use DateTimeZone;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
-use Doctrine\DBAL\Types\DateTimeType;
+use Doctrine\DBAL\Types\DateType;
 
-class UTCDateTimeType extends DateTimeType
+class UTCDateType extends DateType
 {
     /** @var DateTimeZone */
     private static $utc;
@@ -17,48 +17,48 @@ class UTCDateTimeType extends DateTimeType
     private static $defaultTimeZone;
 
     /**
-     * @param DateTime $dateTime
+     * @param DateTime $date
      * @param AbstractPlatform $platform
      *
      * @return string|null
      */
-    public function convertToDatabaseValue($dateTime, AbstractPlatform $platform)
+    public function convertToDatabaseValue($date, AbstractPlatform $platform)
     {
-        if ($dateTime instanceof DateTime) {
-            $dateTime->setTimezone(self::getUtc());
+        if ($date instanceof DateTime) {
+            $date->setTimezone(self::getUtc());
         }
 
-        return parent::convertToDatabaseValue($dateTime, $platform);
+        return parent::convertToDatabaseValue($date, $platform);
     }
 
     /**
-     * @param string $dateTimeString
+     * @param string $dateString
      * @param AbstractPlatform $platform
      *
      * @throws ConversionException
      *
      * @return DateTime|null
      */
-    public function convertToPHPValue($dateTimeString, AbstractPlatform $platform)
+    public function convertToPHPValue($dateString, AbstractPlatform $platform)
     {
-        if (null === $dateTimeString || $dateTimeString instanceof DateTime) {
-            return $dateTimeString;
+        if (null === $dateString || $dateString instanceof DateTime) {
+            return $dateString;
         }
 
-        $dateTime = DateTime::createFromFormat($platform->getDateTimeFormatString(), $dateTimeString, self::getUtc());
+        $date = DateTime::createFromFormat($platform->getDateFormatString(), $dateString, self::getUtc());
 
-        if (!$dateTime) {
+        if (!$date) {
             throw ConversionException::conversionFailedFormat(
-                $dateTimeString,
+                $dateString,
                 $this->getName(),
-                $platform->getDateTimeFormatString()
+                $platform->getDateFormatString()
             );
         }
 
         // set time zone
-        $dateTime->setTimezone(self::getDefaultTimeZone());
+        $date->setTimezone(self::getDefaultTimeZone());
 
-        return $dateTime;
+        return $date;
     }
 
     /**
