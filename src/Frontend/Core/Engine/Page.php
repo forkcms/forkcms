@@ -502,6 +502,10 @@ class Page extends FrontendBaseObject
 
             // Loop active languages
             foreach ($activeLanguages as $language) {
+                if ($language === LANGUAGE) {
+                    continue;
+                }
+
                 // Define url
                 $url = Navigation::getURL($this->pageId, $language);
 
