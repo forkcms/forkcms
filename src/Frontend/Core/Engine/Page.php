@@ -493,6 +493,42 @@ class Page extends FrontendBaseObject
         // create navigation instance
         new Navigation($this->getKernel());
 
+        // Multi language is activated
+        if ($this->getContainer()->getParameter('site.multilanguage')) {
+            $links = array();
+
+            // Get languages
+            $activeLanguages = Language::getActiveLanguages();
+
+            // Loop active languages
+            foreach ($activeLanguages as $language) {
+                // Define url
+                $url = Navigation::getURL($this->pageId, $language);
+
+                // Ignore 404 links
+                if (($this->pageId !== 404) && ($url === Navigation::getURL(404, $language))) {
+                    continue;
+                }
+
+                // Convert relative to absolute url
+                if (substr($url, 0, 1) == '/') {
+                    $url = SITE_URL . $url;
+                }
+
+                $links[$language] = $url;
+            }
+
+            // We must only add links if we have more then one
+            if (count($links) > 1) {
+                foreach ($links as $language => $url) {
+                    // Add hreflang
+                    $this->header->addLink(
+                        array('rel' => 'alternate', 'hreflang' => $language, 'href' => $url)
+                    );
+                }
+            }
+        }
+
         // assign content
         $pageInfo = Navigation::getPageInfo($this->record['id']);
         $this->record['has_children'] = $pageInfo['has_children'];
