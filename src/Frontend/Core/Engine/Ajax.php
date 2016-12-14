@@ -86,7 +86,8 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
 
         list($module, $action, $language) = $this->splitUpForkData(
             $request->request->has('fork')
-                ? (array) $request->request->get('fork') : (array) $request->query->get('fork')
+                ? (array) $request->request->get('fork')
+                : $request->query->has('fork') ? (array) $request->query->get('fork') : $request->query->all()
         );
 
         if ($language === '') {
