@@ -1,3 +1,22 @@
+4.4.1 (2016-12-14)
+------------------
+
+Bugfixes:
+
+* Core: Doctrine DBAL Type for date's timezone issues where fixed
+* Core: Avoid duplicate slash in canonical URL
+* Core: Fix ajax calls in the frontend using GET
+* Core: Add missing alternate meta tags when multi language is enabled
+* Core: Fix redirect loop on the 404 page that was triggered when the cache wasn't loaded.
+* Pages: Fix saving pages when the profiles module is not installed
+* Pages: Check if auth_groups is set
+* Pages: Check if there are any auth groups
+* MailMotor: Fix languages not passed correctly in events
+* MailMotor: Add missing translations
+* MailMotor: Fix wrong directory casing
+* FormBuilder: Fix html in inputlist
+
+
 4.4.0 (2016-12-02)
 ------------------
 
