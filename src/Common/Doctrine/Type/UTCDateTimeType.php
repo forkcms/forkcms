@@ -13,6 +13,9 @@ class UTCDateTimeType extends DateTimeType
     /** @var DateTimeZone */
     private static $utc;
 
+    /** @var DateTimeZone */
+    private static $defaultTimeZone;
+
     /**
      * @param DateTime $dateTime
      * @param AbstractPlatform $platform
@@ -53,7 +56,7 @@ class UTCDateTimeType extends DateTimeType
         }
 
         // set time zone
-        $dateTime->setTimezone(new DateTimeZone(date_default_timezone_get()));
+        $dateTime->setTimezone(self::getDefaultTimeZone());
 
         return $dateTime;
     }
@@ -64,5 +67,14 @@ class UTCDateTimeType extends DateTimeType
     private static function getUtc()
     {
         return self::$utc ? self::$utc : self::$utc = new DateTimeZone('UTC');
+    }
+
+    /**
+     * @return DateTimeZone
+     */
+    private static function getDefaultTimeZone()
+    {
+        return self::$defaultTimeZone
+            ? self::$defaultTimeZone : self::$defaultTimeZone = new DateTimeZone(date_default_timezone_get());
     }
 }
