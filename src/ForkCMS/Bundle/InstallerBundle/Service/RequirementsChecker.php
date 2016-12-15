@@ -280,7 +280,7 @@ class RequirementsChecker
      */
     protected function checkServerRewrites()
     {
-        if (!preg_match('/^nginx/i', $_SERVER['SERVER_SOFTWARE'])) {
+        if (array_key_exists('SERVER_SOFTWARE', $_SERVER) && stripos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== 0) {
             $this->checkRequirement(
                 'modRewrite',
                 (bool) (getenv('MOD_REWRITE') || getenv('REDIRECT_MOD_REWRITE')),
