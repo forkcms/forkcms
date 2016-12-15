@@ -577,7 +577,7 @@ class Model implements FrontendTagsInterface
     {
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.title, m.url
+            'SELECT i.title, i.image, m.url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $ids) . ') AND i.publish_on <= ?
