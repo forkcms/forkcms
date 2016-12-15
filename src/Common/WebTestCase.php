@@ -2,6 +2,7 @@
 
 namespace Common;
 
+use KernelLoader;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\FileSystem\Filesystem;
@@ -62,6 +63,9 @@ abstract class WebTestCase extends BaseWebTestCase
         }
 
         static::$kernel = static::createKernel($options);
+
+        $loader = new KernelLoader(static::$kernel);
+        $loader->passContainerToModels();
 
         $client = static::$kernel->getContainer()->get('test.client');
         $client->setServerParameters($server);
