@@ -241,7 +241,7 @@ class DataGrid extends \SpoonDataGrid
      */
     public function enableGreyingOut()
     {
-        $allowedColumns = array('hidden', 'visible', 'active', 'published');
+        $allowedColumns = array('status', 'hidden', 'visible', 'active', 'published');
         $allColumns = $this->getColumns();
 
         foreach ($allowedColumns as $column) {
