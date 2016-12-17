@@ -283,16 +283,18 @@ class RequirementsChecker
         if (array_key_exists('SERVER_SOFTWARE', $_SERVER) && stripos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== 0) {
             $this->checkRequirement(
                 'modRewrite',
-                (bool) (getenv('MOD_REWRITE') || getenv('REDIRECT_MOD_REWRITE')),
+                (bool)(getenv('MOD_REWRITE') || getenv('REDIRECT_MOD_REWRITE')),
                 self::STATUS_WARNING
             );
-        } else {
-            $this->checkRequirement(
-                'modRewrite',
-                true,
-                self::STATUS_WARNING
-            );
+
+            return;
         }
+
+        $this->checkRequirement(
+            'modRewrite',
+            true,
+            self::STATUS_WARNING
+        );
     }
 
     /**
