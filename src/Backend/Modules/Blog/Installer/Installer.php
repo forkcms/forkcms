@@ -321,7 +321,7 @@ class Installer extends ModuleInstaller
                     'created_on' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Tijs Verkoyen',
                     'email' => 'forkcms-sample@sumocoders.be',
-                    'website' => 'http://www.sumocoders.be',
+                    'website' => 'https://www.sumocoders.be',
                     'text' => 'wicked!',
                     'type' => 'comment',
                     'status' => 'published',

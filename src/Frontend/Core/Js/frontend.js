@@ -405,7 +405,7 @@ jsFrontend.gravatar =
             if(gravatarId !== '')
             {
                 // build url
-                var url = 'http://www.gravatar.com/avatar/' + gravatarId + '?r=g&d=404';
+                var url = 'https://www.gravatar.com/avatar/' + gravatarId + '?r=g&d=404';
 
                 // add size if set before
                 if(size !== '') url += '&s=' + size;

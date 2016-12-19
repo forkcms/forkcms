@@ -270,7 +270,7 @@ class Model
             $hash = md5(mb_strtolower(trim('d' . $email)));
 
             // define avatar url
-            $avatar = 'http://www.gravatar.com/avatar/' . $hash;
+            $avatar = 'https://www.gravatar.com/avatar/' . $hash;
 
             // when email not exists, it has to show our custom no-avatar image
             $avatar .= '?d=' . SITE_URL . $avatarPath . 'no-avatar.gif';
