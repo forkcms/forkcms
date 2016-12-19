@@ -5,6 +5,7 @@ namespace Common;
 use Common\Core\Model;
 use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
+use Symfony\Component\DependencyInjection\Exception\InactiveScopeException;
 use Symfony\Component\Translation\IdentityTranslator;
 
 /**
@@ -24,11 +25,15 @@ final class Language extends IdentityTranslator
     {
         $application = 'Backend';
 
-        if (Model::has('request')
-            && Model::get('request')->attributes->has('_route')
-            && stripos(Model::get('request')->attributes->get('_route'), 'frontend') === 0
-        ) {
-            $application = 'Frontend';
+        try {
+            if (Model::has('request')
+                && Model::get('request')->attributes->has('_route')
+                && stripos(Model::get('request')->attributes->get('_route'), 'frontend') === 0
+            ) {
+                $application = 'Frontend';
+            }
+        } catch (InactiveScopeException $inactiveScopeException) {
+            // do nothing, use the backend language
         }
 
         return $application . '\Core\Language\Language';
