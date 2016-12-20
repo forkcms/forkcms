@@ -191,7 +191,7 @@
     &[rel="sitemap"],
     &[rel="redirect"]{
 
-      a {
+      > a {
         position: relative;
 
         &:before {
@@ -208,28 +208,28 @@
     &[rel="home"],
     &[rel="hidden"] {
 
-      a:before {
+      > a:before {
         content: "\f016";
       }
     }
 
     &[rel="error"] {
 
-      a:before {
+      > a:before {
         content: "\f071";
       }
     }
 
     &[rel="sitemap"] {
 
-      a:before {
+      > a:before {
         content: "\f0e8";
       }
     }
 
     &[rel="redirect"] {
 
-      a:before {
+      > a:before {
         content: "\f08e";
       }
     }
