@@ -653,7 +653,8 @@ class Edit extends BackendBaseActionEdit
                 if (array_key_exists('image', $this->templates[$templateId]['data'])) {
                     $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
                 }
-
+                
+                $data['auth_required'] = false;
                 if (BackendModel::isModuleInstalled('Profiles') && $this->frm->getField('auth_required')->isChecked()) {
                     $data['auth_required'] = true;
                     // get all groups and parse them in key value pair
@@ -757,12 +758,19 @@ class Edit extends BackendBaseActionEdit
                         $text .= ' ' . $block['html'];
                     }
 
-                    // add to search index
-                    BackendSearchModel::saveIndex(
-                        $this->getModule(),
-                        $page['id'],
-                        array('title' => $page['title'], 'text' => $text)
-                    );
+                    // add to search index, only if authentication is false
+                    if($data['auth_required'] == false) {
+                      BackendSearchModel::saveIndex(
+                          $this->getModule(),
+                          $page['id'],
+                          array('title' => $page['title'], 'text' => $text)
+                      );
+                    } else {
+                      BackendSearchModel::removeIndex(
+                          $this->getModule(),
+                          $page['id']
+                      );
+                    }
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(
