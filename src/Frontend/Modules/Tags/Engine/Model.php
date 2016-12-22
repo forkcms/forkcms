@@ -92,10 +92,13 @@ class Model
      *
      * @return array
      */
-    public static function getForItem($module, $otherId)
+    public static function getForItem($module, $otherId, $language = null)
     {
         $module = (string) $module;
         $otherId = (int) $otherId;
+
+        // redefine language
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // init var
         $return = array();
@@ -105,8 +108,8 @@ class Model
             'SELECT t.tag AS name, t.url
              FROM modules_tags AS mt
              INNER JOIN tags AS t ON mt.tag_id = t.id
-             WHERE mt.module = ? AND mt.other_id = ?',
-            array($module, $otherId)
+             WHERE mt.module = ? AND mt.other_id = ? AND t.language = ?',
+            array($module, $otherId, $language)
         );
 
         // return
@@ -138,9 +141,12 @@ class Model
      *
      * @return array
      */
-    public static function getForMultipleItems($module, array $otherIds)
+    public static function getForMultipleItems($module, array $otherIds, $language = null)
     {
         $module = (string) $module;
+
+        // redefine language
+        $language = ($language !== null) ? (string) $language : LANGUAGE;
 
         // get db
         $db = FrontendModel::getContainer()->get('database');
@@ -153,8 +159,8 @@ class Model
             'SELECT mt.other_id, t.tag AS name, t.url
              FROM modules_tags AS mt
              INNER JOIN tags AS t ON mt.tag_id = t.id
-             WHERE mt.module = ? AND mt.other_id IN (' . implode(', ', $otherIds) . ')',
-            array($module)
+             WHERE mt.module = ? AND t.language = ? AND mt.other_id IN (' . implode(', ', $otherIds) . ')',
+            array($module, $language)
         );
 
         // return
