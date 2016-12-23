@@ -3,6 +3,7 @@
 
 # Libraries
 /vendor/*
+/node_modules/*
 
 # Generated files
 .project
