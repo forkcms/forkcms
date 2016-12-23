@@ -53,6 +53,11 @@ If you use the command line, you can run the following command in your document 
 
     sass --watch src/Backend/Core/Layout/Sass:src/Backend/Core/Layout/Css --style compressed
 
+## Yarn
+
+We use [yarn](https://yarnpkg.com/) to install our dependencies. For now we have a `gulp`-script that moves everything to
+the correct directories. So if you change the dependencies, make sure you run `gulp build`.
+
 ## Discussion
 
 - Slack: <https://fork-cms.herokuapp.com/>
