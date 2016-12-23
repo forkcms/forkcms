@@ -1,0 +1,14 @@
+{
+  "name": "forkcms",
+  "version": "1.0.0",
+  "description": "The NPM-dependencies for Fork CMS",
+  "main": "index.js",
+  "repository": "git@github.com:forkcms/forkcms.git",
+  "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "jquery": "~2.2",
+    "jquery-migrate": "~1.4"
+  }
+}
