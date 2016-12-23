@@ -15,7 +15,6 @@
   ],
   "dependencies": {
     "modernizr": "2.*",
-    "jquery-ui": "1.11.*",
     "bootstrap-sass": "~3.3.6",
     "fontawesome": "~4.5.0",
     "bootstrap-tagsinput": "^0.7.1",

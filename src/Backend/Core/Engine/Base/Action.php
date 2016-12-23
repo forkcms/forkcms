@@ -143,7 +143,7 @@ class Action extends Object
         // add jquery, we will need this in every action, so add it globally
         $this->header->addJS('/js/vendors/jquery.min.js', 'Core', false, true);
         $this->header->addJS('/js/vendors/jquery-migrate.min.js', 'Core', false, true);
-        $this->header->addJS('/bower_components/jquery-ui/jquery-ui.min.js', 'Core', false, true);
+        $this->header->addJS('/js/vendors/jquery-ui.min.js', 'Core', false, true);
         $this->header->addJS('/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js', 'Core', false, true);
         $this->header->addJS('/bower_components/typeahead.js/dist/typeahead.bundle.min.js', 'Core', false, true);
         $this->header->addJS('/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js', 'Core', false, true);
