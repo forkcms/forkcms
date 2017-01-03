@@ -110,7 +110,7 @@ class RequirementsChecker
 
     /*
      * At first we're going to check to see if the PHP version meets the minimum
-     * requirements for Fork CMS. We require at least PHP 5.5.0, because we don't
+     * requirements for Fork CMS. We require at least PHP 7.0.0, because we don't
      * want to be responsible for security issues in PHP itself.
      *
      * We follow this timeline: http://php.net/supported-versions.php
@@ -119,7 +119,7 @@ class RequirementsChecker
     {
         $this->checkRequirement(
             'phpVersion',
-            version_compare(PHP_VERSION, '5.5.0', '>='),
+            version_compare(PHP_VERSION, '7.0.0', '>='),
             self::STATUS_ERROR
         );
     }
