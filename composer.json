@@ -32,7 +32,8 @@
         "simple-bus/doctrine-orm-bridge": "^4.0",
         "mailmotor/mailchimp-bundle": "^2.0",
         "mailmotor/campaignmonitor-bundle": "^1.0",
-        "mailmotor/mailmotor-bundle": "^2.0"
+        "mailmotor/mailmotor-bundle": "^2.0",
+        "wikimedia/composer-merge-plugin": "^1.3"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
@@ -66,5 +67,12 @@
             "**/tests/",
             "**/Test/"
         ]
+    },
+    "extra": {
+        "merge-plugin": {
+            "include": [
+                "src/Backend/Modules/*/composer.json"
+            ]
+        }
     }
 }
