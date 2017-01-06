@@ -14,6 +14,13 @@ gulp.task("build:backend:assets:copy-js-vendors", function() {
       .pipe(gulp.dest("./js/vendors"));
 });
 
+gulp.task("build:backend:assets:copy-fonts-vendors", function() {
+  return gulp.src([
+    "./node_modules/font-awesome/fonts/**",
+  ])
+      .pipe(gulp.dest("./fonts"));
+});
+
 gulp.task("build:backend:sass:generate-css", function() {
   return gulp.src([
     "./src/Backend/Core/Layout/Sass/screen.scss",
@@ -42,6 +49,7 @@ gulp.task("default", function() {
 gulp.task("build", function() {
   gulp.start(
       "build:backend:assets:copy-js-vendors",
+      "build:backend:assets:copy-fonts-vendors",
       "build:backend:sass:generate-css"
   );
 });

@@ -1,8 +1,8 @@
 @charset 'UTF-8';
 
 // Font Awesome
-$fa-font-path: '../../../../../bower_components/fontawesome/fonts';
-@import '../../../../../bower_components/fontawesome/scss/font-awesome';
+$fa-font-path: '/fonts';
+@import 'font-awesome/scss/font-awesome';
 
 
 // Bootstrap
