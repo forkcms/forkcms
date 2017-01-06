@@ -18,5 +18,5 @@
 /app/sessions/*
 /bin/*
 /bundles/*
-/css/*
+/css/*.css
 /js/*.js

@@ -323,7 +323,7 @@ class Header extends Base\Object
                 '/js/vendors/jquery-migrate.min.js',
                 '/js/vendors/jquery-ui.min.js',
                 '/js/vendors/bootstrap.min.js',
-                '/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
+                '/js/vendors/bootstrap-tagsinput.min.js',
                 '/src/Backend/Core/Js/jquery/jquery.ui.dialog.patch.js',
                 '/src/Backend/Core/Js/jquery/jquery.backend.js',
                 '/src/Backend/Core/Js/ckeditor/ckeditor.js',
