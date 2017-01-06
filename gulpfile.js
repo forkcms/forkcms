@@ -1,6 +1,6 @@
 var gulp = require("gulp");
 
-gulp.task("assets:copy_js_assets_from_node_modules", function() {
+gulp.task("build:backend:assets:copy-js-vendors", function() {
   return gulp.src([
     "./node_modules/jquery/dist/jquery.min.js",
     "./node_modules/jquery-migrate/dist/jquery-migrate.min.js",
@@ -16,5 +16,5 @@ gulp.task("default", function() {
 });
 
 gulp.task("build", function() {
-  gulp.start("assets:copy_js_assets_from_node_modules");
+  gulp.start("build:backend:assets:copy-js-vendors");
 });
