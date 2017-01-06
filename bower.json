@@ -16,7 +16,6 @@
   "dependencies": {
     "modernizr": "2.*",
     "fontawesome": "~4.5.0",
-    "bootstrap-tagsinput": "^0.7.1",
-    "typeahead.js": "^0.11.1"
+    "bootstrap-tagsinput": "^0.7.1"
   }
 }
