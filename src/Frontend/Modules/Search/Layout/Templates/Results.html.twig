@@ -25,7 +25,7 @@
                 </header>
                 <div class="bd content">
                   {% if not result.introduction %}{{ result.text|truncate(200) }}{% endif %}
-                  {% if result.introduction %}{{ result.introduction }}{% endif %}
+                  {% if result.introduction %}{{ result.introduction|raw }}{% endif %}
                 </div>
               </div>
             </section>
