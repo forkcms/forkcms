@@ -144,7 +144,7 @@ class Action extends Object
         $this->header->addJS('/js/vendors/jquery.min.js', 'Core', false, true);
         $this->header->addJS('/js/vendors/jquery-migrate.min.js', 'Core', false, true);
         $this->header->addJS('/js/vendors/jquery-ui.min.js', 'Core', false, true);
-        $this->header->addJS('/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js', 'Core', false, true);
+        $this->header->addJS('/js/vendors/bootstrap.min.js', 'Core', false, true);
         $this->header->addJS('/js/vendors/typeahead.bundle.min.js', 'Core', false, true);
         $this->header->addJS('/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js', 'Core', false, true);
         $this->header->addJS('jquery/jquery.backend.js', 'Core');
