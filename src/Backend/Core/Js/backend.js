@@ -332,16 +332,6 @@ jsBackend.ckeditor =
             { name: 'styles', items: [ 'Format', 'Styles' ] }
         ],
 
-        // buttons specific for the newsletter
-        toolbar_Newsletter: [
-            {name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
-            {name: 'clipboard', items: ['Undo', 'Redo']},
-            {name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
-            {name: 'links', items: ['Link', 'Unlink', 'Anchor']},
-            {name: 'insert', items: ['Image', 'MediaEmbed', '-', 'SpecialChar']},
-            {name: 'document', items: ['Templates', 'Source']},
-            {name: 'styles', items: ['Format']}
-        ],
 
         // skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
         skin: 'bootstrapck',
@@ -375,7 +365,7 @@ jsBackend.ckeditor =
         jsBackend.ckeditor.defaultConfig.templates_files = ['/backend/ajax?fork[module]=Core&fork[action]=Templates&fork[language]=' + jsBackend.current.language];
 
         // load the editor
-        if ($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0) {
+        if ($('textarea.inputEditor, textarea.inputEditorError').length > 0) {
             // language options
             jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language;
             jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language');
@@ -412,17 +402,8 @@ jsBackend.ckeditor =
         // extend the editor config
         var editorConfig = $.extend({}, jsBackend.ckeditor.defaultConfig);
 
-        // specific config for the newsletter
-        var newsletterConfig = $.extend({}, jsBackend.ckeditor.defaultConfig,
-            {
-                toolbar: 'Newsletter',
-                toolbarStartupExpanded: true,
-                toggleToolbar: false
-            });
-
         // bind on inputEditor and inputEditorError
         $('textarea.inputEditor, textarea.inputEditorError').ckeditor(jsBackend.ckeditor.callback, editorConfig);
-        $('textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').ckeditor(jsBackend.ckeditor.callback, newsletterConfig);
     },
 
     callback: function (element) {
