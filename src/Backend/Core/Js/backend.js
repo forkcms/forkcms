@@ -319,6 +319,9 @@ jsBackend.ckeditor =
 
         // paste options
         forcePasteAsPlainText: true,
+
+        // The CSS file(s) to be used to apply style to editor content.
+        // It should reflect the CSS used in the target pages where the content is to be displayed.
         contentsCss: [],
 
         // buttons
@@ -332,8 +335,7 @@ jsBackend.ckeditor =
             { name: 'styles', items: [ 'Format', 'Styles' ] }
         ],
 
-
-        // skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
+        // Skin by Kunstmaan (https://github.com/Kunstmaan/BootstrapCK4-Skin)
         skin: 'bootstrapck',
 
         toolbar: 'Full',
