@@ -335,8 +335,7 @@ jsBackend.ckeditor =
             { name: 'styles', items: [ 'Format', 'Styles' ] }
         ],
 
-        // Skin by Kunstmaan (https://github.com/Kunstmaan/BootstrapCK4-Skin)
-        skin: 'bootstrapck',
+        skin: 'moono-lisa',
 
         toolbar: 'Full',
         toolbarStartupExpanded: true,
