@@ -13,10 +13,10 @@
  * (1) http://ckeditor.com/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) http://ckeditor.com/builder/e9119b48e5f315e304ffa0a5f32126f9
+ * (2) http://ckeditor.com/builder/cfeaa15282bb7d73f23fd26f4f1f999c
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) http://ckeditor.com/builder/download/e9119b48e5f315e304ffa0a5f32126f9
+ * (3) http://ckeditor.com/builder/download/cfeaa15282bb7d73f23fd26f4f1f999c
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -25,7 +25,7 @@
  */
 
 var CKBUILDER_CONFIG = {
-	skin: 'bootstrapck',
+	skin: 'moono-lisa',
 	preset: 'full',
 	ignore: [
 		'.bender',
@@ -68,7 +68,6 @@ var CKBUILDER_CONFIG = {
 		'elementspath' : 1,
 		'enterkey' : 1,
 		'entities' : 1,
-		'extraformattributes' : 1,
 		'filebrowser' : 1,
 		'filetools' : 1,
 		'find' : 1,
@@ -82,6 +81,7 @@ var CKBUILDER_CONFIG = {
 		'iframe' : 1,
 		'iframedialog' : 1,
 		'image' : 1,
+		'image2' : 1,
 		'indentblock' : 1,
 		'indentlist' : 1,
 		'justify' : 1,
@@ -99,7 +99,6 @@ var CKBUILDER_CONFIG = {
 		'pagebreak' : 1,
 		'pastefromword' : 1,
 		'pastetext' : 1,
-		'placeholder' : 1,
 		'preview' : 1,
 		'print' : 1,
 		'removeformat' : 1,
@@ -123,6 +122,8 @@ var CKBUILDER_CONFIG = {
 		'toolbar' : 1,
 		'uicolor' : 1,
 		'undo' : 1,
+		'uploadfile' : 1,
+		'uploadimage' : 1,
 		'widget' : 1,
 		'wsc' : 1,
 		'wysiwygarea' : 1,
