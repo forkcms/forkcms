@@ -345,6 +345,14 @@ jsBackend.ckeditor =
         entities_greek: false,
         entities_latin: false,
 
+        // No file browser upload button in the images dialog needed
+        filebrowserUploadUrl: null,
+        filebrowserImageUploadUrl: null,
+        filebrowserFlashUploadUrl: null,
+
+        // uploading drag&drop images, see http://docs.ckeditor.com/#!/guide/dev_file_upload
+        uploadUrl: '/src/Backend/Core/Js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+
         // load some extra plugins
         extraPlugins: 'stylesheetparser,mediaembed',
 
