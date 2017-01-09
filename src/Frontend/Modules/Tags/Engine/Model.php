@@ -12,6 +12,7 @@ namespace Frontend\Modules\Tags\Engine;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Backend\Core\Language\Locale;
 
 /**
  * In this file we store all generic functions that we will be using in the tags module
@@ -98,7 +99,7 @@ class Model
         $otherId = (int) $otherId;
 
         // redefine language
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
+        $language = ($language !== null) ? (string) $language : Locale::workingLocale();
 
         // init var
         $return = array();
@@ -146,7 +147,7 @@ class Model
         $module = (string) $module;
 
         // redefine language
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
+        $language = ($language !== null) ? (string) $language : Locale::workingLocale();
 
         // get db
         $db = FrontendModel::getContainer()->get('database');
