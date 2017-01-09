@@ -50,6 +50,15 @@ gulp.task("build:backend:sass:generate-css", function() {
       .pipe(gulp.dest("./src/Backend/Core/Layout/Css"));
 });
 
+gulp.task("build:backend", function() {
+  gulp.start(
+      "build:backend:assets:copy-css-vendors",
+      "build:backend:assets:copy-fonts-vendors",
+      "build:backend:assets:copy-js-vendors",
+      "build:backend:sass:generate-css"
+  );
+});
+
 // public tasks
 gulp.task("default", function() {
   gulp.start("build");
@@ -57,9 +66,6 @@ gulp.task("default", function() {
 
 gulp.task("build", function() {
   gulp.start(
-      "build:backend:assets:copy-css-vendors",
-      "build:backend:assets:copy-fonts-vendors",
-      "build:backend:assets:copy-js-vendors",
-      "build:backend:sass:generate-css"
+      "build:backend"
   );
 });
