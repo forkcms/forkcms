@@ -1,7 +1,1 @@
-{
-"version": 3,
-"mappings": "AAgBA,GAAI,CACH,4BAA4B,CAAE,CAAC",
-"sources": ["../Sass/debug.scss"],
-"names": [],
-"file": "debug.css"
-}
+{"version":3,"file":"debug.css","sources":["debug.scss"],"names":[],"mappings":"AAaA,AAAA,GAAG,AAAC,CACA,4BAA4B,CAAE,CAAC,CAClC","sourceRoot":"/src/Backend/Core/Layout/Sass"}

@@ -1,164 +1,65 @@
-var autoprefixer = require('gulp-autoprefixer'),
-    clean = require('gulp-clean'),
-    consolidate = require('gulp-consolidate'),
-    fontgen = require('gulp-fontgen'),
-    fs = require('fs'),
-    gulp = require('gulp'),
-    iconfont = require('gulp-iconfont'),
-    imagemin = require('gulp-imagemin'),
-    livereload = require('gulp-livereload'),
-    plumber = require('gulp-plumber'),
-    rename = require('gulp-rename'),
-    runSequence = require('run-sequence'),
-    sass = require('gulp-sass'),
-    sourcemaps = require('gulp-sourcemaps'),
-    gulpWebpack = require('webpack-stream'),
-    webpack = require('webpack');
+'use strict';
 
-var theme = JSON.parse(fs.readFileSync('./package.json')).theme;
-var paths = {
-  src:  'src/Frontend/Themes/' + theme + '/src',
-  core: 'src/Frontend/Themes/' + theme + '/Core'
-};
+const gulp = require("gulp");
+const sass = require("gulp-sass");
+const sourcemaps = require("gulp-sourcemaps");
 
-gulp.plumbedSrc = function(){
-  return gulp.src.apply(gulp, arguments)
-    .pipe(plumber());
-};
-
-gulp.task('clean', function() {
+gulp.task("build:backend:assets:copy-css-vendors", function() {
   return gulp.src([
-    paths.core + '/Layout/Fonts/*',
-    paths.core + '/Layout/Images/*',
-    paths.core + '/Layout/Templates/*'
-  ]).pipe(clean());
+    "./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css",
+    "./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css",
+  ])
+      .pipe(gulp.dest("./css/vendors"));
 });
 
-gulp.task('sass', function() {
-  return gulp.plumbedSrc(paths.src + '/Layout/Sass/*.scss')
-    .pipe(sourcemaps.init())
-    .pipe(sass({
+gulp.task("build:backend:assets:copy-fonts-vendors", function() {
+  return gulp.src([
+    "./node_modules/font-awesome/fonts/**",
+  ])
+      .pipe(gulp.dest("./fonts/vendors"));
+});
+
+gulp.task("build:backend:assets:copy-js-vendors", function() {
+  return gulp.src([
+    "./node_modules/jquery/dist/jquery.min.js",
+    "./node_modules/jquery-migrate/dist/jquery-migrate.min.js",
+    "./node_modules/jquery-ui-dist/jquery-ui.min.js",
+    "./node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
+    "./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
+  ])
+      .pipe(gulp.dest("./js/vendors"));
+});
+
+gulp.task("build:backend:sass:generate-css", function() {
+  return gulp.src([
+    "./src/Backend/Core/Layout/Sass/screen.scss",
+    "./src/Backend/Core/Layout/Sass/debug.scss",
+  ])
+      .pipe(sourcemaps.init())
+      .pipe(sass({
         includePaths: [
-            './node_modules/bootstrap-sass/assets/stylesheets',
-            './node_modules'
-        ]
-    }).on('error', sass.logError))
-    .pipe(autoprefixer())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(paths.core + '/Layout/Css'))
-    .pipe(livereload());
+          "./node_modules/"
+        ],
+        outputStyle:  "compressed",
+        precision:    10
+      }))
+      .pipe(sourcemaps.write("./", {
+        includeContent: false,
+        sourceRoot:     "/src/Backend/Core/Layout/Sass"
+      }))
+      .pipe(gulp.dest("./src/Backend/Core/Layout/Css"));
 });
 
-gulp.task('sass:build', function() {
-  return gulp.src(paths.src + '/Layout/Sass/*.scss')
-    .pipe(sass({
-      outputStyle: 'compressed',
-        includePaths: [
-            './node_modules/bootstrap-sass/assets/stylesheets',
-            './node_modules'
-        ]
-    }).on('error', sass.logError))
-    .pipe(autoprefixer())
-    .pipe(gulp.dest(paths.core + '/Layout/Css'));
+// public tasks
+gulp.task("default", function() {
+  gulp.start("build");
 });
 
-gulp.task('fontgen', function() {
-  return gulp.plumbedSrc(paths.src + '/Layout/Fonts/**/*.{ttf,otf}')
-    .pipe(fontgen({
-      options: {
-        stylesheet: false
-      },
-      dest: paths.core + '/Layout/Fonts/'
-    }))
-    .pipe(livereload());
-});
-
-gulp.task('iconfont', function() {
-  return gulp.plumbedSrc(paths.src + '/Layout/icon-sources/*.svg')
-    .pipe(iconfont({fontName: 'icons'}))
-    .on('glyphs', function(glyphs) {
-      var options = {
-        glyphs: glyphs,
-        fontName: 'icons',
-        fontPath: '../Fonts/',
-        className: 'icon'
-      };
-
-      gulp.src(paths.src + '/Layout/Sass/_icons-template.scss')
-        .pipe(consolidate('lodash', options))
-        .pipe(rename({basename: '_icons'}))
-        .pipe(gulp.dest(paths.src + '/Layout/Sass'));
-    })
-    .pipe(gulp.dest(paths.core + '/Layout/Fonts'))
-    .pipe(livereload());
-});
-
-var commonWebpackConfig = {
-  output: {
-    filename: 'bundle.js',
-  },
-  module: {
-    loaders: [{
-      test: /.js?$/,
-      loader: 'babel',
-      exclude: /node_modules/,
-    }]
-  }
-};
-
-gulp.task('webpack', function() {
-  return gulp.plumbedSrc(paths.src + '/Js/index.js')
-    .pipe(gulpWebpack(Object.assign({}, commonWebpackConfig, {
-      watch: true,
-    })))
-    .pipe(gulp.dest(paths.core + '/Js'))
-    .pipe(livereload());
-});
-
-gulp.task('webpack:build', function() {
-  return gulp.src(paths.src + '/Js/index.js')
-    .pipe(gulpWebpack(Object.assign({}, commonWebpackConfig, {
-      plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-          compress: {
-            warnings: false
-          }
-        }),
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': '"production"'
-        })
-      ]
-    }, webpack)))
-    .pipe(gulp.dest(paths.core + '/Js'));
-});
-
-gulp.task('copy:templates', function() {
-  return gulp.plumbedSrc(paths.src + '/Layout/Templates/**/*')
-    .pipe(gulp.dest(paths.core + '/Layout/Templates'))
-    .pipe(livereload());
-});
-
-gulp.task('imagemin', function() {
-  return gulp.plumbedSrc(paths.src + '/Layout/Images/**/*')
-    .pipe(imagemin())
-    .pipe(gulp.dest(paths.core + '/Layout/Images'))
-    .pipe(livereload());
-});
-
-gulp.task('default', function() {
-  livereload.listen();
-  gulp.watch(paths.src + '/Js/**/*.js', ['webpack']);
-  gulp.watch(paths.src + '/Layout/Sass/**/*.scss', ['sass']);
-  gulp.watch(paths.src + '/Layout/Templates/**/*', ['copy:templates']);
-  gulp.watch(paths.src + '/Layout/Images/**/*', ['imagemin']);
-  gulp.watch(paths.src + '/Layout/icon-sources/*', ['iconfont']);
-  gulp.watch(paths.src + '/Layout/Fonts/**/*', ['fontgen']);
-});
-
-gulp.task('serve', function() {
-  gulp.start('default');
-});
-
-gulp.task('build', function() {
-  runSequence('clean', ['iconfont', 'fontgen', 'sass:build', 'webpack:build', 'copy:templates', 'imagemin']);
+gulp.task("build", function() {
+  gulp.start(
+      "build:backend:assets:copy-css-vendors",
+      "build:backend:assets:copy-fonts-vendors",
+      "build:backend:assets:copy-js-vendors",
+      "build:backend:sass:generate-css"
+  );
 });

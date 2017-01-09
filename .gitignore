@@ -3,6 +3,7 @@
 
 # Libraries
 /vendor/*
+/node_modules/*
 
 # Generated files
 .project
@@ -17,8 +18,5 @@
 /app/sessions/*
 /bin/*
 /bundles/*
-/css/*
-/js/*
-
-# @remark: custom for Sumocoders
-/node_modules/*
+/css/*.css
+/js/*.js

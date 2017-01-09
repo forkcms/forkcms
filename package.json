@@ -1,48 +1,20 @@
 {
   "name": "forkcms",
-  "version": "4.2.1",
-  "theme": "Bootstrap",
-  "scripts": {
-    "dev": "gulp",
-    "build": "gulp build"
-  },
+  "version": "1.0.0",
+  "description": "The NPM-dependencies for Fork CMS",
+  "main": "index.js",
+  "repository": "git@github.com:forkcms/forkcms.git",
+  "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
+  "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.10.4",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.11.1",
-    "bootstrap-sass": "3.3.7",
+    "bootstrap-sass": "~3.3",
+    "bootstrap-tagsinput": "~0.7",
+    "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-clean": "^0.3.2",
-    "gulp-consolidate": "^0.2.0",
-    "gulp-fontgen": "0.1.9",
-    "gulp-iconfont": "^8.0.1",
-    "gulp-imagemin": "^3.0.1",
-    "gulp-livereload": "^3.8.1",
-    "gulp-plumber": "^1.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.3.2",
-    "gulp-sourcemaps": "^1.6.0",
-    "lodash": "^4.13.1",
-    "node-sass": "^3.8.0",
-    "react": "^15.2.1",
-    "react-dom": "^15.2.1",
-    "requestanimationframe": "0.0.23",
-    "run-sequence": "^1.2.2",
-    "sass-loader": "^4.0.0",
-    "sweet-scroll": "^1.0.3",
-    "webpack": "^1.13.1",
-    "webpack-stream": "^3.2.0"
-  },
-  "dependencies": {
-    "fancybox": "3.0.0",
-    "font-awesome": "^4.6.3"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
+    "gulp-sass": "^3.0.0",
+    "gulp-sourcemaps": "^1.9.1",
+    "jquery": "~2.2",
+    "jquery-migrate": "~1.4",
+    "jquery-ui-dist": "~1.12"
   }
 }
