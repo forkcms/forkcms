@@ -348,7 +348,7 @@
 				required: jsFrontend.locale.err('FieldIsRequired'),
 				email: 	  jsFrontend.locale.err('EmailIsInvalid'),
 				date: 	  jsFrontend.locale.err('DateIsInvalid'),
-				numeric:  jsFrontend.locale.err('NumberIsInvalid'),
+				number:   jsFrontend.locale.err('NumberIsInvalid'),
 				value:    jsFrontend.locale.err('InvalidValue')
 			};
 
@@ -362,7 +362,7 @@
 				type = $input.context.type;
 				errorMessage = options.value;
 
-				if(options[type]) {
+				if (options[type]) {
 					errorMessage = options[type];
 				}
 			}
