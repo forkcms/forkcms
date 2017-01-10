@@ -319,6 +319,7 @@ jsBackend.ckeditor =
 
         // paste options
         forcePasteAsPlainText: true,
+        pasteFromWordRemoveFontStyles: true,
 
         // The CSS file(s) to be used to apply style to editor content.
         // It should reflect the CSS used in the target pages where the content is to be displayed.
