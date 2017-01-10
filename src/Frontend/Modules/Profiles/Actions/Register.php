@@ -62,7 +62,7 @@ class Register extends FrontendBaseBlock
         $this->frm = new FrontendForm('register', null, null, 'registerForm');
         $this->frm->addText('display_name');
         $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
-        $this->frm->addPassword('password', null, null, 'inputText showPasswordInput')->setAttributes(
+        $this->frm->addPassword('password', null, null, 'form-control showPasswordInput')->setAttributes(
             array('required' => null)
         );
         $this->frm->addCheckbox('show_password');
