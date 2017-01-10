@@ -64,8 +64,9 @@ gulp.task("build:backend", function() {
 // frontend tasks
 gulp.task("build:frontend:sass:generate-css", function() {
   return gulp.src([
-    "./src/Frontend/Core/Layout/Sass/screen.scss",
     "./src/Frontend/Core/Layout/Sass/debug.scss",
+    "./src/Frontend/Core/Layout/Sass/editor_content.scss",
+    "./src/Frontend/Core/Layout/Sass/screen.scss",
   ])
       .pipe(sourcemaps.init())
       .pipe(sass({
