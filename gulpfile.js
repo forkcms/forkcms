@@ -4,6 +4,7 @@
 const gulp = require("gulp");
 const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
+const autoprefixer = require("gulp-autoprefixer");
 
 // backend tasks
 gulp.task("build:backend:assets:copy-css-vendors", function() {
@@ -45,6 +46,7 @@ gulp.task("build:backend:sass:generate-css", function() {
         outputStyle:  "compressed",
         precision:    10
       }))
+      .pipe(autoprefixer({}))
       .pipe(sourcemaps.write("./", {
         includeContent: false,
         sourceRoot:     "/src/Backend/Core/Layout/Sass"
@@ -76,6 +78,7 @@ gulp.task("build:frontend:sass:generate-css", function() {
         outputStyle:  "compressed",
         precision:    10
       }))
+      .pipe(autoprefixer({}))
       .pipe(sourcemaps.write("./", {
         includeContent: false,
         sourceRoot:     "/src/Frontend/Core/Layout/Sass"
