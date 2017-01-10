@@ -2,35 +2,32 @@
   Variables that are available:
   - {{ tagsModules }}: contains all tags, grouped per module
 #}
+<section id="tagsDetail" class="tags">
+  <header role="banner">
+    <h1>{{ 'lbl.ItemsWithTag'|trans|format(tag.name|capitalize) }}</h1>
+  </header>
+  {% if tagsModules %}
+    {% for module in tagsModules %}
+      <section>
+        <header role="banner">
+          <h2>{{ module.label|capitalize }}</h2>
+        </header>
+        <ul>
+          {% for tag in module.items %}
+            <li>
+              <a href="{{ tag.full_url }}">
+                {{ tag.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endfor %}
+  {% endif %}
 
-<section id="tagsDetail" class="mod">
-  <div class="inner">
-    <header class="hd">
-      <h1>{{ 'lbl.ItemsWithTag'|trans|format(tag.name)|raw|ucfirst }}</h1>
-    </header>
-    <div class="bd">
-      {% if tagsModules %}
-        {% for tagsModules in tagsModules %}
-          <section class="mod">
-            <div class="inner">
-              <header class="hd">
-                <h3>{{ tagsModules.label }}</h3>
-              </header>
-              <div class="bd content">
-                <ul>
-                  {% for item in tagsModules.items %}
-                    <li><a href="{{ item.full_url }}">{{ item.title }}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-          </section>
-        {% endfor %}
-      {% endif %}
-      <p>
-        <a href="{{ geturlforblock('Tags') }}" title="{{ 'lbl.ToTagsOverview'|trans|ucfirst }}">{{ 'lbl.ToTagsOverview'|trans|ucfirst }}</a>
-      </p>
-
-    </div>
-  </div>
+  <p>
+    <a href="{{ geturlforblock('Tags') }}" class="btn btn-default">
+      {{ 'lbl.ToTagsOverview'|trans|capitalize }}
+    </a>
+  </p>
 </section>
