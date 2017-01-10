@@ -4,30 +4,33 @@
     - $mailMotorSubscribeHasError
     - $mailMotorSubscribeIsSuccess
     - $mailMotorSubscribeHideForm
-    - $mailMotorSubscribe
+    - mailmotorSubscribeHasDoubleOptIn
 #}
 
-<div id="mailmotorSubscribeForm" class="mod">
-  <div class="inner">
-    <div class="hd">
-      <h3>{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
-    </div>
-    <div class="bd">
-      {% if mailmotorSubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans|raw }}</p></div>{% endif %}
-      {% if mailmotorSubscribeHasError %}<div class="message error"><p>{{ 'err.SubscribeFailed'|trans|raw }}</p></div>{% endif %}
-      {% if mailmotorSubscribeIsSuccess %}
-        <div class="message success">
-          {% if mailmotorSubscribeHasDoubleOptIn %}{{ 'msg.SubscribeSuccessForDoubleOptIn'|trans|raw }}{% endif %}
-          {% if not mailmotorSubscribeHasDoubleOptIn %}{{ 'msg.SubscribeSuccess'|trans|raw }}{% endif %}
-        </div>
-      {% endif %}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+<div id="mailmotorSubscribeForm">
+  <h3>{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
 
-      {% if not mailmotorSubscribeHideForm %}
-        {{ form_start(form) }}
-        {{ form_rest(form) }}
-        {{ form_end(form) }}
-      {% endif %}
+  {% if mailmotorSubscribeHasFormError %}
+    {{ alerts.alert('danger', 'err.FormError'|trans|raw) }}
+  {% endif %}
+  {% if mailmotorSubscribeHasError %}
+    {{ alerts.alert('danger', 'err.SubscribeFailed'|trans|raw) }}
+  {% endif %}
+  {% if mailmotorSubscribeIsSuccess %}
+    {% if mailmotorSubscribeHasDoubleOptIn %}
+      {{ alerts.alert('success', 'msg.SubscribeSuccessForDoubleOptIn'|trans|raw) }}
+    {% endif %}
+    {% if not mailmotorSubscribeHasDoubleOptIn %}
+      {{ alerts.alert('success', 'msg.SubscribeSuccess'|trans|raw) }}
+    {% endif %}
+  {% endif %}
 
-    </div>
-  </div>
+  {% if not mailmotorSubscribeHideForm %}
+    {{ form_start(form) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.subscribe, { 'attr': {'class': 'btn btn-primary'} }) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+  {% endif %}
 </div>
