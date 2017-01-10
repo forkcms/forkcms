@@ -1,0 +1,16 @@
+/*
+    Debug stylesheet for Fork NG
+    @remark THIS FILE WILL NOT BE INCLUDED WHEN DEBUG-MODE IS OFF
+
+    @package backend
+    @subpackage core
+    @since 2.0
+*/
+
+/*
+    Display broken image indicator in Firefox
+*/
+
+img {
+    -moz-force-broken-image-icon: 1;
+}

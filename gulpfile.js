@@ -1,9 +1,11 @@
-'use strict';
+/*jslint node: true */
+"use strict";
 
 const gulp = require("gulp");
 const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 
+// backend tasks
 gulp.task("build:backend:assets:copy-css-vendors", function() {
   return gulp.src([
     "./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css",
@@ -59,6 +61,33 @@ gulp.task("build:backend", function() {
   );
 });
 
+// frontend tasks
+gulp.task("build:frontend:sass:generate-css", function() {
+  return gulp.src([
+    "./src/Frontend/Core/Layout/Sass/screen.scss",
+    "./src/Frontend/Core/Layout/Sass/debug.scss",
+  ])
+      .pipe(sourcemaps.init())
+      .pipe(sass({
+        includePaths: [
+          "./node_modules/"
+        ],
+        outputStyle:  "compressed",
+        precision:    10
+      }))
+      .pipe(sourcemaps.write("./", {
+        includeContent: false,
+        sourceRoot:     "/src/Frontend/Core/Layout/Sass"
+      }))
+      .pipe(gulp.dest("./src/Frontend/Core/Layout/Css"));
+});
+
+gulp.task("build:frontend", function() {
+  gulp.start(
+      "build:frontend:sass:generate-css"
+  );
+});
+
 // public tasks
 gulp.task("default", function() {
   gulp.start("build");
@@ -66,6 +95,7 @@ gulp.task("default", function() {
 
 gulp.task("build", function() {
   gulp.start(
-      "build:backend"
+      "build:backend",
+      "build:frontend"
   );
 });
