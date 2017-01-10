@@ -1,8 +1,6 @@
 {% include "Core/Layout/Templates/Head.html.twig" %}
 
 <body class="{{ LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
-{% include "Core/Layout/Templates/Cookies.html.twig" %}
-
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -24,6 +22,8 @@
 </nav>
 
 <div class="content container">
+  {% include "Core/Layout/Templates/Cookies.html.twig" %}
+
   {# Breadcrumb #}
   {% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
 
