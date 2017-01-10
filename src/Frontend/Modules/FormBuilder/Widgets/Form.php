@@ -321,6 +321,7 @@ class Form extends FrontendBaseWidget
     private function setCustomHTML5ErrorMessages(array $item, SpoonFormAttributes $formField)
     {
         foreach ($item['validations'] as $validation) {
+            // @deprecated
             // we need to change it here since it is saved like this in the database and we can't change that for now.
             if ($validation['type'] === 'numeric') {
                 $validation['type'] = 'number';
