@@ -2,34 +2,26 @@
   variables that are available:
   - {{ questions }}: contains all questions inside this category
 #}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-<section id="faqCategory" class="mod">
-  <div class="inner">
-    <header class="hd">
-      <h1>{{ category.title }}</h1>
-    </header>
-    <div class="bd">
-      {% if questions %}
-        <section class="mod">
-          <div class="inner">
-            <div class="bd">
-              <ul>
-                {% for question in questions %}
-                  <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-        </section>
-      {% endif %}
+<section id="faqCategory" class="faq faq-category" itemscope itemtype="http://schema.org/Question">
+  <h1 itemprop="genre">{{ category.title }}</h1>
+  {% if questions is empty %}
+    {{ alerts.alert('info', 'msg.NoQuestionsInCategory'|trans) }}
+  {% else %}
+    <ul>
+      {% for question in questions %}
+        <li itemprop="about"><a href="{{ question.full_url }}">{{ question.question }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 
-      {% if not questions %}
-        <p>{{ 'msg.NoQuestionsInCategory'|trans|ucfirst }}</p>
-      {% endif %}
-
-      <p>
-        <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">{{ 'lbl.ToFaqOverview'|trans|ucfirst }}</a>
-      </p>
-    </div>
-  </div>
+  <ul class="pager">
+    <li class="previous">
+      <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">
+        ←
+        {{ 'lbl.ToFaqOverview'|trans|ucfirst }}
+      </a>
+    </li>
+  </ul>
 </section>

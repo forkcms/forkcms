@@ -4,20 +4,18 @@
 #}
 
 {% if widgetFaqMostRead %}
-  <section id="faqMostReadWidget" class="mod">
-    <div class="inner">
-      <header class="hd">
-        <h3>{{ 'lbl.MostReadQuestions'|trans|ucfirst }}</h3>
-      </header>
-      <div class="bd content">
-        <ul>
-          {% for widgetFaqMostRead in widgetFaqMostRead %}
-            <li>
-              <a href="{{ widgetFaqMostRead.full_url }}" title="{{ widgetFaqMostRead.question }}">{{ widgetFaqMostRead.question }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </section>
+  <aside id="faqMostReadWidget">
+    <header>
+      <h3>{{ 'lbl.MostReadQuestions'|trans|capitalize }}</h3>
+    </header>
+    <ul>
+      {% for widgetFaqMostRead in widgetFaqMostRead %}
+        <li>
+          <a href="{{ widgetFaqMostRead.full_url }}" title="{{ widgetFaqMostRead.question }}">
+            {{ widgetFaqMostRead.question }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </aside>
 {% endif %}
