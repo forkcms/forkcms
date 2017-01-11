@@ -1,29 +1,24 @@
-{# Success #}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 {% if resendActivationSuccess %}
-  <div class="message success"><p>{{ 'msg.ResendActivationIsSuccess'|trans }}</p></div>
+  {{ alerts.alert('success', 'msg.ResendActivationIsSuccess'|trans) }}
 {% endif %}
-
-{# Error #}
 {% if resendActivationHasError %}
-  <div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
+  {{ alerts.alert('danger', 'err.FormError'|trans) }}
 {% endif %}
 
 {% if not resendActivationHideForm %}
-  <section id="resendActivationForm" class="mod">
-    <div class="inner">
-      <div class="bd">
-        {% form resendActivation %}
-        <fieldset>
-          <p {% if txtEmailError %} class="errorArea"{% endif %}>
-            <label for="email">{{ 'lbl.Email'|trans|ucfirst }} <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field email %} {% form_field_error email %}
-          </p>
-          <p>
-            <input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
-          </p>
-        </fieldset>
-        {% endform %}
-      </div>
+  <section id="resendActivationForm" class="profiles">
+    <div class="bd">
+      {% form resendActivation %}
+        <label for="email">{{ 'lbl.Email'|trans|capitalize }} <abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+        <div class="input-group {% if txtEmailError %} has-error{% endif %}">
+          {% form_field email %}
+          <span class="input-group-btn">
+            <input class="btn btn-primary" type="submit" value="{{ 'lbl.Save'|trans|capitalize }}" />
+          </span>
+        </div>
+        {% form_field_error email %}
+      {% endform %}
     </div>
   </section>
 {% endif %}

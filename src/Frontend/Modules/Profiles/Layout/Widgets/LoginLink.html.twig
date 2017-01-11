@@ -9,5 +9,7 @@
 {% endif %}
 
 {% if not isLoggedIn %}
-  <a href="{{ geturlforblock('Profiles', 'Login') }}?queryString={{ geturlforblock('Profiles') }}">{{ 'lbl.Login'|trans|ucfirst }}</a>
+  <a href="{{ geturlforblock('Profiles', 'Login') }}?queryString={{ geturlforblock('Profiles') }}">
+    {{ 'lbl.Login'|trans|ucfirst }}
+  </a>
 {% endif %}
