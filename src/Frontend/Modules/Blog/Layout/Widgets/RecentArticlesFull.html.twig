@@ -4,50 +4,64 @@
 #}
 
 {% if widgetBlogRecentArticlesFull %}
-  <section id="blogRecentArticlesFullWidget" class="mod">
-    <div class="inner">
-      <header class="hd">
-        <h3>{{ 'lbl.RecentArticles'|trans|ucfirst }}</h3>
-      </header>
-      <div class="bd">
-        {% for article in widgetBlogRecentArticlesFull %}
-          <article class="mod article">
-            <div class="inner">
-              <header class="hd">
-                <h4><a href="{{ article.full_url }}" title="{{ article.title }}">{{ article.title }}</a></h4>
-                <ul>
-                  <li>{{ 'msg.WrittenBy'|trans|ucfirst|format(article.user_id|usersetting('nickname')|raw) }} {{ 'lbl.On'|trans }} {{ article.publish_on|spoondate(dateFormatLong, LANGUAGE) }}</li>
-                  {% if article.allow_comments %}
-                    <li>
-                      {% if not article.comments %}
-                        <a href="{{ article.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNoComments'|trans|ucfirst }}</a>{% endif %}
-                      {% if article.comments %}
-                        {% if article.comments_multiple %}
-                          <a href="{{ article.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(article.comments_count)|raw }}</a>{% endif %}
-                        {% if not article.comments_multiple %}
-                          <a href="{{ article.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
-                      {% endif %}
-                    </li>
-                  {% endif %}
-                  <li>
-                    <a href="{{ article.category_full_url }}" title="{{ article.category_title }}">{{ article.category_title }}</a>
-                  </li>
-                </ul>
-              </header>
-              <div class="bd content">
-                {% if not article.introduction %}{{ article.text }}{% endif %}
-                {% if article.introduction %}{{ article.introduction }}{% endif %}
-              </div>
+  <section id="blogRecentArticlesFullWidget" class="blog">
+    <header role="banner">
+      <h2>{{ 'lbl.RecentArticles'|trans|capitalize }}</h2>
+    </header>
+    {% for post in widgetBlogRecentArticlesFull %}
+      <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
+        <meta itemprop="interactionCount" content="UserComments:post.comments_count">
+        <meta itemprop="author" content="{{ post.user_id|usersetting('nickname' ) }}">
+        <header role="banner">
+          <div class="row title">
+            <div class="col-md-10">
+              <h3><a href="{{ post.full_url }}" title="{{ post.title }}">{{ post.title }}</a></h3>
             </div>
-          </article>
-        {% endfor %}
-      </div>
-      <footer class="ft">
-        <p>
-          <a href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|ucfirst }}</a>
-          <a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|ucfirst }}</a>
-        </p>
-      </footer>
-    </div>
+            {% if post.allow_comments %}
+              <div class="col-md-2 commentCount">
+                <i class="icon-comment"></i>
+                {% if not post.comments %}
+                  <a href="{{ post.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}</a>
+                {% else %}
+                  {% if post.comments_multiple %}
+                    <a href="{{ post.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}</a>
+                  {% else %}
+                    <a href="{{ post.full_url }}#{{ act.Comments }}">{{ 'msg.BlogOneComment'|trans }}</a>
+                  {% endif %}
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+          <div class="row muted meta">
+            <div class="col-md-6">
+              {{ 'msg.WrittenBy'|trans|capitalize|format(post.user_id|usersetting('nickname')) }}
+              {{ 'lbl.On'|trans }}
+              <time itemprop="datePublished" datetime="{{ post.publish_on|trans|date('Y-m-d\TH,i,s') }}">
+                {{ post.publish_on|spoondate(dateFormatLong, LANGUAGE ) }}
+              </time>
+            </div>
+            <div class="col-md-6 metaExtra">
+              {{ 'lbl.Category'|trans }}:
+              <a href="{{ post.category_full_url }}" title="{{ post.category_title }}">{{ post.category_title }}</a>
+            </div>
+          </div>
+        </header>
+        <div class="bd content" itemprop="articleBody">
+          {% if post.image %}
+            <img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ post.image }}" alt="{{ post.title }}" />{% endif %}
+          {% if not post.introduction %}
+            {{ post.text|raw }}
+          {% else %}
+            {{ post.introduction|raw }}
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+    <footer role="contentinfo">
+      <p class="btn-group">
+        <a class="btn btn-default" href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|capitalize }}</a>
+        <a class="btn btn-default" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|capitalize }}</a>
+      </p>
+    </footer>
   </section>
 {% endif %}
