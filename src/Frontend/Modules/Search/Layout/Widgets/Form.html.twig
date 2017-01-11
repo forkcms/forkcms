@@ -1,19 +1,9 @@
-<section id="searchFormWidget" class="mod">
-  <div class="inner">
-    <header class="hd">
-      <h3>{{ 'lbl.Search'|trans|ucfirst }}</h3>
-    </header>
-    <div class="bd">
-      {% form search %}
-      <p>
-        <label for="q_widget">{{ 'lbl.SearchTerm'|trans|ucfirst }}
-          <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-        {% form_field q_widget %}
-      </p>
-      <p>
-        <input id="submit" class="inputSubmit" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />
-      </p>
-      {% endform %}
+<section id="searchFormWidget" role="search">
+  {% form search %}
+    <label for="qWidget" class="hide">{{ 'lbl.SearchTerm'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+    <div class="form-group">
+      {% form_field q_widget %}
     </div>
-  </div>
+    <input id="submit" class="btn btn-default" type="submit" name="submit" value="{{ 'lbl.Search'|trans|capitalize }}" />
+  {% endform %}
 </section>
