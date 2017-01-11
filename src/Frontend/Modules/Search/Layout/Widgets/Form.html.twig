@@ -1,6 +1,8 @@
 <section id="searchFormWidget" role="search">
   {% form search %}
-    <label for="qWidget" class="hide">{{ 'lbl.SearchTerm'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+    <label for="qWidget" class="sr-only sr-only-focusable">
+      {{ 'lbl.SearchTerm'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
+    </label>
     <div class="form-group">
       {% form_field q_widget %}
     </div>
