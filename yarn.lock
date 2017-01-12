@@ -731,6 +731,10 @@ gulp-autoprefixer@^3.1.1:
     through2 "^2.0.0"
     vinyl-sourcemaps-apply "^0.2.0"
 
+gulp-rename@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
+
 gulp-sass@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/gulp-sass/-/gulp-sass-3.0.0.tgz#22adde0b2bcc40f9bb38435b49f48cd459e002d3"

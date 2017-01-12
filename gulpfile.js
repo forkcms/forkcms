@@ -5,6 +5,7 @@ const gulp = require("gulp");
 const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 const autoprefixer = require("gulp-autoprefixer");
+const rename = require("gulp-rename");
 
 // backend tasks
 gulp.task("build:backend:assets:copy-css-vendors", function() {
@@ -86,9 +87,28 @@ gulp.task("build:frontend:sass:generate-css", function() {
       .pipe(gulp.dest("./src/Frontend/Core/Layout/Css"));
 });
 
+gulp.task("build:frontend:sass:generate-module-css", function() {
+  return gulp.src([
+    "./src/Frontend/Modules/**/Layout/Sass/*.scss",
+  ])
+      .pipe(sass({
+        includePaths: [
+          "./node_modules/"
+        ],
+        outputStyle:  "compressed",
+        precision:    10
+      }))
+      .pipe(autoprefixer({}))
+      .pipe(rename(function(path) {
+        path.dirname = path.dirname.replace("/Sass", "/Css");
+      }))
+      .pipe(gulp.dest("./src/Frontend/Modules/"));
+});
+
 gulp.task("build:frontend", function() {
   gulp.start(
-      "build:frontend:sass:generate-css"
+      "build:frontend:sass:generate-css",
+      "build:frontend:sass:generate-module-css"
   );
 });
 

@@ -18,5 +18,7 @@
     "jquery-migrate": "~1.4",
     "jquery-ui-dist": "~1.12"
   },
-  "dependencies": {}
+  "dependencies": {
+    "gulp-rename": "^1.2.2"
+  }
 }
