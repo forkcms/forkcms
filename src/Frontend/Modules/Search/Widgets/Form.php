@@ -56,7 +56,7 @@ class Form extends FrontendBaseWidget
      */
     private function parse()
     {
-        $this->addJS('typeahead.bundle.min.js');
+        $this->addJS('/js/vendors/typeahead.bundle.min.js', 'Core', false, true);
         $this->addCSS('Search.css');
         $this->frm->parse($this->tpl);
     }
