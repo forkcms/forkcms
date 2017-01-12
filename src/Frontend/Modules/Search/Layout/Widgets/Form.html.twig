@@ -1,11 +1,15 @@
-<section id="searchFormWidget" role="search">
-  {% form search %}
-    <label for="qWidget" class="sr-only sr-only-focusable">
-      {{ 'lbl.SearchTerm'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
-    </label>
-    <div class="form-group">
-      {% form_field q_widget %}
+<section class="module-search widget-search-form" role="search">
+  {% block widgetBody %}
+    <div class="widget-body">
+      {% form search %}
+      <label for="qWidget" class="sr-only sr-only-focusable">
+        {{ 'lbl.SearchTerm'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+      </label>
+      <div class="form-group">
+        {% form_field q_widget %}
+      </div>
+      <input id="submit" class="btn btn-default" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />
+      {% endform %}
     </div>
-    <input id="submit" class="btn btn-default" type="submit" name="submit" value="{{ 'lbl.Search'|trans|capitalize }}" />
-  {% endform %}
+  {% endblock %}
 </section>

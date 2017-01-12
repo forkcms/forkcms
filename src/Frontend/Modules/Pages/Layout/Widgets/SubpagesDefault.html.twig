@@ -11,16 +11,20 @@
 #}
 
 {% if widgetSubpages is not empty %}
-  <div id="subpagesBlocks" class="media">
-    {% for subpage in widgetSubpages %}
-      <div class="media-body">
-        <h3>
-          <a href="{{ subpage.full_url }}" title="{{ subpage.title }}">
-            {{ subpage.title }}
-          </a>
-        </h3>
-        {{ subpage.description|cleanupplaintext|raw }}
+  <aside class="module-pages widget-pages-subpages-default">
+    {% block widgetBody %}
+      <div class="widget-body media">
+        {% for subpage in widgetSubpages %}
+          <div class="media-body">
+            <h3>
+              <a href="{{ subpage.full_url }}" title="{{ subpage.title }}">
+                {{ subpage.title }}
+              </a>
+            </h3>
+            {{ subpage.description|cleanupplaintext|raw }}
+          </div>
+        {% endfor %}
       </div>
-    {% endfor %}
-  </div>
+    {% endblock %}
+  </aside>
 {% endif %}

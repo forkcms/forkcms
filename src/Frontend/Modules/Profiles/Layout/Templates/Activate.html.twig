@@ -1,5 +1,11 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-{% if activationSuccess %}
-  {{ alerts.alert('success', 'msg.ActivationIsSuccess'|trans) }}
-{% endif %}
+<section class="module-profiles block-profiles-change-email">
+  {% block blockAlerts %}
+    <div class="block-alerts">
+      {% if activationSuccess %}
+        {{ alerts.alert('success', 'msg.ActivationIsSuccess'|trans) }}
+      {% endif %}
+    </div>
+  {% endblock %}
+</section>

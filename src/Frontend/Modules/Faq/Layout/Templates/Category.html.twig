@@ -4,24 +4,41 @@
 #}
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-<section id="faqCategory" class="faq faq-category" itemscope itemtype="http://schema.org/Question">
-  <h1 itemprop="genre">{{ category.title }}</h1>
+<section class="module-faq block-faq-category" itemscope itemtype="http://schema.org/Question">
+  {% block blockHeading %}
+    <header class="page-header">
+      <h1 itemprop="genre">{{ category.title }}</h1>
+    </header>
+  {% endblock %}
+
   {% if questions is empty %}
-    {{ alerts.alert('info', 'msg.NoQuestionsInCategory'|trans) }}
+    {% block blockAlerts %}
+      <div class="block-alerts">
+        {{ alerts.alert('info', 'msg.NoQuestionsInCategory'|trans) }}
+      </div>
+    {% endblock %}
   {% else %}
-    <ul>
-      {% for question in questions %}
-        <li itemprop="about"><a href="{{ question.full_url }}">{{ question.question }}</a></li>
-      {% endfor %}
-    </ul>
+    {% block blockBody %}
+      <div class="block-body">
+        <ul>
+          {% for question in questions %}
+            <li itemprop="about"><a href="{{ question.full_url }}">{{ question.question }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endblock %}
   {% endif %}
 
-  <ul class="pager">
-    <li class="previous">
-      <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">
-        ←
-        {{ 'lbl.ToFaqOverview'|trans|ucfirst }}
-      </a>
-    </li>
-  </ul>
+  {% block blockFooter %}
+    <nav class="block-footer">
+      <ul class="pager">
+        <li class="previous">
+          <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">
+            ←
+            {{ 'lbl.ToFaqOverview'|trans|ucfirst }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  {% endblock %}
 </section>

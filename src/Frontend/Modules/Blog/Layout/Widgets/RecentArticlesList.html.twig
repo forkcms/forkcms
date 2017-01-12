@@ -2,22 +2,39 @@
   variables that are available:
   - {{ widgetBlogRecentArticlesList }}: contains an array with all posts, each element contains data about the post
 #}
-
 {% if widgetBlogRecentArticlesList %}
-  <section id="blogRecentArticlesListWidget" class="well blog">
-    <header role="banner">
-      <h3>{{ 'lbl.RecentArticles'|trans|capitalize }}</h3>
-    </header>
-    <ul>
-      {% for post in widgetBlogRecentArticlesList %}
-        <li><a href="{{ post.full_url }}" title="{{ post.title }}">{{ post.title }}</a></li>
-      {% endfor %}
-    </ul>
-    <footer role="contentinfo">
-      <p class="btn-group">
-        <a class="btn btn-default" href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|capitalize }}</a>
-        <a class="btn btn-default" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|capitalize }}</a>
-      </p>
-    </footer>
-  </section>
+  <aside class="module-blog widget-blog-recent-articles-list">
+    {% block widgetHeading %}
+      <header class="widget-heading" role="banner">
+        <h3>{{ 'lbl.RecentArticles'|trans|ucfirst }}</h3>
+      </header>
+    {% endblock %}
+
+    {% block widgetBody %}
+      <div class="widget-body">
+        <ul>
+          {% for post in widgetBlogRecentArticlesList %}
+            <li>
+              <a href="{{ post.full_url }}" title="{{ post.title }}">
+                {{ post.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endblock %}
+
+    {% block widgetFooter %}
+      <footer class="widget-footer">
+        <p class="btn-group">
+          <a class="btn btn-default" href="{{ geturlforblock('Blog') }}">
+            {{ 'lbl.BlogArchive'|trans|ucfirst }}
+          </a>
+          <a class="btn btn-default" href="{{ widgetBlogRecentArticlesFullRssLink }}">
+            {{ 'lbl.SubscribeToTheRSSFeed'|trans|ucfirst }}
+          </a>
+        </p>
+      </footer>
+    {% endblock %}
+  </aside>
 {% endif %}

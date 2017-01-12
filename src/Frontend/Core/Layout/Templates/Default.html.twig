@@ -37,9 +37,7 @@
   {# Main positions #}
   {% for main in positions.main %}
     {% if main.html %}
-      <section>
-        {{ main.html|raw }}
-      </section>
+      {{ main.html|raw }}
     {% endif %}
   {% endfor %}
 

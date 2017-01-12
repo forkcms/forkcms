@@ -6,31 +6,37 @@
     - $mailMotorSubscribeHideForm
     - mailmotorSubscribeHasDoubleOptIn
 #}
-
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
-<div id="mailmotorSubscribeForm">
-  <h3>{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
 
-  {% if mailmotorSubscribeHasFormError %}
-    {{ alerts.alert('danger', 'err.FormError'|trans|raw) }}
-  {% endif %}
-  {% if mailmotorSubscribeHasError %}
-    {{ alerts.alert('danger', 'err.SubscribeFailed'|trans|raw) }}
-  {% endif %}
-  {% if mailmotorSubscribeIsSuccess %}
-    {% if mailmotorSubscribeHasDoubleOptIn %}
-      {{ alerts.alert('success', 'msg.SubscribeSuccessForDoubleOptIn'|trans|raw) }}
-    {% endif %}
-    {% if not mailmotorSubscribeHasDoubleOptIn %}
-      {{ alerts.alert('success', 'msg.SubscribeSuccess'|trans|raw) }}
-    {% endif %}
-  {% endif %}
+<section class="module-mailmotor block-mailmotor-subscribe">
+  {% block blockAlerts %}
+    <div class="block-alerts">
+      {% if mailmotorSubscribeHasFormError %}
+        {{ alerts.alert('danger', 'err.FormError'|trans|raw) }}
+      {% endif %}
+      {% if mailmotorSubscribeHasError %}
+        {{ alerts.alert('danger', 'err.SubscribeFailed'|trans|raw) }}
+      {% endif %}
+      {% if mailmotorSubscribeIsSuccess %}
+        {% if mailmotorSubscribeHasDoubleOptIn %}
+          {{ alerts.alert('success', 'msg.SubscribeSuccessForDoubleOptIn'|trans|raw) }}
+        {% endif %}
+        {% if not mailmotorSubscribeHasDoubleOptIn %}
+          {{ alerts.alert('success', 'msg.SubscribeSuccess'|trans|raw) }}
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endblock %}
 
-  {% if not mailmotorSubscribeHideForm %}
-    {{ form_start(form) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.subscribe, { 'attr': {'class': 'btn btn-primary'} }) }}
-    {{ form_rest(form) }}
-    {{ form_end(form) }}
-  {% endif %}
-</div>
+  {% block blockBody %}
+    <div class="block-body">
+      {% if not mailmotorSubscribeHideForm %}
+        {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.subscribe, { 'attr': {'class': 'btn btn-primary'} }) }}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+      {% endif %}
+    </div>
+  {% endblock %}
+</section>

@@ -5,25 +5,34 @@
     - $mailMotorUnsubscribeIsSuccess
     - $mailMotorUnsubscribeHideForm
 #}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
-<div id="mailmotorUnsubscribeForm">
-  <h3>{{ 'lbl.UnsubscribeFromNewsletter'|trans|capitalize }}</h3>
-  {% if mailmotorUnsubscribeHasFormError %}
-    {{ alerts.alert('danger', 'err.FormError'|trans|raw) }}
-  {% endif %}
-  {% if mailmotorUnsubscribeHasError %}
-    {{ alerts.alert('danger', 'err.UnsubscribeFailed'|trans|raw) }}
-  {% endif %}
-  {% if mailmotorUnsubscribeIsSuccess %}
-    {{ alerts.alert('success', 'msg.UnsubscribeSuccess'|trans|raw) }}
-  {% endif %}
 
-  {% if not mailmotorUnsubscribeHideForm %}
-    {{ form_start(form) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.unsubscribe, { 'attr': {'class': 'btn btn-primary'} }) }}
-    {{ form_rest(form) }}
-    {{ form_end(form) }}
-  {% endif %}
-</div>
+<section class="module-mailmotor block-mailmotor-unsubscribe">
+  {% block blockAlerts %}
+    <div class="block-alerts">
+      {% if mailmotorUnsubscribeHasFormError %}
+        {{ alerts.alert('danger', 'err.FormError'|trans|raw) }}
+      {% endif %}
+      {% if mailmotorUnsubscribeHasError %}
+        {{ alerts.alert('danger', 'err.UnsubscribeFailed'|trans|raw) }}
+      {% endif %}
+      {% if mailmotorUnsubscribeIsSuccess %}
+        {{ alerts.alert('success', 'msg.UnsubscribeSuccess'|trans|raw) }}
+      {% endif %}
+    </div>
+  {% endblock %}
+
+  {% block blockBody %}
+    <div class="block-body">
+      {% if not mailmotorUnsubscribeHideForm %}
+        {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.unsubscribe, { 'attr': {'class': 'btn btn-primary'} }) }}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+      {% endif %}
+    </div>
+  {% endblock %}
+</section>

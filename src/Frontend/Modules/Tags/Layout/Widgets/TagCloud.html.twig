@@ -2,22 +2,26 @@
   variables that are available:
   - {{ widgetTagsTagCloud }}: contains an array with the most popular tags
 #}
+
 {% if widgetTagsTagCloud %}
-  <aside id="tagCloudWidget" class="well tags" role="complementary">
-    <header role="banner">
-      <h3>{{ 'lbl.Tags'|trans|capitalize }}</h3>
-    </header>
-    <p>
-      {% for tag in widgetTagsTagCloud %}
-        <a href="{{ tag.url }}" rel="tag">
-          {% if tag.first %}
-            {{ tag.name|capitalize }}
-          {% else %}
-            {{ tag.name }}
-          {% endif %}
-        </a>
-        <span class="badge hidden-phone">{{ tag.number }}</span>{% if not tag.last %}, {% else %}.{% endif %}
-      {% endfor %}
-    </p>
+  <aside class="module-tags widget-tags-tag-cloud">
+    {% block widgetHeading %}
+      <header class="widget-heading" role="banner">
+        <h3>{{ 'lbl.Tags'|trans|ucfirst }}</h3>
+      </header>
+    {% endblock %}
+
+    {% block widgetBody %}
+      <div class="widget-body">
+        <p>
+          {% for tag in widgetTagsTagCloud %}
+            <a href="{{ tag.url }}" rel="tag">
+              {{ tag.name }}
+            </a>
+            <span class="badge hidden-phone">{{ tag.number }}</span>{% if not loop.last %},{% endif %}
+          {% endfor %}
+        </p>
+      </div>
+    {% endblock %}
   </aside>
 {% endif %}

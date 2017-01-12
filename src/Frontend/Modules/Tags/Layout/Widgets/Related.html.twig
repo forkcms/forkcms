@@ -3,18 +3,25 @@
   - {{ widgetTagsRelated }}: contains an array with all related items
 #}
 {% if widgetTagsRelated %}
-  <section id="tagRelatedWidget" class="tags">
-    <header role="banner">
-      <h3>{{ 'lbl.Related'|trans|capitalize }}</h3>
-    </header>
-    <ul>
-      {% for widgetTagsRelated in widgetTagsRelated %}
-        <li>
-          <a href="{{ widgetTagsRelated.full_url }}" title="{{ widgetTagsRelated.title }}">
-            {{ widgetTagsRelated.title }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </section>
+  <aside class="module-tags widget-tags-related">
+    {% block widgetHeading %}
+      <header class="widget-heading" role="banner">
+        <h3>{{ 'lbl.Related'|trans|ucfirst }}</h3>
+      </header>
+    {% endblock %}
+
+    {% block widgetBody %}
+      <div class="widget-body">
+        <ul>
+          {% for widgetTagsRelated in widgetTagsRelated %}
+            <li>
+              <a href="{{ widgetTagsRelated.full_url }}" title="{{ widgetTagsRelated.title }}">
+                {{ widgetTagsRelated.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endblock %}
+  </aside>
 {% endif %}

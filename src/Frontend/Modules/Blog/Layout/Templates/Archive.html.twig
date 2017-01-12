@@ -4,63 +4,78 @@
   - {{ items }}: contains an array with all items, each element contains data about the items
   - {{ allowComments }}: boolean to indicate that the archive may display comment info
 #}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-{% if not items %}
-  <section id="blogArchive" class="blog">
-    <div class="bd content">
-      <p>{{ 'msg.BlogNoItems'|trans }}</p>
-    </div>
-  </section>
-{% else %}
-  <section id="blogArchive" class="blog">
-    <header role="banner">
-      <h3>
-        {% if archive.month %}
-          {{ archive.start_date|spoondate('F Y',LANGUAGE) }}
-        {% else %}
-          {{ archive.start_date|date('Y') }}
-        {% endif %}
-      </h3>
-    </header>
-    <div class="bd content">
-      <table class="dataGrid table table-hover" width="100%" itemscope itemtype="http://schema.org/Blog">
-        <thead class="hidden">
-          <tr>
-            <th class="date">{{ 'lbl.Date'|trans|capitalize }}</th>
-            <th class="title">{{ 'lbl.Title'|trans|capitalize }}</th>
-            {% if allowComments %}
-              <th class="comments">{{ 'lbl.Comments'|trans|capitalize }}</th>{% endif %}
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in items %}
+<section class="module-blog block-blog-archive">
+  {% if not items %}
+    {% block blockNoItems %}
+      {{ alerts.alert('info', 'msg.BlogNoItems'|trans) }}
+    {% endblock %}
+  {% else %}
+
+    {% block blockHeading %}
+      <header class="page-header block-heading" role="banner">
+        <h3>
+          {% if archive.month %}
+            {{ archive.start_date|spoondate('F Y',LANGUAGE) }}
+          {% else %}
+            {{ archive.start_date|date('Y') }}
+          {% endif %}
+        </h3>
+      </header>
+    {% endblock %}
+
+    {% block blockBody %}
+      <div class="block-body">
+        <table class="table table-hover" width="100%" itemscope itemtype="http://schema.org/Blog">
+          <thead class="hidden">
             <tr>
-              <td class="date muted">
-                <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">
-                  {{ item.publish_on|spoondate(dateFormatShort,LANGUAGE ) }}
-                </time>
-              </td>
-              <td class="title">
-                <a href="{{ item.full_url }}" title="{{ item.title }}">
-                  {{ item.title }}
-                </a>
-              </td>
+              <th class="date">{{ 'lbl.Date'|trans|ucfirst }}</th>
+              <th class="title">{{ 'lbl.Title'|trans|ucfirst }}</th>
               {% if allowComments %}
-                <td class="comments">
-                  {% if item.comments %}
-                    {% if item.comments_multiple %}
-                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}</a>
-                    {% else %}
-                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>
-                    {% endif %}
-                  {% endif %}
-                </td>
+                <th class="comments">{{ 'lbl.Comments'|trans|ucfirst }}</th>
               {% endif %}
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </section>
-  {% include "Core/Layout/Templates/Pagination.html.twig" %}
-{% endif %}
+          </thead>
+          <tbody>
+            {% for item in items %}
+              <tr>
+                <td class="date">
+                  <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">
+                    {{ item.publish_on|spoondate(dateFormatShort,LANGUAGE ) }}
+                  </time>
+                </td>
+                <td class="title">
+                  <a href="{{ item.full_url }}" title="{{ item.title }}">
+                    {{ item.title }}
+                  </a>
+                </td>
+                {% if allowComments %}
+                  <td class="comments">
+                    {% if item.comments %}
+                      {% if item.comments_multiple %}
+                        <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">
+                          {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}
+                        </a>
+                      {% else %}
+                        <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">
+                          {{ 'msg.BlogOneComment'|trans }}
+                        </a>
+                      {% endif %}
+                    {% endif %}
+                  </td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endblock %}
+
+    {% block blockPagination %}
+      <div class="block-footer">
+        {% include "Core/Layout/Templates/Pagination.html.twig" %}
+      </div>
+    {% endblock %}
+  {% endif %}
+</section>

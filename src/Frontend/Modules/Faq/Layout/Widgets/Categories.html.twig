@@ -4,18 +4,25 @@
 #}
 
 {% if widgetFaqCategories %}
-  <aside id="faqCategoriesWidget">
-    <header>
-      <h3>{{ 'lbl.AllCategories'|trans|ucfirst }}</h3>
-    </header>
-    <ul>
-      {% for widgetFaqCategories in widgetFaqCategories %}
-        <li>
-          <a href="{{ widgetFaqCategories.full_url }}" title="{{ widgetFaqCategories.title }}">
-            {{ widgetFaqCategories.title }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
+  <aside class="module-faq widget-faq-categories">
+    {% block widgetHeading %}
+      <header class="widget-heading">
+        <h3>{{ 'lbl.AllCategories'|trans|ucfirst }}</h3>
+      </header>
+    {% endblock %}
+
+    {% block widgetBody %}
+      <div class="widget-body">
+        <ul>
+          {% for widgetFaqCategories in widgetFaqCategories %}
+            <li>
+              <a href="{{ widgetFaqCategories.full_url }}" title="{{ widgetFaqCategories.title }}">
+                {{ widgetFaqCategories.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endblock %}
   </aside>
 {% endif %}

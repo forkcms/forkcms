@@ -5,28 +5,36 @@
 #}
 
 {% if locationItems %}
-  <div id="locationIndex" class="location">
-    {# @remark: do not remove the parseMap-class, it is used by JS #}
-    <div id="map" class="parseMap" style="height: {{ locationSettings.height }}px;">
-      <span class="hidden">{{ 'lbl.Loading'|trans|capitalize }}</span>
-    </div>
-
-    {% for locationItem in locationItems %}
-      {# @remark: do not remove the id #}
-      <div id="markerText{{ locationItem.id }}" class="hidden" itemscope itemtype="http://schema.org/Place">
-        <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-          <meta itemprop="latitude" content="{{ locationItem.lat }}" />
-          <meta itemprop="longitude" content="{{ locationItem.lng }}" />
+  <section class="module-location block-location-index">
+    {% block blockMap %}
+      <div class="block-map">
+        {# @remark: do not remove the parseMap-class, it is used by JS #}
+        <div id="map" class="parseMap" style="height: {{ locationSettings.height }}px;">
+          <span class="hidden">{{ 'lbl.Loading'|trans|ucfirst }}</span>
         </div>
-
-        <div itemprop="name" class="hidden"><strong>{{ locationItem.title }}</strong></div>
-        <address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-          <span itemprop="streetAddress">{{ locationItem.street }} {{ locationItem.number }}</span><br>
-          <span itemprop="postalCode">{{ locationItem.zip }}</span>
-          <span itemprop="addressLocality">{{ locationItem.city }}</span><br>
-          <span itemprop="addressCountry">{{ locationItem.country }}</span>
-        </address>
       </div>
-    {% endfor %}
-  </div>
+    {% endblock %}
+
+    {% block blockMarkerTexts %}
+      <div class="block-marker-texts">
+        {% for locationItem in locationItems %}
+          {# @remark: do not remove the id #}
+          <div id="markerText{{ locationItem.id }}" class="hidden" itemscope itemtype="http://schema.org/Place">
+            <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+              <meta itemprop="latitude" content="{{ locationItem.lat }}" />
+              <meta itemprop="longitude" content="{{ locationItem.lng }}" />
+            </div>
+
+            <div itemprop="name" class="hidden"><strong>{{ locationItem.title }}</strong></div>
+            <address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+              <span itemprop="streetAddress">{{ locationItem.street }} {{ locationItem.number }}</span><br>
+              <span itemprop="postalCode">{{ locationItem.zip }}</span>
+              <span itemprop="addressLocality">{{ locationItem.city }}</span><br>
+              <span itemprop="addressCountry">{{ locationItem.country }}</span>
+            </address>
+          </div>
+        {% endfor %}
+      </div>
+    {% endblock %}
+  </section>
 {% endif %}

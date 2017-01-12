@@ -2,32 +2,45 @@
   Variables that are available:
   - {{ tagsModules }}: contains all tags, grouped per module
 #}
-<section id="tagsDetail" class="tags">
-  <header role="banner">
-    <h1>{{ 'lbl.ItemsWithTag'|trans|format(tag.name|capitalize) }}</h1>
-  </header>
-  {% if tagsModules %}
-    {% for module in tagsModules %}
-      <section>
-        <header role="banner">
-          <h2>{{ module.label|capitalize }}</h2>
-        </header>
-        <ul>
-          {% for tag in module.items %}
-            <li>
-              <a href="{{ tag.full_url }}">
-                {{ tag.title }}
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
-      </section>
-    {% endfor %}
-  {% endif %}
+<section class="module-tags block-tags-detail">
+  {% block blockHeading %}
+    <header class="block-heading page-header" role="banner">
+      <h1>{{ 'lbl.ItemsWithTag'|trans|format(tag.name)|ucfirst }}</h1>
+    </header>
+  {% endblock %}
 
-  <p>
-    <a href="{{ geturlforblock('Tags') }}" class="btn btn-default">
-      {{ 'lbl.ToTagsOverview'|trans|capitalize }}
-    </a>
-  </p>
+  {% block blockBody %}
+    <div class="block-body">
+      {% if tagsModules %}
+        {% for module in tagsModules %}
+          <section>
+            <header role="banner">
+              <h2>{{ module.label|ucfirst }}</h2>
+            </header>
+            <ul>
+              {% for item in module.items %}
+                <li>
+                  <a href="{{ item.full_url }}" rel="tag">
+                    {{ item.title }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </section>
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% endblock %}
+
+  {% block blockFooter %}
+    <nav class="block-footer" role="navigation">
+      <ul class="pager">
+        <li class="previous">
+          <a href="{{ geturlforblock('Tags') }}" title="{{ 'lbl.ToTagsOverview'|trans|ucfirst }}">
+            ← {{ 'lbl.ToTagsOverview'|trans|ucfirst }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  {% endblock %}
 </section>

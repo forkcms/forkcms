@@ -1,16 +1,25 @@
-<div id="mailmotorSubscribeWidget" class="well">
-  <h3 class="title">{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
-  <form action="{{ geturlforblock('Mailmotor', 'Subscribe' ) }}" method="post">
-    <input type="hidden" name="form_token" id="formToken" value="{{ formToken }}" />
-    <input type="hidden" name="form" value="subscribe" />
-    <label class="control-label" for="email">
-      {{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
-    </label>
-    <div class="input-group">
-      <input type="email" value="" id="email" name="email" class="form-control" placeholder="{{ 'lbl.YourEmail'|trans|capitalize }}" />
-      <span class="input-group-btn">
-        <input id="send" class="btn btn-default" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans|capitalize }}" />
-      </span>
+<aside class="module-mailmotor widget-mailmotor-subscribe">
+  {% block widgetHeading %}
+    <header class="widget-heading">
+      <h3>{{ 'lbl.SubscribeToNewsletter'|trans|ucfirst }}</h3>
+    </header>
+  {% endblock %}
+
+  {% block widgetBody %}
+    <div class="widget-body">
+      <form action="{{ geturlforblock('Mailmotor', 'Subscribe' ) }}" method="post" class="form-horizontal">
+        <input type="hidden" name="form_token" id="formToken" value="{{ formToken }}" />
+        <input type="hidden" name="form" value="subscribe" />
+        <label class="control-label" for="email">
+          {{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+        </label>
+        <div class="input-group">
+          <input type="email" value="" id="email" name="email" class="form-control" placeholder="{{ 'lbl.YourEmail'|trans|ucfirst }}" />
+          <span class="input-group-btn">
+            <input id="send" class="btn btn-default" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans|ucfirst }} HOER" />
+          </span>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
+  {% endblock %}
+</aside>
