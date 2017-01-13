@@ -262,6 +262,13 @@ class Edit extends BackendBaseActionEdit
                 'auth_required',
                 isset($this->record['data']['auth_required']) && $this->record['data']['auth_required']
             );
+
+            // add checkbox for index page to search
+            $this->frm->addCheckbox(
+                'remove_from_search_index',
+                isset($this->record['data']['remove_from_search_index']) && $this->record['data']['remove_from_search_index']
+            );
+
             // get all groups and parse them in key value pair
             $groupItems = BackendProfilesModel::getGroups();
             if (!empty($groupItems)) {
@@ -653,7 +660,7 @@ class Edit extends BackendBaseActionEdit
                 if (array_key_exists('image', $this->templates[$templateId]['data'])) {
                     $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
                 }
-                
+
                 $data['auth_required'] = false;
                 if (BackendModel::isModuleInstalled('Profiles') && $this->frm->getField('auth_required')->isChecked()) {
                     $data['auth_required'] = true;
@@ -663,6 +670,11 @@ class Edit extends BackendBaseActionEdit
                     if (!empty($groupItems)) {
                         $data['auth_groups'] = $this->frm->getField('auth_groups')->getValue();
                     }
+                }
+
+                $data['remove_from_search_index'] = false;
+                if (BackendModel::isModuleInstalled('Profiles') && $this->frm->getField('remove_from_search_index')->isChecked()  && $this->frm->getField('auth_required')->isChecked()) {
+                    $data['remove_from_search_index'] = true;
                 }
 
                 // build page record
@@ -759,14 +771,14 @@ class Edit extends BackendBaseActionEdit
                     }
 
                     // add to search index, only if authentication is false
-                    if($data['auth_required'] == false) {
-                      BackendSearchModel::saveIndex(
+                    if ($data['remove_from_search_index'] == false) {
+                        BackendSearchModel::saveIndex(
                           $this->getModule(),
                           $page['id'],
                           array('title' => $page['title'], 'text' => $text)
                       );
                     } else {
-                      BackendSearchModel::removeIndex(
+                        BackendSearchModel::removeIndex(
                           $this->getModule(),
                           $page['id']
                       );
