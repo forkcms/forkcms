@@ -6,6 +6,7 @@ const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 const autoprefixer = require("gulp-autoprefixer");
 const rename = require("gulp-rename");
+const livereload = require("gulp-livereload");
 
 // backend tasks
 gulp.task("build:backend:assets:copy-css-vendors", function() {
@@ -52,7 +53,8 @@ gulp.task("build:backend:sass:generate-css", function() {
         includeContent: false,
         sourceRoot:     "/src/Backend/Core/Layout/Sass"
       }))
-      .pipe(gulp.dest("./src/Backend/Core/Layout/Css"));
+      .pipe(gulp.dest("./src/Backend/Core/Layout/Css"))
+      .pipe(livereload());
 });
 
 gulp.task("build:backend", function() {
@@ -61,6 +63,16 @@ gulp.task("build:backend", function() {
       "build:backend:assets:copy-fonts-vendors",
       "build:backend:assets:copy-js-vendors",
       "build:backend:sass:generate-css"
+  );
+});
+
+gulp.task("serve:backend", function() {
+  livereload.listen();
+  gulp.watch([
+        "./src/Backend/Core/Layout/Sass/screen.scss",
+        "./src/Backend/Core/Layout/Sass/debug.scss",
+      ],
+      ["build:backend:sass:generate-css"]
   );
 });
 
@@ -84,7 +96,8 @@ gulp.task("build:frontend:sass:generate-css", function() {
         includeContent: false,
         sourceRoot:     "/src/Frontend/Core/Layout/Sass"
       }))
-      .pipe(gulp.dest("./src/Frontend/Core/Layout/Css"));
+      .pipe(gulp.dest("./src/Frontend/Core/Layout/Css"))
+      .pipe(livereload());
 });
 
 gulp.task("build:frontend:sass:generate-module-css", function() {
@@ -102,7 +115,8 @@ gulp.task("build:frontend:sass:generate-module-css", function() {
       .pipe(rename(function(path) {
         path.dirname = path.dirname.replace("/Sass", "/Css");
       }))
-      .pipe(gulp.dest("./src/Frontend/Modules/"));
+      .pipe(gulp.dest("./src/Frontend/Modules/"))
+      .pipe(livereload());
 });
 
 gulp.task("build:frontend", function() {
@@ -112,9 +126,30 @@ gulp.task("build:frontend", function() {
   );
 });
 
+gulp.task("serve:frontend", function() {
+  livereload.listen();
+  gulp.watch([
+        "./src/Frontend/Modules/**/Layout/Sass/*.scss"
+      ],
+      ["build:frontend:sass:generate-module-css"]
+  );
+  gulp.watch([
+        "./src/Frontend/Core/Layout/Sass/debug.scss",
+        "./src/Frontend/Core/Layout/Sass/editor_content.scss",
+        "./src/Frontend/Core/Layout/Sass/screen.scss",
+      ],
+      ["build:frontend:sass:generate-css"]
+  );
+});
+
 // public tasks
 gulp.task("default", function() {
   gulp.start("build");
+});
+
+gulp.task("serve", function() {
+  gulp.start("serve:backend");
+  gulp.start("serve:frontend");
 });
 
 gulp.task("build", function() {
