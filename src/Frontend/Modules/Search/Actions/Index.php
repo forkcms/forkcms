@@ -237,13 +237,14 @@ class Index extends FrontendBaseBlock
         }
 
         // create elements
-        $this->frm->addText(
-            'q',
-            null,
-            255,
-            'form-control liveSuggest autoComplete',
-            'inputTextError liveSuggest autoComplete'
-        );
+        $this->frm->addText('q')
+            ->setAttributes(
+                array(
+                    'data-role' => 'fork-search-field',
+                    'data-autocomplete' => 'enabled',
+                    'data-live-suggest' => 'enabled',
+                )
+            );
 
         // since we know the term just here we should set the canonical url here
         $canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('Search');

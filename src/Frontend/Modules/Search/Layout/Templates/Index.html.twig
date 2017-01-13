@@ -21,8 +21,7 @@
 </section>
 
 {% block blockResultsContainer %}
-  {# don't remove this container nor replace the id - it'll be used to populate the search results live as you type #}
-  <div id="searchContainer">
+  <div data-role="search-results-container">
     {% include "Modules/Search/Layout/Templates/Results.html.twig" %}
   </div>
 {% endblock %}

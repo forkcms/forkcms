@@ -12,12 +12,15 @@ jsFrontend.location =
     // init, something like a constructor
     init: function()
     {
-        if($('.parseMap').length > 0)
+        if($('*[data-role=fork-map-container][data-map-id]').length > 0)
         {
-            $('.parseMap').each(function()
+          $('*[data-role=fork-map-container][data-map-id]').each(function()
             {
-                var id = $(this).attr('id').replace('map', '');
-                google.maps.event.addDomListener(window, 'load', jsFrontend.location.initMap(id));
+                google.maps.event.addDomListener(
+                    window,
+                    'load',
+                    jsFrontend.location.initMap($(this).data('map-id'))
+                );
             });
         }
     },
@@ -26,12 +29,15 @@ jsFrontend.location =
     initMap: function(id)
     {
         // define some variables we will need
-        var suffix = (id == '') ? '' : '_' + id;
-        var mapId = (id == '') ? 'general' : id;
+        var suffix = (id == 'general') ? '' : '_' + id;
+        var mapId = id;
         var mapStyle = (jsFrontend.data.get('Location.settings' + suffix + '.map_style'));
 
           // define coordinates
-        var coordinates = new google.maps.LatLng(jsFrontend.data.get('Location.settings' + suffix + '.center.lat'), jsFrontend.data.get('Location.settings' + suffix + '.center.lng'));
+        var coordinates = new google.maps.LatLng(
+            jsFrontend.data.get('Location.settings' + suffix + '.center.lat'),
+            jsFrontend.data.get('Location.settings' + suffix + '.center.lng')
+        );
 
         // build the options
         var options =
@@ -43,7 +49,10 @@ jsFrontend.location =
         };
 
         // create map
-        jsFrontend.location.map[mapId] = new google.maps.Map(document.getElementById('map' + id), options);
+        jsFrontend.location.map[mapId] = new google.maps.Map(
+            $('*[data-role=fork-map-container][data-map-id=' + id + ']')[0],
+            options
+        );
 
         // we want a streetview
         if(jsFrontend.data.get('Location.settings' + suffix + '.map_type') == 'STREET_VIEW')
@@ -86,18 +95,15 @@ jsFrontend.location =
             if(jsFrontend.location.directionsDisplay == null) jsFrontend.location.directionsDisplay = new google.maps.DirectionsRenderer();
 
             // bind events
-            $('#locationSearch' + id + ' form').on('submit', function(e)
+            $('form[data-role=fork-directions-form][data-map-id=' + id + ']').on('submit', function(e)
             {
-                // prevent default
                 e.preventDefault();
-
-                // calculate & display the route
                 jsFrontend.location.setRoute(id, mapId, items[0]);
             });
         }
 
-        if($('#map-full-url-' + id).length > 0) {
-            jsFrontend.location.mapFullUrl = $('#map-full-url-' + id).attr('href');
+        if($('a[data-role=fork-map-url][data-map-id=' + id + ']').length > 0) {
+            jsFrontend.location.mapFullUrl = $('a[data-role=fork-map-url][data-map-id=' + id + ']').attr('href');
         }
     },
 
@@ -117,7 +123,7 @@ jsFrontend.location =
         // show info window on click
         google.maps.event.addListener(marker, 'click', function()
         {
-            $markerText = $('#markerText' + marker.locationId);
+            $markerText = $('*[data-role=fork-marker-text-container][data-map-id=' + marker.locationId + ']');
 
             // apparently JS goes bananas with multi line HTMl, so we grab it from the div, this seems like a good idea for SEO
             if($markerText.length > 0) text = $markerText.html();
@@ -136,8 +142,8 @@ jsFrontend.location =
     // calculate the route
     setRoute: function(id, mapId, item)
     {
-        $error = $('#locationSearchError' + id);
-        $search = $('#locationSearchAddress' + id);
+        $error = $('*[data-role=fork-directions-error][data-map-id=' + id + ']');
+        $search = $('*[data-role=fork-directions-start][data-map-id=' + id + ']');
 
         // validate
         if($search.val() == '') $error.show();
@@ -169,7 +175,7 @@ jsFrontend.location =
                 // change the link
                 if (jsFrontend.location.mapFullUrl != null) {
                     // get "a"-link element
-                    var $item = $('#map-full-url-' + id);
+                    var $item = $('a[data-role=fork-map-url][data-map-id=' + id + ']');
 
                     // d = directions
                     var href = jsFrontend.location.mapFullUrl + '&f=d&saddr=' + $search.val() + '&daddr=' + position;

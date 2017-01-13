@@ -8,8 +8,7 @@
   <section class="module-location block-location-index">
     {% block blockMap %}
       <div class="block-map">
-        {# @remark: do not remove the parseMap-class, it is used by JS #}
-        <div id="map" class="parseMap" style="height: {{ locationSettings.height }}px;">
+        <div data-role="fork-map-container" data-map-id="general" style="height: {{ locationSettings.height }}px;">
           <span class="hidden">{{ 'lbl.Loading'|trans|ucfirst }}</span>
         </div>
       </div>
@@ -18,8 +17,7 @@
     {% block blockMarkerTexts %}
       <div class="block-marker-texts">
         {% for locationItem in locationItems %}
-          {# @remark: do not remove the id #}
-          <div id="markerText{{ locationItem.id }}" class="hidden" itemscope itemtype="http://schema.org/Place">
+          <div data-role="fork-marker-text-container" data-map-id="{{ locationItem.id }}" class="hidden" itemscope itemtype="http://schema.org/Place">
             <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
               <meta itemprop="latitude" content="{{ locationItem.lat }}" />
               <meta itemprop="longitude" content="{{ locationItem.lng }}" />

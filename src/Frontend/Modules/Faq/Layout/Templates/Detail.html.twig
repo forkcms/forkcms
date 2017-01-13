@@ -80,7 +80,7 @@
                         {% endfor %}
                       </div>
                       <div class="row">
-                        <div class="col-md-12" id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
+                        <div class="col-md-12" data-role="fork-feedback-container" {% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
                           <p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
                             <label for="message">
                               {{ 'msg.HowToImprove'|trans|ucfirst }}
