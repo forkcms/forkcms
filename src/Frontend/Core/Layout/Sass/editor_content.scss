@@ -1,19 +1,14 @@
-@charset 'UTF-8';
-
 body {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
+  background: #fff;
   box-sizing: border-box;
+  color: #000;
+  cursor: text;
   height: 100%;
   height: expression((window) && ((document.documentElement.clientHeight - 6) + "px"));
-  cursor: text;
-  padding: 6px;
   height: auto;
-  width: auto;
   margin: 0;
-  background: #FFF;
-  color: #000;
+  padding: 6px;
+  width: auto;
 }
 
 html {
@@ -22,33 +17,33 @@ html {
 }
 
 img {
-  max-width: 100%;
   height: auto;
+  max-width: 100%;
 }
 
 table {
   border-collapse: collapse;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px dotted #999;
 }
 
-/*
-    Editor defaults edited
-*/
+// Editor defaults edited
 acronym {
-  border-bottom: 1px dotted #CCC;
+  border-bottom: 1px dotted #ccc;
   cursor: help;
 }
 
 abbr {
-  border-bottom: 1px dashed #CCC;
+  border-bottom: 1px dashed #ccc;
   cursor: help;
 }
 
 img:-moz-broken {
   -moz-force-broken-image-icon: 1;
-  width: 24px;
   height: 24px;
+  width: 24px;
 }
