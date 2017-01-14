@@ -10,15 +10,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * You need to implement the method getUploadDir.
  * When using this class in an entity certain life cycle callbacks should be called
- * prepareToUpload for @ORM\PrePersist() and @ORM\PreUpdate()
- * upload for @ORM\PostPersist() and @ORM\PostUpdate()
- * remove for @ORM\PostRemove()
+ * prepareToUpload for [at]orm\PrePersist() and [at]orm\PreUpdate()
+ * upload for [at]orm\PostPersist() and [at]orm\PostUpdate()
+ * remove for [at]orm\PostRemove()
  */
 abstract class AbstractFile
 {
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * [at]orm\Column(type="string", length=255, nullable=true)
      */
     protected $fileName;
 
@@ -143,7 +143,7 @@ abstract class AbstractFile
     }
 
     /**
-     * This function should be called for the life cycle events @ORM\PrePersist() and @ORM\PreUpdate()
+     * This function should be called for the life cycle events [at]orm\PrePersist() and [at]orm\PreUpdate()
      */
     public function prepareToUpload()
     {
@@ -157,7 +157,7 @@ abstract class AbstractFile
     }
 
     /**
-     * This function should be called for the life cycle events @ORM\PostPersist() and @ORM\PostUpdate()
+     * This function should be called for the life cycle events [at]orm\PostPersist() and [at]orm\PostUpdate()
      */
     public function upload()
     {
@@ -200,7 +200,7 @@ abstract class AbstractFile
     }
 
     /**
-     * This function should be called for the life cycle event @ORM\PostRemove()
+     * This function should be called for the life cycle event [at]orm\PostRemove()
      */
     public function remove()
     {
