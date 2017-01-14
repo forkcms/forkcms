@@ -12,7 +12,7 @@
     <meta itemprop="interactionCount" content="UserComments:commentsCount">
     <meta itemprop="author" content="{{ item.user_id|usersetting('nickname' ) }}">
 
-    {% block blockHeading %}
+    {% block block_heading %}
       <header class="block-heading page-header" role="banner">
         <h1 itemprop="name">
           {{ item.title }}
@@ -67,7 +67,7 @@
       </header>
     {% endblock %}
 
-    {% block blockBody %}
+    {% block block_body %}
       <div class="block-body" itemprop="articleBody">
         {% if item.image %}
           <img class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" itemprop="image" />
@@ -76,7 +76,7 @@
       </div>
     {% endblock %}
 
-    {% block blockFooter %}
+    {% block block_footer %}
       <footer class="block-footer">
         <nav>
           <ul class="pager" role="navigation">
@@ -101,7 +101,7 @@
     {% endblock %}
   </article>
 
-  {% block blockArticleComments %}
+  {% block block_article_comments %}
     <section id="{{ act.Comments }}" class="block-blog-article-comments">
       <header role="banner" class="block-blog-article-comments-heading">
         <h3>{{ 'lbl.Comments'|trans|ucfirst }}</h3>
@@ -156,7 +156,7 @@
   {% endblock %}
 
   {% if item.allow_comments %}
-    {% block blockArticleCommentForm %}
+    {% block block_article_comment_form %}
       <section id="{{ act.Comment }}" class="block-blog-article-comment-form">
         <header class="block-blog-article-comment-form-heading" role="banner">
           <h3>{{ 'msg.Comment'|trans|ucfirst }}</h3>

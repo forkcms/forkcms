@@ -5,20 +5,20 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
 <section class="module-faq block-faq-category" itemscope itemtype="http://schema.org/Question">
-  {% block blockHeading %}
+  {% block block_heading %}
     <header class="page-header">
       <h1 itemprop="genre">{{ category.title }}</h1>
     </header>
   {% endblock %}
 
   {% if questions is empty %}
-    {% block blockAlerts %}
+    {% block block_alerts %}
       <div class="block-alerts">
         {{ alerts.alert('info', 'msg.NoQuestionsInCategory'|trans) }}
       </div>
     {% endblock %}
   {% else %}
-    {% block blockBody %}
+    {% block block_body %}
       <div class="block-body">
         <ul>
           {% for question in questions %}
@@ -29,7 +29,7 @@
     {% endblock %}
   {% endif %}
 
-  {% block blockFooter %}
+  {% block block_footer %}
     <nav class="block-footer">
       <ul class="pager">
         <li class="previous">

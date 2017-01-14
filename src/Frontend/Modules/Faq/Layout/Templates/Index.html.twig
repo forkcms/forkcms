@@ -6,14 +6,14 @@
 
 <section class="module-faq block-faq-index">
   {% if not faqCategories %}
-    {% block blockNoItems %}
+    {% block block_no_items %}
       {{ alerts.alert('info', 'msg.FaqNoItems'|trans) }}
     {% endblock %}
   {% endif %}
 
   {% if faqCategories %}
     {% if allowMultipleCategories %}
-      {% block blockAllowMultipleCategories %}
+      {% block block_allow_multiple_categories %}
         <nav class="block-list-categories">
           <ul>
             {% for category in faqCategories %}
@@ -24,7 +24,7 @@
       {% endblock %}
     {% endif %}
 
-    {% block blockBody %}
+    {% block block_body %}
       <div class="block-body">
         {% for category in faqCategories %}
           <section class="faq-category">

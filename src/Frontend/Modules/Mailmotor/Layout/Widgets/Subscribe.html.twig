@@ -1,11 +1,11 @@
 <aside class="module-mailmotor widget-mailmotor-subscribe">
-  {% block widgetHeading %}
+  {% block widget_heading %}
     <header class="widget-heading">
       <h3>{{ 'lbl.SubscribeToNewsletter'|trans|ucfirst }}</h3>
     </header>
   {% endblock %}
 
-  {% block widgetBody %}
+  {% block widget_body %}
     <div class="widget-body">
       <form action="{{ geturlforblock('Mailmotor', 'Subscribe' ) }}" method="post" class="form-horizontal">
         <input type="hidden" name="form_token" id="formToken" value="{{ formToken }}" />

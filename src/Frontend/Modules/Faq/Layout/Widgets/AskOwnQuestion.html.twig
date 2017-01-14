@@ -6,7 +6,7 @@
 
 {% if widgetFaqOwnQuestion %}
   <aside class="module-faq widget-faq-ask-own-question">
-    {% block widgetHeading %}
+    {% block widget_heading %}
       <header class="widget-heading">
         {# don't remive the ID as it will be used as an anchor #}
         <h3 id="{{ 'act.OwnQuestion'|trans }}">
@@ -15,7 +15,7 @@
       </header>
     {% endblock %}
 
-    {% block widgetAlerts %}
+    {% block widget_alerts %}
       <div class="widget-alerts">
         {% if errorSpam %}
           {{ alerts.alert('danger', 'err.OwnQuestionSpam'|trans) }}
@@ -27,7 +27,7 @@
     {% endblock %}
 
     {% if form_own_question %}
-      {% block widgetBody %}
+      {% block widget_body %}
         <div class="widget-body">
           {% form own_question %}
           <div class="form-group{% if txtNameError %} has-error{% endif %}">

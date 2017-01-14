@@ -1,7 +1,7 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
 <section class="module-profiles block-profiles-change-email">
-  {% block blockAlerts %}
+  {% block block_alerts %}
     <div class="block-alerts">
       {% if updateEmailSuccess %}
         {{ alerts.alert('success', 'msg.UpdateEmailIsSuccess'|trans) }}
@@ -12,7 +12,7 @@
     </div>
   {% endblock %}
 
-  {% block blockBody %}
+  {% block block_body %}
     <div class="block-body">
       {% form updateEmail %}
       <fieldset class="form-horizontal">

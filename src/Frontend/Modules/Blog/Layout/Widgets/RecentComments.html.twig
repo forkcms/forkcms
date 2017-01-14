@@ -4,13 +4,13 @@
 #}
 {% if widgetBlogRecentComments %}
   <aside class="module-blog widget-blog-recent-comments">
-    {% block widgetHeading %}
+    {% block widget_heading %}
       <header role="banner" class="widget-heading">
         <h3>{{ 'lbl.RecentComments'|trans|ucfirst }}</h3>
       </header>
     {% endblock %}
 
-    {% block widgetBody %}
+    {% block widget_body %}
       <div class="widget-body">
         <ul>
           {% for comment in widgetBlogRecentComments %}

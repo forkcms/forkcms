@@ -4,13 +4,13 @@
 #}
 {% if widgetTagsRelated %}
   <aside class="module-tags widget-tags-related">
-    {% block widgetHeading %}
+    {% block widget_heading %}
       <header class="widget-heading" role="banner">
         <h3>{{ 'lbl.Related'|trans|ucfirst }}</h3>
       </header>
     {% endblock %}
 
-    {% block widgetBody %}
+    {% block widget_body %}
       <div class="widget-body">
         <ul>
           {% for widgetTagsRelated in widgetTagsRelated %}

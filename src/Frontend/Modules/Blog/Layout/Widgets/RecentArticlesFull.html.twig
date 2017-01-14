@@ -5,13 +5,13 @@
 
 {% if widgetBlogRecentArticlesFull %}
   <section class="module-blog widget-blog-recent-articles-full">
-    {% block widgetHeading %}
+    {% block widget_heading %}
       <header class="widget-heading page-header" role="banner">
         <h2>{{ 'lbl.RecentArticles'|trans|ucfirst }}</h2>
       </header>
     {% endblock %}
 
-    {% block widgetBody %}
+    {% block widget_body %}
       <div class="widget-body">
         {% for post in widgetBlogRecentArticlesFull %}
           <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
@@ -87,7 +87,7 @@
       </div>
     {% endblock %}
 
-    {% block widgetFooter %}
+    {% block widget_footer %}
       <footer class="widget-footer">
         <p class="btn-group">
           <a class="btn btn-default" href="{{ geturlforblock('Blog') }}">

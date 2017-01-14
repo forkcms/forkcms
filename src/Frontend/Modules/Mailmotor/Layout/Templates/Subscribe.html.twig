@@ -9,7 +9,7 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
 <section class="module-mailmotor block-mailmotor-subscribe">
-  {% block blockAlerts %}
+  {% block block_alerts %}
     <div class="block-alerts">
       {% if mailmotorSubscribeHasFormError %}
         {{ alerts.alert('danger', 'err.FormError'|trans|raw) }}
@@ -28,7 +28,7 @@
     </div>
   {% endblock %}
 
-  {% block blockBody %}
+  {% block block_body %}
     <div class="block-body">
       {% if not mailmotorSubscribeHideForm %}
         {{ form_start(form) }}

@@ -4,7 +4,7 @@
 <section class="module-formbuilder widget-formbuilder-form" id="formbuilder{{ formName|ucfirst }}">
   <div class="row">
     <div class="col-xs-12">
-      {% block widgetAlerts %}
+      {% block widget_alerts %}
         <div class="widget-alerts">
           {% if successMessage %}
             {{ alerts.alert('success', successMessage, false, formName) }}
@@ -16,7 +16,7 @@
       {% endblock %}
 
       {% if fields %}
-        {% block widgetBody %}
+        {% block widget_body %}
           <div class="widget-body">
             <form id="{{ formName }}" method="post" action="{{ formAction }}">
               <fieldset class="form">

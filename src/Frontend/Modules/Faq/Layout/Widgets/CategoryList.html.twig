@@ -4,13 +4,13 @@
 #}
 {% if widgetFaqCategoryList %}
   <aside class="module-faq widget-faq-category-list">
-    {% block widgetHeading %}
+    {% block widget_heading %}
       <header class="widget-heading">
         <h3>{{ 'lbl.Faq'|trans }}: {{ widgetFaqCategory.title }}</h3>
       </header>
     {% endblock %}
 
-    {% block widgetBody %}
+    {% block widget_body %}
       <div class="widget-body">
         <ul>
           {% for widgetFaqCategoryList in widgetFaqCategoryList %}

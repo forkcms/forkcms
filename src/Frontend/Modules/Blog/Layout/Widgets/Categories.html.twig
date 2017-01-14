@@ -4,13 +4,13 @@
 #}
 {% if widgetBlogCategories %}
   <aside class="module-blog widget-blog-categories">
-    {% block widgetHeading %}
+    {% block widget_heading %}
       <header class="widget-heading" role="banner">
         <h3>{{ 'lbl.Categories'|trans|ucfirst }}</h3>
       </header>
     {% endblock %}
 
-    {% block widgetBody %}
+    {% block widget_body %}
       <div class="widget-body">
         <ul>
           {% for category in widgetBlogCategories %}

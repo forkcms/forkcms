@@ -7,7 +7,7 @@
 
 <section class="module-profiles widget-profiles-login-box">
   {% if isLoggedIn %}
-    {% block blockIsLoggedIn %}
+    {% block block_is_logged_in %}
       <div class="block-alerts">
         {{ alerts.alert('success', 'msg.ProfilesLoggedInAs'|trans|format(profile.display_name, profile.url.dashboard)) }}
         <a href="{{ profile.url.settings }}">{{ 'lbl.Settings'|trans|ucfirst }}</a>
@@ -16,13 +16,13 @@
   {% endif %}
 
   {% if not isLoggedIn %}
-    {% block blockHeading %}
+    {% block block_heading %}
       <header class="block-heading page-header" role="banner">
         <h3>{{ 'lbl.Login'|trans|ucfirst }}</h3>
       </header>
     {% endblock %}
 
-    {% block blockBody %}
+    {% block block_body %}
       <div class="block-body">
         {% form login %}
         <fieldset class="form-horizontal">

@@ -1,7 +1,7 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
 <section class="module-profiles block-profiles-login">
-  {% block blockAlerts %}
+  {% block block_alerts %}
     <div class="block-alerts">
       {% if formError %}
         {% if loginError %}
@@ -14,7 +14,7 @@
     </div>
   {% endblock %}
 
-  {% block blockBody %}
+  {% block block_body %}
     {% form login %}
     <fieldset class="form-horizontal">
       <div class="form-group{% if txtEmailError %} has-error{% endif %}">

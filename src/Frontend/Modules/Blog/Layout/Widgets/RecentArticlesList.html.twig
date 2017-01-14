@@ -4,13 +4,13 @@
 #}
 {% if widgetBlogRecentArticlesList %}
   <aside class="module-blog widget-blog-recent-articles-list">
-    {% block widgetHeading %}
+    {% block widget_heading %}
       <header class="widget-heading" role="banner">
         <h3>{{ 'lbl.RecentArticles'|trans|ucfirst }}</h3>
       </header>
     {% endblock %}
 
-    {% block widgetBody %}
+    {% block widget_body %}
       <div class="widget-body">
         <ul>
           {% for post in widgetBlogRecentArticlesList %}
@@ -24,7 +24,7 @@
       </div>
     {% endblock %}
 
-    {% block widgetFooter %}
+    {% block widget_footer %}
       <footer class="widget-footer">
         <p class="btn-group">
           <a class="btn btn-default" href="{{ geturlforblock('Blog') }}">

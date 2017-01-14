@@ -8,11 +8,11 @@
 
 <section class="module-blog block-blog-category">
   {% if not items %}
-    {% block blockNoItems %}
+    {% block block_no_items %}
       {{ alerts.alert('info', 'msg.BlogNoItems'|trans) }}
     {% endblock %}
   {% else %}
-    {% block blockBody %}
+    {% block block_body %}
       <div class="block-body">
         {% for item in items %}
           <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
@@ -88,7 +88,7 @@
       </div>
     {% endblock %}
 
-    {% block blockPagination %}
+    {% block block_pagination %}
       <div class="block-footer">
         {% include "Core/Layout/Templates/Pagination.html.twig" %}
       </div>

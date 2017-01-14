@@ -6,7 +6,7 @@
 
 {% if locationItems %}
   <section class="module-location block-location-index">
-    {% block blockMap %}
+    {% block block_map %}
       <div class="block-map">
         <div data-role="fork-map-container" data-map-id="general" style="height: {{ locationSettings.height }}px;">
           <span class="hidden">{{ 'lbl.Loading'|trans|ucfirst }}</span>
@@ -14,7 +14,7 @@
       </div>
     {% endblock %}
 
-    {% block blockMarkerTexts %}
+    {% block block_marker_texts %}
       <div class="block-marker-texts">
         {% for locationItem in locationItems %}
           <div data-role="fork-marker-text-container" data-map-id="{{ locationItem.id }}" class="hidden" itemscope itemtype="http://schema.org/Place">

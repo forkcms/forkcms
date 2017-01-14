@@ -6,7 +6,7 @@
 
 {% if widgetLocationItem %}
   <aside class="module-location widget-location-location">
-    {% block widgetMap %}
+    {% block widget_map %}
       <div class="widget-map">
         <div data-role="fork-map-container" data-map-id="{{ widgetLocationItem.id }}" style="height: {{ widgetLocationSettings.height }}px;">
           <span class="hidden">{{ 'lbl.Loading'|trans|ucfirst }}</span>
@@ -15,7 +15,7 @@
     {% endblock %}
 
     {% if widgetLocationSettings.full_url %}
-      {% block widgetLargeMapLink %}
+      {% block widget_large_map_link %}
         <div class="widget-large-map-link">
           <div class="row">
             <div class="col-xs-12">
@@ -29,7 +29,7 @@
     {% endif %}
 
     {% if widgetLocationSettings.directions %}
-      {% block widgetDirections %}
+      {% block widget_directions %}
         <div class="widget-directions">
           <aside>
             <form method="get" action="#" data-role="fork-directions-form" data-map-id="{{ widgetLocationItem.id }}">
@@ -53,7 +53,7 @@
       {% endblock %}
     {% endif %}
 
-    {% block widgetMarkerText %}
+    {% block widget_marker_text %}
       <div class="widget-marker-text">
         <div data-role="fork-marker-data-container" data-map-id="{{ widgetLocationItem.id }}" class="hidden" itemscope itemtype="http://schema.org/Place">
           <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">

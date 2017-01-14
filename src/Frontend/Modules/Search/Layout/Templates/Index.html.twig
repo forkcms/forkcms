@@ -4,7 +4,7 @@
   - {{ searchTerm }}: the term that has been searched for
 #}
 <section class="module-search block-search-index" role="search">
-  {% block blockBody %}
+  {% block block_body %}
     {% form search %}
     <label for="q">
       {{ 'lbl.SearchTerm'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
@@ -20,7 +20,7 @@
   {% endblock %}
 </section>
 
-{% block blockResultsContainer %}
+{% block block_results_container %}
   <div data-role="search-results-container">
     {% include "Modules/Search/Layout/Templates/Results.html.twig" %}
   </div>

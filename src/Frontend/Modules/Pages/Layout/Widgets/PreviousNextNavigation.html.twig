@@ -1,7 +1,7 @@
 <nav class="module-pages widget-pages-previous-next-navigation">
   <ul class="pager">
     {% if widgetPagesNavigation.previous %}
-      {% block widgetPrevious %}
+      {% block widget_previous %}
         <li class="previous">
           <a href="{{ widgetPagesNavigation.previous.url }}" rel="prev" title="{{ widgetPagesNavigation.previous.title }}">
             ←
@@ -13,7 +13,7 @@
     {% endif %}
 
     {% if widgetPagesNavigation.parent %}
-      {% block widgetParent %}
+      {% block widget_parent %}
         <li class="parentLink">
           <a href="{{ widgetPagesNavigation.parent.url }}" title="{{ widgetPagesNavigation.parent.title }}">
             ↑
@@ -25,7 +25,7 @@
     {% endif %}
 
     {% if widgetPagesNavigation.next %}
-      {% block widgetNext %}
+      {% block widget_next %}
         <li class="next">
           <a href="{{ widgetPagesNavigation.next.url }}" rel="next" title="{{ widgetPagesNavigation.next.title }}">
             <span class="sr-only">{{ 'lbl.NextPage'|trans|ucfirst }}: </span>
