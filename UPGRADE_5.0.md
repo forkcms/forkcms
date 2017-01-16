@@ -13,17 +13,29 @@ You should remove all usages of:
 * `API_CORE_PATH`-constant
 * `fork_api_private_key`-setting
 * `fork_api_public_key`-setting
-* `BackendModel::ping`-method
+* `BackendModel::ping()`-method
 * `ping_services`-setting from the Blog-module
 * `ForkAPI`-class
 * `api_access`-usersetting
 * `ApiTestCase`-class
-* `FrontendModel::pushToAppleApp`-method
+* `FrontendModel::pushToAppleApp()`-method
 
 
 ## triggerEvent
 
-...
+Our own implementation of events has been removed. If you need to implement the
+same behaviour you should look into [Symfony's EventDispatcher Component](http://symfony.com/doc/current/components/event_dispatcher.html).
+
+You should remove all usages of:
+
+* `Backend\Core\Installer\ModuleInstaller->subscribeToEvent()`
+* `BackendModel::triggerEvent()`
+* `Common\Core\Model::subscribeToEvent()`
+* `Common\Core\Model::triggerEvent()`
+* `Common\Core\Model::startProcessingHooks()`
+* `Common\Core\Model::unsubscribeFromEvent()`
+* `FrontendModel::triggerEvent()`
+
 
 ## Backend\Core\Engine\Language moved to its namespace
 
