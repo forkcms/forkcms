@@ -65,3 +65,13 @@ After:
 ```php
 use Frontend\Core\Language\Language as ...;
 ```
+
+## invalidateFrontendCache is removed
+
+Since we moved to Twig, and Twig does not use the same caching mechanisme. The ``-method is removed.
+If you need template caching you can take a look at [Twig cache extension](https://github.com/asm89/twig-cache-extension).
+
+You should remove all usages of:
+
+* `Backend\Core\Engine\Model::invalidateFrontendCache()`
+

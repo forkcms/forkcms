@@ -784,23 +784,6 @@ class Model extends \Common\Core\Model
     }
 
     /**
-     * @deprecated: twig doesn't contain this same type of caching out of the box.
-     * Use https://github.com/asm89/twig-cache-extension instead
-     *
-     * @param string $module   A specific module to clear the cache for.
-     * @param string $language The language to use.
-     */
-    public static function invalidateFrontendCache($module = null, $language = null)
-    {
-        trigger_error(
-            'invalidateFrontendCache is deprecated since twig does not use the
-            same caching mechanisme. You can use https://github.com/asm89/twig-cache-extension
-            if you want a similar type of template cache.',
-            E_USER_DEPRECATED
-        );
-    }
-
-    /**
      * Is module installed?
      *
      * @param string $module
