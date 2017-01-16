@@ -88,3 +88,8 @@ If you want to convert a Spoon template to Twig its better to take a look at:
 * [Converter Collection by Thijzer](https://github.com/Thijzer/ConverterCollection)
 * [Fork CMS Spoon2Twig Converter by Jesse](http://spoon2twig.jessedobbelae.re/)
 
+
+## install_locale.php-script is removed
+
+Use `php app/console forkcms:locale:import` instead.
+
