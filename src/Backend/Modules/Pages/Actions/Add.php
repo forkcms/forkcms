@@ -454,9 +454,6 @@ class Add extends BackendBaseActionAdd
                 // insert the blocks
                 BackendPagesModel::insertBlocks($this->blocksContent);
 
-                // trigger an event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', $page);
-
                 if ($this->showTags()) {
                     // save tags
                     BackendTagsModel::saveTags(

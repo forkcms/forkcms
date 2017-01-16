@@ -258,9 +258,6 @@ class Add extends BackendBaseActionAdd
                 // save groups
                 BackendGroupsModel::insertMultipleGroups($user['id'], $groups);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $user));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction(

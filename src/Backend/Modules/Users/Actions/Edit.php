@@ -406,9 +406,6 @@ class Edit extends BackendBaseActionEdit
                     BackendGroupsModel::insertMultipleGroups($this->id, $groups);
                 }
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $user));
-
                 // can only edit own profile
                 if (!BackendAuthentication::isAllowedAction('Index')) {
                     // everything is saved, so redirect to the edit page

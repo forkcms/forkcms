@@ -319,9 +319,6 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 // insert the item
                 $item['id'] = BackendExtensionsModel::insertTemplate($item);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add_template', array('item' => $item));
-
                 // set default template
                 if ($this->frm->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'core')) {
                     $this->get('fork.settings')->set($this->getModule(), 'default_template', $item['id']);

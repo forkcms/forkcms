@@ -35,9 +35,6 @@ class Delete extends BackendBaseActionDelete
             // delete group
             BackendGroupsModel::delete($this->id);
 
-            // trigger event
-            BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
-
             // item was deleted, so redirect
             $this->redirect(BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['name']));
         } else {

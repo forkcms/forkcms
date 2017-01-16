@@ -375,9 +375,6 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 // insert the item
                 BackendExtensionsModel::updateTemplate($item);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit_template', array('item' => $item));
-
                 // set default template
                 if ($this->frm->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'core')) {
                     $this->get('fork.settings')->set('pages', 'default_template', $item['id']);

@@ -287,9 +287,6 @@ class Settings extends FrontendBaseBlock
                 // save settings
                 $this->profile->setSettings($settings);
 
-                // trigger event
-                FrontendModel::triggerEvent('Profiles', 'after_saved_settings', array('id' => $this->profile->getId()));
-
                 // redirect
                 $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Settings') . '?sent=true');
             } else {

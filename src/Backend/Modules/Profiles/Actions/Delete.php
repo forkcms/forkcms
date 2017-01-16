@@ -39,9 +39,6 @@ class Delete extends BackendBaseActionDelete
                 // set profile status to active
                 BackendProfilesModel::update($this->id, array('status' => 'active'));
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_reactivate', array('id' => $this->id));
-
                 // redirect
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=profile-undeleted&var=' . rawurlencode(
@@ -51,9 +48,6 @@ class Delete extends BackendBaseActionDelete
             } else {
                 // delete profile
                 BackendProfilesModel::delete($this->id);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_delete_profile', array('id' => $this->id));
 
                 // redirect
                 $this->redirect(

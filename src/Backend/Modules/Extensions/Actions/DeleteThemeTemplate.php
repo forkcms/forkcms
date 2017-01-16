@@ -41,9 +41,6 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
             if (!empty($item)) {
                 // delete the page
                 $success = BackendExtensionsModel::deleteTemplate($this->id);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_delete_template', array('id' => $this->id));
             }
 
             // page is deleted, so redirect to the overview

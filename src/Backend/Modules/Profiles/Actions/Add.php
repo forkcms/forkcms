@@ -239,9 +239,6 @@ class Add extends BackendBaseActionAdd
                     BackendProfilesModel::notifyAdmin($notifyValues);
                 }
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect($redirectUrl);
             }

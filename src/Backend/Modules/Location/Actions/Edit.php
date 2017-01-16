@@ -235,12 +235,6 @@ class Edit extends BackendBaseActionEdit
                 // insert the item
                 BackendLocationModel::update($item);
 
-                // everything is saved, so redirect to the overview
-                if ($item['lat'] && $item['lng']) {
-                    // trigger event
-                    BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
-                }
-
                 // redirect to the overview
                 if ($this->frm->getField('redirect')->getValue() == 'overview') {
                     $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['id']);

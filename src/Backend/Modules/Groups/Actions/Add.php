@@ -548,9 +548,6 @@ class Add extends BackendBaseActionAdd
                 // insert permissions
                 $this->insertPermissions($actionPermissions, $bundledActionPermissions);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $group));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
             }

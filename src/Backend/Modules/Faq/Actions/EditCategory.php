@@ -116,7 +116,6 @@ class EditCategory extends BackendBaseActionEdit
 
                 // update the item
                 BackendFaqModel::updateCategory($item);
-                BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(

@@ -170,9 +170,6 @@ class Edit extends BackendBaseActionEdit
                 // update item
                 BackendLocaleModel::update($item);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=edited&var=' . rawurlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
             }

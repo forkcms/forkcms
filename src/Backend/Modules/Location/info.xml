@@ -20,10 +20,4 @@
       <url><![CDATA[http://www.jelmersnoeck.com]]></url>
     </author>
   </authors>
-  <events>
-    <event application="backend" name="after_edit"><![CDATA[Triggered when a location is added.]]></event>
-    <event application="backend" name="after_delete"><![CDATA[Triggered when a location is deleted.]]></event>
-    <event application="backend" name="after_edit"><![CDATA[Triggered when a location is edited.]]></event>
-    <event application="backend" name="after_saved_settings"><![CDATA[Triggered when settings are saved.]]></event>
-  </events>
 </module>

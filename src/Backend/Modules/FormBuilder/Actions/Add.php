@@ -122,9 +122,6 @@ class Add extends BackendBaseActionAdd
                 // insert the item
                 $id = BackendFormBuilderModel::insert($values);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
-
                 // set frontend locale
                 FL::setLocale(BL::getWorkingLanguage(), true);
 

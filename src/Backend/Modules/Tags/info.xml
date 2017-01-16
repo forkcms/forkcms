@@ -28,7 +28,4 @@
   <description>
     <![CDATA[This module manages the tags, other modules can use these module, as it is loaded by default.]]>
   </description>
-  <events>
-    <event application="backend" name="after_edit"><![CDATA[Triggered when a tag is edited.]]></event>
-  </events>
 </module>

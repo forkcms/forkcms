@@ -21,9 +21,4 @@
       <url><![CDATA[http://blog.bauffman.be]]></url>
     </author>
   </authors>
-  <events>
-    <event application="backend" name="after_add"><![CDATA[Triggered when an user is added.]]></event>
-    <event application="backend" name="after_delete"><![CDATA[Triggered when an user is deleted.]]></event>
-    <event application="backend" name="after_edit"><![CDATA[Triggered when an user is edited.]]></event>
-  </events>
 </module>

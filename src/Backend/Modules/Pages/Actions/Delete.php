@@ -56,9 +56,6 @@ class Delete extends BackendBaseActionDelete
                 // delete the page
                 $success = BackendPagesModel::delete($this->id, null, $revisionId);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
-
                 // delete search indexes
                 BackendSearchModel::removeIndex($this->getModule(), $this->id);
 

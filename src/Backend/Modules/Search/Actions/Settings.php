@@ -188,9 +188,6 @@ class Settings extends BackendBaseActionEdit
                     BackendSearchModel::insertModuleSettings($module, $searchable, $weight);
                 }
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_changed_settings');
-
                 // redirect to the settings page
                 $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
             }

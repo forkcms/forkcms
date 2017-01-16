@@ -513,27 +513,6 @@ VALUES
 /*!40000 ALTER TABLE `groups_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `hooks_queue`;
-CREATE TABLE `hooks_queue` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `callback` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` text COLLATE utf8mb4_unicode_ci,
-  `status` enum('busy','error','queued') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'queued',
-  `created_on` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `hooks_subscriptions`;
-CREATE TABLE `hooks_subscriptions` (
-  `event_module` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `event_name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `callback` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_on` datetime NOT NULL,
-  UNIQUE KEY `event_module` (`event_module`(100),`event_name`(100),`module`(100))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 DROP TABLE IF EXISTS `locale`;
 CREATE TABLE `locale` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1437,7 +1416,6 @@ VALUES
   (894,1,'en','Backend','Extensions','lbl','AddPosition','add position','2015-02-23 19:48:53'),
   (895,1,'en','Backend','Extensions','lbl','Authors','authors','2015-02-23 19:48:53'),
   (896,1,'en','Backend','Extensions','lbl','DeletePosition','delete position','2015-02-23 19:48:53'),
-  (897,1,'en','Backend','Extensions','lbl','Events','events (hooks)','2015-02-23 19:48:53'),
   (898,1,'en','Backend','Extensions','lbl','FindModules','find modules','2015-02-23 19:48:53'),
   (899,1,'en','Backend','Extensions','lbl','FindThemes','find themes','2015-02-23 19:48:53'),
   (900,1,'en','Backend','Extensions','lbl','Install','install','2015-02-23 19:48:53'),

@@ -73,9 +73,6 @@ class AddCategory extends BackendBaseActionAdd
                 // insert the item
                 $item['id'] = BackendBlogModel::insertCategory($item);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add_category', array('item' => $item));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Categories') . '&report=added-category&var=' .
