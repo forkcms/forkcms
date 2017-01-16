@@ -104,23 +104,6 @@ class User
     }
 
     /**
-     * Get groupid
-     *
-     * @return null
-     *
-     * @deprecated
-     */
-    public function getGroupId()
-    {
-        trigger_error(
-            'This is not used anymore, use the getGroups method to get all the groups the user belongs to',
-            E_USER_DEPRECATED
-        );
-
-        return null;
-    }
-
-    /**
      * Get last logged in date
      *
      * @return int

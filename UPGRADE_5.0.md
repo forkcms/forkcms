@@ -75,3 +75,7 @@ You should remove all usages of:
 
 * `Backend\Core\Engine\Model::invalidateFrontendCache()`
 
+
+## `getGroups` in favor of `getGroupId`
+
+If your code uses `getGroupId` you should rewrite it to use `getGroups` instead.
