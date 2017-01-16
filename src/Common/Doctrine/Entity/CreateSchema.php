@@ -39,23 +39,14 @@ class CreateSchema
      */
     public function forEntityClasses(array $entityClasses)
     {
-        // create the database table for the given class using the doctrine SchemaTool
         $schemaTool = new SchemaTool($this->entityManager);
 
-        try {
-            $schemaTool->createSchema(
-                array_map(
-                    [$this->entityManager, 'getClassMetadata'],
-                    $entityClasses
-                )
-            );
-        } catch (TableExistsException $tableExists) {
-            // do nothing
-        } catch (ToolsException $toolsException) {
-            if (!$toolsException->getPrevious() instanceof TableExistsException) {
-                throw $toolsException;
-            }
-            // do nothing
-        }
+        $schemaTool->updateSchema(
+            array_map(
+                [$this->entityManager, 'getClassMetadata'],
+                $entityClasses
+            ),
+            true
+        );
     }
 }
