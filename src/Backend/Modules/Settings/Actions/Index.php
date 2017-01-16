@@ -134,14 +134,6 @@ class Index extends BackendBaseActionIndex
             $this->get('fork.settings')->get('Core', 'ckfinder_image_max_height', 1200)
         );
 
-        // api keys
-        // @TODO should be removed when the api is kicked out
-        $this->frm->addText('fork_api_public_key', $this->get('fork.settings')->get('Core', 'fork_api_public_key', null));
-        $this->frm->addText(
-            'fork_api_private_key',
-            $this->get('fork.settings')->get('Core', 'fork_api_private_key', null)
-        );
-
         // date & time formats
         $this->frm->addDropdown(
             'time_format',
@@ -441,17 +433,6 @@ class Index extends BackendBaseActionIndex
                 );
 
                 // api keys
-                // @TODO should be removed when the api is kicked out
-                $this->get('fork.settings')->set(
-                    'Core',
-                    'fork_api_public_key',
-                    $this->frm->getField('fork_api_public_key')->getValue()
-                );
-                $this->get('fork.settings')->set(
-                    'Core',
-                    'fork_api_private_key',
-                    $this->frm->getField('fork_api_private_key')->getValue()
-                );
                 if ($this->needsAkismet) {
                     $this->get('fork.settings')->set(
                         'Core',

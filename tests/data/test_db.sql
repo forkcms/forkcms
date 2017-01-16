@@ -1291,7 +1291,6 @@ VALUES
   (746,1,'en','Backend','Core','err','ErrorWhileSendingEmail','Error while sending email.','2015-02-23 19:48:52'),
   (747,1,'en','Backend','Core','err','ExtensionNotAllowed','Invalid file type. (allowed: %1$s)','2015-02-23 19:48:52'),
   (748,1,'en','Backend','Core','err','FieldIsRequired','This field is required.','2015-02-23 19:48:52'),
-  (749,1,'en','Backend','Core','err','ForkAPIKeys','Fork API-keys are not configured.','2015-02-23 19:48:52'),
   (750,1,'en','Backend','Core','err','FormError','Something went wrong','2015-02-23 19:48:52'),
   (751,1,'en','Backend','Core','err','GoogleMapsKey','Google maps API-key is not configured. <a href=\"%1$s\">Configure</a>','2015-02-23 19:48:52'),
   (752,1,'en','Backend','Core','err','InvalidAPIKey','Invalid API key.','2015-02-23 19:48:52'),
@@ -1319,7 +1318,6 @@ VALUES
   (774,1,'en','Backend','Core','err','PasswordsDontMatch','The passwords differ','2015-02-23 19:48:52'),
   (775,1,'en','Backend','Core','err','RobotsFileIsNotOK','robots.txt will block search-engines.','2015-02-23 19:48:52'),
   (776,1,'en','Backend','Core','err','RSSTitle','Blog RSS title is not configured. <a href=\"%1$s\">Configure</a>','2015-02-23 19:48:52'),
-  (777,1,'en','Backend','Core','err','SettingsForkAPIKeys','The Fork API-keys are not configured.','2015-02-23 19:48:52'),
   (778,1,'en','Backend','Core','err','SomethingWentWrong','Something went wrong.','2015-02-23 19:48:52'),
   (779,1,'en','Backend','Core','err','StartDateIsInvalid','Invalid start date.','2015-02-23 19:48:52'),
   (780,1,'en','Backend','Core','err','SurnameIsRequired','Please provide a last name.','2015-02-23 19:48:52'),
@@ -2039,8 +2037,6 @@ VALUES
   ('Core','smtp_username','s:0:\"\";'),
   ('Core','smtp_password','s:0:\"\";'),
   ('Core','site_title_en','s:10:\"My website\";'),
-  ('Core','fork_api_public_key','s:32:\"a457d1154e930927669f4aab67f97fbe\";'),
-  ('Core','fork_api_private_key','s:32:\"d67c0199ac93145c7a53c4d271cdf239\";'),
   ('Core','ping_services','a:2:{s:8:\"services\";a:3:{i:0;a:3:{s:3:\"url\";s:27:\"http://rpc.weblogs.com/RPC2\";s:4:\"port\";i:80;s:4:\"type\";s:8:\"extended\";}i:1;a:3:{s:3:\"url\";s:30:\"http://rpc.pingomatic.com/RPC2\";s:4:\"port\";i:80;s:4:\"type\";s:8:\"extended\";}i:2;a:3:{s:3:\"url\";s:39:\"http://blogsearch.google.com/ping/RPC2 \";s:4:\"port\";i:80;s:4:\"type\";s:8:\"extended\";}}s:4:\"date\";i:1424720932;}'),
   ('Core','ckfinder_license_name','s:8:\"Fork CMS\";'),
   ('Core','ckfinder_license_key','s:34:\"VNA6-BP17-T7D3-CP1B-EMJF-X7Q3-5THF\";'),
@@ -2463,8 +2459,6 @@ VALUES
   (1,'current_password_change','i:1424720932;'),
   (1,'avatar','s:7:\"god.jpg\";'),
   (1,'dashboard_sequence','a:5:{s:8:\"Settings\";a:1:{s:7:\"Analyse\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:1;}}s:5:\"Users\";a:1:{s:10:\"Statistics\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:2;s:6:\"hidden\";b:0;s:7:\"present\";b:1;}}s:9:\"Analytics\";a:2:{s:14:\"TrafficSources\";a:4:{s:6:\"column\";s:6:\"middle\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:1;}s:8:\"Visitors\";a:4:{s:6:\"column\";s:6:\"middle\";s:8:\"position\";i:2;s:6:\"hidden\";b:0;s:7:\"present\";b:1;}}s:4:\"Blog\";a:1:{s:8:\"Comments\";a:4:{s:6:\"column\";s:5:\"right\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:1;}}s:3:\"Faq\";a:1:{s:8:\"Feedback\";a:4:{s:6:\"column\";s:5:\"right\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:1;}}}'),
-  (1,'api_access','b:1;'),
-  (1,'api_key','s:13:"54f0fb1222403";'),
   (2,'nickname','s:10:\"Pages User\";'),
   (2,'name','s:5:\"Pages\";'),
   (2,'surname','s:4:\"User\";'),
@@ -2478,7 +2472,6 @@ VALUES
   (2,'current_password_change','i:1424720932;'),
   (2,'avatar','s:7:\"god.jpg\";'),
   (2,'dashboard_sequence','a:3:{s:4:\"Blog\";a:1:{s:8:\"Comments\";a:4:{s:6:\"column\";s:6:\"middle\";s:8:\"position\";i:0;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:8:\"Settings\";a:1:{s:7:\"Analyse\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:5:\"Users\";a:1:{s:10:\"Statistics\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}}'),
-  (2,'api_access','b:0;'),
   (3,'name','s:5:\"Users\";'),
   (3,'surname','s:4:\"User\";'),
   (3,'interface_language','s:2:\"en\";'),
@@ -2490,8 +2483,7 @@ VALUES
   (3,'password_strength','s:4:\"weak\";'),
   (3,'current_password_change','i:1424720932;'),
   (3,'avatar','s:7:\"god.jpg\";'),
-  (3,'dashboard_sequence','a:3:{s:4:\"Blog\";a:1:{s:8:\"Comments\";a:4:{s:6:\"column\";s:6:\"middle\";s:8:\"position\";i:0;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:8:\"Settings\";a:1:{s:7:\"Analyse\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:5:\"Users\";a:1:{s:10:\"Statistics\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}}'),
-  (3,'api_access','b:0;');
+  (3,'dashboard_sequence','a:3:{s:4:\"Blog\";a:1:{s:8:\"Comments\";a:4:{s:6:\"column\";s:6:\"middle\";s:8:\"position\";i:0;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:8:\"Settings\";a:1:{s:7:\"Analyse\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:5:\"Users\";a:1:{s:10:\"Statistics\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}}');
 
 /*!40000 ALTER TABLE `users_settings` ENABLE KEYS */;
 UNLOCK TABLES;

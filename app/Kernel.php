@@ -123,8 +123,6 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/Frontend/Files');
         defined('FRONTEND_CORE_URL') || define('FRONTEND_CORE_URL', '/src/Frontend/Core');
         defined('FRONTEND_CACHE_URL') || define('FRONTEND_CACHE_URL', '/src/Frontend/Cache');
-
-        defined('API_CORE_PATH') || define('API_CORE_PATH', PATH_WWW . '/Api');
     }
 
     /**
