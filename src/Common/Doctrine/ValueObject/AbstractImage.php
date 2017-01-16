@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * You need to implement the method getUploadDir.
  * When using this class in an entity certain life cycle callbacks should be called
- * prepareToUpload for [at]orm\PrePersist() and [at]orm\PreUpdate()
- * upload for [at]orm\PostPersist() and [at]orm\PostUpdate()
- * remove for [at]orm\PostRemove()
+ * prepareToUpload for PrePersist() and PreUpdate()
+ * upload for PostPersist() and PostUpdate()
+ * remove for PostRemove()
  *
  * The following things are optional
  * A fallback image can be set by setting the full path of the image to the FALLBACK_IMAGE constant
@@ -91,7 +91,7 @@ abstract class AbstractImage extends AbstractFile
     }
 
     /**
-     * This function should be called for the life cycle events [at]orm\PostPersist() and [at]orm\PostUpdate()
+     * This function should be called for the life cycle events PostPersist() and PostUpdate()
      */
     public function upload()
     {
@@ -121,7 +121,7 @@ abstract class AbstractImage extends AbstractFile
     }
 
     /**
-     * This function should be called for the life cycle event [at]orm\PostRemove()
+     * This function should be called for the life cycle event PostRemove()
      */
     public function remove()
     {
