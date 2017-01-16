@@ -1,5 +1,9 @@
 {% extends 'Core/Layout/Templates/Mails/Default.html.twig' %}
 
+{% block title %}
+  <title>{{ SITE_TITLE }} - {{ 'msg.FaqFeedbackSubject'|trans|format(question) }}}</title>
+{% endblock %}
+
 {% block main %}
   <h2>{{ SITE_TITLE }}: {{ 'msg.FaqFeedbackSubject'|trans|format(question) }}</h2>
   <hr />
