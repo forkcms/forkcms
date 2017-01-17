@@ -117,3 +117,8 @@ You can use `Backend\Core\Engine\Base\Config->isActionAvailable($action)` instea
 ## `Frontend\Core\Engine\Url->getHost()` is removed
 
 You should use `$request->getHttpHost()` instead. The request-object is available in the container.
+
+
+## `Frontend\Core\Engine\TemplateCustom` is removed
+
+You can use the Twig templating service instead.
