@@ -93,3 +93,10 @@ If you want to convert a Spoon template to Twig its better to take a look at:
 
 Use `php app/console forkcms:locale:import` instead.
 
+## ContentBlocks uses Doctrine
+
+The ContentBlocks-module now uses Doctrine.
+
+You should remove all usages of:
+
+* `Frontend\Modules\ContentBlocks\Engine\Model::get()`
