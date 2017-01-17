@@ -112,3 +112,8 @@ You should remove all usages of:
 ## `Backend\Core\Engine\Base\Config->getPossibleAJAXActions()` and `Backend\Core\Engine\Base\Config->getPossibleActions` are removed
 
 You can use `Backend\Core\Engine\Base\Config->isActionAvailable($action)` instead.
+
+
+## `Frontend\Core\Engine\Url->getHost()` is removed
+
+You should use `$request->getHttpHost()` instead. The request-object is available in the container.
