@@ -93,6 +93,13 @@ If you want to convert a Spoon template to Twig its better to take a look at:
 
 Use `php app/console forkcms:locale:import` instead.
 
+
+## `sprintf`-filter is removed
+
+In the past you could use `|sprintf` in your templates, this was a non-standard Twig Filter.
+You should rewrite your code to use `|format(args)` instead.
+
+
 ## ContentBlocks uses Doctrine
 
 The ContentBlocks-module now uses Doctrine.

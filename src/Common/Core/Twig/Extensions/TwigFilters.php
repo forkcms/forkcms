@@ -54,11 +54,6 @@ class TwigFilters
         $twig->addFilter(new Twig_SimpleFilter('addslashes', 'addslashes'));
         $twig->addFilter(new Twig_SimpleFilter('count', 'count'));
         $twig->addFilter(new Twig_SimpleFilter('is_array', 'is_array'));
-        $twig->addFilter(new Twig_SimpleFilter(
-            'sprintf',
-            array(__CLASS__, 'deprecatedSprintf'),
-            array('is_safe' => array('html'))
-        ));
         $twig->addFilter(new Twig_SimpleFilter('ucfirst', 'ucfirst'));
 
         // Functions navigation
@@ -108,21 +103,5 @@ class TwigFilters
         $twig->addFilter(new Twig_SimpleFilter('formattime', $app.'::formatTime'));
         $twig->addFilter(new Twig_SimpleFilter('timeago', $app.'::timeAgo'));
         $twig->addFilter(new Twig_SimpleFilter('formatdatetime', $app.'::formatDateTime'));
-    }
-
-    /**
-     * Show deprecated error for sprintf.
-     *
-     * @return string
-     */
-    public static function deprecatedSprintf()
-    {
-        trigger_error(
-            '|sprintf is deprecated.
-             Use |format(args)|raw instead',
-            E_USER_DEPRECATED
-        );
-
-        return call_user_func_array('sprintf', func_get_args());
     }
 }
