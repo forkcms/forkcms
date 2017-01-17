@@ -107,3 +107,8 @@ The ContentBlocks-module now uses Doctrine.
 You should remove all usages of:
 
 * `Frontend\Modules\ContentBlocks\Engine\Model::get()`
+
+
+## `Backend\Core\Engine\Base\Config->getPossibleAJAXActions()` and `Backend\Core\Engine\Base\Config->getPossibleActions` are removed
+
+You can use `Backend\Core\Engine\Base\Config->isActionAvailable($action)` instead.
