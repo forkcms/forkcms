@@ -122,3 +122,8 @@ You should use `$request->getHttpHost()` instead. The request-object is availabl
 ## `Frontend\Core\Engine\TemplateCustom` is removed
 
 You can use the Twig templating service instead.
+
+
+## `Common\Uri::getFilename()` is removed
+
+You should use `Common\Uri::getUrl()` instead.
