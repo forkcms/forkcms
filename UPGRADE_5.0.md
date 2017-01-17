@@ -114,7 +114,7 @@ You should remove all usages of:
 You can use `Backend\Core\Engine\Base\Config->isActionAvailable($action)` instead.
 
 
-## `Frontend\Core\Engine\Url->getHost()` is removed
+## `Frontend\Core\Engine\Url->getHost()` and `Backend\Core\Engine\Url->getHost()` are removed
 
 You should use `$request->getHttpHost()` instead. The request-object is available in the container.
 
