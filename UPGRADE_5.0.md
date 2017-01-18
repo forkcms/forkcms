@@ -127,3 +127,9 @@ You can use the Twig templating service instead.
 ## `Common\Uri::getFilename()` is removed
 
 You should use `Common\Uri::getUrl()` instead.
+
+## removed constant SPOON_DEBUG
+
+SPOON_DEBUG is removed. From now on you need to check if DEBUG is on by using the kernel.debug parameter, f.e.
+
+	if ($this->getContainer()->getParameter('kernel.debug')) { ...
