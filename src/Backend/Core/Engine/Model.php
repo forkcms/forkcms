@@ -467,7 +467,7 @@ class Model extends \Common\Core\Model
         }
         $finder = new Finder();
         $directories = $finder->directories()->in(
-            self::getContainer()->getParameter('site.path_www') . '/src/Backend/Modules'
+            __DIR__ . '/../../Modules'
         )->depth('==0');
         foreach ($directories as $directory) {
             $return[] = $directory->getBasename();
