@@ -612,7 +612,7 @@
       </item>
       <item type="message" name="ProfileBlocked">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd geblokkeerd.]]></translation>
-        <translation language="en"><![CDATA[The profiel "%1$s" was blocked.]]></translation>
+        <translation language="en"><![CDATA[The profile "%1$s" was blocked.]]></translation>
         <translation language="it"><![CDATA[Il profilo "%1$s" è stato bloccato.]]></translation>
         <translation language="ru"><![CDATA[Профиль "%1$s" заблокирован.]]></translation>
         <translation language="zh"><![CDATA[用户资料“％1$s”已屏蔽。]]></translation>
@@ -656,7 +656,7 @@
       </item>
       <item type="message" name="ProfileUnblocked">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
-        <translation language="en"><![CDATA[The profiel "%1$s" was unblocked.]]></translation>
+        <translation language="en"><![CDATA[The profile "%1$s" was unblocked.]]></translation>
         <translation language="it"><![CDATA[Il profilo "%1$s" è stato sbloccato.]]></translation>
         <translation language="ru"><![CDATA[Профиль "%1$s" разблокирован.]]></translation>
         <translation language="zh"><![CDATA[用户资料“％1$s”已解除屏蔽。]]></translation>
@@ -668,7 +668,7 @@
       </item>
       <item type="message" name="ProfileUndeleted">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
-        <translation language="en"><![CDATA[The profiel "%1$s" was undeleted.]]></translation>
+        <translation language="en"><![CDATA[The profile "%1$s" was undeleted.]]></translation>
         <translation language="it"><![CDATA[Il profilo "%1$s" è stato ripristinato.]]></translation>
         <translation language="ru"><![CDATA[Профиль "%1$s" восстановлен.]]></translation>
         <translation language="zh"><![CDATA[用户资料“％1$s”已恢复。]]></translation>
@@ -680,7 +680,7 @@
       </item>
       <item type="message" name="Saved">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opgeslagen.]]></translation>
-        <translation language="en"><![CDATA[The profiel "%1$s" was saved.]]></translation>
+        <translation language="en"><![CDATA[The profile "%1$s" was saved.]]></translation>
         <translation language="it"><![CDATA[Il profilo "%1$s" è stato salvato.]]></translation>
         <translation language="ru"><![CDATA[Профиль "%1$s" сохранен.]]></translation>
         <translation language="zh"><![CDATA[用户资料“％1$s”已保存。]]></translation>
@@ -692,8 +692,8 @@
       </item>
       <item type="message" name="SavedAndNotified">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opgeslagen en verwittigd per mail.]]></translation>
-        <translation language="en"><![CDATA[The profiel "%1$s" was saved and notified by mail.]]></translation>
-        <translation language="fr"><![CDATA[Le profiel "%1$s" a été enregistré et notifié par courrier.]]></translation>
+        <translation language="en"><![CDATA[The profile "%1$s" was saved and notified by mail.]]></translation>
+        <translation language="fr"><![CDATA[Le profil "%1$s" a été enregistré et notifié par courrier.]]></translation>
       </item>
       <item type="message" name="SavedSettings">
         <translation language="nl"><![CDATA[Profiel instellingen werden opgeslagen.]]></translation>
