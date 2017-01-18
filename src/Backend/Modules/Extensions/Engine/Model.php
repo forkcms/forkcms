@@ -664,7 +664,8 @@ class Model
 
         $finder = new Finder();
         foreach ($finder->directories()->in(FRONTEND_PATH . '/Themes')->depth(0) as $directory) {
-            $pathInfoXml = PATH_WWW . '/src/Frontend/Themes/' . $directory->getBasename() . '/info.xml';
+            $pathInfoXml = BackendModel::getContainer()->getParameter('site.path_www') . '/src/Frontend/Themes/'
+                           . $directory->getBasename() . '/info.xml';
             if (!is_file($pathInfoXml)) {
                 throw new Exception('info.xml is missing for the theme ' . $directory->getBasename());
             }

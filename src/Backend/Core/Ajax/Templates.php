@@ -84,9 +84,9 @@ class Templates extends AjaxAction
             if (!isset($template['title'])) {
                 continue;
             }
-
-            if (isset($template['file']) && $filesystem->exists(PATH_WWW . $template['file'])) {
-                $template['html'] = file_get_contents(PATH_WWW . $template['file']);
+            $realPathWww = realpath($this->getContainer()->getParameter('site.path_www'));
+            if (isset($template['file']) && $filesystem->exists($realPathWww . $template['file'])) {
+                $template['html'] = file_get_contents($realPathWww . $template['file']);
             }
 
             // skip items without HTML

@@ -277,11 +277,12 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $this->frm->getField('label')->isFilled(BL::err('FieldIsRequired'));
             $this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
+            $templateFile = $this->getContainer()->getParameter('site.path_www');
             // check if the template file exists
             if ($this->frm->getField('theme')->getValue() == 'Core') {
-                $templateFile = PATH_WWW.'/src/Frontend/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
+                $templateFile .= '/src/Frontend/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
             } else {
-                $templateFile = PATH_WWW.'/src/Frontend/Themes/' . $this->frm->getField('theme')->getValue() . '/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
+                $templateFile .= '/src/Frontend/Themes/' . $this->frm->getField('theme')->getValue() . '/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
             }
             if (!is_file($templateFile)) {
                 $this->frm->getField('file')->addError(BL::err('TemplateFileNotFound'));

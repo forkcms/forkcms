@@ -466,8 +466,9 @@ class Model extends \Common\Core\Model
             $return = array();
         }
         $finder = new Finder();
-        foreach ($finder->directories()->in(PATH_WWW . '/src/Backend/Modules')->depth('==0') as $folder) {
-            $return[] = $folder->getBasename();
+        $directories = $finder->directories()->in(self::get('site.path_www') . '/src/Backend/Modules')->depth('==0');
+        foreach ($directories as $directory) {
+            $return[] = $directory->getBasename();
         }
 
         return $return;

@@ -226,13 +226,14 @@ class Header extends Base\Object
     {
         // create unique filename
         $fileName = md5($file) . '.css';
+        $filePath = $this->getContainer()->getParameter('site.path_www') . $file;
         $finalURL = BACKEND_CACHE_URL . '/MinifiedCss/' . $fileName;
         $finalPath = BACKEND_CACHE_PATH . '/MinifiedCss/' . $fileName;
 
         // check that file does not yet exist or has been updated already
-        if (!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
+        if (!is_file($finalPath) || filemtime($filePath) > filemtime($finalPath)) {
             // minify the file
-            $css = new Minify\CSS(PATH_WWW . $file);
+            $css = new Minify\CSS($filePath);
             $css->minify($finalPath);
         }
 
@@ -250,13 +251,14 @@ class Header extends Base\Object
     {
         // create unique filename
         $fileName = md5($file) . '.js';
+        $filePath = $this->getContainer()->getParameter('site.path_www') . $file;
         $finalURL = BACKEND_CACHE_URL . '/MinifiedJs/' . $fileName;
         $finalPath = BACKEND_CACHE_PATH . '/MinifiedJs/' . $fileName;
 
         // check that file does not yet exist or has been updated already
-        if (!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
+        if (!is_file($finalPath) || filemtime($filePath) > filemtime($finalPath)) {
             // minify the file
-            $js = new Minify\JS(PATH_WWW . $file);
+            $js = new Minify\JS($filePath);
             $js->minify($finalPath);
         }
 
