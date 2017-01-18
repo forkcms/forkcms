@@ -83,7 +83,7 @@ class Edit extends BackendBaseActionEdit
             array(
                 '' => '',
                 'email' => BL::getLabel('Email'),
-                'numeric' => BL::getLabel('Numeric'),
+                'number' => BL::getLabel('Numeric'),
             )
         );
         $this->frm->addText('textbox_validation_parameter');

@@ -366,7 +366,7 @@ class Model
     {
         $errors['required'] = FL::getError('FieldIsRequired');
         $errors['email'] = FL::getError('EmailIsInvalid');
-        $errors['numeric'] = FL::getError('NumericCharactersOnly');
+        $errors['number'] = FL::getError('NumericCharactersOnly');
         $errors['time'] = FL::getError('TimeIsInvalid');
 
         // specific type

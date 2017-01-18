@@ -270,7 +270,7 @@ DROP TABLE IF EXISTS `forms_fields_validation`;
 CREATE TABLE `forms_fields_validation` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `field_id` int(11) unsigned NOT NULL,
-  `type` enum('required','email','numeric') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('required','email','number') COLLATE utf8mb4_unicode_ci NOT NULL,
   `parameter` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'If you want to validate higher then a number, the number would be the parameter',
   `error_message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
