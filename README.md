@@ -45,13 +45,13 @@ Running only the unit tests or the functional tests
 
 ## Styling the backend
 
-The backend uses [Bootstrap](http://www.getbootstrap.com) in combination with Sass. To make changes, you can either
-apply your styles in /src/Backend/Core/Layout/Css/screen.css or use Sass.
+The backend uses [Bootstrap](http://www.getbootstrap.com) in combination with Sass. To make changes, you should make
+the changes into the scss-files, and regenerate the real css with `gulp build`.
 
-To use Sass, you first need to install it on your system, more info can be found here: [http://sass-lang.com/install](http://sass-lang.com/install).
-If you use the command line, you can run the following command in your document root:
+## Yarn
 
-    sass --watch src/Backend/Core/Layout/Sass:src/Backend/Core/Layout/Css --style compressed
+We use [yarn](https://yarnpkg.com/) to install our dependencies. For now we have a `gulp`-script that moves everything to
+the correct directories. So if you change the dependencies, make sure you run `gulp build`.
 
 ## Discussion
 
