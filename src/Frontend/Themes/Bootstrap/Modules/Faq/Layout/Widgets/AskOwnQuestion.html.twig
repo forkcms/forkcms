@@ -1,0 +1,39 @@
+{#
+  variables that are available:
+  - {{ widgetFaqOwnQuestion }}: true or false depending on if the data can be shown
+#}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+
+{% if widgetFaqOwnQuestion %}
+  <div id="faqOwnQuestionForm" class="faq faq-widget well">
+    <header class="widget-header">
+      <h3 id="{{ 'act.OwnQuestion'|trans }}">{{ 'msg.AskOwnQuestion'|trans|ucfirst }}</h3>
+    </header>
+    {% if errorSpam %}
+      {{ alerts.alert('danger', 'err.OwnQuestionSpam'|trans) }}
+    {% endif %}
+    {% if success %}
+      {{ alerts.alert('success', 'msg.OwnQuestionSuccess'|trans) }}
+    {% endif %}
+
+    <div class="widget-body">
+      {% if form_own_question %}
+        {% form own_question %}
+          <div class="form-group{% if txtNameError %} has-error{% endif %}">
+            <label class="control-label" for="name">{{ 'lbl.YourName'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+            {% form_field_error name %} {% form_field name %}
+          </div>
+          <div class="form-group{% if txtEmailError %} has-error{% endif %}">
+            <label class="control-label" for="email">{{ 'lbl.YourEmail'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+            {% form_field_error email %} {% form_field email %}
+          </div>
+          <div class="form-group{% if txtMessageError %} has-error{% endif %}">
+            <label class="control-label" for="message">{{ 'lbl.YourQuestion'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+            {% form_field_error message %} {% form_field message %}
+          </div>
+          <input class="btn btn-default" type="submit" name="send" value="{{ 'lbl.Send'|trans|ucfirst }}" />
+        {% endform %}
+      {% endif %}
+    </div>
+  </div>
+{% endif %}

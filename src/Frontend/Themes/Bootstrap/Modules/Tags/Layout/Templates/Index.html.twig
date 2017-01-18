@@ -1,0 +1,21 @@
+{#
+  variables that are available:
+  - {{ tags }}: contains an array with all tags that are used on the site, each element contains data about the tag
+#}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+<section id="tagsIndex" class="tags">
+  {% if not tags %}
+    {{ alerts.alert('info', 'msg.TagsNoItems'|trans) }}
+  {% else %}
+    <ul>
+      {% for tag in tags %}
+      <li>
+        <a href="{{ geturlforblock('Tags','Detail') }}/{{ tag.url }}" rel="tag">
+          {{ tag.name }}
+        </a>
+        <span class="badge hidden-phone">{{ tag.number }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>

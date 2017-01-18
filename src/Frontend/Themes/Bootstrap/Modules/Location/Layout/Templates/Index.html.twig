@@ -1,0 +1,30 @@
+{#
+  variables that are available:
+  - {{ locationItems }}: contains data about all locations
+  - {{ locationSettings }}: contains this module's settings
+#}
+{% if locationItems %}
+  <div id="locationIndex" class="location">
+    {# @remark: do not remove the parseMap-class, it is used by JS #}
+    <div id="map" class="parseMap" style="height: {{ locationSettings.height }}px;">
+      <span class="hideText">{{ 'lbl.Loading'|trans|capitalize }}</span>
+    </div>
+
+    {% for location in locationItems %}
+      {# @remark: do not remove the id #}
+      <div id="markerText{{ location.id }}" class="hide" itemscope itemtype="http://schema.org/Place">
+        <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+          <meta itemprop="latitude" content="{{ location.lat }}" />
+          <meta itemprop="longitude" content="{{ location.lng }}" />
+        </div>
+
+        <div itemprop="name" class="hide"><strong>{{ location.title }}</strong></div>
+        <address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+          <span itemprop="streetAddress">{{ location.street }} {{ location.number }}</span><br>
+          <span itemprop="postalCode">{{ location.zip }}</span> <span itemprop="addressLocality">{{ location.city }}</span><br>
+          <span itemprop="addressCountry">{{ location.country }}</span>
+        </address>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

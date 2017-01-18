@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-xs-12">
+    <ul class="breadcrumb" itemprop="breadcrumb" role="navigation">
+      {% for breadcrumb in breadcrumb %}
+        <li{% if breadcrumb.last %} class="active"{% endif %}>
+          {% if breadcrumb.url %}
+            <a href="{{ breadcrumb.url }}" title="{{ breadcrumb.title }}">
+              {{ breadcrumb.title }}
+            </a>
+          {% else %}
+            {{ breadcrumb.title }}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

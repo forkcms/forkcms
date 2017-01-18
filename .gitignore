@@ -3,6 +3,7 @@
 
 # Libraries
 /vendor/*
+/node_modules/*
 
 # Generated files
 .project
@@ -17,5 +18,5 @@
 /app/sessions/*
 /bin/*
 /bundles/*
-/css/*
-/js/*
+/css/*.css
+/js/*.js

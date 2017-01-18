@@ -24,6 +24,7 @@ require_once __DIR__ . '/autoload.php';
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 // get environment and debug mode from environment variables
 $env = getenv('FORK_ENV') ?: 'prod';
@@ -61,7 +62,18 @@ if ($debug) {
 }
 
 $kernel = new AppKernel($env, $debug);
-$response = $kernel->handle($request);
+
+/**
+ * Here we initialize our Sumo class, which will add some Sumo specific stuff
+ * into this Fork instance.
+ *
+ * @remark only for SumoCoders
+ */
+$sumo = new SumoCoders\SumoForkClass\SumoForkClass();
+$sumo->setContainer($kernel->getContainer());
+$sumo->init();
+
+$response = $kernel->handle($request, HttpKernelInterface::MASTER_REQUEST, false);
 if ($response->getCharset() === null && $kernel->getContainer() instanceof ContainerInterface) {
     $response->setCharset(
         $kernel->getContainer()->getParameter('kernel.charset')

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+  <html lang="{{ FRONTEND_LANGUAGE }}" class="ie8 ie">
+<![endif]-->
+<!--[if IE 9 ]>
+  <html lang="{{ FRONTEND_LANGUAGE }}" class="ie9 ie">
+<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+    <html lang="{{ FRONTEND_LANGUAGE }}">
+<!--<![endif]-->
+<head>
+  {# Meta #}
+  {% block meta %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Fork CMS" />
+    {{ meta|raw }}
+    {{ metaCustom|raw }}
+  {% endblock %}
+
+  {% block pageTitle %}
+    <title>{{ pageTitle }}</title>
+  {% endblock %}
+
+  {# Stylesheets #}
+  {% block stylesheets %}
+    {% for css in cssFiles %}
+      <link rel="stylesheet" href="{{ css.file }}" />
+    {% endfor %}
+  {% endblock %}
+
+  {# humans.txt, see http://humanstxt.org #}
+  <link rel="author" href="/humans.txt" />
+
+  {% block icons %}
+    {# Apple touch icon #}
+    <link rel="apple-touch-icon" href="{{ THEME_URL }}/apple-touch-icon.png" /> {# @todo create a 180x180 png file #}
+
+    {# Favicon #}
+    <link rel="icon" href="{{ THEME_URL }}/favicon.png"> {# @todo create a 96x96 png file #}
+    <!--[if IE]>
+      <link rel="shortcut icon" href="{{ THEME_URL }}/favicon.ico">
+    <![endif]--> {# @todo	create a 32x32 ico file and store it in the root of the website.  #}
+
+    {# Windows 8 tile #}
+    <meta name="application-name" content="{{ siteTitle }}" />
+    <meta name="msapplication-TileColor" content="#3380aa" /> {# @todo choose a decent color #}
+    <meta name="msapplication-TileImage" content="{{ THEME_URL }}/metro-tile.png" /> {# @todo create a white monochrome version (144x144) of the logo of the site #}
+
+    {# Facebook #}
+    <meta property="og:image" content="{{ SITE_URL }}{{ THEME_URL }}/image_src.png" /> {# @todo create a 200x200 png file #}
+  {% endblock %}
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  {% block ieFallbacks %}
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  {% endblock %}
+  <![endif]-->
+
+  {% if debug %}
+    <script src="http://localhost:35729/livereload.js?snipver=1"></script>
+  {% endif %}
+
+  {# Site wide HTML #}
+  {% block htmlHeader %}
+    {{ siteHTMLHeader|raw }}
+  {% endblock %}
+
+  {# Extra stuff you want to put in the header #}
+  {% block extraHeadScripts %}
+
+  {% endblock %}
+</head>
+<body class="{{ FRONTEND_LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
+  <div id="root">
+    {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+
+    {% block notifications %}
+      {% include 'Core/Layout/Templates/Notifications.html.twig' %}
+    {% endblock %}
+
+    {% block navigation %}
+      {% include 'Core/Layout/Templates/Navbar.html.twig' %}
+    {% endblock %}
+
+    {# Main content #}
+    {% block main %}
+
+    {% endblock %}
+    <div id="root-footer"></div>
+  </div>
+
+  {% block footer %}
+    {% include 'Core/Layout/Templates/Footer.html.twig' %}
+  {% endblock %}
+
+  {# Site wide HTML #}
+  {% block htmlFooter %}
+    {{ siteHTMLFooter|raw }}
+  {% endblock %}
+
+  {% block footerScripts %}
+  {# General Javascript #}
+    {% for jsFile in jsFiles %}
+      <script src="{{ jsFile.file|raw }}"></script>
+    {% endfor %}
+
+    <script src="{{ THEME_URL }}/Core/Js/bundle.js?t={{ LAST_MODIFIED_TIME }}"></script>
+  {% endblock %}
+
+  {# @todo Remove when needed #}
+  {% block socialMedia %}
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+      !function(d,s,id) {
+        var js,fjs=d.getElementsByTagName(s)[0];
+        if(!d.getElementById(id)) {
+          js=d.createElement(s);
+          js.id=id;
+          js.src="//platform.twitter.com/widgets.js";
+          fjs.parentNode.insertBefore(js,fjs);
+        }
+      }(document,"script","twitter-wjs");
+    </script>
+  {% endblock %}
+
+</body>
+</html>

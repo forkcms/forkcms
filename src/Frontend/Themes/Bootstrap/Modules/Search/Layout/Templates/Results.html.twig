@@ -1,0 +1,34 @@
+{#
+  variables that are available:
+  - {{ searchResults }}: contains an array with all items, each element contains data about the item
+  - {{ searchTerm }}: the term that has been searched for
+#}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+{% if searchTerm %}
+  <section id="searchResults" itemscope itemtype="http://schema.org/SearchResultsPage" class="search">
+    {% if not searchResults %}
+      {{ alerts.alert('info', 'msg.SearchNoItems'|trans) }}
+    {% else %}
+      <div class="media">
+        {% for result in searchResults %}
+          <section class="media-body" >
+            <header role="banner">
+              <h3 class="media-heading" itemprop="name">
+                <a href="{{ result.full_url }}" itemprop="url">
+                  {{ result.title }}
+                </a>
+              </h3>
+            </header>
+            {% if not result.introduction %}
+              <div itemprop="description">{{ result.text|truncate(200)|cleanupplaintext|raw }}</div>
+            {% else %}
+              <div itemprop="description">{{ result.introduction|raw }}</div>
+            {% endif %}
+          </section>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </section>
+
+  {% include "Core/Layout/Templates/Pagination.html.twig" %}
+{% endif %}

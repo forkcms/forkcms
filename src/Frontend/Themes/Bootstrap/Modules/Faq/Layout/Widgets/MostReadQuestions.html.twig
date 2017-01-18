@@ -1,0 +1,19 @@
+{#
+  variables that are available:
+  - {{ widgetFaqMostRead }}: contains an array with all posts, each element contains data about the post
+#}
+
+{% if widgetFaqMostRead %}
+  <section id="faqMostReadWidget" class="faq faq-widget well">
+    <header class="widget-header">
+      <h3>{{ 'lbl.MostReadQuestions'|trans|ucfirst }}</h3>
+    </header>
+    <div class="widget-body">
+      <ul>
+        {% for question in widgetFaqMostRead %}
+          <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endif %}

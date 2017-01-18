@@ -1,0 +1,108 @@
+{#
+  variables that are available:
+  - {{ item }}: contains data about the question
+  - {{ related }}: the related items
+#}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+
+<div id="faqDetail" class="faq faq-detail" itemscope itemtype="http://schema.org/Question">
+
+  <header class="module-header">
+    <h1 itemprop="about">{{ item.question }}</h1>
+    {# Category#}
+    {% if settings.allow_multiple_categories %}
+      <span class="categories">
+        <span class="sr-only">{{ 'lbl.In'|trans|ucfirst }} {{ 'lbl.The'|trans }} </span>{{ 'lbl.Category'|trans }}: <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
+      </span>
+    {% endif %}
+
+    {# Tags#}
+    {% if item.tags %}
+      <span class="tags" itemprop="keywords">
+        <span class="sr-only">{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} </span>{{ 'lbl.Tags'|trans }}:
+        {% for tag in item.tags %}
+          <a class="label label-default" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>
+        {% endfor %}
+      </span>
+    {% endif %}
+  </header>
+
+  <div class="module-body">
+    <section class="module-body-section" itemprop="acceptedAnswer">
+      {{ item.answer|raw }}
+    </section>
+
+    {% if settings.allow_feedback %}
+      <section id="faqFeedbackForm" class="module-body-section">
+        {% if success %}
+          {{ alerts.alert('success', 'msg.FeedbackSuccess'|trans) }}
+        {% endif %}
+        {% if spam %}
+          {{ alerts.alert('danger', 'err.FeedbackSpam'|trans) }}
+        {% endif %}
+
+        {% if form_feedback %}
+          {% form feedback %}
+            <div class="well">
+              <div class="row">
+                {{ hidQuestionId|raw }}
+                <div class="col-md-3">
+                  {{ 'msg.Feedback'|trans|ucfirst }}
+                </div>
+                <div class="col-md-9">
+                  <div class="row">
+                    {% for answer in useful %}
+                      <div class="col-md-2">
+                        <label for="{{ answer.id }}">{{ answer.rbtUseful|raw }} {{ answer.label|ucfirst }}</label>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
+                <div class="form-group{% if txtMessageError %} has-error{% endif %}">
+                  <label class="control-label" for="message">{{ 'msg.HowToImprove'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+                  {% form_field_error message %} {% form_field message %}
+                </div>
+                <input class="btn btn-default" type="submit" name="comment" value="{{ 'lbl.Send'|trans|ucfirst }}" />
+              </div>
+            </div>
+          {% endform %}
+        {% endif %}
+      </section>
+    {% endif %}
+
+    {% if inSameCategory %}
+      <section id="faqOtherQuestions" class="module-body-section">
+        <header>
+          {% if settings.allow_multiple_categories %}<h2>{{ 'msg.QuestionsInSameCategory'|trans|ucfirst }}</h2>{% endif %}
+          {% if not settings.allow_multiple_categories %}<h2>{{ 'msg.OtherQuestions'|trans|ucfirst }}</h2>{% endif %}
+        </header>
+        <ul>
+          {% for category in inSameCategory %}
+            <li><a href="{{ category.full_url }}" title="{{ category.question }}">{{ category.question }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    {% if related %}
+      <section id="faqAlsoRead" class="module-body-section">
+        <header>
+          <h2>{{ 'msg.RelatedQuestions'|trans|ucfirst }}</h2>
+        </header>
+        <ul>
+          {% for question in related %}
+            <li><a href="{{ question.full_url }}" title="{{ question.question }}">{{ question.question }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+  </div>
+
+  <ul class="pager">
+    <li class="previous">
+      <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> {{ 'lbl.ToFaqOverview'|trans|ucfirst }}</a>
+    </li>
+  </ul>
+</div>

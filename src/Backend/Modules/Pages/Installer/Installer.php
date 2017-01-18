@@ -107,6 +107,7 @@ class Installer extends ModuleInstaller
                     array(
                          'id' => 404,
                          'title' => '404',
+                         'template_id' => $this->getTemplateId('error'),
                          'type' => 'root',
                          'language' => $language,
                          'allow_move' => 'N',
@@ -333,6 +334,8 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Pages', 'Add');
         $this->setActionRights(1, 'Pages', 'Delete');
         $this->setActionRights(1, 'Pages', 'Edit');
+        $this->setActionRights(1, 'Pages', 'UploadFile');
+        $this->setActionRights(1, 'Pages', 'RemoveUploadedFile');
 
         $this->setActionRights(1, 'Pages', 'Settings');
     }

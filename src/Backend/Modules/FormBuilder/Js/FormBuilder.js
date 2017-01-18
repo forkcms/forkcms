@@ -388,6 +388,12 @@ jsBackend.FormBuilder.Fields =
                                 $('#textboxPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
                                 $('#textboxClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
                                 if (data.data.field.settings.reply_to && data.data.field.settings.reply_to == true) $('#textboxReplyTo').prop('checked', true);
+
+                                // @remark: custom for Sumocoders
+                                if (data.data.field.settings.mailCopyTo && data.data.field.settings.mailCopyTo === 'Y') {
+                                    $('#textboxMailCopyTo').prop('checked', true);
+                                }
+
                                 $.each(data.data.field.validations, function (k, v) {
                                     // required checkbox
                                     if (k == 'required') {
@@ -1275,6 +1281,9 @@ jsBackend.FormBuilder.Fields =
         var errorMessage = $('#textboxErrorMessage').val();
         var classname = $('#textboxClassname').val();
 
+        // @remark: custom for Sumocoders
+        var mailCopyTo = ($('#textboxMailCopyTo').is(':checked') ? 'Y' : 'N');
+
         // make the call
         $.ajax({
             data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
@@ -1290,7 +1299,9 @@ jsBackend.FormBuilder.Fields =
                 validation_parameter: validationParameter,
                 error_message: errorMessage,
                 placeholder: placeholder,
-                classname: classname
+                classname: classname,
+                // @remark: custom for Sumocoders
+                mail_copy_to: mailCopyTo
             }),
             success: function (data, textStatus) {
                 // success
@@ -1315,6 +1326,11 @@ jsBackend.FormBuilder.Fields =
                         }
                         if (typeof data.data.errors.reply_to_error_message != 'undefined') {
                             $('#textboxReplyToErrorMessageError').html(data.data.errors.reply_to_error_message);
+                        }
+
+                        // @remark: custom for Sumocoders
+                        if (typeof data.data.errors.mail_copy_to !== 'undefined') {
+                            $('#textboxMailCopyToError').html(data.data.errors.mail_copy_to);
                         }
 
                         // toggle error messages

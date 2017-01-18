@@ -1,0 +1,67 @@
+{#
+variables that are available:
+- {{ category }}: contains data about the category
+- {{ items }}: contains an array with all posts, each element contains data about the post
+#}
+
+{% if items %}
+  <section id="blogCategory" class="blog">
+    {% for item in items %}
+      <article class="article" itemcope itemtype="http://schema.org/Blog" role="main">
+        <meta itemprop="interactionCount" content="UserComments:item.comment_count">
+        <meta itemprop="author" content="{{ item.user_id|usersetting('nickname' ) }}">
+        <header role="banner">
+          <div class="title">
+            <div class="row">
+              <div class="col-md-10">
+                <h2><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></h2>
+              </div>
+              {% if item.allow_comments %}
+                <div class="col-md-2 commentCount">
+                  {% if item.comments %}
+                    <i class="icon-comment"></i>
+                    {% if item.comments_multiple %}
+                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}</a>
+                    {% else %}
+                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row muted meta">
+            <div class="col-md-6">
+              <span class="hideText">{{ 'msg.WrittenBy'|trans|capitalize|format('') }} </span>{{ item.user_id|usersetting('nickname' ) }}
+              <span class="hideText">{{ 'lbl.On'|trans }}</span>
+              <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s') }}">{{ item.publish_on|spoondate(dateFormatLong,LANGUAGE) }}</time>
+            </div>
+            <div class="col-md-6 metaExtra">
+              <span class="hideText">{{ 'lbl.InThe'|trans }} </span>{{ 'lbl.Category'|trans }}:
+              <a itemprop="articleSection" href="{{ item.category_full_url }}">{{ item.category_title }}</a>
+              {% if not item.tags %}
+                .
+              {% else %}
+                <span class="hideText">{{ 'lbl.WithThe'|trans }}</span> {{ 'lbl.Tags'|trans|capitalize }}:
+                <span itemprop="keywords">
+                  {% for tag in item.tags %}
+                    <a class="label label-default" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>{% if not tag.last %}<span class="hideText">,</span> {% endif %}
+                  {% endfor %}
+                </span>
+              {% endif %}
+            </div>
+          </div>
+        </header>
+        <div class="articleBody" itemprop="articleBody">
+          {% if item.image %}<img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
+          {% if not item.introduction %}
+            {{ item.text|raw }}
+          {% else %}
+            {{ item.introduction|raw }}
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  </section>
+  {% include "Core/Layout/Templates/Pagination.html.twig" %}
+{% endif %}

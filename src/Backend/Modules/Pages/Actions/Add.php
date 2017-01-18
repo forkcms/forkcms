@@ -73,6 +73,7 @@ class Add extends BackendBaseActionAdd
         $this->header->addJS('jstree/jquery.tree.js', null, false);
         $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
+        $this->header->addJS('SimpleAjaxUploader.min.js', 'Core', false);
 
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
@@ -159,6 +160,7 @@ class Add extends BackendBaseActionAdd
         $block['index'] = 0;
         $block['formElements']['chkVisible'] = $this->frm->addCheckbox('block_visible_' . $block['index'], true);
         $block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], 0);
+        $block['formElements']['hidExtraType'] = $this->frm->addHidden('block_extra_type_' . $block['index'], 'rich_text');
         $block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index'], 'fallback');
         $block['formElements']['txtHTML'] = $this->frm->addTextarea(
             'block_html_' . $block['index']
@@ -185,6 +187,7 @@ class Add extends BackendBaseActionAdd
 
                 // set linked extra
                 $block['extra_id'] = $_POST['block_extra_id_' . $i];
+                $block['extra_type'] = $_POST['block_extra_type_' . $i];
 
                 // reset some stuff
                 if ($block['extra_id'] <= 0) {
@@ -194,11 +197,17 @@ class Add extends BackendBaseActionAdd
                 // init html
                 $block['html'] = null;
 
+                $html = $_POST['block_html_' . $i];
+
                 // extra-type is HTML
-                if ($block['extra_id'] === null) {
-                    // reset vars
-                    $block['extra_id'] = null;
-                    $block['html'] = $_POST['block_html_' . $i];
+                if ($block['extra_id'] === null || $block['extra_type'] == 'usertemplate') {
+                    if ($_POST['block_extra_type_' . $i] == 'usertemplate') {
+                        $block['extra_id'] = $_POST['block_extra_id_' . $i];
+                    } else {
+                        // reset vars
+                        $block['extra_id'] = null;
+                    }
+                    $block['html'] = $html;
                 } else {
                     // type of block
                     if (isset($this->extras[$block['extra_id']]['type']) && $this->extras[$block['extra_id']]['type'] == 'block') {
@@ -236,6 +245,10 @@ class Add extends BackendBaseActionAdd
             $block['formElements']['hidExtraId'] = $this->frm->addHidden(
                 'block_extra_id_' . $block['index'],
                 (int) $block['extra_id']
+            );
+            $block['formElements']['hidExtraType'] = $this->frm->addHidden(
+                'block_extra_type_' . $block['index'],
+                $block['extra_type']
             );
             $block['formElements']['hidPosition'] = $this->frm->addHidden(
                 'block_position_' . $block['index'],
@@ -318,6 +331,12 @@ class Add extends BackendBaseActionAdd
 
         // parse the tree
         $this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
+
+        $this->header->addJsData(
+            'pages',
+            'userTemplates',
+            BackendPagesModel::loadUserTemplates()
+        );
     }
 
     /**

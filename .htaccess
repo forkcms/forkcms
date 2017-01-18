@@ -34,6 +34,15 @@ FileETag MTime Size
 	RewriteRule src/Backend/Cache/CompiledTemplates - [F]
 	RewriteRule src/Backend/Cache/Locale/.*\.php - [F]
 
+    # @remark: custom for Sumocoders
+	RewriteRule .*\.rb - [F]
+	RewriteRule Capfile - [F]
+	RewriteRule Gemfile - [F]
+	RewriteRule Gemfile\.lock - [F]
+	RewriteRule Gruntfile\.coffee - [F]
+	RewriteRule Sumofile - [F]
+	RewriteRule package\.json - [F]
+
 	# redirect all trafic to https
 	# RewriteCond %{SERVER_PORT} 80
 	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]

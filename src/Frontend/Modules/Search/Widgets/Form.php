@@ -44,7 +44,7 @@ class Form extends FrontendBaseWidget
             'q_widget',
             null,
             255,
-            'inputText autoSuggest',
+            'form-control autoSuggest',
             'inputTextError autoSuggest'
         );
 

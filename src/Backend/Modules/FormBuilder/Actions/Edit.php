@@ -89,6 +89,9 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('textbox_validation_parameter');
         $this->frm->addText('textbox_error_message');
 
+        // @remark: custom for Sumocoders
+        $this->frm->addCheckbox('textbox_mail_copy_to');
+
         // textarea dialog
         $this->frm->addText('textarea_label');
         $this->frm->addTextarea('textarea_value');

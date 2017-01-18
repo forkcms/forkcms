@@ -1,0 +1,46 @@
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+{# Error #}
+{% if formError %}
+  {% if loginError %}
+    {% set error = loginError %}
+  {% else %}
+    {% set error = 'err.FormError'|trans %}
+  {% endif %}
+  {{ alerts.alert('danger', error) }}
+{% endif %}
+
+<section id="loginForm" class="profiles">
+  {% form login %}
+    <fieldset class="form-horizontal">
+      <div class="form-group{% if txtEmailError %} has-error{% endif %}">
+        <label class="control-label col-sm-2" for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+        <div class="col-sm-6">
+          {% form_field email %}
+          {% form_field_error email %}
+        </div>
+      </div>
+      <div class="form-group{% if txtPasswordError %} has-error{% endif %}">
+        <label class="control-label col-sm-2" for="password">{{ 'lbl.Password'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+        <div class="col-sm-6">
+          {% form_field_error password %}{% form_field password %}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-6">
+          <div class="checkbox">
+            <label for="remember">{% form_field remember %} {{ 'lbl.RememberMe'|trans|capitalize }}</label>
+            {% form_field_error remember %}
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-6">
+          <input class="btn btn-primary" type="submit" value="{{ 'lbl.Login'|trans|capitalize }}" />
+          <small>
+            <a href="{{ geturlforblock('Profiles','ForgotPassword') }}" title="{{ 'msg.ForgotPassword'|trans }}">{{ 'msg.ForgotPassword'|trans }}</a>
+          </small>
+        </div>
+      </div>
+    </fieldset>
+  {% endform %}
+</section>

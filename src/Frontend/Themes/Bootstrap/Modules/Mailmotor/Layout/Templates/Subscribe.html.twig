@@ -1,0 +1,24 @@
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+<div id="mailmotorSubscribe">
+  {% if subscribeHasFormError %}
+    {{ alerts.alert('danger', 'err.FormError'|trans) }}
+  {% endif %}
+  {% if subscribeHasError %}
+    {{ alerts.alert('danger', 'err.SubscribeFailed'|trans) }}
+  {% endif %}
+  {% if subscribeIsSuccess %}
+    {{ alerts.alert('success', 'msg.SubscribeSuccess'|trans) }}
+  {% endif %}
+
+  {% if not subscribeHideForm %}
+    {% form subscribe %}
+      <label class="control-label" for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+      <div class="input-group{% if txtEmailError %} error{% endif %}">
+        {% form_field_error email %} {% form_field email %}
+        <div class="input-group-btn">
+          <input class="btn-primary btn" type="submit" name="send" value="{{ 'lbl.Send'|trans|capitalize }}" />
+        </div>
+      </div>
+    {% endform %}
+  {% endif %}
+</div>

@@ -1,0 +1,23 @@
+{#
+  variables that are available:
+  - {{ widgetTagsTagCloud }}: contains an array with the most popular tag
+#}
+{% if widgetTagsTagCloud %}
+  <aside id="tagCloudWidget" class="well tags" role="complementary">
+    <header role="banner">
+      <h3>{{ 'lbl.Tags'|trans|capitalize }}</h3>
+    </header>
+    <p>
+      {% for tag in widgetTagsTagCloud %}
+        <a href="{{ tag.url }}" rel="tag">
+          {% if tag.first %}
+            {{ tag.name|capitalize }}
+          {% else %}
+            {{ tag.name }}
+          {% endif %}
+        </a>
+        <span class="badge hidden-phone">{{ tag.number }}</span>{% if not tag.last %}, {% else %}.{% endif %}
+      {% endfor %}
+    </p>
+  </aside>
+{% endif %}

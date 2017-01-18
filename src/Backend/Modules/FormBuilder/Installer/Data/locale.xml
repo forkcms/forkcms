@@ -470,6 +470,10 @@
         <translation language="zh"><![CDATA[回复给]]></translation>
         <translation language="de"><![CDATA[Antwort an]]></translation>
       </item>
+      <item type="label" name="MailCopyTo">
+        <translation language="nl"><![CDATA[mail copy to]]></translation>
+        <translation language="en"><![CDATA[mail copy to]]></translation>
+      </item>
       <item type="label" name="Required">
         <translation language="nl"><![CDATA[vereist]]></translation>
         <translation language="en"><![CDATA[required]]></translation>
@@ -1062,6 +1066,10 @@
   </Backend>
   <Frontend>
     <Core>
+      <item type="message" name="FormBuilderMailCopyTo">
+        <translation language="nl">Dit is een kopie van het bericht dat u net verzond via %s</translation>
+        <translation language="en">This is a copy of the message you've sent via %s</translation>
+      </item>
       <item type="error" name="TimeIsInvalid">
         <translation language="nl"><![CDATA[Ongeldige tijd]]></translation>
         <translation language="en"><![CDATA[Invalid time]]></translation>

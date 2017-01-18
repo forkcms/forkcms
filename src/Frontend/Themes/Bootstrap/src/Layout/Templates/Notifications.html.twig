@@ -1,0 +1,30 @@
+<!-- warning for people that don't have JS enabled -->
+<noscript>
+  {{ alerts.alert('danger', 'msg.EnableJavascript'|trans|raw, true) }}
+</noscript>
+
+<!-- Warning for people that still use IE7 or below -->
+<!--[if lt IE 8 ]>
+  {{ alerts.alert('danger', 'msg.OldBrowser'|trans, true, 'ie') }}
+<![endif]-->
+
+<a href="#main" class="muted hide">{$lblSkipToContent|ucfirst}</a>
+
+{% if not cookieBarHide %}
+  <div id="cookieBar" class="cookiebar alert alert-fullwidth">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <div class="container">
+
+      <div class="cookiebar-content">
+        <strong>{{ 'lbl.Warning'|trans|capitalize }}:</strong> {{ 'msg.Cookies'|trans|raw }}
+      </div>
+
+      <div class="cookiebar-buttons">
+        <a href="#" id="cookieBarAgree" class="btn btn-primary btn-xs">{{ 'lbl.IAgree'|trans|capitalize }}</a>
+        <a href="#" id="cookieBarDisagree" class="btn btn-primary btn-xs">{{ 'lbl.IDisagree'|trans|capitalize }}</a>
+      </div>
+
+    </div>
+  </div>
+{% endif %}
+
