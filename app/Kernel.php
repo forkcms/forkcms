@@ -88,8 +88,6 @@ abstract class Kernel extends BaseKernel implements KernelInterface
          * @deprecated SPOON_* constants are deprecated in favor of Spoon::set*().
          * Will be removed in the next major release.
          */
-        defined('SPOON_CHARSET') || define('SPOON_CHARSET', $container->getParameter('kernel.charset'));
-
         defined('PATH_WWW') || define('PATH_WWW', realpath($container->getParameter('site.path_www')));
         defined('PATH_LIBRARY') || define('PATH_LIBRARY', realpath($container->getParameter('site.path_library')));
 

@@ -149,3 +149,9 @@ SPOON_DEBUG_EMAIL is removed. From now on you need to get the debug email addres
 SPOON_DEBUG_MESSAGE is removed. From now on you need to get the debug message by using the fork.debug_message parameter, f.e.
 
 	if ($this->getContainer()->getParameter('fork.debug_message')) { ...
+
+## SPOON_CHARSET
+
+SPOON_CHARSET is removed. From now on you need to get the charset by using the kernel.charset parameter, f.e.
+
+	if ($this->getContainer()->getParameter('kernel.charset')) { ...
