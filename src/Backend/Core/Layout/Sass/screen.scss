@@ -1,12 +1,12 @@
 @charset 'UTF-8';
 
 // Font Awesome
-$fa-font-path: '../../../../../bower_components/fontawesome/fonts';
-@import '../../../../../bower_components/fontawesome/scss/font-awesome';
+$fa-font-path: '/fonts/vendors';
+@import 'font-awesome/scss/font-awesome';
 
 
 // Bootstrap
-@import '../../../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables';
+@import 'bootstrap-sass/assets/stylesheets/bootstrap/_variables';
 @import 'bootstrap-variables';
 @import 'fork-variables';
 @import 'bootstrap-imports';
