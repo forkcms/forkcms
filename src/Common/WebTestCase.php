@@ -105,7 +105,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $kernelDir = $client->getContainer()->getParameter('kernel.root_dir');
         $this->importSQL(
             $client->getContainer()->get('database'),
-            file_get_contents($kernelDir . '/../tools/test_db.sql')
+            file_get_contents($kernelDir . '/../tests/data/test_db.sql')
         );
 
         // load all the fixtures

@@ -50,11 +50,13 @@
     "scripts": {
         "post-install-cmd": [
             "php app/console assetic:dump .",
-            "cd tools && bash ./remove_cache"
+            "php app/console forkcms:cache:clear",
+            "php app/console cache:clear"
         ],
         "post-update-cmd": [
             "php app/console assetic:dump .",
-            "cd tools && bash ./remove_cache"
+            "php app/console forkcms:cache:clear",
+            "php app/console cache:clear"
         ]
     },
     "autoload": {
