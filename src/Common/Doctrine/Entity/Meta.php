@@ -198,7 +198,7 @@ class Meta
     {
         if ($this->data !== null) {
             // backwards compatible fix for when the seo is saved with the serialized value objects
-            // @TODO remove this for fork 5
+            // @todo remove this for when all the modules use doctrine
             $this->data = preg_replace(
                 '$O\\:3[67]\\:"Common\\\\Doctrine\\\\ValueObject\\\\(?:(?:SEOIndex)|(?:SEOFollow))"\\:1\\:{s\\:4[68]\\:"\\x00Common\\\\Doctrine\\\\ValueObject\\\\(?:(?:SEOIndex)|(?:SEOFollow))\\x00(?:(?:SEOIndex)|(?:SEOFollow))";(s\\:\d+\\:".+?";)}$',
                 '$1',
