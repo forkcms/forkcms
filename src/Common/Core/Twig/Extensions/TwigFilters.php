@@ -96,7 +96,8 @@ class TwigFilters
             array('is_safe' => array('html'))
         ));
 
-        // Deprecated functions
+        // @Deprecated We should look for replacements because they run on spoon library
+        // after we have those we can remove them
 
         $twig->addFilter(new Twig_SimpleFilter('spoondate', $app.'::spoonDate'));
         $twig->addFilter(new Twig_SimpleFilter('formatdate', $app.'::formatDate'));
