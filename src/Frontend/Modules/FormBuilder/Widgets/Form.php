@@ -151,7 +151,6 @@ class Form extends FrontendBaseWidget
 
         // exists and has fields
         if (!empty($this->item) && !empty($this->item['fields'])) {
-            //dump($this->item['fields'] );die;
             // loop fields
             foreach ($this->item['fields'] as $field) {
                 // init
@@ -322,6 +321,12 @@ class Form extends FrontendBaseWidget
     private function setCustomHTML5ErrorMessages(array $item, SpoonFormAttributes $formField)
     {
         foreach ($item['validations'] as $validation) {
+            // @deprecated
+            // we need to change it here since it is saved like this in the database and we can't change that for now.
+            if ($validation['type'] === 'numeric') {
+                $validation['type'] = 'number';
+            }
+
             $formField->setAttribute(
                 'data-error-' . $validation['type'],
                 $validation['error_message']
