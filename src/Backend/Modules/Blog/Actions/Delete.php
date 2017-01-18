@@ -51,9 +51,6 @@ class Delete extends BackendBaseActionDelete
             // delete item
             BackendBlogModel::delete($this->id);
 
-            // trigger event
-            BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
-
             // delete search indexes
             BackendSearchModel::removeIndex($this->getModule(), $this->id);
 

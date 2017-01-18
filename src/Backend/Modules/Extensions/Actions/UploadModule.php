@@ -107,7 +107,7 @@ class UploadModule extends BackendBaseActionAdd
                 if (mb_stripos($fileName, $prefix . $directory) === 0) {
                     // we have a library file
                     if ($directory == $prefix . 'library/external/') {
-                        if (!is_file(PATH_WWW . '/' . $fileName)) {
+                        if (!is_file($this->getContainer()->getParameter('site.path_www') . '/' . $fileName)) {
                             $files[] = $fileName;
                         }
                         break;
@@ -163,16 +163,16 @@ class UploadModule extends BackendBaseActionAdd
         }
 
         // unpack module files
-        $zip->extractTo(PATH_WWW, $files);
+        $zip->extractTo($this->getContainer()->getParameter('site.path_www'), $files);
 
         // place all the items in the prefixed folders in the right folders
         if (!empty($prefix)) {
             $filesystem = new Filesystem();
             foreach ($files as &$file) {
-                $fullPath = PATH_WWW . '/' . $file;
+                $fullPath = $this->getContainer()->getParameter('site.path_www') . '/' . $file;
                 $newPath = str_replace(
-                    PATH_WWW . '/' . $prefix,
-                    PATH_WWW . '/',
+                    $this->getContainer()->getParameter('site.path_www') . '/' . $prefix,
+                    $this->getContainer()->getParameter('site.path_www') . '/',
                     $fullPath
                 );
 
@@ -186,7 +186,7 @@ class UploadModule extends BackendBaseActionAdd
                 }
             }
 
-            $filesystem->remove(PATH_WWW . '/' . $prefix);
+            $filesystem->remove($this->getContainer()->getParameter('site.path_www') . '/' . $prefix);
         }
 
         // run installer

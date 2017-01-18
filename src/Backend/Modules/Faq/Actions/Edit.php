@@ -138,7 +138,6 @@ class Edit extends BackendBaseActionEdit
                     $this->frm->getField('tags')->getValue(),
                     $this->URL->getModule()
                 );
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
                 // edit search index
                 BackendSearchModel::saveIndex(

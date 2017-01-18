@@ -26,14 +26,4 @@
       <url><![CDATA[http://www.netlash.com]]></url>
     </author>
   </authors>
-  <events>
-    <event application="backend" name="after_add"><![CDATA[Triggered when a page is added.]]></event>
-    <event application="backend" name="after_delete"><![CDATA[Triggered when a page is deleted.]]></event>
-    <event application="backend" name="after_edit"><![CDATA[Triggered when a page is edited.]]></event>
-    <event application="backend" name="after_add_template"><![CDATA[Triggered when a template is added.]]></event>
-    <event application="backend" name="after_delete_template"><![CDATA[Triggered when a template is deleted.]]></event>
-    <event application="backend" name="after_edit_template"><![CDATA[Triggered when a template is edited.]]></event>
-    <event application="backend" name="after_saved_settings"><![CDATA[Triggered when the settings are saved.]]></event>
-    <event application="backend" name="after_recreated_cache"><![CDATA[Triggered when the cache-files are recreated.]]></event>
-  </events>
 </module>

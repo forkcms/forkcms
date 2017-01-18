@@ -48,11 +48,6 @@ services:
         class: Common\Doctrine\Entity\CreateSchema
         arguments:
             - "@doctrine.orm.entity_manager"
-    entity.create_schema:
-        deprecated: The service %service_id% is deprecated and is replaced by fork.entity.create_schema
-        class: Common\Doctrine\Entity\CreateSchema
-        arguments:
-            - "@doctrine.orm.entity_manager"
 
     fork.repository.meta:
         class: Common\Doctrine\Repository\MetaRepository

@@ -16,6 +16,7 @@ use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class represents a META-object
+ * @deprecated This class will be removed when all modules run on doctrine and will be replaced with the meta entity
  */
 class Meta
 {
@@ -120,6 +121,7 @@ class Meta
      * @return string
      *
      * @deprecated use the generateUrl method on the meta repository
+     * This class will be removed when all modules run on doctrine
      */
     public function generateURL($url)
     {
@@ -420,7 +422,8 @@ class Meta
      *
      * @return int
      *
-     * @deprecated just use the entity for doctrine
+     * @deprecated just use the entity for doctrine.
+     *             This class will be removed when all modules run on doctrine and will be replaced with the meta entity
      */
     public function save($update = false)
     {

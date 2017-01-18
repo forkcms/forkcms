@@ -97,9 +97,6 @@ class Settings extends BackendBaseActionEdit
                 $this->get('fork.settings')->set($this->URL->getModule(), 'height_widget', $height);
                 $this->get('fork.settings')->set($this->URL->getModule(), 'map_type_widget', (string) $this->frm->getField('map_type_widget')->getValue());
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');
-
                 // redirect to the settings page
                 $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
             }

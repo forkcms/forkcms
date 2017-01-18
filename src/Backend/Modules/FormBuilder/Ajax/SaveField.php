@@ -47,7 +47,7 @@ class SaveField extends BackendBaseAJAXAction
         $classname = trim(\SpoonFilter::getPostValue('classname', null, '', 'string'));
         $required = \SpoonFilter::getPostValue('required', array('Y', 'N'), 'N', 'string');
         $requiredErrorMessage = trim(\SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
-        $validation = \SpoonFilter::getPostValue('validation', array('email', 'numeric', 'time'), '', 'string');
+        $validation = \SpoonFilter::getPostValue('validation', array('email', 'number', 'time'), '', 'string');
         $validationParameter = trim(\SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
         $errorMessage = trim(\SpoonFilter::getPostValue('error_message', null, '', 'string'));
 

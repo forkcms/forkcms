@@ -93,8 +93,6 @@ class Add extends BackendBaseActionAdd
 
         // permissions
         $this->frm->addCheckbox('active', true);
-        // @TODO remove this when the api is kicked out
-        $this->frm->addCheckbox('api_access', false);
         $this->frm->addMultiCheckbox('groups', $groups, $checkedGroups);
     }
 
@@ -172,8 +170,6 @@ class Add extends BackendBaseActionAdd
                 $settings['password_key'] = uniqid('', true);
                 $settings['current_password_change'] = time();
                 $settings['avatar'] = 'no-avatar.gif';
-                // @TODO remove this when the api is kicked out
-                $settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
 
                 // get selected groups
                 $groups = $this->frm->getField('groups')->getChecked();
@@ -261,9 +257,6 @@ class Add extends BackendBaseActionAdd
 
                 // save groups
                 BackendGroupsModel::insertMultipleGroups($user['id'], $groups);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $user));
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(

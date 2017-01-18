@@ -35,13 +35,6 @@ class UndoDelete extends BackendBaseAction
                 // get user
                 $user = new BackendUser(null, $email);
 
-                // trigger event
-                $item = array(
-                    'id' => $user->getUserId(),
-                    'email' => $email,
-                );
-                BackendModel::triggerEvent($this->getModule(), 'after_undelete', array('item' => $item));
-
                 // item was deleted, so redirect
                 $this->redirect(
                     BackendModel::createURLForAction('edit') . '&id=' . $user->getUserId(

@@ -23,13 +23,6 @@ class Detail extends FrontendBaseWidget
             Locale::frontendLanguage()
         );
 
-        // if the content block is not found or if it is hidden, just return an array with empty text
-        // @deprecated fix this for version 5, we just shouldn't assign this instead of this hack, but we need it for BC
-        if (!$contentBlock instanceof ContentBlock || $contentBlock->isHidden()) {
-            $contentBlock = ['text' => ''];
-        }
-
         $this->tpl->assign('widgetContentBlocks', $contentBlock);
-        // That's all folks!
     }
 }

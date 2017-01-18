@@ -90,13 +90,6 @@ class Import extends BackendBaseActionAdd
                     $overwrite
                 );
 
-                // trigger event
-                BackendModel::triggerEvent(
-                    $this->getModule(),
-                    'after_import',
-                    array('statistics' => $statistics)
-                );
-
                 // build redirect url with the right message
                 $redirectUrl = BackendModel::createURLForAction('index') . '&report=';
                 $redirectUrl .= ($overwrite) ?

@@ -101,9 +101,6 @@ class Import extends BackendBaseActionAdd
                 // import
                 $statistics = BackendLocaleModel::importXML($xml, $chkOverwrite->getValue());
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_import', array('statistics' => $statistics));
-
                 // everything is imported, so redirect to the overview
                 $this->redirect(BackendModel::createURLForAction('Index') . '&report=imported&var=' . ($statistics['imported'] . '/' . $statistics['total']) . $this->filterQuery);
             }

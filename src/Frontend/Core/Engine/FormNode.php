@@ -42,11 +42,6 @@ class FormNode extends \Twig_Node
         $hiddenFormName = '<input type="hidden" name="form" value="\', ' . $frmName . ', \'" id="form\', ucfirst(' . $frmName . '), \'" />';
         $hiddenFormToken = '<input type="hidden" name="form_token" value="\', ' . $frmToken . ', \'" id="formToken\', ucfirst(' . $frmName . '), \'" />';
 
-        // oh boy,  disabled atm constant is gone
-        // $htmlAcceptCharset = (SPOON_CHARSET == 'utf-8')
-        //     ? ' accept-charset="UTF-8"'
-        //     : '';
-
         $compiler
             ->addDebugInfo($this)
 

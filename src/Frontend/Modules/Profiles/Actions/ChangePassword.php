@@ -133,13 +133,6 @@ class ChangePassword extends FrontendBaseBlock
                 // update password
                 FrontendProfilesAuthentication::updatePassword($this->profile->getId(), $txtNewPassword->getValue());
 
-                // trigger event
-                FrontendModel::triggerEvent(
-                    'Profiles',
-                    'after_change_password',
-                    array('id' => $this->profile->getId())
-                );
-
                 // redirect
                 $this->redirect(
                     SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'ChangePassword') . '?sent=true'

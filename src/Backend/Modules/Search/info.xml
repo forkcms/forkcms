@@ -20,10 +20,4 @@
       <url><![CDATA[http://www.mullie.eu]]></url>
     </author>
   </authors>
-  <events>
-    <event application="backend" name="after_add_synonym"><![CDATA[Triggered when a synonym is added.]]></event>
-    <event application="backend" name="after_delete_synonym"><![CDATA[Triggered when a synonym is deleted.]]></event>
-    <event application="backend" name="after_edit_synonym"><![CDATA[Triggered when a synonym is edited.]]></event>
-    <event application="backend" name="after_changed_settings"><![CDATA[Triggered when the settings are saved.]]></event>
-  </events>
 </module>

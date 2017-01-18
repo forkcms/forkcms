@@ -88,12 +88,6 @@ class Add extends BackendBaseActionAdd
                 // insert the item
                 $item['id'] = BackendLocationModel::insert($item);
 
-                // everything is saved, so redirect to the overview
-                if ($item['lat'] && $item['lng']) {
-                    // trigger event
-                    BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
-                }
-
                 // redirect
                 $this->redirect(
                     BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] .

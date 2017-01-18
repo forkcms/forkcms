@@ -148,9 +148,6 @@ class Register extends FrontendBaseBlock
                         array('url' => FrontendProfilesModel::getUrl($values['display_name']))
                     );
 
-                    // trigger event
-                    FrontendModel::triggerEvent('Profiles', 'after_register', array('id' => $profileId));
-
                     // generate activation key
                     $settings['activation_key'] = FrontendProfilesModel::getEncryptedString(
                         $profileId . microtime(),

@@ -135,9 +135,6 @@ class ChangeEmail extends FrontendBaseBlock
                 // update email
                 FrontendProfilesModel::update($this->profile->getId(), array('email' => $txtEmail->getValue()));
 
-                // trigger event
-                FrontendModel::triggerEvent('Profiles', 'after_change_email', array('id' => $this->profile->getId()));
-
                 // redirect
                 $this->redirect(
                     SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'ChangeEmail') . '?sent=true'

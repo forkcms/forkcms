@@ -17,14 +17,6 @@ frontend_ajax:
     path: /frontend/ajax
     defaults:
         _controller: ApplicationRouting::frontendAjaxController
-api:
-    path: /api/{version}/{client}
-    defaults:
-        _controller: ApplicationRouting::apiController
-        version:     ~
-        client:      ~
-    requirements:
-        client: (|client)
 frontend:
     path: /{route}
     defaults:

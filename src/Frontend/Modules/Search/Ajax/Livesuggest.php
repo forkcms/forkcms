@@ -136,7 +136,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             return false;
         }
 
@@ -205,7 +205,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if (!SPOON_DEBUG) {
+        if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
             $filesystem = new Filesystem();
             $filesystem->dumpFile(

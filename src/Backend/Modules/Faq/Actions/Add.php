@@ -116,7 +116,6 @@ class Add extends BackendBaseActionAdd
                     $this->frm->getField('tags')->getValue(),
                     $this->URL->getModule()
                 );
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
                 // add search index
                 BackendSearchModel::saveIndex(

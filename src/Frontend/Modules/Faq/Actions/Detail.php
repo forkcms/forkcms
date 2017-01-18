@@ -284,9 +284,6 @@ class Detail extends FrontendBaseBlock
                     }
                 }
 
-                // trigger event
-                FrontendModel::triggerEvent('Faq', 'after_add_feedback', array('comment' => $text));
-
                 // save status
                 $this->redirect($this->record['full_url'] . '/' . FL::getAction('Success'));
             }
