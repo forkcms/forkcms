@@ -242,6 +242,28 @@
   {{ form_rest(form) }}
 {%- endblock meta_widget -%}
 
+{% block image_widget %}
+  {% spaceless %}
+    <div class="form-group">
+      {{ form_widget(form.file) }}
+      {% if help_text_label %}
+        <div class="help-text">{{ help_text_label|trans|format(help_text_argument) }}</div>
+      {% endif %}
+      {{ form_errors(form.file) }}
+    </div>
+    {% set show_preview = show_preview and data is not null and data.fileName is not empty %}
+    {% if show_preview or show_remove_image %}
+      <div class="form-group">
+        {% if show_preview and preview_url %}
+          <img class="{% if preview_class is defined and preview_class is not empty %}{{ preview_class }}{% endif %}" src="{{ preview_url }}">
+        {% endif %}
+        {% if show_remove_image %}
+          {{ form_widget(form.remove) }}
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endspaceless %}
+{% endblock %}
 
 {% block bootstrap_collection_row %}
   {% spaceless %}
