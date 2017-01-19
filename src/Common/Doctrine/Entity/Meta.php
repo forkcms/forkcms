@@ -357,9 +357,13 @@ class Meta
         return $this->data;
     }
 
+    /**
+     * @return bool
+     */
     public function hasSEOIndex()
     {
-        return array_key_exists('seo_index', $this->data);
+        return array_key_exists('seo_index', $this->data)
+               && !SEOIndex::fromString($this->data['seo_index'])->isNone();
     }
 
     /**
@@ -374,9 +378,13 @@ class Meta
         return SEOIndex::fromString($this->data['seo_index']);
     }
 
+    /**
+     * @return bool
+     */
     public function hasSEOFollow()
     {
-        return array_key_exists('seo_follow', $this->data);
+        return array_key_exists('seo_follow', $this->data)
+               && !SEOFollow::fromString($this->data['seo_follow'])->isNone();
     }
 
     /**
