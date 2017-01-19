@@ -246,8 +246,8 @@
   {% spaceless %}
     <div class="form-group">
       {{ form_widget(form.file) }}
-      {% if help_text_label %}
-        <div class="help-text">{{ help_text_label|trans|format(help_text_argument) }}</div>
+      {% if help_text_message %}
+        <div class="help-text">{{ help_text_message|trans|format(help_text_argument) }}</div>
       {% endif %}
       {{ form_errors(form.file) }}
     </div>
@@ -269,8 +269,8 @@
   {% spaceless %}
     <div class="form-group">
       {{ form_widget(form.file) }}
-      {% if help_text_label %}
-        <div class="help-text">{{ help_text_label|trans|format(help_text_argument) }}</div>
+      {% if help_text_message %}
+        <div class="help-text">{{ help_text_message|trans|format(help_text_argument) }}</div>
       {% endif %}
       {{ form_errors(form.file) }}
     </div>

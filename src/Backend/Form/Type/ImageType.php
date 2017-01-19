@@ -150,7 +150,7 @@ class ImageType extends AbstractType
                 'accept' => 'image/*',
                 'constraints' => [new Valid()],
                 'error_bubbling' => false,
-                'help_text_label' => 'msg.HelpImageFieldWithMaxFileSize',
+                'help_text_message' => 'msg.HelpImageFieldWithMaxFileSize',
                 'help_text_argument' => $this->getUploadMaxFileSize(),
             ]
         );
@@ -206,7 +206,7 @@ class ImageType extends AbstractType
             },
             [
                 'preview_class',
-                'help_text_label',
+                'help_text_message',
                 'help_text_argument',
             ]
         );

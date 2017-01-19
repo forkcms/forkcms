@@ -148,7 +148,7 @@ class FileType extends AbstractType
                 'accept' => null,
                 'constraints' => array(new Valid()),
                 'error_bubbling' => false,
-                'help_text_label' => 'msg.HelpMaxFileSize',
+                'help_text_message' => 'msg.HelpMaxFileSize',
                 'help_text_argument' => $this->getUploadMaxFileSize(),
             ]
         );
@@ -203,7 +203,7 @@ class FileType extends AbstractType
             },
             [
                 'preview_label',
-                'help_text_label',
+                'help_text_message',
                 'help_text_argument',
             ]
         );
