@@ -106,12 +106,14 @@ class SubscribeType extends AbstractType
             $mailMotorInterests = $this->subscriber->getInterests();
 
             // Has interests
-            if (!empty($mailMotorInterests)) {
+            if (!empty($mailMotorInterests) && is_array($mailMotorInterests)) {
                 // Loop interests
                 foreach ($mailMotorInterests as $categoryId => $categoryInterest) {
-                    foreach ($categoryInterest['children'] as $categoryChildId => $categoryChildTitle) {
-                        // Add interest value for checkbox
-                        $interests[$categoryChildId] = $categoryChildTitle;
+                    if(!empty($categoryInterest['children']) && is_array($categoryInterest['children'])) {
+                        foreach ($categoryInterest['children'] as $categoryChildId => $categoryChildTitle) {
+                            // Add interest value for checkbox
+                            $interests[$categoryChildId] = $categoryChildTitle;
+                        }
                     }
                 }
             }
