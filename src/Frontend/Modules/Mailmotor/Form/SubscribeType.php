@@ -109,7 +109,7 @@ class SubscribeType extends AbstractType
             if (!empty($mailMotorInterests) && is_array($mailMotorInterests)) {
                 // Loop interests
                 foreach ($mailMotorInterests as $categoryId => $categoryInterest) {
-                    if(!empty($categoryInterest['children']) && is_array($categoryInterest['children'])) {
+                    if (!empty($categoryInterest['children']) && is_array($categoryInterest['children'])) {
                         foreach ($categoryInterest['children'] as $categoryChildId => $categoryChildTitle) {
                             // Add interest value for checkbox
                             $interests[$categoryChildId] = $categoryChildTitle;
