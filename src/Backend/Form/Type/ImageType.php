@@ -161,7 +161,7 @@ class ImageType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'image';
+        return 'fork_image';
     }
 
     /**
@@ -170,7 +170,7 @@ class ImageType extends AbstractType
     public function getParent()
     {
         if (!$this instanceof self) {
-            return 'image';
+            return 'fork_image';
         }
 
         return 'file';
