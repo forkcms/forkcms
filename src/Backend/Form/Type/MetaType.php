@@ -123,7 +123,6 @@ class MetaType extends AbstractType
 
                 return $SEOIndex;
             },
-            'data' => SEOIndex::none(),
             'choice_translation_domain' => true,
             'required' => false,
             'placeholder' => false,
@@ -156,7 +155,6 @@ class MetaType extends AbstractType
 
                 return $SEOFollow;
             },
-            'data' => SEOFollow::none(),
             'choice_translation_domain' => true,
             'required' => false,
             'placeholder' => false,
@@ -231,7 +229,10 @@ class MetaType extends AbstractType
     {
         return function ($meta) {
             if (!$meta instanceof Meta) {
-                return;
+                return [
+                    'SEOIndex' =>  SEOIndex::none(),
+                    'SEOFollow' => SEOFollow::none(),
+                ];
             }
 
             $this->meta[$meta->getId()] = $meta;
