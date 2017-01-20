@@ -248,8 +248,8 @@ class MetaType extends AbstractType
                 'custom' => $meta->getCustom(),
                 'url' => $meta->getUrl(),
                 'urlOverwrite' => $meta->isUrlOverwrite(),
-                'SEOIndex' => $meta->getSEOIndex(),
-                'SEOFollow' => $meta->getSEOFollow(),
+                'SEOIndex' => $meta->getSEOIndex() === null ? SEOIndex::none() : $meta->getSEOIndex(),
+                'SEOFollow' => $meta->getSEOFollow() === null ? SEOFollow::none() : $meta->getSEOFollow(),
             ];
         };
     }
