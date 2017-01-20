@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -13,10 +13,10 @@
  * (1) http://ckeditor.com/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) http://ckeditor.com/builder/66204de89d34355b6934f22499fece10
+ * (2) http://ckeditor.com/builder/cfeaa15282bb7d73f23fd26f4f1f999c
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) http://ckeditor.com/builder/download/66204de89d34355b6934f22499fece10
+ * (3) http://ckeditor.com/builder/download/cfeaa15282bb7d73f23fd26f4f1f999c
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -25,7 +25,7 @@
  */
 
 var CKBUILDER_CONFIG = {
-	skin: 'bootstrapck',
+	skin: 'moono-lisa',
 	preset: 'full',
 	ignore: [
 		'.bender',
@@ -57,19 +57,19 @@ var CKBUILDER_CONFIG = {
 		'bidi' : 1,
 		'blockquote' : 1,
 		'clipboard' : 1,
+		'codemirror' : 1,
 		'colorbutton' : 1,
 		'colordialog' : 1,
 		'contextmenu' : 1,
-		'devtools' : 1,
+		'copyformatting' : 1,
 		'dialogadvtab' : 1,
 		'div' : 1,
-		'divarea' : 1,
 		'docprops' : 1,
 		'elementspath' : 1,
 		'enterkey' : 1,
 		'entities' : 1,
-		'extraformattributes' : 1,
 		'filebrowser' : 1,
+		'filetools' : 1,
 		'find' : 1,
 		'flash' : 1,
 		'floatingspace' : 1,
@@ -81,10 +81,12 @@ var CKBUILDER_CONFIG = {
 		'iframe' : 1,
 		'iframedialog' : 1,
 		'image' : 1,
+		'image2' : 1,
 		'indentblock' : 1,
 		'indentlist' : 1,
 		'justify' : 1,
 		'language' : 1,
+		'lineutils' : 1,
 		'link' : 1,
 		'list' : 1,
 		'liststyle' : 1,
@@ -92,10 +94,11 @@ var CKBUILDER_CONFIG = {
 		'maximize' : 1,
 		'mediaembed' : 1,
 		'newpage' : 1,
+		'notification' : 1,
+		'notificationaggregator' : 1,
 		'pagebreak' : 1,
 		'pastefromword' : 1,
 		'pastetext' : 1,
-		'placeholder' : 1,
 		'preview' : 1,
 		'print' : 1,
 		'removeformat' : 1,
@@ -115,12 +118,16 @@ var CKBUILDER_CONFIG = {
 		'tableresize' : 1,
 		'tabletools' : 1,
 		'templates' : 1,
+		'textselection' : 1,
 		'toolbar' : 1,
 		'uicolor' : 1,
 		'undo' : 1,
-		'videodetector' : 1,
+		'uploadfile' : 1,
+		'uploadimage' : 1,
+		'widget' : 1,
 		'wsc' : 1,
-		'wysiwygarea' : 1
+		'wysiwygarea' : 1,
+		'xml' : 1
 	},
 	languages : {
 		'af' : 1,
@@ -170,6 +177,7 @@ var CKBUILDER_CONFIG = {
 		'nb' : 1,
 		'nl' : 1,
 		'no' : 1,
+		'oc' : 1,
 		'pl' : 1,
 		'pt' : 1,
 		'pt-br' : 1,
