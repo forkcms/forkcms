@@ -75,7 +75,7 @@ class Model implements FrontendTagsInterface
     {
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.title, m.description, i.parent_id
+            'SELECT i.id, i.title, m.description, i.parent_id, i.data
              FROM pages AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
@@ -86,9 +86,14 @@ class Model implements FrontendTagsInterface
 
         // has items
         if (!empty($items)) {
-            // reset url
             foreach ($items as &$row) {
+                // reset url
                 $row['full_url'] = FrontendNavigation::getURL($row['id'], LANGUAGE);
+
+                // unserialize page data and template data
+                if (!empty($row['data'])) {
+                    $row['data'] = unserialize($row['data']);
+                }
             }
         }
 
