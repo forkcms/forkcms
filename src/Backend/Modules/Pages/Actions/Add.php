@@ -287,7 +287,11 @@ class Add extends BackendBaseActionAdd
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
 
         // set callback for generating an unique URL
-        $this->meta->setURLCallback('Backend\Modules\Pages\Engine\Model', 'getURL', array(0, null, false));
+        $this->meta->setURLCallback(
+            'Backend\Modules\Pages\Engine\Model',
+            'getURL',
+            array(0, $this->getParameter('parent', 'int', null), false)
+        );
     }
 
     /**
@@ -303,7 +307,10 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('positions', $this->positions);
         $this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
         $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
-        $this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL(1), '/'));
+        $this->tpl->assign(
+            'prefixURL',
+            rtrim(BackendPagesModel::getFullURL($this->getParameter('parent', 'int', 1)), '/')
+        );
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
         $this->tpl->assign('showTags', $this->showTags());
 
@@ -345,7 +352,7 @@ class Add extends BackendBaseActionAdd
             $this->meta->setURLCallback(
                 'Backend\Modules\Pages\Engine\Model',
                 'getURL',
-                array(0, null, $this->frm->getField('is_action')->getChecked())
+                array(0, $this->getParameter('parent', 'int', null), $this->frm->getField('is_action')->getChecked())
             );
 
             // cleanup the submitted fields, ignore fields that were added by hackers
@@ -399,10 +406,15 @@ class Add extends BackendBaseActionAdd
                 $page['template_id'] = $templateId;
                 $page['meta_id'] = (int) $this->meta->save();
                 $page['language'] = BL::getWorkingLanguage();
-                $page['type'] = $parentPage ? 'page': 'root';
+                $page['type'] = $parentPage ? 'page' : 'root';
                 $page['title'] = $this->frm->getField('title')->getValue();
-                $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();
-                $page['navigation_title_overwrite'] = $this->frm->getField('navigation_title_overwrite')->getActualValue();
+                $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue(
+                    ) != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField(
+                    'title'
+                )->getValue();
+                $page['navigation_title_overwrite'] = $this->frm->getField(
+                    'navigation_title_overwrite'
+                )->getActualValue();
                 $page['hidden'] = $this->frm->getField('hidden')->getValue();
                 $page['status'] = $status;
                 $page['publish_on'] = BackendModel::getUTCDate();
