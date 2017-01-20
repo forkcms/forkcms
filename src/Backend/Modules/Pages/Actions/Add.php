@@ -360,7 +360,13 @@ class Add extends BackendBaseActionAdd
             // no errors?
             if ($this->frm->isCorrect()) {
                 // init var
-                $parentId = 0;
+                $parentId = $this->getParameter('parent', 'int', 0);
+                $parentPage = BackendPagesModel::get($parentId);
+                if (!$parentPage || !$parentPage['children_allowed']) {
+                    // no children allowed
+                    $parentId = 0;
+                    $parentPage = false;
+                }
                 $templateId = (int) $this->frm->getField('template_id')->getValue();
                 $data = null;
 
@@ -393,7 +399,7 @@ class Add extends BackendBaseActionAdd
                 $page['template_id'] = $templateId;
                 $page['meta_id'] = (int) $this->meta->save();
                 $page['language'] = BL::getWorkingLanguage();
-                $page['type'] = 'root';
+                $page['type'] = $parentPage ? 'page': 'root';
                 $page['title'] = $this->frm->getField('title')->getValue();
                 $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();
                 $page['navigation_title_overwrite'] = $this->frm->getField('navigation_title_overwrite')->getActualValue();
