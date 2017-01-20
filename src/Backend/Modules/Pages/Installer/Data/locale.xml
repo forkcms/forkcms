@@ -30,6 +30,16 @@
         <translation language="lt"><![CDATA[naujas puslapis]]></translation>
         <translation language="el"><![CDATA[Προσθήκη σελίδας]]></translation>
       </item>
+      <item type="label" name="AddSubPage">
+        <translation language="nl"><![CDATA[sub pagina toevoegen]]></translation>
+        <translation language="en"><![CDATA[add sub page]]></translation>
+        <translation language="fr"><![CDATA[ajouter une sous-page]]></translation>
+      </item>
+      <item type="label" name="ToggleAddPageDropdown">
+        <translation language="nl"><![CDATA[wissel pagina toevoegen dropdown]]></translation>
+        <translation language="en"><![CDATA[toggle add page dropdown]]></translation>
+        <translation language="fr"><![CDATA[basculer ajouter la page déroulante]]></translation>
+      </item>
       <item type="label" name="ChangeTemplate">
         <translation language="nl"><![CDATA[Wijzig template]]></translation>
         <translation language="en"><![CDATA[Change template]]></translation>
