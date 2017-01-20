@@ -535,6 +535,10 @@
         <translation language="es"><![CDATA[La página "%1$s" ha sido movida.]]></translation>
         <translation language="el"><![CDATA[Η σελίδα "%1$s" έχει μετακινηθεί.]]></translation>
       </item>
+      <item type="message" name="RemoveFromSearchIndex">
+        <translation language="nl"><![CDATA[Toon deze pagina en inhoud niet in de zoekresulaten.]]></translation>
+        <translation language="en"><![CDATA[Do not show this page or content in the search results.]]></translation>
+      </item>
       <item type="message" name="RichText">
         <translation language="nl"><![CDATA[Editor]]></translation>
         <translation language="en"><![CDATA[Editor]]></translation>
