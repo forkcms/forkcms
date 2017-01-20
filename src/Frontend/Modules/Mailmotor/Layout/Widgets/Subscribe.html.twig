@@ -9,7 +9,9 @@
           {{ form_row(form.email) }}
         </p>
 
-        {{ form_row(form.interests) }}
+        {% if form.interests %}
+          {{ form_row(form.interests) }}
+        {% endif %}
 
         <p>
           {{ form_widget(form.subscribe) }}
