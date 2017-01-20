@@ -33,6 +33,11 @@ abstract class AbstractFile
     protected $oldFileName;
 
     /**
+     * @var string
+     */
+    protected $namePrefix;
+
+    /**
      * @param string $fileName
      */
     protected function __construct($fileName)
@@ -96,7 +101,7 @@ abstract class AbstractFile
     /**
      * Sets file.
      *
-     * @param UploadedFile $file
+     * @param UploadedFile|null $file
      *
      * @return static
      */
@@ -107,6 +112,7 @@ abstract class AbstractFile
         }
 
         $this->file = $file;
+
         // check if we have an old image path
         if ($this->fileName === null) {
             return $this;
@@ -121,13 +127,15 @@ abstract class AbstractFile
 
     /**
      * @param UploadedFile|null $uploadedFile
+     * @param string|null $namePrefix If set this will be prepended to the generated filename
      *
      * @return static
      */
-    public static function fromUploadedFile(UploadedFile $uploadedFile = null)
+    public static function fromUploadedFile(UploadedFile $uploadedFile = null, $namePrefix = null)
     {
         $file = new static(null);
         $file->setFile($uploadedFile);
+        $file->setNamePrefix($namePrefix);
 
         return $file;
     }
@@ -152,7 +160,7 @@ abstract class AbstractFile
         }
 
         // do whatever you want to generate a unique name
-        $filename = sha1(uniqid(mt_rand(), true));
+        $filename = urlencode($this->namePrefix) . '_' . sha1(uniqid(mt_rand(), true));
         $this->fileName = $filename . '.' . $this->getFile()->guessExtension();
     }
 
@@ -239,5 +247,16 @@ abstract class AbstractFile
     {
         $this->oldFileName = $this->fileName;
         $this->fileName = null;
+    }
+
+    /**
+     * @param string $namePrefix If set this will be prepended to the generated filename
+     * @return self
+     */
+    public function setNamePrefix($namePrefix)
+    {
+        $this->namePrefix = $namePrefix;
+
+        return $this;
     }
 }
