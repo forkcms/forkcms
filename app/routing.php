@@ -30,7 +30,6 @@ class ApplicationRouting extends Controller
         'private' => 'Backend',
         'Backend' => 'Backend',
         'backend' => 'Backend',
-        'api' => 'Api',
     );
 
     /**
@@ -120,23 +119,6 @@ class ApplicationRouting extends Controller
     }
 
     /**
-     * Runs the api requests
-     *
-     * @param Request $request
-     *
-     * @return Symfony\Component\HttpFoundation\Response
-     */
-    public function apiController(Request $request)
-    {
-        defined('APPLICATION') || define('APPLICATION', 'Api');
-
-        $applicationClass = $this->initializeAPI('Api', $request);
-        $application = new $applicationClass($this->container->get('kernel'));
-
-        return $this->handleApplication($application);
-    }
-
-    /**
      * Runs an application and returns the Response
      *
      * @param \ApplicationInterface $application
@@ -154,41 +136,6 @@ class ApplicationRouting extends Controller
         } catch (RedirectException $ex) {
             return $ex->getResponse();
         }
-    }
-
-    /**
-     * @param string $app The name of the application to load (ex. BackendAjax)
-     * @param Request $request
-     *
-     * @throws Exception
-     *
-     * @return string The name of the application class we need to instantiate.
-     */
-    protected function initializeAPI($app, $request)
-    {
-        $queryString = trim($request->getRequestUri(), '/');
-        $chunks = explode('/', $queryString);
-        $apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : 'v1';
-        $apiVersion = strtok($apiVersion, '?');
-        $apiClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Init';
-
-        // validate
-        if (!class_exists($apiClass)) {
-            throw new Exception('This version of the API does not exist.');
-        }
-
-        $init = new $apiClass($this->container->get('kernel'));
-        $init->initialize($app);
-
-        // The client was requested
-        if (array_key_exists(2, $chunks) && $chunks[2] === 'client') {
-            $applicationClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Engine\\Client';
-        } else {
-            // The regular API was requested
-            $applicationClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Engine\\Api';
-        }
-
-        return $applicationClass;
     }
 
     /**

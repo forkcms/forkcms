@@ -85,8 +85,6 @@ class Installer extends ModuleInstaller
         $this->setSetting('Blog', 'requires_akismet', true);
         $this->setSetting('Blog', 'spamfilter', false);
         $this->setSetting('Blog', 'moderation', true);
-        // @TODO remove this when the api is kicked out
-        $this->setSetting('Blog', 'ping_services', false);
         $this->setSetting('Blog', 'overview_num_items', 10);
         $this->setSetting('Blog', 'recent_articles_full_num_items', 3);
         $this->setSetting('Blog', 'recent_articles_list_num_items', 5);
@@ -228,10 +226,10 @@ class Installer extends ModuleInstaller
                     'language' => $language,
                     'title' => 'Nunc sediam est',
                     'introduction' => file_get_contents(
-                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                        __DIR__ . '/Data/' . $language . '/sample1.txt'
                     ),
                     'text' => file_get_contents(
-                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                        __DIR__ . '/Data/' . $language . '/sample1.txt'
                     ),
                     'status' => 'active',
                     'publish_on' => gmdate('Y-m-d H:i:00'),
@@ -250,7 +248,7 @@ class Installer extends ModuleInstaller
                 array(
                     'title' => 'Nunc sediam est',
                     'text' => file_get_contents(
-                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                        __DIR__ . '/Data/' . $language . '/sample1.txt'
                     ),
                 ),
                 $language
@@ -267,10 +265,10 @@ class Installer extends ModuleInstaller
                     'language' => $language,
                     'title' => 'Lorem ipsum',
                     'introduction' => file_get_contents(
-                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                        __DIR__ . '/Data/' . $language . '/sample1.txt'
                     ),
                     'text' => file_get_contents(
-                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                        __DIR__ . '/Data/' . $language . '/sample1.txt'
                     ),
                     'status' => 'active',
                     'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
@@ -289,7 +287,7 @@ class Installer extends ModuleInstaller
                 array(
                     'title' => 'Lorem ipsum',
                     'text' => file_get_contents(
-                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                        __DIR__ . '/Data/' . $language . '/sample1.txt'
                     ),
                 ),
                 $language

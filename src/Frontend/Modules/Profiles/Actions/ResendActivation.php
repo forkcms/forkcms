@@ -116,9 +116,6 @@ class ResendActivation extends FrontendBaseBlock
                 $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate') .
                                                '/' . $profile->getSetting('activation_key');
 
-                // trigger event
-                FrontendModel::triggerEvent('Profiles', 'after_resend_activation', array('id' => $profileId));
-
                 // send email
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');

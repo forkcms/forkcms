@@ -88,11 +88,6 @@ abstract class Kernel extends BaseKernel implements KernelInterface
          * @deprecated SPOON_* constants are deprecated in favor of Spoon::set*().
          * Will be removed in the next major release.
          */
-        defined('SPOON_DEBUG') || define('SPOON_DEBUG', $container->getParameter('kernel.debug'));
-        defined('SPOON_DEBUG_EMAIL') || define('SPOON_DEBUG_EMAIL', $container->getParameter('fork.debug_email'));
-        defined('SPOON_DEBUG_MESSAGE') || define('SPOON_DEBUG_MESSAGE', $container->getParameter('fork.debug_message'));
-        defined('SPOON_CHARSET') || define('SPOON_CHARSET', $container->getParameter('kernel.charset'));
-
         defined('PATH_WWW') || define('PATH_WWW', realpath($container->getParameter('site.path_www')));
         defined('PATH_LIBRARY') || define('PATH_LIBRARY', realpath($container->getParameter('site.path_library')));
 
@@ -123,8 +118,6 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/Frontend/Files');
         defined('FRONTEND_CORE_URL') || define('FRONTEND_CORE_URL', '/src/Frontend/Core');
         defined('FRONTEND_CACHE_URL') || define('FRONTEND_CACHE_URL', '/src/Frontend/Cache');
-
-        defined('API_CORE_PATH') || define('API_CORE_PATH', PATH_WWW . '/Api');
     }
 
     /**

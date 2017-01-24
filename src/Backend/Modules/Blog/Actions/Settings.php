@@ -88,10 +88,6 @@ class Settings extends BackendBaseActionEdit
             $this->get('fork.settings')->get($this->URL->getModule(), 'notify_by_email_on_new_comment', false)
         );
 
-        // add fields for SEO
-        // @TODO remove this when the api is kicked out
-        $this->frm->addCheckbox('ping_services', $this->get('fork.settings')->get($this->URL->getModule(), 'ping_services', false));
-
         // add fields for RSS
         $this->frm->addCheckbox('rss_meta', $this->get('fork.settings')->get($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), true));
         $this->frm->addText('rss_title', $this->get('fork.settings')->get($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage()));
@@ -134,8 +130,6 @@ class Settings extends BackendBaseActionEdit
                 $this->get('fork.settings')->set($this->URL->getModule(), 'moderation', (bool) $this->frm->getField('moderation')->getValue());
                 $this->get('fork.settings')->set($this->URL->getModule(), 'notify_by_email_on_new_comment_to_moderate', (bool) $this->frm->getField('notify_by_email_on_new_comment_to_moderate')->getValue());
                 $this->get('fork.settings')->set($this->URL->getModule(), 'notify_by_email_on_new_comment', (bool) $this->frm->getField('notify_by_email_on_new_comment')->getValue());
-                // @TODO remove this when the api is kicked out
-                $this->get('fork.settings')->set($this->URL->getModule(), 'ping_services', (bool) $this->frm->getField('ping_services')->getValue());
                 $this->get('fork.settings')->set($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
                 $this->get('fork.settings')->set($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
                 $this->get('fork.settings')->set($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
@@ -145,9 +139,6 @@ class Settings extends BackendBaseActionEdit
                 if ($this->get('fork.settings')->get('Core', 'akismet_key') === null) {
                     $this->get('fork.settings')->set($this->URL->getModule(), 'spamfilter', false);
                 }
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');
 
                 // redirect to the settings page
                 $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');

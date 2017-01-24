@@ -2,8 +2,6 @@ language: php
 
 matrix:
   include:
-    - php: 5.5
-    - php: 5.6
     - php: 7.0
     - php: 7.1
     - php: hhvm
@@ -17,7 +15,7 @@ before_script:
   - npm install -g bower
   - composer install
   - mysql -e 'create database fork_test'
-  - mysql -u travis fork_test < tools/test_db.sql
+  - mysql -u travis fork_test < tests/data/test_db.sql
   - cp app/config/parameters.yml.travis app/config/parameters.yml
   - mysql -e "SET GLOBAL wait_timeout = 3600" # try to avoid mysql has gone away errors
 

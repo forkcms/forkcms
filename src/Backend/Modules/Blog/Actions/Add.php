@@ -173,9 +173,6 @@ class Add extends BackendBaseActionAdd
                     }
                 }
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
-
                 // save the tags
                 BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 

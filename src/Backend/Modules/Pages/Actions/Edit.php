@@ -732,9 +732,6 @@ class Edit extends BackendBaseActionEdit
                 // insert the blocks
                 BackendPagesModel::insertBlocks($this->blocksContent);
 
-                // trigger an event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $page));
-
                 if ($this->showTags()) {
                     // save tags
                     BackendTagsModel::saveTags(

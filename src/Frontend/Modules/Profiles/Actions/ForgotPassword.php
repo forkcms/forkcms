@@ -116,9 +116,6 @@ class ForgotPassword extends FrontendBaseBlock
                 $mailValues['firstName'] = FrontendProfilesModel::getSetting($profileId, 'first_name');
                 $mailValues['lastName'] = FrontendProfilesModel::getSetting($profileId, 'last_name');
 
-                // trigger event
-                FrontendModel::triggerEvent('Profiles', 'after_forgot_password', array('id' => $profileId));
-
                 // send email
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');

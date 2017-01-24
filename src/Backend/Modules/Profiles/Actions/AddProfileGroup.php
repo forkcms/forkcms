@@ -111,9 +111,6 @@ class AddProfileGroup extends BackendBaseActionAdd
                 // insert values
                 $id = BackendProfilesModel::insertProfileGroup($values);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_profile_add_to_group', array('item' => $values));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction(

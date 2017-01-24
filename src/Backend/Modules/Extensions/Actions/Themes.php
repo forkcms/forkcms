@@ -151,7 +151,7 @@ class Themes extends BackendBaseActionIndex
                     if (empty($newTemplates)) {
                         // templates do not yet exist; don't switch
                         $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-templates-available');
-    
+
                         return;
                     }
 
@@ -199,9 +199,6 @@ class Themes extends BackendBaseActionIndex
                         // getting here meant we found no matching template for the new theme; pick first theme's template as default
                         BackendPagesModel::updatePagesTemplates($oldTemplateId, $newDefaultTemplateId);
                     }
-
-                    // trigger event
-                    BackendModel::triggerEvent($this->getModule(), 'after_changed_theme');
                 }
 
                 // assign report

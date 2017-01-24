@@ -151,7 +151,6 @@ class Form extends FrontendBaseWidget
 
         // exists and has fields
         if (!empty($this->item) && !empty($this->item['fields'])) {
-            //dump($this->item['fields'] );die;
             // loop fields
             foreach ($this->item['fields'] as $field) {
                 // init
@@ -226,7 +225,7 @@ class Form extends FrontendBaseWidget
                     if (isset($item['validations']['email'])) {
                         $txt->setAttribute('type', 'email');
                     }
-                    if (isset($item['validations']['numeric'])) {
+                    if (isset($item['validations']['number'])) {
                         $txt->setAttribute('type', 'number');
                     }
                     if ($item['placeholder']) {
@@ -445,7 +444,7 @@ class Form extends FrontendBaseWidget
                                 $settings['error_message']
                             );
                         }
-                    } elseif ($rule == 'numeric') {
+                    } elseif ($rule == 'number') {
                         // only check this if the field is filled, if the field is required it will be validated before
                         if ($this->frm->getField($fieldName)->isFilled()) {
                             $this->frm->getField($fieldName)->isNumeric(
@@ -518,19 +517,6 @@ class Form extends FrontendBaseWidget
                 $this->get('event_dispatcher')->dispatch(
                     FormBuilderEvents::FORM_SUBMITTED,
                     new FormBuilderSubmittedEvent($this->item, $fields, $dataId)
-                );
-
-                // trigger event
-                FrontendModel::triggerEvent(
-                    'FormBuilder',
-                    'after_submission',
-                    array(
-                        'form_id' => $this->item['id'],
-                        'data_id' => $dataId,
-                        'data' => $data,
-                        'fields' => $fields,
-                        'visitorId' => FrontendModel::getVisitorId(),
-                    )
                 );
 
                 // store timestamp in session so we can block excessive usage

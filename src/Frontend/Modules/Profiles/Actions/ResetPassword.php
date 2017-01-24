@@ -132,9 +132,6 @@ class ResetPassword extends FrontendBaseBlock
                     FrontendProfilesAuthentication::login($profileId);
                 }
 
-                // trigger event
-                FrontendModel::triggerEvent('Profiles', 'after_reset_password', array('id' => $profileId));
-
                 // redirect
                 $this->redirect(
                     FrontendNavigation::getURLForBlock('Profiles', 'ResetPassword') . '/' . $this->URL->getParameter(

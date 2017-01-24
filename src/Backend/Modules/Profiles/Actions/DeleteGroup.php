@@ -37,9 +37,6 @@ class DeleteGroup extends BackendBaseActionDelete
             // delete group
             BackendProfilesModel::deleteGroup($this->id);
 
-            // trigger event
-            BackendModel::triggerEvent($this->getModule(), 'after_delete_group', array('id' => $this->id));
-
             // group was deleted, so redirect
             $this->redirect(
                 BackendModel::createURLForAction('Groups') . '&report=deleted&var=' . rawurlencode($group['name'])

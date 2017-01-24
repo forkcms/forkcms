@@ -27,14 +27,4 @@
       <url><![CDATA[http://www.jelmersnoeck.com]]></url>
     </author>
   </authors>
-  <events>
-    <event application="backend" name="after_add"><![CDATA[Triggered when a faq is added.]]></event>
-    <event application="backend" name="after_delete"><![CDATA[Triggered when a faq is deleted.]]></event>
-    <event application="backend" name="after_edit"><![CDATA[Triggered when a faq is edited.]]></event>
-    <event application="backend" name="after_add_category"><![CDATA[Triggered when a category is added.]]></event>
-    <event application="backend" name="after_delete_category"><![CDATA[Triggered when a category is deleted.]]></event>
-    <event application="backend" name="after_edit_category"><![CDATA[Triggered when a category is edited.]]></event>
-    <event application="backend" name="after_add_feedback"><![CDATA[Triggered when a feedback comment is added.]]></event>
-    <event application="backend" name="after_delete_feedback"><![CDATA[Triggered when a feedback comment is deleted.]]></event>
-  </events>
 </module>

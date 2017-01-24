@@ -986,46 +986,4 @@ class ModuleInstaller
             }
         }
     }
-
-    /**
-     * Subscribe to an event, when the subscription already exists, the callback will be updated.
-     *
-     * @param string $eventModule The module that triggers the event.
-     * @param string $eventName   The name of the event.
-     * @param string $module      The module that subscribes to the event.
-     * @param mixed  $callback    The callback that should be executed when the event is triggered.
-     */
-    public function subscribeToEvent($eventModule, $eventName, $module, $callback)
-    {
-        // build record
-        $item['event_module'] = (string) $eventModule;
-        $item['event_name'] = (string) $eventName;
-        $item['module'] = (string) $module;
-        $item['callback'] = serialize($callback);
-        $item['created_on'] = gmdate('Y-m-d H:i:s');
-
-        // get db
-        $db = $this->getDB();
-
-        // check if the subscription already exists
-        $exists = (bool) $db->getVar(
-            'SELECT 1
-             FROM hooks_subscriptions AS i
-             WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
-             LIMIT 1',
-            array($eventModule, $eventName, $module)
-        );
-
-        // update
-        if ($exists) {
-            $db->update(
-                'hooks_subscriptions',
-                $item,
-                'event_module = ? AND event_name = ? AND module = ?',
-                array($eventModule, $eventName, $module)
-            );
-        } else {
-            $db->insert('hooks_subscriptions', $item);
-        }
-    }
 }

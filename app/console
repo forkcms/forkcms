@@ -51,4 +51,6 @@ if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
         )
     );
 }
+$application->add(new \Console\Core\CacheClearCommand());
+$application->add(new \Console\Core\ReinstallCommand());
 $application->run($input);

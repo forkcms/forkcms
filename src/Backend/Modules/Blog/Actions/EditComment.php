@@ -109,9 +109,6 @@ class EditComment extends BackendBaseActionEdit
                 // insert the item
                 BackendBlogModel::updateComment($item);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit_comment', array('item' => $item));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Comments') . '&report=edited-comment&id=' .

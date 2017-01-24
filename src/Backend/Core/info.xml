@@ -24,14 +24,4 @@
       <url><![CDATA[http://blog.bauffman.be]]></url>
     </author>
   </authors>
-  <events>
-    <event application="backend" name="after_email_queued"><![CDATA[Triggered when a mail is added into the mail-queue.]]></event>
-    <event application="backend" name="after_email_sent"><![CDATA[Triggered when a mail is sent.]]></event>
-    <event application="frontend" name="after_email_queued"><![CDATA[Triggered when a mail is added into the mail-queue.]]></event>
-    <event application="frontend" name="after_email_sent"><![CDATA[Triggered when a mail is sent.]]></event>
-    <event application="frontend" name="after_page_processed"><![CDATA[Triggered after a page has been processed.]]></event>
-  </events>
-  <cronjobs>
-    <cronjob minute="*" hour="*" day-of-month="*" month="*" day-of-week="*" action="process_queued_hooks"><![CDATA[Processes queued hooks.]]></cronjob>
-  </cronjobs>
 </module>

@@ -57,18 +57,6 @@ class Url extends Base\Object
     }
 
     /**
-     * Get the host
-     *
-     * @deprecated use $request->getHttpHost() instead
-     *
-     * @return string
-     */
-    public function getHost()
-    {
-        return $this->request->getHttpHost();
-    }
-
-    /**
      * Get the full querystring
      *
      * @return string

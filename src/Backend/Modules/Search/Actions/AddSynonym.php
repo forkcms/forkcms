@@ -75,9 +75,6 @@ class AddSynonym extends BackendBaseActionAdd
                 // insert the item
                 $id = BackendSearchModel::insertSynonym($item);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add_synonym', array('item' => $item));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Synonyms') . '&report=added-synonym&var=' . rawurlencode(

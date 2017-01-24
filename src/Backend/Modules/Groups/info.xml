@@ -19,9 +19,4 @@
       <url><![CDATA[http://www.vanbosse.be]]></url>
     </author>
   </authors>
-  <events>
-    <event application="backend" name="after_add"><![CDATA[Triggered when a group is added.]]></event>
-    <event application="backend" name="after_delete"><![CDATA[Triggered when a group is deleted.]]></event>
-    <event application="backend" name="after_edit"><![CDATA[Triggered when a group is edited.]]></event>
-  </events>
 </module>

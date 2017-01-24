@@ -125,9 +125,6 @@ class Login extends FrontendBaseBlock
                 // update salt and password for Dieter's security features
                 FrontendProfilesAuthentication::updatePassword($profileId, $txtPassword->getValue());
 
-                // trigger event
-                FrontendModel::triggerEvent('Profiles', 'after_logged_in', array('id' => $profileId));
-
                 // query string
                 $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
 

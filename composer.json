@@ -13,7 +13,7 @@
     "homepage": "http://www.fork-cms.com/",
     "license": "MIT",
     "require": {
-        "php": "^5.5 || ^7.0",
+        "php": "^7.0",
         "tijsverkoyen/akismet": "1.1.*",
         "tijsverkoyen/css-to-inline-styles": "1.5.*",
         "matthiasmullie/minify": "~1.3",
@@ -50,11 +50,13 @@
     "scripts": {
         "post-install-cmd": [
             "php app/console assetic:dump .",
-            "cd tools && bash ./remove_cache"
+            "php app/console forkcms:cache:clear",
+            "php app/console cache:clear"
         ],
         "post-update-cmd": [
             "php app/console assetic:dump .",
-            "cd tools && bash ./remove_cache"
+            "php app/console forkcms:cache:clear",
+            "php app/console cache:clear"
         ]
     },
     "autoload": {

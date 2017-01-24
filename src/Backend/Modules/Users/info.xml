@@ -7,7 +7,7 @@
   </requirements>
   <description>
     <![CDATA[
-      Define the user accounts that may access either the CMS, the API or both, and can be linked to a group to define the specific permissions.
+      Define the user accounts that may access the CMS, and can be linked to a group to define the specific permissions.
       User accounts and all their settings, including personal information, interface preferences and password, can be managed with this module.
     ]]>
   </description>
@@ -21,9 +21,4 @@
       <url><![CDATA[http://blog.bauffman.be]]></url>
     </author>
   </authors>
-  <events>
-    <event application="backend" name="after_add"><![CDATA[Triggered when an user is added.]]></event>
-    <event application="backend" name="after_delete"><![CDATA[Triggered when an user is deleted.]]></event>
-    <event application="backend" name="after_edit"><![CDATA[Triggered when an user is edited.]]></event>
-  </events>
 </module>

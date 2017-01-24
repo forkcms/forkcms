@@ -88,18 +88,6 @@ class Url extends \KernelLoader
     }
 
     /**
-     * Get the host
-     *
-     * @deprecated use $request->getHttpHost() instead
-     *
-     * @return string
-     */
-    public function getHost()
-    {
-        return $this->request->getHttpHost();
-    }
-
-    /**
      * Get a page specified by the given index
      *
      * @param int $index The index (0-based).

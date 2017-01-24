@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `forms_fields` (
 CREATE TABLE IF NOT EXISTS `forms_fields_validation` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `field_id` int(11) unsigned NOT NULL,
-  `type` enum('required','email','numeric','time') NOT NULL,
+  `type` enum('required','email','number','time') NOT NULL,
   `parameter` varchar(255) default NULL COMMENT 'If you want to validate higher then a number, the number would be the parameter',
   `error_message` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`),

@@ -76,41 +76,6 @@ class Config extends Object
     }
 
     /**
-     * Get the possible actions
-     *
-     * @deprecated
-     *
-     * @return array
-     */
-    public function getPossibleActions()
-    {
-        trigger_error(
-            '$config->getPossibleActions() is deprecated.
-             Use $config->isActionAvailable($action) to determine if an action is available',
-            E_USER_DEPRECATED
-        );
-
-        return $this->possibleActions;
-    }
-    /**
-     * Get the possible AJAX actions
-     *
-     * @deprecated
-     *
-     * @return array
-     */
-    public function getPossibleAJAXActions()
-    {
-        trigger_error(
-            '$config->getPossibleAJAXActions() is deprecated.
-             Use $config->isActionAvailable($action) to determine if an action is available',
-            E_USER_DEPRECATED
-        );
-
-        return $this->possibleAJAXActions;
-    }
-
-    /**
      * Set the module
      *
      * We can't rely on the parent setModule function, because config could be

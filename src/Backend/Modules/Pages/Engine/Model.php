@@ -87,9 +87,6 @@ class Model
 
         $cacheBuilder = static::getCacheBuilder();
         $cacheBuilder->buildCache($language);
-
-        // trigger an event
-        BackendModel::triggerEvent('Pages', 'after_recreated_cache');
     }
 
     /**

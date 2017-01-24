@@ -225,6 +225,11 @@ class DataGridFunctions
                     $greyOut = true;
                 }
                 break;
+            case 'status':
+                if ($value == 'hidden') {
+                    $greyOut = true;
+                }
+                break;
             case 'hidden':
                 if ($value == 'Y') {
                     $greyOut = true;

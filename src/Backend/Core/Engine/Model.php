@@ -44,21 +44,6 @@ class Model extends \Common\Core\Model
             $warnings[] = array('message' => BackendLanguage::err('DebugModeIsActive'));
         }
 
-        // check if this action is allowed
-        if (Authentication::isAllowedAction('Index', 'Settings')) {
-            // check if the fork API keys are available
-            if (self::get('fork.settings')->get('Core', 'fork_api_private_key') == '' ||
-                self::get('fork.settings')->get('Core', 'fork_api_public_key') == ''
-            ) {
-                $warnings[] = array(
-                    'message' => sprintf(
-                        BackendLanguage::err('ForkAPIKeys'),
-                        self::createURLForAction('Index', 'Settings')
-                    ),
-                );
-            }
-        }
-
         // check for extensions warnings
         $warnings = array_merge($warnings, BackendExtensionsModel::checkSettings());
 
@@ -481,8 +466,11 @@ class Model extends \Common\Core\Model
             $return = array();
         }
         $finder = new Finder();
-        foreach ($finder->directories()->in(PATH_WWW . '/src/Backend/Modules')->depth('==0') as $folder) {
-            $return[] = $folder->getBasename();
+        $directories = $finder->directories()->in(
+            __DIR__ . '/../../Modules'
+        )->depth('==0');
+        foreach ($directories as $directory) {
+            $return[] = $directory->getBasename();
         }
 
         return $return;
@@ -799,23 +787,6 @@ class Model extends \Common\Core\Model
     }
 
     /**
-     * @deprecated: twig doesn't contain this same type of caching out of the box.
-     * Use https://github.com/asm89/twig-cache-extension instead
-     *
-     * @param string $module   A specific module to clear the cache for.
-     * @param string $language The language to use.
-     */
-    public static function invalidateFrontendCache($module = null, $language = null)
-    {
-        trigger_error(
-            'invalidateFrontendCache is deprecated since twig does not use the
-            same caching mechanisme. You can use https://github.com/asm89/twig-cache-extension
-            if you want a similar type of template cache.',
-            E_USER_DEPRECATED
-        );
-    }
-
-    /**
      * Is module installed?
      *
      * @param string $module
@@ -827,117 +798,6 @@ class Model extends \Common\Core\Model
         $modules = self::getModules();
 
         return (in_array((string) $module, $modules));
-    }
-
-    /**
-     * Ping the known webservices
-     *
-     * @param string $pageOrFeedURL The page/feed that has changed.
-     * @param string $category      An optional category for the site.
-     *
-     * @return bool If everything went fne true will, otherwise false.
-     * @throws Exception
-     *
-     * @deprecated
-     */
-    public static function ping($pageOrFeedURL = null, $category = null)
-    {
-        $siteTitle = self::get('fork.settings')->get('Core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE);
-        $siteURL = SITE_URL;
-        $pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
-        $category = ($category !== null) ? (string) $category : null;
-
-        // get ping services
-        $pingServices = self::get('fork.settings')->get('Core', 'ping_services', null);
-
-        // no ping services available or older than one month ago
-        if ($pingServices === null || $pingServices['date'] < strtotime('-1 month')) {
-            // get ForkAPI-keys
-            $publicKey = self::get('fork.settings')->get('Core', 'fork_api_public_key', '');
-            $privateKey = self::get('fork.settings')->get('Core', 'fork_api_private_key', '');
-
-            // validate keys
-            if ($publicKey == '' || $privateKey == '') {
-                return false;
-            }
-
-            // require the class
-            require_once PATH_LIBRARY . '/external/fork_api.php';
-
-            // create instance
-            $forkAPI = new \ForkAPI($publicKey, $privateKey);
-
-            // try to get the services
-            try {
-                $pingServices['services'] = $forkAPI->pingGetServices();
-                $pingServices['date'] = time();
-            } catch (Exception $e) {
-                // check if the error should not be ignored
-                if (mb_strpos($e->getMessage(), 'Operation timed out') === false &&
-                    mb_strpos($e->getMessage(), 'Invalid headers') === false
-                ) {
-                    if (BackendModel::getContainer()->getParameter('kernel.debug')) {
-                        throw $e;
-                    } else {
-                        // stop, hammertime
-                        return false;
-                    }
-                }
-            }
-
-            // store the services
-            self::get('fork.settings')->set('Core', 'ping_services', $pingServices);
-        }
-
-        // make sure services array will not trigger an error (even if we couldn't load any)
-        if (!isset($pingServices['services']) || !$pingServices['services']) {
-            $pingServices['services'] = array();
-        }
-
-        // loop services
-        foreach ($pingServices['services'] as $service) {
-            $client = new \SpoonXMLRPCClient($service['url']);
-            $client->setUserAgent('Fork ' . FORK_VERSION);
-            $client->setTimeout(10);
-            $client->setPort($service['port']);
-
-            try {
-                // extended ping?
-                if ($service['type'] == 'extended') {
-                    // no page or feed URL present?
-                    if ($pageOrFeedURL === null) {
-                        continue;
-                    }
-
-                    $parameters[] = array('type' => 'string', 'value' => $siteTitle);
-                    $parameters[] = array('type' => 'string', 'value' => $siteURL);
-                    $parameters[] = array('type' => 'string', 'value' => $pageOrFeedURL);
-                    if ($category !== null) {
-                        $parameters[] = array('type' => 'string', 'value' => $category);
-                    }
-
-                    $client->execute('weblogUpdates.extendedPing', $parameters);
-                } else {
-                    // default ping
-                    $parameters[] = array('type' => 'string', 'value' => $siteTitle);
-                    $parameters[] = array('type' => 'string', 'value' => $siteURL);
-
-                    $client->execute('weblogUpdates.ping', $parameters);
-                }
-            } catch (Exception $e) {
-                // check if the error should not be ignored
-                if (mb_strpos($e->getMessage(), 'Operation timed out') === false &&
-                    mb_strpos($e->getMessage(), 'Invalid headers') === false
-                ) {
-                    if (BackendModel::getContainer()->getParameter('kernel.debug')) {
-                        throw $e;
-                    }
-                }
-                continue;
-            }
-        }
-
-        return true;
     }
 
     /**

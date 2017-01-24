@@ -167,24 +167,6 @@ class Page extends FrontendBaseObject
 
         // store statistics
         $this->storeStatistics();
-
-        // trigger event
-        Model::triggerEvent(
-            'Core',
-            'after_page_processed',
-            array(
-                 'id' => $this->getId(),
-                 'record' => $this->getRecord(),
-                 'statusCode' => $this->getStatusCode(),
-                 'sessionId' => \SpoonSession::getSessionId(),
-                 'visitorId' => Model::getVisitorId(),
-                 'SESSION' => $_SESSION,
-                 'COOKIE' => $_COOKIE,
-                 'GET' => $_GET,
-                 'POST' => $_POST,
-                 'SERVER' => $_SERVER,
-            )
-        );
     }
 
     /**

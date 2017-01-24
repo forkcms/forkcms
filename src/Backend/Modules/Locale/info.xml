@@ -28,10 +28,4 @@
       <url><![CDATA[http://www.lowiebenoot.be]]></url>
     </author>
   </authors>
-  <events>
-    <event application="backend" name="after_add"><![CDATA[Triggered when a locale is added.]]></event>
-    <event application="backend" name="after_delete"><![CDATA[Triggered when a locale is deleted.]]></event>
-    <event application="backend" name="after_edit"><![CDATA[Triggered when a locale is edited.]]></event>
-    <event application="backend" name="after_import"><![CDATA[Triggered when locale is imported.]]></event>
-  </events>
 </module>

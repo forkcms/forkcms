@@ -378,9 +378,6 @@ class Edit extends BackendBaseActionEdit
                     $redirectUrl .= 'saved';
                 }
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect($redirectUrl);
             }
