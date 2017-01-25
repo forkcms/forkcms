@@ -319,6 +319,10 @@ jsBackend.ckeditor =
 
         // paste options
         forcePasteAsPlainText: true,
+        pasteFromWordRemoveFontStyles: true,
+
+        // The CSS file(s) to be used to apply style to editor content.
+        // It should reflect the CSS used in the target pages where the content is to be displayed.
         contentsCss: [],
 
         // buttons
@@ -332,19 +336,7 @@ jsBackend.ckeditor =
             { name: 'styles', items: [ 'Format', 'Styles' ] }
         ],
 
-        // buttons specific for the newsletter
-        toolbar_Newsletter: [
-            {name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
-            {name: 'clipboard', items: ['Undo', 'Redo']},
-            {name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
-            {name: 'links', items: ['Link', 'Unlink', 'Anchor']},
-            {name: 'insert', items: ['Image', 'MediaEmbed', '-', 'SpecialChar']},
-            {name: 'document', items: ['Templates', 'Source']},
-            {name: 'styles', items: ['Format']}
-        ],
-
-        // skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
-        skin: 'bootstrapck',
+        skin: 'moono-lisa',
 
         toolbar: 'Full',
         toolbarStartupExpanded: true,
@@ -353,6 +345,14 @@ jsBackend.ckeditor =
         entities: false,
         entities_greek: false,
         entities_latin: false,
+
+        // No file browser upload button in the images dialog needed
+        filebrowserUploadUrl: null,
+        filebrowserImageUploadUrl: null,
+        filebrowserFlashUploadUrl: null,
+
+        // uploading drag&drop images, see http://docs.ckeditor.com/#!/guide/dev_file_upload
+        uploadUrl: '/src/Backend/Core/Js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
 
         // load some extra plugins
         extraPlugins: 'stylesheetparser,mediaembed',
@@ -375,7 +375,7 @@ jsBackend.ckeditor =
         jsBackend.ckeditor.defaultConfig.templates_files = ['/backend/ajax?fork[module]=Core&fork[action]=Templates&fork[language]=' + jsBackend.current.language];
 
         // load the editor
-        if ($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0) {
+        if ($('textarea.inputEditor, textarea.inputEditorError').length > 0) {
             // language options
             jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language;
             jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language');
@@ -412,17 +412,8 @@ jsBackend.ckeditor =
         // extend the editor config
         var editorConfig = $.extend({}, jsBackend.ckeditor.defaultConfig);
 
-        // specific config for the newsletter
-        var newsletterConfig = $.extend({}, jsBackend.ckeditor.defaultConfig,
-            {
-                toolbar: 'Newsletter',
-                toolbarStartupExpanded: true,
-                toggleToolbar: false
-            });
-
         // bind on inputEditor and inputEditorError
         $('textarea.inputEditor, textarea.inputEditorError').ckeditor(jsBackend.ckeditor.callback, editorConfig);
-        $('textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').ckeditor(jsBackend.ckeditor.callback, newsletterConfig);
     },
 
     callback: function (element) {

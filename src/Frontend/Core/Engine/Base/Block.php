@@ -556,14 +556,17 @@ class Block extends Object
         $this->header->setPageTitle($meta->getTitle(), $meta->isTitleOverwrite());
         $this->header->addMetaDescription($meta->getDescription(), $meta->isDescriptionOverwrite());
         $this->header->addMetaKeywords($meta->getKeywords(), $meta->isKeywordsOverwrite());
+        $SEO = [];
         if ($meta->hasSEOFollow()) {
-            $this->header->addMetaData(
-                ['name' => 'robots', 'content' => $meta->getSEOFollow()]
-            );
+            $SEO[] = $meta->getSEOFollow();
         }
         if ($meta->hasSEOIndex()) {
+            $SEO[] = $meta->getSEOIndex();
+        }
+        if (!empty($SEO)) {
             $this->header->addMetaData(
-                ['name' => 'robots', 'content' => $meta->getSEOIndex()]
+                ['name' => 'robots', 'content' => implode(', ', $SEO)],
+                true
             );
         }
     }

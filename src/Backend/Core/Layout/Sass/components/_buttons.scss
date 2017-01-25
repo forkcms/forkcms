@@ -36,6 +36,10 @@
     + .btn {
       margin-left: 2px;
     }
+
+    + .btn.dropdown-toggle {
+      margin-left: -1px;
+    }
   }
 
   @media screen and (min-width: $screen-lg) {
