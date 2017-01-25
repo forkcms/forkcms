@@ -1,8 +1,7 @@
 /**
  * Interaction for the pages module
  */
-jsBackend.pages =
-{
+jsBackend.pages = {
     // init, something like a constructor
     init: function()
     {
@@ -10,8 +9,7 @@ jsBackend.pages =
         jsBackend.pages.tree.init();
 
         // are we adding or editing?
-        if(typeof templates != 'undefined')
-        {
+        if (typeof templates != 'undefined') {
             // load stuff for the page
             jsBackend.pages.extras.init();
             jsBackend.pages.template.init();
@@ -27,23 +25,23 @@ jsBackend.pages =
         // show / hide the remove from search index checkbox on change
         $('#authRequired').on('change', function(e)
         {
-            if($(this).is(':checked')){
-              $('[data-role="remove-from-search-index"]').removeClass('hidden');
-            } else {
-              $('[data-role="remove-from-search-index"]').addClass('hidden');
+            if ($(this).is(':checked')) {
+                $('[data-role="remove-from-search-index"]').removeClass('hidden');
+            }
+            else {
+                $('[data-role="remove-from-search-index"]').addClass('hidden');
             }
         }).trigger('change');
 
         // do meta
-        if($('#title').length > 0) $('#title').doMeta();
+        if ($('#title').length > 0) $('#title').doMeta();
     }
 };
 
 /**
  * All methods related to the controls (buttons, ...)
  */
-jsBackend.pages.extras =
-{
+jsBackend.pages.extras = {
     // init, something like a constructor
     init: function()
     {
@@ -57,11 +55,11 @@ jsBackend.pages.extras =
         $(document).on('click', '.showEditor', jsBackend.pages.extras.editContent);
         $(document).on('click', '.toggleVisibility', jsBackend.pages.extras.toggleVisibility);
 
-		    // make the default position sortable
-		    jsBackend.pages.extras.sortable($('#templateVisualFallback div.linkedBlocks'));
+        // make the default position sortable
+        jsBackend.pages.extras.sortable($('#templateVisualFallback div.linkedBlocks'));
 
         $('#authRequired').on('change', jsBackend.pages.extras.showGroups);
-	},
+    },
 
     // store the extra for real
     addBlock: function(selectedExtraId, selectedPosition)
@@ -100,10 +98,13 @@ jsBackend.pages.extras =
         var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible);
 
         // block/widget = don't show editor
-        if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') $('.blockContentHTML', block).hide();
-
+        if (typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') {
+            $('.blockContentHTML', block).hide();
+        }
         // editor
-        else $('.blockContentHTML', block).show();
+        else {
+            $('.blockContentHTML', block).show();
+        }
 
         // reset block indexes
         // jsBackend.pages.extras.resetIndexes();
@@ -115,25 +116,22 @@ jsBackend.pages.extras =
     addBlockVisual: function(position, index, extraId, visible)
     {
         // check if the extra is valid
-        if(extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
+        if (extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
 
         // block
         var editLink, title, description;
-        if(extraId != 0)
-        {
+        if (extraId != 0) {
             // link to edit this block/widget
             editLink = '';
-            if(extrasById[extraId].type == 'block' && extrasById[extraId].data.url) editLink = extrasById[extraId].data.url;
-            if(typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
+            if (extrasById[extraId].type == 'block' && extrasById[extraId].data.url) editLink = extrasById[extraId].data.url;
+            if (typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
 
             // title, description & visibility
             title = extrasById[extraId].human_name;
             description = extrasById[extraId].path;
         }
-
         // editor
-        else
-        {
+        else {
             // link to edit this content, title, description & visibility
             editLink = '';
             title = utils.string.ucfirst(jsBackend.locale.lbl('Editor'));
@@ -142,14 +140,14 @@ jsBackend.pages.extras =
 
         // create html to be appended in template-view
         var blockHTML = '<div class="templatePositionCurrentType' + (visible ? ' ' : ' templateDisabled') + '" data-block-id="' + index + '">' +
-                            '<span class="templateTitle">' + title + '</span>' +
-                            '<span class="templateDescription">' + description + '</span>' +
-                            '<div class="btn-group buttonHolder">' +
-                                '<a href="#" class="btn btn-default btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
-                                '<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'btn btn-primary btn-xs' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
-                                '<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="fa fa-trash-o"></span></a>' +
-                            '</div>' +
-                        '</div>';
+            '<span class="templateTitle">' + title + '</span>' +
+            '<span class="templateDescription">' + description + '</span>' +
+            '<div class="btn-group buttonHolder">' +
+            '<a href="#" class="btn btn-default btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
+            '<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'btn btn-primary btn-xs' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
+            '<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="fa fa-trash-o"></span></a>' +
+            '</div>' +
+            '</div>';
 
         // set block description in template-view
         $('#templatePosition-' + position + ' .linkedBlocks').append(blockHTML);
@@ -218,7 +216,7 @@ jsBackend.pages.extras =
             $('#blockHtml').modal('hide');
         });
 
-        $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
+        $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function(e) {
             // set content in editor
             CKEDITOR.instances['html'].setData(previousContent);
         }).modal('show');
@@ -228,7 +226,7 @@ jsBackend.pages.extras =
     hideFallback: function()
     {
         // after removing all from fallback; hide fallback
-        if($('#templateVisualFallback .templatePositionCurrentType').length === 0) $('#templateVisualFallback').hide();
+        if ($('#templateVisualFallback .templatePositionCurrentType').length === 0) $('#templateVisualFallback').hide();
     },
 
     // populate the dropdown with the modules
@@ -244,13 +242,11 @@ jsBackend.pages.extras =
         $('#extraExtraId').html('<option value="0">-</option>');
 
         // only widgets and block need the module dropdown
-        if(selectedType == 'widget' || selectedType == 'block')
-        {
+        if (selectedType == 'widget' || selectedType == 'block') {
             // loop modules
-            for(var i in extrasData)
-            {
+            for (var i in extrasData) {
                 // add option if needed
-                if(typeof extrasData[i]['items'][selectedType] != 'undefined') $('#extraModule').append('<option value="'+ extrasData[i].value +'">'+ extrasData[i].name +'</option>');
+                if (typeof extrasData[i]['items'][selectedType] != 'undefined') $('#extraModule').append('<option value="' + extrasData[i].value + '">' + extrasData[i].name + '</option>');
             }
 
             // show
@@ -270,20 +266,15 @@ jsBackend.pages.extras =
         $('#extraExtraId').html('');
 
         // any items?
-        if(typeof extrasData[selectedModule] != 'undefined' && typeof extrasData[selectedModule]['items'][selectedType] != 'undefined')
-        {
-            if(extrasData[selectedModule]['items'][selectedType].length == 1 && selectedType == 'block')
-            {
-                $('#extraExtraId').append('<option selected="selected" value="'+ extrasData[selectedModule]['items'][selectedType][0].id +'">'+ extrasData[selectedModule]['items'][selectedType][0].label +'</option>');
+        if (typeof extrasData[selectedModule] != 'undefined' && typeof extrasData[selectedModule]['items'][selectedType] != 'undefined') {
+            if (extrasData[selectedModule]['items'][selectedType].length == 1 && selectedType == 'block') {
+                $('#extraExtraId').append('<option selected="selected" value="' + extrasData[selectedModule]['items'][selectedType][0].id + '">' + extrasData[selectedModule]['items'][selectedType][0].label + '</option>');
             }
-
-            else
-            {
+            else {
                 // loop items
-                for(var i in extrasData[selectedModule]['items'][selectedType])
-                {
+                for (var i in extrasData[selectedModule]['items'][selectedType]) {
                     // add option
-                    $('#extraExtraId').append('<option value="'+ extrasData[selectedModule]['items'][selectedType][i].id +'">'+ extrasData[selectedModule]['items'][selectedType][i].label +'</option>');
+                    $('#extraExtraId').append('<option value="' + extrasData[selectedModule]['items'][selectedType][i].id + '">' + extrasData[selectedModule]['items'][selectedType][i].label + '</option>');
                 }
 
                 // show
@@ -336,7 +327,7 @@ jsBackend.pages.extras =
     setContent: function(index, content)
     {
         // the content to set
-        if(content != null) $('#blockHtml' + index).val(content);
+        if (content != null) $('#blockHtml' + index).val(content);
 
         // add short description to visual representation of block
         var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
@@ -365,7 +356,7 @@ jsBackend.pages.extras =
             var id = $(this).val();
 
             // check if a block is already linked
-            if(id !== '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
+            if (id !== '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
         });
 
         // hide warnings
@@ -376,8 +367,7 @@ jsBackend.pages.extras =
         var enabled = true;
 
         // blocks linked?
-        if(hasModules)
-        {
+        if (hasModules) {
             // disable module selection
             enabled = false;
 
@@ -386,8 +376,7 @@ jsBackend.pages.extras =
         }
 
         // home can't have any modules linked!
-        if(typeof pageID != 'undefined' && pageID == 1)
-        {
+        if (typeof pageID != 'undefined' && pageID == 1) {
             // disable module selection
             enabled = false;
 
@@ -406,9 +395,8 @@ jsBackend.pages.extras =
         jsBackend.pages.extras.populateExtraModules();
 
         // initialize the modal for choosing an extra
-        if($('#addBlock').length > 0)
-        {
-            $('#addBlockSubmit').unbind('click').on('click', function (e) {
+        if ($('#addBlock').length > 0) {
+            $('#addBlockSubmit').unbind('click').on('click', function(e) {
                 e.preventDefault();
                 // fetch the selected extra id
                 var selectedExtraId = $('#extraExtraId').val();
@@ -423,8 +411,7 @@ jsBackend.pages.extras =
                 $('#addBlock').modal('hide');
 
                 // if the added block was an editor, show the editor immediately
-                if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
-                {
+                if (index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {
                     $('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
                 }
             });
@@ -443,9 +430,8 @@ jsBackend.pages.extras =
         var element = $(this);
 
         // initialize the modal for deleting a block
-        if($('#confirmDeleteBlock').length > 0)
-        {
-            $('#confirmDeleteBlockSubmit').unbind('click').on('click', function (e) {
+        if ($('#confirmDeleteBlock').length > 0) {
+            $('#confirmDeleteBlockSubmit').unbind('click').on('click', function(e) {
                 // delete this block
                 jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').attr('data-block-id'));
 
@@ -471,8 +457,7 @@ jsBackend.pages.extras =
     sortable: function(element)
     {
         // make blocks sortable
-        element.sortable(
-        {
+        element.sortable({
             items: '.templatePositionCurrentType',
             tolerance: 'pointer',
             placeholder: 'dragAndDropPlaceholder',
@@ -497,13 +482,11 @@ jsBackend.pages.extras =
             start: function(e, ui)
             {
                 // check if we're moving from template
-                if($(this).parents('#templateVisualLarge').length > 0)
-                {
+                if ($(this).parents('#templateVisualLarge').length > 0) {
                     // disable dropping to fallback
                     $('div.linkedBlocks').sortable('option', 'connectWith', '#templateVisualLarge div.linkedBlocks');
                 }
-                else
-                {
+                else {
                     // enable dropping on fallback
                     $('div.linkedBlocks').sortable('option', 'connectWith', 'div.linkedBlocks');
                 }
@@ -543,9 +526,10 @@ jsBackend.pages.extras =
         $(this).closest('*[data-block-id]').removeClass('templateDisabled');
 
         // toggle visibility indicators
-        if(visible) $(this).find('.fa').addClass('fa-eye');
-        else
-        {
+        if (visible) {
+            $(this).find('.fa').addClass('fa-eye');
+        }
+        else {
             $(this).find('.fa').addClass('fa-eye-slash');
             $(this).closest('*[data-block-id]').addClass('templateDisabled');
         }
@@ -561,8 +545,7 @@ jsBackend.pages.extras =
 /**
  * All methods related to the templates
  */
-jsBackend.pages.template =
-{
+jsBackend.pages.template = {
     // indicates whether or not the page content is original or has been altered already
     original: true,
 
@@ -590,7 +573,8 @@ jsBackend.pages.template =
         // show or hide the image tab
         if ('image' in current.data && current.data.image) {
             $('.js-page-image-tab').show();
-        } else {
+        }
+        else {
             $('.js-page-image-tab').hide();
         }
 
@@ -614,7 +598,7 @@ jsBackend.pages.template =
         $('input[id^=blockPosition][value=fallback][id!=blockPosition0]').parent().remove();
 
         // check if we have already committed changes (if not, we can just ignore existing blocks and remove all of them)
-        if(current != old && jsBackend.pages.template.original) $('input[id^=blockPosition][id!=blockPosition0]').parent().remove();
+        if (current != old && jsBackend.pages.template.original) $('input[id^=blockPosition][id!=blockPosition0]').parent().remove();
 
         // loop existing blocks
         $('#editContent .contentBlock').each(function(i)
@@ -626,30 +610,27 @@ jsBackend.pages.template =
             var html = $('textarea[id^=blockHtml]', this).val();
 
             // skip default (base) block (= continue)
-            if(index == 0) return true;
+            if (index == 0) return true;
 
             // blocks were present already = template was not original
             jsBackend.pages.template.original = false;
 
             // check if this block is a default of the old template, in which case it'll go to the fallback position
-            if(current != old && $.inArray(extraId, old.data.default_extras[position]) >= 0 && html === '') $('input[id=blockPosition' + index + ']', this).val('fallback');
+            if (current != old && $.inArray(extraId, old.data.default_extras[position]) >= 0 && html === '') $('input[id=blockPosition' + index + ']', this).val('fallback');
         });
 
         // init var
         newDefaults = [];
 
         // check if this default block has been changed
-        if(current != old || (typeof initDefaults != 'undefined' && initDefaults))
-        {
+        if (current != old || (typeof initDefaults != 'undefined' && initDefaults)) {
             // this is a variable indicating that the add-action may initially set default blocks
-            if(typeof initDefaults != 'undefined') initDefaults = false;
+            if (typeof initDefaults != 'undefined') initDefaults = false;
 
             // loop positions in new template
-            for(var position in current.data.default_extras)
-            {
+            for (var position in current.data.default_extras) {
                 // loop default extra's on positions
-                for(var block in current.data.default_extras[position])
-                {
+                for (var block in current.data.default_extras[position]) {
                     // grab extraId
                     extraId = current.data.default_extras[position][block];
 
@@ -657,10 +638,12 @@ jsBackend.pages.template =
                     var existingBlock = $('input[id^=blockPosition][value=fallback]:not(#blockPosition0)').parent().find('input[id^=blockExtraId][value=' + extraId + ']').parent();
 
                     // if this block did net yet exist, add it
-                    if(existingBlock.length === 0) newDefaults.push(new Array(extraId, position));
-
-                    // if this block already existed, reset it to correct (new) position
-                    else $('input[id^=blockPosition]', existingBlock).val(position);
+                    if (existingBlock.length === 0) {
+                        newDefaults.push(new Array(extraId, position));
+                    }// if this block already existed, reset it to correct (new) position
+                    else {
+                        $('input[id^=blockPosition]', existingBlock).val(position);
+                    }
                 }
             }
         }
@@ -675,11 +658,10 @@ jsBackend.pages.template =
             var visible = $('input[id^=blockVisible]', this).attr('checked');
 
             // skip default (base) block (= continue)
-            if(index == 0) return true;
+            if (index == 0) return true;
 
             // check if this position exists
-            if($.inArray(position, current.data.names) < 0)
-            {
+            if ($.inArray(position, current.data.names) < 0) {
                 // blocks in positions that do no longer exist should go to fallback
                 position = 'fallback';
 
@@ -694,24 +676,23 @@ jsBackend.pages.template =
             added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible);
 
             // if the visual could be not added, remove the content entirely
-            if(!added) $(this).remove();
+            if (!added) $(this).remove();
         });
 
         // reset block indexes
         jsBackend.pages.extras.resetIndexes();
 
         // add new defaults at last
-        for(var i in newDefaults) jsBackend.pages.extras.addBlock(newDefaults[i][0], newDefaults[i][1]);
+        for (var i in newDefaults) jsBackend.pages.extras.addBlock(newDefaults[i][0], newDefaults[i][1]);
     },
 
     // bind template change submit click event
     changeTemplateBindSubmit: function(e)
     {
         // prevent the default action
-        $('#changeTemplateSubmit').unbind('click').on('click', function (e) {
+        $('#changeTemplateSubmit').unbind('click').on('click', function(e) {
             e.preventDefault();
-            if($('#templateList input:radio:checked').val() != $('#templateId').val())
-            {
+            if ($('#templateList input:radio:checked').val() != $('#templateId').val()) {
                 // change the template for real
                 jsBackend.pages.template.changeTemplate();
             }
@@ -725,52 +706,46 @@ jsBackend.pages.template =
 /**
  * All methods related to the tree
  */
-jsBackend.pages.tree =
-{
+jsBackend.pages.tree = {
     // init, something like a constructor
     init: function()
     {
-        if($('#tree div').length === 0) return false;
+        if ($('#tree div').length === 0) return false;
 
         // add "treeHidden"-class on leafs that are hidden, only for browsers that don't support opacity
-        if(!jQuery.support.opacity) $('#tree ul li[rel="hidden"]').addClass('treeHidden');
+        if (!jQuery.support.opacity) $('#tree ul li[rel="hidden"]').addClass('treeHidden');
 
         var openedIds = [];
-        if(typeof pageID != 'undefined')
-        {
+        if (typeof pageID != 'undefined') {
             // get parents
-            var parents = $('#page-'+ pageID).parents('li');
+            var parents = $('#page-' + pageID).parents('li');
 
             // init var
-            openedIds = ['page-'+ pageID];
+            openedIds = ['page-' + pageID];
 
             // add parents
-            for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).prop('id'));
+            for (var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).prop('id'));
         }
 
         // add home if needed
-        if(!utils.array.inArray('page-1', openedIds)) openedIds.push('page-1');
+        if (!utils.array.inArray('page-1', openedIds)) openedIds.push('page-1');
 
-        var options =
-        {
-            ui: { theme_name: 'fork' },
+        var options = {
+            ui: {theme_name: 'fork'},
             opened: openedIds,
-            rules:
-            {
+            rules: {
                 multiple: false,
                 multitree: 'all',
                 drag_copy: false
             },
-            lang: { loading: utils.string.ucfirst(jsBackend.locale.lbl('Loading')) },
-            callback:
-            {
+            lang: {loading: utils.string.ucfirst(jsBackend.locale.lbl('Loading'))},
+            callback: {
                 beforemove: jsBackend.pages.tree.beforeMove,
                 onselect: jsBackend.pages.tree.onSelect,
                 onmove: jsBackend.pages.tree.onMove
             },
-            plugins:
-            {
-                cookie: { prefix: 'jstree_', types: { selected: false }, options: { path: '/' } }
+            plugins: {
+                cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/'}}
             }
         };
 
@@ -781,11 +756,11 @@ jsBackend.pages.tree =
         $('.tree li.open').each(function()
         {
             // if the so-called open-element doesn't have any childs we should replace the open-class.
-            if($(this).find('ul').length === 0) $(this).removeClass('open').addClass('leaf');
+            if ($(this).find('ul').length === 0) $(this).removeClass('open').addClass('leaf');
         });
 
         // set the item selected
-        if(typeof selectedId != 'undefined') $('#' + selectedId).addClass('selected');
+        if (typeof selectedId != 'undefined') $('#' + selectedId).addClass('selected');
     },
 
     // before an item will be moved we have to do some checks
@@ -794,43 +769,42 @@ jsBackend.pages.tree =
         // get pageID that has to be moved
         var parentPageID;
         var currentPageID = $(node).prop('id').replace('page-', '');
-        if(typeof refNode == 'undefined') parentPageID = 0;
-        else parentPageID = $(refNode).prop('id').replace('page-', '');
+        if (typeof refNode == 'undefined') {
+            parentPageID = 0;
+        }
+        else {
+            parentPageID = $(refNode).prop('id').replace('page-', '');
+        }
 
         // home is a special item
-        if(parentPageID == '1')
-        {
-            if(type == 'before') return false;
-            if(type == 'after') return false;
+        if (parentPageID == '1') {
+            if (type == 'before') return false;
+            if (type == 'after') return false;
         }
 
         // init var
         var result = false;
 
         // make the call
-        $.ajax(
-        {
+        $.ajax({
             async: false, // important that this isn't asynchronous
-            data:
-            {
-                fork: { action: 'GetInfo' },
+            data: {
+                fork: {action: 'GetInfo'},
                 id: currentPageID
             },
             error: function(XMLHttpRequest, textStatus, errorThrown)
             {
-                if(jsBackend.debug) alert(textStatus);
+                if (jsBackend.debug) alert(textStatus);
                 result = false;
             },
             success: function(json, textStatus)
             {
-                if(json.code != 200)
-                {
-                    if(jsBackend.debug) alert(textStatus);
+                if (json.code != 200) {
+                    if (jsBackend.debug) alert(textStatus);
                     result = false;
                 }
-                else
-                {
-                    if(json.data.allow_move == 'Y') result = true;
+                else {
+                    if (json.data.allow_move == 'Y') result = true;
                 }
             }
         });
@@ -847,7 +821,7 @@ jsBackend.pages.tree =
         var newPageURL = $(node).find('a').prop('href');
 
         // only redirect if destination isn't the current one.
-        if(typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
+        if (typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
     },
 
     // when an item is moved
@@ -861,15 +835,17 @@ jsBackend.pages.tree =
 
         // get pageID wheron the page has been dropped
         var droppedOnPageID;
-        if(typeof refNode == 'undefined') droppedOnPageID = 0;
-        else droppedOnPageID = $(refNode).prop('id').replace('page-', '');
+        if (typeof refNode == 'undefined') {
+            droppedOnPageID = 0;
+        }
+        else {
+            droppedOnPageID = $(refNode).prop('id').replace('page-', '');
+        }
 
         // make the call
-        $.ajax(
-        {
-            data:
-            {
-                fork: { action: 'Move' },
+        $.ajax({
+            data: {
+                fork: {action: 'Move'},
                 id: currentPageID,
                 dropped_on: droppedOnPageID,
                 type: type,
@@ -877,9 +853,8 @@ jsBackend.pages.tree =
             },
             success: function(json, textStatus)
             {
-                if(json.code != 200)
-                {
-                    if(jsBackend.debug) alert(textStatus);
+                if (json.code != 200) {
+                    if (jsBackend.debug) alert(textStatus);
 
                     // show message
                     jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'));
@@ -887,8 +862,7 @@ jsBackend.pages.tree =
                     // rollback
                     $.tree.rollback(rollback);
                 }
-                else
-                {
+                else {
                     // show message
                     jsBackend.messages.add('success', jsBackend.locale.msg('PageIsMoved').replace('%1$s', json.data.title));
                 }
