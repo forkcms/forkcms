@@ -10,6 +10,7 @@ matrix:
 
 script:
   - phpunit --coverage-clover=coverage.clover
+  - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
 
 before_script:
   - npm install -g bower
