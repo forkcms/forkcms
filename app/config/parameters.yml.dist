@@ -18,7 +18,6 @@ parameters:
     site.multilanguage:     <site-multilanguage>
     site.default_language:  <site-default-language>
     site.path_www:          %kernel.root_dir%/..
-    site.path_library:      %site.path_www%/library
 
     action.group_tag:       <action-group-tag>
     action.rights_level:    <action-rights-level>

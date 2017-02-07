@@ -18,7 +18,6 @@ parameters:
     site.multilanguage:     false
     site.default_language:  en
     site.path_www:          %kernel.root_dir%/..
-    site.path_library:      %site.path_www%/library
 
     action.group_tag:       \@actiongroup
     action.rights_level:    7
