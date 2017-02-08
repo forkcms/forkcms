@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Application routing
  */
-class ApplicationRouting extends Controller
+class ForkController extends Controller
 {
     const DEFAULT_APPLICATION = 'Frontend';
 
