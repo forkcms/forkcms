@@ -818,6 +818,10 @@
   </Backend>
   <Frontend>
     <Core>
+      <item type="error" name="ResetPasswordInvalidCode">
+        <translation language="nl"><![CDATA[De code is niet meer geldig of reeds gebruikt.]]></translation>
+        <translation language="en"><![CDATA[The code is not valid or already used.]]></translation>
+      </item>
       <item type="label" name="Settings">
         <translation language="nl"><![CDATA[instellingen]]></translation>
         <translation language="en"><![CDATA[settings]]></translation>
