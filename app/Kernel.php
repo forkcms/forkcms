@@ -21,7 +21,7 @@ use Backend\DependencyInjection\BackendExtension;
  * The Kernel provides a proper way to load an environment and DI container.
  * It also handles requests and responses.
  */
-abstract class Kernel extends BaseKernel implements KernelInterface
+abstract class Kernel extends BaseKernel
 {
     /** @var Request We need this to check if a module is being installed */
     private $request;
