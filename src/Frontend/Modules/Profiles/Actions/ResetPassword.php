@@ -67,7 +67,6 @@ class ResetPassword extends FrontendBaseBlock
 
             // parse
             $this->parse();
-
         } else {
             $this->redirect(FrontendNavigation::getURL(404));
         }
