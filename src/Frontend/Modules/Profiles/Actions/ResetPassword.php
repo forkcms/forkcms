@@ -55,7 +55,6 @@ class ResetPassword extends FrontendBaseBlock
 
                 // validate
                 $this->validateForm();
-
             } elseif ($this->URL->getParameter('sent') != 'true') {
                 // redirect
                 $this->redirect(
