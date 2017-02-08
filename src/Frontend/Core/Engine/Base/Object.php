@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
@@ -16,7 +17,7 @@ use Frontend\Core\Engine\Url;
 /**
  * This class will be the base of the objects used in on-site
  */
-class Object extends \KernelLoader
+class Object extends KernelLoader
 {
     /**
      * TwigTemplate instance

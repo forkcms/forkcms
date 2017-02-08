@@ -9,6 +9,7 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Authentication;
@@ -18,7 +19,7 @@ use Common\Exception\RedirectException;
 /**
  * This class will be the base of the objects used in the cms
  */
-class Object extends \KernelLoader
+class Object extends KernelLoader
 {
     /**
      * The current action

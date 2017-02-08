@@ -3,6 +3,7 @@
 namespace Common\Core;
 
 use Common\Exception\InvalidInitTypeException;
+use ForkCMS\App\KernelLoader;
 
 /*
  * This file is part of Fork CMS.
@@ -14,7 +15,7 @@ use Common\Exception\InvalidInitTypeException;
 /**
  * This class will initiate the application
  */
-abstract class Init extends \KernelLoader
+abstract class Init extends KernelLoader
 {
     /**
      * Current type

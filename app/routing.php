@@ -1,5 +1,7 @@
 <?php
 
+namespace ForkCMS\App;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Backend\Init as BackendInit;
 use Frontend\Init as FrontendInit;
 use Common\Exception\RedirectException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Application routing
@@ -45,7 +47,7 @@ class ApplicationRouting extends Controller
     /**
      * Runs the backend
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function backendController()
     {
@@ -61,7 +63,7 @@ class ApplicationRouting extends Controller
     /**
      * Runs the backend ajax requests
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function backendAjaxController()
     {
@@ -76,7 +78,7 @@ class ApplicationRouting extends Controller
     /**
      * Runs the cronjobs
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function backendCronjobController()
     {
@@ -91,7 +93,7 @@ class ApplicationRouting extends Controller
     /**
      * Runs the frontend requests
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function frontendController()
     {
@@ -106,7 +108,7 @@ class ApplicationRouting extends Controller
     /**
      * Runs the frontend ajax requests
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function frontendAjaxController()
     {
@@ -121,11 +123,11 @@ class ApplicationRouting extends Controller
     /**
      * Runs an application and returns the Response
      *
-     * @param \ApplicationInterface $application
+     * @param ApplicationInterface $application
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    protected function handleApplication(\ApplicationInterface $application)
+    protected function handleApplication(ApplicationInterface $application)
     {
         $application->passContainerToModels();
 

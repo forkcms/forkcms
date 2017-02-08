@@ -9,6 +9,7 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\ApplicationInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BackendLanguage;
@@ -17,7 +18,7 @@ use Backend\Core\Language\Language as BackendLanguage;
  * This class will handle AJAX-related stuff
  */
 
-class Ajax extends Base\Object implements \ApplicationInterface
+class Ajax extends Base\Object implements ApplicationInterface
 {
     /**
      * @var AjaxAction

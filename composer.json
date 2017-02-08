@@ -65,7 +65,8 @@
             "Backend\\": "src/Backend",
             "Common\\": "src/Common",
             "Console\\": "src/Console",
-            "ForkCMS\\": "src/ForkCMS"
+            "ForkCMS\\": "src/ForkCMS",
+            "ForkCMS\\App\\": "app"
         },
         "exclude-from-classmap": [
             "**/Tests/",

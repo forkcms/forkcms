@@ -9,13 +9,14 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  */
-class AjaxAction extends \KernelLoader
+class AjaxAction extends KernelLoader
 {
     const OK = 200;
     const BAD_REQUEST = 400;
