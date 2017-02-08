@@ -60,8 +60,12 @@
         ]
     },
     "autoload": {
-        "psr-0": {
-            "": "src/"
+        "psr-4": {
+            "Frontend\\": "src/Frontend",
+            "Backend\\": "src/Backend",
+            "Common\\": "src/Common",
+            "Console\\": "src/Console",
+            "ForkCMS\\": "src/ForkCMS"
         },
         "exclude-from-classmap": [
             "**/Tests/",
