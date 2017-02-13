@@ -35,7 +35,8 @@ FileETag MTime Size
 	RewriteRule src/Backend/Cache/Locale/.*\.php - [F]
 
 	# redirect all trafic to https
-	# RewriteCond %{HTTPS} !=on
+	# RewriteCond %{HTTPS} != on
+	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
 	# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 	# one url to rule them all
