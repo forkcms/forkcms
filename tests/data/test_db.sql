@@ -1833,18 +1833,18 @@ DROP TABLE IF EXISTS `meta`;
 CREATE TABLE `meta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `keywords` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `keywords_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `keywords_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `description_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `title_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
   `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
-  `custom` text CHARACTER SET utf8 COMMENT 'used for custom meta-information',
-  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'used for extra meta-information',
+  `url_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
+  `custom` longtext COLLATE utf8mb4_unicode_ci,
+  `data` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
-  KEY `idx_url` (`url`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Meta-information';
+  KEY `idx_url` (`url`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `meta` WRITE;
 /*!40000 ALTER TABLE `meta` DISABLE KEYS */;
