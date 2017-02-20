@@ -1,11 +1,15 @@
 <?php
 
+namespace ForkCMS\App;
+
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * If you want to extend Fork with an application of your own, you should implement this interface
@@ -24,7 +28,7 @@ interface ApplicationInterface
     /**
      * Sends the output of the app to our browser, in the form of a Response object.
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function display();
 }

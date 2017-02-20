@@ -1,5 +1,7 @@
 <?php
 
+namespace ForkCMS\App;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -18,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class BaseModel
 {
     /**
-     * @var Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     private static $container;
 
