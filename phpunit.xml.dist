@@ -25,7 +25,6 @@
             <exclude>src/Backend/Modules/Authentication/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Blog/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Pages/Tests/Actions</exclude>
-            <exclude>src/Api/*/Tests/Actions</exclude>
             <exclude>src/Frontend/Core/Tests/AjaxTest.php</exclude>
         </testsuite>
     </testsuites>
@@ -38,7 +37,6 @@
             <directory>src/Frontend/Modules/*/Tests/Actions</directory>
             <directory>src/Frontend/Core/Tests/AjaxTest.php</directory>
             <directory>src/Backend/Modules/*/Tests/Actions</directory>
-            <directory>src/Api/*/Tests/Actions</directory>
         </testsuite>
     </testsuites>
 
