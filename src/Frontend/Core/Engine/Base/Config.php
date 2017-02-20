@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -17,7 +18,7 @@ use Symfony\Component\Finder\Finder;
  * This is the base-object for config-files.
  * The module-specific config-files can extend the functionality from this class.
  */
-class Config extends \KernelLoader
+class Config extends KernelLoader
 {
     /**
      * The default action

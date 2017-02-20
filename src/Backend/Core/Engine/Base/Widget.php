@@ -10,6 +10,7 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Common\Exception\RedirectException;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -19,7 +20,7 @@ use Backend\Core\Engine\TwigTemplate;
 /**
  * This is the base-object for widgets
  */
-class Widget extends \KernelLoader
+class Widget extends KernelLoader
 {
     /**
      * The column wherein the widget should be shown

@@ -21,6 +21,7 @@ if (!is_dir(__DIR__ . '/vendor')) {
 
 require_once __DIR__ . '/autoload.php';
 
+use ForkCMS\App\AppKernel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
@@ -49,8 +50,6 @@ if (!file_exists($parametersFile)) {
         return;
     }
 }
-
-require_once __DIR__ . '/app/AppKernel.php';
 
 if (extension_loaded('newrelic')) {
     newrelic_name_transaction(strtok($request->getRequestUri(), '?'));
