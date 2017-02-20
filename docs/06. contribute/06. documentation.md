@@ -1,0 +1,41 @@
+# Documentation
+
+We ask contributors to help updating the documentation along the way they build or change features. Still, a lot of processes can be sometimes easier be explained by users.
+
+
+## Fixing spelling mistakes
+
+Everyone does the best he can to avoid mistakes, but not everyone speaks natively english. Most of the documentation is written by developers, not professional writers.
+
+Use [markdown](#Markdown) and [GitHub](#GitHub) as explained below to point us on the mistakes.
+
+
+## Extend guides
+
+Extra documentation or guides are always welcome, but their are a few guidelines to ensure that it stays easy to read for users.
+
+* We want the documentation to read as a book, therefore we try to guide the user through the different articles by adding intro and outro to every part.
+* Use full sentences instead of short small actions
+* Don't document other systems than Fork CMS. E.g. GitHub, reference to the Git or GitHub documentation instead of creating a how-to.
+
+Documentation of extensions should be added to their own system. Every developer is free to choose which system they use for their extension.
+
+
+## Markdown
+
+We chose [markdown](http://en.wikipedia.org/wiki/Markdown) as our format to write the general documentation in. Markdown is mostly known from the Read Me files which comes with variate software packages, including Fork CMS.
+
+Once you know the basic syntax, it allows you to write fast without losing control over the semantics. Some even say it is a lifehack to use it every time you write. Extra tip, use a tool like [Mou](http://mouapp.com/) or [iA Writer](http://www.iawriter.com/).
+
+All files are stored onto a GitHub [repository](https://github.com/forkcms/documentation/). The markdown is eventually converted to html on our website to make it easier to read.
+
+## GitHub
+
+When you're not familiar with GitHub and don't have intention to learn it you can still easly report mistakes. Just [signup](https://github.com/signup/free) for a (free) GitHub account and press the [New issue](https://github.com/forkcms/documentation/issues/new) button. If you know GitHub from editing code, use it just alike to edit the documentation
+
+* [Issues](https://github.com/forkcms/documentation/issues) for reporting mistakes
+* or do a [Pull Request](https://github.com/forkcms/documentation/pulls) to do a suggestion how to fix it
+* [Tags](https://github.com/forkcms/documentation/tags) to find documention of earlier Fork CMS versions
+
+
+Updating the documentation is job a lot of users truly appreciate, in the final article we talk about attracting new Fork CMS users.
