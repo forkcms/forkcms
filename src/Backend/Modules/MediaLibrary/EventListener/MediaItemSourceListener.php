@@ -38,6 +38,6 @@ final class MediaItemSourceListener
         $mediaItem = $event->getMediaItem();
 
         // Delete Source file if exists
-        $this->fileManager->deleteFile( $mediaItem->getAbsolutePath());
+        $this->fileManager->deleteFile($mediaItem->getAbsolutePath());
     }
 }

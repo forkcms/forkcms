@@ -106,7 +106,7 @@ class MediaGroupType extends AbstractType
      */
     private function getMediaGroupTransformFunction()
     {
-        return function($mediaGroup) {
+        return function ($mediaGroup) {
             if (!$mediaGroup instanceof MediaGroup) {
                 return true;
             }
@@ -130,7 +130,7 @@ class MediaGroupType extends AbstractType
          * @param $mediaGroupData
          * @return MediaGroup|null
          */
-        return function($mediaGroupData) {
+        return function ($mediaGroupData) {
             /** @var string $mediaGroupId */
             $mediaGroupId = $mediaGroupData['id'];
 
