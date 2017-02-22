@@ -1,0 +1,312 @@
+/**
+ * Media tree
+ */
+#mediaTree {
+	padding-right : 10px;
+	width : 200px;
+	min-width : 120px;
+	height: 100%;
+}
+	#mediaTree #treeHolder {
+		width: 190px;
+	}
+
+#mediaTree td,
+#mediaTree table {
+	height: 100%;
+	width: 100%;
+}
+	#mediaTree h4 {
+		padding: 4px 12px 0;
+		margin: 0;
+		color: #000;
+		font-size: 11px;
+	}
+#mediaTree #tree { margin : 0; width : 100%; }
+#mediaTree #tree .tree {
+		margin: 6px 6px 12px 6px;
+	}
+#mediaTree .tree-fork li[rel="folder"] a {
+	width : auto!important;
+	position: relative
+}
+
+#mediaTree .tree-fork li[rel="folder"] a:before {
+	content: "\f114";
+}
+#mediaTree .tree-fork li[rel="folder"] a:before {
+	color: #999;
+	font-family: FontAwesome;
+	font-size: 12px;
+	position: absolute;
+	left: 4px
+}
+
+/**
+ * Media library helper
+ */
+
+/* We hide this button because it doesn't work anymore, we have enabled autostart to fix this. */
+#uploader_start {
+	display: none;
+}
+
+/*
+#mediaConnectedItems
+	loop .mediaConnectedBox
+		loop .mediaConnectedItems
+
+*/
+	.mediaGroup {
+		background-color: #f9f9f9!important;
+	}
+	.optionsOnlyOneGroup .mediaGroup {
+		margin-bottom: 0;
+	}
+		.mediaGroup .panel-body {
+			padding: 0;
+			border: none;
+		}
+		.mediaGroup .panel-body .helpTxt {
+			padding: 20px 25px 25px;
+		}
+		.mediaGroup .mediaConnectedBox {
+			background-color: #fff;
+		}
+	#addGalleriesBox a {
+		float: right;
+	}
+	.mediaConnectedItems {
+		float: left;
+		width: 100%;
+	}
+		.helpTxt {
+			padding: 10px;
+		}
+		.mediaConnectedItems {
+			padding: 5px 2px 2px 5px;
+		}
+		.mediaEditBox {
+			background: #eee;
+		}
+			.mediaEditBox ul {
+				padding: 10px;
+			}
+			.mediaEditBox li {
+				display: inline;
+				float: left;
+				padding-right: 10px;
+			}
+				.mediaSettingsGroup
+				{
+					position: absolute;
+					right: 10px;
+				}
+
+	.optionsOnlyOneGroup {
+		padding: 0px!important;
+	}
+		.optionsOnlyOneGroup .panel {
+			border: none;
+			width: 100%;
+		}
+		.optionsOnlyOneGroup .mediaSettingsGroup {
+			right: 0px;
+		}
+
+.mediaConnectedItems .ui-state-default {
+	display: inline-block;
+	overflow: hidden;
+	margin: 0 3px 3px 0;
+	background: #eee;
+	width: 140px;
+	height: 90px;
+	vertical-align: top;
+}
+.ie9 .mediaConnectedItems .ui-state-default,
+.ie8 .mediaConnectedItems .ui-state-default,
+.ie7 .mediaConnectedItems .ui-state-default,
+.ie6 .mediaConnectedItems .ui-state-default {
+	display: inline;
+}
+	.mediaHolder {
+		float: left;
+		cursor: pointer;
+		width: 140px;
+		height: 90px;
+		display: block;
+	}
+		.mediaHolderFile .icon,
+		.mediaHolderMovie .icon,
+		.mediaHolderAudio .icon {
+			background: url(../../../../Core/Layout/images/sprites/fork_icons.png) no-repeat;
+			width: 16px;
+			height: 20px;
+			display: block;
+			text-align: center;
+			margin: 20px auto 2px;
+		}
+			.mediaHolderAudio .icon {
+				background-position: 0px -468px;
+			}
+			.mediaHolderFile .icon {
+				background-position: 0px -443px;
+			}
+			.mediaHolderMovie .icon {
+				background-position: 0px -468px;
+			}
+		.mediaHolderFile .url,
+		.mediaHolderMovie .url,
+		.mediaHolderAudio .url {
+			font-size: 0.8em;
+			color: #666;
+			text-align: center;
+			width: 100%;
+			word-wrap: break-word;
+		}
+		.mediaHolderImage img {
+			width: 140px;
+			height: 90px;
+		}
+	.mediaConnectedItems li.selected {
+		border: 1px solid #000;
+	}
+	.mediaConnectedItems li.selected .mediaHolder {
+		opacity: 0.4;
+		filter: alpha(opacity=40); /* For IE8 and earlier */
+	}
+
+	.editMediaItem,
+	.deleteMediaItem {
+		margin-top: 2px;
+		margin-left: -26px;
+		display: none;
+	}
+		.mediaConnectedItems .ui-state-default.hover .editMediaItem,
+		.mediaConnectedItems .ui-state-default.hover .deleteMediaItem {
+			display: block;
+		}
+
+/**
+ *
+ */
+p.helpTxt.mediaNoItems {
+	padding: 10px;
+}
+
+/**
+ * Media Dialog
+ */
+#addMediaDialog #tabLibrary .options{
+	margin-bottom: 1em;
+}
+#addMediaDialog #tabLibrary .tab-content {
+	padding: 0;
+	border: none;
+}
+#addMediaDialog #tabLibrary .tab-content .table-striped {
+	border-top: 0;
+	padding: .5em 0 0;
+}
+#addMediaDialog #tabLibrary .table-responsive {
+	max-height: 400px;
+	overflow: auto;
+}
+	.mediaTable .check {
+		width: 30px;
+	}
+	.mediaTable .fullUrl {
+	    width: 90px;
+	}
+	.mediaTable .url {
+	    max-width: 156px;
+	}
+	.mediaTable .title {
+	    max-width: 140px;
+        color: #000;
+	}
+	.mediaTable .actions {
+        max-width: 100px;
+	}
+	.mediaTable .actions a {
+        float: right;
+	}
+
+.inputList.noPadding,
+.inputList.noPadding li {
+    padding:  0;
+}
+
+#uploadMediaTypeBox label {
+    vertical-align: bottom;
+}
+
+/**
+ * Plupload header
+ */
+#uploader {
+	padding: 0px;
+}
+#uploader .plupload_header {
+	display: none!important;
+}
+#uploader .plupload_container {
+	padding: 0px;
+}
+
+/**
+ * Plupload upload list
+ */
+.plupload_file_name {
+	width: 60%!important;
+}
+.plupload_file_size {
+	width: 10%!important;
+}
+.plupload_file_status {
+	width: 10%!important;
+}
+.plupload_file_action {
+	width: 10%!important;
+}
+
+.plupload_buttons {
+	width: 100%;
+}
+.plupload_buttons a {
+	float: left;
+}
+.plupload_buttons a span {
+	display: inline;
+}
+.plupload_file_action {
+	float: none!important;
+}
+	.plupload_button {
+		padding-left: 10px!important;
+	}
+	.plupload_cell .ui-icon {
+		background: url(../../../../Core/Layout/images/sprites/fork_icons.png) no-repeat;
+		display: block;  /* Fix for flash (button text dissappeared when using inline-block) */
+		width: 18px;
+		height: 18px;
+	}
+		.plupload_cell .ui-icon-circle-arrow-e {
+			background-position: 0 -396px;
+		}
+		.plupload_cell .ui-icon-circle-minus {
+			background-position: 0 -629px;
+		}
+		.plupload_cell .ui-icon-circle-check {
+			background-position: 0 -610px;
+		}
+		.plupload_cell .ui-icon-circle-arrow-w {
+			background-position: 0 -400px;
+		}
+
+/**
+ * Uploaded media box
+ */
+#uploadedMediaBox .mediaConnectedItems {
+	float: none;
+}

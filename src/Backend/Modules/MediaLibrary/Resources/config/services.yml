@@ -1,0 +1,10 @@
+imports:
+  - { resource: repository.yml }
+  - { resource: command.yml }
+  - { resource: listener.yml }
+  - { resource: factory.yml }
+  - { resource: manager.yml }
+  - { resource: helper.yml }
+  - { resource: console.yml }
+  - { resource: cache_builder.yml }
+  - { resource: form.yml }

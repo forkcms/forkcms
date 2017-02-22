@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Core>
+      <item type="label" name="MediaGalleries">
+        <translation language="en"><![CDATA[media galleries]]></translation>
+        <translation language="nl"><![CDATA[media galerijen]]></translation>
+      </item>
+    </Core>
+    <MediaGalleries>
+      <item type="label" name="Action">
+        <translation language="en"><![CDATA[view]]></translation>
+        <translation language="nl"><![CDATA[weergave]]></translation>
+      </item>
+      <item type="label" name="AddMediaGallery">
+        <translation language="en"><![CDATA[add gallery]]></translation>
+        <translation language="nl"><![CDATA[galerij toevoegen]]></translation>
+      </item>
+      <item type="message" name="AddedMediaGallery">
+        <translation language="en"><![CDATA[The gallery "%1$s" was added.]]></translation>
+        <translation language="nl"><![CDATA[De galerij "%1$s" is toegevoegd.]]></translation>
+      </item>
+      <item type="message" name="AddMediaGalleryForType">
+        <translation language="en"><![CDATA[add gallery with %1$s]]></translation>
+        <translation language="nl"><![CDATA[galerij toevoegen voor %1$s]]></translation>
+      </item>
+      <item type="message" name="AlteredGalleryMediaSequence">
+        <translation language="en"><![CDATA[The sequence of this gallery has been saved.]]></translation>
+        <translation language="nl"><![CDATA[De volgorde van de bestanden in deze gallerij is opgeslagen.]]></translation>
+      </item>
+      <item type="label" name="Connected">
+        <translation language="en"><![CDATA[connected]]></translation>
+        <translation language="nl"><![CDATA[gekoppeld]]></translation>
+      </item>
+      <item type="message" name="ChooseTypeForNewGallery">
+        <translation language="en"><![CDATA[Create a gallery with the following type:]]></translation>
+        <translation language="nl"><![CDATA[Maak een galerij aan van het volgende type:]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteMediaGallery">
+        <translation language="en"><![CDATA[Are your sure you want to delete this gallery "%1$s"?]]></translation>
+        <translation language="nl"><![CDATA[Bent u zeker dat u deze galerij "%1$s" wil verwijderen?]]></translation>
+      </item>
+      <item type="message" name="DeletedMediaGallery">
+        <translation language="en"><![CDATA[Deleted media gallery %1$s" successfull.]]></translation>
+        <translation language="nl"><![CDATA[Media galerij "%1$s" is succesvol verwijderd.]]></translation>
+      </item>
+      <item type="message" name="EditedMediaGallery">
+        <translation language="en"><![CDATA[The gallery "%1$s" has been saved.]]></translation>
+        <translation language="nl"><![CDATA[De galerij "%1$s" werd opgeslagen.]]></translation>
+      </item>
+      <item type="message" name="EditMediaGallery">
+        <translation language="en"><![CDATA[edit gallery "%1$s"]]></translation>
+        <translation language="nl"><![CDATA[bewerk galerij "%1$s"]]></translation>
+      </item>
+      <item type="label" name="GalleryId">
+        <translation language="en"><![CDATA[gallery id]]></translation>
+        <translation language="nl"><![CDATA[galerij id]]></translation>
+      </item>
+      <item type="label" name="Galleries">
+        <translation language="en"><![CDATA[galleries]]></translation>
+        <translation language="nl"><![CDATA[galerijen]]></translation>
+      </item>
+      <item type="label" name="Gallery">
+        <translation language="en"><![CDATA[gallery]]></translation>
+        <translation language="nl"><![CDATA[galerij]]></translation>
+      </item>
+      <item type="label" name="GalleryName">
+        <translation language="en"><![CDATA[gallery name]]></translation>
+        <translation language="nl"><![CDATA[naam galerij]]></translation>
+      </item>
+      <item type="error" name="GalleryDoesNotExists">
+        <translation language="en"><![CDATA[The gallery doesn't exists.]]></translation>
+        <translation language="nl"><![CDATA[De galerij bestaat niet.]]></translation>
+      </item>
+      <item type="error" name="GalleryTitleAlreadyExists">
+        <translation language="en"><![CDATA[A gallery with this title already exists.]]></translation>
+        <translation language="nl"><![CDATA[Een galerij met deze titel bestaat al.]]></translation>
+      </item>
+      <item type="error" name="GroupTypeNotExisting">
+        <translation language="en"><![CDATA[Can't create a gallery with this type.]]></translation>
+        <translation language="nl"><![CDATA[Er kan geen galerij aangemaakt worden met dit type.]]></translation>
+      </item>
+      <item type="error" name="InvalidWidgetAction">
+        <translation language="en"><![CDATA[Invalid widget action.]]></translation>
+        <translation language="nl"><![CDATA[Ongeldige widget action.]]></translation>
+      </item>
+      <item type="error" name="MediaLibraryModuleRequired">
+        <translation language="en"><![CDATA[You must <a href='%1$s'>install the MediaLibrary module</a> for this MediaGalleries module.]]></translation>
+        <translation language="nl"><![CDATA[U moet de <a href='%1$s'>MediaLibrary module installeren</a> om de MediaGalleries module te kunnen gebruiken.]]></translation>
+      </item>
+      <item type="error" name="NonExistingMediaGallery">
+        <translation language="en"><![CDATA[Media gallery does not exist.]]></translation>
+        <translation language="nl"><![CDATA[Media galerij bestaat niet.]]></translation>
+      </item>
+      <item type="label" name="SaveAndEdit">
+        <translation language="en"><![CDATA[save and edit]]></translation>
+        <translation language="nl"><![CDATA[opslaan en blijven bewerken]]></translation>
+      </item>
+      <item type="label" name="WidgetView">
+        <translation language="en"><![CDATA[view]]></translation>
+        <translation language="nl"><![CDATA[weergave]]></translation>
+      </item>
+      <item type="message" name="WidgetViewsHelp">
+        <translation language="en"><![CDATA[As a developer, you can add your own custom widgets by adding them in the folder /src/Frontend/Modules/MediaLibrary/Widgets/. Each widget that you add gets added in this dropdown automatically and can have its own image sizes in the Frontend.]]></translation>
+        <translation language="nl"><![CDATA[U kan zelf als developer eenvoudig widgets aanmaken in /src/Frontend/Modules/MediaLibrary/Widgets/. Elke widget die u toevoegt komt hier automatisch in deze keuzelijst te staan en kan in de Frontend elk z'n eigen afbeeldingsformaten hebben.]]></translation>
+      </item>
+    </MediaGalleries>
+  </Backend>
+</locale>

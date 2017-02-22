@@ -1,0 +1,25 @@
+{#
+  Media Gallery template variables that are available:
+  - {{ widget }}: Contains the html for the template.
+  - {{ mediaGallery }}: Contains the MediaGallery if we are in a gallery.
+#}
+
+{% if widget or mediaGallery.text %}
+<section class="widget">
+  <div class="inner">
+    {% if mediaGallery %}
+    <header class="hd">
+      <h3 class="title">{{ mediaGallery.title }}</h3>
+      {% if mediaGallery.text %}
+      <div class="text">
+        {{ mediaGallery.text|raw }}
+      </div>
+      {% endif %}
+    </header>
+    {% endif %}
+    <div class="bd content">
+      {{ widget|raw }}
+    </div>
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,74 @@
+{# Add new media dialog #}
+<div class="modal fade" id="addMediaDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title h4">{{ 'lbl.MediaConnect'|trans|ucfirst }}</span>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab" data-toggle="tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
+          </li>
+          <li role="presentation">
+            <a href="#tabLibrary" aria-controls="tabLibrary" role="tab" data-toggle="tab">{{ 'lbl.MediaLibrary'|trans|ucfirst }}</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tabUploadMedia">
+            {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabLibrary">
+            <div class="options">
+              <label for="folders">{{ 'msg.MediaYouAreHere'|trans }}</label>
+              <select id="mediaFolders"></select>
+            </div>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tabImages" aria-controls="tabImages" role="tab" data-toggle="tab">{{ 'lbl.MediaImages'|trans|ucfirst }} <span id="mediaCountImages">(0)</span></a>
+              </li>
+              <li role="presentation">
+                <a href="#tabFiles" aria-controls="tabFiles" role="tab" data-toggle="tab">{{ 'lbl.MediaFiles'|trans|ucfirst }} <span id="mediaCountFiles">(0)</span></a>
+              </li>
+              <li role="presentation">
+                <a href="#tabMovies" aria-controls="tabMovies" role="tab" data-toggle="tab">{{ 'lbl.MediaMovies'|trans|ucfirst }} <span id="mediaCountMovies">(0)</span></a>
+              </li>
+              <li role="presentation">
+                <a href="#tabAudio" aria-controls="tabAudio" role="tab" data-toggle="tab">{{ 'lbl.MediaAudio'|trans|ucfirst }} <span id="mediaCountAudio">(0)</span></a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="tabImages">
+                <div class="table-responsive">
+                  <table id="mediaTableImages" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabFiles">
+                <div class="table-responsive">
+                  <table id="mediaTableFiles" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabMovies">
+                <div class="table-responsive">
+                  <table id="mediaTableMovies" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabAudio">
+                <div class="table-responsive">
+                  <table id="mediaTableAudio" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+        </button>
+        <button id="addMediaSubmit" type="button" class="btn btn-primary">
+          <span class="fa fa-plus-square"></span>{{ 'lbl.OK'|trans|ucfirst }}</button>
+      </div>
+    </div>
+  </div>
+</div>

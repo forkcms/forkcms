@@ -1,0 +1,117 @@
+{# Step 0 - Choose type #}
+<div id="uploadMediaTypeBox" class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <p>{{ 'msg.MediaUploadThisType'|trans }}</p>
+      </div>
+      <div class="panel-body">
+        <div class="form-group last">
+          <ul class="list-unstyled">
+            <li class="radiobutton">
+              <label><input type="radio" name="uploading_type" id="uploadTypeDefault" value="all" checked="checked" /> {{ 'msg.MediaUploadTypeFiles'|trans }}</label>
+            </li>
+            <li class="radiobutton">
+              <label><input type="radio" name="uploading_type" value="movie" /> {{ 'msg.MediaUploadTypeMovies'|trans }}</label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Step 1 - Choose folder #}
+<div class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <p>1) {{ 'msg.MediaUploadToThisFolder'|trans }}</p>
+      </div>
+      <div class="panel-body">
+        <p>
+          <label for="folder">{{ 'lbl.MediaFolder'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <select id="uploadMediaFolderId" name="uploadMediaFolderId">
+            <option></option>
+          </select>&nbsp;&nbsp;
+          <a href="#" id="addFolder" title="{{ 'lbl.MediaAddFolder'|trans|capitalize }}">
+            <span>{{ 'msg.MediaOrAddMediaFolder'|trans }}</span>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Step 2 - Choose media to upload #}
+<div id="uploadMediaBox" class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <p>2) {{ 'msg.MediaChoseToUpload'|trans }}</p>
+      </div>
+      <div id="uploader" class="panel-body">
+        <p>{{ 'msg.MediaNoSupport'|trans }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Step 2 - Adding a movie #}
+<div id="addMovieBox" class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <p>2) {{ 'msg.MediaWhichMovieToAdd'|trans|ucfirst }}</p>
+      </div>
+      <div class="panel-body">
+        <p>
+          <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <select id="mediaMovieSource" name="media_movie_source">
+            {% for mediaAllowedMovieSourc in mediaAllowedMovieSources %}
+            <option value="{{ mediaAllowedMovieSourc.key }}"{% if mediaAllowedMovieSourc.first %} selected="selected"{% endif %}>{{ mediaAllowedMovieSourc.label|capitalize }}</option>
+            {% endfor %}
+          </select>
+        </p>
+        <p>
+          <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <input id="mediaMovieId" name="media_movie_id" type="text" class="inputText" />
+          <span class="helpTxt">{{ 'msg.MediaMovieIdHelp'|trans }}</span>
+        </p>
+        <p>
+          <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <input id="mediaMovieTitle" name="media_movie_title" type="text" class="inputText" />
+        </p>
+      </div>
+      <div class="panel-footer">
+        <div class="btn-toolbar">
+          <div class="btn-group pull-right" role="group">
+            <a href="#" id="addMediaMovie" class="btn btn-default" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
+              <span class="fa fa-file-o"></span>{{ 'lbl.MediaAddMovie'|trans|ucfirst }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Step 3 - Uploaded media #}
+<div id="uploadedMediaBox" class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default panel-editor">
+      <div class="panel-heading">
+        <p>3) {{ 'msg.MediaUploaded'|trans }}</p>
+      </div>
+      <div class="panel-body">
+        <p id="mediaWillBeConnectedToMediaGroup">{{ 'msg.MediaWillBeConnected'|trans }}</p>
+        <div class="mediaConnectedBox">
+          <ul id="uploadedMedia" class="mediaConnectedItems ui-sortable"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Add folder dialog #}
+{% include "MediaLibrary/Resources/views/BackendMediaLibraryUploadDialogAddFolder.html.twig" %}

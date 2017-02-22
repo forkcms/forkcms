@@ -1,0 +1,8 @@
+/**
+ * Additional CSS voor widgetMediaLightbox.
+ */
+
+/* Resize the image */
+.widgetMediaLightbox img {
+	max-width: 100%
+}

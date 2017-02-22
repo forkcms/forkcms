@@ -1,0 +1,4 @@
+imports:
+  - { resource: command.yml }
+  - { resource: console.yml }
+  - { resource: repository.yml }

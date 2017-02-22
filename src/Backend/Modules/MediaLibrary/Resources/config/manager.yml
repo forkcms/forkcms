@@ -1,0 +1,9 @@
+services:
+    media_library.manager.file:
+        class: Backend\Modules\MediaLibrary\Manager\FileManager
+        arguments:
+            - "@fork.settings"
+    media_library.manager.frontend.item:
+        class: Frontend\Modules\MediaLibrary\Manager\FrontendMediaItemManager
+        arguments:
+            - "@event_dispatcher"

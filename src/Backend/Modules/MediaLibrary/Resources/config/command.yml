@@ -1,0 +1,56 @@
+services:
+  # MediaFolder
+  media_galleries.handler.create_media_folder:
+    class: Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolderHandler
+    arguments:
+      - "@media_library.repository.folder"
+    tags:
+      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder }
+  media_galleries.handler.delete_media_folder:
+    class: Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolderHandler
+    arguments:
+      - "@media_library.repository.folder"
+    tags:
+      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder }
+  media_galleries.handler.update_media_folder:
+    class: Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolderHandler
+    tags:
+      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder }
+
+  # MediaGroup
+  media_galleries.handler.create_media_group:
+    class: Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\CreateMediaGroupHandler
+    arguments:
+      - "@media_library.repository.group"
+    tags:
+      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\CreateMediaGroup }
+  media_galleries.handler.update_media_group:
+    class: Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\UpdateMediaGroupHandler
+    arguments:
+      - "@media_library.repository.item"
+    tags:
+      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\UpdateMediaGroup }
+
+  # MediaItem
+  media_galleries.handler.create_media_item_from_movie_url:
+    class: Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrlHandler
+    arguments:
+      - "@media_library.repository.item"
+    tags:
+      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrl }
+  media_galleries.handler.create_media_item_from_source:
+    class: Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromSourceHandler
+    arguments:
+      - "@media_library.repository.item"
+    tags:
+      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromSource }
+  media_library.handler.delete_media_item:
+    class: Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItemHandler
+    arguments:
+      - "@media_library.repository.item"
+    tags:
+      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem }
+  media_galleries.handler.update_media_item:
+    class: Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItemHandler
+    tags:
+      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem }
