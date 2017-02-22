@@ -40,7 +40,7 @@ class FrontendResolution
 
     /**
      * Create
-     * 
+     *
      * @param $customKey
      * @param ImageSettings $imageSettings
      * @return FrontendResolution
