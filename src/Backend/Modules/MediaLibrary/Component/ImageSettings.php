@@ -87,16 +87,22 @@ class ImageSettings
 
         // Redefine
         $width = (int) $width;
-        $height = (int) trim(strstr($heightAndMore, '-', true), '-');
+
+        if (strpos($heightAndMore, '-') !== false) {
+            $height = (int) trim(strstr($heightAndMore, '-', true), '-');
+
+            // Define quality
+            $quality = (int) ltrim(substr($heightAndMore, -3), '-');
+        } else {
+            $height = (int) $heightAndMore;
+            $quality = 100;
+        }
 
         // Define method, by default we use "resize"
         $transformationMethod = ImageTransformationMethod::fromString($value);
 
-        // Define quality
-        $quality = (int) ltrim(substr($heightAndMore, -3), '-');
-
-        if ($quality == 0) {
-            throw new \Exception('String must contain quality at the end, f.e.: "-100", "-20"');
+        if ($quality === 0) {
+            $quality = 100;
         }
 
         return new self(
