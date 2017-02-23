@@ -93,7 +93,6 @@ abstract class Kernel extends BaseKernel
          * Will be removed in the next major release.
          */
         defined('PATH_WWW') || define('PATH_WWW', realpath($container->getParameter('site.path_www')));
-        defined('PATH_LIBRARY') || define('PATH_LIBRARY', realpath($container->getParameter('site.path_library')));
 
         defined('SITE_DEFAULT_LANGUAGE') || define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
         defined('SITE_DEFAULT_TITLE') || define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
