@@ -32,43 +32,43 @@ class ImageSettings
     /**
      * Construct
      *
+     * @param ImageTransformationMethod $transformationMethod "crop" or "resize"
      * @param integer|null $width
      * @param integer|null $height
-     * @param ImageTransformationMethod $transformationMethod "crop" or "resize"
      * @param integer $quality
      * @throws \Exception
      */
     private function __construct(
+        ImageTransformationMethod $transformationMethod,
         $width = null,
         $height = null,
-        ImageTransformationMethod $transformationMethod,
         $quality = 100
     ) {
+        $this->transformationMethod = $transformationMethod;
         $this->setWidth($width);
         $this->setHeight($height);
-        $this->transformationMethod = $transformationMethod;
         $this->setQuality($quality);
     }
 
     /**
      * Create
      *
+     * @param ImageTransformationMethod $transformationMethod "crop" or "resize"
      * @param integer|null $width
      * @param integer|null $height
-     * @param ImageTransformationMethod $transformationMethod "crop" or "resize"
      * @param integer $quality
      * @return ImageSettings
      */
     public static function create(
+        ImageTransformationMethod $transformationMethod,
         $width = null,
         $height = null,
-        ImageTransformationMethod $transformationMethod,
         $quality = 100
     ) {
         return new self(
+            $transformationMethod,
             $width,
             $height,
-            $transformationMethod,
             $quality
         );
     }

@@ -24,10 +24,10 @@ class MediaGalleryType extends AbstractType
     /**
      * MediaGalleryType constructor.
      *
-     * @param $dataClass
-     * @param $possibleWidgets
+     * @param array $possibleWidgets
+     * @param string $dataClass
      */
-    public function __construct($dataClass = CreateMediaGallery::class, $possibleWidgets)
+    public function __construct($possibleWidgets, $dataClass = CreateMediaGallery::class)
     {
         $this->dataClass = $dataClass;
         $this->possibleWidgets = $possibleWidgets;

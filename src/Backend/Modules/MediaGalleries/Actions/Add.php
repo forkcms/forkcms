@@ -32,8 +32,8 @@ class Add extends ActionAdd
 
         $form = $this->createForm(
             new MediaGalleryType(
-                CreateMediaGallery::class,
-                $possibleWidgetActions
+                $possibleWidgetActions,
+                CreateMediaGallery::class
             ),
             new CreateMediaGallery(
                 Authentication::getUser()->getUserId(),

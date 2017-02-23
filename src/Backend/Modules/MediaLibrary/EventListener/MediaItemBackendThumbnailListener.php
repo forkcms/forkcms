@@ -92,9 +92,9 @@ final class MediaItemBackendThumbnailListener
 
         /** @var ImageSettings $imageSettings */
         $imageSettings = ImageSettings::create(
+            ImageTransformationMethod::crop(),
             BackendMediaLibraryModel::BACKEND_THUMBNAIL_WIDTH,
             BackendMediaLibraryModel::BACKEND_THUMBNAIL_HEIGHT,
-            ImageTransformationMethod::crop(),
             BackendMediaLibraryModel::BACKEND_THUMBNAIL_QUALITY
         );
 

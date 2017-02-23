@@ -31,8 +31,8 @@ class Edit extends BackendBaseActionEdit
 
         $form = $this->createForm(
             new MediaGalleryType(
-                UpdateMediaGallery::class,
-                $possibleWidgetActions
+                $possibleWidgetActions,
+                UpdateMediaGallery::class
             ),
             new UpdateMediaGallery(
                 $mediaGallery
