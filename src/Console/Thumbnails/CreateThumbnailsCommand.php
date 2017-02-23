@@ -39,7 +39,7 @@ class CreateThumbnailsCommand extends Command
         // Get input values
         $folderOption = $input->getOption('folder');
 
-        if (!isset($folderOption) && !isset($moduleOption)) {
+        if (!isset($folderOption)) {
             throw new Exception('Please specify a foldername "--folder=XXX"');
         }
 
