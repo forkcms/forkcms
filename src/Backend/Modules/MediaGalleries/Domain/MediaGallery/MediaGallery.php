@@ -454,7 +454,7 @@ class MediaGallery
             $mediaGalleryDataTransferObject->title,
             $mediaGalleryDataTransferObject->text,
             $mediaGalleryDataTransferObject->action,
-            $mediaGalleryDataTransferObject->getUserId(),
+            $mediaGalleryDataTransferObject->userId,
             $mediaGalleryDataTransferObject->publishOn,
             $mediaGalleryDataTransferObject->mediaGroup,
             Status::fromString($mediaGalleryDataTransferObject->status)

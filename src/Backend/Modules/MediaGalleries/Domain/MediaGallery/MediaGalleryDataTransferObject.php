@@ -21,7 +21,7 @@ class MediaGalleryDataTransferObject
     /**
      * @var integer
      */
-    private $userId;
+    public $userId;
 
     /**
      * @var string
@@ -54,20 +54,14 @@ class MediaGalleryDataTransferObject
      * MediaGalleryDataTransferObject constructor.
      *
      * @param MediaGallery|null $mediaGallery
-     * @param integer|null $userId
-     * @param MediaGroupType $mediaGroupType
      */
     public function __construct(
-        MediaGallery $mediaGallery = null,
-        $userId = null,
-        MediaGroupType $mediaGroupType = null
+        MediaGallery $mediaGallery = null
     ) {
         $this->mediaGalleryEntity = $mediaGallery;
 
         if (!$this->hasExistingMediaGallery()) {
-            $this->userId = $userId;
             $this->publishOn = new \DateTime();
-            $this->mediaGroup = MediaGroup::create($mediaGroupType);
 
             return;
         }
@@ -86,14 +80,6 @@ class MediaGalleryDataTransferObject
     public function getMediaGalleryEntity()
     {
         return $this->mediaGalleryEntity;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUserId()
-    {
-        return $this->userId;
     }
 
     /**
