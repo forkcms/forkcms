@@ -3,7 +3,6 @@
 namespace Frontend\Modules\MediaLibrary\Helper;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
@@ -161,7 +160,7 @@ class FrontendHelper
         Header $header
     ) {
         // Only image allowed
-        if ($mediaItem->getType() == Type::IMAGE) {
+        if ($mediaItem->getType()->isImage()) {
             // Add OpenGraph image
             $header->addOpenGraphImage(
                 $mediaItem->getAbsoluteWebPath(),
