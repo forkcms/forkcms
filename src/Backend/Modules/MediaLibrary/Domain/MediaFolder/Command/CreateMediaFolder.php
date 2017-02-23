@@ -19,7 +19,7 @@ final class CreateMediaFolder extends MediaFolderDataTransferObject
         MediaFolder $parent = null,
         $userId
     ) {
-        parent::__construct(null);
+        parent::__construct();
 
         $this->name = $name;
         $this->parent = $parent;
