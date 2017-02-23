@@ -409,7 +409,7 @@ class Add extends BackendBaseActionAdd
                 $page['type'] = $parentPage ? 'page' : 'root';
                 $page['title'] = $this->frm->getField('title')->getValue();
                 $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue(
-                    ) != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField(
+                ) != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField(
                     'title'
                 )->getValue();
                 $page['navigation_title_overwrite'] = $this->frm->getField(

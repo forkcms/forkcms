@@ -770,15 +770,15 @@ class Edit extends BackendBaseActionEdit
                     // add to search index, only if authentication is false
                     if ($data['remove_from_search_index'] == false) {
                         BackendSearchModel::saveIndex(
-                          $this->getModule(),
-                          $page['id'],
-                          array('title' => $page['title'], 'text' => $text)
-                      );
+                            $this->getModule(),
+                            $page['id'],
+                            array('title' => $page['title'], 'text' => $text)
+                        );
                     } else {
                         BackendSearchModel::removeIndex(
-                          $this->getModule(),
-                          $page['id']
-                      );
+                            $this->getModule(),
+                            $page['id']
+                        );
                     }
 
                     // everything is saved, so redirect to the overview

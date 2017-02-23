@@ -9,13 +9,15 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\ApplicationInterface;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This class defines the backend, it is the core. Everything starts here.
  * We create all needed instances and execute the requested action
  */
-class Backend extends \KernelLoader implements \ApplicationInterface
+class Backend extends KernelLoader implements ApplicationInterface
 {
     /**
      * @var Base\Action

@@ -43,53 +43,31 @@
   {% endif %}
 
   {% if dgRecent %}
-    <div class="row">
-      <div class="col-md-12">
-        <div class="content-block content-block-pb">
-          <div class="content-title">
-            <p>{{ 'lbl.RecentlyEdited'|trans|ucfirst }}</p>
-          </div>
-          <div class="table-responsive">
-            {{ dgRecent|raw }}
-          </div>
-        </div>
+    <div class="content-block content-block-pb">
+      <div class="content-title">
+        <p>{{ 'lbl.RecentlyEdited'|trans|ucfirst }}</p>
       </div>
+      {{ macro.dataGrid(dgRecent, 'msg.NoItems'|trans|format(geturl('add'))|raw) }}
     </div>
   {% endif %}
+
   {% if dgDrafts %}
-    <div class="row">
-      <div class="col-md-12">
-        <div class="content-block content-block-pb">
-          <div class="content-title">
-            <p>{{ 'lbl.Drafts'|trans|ucfirst }}</p>
-          </div>
-          <div class="table-responsive">
-            {{ dgDrafts|raw }}
-          </div>
-        </div>
-      </div>
+  <div class="content-block content-block-pb">
+    <div class="content-title">
+      <p>{{ 'lbl.Drafts'|trans|ucfirst }}</p>
     </div>
+    {{ macro.dataGrid(dgDrafts, 'msg.NoItems'|trans|format(geturl('add'))|raw) }}
+  </div>
   {% endif %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      {% if dgPosts %}
-        <div class="content-block content-block-pb">
-          <div class="content-title">
-            <h3 class="panel-title">{{ 'lbl.PublishedArticles'|trans|ucfirst }}</h3>
-          </div>
-          <div class="table-responsive">
-            {{ dgPosts|raw }}
-          </div>
-        </div>
-      {% endif %}
-      {% if not dgPosts %}
-        {% if filterCategory %}
-          <p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&category=#{filterCategory.id}'))|raw }}</p>
-        {% endif %}
-        {% if not filterCategory %}
-          <p>{{ 'msg.NoItems'|trans|format(geturl('add'))|raw }}</p>
-        {% endif %}
-      {% endif %}
+
+  <div class="content-block content-block-pb">
+    <div class="content-title">
+      <p>{{ 'lbl.PublishedArticles'|trans|ucfirst }}</p>
     </div>
+    {% if filterCategory %}
+      {{ macro.dataGrid(dgPosts, 'msg.NoItems'|trans|format(geturl('add', null, '&category=#{filterCategory.id}'))|raw) }}
+    {% else %}
+      {{ macro.dataGrid(dgPosts, 'msg.NoItems'|trans|format(geturl('add'))|raw) }}
+    {% endif %}
   </div>
 {% endblock %}

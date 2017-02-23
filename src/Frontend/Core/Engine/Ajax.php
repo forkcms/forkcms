@@ -9,6 +9,8 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\ApplicationInterface;
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +21,7 @@ use InvalidArgumentException;
  * FrontendAJAX
  * This class will handle AJAX-related stuff
  */
-class Ajax extends \KernelLoader implements \ApplicationInterface
+class Ajax extends KernelLoader implements ApplicationInterface
 {
     /**
      * The action
