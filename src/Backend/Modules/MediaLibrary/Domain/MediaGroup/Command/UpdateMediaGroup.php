@@ -3,25 +3,11 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup\Command;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupDataTransferObject;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class UpdateMediaGroup
+final class UpdateMediaGroup extends MediaGroupDataTransferObject
 {
-    /**
-     * @var MediaGroup
-     */
-    public $mediaGroup;
-
-    /**
-     * @var array
-     */
-    public $mediaItemIdsToConnect;
-
-    /**
-     * @var bool
-     */
-    public $removeAllPreviousConnectedMediaItems = true;
-
     /**
      * UpdateMediaGroup constructor.
      *
@@ -32,7 +18,8 @@ final class UpdateMediaGroup
         MediaGroup $mediaGroup,
         $mediaItemIdsToConnect = array()
     ) {
-        $this->mediaGroup = $mediaGroup;
+        parent::__construct($mediaGroup);
+
         $this->mediaItemIdsToConnect = $mediaItemIdsToConnect;
     }
 }

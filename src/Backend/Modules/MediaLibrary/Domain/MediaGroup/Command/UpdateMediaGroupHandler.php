@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup\Command;
 
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
@@ -28,10 +29,8 @@ final class UpdateMediaGroupHandler
      */
     public function handle(UpdateMediaGroup $updateMediaGroup)
     {
-        // Remove all previous connected items
-        if ($updateMediaGroup->removeAllPreviousConnectedMediaItems) {
-            $updateMediaGroup->mediaGroup->getConnectedItems()->clear();
-        }
+        /** @var MediaGroup $mediaGroup */
+        $mediaGroup = MediaGroup::fromDataTransferObject($updateMediaGroup);
 
         /**
          * @var integer $sequence
@@ -47,15 +46,18 @@ final class UpdateMediaGroupHandler
 
                 /** @var MediaGroupMediaItem $mediaGroupMediaItem */
                 $mediaGroupMediaItem = MediaGroupMediaItem::create(
-                    $updateMediaGroup->mediaGroup,
+                    $mediaGroup,
                     $mediaItem,
                     $newSequence
                 );
 
-                $updateMediaGroup->mediaGroup->addConnectedItem($mediaGroupMediaItem);
+                $mediaGroup->addConnectedItem($mediaGroupMediaItem);
             } catch (\Exception $e) {
                 // Do nothing
             }
         }
+
+        // We redefine the MediaGroup, so we can use it in an action
+        $updateMediaGroup->setMediaGroupEntity($mediaGroup);
     }
 }

@@ -26,23 +26,11 @@ final class CreateMediaGroupHandler
      */
     public function handle(CreateMediaGroup $createMediaGroup)
     {
-        if ($createMediaGroup->id === null) {
-            /** @var MediaGroup $mediaGroup */
-            $mediaGroup = MediaGroup::create(
-                $createMediaGroup->type
-            );
-        } else {
-            /** @var MediaGroup $mediaGroup */
-            $mediaGroup = MediaGroup::createForId(
-                $createMediaGroup->id,
-                $createMediaGroup->type
-            );
-        }
-
-        // Add to the repository
+        /** @var MediaGroup $mediaGroup */
+        $mediaGroup = MediaGroup::fromDataTransferObject($createMediaGroup);
         $this->mediaGroupRepository->add($mediaGroup);
 
-        // Define media group
-        $createMediaGroup->setMediaGroup($mediaGroup);
+        // We redefine the MediaGroup, so we can use it in an action
+        $createMediaGroup->setMediaGroupEntity($mediaGroup);
     }
 }

@@ -270,4 +270,38 @@ class MediaGroup
         $this->editedOn = new \Datetime();
         $this->setNumberOfConnectedItems();
     }
+
+    /**
+     * @param MediaGroupDataTransferObject $mediaGroupDataTransferObject
+     * @return MediaGroup
+     */
+    public static function fromDataTransferObject(MediaGroupDataTransferObject $mediaGroupDataTransferObject)
+    {
+        if ($mediaGroupDataTransferObject->hasExistingMediaGroup()) {
+            /** @var MediaGroup $mediaGroup */
+            $mediaGroup = $mediaGroupDataTransferObject->getMediaGroupEntity();
+
+            // Remove all previous connected items
+            if ($mediaGroupDataTransferObject->removeAllPreviousConnectedMediaItems) {
+                $mediaGroup->getConnectedItems()->clear();
+            }
+
+            return $mediaGroup;
+        }
+
+        if ($mediaGroupDataTransferObject->id === null) {
+            /** @var MediaGroup $mediaGroup */
+            $mediaGroup = self::create(
+                $mediaGroupDataTransferObject->type
+            );
+        } else {
+            /** @var MediaGroup $mediaGroup */
+            $mediaGroup = self::createForId(
+                $mediaGroupDataTransferObject->id,
+                $mediaGroupDataTransferObject->type
+            );
+        }
+
+        return $mediaGroup;
+    }
 }
