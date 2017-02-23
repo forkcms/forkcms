@@ -11,19 +11,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
 /**
- * This is a simple command to create thumbnails
+ * This is a simple command to generate thumbnails
  */
-class CreateThumbnailsCommand extends Command
+class GenerateThumbnailsCommand extends Command
 {
     /**
      * Configure the command options.
      */
     protected function configure()
     {
-        $this->setName('forkcms:thumbnails:create')
-            ->setAliases(['thumbnails:create'])
+        $this->setName('forkcms:thumbnails:generate')
+            ->setAliases(['thumbnails:generate'])
             ->setDescription('Create thumbnails')
-            ->addOption('folder', 'f', InputOption::VALUE_OPTIONAL, 'Name of the folder in /src/Frontend/Files where you want to create thumbnails for.');
+            ->addOption('folder', 'f', InputOption::VALUE_OPTIONAL, 'Name of the folder in /src/Frontend/Files where you want to generate thumbnails for.');
     }
 
     /**
@@ -46,7 +46,7 @@ class CreateThumbnailsCommand extends Command
         // Get path to locale file
         $folderPath = $this->getFolderPath($folderOption);
 
-        $this->createThumbnails($folderPath, $output);
+        $this->generateThumbnails($folderPath, $output);
     }
 
     /**
@@ -55,7 +55,7 @@ class CreateThumbnailsCommand extends Command
      *
      * @throws Exception
      */
-    private function createThumbnails($folderPath, $output)
+    private function generateThumbnails($folderPath, $output)
     {
         $finder = new Finder();
         $finder->files()->in($folderPath)->name('/^.*\.(jpg|jpeg|png|gif)$/i');
