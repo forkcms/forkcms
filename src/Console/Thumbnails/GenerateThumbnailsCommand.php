@@ -61,7 +61,7 @@ class GenerateThumbnailsCommand extends Command
         $finder->files()->in($folderPath)->name('/^.*\.(jpg|jpeg|png|gif)$/i');
 
         foreach ($finder as $file) {
-            Model::generateThumbnails($folderPath, $file);
+            Model::generateThumbnails($folderPath, $file->getRealPath());
             $output->writeln('<info>Creating thumbnail for ' . $file->getBasename() . '...</info>');
         }
     }
