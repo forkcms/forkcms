@@ -67,7 +67,7 @@ class CreateThumbnailsCommand extends Command
     }
 
     /**
-     * Get the file or module path according to the input options
+     * Get the folder path according to the input options
      *
      * @param string $folderOption
      *
