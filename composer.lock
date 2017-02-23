@@ -1493,16 +1493,16 @@
         },
         {
             "name": "mailmotor/campaignmonitor-bundle",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/campaignmonitor-bundle.git",
-                "reference": "8583f62c938837790adeb348f3b09ffafb741a4f"
+                "reference": "831b9e1a8a6d4f1fbba7fc901ff0e0db7ca9ca80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/campaignmonitor-bundle/zipball/8583f62c938837790adeb348f3b09ffafb741a4f",
-                "reference": "8583f62c938837790adeb348f3b09ffafb741a4f",
+                "url": "https://api.github.com/repos/mailmotor/campaignmonitor-bundle/zipball/831b9e1a8a6d4f1fbba7fc901ff0e0db7ca9ca80",
+                "reference": "831b9e1a8a6d4f1fbba7fc901ff0e0db7ca9ca80",
                 "shasum": ""
             },
             "require": {
@@ -1536,7 +1536,7 @@
                 "bundle",
                 "php"
             ],
-            "time": "2016-12-01 07:57:53"
+            "time": "2016-12-05 08:25:16"
         },
         {
             "name": "mailmotor/mailchimp-bundle",
