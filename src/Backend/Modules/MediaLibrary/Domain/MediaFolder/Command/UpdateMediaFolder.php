@@ -3,15 +3,10 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaFolder\Command;
 
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderDataTransferObject;
 
-final class UpdateMediaFolder
+final class UpdateMediaFolder extends MediaFolderDataTransferObject
 {
-    /** @var MediaFolder */
-    public $mediaFolder;
-
-    /** @var string */
-    public $name;
-
     /**
      * CreateMediaFolder constructor.
      *
@@ -20,7 +15,6 @@ final class UpdateMediaFolder
     public function __construct(
         MediaFolder $mediaFolder
     ) {
-        $this->mediaFolder = $mediaFolder;
-        $this->name = $mediaFolder->getName();
+        parent::__construct($mediaFolder);
     }
 }

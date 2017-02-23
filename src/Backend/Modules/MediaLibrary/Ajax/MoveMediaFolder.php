@@ -24,6 +24,9 @@ class MoveMediaFolder extends BackendBaseAJAXAction
         /** @var MediaFolder $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
 
+        /** @var UpdateMediaFolder $updateMediaFolder */
+        $updateMediaFolder = new UpdateMediaFolder($mediaFolder);
+
         /** @var MediaFolder|null $mediaFolder */
         $droppedOnMediaFolder = $this->getMediaFolderWhereDroppedOn();
 
@@ -33,33 +36,22 @@ class MoveMediaFolder extends BackendBaseAJAXAction
         // Dropped on no media folder
         if ($droppedOnMediaFolder === null) {
             // Remove parent
-            $mediaFolder->removeParent();
+            $updateMediaFolder->parent = null;
         // Redefine parent
         } else {
             if ($typeOfDrop == 'inside') {
                 // Set new parent
-                $mediaFolder->setParent($droppedOnMediaFolder);
+                $updateMediaFolder->parent = $droppedOnMediaFolder;
             } else {
-                $parent = $droppedOnMediaFolder->getParent();
-
-                if ($parent) {
-                    // Set new parent
-                    $mediaFolder->setParent($parent);
-                } else {
-                    // Remove parent
-                    $mediaFolder->removeParent();
-                }
+                $updateMediaFolder->parent = $droppedOnMediaFolder->getParent();
             }
         }
-
-        /** @var UpdateMediaFolder $updateMediaFolder */
-        $updateMediaFolder = new UpdateMediaFolder($mediaFolder);
 
         // Handle the MediaFolder update
         $this->get('command_bus')->handle($updateMediaFolder);
         $this->get('event_dispatcher')->dispatch(
             MediaFolderUpdated::EVENT_NAME,
-            new MediaFolderUpdated($updateMediaFolder->mediaFolder)
+            new MediaFolderUpdated($updateMediaFolder->getMediaFolderEntity())
         );
 
         $this->output(

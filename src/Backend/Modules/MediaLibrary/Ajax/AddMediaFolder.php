@@ -39,17 +39,17 @@ class AddMediaFolder extends BackendBaseAJAXAction
         $this->get('command_bus')->handle($createMediaFolder);
         $this->get('event_dispatcher')->dispatch(
             MediaFolderCreated::EVENT_NAME,
-            new MediaFolderCreated($createMediaFolder->mediaFolder)
+            new MediaFolderCreated($createMediaFolder->getMediaFolderEntity())
         );
 
         // Success message
         $this->output(
             self::OK,
-            $createMediaFolder->mediaFolder->__toArray(),
+            $createMediaFolder->getMediaFolderEntity()->__toArray(),
             vsprintf(
                 Language::msg('AddedFolder'),
                 array(
-                    $createMediaFolder->mediaFolder->getId()
+                    $createMediaFolder->getMediaFolderEntity()->getId()
                 )
             )
         );

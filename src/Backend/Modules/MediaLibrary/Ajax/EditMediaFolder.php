@@ -35,16 +35,16 @@ class EditMediaFolder extends BackendBaseAJAXAction
         $this->get('command_bus')->handle($updateMediaFolder);
         $this->get('event_dispatcher')->dispatch(
             MediaFolderUpdated::EVENT_NAME,
-            new MediaFolderUpdated($updateMediaFolder->mediaFolder)
+            new MediaFolderUpdated($updateMediaFolder->getMediaFolderEntity())
         );
 
         // Output
         $this->output(
             self::OK,
-            $updateMediaFolder->mediaFolder->__toArray(),
+            $updateMediaFolder->getMediaFolderEntity()->__toArray(),
             sprintf(
                 Language::msg('MediaFolderIsEdited'),
-                $updateMediaFolder->mediaFolder->getName()
+                $updateMediaFolder->getMediaFolderEntity()->getName()
             )
         );
     }

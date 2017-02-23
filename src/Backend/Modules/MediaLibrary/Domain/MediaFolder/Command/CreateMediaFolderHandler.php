@@ -26,14 +26,10 @@ final class CreateMediaFolderHandler
     public function handle(CreateMediaFolder $createMediaFolder)
     {
         /** @var MediaFolder $mediaFolder */
-        $mediaFolder = MediaFolder::create(
-            $createMediaFolder->name,
-            $createMediaFolder->parent,
-            $createMediaFolder->userId
-        );
-
-        $createMediaFolder->mediaFolder = $mediaFolder;
-
+        $mediaFolder = MediaFolder::fromDataTransferObject($createMediaFolder);
         $this->mediaFolderRepository->add($mediaFolder);
+
+        // We redefine the MediaFolder, so we can use it in an action
+        $createMediaFolder->setMediaFolderEntity($mediaFolder);
     }
 }

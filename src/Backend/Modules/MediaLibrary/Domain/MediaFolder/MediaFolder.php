@@ -284,4 +284,48 @@ class MediaFolder
     {
         $this->editedOn = new \Datetime();
     }
+
+    /**
+     * @param $name
+     * @param MediaFolder|null $parent
+     */
+    public function update(
+        $name,
+        MediaFolder $parent = null
+    ) {
+        $this->setName($name);
+
+        if ($parent instanceof MediaFolder) {
+            $this->setParent($parent);
+        } else {
+            $this->removeParent();
+        }
+    }
+
+    /**
+     * @param MediaFolderDataTransferObject $mediaFolderDataTransferObject
+     * @return MediaFolder
+     */
+    public static function fromDataTransferObject(MediaFolderDataTransferObject $mediaFolderDataTransferObject)
+    {
+        if ($mediaFolderDataTransferObject->hasExistingMediaFolder()) {
+            /** @var MediaFolder $mediaFolder */
+            $mediaFolder = $mediaFolderDataTransferObject->getMediaFolderEntity();
+
+            $mediaFolder->update(
+                $mediaFolderDataTransferObject->name,
+                $mediaFolderDataTransferObject->parent
+            );
+
+            return $mediaFolder;
+        }
+
+        /** @var MediaFolder $mediaFolder */
+        $mediaFolder =  self::create(
+            $mediaFolderDataTransferObject->name,
+            $mediaFolderDataTransferObject->parent,
+            $mediaFolderDataTransferObject->userId
+        );
+        return $mediaFolder;
+    }
 }
