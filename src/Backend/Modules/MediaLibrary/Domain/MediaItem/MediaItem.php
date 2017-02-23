@@ -534,6 +534,15 @@ class MediaItem
      */
     public function getWebPath($subDirectory = null)
     {
+        return self::getWebDir($subDirectory) . $this->getFullUrl();
+    }
+
+    /**
+     * @param null $subDirectory
+     * @return string
+     */
+    public static function getWebDir($subDirectory = null)
+    {
         $subDirectory = self::getSubdirectory($subDirectory);
 
         $webPath = FRONTEND_FILES_URL . '/' . self::getTrimmedUploadDir() . '/';
@@ -541,7 +550,7 @@ class MediaItem
             $webPath .= $subDirectory . '/';
         }
 
-        return $webPath . $this->getFullUrl();
+        return $webPath;
     }
 
     /**
