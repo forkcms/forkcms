@@ -106,9 +106,9 @@ class ImageSettings
         }
 
         return new self(
+            $transformationMethod,
             $width,
             $height,
-            $transformationMethod,
             $quality
         );
     }
