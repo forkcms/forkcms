@@ -55,7 +55,6 @@ class FrontendMediaWidget extends FrontendBaseWidget
         // Add OpenGraph images for Facebook scraper
         $this->get('media_library.helper.frontend')->addOpenGraphImagesForMediaGroup(
             $this->mediaGroup,
-            null,
             $this->header
         );
 

@@ -119,13 +119,13 @@ class FrontendHelper
      * Add Open Graph Images for MediaGroup
      *
      * @param MediaGroup $mediaGroup
-     * @param integer $maximumItems Default is null, which means infinite images will be added to header
      * @param Header $header @todo: when we have a header in our services, use that one instead and remove this method variable
+     * @param integer $maximumItems Default is null, which means infinite images will be added to header
      */
     public function addOpenGraphImagesForMediaGroup(
         MediaGroup $mediaGroup,
-        $maximumItems = null,
-        Header $header
+        Header $header,
+        $maximumItems = null
     ) {
         // Define variables
         $counter = 0;
