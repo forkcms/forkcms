@@ -23,17 +23,17 @@ class FrontendResolutionFactory
      */
     public function create(
         $customKey,
+        $method,
         $width = null,
         $height = null,
-        $method,
         $quality = 100
     ) {
         return FrontendResolution::create(
             $customKey,
             ImageSettings::create(
+                ImageTransformationMethod::fromString($method),
                 $width,
                 $height,
-                ImageTransformationMethod::fromString($method),
                 $quality
             )
         );

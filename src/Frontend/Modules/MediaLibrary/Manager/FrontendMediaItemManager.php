@@ -52,10 +52,8 @@ class FrontendMediaItemManager
 
         // Media id is in cache
         if (isset(self::$cachedFolderNames[(string) $mediaItem->getId()])
-            && in_array(
-                $folderName,
-                self::$cachedFolderNames[(string) $mediaItem->getId()]
-        )) {
+            && in_array($folderName, self::$cachedFolderNames[(string) $mediaItem->getId()])
+        ) {
             // Redefine generate
             $generate = false;
         // We check on the server for existence

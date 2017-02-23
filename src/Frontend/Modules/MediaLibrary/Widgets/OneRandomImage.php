@@ -20,9 +20,9 @@ class OneRandomImage extends FrontendMediaWidget
             $this->setResolutions([
                 $this->get('media_library.factory.frontend.resolution')->create(
                     'large',
+                    'resize',
                     1600,
-                    null,
-                    'resize'
+                    null
                 ),
             ]);
 
