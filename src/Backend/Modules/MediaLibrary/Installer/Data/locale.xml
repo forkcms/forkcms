@@ -54,7 +54,7 @@
       </item>
       <item type="label" name="MediaMovies">
         <translation language="en"><![CDATA[movies]]></translation>
-        <translation language="nl"><![CDATA[afbeeldingen]]></translation>
+        <translation language="nl"><![CDATA[video's]]></translation>
         <translation language="fr"><![CDATA[vidéos]]></translation>
         <translation language="de"><![CDATA[Videos]]></translation>
       </item>
