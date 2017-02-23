@@ -62,7 +62,7 @@ class GenerateThumbnailsCommand extends Command
 
         foreach ($finder as $file) {
             Model::generateThumbnails($folderPath, $file);
-            $output->writeln('<info>Creating thumbnail for ' . $file->getBasename() . ' if not already exists...</info>');
+            $output->writeln('<info>Creating thumbnail for ' . $file->getBasename() . '...</info>');
         }
     }
 
