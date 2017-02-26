@@ -13,6 +13,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class ReinstallCommand extends ContainerAwareCommand
 {
+    const RETURN_SUCCESS = 0;
+    const RETURN_DID_NOT_REINSTALL = 1;
+    const RETURN_DID_NOT_CLEAR_DATABASE = 2;
+
     /**
      * Configure the command options.
      */
@@ -23,37 +27,49 @@ class ReinstallCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
-        if ($io->confirm('Are you sure you want to reinstall?')) {
-            $this->clearDatabase($io);
-            $this->removeConfiguration($io);
-            $this->clearCache($output, $io);
+        if (!$io->confirm('Are you sure you want to reinstall?')) {
+            return self::RETURN_DID_NOT_REINSTALL;
         }
+
+        $returnCode = $this->clearDatabase($io);
+        $this->removeConfiguration($io);
+        $this->clearCache($output, $io);
+
+        return $returnCode;
     }
 
     /**
      * @param SymfonyStyle $io
+     *
+     * @return int
      */
     private function clearDatabase(SymfonyStyle $io)
     {
-        if ($io->confirm('Clear the database?')) {
-            $tables = $this->getContainer()->get('database')->getColumn(
-                'SHOW TABLES'
-            );
-
-            if (!empty($tables)) {
-                $this->getContainer()->get('database')->execute('SET FOREIGN_KEY_CHECKS=0');
-                $this->getContainer()->get('database')->drop($tables);
-            }
-
-            $io->success('Removed all tables');
+        if (!$io->confirm('Clear the database?')) {
+            return self::RETURN_DID_NOT_CLEAR_DATABASE;
         }
+
+        $tables = $this->getContainer()->get('database')->getColumn(
+            'SHOW TABLES'
+        );
+
+        if (!empty($tables)) {
+            $this->getContainer()->get('database')->execute('SET FOREIGN_KEY_CHECKS=0');
+            $this->getContainer()->get('database')->drop($tables);
+        }
+
+        $io->success('Removed all tables');
+
+        return self::RETURN_SUCCESS;
     }
 
     /**
@@ -70,7 +86,7 @@ class ReinstallCommand extends ContainerAwareCommand
 
     /**
      * @param OutputInterface $output
-     * @param SymfonyStyle    $io
+     * @param SymfonyStyle $io
      */
     private function clearCache(OutputInterface $output, SymfonyStyle $io)
     {
@@ -78,7 +94,7 @@ class ReinstallCommand extends ContainerAwareCommand
         $command->run(
             new ArrayInput(
                 array(
-                    'forkcms:cache:clear'
+                    'forkcms:cache:clear',
                 )
             ),
             $output
