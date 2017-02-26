@@ -2,7 +2,6 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Console;
 
-use Console\Core\PrepareForReinstallCommand;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,7 +29,7 @@ class InstallCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('forkcms:install')
+            ->setName('forkcms:install:install')
             ->setDescription('Installation of fork from the cli');
     }
 

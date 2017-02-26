@@ -1,6 +1,6 @@
 <?php
 
-namespace Console\Core;
+namespace ForkCMS\Bundle\InstallerBundle\Console;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -22,7 +22,7 @@ class PrepareForReinstallCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('forkcms:prepare-for-reinstall')
+        $this->setName('forkcms:install:prepare-for-reinstall')
             ->setDescription('Clear the cache and database to prepare for a full reinstall');
     }
 
