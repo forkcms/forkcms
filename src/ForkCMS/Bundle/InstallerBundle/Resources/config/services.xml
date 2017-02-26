@@ -11,5 +11,9 @@
             <argument type="service" id="service_container"/>
             <argument>%kernel.root_dir%/../</argument>
         </service>
+
+        <service id="forkcms.console.installer" class="ForkCMS\Bundle\InstallerBundle\Console\InstallCommand">
+            <tag name="console.command" />
+        </service>
     </services>
 </container>
