@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fa0ad0e3a86125199641b390fb36abae",
-    "content-hash": "29502a2429235cf8a047e673fc5f5e63",
+    "hash": "69910c7af7b2776ec5a864909b056f05",
+    "content-hash": "1edf5362350ee039ae4e3d0a77a5a349",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1827,6 +1827,62 @@
                 "value"
             ],
             "time": "2016-09-20 16:00:05"
+        },
+        {
+            "name": "matthiasnoback/symfony-console-form",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasnoback/symfony-console-form.git",
+                "reference": "56433b5bf9e58e7f37228955e56a290cdc53eb69"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasnoback/symfony-console-form/zipball/56433b5bf9e58e7f37228955e56a290cdc53eb69",
+                "reference": "56433b5bf9e58e7f37228955e56a290cdc53eb69",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "symfony/console": "~2.8|~3.0",
+                "symfony/form": "~2.8|~3.0"
+            },
+            "require-dev": {
+                "beberlei/assert": "~2.1",
+                "behat/behat": "~3.0",
+                "friendsofphp/php-cs-fixer": "^1.10",
+                "phpunit/phpunit": "^4.8",
+                "symfony/finder": "~2.8|~3.0",
+                "symfony/framework-bundle": "~2.8|~3.0",
+                "symfony/security": "~2.8|~3.0",
+                "symfony/validator": "~2.8|~3.0",
+                "symfony/yaml": "~2.8|~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Matthias\\SymfonyConsoleForm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Noback",
+                    "email": "matthiasnoback@gmail.com",
+                    "homepage": "http://php-and-symfony.matthiasnoback.nl"
+                }
+            ],
+            "description": "Use Symfony forms for Console command input",
+            "homepage": "http://github.com/matthiasnoback/symfony-console-form",
+            "keywords": [
+                "console",
+                "form",
+                "symfony"
+            ],
+            "time": "2017-02-09 16:06:51"
         },
         {
             "name": "monolog/monolog",
@@ -4477,7 +4533,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.5 || ^7.0"
+        "php": "^7.0"
     },
     "platform-dev": []
 }

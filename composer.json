@@ -32,7 +32,8 @@
         "simple-bus/doctrine-orm-bridge": "^4.0",
         "mailmotor/mailchimp-bundle": "^2.0",
         "mailmotor/campaignmonitor-bundle": "^1.0",
-        "mailmotor/mailmotor-bundle": "^2.0"
+        "mailmotor/mailmotor-bundle": "^2.0",
+        "matthiasnoback/symfony-console-form": "^2.3"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
