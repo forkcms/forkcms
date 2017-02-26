@@ -9,9 +9,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * This command will prepare everuthing for a full reinstall
+ * This command will prepare everything for a full reinstall
  */
-class ReinstallCommand extends ContainerAwareCommand
+class PrepareForReinstallCommand extends ContainerAwareCommand
 {
     const RETURN_SUCCESS = 0;
     const RETURN_DID_NOT_REINSTALL = 1;
@@ -22,8 +22,8 @@ class ReinstallCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('forkcms:reinstall')
-            ->setDescription('Clear the cache');
+        $this->setName('forkcms:prepare-for-reinstall')
+            ->setDescription('Clear the cache and database to prepare for a full reinstall');
     }
 
     /**
