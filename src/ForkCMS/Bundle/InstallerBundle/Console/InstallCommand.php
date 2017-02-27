@@ -2,6 +2,16 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Console;
 
+use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\InstallerHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Type\DatabaseType;
+use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType;
+use ForkCMS\Bundle\InstallerBundle\Form\Type\LoginType;
+use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesType;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -39,7 +49,7 @@ class InstallCommand extends ContainerAwareCommand
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
         $this->output = $output;
@@ -53,7 +63,62 @@ class InstallCommand extends ContainerAwareCommand
             return 1;
         }
 
-        return 0;
+        $installationData = new InstallationData();
+        $installationData = $this->selectLanguages($installationData);
+        $installationData = $this->selectModules($installationData);
+        $installationData = $this->requestDatabaseConfiguration($installationData);
+        $installationData = $this->requestGodUserCredentials($installationData);
+
+        if ($this->getContainer()->get('forkcms.installer')->install($installationData)) {
+            $this->formatter->success('Fork has been installed');
+
+            return 0;
+        }
+
+        // Normally we will never have this but you never know.
+        $this->formatter->error('Fork could not be installed because the data wasn\'t valid');
+
+        return 1;
+    }
+
+    /**
+     * @param InstallationData $installationData
+     *
+     * @return InstallationData
+     */
+    private function selectLanguages(InstallationData $installationData): InstallationData
+    {
+        return $this->interactWithForm(LanguagesType::class, $installationData, new LanguagesHandler());
+    }
+
+    /**
+     * @param InstallationData $installationData
+     *
+     * @return InstallationData
+     */
+    private function selectModules(InstallationData $installationData): InstallationData
+    {
+        return $this->interactWithForm(ModulesType::class, $installationData, new ModulesHandler());
+    }
+
+    /**
+     * @param InstallationData $installationData
+     *
+     * @return InstallationData
+     */
+    private function requestDatabaseConfiguration(InstallationData $installationData): InstallationData
+    {
+        return $this->interactWithForm(DatabaseType::class, $installationData, new DatabaseHandler());
+    }
+
+    /**
+     * @param InstallationData $installationData
+     *
+     * @return InstallationData
+     */
+    private function requestGodUserCredentials(InstallationData $installationData): InstallationData
+    {
+        return $this->interactWithForm(LoginType::class, $installationData, new LoginHandler());
     }
 
     /**
@@ -82,7 +147,7 @@ class InstallCommand extends ContainerAwareCommand
     /**
      * @return bool
      */
-    private function isForkAlreadyInstalled()
+    private function isForkAlreadyInstalled(): bool
     {
         $filesystem = new Filesystem();
         $kernelDir = $this->getContainer()->getParameter('kernel.root_dir');
@@ -95,7 +160,7 @@ class InstallCommand extends ContainerAwareCommand
     /**
      * @return bool
      */
-    private function isPreparedForReinstall()
+    private function isPreparedForReinstall(): bool
     {
         $reinstallCommand = $this->getApplication()->find('forkcms:install:prepare-for-reinstall');
 
@@ -122,5 +187,24 @@ class InstallCommand extends ContainerAwareCommand
         }
 
         return $reinstallOutput === PrepareForReinstallCommand::RETURN_SUCCESS;
+    }
+
+    /**
+     * @param string $className
+     * @param InstallationData $installationData
+     * @param InstallerHandler $handler
+     *
+     * @return InstallationData
+     */
+    private function interactWithForm(
+        string $className,
+        InstallationData $installationData,
+        InstallerHandler $handler
+    ): InstallationData {
+        $formHelper = $this->getHelper('form');
+
+        return $handler->processInstallationData(
+            $formHelper->interactUsingForm($className, $this->input, $this->output, [], $installationData)
+        );
     }
 }
