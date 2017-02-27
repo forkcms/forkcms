@@ -33,12 +33,12 @@ final class UpdateMediaGroupHandler
         $mediaGroup = MediaGroup::fromDataTransferObject($updateMediaGroup);
 
         /**
-         * @var integer $sequence
+         * @var int $sequence
          * @var string $mediaItemId
          */
         foreach ($updateMediaGroup->mediaItemIdsToConnect as $sequence => $mediaItemId) {
             try {
-                /** @var integer $newSequence */
+                /** @var int $newSequence */
                 $newSequence = $sequence + 1;
 
                 /** @var MediaItem $mediaItem */

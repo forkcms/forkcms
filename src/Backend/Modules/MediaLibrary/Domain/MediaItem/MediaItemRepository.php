@@ -26,7 +26,7 @@ final class MediaItemRepository extends EntityRepository
      * @param string $url
      * @return boolean
      */
-    public function existsOneByUrl($url)
+    public function existsOneByUrl(string $url)
     {
         /** @var MediaItem|null $mediaItem */
         $mediaItem = $this->findOneByUrl((string) $url);
@@ -54,7 +54,7 @@ final class MediaItemRepository extends EntityRepository
      * @return MediaItem
      * @throws \Exception
      */
-    public function getOneById($id)
+    public function getOneById(string $id)
     {
         if ($id === null) {
             throw MediaItemNotFound::forEmptyId();

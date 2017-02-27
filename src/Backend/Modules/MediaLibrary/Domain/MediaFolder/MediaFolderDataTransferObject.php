@@ -13,7 +13,7 @@ class MediaFolderDataTransferObject
     /** @var string */
     public $name;
 
-    /** @var integer */
+    /** @var int */
     public $userId;
 
     /**
@@ -33,7 +33,7 @@ class MediaFolderDataTransferObject
     }
 
     /**
-     * @return \Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder
+     * @return MediaFolder
      */
     public function getMediaFolderEntity()
     {
@@ -49,9 +49,9 @@ class MediaFolderDataTransferObject
     }
 
     /**
-     * @param \Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder $mediaFolderEntity
+     * @param MediaFolder $mediaFolderEntity
      */
-    public function setMediaFolderEntity($mediaFolderEntity)
+    public function setMediaFolderEntity(MediaFolder $mediaFolderEntity)
     {
         $this->mediaFolderEntity = $mediaFolderEntity;
     }

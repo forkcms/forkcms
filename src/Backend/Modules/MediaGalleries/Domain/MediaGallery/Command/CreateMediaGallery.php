@@ -11,10 +11,10 @@ final class CreateMediaGallery extends MediaGalleryDataTransferObject
     /**
      * CreateMediaGallery constructor.
      *
-     * @param integer $userId
+     * @param int $userId
      * @param MediaGroupType $mediaGroupType
      */
-    public function __construct($userId, MediaGroupType $mediaGroupType)
+    public function __construct(int $userId, MediaGroupType $mediaGroupType)
     {
         parent::__construct();
 

@@ -19,7 +19,7 @@ final class CreateMediaItemFromMovieUrl
     /** @var MediaFolder */
     public $mediaFolder;
 
-    /** @var integer */
+    /** @var int */
     public $userId;
 
     /** @var MediaItem */
@@ -28,18 +28,18 @@ final class CreateMediaItemFromMovieUrl
     /**
      * CreateMediaItemFromMovieUrl constructor.
      *
-     * @param $movieService
-     * @param $movieId
-     * @param $movieTitle
-     * @param $mediaFolder
-     * @param $userId
+     * @param string $movieService
+     * @param string $movieId
+     * @param string $movieTitle
+     * @param MediaFolder $mediaFolder
+     * @param int $userId
      */
     public function __construct(
-        $movieService,
-        $movieId,
-        $movieTitle,
+        string $movieService,
+        string $movieId,
+        string $movieTitle,
         MediaFolder $mediaFolder,
-        $userId
+        int $userId
     ) {
         $this->movieService = $movieService;
         $this->movieTitle = $movieTitle;
@@ -59,7 +59,7 @@ final class CreateMediaItemFromMovieUrl
     /**
      * @param MediaItem $mediaItem
      */
-    public function setMediaItem($mediaItem)
+    public function setMediaItem(MediaItem $mediaItem)
     {
         $this->mediaItem = $mediaItem;
     }

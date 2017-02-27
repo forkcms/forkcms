@@ -19,7 +19,7 @@ final class Type
     /**
      * @param string $mediaGroupType
      */
-    private function __construct($mediaGroupType)
+    private function __construct(string $mediaGroupType)
     {
         if (!in_array($mediaGroupType, self::getPossibleValues(), true)) {
             throw new \InvalidArgumentException('Invalid value');
@@ -30,10 +30,9 @@ final class Type
 
     /**
      * @param string $mediaGroupType
-     *
      * @return Type
      */
-    public static function fromString($mediaGroupType)
+    public static function fromString(string $mediaGroupType)
     {
         return new self((string) $mediaGroupType);
     }

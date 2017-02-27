@@ -28,7 +28,7 @@ class CacheBuilder
     protected $mediaGroupRepository;
 
     /**
-     * @param \SpoonDatabase         $database
+     * @param \SpoonDatabase $database
      * @param CacheItemPoolInterface $cache
      * @param MediaGroupRepository $mediaGroupRepository
      */
@@ -80,13 +80,13 @@ class CacheBuilder
     /**
      * Get dropdown cache path
      *
-     * @param bool $includeCount  When calling from AJAX, the count should be added
-     * @param bool $includeKeys  When calling from AJAX, the keys are needed to sort the array
+     * @param bool $includeCount When calling from AJAX, the count should be added
+     * @param bool $includeKeys When calling from AJAX, the keys are needed to sort the array
      * @return string
      */
     public function getDropdownCachePath(
-        $includeCount = false,
-        $includeKeys = false
+        bool $includeCount = false,
+        bool $includeKeys = false
     ) {
         $extras = '';
 
@@ -116,7 +116,7 @@ class CacheBuilder
             /** @var MediaItem $mediaItem */
             $mediaItem = $connectedItem->getItem();
 
-            /** @var integer $folderId */
+            /** @var int $folderId */
             $folderId = $mediaItem->getFolder()->getId();
 
             // Counts for folder doesn't exist
@@ -136,13 +136,13 @@ class CacheBuilder
     /**
      * Get the folders for usage in a dropdown menu
      *
-     * @param bool $includeCount  When calling from AJAX, the count should be added
-     * @param bool $includeKeys  When calling from AJAX, the keys are needed to sort the array
+     * @param bool $includeCount When calling from AJAX, the count should be added
+     * @param bool $includeKeys When calling from AJAX, the keys are needed to sort the array
      * @return array
      */
     public function getFoldersForDropdown(
-        $includeCount = false,
-        $includeKeys = false
+        bool $includeCount = false,
+        bool $includeKeys = false
     ) {
         $item = $this->cache->getItem($this->getDropdownCachePath($includeCount, $includeKeys));
         if ($item->isHit()) {
@@ -226,15 +226,15 @@ class CacheBuilder
     /**
      * Get folders tree
      *
-     * @param  array           $ids   The parentIds.
-     * @param  array[optional] $data  A holder for the generated data.
-     * @param  int[optional]   $level The counter for the level.
+     * @param array $ids The parentIds.
+     * @param array[optional] $data A holder for the generated data.
+     * @param int[optional] $level The counter for the level.
      * @return array
      */
     public function getFoldersTree(
         array $ids = null,
         array $data = null,
-        $level = 1
+        int $level = 1
     ) {
         // redefine
         $level = (int) $level;

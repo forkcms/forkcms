@@ -61,7 +61,7 @@ class AddMediaFolder extends BackendBaseAJAXAction
      * @param MediaFolder|null $parent
      * @return string
      */
-    protected function getFolderName($parent = null)
+    protected function getFolderName(MediaFolder $parent = null)
     {
         // Define name
         $name = trim(\SpoonFilter::getPostValue('name', null, '', 'string'));

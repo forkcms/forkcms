@@ -129,7 +129,7 @@ class Index extends BackendBaseActionIndex
      * @param array $dataGrids
      * @return int
      */
-    private function getTotalFolderCount($dataGrids)
+    private function getTotalFolderCount(array $dataGrids)
     {
         $count = 0;
 
@@ -147,7 +147,7 @@ class Index extends BackendBaseActionIndex
     private function parseFiles()
     {
         // add js
-        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/jquery.tree.js', null, false, true);
+        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/jstree.min.js', null, false, true);
         $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/lib/jquery.cookie.js', null, false, true);
         $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/plugins/jquery.tree.cookie.js', null, false, true);
 

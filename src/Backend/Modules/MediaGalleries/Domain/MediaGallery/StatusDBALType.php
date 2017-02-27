@@ -31,7 +31,6 @@ final class StatusDBALType extends Type
     /**
      * @param string $status
      * @param AbstractPlatform $platform
-     *
      * @return Status
      */
     public function convertToPHPValue($status, AbstractPlatform $platform)
@@ -42,7 +41,6 @@ final class StatusDBALType extends Type
     /**
      * @param Status $status
      * @param AbstractPlatform $platform
-     *
      * @return string
      */
     public function convertToDatabaseValue($status, AbstractPlatform $platform)

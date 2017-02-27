@@ -71,7 +71,7 @@ class MediaGroupDataTransferObject
     /**
      * @param MediaGroup $mediaGroup
      */
-    public function setMediaGroupEntity($mediaGroup)
+    public function setMediaGroupEntity(MediaGroup $mediaGroup)
     {
         $this->mediaGroupEntity = $mediaGroup;
     }

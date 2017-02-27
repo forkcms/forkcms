@@ -123,12 +123,12 @@ class Model
     /**
      * Get subtree for folder
      *
-     * @param  int    $folderId
-     * @param  array  $sequences
-     * @param  array  $folders
+     * @param int $folderId
+     * @param array $sequences
+     * @param array $folders
      * @return string
      */
-    public static function getSubtreeForFolder($folderId, $sequences, $folders)
+    public static function getSubtreeForFolder(int $folderId, array $sequences, array $folders)
     {
         // init html
         $html = '';

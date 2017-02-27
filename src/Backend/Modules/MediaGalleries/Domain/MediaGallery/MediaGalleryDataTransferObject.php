@@ -93,7 +93,7 @@ class MediaGalleryDataTransferObject
     /**
      * @param MediaGallery $mediaGalleryEntity
      */
-    public function setMediaGalleryEntity($mediaGalleryEntity)
+    public function setMediaGalleryEntity(MediaGallery $mediaGalleryEntity)
     {
         $this->mediaGalleryEntity = $mediaGalleryEntity;
     }

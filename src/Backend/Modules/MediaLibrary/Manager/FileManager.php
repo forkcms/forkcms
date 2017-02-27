@@ -34,7 +34,7 @@ class FileManager
      *
      * @param string $path
      */
-    public function deleteFile($path)
+    public function deleteFile(string $path)
     {
         if (is_file($path)) {
             $this->filesystem->remove($path);
@@ -46,7 +46,7 @@ class FileManager
      *
      * @param string $path
      */
-    public function deleteFolder($path)
+    public function deleteFolder(string $path)
     {
         if (is_dir($path)) {
             $this->filesystem->remove($path);
@@ -63,9 +63,9 @@ class FileManager
      * @throws \Exception
      */
     public function generateThumbnail(
-        $fileName,
-        $sourcePath,
-        $destinationPath,
+        string $fileName,
+        string $sourcePath,
+        string $destinationPath,
         ImageSettings $imageSettings
     ) {
         try {
@@ -111,15 +111,15 @@ class FileManager
     /**
      * Get unique URL
      *
-     * @param  string         $URL
-     * @param  bool[optional] $overwrite
-     * @param  bool[optional] $useImageSharding Image sharding is used by default.
+     * @param string $URL
+     * @param bool[optional] $overwrite
+     * @param bool[optional] $useImageSharding Image sharding is used by default.
      * @return string
      */
     public function getUniqueURL(
-        $URL,
-        $overwrite = false,
-        $useImageSharding = true
+        string $URL,
+        bool $overwrite = false,
+        bool $useImageSharding = true
     ) {
         // define imageShardingFolder
         $imageShardingFolder = '';
@@ -193,10 +193,10 @@ class FileManager
      * @param string $imageShardingFolder
      */
     private function updateNameIfNotExists(
-        $targetDir,
-        &$name,
-        $extension,
-        $imageShardingFolder = ''
+        string $targetDir,
+        string &$name,
+        string $extension,
+        string $imageShardingFolder = ''
     ) {
         // File with this path exists
         if (\SpoonFile::exists($targetDir . '/' . $imageShardingFolder . '/' . $name . '.' . $extension)) {
@@ -218,10 +218,10 @@ class FileManager
      * @return string
      */
     private function getUniqueURLName(
-        $targetDir,
-        $name,
-        $extension,
-        $imageShardingFolder = ''
+        string $targetDir,
+        string $name,
+        string $extension,
+        string $imageShardingFolder = ''
     ) {
         // define some variables
         $count = 1;

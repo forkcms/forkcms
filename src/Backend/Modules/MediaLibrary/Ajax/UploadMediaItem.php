@@ -192,13 +192,13 @@ class UploadMediaItem extends BackendBaseAJAXAction
     /**
      * Handle the uploaded media item
      *
-     * @param  string         $name       The url for the new uploaded file
-     * @param  int[optional]  $folderId     The id of the folder where the media has been uploaded
-     * @return json           Returns the new media item as an object.
+     * @param string $name The url for the new uploaded file
+     * @param int[optional] $folderId The id of the folder where the media has been uploaded
+     * @return json Returns the new media item as an object.
      */
     private function handleUploadedMediaItem(
-        $name,
-        $folderId
+        string $name,
+        int $folderId
     ) {
         // Define source
         $source = MediaItem::getUploadRootDir() . '/' . $name;
@@ -239,11 +239,11 @@ class UploadMediaItem extends BackendBaseAJAXAction
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      * @throws \Exception
      * @return MediaFolder
      */
-    private function getMediaFolder($id)
+    private function getMediaFolder(int $id)
     {
         try {
             /** @var MediaFolder */

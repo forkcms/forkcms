@@ -48,7 +48,7 @@ final class RegenerateMediaGroupSequenceListener
                 $newMediaIds = array();
 
                 /**
-                 * @var integer $index
+                 * @var int $index
                  * @var MediaGroupMediaItem $connectedItem
                  */
                 foreach ($mediaGroup->getConnectedItems()->toArray() as $index => $connectedItem) {

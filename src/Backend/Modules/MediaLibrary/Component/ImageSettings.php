@@ -10,12 +10,12 @@ namespace Backend\Modules\MediaLibrary\Component;
 class ImageSettings
 {
     /**
-     * @var integer|null
+     * @var int|null
      */
     protected $width;
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     protected $height;
 
@@ -33,16 +33,16 @@ class ImageSettings
      * Construct
      *
      * @param ImageTransformationMethod $transformationMethod "crop" or "resize"
-     * @param integer|null $width
-     * @param integer|null $height
-     * @param integer $quality
+     * @param int|null $width
+     * @param int|null $height
+     * @param int $quality
      * @throws \Exception
      */
     private function __construct(
         ImageTransformationMethod $transformationMethod,
-        $width = null,
-        $height = null,
-        $quality = 100
+        int $width = null,
+        int $height = null,
+        int $quality = 100
     ) {
         $this->transformationMethod = $transformationMethod;
         $this->setWidth($width);
@@ -54,16 +54,16 @@ class ImageSettings
      * Create
      *
      * @param ImageTransformationMethod $transformationMethod "crop" or "resize"
-     * @param integer|null $width
-     * @param integer|null $height
-     * @param integer $quality
+     * @param int|null $width
+     * @param int|null $height
+     * @param int $quality
      * @return ImageSettings
      */
     public static function create(
         ImageTransformationMethod $transformationMethod,
-        $width = null,
-        $height = null,
-        $quality = 100
+        int $width = null,
+        int $height = null,
+        int $quality = 100
     ) {
         return new self(
             $transformationMethod,
@@ -80,7 +80,7 @@ class ImageSettings
      * @return ImageSettings
      * @throws \Exception
      */
-    public static function fromString($value)
+    public static function fromString(string $value)
     {
         // Divide value into width and height
         list($width, $heightAndMore) = explode('x', $value);
@@ -178,11 +178,11 @@ class ImageSettings
     /**
      * Set height
      *
-     * @param integer|null $height
+     * @param int|null $height
      * @return ImageSettings
      * @throws \Exception
      */
-    protected function setHeight($height)
+    protected function setHeight(int $height)
     {
         $height = (int) $height;
 
@@ -203,11 +203,11 @@ class ImageSettings
     /**
      * Set quality
      *
-     * @param integer $quality
+     * @param int $quality
      * @return ImageSettings
      * @throws \Exception
      */
-    protected function setQuality($quality)
+    protected function setQuality(int $quality)
     {
         if ($quality < 0
             || $quality > 100
@@ -224,11 +224,11 @@ class ImageSettings
     /**
      * Set width
      *
-     * @param integer|null $width
+     * @param int|null $width
      * @return ImageSettings
      * @throws \Exception
      */
-    protected function setWidth($width)
+    protected function setWidth(int $width)
     {
         $width = (int) $width;
 

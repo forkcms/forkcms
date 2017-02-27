@@ -29,24 +29,24 @@ final class TypeDBALType extends DoctrineDBALType
     }
 
     /**
-     * @param string $status
+     * @param string $type
      * @param AbstractPlatform $platform
      *
      * @return Type
      */
-    public function convertToPHPValue($status, AbstractPlatform $platform)
+    public function convertToPHPValue($type, AbstractPlatform $platform)
     {
-        return Type::fromString($status);
+        return Type::fromString($type);
     }
 
     /**
-     * @param Type $status
+     * @param Type $type
      * @param AbstractPlatform $platform
      *
      * @return string
      */
-    public function convertToDatabaseValue($status, AbstractPlatform $platform)
+    public function convertToDatabaseValue($type, AbstractPlatform $platform)
     {
-        return (string) $status;
+        return (string) $type;
     }
 }

@@ -16,7 +16,7 @@ final class Type
     /**
      * @param string $mediaItemType
      */
-    private function __construct($mediaItemType)
+    private function __construct(string $mediaItemType)
     {
         if (!in_array($mediaItemType, self::getPossibleValues(), true)) {
             throw new \InvalidArgumentException('Invalid value');
@@ -29,16 +29,16 @@ final class Type
      * @param string $mediaItemType
      * @return Type
      */
-    public static function fromString($mediaItemType)
+    public static function fromString(string $mediaItemType)
     {
         return new self($mediaItemType);
     }
 
     /**
-     * @param $extension
+     * @param string $extension
      * @return Type
      */
-    public static function fromExtension($extension)
+    public static function fromExtension(string $extension)
     {
         // Init extension
         $type = self::FILE;

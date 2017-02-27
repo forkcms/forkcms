@@ -54,14 +54,14 @@ class ImageTransformationMethod
     /**
      * ImageTransformationMethod constructor.
      *
-     * @param $method
+     * @param string $method
      * @param string|null $horizontalCropPosition
      * @param string|null $verticalCropPosition
      */
     private function __construct(
-        $method,
-        $horizontalCropPosition = null,
-        $verticalCropPosition = null
+        string $method,
+        string $horizontalCropPosition = null,
+        string $verticalCropPosition = null
     ) {
         $this->method = $method;
         $this->horizontalCropPosition = ($horizontalCropPosition !== null)
@@ -97,7 +97,7 @@ class ImageTransformationMethod
      * @return ImageTransformationMethod
      * @throws \Exception
      */
-    public static function fromString($value)
+    public static function fromString(string $value)
     {
         // Define method, by default we use "resize"
         $method = self::$defaultMethod;
@@ -236,11 +236,11 @@ class ImageTransformationMethod
     /**
      * Set horizontal crop position
      *
-     * @param $position
+     * @param string $position
      * @return ImageTransformationMethod
      * @throws \Exception
      */
-    public function setHorizontalCropPosition($position)
+    public function setHorizontalCropPosition(string $position)
     {
         if ($this->method != self::CROP) {
             throw new \Exception('You must also set the method to "crop", otherwise setting "horizontal crop position" will have no effect.');
@@ -261,7 +261,7 @@ class ImageTransformationMethod
      * @return ImageTransformationMethod
      * @throws \Exception
      */
-    public function setVerticalCropPosition($position)
+    public function setVerticalCropPosition(string $position)
     {
         if ($this->method != self::CROP) {
             throw new \Exception('You must also set the method to "crop", otherwise setting "vertical crop position" will have no effect.');

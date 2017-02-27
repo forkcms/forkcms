@@ -16,7 +16,7 @@ final class UpdateMediaGroup extends MediaGroupDataTransferObject
      */
     public function __construct(
         MediaGroup $mediaGroup,
-        $mediaItemIdsToConnect = array()
+        array $mediaItemIdsToConnect = array()
     ) {
         parent::__construct($mediaGroup);
 

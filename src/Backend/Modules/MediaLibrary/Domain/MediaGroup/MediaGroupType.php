@@ -162,7 +162,7 @@ class MediaGroupType extends AbstractType
      * @param Type $mediaGroupType
      * @return MediaGroup
      */
-    private function getMediaGroup($mediaGroupId, Type $mediaGroupType)
+    private function getMediaGroup(string $mediaGroupId, Type $mediaGroupType)
     {
         try {
             /** @var MediaGroup|null $mediaGroup */

@@ -20,7 +20,6 @@ final class TypeDBALType extends DoctrineDBALType
     /**
      * @param array $fieldDeclaration
      * @param AbstractPlatform $platform
-     *
      * @return string
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
@@ -29,24 +28,22 @@ final class TypeDBALType extends DoctrineDBALType
     }
 
     /**
-     * @param string $status
+     * @param string $value
      * @param AbstractPlatform $platform
-     *
      * @return Type
      */
-    public function convertToPHPValue($status, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return Type::fromString($status);
+        return Type::fromString($value);
     }
 
     /**
-     * @param Type $status
+     * @param Type $value
      * @param AbstractPlatform $platform
-     *
      * @return string
      */
-    public function convertToDatabaseValue($status, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return (string) $status;
+        return (string) $value;
     }
 }

@@ -108,21 +108,21 @@ class MediaGallery
     /**
      * MediaGallery constructor.
      *
-     * @param $title
-     * @param $text
-     * @param $action
-     * @param $userId
-     * @param $moduleExtraId
+     * @param string $title
+     * @param string $text
+     * @param string $action
+     * @param int $userId
+     * @param int $moduleExtraId
      * @param \DateTime $publishOn
      * @param MediaGroup $group
      * @param Status $status
      */
     private function __construct(
-        $title,
-        $text,
-        $action,
-        $userId,
-        $moduleExtraId,
+        string $title,
+        string $text,
+        string $action,
+        int $userId,
+        int $moduleExtraId,
         \DateTime $publishOn,
         MediaGroup $group,
         Status $status
@@ -138,20 +138,20 @@ class MediaGallery
     }
 
     /**
-     * @param $userId
-     * @param $action
-     * @param $title
-     * @param $text
+     * @param string $title
+     * @param string $text
+     * @param string $action
+     * @param int $userId
      * @param \DateTime $publishOn
      * @param MediaGroup $group
      * @param Status $status
      * @return MediaGallery
      */
     public static function create(
-        $title,
-        $text,
-        $action,
-        $userId,
+        string $title,
+        string $text,
+        string $action,
+        int $userId,
         \DateTime $publishOn,
         MediaGroup $group,
         Status $status
@@ -169,18 +169,18 @@ class MediaGallery
     }
 
     /**
-     * @param $action
-     * @param $title
-     * @param $text
+     * @param string $action
+     * @param string $title
+     * @param string $text
      * @param \DateTime $publishOn
      * @param MediaGroup $group
      * @param Status $status
-     * @return $this
+     * @return MediaGallery
      */
     public function update(
-        $action,
-        $title,
-        $text,
+        string $action,
+        string $title,
+        string $text,
         \DateTime $publishOn,
         MediaGroup $group,
         Status $status

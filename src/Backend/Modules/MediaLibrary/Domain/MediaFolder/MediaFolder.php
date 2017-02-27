@@ -95,12 +95,12 @@ class MediaFolder
      *
      * @param string $name The name of this folder.
      * @param MediaFolder|null $parent The parent of this folder, can be NULL.
-     * @param integer $userId   The id of the user who created this MediaFolder.
+     * @param int $userId The id of the user who created this MediaFolder.
      */
     protected function __construct(
-        $name,
+        string $name,
         MediaFolder $parent = null,
-        $userId
+        int $userId
     ) {
         $this->name = $name;
         if ($parent !== null) {
@@ -114,13 +114,13 @@ class MediaFolder
     /**
      * @param string $name
      * @param MediaFolder|null $parent
-     * @param integer $userId
+     * @param int $userId
      * @return MediaFolder
      */
     public static function create(
-        $name,
+        string $name,
         MediaFolder $parent = null,
-        $userId
+        int $userId
     ) {
         return new self(
             $name,
@@ -213,7 +213,7 @@ class MediaFolder
      * @param string $name
      * @return string
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
         return $this;
@@ -290,7 +290,7 @@ class MediaFolder
      * @param MediaFolder|null $parent
      */
     public function update(
-        $name,
+        string $name,
         MediaFolder $parent = null
     ) {
         $this->setName($name);

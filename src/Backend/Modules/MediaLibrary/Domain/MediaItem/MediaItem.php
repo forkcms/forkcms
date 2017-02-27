@@ -144,18 +144,18 @@ class MediaItem
      * @param string $mime
      * @param string $shardingFolderName
      * @param MediaFolder $folder
-     * @param integer $size
-     * @param integer $userId
+     * @param int $size
+     * @param int $userId
      */
     private function __construct(
-        $title,
-        $url,
+        string $title,
+        string $url,
         Type $type,
-        $mime,
-        $shardingFolderName,
+        string $mime,
+        string $shardingFolderName,
         MediaFolder $folder,
-        $size,
-        $userId
+        int $size,
+        int $userId
     ) {
         $this->folder = $folder;
         $this->userId = (int) $userId;
@@ -173,14 +173,14 @@ class MediaItem
     /**
      * @param string $source
      * @param MediaFolder $folder
-     * @param integer $userId
+     * @param int $userId
      * @return MediaItem
      * @throws \Exception
      */
     public static function createFromSource(
-        $source,
+        string $source,
         MediaFolder $folder,
-        $userId
+        int $userId
     ) {
         try {
             // Define file
@@ -240,15 +240,15 @@ class MediaItem
      * @param string $movieId
      * @param string $movieTitle
      * @param MediaFolder $folder
-     * @param integer $userId
+     * @param int $userId
      * @return MediaItem
      */
     public static function createFromMovieUrl(
-        $movieService,
-        $movieId,
-        $movieTitle,
+        string $movieService,
+        string $movieId,
+        string $movieTitle,
         MediaFolder $folder,
-        $userId
+        int $userId
     ) {
         return new MediaItem(
             $movieId,
@@ -428,11 +428,11 @@ class MediaItem
     /**
      * Set resolution
      *
-     * @param integer $width
-     * @param integer $height
+     * @param int $width
+     * @param int $height
      * @return self
      */
-    public function setResolution($width, $height)
+    public function setResolution(int $width, int $height)
     {
         $this->width = (int) $width;
         $this->height = (int) $height;
@@ -442,7 +442,7 @@ class MediaItem
     /**
      * Gets the value of width.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getWidth()
     {
@@ -452,7 +452,7 @@ class MediaItem
     /**
      * Gets the value of height.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getHeight()
     {
@@ -491,10 +491,9 @@ class MediaItem
 
     /**
      * @param string|null $subDirectory
-     *
      * @return string|null
      */
-    public function getAbsolutePath($subDirectory = null)
+    public function getAbsolutePath(string $subDirectory = null)
     {
         $subDirectory = self::getSubdirectory($subDirectory);
 
@@ -502,10 +501,10 @@ class MediaItem
     }
 
     /**
-     * @param null $subDirectory
+     * @param string|null $subDirectory
      * @return string
      */
-    protected static function getSubdirectory($subDirectory = null)
+    protected static function getSubdirectory(string $subDirectory = null)
     {
         if ($subDirectory === null || $subDirectory === 'source') {
             return 'Source';
@@ -519,29 +518,28 @@ class MediaItem
     }
 
     /**
-     * @param null $subDirectory
+     * @param string|null $subDirectory
      * @return string
      */
-    public function getAbsoluteWebPath($subDirectory = null)
+    public function getAbsoluteWebPath(string $subDirectory = null)
     {
         return SITE_URL . $this->getWebPath($subDirectory);
     }
 
     /**
      * @param string|null $subDirectory
-     *
      * @return string|null
      */
-    public function getWebPath($subDirectory = null)
+    public function getWebPath(string $subDirectory = null)
     {
         return self::getWebDir($subDirectory) . $this->getFullUrl();
     }
 
     /**
-     * @param null $subDirectory
+     * @param string|null $subDirectory
      * @return string
      */
-    public static function getWebDir($subDirectory = null)
+    public static function getWebDir(string $subDirectory = null)
     {
         $subDirectory = self::getSubdirectory($subDirectory);
 
@@ -555,10 +553,9 @@ class MediaItem
 
     /**
      * @param string|null $subDirectory
-     *
      * @return string
      */
-    public static function getUploadRootDir($subDirectory = null)
+    public static function getUploadRootDir(string $subDirectory = null)
     {
         $subDirectory = self::getSubdirectory($subDirectory);
         $parentUploadRootDir = FRONTEND_FILES_PATH . '/' . self::getTrimmedUploadDir();

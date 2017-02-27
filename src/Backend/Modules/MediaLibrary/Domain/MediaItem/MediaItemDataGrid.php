@@ -17,9 +17,9 @@ class MediaItemDataGrid extends DataGridDB
      * MediaItemDataGrid constructor.
      *
      * @param string $type
-     * @param integer|null $folderId
+     * @param int|null $folderId
      */
-    public function __construct($type, $folderId = null)
+    public function __construct(string $type, int $folderId = null)
     {
         $andWhere = '';
         $parameters = [(string) $type];
@@ -172,11 +172,11 @@ class MediaItemDataGrid extends DataGridDB
     }
 
     /**
-     * @param $type
-     * @param null $folderId
+     * @param string $type
+     * @param int|null $folderId
      * @return DataGridDB
      */
-    public static function getDataGrid($type, $folderId = null)
+    public static function getDataGrid(string $type, int $folderId = null)
     {
         $dataGrid = new self($type, $folderId);
 
@@ -184,11 +184,11 @@ class MediaItemDataGrid extends DataGridDB
     }
 
     /**
-     * @param $type
-     * @param null $folderId
+     * @param string $type
+     * @param int|null $folderId
      * @return string
      */
-    public static function getHtml($type, $folderId = null)
+    public static function getHtml(string $type, int $folderId = null)
     {
         $dataGrid = new self($type, $folderId);
 

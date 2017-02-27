@@ -50,15 +50,15 @@ class FrontendHelper
      * @param string $methodForMediaGroup F.e.: "getImagesMediaGroup"
      * @param string $newVariableName F.e.: "image", this variable will be assigned in your entity
      * @param array $resolutions F.e.: array(new FrontendResolution())
-     * @param boolean $onlyGetTheFirstMediaItem True = only get the first item, false = get all items
+     * @param bool $onlyGetTheFirstMediaItem True = only get the first item, false = get all items
      * @throws \Exception
      */
     public function addFrontendMediaItems(
-        $entities,
-        $methodForMediaGroup,
-        $newVariableName,
-        $resolutions,
-        $onlyGetTheFirstMediaItem = true
+        array $entities,
+        string $methodForMediaGroup,
+        string $newVariableName,
+        array $resolutions,
+        bool $onlyGetTheFirstMediaItem = true
     ) {
         // Init variables
         $mediaGroupIds = array();
@@ -120,12 +120,12 @@ class FrontendHelper
      *
      * @param MediaGroup $mediaGroup
      * @param Header $header @todo: when we have a header in our services, use that one instead and remove this method variable
-     * @param integer $maximumItems Default is null, which means infinite images will be added to header
+     * @param int $maximumItems Default is null, which means infinite images will be added to header
      */
     public function addOpenGraphImagesForMediaGroup(
         MediaGroup $mediaGroup,
         Header $header,
-        $maximumItems = null
+        int $maximumItems = null
     ) {
         // Define variables
         $counter = 0;
@@ -184,7 +184,7 @@ class FrontendHelper
      */
     public function createFrontendMediaItems(
         MediaGroup $mediaGroup,
-        $customResolutions
+        array $customResolutions
     ) {
         $frontendMediaItems = array();
 
@@ -209,7 +209,7 @@ class FrontendHelper
      */
     public function createFrontendMediaItem(
         MediaItem $mediaItem,
-        $customResolutions
+        array $customResolutions
     ) {
         // Define FrontendMediaItem
         $frontendMediaItem = new FrontendMediaItem(
@@ -257,10 +257,10 @@ class FrontendHelper
      * @throws \Exception
      */
     public function parseWidget(
-        $mediaWidgetAction,
-        $mediaGroupId,
-        $title = null,
-        $module = 'MediaLibrary'
+        string $mediaWidgetAction,
+        string $mediaGroupId,
+        string $title = null,
+        string $module = 'MediaLibrary'
     ) {
         $data = serialize(array(
             'group_id' => $mediaGroupId,

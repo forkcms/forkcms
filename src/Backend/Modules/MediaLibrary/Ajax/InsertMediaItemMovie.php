@@ -97,7 +97,7 @@ class InsertMediaItemMovie extends BackendBaseAJAXAction
     /**
      * @param $error
      */
-    private function throwOutputError($error)
+    private function throwOutputError(string $error)
     {
         // Throw output error
         $this->output(

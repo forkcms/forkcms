@@ -12,12 +12,12 @@ final class CreateMediaFolder extends MediaFolderDataTransferObject
      *
      * @param string $name
      * @param MediaFolder|null $parent
-     * @param integer $userId
+     * @param int $userId
      */
     public function __construct(
-        $name,
+        string $name,
         MediaFolder $parent = null,
-        $userId
+        int $userId
     ) {
         parent::__construct();
 

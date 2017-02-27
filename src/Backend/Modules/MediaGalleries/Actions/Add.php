@@ -95,10 +95,9 @@ class Add extends ActionAdd
 
     /**
      * @param array $parameters
-     *
      * @return string
      */
-    private function getBackLink($parameters = [])
+    private function getBackLink(array $parameters = [])
     {
         return Model::createURLForAction(
             'Index',

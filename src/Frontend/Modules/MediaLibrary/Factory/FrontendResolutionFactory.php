@@ -15,18 +15,18 @@ class FrontendResolutionFactory
      * Create a FrontendResolution
      *
      * @param string $customKey
-     * @param integer $width
-     * @param integer $height
      * @param string $method  "crop" or "resize"
-     * @param integer $quality
+     * @param int $width
+     * @param int $height
+     * @param int $quality
      * @return FrontendResolution
      */
     public function create(
-        $customKey,
-        $method,
-        $width = null,
-        $height = null,
-        $quality = 100
+        string $customKey,
+        string $method,
+        int $width = null,
+        int $height = null,
+        int $quality = 100
     ) {
         return FrontendResolution::create(
             $customKey,

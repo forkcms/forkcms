@@ -56,7 +56,7 @@ class GetMediaItems extends BackendBaseAJAXAction
             }
         }
 
-        /** @var integer|null $mediaFolderId */
+        /** @var int|null $mediaFolderId */
         $mediaFolderId = ($mediaFolder !== null) ? $mediaFolder->getId() : null;
 
         // Output success message with variables
@@ -101,7 +101,7 @@ class GetMediaItems extends BackendBaseAJAXAction
      */
     protected function getMediaFolder()
     {
-        /** @var integer $id */
+        /** @var int $id */
         $id = trim(\SpoonFilter::getPostValue('folder_id', null, 0, 'int'));
 
         // We have an id

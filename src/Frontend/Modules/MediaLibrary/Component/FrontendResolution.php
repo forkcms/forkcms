@@ -31,7 +31,7 @@ class FrontendResolution
      * @param ImageSettings $imageSettings
      */
     private function __construct(
-        $customKey,
+        string $customKey,
         ImageSettings $imageSettings
     ) {
         $this->setCustomKey($customKey);
@@ -41,12 +41,12 @@ class FrontendResolution
     /**
      * Create
      *
-     * @param $customKey
+     * @param string $customKey
      * @param ImageSettings $imageSettings
      * @return FrontendResolution
      */
     public static function create(
-        $customKey,
+        string $customKey,
         ImageSettings $imageSettings
     ) {
         return new self(
@@ -78,11 +78,11 @@ class FrontendResolution
     /**
      * Set custom key
      *
-     * @param $customKey
+     * @param string $customKey
      * @return FrontendResolution
      * @throws \Exception
      */
-    protected function setCustomKey($customKey)
+    protected function setCustomKey(string $customKey)
     {
         $customKey = (string) $customKey;
 

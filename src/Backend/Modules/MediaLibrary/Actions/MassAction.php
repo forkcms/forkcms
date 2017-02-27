@@ -112,7 +112,7 @@ class MassAction extends BackendBaseAction
      *
      * @return string
      */
-    private function getBackLink($parameters = [])
+    private function getBackLink(array $parameters = [])
     {
         return Model::createURLForAction(
             'Index',
@@ -147,7 +147,7 @@ class MassAction extends BackendBaseAction
      * @param string $selectedType
      * @return MediaFolder
      */
-    private function getMediaFolderToMoveTo($selectedType)
+    private function getMediaFolderToMoveTo(string $selectedType)
     {
         // Define folder id
         $id = $this->getParameter('move_to_folder_id', 'int', 0);

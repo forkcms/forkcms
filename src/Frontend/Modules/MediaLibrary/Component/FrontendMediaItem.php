@@ -49,8 +49,8 @@ class FrontendMediaItem
      * @param string|null $folderName  The resolution (f.e: 900x600-resize-100) folderName.
      */
     public function addUrl(
-        $customKey,
-        $folderName = null
+        string $customKey,
+        string $folderName = null
     ) {
         if ($customKey === 'source') {
             // Define "source", "small", "large", ... with its url

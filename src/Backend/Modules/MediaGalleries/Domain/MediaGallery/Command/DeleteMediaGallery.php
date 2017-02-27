@@ -19,10 +19,10 @@ final class DeleteMediaGallery
     /**
      * DeleteMediaGallery constructor.
      *
-     * @param $mediaGallery
+     * @param MediaGallery $mediaGallery
      * @param bool $deleteAllMediaItems
      */
-    public function __construct($mediaGallery, $deleteAllMediaItems = false)
+    public function __construct(MediaGallery $mediaGallery, bool $deleteAllMediaItems = false)
     {
         $this->mediaGallery = $mediaGallery;
         $this->deleteAllMediaItems = $deleteAllMediaItems;

@@ -82,12 +82,12 @@ class MediaGroupMediaItem
      *
      * @param MediaGroup $group
      * @param MediaItem $item
-     * @param integer $sequence
+     * @param int $sequence
      */
     private function __construct(
         MediaGroup $group,
         MediaItem $item,
-        $sequence
+        int $sequence
     ) {
         $this->group = $group;
         $this->item = $item;
@@ -105,7 +105,7 @@ class MediaGroupMediaItem
     public static function create(
         MediaGroup $group,
         MediaItem $item,
-        $sequence
+        int $sequence
     ) {
         return new self(
             $group,
@@ -193,10 +193,10 @@ class MediaGroupMediaItem
     /**
      * Sets the value of sequence.
      *
-     * @param integer $sequence the sequence
+     * @param int $sequence the sequence
      * @return self
      */
-    public function setSequence($sequence)
+    public function setSequence(int $sequence)
     {
         $this->sequence = $sequence;
 

@@ -13,7 +13,7 @@ final class CreateMediaItemFromSource
     /** @var MediaFolder */
     public $mediaFolder;
 
-    /** @var integer */
+    /** @var int */
     public $userId;
 
     /** @var MediaItem */
@@ -22,15 +22,15 @@ final class CreateMediaItemFromSource
     /**
      * CreateMediaItemFromSource constructor.
      *
-     * @param $source
+     * @param string $source
      * @param MediaFolder $mediaFolder
      * @param int $userId
      * @throws \Exception
      */
     public function __construct(
-        $source,
+        string $source,
         MediaFolder $mediaFolder,
-        $userId = 0
+        int $userId = 0
     ) {
         $this->source = $source;
         $this->mediaFolder = $mediaFolder;

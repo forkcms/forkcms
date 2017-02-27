@@ -13,7 +13,7 @@ final class Status
     /**
      * @param string $mediaGalleryStatus
      */
-    private function __construct($mediaGalleryStatus)
+    private function __construct(string $mediaGalleryStatus)
     {
         if (!in_array($mediaGalleryStatus, self::getPossibleValues(), true)) {
             throw new \InvalidArgumentException('Invalid value');
@@ -24,10 +24,9 @@ final class Status
 
     /**
      * @param string $mediaGalleryStatus
-     *
      * @return Status
      */
-    public static function fromString($mediaGalleryStatus)
+    public static function fromString(string $mediaGalleryStatus)
     {
         return new self($mediaGalleryStatus);
     }

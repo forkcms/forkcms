@@ -64,7 +64,7 @@ class Delete extends BackendBaseActionDelete
      *
      * @return string
      */
-    private function getBackLink($parameters = [])
+    private function getBackLink(array $parameters = [])
     {
         return Model::createURLForAction(
             'Index',

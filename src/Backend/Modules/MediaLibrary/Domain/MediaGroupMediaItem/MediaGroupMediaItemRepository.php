@@ -10,12 +10,12 @@ final class MediaGroupMediaItemRepository extends EntityRepository
      * Get all MediaGroupMediaItem and their MediaItem
      *
      * @param array $mediaGroupIds
-     * @param boolean $onlyGetFirstMediaItem
+     * @param bool $onlyGetFirstMediaItem
      * @return array
      */
     public function getAll(
-        $mediaGroupIds,
-        $onlyGetFirstMediaItem
+        array $mediaGroupIds,
+        bool $onlyGetFirstMediaItem
     ) {
         $queryBuilder = $this->createQueryBuilder('i')
             ->select(array(
