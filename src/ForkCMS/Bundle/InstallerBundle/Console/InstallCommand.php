@@ -49,7 +49,34 @@ class InstallCommand extends ContainerAwareCommand
             return 1;
         }
 
+        if (!$this->serverMeetsTheRequirements()) {
+            return 1;
+        }
+
         return 0;
+    }
+
+    /**
+     * @return bool
+     */
+    private function serverMeetsTheRequirements(): bool
+    {
+        $checkRequirementsCommand = $this->getApplication()->find('forkcms:install:check-requirements');
+
+        $checkRequirementsOutput = $checkRequirementsCommand->run(
+            new ArrayInput(['forkcms:install:check-requirements']),
+            $this->output
+        );
+
+        if ($checkRequirementsOutput === CheckRequirementsCommand::RETURN_SERVER_DOES_NOT_MEET_REQUIREMENTS) {
+            return false;
+        }
+
+        if ($checkRequirementsOutput === CheckRequirementsCommand::RETURN_SERVER_MEETS_REQUIREMENTS_BUT_HAS_WARNINGS) {
+            return $this->formatter->confirm('There where some warnings, do you still want to continue?');
+        }
+
+        return $checkRequirementsOutput === CheckRequirementsCommand::RETURN_SERVER_MEETS_REQUIREMENTS;
     }
 
     /**
