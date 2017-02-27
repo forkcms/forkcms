@@ -3,18 +3,18 @@
 namespace ForkCMS\Bundle\InstallerBundle\Controller;
 
 use Common\Exception\ExitException;
+use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Type\DatabaseType;
+use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType;
+use ForkCMS\Bundle\InstallerBundle\Form\Type\LoginType;
+use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
-use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType;
-use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesType;
-use ForkCMS\Bundle\InstallerBundle\Form\Type\DatabaseType;
-use ForkCMS\Bundle\InstallerBundle\Form\Type\LoginType;
-use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
-use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
-use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
-use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
-use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\HttpFoundation\Response;
 
 class InstallerController extends Controller
@@ -34,10 +34,9 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step1.html.twig',
-            array(
+            [
                 'checker' => $requirementsChecker,
-                'rootDir' => realpath($this->container->getParameter('site.path_www')),
-            )
+            ]
         );
     }
 
@@ -65,9 +64,9 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step2.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -91,9 +90,9 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step3.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -115,9 +114,9 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step4.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -139,9 +138,9 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step5.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -159,12 +158,22 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step6.html.twig',
-            array(
+            [
                 'installStatus' => $status,
                 'installer' => $forkInstaller,
                 'data' => $this->getInstallationData($request),
-            )
+            ]
         );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function noStepAction()
+    {
+        $this->checkInstall();
+
+        return $this->redirect($this->generateUrl('install_step1'));
     }
 
     /**
@@ -179,16 +188,6 @@ class InstallerController extends Controller
         }
 
         return $request->getSession()->get('installation_data');
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function noStepAction()
-    {
-        $this->checkInstall();
-
-        return $this->redirect($this->generateUrl('install_step1'));
     }
 
     protected function checkInstall()
