@@ -19,6 +19,7 @@
     "jquery-ui-dist": "~1.12"
   },
   "dependencies": {
-    "bxslider": "^4.2.10"
+    "bxslider": "^4.2.10",
+    "photoswipe": "^4.1.1"
   }
 }
