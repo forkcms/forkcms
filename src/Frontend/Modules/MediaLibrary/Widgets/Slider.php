@@ -19,13 +19,13 @@ class Slider extends FrontendMediaWidget
         // We need to have a MediaGroup to show this widget
         if ($this->mediaGroup) {
             // Add CSS
-            $this->addCSS('Plugins/bxslider/jquery.bxslider.css');
+            $this->addCSS('/node_modules/bxslider/dist/jquery.bxslider.css', true);
 
             // Add custom CSS
             $this->addCSS('slider.css');
 
             // Add JS
-            $this->addJS('Plugins/bxslider/jquery.bxslider.min.js');
+            $this->addJS('/node_modules/bxslider/dist/jquery.bxslider.min.js', true);
 
             // We define the resolutions
             $this->setResolutions([
