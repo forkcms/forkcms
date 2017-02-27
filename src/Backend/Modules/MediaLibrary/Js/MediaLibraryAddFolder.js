@@ -107,7 +107,7 @@ jsBackend.mediaLibraryAddFolder =
                     $('#descriptionTitleError').show();
                 } else {
                     // add empty element to html
-                    var html = '<option value="0" />';
+                    var html = '';
 
                     // cache folders
                     var folders = json2array(json.data).sort(sortByProperty('name'));

@@ -553,7 +553,7 @@ jsBackend.mediaLibraryHelper.group =
     updateFolders : function()
     {
         // add empty element to html
-        var html = '<option value="0" />';
+        var html = '';
 
         // add folders to html
         $.each(mediaFolders, function(i, item) {
