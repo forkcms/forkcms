@@ -311,14 +311,18 @@ class RequirementsChecker
         // loop child directories
         foreach ((array) scandir($path) as $file) {
             // no '.' and '..'
-            if (($file != '.') && ($file != '..')) {
-                // directory
-                if (is_dir($path . '/' . $file)) {
-                    // check if children are readable
-                    if (!$this->isRecursivelyWritable($path . '/' . $file)) {
-                        return false;
-                    }
-                }
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            // we only check directories
+            if (!is_dir($path . '/' . $file)) {
+                continue;
+            }
+
+            // check if children are readable
+            if (!$this->isRecursivelyWritable($path . '/' . $file)) {
+                return false;
             }
         }
 
@@ -330,11 +334,11 @@ class RequirementsChecker
      * Check if a directory is writable.
      * The default is_writable function has problems due to Windows ACLs "bug"
      *
-     * @param  string $path The path to check.
+     * @param string $path The path to check.
      *
      * @return bool
      */
-    private function isWritable($path)
+    private function isWritable(string $path): bool
     {
         // redefine argument
         $path = rtrim((string) $path, '/');
