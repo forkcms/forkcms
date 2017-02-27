@@ -19,5 +19,10 @@
         <service id="forkcms.console.installer.prepare_for_reinstall" class="ForkCMS\Bundle\InstallerBundle\Console\PrepareForReinstallCommand">
             <tag name="console.command" />
         </service>
+
+        <service id="forkcms.console.installer.check_requirements" class="ForkCMS\Bundle\InstallerBundle\Console\CheckRequirementsCommand">
+            <argument type="service" id="forkcms.requirements.checker"/>
+            <tag name="console.command" />
+        </service>
     </services>
 </container>
