@@ -5,6 +5,7 @@ namespace ForkCMS\Bundle\InstallerBundle\Controller;
 use Common\Exception\ExitException;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\InstallerHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
@@ -48,27 +49,7 @@ final class InstallerController extends Controller
      */
     public function step2Action(Request $request): Response
     {
-        $this->checkInstall();
-
-        // check if can start the next step
-        $requirementsChecker = $this->get('forkcms.requirements.checker');
-        if ($requirementsChecker->hasErrors()) {
-            return $this->redirect($this->generateUrl('install_step1'));
-        }
-
-        // show language information form.
-        $form = $this->createForm(new LanguagesType(), $this->getInstallationData($request));
-        $handler = new LanguagesHandler();
-        if ($handler->process($form, $request)) {
-            return $this->redirect($this->generateUrl('install_step3'));
-        }
-
-        return $this->render(
-            'ForkCMSInstallerBundle:Installer:step2.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->handleInstallationStep(2, LanguagesType::class, new LanguagesHandler(), $request);
     }
 
     /**
@@ -78,23 +59,7 @@ final class InstallerController extends Controller
      */
     public function step3Action(Request $request): Response
     {
-        $this->checkInstall();
-
-        // @todo: check if all data from step 2 is available
-
-        // show modules form
-        $form = $this->createForm(new ModulesType(), $this->getInstallationData($request));
-        $handler = new ModulesHandler();
-        if ($handler->process($form, $request)) {
-            return $this->redirect($this->generateUrl('install_step4'));
-        }
-
-        return $this->render(
-            'ForkCMSInstallerBundle:Installer:step3.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->handleInstallationStep(3, ModulesType::class, new ModulesHandler(), $request);
     }
 
     /**
@@ -104,21 +69,7 @@ final class InstallerController extends Controller
      */
     public function step4Action(Request $request): Response
     {
-        $this->checkInstall();
-
-        // show database form
-        $form = $this->createForm(new DatabaseType(), $this->getInstallationData($request));
-        $handler = new DatabaseHandler();
-        if ($handler->process($form, $request)) {
-            return $this->redirect($this->generateUrl('install_step5'));
-        }
-
-        return $this->render(
-            'ForkCMSInstallerBundle:Installer:step4.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->handleInstallationStep(4, DatabaseType::class, new DatabaseHandler(), $request);
     }
 
     /**
@@ -128,21 +79,7 @@ final class InstallerController extends Controller
      */
     public function step5Action(Request $request): Response
     {
-        $this->checkInstall();
-
-        // show database form
-        $form = $this->createForm(new LoginType(), $this->getInstallationData($request));
-        $handler = new LoginHandler();
-        if ($handler->process($form, $request)) {
-            return $this->redirect($this->generateUrl('install_step6'));
-        }
-
-        return $this->render(
-            'ForkCMSInstallerBundle:Installer:step5.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->handleInstallationStep(5, LoginType::class, new LoginHandler(), $request);
     }
 
     /**
@@ -209,5 +146,40 @@ final class InstallerController extends Controller
                 Response::HTTP_FORBIDDEN
             );
         }
+    }
+
+    /**
+     * @param int $step
+     * @param string $formTypeClass
+     * @param InstallerHandler $handler
+     * @param Request $request
+     *
+     * @return Response
+     */
+    private function handleInstallationStep(
+        int $step,
+        string $formTypeClass,
+        InstallerHandler $handler,
+        Request $request
+    ): Response {
+        $this->checkInstall();
+
+        // check if can start the next step
+        $requirementsChecker = $this->get('forkcms.requirements.checker');
+        if ($requirementsChecker->hasErrors()) {
+            return $this->redirect($this->generateUrl('install_step1'));
+        }
+
+        $form = $this->createForm($formTypeClass, $this->getInstallationData($request));
+        if ($handler->process($form, $request)) {
+            return $this->redirect($this->generateUrl('install_step' . ($step + 1)));
+        }
+
+        return $this->render(
+            'ForkCMSInstallerBundle:Installer:step' . $step . '.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 }
