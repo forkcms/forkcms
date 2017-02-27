@@ -55,51 +55,12 @@ class Installer extends ModuleInstaller
         $this->getDB()->insert('themes_templates', $templates['core']['default']);
         $this->getDB()->insert('themes_templates', $templates['core']['home']);
 
-        /*
-         * Triton templates
-         */
-
         // search will be installed by default; already link it to this template
         $extras['search_form'] = $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, 'N', 2001);
-
-        // build templates
-        $templates['triton']['default'] = array(
-            'theme' => 'triton',
-            'label' => 'Default',
-            'path' => 'Core/Layout/Templates/Default.html.twig',
-            'active' => 'Y',
-            'data' => serialize(array(
-                'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]',
-                'names' => array('main', 'left', 'top', 'advertisement'),
-                'default_extras' => array('top' => array($extras['search_form'])),
-                'image' => false,
-            )),
-        );
-
-        $templates['triton']['home'] = array(
-            'theme' => 'triton',
-            'label' => 'Home',
-            'path' => 'Core/Layout/Templates/Home.html.twig',
-            'active' => 'Y',
-            'data' => serialize(array(
-                'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]',
-                'names' => array('main', 'left', 'right', 'top', 'advertisement'),
-                'default_extras' => array('top' => array($extras['search_form'])),
-                'image' => true,
-            )),
-        );
-
-        // insert templates
-        $this->getDB()->insert('themes_templates', $templates['triton']['default']);
-        $this->getDB()->insert('themes_templates', $templates['triton']['home']);
 
         /*
          * General theme settings
          */
-
-        // set default theme
-        $this->setSetting('Core', 'theme', 'triton', true);
-
         // set default template
         $this->setSetting('Pages', 'default_template', $this->getTemplateId('default'));
 
