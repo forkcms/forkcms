@@ -147,9 +147,9 @@ class Index extends BackendBaseActionIndex
     private function parseFiles()
     {
         // add js
-        $this->header->addJS('jstree/jquery.tree.js', null, false);
-        $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
-        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
+        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/jquery.tree.js', null, false, true);
+        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/lib/jquery.cookie.js', null, false, true);
+        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/plugins/jquery.tree.cookie.js', null, false, true);
 
         // add js
         $this->header->addJS('MediaLibraryAddFolder.js', 'MediaLibrary', true);
