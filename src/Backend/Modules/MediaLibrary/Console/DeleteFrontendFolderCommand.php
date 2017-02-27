@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Delete generated folder Command
- * Example: "app/console media_library:delete:generated_folder",
+ * Example: "app/console media_library:delete:frontend",
  * will delete the Generated folder which contains all generated images for the frontend.
  */
 class DeleteFrontendFolderCommand extends ContainerAwareCommand
