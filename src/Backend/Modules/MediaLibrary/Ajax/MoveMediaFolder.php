@@ -27,25 +27,10 @@ class MoveMediaFolder extends BackendBaseAJAXAction
         /** @var UpdateMediaFolder $updateMediaFolder */
         $updateMediaFolder = new UpdateMediaFolder($mediaFolder);
 
-        /** @var MediaFolder|null $mediaFolder */
-        $droppedOnMediaFolder = $this->getMediaFolderWhereDroppedOn();
-
         /** @var string $typeOfDrop */
         $typeOfDrop = $this->getTypeOfDrop();
 
-        // Dropped on no media folder
-        if ($droppedOnMediaFolder === null) {
-            // Remove parent
-            $updateMediaFolder->parent = null;
-        // Redefine parent
-        } else {
-            if ($typeOfDrop == 'inside') {
-                // Set new parent
-                $updateMediaFolder->parent = $droppedOnMediaFolder;
-            } else {
-                $updateMediaFolder->parent = $droppedOnMediaFolder->getParent();
-            }
-        }
+        $updateMediaFolder->parent = $this->getMediaFolderWhereDroppedOn($typeOfDrop);
 
         // Handle the MediaFolder update
         $this->get('command_bus')->handle($updateMediaFolder);
@@ -89,16 +74,23 @@ class MoveMediaFolder extends BackendBaseAJAXAction
     }
 
     /**
+     * @param string $typeOfDrop
      * @return MediaFolder|null
      */
-    private function getMediaFolderWhereDroppedOn()
+    private function getMediaFolderWhereDroppedOn(string $typeOfDrop)
     {
         $id = (int) $this->get('request')->request->get('dropped_on', -1);
 
         if ($id !== -1) {
             try {
                 /** @var MediaFolder $mediaFolder */
-                return $this->get('media_library.repository.folder')->getOneById($id);
+                $mediaFolder = $this->get('media_library.repository.folder')->getOneById($id);
+
+                if ($typeOfDrop === 'inside') {
+                    return $mediaFolder;
+                }
+
+                return $mediaFolder->getParent();
             } catch (\Exception $e) {
                 $this->output(
                     self::BAD_REQUEST,
