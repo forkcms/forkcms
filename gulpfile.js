@@ -142,19 +142,60 @@ gulp.task("serve:frontend", function() {
   );
 });
 
+// Fork-theme tasks
+gulp.task("build:theme-fork:sass:generate-css", function() {
+  return gulp.src([
+    "./src/Frontend/Themes/Fork/Core/Layout/Sass/screen.scss",
+  ])
+      .pipe(sourcemaps.init())
+      .pipe(sass({
+        includePaths: [
+          "./node_modules/"
+        ],
+        outputStyle:  "compressed",
+        precision:    10
+      }))
+      .pipe(autoprefixer({}))
+      .pipe(sourcemaps.write("./", {
+        includeContent: false,
+        sourceRoot:     "/src/Frontend/Themes/Fork/Core/Layout/Sass"
+      }))
+      .pipe(gulp.dest("./src/Frontend/Themes/Fork/Core/Layout/Css"))
+      .pipe(livereload());
+});
+
+gulp.task("build:theme-fork", function() {
+  gulp.start(
+      "build:theme-fork:sass:generate-css"
+  );
+});
+
+gulp.task("serve:theme-fork", function() {
+  livereload.listen();
+  gulp.watch([
+        "./src/Frontend/Themes/Fork/Core/Layout/Sass/**/*",
+      ],
+      ["build:theme-fork:sass:generate-css"]
+  );
+});
+
 // public tasks
 gulp.task("default", function() {
   gulp.start("build");
 });
 
 gulp.task("serve", function() {
-  gulp.start("serve:backend");
-  gulp.start("serve:frontend");
+  gulp.start(
+      "serve:backend",
+      "serve:frontend",
+      "serve:theme-fork"
+  );
 });
 
 gulp.task("build", function() {
   gulp.start(
       "build:backend",
-      "build:frontend"
+      "build:frontend",
+      "build:theme-fork"
   );
 });

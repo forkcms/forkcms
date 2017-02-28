@@ -1,0 +1,15 @@
+@charset 'UTF-8';
+
+// Font Awesome
+$fa-font-path: '/fonts/vendors';
+@import 'font-awesome/scss/font-awesome';
+
+
+// Bootstrap
+@import 'bootstrap-sass/assets/stylesheets/bootstrap/_variables';
+@import 'bootstrap-variables';
+@import 'bootstrap-imports';
+
+// Custom page styling
+// Insert custom page styling here. Put all page styles in the pages/ directory
+// eg. @import 'pages/footer';
