@@ -291,7 +291,6 @@ class MediaGroup
             );
         }
 
-        /** @var MediaGroup $mediaGroup */
         return self::createForId(
             $mediaGroupDataTransferObject->id,
             $mediaGroupDataTransferObject->type
