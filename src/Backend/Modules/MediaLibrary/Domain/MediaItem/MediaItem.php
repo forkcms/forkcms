@@ -91,7 +91,7 @@ class MediaItem
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $size;
 
@@ -142,9 +142,7 @@ class MediaItem
      * @param string $url
      * @param Type $type
      * @param string $mime
-     * @param string $shardingFolderName
      * @param MediaFolder $folder
-     * @param int $size
      * @param int $userId
      */
     private function __construct(
@@ -152,19 +150,15 @@ class MediaItem
         string $url,
         Type $type,
         string $mime,
-        string $shardingFolderName,
         MediaFolder $folder,
-        int $size,
         int $userId
     ) {
         $this->folder = $folder;
         $this->userId = (int) $userId;
         $this->type = $type;
         $this->mime = $mime;
-        $this->shardingFolderName = $shardingFolderName;
         $this->url = (string) $url;
         $this->title = (string) $title;
-        $this->size = (int) $size;
         $this->createdOn = new \DateTime();
         $this->editedOn = new \DateTime();
         $this->groups = new ArrayCollection();
@@ -210,11 +204,12 @@ class MediaItem
                 $file->getFilename(),
                 $mediaItemType,
                 $file->getMimeType(),
-                $shardingFolderName,
                 $folder,
-                $file->getSize(),
                 $userId
             );
+
+            $mediaItem->shardingFolderName = $shardingFolderName;
+            $mediaItem->size = $file->getSize();
 
             // Image
             if ($mediaItemType->isImage()) {
@@ -255,9 +250,7 @@ class MediaItem
             $movieTitle,
             Type::movie(),
             $movieService,
-            null,
             $folder,
-            0,
             $userId
         );
     }
