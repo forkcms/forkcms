@@ -48,11 +48,12 @@ jsFrontend.mediaSlider =
 {
     init: function()
     {
-        // when no items for slider found, stop here
-        if($('.widgetMediaSlider').length == 0) return false;
-
-        // define sliders
         var $sliders = $('.widgetMediaSlider');
+
+        // when no items for slider found, stop here
+        if ($sliders.length === 0) {
+            return false;
+        }
 
         // init sliders
         $sliders.mediaSlider();
