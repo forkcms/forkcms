@@ -54,16 +54,16 @@ class EditMediaFolder extends BackendBaseAJAXAction
      */
     protected function getMediaFolder()
     {
-        $id = trim(\SpoonFilter::getPostValue('folder_id', null, '', 'int'));
+        $id = $this->get('request')->request->get('folder_id');
 
         // validate values
-        if ($id === '') {
+        if ($id === null) {
             $this->output(self::BAD_REQUEST, null, Language::err('FolderIdIsRequired'));
         }
 
         try {
             /** @var MediaFolder $mediaFolder */
-            return $this->get('media_library.repository.folder')->getOneById($id);
+            return $this->get('media_library.repository.folder')->getOneById((int) $id);
         } catch (\Exception $e) {
             $this->output(
                 self::BAD_REQUEST,
@@ -79,13 +79,13 @@ class EditMediaFolder extends BackendBaseAJAXAction
     protected function getFolderName()
     {
         // Define name
-        $name = trim(\SpoonFilter::getPostValue('name', null, '', 'string'));
-        $name = Uri::getUrl($name);
+        $name = $this->get('request')->request->get('name');
 
-        if ($name === '') {
+        if ($name === null) {
             $this->output(self::BAD_REQUEST, null, Language::err('TitleIsRequired'));
         }
 
+        $name = Uri::getUrl($name);
         return $name;
     }
 }

@@ -38,26 +38,10 @@ class UploadMediaItem extends BackendBaseAJAXAction
         $contentType = null;
 
         // define folder id
-        $folderId = trim(\SpoonFilter::getPostValue(
-            'folder_id',
-            null,
-            '',
-            'int'
-        ));
+        $folderId = $this->getMediaFolder();
 
         // define destination URL
-        $destinationURL = trim(\SpoonFilter::getPostValue(
-            'filename',
-            null,
-            '',
-            'string'
-        ));
-
-        // redefine destination URL as unique URL
-        $destinationURL = $this->get('media_library.manager.file')->getUniqueURL(
-            $destinationURL,
-            self::OVERRIDE_EXISTING
-        );
+        $destinationURL = $this->getDestinationURL();
 
         // define destination source path
         $destinationSourcePath = MediaItem::getUploadRootDir() . '/' . $destinationURL;
@@ -107,11 +91,7 @@ class UploadMediaItem extends BackendBaseAJAXAction
                         }
                     // error opening input stream
                     } else {
-                        $this->output(
-                            self::BAD_REQUEST,
-                            null,
-                            'Failed to open input stream.'
-                        );
+                        $this->throwOutputError('Failed to open input stream.');
                     }
 
                     fclose($in);
@@ -133,19 +113,11 @@ class UploadMediaItem extends BackendBaseAJAXAction
                     }
                 // error can't write file
                 } else {
-                    $this->output(
-                        self::BAD_REQUEST,
-                        null,
-                        'Failed to open output stream.'
-                    );
+                    $this->throwOutputError('Failed to open output stream.');
                 }
             // error when moving uploaded file
             } else {
-                $this->output(
-                    self::BAD_REQUEST,
-                    null,
-                    'Failed to move uploaded file.'
-                );
+                $this->throwOutputError('Failed to move uploaded file.');
             }
         // handle non multipart uploads older WebKit versions didn't support multipart in HTML5
         } else {
@@ -163,11 +135,7 @@ class UploadMediaItem extends BackendBaseAJAXAction
                     }
                 // error opening input stream
                 } else {
-                    $this->output(
-                        self::BAD_REQUEST,
-                        null,
-                        'Failed to open input stream.'
-                    );
+                    $this->throwOutputError('Failed to open input stream.');
                 }
 
                 fclose($in);
@@ -180,11 +148,7 @@ class UploadMediaItem extends BackendBaseAJAXAction
                 );
             // error opening output stream
             } else {
-                $this->output(
-                    self::BAD_REQUEST,
-                    null,
-                    'Failed to open output stream.'
-                );
+                $this->throwOutputError('Failed to open output stream.');
             }
         }
     }
@@ -204,7 +168,7 @@ class UploadMediaItem extends BackendBaseAJAXAction
         $source = MediaItem::getUploadRootDir() . '/' . $name;
 
         /** @var MediaFolder $mediaFolder */
-        $mediaFolder = $this->getMediaFolder($folderId);
+        $mediaFolder = $this->loadMediaFolder($folderId);
 
         /** @var CreateMediaItemFromSource $createMediaItem */
         $createMediaItemFromSource = new CreateMediaItemFromSource(
@@ -239,21 +203,67 @@ class UploadMediaItem extends BackendBaseAJAXAction
     }
 
     /**
+     * Get MediaFolder
+     *
+     * @return MediaFolder
+     */
+    protected function getMediaFolder()
+    {
+        // Define id
+        $id = $this->get('request')->request->get('folder_id');
+
+        if ($id === null) {
+            $this->throwOutputError('MediaFolderIsRequired');
+        }
+
+        return (int) $id;
+    }
+
+    /**
+     * Get destination url
+     *
+     * @return string
+     */
+    protected function getDestinationURL()
+    {
+        $destinationURL = $this->get('request')->request->get('filename');
+
+        if ($destinationURL === null) {
+            $this->throwOutputError('FilenameIsRequired');
+        }
+
+        // redefine destination URL as unique URL
+        return $this->get('media_library.manager.file')->getUniqueURL(
+            (string) $destinationURL,
+            self::OVERRIDE_EXISTING
+        );
+    }
+
+    /**
      * @param int $id
      * @throws \Exception
      * @return MediaFolder
      */
-    private function getMediaFolder(int $id)
+    private function loadMediaFolder(int $id)
     {
         try {
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->getOneById($id);
         } catch (\Exception $e) {
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                Language::err('NotExistingMediaFolder')
-            );
+            $this->throwOutputError('NotExistingMediaFolder');
         }
+    }
+
+    /**
+     * @param $error
+     */
+    private function throwOutputError(string $error)
+    {
+        // Throw output error
+        $this->output(
+            self::BAD_REQUEST,
+            null,
+            Language::err($error)
+        );
     }
 }

@@ -66,7 +66,7 @@ class MoveMediaFolder extends BackendBaseAJAXAction
      */
     private function getMediaFolder()
     {
-        $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
+        $id = (int) $this->get('request')->request->get('id', 0);
 
         if ($id === 0) {
             $this->output(
@@ -93,7 +93,7 @@ class MoveMediaFolder extends BackendBaseAJAXAction
      */
     private function getMediaFolderWhereDroppedOn()
     {
-        $id = \SpoonFilter::getPostValue('dropped_on', null, -1, 'int');
+        $id = (int) $this->get('request')->request->get('dropped_on', -1);
 
         if ($id !== -1) {
             try {
@@ -116,21 +116,21 @@ class MoveMediaFolder extends BackendBaseAJAXAction
      */
     private function getTypeOfDrop()
     {
-        $typeOfDrop = \SpoonFilter::getPostValue(
-            'type',
-            array(
-                'before',
-                'after',
-                'inside',
-            ),
-            ''
-        );
+        $typeOfDrop = $this->get('request')->request->get('type');
 
-        if ($typeOfDrop === '') {
+        if ($typeOfDrop === null) {
             $this->output(
                 self::BAD_REQUEST,
                 null,
                 'no type provided'
+            );
+        }
+
+        if (!in_array($typeOfDrop, ['before', 'after', 'inside'])) {
+            $this->output(
+                self::BAD_REQUEST,
+                null,
+                'wrong type provided'
             );
         }
 

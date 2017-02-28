@@ -24,7 +24,7 @@ class GetMediaFolders extends BackendBaseAJAXAction
         parent::execute();
 
         // We must show count of items in folder
-        if (trim(\SpoonFilter::getPostValue('show_count', null, '', 'bool'))) {
+        if ((bool) $this->get('request')->request->get('show_count', false)) {
             $this->showCount = true;
         }
 

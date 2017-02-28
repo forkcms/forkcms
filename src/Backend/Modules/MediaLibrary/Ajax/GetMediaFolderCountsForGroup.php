@@ -37,10 +37,10 @@ class GetMediaFolderCountsForGroup extends BackendBaseAJAXAction
      */
     private function getMediaGroup()
     {
-        $id = trim(\SpoonFilter::getPostValue('group_id', null, '', 'string'));
+        $id = $this->get('request')->request->get('group_id');
 
         // GroupId not valid
-        if ($id === '') {
+        if ($id === null) {
             // Throw error output
             $this->output(
                 self::BAD_REQUEST,
@@ -51,7 +51,7 @@ class GetMediaFolderCountsForGroup extends BackendBaseAJAXAction
 
         try {
             /** @var MediaGroup */
-            return $this->get('media_library.repository.group')->getOneById($id);
+            return $this->get('media_library.repository.group')->getOneById((string) $id);
         } catch (\Exception $e) {
             return null;
         }

@@ -18,15 +18,8 @@ class GetMediaFolderInfo extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $type = \SpoonFilter::getPostValue(
-            'type',
-            array(
-                'folder',
-            ),
-            null,
-            'string'
-        );
-        $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
+        $type = $this->get('request')->request->get('type');
+        $id = (int) $this->get('request')->request->get('id', 0);
 
         // validate
         if ($type === null) {
@@ -34,6 +27,13 @@ class GetMediaFolderInfo extends BackendBaseAJAXAction
                 self::BAD_REQUEST,
                 null,
                 'no type provided'
+            );
+        }
+        if ((string) $type !== 'folder') {
+            $this->output(
+                self::BAD_REQUEST,
+                null,
+                'wrong type provided'
             );
         }
         if ($id === 0) {

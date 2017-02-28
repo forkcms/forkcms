@@ -76,13 +76,13 @@ class GetMediaItems extends BackendBaseAJAXAction
     protected function getMediaGroup()
     {
         /** @var string $id */
-        $id = trim(\SpoonFilter::getPostValue('group_id', null, null, 'string'));
+        $id = $this->get('request')->request->get('group_id');
 
         // We have an id
         if ($id !== null) {
             try {
                 /** @var MediaGroup */
-                return $this->get('media_library.repository.group')->getOneById($id);
+                return $this->get('media_library.repository.group')->getOneById((string) $id);
             } catch (\Exception $e) {
                 // Throw output error
                 $this->output(
@@ -102,7 +102,7 @@ class GetMediaItems extends BackendBaseAJAXAction
     protected function getMediaFolder()
     {
         /** @var int $id */
-        $id = trim(\SpoonFilter::getPostValue('folder_id', null, 0, 'int'));
+        $id = (int) $this->get('request')->request->get('folder_id', 0);
 
         // We have an id
         if ($id !== 0) {

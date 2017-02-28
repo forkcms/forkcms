@@ -64,7 +64,7 @@ class AddMediaFolder extends BackendBaseAJAXAction
     protected function getFolderName(MediaFolder $parent = null)
     {
         // Define name
-        $name = trim(\SpoonFilter::getPostValue('name', null, '', 'string'));
+        $name = (string) trim($this->get('request')->request->get('name'));
 
         // Urlise name
         $name = Uri::getUrl($name);
@@ -100,12 +100,7 @@ class AddMediaFolder extends BackendBaseAJAXAction
     protected function getParent()
     {
         // Get parameters
-        $parentId = (int) trim(\SpoonFilter::getPostValue(
-            'parent_id',
-            null,
-            null,
-            'int'
-        ));
+        $parentId = (int) $this->get('request')->request->get('parent_id');
 
         // We have a parent
         if ($parentId !== null) {

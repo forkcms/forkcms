@@ -29,28 +29,28 @@ class InsertMediaItemMovie extends BackendBaseAJAXAction
         $movieService = $this->getMovieService();
 
         // Define parameters
-        $movieId = trim(\SpoonFilter::getPostValue('id', null, '', 'string'));
-        $movieTitle = trim(\SpoonFilter::getPostValue('title', null, '', 'string'));
+        $movieId = trim($this->get('request')->request->get('id'));
+        $movieTitle = trim($this->get('request')->request->get('title'));
 
         // Mime not valid
         if ($movieService === null) {
             $this->throwOutputError('MediaMovieSourceIsRequired');
         // External video id not valid
-        } elseif ($movieId === '') {
+        } elseif ($movieId === null) {
             $this->throwOutputError('MediaMovieIdIsRequired');
         // Title not valid
-        } elseif ($movieTitle === '') {
+        } elseif ($movieTitle === null) {
             $this->throwOutputError('MediaMovieTitleIsRequired');
         // Movie url (= externalVideoId) already exists in our repository
-        } elseif ($this->get('media_library.repository.item')->existsOneByUrl($movieId)) {
+        } elseif ($this->get('media_library.repository.item')->existsOneByUrl((string) $movieId)) {
             $this->throwOutputError('MediaMovieIdAlreadyExists');
         // Not already exists
         } else {
             /** @var CreateMediaItemFromMovieUrl $createMediaItem */
             $createMediaItemFromMovieUrl = new CreateMediaItemFromMovieUrl(
                 $movieService,
-                $movieId,
-                $movieTitle,
+                (string) $movieId,
+                (string) $movieTitle,
                 $mediaFolder,
                 BackendAuthentication::getUser()->getUserId()
             );
@@ -74,24 +74,23 @@ class InsertMediaItemMovie extends BackendBaseAJAXAction
     /**
      * Get MediaFolder
      *
-     * @return MediaFolder|null
+     * @return MediaFolder
      */
     protected function getMediaFolder()
     {
         // Define id
-        $id = \SpoonFilter::getPostValue('folder_id', null, null, 'int');
+        $id = $this->get('request')->request->get('folder_id');
 
-        // We have a folder
-        if ($id !== null) {
-            try {
-                /** @var MediaFolder */
-                return $this->get('media_library.repository.folder')->getOneById($id);
-            } catch (\Exception $e) {
-                $this->throwOutputError('ParentNotExists');
-            }
+        if ($id === null) {
+            $this->throwOutputError('MediaFolderIsRequired');
         }
 
-        return null;
+        try {
+            /** @var MediaFolder */
+            return $this->get('media_library.repository.folder')->getOneById((int) $id);
+        } catch (\Exception $e) {
+            $this->throwOutputError('ParentNotExists');
+        }
     }
 
     /**
@@ -112,11 +111,12 @@ class InsertMediaItemMovie extends BackendBaseAJAXAction
      */
     protected function getMovieService()
     {
-        return trim(\SpoonFilter::getPostValue(
-            'mime',
-            MediaItem::getMimesForMovie(),
-            null,
-            'string'
-        ));
+        $movieService = $this->get('request')->request->get('mime');
+
+        if ($movieService === null || !in_array((string) $movieService, MediaItem::getMimesForMovie())) {
+            $this->throwOutputError('MovieServiceNotExists');
+        }
+
+        return (string) $movieService;
     }
 }
