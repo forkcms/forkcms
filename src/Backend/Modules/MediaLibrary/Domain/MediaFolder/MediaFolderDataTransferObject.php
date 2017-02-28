@@ -25,11 +25,13 @@ class MediaFolderDataTransferObject
     {
         $this->mediaFolderEntity = $mediaFolder;
 
-        if ($this->hasExistingMediaFolder()) {
-            $this->name = $mediaFolder->getName();
-            $this->parent = $mediaFolder->getParent();
-            $this->userId = $mediaFolder->getUserId();
+        if (!$this->hasExistingMediaFolder()) {
+            return;
         }
+
+        $this->name = $mediaFolder->getName();
+        $this->parent = $mediaFolder->getParent();
+        $this->userId = $mediaFolder->getUserId();
     }
 
     /**
