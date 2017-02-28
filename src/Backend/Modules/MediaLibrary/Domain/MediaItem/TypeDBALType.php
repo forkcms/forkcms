@@ -3,9 +3,9 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\Type as DoctrineDBALType;
+use Doctrine\DBAL\Types\StringType;
 
-final class TypeDBALType extends DoctrineDBALType
+final class TypeDBALType extends StringType
 {
     const NAME = 'media_item_type';
 
@@ -15,16 +15,6 @@ final class TypeDBALType extends DoctrineDBALType
     public function getName(): string
     {
         return self::NAME;
-    }
-
-    /**
-     * @param array $fieldDeclaration
-     * @param AbstractPlatform $platform
-     * @return string
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
-    {
-        return 'VARCHAR(255)';
     }
 
     /**

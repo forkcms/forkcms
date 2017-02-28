@@ -40,34 +40,32 @@ final class Type
      */
     public static function fromExtension(string $extension): Type
     {
-        // Init extension
-        $type = self::FILE;
-
         // Looking for image files
-        if (in_array($extension, array(
+        if (in_array($extension, [
             'jpg',
             'jpeg',
             'gif',
             'png',
-        ))) {
-            // Define extension as image
-            $type = self::IMAGE;
-            // Looking for audio files
-        } elseif (in_array($extension, array(
+        ])) {
+            return self::image();
+        }
+
+        // Looking for audio files
+        if (in_array($extension, [
             'mp3',
             'aiff',
             'wav',
-        ))) {
-            $type = self::AUDIO;
-        } elseif (in_array($extension, array(
+        ])) {
+            return self::audio();
+        } elseif (in_array($extension, [
             'avi',
             'mov',
             'mp4',
-        ))) {
-            $type = self::MOVIE;
+        ])) {
+            return self::movie();
         }
 
-        return self::fromString($type);
+        return self::file();
     }
 
     /**

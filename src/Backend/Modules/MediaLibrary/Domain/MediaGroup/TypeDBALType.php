@@ -3,9 +3,9 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\Type as DoctrineDBALType;
+use Doctrine\DBAL\Types\StringType;
 
-final class TypeDBALType extends DoctrineDBALType
+final class TypeDBALType extends StringType
 {
     const NAME = 'media_group_type';
 
@@ -18,20 +18,8 @@ final class TypeDBALType extends DoctrineDBALType
     }
 
     /**
-     * @param array $fieldDeclaration
-     * @param AbstractPlatform $platform
-     *
-     * @return string
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
-    {
-        return 'VARCHAR(255)';
-    }
-
-    /**
      * @param mixed $value
      * @param AbstractPlatform $platform
-     *
      * @return Type
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): Type
@@ -42,7 +30,6 @@ final class TypeDBALType extends DoctrineDBALType
     /**
      * @param mixed $value
      * @param AbstractPlatform $platform
-     *
      * @return string
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string

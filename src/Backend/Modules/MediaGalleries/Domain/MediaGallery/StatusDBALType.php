@@ -3,9 +3,9 @@
 namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\StringType;
 
-final class StatusDBALType extends Type
+final class StatusDBALType extends StringType
 {
     const NAME = 'media_gallery_status';
 
@@ -15,17 +15,6 @@ final class StatusDBALType extends Type
     public function getName(): string
     {
         return self::NAME;
-    }
-
-    /**
-     * @param array $fieldDeclaration
-     * @param AbstractPlatform $platform
-     *
-     * @return string
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
-    {
-        return 'VARCHAR(255)';
     }
 
     /**
