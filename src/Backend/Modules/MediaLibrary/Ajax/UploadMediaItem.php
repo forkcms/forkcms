@@ -158,12 +158,11 @@ class UploadMediaItem extends BackendBaseAJAXAction
      *
      * @param string $name The url for the new uploaded file
      * @param int $folderId The id of the folder where the media has been uploaded
-     * @return string Returns the new media item as an object.
      */
     private function handleUploadedMediaItem(
         string $name,
         int $folderId
-    ) : string {
+    ) {
         // Define source
         $source = MediaItem::getUploadRootDir() . '/' . $name;
 
@@ -205,9 +204,9 @@ class UploadMediaItem extends BackendBaseAJAXAction
     /**
      * Get MediaFolder
      *
-     * @return MediaFolder
+     * @return int
      */
-    protected function getMediaFolder(): MediaFolder
+    protected function getMediaFolder(): int
     {
         // Define id
         $id = $this->get('request')->request->get('folder_id');
