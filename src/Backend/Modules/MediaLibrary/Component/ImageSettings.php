@@ -10,12 +10,12 @@ namespace Backend\Modules\MediaLibrary\Component;
 class ImageSettings
 {
     /**
-     * @var int|null
+     * @var int
      */
     protected $width;
 
     /**
-     * @var int|null
+     * @var int
      */
     protected $height;
 
@@ -152,13 +152,13 @@ class ImageSettings
     {
         $resolution = '';
 
-        if ($this->getWidth() !== null) {
+        if ($this->getWidth() !== 0) {
             $resolution .= $this->getWidth();
         }
 
         $resolution .= 'x';
 
-        if ($this->getHeight() !== null) {
+        if ($this->getHeight() !== 0) {
             $resolution .= $this->getHeight();
         }
 
@@ -184,16 +184,10 @@ class ImageSettings
      */
     protected function setHeight(int $height): ImageSettings
     {
-        $height = (int) $height;
-
-        if ($height == 0) {
-            $height = null;
-        } else {
-            if ($height <= 0) {
-                throw new \Exception(
-                    'The height should be higher then 0.'
-                );
-            }
+        if ($height < 0) {
+            throw new \Exception(
+                'The height should be higher then or equal to 0.'
+            );
         }
 
         $this->height = $height;
@@ -209,9 +203,7 @@ class ImageSettings
      */
     protected function setQuality(int $quality): ImageSettings
     {
-        if ($quality < 0
-            || $quality > 100
-        ) {
+        if ($quality < 0 || $quality > 100) {
             throw new \Exception(
                 'The quality must be between 0 and 100.'
             );
@@ -230,16 +222,10 @@ class ImageSettings
      */
     protected function setWidth(int $width): ImageSettings
     {
-        $width = (int) $width;
-
-        if ($width == 0) {
-            $width = null;
-        } else {
-            if ($width <= 0) {
-                throw new \Exception(
-                    'The width should be higher then 0.'
-                );
-            }
+        if ($width < 0) {
+            throw new \Exception(
+                'The width should be higher then or equal to 0.'
+            );
         }
 
         $this->width = $width;
