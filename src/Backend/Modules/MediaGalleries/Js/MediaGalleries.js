@@ -4,14 +4,14 @@
  */
 jsBackend.mediaGalleries =
 {
-	init: function()
-	{
-		// controls the adding of a gallery
-		jsBackend.mediaGalleries.addGallery.init();
+    init: function()
+    {
+        // controls the adding of a gallery
+        jsBackend.mediaGalleries.addGallery.init();
 
-		// add some extra controls
-		jsBackend.mediaGalleries.controls.init();
-	}
+        // add some extra controls
+        jsBackend.mediaGalleries.controls.init();
+    }
 };
 
 /**
@@ -20,39 +20,39 @@ jsBackend.mediaGalleries =
  */
 jsBackend.mediaGalleries.addGallery =
 {
-	init: function()
-	{
+    init: function()
+    {
         var $addMediaGroupType = $('#addMediaGroupType');
         var $addMediaGroupTypeDialog = $('#addMediaGroupTypeDialog');
         var $addMediaGroupTypeSubmit = $('#addMediaGroupTypeSubmit');
 
-		// start or not
-		if ($addMediaGroupTypeDialog.length == 0) {
-			return false;
-		}
+        // start or not
+        if ($addMediaGroupTypeDialog.length == 0) {
+            return false;
+        }
 
-		// Bind click to open the dialog
-		$addMediaGroupType.on('click', function(e)
-		{
-			// prevent default
-			e.preventDefault();
-
-			// open dialog
-			$addMediaGroupTypeDialog.modal('show');
-		});
-
-		// When clicked in dialog
-		$addMediaGroupTypeSubmit.on('click', function(e){
+        // Bind click to open the dialog
+        $addMediaGroupType.on('click', function(e)
+        {
             // prevent default
             e.preventDefault();
 
-			// submit the form
-			window.location.href = $('#addMediaGroupTypeSelect').val();
+            // open dialog
+            $addMediaGroupTypeDialog.modal('show');
+        });
 
-			// close the dialog
-			$addMediaGroupTypeDialog.modal('hide');
-		});
-	}
+        // When clicked in dialog
+        $addMediaGroupTypeSubmit.on('click', function(e){
+            // prevent default
+            e.preventDefault();
+
+            // submit the form
+            window.location.href = $('#addMediaGroupTypeSelect').val();
+
+            // close the dialog
+            $addMediaGroupTypeDialog.modal('hide');
+        });
+    }
 };
 
 /**
@@ -61,14 +61,14 @@ jsBackend.mediaGalleries.addGallery =
  */
 jsBackend.mediaGalleries.controls =
 {
-	init: function()
-	{
-		// save and edit
-		$('#saveAndEdit').on('click', function()
-		{
-			$('form').append('<input type="hidden" name="after_save" value="Edit" />').submit();
-		});
-	}
+    init: function()
+    {
+        // save and edit
+        $('#saveAndEdit').on('click', function()
+        {
+            $('form').append('<input type="hidden" name="after_save" value="Edit" />').submit();
+        });
+    }
 };
 
 /** global: jsBackend */
