@@ -20,9 +20,7 @@ class MediaGroupEvent extends Event
      *
      * @param MediaGroup $mediaGroup
      */
-    public function __construct(
-        MediaGroup $mediaGroup
-    ) {
+    public function __construct(MediaGroup $mediaGroup) {
         $this->mediaGroup = $mediaGroup;
     }
 

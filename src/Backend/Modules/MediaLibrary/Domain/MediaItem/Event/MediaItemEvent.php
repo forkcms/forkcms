@@ -20,9 +20,7 @@ class MediaItemEvent extends Event
      *
      * @param MediaItem $mediaItem
      */
-    public function __construct(
-        MediaItem $mediaItem
-    ) {
+    public function __construct(MediaItem $mediaItem) {
         $this->mediaItem = $mediaItem;
     }
 
