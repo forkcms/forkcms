@@ -128,16 +128,11 @@ class MassAction extends BackendBaseAction
     private function getMediaFolder()
     {
         // Define current folder
-        $id = trim(\SpoonFilter::getGetValue(
-            'current_folder_id',
-            null,
-            null,
-            'int'
-        ));
+        $id = $this->get('request')->request->get('current_folder_id');
 
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->getOneById($id);
+            return $this->get('media_library.repository.folder')->getOneById((int) $id);
         } catch (\Exception $e) {
             return null;
         }
@@ -180,17 +175,17 @@ class MassAction extends BackendBaseAction
 
     /**
      * @return string
+     * @throws \Exception
      */
     private function getSelectedAction()
     {
-        return \SpoonFilter::getGetValue(
-            'action',
-            array(
-                self::MOVE,
-                self::DELETE,
-            ),
-            self::MOVE
-        );
+        $action = $this->get('request')->request->get('action', self::MOVE);
+
+        if (!in_array($action, [self::MOVE, self::DELETE])) {
+            throw new \Exception('Action not exists');
+        }
+
+        return $action;
     }
 
     /**
@@ -215,13 +210,16 @@ class MassAction extends BackendBaseAction
 
     /**
      * @return string
+     * @throws \Exception
      */
     private function getSelectedType()
     {
-        return \SpoonFilter::getGetValue(
-            'from',
-            Type::getPossibleValues(),
-            'image'
-        );
+        $from = $this->get('request')->request->get('from', 'image');
+
+        if (!in_array($from, Type::getPossibleValues())) {
+            throw new \Exception('From not exists');
+        }
+
+        return $from;
     }
 }
