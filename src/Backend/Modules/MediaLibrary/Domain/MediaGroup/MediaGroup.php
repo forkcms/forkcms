@@ -110,20 +110,15 @@ class MediaGroup
      */
     public function __toArray(): array
     {
-        // Init $connectedItemsArray
-        $connectedItemsArray = array();
-
-        // Loop connected items
-        foreach ($this->connectedItems as $connectedItem) {
-            // Add connectedItem as an array
-            $connectedItemsArray[] = $connectedItem->__toArray();
-        }
-
         return [
             'id' => $this->id,
             'type' => $this->type,
             'editedOn' => ($this->editedOn) ? $this->editedOn->getTimestamp() : null,
-            'connectedItems' => $connectedItemsArray,
+            'connectedItems' => $this->connectedItems->map(
+                function (MediaGroupMediaItem $connectedItem) {
+                    return $connectedItem->__toArray();
+                }
+            ),
         ];
     }
 
