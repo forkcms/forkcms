@@ -181,14 +181,14 @@ class MediaGroup
 
     /**
      * @param string $mediaItemId
-     * @return mixed
+     * @return MediaGroupMediaItem
      */
     public function getConnectedItemByMediaItemId(
         string $mediaItemId
-    ) {
+    ) : MediaGroupMediaItem {
         /** @var MediaGroupMediaItem $mediaGroupMediaItem */
         foreach ($this->connectedItems->toArray() as $mediaGroupMediaItem) {
-            if ($mediaGroupMediaItem->getItem()->getId() == (int) $mediaItemId) {
+            if ($mediaGroupMediaItem->getItem()->getId() === $mediaItemId) {
                 return $mediaGroupMediaItem;
             }
         }
