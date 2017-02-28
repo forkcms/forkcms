@@ -9,6 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromSou
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This AJAX-action is being used to upload new MediaItem items and save them into to the database.
@@ -47,8 +48,9 @@ class UploadMediaItem extends BackendBaseAJAXAction
         $destinationSourcePath = MediaItem::getUploadRootDir() . '/' . $destinationURL;
 
         // create folder if not exists
-        if (!\SpoonDirectory::exists(dirname($destinationSourcePath))) {
-            \SpoonDirectory::create(dirname($destinationSourcePath));
+        $fs = new Filesystem();
+        if (!$fs->exists(dirname($destinationSourcePath))) {
+            $fs->mkdir(dirname($destinationSourcePath));
         }
 
         // HTTP headers for no cache etc
