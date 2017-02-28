@@ -3,10 +3,10 @@
 	<name>MediaGalleries</name>
 	<version>1.0.0</version>
 	<requirements>
-		<minimum_version>4.0.0</minimum_version>
+		<minimum_version>5.0.0</minimum_version>
 	</requirements>
 	<description>
-		<![CDATA[Creating media galleries has never been this easy.]]>
+    <![CDATA[Creating media galleries has never been this easy.]]>
 	</description>
 	<authors>
 		<author>
