@@ -29,7 +29,7 @@ class EditMediaFolder extends BackendBaseAJAXAction
 
         /** @var UpdateMediaFolder $updateMediaFolder */
         $updateMediaFolder = new UpdateMediaFolder($mediaFolder);
-        $updateMediaFolder->name = \SpoonFilter::htmlspecialchars($name);
+        $updateMediaFolder->name = htmlspecialchars($name, ENT_QUOTES);
 
         // Handle the MediaFolder update
         $this->get('command_bus')->handle($updateMediaFolder);
