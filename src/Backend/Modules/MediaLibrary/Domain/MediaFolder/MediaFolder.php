@@ -103,9 +103,7 @@ class MediaFolder
         int $userId
     ) {
         $this->name = $name;
-        if ($parent !== null) {
-            $this->parent = $parent;
-        }
+        $this->parent = $parent;
         $this->userId = $userId;
         $this->items = new ArrayCollection();
         $this->children = new ArrayCollection();
