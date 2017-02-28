@@ -33,7 +33,7 @@ class UploadMediaItem extends BackendBaseAJAXAction
             // Do nothing
         }
 
-        $this->preserveMemoryLimit();
+        $this->upgradeMemoryLimitIfNecessary();
 
         $contentType = null;
 
@@ -267,9 +267,33 @@ class UploadMediaItem extends BackendBaseAJAXAction
         );
     }
 
-    private function preserveMemoryLimit()
+    private function upgradeMemoryLimitIfNecessary()
     {
-        // increase memory limit
-        ini_set('memory_limit', '128M');
+        $memoryLimit = $this->returnBytes(ini_get('memory_limit'));
+
+        if ($memoryLimit < (128 * 1024 * 1024)) {
+            // increase memory limit
+            ini_set('memory_limit', '128M');
+        }
+    }
+
+    /**
+     * @param $val
+     * @return int
+     */
+    private function returnBytes($val) : int
+    {
+        $val = trim($val);
+        $last = strtolower($val[strlen($val)-1]);
+        switch($last) {
+            // The 'G' modifier is available since PHP 5.1.0
+            case 'g':
+                $val *= 1024;
+            case 'm':
+                $val *= 1024;
+            case 'k':
+                $val *= 1024;
+        }
+        return $val;
     }
 }
