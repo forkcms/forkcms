@@ -1,11 +1,14 @@
 #installer h2,
 #installer h3 {
     float: none;
-
 }
 
-#step2 .list-group-item-success h3,
-#step2 .list-group-item-danger h3  {
+#installer h4 {
+	font-size: 14px;
+}
+
+#step2 .list-group-item-success h4,
+#step2 .list-group-item-danger h4  {
     color: white;
 }
 
