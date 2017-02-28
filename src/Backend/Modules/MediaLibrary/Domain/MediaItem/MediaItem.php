@@ -174,7 +174,7 @@ class MediaItem
         string $source,
         MediaFolder $folder,
         int $userId
-    ) : MediaItem{
+    ) : MediaItem {
         try {
             // Define file
             $file = new File($source);
@@ -243,7 +243,7 @@ class MediaItem
         string $movieTitle,
         MediaFolder $folder,
         int $userId
-    ) : MediaItem{
+    ) : MediaItem {
         return new MediaItem(
             $movieId,
             $movieTitle,

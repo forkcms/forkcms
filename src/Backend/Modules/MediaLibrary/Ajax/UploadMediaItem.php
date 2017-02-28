@@ -163,7 +163,7 @@ class UploadMediaItem extends BackendBaseAJAXAction
     private function handleUploadedMediaItem(
         string $name,
         int $folderId
-    ) : string{
+    ) : string {
         // Define source
         $source = MediaItem::getUploadRootDir() . '/' . $name;
 

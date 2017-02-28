@@ -156,7 +156,7 @@ class MediaGallery
         \DateTime $publishOn,
         MediaGroup $group,
         Status $status
-    ) : MediaGallery{
+    ) : MediaGallery {
         return new self(
             $title,
             $text,
@@ -185,7 +185,7 @@ class MediaGallery
         \DateTime $publishOn,
         MediaGroup $group,
         Status $status
-    ) : MediaGallery{
+    ) : MediaGallery {
         $this->action = $action;
         $this->title = $title;
         $this->text = $text;

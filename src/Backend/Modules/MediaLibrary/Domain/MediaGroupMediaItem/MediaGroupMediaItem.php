@@ -106,7 +106,7 @@ class MediaGroupMediaItem
         MediaGroup $group,
         MediaItem $item,
         int $sequence
-    ) : MediaGroupMediaItem{
+    ) : MediaGroupMediaItem {
         return new self(
             $group,
             $item,

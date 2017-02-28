@@ -48,7 +48,7 @@ class FrontendResolution
     public static function create(
         string $customKey,
         ImageSettings $imageSettings
-    ) : FrontendResolution{
+    ) : FrontendResolution {
         return new self(
             $customKey,
             $imageSettings

@@ -27,7 +27,7 @@ class FrontendResolutionFactory
         int $width = null,
         int $height = null,
         int $quality = 100
-    ) : FrontendResolution{
+    ) : FrontendResolution {
         return FrontendResolution::create(
             $customKey,
             ImageSettings::create(

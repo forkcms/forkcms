@@ -87,7 +87,7 @@ class CacheBuilder
     public function getDropdownCachePath(
         bool $includeCount = false,
         bool $includeKeys = false
-    ) : string{
+    ) : string {
         $extras = '';
 
         if ($includeCount) {
@@ -143,7 +143,7 @@ class CacheBuilder
     public function getFoldersForDropdown(
         bool $includeCount = false,
         bool $includeKeys = false
-    ) : array{
+    ) : array {
         $item = $this->cache->getItem($this->getDropdownCachePath($includeCount, $includeKeys));
         if ($item->isHit()) {
             return $item->get();
@@ -235,7 +235,7 @@ class CacheBuilder
         array $ids = null,
         array $data = null,
         int $level = 1
-    ) : array{
+    ) : array {
         // redefine
         $level = (int) $level;
 

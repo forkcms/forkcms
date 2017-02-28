@@ -120,7 +120,7 @@ class FileManager
         string $URL,
         bool $overwrite = false,
         bool $useImageSharding = true
-    ) : string{
+    ) : string {
         // define imageShardingFolder
         $imageShardingFolder = '';
 
@@ -222,7 +222,7 @@ class FileManager
         string $name,
         string $extension,
         string $imageShardingFolder = ''
-    ) : string{
+    ) : string {
         // define some variables
         $count = 1;
 

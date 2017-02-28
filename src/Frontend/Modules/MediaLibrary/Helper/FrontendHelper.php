@@ -158,7 +158,7 @@ class FrontendHelper
     public function addOpenGraphImageForMediaItem(
         MediaItem $mediaItem,
         Header $header
-    ) : bool{
+    ) : bool {
         // Only image allowed
         if ($mediaItem->getType()->isImage()) {
             // Add OpenGraph image
@@ -185,7 +185,7 @@ class FrontendHelper
     public function createFrontendMediaItems(
         MediaGroup $mediaGroup,
         array $customResolutions
-    ) : array{
+    ) : array {
         $frontendMediaItems = array();
 
         // Loop connected items from MediaGroup
@@ -210,7 +210,7 @@ class FrontendHelper
     public function createFrontendMediaItem(
         MediaItem $mediaItem,
         array $customResolutions
-    ) : FrontendMediaItem{
+    ) : FrontendMediaItem {
         // Define FrontendMediaItem
         $frontendMediaItem = new FrontendMediaItem(
             $mediaItem
