@@ -59,13 +59,8 @@ class MediaItemDataGrid extends DataGridDB
         // active tab
         $this->setActiveTab('tab' . ucfirst($type));
 
-        // hide column
-        // If we have an image, show the image
-        if ($type == Type::IMAGE) {
-            $this->setColumnsHidden(array('shardingFolderName', 'type', 'mime'));
-        } else {
-            $this->setColumnsHidden(array('shardingFolderName', 'type', 'mime', 'url'));
-        }
+        // hide columns
+        $this->setColumnsHidden($this->getColumnsThatNeedToBeHidden($type));
 
         // sorting columns
         $this->setSortingColumns(
@@ -169,6 +164,19 @@ class MediaItemDataGrid extends DataGridDB
             )
         );
         $this->setMassAction($ddmMassAction);
+    }
+
+    /**
+     * @param string $type
+     * @return array
+     */
+    private function getColumnsThatNeedToBeHidden(string $type): array
+    {
+        if ($type === Type::IMAGE) {
+            return ['shardingFolderName', 'type', 'mime'];
+        }
+
+        return ['shardingFolderName', 'type', 'mime', 'url'];
     }
 
     /**
