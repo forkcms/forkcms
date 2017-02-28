@@ -286,18 +286,15 @@ class MediaGroup
         }
 
         if ($mediaGroupDataTransferObject->id === null) {
-            /** @var MediaGroup $mediaGroup */
-            $mediaGroup = self::create(
-                $mediaGroupDataTransferObject->type
-            );
-        } else {
-            /** @var MediaGroup $mediaGroup */
-            $mediaGroup = self::createForId(
-                $mediaGroupDataTransferObject->id,
+            return self::create(
                 $mediaGroupDataTransferObject->type
             );
         }
 
-        return $mediaGroup;
+        /** @var MediaGroup $mediaGroup */
+        return self::createForId(
+            $mediaGroupDataTransferObject->id,
+            $mediaGroupDataTransferObject->type
+        );
     }
 }
