@@ -1,6 +1,17 @@
 #installer h2,
 #installer h3 {
     float: none;
+
+}
+
+#step2 .list-group-item-success h3,
+#step2 .list-group-item-danger h3  {
+    color: white;
+}
+
+#step2 .list-group-item-success a,
+#step2 .list-group-item-danger a  {
+    color: white;
 }
 
 .help-block.errorMessage,
