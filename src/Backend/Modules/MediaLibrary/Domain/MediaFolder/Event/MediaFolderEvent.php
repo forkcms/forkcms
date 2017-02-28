@@ -20,7 +20,8 @@ class MediaFolderEvent extends Event
      *
      * @param MediaFolder $mediaFolder
      */
-    public function __construct(MediaFolder $mediaFolder) {
+    public function __construct(MediaFolder $mediaFolder)
+    {
         $this->mediaFolder = $mediaFolder;
     }
 
