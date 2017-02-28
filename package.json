@@ -16,6 +16,7 @@
     "gulp-sourcemaps": "^1.9.1",
     "jquery": "~2.2",
     "jquery-migrate": "~1.4",
-    "jquery-ui-dist": "~1.12"
+    "jquery-ui-dist": "~1.12",
+    "simple-ajax-uploader": "^2.5.5"
   }
 }

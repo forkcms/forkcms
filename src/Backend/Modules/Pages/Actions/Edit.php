@@ -85,7 +85,7 @@ class Edit extends BackendBaseActionEdit
         $this->header->addJS('jstree/jquery.tree.js', null, false);
         $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
-        $this->header->addJS('SimpleAjaxUploader.min.js', 'Core', false);
+        $this->header->addJS('/js/vendors/SimpleAjaxUploader.min.js', 'Core', false, true);
 
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
