@@ -31,7 +31,7 @@ class MediaGroupEvent extends Event
      *
      * @return MediaGroup
      */
-    public function getMediaGroup()
+    public function getMediaGroup(): MediaGroup
     {
         return $this->mediaGroup;
     }

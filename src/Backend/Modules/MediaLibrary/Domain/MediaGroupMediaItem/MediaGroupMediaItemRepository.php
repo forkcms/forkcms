@@ -16,7 +16,7 @@ final class MediaGroupMediaItemRepository extends EntityRepository
     public function getAll(
         array $mediaGroupIds,
         bool $onlyGetFirstMediaItem
-    ) {
+    ) : array{
         $queryBuilder = $this->createQueryBuilder('i')
             ->select(array(
                 'i',

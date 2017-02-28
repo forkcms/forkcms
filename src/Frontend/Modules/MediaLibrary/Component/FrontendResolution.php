@@ -48,7 +48,7 @@ class FrontendResolution
     public static function create(
         string $customKey,
         ImageSettings $imageSettings
-    ) {
+    ) : FrontendResolution{
         return new self(
             $customKey,
             $imageSettings
@@ -60,7 +60,7 @@ class FrontendResolution
      *
      * @return string
      */
-    public function getCustomKey()
+    public function getCustomKey(): string
     {
         return $this->customKey;
     }
@@ -70,7 +70,7 @@ class FrontendResolution
      *
      * @return ImageSettings
      */
-    public function getImageSettings()
+    public function getImageSettings(): ImageSettings
     {
         return $this->imageSettings;
     }
@@ -82,7 +82,7 @@ class FrontendResolution
      * @return FrontendResolution
      * @throws \Exception
      */
-    protected function setCustomKey(string $customKey)
+    protected function setCustomKey(string $customKey): FrontendResolution
     {
         $customKey = (string) $customKey;
 

@@ -84,7 +84,7 @@ class EditMediaItem extends BackendBaseActionEdit
      *
      * @return MediaItem
      */
-    private function getMediaItem()
+    private function getMediaItem(): MediaItem
     {
         try {
             // Define MediaItem from repository
@@ -107,7 +107,7 @@ class EditMediaItem extends BackendBaseActionEdit
      *
      * @return string
      */
-    private function getBackLink(array $parameters = [])
+    private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(
             'Index',

@@ -26,7 +26,7 @@ final class MediaFolderRepository extends EntityRepository
      * @param MediaFolder|null $parent The parent MediaFolder where this folder should be in.
      * @return boolean
      */
-    public function existsByName(string $name, MediaFolder $parent = null)
+    public function existsByName(string $name, MediaFolder $parent = null): bool
     {
         /** @var MediaFolder $mediaFolder */
         $mediaFolder = $this->findOneBy([
@@ -42,7 +42,7 @@ final class MediaFolderRepository extends EntityRepository
      * @return MediaFolder
      * @throws \Exception
      */
-    public function getOneById(int $id)
+    public function getOneById(int $id): MediaFolder
     {
         if ($id === null) {
             throw MediaFolderNotFound::forEmptyId();

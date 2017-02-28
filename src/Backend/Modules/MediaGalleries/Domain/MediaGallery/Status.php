@@ -26,7 +26,7 @@ final class Status
      * @param string $mediaGalleryStatus
      * @return Status
      */
-    public static function fromString(string $mediaGalleryStatus)
+    public static function fromString(string $mediaGalleryStatus): \Backend\Modules\MediaGalleries\Domain\MediaGallery\Status
     {
         return new self($mediaGalleryStatus);
     }
@@ -34,7 +34,7 @@ final class Status
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->mediaGalleryStatus;
     }
@@ -44,7 +44,7 @@ final class Status
      *
      * @return bool
      */
-    public function equals(Status $mediaGalleryStatus)
+    public function equals(Status $mediaGalleryStatus): bool
     {
         if (!($mediaGalleryStatus instanceof $this)) {
             return false;
@@ -56,7 +56,7 @@ final class Status
     /**
      * @return array
      */
-    public static function getPossibleValues()
+    public static function getPossibleValues(): array
     {
         return [
             self::ACTIVE,
@@ -67,7 +67,7 @@ final class Status
     /**
      * @return Status
      */
-    public static function active()
+    public static function active(): \Backend\Modules\MediaGalleries\Domain\MediaGallery\Status
     {
         return new self(self::ACTIVE);
     }
@@ -75,7 +75,7 @@ final class Status
     /**
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->equals(self::active());
     }
@@ -83,7 +83,7 @@ final class Status
     /**
      * @return Status
      */
-    public static function hidden()
+    public static function hidden(): \Backend\Modules\MediaGalleries\Domain\MediaGallery\Status
     {
         return new self(self::HIDDEN);
     }
@@ -91,7 +91,7 @@ final class Status
     /**
      * @return bool
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->equals(self::hidden());
     }

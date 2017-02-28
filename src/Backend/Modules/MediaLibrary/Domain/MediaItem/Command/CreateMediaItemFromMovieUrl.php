@@ -51,7 +51,7 @@ final class CreateMediaItemFromMovieUrl
     /**
      * @return MediaItem
      */
-    public function getMediaItem()
+    public function getMediaItem(): MediaItem
     {
         return $this->mediaItem;
     }

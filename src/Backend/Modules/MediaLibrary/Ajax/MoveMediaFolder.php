@@ -64,7 +64,7 @@ class MoveMediaFolder extends BackendBaseAJAXAction
     /**
      * @return MediaFolder
      */
-    private function getMediaFolder()
+    private function getMediaFolder(): MediaFolder
     {
         $id = (int) $this->get('request')->request->get('id', 0);
 
@@ -114,7 +114,7 @@ class MoveMediaFolder extends BackendBaseAJAXAction
     /**
      * @return string
      */
-    private function getTypeOfDrop()
+    private function getTypeOfDrop(): string
     {
         $typeOfDrop = $this->get('request')->request->get('type');
 

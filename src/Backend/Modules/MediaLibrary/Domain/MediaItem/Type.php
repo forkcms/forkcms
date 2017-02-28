@@ -29,7 +29,7 @@ final class Type
      * @param string $mediaItemType
      * @return Type
      */
-    public static function fromString(string $mediaItemType)
+    public static function fromString(string $mediaItemType): Type
     {
         return new self($mediaItemType);
     }
@@ -38,7 +38,7 @@ final class Type
      * @param string $extension
      * @return Type
      */
-    public static function fromExtension(string $extension)
+    public static function fromExtension(string $extension): Type
     {
         // Init extension
         $type = self::FILE;
@@ -73,7 +73,7 @@ final class Type
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->mediaItemType;
     }
@@ -83,7 +83,7 @@ final class Type
      *
      * @return bool
      */
-    public function equals(Type $mediaItemType)
+    public function equals(Type $mediaItemType): bool
     {
         if (!($mediaItemType instanceof $this)) {
             return false;
@@ -95,7 +95,7 @@ final class Type
     /**
      * @return array
      */
-    public static function getPossibleValues()
+    public static function getPossibleValues(): array
     {
         return [
             self::IMAGE,
@@ -108,7 +108,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function audio()
+    public static function audio(): Type
     {
         return new self(self::AUDIO);
     }
@@ -116,7 +116,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isAudio()
+    public function isAudio(): bool
     {
         return $this->equals(self::audio());
     }
@@ -124,7 +124,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function file()
+    public static function file(): Type
     {
         return new self(self::FILE);
     }
@@ -132,7 +132,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isFile()
+    public function isFile(): bool
     {
         return $this->equals(self::file());
     }
@@ -140,7 +140,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function image()
+    public static function image(): Type
     {
         return new self(self::IMAGE);
     }
@@ -148,7 +148,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isImage()
+    public function isImage(): bool
     {
         return $this->equals(self::image());
     }
@@ -156,7 +156,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function movie()
+    public static function movie(): Type
     {
         return new self(self::MOVIE);
     }
@@ -164,7 +164,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isMovie()
+    public function isMovie(): bool
     {
         return $this->equals(self::movie());
     }
@@ -172,7 +172,7 @@ final class Type
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->mediaItemType;
     }

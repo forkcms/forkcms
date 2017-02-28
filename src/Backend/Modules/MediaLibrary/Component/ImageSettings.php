@@ -64,7 +64,7 @@ class ImageSettings
         int $width = null,
         int $height = null,
         int $quality = 100
-    ) {
+    ) : ImageSettings{
         return new self(
             $transformationMethod,
             $width,
@@ -80,7 +80,7 @@ class ImageSettings
      * @return ImageSettings
      * @throws \Exception
      */
-    public static function fromString(string $value)
+    public static function fromString(string $value): ImageSettings
     {
         // Divide value into width and height
         list($width, $heightAndMore) = explode('x', $value);
@@ -118,7 +118,7 @@ class ImageSettings
      *
      * @return integer
      */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->width;
     }
@@ -128,7 +128,7 @@ class ImageSettings
      *
      * @return integer
      */
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->height;
     }
@@ -138,7 +138,7 @@ class ImageSettings
      *
      * @return ImageTransformationMethod
      */
-    public function getTransformationMethod()
+    public function getTransformationMethod(): ImageTransformationMethod
     {
         return $this->transformationMethod;
     }
@@ -148,7 +148,7 @@ class ImageSettings
      *
      * @return string
      */
-    public function getResolution()
+    public function getResolution(): string
     {
         $resolution = '';
 
@@ -170,7 +170,7 @@ class ImageSettings
      *
      * @return integer
      */
-    public function getQuality()
+    public function getQuality(): int
     {
         return $this->quality;
     }
@@ -182,7 +182,7 @@ class ImageSettings
      * @return ImageSettings
      * @throws \Exception
      */
-    protected function setHeight(int $height)
+    protected function setHeight(int $height): ImageSettings
     {
         $height = (int) $height;
 
@@ -207,7 +207,7 @@ class ImageSettings
      * @return ImageSettings
      * @throws \Exception
      */
-    protected function setQuality(int $quality)
+    protected function setQuality(int $quality): ImageSettings
     {
         if ($quality < 0
             || $quality > 100
@@ -228,7 +228,7 @@ class ImageSettings
      * @return ImageSettings
      * @throws \Exception
      */
-    protected function setWidth(int $width)
+    protected function setWidth(int $width): ImageSettings
     {
         $width = (int) $width;
 
@@ -251,7 +251,7 @@ class ImageSettings
      *
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         // Add resolution (width - height)
         $value = $this->getResolution();

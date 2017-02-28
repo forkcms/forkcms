@@ -15,7 +15,7 @@ class Model
      *
      * @return array
      */
-    public static function checkSettings()
+    public static function checkSettings(): array
     {
         $warnings = array();
 

@@ -12,7 +12,7 @@ final class StatusDBALType extends Type
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -23,28 +23,28 @@ final class StatusDBALType extends Type
      *
      * @return string
      */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'VARCHAR(255)';
     }
 
     /**
-     * @param string $status
+     * @param mixed $value
      * @param AbstractPlatform $platform
      * @return Status
      */
-    public function convertToPHPValue($status, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): Status
     {
-        return Status::fromString($status);
+        return Status::fromString($value);
     }
 
     /**
-     * @param Status $status
+     * @param mixed $value
      * @param AbstractPlatform $platform
      * @return string
      */
-    public function convertToDatabaseValue($status, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
-        return (string) $status;
+        return (string) $value;
     }
 }

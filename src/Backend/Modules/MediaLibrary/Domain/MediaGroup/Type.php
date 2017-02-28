@@ -32,7 +32,7 @@ final class Type
      * @param string $mediaGroupType
      * @return Type
      */
-    public static function fromString(string $mediaGroupType)
+    public static function fromString(string $mediaGroupType): Type
     {
         return new self((string) $mediaGroupType);
     }
@@ -40,7 +40,7 @@ final class Type
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->mediaGroupType;
     }
@@ -50,7 +50,7 @@ final class Type
      *
      * @return bool
      */
-    public function equals(Type $mediaGroupType)
+    public function equals(Type $mediaGroupType): bool
     {
         if (!($mediaGroupType instanceof $this)) {
             return false;
@@ -62,7 +62,7 @@ final class Type
     /**
      * @return array
      */
-    public static function getPossibleValues()
+    public static function getPossibleValues(): array
     {
         return [
             self::ALL,
@@ -78,7 +78,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function all()
+    public static function all(): Type
     {
         return new self(self::ALL);
     }
@@ -86,7 +86,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isAll()
+    public function isAll(): bool
     {
         return $this->equals(self::all());
     }
@@ -94,7 +94,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function audio()
+    public static function audio(): Type
     {
         return new self(self::AUDIO);
     }
@@ -102,7 +102,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isAudio()
+    public function isAudio(): bool
     {
         return $this->equals(self::audio());
     }
@@ -110,7 +110,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function file()
+    public static function file(): Type
     {
         return new self(self::FILE);
     }
@@ -118,7 +118,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isFile()
+    public function isFile(): bool
     {
         return $this->equals(self::file());
     }
@@ -126,7 +126,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function imageFile()
+    public static function imageFile(): Type
     {
         return new self(self::IMAGE_FILE);
     }
@@ -134,7 +134,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function image()
+    public static function image(): Type
     {
         return new self(self::IMAGE);
     }
@@ -142,7 +142,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isImage()
+    public function isImage(): bool
     {
         return $this->equals(self::image());
     }
@@ -150,7 +150,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isImageFile()
+    public function isImageFile(): bool
     {
         return $this->equals(self::imageFile());
     }
@@ -158,7 +158,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function imageMovie()
+    public static function imageMovie(): Type
     {
         return new self(self::IMAGE_MOVIE);
     }
@@ -166,7 +166,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isImageMovie()
+    public function isImageMovie(): bool
     {
         return $this->equals(self::imageMovie());
     }
@@ -174,7 +174,7 @@ final class Type
     /**
      * @return Type
      */
-    public static function movie()
+    public static function movie(): Type
     {
         return new self(self::MOVIE);
     }
@@ -182,7 +182,7 @@ final class Type
     /**
      * @return bool
      */
-    public function isMovie()
+    public function isMovie(): bool
     {
         return $this->equals(self::movie());
     }

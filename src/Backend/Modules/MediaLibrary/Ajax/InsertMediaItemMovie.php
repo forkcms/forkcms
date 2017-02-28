@@ -76,7 +76,7 @@ class InsertMediaItemMovie extends BackendBaseAJAXAction
      *
      * @return MediaFolder
      */
-    protected function getMediaFolder()
+    protected function getMediaFolder(): MediaFolder
     {
         // Define id
         $id = $this->get('request')->request->get('folder_id');
@@ -109,7 +109,7 @@ class InsertMediaItemMovie extends BackendBaseAJAXAction
     /**
      * @return string
      */
-    protected function getMovieService()
+    protected function getMovieService(): string
     {
         $movieService = $this->get('request')->request->get('mime');
 

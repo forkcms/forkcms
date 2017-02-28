@@ -31,7 +31,7 @@ class MediaItemEvent extends Event
      *
      * @return MediaItem
      */
-    public function getMediaItem()
+    public function getMediaItem(): MediaItem
     {
         return $this->mediaItem;
     }

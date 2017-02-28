@@ -40,7 +40,7 @@ final class CreateMediaItemFromSource
     /**
      * @return MediaItem
      */
-    public function getMediaItem()
+    public function getMediaItem(): MediaItem
     {
         return $this->mediaItem;
     }
@@ -48,7 +48,7 @@ final class CreateMediaItemFromSource
     /**
      * @param MediaItem $mediaItem
      */
-    public function setMediaItem($mediaItem)
+    public function setMediaItem(MediaItem $mediaItem)
     {
         $this->mediaItem = $mediaItem;
     }

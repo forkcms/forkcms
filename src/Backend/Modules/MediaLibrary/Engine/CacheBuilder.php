@@ -87,7 +87,7 @@ class CacheBuilder
     public function getDropdownCachePath(
         bool $includeCount = false,
         bool $includeKeys = false
-    ) {
+    ) : string{
         $extras = '';
 
         if ($includeCount) {
@@ -106,7 +106,7 @@ class CacheBuilder
      * @param MediaGroup $mediaGroup
      * @return array
      */
-    public function getFolderCountsForGroup(MediaGroup $mediaGroup)
+    public function getFolderCountsForGroup(MediaGroup $mediaGroup): array
     {
         // Init counts
         $counts = array();
@@ -143,7 +143,7 @@ class CacheBuilder
     public function getFoldersForDropdown(
         bool $includeCount = false,
         bool $includeKeys = false
-    ) {
+    ) : array{
         $item = $this->cache->getItem($this->getDropdownCachePath($includeCount, $includeKeys));
         if ($item->isHit()) {
             return $item->get();
@@ -227,15 +227,15 @@ class CacheBuilder
      * Get folders tree
      *
      * @param array $ids The parentIds.
-     * @param array[optional] $data A holder for the generated data.
-     * @param int[optional] $level The counter for the level.
+     * @param array $data A holder for the generated data.
+     * @param int $level The counter for the level.
      * @return array
      */
     public function getFoldersTree(
         array $ids = null,
         array $data = null,
         int $level = 1
-    ) {
+    ) : array{
         // redefine
         $level = (int) $level;
 

@@ -35,7 +35,7 @@ class MediaFolderDataTransferObject
     /**
      * @return MediaFolder
      */
-    public function getMediaFolderEntity()
+    public function getMediaFolderEntity(): MediaFolder
     {
         return $this->mediaFolderEntity;
     }
@@ -43,7 +43,7 @@ class MediaFolderDataTransferObject
     /**
      * @return bool
      */
-    public function hasExistingMediaFolder()
+    public function hasExistingMediaFolder(): bool
     {
         return $this->mediaFolderEntity instanceof MediaFolder;
     }

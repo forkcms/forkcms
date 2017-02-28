@@ -57,7 +57,7 @@ class Index extends BackendBaseActionIndex
      * @param $possibleTypes
      * @return array
      */
-    private function getDataGrids(MediaFolder $mediaFolder = null, $possibleTypes)
+    private function getDataGrids(MediaFolder $mediaFolder = null, $possibleTypes): array
     {
         $dataGrids = array();
 
@@ -102,7 +102,7 @@ class Index extends BackendBaseActionIndex
      * @param MediaFolder|null $currentMediaFolder
      * @return array
      */
-    private function getMediaFoldersForDropdown(MediaFolder $currentMediaFolder = null)
+    private function getMediaFoldersForDropdown(MediaFolder $currentMediaFolder = null): array
     {
         // get folders
         $folders = $this->get('media_library.cache_builder')->getFoldersForDropdown();
@@ -130,7 +130,7 @@ class Index extends BackendBaseActionIndex
      * @param array $dataGrids
      * @return int
      */
-    private function getTotalFolderCount(array $dataGrids)
+    private function getTotalFolderCount(array $dataGrids): int
     {
         $count = 0;
 

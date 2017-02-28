@@ -80,7 +80,7 @@ class FrontendMediaWidget extends FrontendBaseWidget
      *
      * @return array
      */
-    public function getResolutions()
+    public function getResolutions(): array
     {
         return $this->resolutions;
     }

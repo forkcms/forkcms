@@ -31,7 +31,7 @@ class MediaFolderEvent extends Event
      *
      * @return MediaFolder
      */
-    public function getMediaFolder()
+    public function getMediaFolder(): MediaFolder
     {
         return $this->mediaFolder;
     }

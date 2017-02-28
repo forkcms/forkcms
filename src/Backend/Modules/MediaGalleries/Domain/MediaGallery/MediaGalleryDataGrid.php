@@ -67,7 +67,7 @@ class MediaGalleryDataGrid extends DataGridDB
     /**
      * @return string
      */
-    public static function getHtml()
+    public static function getHtml(): string
     {
         $dataGrid = new self();
 

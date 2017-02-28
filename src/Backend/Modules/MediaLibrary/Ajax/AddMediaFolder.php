@@ -61,7 +61,7 @@ class AddMediaFolder extends BackendBaseAJAXAction
      * @param MediaFolder|null $parent
      * @return string
      */
-    protected function getFolderName(MediaFolder $parent = null)
+    protected function getFolderName(MediaFolder $parent = null): string
     {
         // Define name
         $name = (string) trim($this->get('request')->request->get('name'));

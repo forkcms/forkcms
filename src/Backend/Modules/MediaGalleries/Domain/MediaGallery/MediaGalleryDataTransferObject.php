@@ -77,7 +77,7 @@ class MediaGalleryDataTransferObject
     /**
      * @return \Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery
      */
-    public function getMediaGalleryEntity()
+    public function getMediaGalleryEntity(): MediaGallery
     {
         return $this->mediaGalleryEntity;
     }
@@ -85,7 +85,7 @@ class MediaGalleryDataTransferObject
     /**
      * @return bool
      */
-    public function hasExistingMediaGallery()
+    public function hasExistingMediaGallery(): bool
     {
         return $this->mediaGalleryEntity instanceof MediaGallery;
     }

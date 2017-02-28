@@ -55,7 +55,7 @@ class MediaGroupDataTransferObject
     /**
      * @return MediaGroup
      */
-    public function getMediaGroupEntity()
+    public function getMediaGroupEntity(): MediaGroup
     {
         return $this->mediaGroupEntity;
     }
@@ -63,7 +63,7 @@ class MediaGroupDataTransferObject
     /**
      * @return boolean
      */
-    public function hasExistingMediaGroup()
+    public function hasExistingMediaGroup(): bool
     {
         return $this->mediaGroupEntity instanceof MediaGroup;
     }

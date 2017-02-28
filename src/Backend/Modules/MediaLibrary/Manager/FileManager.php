@@ -112,15 +112,15 @@ class FileManager
      * Get unique URL
      *
      * @param string $URL
-     * @param bool[optional] $overwrite
-     * @param bool[optional] $useImageSharding Image sharding is used by default.
+     * @param bool $overwrite
+     * @param bool $useImageSharding Image sharding is used by default.
      * @return string
      */
     public function getUniqueURL(
         string $URL,
         bool $overwrite = false,
         bool $useImageSharding = true
-    ) {
+    ) : string{
         // define imageShardingFolder
         $imageShardingFolder = '';
 
@@ -222,7 +222,7 @@ class FileManager
         string $name,
         string $extension,
         string $imageShardingFolder = ''
-    ) {
+    ) : string{
         // define some variables
         $count = 1;
 

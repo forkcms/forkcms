@@ -45,7 +45,7 @@ final class FrontendMediaItemResolutionMissingEvent extends Event
      *
      * @return MediaItem
      */
-    public function getMediaItem()
+    public function getMediaItem(): MediaItem
     {
         return $this->mediaItem;
     }
@@ -55,7 +55,7 @@ final class FrontendMediaItemResolutionMissingEvent extends Event
      *
      * @return FrontendResolution
      */
-    public function getResolution()
+    public function getResolution(): FrontendResolution
     {
         return $this->resolution;
     }

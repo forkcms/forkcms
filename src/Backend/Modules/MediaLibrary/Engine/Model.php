@@ -22,7 +22,7 @@ class Model
      *
      * @return array
      */
-    public static function getMovieMimesForDropdown()
+    public static function getMovieMimesForDropdown(): array
     {
         // Init
         $ddmAllowedMovieSourcesValues = array();
@@ -47,7 +47,7 @@ class Model
      *
      * @return array
      */
-    public static function getPossibleWidgetActions()
+    public static function getPossibleWidgetActions(): array
     {
         // Define actions
         $actions = array();
@@ -128,7 +128,7 @@ class Model
      * @param array $folders
      * @return string
      */
-    public static function getSubtreeForFolder(int $folderId, array $sequences, array $folders)
+    public static function getSubtreeForFolder(int $folderId, array $sequences, array $folders): string
     {
         // init html
         $html = '';

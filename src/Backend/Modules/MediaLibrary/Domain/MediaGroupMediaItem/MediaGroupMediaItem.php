@@ -106,7 +106,7 @@ class MediaGroupMediaItem
         MediaGroup $group,
         MediaItem $item,
         int $sequence
-    ) {
+    ) : MediaGroupMediaItem{
         return new self(
             $group,
             $item,
@@ -119,7 +119,7 @@ class MediaGroupMediaItem
      *
      * @return array
      */
-    public function __toArray()
+    public function __toArray(): array
     {
         return [
             'id' => $this->id,
@@ -135,7 +135,7 @@ class MediaGroupMediaItem
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -145,7 +145,7 @@ class MediaGroupMediaItem
      *
      * @return MediaGroup
      */
-    public function getGroup()
+    public function getGroup(): MediaGroup
     {
         return $this->group;
     }
@@ -155,7 +155,7 @@ class MediaGroupMediaItem
      *
      * @return MediaItem
      */
-    public function getItem()
+    public function getItem(): MediaItem
     {
         return $this->item;
     }
@@ -165,7 +165,7 @@ class MediaGroupMediaItem
      *
      * @return \DateTime
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): \DateTime
     {
         return $this->createdOn;
     }
@@ -175,7 +175,7 @@ class MediaGroupMediaItem
      *
      * @return \DateTime
      */
-    public function getPublishOn()
+    public function getPublishOn(): \DateTime
     {
         return $this->publishOn;
     }
@@ -185,7 +185,7 @@ class MediaGroupMediaItem
      *
      * @return integer
      */
-    public function getSequence()
+    public function getSequence(): int
     {
         return $this->sequence;
     }
@@ -196,7 +196,7 @@ class MediaGroupMediaItem
      * @param int $sequence the sequence
      * @return self
      */
-    public function setSequence(int $sequence)
+    public function setSequence(int $sequence): self
     {
         $this->sequence = $sequence;
 

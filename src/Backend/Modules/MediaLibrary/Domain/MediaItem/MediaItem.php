@@ -175,7 +175,7 @@ class MediaItem
         string $source,
         MediaFolder $folder,
         int $userId
-    ) {
+    ) : MediaItem{
         try {
             // Define file
             $file = new File($source);
@@ -244,7 +244,7 @@ class MediaItem
         string $movieTitle,
         MediaFolder $folder,
         int $userId
-    ) {
+    ) : MediaItem{
         return new MediaItem(
             $movieId,
             $movieTitle,
@@ -260,7 +260,7 @@ class MediaItem
      *
      * @return array
      */
-    public function __toArray()
+    public function __toArray(): array
     {
         return [
             'id' => $this->id,
@@ -288,7 +288,7 @@ class MediaItem
      *
      * @return Uuid
      */
-    public function getId()
+    public function getId(): Uuid
     {
         return $this->id;
     }
@@ -298,7 +298,7 @@ class MediaItem
      *
      * @return MediaFolder
      */
-    public function getFolder()
+    public function getFolder(): MediaFolder
     {
         return $this->folder;
     }
@@ -309,7 +309,7 @@ class MediaItem
      * @param MediaFolder $folder the folder
      * @return self
      */
-    public function setFolder(MediaFolder $folder)
+    public function setFolder(MediaFolder $folder): self
     {
         $this->folder = $folder;
         return $this;
@@ -320,7 +320,7 @@ class MediaItem
      *
      * @return integer
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -330,7 +330,7 @@ class MediaItem
      *
      * @return Type
      */
-    public function getType()
+    public function getType(): Type
     {
         return $this->type;
     }
@@ -340,7 +340,7 @@ class MediaItem
      *
      * @return string
      */
-    public function getMime()
+    public function getMime(): string
     {
         return $this->mime;
     }
@@ -350,7 +350,7 @@ class MediaItem
      *
      * @return string[]
      */
-    public static function getMimesForMovie()
+    public static function getMimesForMovie(): array
     {
         return [
             self::MIME_YOUTUBE,
@@ -363,7 +363,7 @@ class MediaItem
      *
      * @return string
      */
-    public function getScardingFolderName()
+    public function getScardingFolderName(): string
     {
         return $this->shardingFolderName;
     }
@@ -373,7 +373,7 @@ class MediaItem
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -383,7 +383,7 @@ class MediaItem
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -393,7 +393,7 @@ class MediaItem
      *
      * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
         $this->title = (string) $title;
     }
@@ -403,7 +403,7 @@ class MediaItem
      *
      * @return string
      */
-    public function getFullUrl()
+    public function getFullUrl(): string
     {
         return $this->getScardingFolderName() . '/' . $this->getUrl();
     }
@@ -413,7 +413,7 @@ class MediaItem
      *
      * @return integer
      */
-    public function getSize()
+    public function getSize(): int
     {
         return $this->size;
     }
@@ -425,7 +425,7 @@ class MediaItem
      * @param int $height
      * @return self
      */
-    public function setResolution(int $width, int $height)
+    public function setResolution(int $width, int $height): self
     {
         $this->width = (int) $width;
         $this->height = (int) $height;
@@ -457,7 +457,7 @@ class MediaItem
      *
      * @return \DateTime
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): \DateTime
     {
         return $this->createdOn;
     }
@@ -467,7 +467,7 @@ class MediaItem
      *
      * @return \DateTime
      */
-    public function getEditedOn()
+    public function getEditedOn(): \DateTime
     {
         return $this->editedOn;
     }
@@ -477,7 +477,7 @@ class MediaItem
      *
      * @return ArrayCollection
      */
-    public function getGroups()
+    public function getGroups(): ArrayCollection
     {
         return $this->groups;
     }
@@ -497,7 +497,7 @@ class MediaItem
      * @param string|null $subDirectory
      * @return string
      */
-    protected static function getSubdirectory(string $subDirectory = null)
+    protected static function getSubdirectory(string $subDirectory = null): string
     {
         if ($subDirectory === null || $subDirectory === 'source') {
             return 'Source';
@@ -514,7 +514,7 @@ class MediaItem
      * @param string|null $subDirectory
      * @return string
      */
-    public function getAbsoluteWebPath(string $subDirectory = null)
+    public function getAbsoluteWebPath(string $subDirectory = null): string
     {
         return SITE_URL . $this->getWebPath($subDirectory);
     }
@@ -532,7 +532,7 @@ class MediaItem
      * @param string|null $subDirectory
      * @return string
      */
-    public static function getWebDir(string $subDirectory = null)
+    public static function getWebDir(string $subDirectory = null): string
     {
         $subDirectory = self::getSubdirectory($subDirectory);
 
@@ -548,7 +548,7 @@ class MediaItem
      * @param string|null $subDirectory
      * @return string
      */
-    public static function getUploadRootDir(string $subDirectory = null)
+    public static function getUploadRootDir(string $subDirectory = null): string
     {
         $subDirectory = self::getSubdirectory($subDirectory);
         $parentUploadRootDir = FRONTEND_FILES_PATH . '/' . self::getTrimmedUploadDir();
@@ -565,7 +565,7 @@ class MediaItem
     /**
      * @return string
      */
-    protected static function getUploadDir()
+    protected static function getUploadDir(): string
     {
         return 'MediaLibrary';
     }
@@ -573,7 +573,7 @@ class MediaItem
     /**
      * @return string
      */
-    protected static function getTrimmedUploadDir()
+    protected static function getTrimmedUploadDir(): string
     {
         return trim(self::getUploadDir(), '/\\');
     }

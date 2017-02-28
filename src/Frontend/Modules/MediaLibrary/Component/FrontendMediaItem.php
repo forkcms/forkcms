@@ -92,7 +92,7 @@ class FrontendMediaItem
     /**
      * @return MediaItem
      */
-    public function getMediaItem()
+    public function getMediaItem(): MediaItem
     {
         return $this->mediaItem;
     }
@@ -100,7 +100,7 @@ class FrontendMediaItem
     /**
      * @return string
      */
-    public function getSource()
+    public function getSource(): string
     {
         return $this->source;
     }

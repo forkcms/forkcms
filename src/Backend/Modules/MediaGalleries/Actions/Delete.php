@@ -41,7 +41,7 @@ class Delete extends BackendBaseActionDelete
     /**
      * @return MediaGallery
      */
-    private function getMediaGallery()
+    private function getMediaGallery(): MediaGallery
     {
         try {
             /** @var MediaGallery|null $mediaGallery */
@@ -64,7 +64,7 @@ class Delete extends BackendBaseActionDelete
      *
      * @return string
      */
-    private function getBackLink(array $parameters = [])
+    private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(
             'Index',

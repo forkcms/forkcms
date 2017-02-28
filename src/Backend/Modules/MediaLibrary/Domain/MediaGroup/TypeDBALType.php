@@ -12,7 +12,7 @@ final class TypeDBALType extends DoctrineDBALType
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -23,30 +23,30 @@ final class TypeDBALType extends DoctrineDBALType
      *
      * @return string
      */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'VARCHAR(255)';
     }
 
     /**
-     * @param string $type
+     * @param mixed $value
      * @param AbstractPlatform $platform
      *
      * @return Type
      */
-    public function convertToPHPValue($type, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): Type
     {
-        return Type::fromString($type);
+        return Type::fromString($value);
     }
 
     /**
-     * @param Type $type
+     * @param mixed $value
      * @param AbstractPlatform $platform
      *
      * @return string
      */
-    public function convertToDatabaseValue($type, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
-        return (string) $type;
+        return (string) $value;
     }
 }

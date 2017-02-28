@@ -75,7 +75,7 @@ class ImageTransformationMethod
      *
      * @return ImageTransformationMethod
      */
-    public function createDefault()
+    public function createDefault(): ImageTransformationMethod
     {
         return new self(self::$defaultMethod);
     }
@@ -85,7 +85,7 @@ class ImageTransformationMethod
      *
      * @return ImageTransformationMethod
      */
-    public static function crop()
+    public static function crop(): ImageTransformationMethod
     {
         return new self(self::CROP);
     }
@@ -97,7 +97,7 @@ class ImageTransformationMethod
      * @return ImageTransformationMethod
      * @throws \Exception
      */
-    public static function fromString(string $value)
+    public static function fromString(string $value): ImageTransformationMethod
     {
         // Define method, by default we use "resize"
         $method = self::$defaultMethod;
@@ -137,7 +137,7 @@ class ImageTransformationMethod
      *
      * @return string
      */
-    public function getHorizontalCropPosition()
+    public function getHorizontalCropPosition(): string
     {
         return $this->horizontalCropPosition;
     }
@@ -147,7 +147,7 @@ class ImageTransformationMethod
      *
      * @return string
      */
-    public function getMethod()
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -157,7 +157,7 @@ class ImageTransformationMethod
      *
      * @return string
      */
-    public function getVerticalCropPosition()
+    public function getVerticalCropPosition(): string
     {
         return $this->verticalCropPosition;
     }
@@ -167,7 +167,7 @@ class ImageTransformationMethod
      *
      * @return array
      */
-    public static function getPossibleHorizontalCropPositions()
+    public static function getPossibleHorizontalCropPositions(): array
     {
         return array(
             self::LEFT,
@@ -181,7 +181,7 @@ class ImageTransformationMethod
      *
      * @return array
      */
-    public static function getPossibleMethods()
+    public static function getPossibleMethods(): array
     {
         return array(
             self::CROP,
@@ -194,7 +194,7 @@ class ImageTransformationMethod
      *
      * @return array
      */
-    public static function getPossibleVerticalCropPositions()
+    public static function getPossibleVerticalCropPositions(): array
     {
         return array(
             self::TOP,
@@ -208,7 +208,7 @@ class ImageTransformationMethod
      *
      * @return bool
      */
-    public function isCrop()
+    public function isCrop(): bool
     {
         return $this->method == self::CROP;
     }
@@ -218,7 +218,7 @@ class ImageTransformationMethod
      *
      * @return bool
      */
-    public function isResize()
+    public function isResize(): bool
     {
         return $this->method == self::RESIZE;
     }
@@ -228,7 +228,7 @@ class ImageTransformationMethod
      *
      * @return ImageTransformationMethod
      */
-    public static function resize()
+    public static function resize(): ImageTransformationMethod
     {
         return new self(self::RESIZE);
     }
@@ -240,7 +240,7 @@ class ImageTransformationMethod
      * @return ImageTransformationMethod
      * @throws \Exception
      */
-    public function setHorizontalCropPosition(string $position)
+    public function setHorizontalCropPosition(string $position): ImageTransformationMethod
     {
         if ($this->method != self::CROP) {
             throw new \Exception('You must also set the method to "crop", otherwise setting "horizontal crop position" will have no effect.');
@@ -261,7 +261,7 @@ class ImageTransformationMethod
      * @return ImageTransformationMethod
      * @throws \Exception
      */
-    public function setVerticalCropPosition(string $position)
+    public function setVerticalCropPosition(string $position): ImageTransformationMethod
     {
         if ($this->method != self::CROP) {
             throw new \Exception('You must also set the method to "crop", otherwise setting "vertical crop position" will have no effect.');
@@ -280,7 +280,7 @@ class ImageTransformationMethod
      *
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         $value = '';
 

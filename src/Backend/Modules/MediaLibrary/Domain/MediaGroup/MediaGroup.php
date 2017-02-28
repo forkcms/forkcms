@@ -81,7 +81,7 @@ class MediaGroup
      */
     public static function create(
         Type $type
-    ) {
+    ) : MediaGroup{
         return new self(
             Uuid::uuid4(),
             $type
@@ -96,7 +96,7 @@ class MediaGroup
     public static function createForId(
         UuidInterface $id,
         Type $type
-    ) {
+    ) : MediaGroup{
         return new self(
             $id,
             $type
@@ -108,7 +108,7 @@ class MediaGroup
      *
      * @return array
      */
-    public function __toArray()
+    public function __toArray(): array
     {
         // Init $connectedItemsArray
         $connectedItemsArray = array();
@@ -132,7 +132,7 @@ class MediaGroup
      *
      * @return UuidInterface
      */
-    public function getId()
+    public function getId(): UuidInterface
     {
         return $this->id;
     }
@@ -142,7 +142,7 @@ class MediaGroup
      *
      * @return Type
      */
-    public function getType()
+    public function getType(): Type
     {
         return $this->type;
     }
@@ -152,7 +152,7 @@ class MediaGroup
      *
      * @return \DateTime
      */
-    public function getEditedOn()
+    public function getEditedOn(): \DateTime
     {
         return $this->editedOn;
     }
@@ -162,7 +162,7 @@ class MediaGroup
      *
      * @return ArrayCollection
      */
-    public function getConnectedItems()
+    public function getConnectedItems(): ArrayCollection
     {
         return $this->connectedItems;
     }
@@ -170,7 +170,7 @@ class MediaGroup
     /**
      * @return boolean
      */
-    public function hasConnectedItems()
+    public function hasConnectedItems(): bool
     {
         return ($this->numberOfConnectedItems > 0);
     }
@@ -178,7 +178,7 @@ class MediaGroup
     /**
      * @return int
      */
-    public function getNumberOfConnectedItems()
+    public function getNumberOfConnectedItems(): int
     {
         return $this->numberOfConnectedItems;
     }
@@ -206,7 +206,7 @@ class MediaGroup
      */
     public function addConnectedItem(
         MediaGroupMediaItem $connectedItem
-    ) {
+    ) : MediaGroup{
         $this->connectedItems->add($connectedItem);
 
         // This is required, otherwise, doctrine thinks the entity hasn't been changed
@@ -223,7 +223,7 @@ class MediaGroup
      */
     public function removeConnectedItem(
         MediaGroupMediaItem $connectedItem
-    ) {
+    ) : MediaGroup{
         $this->connectedItems->removeElement($connectedItem);
 
         // This is required, otherwise, doctrine thinks the entity hasn't been changed
@@ -242,7 +242,7 @@ class MediaGroup
      *
      * @return ArrayCollection
      */
-    public function getIdsForConnectedItems()
+    public function getIdsForConnectedItems(): ArrayCollection
     {
         $ids = array();
 
@@ -275,7 +275,7 @@ class MediaGroup
      * @param MediaGroupDataTransferObject $mediaGroupDataTransferObject
      * @return MediaGroup
      */
-    public static function fromDataTransferObject(MediaGroupDataTransferObject $mediaGroupDataTransferObject)
+    public static function fromDataTransferObject(MediaGroupDataTransferObject $mediaGroupDataTransferObject): MediaGroup
     {
         if ($mediaGroupDataTransferObject->hasExistingMediaGroup()) {
             /** @var MediaGroup $mediaGroup */

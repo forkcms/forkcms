@@ -176,7 +176,7 @@ class MediaItemDataGrid extends DataGridDB
      * @param int|null $folderId
      * @return DataGridDB
      */
-    public static function getDataGrid(string $type, int $folderId = null)
+    public static function getDataGrid(string $type, int $folderId = null): DataGridDB
     {
         $dataGrid = new self($type, $folderId);
 
@@ -188,7 +188,7 @@ class MediaItemDataGrid extends DataGridDB
      * @param int|null $folderId
      * @return string
      */
-    public static function getHtml(string $type, int $folderId = null)
+    public static function getHtml(string $type, int $folderId = null): string
     {
         $dataGrid = new self($type, $folderId);
 

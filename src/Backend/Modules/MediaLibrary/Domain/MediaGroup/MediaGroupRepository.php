@@ -24,7 +24,7 @@ final class MediaGroupRepository extends EntityRepository
      * @return MediaGroup
      * @throws \Exception
      */
-    public function getOneById(string $id)
+    public function getOneById(string $id): MediaGroup
     {
         if ($id === null) {
             throw MediaGroupNotFound::forEmptyId();

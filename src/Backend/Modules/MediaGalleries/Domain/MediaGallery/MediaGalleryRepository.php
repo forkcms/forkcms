@@ -29,7 +29,7 @@ final class MediaGalleryRepository extends EntityRepository
      * @param int $ignoreMediaGalleryId
      * @return boolean
      */
-    public function existsByTitle(string $title, int $ignoreMediaGalleryId = 0)
+    public function existsByTitle(string $title, int $ignoreMediaGalleryId = 0): bool
     {
         /** @var MediaGallery $mediaGallery */
         $mediaGallery = $this->findOneByTitle($title);
@@ -43,7 +43,7 @@ final class MediaGalleryRepository extends EntityRepository
      * @return MediaGallery
      * @throws \Exception
      */
-    public function getOneById(string $id)
+    public function getOneById(string $id): MediaGallery
     {
         if ($id === null) {
             throw MediaGalleryNotFound::forEmptyId();

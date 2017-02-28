@@ -155,7 +155,7 @@ class MediaGallery
         \DateTime $publishOn,
         MediaGroup $group,
         Status $status
-    ) {
+    ) : MediaGallery{
         return new self(
             $title,
             $text,
@@ -184,7 +184,7 @@ class MediaGallery
         \DateTime $publishOn,
         MediaGroup $group,
         Status $status
-    ) {
+    ) : MediaGallery{
         $this->action = $action;
         $this->title = $title;
         $this->text = $text;
@@ -200,7 +200,7 @@ class MediaGallery
      *
      * @return array
      */
-    public function __toArray()
+    public function __toArray(): array
     {
         return [
             'id' => $this->id,
@@ -222,7 +222,7 @@ class MediaGallery
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -232,7 +232,7 @@ class MediaGallery
      *
      * @return integer
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -242,7 +242,7 @@ class MediaGallery
      *
      * @return integer
      */
-    public function getModuleExtraId()
+    public function getModuleExtraId(): int
     {
         return $this->moduleExtraId;
     }
@@ -252,7 +252,7 @@ class MediaGallery
      *
      * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
@@ -262,7 +262,7 @@ class MediaGallery
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -272,7 +272,7 @@ class MediaGallery
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -282,7 +282,7 @@ class MediaGallery
      *
      * @return \DateTime
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): \DateTime
     {
         return $this->createdOn;
     }
@@ -292,7 +292,7 @@ class MediaGallery
      *
      * @return \DateTime
      */
-    public function getEditedOn()
+    public function getEditedOn(): \DateTime
     {
         return $this->editedOn;
     }
@@ -302,7 +302,7 @@ class MediaGallery
      *
      * @return \DateTime
      */
-    public function getPublishOn()
+    public function getPublishOn(): \DateTime
     {
         return $this->publishOn;
     }
@@ -310,7 +310,7 @@ class MediaGallery
     /**
      * @return Status
      */
-    public function getStatus()
+    public function getStatus(): \Backend\Modules\MediaGalleries\Domain\MediaGallery\Status
     {
         return $this->status;
     }
@@ -320,7 +320,7 @@ class MediaGallery
      *
      * @return MediaGroup
      */
-    public function getGroup()
+    public function getGroup(): MediaGroup
     {
         return $this->group;
     }
@@ -382,7 +382,7 @@ class MediaGallery
      *
      * @return string The gallery extra_label.
      */
-    protected function getExtraLabel()
+    protected function getExtraLabel(): string
     {
         return '"' . $this->title . '"'
             . ' - '
@@ -420,7 +420,7 @@ class MediaGallery
      *
      * @return bool
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         $now = new \DateTime();
 
@@ -431,7 +431,7 @@ class MediaGallery
      * @param MediaGalleryDataTransferObject $mediaGalleryDataTransferObject
      * @return MediaGallery
      */
-    public static function fromDataTransferObject(MediaGalleryDataTransferObject $mediaGalleryDataTransferObject)
+    public static function fromDataTransferObject(MediaGalleryDataTransferObject $mediaGalleryDataTransferObject): MediaGallery
     {
         if ($mediaGalleryDataTransferObject->hasExistingMediaGallery()) {
             /** @var MediaGallery $mediaGallery */

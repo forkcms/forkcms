@@ -35,7 +35,7 @@ class Index extends BackendBaseActionIndex
     /**
      * @return array
      */
-    private function getTypes()
+    private function getTypes(): array
     {
         $types = Type::getPossibleValues();
 

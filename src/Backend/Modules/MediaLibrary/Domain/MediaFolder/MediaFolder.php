@@ -121,7 +121,7 @@ class MediaFolder
         string $name,
         MediaFolder $parent = null,
         int $userId
-    ) {
+    ) : MediaFolder{
         return new self(
             $name,
             $parent,
@@ -134,7 +134,7 @@ class MediaFolder
      *
      * @return array
      */
-    public function __toArray()
+    public function __toArray(): array
     {
         return [
             'id' => $this->id,
@@ -151,7 +151,7 @@ class MediaFolder
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -181,7 +181,7 @@ class MediaFolder
      *
      * @return self
      */
-    public function removeParent()
+    public function removeParent(): self
     {
         $this->parent = null;
         return $this;
@@ -202,7 +202,7 @@ class MediaFolder
      *
      * @return integer
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -213,7 +213,7 @@ class MediaFolder
      * @param string $name
      * @return string
      */
-    public function setName(string $name)
+    public function setName(string $name): string
     {
         $this->name = $name;
         return $this;
@@ -224,7 +224,7 @@ class MediaFolder
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -234,7 +234,7 @@ class MediaFolder
      *
      * @return \DateTime
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): \DateTime
     {
         return $this->createdOn;
     }
@@ -244,7 +244,7 @@ class MediaFolder
      *
      * @return \DateTime
      */
-    public function getEditedOn()
+    public function getEditedOn(): \DateTime
     {
         return $this->editedOn;
     }
@@ -254,7 +254,7 @@ class MediaFolder
      *
      * @return ArrayCollection
      */
-    public function getItems()
+    public function getItems(): ArrayCollection
     {
         return $this->items;
     }
@@ -264,7 +264,7 @@ class MediaFolder
      *
      * @return ArrayCollection
      */
-    public function getChildren()
+    public function getChildren(): ArrayCollection
     {
         return $this->children;
     }
@@ -306,7 +306,7 @@ class MediaFolder
      * @param MediaFolderDataTransferObject $mediaFolderDataTransferObject
      * @return MediaFolder
      */
-    public static function fromDataTransferObject(MediaFolderDataTransferObject $mediaFolderDataTransferObject)
+    public static function fromDataTransferObject(MediaFolderDataTransferObject $mediaFolderDataTransferObject): MediaFolder
     {
         if ($mediaFolderDataTransferObject->hasExistingMediaFolder()) {
             /** @var MediaFolder $mediaFolder */

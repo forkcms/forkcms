@@ -26,7 +26,7 @@ final class MediaItemRepository extends EntityRepository
      * @param string $url
      * @return boolean
      */
-    public function existsOneByUrl(string $url)
+    public function existsOneByUrl(string $url): bool
     {
         /** @var MediaItem|null $mediaItem */
         $mediaItem = $this->findOneByUrl((string) $url);
@@ -40,7 +40,7 @@ final class MediaItemRepository extends EntityRepository
      * @param MediaFolder $mediaFolder
      * @return array
      */
-    public function getAllByFolder(MediaFolder $mediaFolder)
+    public function getAllByFolder(MediaFolder $mediaFolder): array
     {
         return $this->findBy(array(
             'folder' => $mediaFolder
@@ -54,7 +54,7 @@ final class MediaItemRepository extends EntityRepository
      * @return MediaItem
      * @throws \Exception
      */
-    public function getOneById(string $id)
+    public function getOneById(string $id): MediaItem
     {
         if ($id === null) {
             throw MediaItemNotFound::forEmptyId();

@@ -52,7 +52,7 @@ class EditMediaFolder extends BackendBaseAJAXAction
     /**
      * @return MediaFolder
      */
-    protected function getMediaFolder()
+    protected function getMediaFolder(): MediaFolder
     {
         $id = $this->get('request')->request->get('folder_id');
 
@@ -76,7 +76,7 @@ class EditMediaFolder extends BackendBaseAJAXAction
     /**
      * @return string
      */
-    protected function getFolderName()
+    protected function getFolderName(): string
     {
         // Define name
         $name = $this->get('request')->request->get('name');

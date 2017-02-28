@@ -47,7 +47,7 @@ class DeleteMediaFolder extends BackendBaseActionDelete
     /**
      * @return MediaFolder
      */
-    protected function getMediaFolder()
+    protected function getMediaFolder(): MediaFolder
     {
         try {
             // Get id to delete
@@ -70,7 +70,7 @@ class DeleteMediaFolder extends BackendBaseActionDelete
      * @param array $parameters
      * @return string
      */
-    private function getBackLink(array $parameters = [])
+    private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(
             'Index',
