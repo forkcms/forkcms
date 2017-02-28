@@ -82,7 +82,7 @@ class MediaGroup
      */
     public static function create(
         Type $type
-    ) : MediaGroup{
+    ) : MediaGroup {
         return new self(
             Uuid::uuid4(),
             $type
@@ -97,7 +97,7 @@ class MediaGroup
     public static function createForId(
         UuidInterface $id,
         Type $type
-    ) : MediaGroup{
+    ) : MediaGroup {
         return new self(
             $id,
             $type
@@ -202,7 +202,7 @@ class MediaGroup
      */
     public function addConnectedItem(
         MediaGroupMediaItem $connectedItem
-    ) : MediaGroup{
+    ) : MediaGroup {
         $this->connectedItems->add($connectedItem);
 
         // This is required, otherwise, doctrine thinks the entity hasn't been changed
@@ -219,7 +219,7 @@ class MediaGroup
      */
     public function removeConnectedItem(
         MediaGroupMediaItem $connectedItem
-    ) : MediaGroup{
+    ) : MediaGroup {
         $this->connectedItems->removeElement($connectedItem);
 
         // This is required, otherwise, doctrine thinks the entity hasn't been changed

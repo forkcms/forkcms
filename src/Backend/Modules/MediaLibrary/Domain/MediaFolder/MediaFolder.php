@@ -121,7 +121,7 @@ class MediaFolder
         string $name,
         MediaFolder $parent = null,
         int $userId
-    ) : MediaFolder{
+    ) : MediaFolder {
         return new self(
             $name,
             $parent,

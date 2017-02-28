@@ -64,7 +64,7 @@ class ImageSettings
         int $width = null,
         int $height = null,
         int $quality = 100
-    ) : ImageSettings{
+    ) : ImageSettings {
         return new self(
             $transformationMethod,
             $width,
