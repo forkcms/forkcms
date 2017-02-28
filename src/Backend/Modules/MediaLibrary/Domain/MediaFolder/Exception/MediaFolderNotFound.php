@@ -6,11 +6,11 @@ class MediaFolderNotFound extends \Exception
 {
     public static function forEmptyId()
     {
-        return new \Exception('The id you have given is null');
+        return new self('The id you have given is null');
     }
 
     public static function forId(int $id)
     {
-        return new \Exception('Can\'t find a MediaFolder with id = "' . $id . '"".');
+        return new self('Can\'t find a MediaFolder with id = "' . $id . '"".');
     }
 }

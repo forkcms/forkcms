@@ -6,11 +6,11 @@ class MediaItemNotFound extends \Exception
 {
     public static function forEmptyId()
     {
-        return new \Exception('The id you have given is null');
+        return new self('The id you have given is null');
     }
 
     public static function forId(string $id)
     {
-        return new \Exception('Can\'t find a MediaItem with id = "' . $id . '"".');
+        return new self('Can\'t find a MediaItem with id = "' . $id . '"".');
     }
 }
