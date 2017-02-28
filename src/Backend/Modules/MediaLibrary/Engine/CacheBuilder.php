@@ -120,14 +120,15 @@ class CacheBuilder
             $folderId = $mediaItem->getFolder()->getId();
 
             // Counts for folder doesn't exist
-            if (!isset($counts[$folderId])) {
+            if (!array_key_exists($folderId, $counts)) {
                 // Init counts
                 $counts[$folderId] = 1;
-            // We have counts for this folder
-            } else {
-                // Bump counts
-                $counts[$folderId] += 1;
+
+                continue;
             }
+
+            // Bump counts
+            $counts[$folderId] += 1;
         }
 
         return $counts;
