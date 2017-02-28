@@ -33,8 +33,7 @@ class UploadMediaItem extends BackendBaseAJAXAction
             // Do nothing
         }
 
-        // increase memory limit
-        ini_set('memory_limit', '128M');
+        $this->preserveMemoryLimit();
 
         $contentType = null;
 
@@ -266,5 +265,11 @@ class UploadMediaItem extends BackendBaseAJAXAction
             null,
             Language::err($error)
         );
+    }
+
+    private function preserveMemoryLimit()
+    {
+        // increase memory limit
+        ini_set('memory_limit', '128M');
     }
 }

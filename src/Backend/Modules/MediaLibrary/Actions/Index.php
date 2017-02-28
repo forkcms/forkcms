@@ -46,8 +46,7 @@ class Index extends BackendBaseActionIndex
         $this->tpl->assign('mediaFolders', $this->getMediaFoldersForDropdown($mediaFolder));
         $this->tpl->assign('dataGrids', $dataGrids);
         $this->tpl->assign('hasResults', ($this->getTotalFolderCount($dataGrids)) > 0);
-        $this->header->addJsData('MediaLibrary', 'openedFolderId',
-            ($mediaFolder !== null) ? $mediaFolder->getId() : null);
+        $this->header->addJsData('MediaLibrary', 'openedFolderId', ($mediaFolder !== null) ? $mediaFolder->getId() : null);
 
         $this->display();
     }
