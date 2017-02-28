@@ -208,18 +208,6 @@ class MediaFolder
     }
 
     /**
-     * Set the value of name.
-     *
-     * @param string $name
-     * @return string
-     */
-    public function setName(string $name): string
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
      * Gets the value of name.
      *
      * @return string
@@ -286,14 +274,14 @@ class MediaFolder
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param MediaFolder|null $parent
      */
     public function update(
         string $name,
         MediaFolder $parent = null
     ) {
-        $this->setName($name);
+        $this->name = $name;
 
         if ($parent instanceof MediaFolder) {
             $this->setParent($parent);
