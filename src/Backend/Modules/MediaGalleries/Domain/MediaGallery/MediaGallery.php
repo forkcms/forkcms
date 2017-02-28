@@ -2,10 +2,11 @@
 
 namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
-use Backend\Core\Engine\Model;
-use Common\ModuleExtraType;
+use Ramsey\Uuid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
+use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Common\ModuleExtraType;
 
 /**
  * MediaGallery
@@ -171,7 +172,7 @@ class MediaGallery
     /**
      * @param string $action
      * @param string $title
-     * @param string $text
+     * @param string|null $text
      * @param \DateTime $publishOn
      * @param MediaGroup $group
      * @param Status $status
@@ -180,7 +181,7 @@ class MediaGallery
     public function update(
         string $action,
         string $title,
-        string $text,
+        string $text = null,
         \DateTime $publishOn,
         MediaGroup $group,
         Status $status
@@ -220,9 +221,9 @@ class MediaGallery
     /**
      * Gets the value of id.
      *
-     * @return integer
+     * @return string
      */
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
@@ -270,9 +271,9 @@ class MediaGallery
     /**
      * Gets the value of text.
      *
-     * @return string
+     * @return string|null
      */
-    public function getText(): string
+    public function getText()
     {
         return $this->text;
     }

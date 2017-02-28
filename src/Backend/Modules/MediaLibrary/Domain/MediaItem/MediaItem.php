@@ -2,9 +2,9 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
+use Ramsey\Uuid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -22,7 +22,7 @@ class MediaItem
     const MIME_VIMEO = 'vimeo';
 
     /**
-     * @var Uuid
+     * @var string
      *
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="UUID")
@@ -286,9 +286,9 @@ class MediaItem
     /**
      * Gets the value of id.
      *
-     * @return Uuid
+     * @return string
      */
-    public function getId(): Uuid
+    public function getId(): string
     {
         return $this->id;
     }
