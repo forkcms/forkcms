@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
-use Ramsey\Uuid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
