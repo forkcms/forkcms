@@ -9,7 +9,7 @@ class MediaGroupNotFound extends \Exception
         return new self('The id you have given is null');
     }
 
-    public static function forId(int $id)
+    public static function forId(string $id)
     {
         return new self('Can\'t find a MediaGroup with id = "' . $id . '"".');
     }
