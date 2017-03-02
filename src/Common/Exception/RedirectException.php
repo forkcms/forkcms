@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class RedirectException extends \Exception
 {
+    /**
+     * @var Response
+     */
     protected $response;
 
     /**
@@ -26,7 +29,7 @@ class RedirectException extends \Exception
      *
      * @return Response
      */
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->response;
     }

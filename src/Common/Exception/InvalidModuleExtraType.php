@@ -11,7 +11,7 @@ final class InvalidModuleExtraType extends Exception
      * @param string $type
      * @return self
      */
-    public static function withType($type)
+    public static function withType(string $type): self
     {
         return new self(
             sprintf(

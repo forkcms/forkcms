@@ -11,12 +11,12 @@ use InvalidArgumentException;
 final class InvalidInitTypeException extends InvalidArgumentException
 {
     /**
-     * @param $type
-     * @param $allowedTypes
+     * @param string $type
+     * @param array $allowedTypes
      *
      * @return InvalidInitTypeException
      */
-    public static function withType($type, $allowedTypes)
+    public static function withType(string $type, array $allowedTypes): InvalidInitTypeException
     {
         return new self(
             'The type "' . $type . '" is not within the allowed types "'
