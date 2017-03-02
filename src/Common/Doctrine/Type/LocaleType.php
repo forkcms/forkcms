@@ -31,7 +31,7 @@ class LocaleType extends TextType
      */
     public function convertToPHPValue($locale, AbstractPlatform $platform)
     {
-        if (APPLICATION === 'frontend') {
+        if (APPLICATION === 'Frontend') {
             return FrontendLocale::fromString($locale);
         }
 

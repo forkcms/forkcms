@@ -23,9 +23,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 abstract class AbstractImage extends AbstractFile
 {
     /**
-     * @var string|null
+     * @var string
      */
-    const FALLBACK_IMAGE = null;
+    const FALLBACK_IMAGE = '';
 
     /**
      * When set to true a source directory will be created inside the upload directory
@@ -40,7 +40,7 @@ abstract class AbstractImage extends AbstractFile
      *
      * @return string|null
      */
-    public function getAbsolutePath($subDirectory = null)
+    public function getAbsolutePath(string $subDirectory = null)
     {
         if (self::GENERATE_THUMBNAILS && $subDirectory === null) {
             $subDirectory = 'source';
@@ -52,9 +52,9 @@ abstract class AbstractImage extends AbstractFile
     /**
      * @param string|null $subDirectory
      *
-     * @return string|null
+     * @return string
      */
-    public function getWebPath($subDirectory = null)
+    public function getWebPath(string $subDirectory = null): string
     {
         if (self::GENERATE_THUMBNAILS && $subDirectory === null) {
             $subDirectory = 'source';
@@ -79,7 +79,7 @@ abstract class AbstractImage extends AbstractFile
      *
      * @return string
      */
-    protected function getUploadRootDir($subDirectory = null)
+    protected function getUploadRootDir($subDirectory = null): string
     {
         // the absolute directory path where uploaded
         // documents should be saved
@@ -135,9 +135,9 @@ abstract class AbstractImage extends AbstractFile
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getFallbackImage()
+    public function getFallbackImage(): string
     {
         return static::FALLBACK_IMAGE;
     }

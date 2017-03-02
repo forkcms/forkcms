@@ -64,17 +64,16 @@ class UTCDateTimeType extends DateTimeType
     /**
      * @return DateTimeZone
      */
-    private static function getUtc()
+    private static function getUtc(): DateTimeZone
     {
-        return self::$utc ? self::$utc : self::$utc = new DateTimeZone('UTC');
+        return self::$utc ?: self::$utc = new DateTimeZone('UTC');
     }
 
     /**
      * @return DateTimeZone
      */
-    private static function getDefaultTimeZone()
+    private static function getDefaultTimeZone(): DateTimeZone
     {
-        return self::$defaultTimeZone
-            ? self::$defaultTimeZone : self::$defaultTimeZone = new DateTimeZone(date_default_timezone_get());
+        return self::$defaultTimeZone ?: self::$defaultTimeZone = new DateTimeZone(date_default_timezone_get());
     }
 }

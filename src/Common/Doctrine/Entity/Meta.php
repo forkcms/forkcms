@@ -107,17 +107,17 @@ class Meta
      * @param int|null $id
      */
     public function __construct(
-        $keywords,
-        $keywordsOverwrite,
-        $description,
-        $descriptionOverwrite,
-        $title,
-        $titleOverwrite,
-        $url,
-        $urlOverwrite,
-        $custom,
+        string $keywords,
+        bool $keywordsOverwrite,
+        string $description,
+        bool $descriptionOverwrite,
+        string $title,
+        bool $titleOverwrite,
+        string $url,
+        bool $urlOverwrite,
+        string $custom,
         array $data,
-        $id = null
+        int $id = null
     ) {
         $this->keywords = $keywords;
         $this->keywordsOverwrite = $keywordsOverwrite;
@@ -145,15 +145,15 @@ class Meta
      * @param array $data
      */
     public function update(
-        $keywords,
-        $keywordsOverwrite,
-        $description,
-        $descriptionOverwrite,
-        $title,
-        $titleOverwrite,
-        $url,
-        $urlOverwrite,
-        $custom,
+        string $keywords,
+        bool $keywordsOverwrite,
+        string $description,
+        bool $descriptionOverwrite,
+        string $title,
+        bool $titleOverwrite,
+        string $url,
+        bool $urlOverwrite,
+        string $custom,
         array $data
     ) {
         $this->keywords = $keywords;
@@ -196,26 +196,26 @@ class Meta
      */
     public function unSerialiseData()
     {
-        if ($this->data !== null) {
-            // backwards compatible fix for when the seo is saved with the serialized value objects
-            // @todo remove this for when all the modules use doctrine
-            $this->data = preg_replace(
-                '$O\\:3[67]\\:"Common\\\\Doctrine\\\\ValueObject\\\\(?:(?:SEOIndex)|(?:SEOFollow))"\\:1\\:{s\\:4[68]\\:"\\x00Common\\\\Doctrine\\\\ValueObject\\\\(?:(?:SEOIndex)|(?:SEOFollow))\\x00(?:(?:SEOIndex)|(?:SEOFollow))";(s\\:\d+\\:".+?";)}$',
-                '$1',
-                $this->data
-            );
-            $this->data = unserialize($this->data);
-            if (array_key_exists('seo_index', $this->data)) {
-                $this->data['seo_index'] = SEOIndex::fromString($this->data['seo_index']);
-            }
-            if (array_key_exists('seo_follow', $this->data)) {
-                $this->data['seo_follow'] = SEOFollow::fromString($this->data['seo_follow']);
-            }
+        if ($this->data === null) {
+            $this->data = [];
 
             return;
         }
 
-        $this->data = [];
+        // backwards compatible fix for when the seo is saved with the serialized value objects
+        // @todo remove this for when all the modules use doctrine
+        $this->data = preg_replace(
+            '$O\\:3[67]\\:"Common\\\\Doctrine\\\\ValueObject\\\\(?:(?:SEOIndex)|(?:SEOFollow))"\\:1\\:{s\\:4[68]\\:"\\x00Common\\\\Doctrine\\\\ValueObject\\\\(?:(?:SEOIndex)|(?:SEOFollow))\\x00(?:(?:SEOIndex)|(?:SEOFollow))";(s\\:\d+\\:".+?";)}$',
+            '$1',
+            $this->data
+        );
+        $this->data = unserialize($this->data);
+        if (array_key_exists('seo_index', $this->data)) {
+            $this->data['seo_index'] = SEOIndex::fromString($this->data['seo_index']);
+        }
+        if (array_key_exists('seo_follow', $this->data)) {
+            $this->data['seo_follow'] = SEOFollow::fromString($this->data['seo_follow']);
+        }
     }
 
     /**
@@ -223,7 +223,7 @@ class Meta
      *
      * @return self
      */
-    public static function fromBackendMeta(BackendMeta $meta)
+    public static function fromBackendMeta(BackendMeta $meta): self
     {
         $metaData = $meta->getData();
 
@@ -237,7 +237,7 @@ class Meta
             $metaData['url'],
             $metaData['url_overwrite'] === 'Y',
             $metaData['custom'],
-            isset($metaData['data']) ? $metaData['data'] : [],
+            $metaData['data'] ?? [],
             $meta->getId()
         );
     }
@@ -249,7 +249,7 @@ class Meta
      *
      * @return self
      */
-    public static function updateWithFormData(array $metaData)
+    public static function updateWithFormData(array $metaData): self
     {
         return new self(
             $metaData['keywords'],
@@ -260,7 +260,7 @@ class Meta
             $metaData['titleOverwrite'],
             $metaData['url'],
             $metaData['urlOverwrite'],
-            array_key_exists('custom', $metaData) ? $metaData['custom'] : null,
+            $metaData['custom'] ?? null,
             [
                 'seo_index' => SEOIndex::fromString($metaData['SEOIndex']),
                 'seo_follow' => SEOFollow::fromString($metaData['SEOFollow']),
@@ -272,7 +272,7 @@ class Meta
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -280,7 +280,7 @@ class Meta
     /**
      * @return string
      */
-    public function getKeywords()
+    public function getKeywords(): string
     {
         return $this->keywords;
     }
@@ -288,7 +288,7 @@ class Meta
     /**
      * @return bool
      */
-    public function isKeywordsOverwrite()
+    public function isKeywordsOverwrite(): bool
     {
         return $this->keywordsOverwrite;
     }
@@ -296,7 +296,7 @@ class Meta
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -304,7 +304,7 @@ class Meta
     /**
      * @return bool
      */
-    public function isDescriptionOverwrite()
+    public function isDescriptionOverwrite(): bool
     {
         return $this->descriptionOverwrite;
     }
@@ -312,7 +312,7 @@ class Meta
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -320,7 +320,7 @@ class Meta
     /**
      * @return bool
      */
-    public function isTitleOverwrite()
+    public function isTitleOverwrite(): bool
     {
         return $this->titleOverwrite;
     }
@@ -328,7 +328,7 @@ class Meta
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -336,7 +336,7 @@ class Meta
     /**
      * @return bool
      */
-    public function isUrlOverwrite()
+    public function isUrlOverwrite(): bool
     {
         return $this->urlOverwrite;
     }
@@ -344,7 +344,7 @@ class Meta
     /**
      * @return string
      */
-    public function getCustom()
+    public function getCustom(): string
     {
         return $this->custom;
     }
@@ -352,7 +352,7 @@ class Meta
     /**
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
@@ -360,7 +360,7 @@ class Meta
     /**
      * @return bool
      */
-    public function hasSEOIndex()
+    public function hasSEOIndex(): bool
     {
         return array_key_exists('seo_index', $this->data)
                && !SEOIndex::fromString($this->data['seo_index'])->isNone();
@@ -381,7 +381,7 @@ class Meta
     /**
      * @return bool
      */
-    public function hasSEOFollow()
+    public function hasSEOFollow(): bool
     {
         return array_key_exists('seo_follow', $this->data)
                && !SEOFollow::fromString($this->data['seo_follow'])->isNone();

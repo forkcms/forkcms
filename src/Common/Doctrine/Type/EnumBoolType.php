@@ -44,13 +44,13 @@ class EnumBoolType extends Type
      */
     public function convertToDatabaseValue($bool, AbstractPlatform $platform)
     {
-        return ($bool) ? 'Y' : 'N';
+        return $bool ? 'Y' : 'N';
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return self::ENUM_BOOL;
     }

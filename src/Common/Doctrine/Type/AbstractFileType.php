@@ -46,5 +46,5 @@ abstract class AbstractFileType extends Type
      *
      * @return AbstractFile
      */
-    abstract protected function createFromString($fileName);
+    abstract protected function createFromString(string $fileName): AbstractFile;
 }

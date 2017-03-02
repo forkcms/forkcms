@@ -46,5 +46,5 @@ abstract class AbstractImageType extends Type
      *
      * @return AbstractImage
      */
-    abstract protected function createFromString($imageFileName);
+    abstract protected function createFromString(string $imageFileName): AbstractImage;
 }

@@ -16,7 +16,7 @@ final class SEOIndex
     /**
      * @param string $SEOIndex
      */
-    public function __construct($SEOIndex)
+    public function __construct(string $SEOIndex)
     {
         if (!in_array($SEOIndex, self::getPossibleValues())) {
             throw new \InvalidArgumentException('Invalid value');
@@ -30,7 +30,7 @@ final class SEOIndex
      *
      * @return SEOIndex
      */
-    public static function fromString($SEOIndex)
+    public static function fromString(string $SEOIndex): SEOIndex
     {
         return new self($SEOIndex);
     }
@@ -38,7 +38,7 @@ final class SEOIndex
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->SEOIndex;
     }
@@ -48,7 +48,7 @@ final class SEOIndex
      *
      * @return bool
      */
-    public function equals(SEOIndex $SEOIndex)
+    public function equals(SEOIndex $SEOIndex): bool
     {
         if (!($SEOIndex instanceof $this)) {
             return false;
@@ -60,7 +60,7 @@ final class SEOIndex
     /**
      * @return array
      */
-    public static function getPossibleValues()
+    public static function getPossibleValues(): array
     {
         return [
             self::NONE,
@@ -72,7 +72,7 @@ final class SEOIndex
     /**
      * @return SEOIndex
      */
-    public static function none()
+    public static function none(): SEOIndex
     {
         return new self(self::NONE);
     }
@@ -80,7 +80,7 @@ final class SEOIndex
     /**
      * @return bool
      */
-    public function isNone()
+    public function isNone(): bool
     {
         return $this->equals(self::none());
     }
@@ -88,7 +88,7 @@ final class SEOIndex
     /**
      * @return SEOIndex
      */
-    public static function index()
+    public static function index(): SEOIndex
     {
         return new self(self::INDEX);
     }
@@ -96,7 +96,7 @@ final class SEOIndex
     /**
      * @return bool
      */
-    public function isIndex()
+    public function isIndex(): bool
     {
         return $this->equals(self::index());
     }
@@ -104,7 +104,7 @@ final class SEOIndex
     /**
      * @return SEOIndex
      */
-    public static function noindex()
+    public static function noindex(): SEOIndex
     {
         return new self(self::NOINDEX);
     }
@@ -112,7 +112,7 @@ final class SEOIndex
     /**
      * @return bool
      */
-    public function isNoindex()
+    public function isNoindex(): bool
     {
         return $this->equals(self::noindex());
     }

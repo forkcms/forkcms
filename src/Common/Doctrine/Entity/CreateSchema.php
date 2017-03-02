@@ -25,7 +25,7 @@ class CreateSchema
      *
      * @param string $entityClass
      */
-    public function forEntityClass($entityClass)
+    public function forEntityClass(string $entityClass)
     {
         $this->forEntityClasses([$entityClass]);
     }
@@ -33,7 +33,7 @@ class CreateSchema
     /**
      * Adds new doctrine entities in the database
      *
-     * @param array $entityClasses
+     * @param string[] $entityClasses
      *
      * @throws ToolsException
      */

@@ -16,7 +16,7 @@ final class SEOFollow
     /**
      * @param string $SEOFollow
      */
-    public function __construct($SEOFollow)
+    public function __construct(string $SEOFollow)
     {
         if (!in_array($SEOFollow, self::getPossibleValues())) {
             throw new \InvalidArgumentException('Invalid value');
@@ -30,7 +30,7 @@ final class SEOFollow
      *
      * @return SEOFollow
      */
-    public static function fromString($SEOFollow)
+    public static function fromString(string $SEOFollow): SEOFollow
     {
         return new self($SEOFollow);
     }
@@ -38,7 +38,7 @@ final class SEOFollow
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->SEOFollow;
     }
@@ -48,7 +48,7 @@ final class SEOFollow
      *
      * @return bool
      */
-    public function equals(SEOFollow $SEOFollow)
+    public function equals(SEOFollow $SEOFollow): bool
     {
         if (!($SEOFollow instanceof $this)) {
             return false;
@@ -60,7 +60,7 @@ final class SEOFollow
     /**
      * @return array
      */
-    public static function getPossibleValues()
+    public static function getPossibleValues(): array
     {
         return [
             self::NONE,
@@ -72,7 +72,7 @@ final class SEOFollow
     /**
      * @return SEOFollow
      */
-    public static function none()
+    public static function none(): SEOFollow
     {
         return new self(self::NONE);
     }
@@ -80,7 +80,7 @@ final class SEOFollow
     /**
      * @return bool
      */
-    public function isNone()
+    public function isNone(): bool
     {
         return $this->equals(self::none());
     }
@@ -88,7 +88,7 @@ final class SEOFollow
     /**
      * @return SEOFollow
      */
-    public static function follow()
+    public static function follow(): SEOFollow
     {
         return new self(self::FOLLOW);
     }
@@ -96,7 +96,7 @@ final class SEOFollow
     /**
      * @return bool
      */
-    public function isFollow()
+    public function isFollow(): bool
     {
         return $this->equals(self::follow());
     }
@@ -104,7 +104,7 @@ final class SEOFollow
     /**
      * @return SEOFollow
      */
-    public static function nofollow()
+    public static function nofollow(): SEOFollow
     {
         return new self(self::NOFOLLOW);
     }
@@ -112,7 +112,7 @@ final class SEOFollow
     /**
      * @return bool
      */
-    public function isNofollow()
+    public function isNofollow(): bool
     {
         return $this->equals(self::nofollow());
     }

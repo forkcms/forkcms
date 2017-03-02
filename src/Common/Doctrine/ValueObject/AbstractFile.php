@@ -41,7 +41,7 @@ abstract class AbstractFile
     /**
      * @param string $fileName
      */
-    protected function __construct($fileName)
+    protected function __construct(string $fileName)
     {
         $this->fileName = $fileName;
     }
@@ -49,7 +49,7 @@ abstract class AbstractFile
     /**
      * @return string
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
@@ -65,7 +65,7 @@ abstract class AbstractFile
     /**
      * @return string
      */
-    public function getWebPath()
+    public function getWebPath(): string
     {
         $file = $this->getAbsolutePath();
         if (is_file($file) && file_exists($file)) {
@@ -78,7 +78,7 @@ abstract class AbstractFile
     /**
      * @return string
      */
-    protected function getUploadRootDir()
+    protected function getUploadRootDir(): string
     {
         return FRONTEND_FILES_PATH . '/' . $this->getTrimmedUploadDir();
     }
@@ -86,7 +86,7 @@ abstract class AbstractFile
     /**
      * @return string
      */
-    protected function getTrimmedUploadDir()
+    protected function getTrimmedUploadDir(): string
     {
         return trim($this->getUploadDir(), '/\\');
     }
@@ -97,16 +97,16 @@ abstract class AbstractFile
      *
      * @return string
      */
-    abstract protected function getUploadDir();
+    abstract protected function getUploadDir(): string;
 
     /**
      * Sets file.
      *
      * @param UploadedFile|null $file
      *
-     * @return static
+     * @return self
      */
-    public function setFile(UploadedFile $file = null)
+    public function setFile(UploadedFile $file = null): self
     {
         if ($file === null) {
             return $this;
@@ -130,13 +130,15 @@ abstract class AbstractFile
      * @param UploadedFile|null $uploadedFile
      * @param string|null $namePrefix If set this will be prepended to the generated filename
      *
-     * @return static
+     * @return self
      */
-    public static function fromUploadedFile(UploadedFile $uploadedFile = null, $namePrefix = null)
+    public static function fromUploadedFile(UploadedFile $uploadedFile = null, string $namePrefix = null): self
     {
         $file = new static(null);
         $file->setFile($uploadedFile);
-        $file->setNamePrefix($namePrefix);
+        if ($namePrefix !== null) {
+            $file->setNamePrefix($namePrefix);
+        }
 
         return $file;
     }
@@ -146,7 +148,7 @@ abstract class AbstractFile
      *
      * @return UploadedFile
      */
-    public function getFile()
+    public function getFile(): UploadedFile
     {
         return $this->file;
     }
@@ -234,9 +236,9 @@ abstract class AbstractFile
     /**
      * @param string $fileName
      *
-     * @return static
+     * @return self
      */
-    public static function fromString($fileName)
+    public static function fromString(string $fileName): self
     {
         return new static($fileName);
     }
@@ -252,9 +254,10 @@ abstract class AbstractFile
 
     /**
      * @param string $namePrefix If set this will be prepended to the generated filename
+     *
      * @return self
      */
-    public function setNamePrefix($namePrefix)
+    public function setNamePrefix(string $namePrefix): self
     {
         $this->namePrefix = $namePrefix;
 
