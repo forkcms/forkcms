@@ -22,8 +22,12 @@ class Message extends \Swift_Message
      * @param string $contentType
      * @param string $charset
      */
-    public function __construct($subject = null, $body = null, $contentType = null, $charset = null)
-    {
+    public function __construct(
+        string $subject = null,
+        string $body = null,
+        string $contentType = null,
+        string $charset = null
+    ) {
         parent::__construct($subject, $body, $contentType, $charset);
     }
 
@@ -51,7 +55,7 @@ class Message extends \Swift_Message
      *
      * @return Message
      */
-    public function parseHtml($template, $variables, $addUTM = false)
+    public function parseHtml(string $template, array $variables, bool $addUTM = false): Message
     {
         $html = $this->getTemplateContent($template, $variables);
         $html = $this->relativeToAbsolute($html);
@@ -73,7 +77,7 @@ class Message extends \Swift_Message
      *
      * @return Message
      */
-    public function addAttachments($attachments)
+    public function addAttachments(array $attachments): Message
     {
         if (!empty($attachments)) {
             // add attachments one by one
@@ -95,7 +99,7 @@ class Message extends \Swift_Message
      *
      * @return Message
      */
-    public function setPlainText($content)
+    public function setPlainText(string $content): Message
     {
         if ($content !== null) {
             $this->addPart($content, 'text/plain');
@@ -110,7 +114,7 @@ class Message extends \Swift_Message
      *
      * @return string
      */
-    private function addUTM($html, $subject)
+    private function addUTM(string $html, string $subject): string
     {
         // match links
         $matches = array();
@@ -146,7 +150,7 @@ class Message extends \Swift_Message
      *
      * @return string
      */
-    private function getTemplateContent($template, $variables = null)
+    private function getTemplateContent(string $template, array $variables = null): string
     {
         // with the strpos we check if it is a frontend template, in that case we use the frontend template to prevent
         // errors that the template could not be found. This way we don't have a backwards compatibility break.
@@ -161,7 +165,7 @@ class Message extends \Swift_Message
 
         // variables were set
         if (!empty($variables)) {
-            $tpl->assign($variables);
+            $tpl->assignArray($variables);
         }
 
         // grab the content
@@ -175,7 +179,7 @@ class Message extends \Swift_Message
      *
      * @return string
      */
-    private function cssToInlineStyles($html)
+    private function cssToInlineStyles(string $html): string
     {
         $cssToInlineStyles = new CssToInlineStyles();
         $cssToInlineStyles->setHTML($html);
@@ -191,7 +195,7 @@ class Message extends \Swift_Message
      *
      * @return string
      */
-    private function relativeToAbsolute($html)
+    private function relativeToAbsolute(string $html): string
     {
         // replace internal links/images
         $search = array('href="/', 'src="/');

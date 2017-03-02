@@ -2,6 +2,10 @@
 
 namespace Common\Mailer;
 
+use Swift_MailTransport;
+use Swift_SmtpTransport;
+use Swift_Transport;
+
 /**
  * This class will create the right mailer transport based on some parameters
  */
@@ -17,15 +21,21 @@ class TransportFactory
      * @param  string $pass
      * @param  string $encryption
      *
-     * @return \Swift_Transport
+     * @return Swift_Transport
      */
-    public static function create($type = 'mail', $server = null, $port = 25, $user = null, $pass = null, $encryption = null)
-    {
+    public static function create(
+        string $type = 'mail',
+        string $server = null,
+        int $port = 25,
+        string $user = null,
+        string $pass = null,
+        string $encryption = null
+    ): Swift_Transport {
         if ($type === 'smtp') {
             return self::getSmtpTransport($server, $port, $user, $pass, $encryption);
-        } else {
-            return self::getMailTransport();
         }
+
+        return self::getMailTransport();
     }
 
     /**
@@ -37,16 +47,20 @@ class TransportFactory
      * @param  string $pass
      * @param  string $encryption
      *
-     * @return \Swift_SmtpTransport
+     * @return Swift_SmtpTransport
      */
-    private static function getSmtpTransport($server, $port, $user, $pass, $encryption = null)
-    {
-        $transport = \Swift_SmtpTransport::newInstance($server, $port)
+    private static function getSmtpTransport(
+        string $server,
+        string $port,
+        string $user,
+        string $pass,
+        string $encryption = null
+    ): Swift_SmtpTransport {
+        $transport = Swift_SmtpTransport::newInstance($server, $port)
             ->setUsername($user)
-            ->setPassword($pass)
-        ;
+            ->setPassword($pass);
 
-        if (in_array($encryption, array('ssl', 'tls'))) {
+        if (in_array($encryption, array('ssl', 'tls'), true)) {
             $transport->setEncryption($encryption);
         }
 
@@ -56,10 +70,10 @@ class TransportFactory
     /**
      * Create a new PHP Mailer Transport instance.
      *
-     * @return \Swift_MailTransport
+     * @return Swift_MailTransport
      */
-    private static function getMailTransport()
+    private static function getMailTransport(): Swift_MailTransport
     {
-        return \Swift_MailTransport::newInstance();
+        return Swift_MailTransport::newInstance();
     }
 }

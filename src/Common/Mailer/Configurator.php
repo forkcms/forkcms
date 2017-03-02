@@ -54,7 +54,7 @@ class Configurator
             $transport = TransportFactory::create(
                 $this->modulesSettings->get('Core', 'mailer_type', 'mail'),
                 $this->modulesSettings->get('Core', 'smtp_server'),
-                $this->modulesSettings->get('Core', 'smtp_port', 25),
+                (int) $this->modulesSettings->get('Core', 'smtp_port', 25),
                 $this->modulesSettings->get('Core', 'smtp_username'),
                 $this->modulesSettings->get('Core', 'smtp_password'),
                 $this->modulesSettings->get('Core', 'smtp_secure_layer')
