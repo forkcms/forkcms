@@ -2,19 +2,23 @@
 
 namespace Common\DataCollector;
 
+use SpoonDatabase;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseDataCollector extends DataCollector
 {
+    /**
+     * @var SpoonDatabase
+     */
     private $database;
 
     /**
      * DatabaseDataCollector constructor.
-     * @param \SpoonDatabase $database
+     * @param SpoonDatabase $database
      */
-    public function __construct(\SpoonDatabase $database)
+    public function __construct(SpoonDatabase $database)
     {
         $this->database = $database;
     }
@@ -25,27 +29,30 @@ class DatabaseDataCollector extends DataCollector
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = array(
-            'queries' => $this->database->getQueries(),
+            'queries' => array_map(
+                function (array $query) {
+                    $query['query_formatted'] = \SqlFormatter::format($query['query']);
+
+                    return $query;
+                },
+                (array) $this->database->getQueries()
+            ),
             'queryCount' => count($this->database->getQueries()),
         );
-
-        foreach ($this->data['queries'] as &$query) {
-            $query['query_formatted'] = \SqlFormatter::format($query['query']);
-        }
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getQueryCount()
+    public function getQueryCount(): int
     {
         return $this->data['queryCount'];
     }
 
     /**
-     * @return mixed
+     * @return array[]
      */
-    public function getQueries()
+    public function getQueries(): array
     {
         return $this->data['queries'];
     }
@@ -53,7 +60,7 @@ class DatabaseDataCollector extends DataCollector
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'database';
     }
