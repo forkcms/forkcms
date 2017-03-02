@@ -31,7 +31,7 @@ class BaseModel
      *
      * @return object The service
      */
-    public static function get($reference)
+    public static function get(string $reference)
     {
         return self::$container->get($reference);
     }
@@ -39,7 +39,7 @@ class BaseModel
     /**
      * @return ContainerInterface
      */
-    public static function getContainer()
+    public static function getContainer(): ContainerInterface
     {
         return self::$container;
     }
@@ -49,9 +49,9 @@ class BaseModel
      *
      * @param string $reference The service id
      *
-     * @return Boolean true if the service id is defined, false otherwise
+     * @return bool true if the service id is defined, false otherwise
      */
-    public static function has($reference)
+    public static function has(string $reference): bool
     {
         return self::$container->has($reference);
     }

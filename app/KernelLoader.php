@@ -39,7 +39,7 @@ class KernelLoader
      *
      * @return object The service
      */
-    public function get($reference)
+    public function get(string $reference)
     {
         return $this->getKernel()->getContainer()->get($reference);
     }
@@ -47,15 +47,15 @@ class KernelLoader
     /**
      * @return ContainerInterface
      */
-    public function getContainer()
+    public function getContainer(): ContainerInterface
     {
         return $this->getKernel()->getContainer();
     }
 
     /**
-     * @return Kernel
+     * @return KernelInterface
      */
-    public function getKernel()
+    public function getKernel(): KernelInterface
     {
         return $this->kernel;
     }
@@ -67,7 +67,7 @@ class KernelLoader
      *
      * @return Boolean true if the service id is defined, false otherwise
      */
-    public function has($reference)
+    public function has(string $reference): bool
     {
         return $this->getKernel()->getContainer()->has($reference);
     }

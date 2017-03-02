@@ -38,7 +38,7 @@ abstract class Kernel extends BaseKernel
      *
      * @api
      */
-    public function __construct($environment, $debug)
+    public function __construct(string $environment, bool $debug)
     {
         $this->request = Request::createFromGlobals();
 
@@ -130,7 +130,7 @@ abstract class Kernel extends BaseKernel
      *
      * @return ContainerBuilder The compiled service container
      */
-    protected function buildContainer()
+    protected function buildContainer(): ContainerBuilder
     {
         $container = parent::buildContainer();
 
@@ -161,7 +161,7 @@ abstract class Kernel extends BaseKernel
      *
      * @return array
      */
-    private function getInstalledModules(ContainerBuilder $container)
+    private function getInstalledModules(ContainerBuilder $container): array
     {
         // on installation all modules should be loaded
         if ($this->environment === 'install' || $this->environment === 'test') {
@@ -197,17 +197,17 @@ abstract class Kernel extends BaseKernel
     /**
      * @return bool
      */
-    private function isInstallingModule()
+    private function isInstallingModule(): bool
     {
         return preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $this->request->getRequestUri())
                && $this->request->query->has('module')
-               && in_array($this->request->query->get('module'), $this->getAllPossibleModuleNames());
+               && in_array($this->request->query->get('module'), $this->getAllPossibleModuleNames(), true);
     }
 
     /**
      * @return array
      */
-    private function getAllPossibleModuleNames()
+    private function getAllPossibleModuleNames(): array
     {
         $moduleNames = [];
         $finder = new Finder();

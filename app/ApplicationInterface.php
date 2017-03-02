@@ -30,5 +30,5 @@ interface ApplicationInterface
      *
      * @return Response
      */
-    public function display();
+    public function display(): Response;
 }

@@ -22,7 +22,7 @@ class AppKernel extends Kernel
      *
      * @return array
      */
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = array(
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
