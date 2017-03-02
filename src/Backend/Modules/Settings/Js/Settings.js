@@ -97,6 +97,9 @@ jsBackend.settings =
         var $statusAlert = $('[data-role="fork-clear-cache-status"]');
         $statusAlert.toggleClass('hidden');
 
+        // start the dot animation
+        var dotAnimation = jsBackend.settings.startDotAnimation();
+
         // start the action clearing
         $.ajax(
             {
@@ -125,6 +128,8 @@ jsBackend.settings =
                 },
                 complete: function()
                 {
+                    // stop the dot animation
+                    jsBackend.settings.stopDotAnimation(dotAnimation);
                     // hide the status
                     $statusAlert.toggleClass('hidden');
                     // reset the button
@@ -133,6 +138,45 @@ jsBackend.settings =
                 }
             }
         );
+    },
+
+    startDotAnimation: function (speed, dotAmount)
+    {
+        // set the default speed
+        if (!speed) {
+            speed = 300;
+        }
+
+        // set the default dot amount
+        if (!dotAmount) {
+            dotAmount = 3;
+        }
+
+        var $dotsAnimation = $('[data-role="fork-dots-animation"]');
+
+        // clear the initial content
+        $dotsAnimation.text('');
+
+        // start the interval for our animation
+        return setInterval(
+            function () {
+                $dotsAnimation.text($dotsAnimation.text() + '.');
+
+                if ($dotsAnimation.text().length > dotAmount) {
+                    $dotsAnimation.text('');
+                }
+            },
+            speed
+        )
+    },
+
+    stopDotAnimation: function (animation)
+    {
+        // clear the text
+        $('[data-role="fork-dots-animation"]').text('');
+
+        // clear the interval
+        clearInterval(animation);
     }
 };
 
