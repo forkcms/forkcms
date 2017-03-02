@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -87,8 +88,7 @@ class ImageType extends AbstractType
                         $imageClass = $options['image_class'];
 
                         if (!$image instanceof AbstractImage) {
-                            // your editor might say the file has protected but it isn't in this case
-                            $image = $imageClass::fromUploadedFile($image->file);
+                            $image = $imageClass::fromUploadedFile($image->getFile());
                         }
 
                         $this->nextField();
@@ -135,10 +135,20 @@ class ImageType extends AbstractType
             [
                 'data_class' => AbstractImage::class,
                 'empty_data' => function () {
-                    $emptyData = new StdClass();
-                    $emptyData->file = null;
+                    return new class extends StdClass {
+                        /** @var UploadedFile */
+                        protected $file;
 
-                    return $emptyData;
+                        public function setFile(UploadedFile $file = null)
+                        {
+                            $this->file = $file;
+                        }
+
+                        public function getFile()
+                        {
+                            return $this->file;
+                        }
+                    };
                 },
                 'compound' => true,
                 'preview_class' => 'img-thumbnail img-responsive',

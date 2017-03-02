@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -87,8 +88,7 @@ class FileType extends AbstractType
                         $fileClass = $options['file_class'];
 
                         if (!$file instanceof AbstractFile) {
-                            // your editor might say the file has protected but it isn't in this case
-                            $file = $fileClass::fromUploadedFile($file->file);
+                            $file = $fileClass::fromUploadedFile($file->getFile());
                         }
 
                         $this->nextField();
@@ -134,10 +134,20 @@ class FileType extends AbstractType
             [
                 'data_class' => AbstractFile::class,
                 'empty_data' => function () {
-                    $emptyData = new StdClass();
-                    $emptyData->file = null;
+                    return new class extends StdClass {
+                        /** @var UploadedFile */
+                        protected $file;
 
-                    return $emptyData;
+                        public function setFile(UploadedFile $file = null)
+                        {
+                            $this->file = $file;
+                        }
+
+                        public function getFile()
+                        {
+                            return $this->file;
+                        }
+                    };
                 },
                 'compound' => true,
                 'preview_label' => 'lbl.ViewCurrentFile',
