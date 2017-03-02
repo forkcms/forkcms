@@ -3,6 +3,7 @@
 namespace Common\Core\Twig;
 
 use Common\ModulesSettings;
+use SpoonForm;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Twig_Environment;
 
@@ -20,8 +21,6 @@ use Twig_Environment;
 abstract class BaseTwigTemplate extends TwigEngine
 {
     /**
-     * Language.
-     *
      * @var string
      */
     protected $language;
@@ -62,18 +61,11 @@ abstract class BaseTwigTemplate extends TwigEngine
     /**
      * Spoon assign method.
      *
-     * @param string|array $key
-     * @param mixed  $values
+     * @param string $key
+     * @param mixed $values
      */
-    public function assign($key, $values = null)
+    public function assign(string $key, $values)
     {
-        if (is_array($key)) {
-            $this->assignArray($key);
-
-            return;
-        }
-
-        // in all other cases
         $this->variables[$key] = $values;
     }
 
@@ -81,7 +73,7 @@ abstract class BaseTwigTemplate extends TwigEngine
      * @param string $key
      * @param mixed $value
      */
-    public function assignGlobal($key, $value)
+    public function assignGlobal(string $key, $value)
     {
         $this->environment->addGlobal($key, $value);
     }
@@ -90,10 +82,9 @@ abstract class BaseTwigTemplate extends TwigEngine
      * Assign an entire array with keys & values.
      *
      * @param array $variables This array with keys and values will be used to search and replace in the template file.
-     * @param string[optional] $prefix An optional prefix eg. 'lbl' that can be used.
-     * @param string[optional] $suffix An optional suffix eg. 'msg' that can be used.
+     * @param string|null $index
      */
-    public function assignArray(array $variables, $index = null)
+    public function assignArray(array $variables, string $index = null)
     {
         // artifacts?
         if (!empty($index) && isset($variables['Core'])) {
@@ -114,7 +105,7 @@ abstract class BaseTwigTemplate extends TwigEngine
      *
      * @param SpoonForm $form The form-instance to add.
      */
-    public function addForm($form)
+    public function addForm(SpoonForm $form)
     {
         $this->forms[$form->getName()] = $form;
     }
@@ -124,7 +115,7 @@ abstract class BaseTwigTemplate extends TwigEngine
      *
      * @return array
      */
-    public function getAssignedVariables()
+    public function getAssignedVariables(): array
     {
         return $this->variables;
     }
@@ -134,7 +125,7 @@ abstract class BaseTwigTemplate extends TwigEngine
      *
      * @param Twig_Environment $twig
      */
-    protected function startGlobals(&$twig)
+    protected function startGlobals(Twig_Environment $twig)
     {
         // some old globals
         $twig->addGlobal('var', '');
@@ -155,7 +146,7 @@ abstract class BaseTwigTemplate extends TwigEngine
 
         // remove protected constants aka constants that should not be used in the template
         foreach ($constants['user'] as $key => $value) {
-            if (!in_array($key, $notPublicConstants)) {
+            if (!in_array($key, $notPublicConstants, true)) {
                 $twig->addGlobal($key, $value);
             }
         }
@@ -227,8 +218,8 @@ abstract class BaseTwigTemplate extends TwigEngine
      *
      * @param bool $enabled Enable addslashes.
      */
-    public function setAddSlashes($enabled = true)
+    public function setAddSlashes(bool $enabled = true)
     {
-        $this->addSlashes = (bool) $enabled;
+        $this->addSlashes = $enabled;
     }
 }

@@ -23,11 +23,11 @@ class TemplateModifiers extends BaseTwigModifiers
      * Format a UNIX-timestamp as a date
      * syntax: {{ $var|formatdate }}
      *
-     * @param int $var The UNIX-timestamp to format.
+     * @param int|\DateTime $var The UNIX-timestamp to format.
      *
      * @return string
      */
-    public static function formatDate($var)
+    public static function formatDate($var): string
     {
         // get setting
         $format = Authentication::getUser()->getSetting('date_format');
@@ -44,11 +44,11 @@ class TemplateModifiers extends BaseTwigModifiers
      * Format a UNIX-timestamp as a date
      * syntax: {{ $var|formatdatetime }}
      *
-     * @param int $var The UNIX-timestamp to format.
+     * @param int|\DateTime $var The UNIX-timestamp to format.
      *
      * @return string
      */
-    public static function formatDateTime($var)
+    public static function formatDateTime($var): string
     {
         // get setting
         $format = Authentication::getUser()->getSetting('datetime_format');
@@ -65,28 +65,23 @@ class TemplateModifiers extends BaseTwigModifiers
      * Format a number as a float
      * syntax: {$var|formatfloat}
      *
-     * @param float $number   The number to format.
-     * @param int   $decimals The number of decimals.
+     * @param float $number The number to format.
+     * @param int $decimals The number of decimals.
      *
      * @return string
      */
-    public static function formatFloat($number, $decimals = 2)
+    public static function formatFloat(float $number, int $decimals = 2): string
     {
-        $number = (float) $number;
-        $decimals = (int) $decimals;
-
         // get setting
         $format = Authentication::getUser()->getSetting('number_format', 'dot_nothing');
 
         // get separators
         $separators = explode('_', $format);
         $separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
-        $decimalSeparator = (
-            isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null
-        );
-        $thousandsSeparator = (
-            isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null
-        );
+        $decimalSeparator = isset($separators[0], $separatorSymbols[$separators[0]])
+            ? $separatorSymbols[$separators[0]] : null;
+        $thousandsSeparator = isset($separators[1], $separatorSymbols[$separators[1]])
+            ? $separatorSymbols[$separators[1]] : null;
 
         // format the number
         return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
@@ -101,10 +96,8 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function formatNumber($number, $decimals = null)
+    public static function formatNumber(float $number, int $decimals = null): string
     {
-        $number = (float) $number;
-
         // get setting
         $format = Authentication::getUser()->getSetting('number_format', 'dot_nothing');
 
@@ -116,12 +109,10 @@ class TemplateModifiers extends BaseTwigModifiers
         // get separators
         $separators = explode('_', $format);
         $separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
-        $decimalSeparator = (
-            isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null
-        );
-        $thousandsSeparator = (
-            isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null
-        );
+        $decimalSeparator = isset($separators[0], $separatorSymbols[$separators[0]])
+            ? $separatorSymbols[$separators[0]] : null;
+        $thousandsSeparator = isset($separators[1], $separatorSymbols[$separators[1]])
+            ? $separatorSymbols[$separators[1]] : null;
 
         // format the number
         return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
@@ -131,11 +122,11 @@ class TemplateModifiers extends BaseTwigModifiers
      * Format a UNIX-timestamp as a date
      * syntax: {{ $var|formatdate }}
      *
-     * @param int $var The UNIX-timestamp to format.
+     * @param int|\DateTime $var The UNIX-timestamp to format.
      *
      * @return string
      */
-    public static function formatTime($var)
+    public static function formatTime($var): string
     {
         // get setting
         $format = Authentication::getUser()->getSetting('time_format');
@@ -159,14 +150,15 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function getURL($action = null, $module = null, $suffix = null, $language = null)
-    {
-        if (!in_array($language, BackendLanguage::getActiveLanguages())) {
+    public static function getURL(
+        string $action = null,
+        string $module = null,
+        string $suffix = null,
+        string $language = null
+    ): string {
+        if (!in_array($language, BackendLanguage::getActiveLanguages(), true)) {
             $language = BackendLanguage::getWorkingLanguage();
         }
-
-        $action = ($action !== null) ? (string) $action : null;
-        $module = ($module !== null) ? (string) $module : null;
 
         return BackendModel::createURLForAction($action, $module, $language) . $suffix;
     }
@@ -179,7 +171,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function toLabel($value)
+    public static function toLabel($value): string
     {
         return \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
     }
@@ -188,14 +180,14 @@ class TemplateModifiers extends BaseTwigModifiers
      * Truncate a string
      *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}
      *
-     * @param string $var      The string passed from the template.
-     * @param int    $length      The maximum length of the truncated string.
-     * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
-     * @param bool   $closestWord Truncate on exact length or on closest word?
+     * @param string $var The string passed from the template.
+     * @param int $length The maximum length of the truncated string.
+     * @param bool $useHellip Should a hellip be appended if the length exceeds the requested length?
+     * @param bool $closestWord Truncate on exact length or on closest word?
      *
      * @return string
      */
-    public static function truncate($var, $length, $useHellip = true, $closestWord = false)
+    public static function truncate(string $var, int $length, bool $useHellip = true, $closestWord = false): string
     {
         // init vars
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
@@ -209,28 +201,28 @@ class TemplateModifiers extends BaseTwigModifiers
         // less characters
         if (mb_strlen($var) <= $length) {
             return \SpoonFilter::htmlspecialchars($var);
-        } else {
-            // more characters
-            // hellip is seen as 1 char, so remove it from length
-            if ($useHellip) {
-                --$length;
-            }
-
-            // truncate
-            if ($closestWord) {
-                $var = mb_substr($var, 0, mb_strrpos(mb_substr($var, 0, $length + 1), ' '), $charset);
-            } else {
-                $var = mb_substr($var, 0, $length, $charset);
-            }
-
-            // add hellip
-            if ($useHellip) {
-                $var .= '…';
-            }
-
-            // return
-            return \SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
         }
+
+        // more characters
+        // hellip is seen as 1 char, so remove it from length
+        if ($useHellip) {
+            --$length;
+        }
+
+        // truncate
+        if ($closestWord) {
+            $var = mb_substr($var, 0, mb_strrpos(mb_substr($var, 0, $length + 1), ' '), $charset);
+        } else {
+            $var = mb_substr($var, 0, $length, $charset);
+        }
+
+        // add hellip
+        if ($useHellip) {
+            $var .= '…';
+        }
+
+        // return
+        return \SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
     }
 
     /**
@@ -240,7 +232,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return int
      */
-    public static function count(array $data)
+    public static function count(array $data): int
     {
         return count($data);
     }

@@ -82,7 +82,7 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @return string
      */
-    public function getPath($template)
+    public function getPath(string $template): string
     {
         if (strpos($template, FRONTEND_MODULES_PATH) !== false) {
             return str_replace(FRONTEND_MODULES_PATH . '/', '', $template);
@@ -98,7 +98,7 @@ class TwigTemplate extends BaseTwigTemplate
      * @param string $name
      * @param mixed $value
      */
-    public function addGlobal($name, $value)
+    public function addGlobal(string $name, $value)
     {
         $this->environment->addGlobal($name, $value);
     }
@@ -110,7 +110,7 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @return string The actual parsed content after executing this template.
      */
-    public function getContent($template)
+    public function getContent(string $template): string
     {
         $template = $this->getPath($template);
 
@@ -145,7 +145,7 @@ class TwigTemplate extends BaseTwigTemplate
     /**
      * @return array
      */
-    private function getLoadingFolders()
+    private function getLoadingFolders(): array
     {
         $filesystem = new Filesystem();
 
@@ -167,7 +167,7 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @return array
      */
-    private function getFormTemplates($fileName)
+    private function getFormTemplates(string $fileName): array
     {
         $filesystem = new Filesystem();
 

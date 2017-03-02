@@ -27,9 +27,9 @@ class TwigFilters
      *
      * @return array
      */
-    public static function getFilters(&$twig, $app)
+    public static function getFilters(Twig_Environment $twig, string $app): array
     {
-        $app = $app.'\Core\Engine\TemplateModifiers';
+        $app .= '\Core\Engine\TemplateModifiers';
         $twig->addFilter(new Twig_SimpleFilter('getpageinfo', $app.'::getPageInfo'));
         $twig->addFilter(new Twig_SimpleFilter('highlight', $app.'::highlightCode'));
         $twig->addFilter(new Twig_SimpleFilter('profilesetting', $app.'::profileSetting'));

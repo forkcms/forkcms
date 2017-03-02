@@ -33,7 +33,7 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @param bool $addToReference Should the instance be added into the reference.
      */
-    public function __construct($addToReference = true)
+    public function __construct(bool $addToReference = true)
     {
         if ($addToReference) {
             Model::getContainer()->set('template', $this);
@@ -51,7 +51,7 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @return string The actual parsed content after executing this template.
      */
-    public function getContent($template)
+    public function getContent($template): string
     {
         $this->parseConstants();
         $this->parseAuthentication();
@@ -133,14 +133,14 @@ class TwigTemplate extends BaseTwigTemplate
 
         // remove protected constants aka constants that should not be used in the template
         foreach ($constants['user'] as $key => $value) {
-            if (!in_array($key, $notPublicConstants)) {
+            if (!in_array($key, $notPublicConstants, true)) {
                 $realConstants[$key] = $value;
             }
         }
 
         // we should only assign constants if there are constants to assign
         if (!empty($realConstants)) {
-            $this->assign($realConstants);
+            $this->assignArray($realConstants);
         }
 
         // we use some abbreviations and common terms, these should also be assigned
@@ -155,11 +155,11 @@ class TwigTemplate extends BaseTwigTemplate
                 $this->assign('MODULE', $url->getModule());
 
                 // assign the current action
-                if ($url->getAction() != '') {
+                if ($url->getAction() !== '') {
                     $this->assign('ACTION', $url->getAction());
                 }
 
-                if ($url->getModule() == 'Core') {
+                if ($url->getModule() === 'Core') {
                     $this->assign(
                         'BACKEND_MODULE_PATH',
                         BACKEND_PATH . '/' . $url->getModule()
@@ -234,7 +234,7 @@ class TwigTemplate extends BaseTwigTemplate
         // loop actions and assign to template
         foreach (Authentication::getAllowedActions() as $module => $allowedActions) {
             foreach ($allowedActions as $action => $level) {
-                if ($level == '7') {
+                if ($level === '7') {
                     $this->assign(
                         'show' . \SpoonFilter::toCamelCase($module, '_') . \SpoonFilter::toCamelCase(
                             $action,
@@ -252,10 +252,7 @@ class TwigTemplate extends BaseTwigTemplate
      */
     private function parseDebug()
     {
-        $this->assign(
-            'debug',
-            Model::getContainer()->getParameter('kernel.debug')
-        );
+        $this->assign('debug', Model::getContainer()->getParameter('kernel.debug'));
     }
 
     /**
@@ -316,12 +313,15 @@ class TwigTemplate extends BaseTwigTemplate
             foreach ($realErrors as &$value) {
                 $value = addslashes($value);
             }
+            unset($value);
             foreach ($realLabels as &$value) {
                 $value = addslashes($value);
             }
+            unset($value);
             foreach ($realMessages as &$value) {
                 $value = addslashes($value);
             }
+            unset($value);
         }
 
         // sort the arrays (just to make it look beautiful)
@@ -360,9 +360,7 @@ class TwigTemplate extends BaseTwigTemplate
             $localeToAssign['locMonthLong' . \SpoonFilter::ucfirst($key)] = $value;
         }
         foreach ($monthsShort as $key => $value) {
-            $localeToAssign['locMonthShort' . \SpoonFilter::ucfirst(
-                $key
-            )] = $value;
+            $localeToAssign['locMonthShort' . \SpoonFilter::ucfirst($key)] = $value;
         }
         foreach ($daysLong as $key => $value) {
             $localeToAssign['locDayLong' . \SpoonFilter::ucfirst($key)] = $value;
@@ -397,7 +395,7 @@ class TwigTemplate extends BaseTwigTemplate
                 $bodyClass = \SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true);
 
                 // special occasions
-                if ($url->getAction() == 'add' || $url->getAction() == 'edit'
+                if ($url->getAction() === 'add' || $url->getAction() === 'edit'
                 ) {
                     $bodyClass = $url->getModule() . 'AddEdit';
                 }
