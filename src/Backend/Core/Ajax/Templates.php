@@ -9,7 +9,6 @@ namespace Backend\Core\Ajax;
  * file that was distributed with this source code.
  */
 
-use Common\Exception\RedirectException;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\AjaxAction;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,7 +43,7 @@ class Templates extends AjaxAction
     /**
      * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
         return new Response(
             'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n" . json_encode(
@@ -60,7 +59,7 @@ class Templates extends AjaxAction
      *
      * @param string $file The file to process.
      */
-    private function processFile($file)
+    private function processFile(string $file)
     {
         $filesystem = new Filesystem();
 
@@ -102,7 +101,7 @@ class Templates extends AjaxAction
             }
 
             $temp['title'] = $template['title'];
-            $temp['description'] = isset($template['description']) ? $template['description'] : '';
+            $temp['description'] = $template['description'] ?? '';
             $temp['image'] = $image;
             $temp['html'] = $template['html'];
 
