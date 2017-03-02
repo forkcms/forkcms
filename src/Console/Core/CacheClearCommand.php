@@ -22,7 +22,7 @@ class CacheClearCommand extends Command
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -49,17 +49,17 @@ class CacheClearCommand extends Command
     /**
      * Remove the files in a given folder
      *
-     * @param string       $path
+     * @param string $path
      * @param SymfonyStyle $io
-     * @param string       $name
+     * @param string $name
      */
-    private function removeFilesInFolder($path, SymfonyStyle $io, $name)
+    private function removeFilesInFolder(string $path, SymfonyStyle $io, string $name)
     {
         $fullPath = realpath(__DIR__ . '/../../..' . $path);
 
         // I use a rm-command because this is much faster then using the finder/filesystem-component
         $command = 'rm -f `find %1$s ! -name ".gitignore" -type f ! -path *.svn/* -type f`';
-        shell_exec(vsprintf($command, $fullPath));
-        $io->comment(vsprintf('Removed %1$s', $name));
+        shell_exec(sprintf($command, $fullPath));
+        $io->comment(sprintf('Removed %1$s', $name));
     }
 }

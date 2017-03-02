@@ -32,16 +32,16 @@ class EnableLocaleCommand extends Command
     /** @var string */
     private $workingLocale;
 
-    /** @var string */
+    /** @var array */
     private $installedLocale;
 
-    /** @var string */
+    /** @var array */
     private $interfaceLocale;
 
-    /** @var string */
+    /** @var array */
     private $enabledLocale;
 
-    /** @var string */
+    /** @var array */
     private $redirectLocale;
 
     /** @var string */
@@ -65,8 +65,8 @@ class EnableLocaleCommand extends Command
     public function __construct(
         ModulesSettings $settings,
         array $installedModules,
-        $multiLanguageIsEnabled,
-        $name = null
+        bool $multiLanguageIsEnabled,
+        string $name = null
     ) {
         parent::__construct($name);
 
@@ -155,7 +155,7 @@ class EnableLocaleCommand extends Command
     /**
      * @return bool
      */
-    private function askToMakeTheLocaleAccessibleToVisitors()
+    private function askToMakeTheLocaleAccessibleToVisitors(): bool
     {
         $makeAccessible = $this->formatter->confirm(
             'Would you like to make this locale accessible to visitors?'
@@ -216,7 +216,7 @@ class EnableLocaleCommand extends Command
     /**
      * @return bool
      */
-    private function askToInstall()
+    private function askToInstall(): bool
     {
         if (array_key_exists($this->workingLocale, $this->installedLocale)) {
             $reinstallLocale = $this->formatter->confirm(
@@ -268,7 +268,7 @@ class EnableLocaleCommand extends Command
     /**
      * @param bool $force
      */
-    private function installWorkingLocale($force = false)
+    private function installWorkingLocale(bool $force = false)
     {
         $installLocaleCommand = $this->getApplication()->find('forkcms:locale:import');
         $installBackendLocaleCommandArguments = [
@@ -355,7 +355,7 @@ class EnableLocaleCommand extends Command
     /**
      * @return array
      */
-    private function getInstallableLocale()
+    private function getInstallableLocale(): array
     {
         return [
             'en' => 'English',

@@ -69,8 +69,12 @@ class ImportLocaleCommand extends Command
      *
      * @throws Exception
      */
-    private function importLocale($localePath, $overwrite, OutputInterface $output, $specificLocale = null)
-    {
+    private function importLocale(
+        string $localePath,
+        bool $overwrite,
+        OutputInterface $output,
+        string $specificLocale = null
+    ) {
         // Load the xml from the file
         $xmlData = @simplexml_load_file($localePath);
 
@@ -115,7 +119,7 @@ class ImportLocaleCommand extends Command
      *
      * @return string
      */
-    private function getLocalePath($fileOption, $moduleOption)
+    private function getLocalePath(string $fileOption, string $moduleOption): string
     {
         if (isset($fileOption)) {
             return $fileOption;
