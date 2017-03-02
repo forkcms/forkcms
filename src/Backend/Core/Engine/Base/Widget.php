@@ -41,7 +41,7 @@ class Widget extends KernelLoader
      *
      * @var int
      */
-    private $position;
+    private $position = 0;
 
     /**
      * Required rights needed for this widget.
@@ -84,7 +84,7 @@ class Widget extends KernelLoader
      *
      * @param string $template The template to use.
      */
-    protected function display($template = null)
+    protected function display(string $template = null)
     {
         if ($template !== null) {
             $this->templatePath = (string) $template;
@@ -96,7 +96,7 @@ class Widget extends KernelLoader
      *
      * @return string
      */
-    public function getColumn()
+    public function getColumn(): string
     {
         return $this->column;
     }
@@ -104,9 +104,9 @@ class Widget extends KernelLoader
     /**
      * Get the position
      *
-     * @return mixed
+     * @return int
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -114,9 +114,9 @@ class Widget extends KernelLoader
     /**
      * Get the template path
      *
-     * @return mixed
+     * @return string
      */
-    public function getTemplatePath()
+    public function getTemplatePath(): string
     {
         return $this->templatePath;
     }
@@ -126,7 +126,7 @@ class Widget extends KernelLoader
      *
      * @return bool
      */
-    public function isAllowed()
+    public function isAllowed(): bool
     {
         foreach ($this->rights as $rights) {
             list($module, $action) = explode('/', $rights);
@@ -147,10 +147,10 @@ class Widget extends KernelLoader
      *
      * @param string $column Possible values are: left, middle, right.
      */
-    protected function setColumn($column)
+    protected function setColumn(string $column)
     {
         $allowedColumns = array('left', 'middle', 'right');
-        $this->column = \SpoonFilter::getValue((string) $column, $allowedColumns, 'left');
+        $this->column = \SpoonFilter::getValue($column, $allowedColumns, 'left');
     }
 
     /**
@@ -158,9 +158,9 @@ class Widget extends KernelLoader
      *
      * @param int $position The position for the widget.
      */
-    protected function setPosition($position)
+    protected function setPosition(int $position)
     {
-        $this->position = (int) $position;
+        $this->position = $position;
     }
 
     /**
@@ -171,7 +171,7 @@ class Widget extends KernelLoader
      *
      * @throws RedirectException
      */
-    public function redirect($url, $code = 302)
+    public function redirect(string $url, int $code = 302)
     {
         $response = new RedirectResponse($url, $code);
 

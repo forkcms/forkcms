@@ -41,7 +41,7 @@ class Cronjob extends Object
     /**
      * @return string
      */
-    protected function getCacheDirectory()
+    protected function getCacheDirectory(): string
     {
         return BackendModel::getContainer()->getParameter('kernel.cache_dir') . '/cronjobs/';
     }
@@ -55,7 +55,7 @@ class Cronjob extends Object
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return mb_strtolower($this->getModule() . '_' . $this->getAction());
     }
@@ -70,7 +70,7 @@ class Cronjob extends Object
      *
      * @throws BackendException If module is not set or the action does not exist
      */
-    public function setAction($action, $module = null)
+    public function setAction(string $action, string $module = null)
     {
         // set module
         if ($module !== null) {
@@ -83,11 +83,7 @@ class Cronjob extends Object
         }
 
         // path to look for actions based on the module
-        if ($this->getModule() == 'Core') {
-            $path = BACKEND_CORE_PATH . '/Cronjobs';
-        } else {
-            $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/Cronjobs';
-        }
+        $path = $this->getPathForModule();
 
         // check if file exists
         if (!is_file($path . '/' . $action . '.php')) {
@@ -96,7 +92,19 @@ class Cronjob extends Object
         }
 
         // set property
-        $this->action = (string) $action;
+        $this->action = $action;
+    }
+
+    /**
+     * @return string
+     */
+    private function getPathForModule(): string
+    {
+        if ($this->getModule() === 'Core') {
+            return BACKEND_CORE_PATH . '/Cronjobs';
+        }
+
+        return BACKEND_MODULES_PATH . '/' . $this->getModule() . '/Cronjobs';
     }
 
     /**
@@ -115,6 +123,7 @@ class Cronjob extends Object
 
         // init var
         $isBusy = false;
+        $counter = 0;
 
         // does the busy file already exists.
         if ($filesystem->exists($path)) {
@@ -127,15 +136,13 @@ class Cronjob extends Object
             if ($counter > 9) {
                 // build class name
                 $class = 'Backend\\Modules\\' . $this->getModule() . '\\Cronjobs\\' . $this->getAction();
-                if ($this->getModule() == 'Core') {
+                if ($this->getModule() === 'Core') {
                     $class = 'Backend\\Core\\Cronjobs\\' . $this->getAction();
                 }
 
                 // notify user
                 throw new BackendException('Cronjob (' . $class . ') is still busy after 10 runs, check it out!');
             }
-        } else {
-            $counter = 0;
         }
 
         // increment counter
@@ -159,11 +166,11 @@ class Cronjob extends Object
      *
      * @throws BackendException If module is not allowed
      */
-    public function setModule($module)
+    public function setModule(string $module)
     {
         // does this module exist?
         $modules = BackendModel::getModulesOnFilesystem();
-        if (!in_array($module, $modules)) {
+        if (!in_array($module, $modules, true)) {
             // set correct headers
             header('HTTP/1.1 403 Forbidden');
 

@@ -23,12 +23,9 @@ class AjaxAction extends Object
 
     /**
      * Execute the action
-     *
-     * @return Response
      */
     public function execute()
     {
-        return $this->getContent();
     }
 
     /**
@@ -41,9 +38,9 @@ class AjaxAction extends Object
      *
      * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
-        $statusCode = (isset($this->content['code']) ? $this->content['code'] : 200);
+        $statusCode = $this->content['code'] ?? self::OK;
 
         return new Response(
             json_encode($this->content),
@@ -55,19 +52,14 @@ class AjaxAction extends Object
     /**
      * Output an answer to the browser
      *
-     * @param int    $statusCode The status code for the response, use the
+     * @param int $statusCode The status code for the response, use the
      *                           available constants:
      *                           self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR
-     * @param mixed  $data       The data to output.
-     * @param string $message    The text-message to send.
+     * @param mixed $data The data to output.
+     * @param string $message The text-message to send.
      */
-    public function output($statusCode, $data = null, $message = null)
+    public function output(int $statusCode, $data = null, string $message = null)
     {
-        $statusCode = (int) $statusCode;
-        if ($message !== null) {
-            $message = (string) $message;
-        }
-
         $response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
         $this->content = $response;
     }

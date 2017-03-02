@@ -47,7 +47,7 @@ class AjaxAction extends KernelLoader
      * @param string          $action The action to use.
      * @param string          $module The module to use.
      */
-    public function __construct(KernelInterface $kernel, $action, $module)
+    public function __construct(KernelInterface $kernel, string $action, string $module)
     {
         parent::__construct($kernel);
 
@@ -69,7 +69,7 @@ class AjaxAction extends KernelLoader
      *
      * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
@@ -84,9 +84,9 @@ class AjaxAction extends KernelLoader
      *
      * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
-        $statusCode = (isset($this->content['code']) ? $this->content['code'] : 200);
+        $statusCode = ($this->content['code'] ?? self::OK);
 
         return new Response(
             json_encode($this->content),
@@ -100,7 +100,7 @@ class AjaxAction extends KernelLoader
      *
      * @return string
      */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
@@ -113,16 +113,9 @@ class AjaxAction extends KernelLoader
      * @param mixed  $data       The data to be returned (will be encoded as JSON).
      * @param string $message    A text-message.
      */
-    public function output($statusCode, $data = null, $message = null)
+    public function output(int $statusCode, $data = null, string $message = null)
     {
-        $statusCode = (int) $statusCode;
-        if ($message !== null) {
-            $message = (string) $message;
-        }
-
-        $response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
-
-        $this->content = $response;
+        $this->content = array('code' => $statusCode, 'data' => $data, 'message' => $message);
     }
 
     /**
@@ -130,9 +123,9 @@ class AjaxAction extends KernelLoader
      *
      * @param string $action The action to use.
      */
-    protected function setAction($action)
+    protected function setAction(string $action)
     {
-        $this->action = (string) $action;
+        $this->action = $action;
     }
 
     /**
@@ -140,8 +133,8 @@ class AjaxAction extends KernelLoader
      *
      * @param string $module The module to use.
      */
-    protected function setModule($module)
+    protected function setModule(string $module)
     {
-        $this->module = (string) $module;
+        $this->module = $module;
     }
 }

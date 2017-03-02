@@ -11,7 +11,6 @@ namespace Backend\Core\Engine\Base;
 
 use Backend\Core\Engine\TwigTemplate;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Header;
 use Backend\Core\Language\Language as BL;
@@ -104,13 +103,13 @@ class Action extends Object
     /**
      * @return string
      */
-    protected function getBackendModulePath()
+    protected function getBackendModulePath(): string
     {
-        if ($this->URL->getModule() == 'Core') {
+        if ($this->URL->getModule() === 'Core') {
             return BACKEND_PATH . '/' . $this->URL->getModule();
-        } else {
-            return BACKEND_MODULES_PATH . '/' . $this->URL->getModule();
         }
+
+        return BACKEND_MODULES_PATH . '/' . $this->URL->getModule();
     }
 
     /**
@@ -119,7 +118,7 @@ class Action extends Object
      *
      * @param string $template The template to use, if not provided it will be based on the action.
      */
-    public function display($template = null)
+    public function display(string $template = null)
     {
         // parse header
         $this->header->parse();
@@ -129,7 +128,7 @@ class Action extends Object
          * based on the name of the current action
          */
         if ($template === null) {
-            $template = '/'. $this->getModule() . '/Layout/Templates/' . $this->URL->getAction() . '.html.twig';
+            $template = '/' . $this->getModule() . '/Layout/Templates/' . $this->URL->getAction() . '.html.twig';
         }
 
         $this->content = $this->tpl->getContent($template);
@@ -218,21 +217,21 @@ class Action extends Object
      * By default we will cast the return value into a string, if you want
      * something else specify it by passing the wanted type.
      *
-     * @param string $key          The name of the parameter.
-     * @param string $type         The return-type, possible values are: bool,
+     * @param string $key The name of the parameter.
+     * @param string $type The return-type, possible values are: bool,
      *                             boolean, int, integer, float, double,
      *                             string, array.
-     * @param mixed  $defaultValue The value that should be returned if the key
+     * @param mixed $defaultValue The value that should be returned if the key
      *                             is not available.
      *
      * @return mixed
      */
-    public function getParameter($key, $type = 'string', $defaultValue = null)
+    public function getParameter(string $key, string $type = 'string', $defaultValue = null)
     {
         $key = (string) $key;
 
         // parameter exists
-        if (isset($this->parameters[$key]) && $this->parameters[$key] != '') {
+        if (isset($this->parameters[$key]) && $this->parameters[$key] !== '') {
             return \SpoonFilter::getValue($this->parameters[$key], null, null, $type);
         }
 
@@ -249,13 +248,13 @@ class Action extends Object
     /**
      * Creates and returns a Form instance from the type of the form.
      *
-     * @param string|FormTypeInterface $type The built type of the form
+     * @param string $type FQCN of the form type class i.e: MyClass::class
      * @param mixed $data The initial data for the form
      * @param array $options Options for the form
      *
      * @return Form
      */
-    public function createForm($type, $data = null, array $options = array())
+    public function createForm(string $type, $data = null, array $options = array()): Form
     {
         return $this->get('form.factory')->create($type, $data, $options);
     }

@@ -31,7 +31,7 @@ class Object extends KernelLoader
     /**
      * The actual output
      *
-     * @var string
+     * @var mixed
      */
     protected $content;
 
@@ -47,7 +47,7 @@ class Object extends KernelLoader
      *
      * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
@@ -57,7 +57,7 @@ class Object extends KernelLoader
      *
      * @return string
      */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
@@ -70,7 +70,7 @@ class Object extends KernelLoader
      *
      * @throws Exception If module is not set or action is not allowed
      */
-    public function setAction($action, $module = null)
+    public function setAction(string $action, string $module = null)
     {
         // set module
         if ($module !== null) {
@@ -92,7 +92,7 @@ class Object extends KernelLoader
         }
 
         // set property
-        $this->action = (string) \SpoonFilter::toCamelCase($action);
+        $this->action = \SpoonFilter::toCamelCase($action);
     }
 
     /**
@@ -102,7 +102,7 @@ class Object extends KernelLoader
      *
      * @throws Exception If module is not allowed
      */
-    public function setModule($module)
+    public function setModule(string $module)
     {
         // is this module allowed?
         if (!Authentication::isAllowedModule($module)) {
@@ -127,7 +127,7 @@ class Object extends KernelLoader
      *
      * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
         return new Response(
             $this->content,
@@ -143,7 +143,7 @@ class Object extends KernelLoader
      *
      * @throws RedirectException
      */
-    public function redirect($url, $code = 302)
+    public function redirect(string $url, int $code = 302)
     {
         $response = new RedirectResponse($url, $code);
 

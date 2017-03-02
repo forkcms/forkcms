@@ -11,6 +11,7 @@ namespace Frontend\Core\Engine\Base;
 
 use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Header;
+use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormTypeInterface;
@@ -60,11 +61,11 @@ class Widget extends Object
 
     /**
      * @param KernelInterface $kernel
-     * @param string          $module The module to use.
-     * @param string          $action The action to use.
-     * @param string          $data   The data that should be available.
+     * @param string $module The module to use.
+     * @param string $action The action to use.
+     * @param string $data The data that should be available.
      */
-    public function __construct(KernelInterface $kernel, $module, $action, $data = null)
+    public function __construct(KernelInterface $kernel, string $module, string $action, string $data = null)
     {
         parent::__construct($kernel);
 
@@ -81,17 +82,13 @@ class Widget extends Object
     /**
      * Add a CSS file into the array
      *
-     * @param string $file          The path for the CSS-file that should be loaded.
-     * @param bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param bool   $minify        Should the CSS be minified?
-     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
+     * @param string $file The path for the CSS-file that should be loaded.
+     * @param bool $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param bool $minify Should the CSS be minified?
+     * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
+    public function addCSS(string $file, bool $overwritePath = false, bool $minify = true, bool $addTimestamp = null)
     {
-        // redefine
-        $file = (string) $file;
-        $overwritePath = (bool) $overwritePath;
-
         // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/' . $file;
@@ -104,15 +101,12 @@ class Widget extends Object
     /**
      * Add a javascript file into the array
      *
-     * @param string $file          The path to the javascript-file that should be loaded.
-     * @param bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param bool   $minify        Should the file be minified?
+     * @param string $file The path to the javascript-file that should be loaded.
+     * @param bool $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param bool $minify Should the file be minified?
      */
-    public function addJS($file, $overwritePath = false, $minify = true)
+    public function addJS(string $file, bool $overwritePath = false, bool $minify = true)
     {
-        $file = (string) $file;
-        $overwritePath = (bool) $overwritePath;
-
         // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Js/' . $file;
@@ -125,10 +119,10 @@ class Widget extends Object
     /**
      * Add data that should be available in JS
      *
-     * @param string $key   The key whereunder the value will be stored.
-     * @param mixed  $value The value to pass.
+     * @param string $key The key whereunder the value will be stored.
+     * @param mixed $value The value to pass.
      */
-    public function addJSData($key, $value)
+    public function addJSData(string $key, $value)
     {
         $this->header->addJsData($this->getModule(), $key, $value);
     }
@@ -171,7 +165,7 @@ class Widget extends Object
      *
      * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
@@ -182,7 +176,7 @@ class Widget extends Object
      * @param string $template
      * @return string
      */
-    public function getContent($template = null)
+    public function getContent(string $template = null): string
     {
         if ($template !== null) {
             return $this->tpl->getContent($template);
@@ -196,7 +190,7 @@ class Widget extends Object
      *
      * @return string
      */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
@@ -204,9 +198,9 @@ class Widget extends Object
     /**
      * Get template
      *
-     * @return string
+     * @return TwigTemplate
      */
-    public function getTemplate()
+    public function getTemplate(): TwigTemplate
     {
         return $this->tpl;
     }
@@ -216,7 +210,7 @@ class Widget extends Object
      *
      * @param string $path The path for the template to use.
      */
-    protected function loadTemplate($path = null)
+    protected function loadTemplate(string $path = null)
     {
         // no template given, so we should build the path
         if ($path === null) {
@@ -225,9 +219,6 @@ class Widget extends Object
 
             // build template path
             $path = $frontendModulePath . '/Layout/Widgets/' . $this->getAction() . '.html.twig';
-        } else {
-            // redefine
-            $path = (string) $path;
         }
 
         // set template
@@ -239,9 +230,9 @@ class Widget extends Object
      *
      * @param string $action The action to use.
      */
-    private function setAction($action)
+    private function setAction(string $action)
     {
-        $this->action = (string) $action;
+        $this->action = $action;
     }
 
     /**
@@ -249,16 +240,18 @@ class Widget extends Object
      *
      * @param string $data The data that should available.
      */
-    private function setData($data = null)
+    private function setData(string $data = null)
     {
         // data given?
-        if ($data !== null) {
-            // unserialize data
-            $data = unserialize($data);
-
-            // store
-            $this->data = $data;
+        if ($data === null) {
+            return;
         }
+
+        // unserialize data
+        $data = unserialize($data);
+
+        // store
+        $this->data = $data;
     }
 
     /**
@@ -266,9 +259,9 @@ class Widget extends Object
      *
      * @param string $module The module to use.
      */
-    private function setModule($module)
+    private function setModule(string $module)
     {
-        $this->module = (string) $module;
+        $this->module = $module;
     }
 
     /**
@@ -276,9 +269,9 @@ class Widget extends Object
      *
      * @param string $path The path to the template that should be loaded.
      */
-    protected function setTemplatePath($path)
+    protected function setTemplatePath(string $path)
     {
-        $this->templatePath = (string) $path;
+        $this->templatePath = $path;
     }
 
     /**
@@ -289,7 +282,7 @@ class Widget extends Object
      *
      * @throws RedirectException
      */
-    public function redirect($url, $code = 302)
+    public function redirect(string $url, int $code = 302)
     {
         $response = new RedirectResponse($url, $code);
 
@@ -305,7 +298,7 @@ class Widget extends Object
      *
      * @return Form
      */
-    public function createForm($type, $data = null, array $options = array())
+    public function createForm($type, $data = null, array $options = array()): Form
     {
         return $this->get('form.factory')->create($type, $data, $options);
     }

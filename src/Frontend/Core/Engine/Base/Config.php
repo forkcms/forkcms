@@ -66,7 +66,7 @@ class Config extends KernelLoader
      * @param KernelInterface $kernel
      * @param string          $module The module wherefore this is the configuration-file.
      */
-    public function __construct(KernelInterface $kernel, $module)
+    public function __construct(KernelInterface $kernel, string $module)
     {
         parent::__construct($kernel);
 
@@ -81,7 +81,7 @@ class Config extends KernelLoader
      *
      * @return string
      */
-    public function getDefaultAction()
+    public function getDefaultAction(): string
     {
         return $this->defaultAction;
     }
@@ -91,7 +91,7 @@ class Config extends KernelLoader
      *
      * @return string
      */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
@@ -101,7 +101,7 @@ class Config extends KernelLoader
      *
      * @return array
      */
-    public function getPossibleActions()
+    public function getPossibleActions(): array
     {
         return $this->possibleActions;
     }
@@ -111,7 +111,7 @@ class Config extends KernelLoader
      *
      * @return array
      */
-    public function getPossibleAJAXActions()
+    public function getPossibleAJAXActions(): array
     {
         return $this->possibleAJAXActions;
     }
