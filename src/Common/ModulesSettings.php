@@ -39,7 +39,7 @@ class ModulesSettings
      *
      * @return mixed
      */
-    public function get($module, $key, $defaultValue = null)
+    public function get(string $module, string $key, $defaultValue = null)
     {
         $settings = $this->getSettings();
 
@@ -57,7 +57,7 @@ class ModulesSettings
      * @param string $key    The name of the setting.
      * @param mixed  $value  The value to save
      */
-    public function set($module, $key, $value)
+    public function set(string $module, string $key, $value)
     {
         $valueToStore = serialize($value);
 
@@ -88,7 +88,7 @@ class ModulesSettings
      * @param string $module
      * @param string $key
      */
-    public function delete($module, $key)
+    public function delete(string $module, string $key)
     {
         $this->database->delete(
             'modules_settings',
@@ -120,7 +120,7 @@ class ModulesSettings
      *
      * @return array
      */
-    public function getForModule($module)
+    public function getForModule(string $module): array
     {
         $settings = $this->getSettings();
 
@@ -136,6 +136,7 @@ class ModulesSettings
         if (isset($settings[$module])) {
             return $settings[$module];
         }
+
         return array();
     }
 
@@ -144,7 +145,7 @@ class ModulesSettings
      *
      * @return array
      */
-    private function getSettings()
+    private function getSettings(): array
     {
         $item = $this->cache->getItem('settings');
         if ($item->isHit()) {
@@ -163,7 +164,7 @@ class ModulesSettings
      *
      * @return array
      */
-    private function getAllSettingsFromDatabase()
+    private function getAllSettingsFromDatabase(): array
     {
         // fetch settings
         $settings = (array) $this->database->getRecords(

@@ -17,9 +17,9 @@ final class ModuleExtraType
      * @param string $type
      * @throws InvalidModuleExtraType
      */
-    public function __construct($type)
+    public function __construct(string $type)
     {
-        if (!in_array($type, self::getPossibleTypes())) {
+        if (!in_array($type, self::getPossibleTypes(), true)) {
             throw InvalidModuleExtraType::withType($type);
         }
 
@@ -29,7 +29,7 @@ final class ModuleExtraType
     /**
      * @return array
      */
-    public static function getPossibleTypes()
+    public static function getPossibleTypes(): array
     {
         $possibleTypes = [
             self::BLOCK,
@@ -43,7 +43,7 @@ final class ModuleExtraType
     /**
      * @return self
      */
-    public static function block()
+    public static function block(): self
     {
         return new self(self::BLOCK);
     }
@@ -51,7 +51,7 @@ final class ModuleExtraType
     /**
      * @return self
      */
-    public static function homepage()
+    public static function homepage(): self
     {
         return new self(self::HOMEPAGE);
     }
@@ -59,7 +59,7 @@ final class ModuleExtraType
     /**
      * @return self
      */
-    public static function widget()
+    public static function widget(): self
     {
         return new self(self::WIDGET);
     }
@@ -67,7 +67,7 @@ final class ModuleExtraType
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->type;
     }

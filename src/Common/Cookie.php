@@ -69,14 +69,14 @@ class Cookie extends \SpoonCookie
              for lighttpd you should add:
                  setenv.add-environment = ("HTTPS" => "on")
              */
-            $secure = (isset($_SERVER['HTTPS']) && mb_strtolower($_SERVER['HTTPS']) == 'on');
+            $secure = (isset($_SERVER['HTTPS']) && mb_strtolower($_SERVER['HTTPS']) === 'on');
         }
 
         // set cookie
         $cookie = setcookie($key, $value, $time, $path, $domain, $secure, $httpOnly);
 
         // problem occurred
-        return ($cookie === false) ? false : true;
+        return $cookie !== false;
     }
 
     /**
@@ -98,11 +98,13 @@ class Cookie extends \SpoonCookie
                 foreach ($argument as $key) {
                     self::delete($key);
                 }
-            } else {
-                // delete the given cookie
-                unset($_COOKIE[(string) $argument]);
-                setcookie((string) $argument, null, 1, '/', $domain);
+
+                continue;
             }
+
+            // delete the given cookie
+            unset($_COOKIE[(string) $argument]);
+            setcookie((string) $argument, null, 1, '/', $domain);
         }
     }
 
@@ -111,7 +113,7 @@ class Cookie extends \SpoonCookie
      *
      * @return bool
      */
-    public static function hasAllowedCookies()
+    public static function hasAllowedCookies(): bool
     {
         return (self::exists('cookie_bar_agree') && self::get('cookie_bar_agree'));
     }
@@ -121,7 +123,7 @@ class Cookie extends \SpoonCookie
      *
      * @return bool
      */
-    public static function hasHiddenCookieBar()
+    public static function hasHiddenCookieBar(): bool
     {
         return (self::exists('cookie_bar_hide') && self::get('cookie_bar_hide'));
     }

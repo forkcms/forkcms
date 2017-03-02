@@ -21,7 +21,7 @@ final class Language extends IdentityTranslator
     /**
      * @return string
      */
-    public static function get()
+    public static function get(): string
     {
         $application = 'Backend';
 
@@ -40,14 +40,14 @@ final class Language extends IdentityTranslator
     }
 
     /**
-     * @param $function
-     * @param $parameters
+     * @param string $function
+     * @param array $parameters
      *
      * @throws InvalidArgumentException when the function can't be called
      *
      * @return mixed
      */
-    public static function callLanguageFunction($function, $parameters = [])
+    public static function callLanguageFunction(string $function, array $parameters = [])
     {
         $languageClass = self::get();
         $callback = [$languageClass, $function];
@@ -68,11 +68,11 @@ final class Language extends IdentityTranslator
      * Get a label.
      * This only implements the key because the other parameters differ between the front- and backend.
      *
-     * @param $key
+     * @param string $key
      *
      * @return string
      */
-    public static function lbl($key)
+    public static function lbl(string $key): string
     {
         return self::callLanguageFunction('lbl', [$key]);
     }
@@ -81,11 +81,11 @@ final class Language extends IdentityTranslator
      * Get an error.
      * This only implements the key because the other parameters differ between the front- and backend.
      *
-     * @param $key
+     * @param string $key
      *
      * @return string
      */
-    public static function err($key)
+    public static function err(string $key): string
     {
         return self::callLanguageFunction('err', [$key]);
     }
@@ -93,14 +93,13 @@ final class Language extends IdentityTranslator
     /**
      * Get an action.
      *
-     *
-     * @param $key
+     * @param string $key
      *
      * @throws InvalidArgumentException when used in the backend.
      *
      * @return string
      */
-    public static function act($key)
+    public static function act(string $key): string
     {
         return self::callLanguageFunction('act', [$key]);
     }
@@ -109,11 +108,11 @@ final class Language extends IdentityTranslator
      * Get a message.
      * This only implements the key because the other parameters differ between the front- and backend.
      *
-     * @param $key
+     * @param string $key
      *
      * @return string
      */
-    public static function msg($key)
+    public static function msg(string $key): string
     {
         return self::callLanguageFunction('msg', [$key]);
     }

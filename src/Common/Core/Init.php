@@ -34,18 +34,18 @@ abstract class Init extends KernelLoader
     /**
      * @param string $type The type of init to load, possible values are: frontend, frontend_ajax, frontend_js.
      */
-    public function initialize($type)
+    public function initialize(string $type)
     {
         $type = (string) $type;
 
         // check if this is a valid type
-        if (!in_array($type, $this->allowedTypes)) {
+        if (!in_array($type, $this->allowedTypes, true)) {
             throw new InvalidInitTypeException($type, $this->allowedTypes);
         }
         $this->type = $type;
 
         // set a default timezone if no one was set by PHP.ini
-        if (ini_get('date.timezone') == '') {
+        if (ini_get('date.timezone') === '') {
             date_default_timezone_set('Europe/Brussels');
         }
 

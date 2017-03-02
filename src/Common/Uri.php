@@ -23,7 +23,7 @@ class Uri
      *
      * @return string        The urlised string.
      */
-    public static function getUrl($value)
+    public static function getUrl(string $value): string
     {
         // convert cyrlic, greek or other caracters to ASCII characters
         $value = Transliterator::transliterate($value);

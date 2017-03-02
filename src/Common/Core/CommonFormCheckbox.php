@@ -13,7 +13,7 @@ class CommonFormCheckbox extends \SpoonFormCheckbox
      * @param mixed $checked the return value when checked
      * @param mixed $notChecked the return value when not checked
      *
-     * @return string
+     * @return mixed
      */
     public function getActualValue($checked = 'Y', $notChecked = 'N')
     {

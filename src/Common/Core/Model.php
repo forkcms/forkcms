@@ -32,7 +32,7 @@ class Model extends BaseModel
      *
      * @return string
      */
-    public static function addNumber($string)
+    public static function addNumber(string $string): string
     {
         // split
         $chunks = explode('-', $string);
@@ -44,32 +44,32 @@ class Model extends BaseModel
         $last = $chunks[$count - 1];
 
         // is numeric
-        if (\SpoonFilter::isNumeric($last)) {
-            // remove last chunk
-            array_pop($chunks);
-
-            // join together, and increment the last one
-            $string = implode('-', $chunks) . '-' . ((int) $last + 1);
-        } else {
+        if (!\SpoonFilter::isNumeric($last)) {
             // not numeric, so add -2
-            $string .= '-2';
+            return $string . '-2';
         }
 
-        // return
-        return $string;
+        // remove last chunk
+        array_pop($chunks);
+
+        // join together, and increment the last one
+        return implode('-', $chunks) . '-' . ((int) $last + 1);
     }
 
     /**
      * Generate a totally random but readable/speakable password
      *
-     * @param int  $length           The maximum length for the password to generate.
+     * @param int $length The maximum length for the password to generate.
      * @param bool $uppercaseAllowed Are uppercase letters allowed?
      * @param bool $lowercaseAllowed Are lowercase letters allowed?
      *
      * @return string
      */
-    public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
-    {
+    public static function generatePassword(
+        int $length = 6,
+        bool $uppercaseAllowed = true,
+        bool $lowercaseAllowed = true
+    ): string {
         // list of allowed vowels and vowel sounds
         $vowels = array('a', 'e', 'i', 'u', 'ae', 'ea');
 
@@ -111,17 +111,19 @@ class Model extends BaseModel
 
         // create temporary pass
         for ($i = 0; $i < $length; ++$i) {
-            $tmp .= ($consonants[mt_rand(0, $consonantsCount - 1)] .
-                $vowels[mt_rand(0, $vowelsCount - 1)]);
+            $tmp .= ($consonants[random_int(0, $consonantsCount - 1)] .
+                     $vowels[random_int(0, $vowelsCount - 1)]);
         }
 
         // reformat the pass
         for ($i = 0; $i < $length; ++$i) {
-            if (mt_rand(0, 1) == 1) {
-                $pass .= mb_strtoupper(mb_substr($tmp, $i, 1));
-            } else {
-                $pass .= mb_substr($tmp, $i, 1);
+            if (random_int(0, 1) === 1) {
+                $pass .= mb_strtoupper($tmp[$i]);
+
+                continue;
             }
+
+            $pass .= $tmp[$i];
         }
 
         // reformat it again, if uppercase isn't allowed
@@ -148,10 +150,10 @@ class Model extends BaseModel
      *  - x128 as foldername to generate an image where the height will be
      *      128px, the width will be calculated based on the aspect ratio.
      *
-     * @param string $path       The path wherein the thumbnail-folders will be stored.
+     * @param string $path The path wherein the thumbnail-folders will be stored.
      * @param string $sourceFile The location of the source file.
      */
-    public static function generateThumbnails($path, $sourceFile)
+    public static function generateThumbnails(string $path, string $sourceFile)
     {
         // get folder listing
         $folders = self::getThumbnailFolders($path);
@@ -174,12 +176,12 @@ class Model extends BaseModel
     /**
      * Get the thumbnail folders
      *
-     * @param string $path          The path
-     * @param bool   $includeSource Should the source-folder be included in the return-array.
+     * @param string $path The path
+     * @param bool $includeSource Should the source-folder be included in the return-array.
      *
      * @return array
      */
-    public static function getThumbnailFolders($path, $includeSource = false)
+    public static function getThumbnailFolders(string $path, bool $includeSource = false): array
     {
         $return = array();
         $filesystem = new Filesystem();
@@ -194,23 +196,23 @@ class Model extends BaseModel
 
         foreach ($finder->directories()->in($path)->depth('== 0') as $directory) {
             $chunks = explode('x', $directory->getBasename(), 2);
-            if (count($chunks) != 2 && !$includeSource) {
+            if (!$includeSource && count($chunks) !== 2) {
                 continue;
             }
 
             $item = array();
             $item['dirname'] = $directory->getBasename();
             $item['path'] = $directory->getRealPath();
-            if (mb_substr($path, 0, mb_strlen(PATH_WWW)) == PATH_WWW) {
+            if (mb_substr($path, 0, mb_strlen(PATH_WWW)) === PATH_WWW) {
                 $item['url'] = mb_substr($path, mb_strlen(PATH_WWW));
             }
 
-            if ($item['dirname'] == 'source') {
+            if ($item['dirname'] === 'source') {
                 $item['width'] = null;
                 $item['height'] = null;
             } else {
-                $item['width'] = ($chunks[0] != '') ? (int) $chunks[0] : null;
-                $item['height'] = ($chunks[1] != '') ? (int) $chunks[1] : null;
+                $item['width'] = ($chunks[0] !== '') ? (int) $chunks[0] : null;
+                $item['height'] = ($chunks[1] !== '') ? (int) $chunks[1] : null;
             }
 
             $return[] = $item;
@@ -222,19 +224,19 @@ class Model extends BaseModel
     /**
      * Get the UTC date in a specific format. Use this method when inserting dates in the database!
      *
-     * @param string $format    The format to return the timestamp in. Default is MySQL datetime format.
-     * @param int    $timestamp The timestamp to use, if not provided the current time will be used.
+     * @param string $format The format to return the timestamp in. Default is MySQL datetime format.
+     * @param int $timestamp The timestamp to use, if not provided the current time will be used.
      *
      * @return string
      */
-    public static function getUTCDate($format = null, $timestamp = null)
+    public static function getUTCDate(string $format = null, int $timestamp = null): string
     {
         $format = ($format !== null) ? (string) $format : 'Y-m-d H:i:s';
         if ($timestamp === null) {
             return gmdate($format);
         }
 
-        return gmdate($format, (int) $timestamp);
+        return gmdate($format, $timestamp);
     }
 
     /**
@@ -247,7 +249,7 @@ class Model extends BaseModel
      *
      * @return int
      */
-    public static function getUTCTimestamp(\SpoonFormDate $date, \SpoonFormTime $time = null)
+    public static function getUTCTimestamp(\SpoonFormDate $date, \SpoonFormTime $time = null): int
     {
         // validate date/time object
         if (!$date->isValid() || ($time !== null && !$time->isValid())
@@ -259,14 +261,12 @@ class Model extends BaseModel
         $year = gmdate('Y', $date->getTimestamp());
         $month = gmdate('m', $date->getTimestamp());
         $day = gmdate('j', $date->getTimestamp());
+        $hour = 0;
+        $minute = 0;
 
         if ($time !== null) {
             // define hour & minute
             list($hour, $minute) = explode(':', $time->getValue());
-        } else {
-            // user default time
-            $hour = 0;
-            $minute = 0;
         }
 
         // make and return timestamp
@@ -278,19 +278,19 @@ class Model extends BaseModel
      *
      * @return array
      */
-    public static function getModules()
+    public static function getModules(): array
     {
         // validate cache
-        if (empty(self::$modules)) {
-            // get all modules
-            $modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
-
-            // add modules to the cache
-            foreach ($modules as $module) {
-                self::$modules[] = $module;
-            }
+        if (!empty(self::$modules)) {
+            return self::$modules;
         }
 
-        return self::$modules;
+        // get all modules
+        $modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
+
+        // add modules to the cache
+        foreach ($modules as $module) {
+            self::$modules[] = $module;
+        }
     }
 }
