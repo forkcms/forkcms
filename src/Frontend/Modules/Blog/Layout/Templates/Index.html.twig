@@ -26,50 +26,54 @@
               </h2>
 
               <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-12 col-md-8">
                   {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname')) }}
                   {{ 'lbl.On'|trans }}
                   <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">
                     {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
                   </time>
                 </div>
+                <div class="col-xs-12 col-md-4">
+                  {% if item.allow_comments %}
+                    <div class="pull-right">
+                      {% if not item.comments %}
+                        <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
+                          {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+                        </a>
+                      {% else %}
+                        <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
+                          {% if item.comments_multiple %}
+                            {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+                          {% else %}
+                            {{ 'msg.BlogOneComment'|trans }}
+                          {% endif %}
+                        </a>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
               </div>
 
               <div class="row">
                 <div class="col-xs-12 col-md-6">
                   {{ 'lbl.Category'|trans|ucfirst }}
-                  <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if item.tags %},{% endif %}
-
-                  {% if item.tags %}
-                    {{ 'lbl.Tags'|trans }}:
-                    <span itemprop="keywords">
-                      {% for tag in item.tags %}
-                      <a class="label label-default" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
-                        {{ tag.name }}
-                        </a>{% if not loop.last %},{% endif %}
-                      {% endfor %}
-                    </span>
-                  {% endif %}
-                  .
+                  <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
                 </div>
 
-                {% if item.allow_comments %}
-                  <div class="col-xs-12 col-md-6">
-                    {% if not item.comments %}
-                      <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
-                        {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
-                      </a>
-                    {% else %}
-                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
-                        {% if item.comments_multiple %}
-                          {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
-                        {% else %}
-                          {{ 'msg.BlogOneComment'|trans }}
-                        {% endif %}
-                      </a>
+                <div class="col-xs-12 col-md-6">
+                  <div class="pull-right">
+                    {% if item.tags %}
+                      {{ 'lbl.Tags'|trans|ucfirst }}:
+                      <span itemprop="keywords">
+                        {% for tag in item.tags %}
+                        <a class="label label-default" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                          {{ tag.name }}
+                          </a>{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                      </span>
                     {% endif %}
                   </div>
-                {% endif %}
+                </div>
               </div>
             </header>
 
