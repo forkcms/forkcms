@@ -20,23 +20,43 @@ use Backend\Modules\Locale\Engine\CacheBuilder;
 class Language
 {
     /**
-     * Locale arrays
-     *
      * @var array
      */
     private static $act = array();
+
+    /**
+     * @var array
+     */
     private static $err = array();
+
+    /**
+     * @var array
+     */
     private static $lbl = array();
+
+    /**
+     * @var array
+     */
     private static $msg = array();
 
     /**
-     * Locale fallback arrays
-     *
      * @var array
      */
     private static $fallbackAct = array();
+
+    /**
+     * @var array
+     */
     private static $fallbackErr = array();
+
+    /**
+     * @var array
+     */
     private static $fallbackLbl = array();
+
+    /**
+     * @var array
+     */
     private static $fallbackMsg = array();
 
     /**
@@ -52,7 +72,7 @@ class Language
      * @param string $language The language to build the locale-file for.
      * @param string $application The application to build the locale-file for.
      */
-    public static function buildCache($language, $application)
+    public static function buildCache(string $language, string $application)
     {
         $cacheBuilder = new CacheBuilder(Model::get('database'));
         $cacheBuilder->buildCache($language, $application);
@@ -66,10 +86,10 @@ class Language
      *
      * @return string
      */
-    public static function getAction($key, $fallback = true)
+    public static function getAction(string $key, bool $fallback = true): string
     {
         // redefine
-        $key = \SpoonFilter::toCamelCase((string) $key);
+        $key = \SpoonFilter::toCamelCase($key);
 
         // if the action exists return it,
         if (isset(self::$act[$key])) {
@@ -93,9 +113,9 @@ class Language
      *
      * @return array
      */
-    public static function getActions()
+    public static function getActions(): array
     {
-        return (Model::getContainer()->getParameter('kernel.debug')) ? self::$act : array_merge(
+        return Model::getContainer()->getParameter('kernel.debug') ? self::$act : array_merge(
             self::$fallbackAct,
             self::$act
         );
@@ -106,7 +126,7 @@ class Language
      *
      * @return array
      */
-    public static function getActiveLanguages()
+    public static function getActiveLanguages(): array
     {
         // validate the cache
         if (empty(self::$languages['active'])) {
@@ -128,48 +148,44 @@ class Language
      *
      * @return string
      */
-    public static function getBrowserLanguage($forRedirect = true)
+    public static function getBrowserLanguage(bool $forRedirect = true): string
     {
         // browser language set
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && mb_strlen($_SERVER['HTTP_ACCEPT_LANGUAGE']) >= 2) {
-            // get languages
-            $redirectLanguages = self::getRedirectLanguages();
+        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) || mb_strlen($_SERVER['HTTP_ACCEPT_LANGUAGE']) < 2) {
+            return SITE_DEFAULT_LANGUAGE;
+        }
 
-            // preferred languages
-            $acceptedLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-            $browserLanguages = array();
+        // get languages
+        $redirectLanguages = self::getRedirectLanguages();
 
-            foreach ($acceptedLanguages as $language) {
-                $qPos = mb_strpos($language, 'q=');
-                $weight = 1;
+        // preferred languages
+        $acceptedLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        $browserLanguages = array();
 
-                if ($qPos !== false) {
-                    $endPos = mb_strpos($language, ';', $qPos);
-                    $weight = ($endPos === false) ? (float) mb_substr($language, $qPos + 2) : (float) mb_substr(
-                        $language,
-                        $qPos + 2,
-                        $endPos
-                    );
-                }
+        foreach ($acceptedLanguages as $language) {
+            $qPos = mb_strpos($language, 'q=');
+            $weight = 1;
 
-                $browserLanguages[$language] = $weight;
+            if ($qPos !== false) {
+                $endPos = mb_strpos($language, ';', $qPos);
+                $weight = $endPos === false
+                    ? (float) mb_substr($language, $qPos + 2) : (float) mb_substr($language, $qPos + 2, $endPos);
             }
 
-            // sort by weight
-            arsort($browserLanguages);
+            $browserLanguages[$language] = $weight;
+        }
 
-            // loop until result
-            foreach (array_keys($browserLanguages) as $language) {
-                // redefine language
-                $language = mb_substr($language, 0, 2); // first two characters
+        // sort by weight
+        arsort($browserLanguages);
 
-                // find possible language
-                if ($forRedirect) {
-                    // check in the redirect-languages
-                    if (in_array($language, $redirectLanguages)) {
-                        return $language;
-                    }
-                }
+        // loop until result
+        foreach (array_keys($browserLanguages) as $language) {
+            // redefine language
+            $language = mb_substr($language, 0, 2); // first two characters
+
+            // find possible language and check in the redirect-languages
+            if ($forRedirect && in_array($language, $redirectLanguages, true)) {
+                return $language;
             }
         }
 
@@ -185,10 +201,10 @@ class Language
      *
      * @return string
      */
-    public static function getError($key, $fallback = true)
+    public static function getError(string $key, bool $fallback = true): string
     {
         // redefine
-        $key = \SpoonFilter::toCamelCase((string) $key);
+        $key = \SpoonFilter::toCamelCase($key);
 
         // if the error exists return it,
         if (isset(self::$err[$key])) {
@@ -212,9 +228,9 @@ class Language
      *
      * @return array
      */
-    public static function getErrors()
+    public static function getErrors(): array
     {
-        return (Model::getContainer()->getParameter('kernel.debug')) ? self::$err : array_merge(
+        return Model::getContainer()->getParameter('kernel.debug') ? self::$err : array_merge(
             self::$fallbackErr,
             self::$err
         );
@@ -228,10 +244,10 @@ class Language
      *
      * @return string
      */
-    public static function getLabel($key, $fallback = true)
+    public static function getLabel(string $key, bool $fallback = true): string
     {
         // redefine
-        $key = \SpoonFilter::toCamelCase((string) $key);
+        $key = \SpoonFilter::toCamelCase($key);
 
         // if the error exists return it,
         if (isset(self::$lbl[$key])) {
@@ -255,7 +271,7 @@ class Language
      *
      * @return array
      */
-    public static function getLabels()
+    public static function getLabels(): array
     {
         return (Model::getContainer()->getParameter('kernel.debug')) ? self::$lbl : array_merge(
             self::$fallbackLbl,
@@ -271,10 +287,10 @@ class Language
      *
      * @return string
      */
-    public static function getMessage($key, $fallback = true)
+    public static function getMessage(string $key, bool $fallback = true): string
     {
         // redefine
-        $key = \SpoonFilter::toCamelCase((string) $key);
+        $key = \SpoonFilter::toCamelCase($key);
 
         // if the error exists return it,
         if (isset(self::$msg[$key])) {
@@ -298,7 +314,7 @@ class Language
      *
      * @return array
      */
-    public static function getMessages()
+    public static function getMessages(): array
     {
         return (Model::getContainer()->getParameter('kernel.debug') === true)
             ? self::$msg : array_merge(self::$fallbackMsg, self::$msg);
@@ -309,7 +325,7 @@ class Language
      *
      * @return array
      */
-    public static function getRedirectLanguages()
+    public static function getRedirectLanguages(): array
     {
         // validate the cache
         if (empty(self::$languages['possible_redirect'])) {
@@ -332,13 +348,14 @@ class Language
      *
      * @throws Exception
      */
-    public static function setLocale($language = null, $force = false)
+    public static function setLocale(string $language = null, bool $force = false)
     {
-        // redefine
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
+        if ($language === null) {
+            $language = LANGUAGE;
+        }
 
         // validate language
-        if (!$force && !in_array($language, self::getActiveLanguages())) {
+        if (!$force && !in_array($language, self::getActiveLanguages(), true)) {
             throw new Exception('Invalid language (' . $language . ').');
         }
 
@@ -380,7 +397,7 @@ class Language
      *
      * @return string
      */
-    public static function act($key, $fallback = true)
+    public static function act(string $key, bool $fallback = true): string
     {
         return self::getAction($key, $fallback);
     }
@@ -393,7 +410,7 @@ class Language
      *
      * @return string
      */
-    public static function err($key, $fallback = true)
+    public static function err(string $key, bool $fallback = true): string
     {
         return self::getError($key, $fallback);
     }
@@ -406,7 +423,7 @@ class Language
      *
      * @return string
      */
-    public static function lbl($key, $fallback = true)
+    public static function lbl(string $key, bool $fallback = true): string
     {
         return self::getLabel($key, $fallback);
     }
@@ -419,7 +436,7 @@ class Language
      *
      * @return string
      */
-    public static function msg($key, $fallback = true)
+    public static function msg(string $key, bool $fallback = true): string
     {
         return self::getMessage($key, $fallback);
     }
