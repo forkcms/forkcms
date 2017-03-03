@@ -31,11 +31,16 @@
   {% block block_body %}
     <div class="block-body">
       {% if not mailmotorSubscribeHideForm %}
-        {{ form_start(form) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.subscribe, { 'attr': {'class': 'btn btn-primary'} }) }}
-        {{ form_rest(form) }}
-        {{ form_end(form) }}
+        <div class="form-group">
+          <label for="{{ form.email.vars.id }}" class="control-label">{{ form.email.vars.label|trans|ucfirst }}</label>
+          <div class="input-group">
+            {{ form_widget(form.email) }}
+            <div class="input-group-btn">
+              <button type="submit" id="{{ form.subscribe.vars.id }}" class="btn btn-default">{{ form.subscribe.vars.label|trans }}</button>
+              {% do form.subscribe.setRendered %}
+            </div>
+          </div>
+        </div>
       {% endif %}
     </div>
   {% endblock %}

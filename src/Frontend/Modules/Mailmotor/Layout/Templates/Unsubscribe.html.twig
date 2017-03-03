@@ -28,8 +28,16 @@
     <div class="block-body">
       {% if not mailmotorUnsubscribeHideForm %}
         {{ form_start(form) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.unsubscribe, { 'attr': {'class': 'btn btn-primary'} }) }}
+        <div class="form-group">
+          <label for="{{ form.email.vars.id }}" class="control-label">{{ form.email.vars.label|trans|ucfirst }}</label>
+          <div class="input-group">
+            {{ form_widget(form.email) }}
+            <div class="input-group-btn">
+              <button type="submit" id="{{ form.unsubscribe.vars.id }}" class="btn btn-default">{{ form.unsubscribe.vars.label|trans }}</button>
+              {% do form.unsubscribe.setRendered %}
+            </div>
+          </div>
+        </div>
         {{ form_rest(form) }}
         {{ form_end(form) }}
       {% endif %}
