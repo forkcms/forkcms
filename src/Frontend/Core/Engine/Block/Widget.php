@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine\Block;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
@@ -68,16 +69,14 @@ class Widget extends FrontendBaseObject
      * @param string          $action The action to load.
      * @param mixed           $data   The data that was passed from the database.
      */
-    public function __construct(KernelInterface $kernel, $module, $action, $data = null)
+    public function __construct(KernelInterface $kernel, string $module, string $action, $data = null)
     {
         parent::__construct($kernel);
 
         // set properties
         $this->setModule($module);
         $this->setAction($action);
-        if ($data !== null) {
-            $this->setData($data);
-        }
+        $this->setData($data);
 
         // load the config file for the required module
         $this->loadConfig();
@@ -91,24 +90,20 @@ class Widget extends FrontendBaseObject
     {
         // build action-class-name
         $actionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Widgets\\' . $this->getAction();
-        if ($this->getModule() == 'Core') {
+        if ($this->getModule() === 'Core') {
             $actionClass = 'Frontend\\Core\\Widgets\\' . $this->getAction();
         }
 
         // validate if class exists (aka has correct name)
         if (!class_exists($actionClass)) {
-            throw new FrontendException(
-                'The action file ' . $actionClass . ' could not be found.'
-            );
+            throw new FrontendException('The action file ' . $actionClass . ' could not be found.');
         }
         // create action-object
         $this->object = new $actionClass($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData());
 
         // validate if the execute-method is callable
         if (!is_callable(array($this->object, 'execute'))) {
-            throw new FrontendException(
-                'The action file should contain a callable method "execute".'
-            );
+            throw new FrontendException('The action file should contain a callable method "execute".');
         }
 
         // call the execute method of the real action (defined in the module)
@@ -123,7 +118,7 @@ class Widget extends FrontendBaseObject
      *
      * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
         // no action specified?
         if ($this->action === null) {
@@ -137,7 +132,7 @@ class Widget extends FrontendBaseObject
     /**
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->output;
     }
@@ -149,7 +144,7 @@ class Widget extends FrontendBaseObject
      *
      * @return string
      */
-    public function render($template = null)
+    public function render(string $template = null): string
     {
         // set path to template if the widget didn't return any data
         if ($this->output === null) {
@@ -188,7 +183,7 @@ class Widget extends FrontendBaseObject
      *
      * @return string
      */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
@@ -196,9 +191,9 @@ class Widget extends FrontendBaseObject
     /**
      * Get the assigned template.
      *
-     * @return array
+     * @return TwigTemplate
      */
-    public function getTemplate()
+    public function getTemplate(): TwigTemplate
     {
         return $this->object->getTemplate();
     }
@@ -212,15 +207,13 @@ class Widget extends FrontendBaseObject
     public function loadConfig()
     {
         $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
-        if ($this->getModule() == 'Core') {
+        if ($this->getModule() === 'Core') {
             $configClass = 'Frontend\\Core\\Config';
         }
 
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
-            throw new FrontendException(
-                'The config file ' . $configClass . ' could not be found.'
-            );
+            throw new FrontendException('The config file ' . $configClass . ' could not be found.');
         }
 
         // create config-object, the constructor will do some magic
@@ -232,11 +225,9 @@ class Widget extends FrontendBaseObject
      *
      * @param string $action The action to load.
      */
-    private function setAction($action = null)
+    private function setAction(string $action = null)
     {
-        if ($action !== null) {
-            $this->action = (string) $action;
-        }
+        $this->action = $action;
     }
 
     /**
@@ -254,9 +245,9 @@ class Widget extends FrontendBaseObject
      *
      * @param string $module The module to load.
      */
-    private function setModule($module)
+    private function setModule(string $module)
     {
-        $this->module = (string) $module;
+        $this->module = $module;
     }
 
     /**
@@ -267,7 +258,7 @@ class Widget extends FrontendBaseObject
      *
      * @return string|null if we have data it is still serialised since it will be unserialized in the constructor
      */
-    public static function getForId(KernelInterface $kernel, $module, $action, $id = null)
+    public static function getForId(KernelInterface $kernel, string $module, string $action, int $id = null)
     {
         $query = 'SELECT data FROM modules_extras WHERE type = :widget AND module = :module AND action = :action';
         $parameters = [
@@ -277,7 +268,7 @@ class Widget extends FrontendBaseObject
         ];
         if (is_numeric($id)) {
             $query .= ' AND data LIKE :data';
-            $parameters['data'] = '%s:2:"id";i:' . (int) $id . ';%';
+            $parameters['data'] = '%s:2:"id";i:' . $id . ';%';
         }
 
         return new self(
