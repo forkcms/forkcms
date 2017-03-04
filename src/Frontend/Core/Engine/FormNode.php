@@ -14,12 +14,12 @@ class FormNode extends \Twig_Node
 
     /**
      * @param string $form The name of the template variable to which the form is assigned
-     * @param int $lineno
+     * @param int $lineNumber
      * @param string $tag
      */
-    public function __construct($form, $lineno, $tag)
+    public function __construct(string $form, int $lineNumber, string $tag)
     {
-        parent::__construct(array(), array(), $lineno, $tag);
+        parent::__construct([], [], $lineNumber, $tag);
         $this->form = $form;
     }
 

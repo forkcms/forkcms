@@ -20,14 +20,17 @@ class FormImage extends \SpoonFormImage
     /**
      * Constructor.
      *
-     * @param    string $name The name.
-     * @param    string [optional] $class         The CSS-class to be used.
-     * @param    string [optional] $classError    The CSS-class to be used when there is an error.
+     * @param string $name The name.
+     * @param string $class The CSS-class to be used.
+     * @param string $classError The CSS-class to be used when there is an error.
      *
      * @see      SpoonFormFile::__construct()
      */
-    public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
-    {
+    public function __construct(
+        string $name,
+        string $class = 'inputFilefield',
+        string $classError = 'inputFilefieldError'
+    ) {
         // call the parent
         parent::__construct($name, $class, $classError);
 
@@ -47,7 +50,7 @@ class FormImage extends \SpoonFormImage
      * @param string $path
      * @param string $filename
      */
-    public function generateThumbnails($path, $filename)
+    public function generateThumbnails(string $path, string $filename)
     {
         // create folder if needed
         $filesystem = new Filesystem();
@@ -67,7 +70,7 @@ class FormImage extends \SpoonFormImage
      *
      * @return string
      */
-    public function getErrors()
+    public function getErrors(): string
     {
         // do an image validation
         if ($this->isFilled()) {

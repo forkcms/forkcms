@@ -13,7 +13,7 @@ class FormFieldErrorTokenParser extends \Twig_TokenParser
      * @return \Twig_Node
      * @throws \Twig_Error_Syntax
      */
-    public function parse(\Twig_Token $token)
+    public function parse(\Twig_Token $token): \Twig_Node
     {
         $stream = $this->parser->getStream();
         $field = $stream->expect(\Twig_Token::NAME_TYPE)->getValue();
@@ -37,7 +37,7 @@ class FormFieldErrorTokenParser extends \Twig_TokenParser
     /**
      * @return string
      */
-    public function getTag()
+    public function getTag(): string
     {
         return 'form_field_error';
     }

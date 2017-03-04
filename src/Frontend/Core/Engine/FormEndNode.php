@@ -11,7 +11,7 @@ class FormEndNode extends \Twig_Node
      * @param int $lineno Line number in the template source file.
      * @param string $tag
      */
-    public function __construct($lineno, $tag)
+    public function __construct(int $lineno, string $tag)
     {
         parent::__construct(array(), array(), $lineno, $tag);
     }

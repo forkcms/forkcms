@@ -25,7 +25,7 @@ class Form extends \Common\Core\Form
      * @param string $hash     The id of the anchor to append to the action-URL.
      * @param bool   $useToken Should we automagically add a form token?
      */
-    public function __construct($name, $action = null, $method = 'post', $hash = null, $useToken = true)
+    public function __construct(string $name, string $action = null, $method = 'post', string $hash = null, $useToken = true)
     {
         $this->URL = Model::getContainer()->get('url');
         $this->header = Model::getContainer()->get('header');
@@ -65,7 +65,7 @@ class Form extends \Common\Core\Form
      *
      * @throws Exception
      */
-    public function addButton($name, $value, $type = 'submit', $class = null)
+    public function addButton($name, string $value, string $type = 'submit', string $class = null): \SpoonFormButton
     {
         $name = (string) $name;
         $value = (string) $value;
@@ -108,7 +108,7 @@ class Form extends \Common\Core\Form
         $date2 = null,
         $class = null,
         $classError = null
-    ) {
+    ) : \Frontend\Core\Engine\FormDate{
         $name = (string) $name;
         $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
         $type = \SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
@@ -232,7 +232,7 @@ class Form extends \Common\Core\Form
      *
      * @return \SpoonFormFile
      */
-    public function addFile($name, $class = null, $classError = null)
+    public function addFile($name, string $class = null, $classError = null): \SpoonFormFile
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'inputFile';
@@ -251,7 +251,7 @@ class Form extends \Common\Core\Form
      *
      * @return FormImage
      */
-    public function addImage($name, $class = null, $classError = null)
+    public function addImage($name, string $class = null, $classError = null): \Frontend\Core\Engine\FormImage
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'inputFile inputImage';
@@ -386,7 +386,7 @@ class Form extends \Common\Core\Form
      *
      * @return string
      */
-    public function getTemplateExample()
+    public function getTemplateExample(): string
     {
         // start form
         $value = "\n";
@@ -544,7 +544,7 @@ class Form extends \Common\Core\Form
      *
      * @return array
      */
-    public function getValues($excluded = array('form', 'save', '_utf8'))
+    public function getValues($excluded = array('form', 'save', '_utf8')): array
     {
         return parent::getValues($excluded);
     }
