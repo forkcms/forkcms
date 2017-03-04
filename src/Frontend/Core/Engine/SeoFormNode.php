@@ -14,12 +14,12 @@ class SeoFormNode extends \Twig_Node
     /**
      * @param string $form Name of the template var holding the form this field
      *                     belongs to.
-     * @param int $lineno Line number in the template source file.
+     * @param int $lineNumber Line number in the template source file.
      * @param string $tag
      */
-    public function __construct($form, $lineno, $tag)
+    public function __construct(string $form, int $lineNumber, string $tag)
     {
-        parent::__construct(array(), array(), $lineno, $tag);
+        parent::__construct(array(), array(), $lineNumber, $tag);
         $this->form = $form;
     }
 
@@ -218,62 +218,62 @@ class SeoFormNode extends \Twig_Node
     }
 
     /**
-     * @param $label string
+     * @param string $label
      *
      * @return string
      */
-    private function lbl($label)
+    private function lbl(string $label): string
     {
         return ucfirst(BackendLanguage::getLabel($label));
     }
 
     /**
-     * @param $message string
+     * @param string $message string
      *
      * @return string
      */
-    private function msg($message)
+    private function msg(string $message): string
     {
         return BackendLanguage::getMessage($message);
     }
 
     /**
-     * @param $variable
+     * @param string $variable
      *
      * @return string
      */
-    private function hasVariable($variable)
+    private function hasVariable(string $variable): string
     {
         return "isset(\$context['{$variable}']) && !empty(\$context['{$variable}'])";
     }
 
     /**
-     * @param $variable
-     * @param $as
+     * @param string $variable
+     * @param string $as
      *
      * @return string
      */
-    private function loopTroughField($variable, $as)
+    private function loopTroughField(string $variable, string $as): string
     {
         return "foreach (\$context['{$variable}'] as {$as}) {";
     }
 
     /**
-     * @param $variable
+     * @param string $variable
      *
      * @return string
      */
-    private function getVariable($variable)
+    private function getVariable(string $variable): string
     {
         return "echo \$context['{$variable}'];";
     }
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
      *
      * @return string
      */
-    private function getField($fieldName)
+    private function getField(string $fieldName): string
     {
         $frm = "\$context['form_{$this->form}']";
 
@@ -281,11 +281,11 @@ class SeoFormNode extends \Twig_Node
     }
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
      *
      * @return string
      */
-    private function hasField($fieldName)
+    private function hasField(string $fieldName): string
     {
         $frm = "\$context['form_{$this->form}']";
 
@@ -293,21 +293,21 @@ class SeoFormNode extends \Twig_Node
     }
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
      *
      * @return string
      */
-    private function hasError($fieldName)
+    private function hasError(string $fieldName): string
     {
         return "\$context['form_{$this->form}']->getField('" . $fieldName . "')->getErrors() ";
     }
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
      *
      * @return string
      */
-    private function getError($fieldName)
+    private function getError(string $fieldName): string
     {
         return "echo \$context['form_{$this->form}']->getField('" . $fieldName . "')->getErrors() "
             . "? '<span class=\"formError\">' "
