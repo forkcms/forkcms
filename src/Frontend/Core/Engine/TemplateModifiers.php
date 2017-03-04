@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Frontend\Core\Language\Locale;
@@ -406,6 +407,8 @@ class TemplateModifiers extends BaseTwigModifiers
             FrontendModel::getContainer()->set('parseWidget', null);
 
             return $content;
+        } catch (RedirectException $redirectException) {
+            throw new \Twig_Error('redirect fix from template modifier', null, null, $redirectException);
         } catch (Exception $e) {
             // if we are debugging, we want to see the exception
             if (FrontendModel::getContainer()->getParameter('kernel.debug')) {
