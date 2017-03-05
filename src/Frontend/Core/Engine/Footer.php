@@ -146,7 +146,6 @@ class Footer extends FrontendBaseObject
     {
         $siteLinksCode = '<script type="application/ld+json">' . "\n";
         $siteLinksCode .= '{' . "\n";
--        $siteLinksCode .= '    "@context": "http://schema.org",' . "\n";
         $siteLinksCode .= '    "@context": "https://schema.org",' . "\n";
         $siteLinksCode .= '    "@type": "WebSite",' . "\n";
         $siteLinksCode .= '    "url": "' . SITE_URL . '",' . "\n";
