@@ -45,7 +45,7 @@ class User
     /**
      * @param int $userId If you provide a userId, the object will be loaded with the data for this user.
      */
-    public function __construct($userId = null)
+    public function __construct(int $userId = null)
     {
         // if a user id is given we will load the user in this object
         if ($userId !== null) {
@@ -58,9 +58,9 @@ class User
      *
      * @param int $userId The users id in the backend.
      *
-     * @return User
+     * @return self
      */
-    public static function getBackendUser($userId)
+    public static function getBackendUser(int $userId): self
     {
         // create new instance if necessary and cache it
         if (!isset(self::$cache[$userId])) {
@@ -75,7 +75,7 @@ class User
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -87,11 +87,8 @@ class User
      *
      * @return mixed The stored value, if the setting wasn't found null will be returned
      */
-    public function getSetting($key)
+    public function getSetting(string $key)
     {
-        // redefine
-        $key = (string) $key;
-
         // not set? return null
         if (!isset($this->settings[$key])) {
             return;
@@ -106,9 +103,9 @@ class User
      *
      * @return array An key-value-array with all settings for this user.
      */
-    public function getSettings()
+    public function getSettings(): array
     {
-        return (array) $this->settings;
+        return $this->settings;
     }
 
     /**
@@ -116,7 +113,7 @@ class User
      *
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -128,10 +125,8 @@ class User
      *
      * @throws Exception
      */
-    public function loadUser($userId)
+    public function loadUser(int $userId)
     {
-        $userId = (int) $userId;
-
         // get database instance
         $db = Model::getContainer()->get('database');
 
@@ -150,8 +145,8 @@ class User
         }
 
         // set properties
-        $this->setUserId($userData['id']);
-        $this->setEmail($userData['email']);
+        $this->userId = (int) $userData['id'];
+        $this->email = (string) $userData['email'];
 
         // get settings
         $settings = (array) $db->getPairs(
@@ -165,25 +160,5 @@ class User
         foreach ($settings as $key => $value) {
             $this->settings[$key] = unserialize($value);
         }
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $value The email-address.
-     */
-    private function setEmail($value)
-    {
-        $this->email = (string) $value;
-    }
-
-    /**
-     * Set user id
-     *
-     * @param int $value The user's id.
-     */
-    private function setUserId($value)
-    {
-        $this->userId = (int) $value;
     }
 }

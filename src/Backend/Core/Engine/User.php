@@ -80,13 +80,13 @@ class User
     private $email;
 
     /**
-     * @param int    $userId The id of the user.
-     * @param string $email  The e-mail address of the user.
+     * @param int $userId The id of the user.
+     * @param string $email The e-mail address of the user.
      */
-    public function __construct($userId = null, $email = null)
+    public function __construct(int $userId = null, string $email = null)
     {
         if ($userId !== null) {
-            $this->loadUser((int) $userId);
+            $this->loadUser($userId);
         }
         if ($email !== null) {
             $this->loadUserByEmail($email);
@@ -98,7 +98,7 @@ class User
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -108,7 +108,7 @@ class User
      *
      * @return int
      */
-    public function getLastloggedInDate()
+    public function getLastLoggedInDate(): int
     {
         return $this->lastLoggedInDate;
     }
@@ -118,7 +118,7 @@ class User
      *
      * @return string
      */
-    public function getSecretKey()
+    public function getSecretKey(): string
     {
         return $this->secretKey;
     }
@@ -128,7 +128,7 @@ class User
      *
      * @return string
      */
-    public function getSessionId()
+    public function getSessionId(): string
     {
         return $this->sessionId;
     }
@@ -136,16 +136,14 @@ class User
     /**
      * Get a setting
      *
-     * @param string $key          The key for the setting to get.
-     * @param mixed  $defaultValue Default value, will be stored if the setting isn't set.
+     * @param string $key The key for the setting to get.
+     * @param mixed $defaultValue Default value, will be stored if the setting isn't set.
      *
      * @return mixed
      */
-    public function getSetting($key, $defaultValue = null)
+    public function getSetting(string $key, $defaultValue = null)
     {
-        $key = (string) $key;
-
-        // if the value isn't present we should set a defaultvalue
+        // if the value isn't present we should set a default value
         if (!isset($this->settings[$key])) {
             $this->setSetting($key, $defaultValue);
         }
@@ -159,9 +157,9 @@ class User
      *
      * @return array
      */
-    public function getSettings()
+    public function getSettings(): array
     {
-        return (array) $this->settings;
+        return $this->settings;
     }
 
     /**
@@ -169,17 +167,17 @@ class User
      *
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
     /**
-     * Is the current userobject a authenticated user?
+     * Is the current user object a authenticated user?
      *
      * @return bool
      */
-    public function isAuthenticated()
+    public function isAuthenticated(): bool
     {
         return $this->isAuthenticated;
     }
@@ -189,7 +187,7 @@ class User
      *
      * @return bool
      */
-    public function isGod()
+    public function isGod(): bool
     {
         return $this->isGod;
     }
@@ -201,10 +199,8 @@ class User
      *
      * @throws Exception If user cannot be loaded
      */
-    public function loadUser($userId)
+    public function loadUser(int $userId)
     {
-        $userId = (int) $userId;
-
         // get database instance
         $db = BackendModel::getContainer()->get('database');
 
@@ -224,15 +220,15 @@ class User
         }
 
         // set properties
-        $this->setUserId($userData['id']);
-        $this->setEmail($userData['email']);
-        $this->setSessionId($userData['session_id']);
-        $this->setSecretKey($userData['secret_key']);
-        $this->setLastloggedInDate($userData['date']);
+        $this->userId = (int) $userData['id'];
+        $this->email = $userData['email'];
+        $this->sessionId = $userData['session_id'];
+        $this->secretKey = $userData['secret_key'];
+        $this->lastLoggedInDate = (int) $userData['date'];
         $this->isAuthenticated = true;
-        $this->isGod = ($userData['is_god'] == 'Y');
+        $this->isGod = $userData['is_god'] === 'Y';
 
-        $this->loadGroups($userData['id']);
+        $this->loadGroups();
 
         // get settings
         $settings = (array) $db->getPairs(
@@ -248,28 +244,25 @@ class User
         }
 
         // nickname available?
-        if (!isset($this->settings['nickname']) || $this->settings['nickname'] == '') {
+        if (!isset($this->settings['nickname']) || $this->settings['nickname'] === '') {
             $this->setSetting('nickname', $this->settings['name'] . ' ' . $this->settings['surname']);
         }
     }
 
-    /**
-     * @param int $userId
-     */
-    private function loadGroups($userId)
+    private function loadGroups()
     {
         $this->groups = (array) BackendModel::get('database')->getColumn(
             'SELECT group_id
              FROM users_groups
              WHERE user_id = ?',
-            array((int) $userId)
+            array($this->userId)
         );
     }
 
     /**
      * @return array
      */
-    public function getGroups()
+    public function getGroups(): array
     {
         return $this->groups;
     }
@@ -281,14 +274,12 @@ class User
      *
      * @throws Exception If user cannot be loaded
      */
-    public function loadUserByEmail($email)
+    public function loadUserByEmail(string $email)
     {
-        $email = (string) $email;
         $db = BackendModel::getContainer()->get('database');
 
-        // get user-data
-        $userData = (array) $db->getRecord(
-            'SELECT u.id, u.email, u.is_god, us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
+        $userId = (int) $db->getVar(
+            'SELECT u.id
              FROM users AS u
              LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
              WHERE u.email = ?
@@ -297,89 +288,21 @@ class User
         );
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation
-        if (empty($userData)) {
+        if ($userId === 0) {
             throw new Exception('user (' . $email . ') can\'t be loaded.');
         }
 
-        // set properties
-        $this->setUserId($userData['id']);
-        $this->setEmail($userData['email']);
-        $this->setSessionId($userData['session_id']);
-        $this->setSecretKey($userData['secret_key']);
-        $this->setLastloggedInDate($userData['date']);
-        $this->isAuthenticated = true;
-        $this->isGod = ($userData['is_god'] == 'Y');
-        $this->loadGroups($userData['id']);
-
-        // get settings
-        $settings = (array) $db->getPairs(
-            'SELECT us.name, us.value
-             FROM users_settings AS us
-             INNER JOIN users AS u ON us.user_id = u.id
-             WHERE u.email = ?',
-            array($email)
-        );
-
-        // loop settings and store them in the object
-        foreach ($settings as $key => $value) {
-            $this->settings[$key] = unserialize($value);
-        }
-
-        // nickname available?
-        if (!isset($this->settings['nickname']) || $this->settings['nickname'] == '') {
-            $this->setSetting('nickname', $this->settings['name'] . ' ' . $this->settings['surname']);
-        }
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $value The email to set.
-     */
-    private function setEmail($value)
-    {
-        $this->email = (string) $value;
-    }
-
-    /**
-     * Set last logged in date
-     *
-     * @param int $value The date (UNIX-timestamp) to set.
-     */
-    private function setLastloggedInDate($value)
-    {
-        $this->lastLoggedInDate = (int) $value;
-    }
-
-    /**
-     * Set secretkey
-     *
-     * @param string $value The secret key.
-     */
-    private function setSecretKey($value)
-    {
-        $this->secretKey = (string) $value;
-    }
-
-    /**
-     * Set sessionid
-     *
-     * @param string $value The sessionID.
-     */
-    private function setSessionId($value)
-    {
-        $this->sessionId = (string) $value;
+        $this->loadUser($userId);
     }
 
     /**
      * Set a setting
      *
-     * @param string $key   The key of the setting.
-     * @param mixed  $value The value to store.
+     * @param string $key The key of the setting.
+     * @param mixed $value The value to store.
      */
-    public function setSetting($key, $value)
+    public function setSetting(string $key, $value)
     {
-        $key = (string) $key;
         $valueToStore = serialize($value);
 
         // get db
@@ -394,16 +317,6 @@ class User
         );
 
         // cache setting
-        $this->settings[(string) $key] = $value;
-    }
-
-    /**
-     * Set userid
-     *
-     * @param int $value The Id of the user.
-     */
-    private function setUserId($value)
-    {
-        $this->userId = (int) $value;
+        $this->settings[$key] = $value;
     }
 }
