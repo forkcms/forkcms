@@ -17,22 +17,23 @@ use Backend\Core\Engine\Model as BackendModel;
 class DataGridDB extends DataGrid
 {
     /**
-     * @param string $query             The query to retrieve the data.
-     * @param array  $parameters        The parameters to be used inside the query.
-     * @param string $resultsQuery      The optional count query, used to calculate the number of results.
-     * @param array  $resultsParameters The parameters to be used inside the results query.
+     * @param string $query The query to retrieve the data.
+     * @param array $parameters The parameters to be used inside the query.
+     * @param string $resultsQuery The optional count query, used to calculate the number of results.
+     * @param array $resultsParameters The parameters to be used inside the results query.
      */
-    public function __construct($query, $parameters = array(), $resultsQuery = null, $resultsParameters = array())
-    {
-        // results query?
-        $results = ($resultsQuery !== null) ? array($resultsQuery, $resultsParameters) : null;
-
-        // create a new source-object
-        $source = new \SpoonDatagridSourceDB(BackendModel::get('database'), array(
-            $query,
-            (array) $parameters,
-        ), $results);
-
-        parent::__construct($source);
+    public function __construct(
+        string $query,
+        array $parameters = array(),
+        string $resultsQuery = null,
+        array $resultsParameters = array()
+    ) {
+        parent::__construct(
+            new \SpoonDatagridSourceDB(
+                BackendModel::get('database'),
+                array($query, $parameters),
+                $resultsQuery === null ? null : array($resultsQuery, $resultsParameters)
+            )
+        );
     }
 }
