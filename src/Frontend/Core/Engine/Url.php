@@ -12,6 +12,7 @@ namespace Frontend\Core\Engine;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
+use SpoonSession;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -59,8 +60,8 @@ class Url extends KernelLoader
         $this->request = $this->get('request');
 
         // if there is a trailing slash we permanent redirect to the page without slash
-        if (mb_strlen($this->request->getRequestUri()) != 1 &&
-            mb_substr($this->request->getRequestUri(), -1) == '/'
+        if (mb_strlen($this->request->getRequestUri()) !== 1 &&
+            mb_substr($this->request->getRequestUri(), -1) === '/'
         ) {
             throw new RedirectException(
                 'Redirect',
@@ -83,7 +84,7 @@ class Url extends KernelLoader
      *
      * @return string The current domain (without www.)
      */
-    public function getDomain()
+    public function getDomain(): string
     {
         // replace
         return str_replace('www.', '', $this->request->getHttpHost());
@@ -96,18 +97,11 @@ class Url extends KernelLoader
      *
      * @return mixed
      */
-    public function getPage($index)
+    public function getPage(int $index)
     {
-        // redefine
-        $index = (int) $index;
-
-        // does the index exists
         if (isset($this->pages[$index])) {
             return $this->pages[$index];
         }
-
-        // fallback
-        return;
     }
 
     /**
@@ -115,7 +109,7 @@ class Url extends KernelLoader
      *
      * @return array
      */
-    public function getPages()
+    public function getPages(): array
     {
         return $this->pages;
     }
@@ -126,14 +120,14 @@ class Url extends KernelLoader
      * By default we will cast the return value into a string, if you want
      * something else specify it by passing the wanted type.
      *
-     * @param mixed  $index        The index of the parameter.
-     * @param string $type         The return type, possible values are:
+     * @param mixed $index The index of the parameter.
+     * @param string $type The return type, possible values are:
      *                             bool, boolean, int, integer, float, double, string, array.
-     * @param mixed  $defaultValue The value that should be returned if the key is not available.
+     * @param mixed $defaultValue The value that should be returned if the key is not available.
      *
      * @return mixed
      */
-    public function getParameter($index, $type = 'string', $defaultValue = null)
+    public function getParameter($index, string $type = 'string', $defaultValue = null)
     {
         // does the index exists and isn't this parameter empty
         if ($this->hasParameter($index)) {
@@ -156,12 +150,9 @@ class Url extends KernelLoader
      *
      * @return array
      */
-    public function getParameters($includeGET = true)
+    public function getParameters($includeGET = true): array
     {
-        return ($includeGET) ?
-            $this->parameters :
-            array_diff_assoc($this->parameters, $this->request->query->all())
-        ;
+        return $includeGET ? $this->parameters : array_diff_assoc($this->parameters, $this->request->query->all());
     }
 
     /**
@@ -169,24 +160,21 @@ class Url extends KernelLoader
      *
      * @return string
      */
-    public function getQueryString()
+    public function getQueryString(): string
     {
-        return rtrim((string) $this->request->getRequestUri(), '/');
+        return rtrim($this->request->getRequestUri(), '/');
     }
 
     /**
      * Check if a certain ($_GET) parameter exists
      *
-     * @param  mixed   $index The index of the parameter.
+     * @param  mixed $index The index of the parameter.
      *
      * @return bool
      */
-    public function hasParameter($index)
+    public function hasParameter($index): bool
     {
-        return (
-            isset($this->parameters[$index])
-            && $this->parameters[$index] != ''
-        );
+        return isset($this->parameters[$index]) && $this->parameters[$index] !== '';
     }
 
     /**
@@ -197,83 +185,8 @@ class Url extends KernelLoader
         // store the query string local, so we don't alter it.
         $queryString = trim($this->request->getPathInfo(), '/');
 
-        // split into chunks
-        $chunks = (array) explode('/', $queryString);
-
         $hasMultiLanguages = $this->getContainer()->getParameter('site.multilanguage');
-
-        // single language
-        if (!$hasMultiLanguages) {
-            // set language id
-            $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
-        } else {
-            // multiple languages
-            // default value
-            $mustRedirect = false;
-
-            // get possible languages
-            $possibleLanguages = (array) Language::getActiveLanguages();
-            $redirectLanguages = (array) Language::getRedirectLanguages();
-
-            // the language is present in the URL
-            if (isset($chunks[0]) && in_array($chunks[0], $possibleLanguages)) {
-                // define language
-                $language = (string) $chunks[0];
-
-                // try to set a cookie with the language
-                try {
-                    // set cookie
-                    CommonCookie::set('frontend_language', $language);
-                } catch (\SpoonCookieException $e) {
-                    // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
-                }
-
-                // set sessions
-                \SpoonSession::set('frontend_language', $language);
-
-                // remove the language part
-                array_shift($chunks);
-            } elseif (CommonCookie::exists('frontend_language') &&
-                      in_array(CommonCookie::get('frontend_language'), $redirectLanguages)
-            ) {
-                // set languageId
-                $language = (string) CommonCookie::get('frontend_language');
-
-                // redirect is needed
-                $mustRedirect = true;
-            } else {
-                // default browser language
-                // set languageId & abbreviation
-                $language = Language::getBrowserLanguage();
-
-                // try to set a cookie with the language
-                try {
-                    // set cookie
-                    CommonCookie::set('frontend_language', $language);
-                } catch (\SpoonCookieException $e) {
-                    // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
-                }
-
-                // redirect is needed
-                $mustRedirect = true;
-            }
-
-            // redirect is required
-            if ($mustRedirect) {
-                // build URL
-                // trim the first / from the query string to prevent double slashes
-                $url = rtrim('/' . $language . '/' . trim($this->getQueryString(), '/'), '/');
-                // when we are just adding the language to the domain, it's a temporary redirect because
-                // Safari keeps the 301 in cache, so the cookie to switch language doesn't work any more
-                $redirectCode = ($url == '/' . $language ? 302 : 301);
-
-                // set header & redirect
-                throw new RedirectException(
-                    'Redirect',
-                    new RedirectResponse($url, $redirectCode)
-                );
-            }
-        }
+        $language = $this->determineLanguage($queryString);
 
         // define the language
         defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $language);
@@ -282,64 +195,19 @@ class Url extends KernelLoader
         // sets the locale file
         Language::setLocale($language);
 
-        // list of pageIds & their full URL
-        $keys = Navigation::getKeys();
-
-        // rebuild our URL, but without the language parameter. (it's tripped earlier)
-        $url = implode('/', $chunks);
-        $startURL = $url;
-
-        // loop until we find the URL in the list of pages
-        while (!in_array($url, $keys)) {
-            // remove the last chunk
-            array_pop($chunks);
-
-            // redefine the URL
-            $url = implode('/', $chunks);
-        }
-
         // remove language from query string
         if ($hasMultiLanguages) {
             $queryString = trim(mb_substr($queryString, mb_strlen($language)), '/');
         }
 
-        // if it's the homepage AND parameters were given (not allowed!)
-        if ($url == '' && $queryString != '') {
-            // get 404 URL
-            $url = Navigation::getURL(404);
-
-            // remove language
-            if ($hasMultiLanguages) {
-                $url = str_replace('/' . $language, '', $url);
-            }
-        }
-
-        // set pages
-        $url = trim($url, '/');
+        $url = $this->determineUrl($queryString, $language);
 
         // currently not in the homepage
-        if ($url != '') {
-            // explode in pages
-            $pages = explode('/', $url);
-
-            // reset pages
-            $this->setPages($pages);
-
-            // reset parameters
-            $this->setParameters(array());
+        if ($url !== '') {
+            $this->setPages(explode('/', $url));
         }
 
-        // set parameters
-        $parameters = trim(mb_substr($startURL, mb_strlen($url)), '/');
-
-        // has at least one parameter
-        if ($parameters != '') {
-            // parameters will be separated by /
-            $parameters = explode('/', $parameters);
-
-            // set parameters
-            $this->setParameters($parameters);
-        }
+        $parameters = $this->extractParametersFromQueryString($queryString, $url);
 
         // pageId, parentId & depth
         $pageId = Navigation::getPageId(implode('/', $this->getPages()));
@@ -359,26 +227,128 @@ class Url extends KernelLoader
             $url = trim($url, '/');
 
             // currently not in the homepage
-            if ($url != '') {
-                // explode in pages
-                $pages = explode('/', $url);
-
-                // reset pages
-                $this->setPages($pages);
-
-                // reset parameters
-                $this->setParameters(array());
+            if ($url !== '') {
+                $this->setPages(explode('/', $url));
             }
         }
 
+        if ($pageInfo !== false) {
+            $this->handleRedirects($pageInfo);
+        }
+    }
+
+    /**
+     * @param string $queryString
+     * @param string $url
+     *
+     * @return array
+     */
+    private function extractParametersFromQueryString(string $queryString, string $url): array
+    {
+        // set parameters
+        $parameters = trim(mb_substr($queryString, mb_strlen($url)), '/');
+
+        if (empty($parameters)) {
+            return [];
+        }
+
+        // parameters will be separated by /
+        $parameters = explode('/', $parameters);
+
+        // set parameters
+        $this->setParameters($parameters);
+
+        return $parameters;
+    }
+
+    /**
+     * @param string $queryString
+     *
+     * @return string
+     */
+    private function determineLanguage(string $queryString): string
+    {
+        if ($this->getContainer()->getParameter('site.multilanguage')) {
+            return $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
+        }
+
+        // get possible languages
+        $possibleLanguages = (array) Language::getActiveLanguages();
+        $redirectLanguages = (array) Language::getRedirectLanguages();
+
+        // split into chunks
+        $chunks = (array) explode('/', $queryString);
+
+        // the language is present in the URL
+        if (isset($chunks[0]) && in_array($chunks[0], $possibleLanguages, true)) {
+            // define language
+            $language = (string) $chunks[0];
+            $this->setLanguageCookie($language);
+
+            SpoonSession::set('frontend_language', $language);
+
+            return $language;
+        }
+
+        if (CommonCookie::exists('frontend_language')
+            && in_array(CommonCookie::get('frontend_language'), $redirectLanguages, true)
+        ) {
+            $this->redirectToLanguage((string) CommonCookie::get('frontend_language'));
+        }
+
+        // default browser language
+        $language = Language::getBrowserLanguage();
+        $this->setLanguageCookie($language);
+        $this->redirectToLanguage($language);
+    }
+
+    /**
+     * @param string $language
+     */
+    private function setLanguageCookie(string $language)
+    {
+        try {
+            CommonCookie::set('frontend_language', $language);
+        } catch (\SpoonCookieException $e) {
+            // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
+        }
+    }
+
+    /**
+     * @param string $language
+     *
+     * @throws RedirectException
+     */
+    private function redirectToLanguage(string $language)
+    {
+        // trim the first / from the query string to prevent double slashes
+        $url = rtrim('/' . $language . '/' . trim($this->getQueryString(), '/'), '/');
+        // when we are just adding the language to the domain, it's a temporary redirect because
+        // Safari keeps the 301 in cache, so the cookie to switch language doesn't work any more
+        $redirectCode = ($url === '/' . $language ? 302 : 301);
+
+        // set header & redirect
+        throw new RedirectException(
+            'Redirect',
+            new RedirectResponse($url, $redirectCode)
+        );
+    }
+
+    /**
+     * @param array $pageInfo
+     *
+     * @throws RedirectException
+     */
+    private function handleRedirects(array $pageInfo)
+    {
         // is this an internal redirect?
-        if (isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] != '') {
+        if (isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] !== '') {
             // get url for item
             $newPageURL = Navigation::getURL((int) $pageInfo['redirect_page_id']);
             $errorURL = Navigation::getURL(404);
 
             // not an error?
-            if ($newPageURL != $errorURL) {
+            if ($newPageURL !== $errorURL) {
                 // redirect
                 throw new RedirectException(
                     'Redirect',
@@ -391,7 +361,7 @@ class Url extends KernelLoader
         }
 
         // is this an external redirect?
-        if (isset($pageInfo['redirect_url']) && $pageInfo['redirect_url'] != '') {
+        if (isset($pageInfo['redirect_url']) && $pageInfo['redirect_url'] !== '') {
             // redirect
             throw new RedirectException(
                 'Redirect',
@@ -423,5 +393,46 @@ class Url extends KernelLoader
         foreach ($parameters as $key => $value) {
             $this->parameters[$key] = $value;
         }
+    }
+
+    /**
+     * @param string $queryString
+     * @param string $language
+     *
+     * @return string
+     */
+    private function determineUrl(string $queryString, string $language): string
+    {
+        // list of pageIds & their full URL
+        $keys = Navigation::getKeys();
+        $chunks = (array) explode('/', $queryString);
+
+        // rebuild our URL, but without the language parameter. (it's tripped earlier)
+        $url = implode('/', $chunks);
+
+        // loop until we find the URL in the list of pages
+        while (!in_array($url, $keys, true)) {
+            // remove the last chunk
+            array_pop($chunks);
+
+            // redefine the URL
+            $url = implode('/', $chunks);
+        }
+
+        // if it's the homepage AND parameters were given (not allowed!)
+        if ($url === '' && $queryString !== '') {
+            // get 404 URL
+            $url = Navigation::getURL(404);
+
+            // remove language
+            if ($this->getContainer()->getParameter('site.multilanguage')) {
+                $url = str_replace('/' . $language, '', $url);
+            }
+        }
+
+        // set pages
+        $url = trim($url, '/');
+
+        return $url;
     }
 }
