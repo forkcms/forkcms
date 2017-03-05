@@ -67,42 +67,8 @@ class Footer extends FrontendBaseObject
      *
      * @return string                HTML and JS needed to initialize FB JavaScript
      */
-    protected function getFacebookHtml($facebookAppId)
+    protected function getFacebookHtml(string $facebookAppId): string
     {
-        // build correct locale
-        $locale = mb_strtolower(LANGUAGE) . '_' . mb_strtoupper(LANGUAGE);
-
-        // reform some locale
-        switch (LANGUAGE) {
-            case 'en':
-                $locale = 'en_US';
-                break;
-
-            case 'zh':
-                $locale = 'zh_CN';
-                break;
-
-            case 'cs':
-                $locale = 'cs_CZ';
-                break;
-
-            case 'el':
-                $locale = 'el_GR';
-                break;
-
-            case 'ja':
-                $locale = 'ja_JP';
-                break;
-
-            case 'sv':
-                $locale = 'sv_SE';
-                break;
-
-            case 'uk':
-                $locale = 'uk_UA';
-                break;
-        }
-
         // add the fb-root div
         $facebookHtml = "\n" . '<div id="fb-root"></div>' . "\n";
 
@@ -125,12 +91,31 @@ class Footer extends FrontendBaseObject
         $facebookHtml .= '        var js, fjs = d.getElementsByTagName(s)[0];' . "\n";
         $facebookHtml .= '        if (d.getElementById(id)) {return;}' . "\n";
         $facebookHtml .= '        js = d.createElement(s); js.id = id;' . "\n";
-        $facebookHtml .= '        js.src = "//connect.facebook.net/' . $locale . '/all.js";' . "\n";
+        $facebookHtml .= '        js.src = "//connect.facebook.net/' . $this->getFacebookLocale() . '/all.js";' . "\n";
         $facebookHtml .= '        fjs.parentNode.insertBefore(js, fjs);' . "\n";
         $facebookHtml .= '    }(document, \'script\', \'facebook-jssdk\'));' . "\n";
         $facebookHtml .= '</script>';
 
         return $facebookHtml;
+    }
+
+    /**
+     * @return string
+     */
+    private function getFacebookLocale(): string
+    {
+        $specialCases = [
+            'en' => 'en_US', // sorry uk :( I prefer you too
+            'zh' => 'zh_CN',
+            'cs' => 'cs_CZ',
+            'el' => 'el_GR',
+            'ja' => 'ja_JP',
+            'sv' => 'sv_SE',
+            'uk' => 'uk_UA',
+        ];
+
+        // check if it is a special case, otherwise return [language]_[language]
+        return $specialCases[LANGUAGE] ?? mb_strtolower(LANGUAGE) . '_' . mb_strtoupper(LANGUAGE);
     }
 
     /**
@@ -142,7 +127,7 @@ class Footer extends FrontendBaseObject
      *
      * @return string            The script needed for google
      */
-    protected function getSiteLinksCode($searchUrl)
+    protected function getSiteLinksCode(string $searchUrl): string
     {
         $siteLinksCode = '<script type="application/ld+json">' . "\n";
         $siteLinksCode .= '{' . "\n";
