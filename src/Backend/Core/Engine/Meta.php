@@ -16,6 +16,7 @@ use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class represents a META-object
+ *
  * @deprecated This class will be removed when all modules run on doctrine and will be replaced with the meta entity
  */
 class Meta
@@ -53,7 +54,7 @@ class Meta
      *
      * @var Form
      */
-    protected $frm;
+    protected $form;
 
     /**
      * The id, when an existing meta-record is loaded
@@ -73,12 +74,16 @@ class Meta
      * @param Form $form An instance of Form, the elements will be parsed in here.
      * @param int $metaId The metaID to load.
      * @param string $baseFieldName The field where the URL should be based on.
-     * @param bool $custom Add/show custom-meta.
+     * @param bool $showCustomMeta Add/show custom-meta.
      *
      * @throws Exception
      */
-    public function __construct(Form $form, $metaId = null, $baseFieldName = 'title', $custom = false)
-    {
+    public function __construct(
+        Form $form,
+        int $metaId = null,
+        string $baseFieldName = 'title',
+        bool $showCustomMeta = false
+    ) {
         // check if URL is available from the reference
         if (!BackendModel::getContainer()->has('url')) {
             throw new Exception('URL should be available in the reference.');
@@ -87,14 +92,9 @@ class Meta
         // get BackendURL instance
         $this->URL = BackendModel::getContainer()->get('url');
 
-        // should we use meta-custom
-        $this->custom = (bool) $custom;
-
-        // set form instance
-        $this->frm = $form;
-
-        // set base field name
-        $this->baseFieldName = (string) $baseFieldName;
+        $this->custom = $showCustomMeta;
+        $this->form = $form;
+        $this->baseFieldName = $baseFieldName;
 
         // metaId was specified, so we should load the item
         if ($metaId !== null) {
@@ -123,9 +123,9 @@ class Meta
      * @deprecated use the generateUrl method on the meta repository
      * This class will be removed when all modules run on doctrine
      */
-    public function generateURL($url)
+    public function generateURL(string $url): string
     {
-        return  Model::get('fork.repository.meta')->generateURL(
+        return Model::get('fork.repository.meta')->generateURL(
             $url,
             $this->callback['class'],
             $this->callback['method'],
@@ -136,7 +136,7 @@ class Meta
     /**
      * Get the current value for the meta-description;
      *
-     * @return mixed
+     * @return string|null
      */
     public function getDescription()
     {
@@ -162,7 +162,7 @@ class Meta
         }
 
         // return value
-        return ($this->data['description_overwrite'] == 'Y');
+        return $this->data['description_overwrite'] === 'Y';
     }
 
     /**
@@ -184,7 +184,7 @@ class Meta
     /**
      * Get the current value for the meta-keywords;
      *
-     * @return mixed
+     * @return null|string
      */
     public function getKeywords()
     {
@@ -210,13 +210,13 @@ class Meta
         }
 
         // return value
-        return ($this->data['keywords_overwrite'] == 'Y');
+        return $this->data['keywords_overwrite'] === 'Y';
     }
 
     /**
      * Get the current value for the page title;
      *
-     * @return mixed
+     * @return null|string
      */
     public function getTitle()
     {
@@ -242,7 +242,7 @@ class Meta
         }
 
         // return value
-        return ($this->data['title_overwrite'] == 'Y');
+        return $this->data['title_overwrite'] === 'Y';
     }
 
     /**
@@ -274,7 +274,37 @@ class Meta
         }
 
         // return value
-        return ($this->data['url_overwrite'] == 'Y');
+        return $this->data['url_overwrite'] === 'Y';
+    }
+
+    /**
+     * If the fields are disabled we don't have any values in the post.
+     * When an error occurs in the other fields of the form the meta-fields would be cleared
+     * therefore we alter the POST so it contains the initial values.
+     */
+    private function loadValuesOfDisabledFields()
+    {
+        if (!isset($_POST['page_title'])) {
+            $_POST['page_title'] = $this->data['title'] ?? null;
+        }
+        if (!isset($_POST['meta_description'])) {
+            $_POST['meta_description'] = $this->data['description'] ?? null;
+        }
+        if (!isset($_POST['meta_keywords'])) {
+            $_POST['meta_keywords'] = $this->data['keywords'] ?? null;
+        }
+        if (!isset($_POST['url'])) {
+            $_POST['url'] = $this->data['url'] ?? null;
+        }
+        if ($this->custom && !isset($_POST['meta_custom'])) {
+            $_POST['meta_custom'] = $this->data['custom'] ?? null;
+        }
+        if (!isset($_POST['seo_index'])) {
+            $_POST['seo_index'] = $this->data['data']['seo_index'] ?? 'none';
+        }
+        if (!isset($_POST['seo_follow'])) {
+            $_POST['seo_follow'] = $this->data['data']['seo_follow'] ??'none';
+        }
     }
 
     /**
@@ -283,69 +313,40 @@ class Meta
     protected function loadForm()
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
-            /**
-             * If the fields are disabled we don't have any values in the post.
-             * When an error occurs in the other fields of the form the meta-fields would be cleared
-             * therefore we alter the POST so it contains the initial values.
-             */
-            if (!isset($_POST['page_title'])) {
-                $_POST['page_title'] = (isset($this->data['title'])) ? $this->data['title'] : null;
-            }
-            if (!isset($_POST['meta_description'])) {
-                $_POST['meta_description'] = (isset($this->data['description'])) ? $this->data['description'] : null;
-            }
-            if (!isset($_POST['meta_keywords'])) {
-                $_POST['meta_keywords'] = (isset($this->data['keywords'])) ? $this->data['keywords'] : null;
-            }
-            if (!isset($_POST['url'])) {
-                $_POST['url'] = (isset($this->data['url'])) ? $this->data['url'] : null;
-            }
-            if ($this->custom && !isset($_POST['meta_custom'])) {
-                $_POST['meta_custom'] = (isset($this->data['custom'])) ? $this->data['custom'] : null;
-            }
-            if (!isset($_POST['seo_index'])) {
-                $_POST['seo_index'] = (isset($this->data['data']['seo_index'])) ?
-                    $this->data['data']['seo_index'] :
-                    'none';
-            }
-            if (!isset($_POST['seo_follow'])) {
-                $_POST['seo_follow'] = (isset($this->data['data']['seo_follow'])) ?
-                    $this->data['data']['seo_follow'] :
-                    'none';
-            }
+        if ($this->form->isSubmitted()) {
+            $this->loadValuesOfDisabledFields();
         }
 
         // add page title elements into the form
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'page_title_overwrite',
-            (isset($this->data['title_overwrite']) && $this->data['title_overwrite'] == 'Y')
+            isset($this->data['title_overwrite']) && $this->data['title_overwrite'] === 'Y'
         );
-        $this->frm->addText('page_title', (isset($this->data['title'])) ? $this->data['title'] : null);
+        $this->form->addText('page_title', $this->data['title'] ?? null);
 
         // add meta description elements into the form
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'meta_description_overwrite',
-            (isset($this->data['description_overwrite']) && $this->data['description_overwrite'] == 'Y')
+            isset($this->data['description_overwrite']) && $this->data['description_overwrite'] === 'Y'
         );
-        $this->frm->addText(
+        $this->form->addText(
             'meta_description',
-            (isset($this->data['description'])) ? $this->data['description'] : null
+            $this->data['description'] ?? null
         );
 
         // add meta keywords elements into the form
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'meta_keywords_overwrite',
-            (isset($this->data['keywords_overwrite']) && $this->data['keywords_overwrite'] == 'Y')
+            isset($this->data['keywords_overwrite']) && $this->data['keywords_overwrite'] === 'Y'
         );
-        $this->frm->addText('meta_keywords', (isset($this->data['keywords'])) ? $this->data['keywords'] : null);
+        $this->form->addText('meta_keywords', $this->data['keywords'] ?? null);
 
         // add URL elements into the form
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'url_overwrite',
-            (isset($this->data['url_overwrite']) && $this->data['url_overwrite'] == 'Y')
+            isset($this->data['url_overwrite']) && $this->data['url_overwrite'] === 'Y'
         );
-        $this->frm->addText('url', (isset($this->data['url'])) ? urldecode($this->data['url']) : null);
+        $this->form->addText('url', isset($this->data['url']) ? urldecode($this->data['url']) : null);
 
         // advanced SEO
         $indexValues = array(
@@ -353,34 +354,34 @@ class Meta
             array('value' => 'index', 'label' => 'index'),
             array('value' => 'noindex', 'label' => 'noindex'),
         );
-        $this->frm->addRadiobutton(
+        $this->form->addRadiobutton(
             'seo_index',
             $indexValues,
-            (isset($this->data['data']['seo_index'])) ? $this->data['data']['seo_index'] : 'none'
+            $this->data['data']['seo_index'] ?? 'none'
         );
         $followValues = array(
             array('value' => 'none', 'label' => BackendLanguage::getLabel('None')),
             array('value' => 'follow', 'label' => 'follow'),
             array('value' => 'nofollow', 'label' => 'nofollow'),
         );
-        $this->frm->addRadiobutton(
+        $this->form->addRadiobutton(
             'seo_follow',
             $followValues,
-            (isset($this->data['data']['seo_follow'])) ? $this->data['data']['seo_follow'] : 'none'
+            $this->data['data']['seo_follow'] ?? 'none'
         );
 
         // should we add the meta-custom field
         if ($this->custom) {
             // add meta custom element into the form
-            $this->frm->addTextarea('meta_custom', (isset($this->data['custom'])) ? $this->data['custom'] : null);
+            $this->form->addTextarea('meta_custom', $this->data['custom'] ?? null);
         }
 
-        $this->frm->addHidden('meta_id', $this->id);
-        $this->frm->addHidden('base_field_name', $this->baseFieldName);
-        $this->frm->addHidden('custom', $this->custom);
-        $this->frm->addHidden('class_name', $this->callback['class']);
-        $this->frm->addHidden('method_name', $this->callback['method']);
-        $this->frm->addHidden('parameters', \SpoonFilter::htmlspecialchars(serialize($this->callback['parameters'])));
+        $this->form->addHidden('meta_id', $this->id);
+        $this->form->addHidden('base_field_name', $this->baseFieldName);
+        $this->form->addHidden('custom', $this->custom);
+        $this->form->addHidden('class_name', $this->callback['class']);
+        $this->form->addHidden('method_name', $this->callback['method']);
+        $this->form->addHidden('parameters', \SpoonFilter::htmlspecialchars(serialize($this->callback['parameters'])));
     }
 
     /**
@@ -390,11 +391,10 @@ class Meta
      *
      * @throws Exception If no meta-record exists with the provided id
      */
-    protected function loadMeta($id)
+    protected function loadMeta(int $id)
     {
-        $this->id = (int) $id;
+        $this->id = $id;
 
-        // get item
         $this->data = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT *
              FROM meta AS m
@@ -425,11 +425,9 @@ class Meta
      * @deprecated just use the entity for doctrine.
      *             This class will be removed when all modules run on doctrine and will be replaced with the meta entity
      */
-    public function save($update = false)
+    public function save(bool $update = false): int
     {
         $this->validate();
-
-        $update = (bool) $update;
 
         //serialize data for save
         if (!empty($this->data['data'])) {
@@ -443,11 +441,11 @@ class Meta
             $db->update('meta', $this->data, 'id = ?', array($this->id));
 
             return $this->id;
-        } else {
-            unset($this->data['id']);
-
-            return (int) $db->insert('meta', $this->data);
         }
+
+        unset($this->data['id']);
+
+        return (int) $db->insert('meta', $this->data);
     }
 
     /**
@@ -459,12 +457,8 @@ class Meta
      * @param string $methodName Name of the method to use.
      * @param array $parameters Parameters to parse, they will be passed after ours.
      */
-    public function setURLCallback($className, $methodName, $parameters = array())
+    public function setURLCallback(string $className, string $methodName, array $parameters = array())
     {
-        $className = (string) $className;
-        $methodName = (string) $methodName;
-        $parameters = (array) $parameters;
-
         // store in property
         $this->callback = array('class' => $className, 'method' => $methodName, 'parameters' => $parameters);
 
@@ -479,97 +473,78 @@ class Meta
     public function validate()
     {
         // page title overwrite is checked
-        if ($this->frm->getField('page_title_overwrite')->isChecked()) {
-            $this->frm->getField('page_title')->isFilled(BackendLanguage::err('FieldIsRequired'));
+        if ($this->form->getField('page_title_overwrite')->isChecked()) {
+            $this->form->getField('page_title')->isFilled(BackendLanguage::err('FieldIsRequired'));
         }
 
         // meta description overwrite is checked
-        if ($this->frm->getField('meta_description_overwrite')->isChecked()) {
-            $this->frm->getField('meta_description')->isFilled(BackendLanguage::err('FieldIsRequired'));
+        if ($this->form->getField('meta_description_overwrite')->isChecked()) {
+            $this->form->getField('meta_description')->isFilled(BackendLanguage::err('FieldIsRequired'));
         }
 
         // meta keywords overwrite is checked
-        if ($this->frm->getField('meta_keywords_overwrite')->isChecked()) {
-            $this->frm->getField('meta_keywords')->isFilled(BackendLanguage::err('FieldIsRequired'));
+        if ($this->form->getField('meta_keywords_overwrite')->isChecked()) {
+            $this->form->getField('meta_keywords')->isFilled(BackendLanguage::err('FieldIsRequired'));
         }
 
         // URL overwrite is checked
-        if ($this->frm->getField('url_overwrite')->isChecked()) {
-            $this->frm->getField('url')->isFilled(BackendLanguage::err('FieldIsRequired'));
-            $url = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
+        if ($this->form->getField('url_overwrite')->isChecked()) {
+            $this->form->getField('url')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $url = \SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue());
             $generatedUrl = $this->generateURL($url);
 
             // check if urls are different
-            if (CommonUri::getUrl($url) != $generatedUrl) {
-                $this->frm->getField('url')->addError(
+            if (CommonUri::getUrl($url) !== $generatedUrl) {
+                $this->form->getField('url')->addError(
                     BackendLanguage::err('URLAlreadyExists')
                 );
             }
         }
 
         // if the form was submitted correctly the data array should be populated
-        if ($this->frm->isCorrect()) {
-            // get meta keywords
-            $keywords = $this->frm->getField('meta_keywords_overwrite')->getActualValue(
-                $this->frm->getField('meta_keywords')->getValue(),
-                $this->frm->getField($this->baseFieldName)->getValue()
-            );
+        if (!$this->form->isCorrect()) {
+            return;
+        }
 
-            // get meta description
-            $description = $this->frm->getField('meta_description_overwrite')->getActualValue(
-                $this->frm->getField('meta_description')->getValue(),
-                $this->frm->getField($this->baseFieldName)->getValue()
-            );
+        $this->data['keywords'] = $this->form->getField('meta_keywords_overwrite')->getActualValue(
+            $this->form->getField('meta_keywords')->getValue(),
+            $this->form->getField($this->baseFieldName)->getValue()
+        );
+        $this->data['keywords_overwrite'] = $this->form->getField('meta_keywords_overwrite')->getActualValue();
+        $this->data['description'] = $this->form->getField('meta_description_overwrite')->getActualValue(
+            $this->form->getField('meta_description')->getValue(),
+            $this->form->getField($this->baseFieldName)->getValue()
+        );
+        $this->data['description_overwrite'] = $this->form->getField('meta_description_overwrite')->getActualValue();
+        $this->data['title'] = $this->form->getField('page_title_overwrite')->getActualValue(
+            $this->form->getField('page_title')->getValue(),
+            $this->form->getField($this->baseFieldName)->getValue()
+        );
+        $this->data['title_overwrite'] = $this->form->getField('page_title_overwrite')->getActualValue();
+        $this->data['url'] = $this->generateURL(
+            $this->form->getField('url_overwrite')->getActualValue(
+                \SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue()),
+                \SpoonFilter::htmlspecialcharsDecode($this->form->getField($this->baseFieldName)->getValue())
+            )
+        );
+        $this->data['url_overwrite'] = $this->form->getField('url_overwrite')->getActualValue();
+        $this->data['custom'] = $this->custom && $this->form->getField('meta_custom')->isFilled()
+            ? $this->form->getField('meta_custom')->getValue() : null;
+        $this->data['data']['seo_index'] = $this->form->getField('seo_index')->getValue();
+        $this->data['data']['seo_follow'] = $this->form->getField('seo_follow')->getValue();
 
-            // get page title
-            $title = $this->frm->getField('page_title_overwrite')->getActualValue(
-                $this->frm->getField('page_title')->getValue(),
-                $this->frm->getField($this->baseFieldName)->getValue()
-            );
-
-            // get URL
-            $url = $this->frm->getField('url_overwrite')->getActualValue(
-                \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue()),
-                \SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue())
-            );
-
-            // get the real URL
-            $url = $this->generateURL($url);
-
-            // get meta custom
-            if ($this->custom && $this->frm->getField('meta_custom')->isFilled()) {
-                $custom = $this->frm->getField('meta_custom')->getValue();
-            } else {
-                $custom = null;
-            }
-
-            // set data
-            $this->data['keywords'] = $keywords;
-            $this->data['keywords_overwrite'] = $this->frm->getField('meta_keywords_overwrite')->getActualValue();
-            $this->data['description'] = $description;
-            $this->data['description_overwrite'] = $this->frm->getField('meta_description_overwrite')->getActualValue();
-            $this->data['title'] = $title;
-            $this->data['title_overwrite'] = $this->frm->getField('page_title_overwrite')->getActualValue();
-            $this->data['url'] = $url;
-            $this->data['url_overwrite'] = $this->frm->getField('url_overwrite')->getActualValue();
-            $this->data['custom'] = $custom;
-            if ($this->frm->getField('seo_index')->getValue() == 'none') {
-                unset($this->data['data']['seo_index']);
-            } else {
-                $this->data['data']['seo_index'] = $this->frm->getField('seo_index')->getValue();
-            }
-            if ($this->frm->getField('seo_follow')->getValue() == 'none') {
-                unset($this->data['data']['seo_follow']);
-            } else {
-                $this->data['data']['seo_follow'] = $this->frm->getField('seo_follow')->getValue();
-            }
+        if ($this->data['data']['seo_index'] === 'none') {
+            unset($this->data['data']['seo_index']);
+        }
+        if ($this->data['data']['seo_follow'] === 'none') {
+            unset($this->data['data']['seo_follow']);
         }
     }
 
     /**
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
@@ -577,7 +552,7 @@ class Meta
     /**
      * @return MetaEntity
      */
-    public function getMetaEntity()
+    public function getMetaEntity(): MetaEntity
     {
         $this->validate();
 
