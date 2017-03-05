@@ -149,4 +149,40 @@ class Object extends KernelLoader
 
         throw new RedirectException('Redirect', $response);
     }
+
+    /**
+     * Redirect to the error page
+     *
+     * @param string $type
+     * @param int $code
+     */
+    protected function redirectToErrorPage(string $type, int $code = Response::HTTP_BAD_REQUEST)
+    {
+        $errorUrl = '/' . NAMED_APPLICATION . '/' . $this->get('request')->getLocale() . '/error?type=' . $type;
+
+        $this->redirect($errorUrl, $code);
+    }
+
+    /**
+     * Load the config file for the requested module.
+     * In the config file we have to find disabled actions, the constructor
+     * will read the folder and set possible actions
+     * Other configurations will be stored in it also.
+     */
+    public function getConfig(): Config
+    {
+        // check if we can load the config file
+        $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
+        if ($this->getModule() === 'Core') {
+            $configClass = Config::class;
+        }
+
+        // validate if class exists (aka has correct name)
+        if (!class_exists($configClass)) {
+            throw new Exception('The config file ' . $configClass . ' could not be found.');
+        }
+
+        // create config-object, the constructor will do some magic
+        return new $configClass($this->getKernel(), $this->getModule());
+    }
 }

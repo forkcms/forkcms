@@ -27,7 +27,7 @@ class Backend extends KernelLoader implements ApplicationInterface
     /**
      * @return Response
      */
-    public function display()
+    public function display(): Response
     {
         return $this->action->execute();
     }
