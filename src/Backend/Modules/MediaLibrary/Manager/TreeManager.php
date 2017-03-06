@@ -1,79 +1,39 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Engine;
+namespace Backend\Modules\MediaLibrary\Manager;
 
-use Symfony\Component\Finder\Finder;
+use Backend\Modules\MediaLibrary\Builder\CacheBuilder;
 use Backend\Core\Language\Language;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 
 /**
  * In this file we store all generic functions that we will be using in the MediaLibrary module
  */
-class Model
+class TreeManager
 {
-    // Backend thumbnail settings
-    const BACKEND_THUMBNAIL_HEIGHT = 90;
-    const BACKEND_THUMBNAIL_WIDTH = 140;
-    const BACKEND_THUMBNAIL_QUALITY = 95;
+    /** @var CacheBuilder */
+    protected $cacheBuilder;
 
     /**
-     * Get movie mimes for dropdown
+     * TreeManager constructor.
      *
-     * @return array
+     * @param CacheBuilder $cacheBuilder
      */
-    public static function getMovieMimesForDropdown(): array
+    public function __construct(CacheBuilder $cacheBuilder)
     {
-        // Init
-        $ddmAllowedMovieSourcesValues = array();
-
-        // Define
-        $allowedMovieSourcesValues = MediaItem::getMimesForMovie();
-
-        // Loop all allowed movie sources
-        foreach ($allowedMovieSourcesValues as $value) {
-            // add value
-            $ddmAllowedMovieSourcesValues[] = array(
-                'key' => $value,
-                'label' => Language::lbl(ucfirst($value))
-            );
-        }
-
-        return $ddmAllowedMovieSourcesValues;
+        $this->cacheBuilder = $cacheBuilder;
     }
 
     /**
-     * Get possible widget actions
-     *
-     * @return array
+     * Get HTML from tree
      */
-    public static function getPossibleWidgetActions(): array
-    {
-        // Define actions
-        $actions = array();
-
-        $finder = new Finder();
-        $finder->files()->in(
-            FRONTEND_MODULES_PATH . '/MediaLibrary/Widgets'
-        )->exclude('Base');
-
-        foreach ($finder as $file) {
-            $actions[] = $file->getBasename('.' . $file->getExtension());
-        }
-
-        return $actions;
-    }
-
-    /**
-     * Get tree html
-     */
-    public static function getTreeHTML()
+    public function getHTML()
     {
         // init html
         $html = '';
 
         // get tree
-        $foldersTree = BackendModel::get('media_library.cache_builder')->getFoldersTree(null, null, 1);
+        $foldersTree = $this->cacheBuilder->getFoldersTree(null, null, 1);
 
         // has folders?
         if (count($foldersTree) > 0) {
@@ -109,7 +69,7 @@ class Model
             $html .= '  <ul>' . "\n";
 
             // add album subchildren
-            $html .= self::getSubtreeForFolder(0, $sequences, $return);
+            $html .= $this->getSubtreeForFolder(0, $sequences, $return);
 
             // end
             $html .= '  </ul>' . "\n";
@@ -128,7 +88,7 @@ class Model
      * @param array $folders
      * @return string
      */
-    public static function getSubtreeForFolder(int $folderId, array $sequences, array $folders): string
+    private function getSubtreeForFolder(int $folderId, array $sequences, array $folders): string
     {
         // init html
         $html = '';
@@ -161,7 +121,7 @@ class Model
                 $html .= '<ul>' . "\n";
 
                 // add child albums
-                $html .= self::getSubtreeForFolder(
+                $html .= $this->getSubtreeForFolder(
                     $folder['id'],
                     $sequences,
                     $folders

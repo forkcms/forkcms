@@ -5,11 +5,11 @@ namespace Backend\Modules\MediaLibrary\EventListener;
 use Backend\Modules\MediaLibrary\Component\ImageSettings;
 use Backend\Modules\MediaLibrary\Component\ImageTransformationMethod;
 use Backend\Modules\MediaLibrary\Manager\FileManager;
-use Backend\Modules\MediaLibrary\Engine\Model as BackendMediaLibraryModel;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemUpdated;
+use Common\ModulesSettings;
 
 /**
  * MediaItem Backend Thumbnail Listener
@@ -20,6 +20,11 @@ final class MediaItemBackendThumbnailListener
      * @var FileManager
      */
     protected $fileManager;
+
+    /**
+     * @var ModulesSettings
+     */
+    protected $settings;
 
     /**
      * Construct
@@ -93,9 +98,9 @@ final class MediaItemBackendThumbnailListener
         /** @var ImageSettings $imageSettings */
         $imageSettings = ImageSettings::create(
             ImageTransformationMethod::crop(),
-            BackendMediaLibraryModel::BACKEND_THUMBNAIL_WIDTH,
-            BackendMediaLibraryModel::BACKEND_THUMBNAIL_HEIGHT,
-            BackendMediaLibraryModel::BACKEND_THUMBNAIL_QUALITY
+            $this->settings->get('MediaLibrary', 'backend_thumbnail_width'),
+            $this->settings->get('MediaLibrary', 'backend_thumbnail_height'),
+            $this->settings->get('MediaLibrary', 'backend_thumbnail_quality')
         );
 
         // Generate thumbnail

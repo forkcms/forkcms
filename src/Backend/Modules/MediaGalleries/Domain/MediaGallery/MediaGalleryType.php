@@ -12,25 +12,21 @@ use Backend\Core\Engine\TemplateModifiers;
 use Backend\Form\Type\EditorType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
+use Backend\Modules\MediaLibrary\ValueObject\MediaWidget;
 
 class MediaGalleryType extends AbstractType
 {
     /** @var string */
     private $dataClass;
 
-    /** @var array $possibleWidgets */
-    private $possibleWidgets;
-
     /**
      * MediaGalleryType constructor.
      *
-     * @param array $possibleWidgets
      * @param string $dataClass
      */
-    public function __construct(array $possibleWidgets, string $dataClass = CreateMediaGallery::class)
+    public function __construct(string $dataClass = CreateMediaGallery::class)
     {
         $this->dataClass = $dataClass;
-        $this->possibleWidgets = $possibleWidgets;
     }
 
     /**
@@ -60,7 +56,7 @@ class MediaGalleryType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'lbl.Action',
-                    'choices' => $this->possibleWidgets,
+                    'choices' => MediaWidget::getPossibleValues(),
                     'choices_as_values' => true,
                     'choice_label' => function ($possibleWidget) {
                         return $possibleWidget;

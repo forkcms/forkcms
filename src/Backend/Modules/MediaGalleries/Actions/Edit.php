@@ -4,7 +4,6 @@ namespace Backend\Modules\MediaGalleries\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model;
-use Backend\Modules\MediaLibrary\Engine\Model as BackendMediaLibraryModel;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryType;
@@ -26,12 +25,8 @@ class Edit extends BackendBaseActionEdit
         /** @var MediaGallery $mediaGallery */
         $mediaGallery = $this->getMediaGallery();
 
-        /** @var array $possibleWidgetActions */
-        $possibleWidgetActions = BackendMediaLibraryModel::getPossibleWidgetActions();
-
         $form = $this->createForm(
             new MediaGalleryType(
-                $possibleWidgetActions,
                 UpdateMediaGallery::class
             ),
             new UpdateMediaGallery(

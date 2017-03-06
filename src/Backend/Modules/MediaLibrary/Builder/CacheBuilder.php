@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Engine;
+namespace Backend\Modules\MediaLibrary\Builder;
 
 use Psr\Cache\CacheItemPoolInterface;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;

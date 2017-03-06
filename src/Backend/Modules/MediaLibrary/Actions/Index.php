@@ -41,7 +41,7 @@ class Index extends BackendBaseActionIndex
         );
 
         // Assign variables
-        $this->tpl->assign('tree', BackendMediaLibraryModel::getTreeHTML());
+        $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
         $this->tpl->assign('mediaFolder', $mediaFolder);
         $this->tpl->assign('mediaFolders', $this->getMediaFoldersForDropdown($mediaFolder));
         $this->tpl->assign('dataGrids', $dataGrids);

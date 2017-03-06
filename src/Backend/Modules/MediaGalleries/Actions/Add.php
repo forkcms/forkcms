@@ -5,7 +5,6 @@ namespace Backend\Modules\MediaGalleries\Actions;
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionAdd;
 use Backend\Core\Engine\Model;
-use Backend\Modules\MediaLibrary\Engine\Model as BackendMediaLibraryModel;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery;
@@ -27,14 +26,8 @@ class Add extends ActionAdd
         /** @var Type $mediaGroupType */
         $mediaGroupType = $this->getType();
 
-        /** @var array $possibleWidgetActions */
-        $possibleWidgetActions = BackendMediaLibraryModel::getPossibleWidgetActions();
-
         $form = $this->createForm(
-            new MediaGalleryType(
-                $possibleWidgetActions,
-                CreateMediaGallery::class
-            ),
+            new MediaGalleryType(),
             new CreateMediaGallery(
                 Authentication::getUser()->getUserId(),
                 $mediaGroupType

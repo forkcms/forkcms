@@ -102,8 +102,8 @@ class MediaItemDataGrid extends DataGridDB
                     Model::createURLForAction('EditMediaItem')
                     . '&id=[id]'
                     . '&folder=' . $folderId,
-                    BackendMediaLibraryModel::BACKEND_THUMBNAIL_WIDTH,
-                    BackendMediaLibraryModel::BACKEND_THUMBNAIL_HEIGHT
+                    Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_width'),
+                    Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_height')
                 ),
                 'url',
                 true

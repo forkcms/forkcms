@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\EventListener;
 
-use Backend\Modules\MediaLibrary\Engine\CacheBuilder;
+use Backend\Modules\MediaLibrary\Builder\CacheBuilder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Event\MediaFolderEvent;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemEvent;
 

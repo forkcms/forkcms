@@ -145,8 +145,8 @@
         <p>
           <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
           <select id="mediaMovieSource" name="media_movie_source">
-            {% for mediaAllowedMovieSourc in mediaAllowedMovieSources %}
-            <option value="{{ mediaAllowedMovieSourc.key }}"{% if mediaAllowedMovieSourc.first %} selected="selected"{% endif %}>{{ mediaAllowedMovieSourc.label|capitalize }}</option>
+            {% for mediaAllowedMovieSource in mediaAllowedMovieSources %}
+            <option value="{{ mediaAllowedMovieSource }}"{% if loop.first %} selected="selected"{% endif %}>{{ mediaAllowedMovieSource|capitalize }}</option>
             {% endfor %}
           </select>
         </p>
