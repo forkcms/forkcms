@@ -38,8 +38,8 @@
           <li><span>…</span></li>
           {% for pagination in pagination.last %}
             <li>
-              <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }}{{ pagination.label }}">
-                {{ pagination.last }}
+              <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">
+                {{ pagination.label }}
               </a>
             </li>
           {% endfor %}
