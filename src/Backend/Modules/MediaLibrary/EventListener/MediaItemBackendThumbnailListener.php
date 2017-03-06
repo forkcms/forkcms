@@ -32,9 +32,11 @@ final class MediaItemBackendThumbnailListener
      * @param FileManager $fileManager
      */
     public function __construct(
-        FileManager $fileManager
+        FileManager $fileManager,
+        ModulesSettings $settings
     ) {
         $this->fileManager = $fileManager;
+        $this->settings = $settings;
     }
 
     /**
@@ -65,19 +67,6 @@ final class MediaItemBackendThumbnailListener
             // Delete Backend image
             $this->fileManager->deleteFile($mediaItem->getWebPath('backend'));
         }
-    }
-
-    /**
-     * On MediaItem updated
-     *
-     * @param MediaItemUpdated $event
-     */
-    public function onMediaItemUpdated(MediaItemUpdated $event)
-    {
-        // Generate Backend thumbnail
-        $this->generateBackendThumbnail(
-            $event->getMediaItem()
-        );
     }
 
     /**

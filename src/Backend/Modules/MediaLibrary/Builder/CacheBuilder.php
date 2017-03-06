@@ -2,9 +2,9 @@
 
 namespace Backend\Modules\MediaLibrary\Builder;
 
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Psr\Cache\CacheItemPoolInterface;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository;
 
 /**
@@ -18,9 +18,9 @@ class CacheBuilder
     protected $cache;
 
     /**
-     * @var \SpoonDatabase
+     * @var MediaGroupRepository
      */
-    protected $database;
+    protected $mediaFolderRepository;
 
     /**
      * @var MediaGroupRepository
@@ -28,17 +28,17 @@ class CacheBuilder
     protected $mediaGroupRepository;
 
     /**
-     * @param \SpoonDatabase $database
      * @param CacheItemPoolInterface $cache
+     * @param MediaFolderRepository $mediaFolderRepository
      * @param MediaGroupRepository $mediaGroupRepository
      */
     public function __construct(
-        \SpoonDatabase $database,
         CacheItemPoolInterface $cache,
+        MediaFolderRepository $mediaFolderRepository,
         MediaGroupRepository $mediaGroupRepository
     ) {
-        $this->database = $database;
         $this->cache = $cache;
+        $this->mediaFolderRepository = $mediaFolderRepository;
         $this->mediaGroupRepository = $mediaGroupRepository;
     }
 
@@ -101,40 +101,6 @@ class CacheBuilder
     }
 
     /**
-     * Get the folder counts for a group.
-     *
-     * @param MediaGroup $mediaGroup
-     * @return array
-     */
-    public function getFolderCountsForGroup(MediaGroup $mediaGroup): array
-    {
-        // Init counts
-        $counts = array();
-
-        // Loop all connected items
-        foreach ($mediaGroup->getConnectedItems() as $connectedItem) {
-            /** @var MediaItem $mediaItem */
-            $mediaItem = $connectedItem->getItem();
-
-            /** @var int $folderId */
-            $folderId = $mediaItem->getFolder()->getId();
-
-            // Counts for folder doesn't exist
-            if (!array_key_exists($folderId, $counts)) {
-                // Init counts
-                $counts[$folderId] = 1;
-
-                continue;
-            }
-
-            // Bump counts
-            $counts[$folderId] += 1;
-        }
-
-        return $counts;
-    }
-
-    /**
      * Get the folders for usage in a dropdown menu
      *
      * @param bool $includeCount When calling from AJAX, the count should be added
@@ -163,27 +129,31 @@ class CacheBuilder
         // loop levels
         foreach ($levels as $level => $folders) {
             // loop all items on this level
+            /**
+             * @var int $folderID
+             * @var MediaFolder $folder
+             */
             foreach ($folders as $folderID => $folder) {
                 // init var
-                $parentID = (int) $folder['parentMediaFolderId'];
+                $parentID = (int) ($folder->hasParent()) ? $folder->getParent()->getId() : 0;
 
                 // get URL for parent
                 $URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
                 // add it
-                $keys[$folderID] = trim($URL . '/' . $folder['name'], '/');
+                $keys[$folderID] = trim($URL . '/' . $folder->getName(), '/');
 
                 // add to counts
-                $counts[$folderID] = $folder['count'];
+                $counts[$folderID] = $folder->getChildren()->count();
 
                 // add to sequences
-                $sequences[(string) trim($URL . '/' . $folder['name'], '/')] = $folderID;
+                $sequences[(string) trim($URL . '/' . $folder->getName(), '/')] = $folderID;
 
                 // get URL for parent
                 $name = (isset($names[$parentID])) ? $names[$parentID] : '';
 
                 // add it
-                $names[$folderID] = trim($name . '/' . $folder['name'], '/');
+                $names[$folderID] = trim($name . '/' . $folder->getName(), '/');
             }
         }
 
@@ -240,28 +210,31 @@ class CacheBuilder
         // redefine
         $level = (int) $level;
 
-        $whereIds = (!empty($ids)) ?
-            'IN ("' . implode('", "', $ids) . '")' : 'IS NULL';
-
         // get data
-        $data[$level] = (array) $this->database->getRecords(
-            'SELECT i.id, i.parentMediaFolderId, i.name, COUNT(p.mediaFolderId) as count
-                 FROM MediaFolder AS i
-                 LEFT OUTER JOIN MediaItem AS p ON i.id = p.mediaFolderId
-                 WHERE i.parentMediaFolderId ' . $whereIds . '
-                 GROUP BY i.id
-                 ORDER BY i.name ASC',
-            null,
-            'id'
-        );
+        $queryBuilder = $this->mediaFolderRepository->createQueryBuilder('i');
 
-        // get the childIDs
-        $childIds = array_keys($data[$level]);
+        if ($ids !== null) {
+            $queryBuilder
+                ->leftJoin(MediaFolder::class, 'p', 'WITH', 'i.parent = p.id')
+                ->where('p.id IN(:ids)')
+                ->setParameter('ids', $ids);
+        }
+
+        $results = $queryBuilder
+            ->groupBy('i.id')
+            ->orderBy('i.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        /** @var MediaFolder $mediaFolder */
+        foreach ($results as $mediaFolder) {
+            $data[$level][$mediaFolder->getId()] = $mediaFolder;
+        }
 
         // build array
         if (!empty($data[$level])) {
             return $this->getFoldersTree(
-                $childIds,
+                array_keys($data[$level]),
                 $data,
                 ++$level
             );

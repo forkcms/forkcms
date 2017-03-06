@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaFolder;
 
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Doctrine\ORM\EntityRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 
@@ -55,6 +57,40 @@ final class MediaFolderRepository extends EntityRepository
         }
 
         return $mediaFolder;
+    }
+
+    /**
+     * Get counts for media group
+     *
+     * @param MediaGroup $mediaGroup
+     * @return array
+     */
+    public function getCountsForMediaGroup(MediaGroup $mediaGroup): array
+    {
+        // Init counts
+        $counts = array();
+
+        // Loop all connected items
+        foreach ($mediaGroup->getConnectedItems() as $connectedItem) {
+            /** @var MediaItem $mediaItem */
+            $mediaItem = $connectedItem->getItem();
+
+            /** @var int $folderId */
+            $folderId = $mediaItem->getFolder()->getId();
+
+            // Counts for folder doesn't exist
+            if (!array_key_exists($folderId, $counts)) {
+                // Init counts
+                $counts[$folderId] = 1;
+
+                continue;
+            }
+
+            // Bump counts
+            $counts[$folderId] += 1;
+        }
+
+        return $counts;
     }
 
     /**

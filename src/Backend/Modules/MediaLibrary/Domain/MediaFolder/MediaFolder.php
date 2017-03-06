@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaFolder;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -141,6 +142,7 @@ class MediaFolder
             'name' => $this->name,
             'createdOn' => $this->createdOn->getTimestamp(),
             'editedOn' => $this->editedOn->getTimestamp(),
+            'numberOfItems' => $this->getItems()->count(),
         ];
     }
 
@@ -157,11 +159,11 @@ class MediaFolder
     /**
      * Has a parent
      *
-     * @return mixed
+     * @return bool
      */
-    public function hasParent()
+    public function hasParent(): bool
     {
-        return ($this->parent);
+        return $this->parent instanceof MediaFolder;
     }
 
     /**
@@ -238,9 +240,9 @@ class MediaFolder
     /**
      * Gets the value of items.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getItems(): ArrayCollection
+    public function getItems(): Collection
     {
         return $this->items;
     }
@@ -248,9 +250,9 @@ class MediaFolder
     /**
      * Gets the value of children.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getChildren(): ArrayCollection
+    public function getChildren(): Collection
     {
         return $this->children;
     }

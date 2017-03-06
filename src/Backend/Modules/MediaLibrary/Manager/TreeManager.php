@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Manager;
 use Backend\Modules\MediaLibrary\Builder\CacheBuilder;
 use Backend\Core\Language\Language;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 
 /**
  * In this file we store all generic functions that we will be using in the MediaLibrary module
@@ -45,9 +46,11 @@ class TreeManager
             // loop folders tree
             foreach ($foldersTree as $folders) {
                 // loop all items on this level
-                foreach ($folders as $folderID => $folder) {
+                /** @var MediaFolder $folder */
+                foreach ($folders as $folder) {
                     // init var
-                    $parentID = (int) $folder['parentMediaFolderId'];
+                    $parentID = ($folder->hasParent()) ? $folder->getParent()->getId() : 0;
+                    $folderID = $folder->getId();
 
                     // get URL for parent
                     $URL = (int) (isset($keys[$parentID])) ? $keys[$parentID] : 0;
@@ -59,7 +62,7 @@ class TreeManager
                     $sequences[$URL]['children'][] = $folderID;
 
                     // albums
-                    $return[$folderID] = $folder;
+                    $return[$folderID] = $folder->__toArray();
                 }
             }
 
@@ -108,12 +111,12 @@ class TreeManager
                     null,
                     null,
                     array(
-                        'folder' => $folder['id']
+                        'folder' => $folder['id'],
                     )
                 )
                 . '"><ins>&#160;</ins>'
                 . $folder['name']
-                . ' (' . $folder['count'] . ')</a>' . "\n";
+                . ' (' . $folder['numberOfItems'] . ')</a>' . "\n";
 
             // find children albums or galleries
             if (isset($sequences[$folder['id']])) {

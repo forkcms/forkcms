@@ -2,6 +2,6 @@ services:
     media_library.cache_builder:
         class: Backend\Modules\MediaLibrary\Builder\CacheBuilder
         arguments:
-            - "@database"
             - "@cache.pool"
+            - "@media_library.repository.folder"
             - "@media_library.repository.group"

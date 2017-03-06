@@ -50,13 +50,6 @@ services:
         arguments:
             - "@media_library.manager.file"
             - "@fork.settings"
-    media_library.listener.media_item_update_backend_thumbnail:
-        class: Backend\Modules\MediaLibrary\EventListener\MediaItemBackendThumbnailListener
-        tags:
-            - { name: kernel.event_listener, event: media_library.event.media_item_updated, method: onMediaItemUpdated }
-        arguments:
-            - "@media_library.manager.file"
-            - "@fork.settings"
     media_library.listener.media_item_delete_backend_thumbnail:
         class: Backend\Modules\MediaLibrary\EventListener\MediaItemBackendThumbnailListener
         tags:
