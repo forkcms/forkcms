@@ -127,7 +127,11 @@ jsBackend.mediaLibraryAddFolder =
                         $('#uploadMediaFolderId').html(html);
 
                         // select the new folder
-                        if (selectFolderId) $('#uploadMediaFolderId').val(selectFolderId);
+                        if (selectFolderId) {
+                            $('#uploadMediaFolderId').val(selectFolderId);
+                        } else {
+                            $('#uploadMediaFolderId option:nth(0)').attr("selected", "selected");
+                        }
 
                         // update folders in library
                         if ($('.folderSelect').length > 0) {
