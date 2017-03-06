@@ -83,20 +83,9 @@ class MediaGroupType extends AbstractType
         // Thats why we still use a static function to get the header
         $header = Model::get('header');
 
-        // Add CSS when not in the "media module"
+        $header->addCSS('fine-uploader/jquery.fine-uploader/fine-uploader-new.css', 'node_modules');
         $header->addCSS('MediaLibrary.css', 'MediaLibrary', false, true);
-
-        // Add css
-        $header->addCSS('plupload/jquery.plupload.queue.css', 'MediaLibrary');
-        $header->addCSS('plupload/jquery.ui.plupload.css', 'MediaLibrary');
-
-        // Add js
-        $header->addJS('plupload/plupload.full.js', 'MediaLibrary');
-        $header->addJS('plupload/plupload.browserplus.js', 'MediaLibrary');
-        $header->addJS('plupload/jquery.ui.plupload/jquery.ui.plupload.js', 'MediaLibrary');
-        if (substr(Language::getWorkingLanguage(), 0, 2) != 'en') {
-            $header->addJS('plupload/i18n/' . substr(Language::getWorkingLanguage(), 0, 2) . '.js', 'MediaLibrary');
-        }
+        $header->addJS('fine-uploader/jquery.fine-uploader/jquery.fine-uploader.js', 'node_modules');
         $header->addJS('MediaLibraryAddFolder.js', 'MediaLibrary', true);
         $header->addJS('MediaLibraryHelper.js', 'MediaLibrary', true);
     }

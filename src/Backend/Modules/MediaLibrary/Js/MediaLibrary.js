@@ -128,8 +128,7 @@ jsBackend.mediaLibrary.library =
         var value = $('#' + e.data.value_id).val();
 
         // add field to form
-        if ($('#' + e.data.form_id).find('#' + e.data.name).length == 0)
-        {
+        if ($('#' + e.data.form_id).find('#' + e.data.name).length == 0) {
             $('#' + e.data.form_id).append('<input id="' + e.data.name + '" name="' + e.data.name + '" type="hidden" value="' + value + '" />');
         // update existing field
         } else {

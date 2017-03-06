@@ -30,6 +30,16 @@ class FileManager
     }
 
     /**
+     * @param string $path
+     */
+    public function createFolder(string $path)
+    {
+        if (!is_dir($path)) {
+            $this->filesystem->mkdir($path);
+        }
+    }
+
+    /**
      * Delete file
      *
      * @param string $path
@@ -109,46 +119,64 @@ class FileManager
     }
 
     /**
-     * Get unique URL
-     *
-     * @param string $URL
-     * @param bool $overwrite
-     * @param bool $useImageSharding Image sharding is used by default.
+     * @param string $targetDir
+     * @param string $name
+     * @param string $extension
      * @return string
      */
-    public function getUniqueURL(
-        string $URL,
-        bool $overwrite = false,
-        bool $useImageSharding = true
+    private function generateUniqueFileName(
+        string $targetDir,
+        string $name,
+        string $extension
     ) : string {
-        // define imageShardingFolder
-        $imageShardingFolder = '';
+        // define some variables
+        $count = 1;
 
-        // use image sharding
-        if ($useImageSharding) {
-            // get id
-            $id = $this->settings->get(
-                'MediaLibrary',
-                'upload_auto_increment',
-                0
-            ) + 1;
-
-            // define number of sharding folders
-            $numberOfShardingFolders = $this->settings->get(
-                'MediaLibrary',
-                'upload_number_of_sharding_folders',
-                15
-            );
-
-            // define image sharding folder
-            $imageShardingFolder = str_pad(($id % $numberOfShardingFolders), 2, '0', STR_PAD_LEFT);
+        // find unique filename
+        while ($this->filesystem->exists(
+            $targetDir . '/' . $name . '_' . $count . '.' . $extension
+        )) {
+            $count++;
         }
 
-        // define extension
-        $extension = \SpoonFile::getExtension($URL);
+        // redefine name
+        $name .= '_' . $count;
 
-        // define name
-        $name = (($extension != '') ? str_replace('.' . $extension, '', $URL) : $URL);
+        // return new name
+        return $name . '.' . $extension;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNextShardingFolder(): string
+    {
+        // get id
+        $id = $this->settings->get('MediaLibrary', 'upload_auto_increment', 0) + 1;
+
+        // define number of sharding folders
+        $numberOfShardingFolders = $this->settings->get(
+            'MediaLibrary',
+            'upload_number_of_sharding_folders',
+            15
+        );
+
+        // define image sharding folder
+        return str_pad(($id % $numberOfShardingFolders), 2, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * @param $directory
+     * @param $fileName
+     * @return string
+     */
+    public function getUniqueFileName(
+        $directory,
+        $fileName
+    ) : string {
+        $pathInfo = pathinfo($directory . '/' . $fileName);
+        $name = $pathInfo['filename'];
+        $extension = $pathInfo['extension'];
 
         // redefine name as urlised
         $name = Uri::getUrl($name);
@@ -159,84 +187,10 @@ class FileManager
             $name = BackendModel::generateRandomString(15, true, true, false, false);
         }
 
-        // filename should be unique, don't overwrite existing names
-        if (!$overwrite) {
-            // Define destinations
-            $destinationSourcePath = MediaItem::getUploadRootDir();
-            $destinationBackendPath = MediaItem::getUploadRootDir('backend') . '/';
-
-            // Source filename exists
-            $this->updateNameIfNotExists(
-                $destinationSourcePath,
-                $name,
-                $extension,
-                $imageShardingFolder
-            );
-
-            // Thumbnail filename exists
-            $this->updateNameIfNotExists(
-                $destinationBackendPath,
-                $name,
-                $extension,
-                $imageShardingFolder
-            );
+        if (!$this->filesystem->exists($directory . '/' . $name . '.' . $extension)) {
+            return $name . '.' . $extension;
         }
 
-        // return
-        return $imageShardingFolder . '/' . $name . '.' . $extension;
-    }
-
-    /**
-     * @param string $targetDir
-     * @param string &$name
-     * @param string $extension
-     * @param string $imageShardingFolder
-     */
-    private function updateNameIfNotExists(
-        string $targetDir,
-        string &$name,
-        string $extension,
-        string $imageShardingFolder = ''
-    ) {
-        // File with this path exists
-        if (\SpoonFile::exists($targetDir . '/' . $imageShardingFolder . '/' . $name . '.' . $extension)) {
-            // redefine name to an unique one
-            $name = self::getUniqueURLName(
-                $targetDir,
-                $name,
-                $extension,
-                $imageShardingFolder
-            );
-        }
-    }
-
-    /**
-     * @param string $targetDir
-     * @param string $name
-     * @param string $extension
-     * @param string $imageShardingFolder
-     * @return string
-     */
-    private function getUniqueURLName(
-        string $targetDir,
-        string $name,
-        string $extension,
-        string $imageShardingFolder = ''
-    ) : string {
-        // define some variables
-        $count = 1;
-
-        // find unique filename
-        while (\SpoonFile::exists(
-            $targetDir . $imageShardingFolder . '/' . $name . '_' . $count . '.' . $extension
-        )) {
-            $count++;
-        }
-
-        // redefine name
-        $name .= '_' . $count;
-
-        // return new name
-        return $name;
+        return $this->generateUniqueFileName($directory, $name, $extension);
     }
 }

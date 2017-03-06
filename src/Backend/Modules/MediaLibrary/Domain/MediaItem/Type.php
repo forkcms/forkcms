@@ -40,6 +40,8 @@ final class Type
      */
     public static function fromExtension(string $extension): Type
     {
+        $extension = strtolower($extension);
+
         // Looking for image files
         if (in_array($extension, [
             'jpg',

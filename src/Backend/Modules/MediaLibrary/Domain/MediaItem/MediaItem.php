@@ -2,8 +2,10 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -474,9 +476,9 @@ class MediaItem
     /**
      * Gets the value of groups.
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getGroups(): ArrayCollection
+    public function getGroups(): Collection
     {
         return $this->groups;
     }

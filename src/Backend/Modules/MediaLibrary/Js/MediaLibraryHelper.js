@@ -851,102 +851,60 @@ jsBackend.mediaLibraryHelper.upload =
 {
     init: function()
     {
-        // stop executing here
-        if ($("#uploader").length == 0) {
-            return false;
-        }
+        // update media for folder
+        mediaFolderId = $('#uploadMediaFolderId').val();
 
-        // add plupload
-        $("#uploader").plupload({
-            // General settings
-            runtimes : 'html5,flash,silverlight,gears,browserplus',
-            url : '/backend/ajax',
-            max_file_size : '20mb',
-            chunk_size : '1mb', // Previously this was set as '1mb', but that give problems on big files (Probably on MediaLibrary UploadMediaItem)
-            unique_names : true,
-            autostart: true,
-
-            // Resize images on clientside if we can
-            resize : {width : 2000, height : 2000, quality : 100},
-
-            // Specify what files to browse for
-            filters : [
-                {title : "Images", extensions : "gif,jpeg,jpg,png"},
-                {title : "Files", extensions : "csv,doc,docx,pdf,rtf,txt,xls,xlsx,vwx,dwg,skp"},
-                {title : "Movies", extensions : "avi,mov,mp4"},
-                {title : "Audio", extensions : "aiff,mp3,wav"},
-                {title : "Zip files", extensions : "zip"}
-            ],
-
-            // Flash settings
-            flash_swf_url : '/src/Backend/Modules/MediaLibrary/Js/plupload/plupload.flash.swf',
-
-            // Silverlight settings
-            silverlight_xap_url : '/src/Backend/Modules/MediaLibrary/Js/plupload/plupload.silverlight.xap',
-
-            // pre init events, bound before any internal events
-            preinit: {
-                // add correct upload folder to file
-                UploadFile: function(up, file) {
-                    // update media for folder
-                    mediaFolderId = $('#uploadMediaFolderId').val();
-
-                    // add some variables to POST call
-                    // @todo: this is temporary: when plupload allows objects in multipart_params,
-                    //      then fix this nasty \[module\] trick (I pullrequested this @24-02-2012 on GitHub)
-                    //      This bug is on r.361 in plupload.js
-                    up.settings.multipart_params = {
-                        'fork\[module\]' : 'MediaLibrary',
-                        'fork\[action\]' : 'UploadMediaItem',
-                        'fork\[language\]' : jsBackend.current.language,
-                        folder_id: mediaFolderId,
-                        filename: file.name
-                    };
+        $('#fine-uploader-gallery').fineUploader({
+            template: 'qq-template-gallery',
+            request: {
+                endpoint: '/backend/ajax?fork[module]=MediaLibrary&fork[action]=UploadMediaItem&fork[language]=' + jsBackend.current.language + '&folder_id=' + mediaFolderId
+            },
+            thumbnails: {
+                placeholders: {
+                    waitingPath: '/node_modules/fine-uploader/jquery.fine-uploader/placeholders/waiting-generic.png',
+                    notAvailablePath: '/node_modules/fine-uploader/jquery.fine-uploader/placeholders/not_available-generic.png'
                 }
             },
+            validation: {
+                allowedExtensions: ['jpeg', 'jpg', 'gif', 'png', 'csv', 'doc', 'docx', 'pdf', 'rtf', 'txt', 'xls', 'xlsx', 'aiff', 'mp3', 'wav']
+            },
+            callbacks: {
+                onComplete: function(id, name, responseJSON) {
+                    // add file to uploaded box
+                    jsBackend.mediaLibraryHelper.upload.addUploadedFile(responseJSON);
 
-            // post init events, bound after the internal events
-            init: {
-                // an error has occured
-                Error: function(up, error) {
-                    // file extension not allowed
-                    if (error.code == '-601') {
-                        jsBackend.messages.add('error', jsBackend.locale.err('FileExtensionNotAllowed'));
-                    // other unhandled errors
-                    } else {
-                        jsBackend.messages.add('error', error.message);
-                    }
+                    // update counter
+                    jsBackend.mediaLibraryHelper.upload.uploadedCount += 1;
+
+                    // toggle upload box
+                    jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
                 },
+                onAllComplete: function(succeeded, failed) {
+                    // clear if already exists
+                    if (media[mediaFolderId]) {
+                        // set folder to false so we can refresh items in the folder
+                        media[mediaFolderId] = false;
+                    }
 
-                // file has been uploaded
-                FileUploaded: function(up, file, info) {
-                    // server returns valid info
-                    if (info.response) {
-                        // get object instead of json
-                        var result = eval('(' + info.response + ')');
+                    // load and add media for group
+                    jsBackend.mediaLibraryHelper.group.getMedia();
 
-                        // upload complete
-                        jsBackend.mediaLibraryHelper.upload.uploadComplete(up, result.data);
-                    // something went wrong (server returns nothing)
+                    // everything uploaded, show success message
+                    if (failed.length === 0) {
+                        jsBackend.messages.add('success', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedSuccess'), succeeded.length));
+                    // not everything is uploaded successful, show error message
                     } else {
-                        jsBackend.messages.add('error', jsBackend.locale.err('MediaUploadError'));
+                        jsBackend.messages.add('error', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedError'), (succeeded.length + '","' + failed.length)));
                     }
                 }
             }
         });
-
-        // refresh
-        // @todo still not working in FF
-        $('#uploader').plupload('getUploader').refresh();
-
-        // fix chrome issue
-        $('#uploader > div.plupload').css('zIndex', '99999');
     },
 
     /**
      * Add the uploaded file to the box
      *
-     * @param item      This is the media-item that ajax returned for us.
+     * @param item This is the media-item that ajax returned for us.
      */
     addUploadedFile : function(item)
     {
@@ -954,7 +912,7 @@ jsBackend.mediaLibraryHelper.upload =
         html = '';
 
         // create element
-        html += '<li id="media-' + item.id + '" data-folder-id="' + item.folder_id + '" class="ui-state-default">';
+        html += '<li id="media-' + item.id + '" data-folder-id="' + item.folder.id + '" class="ui-state-default">';
         html += '    <div class="mediaHolder mediaHolder' + utils.string.ucfirst(item.type) + '">';
 
         // is image
@@ -991,9 +949,6 @@ jsBackend.mediaLibraryHelper.upload =
             mediaCurrentGroup.push(id);
         });
 
-        // destroy uploader
-        $('#uploader').plupload('getUploader').splice();
-
         // clear upload queue count
         jsBackend.mediaLibraryHelper.upload.uploadedCount = 0;
 
@@ -1014,10 +969,6 @@ jsBackend.mediaLibraryHelper.upload =
 
         // bind change to upload folder
         $('#uploadMediaFolderId').on('change', function() {
-            // reset pluploads queue
-            // 2016-10-05: I commented this and everything works again
-            //$('#uploader').plupload('getUploader').splice();
-
             // update upload button
             jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
         }).trigger('change');
@@ -1152,44 +1103,6 @@ jsBackend.mediaLibraryHelper.upload =
         // toggle uploaded box
         $('#uploadedMediaBox').toggle(showUploadedBox);
         $('#mediaWillBeConnectedToMediaGroup').toggle((mediaGroupI !== 0));
-    },
-
-    /**
-     * Upload complete
-     *
-     * @param Plupload up
-     * @param json item
-     */
-    uploadComplete : function(up, item)
-    {
-        // add file to uploaded box
-        jsBackend.mediaLibraryHelper.upload.addUploadedFile(item);
-
-        // update counter
-        jsBackend.mediaLibraryHelper.upload.uploadedCount += 1;
-
-        // toggle upload box
-        jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
-
-        // is all complete
-        if (up.files.length === (up.total.uploaded + up.total.failed)) {
-            // clear if already exists
-            if (media[mediaFolderId]) {
-                // set folder to false so we can refresh items in the folder
-                media[mediaFolderId] = false;
-            }
-
-            // load and add media for group
-            jsBackend.mediaLibraryHelper.group.getMedia();
-
-            // everything uploaded, show success message
-            if (up.files.length === up.total.uploaded) {
-                jsBackend.messages.add('success', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedSuccess'), up.total.uploaded));
-            // not everything is uploaded successful, show error message
-            } else {
-                jsBackend.messages.add('error', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedError'), (up.total.uploaded + '","' + up.total.failed)));
-            }
-        }
     },
 
     /**

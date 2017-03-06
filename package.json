@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "bxslider": "^4.2.10",
+    "fine-uploader": "^5.14.1",
     "photoswipe": "^4.1.1"
   }
 }

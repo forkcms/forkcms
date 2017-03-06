@@ -10,6 +10,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Symfony\Component\Filesystem\Filesystem;
+use Backend\Modules\MediaLibrary\Component\UploadHandler;
 
 /**
  * This AJAX-action is being used to upload new MediaItem items and save them into to the database.
@@ -26,232 +27,237 @@ class UploadMediaItem extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        try {
-            // 60 minutes execution time
-            set_time_limit(60 * 60);
-        } catch (\Exception $e) {
-            // Do nothing
+        /**
+         * PHP Server-Side Example for Fine Uploader (traditional endpoint handler).
+         * Maintained by Widen Enterprises.
+         *
+         * This example:
+         *  - handles chunked and non-chunked requests
+         *  - supports the concurrent chunking feature
+         *  - assumes all upload requests are multipart encoded
+         *  - handles delete requests
+         *  - handles cross-origin environments
+         *
+         * Follow these steps to get up and running with Fine Uploader in a PHP environment:
+         *
+         * 1. Setup your client-side code, as documented on http://docs.fineuploader.com.
+         *
+         * 2. Copy this file and handler.php to your server.
+         *
+         * 3. Ensure your php.ini file contains appropriate values for
+         *    max_input_time, upload_max_filesize and post_max_size.
+         *
+         * 4. Ensure your "chunks" and "files" folders exist and are writable.
+         *    "chunks" is only needed if you have enabled the chunking feature client-side.
+         *
+         * 5. If you have chunking enabled in Fine Uploader, you MUST set a value for the `chunking.success.endpoint` option.
+         *    This will be called by Fine Uploader when all chunks for a file have been successfully uploaded, triggering the
+         *    PHP server to combine all parts into one file. This is particularly useful for the concurrent chunking feature,
+         *    but is now required in all cases if you are making use of this PHP example.
+         */
+        // Include the upload handler class
+        $uploader = new UploadHandler();
+        // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
+        $uploader->allowedExtensions = array(); // all files types allowed by default
+        // Specify max file size in bytes.
+        $uploader->sizeLimit = null;
+        // Specify the input name set in the javascript.
+        $uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
+        // If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
+        $uploader->chunksFolder = "chunks";
+        //$method = $_SERVER["REQUEST_METHOD"];
+        $method = $this->get_request_method();
+
+        // Determine whether we are dealing with a regular ol' XMLHttpRequest, or
+        // an XDomainRequest
+        $_HEADERS = $this->parseRequestHeaders();
+        $iframeRequest = false;
+
+        if (!isset($_HEADERS['X-Requested-With']) || $_HEADERS['X-Requested-With'] != "XMLHttpRequest") {
+            $iframeRequest = true;
         }
 
-        $this->upgradeMemoryLimitIfNecessary();
-
-        $contentType = null;
-
-        // define folder id
-        $folderId = $this->getMediaFolder();
-
-        // define destination URL
-        $destinationURL = $this->getDestinationURL();
-
-        // define destination source path
-        $destinationSourcePath = MediaItem::getUploadRootDir() . '/' . $destinationURL;
-
-        // create folder if not exists
-        $fs = new Filesystem();
-        if (!$fs->exists(dirname($destinationSourcePath))) {
-            $fs->mkdir(dirname($destinationSourcePath));
-        }
-
-        // HTTP headers for no cache etc
-        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-        header('Cache-Control: no-store, no-cache, must-revalidate');
-        header('Cache-Control: post-check=0, pre-check=0', false);
-        header('Pragma: no-cache');
-
-        // get parameters
-        $chunk = isset($_REQUEST['chunk']) ? (int) $_REQUEST['chunk'] : 0;
-        $chunks = isset($_REQUEST['chunks']) ? (int) $_REQUEST['chunks'] : 0;
-
-        // look for the content type header
-        if (isset($_SERVER['HTTP_CONTENT_TYPE'])) {
-            $contentType = $_SERVER['HTTP_CONTENT_TYPE'];
-        }
-        if (isset($_SERVER['CONTENT_TYPE'])) {
-            $contentType = $_SERVER['CONTENT_TYPE'];
-        }
-
-        // handle multipart files
-        if (strpos($contentType, 'multipart') !== false) {
-            // upload temp file
-            if (isset($_FILES['file']['tmp_name'])
-                && is_uploaded_file($_FILES['file']['tmp_name'])
-            ) {
-                // open temp file
-                $out = fopen($destinationSourcePath, $chunk == 0 ? 'wb' : 'ab');
-
-                // write file
-                if ($out) {
-                    // read binary input stream and append it to temp file
-                    $in = fopen($_FILES['file']['tmp_name'], 'rb');
-
-                    // write
-                    if ($in) {
-                        while ($buff = fread($in, 4096)) {
-                            fwrite($out, $buff);
-                        }
-                    // error opening input stream
-                    } else {
-                        $this->throwOutputError('Failed to open input stream.');
-                    }
-
-                    fclose($in);
-                    fclose($out);
-
-                    try {
-                        unlink($_FILES['file']['tmp_name']);
-                    } catch (\Exception $e) {
-                        // Do nothing
-                    }
-
-                    // only handle uploaded file when chunk is ready
-                    if ($chunks === $chunk || ($chunks > 1 && ($chunk == ($chunks - 1)))) {
-                        // handle uploaded media item
-                        $this->handleUploadedMediaItem(
-                            $destinationURL,
-                            $folderId
-                        );
-                    }
-                // error can't write file
-                } else {
-                    $this->throwOutputError('Failed to open output stream.');
-                }
-            // error when moving uploaded file
+        /*
+         * handle the preflighted OPTIONS request. Needed for CORS operation.
+         */
+        if ($method == "OPTIONS") {
+            $this->handlePreflight();
+        /*
+         * handle a DELETE request or a POST with a _method of DELETE.
+         */
+        } elseif ($method == "DELETE") {
+            $this->handleCorsRequest();
+            $result = $uploader->handleDelete("files");
+            // iframe uploads require the content-type to be 'text/html' and
+            // return some JSON along with self-executing javascript (iframe.ss.response)
+            // that will parse the JSON and pass it along to Fine Uploader via
+            // window.postMessage
+            if ($iframeRequest == true) {
+                header("Content-Type: text/html");
+                echo json_encode($result)."<script src='http://10.0.2.2/jquery.fineuploader-4.1.1/iframe.xss.response-4.1.1.js'></script>";
             } else {
-                $this->throwOutputError('Failed to move uploaded file.');
+                echo json_encode($result);
             }
-        // handle non multipart uploads older WebKit versions didn't support multipart in HTML5
-        } else {
-            // open temp file
-            $out = fopen($destinationSourcePath, $chunk == 0 ? 'wb' : 'ab');
+        } elseif ($method == "POST") {
+            $this->handleCorsRequest();
+            header("Content-Type: text/plain");
 
-            // write temp file
-            if ($out) {
-                // read binary input stream and append it to temp file
-                $in = fopen('php://input', 'rb');
+            // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
+            // For example: /myserver/handlers/endpoint.php?done
+            if (isset($_GET["done"])) {
+                $result = $uploader->combineChunks("files");
+            // Handles upload requests
+            } else {
+                // Define upload dir
+                $uploadDir = MediaItem::getUploadRootDir() . '/' . $this->get('media_library.manager.file')->getNextShardingFolder();
 
-                if ($in) {
-                    while ($buff = fread($in, 4096)) {
-                        fwrite($out, $buff);
-                    }
-                // error opening input stream
-                } else {
-                    $this->throwOutputError('Failed to open input stream.');
-                }
+                // Generate folder if not exists
+                $this->get('media_library.manager.file')->createFolder($uploadDir);
 
-                fclose($in);
-                fclose($out);
+                // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
+                $result = $uploader->handleUpload($uploadDir);
 
-                // handle uploaded media item
-                $this->handleUploadedMediaItem(
-                    $destinationURL,
-                    $folderId
+                // To return a name used for uploaded file you can use the following line.
+                $result["uploadName"] = $uploader->getUploadName();
+
+                // Generate filename which doesn't exist yet in our media library
+                $newName = $this->get('media_library.manager.file')->getUniqueFileName(
+                    $uploadDir,
+                    $result['uploadName']
                 );
-            // error opening output stream
-            } else {
-                $this->throwOutputError('Failed to open output stream.');
+
+                $fs = new Filesystem();
+                if ($fs->exists($uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'])) {
+                    // Move file to correct folder
+                    $fs->rename(
+                        $uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'],
+                        $uploadDir . '/' . $newName
+                    );
+
+                    // Remove the old folder
+                    $fs->remove($uploadDir . '/' . $result['uuid']);
+                }
+
+                /** @var CreateMediaItemFromSource $createMediaItem */
+                $createMediaItemFromSource = new CreateMediaItemFromSource(
+                    $uploadDir . '/' . $newName,
+                    $this->getMediaFolder(),
+                    BackendAuthentication::getUser()->getUserId()
+                );
+
+                // Handle the MediaItem create
+                $this->get('command_bus')->handle($createMediaItemFromSource);
+                $this->get('event_dispatcher')->dispatch(
+                    MediaItemCreated::EVENT_NAME,
+                    new MediaItemCreated($createMediaItemFromSource->getMediaItem())
+                );
+
+                // set media auto_increment
+                $this->get('fork.settings')->set(
+                    'MediaLibrary',
+                    'upload_auto_increment',
+                    $this->get('fork.settings')->get(
+                        'MediaLibrary',
+                        'upload_auto_increment',
+                        0
+                    ) + 1
+                );
+
+                $resultData = json_encode(
+                    array_merge(
+                        $result,
+                        $createMediaItemFromSource->getMediaItem()->__toArray()
+                    )
+                );
+
+                // iframe uploads require the content-type to be 'text/html' and
+                // return some JSON along with self-executing javascript (iframe.ss.response)
+                // that will parse the JSON and pass it along to Fine Uploader via
+                // window.postMessage
+                if ($iframeRequest === true) {
+                    header("Content-Type: text/html");
+                    $resultData .= "<script src='http://{{SERVER_URL}}/{{FINE_UPLOADER_FOLDER}}/iframe.xss.response.js'></script>";
+                }
+                echo $resultData;
+                exit();
             }
+        } else {
+            header("HTTP/1.0 405 Method Not Allowed");
         }
     }
 
-    /**
-     * Handle the uploaded media item
-     *
-     * @param string $name The url for the new uploaded file
-     * @param int $folderId The id of the folder where the media has been uploaded
-     */
-    private function handleUploadedMediaItem(
-        string $name,
-        int $folderId
-    ) {
-        // Define source
-        $source = MediaItem::getUploadRootDir() . '/' . $name;
+    // This will retrieve the "intended" request method.  Normally, this is the
+    // actual method of the request.  Sometimes, though, the intended request method
+    // must be hidden in the parameters of the request.  For example, when attempting to
+    // send a DELETE request in a cross-origin environment in IE9 or older, it is not
+    // possible to send a DELETE request.  So, we send a POST with the intended method,
+    // DELETE, in a "_method" parameter.
+    private function get_request_method()
+    {
+        global $HTTP_RAW_POST_DATA;
+        // This should only evaluate to true if the Content-Type is undefined
+        // or unrecognized, such as when XDomainRequest has been used to
+        // send the request.
+        if (isset($HTTP_RAW_POST_DATA)) {
+            parse_str($HTTP_RAW_POST_DATA, $_POST);
+        }
 
-        /** @var MediaFolder $mediaFolder */
-        $mediaFolder = $this->loadMediaFolder($folderId);
+        if (isset($_POST["_method"]) && $_POST["_method"] != null) {
+            return $_POST["_method"];
+        }
 
-        /** @var CreateMediaItemFromSource $createMediaItem */
-        $createMediaItemFromSource = new CreateMediaItemFromSource(
-            $source,
-            $mediaFolder,
-            BackendAuthentication::getUser()->getUserId()
-        );
+        return $_SERVER["REQUEST_METHOD"];
+    }
 
-        // Handle the MediaItem create
-        $this->get('command_bus')->handle($createMediaItemFromSource);
-        $this->get('event_dispatcher')->dispatch(
-            MediaItemCreated::EVENT_NAME,
-            new MediaItemCreated($createMediaItemFromSource->getMediaItem())
-        );
-
-        // set media auto_increment
-        $this->get('fork.settings')->set(
-            'MediaLibrary',
-            'upload_auto_increment',
-            $this->get('fork.settings')->get(
-                'MediaLibrary',
-                'upload_auto_increment',
-                0
-            ) + 1
-        );
-
-        $this->output(
-            self::OK,
-            $createMediaItemFromSource->getMediaItem()->__toArray(),
-            Language::msg('MediaUploadedSuccessful')
-        );
+    private function parseRequestHeaders()
+    {
+        $headers = array();
+        foreach ($_SERVER as $key => $value) {
+            if (substr($key, 0, 5) <> 'HTTP_') {
+                continue;
+            }
+            $header = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
+            $headers[$header] = $value;
+        }
+        return $headers;
     }
 
     /**
      * Get MediaFolder
      *
-     * @return int
+     * @return MediaFolder
      */
-    protected function getMediaFolder(): int
+    private function getMediaFolder(): MediaFolder
     {
         // Define id
-        $id = $this->get('request')->request->get('folder_id');
+        $id = $this->get('request')->query->get('folder_id');
 
         if ($id === null) {
             $this->throwOutputError('MediaFolderIsRequired');
         }
 
-        return (int) $id;
-    }
-
-    /**
-     * Get destination url
-     *
-     * @return string
-     */
-    protected function getDestinationURL(): string
-    {
-        $destinationURL = $this->get('request')->request->get('filename');
-
-        if ($destinationURL === null) {
-            $this->throwOutputError('FilenameIsRequired');
-        }
-
-        // redefine destination URL as unique URL
-        return $this->get('media_library.manager.file')->getUniqueURL(
-            (string) $destinationURL,
-            self::OVERRIDE_EXISTING
-        );
-    }
-
-    /**
-     * @param int $id
-     * @throws \Exception
-     * @return MediaFolder
-     */
-    private function loadMediaFolder(int $id): MediaFolder
-    {
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->getOneById($id);
+            return $this->get('media_library.repository.folder')->getOneById((int) $id);
         } catch (\Exception $e) {
             $this->throwOutputError('NotExistingMediaFolder');
         }
+    }
+
+    private function handleCorsRequest()
+    {
+        header("Access-Control-Allow-Origin: *");
+    }
+
+    /*
+     * handle pre-flighted requests. Needed for CORS operation
+     */
+    private function handlePreflight()
+    {
+        $this->handleCorsRequest();
+        header("Access-Control-Allow-Methods: POST, DELETE");
+        header("Access-Control-Allow-Credentials: true");
+        header("Access-Control-Allow-Headers: Content-Type, X-Requested-With, Cache-Control");
     }
 
     /**
@@ -265,40 +271,5 @@ class UploadMediaItem extends BackendBaseAJAXAction
             null,
             Language::err($error)
         );
-    }
-
-    private function upgradeMemoryLimitIfNecessary()
-    {
-        $memoryLimit = $this->returnBytes(ini_get('memory_limit'));
-
-        if ($memoryLimit < (128 * 1024 * 1024)) {
-            // increase memory limit
-            ini_set('memory_limit', '128M');
-        }
-    }
-
-    /**
-     * @param $val
-     * @return int
-     */
-    private function returnBytes($val) : int
-    {
-        $val = trim($val);
-        $last = strtolower($val[strlen($val)-1]);
-
-        $amplifier = 1;
-        switch ($last) {
-            case 'g':
-                $amplifier = 1024 * 1024 * 1024;
-                break;
-            case 'm':
-                $amplifier = 1024 * 1024;
-                break;
-            case 'k':
-                $amplifier = 1024;
-                break;
-        }
-
-        return $val * $amplifier;
     }
 }
