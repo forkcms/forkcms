@@ -20,6 +20,20 @@ gulp.task("build:backend:assets:copy-fonts-vendors", function() {
       .pipe(gulp.dest("./fonts/vendors"));
 });
 
+gulp.task("build:backend:assets:copy-fine-uploader-css-and-images", function() {
+  return gulp.src([
+    "./node_modules/fine-uploader/jquery.fine-uploader/fine-uploader-new.min.css",
+    "./node_modules/fine-uploader/jquery.fine-uploader/continue.gif",
+    "./node_modules/fine-uploader/jquery.fine-uploader/edit.gif",
+    "./node_modules/fine-uploader/jquery.fine-uploader/loading.gif",
+    "./node_modules/fine-uploader/jquery.fine-uploader/pause.gif",
+    "./node_modules/fine-uploader/jquery.fine-uploader/processing.gif",
+    "./node_modules/fine-uploader/jquery.fine-uploader/retry.gif",
+    "./node_modules/fine-uploader/jquery.fine-uploader/trash.gif",
+  ])
+      .pipe(gulp.dest("./css/vendors/fine-uploader"));
+});
+
 gulp.task("build:backend:assets:copy-js-vendors", function() {
   return gulp.src([
     "./node_modules/jquery/dist/jquery.min.js",
@@ -27,6 +41,7 @@ gulp.task("build:backend:assets:copy-js-vendors", function() {
     "./node_modules/jquery-ui-dist/jquery-ui.min.js",
     "./node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
     "./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
+    "./node_modules/fine-uploader/jquery.fine-uploader/jquery.fine-uploader.min.js",
   ])
       .pipe(gulp.dest("./js/vendors"));
 });
@@ -57,6 +72,7 @@ gulp.task("build:backend", function() {
       "build:backend:assets:copy-css-vendors",
       "build:backend:assets:copy-fonts-vendors",
       "build:backend:assets:copy-js-vendors",
+      "build:backend:assets:copy-fine-uploader-css-and-images",
       "build:backend:sass:generate-css"
   );
 });
