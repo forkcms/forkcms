@@ -861,8 +861,8 @@ jsBackend.mediaLibraryHelper.upload =
             },
             thumbnails: {
                 placeholders: {
-                    waitingPath: '/node_modules/fine-uploader/jquery.fine-uploader/placeholders/waiting-generic.png',
-                    notAvailablePath: '/node_modules/fine-uploader/jquery.fine-uploader/placeholders/not_available-generic.png'
+                    waitingPath: '/css/vendors/fine-uploader/waiting-generic.png',
+                    notAvailablePath: '/css/vendors/fine-uploader/not_available-generic.png'
                 }
             },
             validation: {

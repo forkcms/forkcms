@@ -30,6 +30,8 @@ gulp.task("build:backend:assets:copy-fine-uploader-css-and-images", function() {
     "./node_modules/fine-uploader/jquery.fine-uploader/processing.gif",
     "./node_modules/fine-uploader/jquery.fine-uploader/retry.gif",
     "./node_modules/fine-uploader/jquery.fine-uploader/trash.gif",
+    "./node_modules/fine-uploader/jquery.fine-uploader/placeholders/waiting-generic.png",
+    "./node_modules/fine-uploader/jquery.fine-uploader/placeholders/not_available-generic.png",
   ])
       .pipe(gulp.dest("./css/vendors/fine-uploader"));
 });
