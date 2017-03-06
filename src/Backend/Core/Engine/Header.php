@@ -96,10 +96,7 @@ class Header extends Base\Object
         // no actual path given: create
         if (!$overwritePath) {
             // we have to build the path, but core is a special one
-            if ($module === 'node_modules') {
-                // core is special because it isn't a real module
-                $file = '/node_modules/' . $file;
-            } elseif ($module !== 'Core') {
+            if ($module !== 'Core') {
                 $file = '/src/Backend/Modules/' . $module . '/Layout/Css/' . $file;
             } else {
                 // core is special because it isn't a real module
@@ -165,10 +162,7 @@ class Header extends Base\Object
         // is the given path the real path?
         if (!$overwritePath) {
             // we have to build the path, but core is a special one
-            if ($module === 'node_modules') {
-                // core is special because it isn't a real module
-                $file = '/node_modules/' . $file;
-            } elseif ($module !== 'Core') {
+            if ($module !== 'Core') {
                 $file = '/src/Backend/Modules/' . $module . '/Js/' . $file;
             } else {
                 // core is special because it isn't a real module
