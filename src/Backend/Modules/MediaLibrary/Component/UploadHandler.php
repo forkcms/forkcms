@@ -39,7 +39,14 @@ class UploadHandler
         $initialFiles = array();
 
         for ($i = 0; $i < 5000; $i++) {
-            array_push($initialFiles, array("name" => "name" + $i, uuid => "uuid" + $i, thumbnailUrl => "/test/dev/handlers/vendor/fineuploader/php-traditional-server/fu.png"));
+            array_push(
+                $initialFiles,
+                array(
+                    "name" => "name" . $i,
+                    "uuid" => "uuid" . $i,
+                    "thumbnailUrl" => "/test/dev/handlers/vendor/fineuploader/php-traditional-server/fu.png"
+                )
+            );
         }
 
         return $initialFiles;
@@ -96,8 +103,10 @@ class UploadHandler
 
     /**
      * Process the upload.
+     *
      * @param string $uploadDirectory Target directory.
      * @param string $name Overwrites the name of the file.
+     * @return array
      */
     public function handleUpload($uploadDirectory, $name = null)
     {
@@ -217,11 +226,12 @@ class UploadHandler
 
     /**
      * Process a delete.
+     *
      * @param string $uploadDirectory Target directory.
      * @params string $name Overwrites the name of the file.
-     *
+     * @return array
      */
-    public function handleDelete($uploadDirectory, $name=null)
+    public function handleDelete($uploadDirectory, $name = null)
     {
         if ($this->isInaccessible($uploadDirectory)) {
             return array('error' => "Server error. Uploads directory isn't writable" . ((!$this->isWindows()) ? " or executable." : "."));
@@ -249,7 +259,7 @@ class UploadHandler
             return array("success" => true, "uuid" => $uuid);
         } else {
             return array("success" => false,
-                "error" => "File not found! Unable to delete.".$url,
+                "error" => "File not found! Unable to delete." . $url,
                 "path" => $uuid
             );
         }
@@ -258,8 +268,10 @@ class UploadHandler
     /**
      * Returns a path to use with this upload. Check that the name does not exist,
      * and appends a suffix otherwise.
+     *
      * @param string $uploadDirectory Target directory
      * @param string $filename The name of the file to use.
+     * @return bool|string
      */
     protected function getUniqueTargetPath($uploadDirectory, $filename)
     {
@@ -347,23 +359,34 @@ class UploadHandler
 
     /**
      * Converts a given size with units to bytes.
+     *
      * @param string $str
+     * @return int
      */
-    protected function toBytes($str)
+    protected function toBytes($str): int
     {
         $str = trim($str);
         $last = strtolower($str[strlen($str)-1]);
-        $val;
+
         if (is_numeric($last)) {
             $val = (int) $str;
         } else {
             $val = (int) substr($str, 0, -1);
         }
-        switch ($last) {
-            case 'g': case 'G': $val *= 1024;
-            case 'm': case 'M': $val *= 1024;
-            case 'k': case 'K': $val *= 1024;
+
+        $last = strtoupper($last);
+        if ($last === 'G') {
+            $val *= 1073741824;
         }
+
+        if ($last === 'M') {
+            $val *= 1048576;
+        }
+
+        if ($last === 'K') {
+            $val *= 1024;
+        }
+
         return $val;
     }
 
@@ -377,8 +400,9 @@ class UploadHandler
      * otherwise, it checks additionally for executable status (like before).
      *
      * @param string $directory The target directory to test access
+     * @return bool
      */
-    protected function isInaccessible($directory)
+    protected function isInaccessible($directory): bool
     {
         $isWin = $this->isWindows();
         $folderInaccessible = ($isWin) ? !is_writable($directory) : (!is_writable($directory) && !is_executable($directory));
@@ -390,8 +414,7 @@ class UploadHandler
      *
      * @return boolean
      */
-
-    protected function isWindows()
+    protected function isWindows(): bool
     {
         $isWin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
         return $isWin;

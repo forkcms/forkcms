@@ -66,7 +66,7 @@ class UploadMediaItem extends BackendBaseAJAXAction
         // If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
         $uploader->chunksFolder = "chunks";
         //$method = $_SERVER["REQUEST_METHOD"];
-        $method = $this->get_request_method();
+        $method = $this->getRequestMethod();
 
         // Determine whether we are dealing with a regular ol' XMLHttpRequest, or
         // an XDomainRequest
@@ -192,7 +192,7 @@ class UploadMediaItem extends BackendBaseAJAXAction
     // send a DELETE request in a cross-origin environment in IE9 or older, it is not
     // possible to send a DELETE request.  So, we send a POST with the intended method,
     // DELETE, in a "_method" parameter.
-    private function get_request_method()
+    private function getRequestMethod()
     {
         global $HTTP_RAW_POST_DATA;
         // This should only evaluate to true if the Content-Type is undefined
