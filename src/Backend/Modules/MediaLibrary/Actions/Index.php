@@ -72,8 +72,8 @@ class Index extends BackendBaseActionIndex
             $dataGrids[$type] = [
                 'label' => Language::lbl('MediaMultiple' . ucfirst($type)),
                 'tabName' => 'tab' . ucfirst($type),
-                'type' => $type,
-                'dataGrid' => $dataGrid->getContent(),
+                'mediaType' => $type,
+                'html' => $dataGrid->getContent(),
                 'numberOfResults' => $dataGrid->getNumResults(),
             ];
         }

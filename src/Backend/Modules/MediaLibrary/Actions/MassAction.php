@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem as DeleteMediaItemCommand;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
@@ -81,8 +81,8 @@ class MassAction extends BackendBaseAction
 
                         break;
                     case self::DELETE:
-                        /** @var DeleteMediaItemCommand $deleteMediaItem */
-                        $deleteMediaItem = new DeleteMediaItemCommand($mediaItem);
+                        /** @var DeleteMediaItem $deleteMediaItem */
+                        $deleteMediaItem = new DeleteMediaItem($mediaItem);
 
                         // Handle the MediaItem delete
                         $this->get('command_bus')->handle($deleteMediaItem);
@@ -179,7 +179,7 @@ class MassAction extends BackendBaseAction
      */
     private function getSelectedAction(): string
     {
-        $action = $this->get('request')->request->get('action', self::MOVE);
+        $action = $this->get('request')->query->get('action', self::MOVE);
 
         if (!in_array($action, [self::MOVE, self::DELETE])) {
             throw new \Exception('Action not exists');
@@ -214,7 +214,7 @@ class MassAction extends BackendBaseAction
      */
     private function getSelectedType(): string
     {
-        $from = $this->get('request')->request->get('from', 'image');
+        $from = $this->get('request')->query->get('from', 'image');
 
         if (!in_array($from, Type::getPossibleValues())) {
             throw new \Exception('From not exists');

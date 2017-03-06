@@ -43,11 +43,11 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="table-responsive">
-                    {{ dataGrid.dataGrid|raw }}
-                    <input type="hidden" name="from" value="{{ dataGrid.type }}" />
+                    <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
                     {% if mediaFolder %}
                       <input type="hidden" name="current_folder_id" value="{{ mediaFolder.id }}" />
                     {% endif %}
+                    {{ dataGrid.html|raw }}
 
                     {# Mass action: Dialog to delete selected media items #}
                     <div class="modal fade" id="confirmDeleteMediaItems" tabindex="-1" role="dialog" aria-hidden="true">
