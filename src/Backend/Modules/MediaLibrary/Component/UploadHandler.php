@@ -110,9 +110,7 @@ class UploadHandler
      */
     public function handleUpload($uploadDirectory, $name = null)
     {
-        if (is_writable($this->chunksFolder) &&
-            1 == mt_rand(1, 1/$this->chunksCleanupProbability)) {
-
+        if (is_writable($this->chunksFolder) && 1 == mt_rand(1, 1/$this->chunksCleanupProbability)) {
             // Run garbage collection
             $this->cleanupChunks();
         }
