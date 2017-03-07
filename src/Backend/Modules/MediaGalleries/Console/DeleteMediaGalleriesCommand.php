@@ -35,7 +35,7 @@ class DeleteMediaGalleriesCommand extends ContainerAwareCommand
                 'delete-media-items',
                 null,
                 InputOption::VALUE_NONE,
-                'If set, all MediaItems from library will be deleted as well.'
+                'If set, all connected MediaItems will be deleted as well from the library.'
             )
         ;
     }
@@ -67,6 +67,7 @@ class DeleteMediaGalleriesCommand extends ContainerAwareCommand
             /** @var DeleteMediaGallery $deleteMediaGallery */
             $deleteMediaGallery = new DeleteMediaGallery($mediaGallery);
 
+            // Handle the MediaGallery delete
             $this->getContainer()->get('command_bus')->handle(
                 $deleteMediaGallery,
                 $this->deleteMediaItems
