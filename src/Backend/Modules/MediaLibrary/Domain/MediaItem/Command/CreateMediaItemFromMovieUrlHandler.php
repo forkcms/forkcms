@@ -27,7 +27,7 @@ final class CreateMediaItemFromMovieUrlHandler
     {
         /** @var MediaItem $mediaItem */
         $mediaItem = MediaItem::createFromMovieUrl(
-            $createMediaItemFromMovieUrl->movieService,
+            $createMediaItemFromMovieUrl->source,
             $createMediaItemFromMovieUrl->movieId,
             $createMediaItemFromMovieUrl->movieTitle,
             $createMediaItemFromMovieUrl->mediaFolder,

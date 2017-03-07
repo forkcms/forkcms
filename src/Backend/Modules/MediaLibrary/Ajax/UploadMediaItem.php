@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromSource;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageType;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
@@ -138,18 +138,18 @@ class UploadMediaItem extends BackendBaseAJAXAction
                     $fs->remove($uploadDir . '/' . $result['uuid']);
                 }
 
-                /** @var CreateMediaItemFromSource $createMediaItem */
-                $createMediaItemFromSource = new CreateMediaItemFromSource(
+                /** @var CreateMediaItemFromLocalStorageType $createMediaItem */
+                $createMediaItemFromLocalSource = new CreateMediaItemFromLocalStorageType(
                     $uploadDir . '/' . $newName,
                     $this->getMediaFolder(),
                     BackendAuthentication::getUser()->getUserId()
                 );
 
                 // Handle the MediaItem create
-                $this->get('command_bus')->handle($createMediaItemFromSource);
+                $this->get('command_bus')->handle($createMediaItemFromLocalSource);
                 $this->get('event_dispatcher')->dispatch(
                     MediaItemCreated::EVENT_NAME,
-                    new MediaItemCreated($createMediaItemFromSource->getMediaItem())
+                    new MediaItemCreated($createMediaItemFromLocalSource->getMediaItem())
                 );
 
                 // set media auto_increment
@@ -166,7 +166,7 @@ class UploadMediaItem extends BackendBaseAJAXAction
                 $resultData = json_encode(
                     array_merge(
                         $result,
-                        $createMediaItemFromSource->getMediaItem()->__toArray()
+                        $createMediaItemFromLocalSource->getMediaItem()->__toArray()
                     )
                 );
 

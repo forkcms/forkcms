@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
 
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 
 final class CreateMediaItemFromMovieUrl
 {
@@ -13,35 +14,35 @@ final class CreateMediaItemFromMovieUrl
     /** @var string */
     public $movieTitle;
 
-    /** @var string */
-    public $movieService;
-
     /** @var MediaFolder */
     public $mediaFolder;
-
-    /** @var int */
-    public $userId;
 
     /** @var MediaItem */
     private $mediaItem;
 
+    /** @var int */
+    public $userId;
+
+    /** @var StorageType */
+    public $source;
+
     /**
      * CreateMediaItemFromMovieUrl constructor.
      *
-     * @param string $movieService
+     * @param StorageType $source
      * @param string $movieId
      * @param string $movieTitle
      * @param MediaFolder $mediaFolder
      * @param int $userId
      */
     public function __construct(
-        string $movieService,
+        StorageType $source,
         string $movieId,
         string $movieTitle,
         MediaFolder $mediaFolder,
         int $userId
     ) {
-        $this->movieService = $movieService;
+        $this->source = $source;
         $this->movieTitle = $movieTitle;
         $this->movieId = $movieId;
         $this->mediaFolder = $mediaFolder;

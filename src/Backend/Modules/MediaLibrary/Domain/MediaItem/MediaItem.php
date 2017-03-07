@@ -18,10 +18,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
  */
 class MediaItem
 {
-    // Possible MediaMime types for movies
-    const MIME_YOUTUBE = 'youtube';
-    const MIME_VIMEO = 'vimeo';
-
     /**
      * @var string
      *
@@ -55,6 +51,13 @@ class MediaItem
     protected $userId;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="media_item_storage_type", options={"default"="local"})
+     */
+    protected $storageType;
+
+    /**
      * @var Type
      *
      * @ORM\Column(type="media_item_type")
@@ -64,7 +67,7 @@ class MediaItem
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $mime;
 
@@ -142,7 +145,7 @@ class MediaItem
      * @param string $title
      * @param string $url
      * @param Type $type
-     * @param string $mime
+     * @param StorageType $storageType
      * @param MediaFolder $folder
      * @param int $userId
      */
@@ -150,14 +153,14 @@ class MediaItem
         string $title,
         string $url,
         Type $type,
-        string $mime,
+        StorageType $storageType,
         MediaFolder $folder,
         int $userId
     ) {
         $this->folder = $folder;
         $this->userId = (int) $userId;
         $this->type = $type;
-        $this->mime = $mime;
+        $this->storageType = $storageType;
         $this->url = (string) $url;
         $this->title = (string) $title;
         $this->createdOn = new \DateTime();
@@ -166,20 +169,20 @@ class MediaItem
     }
 
     /**
-     * @param string $source
+     * @param string $path
      * @param MediaFolder $folder
      * @param int $userId
      * @return MediaItem
      * @throws \Exception
      */
-    public static function createFromSource(
-        string $source,
+    public static function createFromLocalStorageType(
+        string $path,
         MediaFolder $folder,
         int $userId
     ) : MediaItem {
         try {
-            // Define file
-            $file = new File($source);
+            // Define file from path
+            $file = new File($path);
 
             // We don't have a file
             if (!$file->isFile()) {
@@ -204,20 +207,21 @@ class MediaItem
                 $title,
                 $file->getFilename(),
                 $mediaItemType,
-                $file->getMimeType(),
+                StorageType::local(),
                 $folder,
                 $userId
             );
 
+            $mediaItem->mime = $file->getMimeType();
             $mediaItem->shardingFolderName = $shardingFolderName;
             $mediaItem->size = $file->getSize();
 
             // Image
             if ($mediaItemType->isImage()) {
                 try {
-                    list($width, $height) = getimagesize($source);
+                    list($width, $height) = getimagesize($path);
                 } catch (\Exception $e) {
-                    throw new \Exception('Error happened when creating MediaItem from source "' . $source . '". The error = ' . $e->getMessage());
+                    throw new \Exception('Error happened when creating MediaItem from path "' . $path . '". The error = ' . $e->getMessage());
                 }
 
                 $mediaItem->setResolution($width, $height);
@@ -226,13 +230,13 @@ class MediaItem
             return $mediaItem;
         } catch (FileNotFoundException $e) {
             throw new \Exception(
-                'This is not a valid file: "' . $source . '".'
+                'This is not a valid file: "' . $path . '".'
             );
         }
     }
 
     /**
-     * @param string $movieService
+     * @param StorageType $movieStorageType
      * @param string $movieId
      * @param string $movieTitle
      * @param MediaFolder $folder
@@ -240,7 +244,7 @@ class MediaItem
      * @return MediaItem
      */
     public static function createFromMovieUrl(
-        string $movieService,
+        StorageType $movieStorageType,
         string $movieId,
         string $movieTitle,
         MediaFolder $folder,
@@ -250,7 +254,7 @@ class MediaItem
             $movieId,
             $movieTitle,
             Type::movie(),
-            $movieService,
+            $movieStorageType,
             $folder,
             $userId
         );
@@ -268,6 +272,7 @@ class MediaItem
             'folder' => $this->folder->__toArray(),
             'userId' => $this->userId,
             'type' => (string) $this->type,
+            'storageType' => (string) $this->storageType,
             'mime' => $this->mime,
             'shardingFolderName' => $this->shardingFolderName,
             'url' => $this->url,
@@ -347,24 +352,11 @@ class MediaItem
     }
 
     /**
-     * Get all the mimes for movie
-     *
-     * @return string[]
-     */
-    public static function getMimesForMovie(): array
-    {
-        return [
-            self::MIME_YOUTUBE,
-            self::MIME_VIMEO,
-        ];
-    }
-
-    /**
      * Gets the value of shardingFolderName.
      *
-     * @return string
+     * @return string|null
      */
-    public function getScardingFolderName(): string
+    public function getScardingFolderName()
     {
         return $this->shardingFolderName;
     }
@@ -501,7 +493,7 @@ class MediaItem
     protected static function getSubdirectory(string $subDirectory = null): string
     {
         if ($subDirectory === null || $subDirectory === 'source') {
-            return 'Source';
+            return 'StorageType';
         } elseif (strtolower($subDirectory) === 'backend') {
             return 'Backend';
         } elseif (strtolower($subDirectory) === 'frontend') {

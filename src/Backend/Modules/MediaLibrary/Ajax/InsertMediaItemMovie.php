@@ -9,6 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMov
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 
 /**
  * This AJAX-action will insert a new MediaFolder.
@@ -25,18 +26,15 @@ class InsertMediaItemMovie extends BackendBaseAJAXAction
         /** @var MediaFolder $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
 
-        /** @var string|null $movieService */
-        $movieService = $this->getMovieService();
+        /** @var StorageType $movieStorageType */
+        $movieStorageType = $this->getMovieStorageType();
 
         // Define parameters
         $movieId = trim($this->get('request')->request->get('id'));
         $movieTitle = trim($this->get('request')->request->get('title'));
 
-        // Mime not valid
-        if ($movieService === null) {
-            $this->throwOutputError('MediaMovieSourceIsRequired');
-        // External video id not valid
-        } elseif ($movieId === null) {
+        // Movie id not null
+        if ($movieId === null) {
             $this->throwOutputError('MediaMovieIdIsRequired');
         // Title not valid
         } elseif ($movieTitle === null) {
@@ -48,7 +46,7 @@ class InsertMediaItemMovie extends BackendBaseAJAXAction
         } else {
             /** @var CreateMediaItemFromMovieUrl $createMediaItem */
             $createMediaItemFromMovieUrl = new CreateMediaItemFromMovieUrl(
-                $movieService,
+                $movieStorageType,
                 (string) $movieId,
                 (string) $movieTitle,
                 $mediaFolder,
@@ -94,6 +92,24 @@ class InsertMediaItemMovie extends BackendBaseAJAXAction
     }
 
     /**
+     * @return StorageType
+     */
+    protected function getMovieStorageType(): StorageType
+    {
+        $movieStorageType = $this->get('request')->request->get('mime');
+
+        if ($movieStorageType === null || !in_array((string) $movieStorageType, StorageType::getPossibleMovieStorageTypeValues())) {
+            $this->throwOutputError('MovieStorageTypeNotExists');
+        }
+
+        try {
+            return StorageType::fromString($movieStorageType);
+        } catch (\Exception $e) {
+            $this->throwOutputError('MovieStorageTypeNotExists');
+        }
+    }
+
+    /**
      * @param $error
      */
     private function throwOutputError(string $error)
@@ -104,19 +120,5 @@ class InsertMediaItemMovie extends BackendBaseAJAXAction
             null,
             Language::err($error)
         );
-    }
-
-    /**
-     * @return string
-     */
-    protected function getMovieService(): string
-    {
-        $movieService = $this->get('request')->request->get('mime');
-
-        if ($movieService === null || !in_array((string) $movieService, MediaItem::getMimesForMovie())) {
-            $this->throwOutputError('MovieServiceNotExists');
-        }
-
-        return (string) $movieService;
     }
 }

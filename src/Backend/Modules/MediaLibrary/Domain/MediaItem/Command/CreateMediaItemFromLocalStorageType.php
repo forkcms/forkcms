@@ -5,10 +5,10 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 
-final class CreateMediaItemFromSource
+final class CreateMediaItemFromLocalStorageType
 {
     /** @var string */
-    public $source;
+    public $path;
 
     /** @var MediaFolder */
     public $mediaFolder;
@@ -20,19 +20,19 @@ final class CreateMediaItemFromSource
     private $mediaItem;
 
     /**
-     * CreateMediaItemFromSource constructor.
+     * CreateMediaItemFromStorageType constructor.
      *
-     * @param string $source
+     * @param string $path
      * @param MediaFolder $mediaFolder
      * @param int $userId
      * @throws \Exception
      */
     public function __construct(
-        string $source,
+        string $path,
         MediaFolder $mediaFolder,
         int $userId = 0
     ) {
-        $this->source = $source;
+        $this->path = $path;
         $this->mediaFolder = $mediaFolder;
         $this->userId = $userId;
     }

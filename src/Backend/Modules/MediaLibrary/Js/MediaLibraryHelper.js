@@ -856,9 +856,6 @@ jsBackend.mediaLibraryHelper.upload =
 
         $('#fine-uploader-gallery').fineUploader({
             template: 'qq-template-gallery',
-            request: {
-                endpoint: '/backend/ajax?fork[module]=MediaLibrary&fork[action]=UploadMediaItem&fork[language]=' + jsBackend.current.language + '&folder_id=' + mediaFolderId
-            },
             thumbnails: {
                 placeholders: {
                     waitingPath: '/css/vendors/fine-uploader/waiting-generic.png',
@@ -869,6 +866,10 @@ jsBackend.mediaLibraryHelper.upload =
                 allowedExtensions: ['jpeg', 'jpg', 'gif', 'png', 'csv', 'doc', 'docx', 'pdf', 'rtf', 'txt', 'xls', 'xlsx', 'aiff', 'mp3', 'wav']
             },
             callbacks: {
+                onUpload:  function() {
+                    // We must set the endpoint dynamically, because "uploadMediaFolderId" is null at start and is async loaded using AJAX.
+                    this.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=UploadMediaItem&fork[language]=' + jsBackend.current.language + '&folder_id=' + $('#uploadMediaFolderId').val());
+                },
                 onComplete: function(id, name, responseJSON) {
                     // add file to uploaded box
                     jsBackend.mediaLibraryHelper.upload.addUploadedFile(responseJSON);

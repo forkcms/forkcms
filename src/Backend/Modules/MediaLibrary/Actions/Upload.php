@@ -4,9 +4,9 @@ namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 
 /**
  * This is the class to Upload MediaItem items
@@ -68,7 +68,7 @@ class Upload extends BackendBaseActionAdd
         MediaGroupType::parseFiles();
 
         // Parse allowed movie sources
-        $this->tpl->assign('mediaAllowedMovieSources', MediaItem::getMimesForMovie());
+        $this->tpl->assign('mediaAllowedMovieSources', StorageType::getPossibleMovieStorageTypeValues());
 
         // Assign folder
         if ($this->folderId) {

@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 
-final class CreateMediaItemFromSourceHandler
+final class CreateMediaItemFromLocalStorageTypeHandler
 {
     /** @var MediaItemRepository */
     protected $mediaItemRepository;
@@ -21,20 +21,20 @@ final class CreateMediaItemFromSourceHandler
     }
 
     /**
-     * @param CreateMediaItemFromSource $createMediaItemFromSource
+     * @param CreateMediaItemFromLocalStorageType $createMediaItemFromLocalStorageType
      * @throws \Exception
      */
-    public function handle(CreateMediaItemFromSource $createMediaItemFromSource)
+    public function handle(CreateMediaItemFromLocalStorageType $createMediaItemFromLocalStorageType)
     {
         /** @var MediaItem $mediaItem */
-        $mediaItem = MediaItem::createFromSource(
-            $createMediaItemFromSource->source,
-            $createMediaItemFromSource->mediaFolder,
-            $createMediaItemFromSource->userId
+        $mediaItem = MediaItem::createFromLocalStorageType(
+            $createMediaItemFromLocalStorageType->path,
+            $createMediaItemFromLocalStorageType->mediaFolder,
+            $createMediaItemFromLocalStorageType->userId
         );
 
         $this->mediaItemRepository->add($mediaItem);
 
-        $createMediaItemFromSource->setMediaItem($mediaItem);
+        $createMediaItemFromLocalStorageType->setMediaItem($mediaItem);
     }
 }
