@@ -851,7 +851,6 @@ jsBackend.mediaLibraryHelper.upload =
 {
     init: function()
     {
-        // update media for folder
         mediaFolderId = $('#uploadMediaFolderId').val();
 
         $('#fine-uploader-gallery').fineUploader({
@@ -867,8 +866,11 @@ jsBackend.mediaLibraryHelper.upload =
             },
             callbacks: {
                 onUpload:  function() {
+                    // redefine media folder id
+                    mediaFolderId = $('#uploadMediaFolderId').val();
+
                     // We must set the endpoint dynamically, because "uploadMediaFolderId" is null at start and is async loaded using AJAX.
-                    this.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=UploadMediaItem&fork[language]=' + jsBackend.current.language + '&folder_id=' + $('#uploadMediaFolderId').val());
+                    this.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=UploadMediaItem&fork[language]=' + jsBackend.current.language + '&folder_id=' + mediaFolderId);
                 },
                 onComplete: function(id, name, responseJSON) {
                     // add file to uploaded box
