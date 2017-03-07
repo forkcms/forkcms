@@ -37,7 +37,7 @@ final class DeleteMediaGalleryHandler
         // We should delete all MediaItem entities which were connected to this MediaGallery
         if ($deleteMediaGallery->deleteAllMediaItems) {
             /** @var ArrayCollection|MediaGroupMediaItem $mediaGroupMediaItems */
-            $mediaGroupMediaItems = $deleteMediaGallery->mediaGallery->getGroup()->getConnectedItems();
+            $mediaGroupMediaItems = $deleteMediaGallery->mediaGallery->getMediaGroup()->getConnectedItems();
 
             /** @var MediaGroupMediaItem $mediaGroupMediaItem */
             foreach ($mediaGroupMediaItems->getValues() as $mediaGroupMediaItem) {

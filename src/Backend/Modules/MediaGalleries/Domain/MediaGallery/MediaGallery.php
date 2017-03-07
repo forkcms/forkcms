@@ -104,96 +104,35 @@ class MediaGallery
      *      onDelete="cascade"
      * )
      */
-    protected $group;
+    protected $mediaGroup;
 
     /**
      * MediaGallery constructor.
      *
      * @param string $title
-     * @param string $text
      * @param string $action
      * @param int $userId
-     * @param int $moduleExtraId
      * @param \DateTime $publishOn
-     * @param MediaGroup $group
+     * @param MediaGroup $mediaGroup
      * @param Status $status
+     * @param string|null $text
      */
     private function __construct(
         string $title,
-        string $text,
         string $action,
         int $userId,
-        int $moduleExtraId,
         \DateTime $publishOn,
-        MediaGroup $group,
-        Status $status
+        MediaGroup $mediaGroup,
+        Status $status,
+        string $text = null
     ) {
         $this->userId = $userId;
-        $this->moduleExtraId = $moduleExtraId;
         $this->action = $action;
         $this->title = $title;
-        $this->text = $text;
         $this->publishOn = $publishOn;
-        $this->group = $group;
+        $this->mediaGroup = $mediaGroup;
         $this->status = $status;
-    }
-
-    /**
-     * @param string $title
-     * @param string $text
-     * @param string $action
-     * @param int $userId
-     * @param \DateTime $publishOn
-     * @param MediaGroup $group
-     * @param Status $status
-     * @return MediaGallery
-     */
-    public static function create(
-        string $title,
-        string $text,
-        string $action,
-        int $userId,
-        \DateTime $publishOn,
-        MediaGroup $group,
-        Status $status
-    ) : MediaGallery {
-        return new self(
-            $title,
-            $text,
-            $action,
-            $userId,
-            0,
-            $publishOn,
-            $group,
-            $status
-        );
-    }
-
-    /**
-     * @param string $action
-     * @param string $title
-     * @param string|null $text
-     * @param \DateTime $publishOn
-     * @param MediaGroup $group
-     * @param Status $status
-     * @return MediaGallery
-     */
-    public function update(
-        string $action,
-        string $title,
-        string $text = null,
-        \DateTime $publishOn,
-        MediaGroup $group,
-        Status $status
-    ) : MediaGallery {
-        $this->action = $action;
-        $this->title = $title;
         $this->text = $text;
-        $this->publishOn = $publishOn;
-        $this->group = $group;
-        $this->status = $status;
-
-        return $this;
     }
 
     /**
@@ -214,7 +153,7 @@ class MediaGallery
             'editedOn' => $this->editedOn->getTimestamp(),
             'publishOn' => $this->publishOn->getTimestamp(),
             'status' => (string) $this->status,
-            'group' => $this->group->__toArray(),
+            'mediaGroup' => $this->mediaGroup->__toArray(),
         ];
     }
 
@@ -317,13 +256,13 @@ class MediaGallery
     }
 
     /**
-     * Gets the value of group.
+     * Gets the value of mediaGroup.
      *
      * @return MediaGroup
      */
-    public function getGroup(): MediaGroup
+    public function getMediaGroup(): MediaGroup
     {
-        return $this->group;
+        return $this->mediaGroup;
     }
 
     /**
@@ -438,27 +377,25 @@ class MediaGallery
             /** @var MediaGallery $mediaGallery */
             $mediaGallery = $mediaGalleryDataTransferObject->getMediaGalleryEntity();
 
-            $mediaGallery->update(
-                $mediaGalleryDataTransferObject->action,
-                $mediaGalleryDataTransferObject->title,
-                $mediaGalleryDataTransferObject->text,
-                $mediaGalleryDataTransferObject->publishOn,
-                $mediaGalleryDataTransferObject->mediaGroup,
-                Status::fromString($mediaGalleryDataTransferObject->status)
-            );
+            $mediaGallery->action = $mediaGalleryDataTransferObject->action;
+            $mediaGallery->title = $mediaGalleryDataTransferObject->title;
+            $mediaGallery->text = $mediaGalleryDataTransferObject->text;
+            $mediaGallery->publishOn = $mediaGalleryDataTransferObject->publishOn;
+            $mediaGallery->mediaGroup = $mediaGalleryDataTransferObject->mediaGroup;
+            $mediaGallery->status = Status::fromString($mediaGalleryDataTransferObject->status);
 
             return $mediaGallery;
         }
 
         /** @var MediaGallery $mediaGallery */
-        $mediaGallery = MediaGallery::create(
+        $mediaGallery = new self(
             $mediaGalleryDataTransferObject->title,
-            $mediaGalleryDataTransferObject->text,
             $mediaGalleryDataTransferObject->action,
             $mediaGalleryDataTransferObject->userId,
             $mediaGalleryDataTransferObject->publishOn,
             $mediaGalleryDataTransferObject->mediaGroup,
-            Status::fromString($mediaGalleryDataTransferObject->status)
+            Status::fromString($mediaGalleryDataTransferObject->status),
+            $mediaGalleryDataTransferObject->text
         );
 
         return $mediaGallery;

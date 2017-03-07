@@ -42,7 +42,7 @@ final class RegenerateMediaGroupSequenceListener
             // Loop all MediaGroup items
             foreach ($mediaItemMediaGroups as $mediaItemMediaGroup) {
                 /** @var MediaGroup $mediaGroup */
-                $mediaGroup = $mediaItemMediaGroup->getGroup();
+                $mediaGroup = $mediaItemMediaGroup->getMediaGroup();
 
                 // Define new media ids
                 $newMediaIds = array();

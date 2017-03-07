@@ -71,7 +71,7 @@ class MediaGalleryDataTransferObject
         $this->text = $mediaGallery->getText();
         $this->action = $mediaGallery->getAction();
         $this->publishOn = $mediaGallery->getPublishOn();
-        $this->mediaGroup = $mediaGallery->getGroup();
+        $this->mediaGroup = $mediaGallery->getMediaGroup();
     }
 
     /**

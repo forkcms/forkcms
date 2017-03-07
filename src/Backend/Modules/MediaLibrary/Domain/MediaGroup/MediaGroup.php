@@ -3,9 +3,9 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\PersistentCollection;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -156,9 +156,9 @@ class MediaGroup
     /**
      * Gets the value of connectedItems.
      *
-     * @return PersistentCollection
+     * @return Collection
      */
-    public function getConnectedItems(): PersistentCollection
+    public function getConnectedItems(): Collection
     {
         return $this->connectedItems;
     }
