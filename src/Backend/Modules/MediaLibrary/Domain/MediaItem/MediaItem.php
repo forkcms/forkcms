@@ -493,7 +493,7 @@ class MediaItem
     protected static function getSubdirectory(string $subDirectory = null): string
     {
         if ($subDirectory === null || $subDirectory === 'source') {
-            return 'StorageType';
+            return 'Source';
         } elseif (strtolower($subDirectory) === 'backend') {
             return 'Backend';
         } elseif (strtolower($subDirectory) === 'frontend') {
