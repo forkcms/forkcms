@@ -71,8 +71,8 @@
         <translation language="nl"><![CDATA[media koppelen]]></translation>
       </item>
       <item type="label" name="MediaConnectNow">
-        <translation language="en"><![CDATA[connect / add]]></translation>
-        <translation language="nl"><![CDATA[koppelen / toevoegen]]></translation>
+        <translation language="en"><![CDATA[connect / upload]]></translation>
+        <translation language="nl"><![CDATA[koppelen / opladen]]></translation>
       </item>
       <item type="label" name="MediaConnected">
         <translation language="en"><![CDATA[connected media]]></translation>
