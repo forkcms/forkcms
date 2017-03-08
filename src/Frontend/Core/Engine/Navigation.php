@@ -59,38 +59,22 @@ class Navigation extends FrontendBaseObject
      * @return string
      */
     public static function getBackendURLForBlock(
-        $action,
-        $module,
-        $language = null,
+        string $action,
+        string $module,
+        string $language = LANGUAGE,
         array $parameters = null,
-        $urlencode = true
-    ) {
-        $action = (string) $action;
-        $module = (string) $module;
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
-        $queryString = '';
-
+        bool $urlencode = true
+    ): string {
         // add at least one parameter
         if (empty($parameters)) {
             $parameters['token'] = 'true';
         }
 
-        // init counter
-        $i = 1;
-
-        // add parameters
-        foreach ($parameters as $key => $value) {
-            // first element
-            if ($i == 1) {
-                $queryString .= '?' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
-            } else {
-                // other elements
-                $queryString .= '&amp;' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
-            }
-
-            // update counter
-            ++$i;
+        if ($urlencode) {
+            array_walk($parameters, 'rawurlencode');
         }
+
+        $queryString = '?' . http_build_query($parameters, null, '&amp;');
 
         // build the URL and return it
         return '/private/' . $language . '/' . $module . '/' . $action . $queryString;
@@ -103,10 +87,8 @@ class Navigation extends FrontendBaseObject
      *
      * @return int
      */
-    public static function getFirstChildId($pageId)
+    public static function getFirstChildId(int $pageId): int
     {
-        $pageId = (int) $pageId;
-
         // init var
         $navigation = self::getNavigation();
 
@@ -135,40 +117,34 @@ class Navigation extends FrontendBaseObject
      *
      * @return array
      */
-    public static function getFooterLinks()
+    public static function getFooterLinks(): array
     {
         // get the navigation
         $navigation = self::getNavigation();
-
-        // init var
-        $return = array();
+        $footerLinks = array();
 
         // validate
         if (!isset($navigation['footer'][0])) {
-            return $return;
+            return $footerLinks;
         }
 
-        // loop links
         foreach ($navigation['footer'][0] as $id => $data) {
             // skip hidden pages
             if ($data['hidden']) {
                 continue;
             }
 
-            // build temp array
-            $temp = array();
-            $temp['id'] = $id;
-            $temp['url'] = self::getURL($id);
-            $temp['title'] = $data['title'];
-            $temp['navigation_title'] = $data['navigation_title'];
-            $temp['selected'] = (bool) in_array($id, self::$selectedPageIds);
-
             // add
-            $return[] = $temp;
+            $footerLinks[] = [
+                'id' => $id,
+                'url' => self::getURL($id),
+                'title' => $data['title'],
+                'navigation_title' => $data['navigation_title'],
+                'selected' => in_array($id, self::$selectedPageIds, true),
+            ];
         }
 
-        // return footer links
-        return $return;
+        return $footerLinks;
     }
 
     /**
@@ -179,10 +155,8 @@ class Navigation extends FrontendBaseObject
      *
      * @return array
      */
-    public static function getKeys($language = null)
+    public static function getKeys(string $language = LANGUAGE): array
     {
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
-
         return BackendPagesModel::getCacheBuilder()->getKeys($language);
     }
 
@@ -194,11 +168,21 @@ class Navigation extends FrontendBaseObject
      *
      * @return array
      */
-    public static function getNavigation($language = null)
+    public static function getNavigation(string $language = LANGUAGE): array
     {
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
-
         return BackendPagesModel::getCacheBuilder()->getNavigation($language);
+    }
+
+    /**
+     * Check if we have meta navigation and that it is enabled
+     *
+     * @param array $navigation
+     *
+     * @return bool
+     */
+    private static function hasMetaNavigation(array $navigation): bool
+    {
+        return isset($navigation['meta']) && Model::get('fork.settings')->get('Pages', 'meta_navigation', true);
     }
 
     /**
@@ -215,24 +199,21 @@ class Navigation extends FrontendBaseObject
      * @throws Exception
      */
     public static function getNavigationHTML(
-        $type = 'page',
-        $parentId = 0,
-        $depth = null,
-        $excludeIds = array(),
-        $template = '/Core/Layout/Templates/Navigation.html.twig',
-        $depthCounter = 1
-    ) {
+        string $type = 'page',
+        int $parentId = 0,
+        int $depth = null,
+        array $excludeIds = array(),
+        string $template = '/Core/Layout/Templates/Navigation.html.twig',
+        int $depthCounter = 1
+    ) : string {
         // get navigation
         $navigation = self::getNavigation();
 
         // merge the exclude ids with the previously set exclude ids
-        $excludeIds = array_merge((array) $excludeIds, self::$excludedPageIds);
+        $excludeIds = array_merge($excludeIds, self::$excludedPageIds);
 
         // meta-navigation is requested but meta isn't enabled
-        if ($type == 'meta' &&
-            (!Model::get('fork.settings')->get('Pages', 'meta_navigation', true) ||
-             !isset($navigation['meta']))
-        ) {
+        if ($type === 'meta' && !self::hasMetaNavigation($navigation)) {
             return '';
         }
 
@@ -242,6 +223,7 @@ class Navigation extends FrontendBaseObject
                 'This type (' . $type . ') isn\'t a valid navigation type. Possible values are: page, footer, meta.'
             );
         }
+
         if (!isset($navigation[$type][$parentId])) {
             throw new Exception('The parent (' . $parentId . ') doesn\'t exists.');
         }
@@ -252,15 +234,14 @@ class Navigation extends FrontendBaseObject
             // loop elements
             foreach ($navigation[$type][$parentId] as $id => $page) {
                 // home is a special item, it should live on the same depth
-                if ($page['page_id'] == 1 && !$mergedHome) {
+                if (!$mergedHome && (int) $page['page_id'] === 1) {
                     // extra checks otherwise exceptions will wbe triggered.
-                    if (!isset($navigation[$type][$parentId]) ||
-                        !is_array($navigation[$type][$parentId])
-                    ) {
+                    if (!isset($navigation[$type][$parentId])
+                        || !is_array($navigation[$type][$parentId])) {
                         $navigation[$type][$parentId] = array();
                     }
-                    if (!isset($navigation[$type][$page['page_id']]) ||
-                        !is_array($navigation[$type][$page['page_id']])
+                    if (!isset($navigation[$type][$page['page_id']])
+                        || !is_array($navigation[$type][$page['page_id']])
                     ) {
                         $navigation[$type][$page['page_id']] = array();
                     }
@@ -279,7 +260,7 @@ class Navigation extends FrontendBaseObject
                 }
 
                 // not hidden and not an action
-                if ($page['hidden'] || $page['tree_type'] == 'direct_action') {
+                if ($page['hidden'] || $page['tree_type'] === 'direct_action') {
                     unset($navigation[$type][$parentId][$id]);
                     continue;
                 }
@@ -313,39 +294,28 @@ class Navigation extends FrontendBaseObject
                 }
 
                 // some ids should be excluded
-                if (in_array($page['page_id'], (array) $excludeIds)) {
+                if (in_array($page['page_id'], $excludeIds, true)) {
                     unset($navigation[$type][$parentId][$id]);
                     continue;
                 }
 
                 // if the item is in the selected page it should get an selected class
-                if (in_array(
+                $navigation[$type][$parentId][$id]['selected'] = in_array(
                     $page['page_id'],
-                    self::$selectedPageIds
-                )
-                ) {
-                    $navigation[$type][$parentId][$id]['selected'] = true;
-                } else {
-                    $navigation[$type][$parentId][$id]['selected'] = false;
-                }
+                    self::$selectedPageIds,
+                    true
+                );
 
                 // add nofollow attribute if needed
-                if ($page['no_follow']) {
-                    $navigation[$type][$parentId][$id]['nofollow'] = true;
-                } else {
-                    $navigation[$type][$parentId][$id]['nofollow'] = false;
-                }
+                $navigation[$type][$parentId][$id]['nofollow'] = $page['no_follow'];
 
                 // meta and footer subpages have the "page" type
-                if ($type == 'meta' || $type == 'footer') {
-                    $subType = 'page';
-                } else {
-                    $subType = $type;
-                }
+                $subType = ($type === 'meta' || $type === 'footer') ? 'page' : $type;
 
                 // fetch children if needed
-                if (isset($navigation[$subType][$page['page_id']]) && $page['page_id'] != 1 &&
-                    ($depth == null || $depthCounter + 1 <= $depth)
+                if (($depthCounter + 1 <= $depth || $depth === null)
+                    && (int) $page['page_id'] !== 1
+                    && isset($navigation[$subType][$page['page_id']])
                 ) {
                     $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML(
                         $subType,
@@ -359,24 +329,19 @@ class Navigation extends FrontendBaseObject
                     $navigation[$type][$parentId][$id]['children'] = false;
                 }
 
-                // add parent id
                 $navigation[$type][$parentId][$id]['parent_id'] = $parentId;
-
-                // add depth
                 $navigation[$type][$parentId][$id]['depth'] = $depthCounter;
-
-                // set link
                 $navigation[$type][$parentId][$id]['link'] = static::getURL($page['page_id']);
 
                 // is this an internal redirect?
-                if (isset($page['redirect_page_id']) && $page['redirect_page_id'] != '') {
+                if (isset($page['redirect_page_id']) && $page['redirect_page_id'] !== '') {
                     $navigation[$type][$parentId][$id]['link'] = static::getURL(
                         (int) $page['redirect_page_id']
                     );
                 }
 
                 // is this an external redirect?
-                if (isset($page['redirect_url']) && $page['redirect_url'] != '') {
+                if (isset($page['redirect_url']) && $page['redirect_url'] !== '') {
                     $navigation[$type][$parentId][$id]['link'] = $page['redirect_url'];
                 }
             }
@@ -401,17 +366,16 @@ class Navigation extends FrontendBaseObject
      *
      * @return int
      */
-    public static function getPageId($url, $language = null)
+    public static function getPageId(string $url, string $language = LANGUAGE): int
     {
         // redefine
-        $url = trim((string) $url, '/');
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
+        $url = trim($url, '/');
 
         // get menu items array
         $keys = self::getKeys($language);
 
         // get key
-        $key = array_search($url, $keys);
+        $key = array_search($url, $keys, true);
 
         // return 404 if we don't known a valid Id
         if ($key === false) {
@@ -425,11 +389,11 @@ class Navigation extends FrontendBaseObject
     /**
      * Get more info about a page
      *
-     * @param int $pageId The pageID wherefore you want more information.
+     * @param int $requestedPageId The pageID wherefore you want more information.
      *
-     * @return string
+     * @return array|bool
      */
-    public static function getPageInfo($pageId)
+    public static function getPageInfo(int $requestedPageId)
     {
         // get navigation
         $navigation = self::getNavigation();
@@ -439,16 +403,16 @@ class Navigation extends FrontendBaseObject
             // loop parents
             foreach ($level as $parentId => $children) {
                 // loop children
-                foreach ($children as $itemId => $item) {
-                    // return if this is the requested item
-                    if ($pageId == $itemId) {
+                foreach ($children as $pageId => $page) {
+                    // return if this is the requested page
+                    if ($requestedPageId === (int) $pageId) {
                         // set return
-                        $return = $item;
-                        $return['page_id'] = $itemId;
-                        $return['parent_id'] = $parentId;
+                        $pageInfo = $page;
+                        $pageInfo['page_id'] = $pageId;
+                        $pageInfo['parent_id'] = $parentId;
 
                         // return
-                        return $return;
+                        return $pageInfo;
                     }
                 }
             }
@@ -467,22 +431,16 @@ class Navigation extends FrontendBaseObject
      *
      * @return string
      */
-    public static function getURL($pageId, $language = null)
+    public static function getURL(int $pageId, string $language = LANGUAGE): string
     {
-        $pageId = (int) $pageId;
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
-
         // init URL
-        $url = (FrontendModel::getContainer()->getParameter('site.multilanguage'))
-            ? '/' . $language . '/'
-            : '/'
-        ;
+        $url = FrontendModel::getContainer()->getParameter('site.multilanguage') ? '/' . $language . '/' : '/';
 
         // get the menuItems
         $keys = self::getKeys($language);
 
         // get the URL, if it doesn't exist return 404
-        if (!isset($keys[$pageId]) && $pageId !== 404) {
+        if ($pageId !== 404 && !isset($keys[$pageId])) {
             return self::getURL(404, $language);
         }
 
@@ -506,12 +464,12 @@ class Navigation extends FrontendBaseObject
      *
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null, array $data = null)
-    {
-        $module = (string) $module;
-        $action = ($action !== null) ? (string) $action : null;
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
-
+    public static function getURLForBlock(
+        string $module,
+        string $action = null,
+        string $language = LANGUAGE,
+        array $data = null
+    ): string {
         // init var
         $pageIdForURL = null;
 
@@ -533,9 +491,9 @@ class Navigation extends FrontendBaseObject
                     // loop extras
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ($extra['module'] == $module && $extra['action'] == $action  && $extra['action'] !== null) {
+                        if ($extra['module'] === $module && $extra['action'] === $action && $extra['action'] !== null) {
                             // if there is data check if all the requested data matches the extra data
-                            if (isset($extra['data']) && $data !== null
+                            if ($data !== null && isset($extra['data'])
                                 && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
                                 // It is the correct action but has the wrong data
                                 continue;
@@ -544,9 +502,9 @@ class Navigation extends FrontendBaseObject
                             return self::getURL($properties['page_id'], $language);
                         }
 
-                        if ($extra['module'] == $module && $extra['action'] == null) {
+                        if ($extra['module'] === $module && $extra['action'] === null) {
                             // if there is data check if all the requested data matches the extra data
-                            if (isset($extra['data']) && $data !== null) {
+                            if ($data !== null && isset($extra['data'])) {
                                 if (array_intersect_assoc($data, (array) $extra['data']) !== $data) {
                                     // It is the correct module but has the wrong data
                                     continue;
@@ -556,7 +514,7 @@ class Navigation extends FrontendBaseObject
                                 $dataMatch = true;
                             }
 
-                            if ($extra['data'] === null && $data === null) {
+                            if ($data === null && $extra['data'] === null) {
                                 $pageIdForURL = (int) $pageId;
                                 $dataMatch = true;
                             }
@@ -596,11 +554,8 @@ class Navigation extends FrontendBaseObject
      *
      * @return string
      */
-    public static function getURLForExtraId($id, $language = null)
+    public static function getURLForExtraId(int $id, string $language = LANGUAGE): string
     {
-        $id = (int) $id;
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
-
         // get the menuItems
         $navigation = self::getNavigation($language);
 
@@ -618,7 +573,7 @@ class Navigation extends FrontendBaseObject
                     // loop extras
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ($extra['id'] == $id) {
+                        if ((int)$extra['id'] === $id) {
                             // exact page was found, so return
                             return self::getURL($properties['page_id'], $language);
                         }
@@ -642,7 +597,7 @@ class Navigation extends FrontendBaseObject
 
         // go trough the page ids to add them to the excluded page ids for later usage
         foreach ($pageIds as $pageId) {
-            array_push(self::$excludedPageIds, $pageId);
+            self::$excludedPageIds[] = $pageId;
         }
     }
 
@@ -657,20 +612,22 @@ class Navigation extends FrontendBaseObject
         // no pages, means we're at the homepage
         if (empty($pages)) {
             self::$selectedPageIds[] = 1;
-        } else {
-            // loop pages
-            while (!empty($pages)) {
-                // get page id
-                $pageId = self::getPageId((string) implode('/', $pages));
 
-                // add pageId into selected items
-                if ($pageId !== false) {
-                    self::$selectedPageIds[] = $pageId;
-                }
+            return;
+        }
 
-                // remove last element
-                array_pop($pages);
+        // loop pages
+        while (!empty($pages)) {
+            // get page id
+            $pageId = self::getPageId((string) implode('/', $pages));
+
+            // add pageId into selected items
+            if ($pageId !== false) {
+                self::$selectedPageIds[] = $pageId;
             }
+
+            // remove last element
+            array_pop($pages);
         }
     }
 }
