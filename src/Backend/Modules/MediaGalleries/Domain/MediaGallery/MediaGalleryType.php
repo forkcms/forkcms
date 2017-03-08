@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
+use Backend\Core\Engine\Authentication;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -50,8 +51,11 @@ class MediaGalleryType extends AbstractType
                     'label' => 'lbl.Text',
                     'required' => false,
                 ]
-            )
-            ->add(
+            );
+
+        // You can only choose the "widget action" on "Add", or always if you got "EditWidgetAction" rights or if you created the MediaGallery.
+        if ($this->dataClass === CreateMediaGallery::class || Authentication::isAllowedAction('EditWidgetAction') || $builder->getData()->userId === Authentication::getUser()->getUserId()) {
+            $builder->add(
                 'action',
                 ChoiceType::class,
                 [
@@ -63,7 +67,10 @@ class MediaGalleryType extends AbstractType
                     },
                     'choice_translation_domain' => false,
                 ]
-            )
+            );
+        }
+
+        $builder
             ->add(
                 'status',
                 ChoiceType::class,

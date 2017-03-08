@@ -66,6 +66,7 @@ class MediaGalleryDataTransferObject
             return;
         }
 
+        $this->userId = $mediaGallery->getUserId();
         $this->status = (string) $mediaGallery->getStatus();
         $this->title = $mediaGallery->getTitle();
         $this->text = $mediaGallery->getText();

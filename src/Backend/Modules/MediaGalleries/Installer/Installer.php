@@ -61,5 +61,6 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'MediaGalleries', 'Add');
         $this->setActionRights(1, 'MediaGalleries', 'Delete');
         $this->setActionRights(1, 'MediaGalleries', 'Edit');
+        $this->setActionRights(1, 'MediaGalleries', 'EditWidgetAction');
     }
 }

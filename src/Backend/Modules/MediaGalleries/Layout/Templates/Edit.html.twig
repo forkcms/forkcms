@@ -23,6 +23,7 @@
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
               <div class="col-md-8">
+                {% if form.action %}
                 <div id="publishOptions" class="panel panel-default">
                   <div class="panel-heading">
                     <p>
@@ -39,6 +40,7 @@
                     </div>
                   </div>
                 </div>
+                {% endif %}
 
                 {# Including the MediaLibrary MediaGroup Helper #}
                 {% include "MediaLibrary/Resources/views/BackendMediaGroupsHelper.html.twig" %}
