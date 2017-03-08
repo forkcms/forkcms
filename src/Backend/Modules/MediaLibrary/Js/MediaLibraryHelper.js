@@ -113,7 +113,7 @@ jsBackend.mediaLibraryHelper.group =
         // bind click to disconnect button so you can disconnect media items
         $('.mediaEditBox').on('click', '.disconnectMediaItemsButton', function(e) {
             // button is not disabled
-            if (!$(this).hasClass('disabledButton')) {
+            if (!$(this).hasClass('disabled')) {
                 // define groupId
                 var groupId = $(this).data('i');
 
@@ -476,7 +476,7 @@ jsBackend.mediaLibraryHelper.group =
         var $items = jsBackend.mediaLibraryHelper.group.getSelectedItems(groupId);
 
         // toggle disabled button
-        $group.find('.mediaEditBox .disconnectMediaItemsButton').toggleClass('disabledButton', ($items.length > 0) ? false : true);
+        $group.find('.mediaEditBox .disconnectMediaItemsButton').toggleClass('disabled', ($items.length > 0) ? false : true);
     },
 
     /**
