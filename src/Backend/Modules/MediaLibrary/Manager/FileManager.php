@@ -87,8 +87,8 @@ class FileManager
             // Define thumbnail
             $thumbnail = new \SpoonThumbnail(
                 $sourcePath . '/' . $fileName,
-                $imageSettings->getWidth(),
-                $imageSettings->getHeight(),
+                ($imageSettings->getWidth() !== 0) ? $imageSettings->getWidth() : null,
+                ($imageSettings->getHeight() !== 0) ? $imageSettings->getHeight() : null,
                 false
             );
 
@@ -96,7 +96,7 @@ class FileManager
             $thumbnail->setAllowEnlargement(true);
 
             // if the width & height are specified we should ignore the aspect ratio
-            if ($imageSettings->getWidth() !== null && $imageSettings->getHeight() !== null) {
+            if ($imageSettings->getWidth() !== 0 && $imageSettings->getHeight() !== 0) {
                 $thumbnail->setForceOriginalAspectRatio(
                     !$imageSettings->getTransformationMethod()->isCrop()
                 );

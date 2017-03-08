@@ -33,15 +33,15 @@ class ImageSettings
      * Construct
      *
      * @param ImageTransformationMethod $transformationMethod "crop" or "resize"
-     * @param int|null $width
-     * @param int|null $height
+     * @param int $width
+     * @param int $height
      * @param int $quality
      * @throws \Exception
      */
     private function __construct(
         ImageTransformationMethod $transformationMethod,
-        int $width = null,
-        int $height = null,
+        int $width = 0,
+        int $height = 0,
         int $quality = 100
     ) {
         $this->transformationMethod = $transformationMethod;
@@ -67,8 +67,8 @@ class ImageSettings
     ) : ImageSettings {
         return new self(
             $transformationMethod,
-            $width,
-            $height,
+            (int) $width,
+            (int) $height,
             $quality
         );
     }
@@ -178,7 +178,7 @@ class ImageSettings
     /**
      * Set height
      *
-     * @param int|null $height
+     * @param int $height
      * @return ImageSettings
      * @throws \Exception
      */
@@ -216,7 +216,7 @@ class ImageSettings
     /**
      * Set width
      *
-     * @param int|null $width
+     * @param int $width
      * @return ImageSettings
      * @throws \Exception
      */
