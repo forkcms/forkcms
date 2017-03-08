@@ -43,20 +43,13 @@
 }
 
 /**
- * Media library helper
+ * Media library Helper
+ *
+ * Structure:
+ * 	#mediaConnectedItems
+ *		.mediaConnectedBox
+ *			.mediaConnectedItems
  */
-
-/* We hide this button because it doesn't work anymore, we have enabled autostart to fix this. */
-#uploader_start {
-	display: none;
-}
-
-/*
-#mediaConnectedItems
-	loop .mediaConnectedBox
-		loop .mediaConnectedItems
-
-*/
 	.mediaGroup {
 		background-color: #f9f9f9!important;
 	}
@@ -187,12 +180,10 @@
 			display: block;
 		}
 
-/**
- *
- */
 p.helpTxt.mediaNoItems {
 	padding: 10px;
 }
+
 
 /**
  * Media Dialog
@@ -241,72 +232,18 @@ p.helpTxt.mediaNoItems {
     vertical-align: bottom;
 }
 
-/**
- * Plupload header
- */
-#uploader {
-	padding: 0px;
-}
-#uploader .plupload_header {
-	display: none!important;
-}
-#uploader .plupload_container {
-	padding: 0px;
-}
-
-/**
- * Plupload upload list
- */
-.plupload_file_name {
-	width: 60%!important;
-}
-.plupload_file_size {
-	width: 10%!important;
-}
-.plupload_file_status {
-	width: 10%!important;
-}
-.plupload_file_action {
-	width: 10%!important;
-}
-
-.plupload_buttons {
-	width: 100%;
-}
-.plupload_buttons a {
-	float: left;
-}
-.plupload_buttons a span {
-	display: inline;
-}
-.plupload_file_action {
-	float: none!important;
-}
-	.plupload_button {
-		padding-left: 10px!important;
-	}
-	.plupload_cell .ui-icon {
-		background: url(../../../../Core/Layout/images/sprites/fork_icons.png) no-repeat;
-		display: block;  /* Fix for flash (button text dissappeared when using inline-block) */
-		width: 18px;
-		height: 18px;
-	}
-		.plupload_cell .ui-icon-circle-arrow-e {
-			background-position: 0 -396px;
-		}
-		.plupload_cell .ui-icon-circle-minus {
-			background-position: 0 -629px;
-		}
-		.plupload_cell .ui-icon-circle-check {
-			background-position: 0 -610px;
-		}
-		.plupload_cell .ui-icon-circle-arrow-w {
-			background-position: 0 -400px;
-		}
 
 /**
  * Uploaded media box
  */
 #uploadedMediaBox .mediaConnectedItems {
 	float: none;
+}
+
+
+/**
+ * Fine uploader
+ */
+.qq-uploader {
+	border-radius: 0px;
 }
