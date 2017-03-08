@@ -77,7 +77,10 @@ class Navigation extends FrontendBaseObject
         $queryString = '?' . http_build_query($parameters, null, '&amp;');
 
         // build the URL and return it
-        return '/private/' . $language . '/' . $module . '/' . $action . $queryString;
+        return FrontendModel::get('router')->generate(
+            'backend',
+            ['_locale' => $language, 'module' => $module, 'action' => $action]
+        ) . $queryString;
     }
 
     /**

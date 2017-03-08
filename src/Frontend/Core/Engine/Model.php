@@ -9,7 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use TijsVerkoyen\Akismet\Akismet;
+use InvalidArgumentException;
 use Common\Cookie as CommonCookie;
 
 /**
@@ -32,10 +32,8 @@ class Model extends \Common\Core\Model
      *
      * @return string
      */
-    public static function addURLParameters($url, array $parameters)
+    public static function addURLParameters(string $url, array $parameters): string
     {
-        $url = (string) $url;
-
         if (empty($parameters)) {
             return $url;
         }
@@ -50,12 +48,10 @@ class Model extends \Common\Core\Model
         // build query string
         $queryString = http_build_query($parameters, null, '&amp;', PHP_QUERY_RFC3986);
         if (mb_strpos($url, '?') !== false) {
-            $url .= '&' . $queryString . $hash;
-        } else {
-            $url .= '?' . $queryString . $hash;
+            return $url . '&' . $queryString . $hash;
         }
 
-        return $url;
+        return $url . '?' . $queryString . $hash;
     }
 
     /**
@@ -67,7 +63,7 @@ class Model extends \Common\Core\Model
      *
      * @return string
      */
-    public static function convertToPlainText($text, $includeAHrefs = true, $includeImgAlts = true)
+    public static function convertToPlainText(string $text, bool $includeAHrefs = true, $includeImgAlts = true): string
     {
         // remove tabs, line feeds and carriage returns
         $text = str_replace(array("\t", "\n", "\r"), '', $text);
@@ -133,16 +129,36 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getPage($pageId)
+    public static function getPage(int $pageId): array
     {
-        // redefine
-        $pageId = (int) $pageId;
-
-        // get database instance
-        $db = self::getContainer()->get('database');
-
         // get data
-        $record = (array) $db->getRecord(
+        $revisionId = (int) self::getContainer()->get('database')->getVar(
+            'SELECT p.revision_id
+             FROM pages AS p
+             WHERE p.id = ? AND p.status = ? AND p.language = ?
+             LIMIT 1',
+            array($pageId, 'active', LANGUAGE)
+        );
+
+        // No page found
+        if ($revisionId === 0) {
+            return array();
+        }
+
+        return self::getPageRevision($revisionId, false);
+    }
+
+    /**
+     * Get a revision for a page
+     *
+     * @param int $revisionId The revisionID.
+     * @param bool $allowHidden is used by the getPage method to prevent hidden records
+     *
+     * @return array
+     */
+    public static function getPageRevision(int $revisionId, bool $allowHidden = true): array
+    {
+        $pageRevision = (array) self::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title,
                  p.navigation_title_overwrite, p.data, p.hidden,
                  m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
@@ -155,139 +171,63 @@ class Model extends \Common\Core\Model
              FROM pages AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
-             WHERE p.id = ? AND p.status = ? AND p.language = ?
-             LIMIT 1',
-            array($pageId, 'active', LANGUAGE)
-        );
-
-        // validate
-        if (empty($record)) {
-            return array();
-        }
-
-        // if the page is hidden we need a 404 record
-        if ($record['hidden'] === 'Y' && $pageId !== 404) {
-            return self::getPage(404);
-        }
-
-        // unserialize page data and template data
-        if (isset($record['data']) && $record['data'] != '') {
-            $record['data'] = unserialize($record['data']);
-        }
-        if (isset($record['meta_data']) && $record['meta_data'] != '') {
-            $record['meta_data'] = unserialize(
-                $record['meta_data']
-            );
-        }
-        if (isset($record['template_data']) && $record['template_data'] != '') {
-            $record['template_data'] = @unserialize(
-                $record['template_data']
-            );
-        }
-
-        // get blocks
-        $blocks = (array) $db->getRecords(
-            'SELECT pe.id AS extra_id, pb.html, pb.position,
-             pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
-             FROM pages_blocks AS pb
-             INNER JOIN pages AS p ON p.revision_id = pb.revision_id
-             LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-             WHERE pb.revision_id = ? AND p.status = ? AND pb.visible = ?
-             ORDER BY pb.position, pb.sequence',
-            array('N', $record['revision_id'], 'active', 'Y')
-        );
-
-        // init positions
-        $record['positions'] = array();
-
-        // loop blocks
-        foreach ($blocks as $block) {
-            // unserialize data if it is available
-            if (isset($block['data'])) {
-                $block['data'] = unserialize($block['data']);
-            }
-
-            // save to position
-            $record['positions'][$block['position']][] = $block;
-        }
-
-        return $record;
-    }
-
-    /**
-     * Get a revision for a page
-     *
-     * @param int $revisionId The revisionID.
-     *
-     * @return array
-     */
-    public static function getPageRevision($revisionId)
-    {
-        $revisionId = (int) $revisionId;
-
-        // get database instance
-        $db = self::getContainer()->get('database');
-
-        // get data
-        $record = (array) $db->getRecord(
-            'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite,
-                 p.data,
-                 m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-                 m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-                 m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-                 m.custom AS meta_custom,
-                 m.url, m.url_overwrite,
-                 t.path AS template_path, t.data AS template_data
-             FROM pages AS p
-             INNER JOIN meta AS m ON p.meta_id = m.id
-             INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.revision_id = ? AND p.language = ?
              LIMIT 1',
             array($revisionId, LANGUAGE)
         );
 
-        // validate
-        if (empty($record)) {
+        if (empty($pageRevision)) {
             return array();
         }
 
-        // unserialize page data and template data
-        if (isset($record['data']) && $record['data'] != '') {
-            $record['data'] = unserialize($record['data']);
+        if (!$allowHidden && (int) $pageRevision['id'] !== 404 && $pageRevision['hidden'] === 'Y') {
+            return self::getPage(404);
         }
-        if (isset($record['template_data']) && $record['template_data'] != '') {
-            $record['template_data'] = @unserialize(
-                $record['template_data']
-            );
+
+        $pageRevision = self::unserializeArrayContent($pageRevision, 'data');
+        $pageRevision = self::unserializeArrayContent($pageRevision, 'meta_data');
+        $pageRevision = self::unserializeArrayContent($pageRevision, 'template_data');
+        $pageRevision['positions'] = self::getPositionsForRevision($pageRevision['revision_id'], $allowHidden);
+
+        return $pageRevision;
+    }
+
+    /**
+     * @param int $revisionId
+     * @param bool $allowHidden
+     *
+     * @return array
+     */
+    private static function getPositionsForRevision(int $revisionId, bool $allowHidden = false): array
+    {
+        $positions = [];
+        $where = 'pb.revision_id = ?';
+        $parameters = ['N', $revisionId];
+
+        if (!$allowHidden) {
+            $where .= ' AND p.status = ? AND pb.visible = ?';
+            $parameters[] = 'active';
+            $parameters[] = 'Y';
         }
 
         // get blocks
-        $blocks = (array) $db->getRecords(
+        $blocks = (array) self::getContainer()->get('database')->getRecords(
             'SELECT pe.id AS extra_id, pb.html, pb.position,
              pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
              FROM pages_blocks AS pb
              INNER JOIN pages AS p ON p.revision_id = pb.revision_id
              LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-             WHERE pb.revision_id = ?
+             WHERE ' . $where . '
              ORDER BY pb.position, pb.sequence',
-            array('N', $record['revision_id'])
+            $parameters
         );
-
-        // init positions
-        $record['positions'] = array();
 
         // loop blocks
         foreach ($blocks as $block) {
-            // unserialize data if it is available
-            if (isset($block['data'])) {
-                $block['data'] = unserialize($block['data']);
-            }
-
-            // save to position
-            $record['positions'][$block['position']][] = $block;
+            $positions[$block['position']][] = self::unserializeArrayContent($block, 'data');
         }
 
-        return $record;
+        return $positions;
     }
 
     /**
@@ -295,7 +235,7 @@ class Model extends \Common\Core\Model
      *
      * @return string
      */
-    public static function getVisitorId()
+    public static function getVisitorId(): string
     {
         // check if tracking id is fetched already
         if (self::$visitorId !== null) {
@@ -307,7 +247,7 @@ class Model extends \Common\Core\Model
             ? (string) CommonCookie::get('track')
             : md5(uniqid('', true) . \SpoonSession::getSessionId());
 
-        if (!self::get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
+        if (CommonCookie::hasAllowedCookies() || !self::get('fork.settings')->get('Core', 'show_cookie_bar', false)) {
             CommonCookie::set('track', self::$visitorId, 86400 * 365);
         }
 
@@ -328,22 +268,19 @@ class Model extends \Common\Core\Model
      *                          (unknown will be returned in that case)
      * @throws \Exception
      */
-    public static function isSpam($content, $permaLink, $author = null, $email = null, $url = null, $type = 'comment')
-    {
-        // get some settings
-        $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
-
-        // invalid key, so we can't detect spam
-        if ($akismetKey === '') {
+    public static function isSpam(
+        string $content,
+        string $permaLink,
+        string $author = null,
+        string $email = null,
+        string $url = null,
+        string $type = 'comment'
+    ) {
+        try {
+            $akismet = self::getAkismet();
+        } catch (InvalidArgumentException $invalidArgumentException) {
             return false;
         }
-
-        // create new instance
-        $akismet = new Akismet($akismetKey, SITE_URL);
-
-        // set properties
-        $akismet->setTimeOut(10);
-        $akismet->setUserAgent('Fork CMS/' . FORK_VERSION);
 
         // try it, to decide if the item is spam
         try {
@@ -358,5 +295,22 @@ class Model extends \Common\Core\Model
             // return unknown status
             return 'unknown';
         }
+    }
+
+    /**
+     * @param array $array
+     * @param string $key
+     *
+     * @return array
+     */
+    private static function unserializeArrayContent(array $array, string $key): array
+    {
+        if (isset($array[$key]) && $array[$key] !== '') {
+            $array[$key] = unserialize($array[$key]);
+
+            return $array;
+        }
+
+        return $array;
     }
 }

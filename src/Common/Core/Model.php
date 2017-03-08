@@ -10,8 +10,10 @@ namespace Common\Core;
  */
 
 use ForkCMS\App\BaseModel;
+use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use TijsVerkoyen\Akismet\Akismet;
 
 /**
  * This class will initiate the frontend-application
@@ -292,5 +294,26 @@ class Model extends BaseModel
         foreach ($modules as $module) {
             self::$modules[] = $module;
         }
+    }
+
+    /**
+     * @throws InvalidArgumentException when we don't have an akismet key
+     *
+     * @return Akismet
+     */
+    protected static function getAkismet(): Akismet
+    {
+        $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
+
+        // invalid key, so we can't detect spam
+        if (empty($akismetKey)) {
+            throw new InvalidArgumentException('no akismet key found');
+        }
+
+        $akismet = new Akismet($akismetKey, SITE_URL);
+        $akismet->setTimeOut(10);
+        $akismet->setUserAgent('Fork CMS/' . FORK_VERSION);
+
+        return $akismet;
     }
 }
