@@ -22,7 +22,7 @@ class Gallery extends BackendBaseWidget
         $mediaGallery = $this->getMediaGallery();
 
         /** @var MediaGroup|null $mediaGroup */
-        $mediaGroup = ($mediaGallery !== null) ? $mediaGallery->getGroup() : null;
+        $mediaGroup = ($mediaGallery !== null) ? $mediaGallery->getMediaGroup() : null;
 
         // We need to have a MediaGroup to show this widget
         if ($mediaGroup !== null) {
