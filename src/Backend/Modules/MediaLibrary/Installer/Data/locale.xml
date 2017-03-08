@@ -187,8 +187,8 @@
         <translation language="nl"><![CDATA[Er is nog geen media in deze map.]]></translation>
       </item>
       <item type="message" name="MediaNoItemsConnected">
-        <translation language="en"><![CDATA[You didn't have any media connected to this gallery.]]></translation>
-        <translation language="nl"><![CDATA[Je hebt nog geen media gekoppeld aan deze galerij.]]></translation>
+        <translation language="en"><![CDATA[You didn't have any media connected.]]></translation>
+        <translation language="nl"><![CDATA[Je hebt nog geen media gekoppeld.]]></translation>
       </item>
       <item type="message" name="MediaOrAddMediaFolder">
         <translation language="en"><![CDATA[or add new folder]]></translation>
