@@ -156,7 +156,7 @@ jsBackend.mediaLibraryAddFolder =
                     }
 
                     // add folders to dropdown
-                    $('#addFolderParentId').html(html);
+                    $('#addFolderParentId').html('<option value="0" />' + html);
 
                     // select the new folder
                     if (selectFolderId) $('#addFolderParentId').val(selectFolderId);
