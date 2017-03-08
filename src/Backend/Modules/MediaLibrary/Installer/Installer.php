@@ -54,10 +54,14 @@ class Installer extends ModuleInstaller
         // Save Dropdowns
         $fs->dumpFile(
             FRONTEND_FILES_PATH . '/MediaLibrary/.gitignore',
-            '# Generated files
+            '# Uploaded files - Do not delete anything in this directory
+            /Source/*
+            
+            # Generated images needed for backend - Do not delete anything in this directory
             /Backend/*
-            /Frontend/*
-            /Source/*'
+            
+            # Automagically generated images needed for frontend - All directories and images in this directory can safely be removed.
+            /Frontend/*'
         );
     }
 
