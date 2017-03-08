@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem as DeleteMediaItemCommand;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
@@ -81,8 +81,8 @@ class MassAction extends BackendBaseAction
 
                         break;
                     case self::DELETE:
-                        /** @var DeleteMediaItem $deleteMediaItem */
-                        $deleteMediaItem = new DeleteMediaItem($mediaItem);
+                        /** @var DeleteMediaItemCommand $deleteMediaItem */
+                        $deleteMediaItem = new DeleteMediaItemCommand($mediaItem);
 
                         // Handle the MediaItem delete
                         $this->get('command_bus')->handle($deleteMediaItem);
