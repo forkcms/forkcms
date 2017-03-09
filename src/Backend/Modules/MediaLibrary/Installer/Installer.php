@@ -20,27 +20,13 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // Add the schema of the entity to the database
-        Model::get('entity.create_schema')->forEntityClass(MediaFolder::class);
-        Model::get('entity.create_schema')->forEntityClass(MediaGroup::class);
-        Model::get('entity.create_schema')->forEntityClass(MediaGroupMediaItem::class);
-        Model::get('entity.create_schema')->forEntityClass(MediaItem::class);
-
-        // Add 'MediaLibrary' as a module
         $this->addModule('MediaLibrary');
-
-        // Import locale
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
-
-        // Inserting some other required stuff
-        $this->insertRights();
-        $this->insertSettings();
-        $this->insertNavigationForModules();
-
-        // Add a git ignore file
+        $this->createEntityTables();
+        $this->configureModuleRights();
+        $this->configureSettings();
+        $this->configureBackendNavigation();
         $this->addGitIgnoreFile();
-
-        // Load folders
         $this->loadMediaFolders();
     }
 
@@ -66,63 +52,75 @@ class Installer extends ModuleInstaller
     }
 
     /**
-     * Insert backend navigation for modules
+     * Configure backend navigation
      */
-    protected function insertNavigationForModules()
+    protected function configureBackendNavigation()
     {
         // Navigation for "modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation(
             $navigationModulesId,
             'MediaLibrary',
-            'media_library/index',
+            'media_library/media_item_index',
             array(
-                'media_library/upload',
-                'media_library/edit_media_item',
+                'media_library/media_item_upload',
+                'media_library/media_item_edit',
             )
         );
     }
 
     /**
-     * Insert rights
+     * Configure module rights
      */
-    protected function insertRights()
+    protected function configureModuleRights()
     {
         // Set module rights
         $this->setModuleRights(1, 'MediaLibrary');
 
         // Media index
-        $this->setActionRights(1, 'MediaLibrary', 'Index');
-        $this->setActionRights(1, 'MediaLibrary', 'MassAction');
-
-        // MediaItem
-        $this->setActionRights(1, 'MediaLibrary', 'Upload');
-        $this->setActionRights(1, 'MediaLibrary', 'UploadMediaItem'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'DeleteMediaItem');
-        $this->setActionRights(1, 'MediaLibrary', 'EditMediaItem');
-        $this->setActionRights(1, 'MediaLibrary', 'GetMediaItems'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'InsertMediaItemMovie'); // AJAX
+        $this->setActionRights(1, 'MediaLibrary', 'MediaItemIndex');
+        $this->setActionRights(1, 'MediaLibrary', 'MediaItemMassAction');
+        $this->setActionRights(1, 'MediaLibrary', 'MediaItemUpload'); // Action and AJAX
+        $this->setActionRights(1, 'MediaLibrary', 'MediaItemDelete');
+        $this->setActionRights(1, 'MediaLibrary', 'MediaItemEdit');
+        $this->setActionRights(1, 'MediaLibrary', 'MediaItemFindAll'); // AJAX
+        $this->setActionRights(1, 'MediaLibrary', 'MediaItemAddMovie'); // AJAX
 
         // MediaFolder
-        $this->setActionRights(1, 'MediaLibrary', 'AddMediaFolder'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'DeleteMediaFolder');
-        $this->setActionRights(1, 'MediaLibrary', 'EditMediaFolder'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'GetMediaFolderCountsForGroup'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'GetMediaFolderInfo'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'GetMediaFolders'); // AJAX
+        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderAdd'); // AJAX
+        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderDelete');
+        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderEdit'); // AJAX
+        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderGetCountsForGroup'); // AJAX
+        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderInfo'); // AJAX
+        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderFindAll'); // AJAX
         $this->setActionRights(1, 'MediaLibrary', 'MovieMediaFolder'); // AJAX
     }
 
     /**
-     * Insert settings
+     * Configure settings
      */
-    protected function insertSettings()
+    protected function configureSettings()
     {
         $this->setSetting('MediaLibrary', 'backend_thumbnail_height', 90);
         $this->setSetting('MediaLibrary', 'backend_thumbnail_width', 140);
         $this->setSetting('MediaLibrary', 'backend_thumbnail_quality', 95);
         $this->setSetting('MediaLibrary', 'upload_auto_increment', 0);
         $this->setSetting('MediaLibrary', 'upload_number_of_sharding_folders', 15);
+    }
+
+    /**
+     * Create entity tables
+     */
+    private function createEntityTables()
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                MediaFolder::class,
+                MediaGroup::class,
+                MediaGroupMediaItem::class,
+                MediaItem::class,
+            ]
+        );
     }
 
     /**

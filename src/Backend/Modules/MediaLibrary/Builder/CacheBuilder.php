@@ -218,6 +218,8 @@ class CacheBuilder
                 ->leftJoin(MediaFolder::class, 'p', 'WITH', 'i.parent = p.id')
                 ->where('p.id IN(:ids)')
                 ->setParameter('ids', $ids);
+        } else {
+            $queryBuilder->where('i.parent IS NULL');
         }
 
         $results = $queryBuilder

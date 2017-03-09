@@ -54,7 +54,7 @@ class MediaGalleryType extends AbstractType
             );
 
         // You can only choose the "widget action" on "Add", or always if you got "EditWidgetAction" rights or if you created the MediaGallery.
-        if ($this->dataClass === CreateMediaGallery::class || Authentication::isAllowedAction('EditWidgetAction') || $builder->getData()->userId === Authentication::getUser()->getUserId()) {
+        if ($this->dataClass === CreateMediaGallery::class || Authentication::isAllowedAction('MediaGalleryEditWidgetAction') || $builder->getData()->userId === Authentication::getUser()->getUserId()) {
             $builder->add(
                 'action',
                 ChoiceType::class,

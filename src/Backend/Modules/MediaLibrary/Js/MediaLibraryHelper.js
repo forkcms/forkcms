@@ -259,7 +259,7 @@ jsBackend.mediaLibraryHelper.group =
                 data: {
                     fork: {
                         module: 'MediaLibrary',
-                        action: 'GetMediaFolderCountsForGroup'
+                        action: 'MediaFolderGetCountsForGroup'
                     },
                     group_id : mediaGalleries[mediaGroupI].id
                 },
@@ -313,7 +313,7 @@ jsBackend.mediaLibraryHelper.group =
                 data: {
                     fork: {
                         module: 'MediaLibrary',
-                        action: 'GetMediaFolderCountsForGroup'
+                        action: 'MediaFolderGetCountsForGroup'
                     },
                     group_id : mediaGalleries[mediaGroupI].id
                 },
@@ -346,7 +346,7 @@ jsBackend.mediaLibraryHelper.group =
                 data: {
                     fork: {
                         module: 'MediaLibrary',
-                        action: 'GetMediaFolders'
+                        action: 'MediaFolderFindAll'
                     }
                 },
                 success: function(json, textStatus) {
@@ -417,7 +417,7 @@ jsBackend.mediaLibraryHelper.group =
                 data: {
                     fork: {
                         module: 'MediaLibrary',
-                        action: 'GetMediaItems'
+                        action: 'MediaItemFindAll'
                     },
                     group_id: groupId,
                     folder_id: mediaFolderId
@@ -870,7 +870,7 @@ jsBackend.mediaLibraryHelper.upload =
                     mediaFolderId = $('#uploadMediaFolderId').val();
 
                     // We must set the endpoint dynamically, because "uploadMediaFolderId" is null at start and is async loaded using AJAX.
-                    this.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=UploadMediaItem&fork[language]=' + jsBackend.current.language + '&folder_id=' + mediaFolderId);
+                    this.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' + jsBackend.current.language + '&folder_id=' + mediaFolderId);
                 },
                 onComplete: function(id, name, responseJSON) {
                     // add file to uploaded box
@@ -1005,7 +1005,7 @@ jsBackend.mediaLibraryHelper.upload =
             data: {
                 fork: {
                     module: 'MediaLibrary',
-                    action: 'InsertMediaItemMovie'
+                    action: 'MediaItemAddMovie'
                 },
                 folder_id: mediaFolderId,
                 mime: mime,

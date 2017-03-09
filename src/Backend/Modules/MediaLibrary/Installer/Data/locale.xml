@@ -46,6 +46,14 @@
         <translation language="fr"><![CDATA[photos]]></translation>
         <translation language="de"><![CDATA[Bilder]]></translation>
       </item>
+      <item type="label" name="MediaItemIndex">
+        <translation language="en"><![CDATA[overview]]></translation>
+        <translation language="nl"><![CDATA[overzicht]]></translation>
+      </item>
+      <item type="label" name="MediaItemUpload">
+        <translation language="en"><![CDATA[upload]]></translation>
+        <translation language="nl"><![CDATA[opladen]]></translation>
+      </item>
       <item type="label" name="MediaLibrary">
         <translation language="en"><![CDATA[media library]]></translation>
         <translation language="nl"><![CDATA[media bibliotheek]]></translation>
@@ -288,15 +296,15 @@
         <translation language="en"><![CDATA[connected on]]></translation>
         <translation language="nl"><![CDATA[gekoppeld op]]></translation>
       </item>
-      <item type="message" name="ConfirmDeleteMediaFolder">
+      <item type="message" name="ConfirmMediaFolderDelete">
         <translation language="en"><![CDATA[Are you sure you want to delete the folder "%1$s"?]]></translation>
         <translation language="nl"><![CDATA[Bent u zeker dat u de map "%1$s" wil verwijderen?]]></translation>
       </item>
-      <item type="message" name="ConfirmDeleteMediaFolderAndFiles">
+      <item type="message" name="ConfirmMediaFolderDeleteAndFiles">
         <translation language="en"><![CDATA[Are you sure you want to delete the folder "%1$s" and all its files? This files will be completely removed and you can't use them anymore.]]></translation>
         <translation language="nl"><![CDATA[Bent u zeker dat u de map "%1$s" en alle bestanden in deze map wil verwijderen? Deze bestanden worden volledig gewist en kan u niet meer opvragen.]]></translation>
       </item>
-      <item type="message" name="ConfirmDeleteMediaItem">
+      <item type="message" name="ConfirmMediaItemDelete">
         <translation language="en"><![CDATA[Are you sure you want to delete this media item "%1$s" and all it connections?]]></translation>
         <translation language="nl"><![CDATA[Bent u zeker dat u dit bestand "%1$s" en alle koppelingen wil verwijderen?]]></translation>
       </item>
@@ -308,11 +316,15 @@
         <translation language="en"><![CDATA[be the first to connect files]]></translation>
         <translation language="nl"><![CDATA[koppel als eerste bestanden]]></translation>
       </item>
-      <item type="label" name="DeleteMediaFolder">
+      <item type="label" name="MediaFolderDelete">
         <translation language="en"><![CDATA[Delete folder]]></translation>
         <translation language="nl"><![CDATA[map verwijderen]]></translation>
       </item>
-      <item type="label" name="DeleteMediaItems">
+      <item type="error" name="MediaFolderDeleteNotPossible">
+        <translation language="en"><![CDATA[Delete folder not possible because it's the last folder.]]></translation>
+        <translation language="nl"><![CDATA[Map verwijderen niet mogelijk omdat dit de laatste map is.]]></translation>
+      </item>
+      <item type="label" name="MediaItemDeletes">
         <translation language="en"><![CDATA[delete media]]></translation>
         <translation language="nl"><![CDATA[media verwijderen]]></translation>
       </item>
@@ -344,7 +356,7 @@
         <translation language="en"><![CDATA[The item "%1$s" has been saved.]]></translation>
         <translation language="nl"><![CDATA[Het item "%1$s" is opgeslagen.]]></translation>
       </item>
-      <item type="label" name="EditMediaItem">
+      <item type="label" name="MediaItemEdit">
         <translation language="en"><![CDATA[edit item]]></translation>
         <translation language="nl"><![CDATA[item aanpassen]]></translation>
       </item>

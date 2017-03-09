@@ -342,7 +342,7 @@ class MediaGallery
                 'gallery_id' => $this->id,
                 'extra_label' => $this->getExtraLabel(),
                 'edit_url' =>
-                    Model::createURLForAction('Edit', 'MediaGalleries')
+                    Model::createURLForAction('MediaGalleryEdit', 'MediaGalleries')
                     . '&id=' . $this->id,
             )
         );

@@ -12,7 +12,7 @@ final class DeleteMediaItem
     public $mediaItem;
 
     /**
-     * DeleteMediaItem constructor.
+     * MediaItemDelete constructor.
      *
      * @param $mediaItem
      */

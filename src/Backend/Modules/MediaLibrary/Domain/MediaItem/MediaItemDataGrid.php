@@ -46,7 +46,7 @@ class MediaItemDataGrid extends DataGridDB
         }
 
         // define editActionUrl
-        $editActionUrl = Model::createURLForAction('EditMediaItem');
+        $editActionUrl = Model::createURLForAction('MediaItemEdit');
 
         // set headers
         $this->setHeaderLabels(
@@ -99,7 +99,7 @@ class MediaItemDataGrid extends DataGridDB
                     MediaItem::getWebDir('backend') . '/[shardingFolderName]',
                     '[url]',
                     '[url]',
-                    Model::createURLForAction('EditMediaItem')
+                    Model::createURLForAction('MediaItemEdit')
                     . '&id=[id]'
                     . '&folder=' . $folderId,
                     Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_width'),
@@ -136,34 +136,34 @@ class MediaItemDataGrid extends DataGridDB
         $this->setMassActionCheckboxes('check', '[id]');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown(
+        $ddmMediaItemMassAction = new \SpoonFormDropdown(
             'action',
             array(
                 'move' => Language::lbl('MoveMedia'),
-                'delete' => Language::lbl('DeleteMediaItems')
+                'delete' => Language::lbl('MediaItemDeletes')
             ),
             'move',
             false,
             'form-control',
             'form-control danger'
         );
-        $ddmMassAction->setAttribute(
+        $ddmMediaItemMassAction->setAttribute(
             'id',
             'mass-action-' . $type
         );
-        $ddmMassAction->setOptionAttributes(
+        $ddmMediaItemMassAction->setOptionAttributes(
             'move',
             array(
                 'data-target' => '#confirmMoveMediaItems',
             )
         );
-        $ddmMassAction->setOptionAttributes(
+        $ddmMediaItemMassAction->setOptionAttributes(
             'delete',
             array(
-                'data-target' => '#confirmDeleteMediaItems',
+                'data-target' => '#confirmMediaItemDeletes',
             )
         );
-        $this->setMassAction($ddmMassAction);
+        $this->setMassAction($ddmMediaItemMassAction);
     }
 
     /**

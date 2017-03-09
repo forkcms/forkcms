@@ -12,11 +12,19 @@
         <translation language="en"><![CDATA[view]]></translation>
         <translation language="nl"><![CDATA[weergave]]></translation>
       </item>
-      <item type="label" name="AddMediaGallery">
+      <item type="label" name="MediaGalleryAdd">
         <translation language="en"><![CDATA[add gallery]]></translation>
         <translation language="nl"><![CDATA[galerij toevoegen]]></translation>
       </item>
-      <item type="message" name="AddedMediaGallery">
+      <item type="label" name="MediaGalleryEdit">
+        <translation language="en"><![CDATA[edit gallery]]></translation>
+        <translation language="nl"><![CDATA[galerij bewerken]]></translation>
+      </item>
+      <item type="label" name="MediaGalleryIndex">
+        <translation language="en"><![CDATA[overview]]></translation>
+        <translation language="nl"><![CDATA[overzicht]]></translation>
+      </item>
+      <item type="message" name="MediaGalleryAdded">
         <translation language="en"><![CDATA[The gallery "%1$s" was added.]]></translation>
         <translation language="nl"><![CDATA[De galerij "%1$s" is toegevoegd.]]></translation>
       </item>

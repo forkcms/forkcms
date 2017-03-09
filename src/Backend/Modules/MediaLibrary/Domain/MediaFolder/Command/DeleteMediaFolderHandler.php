@@ -5,13 +5,13 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaFolder\Command;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 
-final class DeleteMediaFolderHandler
+final class MediaFolderDeleteHandler
 {
     /** @var MediaFolderRepository */
     protected $mediaFolderRepository;
 
     /**
-     * DeleteMediaFolderHandler constructor.
+     * MediaFolderDeleteHandler constructor.
      *
      * @param MediaFolderRepository $mediaFolderRepository
      */
@@ -21,9 +21,9 @@ final class DeleteMediaFolderHandler
     }
 
     /**
-     * @param DeleteMediaFolder $deleteMediaFolder
+     * @param MediaFolderDelete $deleteMediaFolder
      */
-    public function handle(DeleteMediaFolder $deleteMediaFolder)
+    public function handle(MediaFolderDelete $deleteMediaFolder)
     {
         /** @var MediaFolder $mediaFolder */
         $mediaFolder = $deleteMediaFolder->mediaFolder;

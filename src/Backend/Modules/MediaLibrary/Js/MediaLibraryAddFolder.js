@@ -37,7 +37,7 @@ jsBackend.mediaLibraryAddFolder =
 
                 $.ajax({
                     data: {
-                        fork: {module: 'MediaLibrary', action: 'AddMediaFolder'},
+                        fork: {module: 'MediaLibrary', action: 'MediaFolderAdd'},
                         name: $('#addFolderTitle').val(),
                         parent_id: $('#addFolderParentId').val()
                     },
@@ -96,7 +96,7 @@ jsBackend.mediaLibraryAddFolder =
         // get folders using ajax
         $.ajax({
             data: {
-                fork: { module: 'MediaLibrary', action: 'GetMediaFolders' }
+                fork: { module: 'MediaLibrary', action: 'MediaFolderFindAll' }
             },
             success: function(json, textStatus) {
                 if (json.code != 200) {

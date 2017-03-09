@@ -12,7 +12,7 @@ final class DeleteMediaFolder
     public $mediaFolder;
 
     /**
-     * DeleteMediaFolder constructor.
+     * MediaFolderDelete constructor.
      *
      * @param MediaFolder $mediaFolder
      */

@@ -16,51 +16,56 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // Add 'MediaGalleries' as a module
         $this->addModule('MediaGalleries');
-
-        // Import locale
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
-
-        // add the schema of the entity to the database
-        Model::get('entity.create_schema')->forEntityClass(MediaGallery::class);
-
-        // Inserting some other required stuff
-        $this->insertRights();
-        $this->insertNavigationForModules();
+        $this->createEntityTables();
+        $this->configureModuleRights();
+        $this->configureBackendNavigation();
     }
 
     /**
-     * Insert backend navigation for modules
+     * Configure backend navigation
      */
-    protected function insertNavigationForModules()
+    protected function configureBackendNavigation()
     {
         // Navigation for "modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation(
             $navigationModulesId,
             'MediaGalleries',
-            'media_galleries/index',
+            'media_galleries/media_gallery_index',
             array(
-                'media_galleries/add',
-                'media_galleries/edit',
+                'media_galleries/media_gallery_add',
+                'media_galleries/media_gallery_edit',
             )
         );
     }
 
     /**
-     * Insert rights
+     * Configure module rights
      */
-    protected function insertRights()
+    protected function configureModuleRights()
     {
         // Set module rights
         $this->setModuleRights(1, 'MediaGalleries');
 
         // Media galleries
-        $this->setActionRights(1, 'MediaGalleries', 'Index');
-        $this->setActionRights(1, 'MediaGalleries', 'Add');
-        $this->setActionRights(1, 'MediaGalleries', 'Delete');
-        $this->setActionRights(1, 'MediaGalleries', 'Edit');
-        $this->setActionRights(1, 'MediaGalleries', 'EditWidgetAction');
+        $this->setActionRights(1, 'MediaGalleries', 'MediaGalleryIndex');
+        $this->setActionRights(1, 'MediaGalleries', 'MediaGalleryAdd');
+        $this->setActionRights(1, 'MediaGalleries', 'MediaGalleryDelete');
+        $this->setActionRights(1, 'MediaGalleries', 'MediaGalleryEdit');
+        $this->setActionRights(1, 'MediaGalleries', 'MediaGalleryEditWidgetAction');
+    }
+
+    /**
+     * Create entity tables
+     */
+    private function createEntityTables()
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                MediaGallery::class,
+            ]
+        );
     }
 }

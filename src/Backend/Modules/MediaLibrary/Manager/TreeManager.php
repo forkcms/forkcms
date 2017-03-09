@@ -107,7 +107,7 @@ class TreeManager
             // insert link
             $html .= '  <a href="'
                 . BackendModel::createURLForAction(
-                    'Index',
+                    'MediaItemIndex',
                     null,
                     null,
                     array(

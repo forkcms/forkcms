@@ -28,7 +28,7 @@ jsBackend.mediaLibrary.controls =
         // save and edit
         $('#saveAndEdit').on('click', function()
         {
-            $('form').append('<input type="hidden" name="after_save" value="EditMediaItem" />').submit();
+            $('form').append('<input type="hidden" name="after_save" value="MediaItemEdit" />').submit();
         });
     }
 };
@@ -70,7 +70,7 @@ jsBackend.mediaLibrary.library =
             // Update folder using ajax
             $.ajax({
                 data: {
-                    fork: { action: 'EditMediaFolder' },
+                    fork: { action: 'MediaFolderEdit' },
                     folder_id: $('#mediaFolderId').val(),
                     name: $('#mediaFolderName').val()
                 },
@@ -231,7 +231,7 @@ jsBackend.mediaLibrary.tree =
         $.ajax({
             async: false, // important that this isn't asynchronous
             data: {
-                fork: { action: 'GetMediaFolderInfo' },
+                fork: { action: 'MediaFolderInfo' },
                 id: currentPageID
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -291,7 +291,7 @@ jsBackend.mediaLibrary.tree =
         // make the call
         $.ajax({
             data: {
-                fork: { action: 'MoveMediaFolder' },
+                fork: { action: 'MediaFolderMove' },
                 id: currentPageID,
                 dropped_on: droppedOnPageID,
                 type: type,
