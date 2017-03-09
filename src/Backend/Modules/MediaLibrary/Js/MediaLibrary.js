@@ -91,7 +91,7 @@ jsBackend.mediaLibrary.library =
                         $('#editFolderDialog').modal('close');
 
                         // reload document
-                        window.location.reload('true');
+                        window.location.reload(true);
                     }
                 }
             });
@@ -126,13 +126,14 @@ jsBackend.mediaLibrary.library =
     {
         // get value
         var value = $('#' + e.data.value_id).val();
+        var $formField = $('#' + e.data.form_id);
 
         // add field to form
-        if ($('#' + e.data.form_id).find('#' + e.data.name).length == 0) {
-            $('#' + e.data.form_id).append('<input id="' + e.data.name + '" name="' + e.data.name + '" type="hidden" value="' + value + '" />');
+        if ($formField.find('#' + e.data.name).length == 0) {
+            $formField.append('<input id="' + e.data.name + '" name="' + e.data.name + '" type="hidden" value="' + value + '" />');
         // update existing field
         } else {
-            $('#' + e.data.form_id).find('#' + e.data.name).val(value);
+            $formField.find('#' + e.data.name).val(value);
         }
     }
 };
@@ -148,7 +149,9 @@ jsBackend.mediaLibrary.tree =
     // init, something like a constructor
     init: function()
     {
-        if ($('#tree div').length === 0) {
+        var $treeHolder = $('#tree div');
+
+        if ($treeHolder.length === 0) {
             return false;
         }
 
@@ -161,7 +164,7 @@ jsBackend.mediaLibrary.tree =
         if (jsBackend.data.get('MediaLibrary.openedFolderId')) {
             $('#folder-' + jsBackend.data.get('MediaLibrary.openedFolderId')).addClass('selected');
             jsBackend.mediaLibrary.tree.pageID = jsBackend.data.get('MediaLibrary.openedFolderId');
-        };
+        }
 
         var openedIds = [];
         if (typeof jsBackend.mediaLibrary.tree.pageID != 'undefined') {
@@ -202,7 +205,7 @@ jsBackend.mediaLibrary.tree =
         };
 
         // create tree
-        $('#tree div').tree(options);
+        $treeHolder.tree(options);
 
         // layout fix for the tree
         $('.tree li.open').each(function() {
@@ -218,11 +221,7 @@ jsBackend.mediaLibrary.tree =
     {
         // get pageID that has to be moved
         var currentPageID = $(node).prop('id').replace('folder-', '');
-        if (typeof refNode == 'undefined') {
-            parentPageID = 0;
-        } else {
-            parentPageID = $(refNode).prop('id').replace('folder-', '');
-        }
+        var parentPageID = (typeof refNode == 'undefined') ? 0 : $(refNode).prop('id').replace('folder-', '');
 
         // init var
         var result = false;

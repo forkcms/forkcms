@@ -6,10 +6,9 @@ jsBackend.mediaLibraryAddFolder =
 {
     init: function()
     {
-        $addFolderSubmit = $('#addFolderSubmit');
-        $addFolderDialog = $('#addFolderDialog');
-        $folderTitle = $('#folderTitle');
-        $folderTitleError = $('#folderTitleError');
+        var $addFolderSubmit = $('#addFolderSubmit');
+        var $addFolderDialog = $('#addFolderDialog');
+        var $folderTitleError = $('#folderTitleError');
 
         // start or not
         if ($addFolderDialog.length == 0) {
@@ -130,7 +129,7 @@ jsBackend.mediaLibraryAddFolder =
                         if (selectFolderId) {
                             $('#uploadMediaFolderId').val(selectFolderId);
                         } else {
-                            $('#uploadMediaFolderId option:nth(0)').attr("selected", "selected");
+                            $('#uploadMediaFolderId option:eq(0)').attr("selected", "selected");
                         }
 
                         // update folders in library

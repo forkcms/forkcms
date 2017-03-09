@@ -42,8 +42,8 @@ class MediaItemDeleteAllCommand extends ContainerAwareCommand
 
         // Loop all media items
         foreach ($mediaItems as $mediaItem) {
-            /** @var MediaItemDelete $deleteMediaItem */
-            $deleteMediaItem = new MediaItemDelete($mediaItem);
+            /** @var DeleteMediaItem $deleteMediaItem */
+            $deleteMediaItem = new DeleteMediaItem($mediaItem);
 
             // Handle the MediaItem delete
             $this->getContainer()->get('command_bus')->handle($deleteMediaItem);

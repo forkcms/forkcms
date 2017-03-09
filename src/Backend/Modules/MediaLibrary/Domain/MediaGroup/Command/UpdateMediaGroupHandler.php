@@ -56,8 +56,5 @@ final class UpdateMediaGroupHandler
                 // Do nothing
             }
         }
-
-        // We redefine the MediaGroup, so we can use it in an action
-        $updateMediaGroup->setMediaGroupEntity($mediaGroup);
     }
 }

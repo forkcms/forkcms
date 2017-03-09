@@ -204,14 +204,6 @@ jsBackend.mediaLibraryHelper.group =
     },
 
     /**
-     * Clear the media cache when necessary
-     */
-    clearMediaCache : function()
-    {
-        media = {};
-    },
-
-    /**
      * Clear the folders cache when necessary
      */
     clearFoldersCache : function()
@@ -226,9 +218,6 @@ jsBackend.mediaLibraryHelper.group =
      */
     disconnectMediaFromGroup : function(groupId)
     {
-        // redefine current media group
-        mediaCurrentGroup = [];
-
         // define mediaGroupI
         mediaGroupI = groupId;
 
@@ -275,7 +264,7 @@ jsBackend.mediaLibraryHelper.group =
                         jsBackend.mediaLibraryHelper.group.updateGroupMedia();
 
                         // update folder counts for items
-                        jsBackend.mediaLibraryHelper.group.updateFolderCountsForItemsToDisconnect($items, mediaGroupI);
+                        jsBackend.mediaLibraryHelper.group.updateFolderCountsForItemsToDisconnect($items);
 
                         // update disconnect button
                         jsBackend.mediaLibraryHelper.group.updateDisconnectButton(groupId);
@@ -287,7 +276,7 @@ jsBackend.mediaLibraryHelper.group =
             jsBackend.mediaLibraryHelper.group.updateGroupMedia();
 
             // update folder counts for items
-            jsBackend.mediaLibraryHelper.group.updateFolderCountsForItemsToDisconnect($items, mediaGroupI);
+            jsBackend.mediaLibraryHelper.group.updateFolderCountsForItemsToDisconnect($items);
 
             // update disconnect button
             jsBackend.mediaLibraryHelper.group.updateDisconnectButton(groupId);
@@ -476,7 +465,7 @@ jsBackend.mediaLibraryHelper.group =
         var $items = jsBackend.mediaLibraryHelper.group.getSelectedItems(groupId);
 
         // toggle disabled button
-        $group.find('.mediaEditBox .disconnectMediaItemsButton').toggleClass('disabled', ($items.length > 0) ? false : true);
+        $group.find('.mediaEditBox .disconnectMediaItemsButton').toggleClass('disabled', ($items.length <= 0));
     },
 
     /**
@@ -531,15 +520,9 @@ jsBackend.mediaLibraryHelper.group =
      * Update folder counts for items
      *
      * @param array $items              The media items
-     * @param int id [optional]         Overwrite value for the media group I
      */
-    updateFolderCountsForItemsToDisconnect : function($items, id)
+    updateFolderCountsForItemsToDisconnect : function($items)
     {
-        // define id
-        if (id == null) {
-            id = mediaGroupI;
-        }
-
         // update folder count
         $items.each(function() {
             // get id
@@ -591,7 +574,7 @@ jsBackend.mediaLibraryHelper.group =
             ? $.trim($('#group-' + mediaGroupI + ' .mediaIds').first().val()).split(',') : [];
 
         // define empty
-        var empty = (mediaCurrentGroup.length == 0) ? true : false;
+        var empty = (mediaCurrentGroup.length == 0);
 
         // check which items to add
         $(mediaCurrentGroup).each(function(i, id) {
@@ -603,7 +586,7 @@ jsBackend.mediaLibraryHelper.group =
                     $.each(items, function(index, item) {
                         // item found
                         if (id == item.id) {
-                            html = '<li id="media-' + item.id + '" data-folder-id="' + item.folder_id + '" class="ui-state-default">';
+                            var html = '<li id="media-' + item.id + '" data-folder-id="' + item.folder_id + '" class="ui-state-default">';
                             html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(item.type) + '">';
 
                             if (item.type == 'image') {
@@ -647,7 +630,7 @@ jsBackend.mediaLibraryHelper.group =
         }
 
         // update the hidden group field for media
-        $('#group-' + mediaGroupI).find('.mediaIds').first().val(mediaCurrentGroup.join(',').trim(','));
+        $('#group-' + mediaGroupI).find('.mediaIds').first().val(mediaCurrentGroup.join(','));
 
         // redefine
         mediaCurrentGroup = [];
@@ -817,7 +800,7 @@ jsBackend.mediaLibraryHelper.group =
         // bind change when connecting/disconnecting media
         $tables.find('.toggleConnectedCheckbox').on('click', function(e) {
             // mediaId
-            mediaId = $(this).parent().parent().attr('id').replace('media-', '');
+            var mediaId = $(this).parent().parent().attr('id').replace('media-', '');
 
             // was already connected?
             var connected = utils.array.inArray(mediaId, mediaCurrentGroup);
@@ -912,7 +895,7 @@ jsBackend.mediaLibraryHelper.upload =
     addUploadedFile : function(item)
     {
         // init html
-        html = '';
+        var html = '';
 
         // create element
         html += '<li id="media-' + item.id + '" data-folder-id="' + item.folder.id + '" class="ui-state-default">';

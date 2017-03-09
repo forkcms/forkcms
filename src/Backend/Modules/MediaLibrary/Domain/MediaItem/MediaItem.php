@@ -5,7 +5,6 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;

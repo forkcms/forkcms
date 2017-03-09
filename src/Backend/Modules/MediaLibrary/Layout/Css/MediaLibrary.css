@@ -97,14 +97,14 @@
 				}
 
 	.optionsOnlyOneGroup {
-		padding: 0px!important;
+		padding: 0!important;
 	}
 		.optionsOnlyOneGroup .panel {
 			border: none;
 			width: 100%;
 		}
 		.optionsOnlyOneGroup .mediaSettingsGroup {
-			right: 0px;
+			right: 0;
 		}
 
 .mediaConnectedItems .ui-state-default {
@@ -140,13 +140,13 @@
 			margin: 20px auto 2px;
 		}
 			.mediaHolderAudio .icon {
-				background-position: 0px -468px;
+				background-position: 0 -468px;
 			}
 			.mediaHolderFile .icon {
-				background-position: 0px -443px;
+				background-position: 0 -443px;
 			}
 			.mediaHolderMovie .icon {
-				background-position: 0px -468px;
+				background-position: 0 -468px;
 			}
 		.mediaHolderFile .url,
 		.mediaHolderMovie .url,
@@ -245,5 +245,5 @@ p.helpTxt.mediaNoItems {
  * Fine uploader
  */
 .qq-uploader {
-	border-radius: 0px;
+	border-radius: 0;
 }

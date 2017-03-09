@@ -21,5 +21,6 @@ final class UpdateMediaGroup extends MediaGroupDataTransferObject
         parent::__construct($mediaGroup);
 
         $this->mediaItemIdsToConnect = $mediaItemIdsToConnect;
+        $this->mediaGroup = $mediaGroup;
     }
 }

@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem as MediaItemDeleteCommand;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem as DeleteMediaItemCommand;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
 
 /**
@@ -24,8 +24,8 @@ class MediaItemDelete extends BackendBaseActionDelete
         /** @var MediaItem $mediaItem */
         $mediaItem = $this->getMediaItem();
 
-        /** @var MediaItemDeleteCommand $deleteMediaItem */
-        $deleteMediaItem = new MediaItemDeleteCommand($mediaItem);
+        /** @var DeleteMediaItemCommand $deleteMediaItem */
+        $deleteMediaItem = new DeleteMediaItemCommand($mediaItem);
 
         // Handle the MediaItem delete
         $this->get('command_bus')->handle($deleteMediaItem);

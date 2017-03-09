@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\MediaLibrary\Manager;
 
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Symfony\Component\Filesystem\Filesystem;
 use Common\ModulesSettings;
 use Common\Uri;

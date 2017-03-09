@@ -6,7 +6,6 @@ use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
-use Backend\Modules\MediaLibrary\Engine\Model as BackendMediaLibraryModel;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid

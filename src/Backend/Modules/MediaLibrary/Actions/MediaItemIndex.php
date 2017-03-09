@@ -5,7 +5,6 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Language\Language;
-use Backend\Modules\MediaLibrary\Engine\Model as BackendMediaLibraryModel;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDataGrid;

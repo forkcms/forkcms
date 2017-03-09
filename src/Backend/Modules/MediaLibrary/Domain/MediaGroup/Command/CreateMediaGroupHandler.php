@@ -29,8 +29,5 @@ final class CreateMediaGroupHandler
         /** @var MediaGroup $mediaGroup */
         $mediaGroup = MediaGroup::fromDataTransferObject($createMediaGroup);
         $this->mediaGroupRepository->add($mediaGroup);
-
-        // We redefine the MediaGroup, so we can use it in an action
-        $createMediaGroup->setMediaGroupEntity($mediaGroup);
     }
 }

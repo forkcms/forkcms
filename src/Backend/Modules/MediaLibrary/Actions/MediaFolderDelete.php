@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder as DeleteMediaFolderCommand;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Event\MediaFolderDeleted;
+use Common\Exception\RedirectException;
 
 /**
  * This action will delete a MediaFolder
@@ -56,6 +57,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
 
     /**
      * @return MediaFolder
+     * @throws RedirectException
      */
     protected function getMediaFolder(): MediaFolder
     {

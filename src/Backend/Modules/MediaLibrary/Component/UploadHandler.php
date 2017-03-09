@@ -226,10 +226,10 @@ class UploadHandler
      * Process a delete.
      *
      * @param string $uploadDirectory Target directory.
-     * @params string $name Overwrites the name of the file.
+     * @param string $name
      * @return array
      */
-    public function handleDelete($uploadDirectory, $name = null)
+    public function handleDelete(string $uploadDirectory, string $name = null)
     {
         if ($this->isInaccessible($uploadDirectory)) {
             return array('error' => "Server error. Uploads directory isn't writable" . ((!$this->isWindows()) ? " or executable." : "."));
