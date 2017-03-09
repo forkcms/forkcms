@@ -15,9 +15,8 @@ final class CreateMediaGroupHandler
      *
      * @param MediaGroupRepository $mediaGroupRepository
      */
-    public function __construct(
-        MediaGroupRepository $mediaGroupRepository
-    ) {
+    public function __construct(MediaGroupRepository $mediaGroupRepository)
+    {
         $this->mediaGroupRepository = $mediaGroupRepository;
     }
 
@@ -29,5 +28,8 @@ final class CreateMediaGroupHandler
         /** @var MediaGroup $mediaGroup */
         $mediaGroup = MediaGroup::fromDataTransferObject($createMediaGroup);
         $this->mediaGroupRepository->add($mediaGroup);
+
+        // We redefine the MediaGroup, so we can use it in an action
+        $createMediaGroup->setMediaGroup($mediaGroup);
     }
 }

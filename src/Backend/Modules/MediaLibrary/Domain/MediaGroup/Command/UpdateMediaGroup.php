@@ -8,6 +8,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class UpdateMediaGroup extends MediaGroupDataTransferObject
 {
+    /** @var MediaGroup */
+    protected $mediaGroup;
+
     /**
      * UpdateMediaGroup constructor.
      *
@@ -21,6 +24,22 @@ final class UpdateMediaGroup extends MediaGroupDataTransferObject
         parent::__construct($mediaGroup);
 
         $this->mediaItemIdsToConnect = $mediaItemIdsToConnect;
+        $this->mediaGroup = $mediaGroup;
+    }
+
+    /**
+     * @return MediaGroup
+     */
+    public function getMediaGroup(): MediaGroup
+    {
+        return $this->mediaGroup;
+    }
+
+    /**
+     * @param MediaGroup $mediaGroup
+     */
+    public function setMediaGroup(MediaGroup $mediaGroup)
+    {
         $this->mediaGroup = $mediaGroup;
     }
 }

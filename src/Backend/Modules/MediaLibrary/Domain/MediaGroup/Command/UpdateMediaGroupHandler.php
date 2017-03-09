@@ -18,9 +18,8 @@ final class UpdateMediaGroupHandler
      *
      * @param MediaItemRepository $mediaItemRepository
      */
-    public function __construct(
-        MediaItemRepository $mediaItemRepository
-    ) {
+    public function __construct(MediaItemRepository $mediaItemRepository)
+    {
         $this->mediaItemRepository = $mediaItemRepository;
     }
 
@@ -56,5 +55,8 @@ final class UpdateMediaGroupHandler
                 // Do nothing
             }
         }
+
+        // We redefine the MediaGroup, so we can use it in an action
+        $updateMediaGroup->setMediaGroup($mediaGroup);
     }
 }

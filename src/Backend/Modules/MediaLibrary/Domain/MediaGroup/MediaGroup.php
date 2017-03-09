@@ -90,17 +90,32 @@ class MediaGroup
     }
 
     /**
-     * @param UuidInterface $id
-     * @param Type $type
+     * @param MediaGroupDataTransferObject $mediaGroupDataTransferObject
      * @return MediaGroup
      */
-    public static function createForId(
-        UuidInterface $id,
-        Type $type
-    ) : MediaGroup {
+    public static function fromDataTransferObject(MediaGroupDataTransferObject $mediaGroupDataTransferObject): MediaGroup
+    {
+        if ($mediaGroupDataTransferObject->hasExistingMediaGroup()) {
+            /** @var MediaGroup $mediaGroup */
+            $mediaGroup = $mediaGroupDataTransferObject->getMediaGroupEntity();
+
+            // Remove all previous connected items
+            if ($mediaGroupDataTransferObject->removeAllPreviousConnectedMediaItems) {
+                $mediaGroup->getConnectedItems()->clear();
+            }
+
+            return $mediaGroup;
+        }
+
+        if ($mediaGroupDataTransferObject->id === null) {
+            return self::create(
+                $mediaGroupDataTransferObject->type
+            );
+        }
+
         return new self(
-            $id,
-            $type
+            $mediaGroupDataTransferObject->id,
+            $mediaGroupDataTransferObject->type
         );
     }
 
@@ -265,35 +280,5 @@ class MediaGroup
     {
         $this->editedOn = new \Datetime();
         $this->setNumberOfConnectedItems();
-    }
-
-    /**
-     * @param MediaGroupDataTransferObject $mediaGroupDataTransferObject
-     * @return MediaGroup
-     */
-    public static function fromDataTransferObject(MediaGroupDataTransferObject $mediaGroupDataTransferObject): MediaGroup
-    {
-        if ($mediaGroupDataTransferObject->hasExistingMediaGroup()) {
-            /** @var MediaGroup $mediaGroup */
-            $mediaGroup = $mediaGroupDataTransferObject->getMediaGroupEntity();
-
-            // Remove all previous connected items
-            if ($mediaGroupDataTransferObject->removeAllPreviousConnectedMediaItems) {
-                $mediaGroup->getConnectedItems()->clear();
-            }
-
-            return $mediaGroup;
-        }
-
-        if ($mediaGroupDataTransferObject->id === null) {
-            return self::create(
-                $mediaGroupDataTransferObject->type
-            );
-        }
-
-        return self::createForId(
-            $mediaGroupDataTransferObject->id,
-            $mediaGroupDataTransferObject->type
-        );
     }
 }

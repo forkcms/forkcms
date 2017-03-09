@@ -144,7 +144,7 @@ class MediaGroupType extends AbstractType
             // Handle the MediaGroup update
             $this->commandBus->handle($updateMediaGroup);
 
-            return $updateMediaGroup->getMediaGroupEntity();
+            return $updateMediaGroup->getMediaGroup();
         };
     }
 
@@ -168,7 +168,7 @@ class MediaGroupType extends AbstractType
             // Handle the MediaGroup create
             $this->commandBus->handle($createMediaGroup);
 
-            return $createMediaGroup->getMediaGroupEntity();
+            return $createMediaGroup->getMediaGroup();
         }
     }
 
