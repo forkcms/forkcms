@@ -3,9 +3,9 @@
 {% block main %}
 
   {# Main positions #}
-  {% for main in positions.main %}
-    {% if main.html %}
-      {{ main.html|raw }}
+  {% for content in positions.main %}
+    {% if content.html %}
+      {{ content.html|raw }}
     {% endif %}
   {% endfor %}
 

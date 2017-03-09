@@ -7,11 +7,11 @@
 
   <div class="row">
     {# Main positions #}
-    {% for main in positions.main %}
+    {% for content in positions.main %}
       <div class="col-lg-offset-2 col-lg-8">
         <div class="section-home font-size-large">
-          {% if main.html %}
-            {{ main.html|raw }}
+          {% if content.html %}
+            {{ content.html|raw }}
           {% endif %}
         </div>
       </div>
