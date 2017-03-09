@@ -18,18 +18,12 @@ services:
       - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder }
 
   # MediaGroup
-  media_galleries.handler.create_media_group:
-    class: Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\CreateMediaGroupHandler
-    arguments:
-      - "@media_library.repository.group"
-    tags:
-      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\CreateMediaGroup }
   media_galleries.handler.update_media_group:
-    class: Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\UpdateMediaGroupHandler
+    class: Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroupHandler
     arguments:
       - "@media_library.repository.item"
     tags:
-      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\UpdateMediaGroup }
+      - { name: command_handler, handles: Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup }
 
   # MediaItem
   media_galleries.handler.create_media_item_from_movie_url:

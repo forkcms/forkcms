@@ -6,13 +6,13 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupDataTransferObject;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class UpdateMediaGroup extends MediaGroupDataTransferObject
+final class SaveMediaGroup extends MediaGroupDataTransferObject
 {
     /** @var MediaGroup */
     protected $mediaGroup;
 
     /**
-     * UpdateMediaGroup constructor.
+     * SaveMediaGroup constructor.
      *
      * @param MediaGroup $mediaGroup
      * @param array $mediaItemIdsToConnect

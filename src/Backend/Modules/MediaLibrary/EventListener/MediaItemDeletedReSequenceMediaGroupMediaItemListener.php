@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaLibrary\EventListener;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use SimpleBus\Message\Bus\MessageBus;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\UpdateMediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
@@ -56,7 +56,7 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
                     $newMediaIds[$index] = $connectedItem->getItem()->getId();
                 }
 
-                $updateMediaGroup = new UpdateMediaGroup(
+                $updateMediaGroup = new SaveMediaGroup(
                     $mediaGroup,
                     $newMediaIds
                 );

@@ -90,6 +90,23 @@ class MediaGroup
     }
 
     /**
+     * Create from id
+     *
+     * @param UuidInterface $id
+     * @param Type $type
+     * @return MediaGroup
+     */
+    public static function createFromId(
+        UuidInterface $id,
+        Type $type
+    ) : MediaGroup {
+        return new self(
+            $id,
+            $type
+        );
+    }
+
+    /**
      * @param MediaGroupDataTransferObject $mediaGroupDataTransferObject
      * @return MediaGroup
      */

@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
+use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Ramsey\Uuid\Uuid;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 use Symfony\Component\Form\AbstractType;
@@ -15,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\CreateMediaGroup;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\UpdateMediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
 
 class MediaGroupType extends AbstractType
 {
@@ -27,6 +29,9 @@ class MediaGroupType extends AbstractType
 
     /** @var MediaGroupRepository */
     private $mediaGroupRepository;
+
+    /** @var MediaItemRepository */
+    private $mediaItemRepository;
 
     /**
      * MediaGroupType constructor.
@@ -128,15 +133,22 @@ class MediaGroupType extends AbstractType
             /** @var Type $mediaGroupType */
             $mediaGroupType = Type::fromString($mediaGroupData['type']);
 
-            /** @var MediaGroup $mediaGroup */
-            $mediaGroup = $this->getMediaGroup($mediaGroupId, $mediaGroupType);
-
             /** @var array $mediaItemIds */
             $mediaItemIds = ($mediaGroupData['mediaIds'] !== null)
                 ? explode(',', trim($mediaGroupData['mediaIds'])) : array();
 
-            /** @var UpdateMediaGroup $updateMediaGroup */
-            $updateMediaGroup = new UpdateMediaGroup(
+            try {
+                /** @var MediaGroup $mediaGroup */
+                $mediaGroup = $this->mediaGroupRepository->getOneById($mediaGroupId);
+            } catch (\Exception $e) {
+                $mediaGroup = MediaGroup::createFromId(
+                    Uuid::fromString($mediaGroupId),
+                    $mediaGroupType
+                );
+            }
+
+            /** @var SaveMediaGroup $updateMediaGroup */
+            $updateMediaGroup = new SaveMediaGroup(
                 $mediaGroup,
                 $mediaItemIds
             );
@@ -146,30 +158,6 @@ class MediaGroupType extends AbstractType
 
             return $updateMediaGroup->getMediaGroup();
         };
-    }
-
-    /**
-     * @param string $mediaGroupId
-     * @param Type $mediaGroupType
-     * @return MediaGroup
-     */
-    private function getMediaGroup(string $mediaGroupId, Type $mediaGroupType)
-    {
-        try {
-            /** @var MediaGroup|null $mediaGroup */
-            return $this->mediaGroupRepository->getOneById($mediaGroupId);
-        } catch (\Exception $e) {
-            /** @var CreateMediaGroup $createMediaGroup */
-            $createMediaGroup = new CreateMediaGroup(
-                $mediaGroupType,
-                Uuid::fromString($mediaGroupId)
-            );
-
-            // Handle the MediaGroup create
-            $this->commandBus->handle($createMediaGroup);
-
-            return $createMediaGroup->getMediaGroup();
-        }
     }
 
     /**

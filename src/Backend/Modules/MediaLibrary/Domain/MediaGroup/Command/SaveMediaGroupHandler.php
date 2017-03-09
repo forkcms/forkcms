@@ -8,7 +8,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Ramsey\Uuid\Uuid;
 
-final class UpdateMediaGroupHandler
+final class SaveMediaGroupHandler
 {
     /** @var MediaItemRepository */
     protected $mediaItemRepository;
@@ -24,9 +24,9 @@ final class UpdateMediaGroupHandler
     }
 
     /**
-     * @param UpdateMediaGroup $updateMediaGroup
+     * @param SaveMediaGroup $updateMediaGroup
      */
-    public function handle(UpdateMediaGroup $updateMediaGroup)
+    public function handle(SaveMediaGroup $updateMediaGroup)
     {
         /** @var MediaGroup $mediaGroup */
         $mediaGroup = MediaGroup::fromDataTransferObject($updateMediaGroup);
