@@ -133,7 +133,7 @@ class TwigTemplate extends BaseTwigTemplate
 
         // remove protected constants aka constants that should not be used in the template
         foreach ($constants['user'] as $key => $value) {
-            if (!in_array($key, $notPublicConstants, true)) {
+            if (!in_array($key, $notPublicConstants)) {
                 $realConstants[$key] = $value;
             }
         }

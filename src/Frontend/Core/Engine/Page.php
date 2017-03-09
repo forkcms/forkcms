@@ -502,7 +502,7 @@ class Page extends FrontendBaseObject
         // loop blocks
         foreach ($this->record['positions'] as $position => &$blocks) {
             // position not known in template = skip it
-            if (!in_array($position, $this->record['template_data']['names'], true)) {
+            if (!in_array($position, $this->record['template_data']['names'])) {
                 continue;
             }
 

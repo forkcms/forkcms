@@ -184,7 +184,7 @@ class Language
             $language = mb_substr($language, 0, 2); // first two characters
 
             // find possible language and check in the redirect-languages
-            if ($forRedirect && in_array($language, $redirectLanguages, true)) {
+            if ($forRedirect && in_array($language, $redirectLanguages)) {
                 return $language;
             }
         }
@@ -355,7 +355,7 @@ class Language
         }
 
         // validate language
-        if (!$force && !in_array($language, self::getActiveLanguages(), true)) {
+        if (!$force && !in_array($language, self::getActiveLanguages())) {
             throw new Exception('Invalid language (' . $language . ').');
         }
 

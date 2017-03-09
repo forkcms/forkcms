@@ -98,7 +98,7 @@ class Extra extends FrontendBaseObject
 
         // is the requested action possible? If not we throw an exception.
         // We don't redirect because that could trigger a redirect loop
-        if (!in_array($this->getAction(), $this->config->getPossibleActions(), true)) {
+        if (!in_array($this->getAction(), $this->config->getPossibleActions())) {
             $this->setAction($this->config->getDefaultAction());
         }
     }

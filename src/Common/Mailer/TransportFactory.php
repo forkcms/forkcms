@@ -60,7 +60,7 @@ class TransportFactory
             ->setUsername($user)
             ->setPassword($pass);
 
-        if (in_array($encryption, array('ssl', 'tls'), true)) {
+        if (in_array($encryption, array('ssl', 'tls'))) {
             $transport->setEncryption($encryption);
         }
 

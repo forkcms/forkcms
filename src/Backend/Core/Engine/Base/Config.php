@@ -89,7 +89,7 @@ class Config extends Object
     {
         // does this module exist?
         $modules = BackendModel::getModulesOnFilesystem();
-        if (!in_array($module, $modules, true)) {
+        if (!in_array($module, $modules)) {
             // set correct headers
             header('HTTP/1.1 403 Forbidden');
 
@@ -153,9 +153,9 @@ class Config extends Object
     {
         switch ($actionType) {
             case 'actions':
-                return in_array($this->getAction(), $this->disabledActions, true);
+                return in_array($this->getAction(), $this->disabledActions);
             case 'ajax':
-                return in_array($this->action, $this->disabledAJAXActions, true);
+                return in_array($this->action, $this->disabledAJAXActions);
         }
 
         throw new \Exception($actionType . ' is not a valid action type');

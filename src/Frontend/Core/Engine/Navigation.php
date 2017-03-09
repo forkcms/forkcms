@@ -297,7 +297,7 @@ class Navigation extends FrontendBaseObject
                 }
 
                 // some ids should be excluded
-                if (in_array($page['page_id'], $excludeIds, true)) {
+                if (in_array($page['page_id'], $excludeIds)) {
                     unset($navigation[$type][$parentId][$id]);
                     continue;
                 }
@@ -305,8 +305,7 @@ class Navigation extends FrontendBaseObject
                 // if the item is in the selected page it should get an selected class
                 $navigation[$type][$parentId][$id]['selected'] = in_array(
                     $page['page_id'],
-                    self::$selectedPageIds,
-                    true
+                    self::$selectedPageIds
                 );
 
                 // add nofollow attribute if needed

@@ -201,7 +201,7 @@ abstract class Kernel extends BaseKernel
     {
         return preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $this->request->getRequestUri())
                && $this->request->query->has('module')
-               && in_array($this->request->query->get('module'), $this->getAllPossibleModuleNames(), true);
+               && in_array($this->request->query->get('module'), $this->getAllPossibleModuleNames());
     }
 
     /**

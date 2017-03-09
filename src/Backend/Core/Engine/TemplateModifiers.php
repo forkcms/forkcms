@@ -156,7 +156,7 @@ class TemplateModifiers extends BaseTwigModifiers
         string $suffix = null,
         string $language = null
     ): string {
-        if (!in_array($language, BackendLanguage::getActiveLanguages(), true)) {
+        if (!in_array($language, BackendLanguage::getActiveLanguages())) {
             $language = BackendLanguage::getWorkingLanguage();
         }
 

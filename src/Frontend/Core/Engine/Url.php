@@ -280,7 +280,7 @@ class Url extends KernelLoader
         $chunks = (array) explode('/', $queryString);
 
         // the language is present in the URL
-        if (isset($chunks[0]) && in_array($chunks[0], $possibleLanguages, true)) {
+        if (isset($chunks[0]) && in_array($chunks[0], $possibleLanguages)) {
             // define language
             $language = (string) $chunks[0];
             $this->setLanguageCookie($language);
@@ -291,7 +291,7 @@ class Url extends KernelLoader
         }
 
         if (CommonCookie::exists('frontend_language')
-            && in_array(CommonCookie::get('frontend_language'), $redirectLanguages, true)
+            && in_array(CommonCookie::get('frontend_language'), $redirectLanguages)
         ) {
             $this->redirectToLanguage((string) CommonCookie::get('frontend_language'));
         }
@@ -411,7 +411,7 @@ class Url extends KernelLoader
         $url = implode('/', $chunks);
 
         // loop until we find the URL in the list of pages
-        while (!in_array($url, $keys, true)) {
+        while (!in_array($url, $keys)) {
             // remove the last chunk
             array_pop($chunks);
 

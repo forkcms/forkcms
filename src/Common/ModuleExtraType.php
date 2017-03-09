@@ -19,7 +19,7 @@ final class ModuleExtraType
      */
     public function __construct(string $type)
     {
-        if (!in_array($type, self::getPossibleTypes(), true)) {
+        if (!in_array($type, self::getPossibleTypes())) {
             throw InvalidModuleExtraType::withType($type);
         }
 

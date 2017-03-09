@@ -39,7 +39,7 @@ abstract class Init extends KernelLoader
         $type = (string) $type;
 
         // check if this is a valid type
-        if (!in_array($type, $this->allowedTypes, true)) {
+        if (!in_array($type, $this->allowedTypes)) {
             throw new InvalidInitTypeException($type, $this->allowedTypes);
         }
         $this->type = $type;

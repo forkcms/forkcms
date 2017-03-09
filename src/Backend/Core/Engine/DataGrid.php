@@ -62,7 +62,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setAttributes(['class' => 'table table-hover table-striped fork-data-grid jsDataGrid']);
 
         // id gets special treatment
-        if (in_array('id', $this->getColumns(), true)) {
+        if (in_array('id', $this->getColumns())) {
             // hide the id by defaults
             $this->setColumnsHidden(['id']);
 
@@ -119,8 +119,7 @@ class DataGrid extends \SpoonDataGrid
         // known actions that should have a button
         if (in_array(
             $lowercasedName,
-            array('add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install'),
-            true
+            array('add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install')
         )) {
             // rebuild value, it should have special markup
             $value =
@@ -133,7 +132,7 @@ class DataGrid extends \SpoonDataGrid
             $url = null;
         }
 
-        if (in_array($lowercasedName, array('use_revision', 'use_draft'), true)) {
+        if (in_array($lowercasedName, array('use_revision', 'use_draft'))) {
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $url . '" class="btn btn-default btn-xs">' .
@@ -162,8 +161,7 @@ class DataGrid extends \SpoonDataGrid
                 'install',
                 'use_revision',
                 'use_draft',
-            ),
-            true
+            )
         )) {
             // add special attributes for actions we know
             $this->setColumnAttributes(
@@ -247,7 +245,7 @@ class DataGrid extends \SpoonDataGrid
 
         foreach ($allowedColumns as $column) {
             // we have a match, set the row function
-            if (in_array($column, $allColumns, true)) {
+            if (in_array($column, $allColumns)) {
                 $this->setColumnHidden($column);
                 $this->setRowFunction(
                     array(DataGridFunctions::class, 'greyOut'),

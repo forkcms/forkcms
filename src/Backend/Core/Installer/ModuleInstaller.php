@@ -150,7 +150,7 @@ class ModuleInstaller
         }
 
         // module exists?
-        if (!in_array('Search', self::$modules, true)) {
+        if (!in_array('Search', self::$modules)) {
             return;
         }
 

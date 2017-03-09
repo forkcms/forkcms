@@ -170,7 +170,7 @@ class Cronjob extends Object
     {
         // does this module exist?
         $modules = BackendModel::getModulesOnFilesystem();
-        if (!in_array($module, $modules, true)) {
+        if (!in_array($module, $modules)) {
             // set correct headers
             header('HTTP/1.1 403 Forbidden');
 

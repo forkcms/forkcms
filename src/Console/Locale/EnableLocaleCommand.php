@@ -77,7 +77,7 @@ class EnableLocaleCommand extends Command
         $this->installedModules = array_filter(
             $installedModules,
             function ($installedModule) {
-                return !in_array($installedModule, ['Error', 'Core', 'Authentication'], true);
+                return !in_array($installedModule, ['Error', 'Core', 'Authentication']);
             }
         );
     }
