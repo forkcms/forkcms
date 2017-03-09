@@ -6,6 +6,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository;
+use stdClass;
 
 /**
  * In this file we store all generic functions that we will be using in the Media module
@@ -13,7 +14,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository;
 class CacheBuilder
 {
     /**
-     * @var CacheItemPoolInterface
+     * @var CacheItemPoolInterface|stdClass
      */
     protected $cache;
 
@@ -28,12 +29,12 @@ class CacheBuilder
     protected $mediaGroupRepository;
 
     /**
-     * @param CacheItemPoolInterface $cache
+     * @param CacheItemPoolInterface|stdClass $cache
      * @param MediaFolderRepository $mediaFolderRepository
      * @param MediaGroupRepository $mediaGroupRepository
      */
     public function __construct(
-        CacheItemPoolInterface $cache,
+        $cache,
         MediaFolderRepository $mediaFolderRepository,
         MediaGroupRepository $mediaGroupRepository
     ) {
@@ -47,6 +48,10 @@ class CacheBuilder
      */
     public function createCache()
     {
+        if (!$this->cache instanceof CacheItemPoolInterface) {
+            return false;
+        }
+
         $items = [
             $this->getDropdownCachePath() => $this->getFoldersForDropdown(),
             $this->getDropdownCachePath(true) => $this->getFoldersForDropdown(true),
@@ -67,6 +72,10 @@ class CacheBuilder
      */
     public function deleteCache()
     {
+        if (!$this->cache instanceof CacheItemPoolInterface) {
+            return false;
+        }
+
         $keys = [
             $this->getDropdownCachePath(),
             $this->getDropdownCachePath(true),
@@ -111,9 +120,11 @@ class CacheBuilder
         bool $includeCount = false,
         bool $includeKeys = false
     ) : array {
-        $item = $this->cache->getItem($this->getDropdownCachePath($includeCount, $includeKeys));
-        if ($item->isHit()) {
-            return $item->get();
+        if ($this->cache instanceof CacheItemPoolInterface) {
+            $item = $this->cache->getItem($this->getDropdownCachePath($includeCount, $includeKeys));
+            if ($item->isHit()) {
+                return $item->get();
+            }
         }
 
         // get tree
@@ -188,9 +199,14 @@ class CacheBuilder
             asort($return);
         }
 
+        if (!$this->cache instanceof CacheItemPoolInterface) {
+            return $return;
+        }
+
         // We must set the cache item
         $item->set($return);
         $this->cache->save($item);
+
         return $item->get();
     }
 

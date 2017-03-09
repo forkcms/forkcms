@@ -51,5 +51,6 @@ final class MediaFolderInvalidateBackendCacheListener
     protected function invalidateBackendMediaFolderCache()
     {
         $this->cacheBuilder->deleteCache();
+        $this->cacheBuilder->createCache();
     }
 }
