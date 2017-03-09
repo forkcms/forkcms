@@ -5,13 +5,13 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
 
-final class MediaItemDeleteHandler
+final class DeleteMediaItemHandler
 {
     /** @var MediaItemRepository */
     private $mediaItemRepository;
 
     /**
-     * MediaItemDeleteHandler constructor.
+     * DeleteMediaItemHandler constructor.
      *
      * @param MediaItemRepository $mediaItemRepository
      */
@@ -22,9 +22,9 @@ final class MediaItemDeleteHandler
     }
 
     /**
-     * @param MediaItemDelete $deleteMediaItem
+     * @param DeleteMediaItem $deleteMediaItem
      */
-    public function handle(MediaItemDelete $deleteMediaItem)
+    public function handle(DeleteMediaItem $deleteMediaItem)
     {
         $this->mediaItemRepository->remove($deleteMediaItem->mediaItem);
     }
