@@ -228,46 +228,6 @@ class UploadHandler
     }
 
     /**
-     * Process a delete.
-     *
-     * @param string $uploadDirectory Target directory.
-     * @param string $name
-     * @return array
-     */
-    public function handleDelete(string $uploadDirectory, string $name = null)
-    {
-        if ($this->isInaccessible($uploadDirectory)) {
-            return array('error' => "Server error. Uploads directory isn't writable" . ((!$this->isWindows()) ? " or executable." : "."));
-        }
-
-        $targetFolder = $uploadDirectory;
-        $method = $_SERVER["REQUEST_METHOD"];
-        if ($method == "DELETE") {
-            $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-            $tokens = explode('/', $url);
-            $uuid = $tokens[sizeof($tokens) - 1];
-        } elseif ($method == "POST") {
-            $uuid = $_REQUEST['qquuid'];
-        } else {
-            return array("success" => false,
-                "error" => "Invalid request method! " . $method
-            );
-        }
-
-        $target = join(DIRECTORY_SEPARATOR, array($targetFolder, $uuid));
-
-        if (is_dir($target)) {
-            $this->removeDir($target);
-            return array("success" => true, "uuid" => $uuid);
-        } else {
-            return array("success" => false,
-                "error" => "File not found! Unable to delete." . $target,
-                "path" => $uuid
-            );
-        }
-    }
-
-    /**
      * Returns a path to use with this upload. Check that the name does not exist,
      * and appends a suffix otherwise.
      *

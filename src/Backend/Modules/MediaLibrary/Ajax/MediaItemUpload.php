@@ -83,21 +83,8 @@ class MediaItemUpload extends BackendBaseAJAXAction
         if ($method == "OPTIONS") {
             $this->handlePreflight();
         /*
-         * handle a DELETE request or a POST with a _method of DELETE.
+         * handle a POST
          */
-        } elseif ($method == "DELETE") {
-            $this->handleCorsRequest();
-            $result = $uploader->handleDelete("files");
-            // iframe uploads require the content-type to be 'text/html' and
-            // return some JSON along with self-executing javascript (iframe.ss.response)
-            // that will parse the JSON and pass it along to Fine Uploader via
-            // window.postMessage
-            if ($iframeRequest === true) {
-                header("Content-Type: text/html");
-                echo json_encode($result) . "<script src='http://10.0.2.2/jquery.fineuploader-4.1.1/iframe.xss.response-4.1.1.js'></script>";
-            } else {
-                echo json_encode($result);
-            }
         } elseif ($method == "POST") {
             $this->handleCorsRequest();
             header("Content-Type: text/plain");
