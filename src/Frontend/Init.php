@@ -22,7 +22,7 @@ class Init extends \Common\Core\Init
     /**
      * @param string $type The type of init to load, possible values are: frontend, frontend_ajax, frontend_js.
      */
-    public function initialize($type)
+    public function initialize(string $type)
     {
         parent::initialize($type);
 
