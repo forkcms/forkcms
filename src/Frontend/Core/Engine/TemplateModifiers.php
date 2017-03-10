@@ -152,12 +152,12 @@ class TemplateModifiers extends BaseTwigModifiers
     ): string {
         // build excludeIds
         if ($excludeIds !== null) {
-            $excludeIds = (array) explode('-', $excludeIds);
+            $excludeIds = explode('-', $excludeIds);
         }
 
         // get HTML
         try {
-            $return = (string) Navigation::getNavigationHTML($type, $parentId, $depth, $excludeIds, $template);
+            $return = (string) Navigation::getNavigationHTML($type, $parentId, $depth, (array) $excludeIds, $template);
         } catch (Exception $e) {
             // if something goes wrong just return as fallback
             return '';
@@ -265,7 +265,7 @@ class TemplateModifiers extends BaseTwigModifiers
     ): string {
         // build excludeIds
         if ($excludeIds !== null) {
-            $excludeIds = (array) explode('-', $excludeIds);
+            $excludeIds = explode('-', $excludeIds);
         }
 
         // get info about the given page
@@ -303,7 +303,7 @@ class TemplateModifiers extends BaseTwigModifiers
                 $type,
                 $parentID,
                 $endDepth,
-                $excludeIds,
+                (array) $excludeIds,
                 (string) $template
             );
         } catch (Exception $e) {

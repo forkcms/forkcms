@@ -323,7 +323,7 @@ class Navigation extends FrontendBaseObject
                         $subType,
                         $page['page_id'],
                         $depth,
-                        $excludeIds,
+                        (array) $excludeIds,
                         $template,
                         $depthCounter + 1
                     );
