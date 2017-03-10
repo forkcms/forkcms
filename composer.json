@@ -38,7 +38,6 @@
         "jdorn/sql-formatter": "1.2.17",
         "symfony/var-dumper": "^2.7",
         "squizlabs/php_codesniffer": "^2.7",
-        "phpunit/phpunit": "^4.8",
         "symfony/phpunit-bridge": "^3.2"
     },
     "config": {
