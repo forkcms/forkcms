@@ -250,13 +250,32 @@ class MediaItem
         int $userId
     ) : MediaItem {
         return new MediaItem(
-            $movieId,
             $movieTitle,
+            $movieId,
             Type::movie(),
             $movieStorageType,
             $folder,
             $userId
         );
+    }
+
+    /**
+     * @param MediaItemDataTransferObject $mediaItemDataTransferObject
+     * @return MediaItem
+     */
+    public static function fromDataTransferObject(MediaItemDataTransferObject $mediaItemDataTransferObject)
+    {
+        if ($mediaItemDataTransferObject->hasExistingMediaItem()) {
+            $mediaItem = $mediaItemDataTransferObject->getMediaItemEntity();
+
+            $mediaItem->title = $mediaItemDataTransferObject->title;
+
+            if ($mediaItem->getType()->isMovie()) {
+                $mediaItem->url = $mediaItemDataTransferObject->url;
+            }
+
+            return $mediaItem;
+        }
     }
 
     /**

@@ -15,10 +15,10 @@ class MediaItemDataGrid extends DataGridDB
     /**
      * MediaItemDataGrid constructor.
      *
-     * @param string $type
+     * @param Type $type
      * @param int|null $folderId
      */
-    public function __construct(string $type, int $folderId = null)
+    public function __construct(Type $type, int $folderId = null)
     {
         $andWhere = '';
         $parameters = [(string) $type];
@@ -29,7 +29,7 @@ class MediaItemDataGrid extends DataGridDB
         }
 
         parent::__construct(
-            'SELECT i.id, i.type, i.url, i.title, i.shardingFolderName, COUNT(gi.mediaItemId) as num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
+            'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName, COUNT(gi.mediaItemId) as num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
              FROM MediaItem AS i
              LEFT OUTER JOIN MediaGroupMediaItem as gi ON gi.mediaItemId = i.id
              WHERE i.type = ?'
@@ -48,15 +48,10 @@ class MediaItemDataGrid extends DataGridDB
         $editActionUrl = Model::createURLForAction('MediaItemEdit');
 
         // set headers
-        $this->setHeaderLabels(
-            array(
-                'type' => '',
-                'url' => ucfirst(Language::lbl('Image')),
-            )
-        );
+        $this->setHeaderLabels($this->getColumnHeaderLabels($type));
 
         // active tab
-        $this->setActiveTab('tab' . ucfirst($type));
+        $this->setActiveTab('tab' . ucfirst((string) $type));
 
         // hide columns
         $this->setColumnsHidden($this->getColumnsThatNeedToBeHidden($type));
@@ -82,6 +77,16 @@ class MediaItemDataGrid extends DataGridDB
             . (($folderId) ? '&folder=' . $folderId : '')
         );
 
+        if ($type->isMovie()) {
+            // set column URLs
+            $this->setColumnURL(
+                'url',
+                $editActionUrl
+                . '&id=[id]'
+                . (($folderId) ? '&folder=' . $folderId : '')
+            );
+        }
+
         $this->setColumnURL(
             'num_connected',
             $editActionUrl
@@ -90,7 +95,7 @@ class MediaItemDataGrid extends DataGridDB
         );
 
         // If we have an image, show the image
-        if ($type === Type::IMAGE) {
+        if ($type->isImage()) {
             // Add image url
             $this->setColumnFunction(
                 array(new BackendDataGridFunctions(), 'showImage'),
@@ -166,24 +171,48 @@ class MediaItemDataGrid extends DataGridDB
     }
 
     /**
-     * @param string $type
+     * @param Type $type
      * @return array
      */
-    private function getColumnsThatNeedToBeHidden(string $type): array
+    private function getColumnHeaderLabels(Type $type): array
     {
-        if ($type === Type::IMAGE) {
-            return ['shardingFolderName', 'type', 'mime'];
+        if ($type->isMovie()) {
+            return [
+                'storageType' => ucfirst(Language::lbl('MediaStorageType')),
+                'url' => ucfirst(Language::lbl('MediaMovieId')),
+                'title' => ucfirst(Language::lbl('MediaMovieTitle')),
+            ];
         }
 
-        return ['shardingFolderName', 'type', 'mime', 'url'];
+        return [
+            'type' => '',
+            'url' => ucfirst(Language::lbl('Image')),
+        ];
     }
 
     /**
-     * @param string $type
+     * @param Type $type
+     * @return array
+     */
+    private function getColumnsThatNeedToBeHidden(Type $type): array
+    {
+        if ($type->isImage()) {
+            return ['storageType', 'shardingFolderName', 'type', 'mime'];
+        }
+
+        if ($type->isMovie()) {
+            return ['shardingFolderName', 'type', 'mime'];
+        }
+
+        return ['storageType', 'shardingFolderName', 'type', 'mime', 'url'];
+    }
+
+    /**
+     * @param Type $type
      * @param int|null $folderId
      * @return DataGridDB
      */
-    public static function getDataGrid(string $type, int $folderId = null): DataGridDB
+    public static function getDataGrid(Type $type, int $folderId = null): DataGridDB
     {
         $dataGrid = new self($type, $folderId);
 
@@ -191,11 +220,11 @@ class MediaItemDataGrid extends DataGridDB
     }
 
     /**
-     * @param string $type
+     * @param Type $type
      * @param int|null $folderId
      * @return string
      */
-    public static function getHtml(string $type, int $folderId = null): string
+    public static function getHtml(Type $type, int $folderId = null): string
     {
         $dataGrid = new self($type, $folderId);
 

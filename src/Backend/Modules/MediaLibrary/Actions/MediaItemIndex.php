@@ -63,7 +63,7 @@ class MediaItemIndex extends BackendBaseActionIndex
         foreach ($possibleTypes as $type) {
             /** @var DataGridDB $dataGrid */
             $dataGrid = MediaItemDataGrid::getDataGrid(
-                $type,
+                Type::fromString($type),
                 ($mediaFolder !== null) ? $mediaFolder->getId() : null
             );
 

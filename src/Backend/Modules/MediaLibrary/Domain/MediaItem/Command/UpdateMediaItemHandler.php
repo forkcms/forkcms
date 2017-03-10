@@ -11,9 +11,6 @@ final class UpdateMediaItemHandler
      */
     public function handle(UpdateMediaItem $updateMediaItem)
     {
-        /** @var MediaItem $mediaItem */
-        $mediaItem = $updateMediaItem->mediaItem;
-
-        $mediaItem->setTitle($updateMediaItem->title);
+        MediaItem::fromDataTransferObject($updateMediaItem);
     }
 }

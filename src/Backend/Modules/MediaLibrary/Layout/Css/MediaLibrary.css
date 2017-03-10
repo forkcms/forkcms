@@ -1,31 +1,7 @@
 /**
  * Media tree
  */
-#mediaTree {
-	padding-right : 10px;
-	width : 200px;
-	min-width : 120px;
-	height: 100%;
-}
-	#mediaTree #treeHolder {
-		width: 190px;
-	}
 
-#mediaTree td,
-#mediaTree table {
-	height: 100%;
-	width: 100%;
-}
-	#mediaTree h4 {
-		padding: 4px 12px 0;
-		margin: 0;
-		color: #000;
-		font-size: 11px;
-	}
-#mediaTree #tree { margin : 0; width : 100%; }
-#mediaTree #tree .tree {
-		margin: 6px 6px 12px 6px;
-	}
 #mediaTree .tree-fork li[rel="folder"] a {
 	width : auto!important;
 	position: relative

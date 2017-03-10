@@ -57,9 +57,8 @@ class Installer extends ModuleInstaller
     protected function configureBackendNavigation()
     {
         // Navigation for "modules"
-        $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation(
-            $navigationModulesId,
+            null,
             'MediaLibrary',
             'media_library/media_item_index',
             array(

@@ -1,12 +1,43 @@
-{% extends '/Layout/Templates/base.html.twig' %}
+{% extends '/Layout/Templates/pages.html.twig' %}
+
+{% block pagesTree %}
+  <div class="sub-navigation">
+    <div id="mediaTree" class="pages-tree">
+      <div class="alert alert-warning visible-xs visible-sm">
+        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MovePagesNotPossible'|trans|ucfirst }}</p>
+      </div>
+      <div id="tree">
+        {{ tree|raw }}
+      </div>
+    </div>
+    <div id="fullwidthSwitch">
+      <a href="#close">&nbsp;</a>
+    </div>
+  </div>
+{% endblock %}
 
 {% block actionbar %}
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showMediaLibraryMediaItemIndex %}
+        {% if folderId %}
+          {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'bars', 'lbl.Overview'|trans|capitalize) }}
+        {% endif %}
+        {% if not folderId %}
+          {{ macro.buttonIcon( geturl('MediaItemIndex'), 'bars', 'lbl.Overview'|trans|capitalize) }}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
 
 {% block content %}
   {{ form_start(form) }}
   <div class="row fork-module-content">
     <div class="col-md-12">
+      {% if form.url %}
+        {{ form_row(form.url) }}
+      {% endif %}
       {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
     </div>
   </div>

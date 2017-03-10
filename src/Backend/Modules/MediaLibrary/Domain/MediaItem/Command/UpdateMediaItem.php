@@ -3,22 +3,11 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
 
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDataTransferObject;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class UpdateMediaItem
+final class UpdateMediaItem extends MediaItemDataTransferObject
 {
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank(message="err.FieldIsRequired")
-     */
-    public $title;
-
-    /**
-     * @var MediaItem
-     */
-    public $mediaItem;
-
     /**
      * UpdateMediaItem constructor.
      *
@@ -26,7 +15,6 @@ final class UpdateMediaItem
      */
     public function __construct(MediaItem $mediaItem)
     {
-        $this->mediaItem = $mediaItem;
-        $this->title = $mediaItem->getTitle();
+        parent::__construct($mediaItem);
     }
 }

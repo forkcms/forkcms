@@ -14,6 +14,9 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
  */
 class MediaItemEdit extends BackendBaseActionEdit
 {
+    /** @var int */
+    protected $folderId;
+
     /**
      * MediaItem
      *
@@ -31,8 +34,14 @@ class MediaItemEdit extends BackendBaseActionEdit
         // Call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
+        // Parse JS files
+        $this->parseFiles();
+
         /** @var MediaItem $mediaItem */
         $mediaItem = $this->getMediaItem();
+
+        // Define folder id
+        $this->folderId = $this->getParameter('folder', 'int', 0);
 
         $form = $this->createForm(
             new MediaItemType(),
@@ -44,6 +53,9 @@ class MediaItemEdit extends BackendBaseActionEdit
         $form->handleRequest($this->get('request'));
 
         if (!$form->isValid()) {
+            $this->tpl->assign('folderId', $this->folderId);
+            $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
+            $this->header->addJsData('MediaLibrary', 'openedFolderId', ($this->folderId !== null) ? $this->folderId : null);
             $this->tpl->assign('form', $form->createView());
             $this->tpl->assign('mediaItem', $mediaItem);
             $this->tpl->assign('backLink', $this->getBackLink());
@@ -63,17 +75,18 @@ class MediaItemEdit extends BackendBaseActionEdit
         $this->get('event_dispatcher')->dispatch(
             MediaItemUpdated::EVENT_NAME,
             new MediaItemUpdated(
-                $updateMediaItem->mediaItem
+                $updateMediaItem->getMediaItemEntity()
             )
         );
 
         $this->redirect(
             $this->getBackLink(
                 [
-                    'report' => 'edited-media-item',
+                    'report' => 'media-item-edited',
                     'var' => $updateMediaItem->title,
-                    'highlight' => 'row-' . $updateMediaItem->mediaItem->getId(),
-                    'id' => $updateMediaItem->mediaItem->getId(),
+                    'highlight' => 'row-' . $updateMediaItem->getMediaItemEntity()->getId(),
+                    'id' => $updateMediaItem->getMediaItemEntity()->getId(),
+                    'folder' => $this->folderId,
                 ]
             )
         );
@@ -115,5 +128,15 @@ class MediaItemEdit extends BackendBaseActionEdit
             null,
             $parameters
         );
+    }
+
+    /**
+     * Parse JS files
+     */
+    private function parseFiles()
+    {
+        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/jquery.tree.js', null, false, true);
+        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/lib/jquery.cookie.js', null, false, true);
+        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/plugins/jquery.tree.cookie.js', null, false, true);
     }
 }

@@ -29,6 +29,9 @@ class MediaItemUpload extends BackendBaseActionAdd
     {
         // Call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
+
+        // Parse JS files
+        $this->parseFiles();
         $this->getData();
         $this->parse();
         $this->display();
@@ -68,11 +71,19 @@ class MediaItemUpload extends BackendBaseActionAdd
         MediaGroupType::parseFiles();
 
         // Parse allowed movie sources
+        $this->tpl->assign('folderId', $this->folderId);
+        $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
+        $this->header->addJsData('MediaLibrary', 'openedFolderId', ($this->folderId !== null) ? $this->folderId : null);
         $this->tpl->assign('mediaAllowedMovieSources', StorageType::getPossibleMovieStorageTypeValues());
+    }
 
-        // Assign folder
-        if ($this->folderId) {
-            $this->tpl->assign('folder', $this->folderId);
-        }
+    /**
+     * Parse JS files
+     */
+    private function parseFiles()
+    {
+        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/jquery.tree.js', null, false, true);
+        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/lib/jquery.cookie.js', null, false, true);
+        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/plugins/jquery.tree.cookie.js', null, false, true);
     }
 }
