@@ -152,17 +152,6 @@ class MediaItemUpload extends BackendBaseAJAXAction
                     new MediaItemCreated($createMediaItemFromLocalSource->getMediaItem())
                 );
 
-                // set media auto_increment
-                $this->get('fork.settings')->set(
-                    'MediaLibrary',
-                    'upload_auto_increment',
-                    $this->get('fork.settings')->get(
-                        'MediaLibrary',
-                        'upload_auto_increment',
-                        0
-                    ) + 1
-                );
-
                 $resultData = json_encode(
                     array_merge(
                         $result,

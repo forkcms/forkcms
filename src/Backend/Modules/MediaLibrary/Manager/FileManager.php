@@ -150,15 +150,14 @@ class FileManager
      */
     public function getNextShardingFolder(): string
     {
-        // get id
-        $id = $this->settings->get('MediaLibrary', 'upload_auto_increment', 0) + 1;
-
         // define number of sharding folders
         $numberOfShardingFolders = $this->settings->get(
             'MediaLibrary',
             'upload_number_of_sharding_folders',
             15
         );
+
+        $id = rand(0, $numberOfShardingFolders);
 
         // define image sharding folder
         return str_pad(($id % $numberOfShardingFolders), 2, '0', STR_PAD_LEFT);

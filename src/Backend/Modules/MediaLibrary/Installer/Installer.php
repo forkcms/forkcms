@@ -103,7 +103,6 @@ class Installer extends ModuleInstaller
         $this->setSetting('MediaLibrary', 'backend_thumbnail_height', 90);
         $this->setSetting('MediaLibrary', 'backend_thumbnail_width', 140);
         $this->setSetting('MediaLibrary', 'backend_thumbnail_quality', 95);
-        $this->setSetting('MediaLibrary', 'upload_auto_increment', 0);
         $this->setSetting('MediaLibrary', 'upload_number_of_sharding_folders', 15);
     }
 
