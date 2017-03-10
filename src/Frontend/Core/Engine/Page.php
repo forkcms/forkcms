@@ -226,8 +226,7 @@ class Page extends FrontendBaseObject
      */
     private function getPageRecord(int $pageId): array
     {
-        // load revision
-        if ($this->URL->getParameter('page_revision', 'int') === 0) {
+        if ($this->URL->getParameter('page_revision', 'int') === null) {
             return Model::getPage($pageId);
         }
 
