@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 final class StorageType
 {
     // Possible MediaItem types
+    const EXTERNAL = 'external';
     const LOCAL = 'local';
     const YOUTUBE = 'youtube';
     const VIMEO = 'vimeo';
@@ -61,6 +62,7 @@ final class StorageType
     public static function getPossibleValues(): array
     {
         return [
+            self::EXTERNAL,
             self::LOCAL,
             self::YOUTUBE,
             self::VIMEO,

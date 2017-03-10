@@ -50,6 +50,7 @@ services:
         arguments:
             - "@media_library.manager.file"
             - "@fork.settings"
+            - "@event_dispatcher"
     media_library.listener.media_item_delete_backend_thumbnail:
         class: Backend\Modules\MediaLibrary\EventListener\MediaItemListener
         tags:
@@ -57,6 +58,7 @@ services:
         arguments:
             - "@media_library.manager.file"
             - "@fork.settings"
+            - "@event_dispatcher"
 
     # Frontend Event Listeners
     media_library.listener.media_item_frontend_resolution_missing:
@@ -66,3 +68,4 @@ services:
         arguments:
             - "@media_library.manager.file"
             - "@fork.settings"
+            - "@event_dispatcher"

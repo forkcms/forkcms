@@ -4,12 +4,15 @@ namespace Backend\Modules\MediaLibrary\EventListener;
 
 use Backend\Modules\MediaLibrary\Component\ImageSettings;
 use Backend\Modules\MediaLibrary\Component\ImageTransformationMethod;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemBackendThumbnailCreated;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemFrontendThumbnailCreated;
 use Backend\Modules\MediaLibrary\Manager\FileManager;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
 use Common\ModulesSettings;
 use Frontend\Modules\MediaLibrary\Event\FrontendMediaItemResolutionMissingEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -17,28 +20,30 @@ use Symfony\Component\Finder\Finder;
  */
 final class MediaItemListener
 {
-    /**
-     * @var FileManager
-     */
+    /** @var FileManager */
     protected $fileManager;
 
-    /**
-     * @var ModulesSettings
-     */
+    /** @var ModulesSettings */
     protected $settings;
+
+    /** @var EventDispatcherInterface */
+    protected $eventDispatcher;
 
     /**
      * Construct
      *
      * @param FileManager $fileManager
      * @param ModulesSettings $settings
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         FileManager $fileManager,
-        ModulesSettings $settings
+        ModulesSettings $settings,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->fileManager = $fileManager;
         $this->settings = $settings;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -58,6 +63,12 @@ final class MediaItemListener
                 $this->settings->get('MediaLibrary', 'backend_thumbnail_quality')
             ),
             MediaItem::getUploadRootDir('backend') . '/' . $event->getMediaItem()->getScardingFolderName()
+        );
+
+        // We dispatch an event, so other modules can hook into this
+        $this->eventDispatcher->dispatch(
+            MediaItemBackendThumbnailCreated::EVENT_NAME,
+            new MediaItemBackendThumbnailCreated($event->getMediaItem())
         );
     }
 
@@ -91,13 +102,25 @@ final class MediaItemListener
      */
     public function onMediaItemRequestedMissingFrontendResolution(FrontendMediaItemResolutionMissingEvent $event)
     {
+        // Define frontend thumbnail path
+        $path = MediaItem::getUploadRootDir('frontend')
+            . '/' . $event->getResolution()->getImageSettings()->toString()
+            . '/' . $event->getMediaItem()->getScardingFolderName();
+
         // Generate Frontend thumbnail
         $this->generateThumbnail(
             $event->getMediaItem(),
             $event->getResolution()->getImageSettings(),
-            MediaItem::getUploadRootDir('frontend')
-                . '/' . $event->getResolution()->getImageSettings()->toString()
-                . '/' . $event->getMediaItem()->getScardingFolderName()
+            $path
+        );
+
+        // We dispatch an event, so other modules can hook into this
+        $this->eventDispatcher->dispatch(
+            MediaItemFrontendThumbnailCreated::EVENT_NAME,
+            new MediaItemFrontendThumbnailCreated(
+                $event->getMediaItem(),
+                $path
+            )
         );
     }
 
