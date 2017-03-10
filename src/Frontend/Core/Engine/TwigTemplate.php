@@ -68,7 +68,7 @@ class TwigTemplate extends BaseTwigTemplate
             new FormExtension($this->environment);
 
             // start the filters / globals
-            TwigFilters::getFilters($this->environment, 'Frontend');
+            TwigFilters::addFilters($this->environment, 'Frontend');
             $this->startGlobals($this->environment);
         } catch (\PDOException $exception) {
             // fork is not installed apparently so we need to catch this error

@@ -24,10 +24,8 @@ class TwigFilters
      *
      * @param Twig_Environment $twig
      * @param string $app
-     *
-     * @return array
      */
-    public static function getFilters(Twig_Environment $twig, string $app): array
+    public static function addFilters(Twig_Environment $twig, string $app)
     {
         $app .= '\Core\Engine\TemplateModifiers';
         $twig->addFilter(new Twig_SimpleFilter('getpageinfo', $app.'::getPageInfo'));

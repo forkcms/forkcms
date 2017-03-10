@@ -111,7 +111,7 @@ class TwigTemplate extends BaseTwigTemplate
         new FormExtension($twig);
 
         // start the filters / globals
-        TwigFilters::getFilters($twig, 'Backend');
+        TwigFilters::addFilters($twig, 'Backend');
         $this->startGlobals($twig);
 
         return $twig->render($template, $this->variables);
