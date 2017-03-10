@@ -11,7 +11,7 @@ matrix:
     - php: hhvm
 
 script:
-  - bin/phpunit --coverage-clover=coverage.clover
+  - bin/simple-phpunit --coverage-clover=coverage.clover
 
 before_script:
   - npm install -g bower
