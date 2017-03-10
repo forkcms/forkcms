@@ -2,7 +2,7 @@
 
 namespace Common\Tests\Mailer;
 
-use PHPUnit\Framwork\TestCase;
+use PHPUnit\Framework\TestCase;
 use Common\Mailer\TransportFactory;
 
 /**

@@ -3,7 +3,7 @@
 namespace Backend\Modules\Pages\Tests\Model;
 
 use Backend\Modules\Pages\Engine\Model;
-use PHPUnit\Framwork\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ModelTest extends TestCase
 {

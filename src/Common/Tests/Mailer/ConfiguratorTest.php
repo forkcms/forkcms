@@ -3,7 +3,7 @@
 namespace Common\Tests\Mailer;
 
 use Common\Mailer\Configurator;
-use PHPUnit\Framwork\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for our module settings

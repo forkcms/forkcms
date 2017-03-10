@@ -4,7 +4,7 @@ namespace Frontend\Core\Tests;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\TemplateModifiers;
-use PHPUnit\Framwork\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class TemplateModifiersTest extends TestCase
 {

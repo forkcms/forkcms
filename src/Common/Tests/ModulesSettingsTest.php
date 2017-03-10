@@ -5,7 +5,7 @@ namespace Common\Tests;
 use Common\ModulesSettings;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
-use PHPUnit\Framwork\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for our module settings

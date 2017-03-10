@@ -3,7 +3,7 @@
 namespace Backend\Core\Tests\Engine;
 
 use Backend\Core\Engine\DataGridFunctions;
-use PHPUnit\Framwork\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class DataGridFunctionsTest extends TestCase
 {

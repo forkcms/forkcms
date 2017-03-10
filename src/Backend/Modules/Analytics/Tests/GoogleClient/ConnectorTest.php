@@ -8,7 +8,7 @@ use Google_Client;
 use Google_Service_Analytics;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
-use PHPUnit\Framwork\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ConnectorTest extends TestCase
 {
