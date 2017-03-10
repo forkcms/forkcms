@@ -1,3 +1,6 @@
+/**
+ * global: jsFrontend
+ */
 (function($)
 {
     /**

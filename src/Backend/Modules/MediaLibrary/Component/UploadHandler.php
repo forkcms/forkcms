@@ -206,10 +206,9 @@ class UploadHandler
             $target = $targetFolder . '/' . $partIndex;
             $success = move_uploaded_file($_FILES[$this->inputName]['tmp_name'], $target);
 
-            return array("success" => true, "uuid" => $uuid);
+            return array("success" => $success, "uuid" => $uuid);
         } else {
             # non-chunked upload
-
             $target = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
 
             if ($target) {
@@ -242,7 +241,6 @@ class UploadHandler
         }
 
         $targetFolder = $uploadDirectory;
-        $uuid = false;
         $method = $_SERVER["REQUEST_METHOD"];
         if ($method == "DELETE") {
             $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -263,7 +261,7 @@ class UploadHandler
             return array("success" => true, "uuid" => $uuid);
         } else {
             return array("success" => false,
-                "error" => "File not found! Unable to delete." . $url,
+                "error" => "File not found! Unable to delete." . $target,
                 "path" => $uuid
             );
         }
@@ -282,7 +280,6 @@ class UploadHandler
         // Allow only one process at the time to get a unique file name, otherwise
         // if multiple people would upload a file with the same name at the same time
         // only the latest would be saved.
-
         if (function_exists('sem_acquire')) {
             $lock = sem_get(ftok(__FILE__, 'u'));
             sem_acquire($lock);

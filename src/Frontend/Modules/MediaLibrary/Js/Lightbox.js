@@ -1,3 +1,8 @@
+/**
+ * global: jsFrontend
+ * global: PhotoSwipe
+ * global: PhotoSwipeUI_Default
+ */
 var initPhotoSwipeFromDOM = function(gallerySelector) {
     // parse slide data (url, title, size ...) from DOM elements
     // (children of gallerySelector)
@@ -215,7 +220,9 @@ jsFrontend.mediaLightbox =
     init: function()
     {
         // when no items for lightbox found, stop here
-        if($('.widgetMediaLightbox').length == 0) return false;
+        if($('.widgetMediaLightbox').length == 0) {
+            return false;
+        }
 
         // init lightboxes
         initPhotoSwipeFromDOM('.widgetMediaLightbox');

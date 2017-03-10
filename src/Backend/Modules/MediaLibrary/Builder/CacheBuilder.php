@@ -4,8 +4,8 @@ namespace Backend\Modules\MediaLibrary\Builder;
 
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
-use Psr\Cache\CacheItemPoolInterface;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository;
+use Psr\Cache\CacheItemPoolInterface;
 use stdClass;
 
 /**

@@ -50,7 +50,7 @@ class MediaItem
     protected $userId;
 
     /**
-     * @var string
+     * @var StorageType
      *
      * @ORM\Column(type="media_item_storage_type", options={"default"="local"})
      */

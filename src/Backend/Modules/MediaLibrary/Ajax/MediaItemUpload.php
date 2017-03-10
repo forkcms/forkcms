@@ -92,7 +92,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
             // return some JSON along with self-executing javascript (iframe.ss.response)
             // that will parse the JSON and pass it along to Fine Uploader via
             // window.postMessage
-            if ($iframeRequest == true) {
+            if ($iframeRequest === true) {
                 header("Content-Type: text/html");
                 echo json_encode($result) . "<script src='http://10.0.2.2/jquery.fineuploader-4.1.1/iframe.xss.response-4.1.1.js'></script>";
             } else {

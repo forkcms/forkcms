@@ -1,6 +1,7 @@
 /**
  * Controls the adding of folders on the fly
  * global: jsBackend
+ * global: utils
  */
 jsBackend.mediaLibraryAddFolder =
 {
@@ -11,7 +12,7 @@ jsBackend.mediaLibraryAddFolder =
         var $folderTitleError = $('#folderTitleError');
 
         // start or not
-        if ($addFolderDialog.length == 0) {
+        if ($addFolderDialog.length === 0 || $addFolderSubmit.length === 0) {
             return false;
         }
 
@@ -23,62 +24,62 @@ jsBackend.mediaLibraryAddFolder =
             jsBackend.mediaLibraryAddFolder.updateFolders(selectedFolderId);
         }
 
-        if ($addFolderSubmit.length > 0 && $addFolderDialog.length > 0) {
-            $addFolderSubmit.click(function () {
-                // hide errors
-                $folderTitleError.hide();
+        $addFolderSubmit.click(function () {
+            // hide errors
+            $folderTitleError.hide();
 
-                // get selected folder
-                selectedFolderId = ($('#uploadMediaFolderId').val()) ? $('#uploadMediaFolderId').val() : selectedFolderId;
+            // get selected folder
+            selectedFolderId = ($('#uploadMediaFolderId').val()) ? $('#uploadMediaFolderId').val() : selectedFolderId;
 
-                // update folders
-                jsBackend.mediaLibraryAddFolder.updateFolders(selectedFolderId, true);
+            // update folders
+            jsBackend.mediaLibraryAddFolder.updateFolders(selectedFolderId, true);
 
-                $.ajax({
-                    data: {
-                        fork: {module: 'MediaLibrary', action: 'MediaFolderAdd'},
-                        name: $('#addFolderTitle').val(),
-                        parent_id: $('#addFolderParentId').val()
-                    },
-                    success: function (json, textStatus) {
-                        if (json.code != 200) {
-                            // show error if needed
-                            if (jsBackend.debug) alert(textStatus);
-
-                            // show message
-                            $('#descriptionTitleError').show();
-                        } else {
-                            // add and set selected
-                            $('#mediaConnectedId').append('<option value="'+ json.data.id +'">'+ json.data.name +'</option>');
-
-                            // show message
-                            jsBackend.messages.add('success', jsBackend.locale.msg('FolderIsAdded'));
-
-                            // update folders
-                            jsBackend.mediaLibraryAddFolder.updateFolders(json.data.id);
-
-                            $addFolderDialog.modal('hide');
+            $.ajax({
+                data: {
+                    fork: {module: 'MediaLibrary', action: 'MediaFolderAdd'},
+                    name: $('#addFolderTitle').val(),
+                    parent_id: $('#addFolderParentId').val()
+                },
+                success: function (json, textStatus) {
+                    if (json.code != 200) {
+                        // show error if needed
+                        if (jsBackend.debug) {
+                            alert(textStatus);
                         }
+
+                        // show message
+                        $('#descriptionTitleError').show();
+                    } else {
+                        // add and set selected
+                        $('#mediaConnectedId').append('<option value="'+ json.data.id +'">'+ json.data.name +'</option>');
+
+                        // show message
+                        jsBackend.messages.add('success', jsBackend.locale.msg('FolderIsAdded'));
+
+                        // update folders
+                        jsBackend.mediaLibraryAddFolder.updateFolders(json.data.id);
+
+                        $addFolderDialog.modal('hide');
                     }
-                });
+                }
             });
+        });
 
-            // bind click
-            $('#addFolder').on('click', function (e) {
-                // prevent default
-                e.preventDefault();
+        // bind click
+        $('#addFolder').on('click', function (e) {
+            // prevent default
+            e.preventDefault();
 
-                // open dialog
-                $addFolderDialog.modal('show');
+            // open dialog
+            $addFolderDialog.modal('show');
 
-                // Focus the text field
-                $('#addFolderTitle').focus();
-            });
+            // Focus the text field
+            $('#addFolderTitle').focus();
+        });
 
-            $addFolderDialog.on('hide.bs.modal', function () {
-                $('#addFolderTitle').val('');
-            });
-        }
+        $addFolderDialog.on('hide.bs.modal', function () {
+            $('#addFolderTitle').val('');
+        });
     },
 
     /**
@@ -100,7 +101,9 @@ jsBackend.mediaLibraryAddFolder =
             success: function(json, textStatus) {
                 if (json.code != 200) {
                     // show error if needed
-                    if (jsBackend.debug) alert(textStatus);
+                    if (jsBackend.debug) {
+                        alert(textStatus);
+                    }
 
                     // show message
                     $('#descriptionTitleError').show();
@@ -141,7 +144,9 @@ jsBackend.mediaLibraryAddFolder =
                             });
 
                             // select the new folder
-                            if (selectFolderId) $('.folderSelect').val(selectFolderId);
+                            if (selectFolderId) {
+                                $('.folderSelect').val(selectFolderId);
+                            }
 
                             // trigger changes
                             $('#galleryAudioId, #folderAudioId').trigger('change');

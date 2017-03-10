@@ -30,9 +30,6 @@ class MediaGroupType extends AbstractType
     /** @var MediaGroupRepository */
     private $mediaGroupRepository;
 
-    /** @var MediaItemRepository */
-    private $mediaItemRepository;
-
     /**
      * MediaGroupType constructor.
      *

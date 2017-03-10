@@ -1,6 +1,7 @@
 /**
  * Interaction for the connection of media to the media module.
  * global: jsBackend
+ * global: utils
  */
 jsBackend.mediaLibraryHelper =
 {
@@ -32,7 +33,9 @@ jsBackend.mediaLibraryHelper.group =
     init: function()
     {
         // start or not
-        if ($('#addMediaDialog').length == 0) return false;
+        if ($('#addMediaDialog').length == 0) {
+            return false;
+        }
 
         // get galleries
         jsBackend.mediaLibraryHelper.group.getGalleries();
@@ -55,7 +58,7 @@ jsBackend.mediaLibraryHelper.group =
                 // don't prevent the click
                 ui.item.removeClass('preventClick');
             },
-            update: function(e, ui) {
+            update: function() {
                 // set group i
                 mediaGroupI = $(this).parent().parent().attr('id').replace('group-', '');
 
@@ -85,12 +88,12 @@ jsBackend.mediaLibraryHelper.group =
         });
 
         // bind hover to media items so you see the edit button
-        $('.mediaConnectedItems').on('hover', '.ui-state-default', function(e) {
+        $('.mediaConnectedItems').on('hover', '.ui-state-default', function() {
             $(this).toggleClass('hover');
         });
 
         // bind click to media items so you can select them
-        $('.mediaConnectedItems').on('click', '.mediaHolder', function(e) {
+        $('.mediaConnectedItems').on('click', '.mediaHolder', function() {
             // click handler executes
             if (!$(this).parent().hasClass('preventClick')) {
                 // toggle class
@@ -111,7 +114,7 @@ jsBackend.mediaLibraryHelper.group =
         });
 
         // bind click to disconnect button so you can disconnect media items
-        $('.mediaEditBox').on('click', '.disconnectMediaItemsButton', function(e) {
+        $('.mediaEditBox').on('click', '.disconnectMediaItemsButton', function() {
             // button is not disabled
             if (!$(this).hasClass('disabled')) {
                 // define groupId
@@ -194,7 +197,7 @@ jsBackend.mediaLibraryHelper.group =
         });
 
         // bind change when selecting other folder
-        $('#mediaFolders').on('change', function(e) {
+        $('#mediaFolders').on('change', function() {
             // cache current folder id
             mediaFolderId = $(this).val();
 
@@ -214,7 +217,7 @@ jsBackend.mediaLibraryHelper.group =
     /**
      * Disconnect media fast from this group
      *
-     * @param int groupId       The group id we want to disconnect from.
+     * @param int groupId The group id we want to disconnect from.
      */
     disconnectMediaFromGroup : function(groupId)
     {
@@ -255,7 +258,9 @@ jsBackend.mediaLibraryHelper.group =
                 success: function(json, textStatus) {
                     if (json.code != 200) {
                         // show error if needed
-                        if (jsBackend.debug) alert(textStatus);
+                        if (jsBackend.debug) {
+                            alert(textStatus);
+                        }
                     } else {
                         // cache folder counts
                         mediaGalleries[mediaGroupI].count = json.data;
@@ -290,8 +295,6 @@ jsBackend.mediaLibraryHelper.group =
 
     /**
      * Load in the folders count for a group
-     *
-     * @param int groupId
      */
     getFolderCountsForGroup : function()
     {
@@ -309,7 +312,9 @@ jsBackend.mediaLibraryHelper.group =
                 success: function(json, textStatus) {
                     if (json.code != 200) {
                         // show error if needed
-                        if (jsBackend.debug) alert(textStatus);
+                        if (jsBackend.debug) {
+                            alert(textStatus);
+                        }
                     } else {
                         // cache folder counts
                         mediaGalleries[mediaGroupI].count = json.data;
@@ -324,8 +329,6 @@ jsBackend.mediaLibraryHelper.group =
 
     /**
      * Load in the folders and add numConnected from the group
-     *
-     * @param int groupId
      */
     getFolders : function()
     {
@@ -341,7 +344,9 @@ jsBackend.mediaLibraryHelper.group =
                 success: function(json, textStatus) {
                     if (json.code != 200) {
                         // show error if needed
-                        if (jsBackend.debug) alert(textStatus);
+                        if (jsBackend.debug) {
+                            alert(textStatus);
+                        }
                     } else {
                         // cache folders
                         mediaFolders = json2array(json.data).sort(sortByProperty('name'));
@@ -388,9 +393,6 @@ jsBackend.mediaLibraryHelper.group =
 
     /**
      * Load in the media for a group or in a folder
-     *
-     * @param int groupId
-     * @param int folderId
      */
     getMedia : function()
     {
@@ -456,7 +458,7 @@ jsBackend.mediaLibraryHelper.group =
     /**
      * Enable/disable the disconnect button
      *
-     * @param int groupId
+     * @param groupId
      */
     updateDisconnectButton : function(groupId)
     {
@@ -519,7 +521,7 @@ jsBackend.mediaLibraryHelper.group =
     /**
      * Update folder counts for items
      *
-     * @param array $items              The media items
+     * @param array $items The media items
      */
     updateFolderCountsForItemsToDisconnect : function($items)
     {
@@ -798,7 +800,7 @@ jsBackend.mediaLibraryHelper.group =
         $tables.find('tr:odd').addClass('even');
 
         // bind change when connecting/disconnecting media
-        $tables.find('.toggleConnectedCheckbox').on('click', function(e) {
+        $tables.find('.toggleConnectedCheckbox').on('click', function() {
             // mediaId
             var mediaId = $(this).parent().parent().attr('id').replace('media-', '');
 

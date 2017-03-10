@@ -1,6 +1,7 @@
 /**
  * Interaction for the media module
  * global: jsBackend
+ * global: utils
  */
 jsBackend.mediaLibrary =
 {

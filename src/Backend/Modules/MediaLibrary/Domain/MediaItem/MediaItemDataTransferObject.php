@@ -13,7 +13,10 @@ class MediaItemDataTransferObject
     public $folder;
 
     /** @var string */
-    public $name;
+    public $title;
+
+    /** @var string */
+    public $url;
 
     /** @var int */
     public $userId;
