@@ -313,6 +313,11 @@ class ModuleInstaller
             $theme = $this->getSetting('Core', 'theme');
         }
 
+        // if the theme is still null we should fallback to the core
+        if ($theme === null) {
+            $theme = 'core';
+        }
+
         // return best matching template id
         return (int) $this->getDB()->getVar(
             'SELECT id FROM themes_templates
