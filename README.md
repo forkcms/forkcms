@@ -42,6 +42,10 @@ Running only the unit tests or the functional tests
 
     ./bin/phpunit --testsuite=functional
     ./bin/phpunit --testsuite=unit
+    
+If you get errors that interfaces of phpunit can't be found you can always install phpunit globally and use that one to run the tests
+
+    composer global require phpunit/phpunit:"^5.7"
 
 ## Styling the backend
 
