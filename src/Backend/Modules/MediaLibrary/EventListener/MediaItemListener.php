@@ -78,7 +78,7 @@ final class MediaItemListener
         // We have an image, so we have thumbnails to delete
         if ($mediaItem->getType()->isImage()) {
             // Delete Backend thumbnail
-            $this->fileManager->deleteFile($mediaItem->getWebPath('backend'));
+            $this->fileManager->deleteFile($mediaItem->getAbsolutePath('backend'));
 
             // Delete Frontend thumbnails
             $this->deleteFrontendThumbnails($mediaItem);

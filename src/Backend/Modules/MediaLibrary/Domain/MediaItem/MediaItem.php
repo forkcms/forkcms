@@ -499,8 +499,6 @@ class MediaItem
      */
     public function getAbsolutePath(string $subDirectory = null)
     {
-        $subDirectory = self::getSubdirectory($subDirectory);
-
         return $this->getFullUrl() === null ? null : self::getUploadRootDir($subDirectory) . '/' . $this->getFullUrl();
     }
 
