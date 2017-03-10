@@ -94,7 +94,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
             // window.postMessage
             if ($iframeRequest == true) {
                 header("Content-Type: text/html");
-                echo json_encode($result)."<script src='http://10.0.2.2/jquery.fineuploader-4.1.1/iframe.xss.response-4.1.1.js'></script>";
+                echo json_encode($result) . "<script src='http://10.0.2.2/jquery.fineuploader-4.1.1/iframe.xss.response-4.1.1.js'></script>";
             } else {
                 echo json_encode($result);
             }

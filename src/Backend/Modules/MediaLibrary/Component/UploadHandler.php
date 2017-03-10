@@ -22,8 +22,9 @@ class UploadHandler
 
     /**
      * Get the original filename
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         if (isset($_REQUEST['qqfilename'])) {
             return $_REQUEST['qqfilename'];
@@ -60,14 +61,19 @@ class UploadHandler
         return $this->uploadName;
     }
 
-    public function combineChunks($uploadDirectory, $name = null)
+    /**
+     * @param $uploadDirectory
+     * @param null $name
+     * @return array
+     */
+    public function combineChunks($uploadDirectory, $name = null): array
     {
         $uuid = $_POST['qquuid'];
         if ($name === null) {
             $name = $this->getName();
         }
-        $targetFolder = $this->chunksFolder.DIRECTORY_SEPARATOR.$uuid;
-        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int)$_REQUEST['qqtotalparts'] : 1;
+        $targetFolder = $this->chunksFolder . DIRECTORY_SEPARATOR . $uuid;
+        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int) $_REQUEST['qqtotalparts'] : 1;
 
         $targetPath = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
         $this->uploadName = $name;
@@ -77,8 +83,8 @@ class UploadHandler
         }
         $target = fopen($targetPath, 'wb');
 
-        for ($i=0; $i<$totalParts; $i++) {
-            $chunk = fopen($targetFolder.DIRECTORY_SEPARATOR.$i, "rb");
+        for ($i=0; $i < $totalParts; $i++) {
+            $chunk = fopen($targetFolder . DIRECTORY_SEPARATOR . $i, "rb");
             stream_copy_to_stream($chunk, $target);
             fclose($chunk);
         }
@@ -86,8 +92,8 @@ class UploadHandler
         // Success
         fclose($target);
 
-        for ($i=0; $i<$totalParts; $i++) {
-            unlink($targetFolder.DIRECTORY_SEPARATOR.$i);
+        for ($i=0; $i < $totalParts; $i++) {
+            unlink($targetFolder . DIRECTORY_SEPARATOR . $i);
         }
 
         rmdir($targetFolder);
@@ -110,7 +116,7 @@ class UploadHandler
      */
     public function handleUpload($uploadDirectory, $name = null)
     {
-        if (is_writable($this->chunksFolder) && 1 == mt_rand(1, 1/$this->chunksCleanupProbability)) {
+        if (is_writable($this->chunksFolder) && 1 == mt_rand(1, 1 / $this->chunksCleanupProbability)) {
             // Run garbage collection
             $this->cleanupChunks();
         }
@@ -120,7 +126,7 @@ class UploadHandler
         if ($this->toBytes(ini_get('post_max_size')) < $this->sizeLimit ||
             $this->toBytes(ini_get('upload_max_filesize')) < $this->sizeLimit) {
             $neededRequestSize = max(1, $this->sizeLimit / 1024 / 1024) . 'M';
-            return array('error'=>"Server error. Increase post_max_size and upload_max_filesize to ".$neededRequestSize);
+            return array('error'=>"Server error. Increase post_max_size and upload_max_filesize to " . $neededRequestSize);
         }
 
         if ($this->isInaccessible($uploadDirectory)) {
@@ -151,7 +157,7 @@ class UploadHandler
 
         // check file error
         if ($file['error']) {
-            return array('error' => 'Upload Error #'.$file['error']);
+            return array('error' => 'Upload Error #' . $file['error']);
         }
 
         // Validate name
@@ -174,30 +180,30 @@ class UploadHandler
 
         if ($this->allowedExtensions && !in_array(strtolower($ext), array_map("strtolower", $this->allowedExtensions))) {
             $these = implode(', ', $this->allowedExtensions);
-            return array('error' => 'File has an invalid extension, it should be one of '. $these . '.');
+            return array('error' => 'File has an invalid extension, it should be one of ' . $these . '.');
         }
 
         // Save a chunk
-        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int)$_REQUEST['qqtotalparts'] : 1;
+        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int) $_REQUEST['qqtotalparts'] : 1;
 
         $uuid = $_REQUEST['qquuid'];
         if ($totalParts > 1) {
             # chunked upload
 
             $chunksFolder = $this->chunksFolder;
-            $partIndex = (int)$_REQUEST['qqpartindex'];
+            $partIndex = (int) $_REQUEST['qqpartindex'];
 
             if (!is_writable($chunksFolder) && !is_executable($uploadDirectory)) {
                 return array('error' => "Server error. Chunks directory isn't writable or executable.");
             }
 
-            $targetFolder = $this->chunksFolder.DIRECTORY_SEPARATOR.$uuid;
+            $targetFolder = $this->chunksFolder . DIRECTORY_SEPARATOR . $uuid;
 
             if (!file_exists($targetFolder)) {
                 mkdir($targetFolder, 0777, true);
             }
 
-            $target = $targetFolder.'/'.$partIndex;
+            $target = $targetFolder . '/' . $partIndex;
             $success = move_uploaded_file($_FILES[$this->inputName]['tmp_name'], $target);
 
             return array("success" => true, "uuid" => $uuid);
@@ -241,12 +247,12 @@ class UploadHandler
         if ($method == "DELETE") {
             $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             $tokens = explode('/', $url);
-            $uuid = $tokens[sizeof($tokens)-1];
+            $uuid = $tokens[sizeof($tokens) - 1];
         } elseif ($method == "POST") {
             $uuid = $_REQUEST['qquuid'];
         } else {
             return array("success" => false,
-                "error" => "Invalid request method! ".$method
+                "error" => "Invalid request method! " . $method
             );
         }
 
@@ -269,7 +275,7 @@ class UploadHandler
      *
      * @param string $uploadDirectory Target directory
      * @param string $filename The name of the file to use.
-     * @return bool|string
+     * @return false|string
      */
     protected function getUniqueTargetPath($uploadDirectory, $filename)
     {
@@ -294,10 +300,10 @@ class UploadHandler
 
         while (file_exists($uploadDirectory . DIRECTORY_SEPARATOR . $unique . $ext)) {
             $suffix += rand(1, 999);
-            $unique = $base.'-'.$suffix;
+            $unique = $base . '-' . $suffix;
         }
 
-        $result =  $uploadDirectory . DIRECTORY_SEPARATOR . $unique . $ext;
+        $result = $uploadDirectory . DIRECTORY_SEPARATOR . $unique . $ext;
 
         // Create an empty target file
         if (!touch($result)) {
@@ -323,7 +329,7 @@ class UploadHandler
                 continue;
             }
 
-            $path = $this->chunksFolder.DIRECTORY_SEPARATOR.$item;
+            $path = $this->chunksFolder . DIRECTORY_SEPARATOR . $item;
 
             if (!is_dir($path)) {
                 continue;
@@ -364,7 +370,7 @@ class UploadHandler
     protected function toBytes($str): int
     {
         $str = trim($str);
-        $last = strtolower($str[strlen($str)-1]);
+        $last = strtolower($str[strlen($str) - 1]);
 
         if (is_numeric($last)) {
             $val = (int) $str;

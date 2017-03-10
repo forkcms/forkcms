@@ -309,7 +309,7 @@ class MediaFolder
         }
 
         /** @var MediaFolder $mediaFolder */
-        $mediaFolder =  self::create(
+        $mediaFolder = self::create(
             $mediaFolderDataTransferObject->name,
             $mediaFolderDataTransferObject->parent,
             $mediaFolderDataTransferObject->userId

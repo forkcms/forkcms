@@ -38,8 +38,7 @@ class MediaGroupDataTransferObject
     /**
      * CreateMediaGroup constructor.
      *
-     * @param Type $type
-     * @param Uuid|null $id
+     * @param MediaGroup|null $mediaGroup
      */
     public function __construct(
         MediaGroup $mediaGroup = null
