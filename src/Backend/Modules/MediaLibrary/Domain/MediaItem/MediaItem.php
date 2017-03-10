@@ -350,6 +350,22 @@ class MediaItem
     }
 
     /**
+     * @return StorageType
+     */
+    public function getStorageType(): StorageType
+    {
+        return $this->storageType;
+    }
+
+    /**
+     * @param StorageType $storageType
+     */
+    public function setStorageType(StorageType $storageType)
+    {
+        $this->storageType = $storageType;
+    }
+
+    /**
      * Gets the value of type.
      *
      * @return Type
