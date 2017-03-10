@@ -10,7 +10,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
 use Common\ModulesSettings;
 use Frontend\Modules\MediaLibrary\Event\FrontendMediaItemResolutionMissingEvent;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -112,12 +111,10 @@ final class MediaItemListener
     {
         // Init finder
         $finder = new Finder();
-        $fs = new Filesystem();
-
         $frontendPath = MediaItem::getUploadRootDir('frontend');
 
         // Folder not exists (this can happen in the beginning), stop here
-        if (!$fs->exists($frontendPath)) {
+        if (!$this->fileManager->exists($frontendPath)) {
             return false;
         }
 

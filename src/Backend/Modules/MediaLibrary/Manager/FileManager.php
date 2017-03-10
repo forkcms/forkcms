@@ -33,7 +33,7 @@ class FileManager
      */
     public function createFolder(string $path)
     {
-        if (!is_dir($path)) {
+        if (!$this->exists($path)) {
             $this->filesystem->mkdir($path);
         }
     }
@@ -45,7 +45,7 @@ class FileManager
      */
     public function deleteFile(string $path)
     {
-        if (is_file($path)) {
+        if ($this->exists($path)) {
             $this->filesystem->remove($path);
         }
     }
@@ -57,9 +57,20 @@ class FileManager
      */
     public function deleteFolder(string $path)
     {
-        if (is_dir($path)) {
+        if ($this->exists($path)) {
             $this->filesystem->remove($path);
         }
+    }
+
+    /**
+     * Exists
+     *
+     * @param string $path
+     * @return bool
+     */
+    public function exists(string $path): bool
+    {
+        return $this->filesystem->exists($path);
     }
 
     /**
@@ -190,5 +201,14 @@ class FileManager
         }
 
         return $this->generateUniqueFileName($directory, $name, $extension);
+    }
+
+    /**
+     * @param string $oldName
+     * @param string $newName
+     */
+    public function rename(string $oldName, string $newName)
+    {
+        $this->filesystem->rename($oldName, $newName);
     }
 }

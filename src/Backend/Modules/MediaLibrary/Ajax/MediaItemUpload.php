@@ -113,16 +113,15 @@ class MediaItemUpload extends BackendBaseAJAXAction
                     $result['uploadName']
                 );
 
-                $fs = new Filesystem();
-                if ($fs->exists($uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'])) {
+                if ($this->get('media_library.manager.file')->exists($uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'])) {
                     // Move file to correct folder
-                    $fs->rename(
+                    $this->get('media_library.manager.file')->rename(
                         $uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'],
                         $uploadDir . '/' . $newName
                     );
 
                     // Remove the old folder
-                    $fs->remove($uploadDir . '/' . $result['uuid']);
+                    $this->get('media_library.manager.file')->deleteFolder($uploadDir . '/' . $result['uuid']);
                 }
 
                 /** @var CreateMediaItemFromLocalStorageType $createMediaItem */
