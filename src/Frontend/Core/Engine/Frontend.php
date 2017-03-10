@@ -27,7 +27,7 @@ class Frontend extends KernelLoader implements ApplicationInterface
     /**
      * @return Response
      */
-    public function display()
+    public function display(): Response
     {
         return $this->page->display();
     }
