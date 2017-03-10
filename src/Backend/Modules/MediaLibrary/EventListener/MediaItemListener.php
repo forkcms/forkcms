@@ -91,7 +91,7 @@ final class MediaItemListener
      */
     public function onMediaItemRequestedMissingFrontendResolution(FrontendMediaItemResolutionMissingEvent $event)
     {
-        // Generate frontend thumbnail
+        // Generate Frontend thumbnail
         $this->generateThumbnail(
             $event->getMediaItem(),
             $event->getResolution()->getImageSettings(),
@@ -102,7 +102,7 @@ final class MediaItemListener
     }
 
     /**
-     * Delete frontend thumbnails
+     * Delete Frontend thumbnails
      *
      * @param MediaItem $mediaItem
      * @return bool|void
@@ -131,6 +131,8 @@ final class MediaItemListener
     }
 
     /**
+     * Generate thumbnail
+     *
      * @param MediaItem $mediaItem
      * @param ImageSettings $imageSettings
      * @param string $destinationPath
