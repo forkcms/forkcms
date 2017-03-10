@@ -17,13 +17,14 @@ $gray-lightest:          #f1f1f1;
 $gray-border:            #cccccc;
 $white:                  #fff;
 
-$brand-primary:         #4094c1;
-$brand-primary-dark:    #01417b;
-$brand-primary-darker:  #021b45;
-$brand-success:         #72aa2e;
+$brand-primary-light:   #2f77d1;
+$brand-primary:         #045a90;
+$brand-primary-dark:    #014b79;
+$brand-primary-darker:  #012545;
+$brand-success:         #2C9F42;
 $brand-info:            #5bc0de;
 $brand-warning:         #F5A623;
-$brand-danger:          #d00c00;
+$brand-danger:          #d0021b;
 
 $content-background:    #ffffff;
 
@@ -33,14 +34,14 @@ $content-background:    #ffffff;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:               #FAFAFA;
+$body-bg:               $white;
 //** Global text color on `<body>`.
-$text-color:            $gray;
+$text-color:            rgba($gray-base, .8);
 
 //** Global textual link color.
-$link-color:            $brand-primary;
+$link-color:            $brand-primary-dark;
 //** Link hover color set via `darken()` function.
-$link-hover-color:      darken($link-color, 15%);
+$link-hover-color:      $brand-primary-darker;
 //** Link hover decoration.
 $link-hover-decoration: underline;
 
@@ -49,25 +50,25 @@ $link-hover-decoration: underline;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif:  Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 $font-family-serif:       Georgia, "Times New Roman", Times, serif;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 $font-family-base:        $font-family-sans-serif;
 
-$font-size-base:          14px;
-$font-size-large:         ceil(($font-size-base * 1.25)); // ~18px
-$font-size-small:         ceil(($font-size-base * 0.85)); // ~12px
-$font-size-extra-small:   ceil(($font-size-base * 0.7));
+$font-size-base:          18px;
+$font-size-large:         ceil(($font-size-base * 1.25)); // ~23px
+$font-size-small:         ceil(($font-size-base * 0.85)); // ~16px
+$font-size-extra-small:   ceil(($font-size-base * 0.7)); // 14px
 
-$font-size-h1:            floor(($font-size-base * 2.6)); // ~36px
-$font-size-h2:            floor(($font-size-base * 2.15)); // ~30px
-$font-size-h3:            ceil(($font-size-base * 1.7)); // ~24px
-$font-size-h4:            ceil(($font-size-base * 1.4)); // ~20px
+$font-size-h1:            floor(($font-size-base * 4.8)); // ~86px
+$font-size-h2:            floor(($font-size-base * 2.15)); // ~38px
+$font-size-h3:            ceil(($font-size-base * 1.65)); // ~30px
+$font-size-h4:            ceil(($font-size-base * 1.4)); // ~26px
 $font-size-h5:            $font-size-base;
-$font-size-h6:            ceil(($font-size-base * 0.85)); // ~12px
+$font-size-h6:            ceil(($font-size-base * 0.85)); // ~16px
 
-$font-size-btn:           ceil(($font-size-base * 1.10)); // ~16px
+$font-size-btn:           ceil(($font-size-base * 1.10)); // ~20px
 
 //** Unit-less `line-height` for use in components like buttons.
 $line-height-base:        1.428571429; // 20/14
@@ -76,9 +77,9 @@ $line-height-computed:    floor(($font-size-base * $line-height-base)); // ~20px
 
 //** By default, this inherits from the `<body>`.
 $headings-font-family:    inherit;
-$headings-font-weight:    500;
+$headings-font-weight:    900;
 $headings-line-height:    1.1;
-$headings-color:          $gray-base;
+$headings-color:          $brand-primary-dark;
 
 
 //== Iconography
@@ -158,13 +159,13 @@ $table-border-color:            #e5e5e5;
 
 $btn-font-weight:                normal;
 
-$btn-default-color:              $text-color;
-$btn-default-bg:                 $gray-lighter;
-$btn-default-border:             $gray-lighter;
+$btn-default-color:              $brand-primary-dark;
+$btn-default-bg:                 $white;
+$btn-default-border:             $brand-primary-dark;
 
 $btn-primary-color:              $white;
-$btn-primary-bg:                 $brand-primary;
-$btn-primary-border:             darken($btn-primary-bg, 5%);
+$btn-primary-bg:                 $brand-primary-dark;
+$btn-primary-border:             $brand-primary-dark;
 
 $btn-success-color:              $white;
 $btn-success-bg:                 $brand-success;
@@ -195,21 +196,21 @@ $input-bg:                       $white;
 $input-bg-disabled:              $gray-lightest;
 
 //** Text color for `<input>`s
-$input-color:                    $gray-base;
+$input-color:                    $text-color;
 //** `<input>` border color
 $input-border:                   $gray-lighter;
 
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 //** Default `.form-control` border radius
 // This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
-$input-border-radius:            $border-radius-base;
+$input-border-radius:            0;
 //** Large `.form-control` border radius
 $input-border-radius-large:      $border-radius-large;
 //** Small `.form-control` border radius
 $input-border-radius-small:      $border-radius-small;
 
 //** Border color for inputs on focus
-$input-border-focus:             $brand-primary;
+$input-border-focus:             $brand-primary-dark;
 
 //** Placeholder text color
 $input-color-placeholder:        #999;
@@ -372,7 +373,7 @@ $footer-default-bg:            #012545;
 //##
 
 // Basics of a navbar
-$navbar-height:                    50px;
+$navbar-height:                    60px;
 $navbar-margin-bottom:             $line-height-computed;
 $navbar-border-radius:             0;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2));
@@ -386,9 +387,9 @@ $navbar-default-border:            $brand-primary-dark;
 // Navbar links
 $navbar-default-link-color:                $white;
 $navbar-default-link-hover-color:          $white;
-$navbar-default-link-hover-bg:             $brand-primary;
+$navbar-default-link-hover-bg:             $brand-primary-light;
 $navbar-default-link-active-color:         $white;
-$navbar-default-link-active-bg:            $brand-primary;
+$navbar-default-link-active-bg:            $brand-primary-light;
 $navbar-default-link-disabled-color:       #ccc;
 $navbar-default-link-disabled-bg:          transparent;
 
@@ -398,9 +399,9 @@ $navbar-default-brand-hover-color:         darken($navbar-default-brand-color, 1
 $navbar-default-brand-hover-bg:            transparent;
 
 // Navbar toggle
-$navbar-default-toggle-hover-bg:           #ddd;
-$navbar-default-toggle-icon-bar-bg:        #888;
-$navbar-default-toggle-border-color:       #ddd;
+$navbar-default-toggle-hover-bg:           $white;
+$navbar-default-toggle-icon-bar-bg:        $white;
+$navbar-default-toggle-border-color:       $white;
 
 
 // Inverted navbar
@@ -453,9 +454,9 @@ $nav-tabs-justified-link-border-color:            #ddd;
 $nav-tabs-justified-active-link-border-color:     $body-bg;
 
 //== Pills
-$nav-pills-border-radius:                   $border-radius-base;
-$nav-pills-active-link-hover-bg:            $component-active-bg;
-$nav-pills-active-link-hover-color:         $component-active-color;
+$nav-pills-border-radius:                   0;
+$nav-pills-active-link-hover-bg:            $white;
+$nav-pills-active-link-hover-color:         $brand-primary-dark;
 
 
 //== Pagination
@@ -806,11 +807,11 @@ $breadcrumb-padding-horizontal: 15px;
 //** Breadcrumb background color
 $breadcrumb-bg:                 transparent;
 //** Breadcrumb text color
-$breadcrumb-color:              $gray-light;
+$breadcrumb-color:              $brand-primary-dark;
 //** Text color of current page in the breadcrumb
 $breadcrumb-active-color:       $gray-lighter;
 //** Textual separator for between breadcrumb elements
-$breadcrumb-separator:          "";
+$breadcrumb-separator:          "/";
 
 
 //== Carousel

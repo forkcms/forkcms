@@ -10,6 +10,22 @@ $fa-font-path: '/fonts/vendors';
 @import 'bootstrap-variables';
 @import 'bootstrap-imports';
 
+// Base
+@import 'base/type';
+@import 'base/base';
+
+// Components
+@import 'components/breadcrumbs';
+@import 'components/buttons';
+@import 'components/cookiebar';
+@import 'components/footer';
+@import 'components/forms';
+@import 'components/headers';
+@import 'components/labels';
+@import 'components/modules';
+@import 'components/navbar';
+@import 'components/sections';
+
 // Custom page styling
 // Insert custom page styling here. Put all page styles in the pages/ directory
 // eg. @import 'pages/footer';

@@ -1,12 +1,15 @@
-<nav>
-  <ul class="nav nav-pills" role="navigation">
-    <li class="disabled"><a>© <span itemprop="copyrightYear">{{ now|date('Y') }}</span> {{ siteTitle }}</a></li>
-    {% for footerLink in footerLinks %}
-      <li>
-        <a href="{{ footerLink.url }}" title="{{ footerLink.title }}"{% if footerLink.rel %} rel="{{ footerLink.rel }}"{% endif %}>
-          {{ footerLink.navigation_title }}
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-</nav>
+<footer>
+  <hr />
+  <nav>
+    <ul class="nav nav-pills" role="navigation">
+      <li class="disabled"><a>© <span itemprop="copyrightYear">{{ now|date('Y') }}</span> {{ siteTitle }}</a></li>
+      {% for footerLink in footerLinks %}
+        <li>
+          <a href="{{ footerLink.url }}" title="{{ footerLink.title }}"{% if footerLink.rel %} rel="{{ footerLink.rel }}"{% endif %}>
+            {{ footerLink.navigation_title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</footer>

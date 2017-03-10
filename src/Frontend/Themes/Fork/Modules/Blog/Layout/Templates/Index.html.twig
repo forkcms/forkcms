@@ -66,9 +66,9 @@
                       {{ 'lbl.Tags'|trans|ucfirst }}:
                       <span itemprop="keywords">
                         {% for tag in item.tags %}
-                        <a class="label label-default" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
-                          {{ tag.name }}
-                          </a>{% if not loop.last %},{% endif %}
+                          <a class="label label-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                            {{ tag.name }}
+                          </a>
                         {% endfor %}
                       </span>
                     {% endif %}
@@ -78,13 +78,20 @@
             </header>
 
             <div class="block-article-body" itemprop="articleBody">
-              {% if item.image %}
-                <img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
-              {% if not item.introduction %}
-                {{ item.text|raw }}
-              {% else %}
-                {{ item.introduction|raw }}
-              {% endif %}
+              <div class="row">
+                <div class="{% if item.image %} col-md-8{% else %} col-xs-12{% endif %}">
+                  {% if not item.introduction %}
+                    {{ item.text|raw }}
+                  {% else %}
+                    {{ item.introduction|raw }}
+                  {% endif %}
+                </div>
+                {% if item.image %}
+                  <div class="col-md-4">
+                    <img itemprop="image" class="img-responsive" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />
+                  </div>
+                {% endif %}
+              </div>
             </div>
           </article>
         {% endfor %}

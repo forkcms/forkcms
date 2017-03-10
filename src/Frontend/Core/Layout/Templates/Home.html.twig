@@ -1,58 +1,12 @@
-{% include "Core/Layout/Templates/Head.html.twig" %}
+{% extends 'Core/Layout/Templates/Base.html.twig' %}
 
-<body class="{{ LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
-<nav class="navbar navbar-inverse navbar-static-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">{$lblToggleNavigation}</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/{{ LANGUAGE }}">{{ siteTitle }}</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      {{ getnavigation('page', 0, 1) }}
-      <div class="navbar-right">
-        {% include "Core/Layout/Templates/Languages.html.twig" %}
-      </div>
-    </div>
-  </div>
-</nav>
-
-<div class="content container">
-  {% include "Core/Layout/Templates/Cookies.html.twig" %}
-
-  {# Breadcrumb #}
-  {% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
-
-  {# Page title #}
-  {% if not hideContentTitle %}
-    <header class="page-header">
-      <h1>{{ page.title }}</h1>
-    </header>
-  {% endif %}
+{% block main %}
 
   {# Main positions #}
-  {% for main in positions.main %}
-    {% if main.html %}
-      {{ main.html|raw }}
+  {% for content in positions.main %}
+    {% if content.html %}
+      {{ content.html|raw }}
     {% endif %}
   {% endfor %}
 
-  <footer>
-    <hr />
-    {% include "Core/Layout/Templates/Footer.html.twig" %}
-  </footer>
-</div>
-
-{# General Javascript #}
-{% for js in jsFiles %}
-  <script src="{{ js.file }}"></script>
-{% endfor %}
-
-{# Site wide HTML #}
-{{ siteHTMLFooter|raw }}
-</body>
-</html>
+{% endblock %}
