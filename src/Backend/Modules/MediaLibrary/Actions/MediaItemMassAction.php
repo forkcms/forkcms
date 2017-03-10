@@ -76,7 +76,7 @@ class MediaItemMassAction extends BackendBaseAction
                         $this->get('command_bus')->handle($updateMediaItem);
                         $this->get('event_dispatcher')->dispatch(
                             MediaItemUpdated::EVENT_NAME,
-                            new MediaItemUpdated($updateMediaItem->mediaItem)
+                            new MediaItemUpdated($updateMediaItem->getMediaItemEntity())
                         );
 
                         break;

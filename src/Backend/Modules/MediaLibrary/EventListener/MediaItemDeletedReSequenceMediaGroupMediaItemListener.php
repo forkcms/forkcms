@@ -42,7 +42,7 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
             // Loop all MediaGroup items
             foreach ($mediaItemMediaGroups as $mediaItemMediaGroup) {
                 /** @var MediaGroup $mediaGroup */
-                $mediaGroup = $mediaItemMediaGroup->getMediaGroup();
+                $mediaGroup = $mediaItemMediaGroup->getGroup();
 
                 // Define new media ids
                 $newMediaIds = array();
