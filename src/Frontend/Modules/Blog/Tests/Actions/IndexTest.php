@@ -6,6 +6,9 @@ use Common\WebTestCase;
 
 class IndexTest extends WebTestCase
 {
+    /**
+     * @runInSeparateProcess
+     */
     public function testIndexContainsBlogPosts()
     {
         $client = static::createClient();
@@ -29,6 +32,9 @@ class IndexTest extends WebTestCase
         );
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testNonExistingPageGives404()
     {
         $client = static::createClient();

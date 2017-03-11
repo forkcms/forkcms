@@ -6,6 +6,9 @@ use Common\WebTestCase;
 
 class IndexTest extends WebTestCase
 {
+    /**
+     * @runInSeparateProcess
+     */
     public function testAuthenticationIsNeeded()
     {
         $this->logout();
@@ -28,6 +31,9 @@ class IndexTest extends WebTestCase
         );
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testIndexContainsBlogPosts()
     {
         $client = static::createClient();

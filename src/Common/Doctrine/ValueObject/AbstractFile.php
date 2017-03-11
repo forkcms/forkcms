@@ -2,6 +2,7 @@
 
 namespace Common\Doctrine\ValueObject;
 
+use Common\Uri;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -160,7 +161,7 @@ abstract class AbstractFile
         }
 
         // do whatever you want to generate a unique name
-        $filename = urlencode($this->namePrefix) . '_' . sha1(uniqid(mt_rand(), true));
+        $filename = Uri::getUrl($this->namePrefix) . '_' . sha1(uniqid(mt_rand(), true));
         $this->fileName = $filename . '.' . $this->getFile()->guessExtension();
     }
 
