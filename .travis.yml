@@ -11,10 +11,11 @@ matrix:
     - php: hhvm
 
 script:
-  - phpunit --coverage-clover=coverage.clover
+  - bin/simple-phpunit --coverage-clover=coverage.clover
 
 before_script:
   - npm install -g bower
+  - export SYMFONY_DEPRECATIONS_HELPER="disabled"
   - composer install
   - mysql -e 'create database fork_test'
   - mysql -u travis fork_test < tools/test_db.sql

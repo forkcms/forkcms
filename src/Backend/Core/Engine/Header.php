@@ -319,11 +319,11 @@ class Header extends Base\Object
         if (!empty($existingJSFiles)) {
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
-                '/bower_components/jquery/dist/jquery.min.js',
-                '/bower_components/jquery-migrate/jquery-migrate.min.js',
-                '/bower_components/jquery-ui/jquery-ui.min.js',
-                '/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
-                '/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
+                '/js/vendors/jquery.min.js',
+                '/js/vendors/jquery-migrate.min.js',
+                '/js/vendors/jquery-ui.min.js',
+                '/js/vendors/bootstrap.min.js',
+                '/js/vendors/bootstrap-tagsinput.min.js',
                 '/src/Backend/Core/Js/jquery/jquery.ui.dialog.patch.js',
                 '/src/Backend/Core/Js/jquery/jquery.backend.js',
                 '/src/Backend/Core/Js/ckeditor/ckeditor.js',

@@ -4,16 +4,19 @@
       <h3 class="title">{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
     </div>
     <div class="bd">
-      <form action="{{ geturlforblock('Mailmotor', 'Subscribe' ) }}" method="post">
-        <input type="hidden" name="form" value="mailMotorSubscribeForm" />
+      {{ form_start(form) }}
         <p>
-          <label for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          <input type="text" value="" id="email" name="email" class="inputText" placeholder="{{ 'lbl.YourEmail'|trans|capitalize }}" />
+          {{ form_row(form.email) }}
         </p>
+
+        {% if form.interests %}
+          {{ form_row(form.interests) }}
+        {% endif %}
+
         <p>
-          <input id="send" class="inputSubmit btn" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans|capitalize }}" />
+          {{ form_widget(form.subscribe) }}
         </p>
-      </form>
+      {{ form_end(form) }}
     </div>
   </div>
 </section>

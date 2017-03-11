@@ -62,7 +62,7 @@ abstract class WebTestCase extends BaseWebTestCase
         }
 
         static::$kernel = static::createKernel($options);
-
+        \BaseModel::setContainer(static::$kernel->getContainer());
         $client = static::$kernel->getContainer()->get('test.client');
         $client->setServerParameters($server);
 

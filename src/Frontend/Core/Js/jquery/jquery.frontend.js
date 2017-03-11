@@ -108,7 +108,7 @@
                         // Delicious
                         case 'delicious':
                             // build url
-                            var url = 'http://delicious.com/save?url=' + encodeURIComponent(link);
+                            var url = 'https://delicious.com/save?url=' + encodeURIComponent(link);
                             if(title !== '') url += '&title=' + title;
                             if(description !== '') url += '&notes=' + description;
 
@@ -124,7 +124,7 @@
                         // Digg
                         case 'digg':
                             // build url
-                            var url = 'http://digg.com/submit?url=' + encodeURIComponent(link);
+                            var url = 'https://digg.com/submit?url=' + encodeURIComponent(link);
                             if(title !== '') url += '&title=' + title;
 
                             // add html
@@ -147,7 +147,7 @@
                             // check if the FB-object is available
                             if(typeof FB != 'object')
                             {
-                                html += '<iframe src="http://www.facebook.com/plugins/like.php?href=' + link + '&amp;send=false&amp;layout=button_count&amp;width=' + options.facebook.width + '&amp;show_faces=false&amp;action=' + options.facebook.verb + '&amp;colorscheme=' + options.facebook.colorScheme + '&amp;font=' + options.facebook.font + '&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:' + options.facebook.width + 'px; height:21px;" allowTransparency="true"></iframe>';
+                                html += '<iframe src="https://www.facebook.com/plugins/like.php?href=' + link + '&amp;send=false&amp;layout=button_count&amp;width=' + options.facebook.width + '&amp;show_faces=false&amp;action=' + options.facebook.verb + '&amp;colorscheme=' + options.facebook.colorScheme + '&amp;font=' + options.facebook.font + '&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:' + options.facebook.width + 'px; height:21px;" allowTransparency="true"></iframe>';
                             }
                             else
                             {
@@ -165,7 +165,7 @@
                                 // loop all script to check if the Linkedin widget is already loaded
                                 $('script').each(function()
                                 {
-                                    if($(this).attr('src') == 'http://platform.linkedin.com/in.js') linkedInLoaded = true;
+                                    if($(this).attr('src') == 'https://platform.linkedin.com/in.js') linkedInLoaded = true;
                                 });
 
                                 // not loaded?
@@ -173,7 +173,7 @@
                                 {
                                     // create the script tag
                                     var script = document.createElement('script');
-                                    script.src = 'http://platform.linkedin.com/in.js';
+                                    script.src = 'https://platform.linkedin.com/in.js';
 
                                     // add into head
                                     $('head').after(script);
@@ -196,7 +196,7 @@
                                 // loop all script to check if the twitter-widget is already loaded
                                 $('script').each(function()
                                 {
-                                    if($(this).attr('src') == 'http://platform.twitter.com/widgets.js') twitterLoaded = true;
+                                    if($(this).attr('src') == 'https://platform.twitter.com/widgets.js') twitterLoaded = true;
                                 });
 
                                 // not loaded?
@@ -204,7 +204,7 @@
                                 {
                                     // create the script tag
                                     var script = document.createElement('script');
-                                    script.src = 'http://platform.twitter.com/widgets.js';
+                                    script.src = 'https://platform.twitter.com/widgets.js';
 
                                     // add into head
                                     $('head').after(script);
@@ -216,7 +216,7 @@
 
                             // build & add html
                             html += '<li class="shareMenuTwitter">' +
-                                    '    <a href="http://twitter.com/share" class="twitter-share-button" data-url="' + link + '"';
+                                    '    <a href="https://twitter.com/share" class="twitter-share-button" data-url="' + link + '"';
                             if(title !== '') html += ' data-text="' + title + '"';
                             html += ' data-lang="' + jsFrontend.current.language + '">' + options.twitter.label  + '</a>' +
                                     '</li>';
@@ -289,7 +289,7 @@
 
                                     // build & add html
                                     html += '<li class="shareMenuPinterest">' +
-                                            '    <a href="http://pinterest.com/pin/create/button/?url=' + encodeURIComponent(link) +
+                                            '    <a href="https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(link) +
                                                     '&media=' + encodeURIComponent(image) +
                                                     '&description=' + encodeURIComponent(description) +
                                                     '" class="pin-it-button" count-layout="' + countLayout + '">' +
@@ -348,7 +348,7 @@
 				required: jsFrontend.locale.err('FieldIsRequired'),
 				email: 	  jsFrontend.locale.err('EmailIsInvalid'),
 				date: 	  jsFrontend.locale.err('DateIsInvalid'),
-				numeric:  jsFrontend.locale.err('NumberIsInvalid'),
+				number:   jsFrontend.locale.err('NumberIsInvalid'),
 				value:    jsFrontend.locale.err('InvalidValue')
 			};
 
@@ -362,7 +362,7 @@
 				type = $input.context.type;
 				errorMessage = options.value;
 
-				if(options[type]) {
+				if (options[type]) {
 					errorMessage = options[type];
 				}
 			}

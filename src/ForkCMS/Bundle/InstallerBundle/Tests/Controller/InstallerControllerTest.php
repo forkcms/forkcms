@@ -24,6 +24,9 @@ class InstallerControllerTest extends WebTestCase
         );
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testInstallationProcess()
     {
         $client = static::createClient();

@@ -5,12 +5,12 @@ namespace Common\Tests;
 use Common\ModulesSettings;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for our module settings
  */
-class ModulesSettingsTest extends PHPUnit_Framework_TestCase
+class ModulesSettingsTest extends TestCase
 {
     public function testFetchingSettingsCallsTheDatabaseOnce()
     {
