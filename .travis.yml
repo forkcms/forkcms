@@ -15,7 +15,7 @@ script:
 
 before_script:
   - npm install -g bower
-  - if [[ "$TRAVIS_PHP_VERSION" != "5.5" ]]; then export SYMFONY_PHPUNIT_VERSION=5.7; fi
+  - export SYMFONY_DEPRECATIONS_HELPER="disabled"
   - composer install
   - mysql -e 'create database fork_test'
   - mysql -u travis fork_test < tools/test_db.sql
