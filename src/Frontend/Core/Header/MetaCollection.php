@@ -5,7 +5,7 @@ namespace Frontend\Core\Header;
 final class MetaCollection
 {
     /** @var MetaData[] */
-    private $metaData;
+    private $metaData = [];
 
     /** @var MetaLink[] */
     private $metaLinks = [];

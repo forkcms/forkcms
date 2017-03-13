@@ -10,12 +10,17 @@ final class GoogleAnalytics
     /** @var ModulesSettings */
     private $modulesSettings;
 
+    /** @var string */
+    private $httpHost;
+
     /**
      * @param ModulesSettings $modulesSettings
+     * @param string $httpHost
      */
-    public function __construct(ModulesSettings $modulesSettings)
+    public function __construct(ModulesSettings $modulesSettings, $httpHost)
     {
         $this->modulesSettings = $modulesSettings;
+        $this->httpHost = $httpHost;
     }
 
     /**
@@ -63,13 +68,13 @@ final class GoogleAnalytics
 
         $webPropertyId = $this->modulesSettings->get('Analytics', 'web_property_id', null);
 
-        $request = $this->get('request');
         $trackingCode = '<script>
                           (function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
                           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                           })(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
-                          ga(\'create\', \'' . $webPropertyId . '\', \'' . $request->getHttpHost() . '\');
+                          ga(\'create\', \'' . $webPropertyId . '\', \'' . $this->httpHost
+                        /**string */. '\');
                         ';
         $trackingCode .= $this->getGoogleAnalyticsEvent();
         $trackingCode .= '</script>';

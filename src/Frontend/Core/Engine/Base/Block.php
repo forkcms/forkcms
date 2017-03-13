@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Common\Core\Header\Priority;
 use Common\Doctrine\Entity\Meta;
 use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Breadcrumb;
@@ -171,7 +172,7 @@ class Block extends Object
                 $frontendModuleURL . '/' . $this->getModule() . '.js',
                 true,
                 true,
-                Header::PRIORITY_GROUP_MODULE
+                Priority::module()
             );
         }
 
@@ -181,7 +182,7 @@ class Block extends Object
                 $frontendModuleURL . '/' . $this->getAction() . '.js',
                 true,
                 true,
-                Header::PRIORITY_GROUP_MODULE
+                Priority::module()
             );
         }
     }

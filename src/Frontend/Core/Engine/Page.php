@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Exception\RedirectException;
+use Frontend\Core\Header\Header;
 use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;

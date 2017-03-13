@@ -44,8 +44,8 @@ class AjaxAction extends KernelLoader
 
     /**
      * @param KernelInterface $kernel
-     * @param string          $action The action to use.
-     * @param string          $module The module to use.
+     * @param string $action The action to use.
+     * @param string $module The module to use.
      */
     public function __construct(KernelInterface $kernel, string $action, string $module)
     {
@@ -61,7 +61,6 @@ class AjaxAction extends KernelLoader
      */
     public function execute()
     {
-        return $this->getContent();
     }
 
     /**
@@ -75,7 +74,7 @@ class AjaxAction extends KernelLoader
     }
 
     /**
-     * Since the display action in the backend is rather complicated and we
+     * Since the display action in the frontend is rather complicated and we
      * want to make this work with our Kernel, I've added this getContent
      * method to extract the output from the actual displaying.
      *
@@ -86,11 +85,9 @@ class AjaxAction extends KernelLoader
      */
     public function getContent(): Response
     {
-        $statusCode = ($this->content['code'] ?? self::OK);
-
         return new Response(
             json_encode($this->content),
-            $statusCode,
+            $this->content['code'] ?? self::OK,
             array('content-type' => 'application/json')
         );
     }
@@ -108,10 +105,10 @@ class AjaxAction extends KernelLoader
     /**
      * Outputs an answer to the browser
      *
-     * @param int    $statusCode The status code to use, use one of the available constants
+     * @param int $statusCode The status code to use, use one of the available constants
      *                           (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
-     * @param mixed  $data       The data to be returned (will be encoded as JSON).
-     * @param string $message    A text-message.
+     * @param mixed $data The data to be returned (will be encoded as JSON).
+     * @param string $message A text-message.
      */
     public function output(int $statusCode, $data = null, string $message = null)
     {

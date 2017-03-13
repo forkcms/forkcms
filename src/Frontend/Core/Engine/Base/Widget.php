@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Common\Core\Header\Priority;
 use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\TwigTemplate;
@@ -145,7 +146,7 @@ class Widget extends Object
                 $frontendModuleURL . '/' . $this->getModule() . '.js',
                 true,
                 true,
-                Header::PRIORITY_GROUP_WIDGET
+                Priority::widget()
             );
         }
 
@@ -155,7 +156,7 @@ class Widget extends Object
                 $frontendModuleURL . '/' . $this->getAction() . '.js',
                 true,
                 true,
-                Header::PRIORITY_GROUP_WIDGET
+                Priority::widget()
             );
         }
     }

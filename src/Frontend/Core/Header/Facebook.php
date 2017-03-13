@@ -3,7 +3,6 @@
 namespace Frontend\Core\Header;
 
 use Common\ModulesSettings;
-use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Theme;
 
 final class Facebook
