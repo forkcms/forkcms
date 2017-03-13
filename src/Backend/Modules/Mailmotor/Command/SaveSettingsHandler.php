@@ -39,6 +39,7 @@ final class SaveSettingsHandler
 
         // set our settings
         $this->modulesSettings->set($module, 'mail_engine', $settings->mailEngine);
+        $this->modulesSettings->set($module, 'double_opt_in', $settings->doubleOptIn);
         $this->modulesSettings->set($module, 'overwrite_interests', $settings->overwriteInterests);
         $this->modulesSettings->set($module, 'automatically_subscribe_from_form_builder_submitted_form', $settings->automaticallySubscribeFromFormBuilderSubmittedForm);
 

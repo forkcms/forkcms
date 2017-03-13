@@ -78,7 +78,8 @@ final class SubscriptionHandler
             $subscription->email,
             (string) $subscription->locale,
             $mergeFields,
-            $interests
+            $interests,
+            $this->modulesSettings->get('Mailmotor', 'double_opt_in', true)
         );
     }
 }
