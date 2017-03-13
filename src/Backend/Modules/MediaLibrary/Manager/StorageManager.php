@@ -46,7 +46,7 @@ class StorageManager
      */
     public function getStorage(StorageType $storageType): StorageProviderInterface
     {
-        switch($storageType) {
+        switch ($storageType) {
             case StorageType::external():
                 if (!$this->hasExternalStorageProvider()) {
                     throw new \Exception('You must define an external storage provider before you can call it.');
