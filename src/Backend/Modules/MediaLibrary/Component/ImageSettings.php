@@ -87,23 +87,11 @@ class ImageSettings
 
         // Redefine
         $width = (int) $width;
-
-        if (strpos($heightAndMore, '-') !== false) {
-            $height = (int) trim(strstr($heightAndMore, '-', true), '-');
-
-            // Define quality
-            $quality = (int) ltrim(substr($heightAndMore, -3), '-');
-        } else {
-            $height = (int) $heightAndMore;
-            $quality = 100;
-        }
+        $height = self::getHeightFromString($heightAndMore);
+        $quality = self::getQualityFromString($heightAndMore);
 
         // Define method, by default we use "resize"
         $transformationMethod = ImageTransformationMethod::fromString($value);
-
-        if ($quality === 0) {
-            $quality = 100;
-        }
 
         return new self(
             $transformationMethod,
@@ -131,6 +119,15 @@ class ImageSettings
     public function getHeight(): int
     {
         return $this->height;
+    }
+
+    /**
+     * @param string $value
+     * @return int
+     */
+    private static function getHeightFromString(string $value): int
+    {
+        return (strpos($value, '-') !== false) ? (int) trim(strstr($value, '-', true), '-') : (int) $value;
     }
 
     /**
@@ -173,6 +170,21 @@ class ImageSettings
     public function getQuality(): int
     {
         return $this->quality;
+    }
+
+    /**
+     * @param string $value
+     * @return int
+     */
+    private static function getQualityFromString(string $value): int
+    {
+        $quality = (strpos($value, '-') !== false) ? (int) ltrim(substr($value, -3), '-') : 100;
+
+        if ($quality === 0) {
+            $quality = 100;
+        }
+
+        return $quality;
     }
 
     /**
