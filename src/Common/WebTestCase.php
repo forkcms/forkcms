@@ -3,8 +3,8 @@
 namespace Common;
 
 use ForkCMS\App\AppKernel;
+use ForkCMS\App\BaseModel;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\FileSystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Form;
@@ -47,7 +47,7 @@ abstract class WebTestCase extends BaseWebTestCase
         }
 
         static::$kernel = static::createKernel($options);
-
+        BaseModel::setContainer(static::$kernel->getContainer());
         $client = static::$kernel->getContainer()->get('test.client');
         $client->setServerParameters($server);
 

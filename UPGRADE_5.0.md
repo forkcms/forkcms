@@ -171,6 +171,14 @@ PATH_WWW is removed. From now on you need to get the path to the web directory b
 Twig has trouble with traversing directories, so in that or similar cases you can wrap it with the `realpath` function.
 
     $this->getContainer()->getParameter('site.path_www')
+
+### PATH_LIBRARY
+
+PATH_LIBRARY is removed.
+
+### site.path_library
+
+site.path_library is removed.
     
 ## meta table is now using InnoDB
 

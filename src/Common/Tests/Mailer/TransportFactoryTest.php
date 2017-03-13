@@ -2,13 +2,13 @@
 
 namespace Common\Tests\Mailer;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Common\Mailer\TransportFactory;
 
 /**
  * Tests for our module settings
  */
-class TransportFactoryTest extends PHPUnit_Framework_TestCase
+class TransportFactoryTest extends TestCase
 {
     public function testCreatesMailTransportByDefault()
     {
