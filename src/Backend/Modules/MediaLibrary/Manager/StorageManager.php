@@ -80,12 +80,4 @@ class StorageManager
     {
         $this->externalStorageProvider = $externalStorageProvider;
     }
-
-    /**
-     * @return StorageProviderInterface
-     */
-    public function getLocalStorageProvider(): StorageProviderInterface
-    {
-        return $this->localStorageProvider;
-    }
 }
