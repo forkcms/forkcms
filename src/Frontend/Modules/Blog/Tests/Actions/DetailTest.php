@@ -6,6 +6,9 @@ use Common\WebTestCase;
 
 class DetailTest extends WebTestCase
 {
+    /**
+     * @runInSeparateProcess
+     */
     public function testBlogPostHasDetailPage()
     {
         $client = static::createClient();
@@ -40,6 +43,9 @@ class DetailTest extends WebTestCase
         );
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testNonExistingBlogPostGives404()
     {
         $client = static::createClient();

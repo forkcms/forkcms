@@ -121,30 +121,12 @@
 
   .btn-group .btn {
     padding: 2px 6px 3px;
-
-    &.addBlock .btn-text {
-      display: block;
-      font-size: $font-size-extra-small;
-    }
-
-    .fa {
-      padding-right: 0;
-    }
   }
 
   @media screen and (min-width: $screen-sm) {
 
     .btn-group .btn {
       padding: 4px 15px 5px;
-
-      &.addBlock .btn-text {
-        display: inline-block;
-        font-size: $font-size-small;
-      }
-
-      .fa {
-        padding-right: 6px;
-      }
     }
   }
 
@@ -220,8 +202,6 @@
         padding: 3px 6px;
 
         .fa {
-          padding-right: 0;
-          margin-right: 0;
           font-size: $font-size-small;
         }
       }

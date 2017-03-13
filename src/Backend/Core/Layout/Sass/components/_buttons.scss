@@ -1,9 +1,23 @@
 .btn {
   border-radius: 3px;
-  padding: 9px 12px 10px;
+  padding: 9px 9px 10px;
 
   .fa {
-    margin-right: 6px;
+    margin: 0 3px;
+  }
+
+  .btn-text {
+    display: block;
+    font-size: $font-size-extra-small;
+    margin: 0 3px;
+  }
+
+  @media screen and (min-width: $screen-sm) {
+    .btn-text {
+      display: inline-block;
+      font-size: $font-size-small;
+      margin: 0;
+    }
   }
 
   &.ui-sortable-handle {
@@ -23,6 +37,7 @@
 .btn-icon-only {
   .fa {
     padding-right: 0;
+    margin-right: 0;
   }
 }
 

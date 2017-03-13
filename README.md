@@ -34,14 +34,16 @@ We use phpunit as a test framework. It's installed when using composer install.
 To be able to run them, make sure you have a database with the same credentials as
 your normal database and with the name suffixed with _test.
 
+Because we support multiple php versions it gave some issues. Therefore we use the bridge from symfony.
+
 Running the tests:
 
-    ./bin/phpunit
+    ./bin/simple-phpunit
 
 Running only the unit tests or the functional tests
 
-    ./bin/phpunit --testsuite=functional
-    ./bin/phpunit --testsuite=unit
+     ./bin/simple-phpunit --testsuite=functional
+     ./bin/simple-phpunit --testsuite=unit
 
 ## Styling the backend
 
