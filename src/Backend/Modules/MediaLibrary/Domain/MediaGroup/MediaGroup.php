@@ -148,7 +148,7 @@ class MediaGroup
             'type' => $this->type,
             'editedOn' => ($this->editedOn) ? $this->editedOn->getTimestamp() : null,
             'connectedItems' => $this->connectedItems->map(
-                function(MediaGroupMediaItem $connectedItem) {
+                function (MediaGroupMediaItem $connectedItem) {
                     return $connectedItem->__toArray();
                 }
             ),

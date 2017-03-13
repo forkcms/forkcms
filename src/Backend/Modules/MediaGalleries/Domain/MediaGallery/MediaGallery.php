@@ -250,7 +250,7 @@ class MediaGallery
     /**
      * @return Status
      */
-    public function getStatus(): \Backend\Modules\MediaGalleries\Domain\MediaGallery\Status
+    public function getStatus(): Status
     {
         return $this->status;
     }

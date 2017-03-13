@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Core\Engine\Model;
 
 /**
  * MediaItem
@@ -515,24 +517,7 @@ class MediaItem
      */
     public function getAbsolutePath(string $subDirectory = null)
     {
-        return $this->getFullUrl() === null ? null : self::getUploadRootDir($subDirectory) . '/' . $this->getFullUrl();
-    }
-
-    /**
-     * @param string|null $subDirectory
-     * @return string
-     */
-    protected static function getSubdirectory(string $subDirectory = null): string
-    {
-        if ($subDirectory === null || $subDirectory === 'source') {
-            return 'Source';
-        } elseif (strtolower($subDirectory) === 'backend') {
-            return 'Backend';
-        } elseif (strtolower($subDirectory) === 'frontend') {
-            return 'Frontend';
-        } else {
-            return 'Frontend/' . $subDirectory;
-        }
+        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getAbsolutePath($this, $subDirectory);
     }
 
     /**
@@ -541,7 +526,23 @@ class MediaItem
      */
     public function getAbsoluteWebPath(string $subDirectory = null): string
     {
-        return SITE_URL . $this->getWebPath($subDirectory);
+        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getAbsoluteWebPath($this, $subDirectory);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLinkHTML()
+    {
+        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getLinkHTML($this);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIncludeHTML()
+    {
+        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getIncludeHTML($this);
     }
 
     /**
@@ -550,57 +551,7 @@ class MediaItem
      */
     public function getWebPath(string $subDirectory = null)
     {
-        return self::getWebDir($subDirectory) . $this->getFullUrl();
-    }
-
-    /**
-     * @param string|null $subDirectory
-     * @return string
-     */
-    public static function getWebDir(string $subDirectory = null): string
-    {
-        $subDirectory = self::getSubdirectory($subDirectory);
-
-        $webPath = FRONTEND_FILES_URL . '/' . self::getTrimmedUploadDir() . '/';
-        if ($subDirectory !== null) {
-            $webPath .= $subDirectory . '/';
-        }
-
-        return $webPath;
-    }
-
-    /**
-     * @param string|null $subDirectory
-     * @return string
-     */
-    public static function getUploadRootDir(string $subDirectory = null): string
-    {
-        $subDirectory = self::getSubdirectory($subDirectory);
-        $parentUploadRootDir = FRONTEND_FILES_PATH . '/' . self::getTrimmedUploadDir();
-
-        // the absolute directory path where uploaded
-        // documents should be saved
-        if ($subDirectory !== null) {
-            return $parentUploadRootDir . '/' . $subDirectory;
-        }
-
-        return $parentUploadRootDir;
-    }
-
-    /**
-     * @return string
-     */
-    protected static function getUploadDir(): string
-    {
-        return 'MediaLibrary';
-    }
-
-    /**
-     * @return string
-     */
-    protected static function getTrimmedUploadDir(): string
-    {
-        return trim(self::getUploadDir(), '/\\');
+        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getWebPath($this, $subDirectory);
     }
 
     /**

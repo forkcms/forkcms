@@ -7,6 +7,12 @@ services:
         class: Frontend\Modules\MediaLibrary\Manager\FrontendMediaItemManager
         arguments:
             - "@event_dispatcher"
+    media_library.manager.storage:
+        class: Backend\Modules\MediaLibrary\Manager\StorageManager
+        arguments:
+            - "@media_library.storage.local"
+            - "@media_library.storage.youtube"
+            - "@media_library.storage.vimeo"
     media_library.manager.tree:
         class: Backend\Modules\MediaLibrary\Manager\TreeManager
         arguments:

@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\MediaLibrary\Console;
 
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,7 +31,7 @@ class MediaItemDeleteAllFrontendThumbnailsCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $frontendPath = MediaItem::getUploadRootDir('frontend');
+        $frontendPath = $this->getContainer()->get('media_library.storage.local')->getUploadRootDir('frontend');
 
         // Delete Frontend Generated folder
         $this->getContainer()->get('media_library.manager.file')->deleteFolder($frontendPath);

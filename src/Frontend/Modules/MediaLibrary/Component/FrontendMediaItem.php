@@ -30,15 +30,7 @@ class FrontendMediaItem
     ) {
         $this->mediaItem = $mediaItem;
 
-        // We have a movie type
-        if ($mediaItem->getType() === Type::MOVIE) {
-            $this->addMovieSource();
-        // All other files
-        } else {
-            $this->addUrl(
-                'source'
-            );
-        }
+        $this->addUrl('source');
     }
 
     /**
@@ -62,30 +54,6 @@ class FrontendMediaItem
 
         if ($folderName !== null) {
             $this->{$customKey . '_resolution'} = $this->mediaItem->getWebPath($folderName);
-        }
-    }
-
-    /**
-     * Add movie source
-     */
-    protected function addMovieSource()
-    {
-        // Define url
-        $url = '';
-
-        // YouTube
-        if ($this->mediaItem->getMime() === MediaItem::MIME_YOUTUBE) {
-            // Define YouTube url
-            $url = 'http://www.youtube.com/embed/';
-        // Vimeo
-        } elseif ($this->mediaItem->getMime() === MediaItem::MIME_VIMEO) {
-            // Define Vimeo url
-            $url = '//player.vimeo.com/video/';
-        }
-
-        if ($url) {
-            // Set source
-            $this->source = $url . $this->mediaItem->getUrl();
         }
     }
 

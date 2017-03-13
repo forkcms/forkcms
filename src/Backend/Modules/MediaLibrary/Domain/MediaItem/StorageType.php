@@ -99,6 +99,22 @@ final class StorageType
     /**
      * @return StorageType
      */
+    public static function external(): StorageType
+    {
+        return new self(self::EXTERNAL);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExternal(): bool
+    {
+        return $this->equals(self::external());
+    }
+
+    /**
+     * @return StorageType
+     */
     public static function youtube(): StorageType
     {
         return new self(self::YOUTUBE);

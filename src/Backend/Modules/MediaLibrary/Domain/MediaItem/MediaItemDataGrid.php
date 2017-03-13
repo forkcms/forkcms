@@ -6,6 +6,7 @@ use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
+use Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
@@ -100,7 +101,7 @@ class MediaItemDataGrid extends DataGridDB
             $this->setColumnFunction(
                 array(new BackendDataGridFunctions(), 'showImage'),
                 array(
-                    MediaItem::getWebDir('backend') . '/[shardingFolderName]',
+                    $this->get('media_library.storage.local')->getWebDir('backend') . '/[shardingFolderName]',
                     '[url]',
                     '[url]',
                     Model::createURLForAction('MediaItemEdit')

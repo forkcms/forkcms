@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaLibrary\EventListener;
 
 use Backend\Modules\MediaLibrary\Component\ImageSettings;
 use Backend\Modules\MediaLibrary\Component\ImageTransformationMethod;
+use Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemBackendThumbnailCreated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemFrontendThumbnailCreated;
 use Backend\Modules\MediaLibrary\Manager\FileManager;
@@ -20,6 +21,9 @@ use Symfony\Component\Finder\Finder;
  */
 final class MediaItemListener
 {
+    /** @var LocalStorageProvider */
+    protected $localStorageProvider;
+
     /** @var FileManager */
     protected $fileManager;
 
@@ -32,15 +36,18 @@ final class MediaItemListener
     /**
      * Construct
      *
+     * @param LocalStorageProvider $localStorageProvider
      * @param FileManager $fileManager
      * @param ModulesSettings $settings
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
+        LocalStorageProvider $localStorageProvider,
         FileManager $fileManager,
         ModulesSettings $settings,
         EventDispatcherInterface $eventDispatcher
     ) {
+        $this->localStorageProvider = $localStorageProvider;
         $this->fileManager = $fileManager;
         $this->settings = $settings;
         $this->eventDispatcher = $eventDispatcher;
@@ -62,7 +69,7 @@ final class MediaItemListener
                 $this->settings->get('MediaLibrary', 'backend_thumbnail_height'),
                 $this->settings->get('MediaLibrary', 'backend_thumbnail_quality')
             ),
-            MediaItem::getUploadRootDir('backend') . '/' . $event->getMediaItem()->getScardingFolderName()
+            $this->localStorageProvider->getUploadRootDir('backend') . '/' . $event->getMediaItem()->getScardingFolderName()
         );
 
         // We dispatch an event, so other modules can hook into this
@@ -102,25 +109,19 @@ final class MediaItemListener
      */
     public function onMediaItemRequestedMissingFrontendResolution(FrontendMediaItemResolutionMissingEvent $event)
     {
-        // Define frontend thumbnail path
-        $path = MediaItem::getUploadRootDir('frontend')
-            . '/' . $event->getResolution()->getImageSettings()->toString()
-            . '/' . $event->getMediaItem()->getScardingFolderName();
-
         // Generate Frontend thumbnail
         $this->generateThumbnail(
             $event->getMediaItem(),
             $event->getResolution()->getImageSettings(),
-            $path
+            $this->localStorageProvider->getUploadRootDir('frontend')
+                . '/' . $event->getResolution()->getImageSettings()->toString()
+                . '/' . $event->getMediaItem()->getScardingFolderName()
         );
 
         // We dispatch an event, so other modules can hook into this
         $this->eventDispatcher->dispatch(
             MediaItemFrontendThumbnailCreated::EVENT_NAME,
-            new MediaItemFrontendThumbnailCreated(
-                $event->getMediaItem(),
-                $path
-            )
+            new MediaItemFrontendThumbnailCreated($event)
         );
     }
 
@@ -134,7 +135,7 @@ final class MediaItemListener
     {
         // Init finder
         $finder = new Finder();
-        $frontendPath = MediaItem::getUploadRootDir('frontend');
+        $frontendPath = $this->localStorageProvider->getUploadRootDir('frontend');
 
         // Folder not exists (this can happen in the beginning), stop here
         if (!$this->fileManager->exists($frontendPath)) {
@@ -174,7 +175,7 @@ final class MediaItemListener
         // Generate thumbnail
         $this->fileManager->generateThumbnail(
             $mediaItem->getUrl(),
-            MediaItem::getUploadRootDir() . '/' . $mediaItem->getScardingFolderName(),
+            $this->localStorageProvider->getUploadRootDir() . '/' . $mediaItem->getScardingFolderName(),
             $destinationPath,
             $imageSettings
         );

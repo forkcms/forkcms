@@ -8,8 +8,6 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageType;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Modules\MediaLibrary\Component\UploadHandler;
 
 /**
@@ -96,7 +94,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
             // Handles upload requests
             } else {
                 // Define upload dir
-                $uploadDir = MediaItem::getUploadRootDir() . '/' . $this->get('media_library.manager.file')->getNextShardingFolder();
+                $uploadDir = $this->get('media_library.storage.local')->getUploadRootDir() . '/' . $this->get('media_library.manager.file')->getNextShardingFolder();
 
                 // Generate folder if not exists
                 $this->get('media_library.manager.file')->createFolder($uploadDir);

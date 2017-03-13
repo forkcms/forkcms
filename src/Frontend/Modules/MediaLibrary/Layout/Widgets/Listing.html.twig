@@ -9,14 +9,7 @@
 <section class="widgetMediaListing">
   <ul>
     {% for item in items %}
-    <li>
-      {% if not item.mediaItem.movie %}
-        <a href="{{ item.source }}" title="{{ item.mediaItem.title }}" target="_blank">{{ item.mediaItem.title }}</a>
-      {% endif %}
-      {% if item.mediaItem.movie %}
-        <iframe width="560" height="315" src="{{ item.source }}" frameborder="0" allowfullscreen></iframe>
-      {% endif %}
-    </li>
+    <li>{{ item.mediaItem.getLinkHTML|raw }}</li>
     {% endfor %}
   </ul>
 </section>

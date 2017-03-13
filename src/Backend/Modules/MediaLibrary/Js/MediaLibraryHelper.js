@@ -981,7 +981,7 @@ jsBackend.mediaLibraryHelper.upload =
         mediaFolderId = $('#uploadMediaFolderId').val();
 
         // define variables
-        var mime = $('#mediaMovieSource').find(':checked').val();
+        var storageType = $('#mediaMovieSource').find(':checked').val();
         var $id = $('#mediaMovieId');
         var $title = $('#mediaMovieTitle');
 
@@ -993,7 +993,7 @@ jsBackend.mediaLibraryHelper.upload =
                     action: 'MediaItemAddMovie'
                 },
                 folder_id: mediaFolderId,
-                mime: mime,
+                storageType: storageType,
                 id: $id.val(),
                 title: $title.val()
             },

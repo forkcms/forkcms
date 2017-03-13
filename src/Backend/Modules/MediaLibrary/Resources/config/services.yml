@@ -4,6 +4,7 @@ imports:
   - { resource: cache_builder.yml }
   - { resource: events.yml }
   - { resource: factories.yml }
+  - { resource: storage_providers.yml }
   - { resource: managers.yml }
   - { resource: helpers.yml }
   - { resource: console_commands.yml }
