@@ -101,7 +101,7 @@ class MediaItemDataGrid extends DataGridDB
             $this->setColumnFunction(
                 array(new BackendDataGridFunctions(), 'showImage'),
                 array(
-                    $this->get('media_library.storage.local')->getWebDir('backend') . '/[shardingFolderName]',
+                    Model::get('media_library.storage.local')->getWebDir('backend') . '/[shardingFolderName]',
                     '[url]',
                     '[url]',
                     Model::createURLForAction('MediaItemEdit')
