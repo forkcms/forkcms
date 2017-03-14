@@ -117,9 +117,9 @@ class LocalStorageProvider implements StorageProviderInterface
     {
         $subDirectory = $this->getSubdirectory($subDirectory);
 
-        $webPath = $this->folderPath . '/';
+        $webPath = '/' . $this->folderPath;
         if ($subDirectory !== null) {
-            $webPath .= $subDirectory . '/';
+            $webPath .=  '/' . $subDirectory;
         }
 
         return $webPath;
@@ -132,6 +132,6 @@ class LocalStorageProvider implements StorageProviderInterface
      */
     public function getWebPath(MediaItem $mediaItem, string $subDirectory = null)
     {
-        return '/' . $this->getWebDir($subDirectory) . $mediaItem->getFullUrl();
+        return $this->getWebDir($subDirectory) . '/' . $mediaItem->getFullUrl();
     }
 }
