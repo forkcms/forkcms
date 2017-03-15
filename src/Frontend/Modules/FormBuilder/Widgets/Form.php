@@ -7,9 +7,11 @@ use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
+use ReCaptcha\ReCaptcha;
 use SpoonFormAttributes;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -45,6 +47,11 @@ class Form extends FrontendBaseWidget
      * @var array
      */
     private $item;
+
+    /**
+     * @var bool
+     */
+    private $hasRecaptchaField;
 
     /**
      * Create form action and strip the identifier parameter.
@@ -294,6 +301,9 @@ class Form extends FrontendBaseWidget
                     $item['html'] = $values;
                 } elseif ($field['type'] == 'submit') {
                     $item['html'] = $values;
+                } elseif ($field['type'] == 'recaptcha') {
+                    $this->hasRecaptchaField = true;
+                    continue;
                 }
 
                 // add to list
@@ -320,6 +330,12 @@ class Form extends FrontendBaseWidget
         $this->tpl->assign('formAction', $this->createAction() . '#' . $formName);
         $this->tpl->assign('successMessage', false);
 
+        if ($this->hasRecaptchaField) {
+            $this->header->addJS('https://www.google.com/recaptcha/api.js?hl=' . Locale::frontendLanguage());
+            $this->tpl->assign('hasRecaptchaField', true);
+            $this->tpl->assign('siteKey', FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key'));
+        }
+
         // got fields
         if (!empty($this->fieldsHTML)) {
             // value of the submit button
@@ -327,7 +343,7 @@ class Form extends FrontendBaseWidget
 
             // loop html fields
             foreach ($this->fieldsHTML as &$field) {
-                if ($field['type'] == 'heading' || $field['type'] == 'paragraph') {
+                if ($field['type'] == 'heading' || $field['type'] == 'paragraph' || $field['type'] == 'recaptcha') {
                     $field['plaintext'] = true;
                 } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
                     // name (prefixed by type)
@@ -381,6 +397,28 @@ class Form extends FrontendBaseWidget
     {
         // submitted
         if ($this->frm->isSubmitted()) {
+            if ($this->hasRecaptchaField) {
+                $request = $this->get('request')->request;
+                if (!$request->has('g-recaptcha-response')) {
+                    $this->frm->addError(FL::err('RecaptchaInvalid'));
+                }
+
+                $response = $request->get('g-recaptcha-response');
+
+                $secret = FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
+
+                if (!$secret) {
+                    $this->frm->addError(FL::err('RecaptchaInvalid'));
+                }
+
+                $recaptcha = new ReCaptcha($secret);
+
+                $response = $recaptcha->verify($response);
+
+                if (!$response->isSuccess()) {
+                    $this->frm->addError(FL::err('RecaptchaInvalid'));
+                }
+            }
             // does the key exists?
             if (\SpoonSession::exists('formbuilder_' . $this->item['id'])) {
                 // calculate difference
