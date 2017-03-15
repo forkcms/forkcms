@@ -139,6 +139,8 @@ class Helper
                 $fieldHTML = '<h3>' . $values . '</h3>';
             } elseif ($field['type'] == 'paragraph') {
                 $fieldHTML = $values;
+            } elseif ($field['type'] == 'recaptcha') {
+                $fieldHTML = '<p>reCAPTCHA</p>';
             }
 
             /*
@@ -152,7 +154,7 @@ class Helper
             $tpl->assign('required', isset($field['validations']['required']));
 
             // plaintext items
-            if ($field['type'] == 'heading' || $field['type'] == 'paragraph') {
+            if ($field['type'] == 'heading' || $field['type'] == 'paragraph' || $field['type'] == 'recaptcha') {
                 // assign
                 $tpl->assign('content', $fieldHTML);
                 $tpl->assign('plaintext', true);

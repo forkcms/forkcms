@@ -291,6 +291,13 @@ jsBackend.FormBuilder.Fields =
                 $('#' + id).modal('show');
             }
         });
+
+        $('.jsRecaptchaTrigger').on('click', function(e) {
+            // prevent default
+            e.preventDefault();
+
+            jsBackend.FormBuilder.Fields.saveRecaptcha();
+        });
     },
 
     /**
@@ -1167,6 +1174,33 @@ jsBackend.FormBuilder.Fields =
 
                     // toggle error messages
                     jsBackend.FormBuilder.Fields.toggleValidationErrors('submitDialog');
+                }
+
+                // show error message
+                else jsBackend.messages.add('danger', textStatus);
+
+                // alert the user
+                if (data.code != 200 && jsBackend.debug) alert(data.message);
+            }
+        });
+    },
+
+    /**
+     * Handle recaptcha save
+     */
+    saveRecaptcha: function () {
+
+        // make the call
+        $.ajax({
+            data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+                form_id: jsBackend.FormBuilder.formId,
+                type: 'recaptcha'
+            }),
+            success: function (data, textStatus) {
+                // success
+                if (data.code == 200) {
+                    // append field html
+                    jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
                 }
 
                 // show error message
