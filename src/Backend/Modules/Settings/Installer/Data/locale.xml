@@ -548,5 +548,13 @@
       </item>
     </Settings>
   </Backend>
+  <Frontend>
+    <Core>
+      <item type="error" name="RecaptchaInvalid">
+        <translation language="nl"><![CDATA[Captcha code is ongeldig.]]></translation>
+        <translation language="en"><![CDATA[Captcha code is invalid.]]></translation>
+      </item>
+    </Core>
+  </Frontend>
 </locale>
 
