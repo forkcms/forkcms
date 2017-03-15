@@ -22,9 +22,15 @@ class Installer extends ModuleInstaller
         $this->addModule('FormBuilder');
         $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureSettings();
         $this->configureBackendRights();
         $this->configureBackendNavigation();
         $this->configureFrontendPages();
+    }
+
+    private function configureSettings(): void
+    {
+        $this->setSetting($this->getModule(), 'requires_google_recaptcha', true);
     }
 
     private function configureBackendNavigation(): void
