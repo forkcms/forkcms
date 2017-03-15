@@ -459,6 +459,10 @@
         <translation language="sv"><![CDATA[radiokanpp]]></translation>
         <translation language="el"><![CDATA[Πλήκτρο μοναδικής επιλογής]]></translation>
       </item>
+      <item type="label" name="Recaptcha">
+        <translation language="nl"><![CDATA[reCAPTCHA]]></translation>
+        <translation language="en"><![CDATA[reCAPTCHA]]></translation>
+      </item>
       <item type="label" name="Recipient">
         <translation language="nl"><![CDATA[bestemmeling]]></translation>
         <translation language="en"><![CDATA[recipient]]></translation>
