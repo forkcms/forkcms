@@ -953,6 +953,10 @@
         <translation language="sv"><![CDATA[1 inskick]]></translation>
         <translation language="el"><![CDATA[1 υποβολή]]></translation>
       </item>
+      <item type="message" name="RecaptchaKeysMissing">
+        <translation language="nl"><![CDATA[<strong>Belangrijk</strong>: Één of beide reCAPTCHA keys ontbreken. Voeg ze toe op de <a href="%1$s">installingen pagina</a>]]></translation>
+        <translation language="en"><![CDATA[<strong>Important</strong>: One or both reCAPTCHA keys are missing. Add them on the <a href="%1$s">settings page</a>]]></translation>
+      </item>
       <item type="message" name="SentForms">
         <translation language="nl"><![CDATA[%1$s inzendingen]]></translation>
         <translation language="en"><![CDATA[%1$s submissions]]></translation>

@@ -103,7 +103,9 @@
             <div class="row">
               <div class="col-md-12">
                 <p class="alert alert-warning alert-xs">
-                  <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ImportantImmediateUpdate'|trans|raw }}</p>
+                  <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ImportantImmediateUpdate'|trans|raw }}
+                  {% if recaptchaMissing %}<br><span class="fa fa-exclamation-triangle"></span>{{ 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw }}{% endif %}
+                </p>
                 <br>
               </div>
             </div>
