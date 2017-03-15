@@ -82,7 +82,6 @@ class UploadModule extends BackendBaseActionAdd
         $allowedDirectories = array(
             'src/Backend/Modules/',
             'src/Frontend/Modules/',
-            'library/external/',
         );
 
         // name of the module we are trying to upload
@@ -105,14 +104,6 @@ class UploadModule extends BackendBaseActionAdd
             foreach ($allowedDirectories as $directory) {
                 // yay, in a valid directory
                 if (mb_stripos($fileName, $prefix . $directory) === 0) {
-                    // we have a library file
-                    if ($directory == $prefix . 'library/external/') {
-                        if (!is_file($this->getContainer()->getParameter('site.path_www') . '/' . $fileName)) {
-                            $files[] = $fileName;
-                        }
-                        break;
-                    }
-
                     // extract the module name from the url
                     $tmpName = trim(str_ireplace($prefix . $directory, '', $fileName), '/');
                     if ($tmpName == '') {
@@ -210,7 +201,7 @@ class UploadModule extends BackendBaseActionAdd
         $prefix = array();
 
         foreach ($name as $element) {
-            if ($element == 'src' || $element == 'library') {
+            if ($element == 'src') {
                 return implode(PATH_SEPARATOR, $prefix);
             } else {
                 $prefix[] = $element;
