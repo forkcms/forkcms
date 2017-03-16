@@ -30,7 +30,7 @@ class Init extends \Common\Core\Init
     /**
      * {@inheritdoc}
      */
-    public function initialize($type)
+    public function initialize(string $type)
     {
         parent::initialize($type);
 
