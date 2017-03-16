@@ -89,11 +89,6 @@ class Model extends \Common\Core\Model
         }
 
         $parameters['token'] = self::getToken();
-
-        // lets create underscore cased module and action names
-        $module = self::camelCaseToLowerSnakeCase($module);
-        $action = self::camelCaseToLowerSnakeCase($action);
-
         $queryParameterBag = self::getContainer()->get('request')->query;
 
         // add offset, order & sort (only if not yet manually added)
@@ -108,14 +103,23 @@ class Model extends \Common\Core\Model
         }
 
         if ($urlencode) {
-            array_walk($parameters, 'rawurlencode');
+            array_walk(
+                $parameters,
+                function (string $parameter) {
+                    return rawurlencode($parameter);
+                }
+            );
         }
 
         $queryString = '?' . http_build_query($parameters, null, '&amp;');
 
         return self::get('router')->generate(
             'backend',
-            ['_locale' => $language, 'module' => $module, 'action' => $action]
+            [
+                '_locale' => $language,
+                'module' => self::camelCaseToLowerSnakeCase($module),
+                'action' => self::camelCaseToLowerSnakeCase($action),
+            ]
         ) . $queryString;
     }
 
@@ -433,9 +437,7 @@ class Model extends \Common\Core\Model
     {
         $modules = $includeCore ? array('Core') : array();
         $finder = new Finder();
-        $directories = $finder->directories()->in(
-            __DIR__ . '/../../Modules'
-        )->depth('==0');
+        $directories = $finder->directories()->in(__DIR__ . '/../../Modules')->depth('==0');
         foreach ($directories as $directory) {
             $modules[] = $directory->getBasename();
         }
