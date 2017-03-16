@@ -177,55 +177,6 @@ class TemplateModifiers extends BaseTwigModifiers
     }
 
     /**
-     * Truncate a string
-     *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}
-     *
-     * @param string $var The string passed from the template.
-     * @param int $length The maximum length of the truncated string.
-     * @param bool $useHellip Should a hellip be appended if the length exceeds the requested length?
-     * @param bool $closestWord Truncate on exact length or on closest word?
-     *
-     * @return string
-     */
-    public static function truncate(string $var, int $length, bool $useHellip = true, $closestWord = false): string
-    {
-        // init vars
-        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
-
-        // remove special chars, all of them, also the ones that shouldn't be there.
-        $var = \SpoonFilter::htmlentitiesDecode($var, null, ENT_QUOTES);
-
-        // remove HTML
-        $var = strip_tags($var);
-
-        // less characters
-        if (mb_strlen($var) <= $length) {
-            return \SpoonFilter::htmlspecialchars($var);
-        }
-
-        // more characters
-        // hellip is seen as 1 char, so remove it from length
-        if ($useHellip) {
-            --$length;
-        }
-
-        // truncate
-        if ($closestWord) {
-            $var = mb_substr($var, 0, mb_strrpos(mb_substr($var, 0, $length + 1), ' '), $charset);
-        } else {
-            $var = mb_substr($var, 0, $length, $charset);
-        }
-
-        // add hellip
-        if ($useHellip) {
-            $var .= '…';
-        }
-
-        // return
-        return \SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
-    }
-
-    /**
      * Returns the count of the count of the array.
      *
      * @param array $data
