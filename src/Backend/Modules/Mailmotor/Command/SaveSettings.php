@@ -75,8 +75,7 @@ final class SaveSettings
             ? (bool) $settings['overwrite_interests'] : null;
 
         // Define double opt-in
-        $this->doubleOptIn = array_key_exists('double_opt_in', $settings)
-            ? (bool) $settings['double_opt_in'] : null;
+        $this->doubleOptIn = (bool) $settings['double_opt_in'] ?? false;
 
         // Define automatically subscribe from form builder submitted form
         $this->automaticallySubscribeFromFormBuilderSubmittedForm = array_key_exists('automatically_subscribe_from_form_builder_submitted_form', $settings)
