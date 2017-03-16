@@ -114,9 +114,9 @@ class Widget extends KernelLoader
     /**
      * Get the template path
      *
-     * @return string
+     * @return string|null
      */
-    public function getTemplatePath(): string
+    public function getTemplatePath()
     {
         return $this->templatePath;
     }
