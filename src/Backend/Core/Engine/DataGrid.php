@@ -327,7 +327,7 @@ class DataGrid extends \SpoonDataGrid
         $this->enableGreyingOut();
 
         // execute parent
-        return parent::getContent();
+        return (string) parent::getContent();
     }
 
     /**
