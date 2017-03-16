@@ -51,11 +51,10 @@ class GenerateThumbnailsCommand extends Command
 
     /**
      * @param string $folderPath
-     * @param OutputInterFace $output
-     *
+     * @param OutputInterface $output
      * @throws Exception
      */
-    private function generateThumbnails($folderPath, $output)
+    private function generateThumbnails(string $folderPath, OutputInterface $output)
     {
         $finder = new Finder();
         $finder->files()->in($folderPath)->name('/^.*\.(jpg|jpeg|png|gif)$/i');
@@ -70,10 +69,9 @@ class GenerateThumbnailsCommand extends Command
      * Get the folder path according to the input options
      *
      * @param string $folderOption
-     *
      * @return string
      */
-    private function getFolderPath($folderOption)
+    private function getFolderPath(string $folderOption): string
     {
         return __DIR__ . '/../../..' . '/src/Frontend/Files/' . $folderOption;
     }
