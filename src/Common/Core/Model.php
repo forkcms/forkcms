@@ -294,6 +294,8 @@ class Model extends BaseModel
         foreach ($modules as $module) {
             self::$modules[] = $module;
         }
+
+        return self::$modules;
     }
 
     /**
