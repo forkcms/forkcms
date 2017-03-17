@@ -284,14 +284,6 @@ class ContentBlock
     }
 
     /**
-     * @ORM\PreUpdate
-     */
-    public function preUpdate()
-    {
-        $this->editedOn = new DateTime();
-    }
-
-    /**
      * Update the widget so it shows the correct title and has the correct template
      */
     private function updateWidget()
