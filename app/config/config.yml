@@ -109,6 +109,11 @@ services:
         class: MatthiasMullie\Scrapbook\Psr6\Pool
         arguments:
             - "@cache.buffer"
+    cache.backend_navigation:
+        class: Backend\Core\Engine\NavigationCache
+        arguments:
+            - "@database"
+            - "@cache.pool"
 
     fork.settings:
         class: Common\ModulesSettings

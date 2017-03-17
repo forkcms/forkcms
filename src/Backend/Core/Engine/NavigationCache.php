@@ -5,7 +5,7 @@ namespace Backend\Core\Engine;
 use Psr\Cache\CacheItemPoolInterface;
 use SpoonDatabase;
 
-final class NavigationCacheBuilder
+final class NavigationCache
 {
     const CACHE_KEY = 'backend_navigation';
 
@@ -29,7 +29,7 @@ final class NavigationCacheBuilder
         $this->cache = $cache;
     }
 
-    public function deleteFromCache()
+    public function delete()
     {
         $this->cache->deleteItem(self::CACHE_KEY);
     }
@@ -37,7 +37,7 @@ final class NavigationCacheBuilder
     /**
      * @return array
      */
-    public function getNavigation(): array
+    public function get(): array
     {
         $cachedNavigation = $this->cache->getItem(self::CACHE_KEY);
         if ($cachedNavigation->isHit()) {
