@@ -29,7 +29,8 @@ final class UpdateContentBlockHandler
             $updateContentBlock->title,
             $updateContentBlock->text,
             !$updateContentBlock->isVisible,
-            $updateContentBlock->template
+            $updateContentBlock->template,
+            $updateContentBlock->userId
         );
 
         $this->contentBlockRepository->add($updateContentBlock->contentBlock);
