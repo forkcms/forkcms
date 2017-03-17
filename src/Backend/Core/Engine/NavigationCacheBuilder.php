@@ -7,6 +7,8 @@ use SpoonDatabase;
 
 final class NavigationCacheBuilder
 {
+    const CACHE_KEY = 'backend_navigation';
+
     /**
      * @var SpoonDatabase
      */
@@ -27,12 +29,17 @@ final class NavigationCacheBuilder
         $this->cache = $cache;
     }
 
+    public function deleteFromCache()
+    {
+        $this->cache->deleteItem(self::CACHE_KEY);
+    }
+
     /**
      * @return array
      */
     public function getNavigation(): array
     {
-        $cachedNavigation = $this->cache->getItem('backend_navigation');
+        $cachedNavigation = $this->cache->getItem(self::CACHE_KEY);
         if ($cachedNavigation->isHit()) {
             return $cachedNavigation->get();
         }
