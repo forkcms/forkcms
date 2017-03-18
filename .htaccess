@@ -4,6 +4,12 @@
 Options +FollowSymlinks -Indexes
 DirectorySlash Off
 
+# Make sure the htaccessfile is protected
+<Files .htaccess>
+	order allow,deny
+	deny from all
+</Files>
+
 # file etags (used when comparing local cached file to server file)
 FileETag MTime Size
 
