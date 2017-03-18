@@ -3,6 +3,7 @@
 
 # Libraries
 /vendor/*
+!/vendor/.htaccess
 /node_modules/*
 
 # Generated files
@@ -17,6 +18,7 @@
 /app/logs/*
 /app/sessions/*
 /bin/*
+!/bin/.htaccess
 /bundles/*
 /css/*.css
 /js/*.js
