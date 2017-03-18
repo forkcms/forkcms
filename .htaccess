@@ -34,6 +34,10 @@ deny from env=stayout
 ########## End - Common hacking tools and bandwidth hoggers block
 
 <IfModule mod_rewrite.c>
+	# Protect against cross site tracing https://www.owasp.org/index.php/Cross_Site_Tracing
+	RewriteCond %{REQUEST_METHOD} ^TRACE
+	RewriteRule .* - [F]
+
 	# nice urls
 	RewriteEngine On
 	RewriteBase /
