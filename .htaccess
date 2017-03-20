@@ -45,6 +45,7 @@ deny from env=stayout
 	# forbidden folders
 	RewriteRule \.git - [F]
 	RewriteRule vendor/.* - [F]
+	RewriteRule bin/.* - [F]
 	RewriteRule src/Console/.* - [F]
 	RewriteRule .*\.gitignore - [F]
 	RewriteRule \.editorconfig - [F]
