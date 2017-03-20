@@ -11,7 +11,6 @@ namespace ForkCMS\App;
 
 use Backend\Core\Engine\Ajax;
 use Backend\Core\Engine\Backend;
-use Backend\Core\Engine\Cronjob;
 use Frontend\Core\Engine\Frontend;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Backend\Init as BackendInit;
@@ -74,21 +73,6 @@ class ForkController extends Controller
         defined('APPLICATION') || define('APPLICATION', 'Backend');
 
         $applicationClass = $this->initializeBackend('BackendAjax');
-        $application = new $applicationClass($this->container->get('kernel'));
-
-        return $this->handleApplication($application);
-    }
-
-    /**
-     * Runs the cronjobs
-     *
-     * @return Response
-     */
-    public function backendCronjobController(): Response
-    {
-        defined('APPLICATION') || define('APPLICATION', 'Backend');
-
-        $applicationClass = $this->initializeBackend('BackendCronjob');
         $application = new $applicationClass($this->container->get('kernel'));
 
         return $this->handleApplication($application);
@@ -163,9 +147,6 @@ class ForkController extends Controller
         switch ($app) {
             case 'BackendAjax':
                 $applicationClass = Ajax::class;
-                break;
-            case 'BackendCronjob':
-                $applicationClass = Cronjob::class;
                 break;
             default:
                 $applicationClass = Backend::class;

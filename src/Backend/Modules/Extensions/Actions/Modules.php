@@ -80,7 +80,6 @@ class Modules extends BackendBaseActionIndex
 
         $this->dataGridInstallableModules->setSortingColumns(array('raw_name'));
         $this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => \SpoonFilter::ucfirst(BL::getLabel('Name'))));
-        $this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name', 'cronjobs_active'));
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('DetailModule')) {
@@ -105,7 +104,7 @@ class Modules extends BackendBaseActionIndex
         $this->dataGridInstalledModules = new BackendDataGridArray($this->installedModules);
 
         $this->dataGridInstalledModules->setSortingColumns(array('name'));
-        $this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name', 'cronjobs_active'));
+        $this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name'));
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('DetailModule')) {
