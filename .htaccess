@@ -17,9 +17,7 @@ FileETag MTime Size
 ## By SigSiu.net and @nikosdion.
 # This line also disables Akeeba Remote Control 2.5 and earlier
 SetEnvIf user-agent "Indy Library" stayout=1
-# WARNING: Disabling wget will also block the most common method for
-# running CRON jobs. Remove if you have issues with CRON jobs.
-SetEnvIf user-agent "Wget" stayout=1
+
 # The following rules are for bandwidth-hogging download tools
 SetEnvIf user-agent "libwww-perl" stayout=1
 SetEnvIf user-agent "Download Demon" stayout=1
