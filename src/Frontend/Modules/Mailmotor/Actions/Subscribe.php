@@ -83,7 +83,8 @@ class Subscribe extends FrontendBaseBlock
             $doubleOptin = false;
         }
 
-        $redirectLink .= '&double-opt-in=' . $doubleOptin ? 'true' : 'false';
+        $redirectLink .= '&double-opt-in=';
+        $redirectLink .= $doubleOptin ? 'true' : 'false';
         $redirectLink .= '#mailmotorSubscribeForm';
 
         return $this->redirect($redirectLink);
