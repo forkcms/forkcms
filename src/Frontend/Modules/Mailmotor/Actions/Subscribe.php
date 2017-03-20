@@ -65,6 +65,9 @@ class Subscribe extends FrontendBaseBlock
         /** @var Subscription $subscription */
         $subscription = $form->getData();
 
+        /** @var bool $doubleOptin */
+        $doubleOptin = $this->get('fork.settings')->get('MailMotor', 'double_opt_in', false);
+
         try {
             // The command bus will handle the unsubscription
             $this->get('command_bus')->handle($subscription);
@@ -77,9 +80,10 @@ class Subscribe extends FrontendBaseBlock
                 )
             );
 
-            $redirectLink .= '&double-opt-in=false';
+            $doubleOptin = false;
         }
 
+        $redirectLink .= '&double-opt-in=' . $doubleOptin ? 'true' : 'false';
         $redirectLink .= '#mailmotorSubscribeForm';
 
         return $this->redirect($redirectLink);
