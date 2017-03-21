@@ -154,18 +154,18 @@ class MediaItemDataGrid extends DataGridDB
         );
         $ddmMediaItemMassAction->setAttribute(
             'id',
-            'mass-action-' . $type
+            'mass-action-' . (string) $type
         );
         $ddmMediaItemMassAction->setOptionAttributes(
             'move',
             array(
-                'data-target' => '#confirmMoveMediaItems',
+                'data-target' => '#confirmMassActionMediaItemMove',
             )
         );
         $ddmMediaItemMassAction->setOptionAttributes(
             'delete',
             array(
-                'data-target' => '#confirmMediaItemDeletes',
+                'data-target' => '#confirmMassActionMediaItemDelete',
             )
         );
         $this->setMassAction($ddmMediaItemMassAction);

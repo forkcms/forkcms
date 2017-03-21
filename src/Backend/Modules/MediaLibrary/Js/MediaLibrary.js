@@ -40,6 +40,7 @@ jsBackend.mediaLibrary.controls =
  */
 jsBackend.mediaLibrary.library =
 {
+    currentType: null,
     init: function()
     {
         // start or not
@@ -109,33 +110,17 @@ jsBackend.mediaLibrary.library =
             $('#library .nav-tabs a:first').tab('show');
         }
 
-        // init data
-        var dataGallery = {form_id : 'mediaAudio', value_id : 'galleryAudioId', name : 'gallery_id'};
-        var dataFolder = {form_id : 'mediaAudio', value_id : 'folderAudioId', name : 'folder_id'};
+        // When mass action button is clicked
+        $('.jsMassActionSubmit').on('click', function(){
+            // We remember the current type (image, file, movie, audio, ...)
+            jsBackend.mediaLibrary.library.currentType = $(this).parent().find('select[name=action]').attr('id').replace('mass-action-', '');
+        });
 
-        // add gallery_id to form
-        $('#galleryAudioId').on('focus change', dataGallery, jsBackend.mediaLibrary.library.updateForm);
-
-        // add folder_id to form
-        $('#folderAudioId').on('focus change', dataFolder, jsBackend.mediaLibrary.library.updateForm);
-    },
-
-    /**
-     * Adds an extra field to the form so we know which gallery_id or folder_id is selected
-     */
-    updateForm : function(e)
-    {
-        // get value
-        var value = $('#' + e.data.value_id).val();
-        var $formField = $('#' + e.data.form_id);
-
-        // add field to form
-        if ($formField.find('#' + e.data.name).length == 0) {
-            $formField.append('<input id="' + e.data.name + '" name="' + e.data.name + '" type="hidden" value="' + value + '" />');
-        // update existing field
-        } else {
-            $formField.find('#' + e.data.name).val(value);
-        }
+        // Submit form
+        $('#confirmMassActionMediaItemMove, #confirmMassActionMediaItemDelete').find('button[type=submit]').on('click', function(){
+            $('#move-to-folder-id-for-type-' + jsBackend.mediaLibrary.library.currentType).val($('#moveToFolderId').val());
+            $('#form-for-' + jsBackend.mediaLibrary.library.currentType).submit();
+        });
     }
 };
 

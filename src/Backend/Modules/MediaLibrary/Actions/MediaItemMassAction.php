@@ -36,7 +36,7 @@ class MediaItemMassAction extends BackendBaseAction
         /** @var array $mediaItemIds */
         $ids = $this->getSelectedMediaItemIds();
 
-        /** @var string $selectedType */
+        /** @var Type $selectedType */
         $selectedType = $this->getSelectedType();
 
         /** @var MediaFolder|null $mediaFolder */
@@ -128,7 +128,7 @@ class MediaItemMassAction extends BackendBaseAction
     private function getMediaFolder()
     {
         // Define current folder
-        $id = $this->get('request')->request->get('current_folder_id');
+        $id = $this->get('request')->query->get('current_folder_id');
 
         try {
             /** @var MediaFolder */
@@ -139,13 +139,13 @@ class MediaItemMassAction extends BackendBaseAction
     }
 
     /**
-     * @param string $selectedType
+     * @param Type $selectedType
      * @return MediaFolder
      */
-    private function getMediaFolderToMoveTo(string $selectedType): MediaFolder
+    private function getMediaFolderToMoveTo(Type $selectedType): MediaFolder
     {
         // Define folder id
-        $id = $this->getParameter('move_to_folder_id', 'int', 0);
+        $id = (int) $this->get('request')->query->get('move_to_folder_id', 0);
 
         if ($id === 0) {
             $this->redirect(
@@ -154,7 +154,7 @@ class MediaItemMassAction extends BackendBaseAction
                         'error' => 'please-select-a-folder',
                     ]
                 )
-                . '#tab' . ucfirst($selectedType)
+                . '#tab' . ucfirst((string) $selectedType)
             );
         }
 
@@ -168,7 +168,7 @@ class MediaItemMassAction extends BackendBaseAction
                         'error' => 'folder-does-not-exists',
                     ]
                 )
-                . '#tab' . ucfirst($selectedType)
+                . '#tab' . ucfirst((string) $selectedType)
             );
         }
     }
@@ -209,17 +209,10 @@ class MediaItemMassAction extends BackendBaseAction
     }
 
     /**
-     * @return string
-     * @throws \Exception
+     * @return Type
      */
-    private function getSelectedType(): string
+    private function getSelectedType(): Type
     {
-        $from = $this->get('request')->query->get('from', 'image');
-
-        if (!in_array($from, Type::getPossibleValues())) {
-            throw new \Exception('From not exists');
-        }
-
-        return $from;
+        return Type::fromString($this->get('request')->query->get('from', 'image'));
     }
 }
