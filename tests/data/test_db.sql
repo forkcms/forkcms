@@ -1992,7 +1992,7 @@ VALUES
   ('Core','default_language','s:2:\"en\";'),
   ('Core','interface_languages','a:1:{i:0;s:2:\"en\";}'),
   ('Core','default_interface_language','s:2:\"en\";'),
-  ('Core','theme','s:6:\"Fork\";'),
+  ('Core','theme','s:4:\"Fork\";'),
   ('Core','akismet_key','s:0:\"\";'),
   ('Core','google_maps_key','s:0:\"\";'),
   ('Core','max_num_revisions','i:20;'),
