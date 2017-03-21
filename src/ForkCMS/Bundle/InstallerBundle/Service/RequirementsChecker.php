@@ -20,7 +20,6 @@ class RequirementsChecker
      * @var string
      */
     private $rootDir;
-    private $libraryDir;
 
     private $errors;
 
@@ -32,7 +31,6 @@ class RequirementsChecker
     public function __construct($rootDir)
     {
         $this->rootDir = $rootDir;
-        $this->libraryDir = $rootDir . 'library/';
     }
 
     /**
@@ -236,16 +234,6 @@ class RequirementsChecker
         $this->checkRequirement(
             'fileSystemFrontendThemes',
             $this->isWritable($this->rootDir . 'src/Frontend/Themes/'),
-            self::STATUS_WARNING
-        );
-        $this->checkRequirement(
-            'fileSystemLibrary',
-            $this->isWritable($this->libraryDir),
-            self::STATUS_ERROR
-        );
-        $this->checkRequirement(
-            'fileSystemLibraryExternal',
-            $this->isWritable($this->libraryDir . 'external'),
             self::STATUS_WARNING
         );
         $this->checkRequirement(

@@ -216,7 +216,7 @@ $config['ResourceType'][] = Array(
 		'url' => $baseUrl . 'files',
 		'directory' => $baseDir . 'files',
 		'maxSize' => 0,
-		'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip',
+		'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,eps,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,svg,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,webp,wma,wmv,xls,xlsx,zip',
 		'deniedExtensions' => '');
 
 $config['ResourceType'][] = Array(
@@ -224,7 +224,7 @@ $config['ResourceType'][] = Array(
 		'url' => $baseUrl . 'images',
 		'directory' => $baseDir . 'images',
 		'maxSize' => 0,
-		'allowedExtensions' => 'gif,jpeg,jpg,png',
+		'allowedExtensions' => 'gif,jpeg,jpg,png,svg,webp',
 		'deniedExtensions' => '');
 
 /*

@@ -9,15 +9,14 @@ namespace Common\Core;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\BaseModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-
-require_once __DIR__ . '/../../../app/BaseModel.php';
 
 /**
  * This class will initiate the frontend-application
  */
-class Model extends \BaseModel
+class Model extends BaseModel
 {
     /**
      * Cached modules

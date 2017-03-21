@@ -24,13 +24,13 @@
             <div id="requirementsInformation">
               <div class="list-group">
                 <div class="list-group-item list-group-item-{{ checker.errors.phpVersion }}">
-                  <h3 class="list-group-item-heading">PHP version</h3>
+                  <h4 class="list-group-item-heading">PHP version</h4>
                   <p class="list-group-item-text">
                     PHP version must be at least 7.0.0, Before using Fork CMS, upgrade your PHP installation, preferably to the latest version.
                   </p>
                 </div>
                 <div class="list-group-item list-group-item-{{ checker.errors.subfolder }}">
-                  <h3 class="list-group-item-heading">Fork CMS can't be installed in subfolders</h3>
+                  <h4 class="list-group-item-heading">Fork CMS can't be installed in subfolders</h4>
                 </div>
               </div>
               <h3>PHP Extensions</h3>
@@ -252,18 +252,6 @@
                   <h4 class="list-group-item-heading">{{ rootDir }}/src/Frontend/Themes/</h4>
                   <p class="list-group-item-text">
                     In this location themes will be installed. You can continue the installation, but installing a theme will then require a manual upload.
-                  </p>
-                </div>
-                <div class="list-group-item list-group-item-{{ checker.errors.fileSystemLibrary }}">
-                  <h4 class="list-group-item-heading">{{ rootDir }}/library</h4>
-                  <p class="list-group-item-text">
-                    This location must be writable for the installer, afterwards this folder only needs to be readable.
-                  </p>
-                </div>
-                <div class="list-group-item list-group-item-{{ checker.errors.fileSystemLibraryExternal }}">
-                  <h4 class="list-group-item-heading">{{ rootDir }}/library/external/</h4>
-                  <p class="list-group-item-text">
-                    This location must be writable for the installer, afterwards this folder only needs to be readable.
                   </p>
                 </div>
                 <div class="list-group-item list-group-item-{{ checker.errors.fileSystemAppCache }}">

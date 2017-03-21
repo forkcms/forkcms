@@ -1,5 +1,7 @@
 <?php
 
+namespace ForkCMS\App;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,6 +9,9 @@
  * file that was distributed with this source code.
  */
 
+use PDOException;
+use Spoon;
+use SpoonDatabaseException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -14,14 +19,13 @@ use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfiguration
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\DependencyInjection\BackendExtension;
 
 /**
  * The Kernel provides a proper way to load an environment and DI container.
  * It also handles requests and responses.
  */
-abstract class Kernel extends BaseKernel implements KernelInterface
+abstract class Kernel extends BaseKernel
 {
     /** @var Request We need this to check if a module is being installed */
     private $request;
@@ -89,7 +93,6 @@ abstract class Kernel extends BaseKernel implements KernelInterface
          * Will be removed in the next major release.
          */
         defined('PATH_WWW') || define('PATH_WWW', realpath($container->getParameter('site.path_www')));
-        defined('PATH_LIBRARY') || define('PATH_LIBRARY', realpath($container->getParameter('site.path_library')));
 
         defined('SITE_DEFAULT_LANGUAGE') || define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
         defined('SITE_DEFAULT_TITLE') || define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));

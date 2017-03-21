@@ -33,10 +33,23 @@
         {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       {% endif %}
 
-      {% if showPagesAdd %}
-        {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.AddPage'|trans|ucfirst) }}
-      {% endif %}
     </div>
+      {% if showPagesAdd %}
+        <div class="btn-group">
+          <a type="button" href="{{ geturl('add') }}" class="btn btn-default pull-left">
+            <span class="fa fa-plus-square"></span>
+            <span class="btn-text">{{ 'lbl.AddPage'|trans|ucfirst }}</span>
+          </a>
+          <button type="button" class="btn btn-default dropdown-toggle pull-left" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">{{ 'lbl.ToggleAddPageDropdown'|trans|ucfirst }}</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="{{ geturl('add') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a></li>
+            <li><a href="{{ geturl('add') }}&parent={{ item.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a></li>
+          </ul>
+        </div>
+      {% endif %}
   </div>
 {% endblock %}
 
@@ -243,7 +256,7 @@
           <div role="tabpanel" class="tab-pane" id="tabAuthentication">
             <div class="row">
               <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group last">
                   <li class="checkbox">
                     <label for="authRequired" class="control-label">{% form_field auth_required %} {{ 'msg.AuthRequired'|trans|ucfirst }}</label>
                   </li>
@@ -259,6 +272,9 @@
                     </ul>
                   </div>
                   {% endif %}
+                  <li class="checkbox hidden" data-role="remove-from-search-index">
+                    <label for="removeFromSearchIndex" class="control-label">{% form_field remove_from_search_index %} {{ 'msg.RemoveFromSearchIndex'|trans|ucfirst }}</label>
+                  </li>
                 </div>
               </div>
             </div>

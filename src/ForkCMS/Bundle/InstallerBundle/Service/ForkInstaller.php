@@ -340,7 +340,6 @@ class ForkInstaller
             '<site-multilanguage>' => $data->getLanguageType() === 'multiple' ? 'true' : 'false',
             '<site-default-language>' => $data->getDefaultLanguage(),
             '<path-www>' => PATH_WWW,
-            '<path-library>' => PATH_LIBRARY,
             '<action-group-tag>' => '\@actiongroup',
             '<action-rights-level>' => 7,
             '<secret>' => Model::generateRandomString(32, true, true, true, false),

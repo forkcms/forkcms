@@ -10,6 +10,7 @@ namespace Frontend\Modules\Mailmotor\Form;
  */
 
 use Common\ModulesSettings;
+use Frontend\Core\Engine\Navigation;
 use Frontend\Modules\Mailmotor\Command\Subscription;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
@@ -58,6 +59,9 @@ class SubscribeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //-- Set the default submit action, this is for the widget to work properly.
+        $builder->setAction(Navigation::getURLForBlock('Mailmotor', 'Subscribe'));
+
         $builder->add(
             'email',
             EmailType::class,
@@ -102,12 +106,14 @@ class SubscribeType extends AbstractType
             $mailMotorInterests = $this->subscriber->getInterests();
 
             // Has interests
-            if (!empty($mailMotorInterests)) {
+            if (!empty($mailMotorInterests) && is_array($mailMotorInterests)) {
                 // Loop interests
                 foreach ($mailMotorInterests as $categoryId => $categoryInterest) {
-                    foreach ($categoryInterest['children'] as $categoryChildId => $categoryChildTitle) {
-                        // Add interest value for checkbox
-                        $interests[$categoryChildId] = $categoryChildTitle;
+                    if (!empty($categoryInterest['children']) && is_array($categoryInterest['children'])) {
+                        foreach ($categoryInterest['children'] as $categoryChildId => $categoryChildTitle) {
+                            // Add interest value for checkbox
+                            $interests[$categoryChildId] = $categoryChildTitle;
+                        }
                     }
                 }
             }

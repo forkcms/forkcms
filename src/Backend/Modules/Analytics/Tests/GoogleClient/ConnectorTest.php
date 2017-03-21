@@ -8,9 +8,9 @@ use Google_Client;
 use Google_Service_Analytics;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ConnectorTest extends PHPUnit_Framework_TestCase
+class ConnectorTest extends TestCase
 {
     public function testGetPageViews()
     {

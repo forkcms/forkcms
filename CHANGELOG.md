@@ -1,3 +1,44 @@
+4.5.0 (2017-01-20)
+------------------
+
+Bugfixes:
+
+* Core: Fixed exception when using Common\Language\Language in a console command
+* Core: Fixed https mixed content warnings
+* Core: Create relations when installing a module with doctrine
+* Core: Removed annotations from documentation of AbstractFile and Image type because it gave errors when validating
+* Core: Fix timezone issues with doctrine date
+* Core: Meta entity no longer shows none in the meta tag for SEOFollow and SEOIndex
+* Core: Fix stylesheetparser in ckeditor
+* Installer: Removed stray code
+* Search: Fixed live-suggest
+* FormBuilder: Fixed errors when non required radio button wasn't filled in
+* FormBuilder: Fix numeric html5 validation translation not working
+* Pages: Fix redirect icon applied to sub pages of a page that is redirected
+* Pages: Fix sitemap widget template
+* Triton: Fix html not parsed in search results
+* Profiles: Typo fixes in locale
+* Mailmotor: Fix errors when list is empty or has no users in it
+
+Improvements:
+
+* Core: Added a basic implementation of the symfony form collection class with working add and delete buttons
+* Core: Status fields with the value hidden are now grayed out in the data grids
+* Core: Replaced bower with yarn
+* Core: Updated ckeditor to 4.6
+* Core: Added eps,svg,webp to the allowedExtensions of ckfinder
+* Core: Added FileType for symfony form that will handle everything for you
+* Core: Added ImageType for symfony form that will handle everything for you
+* Profiles: Redirect back to the page you came from when logging in with the loginBox widget
+* Pages: Page image is now also available in the subPages widget
+* Pages: Dont index content for search if authentication for the page is true
+* Pages: You can now add a subpage to a page directly instead of creating it in the root and then dragging it to the correct place 
+* MailMotor: The subscribe widget is now a standalone action instead of a redirect to the full form
+* Tags: Tags that have no items in this language are no longer shown
+* Tags: Blog image is now available when displaying blogpost with a tag
+* Github: Clarification about what people need to fill in under: Resolves the following issues
+
+
 4.4.1 (2016-12-14)
 ------------------
 

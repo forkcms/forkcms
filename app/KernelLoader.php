@@ -1,5 +1,7 @@
 <?php
 
+namespace ForkCMS\App;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Model as BackendModel;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -42,7 +45,7 @@ class KernelLoader
     }
 
     /**
-     * @return Symfony\Component\DependencyInjection\ContainerInterface
+     * @return ContainerInterface
      */
     public function getContainer()
     {
