@@ -30,25 +30,29 @@ class Installer extends ModuleInstaller
 
         // build templates
         $templates['core']['default'] = array(
-            'theme' => 'core',
+            'theme' => 'Core',
             'label' => 'Default',
             'path' => 'Core/Layout/Templates/Default.html.twig',
             'active' => 'Y',
-            'data' => serialize(array(
-                'format' => '[main]',
-                'names' => array('main'),
-            )),
+            'data' => serialize(
+                array(
+                    'format' => '[main]',
+                    'names' => array('main'),
+                )
+            ),
         );
 
         $templates['core']['home'] = array(
-            'theme' => 'core',
+            'theme' => 'Core',
             'label' => 'Home',
             'path' => 'Core/Layout/Templates/Home.html.twig',
             'active' => 'Y',
-            'data' => serialize(array(
-                'format' => '[main]',
-                'names' => array('main'),
-            )),
+            'data' => serialize(
+                array(
+                    'format' => '[main]',
+                    'names' => array('main'),
+                )
+            ),
         );
 
         // insert templates
@@ -97,21 +101,40 @@ class Installer extends ModuleInstaller
         // settings navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
-        $this->setNavigation($navigationModulesId, 'Overview', 'extensions/modules', array(
-            'extensions/detail_module',
-            'extensions/upload_module',
-        ));
+        $this->setNavigation(
+            $navigationModulesId,
+            'Overview',
+            'extensions/modules',
+            array(
+                'extensions/detail_module',
+                'extensions/upload_module',
+            )
+        );
 
         // theme navigation
         $navigationThemesId = $this->setNavigation($navigationSettingsId, 'Themes');
-        $this->setNavigation($navigationThemesId, 'ThemesSelection', 'extensions/themes', array(
-            'extensions/upload_theme',
-            'extensions/detail_theme',
-        ));
-        $this->setNavigation($navigationThemesId, 'Templates', 'extensions/theme_templates', array(
-            'extensions/add_theme_template',
-            'extensions/edit_theme_template',
-        ));
+        $this->setNavigation(
+            $navigationThemesId,
+            'ThemesSelection',
+            'extensions/themes',
+            array(
+                'extensions/upload_theme',
+                'extensions/detail_theme',
+            )
+        );
+        $this->setNavigation(
+            $navigationThemesId,
+            'Templates',
+            'extensions/theme_templates',
+            array(
+                'extensions/add_theme_template',
+                'extensions/edit_theme_template',
+            )
+        );
+
+        if ($this->installExample()) {
+            $this->installForkTheme();
+        }
     }
 
     /**
@@ -136,5 +159,52 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Extensions', 'AddThemeTemplate');
         $this->setActionRights(1, 'Extensions', 'EditThemeTemplate');
         $this->setActionRights(1, 'Extensions', 'DeleteThemeTemplate');
+    }
+
+    private function installForkTheme()
+    {
+        /*
+         * Fallback templates
+         */
+
+        // build templates
+        $templates['core']['default'] = [
+            'theme' => 'Fork',
+            'label' => 'Default',
+            'path' => 'Core/Layout/Templates/Default.html.twig',
+            'active' => 'Y',
+            'data' => serialize(
+                [
+                    'format' => '[main]',
+                    'image' => true,
+                    'names' => ['main'],
+                ]
+            )
+        ];
+
+        $templates['core']['home'] = [
+            'theme' => 'Fork',
+            'label' => 'Home',
+            'path' => 'Core/Layout/Templates/Home.html.twig',
+            'active' => 'Y',
+            'data' => serialize(
+                [
+                    'format' => '[main]',
+                    'image' => true,
+                    'names' => array('main'),
+                ]
+            ),
+        ];
+
+
+        // insert templates
+        $this->getDB()->insert('themes_templates', $templates['core']['default']);
+        $this->getDB()->insert('themes_templates', $templates['core']['home']);
+
+        // set the theme
+        $this->setSetting('Core', 'theme', 'Fork', true);
+
+        // set default template
+        $this->setSetting('Pages', 'default_template', $this->getTemplateId('default'));
     }
 }

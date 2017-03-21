@@ -59,7 +59,6 @@ class CoreInstaller extends ModuleInstaller
     private function setRights()
     {
         $this->setModuleRights(1, 'Dashboard');
-
         $this->setActionRights(1, 'Dashboard', 'Index');
     }
 
