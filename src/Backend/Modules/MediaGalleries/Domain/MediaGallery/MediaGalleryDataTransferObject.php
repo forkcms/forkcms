@@ -55,9 +55,8 @@ class MediaGalleryDataTransferObject
      *
      * @param MediaGallery|null $mediaGallery
      */
-    public function __construct(
-        MediaGallery $mediaGallery = null
-    ) {
+    public function __construct(MediaGallery $mediaGallery = null)
+    {
         $this->mediaGalleryEntity = $mediaGallery;
 
         if (!$this->hasExistingMediaGallery()) {
