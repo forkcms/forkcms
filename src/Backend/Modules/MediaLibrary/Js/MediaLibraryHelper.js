@@ -16,8 +16,8 @@ jsBackend.mediaLibraryHelper =
         // initialize uploader
         jsBackend.mediaLibraryHelper.upload.init();
 
-        // Add movie source in MediaLibraryHelper
-        var $movieStorageDropdown = $('#mediaMovieSource');
+        // Add movie storage type in MediaLibraryHelper
+        var $movieStorageTypeDropdown = $('#mediaMovieStorageType');
         $(jsBackend.data.get('MediaLibrary.mediaAllowedMovieSource')).each(function(index, value){
             var html = '<option value="' + value + '"';
 
@@ -28,7 +28,7 @@ jsBackend.mediaLibraryHelper =
             html += '>' + value + '</option>';
 
             // Add to dropdown
-            $movieStorageDropdown.append(html);
+            $movieStorageTypeDropdown.append(html);
         });
     }
 };
@@ -1058,7 +1058,7 @@ jsBackend.mediaLibraryHelper.upload =
         mediaFolderId = $('#uploadMediaFolderId').val();
 
         // define variables
-        var storageType = $('#mediaMovieSource').find(':checked').val();
+        var storageType = $('#mediaMovieStorageType').find(':checked').val();
         var $id = $('#mediaMovieId');
         var $title = $('#mediaMovieTitle');
 
