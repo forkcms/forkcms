@@ -83,6 +83,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'MediaLibrary', 'MediaItemDelete');
         $this->setActionRights(1, 'MediaLibrary', 'MediaItemEdit');
         $this->setActionRights(1, 'MediaLibrary', 'MediaItemFindAll'); // AJAX
+        $this->setActionRights(1, 'MediaLibrary', 'MediaItemGetAllById'); // AJAX
         $this->setActionRights(1, 'MediaLibrary', 'MediaItemAddMovie'); // AJAX
 
         // MediaFolder

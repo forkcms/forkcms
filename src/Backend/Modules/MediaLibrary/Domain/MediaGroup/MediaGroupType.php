@@ -52,6 +52,15 @@ class MediaGroupType extends AbstractType
     {
         $builder
             ->add(
+                'id',
+                HiddenType::class,
+                [
+                    'attr' => [
+                        'class' => 'mediaGroupId',
+                    ],
+                ]
+            )
+            ->add(
                 'mediaIds',
                 HiddenType::class,
                 [

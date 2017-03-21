@@ -24,10 +24,10 @@ jsBackend.mediaLibraryHelper =
  */
 var media = {};
 var mediaFolders = false;
-var mediaGalleries = {};
-var mediaGroupI = 0;
+var mediaGroups = {};
+var currentMediaGroupId = 0;
 var mediaFolderId = 0;
-var mediaCurrentGroup = [];
+var currentMediaItemIds = [];
 jsBackend.mediaLibraryHelper.group =
 {
     init: function()
@@ -38,7 +38,7 @@ jsBackend.mediaLibraryHelper.group =
         }
 
         // get galleries
-        jsBackend.mediaLibraryHelper.group.getGalleries();
+        jsBackend.mediaLibraryHelper.group.getGroups();
 
         // add media dialog
         jsBackend.mediaLibraryHelper.group.addMediaDialog();
@@ -53,20 +53,20 @@ jsBackend.mediaLibraryHelper.group =
             cursor: 'move',
             start : function(e, ui) {
                 // redefine previous and new sequence
-                prevSequence = newSequence = $('#group-' + mediaGroupI + ' .mediaIds').first().val();
+                prevSequence = newSequence = $('#group-' + currentMediaGroupId + ' .mediaIds').first().val();
 
                 // don't prevent the click
                 ui.item.removeClass('preventClick');
             },
             update: function() {
                 // set group i
-                mediaGroupI = $(this).parent().parent().attr('id').replace('group-', '');
+                currentMediaGroupId = $(this).parent().parent().attr('id').replace('group-', '');
 
                 // prepare correct new sequence value for hidden input
                 newSequence = $(this).sortable("serialize").replace(/media\-/g, '').replace(/\[\]\=/g, '-').replace(/&/g, ',');
 
                 // add value to hidden input
-                $('#group-' + mediaGroupI + ' .mediaIds').first().val(newSequence);
+                $('#group-' + currentMediaGroupId + ' .mediaIds').first().val(newSequence);
             },
             stop : function(e, ui) {
                 // prevent click
@@ -78,7 +78,7 @@ jsBackend.mediaLibraryHelper.group =
                     ui.item.removeClass('selected');
 
                     // update disconnect button
-                    jsBackend.mediaLibraryHelper.group.updateDisconnectButton(mediaGroupI);
+                    jsBackend.mediaLibraryHelper.group.updateDisconnectButton(currentMediaGroupId);
                 // same sequence: select this item (accidently moved this media a few millimeters counts as a click)
                 } else {
                     // don't prevent the click, click handler does the rest
@@ -162,20 +162,20 @@ jsBackend.mediaLibraryHelper.group =
             e.preventDefault();
 
             // redefine folderId when clicked on other group
-            if ($(this).data('i') != mediaGroupI) {
+            if ($(this).data('i') != currentMediaGroupId) {
                 // clear folders cache
                 jsBackend.mediaLibraryHelper.group.clearFoldersCache();
             }
 
             // define groupId
-            mediaGroupI = $(this).data('i');
+            currentMediaGroupId = $(this).data('i');
 
             // get current media for group
-            mediaCurrentGroup = ($('#group-' + mediaGroupI + ' .mediaIds').first().val() != '')
-                ? $.trim($('#group-' + mediaGroupI + ' .mediaIds').first().val()).split(',') : [];
+            currentMediaItemIds = ($('#group-' + currentMediaGroupId + ' .mediaIds').first().val() != '')
+                ? $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',') : [];
 
             // set the group media
-            mediaGalleries[mediaGroupI].media = mediaCurrentGroup;
+            mediaGroups[currentMediaGroupId].media = currentMediaItemIds;
 
             // load and add folders
             jsBackend.mediaLibraryHelper.group.getFolders();
@@ -221,14 +221,14 @@ jsBackend.mediaLibraryHelper.group =
      */
     disconnectMediaFromGroup : function(groupId)
     {
-        // define mediaGroupI
-        mediaGroupI = groupId;
+        // define currentMediaGroupId
+        currentMediaGroupId = groupId;
 
         // current ids
-        var currentIds = $.trim($('#group-' + mediaGroupI + ' .mediaIds').first().val()).split(',');
+        var currentIds = $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',');
 
         // get selected items
-        var $items = jsBackend.mediaLibraryHelper.group.getSelectedItems(mediaGroupI);
+        var $items = jsBackend.mediaLibraryHelper.group.getSelectedItems(currentMediaGroupId);
 
         // get ids from selected items
         $items.each(function() {
@@ -242,10 +242,10 @@ jsBackend.mediaLibraryHelper.group =
         });
 
         // redefine current media group
-        mediaCurrentGroup = currentIds;
+        currentMediaItemIds = currentIds;
 
         // only get new folder counts on startup
-        if (mediaGalleries[mediaGroupI].id != 0 && mediaGalleries[mediaGroupI].count == undefined) {
+        if (mediaGroups[currentMediaGroupId].id != 0 && mediaGroups[currentMediaGroupId].count == undefined) {
             // load folder counts for group using ajax
             $.ajax({
                 data: {
@@ -253,7 +253,7 @@ jsBackend.mediaLibraryHelper.group =
                         module: 'MediaLibrary',
                         action: 'MediaFolderGetCountsForGroup'
                     },
-                    group_id : mediaGalleries[mediaGroupI].id
+                    group_id : mediaGroups[currentMediaGroupId].id
                 },
                 success: function(json, textStatus) {
                     if (json.code != 200) {
@@ -263,7 +263,7 @@ jsBackend.mediaLibraryHelper.group =
                         }
                     } else {
                         // cache folder counts
-                        mediaGalleries[mediaGroupI].count = json.data;
+                        mediaGroups[currentMediaGroupId].count = json.data;
 
                         // update group media
                         jsBackend.mediaLibraryHelper.group.updateGroupMedia();
@@ -299,7 +299,7 @@ jsBackend.mediaLibraryHelper.group =
     getFolderCountsForGroup : function()
     {
         // only get new folder counts on startup
-        if (mediaGalleries[mediaGroupI].id != 0 && mediaGalleries[mediaGroupI].count == undefined) {
+        if (mediaGroups[currentMediaGroupId].id != 0 && mediaGroups[currentMediaGroupId].count == undefined) {
             // load folder counts for group using ajax
             $.ajax({
                 data: {
@@ -307,7 +307,7 @@ jsBackend.mediaLibraryHelper.group =
                         module: 'MediaLibrary',
                         action: 'MediaFolderGetCountsForGroup'
                     },
-                    group_id : mediaGalleries[mediaGroupI].id
+                    group_id : mediaGroups[currentMediaGroupId].id
                 },
                 success: function(json, textStatus) {
                     if (json.code != 200) {
@@ -317,7 +317,7 @@ jsBackend.mediaLibraryHelper.group =
                         }
                     } else {
                         // cache folder counts
-                        mediaGalleries[mediaGroupI].count = json.data;
+                        mediaGroups[currentMediaGroupId].count = json.data;
 
                         // update folders
                         jsBackend.mediaLibraryHelper.group.updateFolders();
@@ -360,24 +360,99 @@ jsBackend.mediaLibraryHelper.group =
     },
 
     /**
-     * Get galleries from looking at the DOM
+     * Get groups from looking at the DOM
      */
-    getGalleries : function()
+    getGroups : function()
     {
         $('.mediaGroup').each(function() {
+            var activateFallback = false;
             var mediaGroupId = $(this).data('media-group-id');
+
+            // Fallback: we have no mediaGroupId
+            // This means we tried saving the page, but an error was thrown, so the mediaGroup was empty again
+            // But in the form field mediaIds, the ids are still present, so we need to use them and show the list items again
+            if (mediaGroupId === '') {
+                // redefine media group id
+                mediaGroupId = $(this).find('.mediaGroupId').val();
+
+                // Redefine wrong id (mediaGroupId was missing)
+                $(this).attr('id', 'group-' + mediaGroupId);
+                $(this).data('id', mediaGroupId);
+                $(this).find('.addMediaButton').first().data('i', mediaGroupId);
+                $(this).find('.disconnectMediaItemsButton').first().data('i', mediaGroupId);
+
+                activateFallback = true;
+            }
+
             var type = $('#group-' + mediaGroupId + ' .type').first().val();
             // get current media for group
-            var mediaIds = ($('#group-' + mediaGroupI + ' .mediaIds').first().val() != '')
-                ? $.trim($('#group-' + mediaGroupI + ' .mediaIds').first().val()).split(',') : [];
+            var mediaIds = ($('#group-' + mediaGroupId + ' .mediaIds').length > 0 && $('#group-' + mediaGroupId + ' .mediaIds').first().val() != '')
+                ? $.trim($('#group-' + mediaGroupId + ' .mediaIds').first().val()).split(',') : [];
 
             // Push ids to array
-            mediaGalleries[mediaGroupId] = {
+            mediaGroups[mediaGroupId] = {
                 'id' : mediaGroupId,
                 'media' : mediaIds,
                 'type' : type
             };
+
+            if (activateFallback && mediaIds.length > 0) {
+                // load media
+                $.ajax( {
+                    data: {
+                        fork: {
+                            module: 'MediaLibrary',
+                            action: 'MediaItemGetAllById'
+                        },
+                        media_ids: mediaIds.join(',')
+                    },
+                    success: function(json, textStatus) {
+                        if (json.code != 200) {
+                            // show error if needed
+                            if (jsBackend.debug) {
+                                alert(textStatus);
+                            }
+                        } else {
+                            // Define the variables
+                            var $group = $('#group-' + mediaGroupId);
+                            var $holder = $group.find('.mediaConnectedItems').first();
+
+                            // Remove paragraph which says that we don't have any media connected
+                            $group.find('.mediaNoItems').remove();
+
+                            $(json.data.items).each(function(index, item) {
+                                // add HTML for MediaItem to connect to holder
+                                $holder.append(jsBackend.mediaLibraryHelper.group.getHTMLForMediaItemToConnect(item));
+                            });
+                        }
+                    }
+                });
+            }
         });
+    },
+
+    /**
+     * Get HTML for MediaItem to connect
+     *
+     * @param Array mediaItem
+     * @returns {string}
+     */
+    getHTMLForMediaItemToConnect: function(mediaItem)
+    {
+        var html = '<li id="media-' + mediaItem.id + '" data-folder-id="' + mediaItem.folder_id + '" class="ui-state-default">';
+        html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">';
+
+        if (mediaItem.type == 'image') {
+            html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>';
+        } else {
+            html += '<div class="icon"></div>';
+            html += '<div class="url">' + mediaItem.url + '</div>';
+        }
+
+        html += '</div>';
+        html += '</li>';
+
+        return html;
     },
 
     /**
@@ -387,7 +462,7 @@ jsBackend.mediaLibraryHelper.group =
      */
     getItems : function(groupId)
     {
-        var id = (groupId) ? groupId : mediaGroupI;
+        var id = (groupId) ? groupId : currentMediaGroupId;
         return $('#group-' + id).find('.mediaConnectedItems');
     },
 
@@ -401,7 +476,7 @@ jsBackend.mediaLibraryHelper.group =
          */
         if (mediaFolderId != null && !media[mediaFolderId]) {
             // init groupId
-            var groupId = (mediaGalleries[mediaGroupI]) ? mediaGalleries[mediaGroupI].id : 0;
+            var groupId = (mediaGroups[currentMediaGroupId]) ? mediaGroups[currentMediaGroupId].id : 0;
 
             // load media
             $.ajax( {
@@ -480,7 +555,7 @@ jsBackend.mediaLibraryHelper.group =
     updateFolderCount : function(folderId, updateCount, updateWithValue)
     {
         // count not found - add it
-        if (mediaGalleries[mediaGroupI].count == undefined) {
+        if (mediaGroups[currentMediaGroupId].count == undefined) {
             // define new object
             var obj = {};
 
@@ -488,17 +563,17 @@ jsBackend.mediaLibraryHelper.group =
             obj[folderId] = 0;
 
             // add object to count
-            mediaGalleries[mediaGroupI].count = obj;
+            mediaGroups[currentMediaGroupId].count = obj;
         }
 
         // folder not found - add it to object
-        if (mediaGalleries[mediaGroupI].count[folderId] == undefined) {
+        if (mediaGroups[currentMediaGroupId].count[folderId] == undefined) {
             // update object to count
-            mediaGalleries[mediaGroupI].count[folderId] = 0;
+            mediaGroups[currentMediaGroupId].count[folderId] = 0;
         }
 
         // init count
-        var count = parseInt(mediaGalleries[mediaGroupI].count[folderId]);
+        var count = parseInt(mediaGroups[currentMediaGroupId].count[folderId]);
 
         // subtract or add value
         count = (updateCount == '-') ? (count - updateWithValue) : (count + updateWithValue);
@@ -512,7 +587,7 @@ jsBackend.mediaLibraryHelper.group =
         }
 
         // update count
-        mediaGalleries[mediaGroupI].count[folderId] = count;
+        mediaGroups[currentMediaGroupId].count[folderId] = count;
 
         // update folders
         jsBackend.mediaLibraryHelper.group.updateFolders();
@@ -546,8 +621,8 @@ jsBackend.mediaLibraryHelper.group =
             var count = 0;
 
             // redefine count
-            if (mediaGalleries[mediaGroupI].count && mediaGalleries[mediaGroupI].count[item.id]) {
-                count = mediaGalleries[mediaGroupI].count[item.id];
+            if (mediaGroups[currentMediaGroupId].count && mediaGroups[currentMediaGroupId].count[item.id]) {
+                count = mediaGroups[currentMediaGroupId].count[item.id];
             }
 
             // add to html
@@ -572,14 +647,14 @@ jsBackend.mediaLibraryHelper.group =
         var $currentItems = jsBackend.mediaLibraryHelper.group.getItems();
 
         // current ids
-        var currentIds = ($('#group-' + mediaGroupI + ' .mediaIds').first().val() != '')
-            ? $.trim($('#group-' + mediaGroupI + ' .mediaIds').first().val()).split(',') : [];
+        var currentIds = ($('#group-' + currentMediaGroupId + ' .mediaIds').first().val() != '')
+            ? $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',') : [];
 
         // define empty
-        var empty = (mediaCurrentGroup.length == 0);
+        var empty = (currentMediaItemIds.length == 0);
 
         // check which items to add
-        $(mediaCurrentGroup).each(function(i, id) {
+        $(currentMediaItemIds).each(function(i, id) {
             // add item
             if (!utils.array.inArray(id, currentIds)) {
                 // loop media folders
@@ -588,21 +663,8 @@ jsBackend.mediaLibraryHelper.group =
                     $.each(items, function(index, item) {
                         // item found
                         if (id == item.id) {
-                            var html = '<li id="media-' + item.id + '" data-folder-id="' + item.folder_id + '" class="ui-state-default">';
-                            html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(item.type) + '">';
-
-                            if (item.type == 'image') {
-                                html += '<img src="' + item.preview_source + '" alt="' + item.title + '" title="' + item.title + '"/>';
-                            } else {
-                                html += '<div class="icon"></div>';
-                                html += '<div class="url">' + item.url + '</div>';
-                            }
-
-                            html += '</div>';
-                            html += '</li>';
-
-                            // add to group
-                            $currentItems.append(html);
+                            // Add HTML for MediaItem to Connect
+                            $currentItems.append(jsBackend.mediaLibraryHelper.group.getHTMLForMediaItemToConnect(item));
                         }
                     });
                 });
@@ -621,21 +683,21 @@ jsBackend.mediaLibraryHelper.group =
         });
 
         // update the group media
-        mediaGalleries[mediaGroupI].media = mediaCurrentGroup;
+        mediaGroups[currentMediaGroupId].media = currentMediaItemIds;
 
         // add empty media paragraph
         if (empty) {
             jsBackend.mediaLibraryHelper.group.getItems().after('<p class="mediaNoItems helpTxt">' + jsBackend.locale.msg('MediaNoItemsConnected') + '</p>');
         // delete empty media paragraph
         } else {
-            $('#group-' + mediaGroupI).find('.mediaNoItems').remove();
+            $('#group-' + currentMediaGroupId).find('.mediaNoItems').remove();
         }
 
         // update the hidden group field for media
-        $('#group-' + mediaGroupI).find('.mediaIds').first().val(mediaCurrentGroup.join(','));
+        $('#group-' + currentMediaGroupId).find('.mediaIds').first().val(currentMediaItemIds.join(','));
 
         // redefine
-        mediaCurrentGroup = [];
+        currentMediaItemIds = [];
     },
 
     /**
@@ -668,7 +730,7 @@ jsBackend.mediaLibraryHelper.group =
         // loop media
         $.each(media[mediaFolderId], function(i, item) {
             // check if media is connected or not
-            var connected = (typeof mediaGalleries[mediaGroupI] == 'undefined') ? false : utils.array.inArray(item.id, mediaGalleries[mediaGroupI].media);
+            var connected = (typeof mediaGroups[currentMediaGroupId] == 'undefined') ? false : utils.array.inArray(item.id, mediaGroups[currentMediaGroupId].media);
 
             // item is an image
             if (item.type == 'image') {
@@ -763,27 +825,27 @@ jsBackend.mediaLibraryHelper.group =
         $tabs.find('.ui-tabs-selected').removeClass('ui-tabs-selected');
 
         // not in connect-to-group modus (just uploading)
-        if (typeof mediaGalleries[mediaGroupI] == 'undefined') {
+        if (typeof mediaGroups[currentMediaGroupId] == 'undefined') {
             return false;
         }
 
         // we have an image group
-        if (mediaGalleries[mediaGroupI].type == 'image') {
+        if (mediaGroups[currentMediaGroupId].type == 'image') {
             $tabs.tabs({disabled: [1, 2, 3]});
             $tabs.tabs('select', 0);
-        } else if (mediaGalleries[mediaGroupI].type == 'file') {
+        } else if (mediaGroups[currentMediaGroupId].type == 'file') {
             $tabs.tabs({disabled: [0, 2, 3]});
             $tabs.tabs('select', 1);
-        } else if (mediaGalleries[mediaGroupI].type == 'movie') {
+        } else if (mediaGroups[currentMediaGroupId].type == 'movie') {
             $tabs.tabs({disabled: [0, 1, 3]});
             $tabs.tabs('select', 2);
-        } else if (mediaGalleries[mediaGroupI].type == 'audio') {
+        } else if (mediaGroups[currentMediaGroupId].type == 'audio') {
             $tabs.tabs({disabled: [0, 1, 2]});
             $tabs.tabs('select', 3);
-        } else if (mediaGalleries[mediaGroupI].type == 'image-file') {
+        } else if (mediaGroups[currentMediaGroupId].type == 'image-file') {
             $tabs.tabs({disabled: [2, 3]});
             $tabs.tabs('select', 0);
-        } else if (mediaGalleries[mediaGroupI].type == 'image-movie') {
+        } else if (mediaGroups[currentMediaGroupId].type == 'image-movie') {
             $tabs.tabs({disabled: [1, 3]});
             $tabs.tabs('select', 0);
         } else {
@@ -805,18 +867,18 @@ jsBackend.mediaLibraryHelper.group =
             var mediaId = $(this).parent().parent().attr('id').replace('media-', '');
 
             // was already connected?
-            var connected = utils.array.inArray(mediaId, mediaCurrentGroup);
+            var connected = utils.array.inArray(mediaId, currentMediaItemIds);
 
             // delete from array
             if (connected) {
                 // loop all to find value and to delete it
-                mediaCurrentGroup.splice(mediaCurrentGroup.indexOf(mediaId), 1);
+                currentMediaItemIds.splice(currentMediaItemIds.indexOf(mediaId), 1);
 
                 // update folder count
                 jsBackend.mediaLibraryHelper.group.updateFolderCount(mediaFolderId, '-', 1);
             // add to array
             } else {
-                mediaCurrentGroup.push(mediaId);
+                currentMediaItemIds.push(mediaId);
 
                 // update folder count
                 jsBackend.mediaLibraryHelper.group.updateFolderCount(mediaFolderId, '+', 1);
@@ -934,7 +996,7 @@ jsBackend.mediaLibraryHelper.upload =
             var id = $(this).attr('id').replace('media-', '');
 
             // add each id to array
-            mediaCurrentGroup.push(id);
+            currentMediaItemIds.push(id);
         });
 
         // clear upload queue count
@@ -1048,7 +1110,7 @@ jsBackend.mediaLibraryHelper.upload =
         var showUploadedBox = false; // step 3
 
         // define group type
-        var groupType = (mediaGalleries[mediaGroupI]) ? mediaGalleries[mediaGroupI].type : 'all';
+        var groupType = (mediaGroups[currentMediaGroupId]) ? mediaGroups[currentMediaGroupId].type : 'all';
 
         // does group accepts movies
         var moviesAllowed = (groupType == 'all' || groupType == 'image-movie' || groupType == 'movie');
@@ -1090,7 +1152,7 @@ jsBackend.mediaLibraryHelper.upload =
 
         // toggle uploaded box
         $('#uploadedMediaBox').toggle(showUploadedBox);
-        $('#mediaWillBeConnectedToMediaGroup').toggle((mediaGroupI !== 0));
+        $('#mediaWillBeConnectedToMediaGroup').toggle((currentMediaGroupId !== 0));
     },
 
     /**
