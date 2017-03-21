@@ -11,11 +11,11 @@ final class JsData
     private $jsData;
 
     /**
-     * @param Locale $locale
+     * @param array $initialData
      */
-    public function __construct(Locale $locale)
+    public function __construct(array $initialData = [])
     {
-        $this->jsData = ['language' => $locale];
+        $this->jsData = $initialData;
     }
 
     /**

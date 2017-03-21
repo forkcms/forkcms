@@ -105,7 +105,7 @@ class Header extends Object
                 FRONTEND_CACHE_PATH . '/MinifiedJs/'
             )
         );
-        $this->jsData = new JsData(Locale::frontendLanguage());
+        $this->jsData = new JsData(['language' => Locale::frontendLanguage()]);
         $this->meta = new MetaCollection();
 
         // add some default CSS files
@@ -174,7 +174,7 @@ class Header extends Object
      *
      * @param array $attributes The attributes to parse.
      * @param bool $overwrite Should we overwrite the current value?
-     * @param array $uniqueAttributeKeys Which keys can we use to decide if an item is unique.
+     * @param string[] $uniqueAttributeKeys Which keys can we use to decide if an item is unique.
      */
     public function addLink(
         array $attributes,
