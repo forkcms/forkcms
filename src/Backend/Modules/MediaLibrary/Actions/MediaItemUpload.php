@@ -74,7 +74,6 @@ class MediaItemUpload extends BackendBaseActionAdd
         $this->tpl->assign('folderId', $this->folderId);
         $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
         $this->header->addJsData('MediaLibrary', 'openedFolderId', ($this->folderId !== null) ? $this->folderId : null);
-        $this->tpl->assign('mediaAllowedMovieSources', StorageType::getPossibleMovieStorageTypeValues());
     }
 
     /**

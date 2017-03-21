@@ -2,8 +2,10 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
+use Backend\Core\Engine\Header;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Ramsey\Uuid\Uuid;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 use Symfony\Component\Form\AbstractType;
@@ -91,7 +93,8 @@ class MediaGroupType extends AbstractType
     public static function parseFiles()
     {
         // Currently Fork CMS can't load in the dependency "@header", since it is defined later when loading in
-        // Thats why we still use a static function to get the header
+        // That's why we still use a static function to get the header
+        /** @var Header $header */
         $header = Model::get('header');
 
         // Add "fine-uploader" css/js
@@ -101,6 +104,7 @@ class MediaGroupType extends AbstractType
         $header->addCSS('MediaLibrary.css', 'MediaLibrary', false, true);
         $header->addJS('MediaLibraryAddFolder.js', 'MediaLibrary', true);
         $header->addJS('MediaLibraryHelper.js', 'MediaLibrary', true);
+        $header->addJsData('MediaLibrary', 'mediaAllowedMovieSource', StorageType::getPossibleMovieStorageTypeValues());
     }
 
     /**

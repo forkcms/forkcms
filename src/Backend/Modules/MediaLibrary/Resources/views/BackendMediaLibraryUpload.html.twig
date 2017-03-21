@@ -144,11 +144,8 @@
       <div class="panel-body">
         <p>
           <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          <select id="mediaMovieSource" name="media_movie_source">
-            {% for mediaAllowedMovieSource in mediaAllowedMovieSources %}
-            <option value="{{ mediaAllowedMovieSource }}"{% if loop.first %} selected="selected"{% endif %}>{{ mediaAllowedMovieSource|capitalize }}</option>
-            {% endfor %}
-          </select>
+          {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
+          <select id="mediaMovieSource" name="media_movie_source"></select>
         </p>
         <p>
           <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>

@@ -15,6 +15,21 @@ jsBackend.mediaLibraryHelper =
 
         // initialize uploader
         jsBackend.mediaLibraryHelper.upload.init();
+
+        // Add movie source in MediaLibraryHelper
+        var $movieStorageDropdown = $('#mediaMovieSource');
+        $(jsBackend.data.get('MediaLibrary.mediaAllowedMovieSource')).each(function(index, value){
+            var html = '<option value="' + value + '"';
+
+            if (index === 0) {
+                html += ' selected="selected"';
+            }
+
+            html += '>' + value + '</option>';
+
+            // Add to dropdown
+            $movieStorageDropdown.append(html);
+        });
     }
 };
 
