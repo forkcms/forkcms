@@ -203,6 +203,15 @@ bxslider@^4.2.10:
   version "4.2.10"
   resolved "https://registry.yarnpkg.com/bxslider/-/bxslider-4.2.10.tgz#da4e530acac4b65bbc5d05e572c7b4117bbded85"
 
+bytes@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.2.0.tgz#fd35464a403f6f9117c2de3609ecff9cae000588"
+
+bytes@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.4.0.tgz#7d97196f9d5baf7f6935e25985549edd2a6c2339"
+>>>>>>> forkcms/5.0.0-dev
+
 bytes@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.4.0.tgz#7d97196f9d5baf7f6935e25985549edd2a6c2339"
