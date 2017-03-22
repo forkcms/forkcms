@@ -1,19 +1,39 @@
-<ul>
-  {% if widgetPagesNavigation.previous %}
-    <li class="previousLink">
-      <a href="{{ widgetPagesNavigation.previous.url }}" rel="prev">{{ 'lbl.PreviousPage'|trans|ucfirst }}: {{ widgetPagesNavigation.previous.title }}</a>
-    </li>
-  {% endif %}
+<nav class="module-pages widget-pages-previous-next-navigation">
+  <ul class="pager">
+    {% if widgetPagesNavigation.previous %}
+      {% block widget_previous %}
+        <li class="previous">
+          <a href="{{ widgetPagesNavigation.previous.url }}" rel="prev" title="{{ widgetPagesNavigation.previous.title }}">
+            ←
+            <span class="sr-only">{{ 'lbl.PreviousPage'|trans|ucfirst }}: </span>
+            <span class="title">{{ widgetPagesNavigation.previous.title }}</span>
+          </a>
+        </li>
+      {% endblock %}
+    {% endif %}
 
-  {% if widgetPagesNavigation.parent %}
-    <li class="parentLink">
-      <a href="{{ widgetPagesNavigation.parent.full_url }}" rel="prev">{{ 'lbl.ParentPage'|trans|ucfirst }}: {{ widgetPagesNavigation.parent.title }}</a>
-    </li>
-  {% endif %}
+    {% if widgetPagesNavigation.parent %}
+      {% block widget_parent %}
+        <li class="parentLink">
+          <a href="{{ widgetPagesNavigation.parent.url }}" title="{{ widgetPagesNavigation.parent.title }}">
+            ↑
+            <span class="sr-only">{{ 'lbl.ParentPage'|trans|ucfirst }}: </span>
+            <span class="title">{{ widgetPagesNavigation.parent.title }}</span>
+          </a>
+        </li>
+      {% endblock %}
+    {% endif %}
 
-  {% if widgetPagesNavigation.next %}
-    <li class="nextLink">
-      <a href="{{ widgetPagesNavigation.next.url }}" rel="next">{{ 'lbl.NextPage'|trans|ucfirst }}: {{ widgetPagesNavigation.next.title }}</a>
-    </li>
-  {% endif %}
-</ul>
+    {% if widgetPagesNavigation.next %}
+      {% block widget_next %}
+        <li class="next">
+          <a href="{{ widgetPagesNavigation.next.url }}" rel="next" title="{{ widgetPagesNavigation.next.title }}">
+            <span class="sr-only">{{ 'lbl.NextPage'|trans|ucfirst }}: </span>
+            <span class="title">{{ widgetPagesNavigation.next.title }}</span>
+            ➝
+          </a>
+        </li>
+      {% endblock %}
+    {% endif %}
+  </ul>
+</nav>

@@ -1,0 +1,226 @@
+@import 'bootstrap-sass/assets/stylesheets/bootstrap/variables';
+
+// a mixin to simplify our code
+@mixin typeahead-form-control($border-color) {
+  border-color: $border-color;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+
+  &:focus {
+    border-color: darken($border-color, 10%);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px lighten($border-color, 20%);
+  }
+}
+
+// coloring based on state
+.has-warning .twitter-typeahead {
+  .tt-input,
+  .tt-hint {
+    @include typeahead-form-control($state-warning-text);
+  }
+}
+
+.has-error .twitter-typeahead {
+  .tt-input,
+  .tt-hint {
+    @include typeahead-form-control($state-danger-text);
+  }
+}
+
+.has-success .twitter-typeahead {
+  .tt-input,
+  .tt-hint {
+    @include typeahead-form-control($state-success-text);
+  }
+}
+
+// borders
+.input-group .twitter-typeahead {
+  &:first-child {
+    .tt-input,
+    .tt-hint {
+      border-bottom-left-radius: $border-radius-base;
+      border-top-left-radius: $border-radius-base;
+      width: 100%;
+    }
+  }
+
+  &:last-child {
+    .tt-input,
+    .tt-hint {
+      border-bottom-right-radius: $border-radius-base;
+      border-top-right-radius: $border-radius-base;
+      width: 100%;
+    }
+  }
+}
+
+// sizing - small
+.input-group.input-group-sm .twitter-typeahead {
+  .tt-input,
+  .tt-hint {
+    border-radius: $border-radius-small;
+    font-size: $font-size-small;
+    height: $input-height-small;
+    line-height: $line-height-small;
+    padding: $padding-small-vertical $padding-small-horizontal;
+  }
+
+  &:not(:first-child):not(:last-child) {
+    .tt-input,
+    .tt-hint {
+      border-radius: 0;
+    }
+  }
+
+  &:first-child {
+    .tt-input,
+    .tt-hint {
+      border-radius: $border-radius-small 0 0 $border-radius-small;
+    }
+  }
+
+  &:last-child {
+    .tt-input,
+    .tt-hint {
+      border-radius: 0 $border-radius-small $border-radius-small 0;
+    }
+  }
+}
+
+select.input-group.input-group-sm .twitter-typeahead {
+  .tt-input,
+  .tt-hint {
+    line-height: $input-height-small;
+  }
+}
+
+textarea.input-group.input-group-sm .twitter-typeahead,
+select[multiple].input-group.input-group-sm .twitter-typeahead {
+  .tt-input,
+  .tt-hint {
+    height: auto;
+  }
+}
+
+// sizing - large
+.input-group.input-group-lg .twitter-typeahead {
+  .tt-input,
+  .tt-hint {
+    border-radius: $border-radius-large;
+    font-size: $font-size-large;
+    height: $input-height-large;
+    line-height: $line-height-large;
+    padding: $padding-large-vertical $padding-large-horizontal;
+  }
+
+  &:not(:first-child):not(:last-child) {
+    .tt-input,
+    .tt-hint {
+      border-radius: 0;
+    }
+  }
+
+  &:first-child {
+    .tt-input,
+    .tt-hint {
+      border-radius: $border-radius-large 0 0 $border-radius-large;
+    }
+  }
+
+  &:last-child {
+    .tt-input,
+    .tt-hint {
+      border-radius: 0 $border-radius-large $border-radius-large 0;
+    }
+  }
+}
+
+select.input-group.input-group-lg .twitter-typeahead {
+  .tt-input,
+  .tt-hint {
+    line-height: $input-height-large;
+  }
+}
+
+textarea.input-group.input-group-lg .twitter-typeahead,
+select[multiple].input-group.input-group-lg .twitter-typeahead {
+  .tt-input,
+  .tt-hint {
+    height: auto;
+  }
+}
+
+// wrapper
+.twitter-typeahead {
+  float: left;
+  width: 100%;
+
+  .tt-hint {
+    color: $text-muted;
+  }
+
+  .tt-input {
+    z-index: 2;
+  }
+}
+
+.input-group .twitter-typeahead {
+  display: table-cell !important;
+}
+
+.twitter-typeahead .tt-input[disabled],
+.twitter-typeahead .tt-input[readonly],
+fieldset[disabled] .twitter-typeahead .tt-input {
+  background-color: $input-bg-disabled !important;
+  cursor: not-allowed;
+}
+
+// dropdown styles
+.tt-dropdown-menu,
+.tt-menu {
+  background-clip: padding-box;
+  background-color: $dropdown-bg;
+  border: 1px solid $dropdown-fallback-border;
+  border: 1px solid $dropdown-border;
+  border-radius: $border-radius-base;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  font-size: $font-size-base;
+  left: 0;
+  list-style: none;
+  margin: 2px 0 0;
+  min-width: 160px;
+  padding: 5px 0;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: $zindex-dropdown;
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+}
+
+.tt-dropdown-menu .tt-suggestion,
+.tt-menu .tt-suggestion {
+  clear: both;
+  color: $dropdown-link-color;
+  display: block;
+  font-weight: normal;
+  line-height: $line-height-base;
+  padding: 3px 20px;
+
+  &.tt-cursor,
+  &:hover {
+    background-color: $dropdown-link-hover-bg;
+    color: $dropdown-link-hover-color;
+    cursor: pointer;
+    outline: 0;
+    text-decoration: none;
+
+    a {
+      color: $dropdown-link-hover-color;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+}

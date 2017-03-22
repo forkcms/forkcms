@@ -3,28 +3,25 @@
   - {{ searchResults }}: contains an array with all items, each element contains data about the item
   - {{ searchTerm }}: the term that has been searched for
 #}
-
-<section id="searchIndex" class="mod">
-  <div class="inner">
-    <header class="hd">
-      <h4>{{ 'lbl.SearchAgain'|trans|ucfirst }}</h4>
-    </header>
-    <div class="bd">
-      {% form search %}
-      <p{% if form_field_error %} class="errorArea"{% endif %}>
-        <label for="q">{{ 'lbl.SearchTerm'|trans|ucfirst }}
-          <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-        {% form_field q %} {% form_field_error q %}
-      </p>
-      <p>
-        <input id="submit" class="inputSubmit" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />
-      </p>
-      {% endform %}
+<section class="module-search block-search-index" role="search">
+  {% block block_body %}
+    {% form search %}
+    <label for="q">
+      {{ 'lbl.SearchTerm'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+    </label>
+    <div class="input-group{% if txtQError %} error{% endif %}">
+      {% form_field q %}
+      <span class="input-group-btn">
+        <input id="submit" class="btn btn-primary" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />
+      </span>
     </div>
-  </div>
+    {% form_field_error q %}
+    {% endform %}
+  {% endblock %}
 </section>
 
-{# don't remove this container nor replace the id - it'll be used to populate the search results live as you type #}
-<div id="searchContainer">
-  {% include "Modules/Search/Layout/Templates/Results.html.twig" %}
-</div>
+{% block block_results_container %}
+  <div data-role="search-results-container">
+    {% include "Modules/Search/Layout/Templates/Results.html.twig" %}
+  </div>
+{% endblock %}

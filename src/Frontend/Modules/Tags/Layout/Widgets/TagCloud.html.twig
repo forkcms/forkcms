@@ -4,22 +4,24 @@
 #}
 
 {% if widgetTagsTagCloud %}
-  <section id="tagCloudWidget" class="mod">
-    <div class="inner">
-      <header class="hd">
+  <aside class="module-tags widget-tags-tag-cloud">
+    {% block widget_heading %}
+      <header class="widget-heading" role="banner">
         <h3>{{ 'lbl.Tags'|trans|ucfirst }}</h3>
       </header>
-      <div class="bd content">
-        <ul>
-          {% for widgetTagsTagCloud in widgetTagsTagCloud %}
-            <li>
-              <a href="{{ widgetTagsTagCloud.url }}">
-                {{ widgetTagsTagCloud.name }}&nbsp;({{ widgetTagsTagCloud.number }})
-              </a>
-            </li>
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
+        <p>
+          {% for tag in widgetTagsTagCloud %}
+            <a href="{{ tag.url }}" rel="tag">
+              {{ tag.name }}
+            </a>
+            <span class="badge hidden-phone">{{ tag.number }}</span>{% if not loop.last %},{% endif %}
           {% endfor %}
-        </ul>
+        </p>
       </div>
-    </div>
-  </section>
+    {% endblock %}
+  </aside>
 {% endif %}

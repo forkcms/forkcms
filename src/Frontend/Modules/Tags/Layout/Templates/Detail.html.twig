@@ -2,35 +2,45 @@
   Variables that are available:
   - {{ tagsModules }}: contains all tags, grouped per module
 #}
-
-<section id="tagsDetail" class="mod">
-  <div class="inner">
-    <header class="hd">
-      <h1>{{ 'lbl.ItemsWithTag'|trans|format(tag.name)|raw|ucfirst }}</h1>
+<section class="module-tags block-tags-detail">
+  {% block block_heading %}
+    <header class="block-heading page-header" role="banner">
+      <h1>{{ 'lbl.ItemsWithTag'|trans|format(tag.name)|ucfirst }}</h1>
     </header>
-    <div class="bd">
+  {% endblock %}
+
+  {% block block_body %}
+    <div class="block-body">
       {% if tagsModules %}
-        {% for tagsModules in tagsModules %}
-          <section class="mod">
-            <div class="inner">
-              <header class="hd">
-                <h3>{{ tagsModules.label }}</h3>
-              </header>
-              <div class="bd content">
-                <ul>
-                  {% for item in tagsModules.items %}
-                    <li><a href="{{ item.full_url }}">{{ item.title }}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
+        {% for module in tagsModules %}
+          <section>
+            <header role="banner">
+              <h2>{{ module.label|ucfirst }}</h2>
+            </header>
+            <ul>
+              {% for item in module.items %}
+                <li>
+                  <a href="{{ item.full_url }}" rel="tag">
+                    {{ item.title }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
           </section>
         {% endfor %}
       {% endif %}
-      <p>
-        <a href="{{ geturlforblock('Tags') }}" title="{{ 'lbl.ToTagsOverview'|trans|ucfirst }}">{{ 'lbl.ToTagsOverview'|trans|ucfirst }}</a>
-      </p>
-
     </div>
-  </div>
+  {% endblock %}
+
+  {% block block_footer %}
+    <nav class="block-footer" role="navigation">
+      <ul class="pager">
+        <li class="previous">
+          <a href="{{ geturlforblock('Tags') }}" title="{{ 'lbl.ToTagsOverview'|trans|ucfirst }}">
+            ← {{ 'lbl.ToTagsOverview'|trans|ucfirst }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  {% endblock %}
 </section>

@@ -1,62 +1,11 @@
-{% include "Core/Layout/Templates/Head.html.twig" %}
+{% extends 'Core/Layout/Templates/Base.html.twig' %}
 
-<body class="{{ LANGUAGE }}" itemscope itemtype="https://schema.org/WebPage">
-{% include "Core/Layout/Templates/Cookies.html.twig" %}
-
-<div id="container">
-  <header id="header">
-    {# Logo #}
-    <h2>
-      <a href="/">{{ siteTitle }}</a>
-    </h2>
-
-    {# Language #}
-    <div>
-      {% include "Core/Layout/Templates/Languages.html.twig" %}
-    </div>
-  </header>
-
-  {# Navigation #}
-  <nav>
-    {{ getnavigation('page', 0, 1) }}
-  </nav>
-
-  <section>
-    {# Breadcrumb #}
-    {% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
-
-    {# Page title #}
-    {% if not hideContentTitle %}
-      <header class="mainTitle">
-        <h1>{{ page.title }}</h1>
-      </header>
+{% block main %}
+  {# Main positions #}
+  {% for content in positions.main %}
+    {% if content.html %}
+      {{ content.html|raw }}
     {% endif %}
+  {% endfor %}
 
-    {# Main positions #}
-    {% for main in positions.main %}
-      {% if main.html %}
-        <section class="mod">
-          <div class="inner">
-            <div class="bd content">
-              {{ main.html|raw }}
-            </div>
-          </div>
-        </section>
-      {% endif %}
-    {% endfor %}
-  </section>
-
-  <footer>
-    {% include "Core/Layout/Templates/Footer.html.twig" %}
-  </footer>
-</div>
-
-{# General Javascript #}
-{% for js in jsFiles %}
-  <script src="{{ js.file }}"></script>
-{% endfor %}
-
-{# Site wide HTML #}
-{{ siteHTMLFooter|raw }}
-</body>
-</html>
+{% endblock %}

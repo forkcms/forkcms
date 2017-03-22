@@ -2,26 +2,39 @@
   variables that are available:
   - {{ widgetBlogRecentArticlesList }}: contains an array with all posts, each element contains data about the post
 #}
-
 {% if widgetBlogRecentArticlesList %}
-  <section id="blogRecentArticlesListWidget" class="mod">
-    <div class="inner">
-      <header class="hd">
+  <aside class="module-blog widget-blog-recent-articles-list">
+    {% block widget_heading %}
+      <header class="widget-heading" role="banner">
         <h3>{{ 'lbl.RecentArticles'|trans|ucfirst }}</h3>
       </header>
-      <div class="bd content">
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
         <ul>
-          {% for ArticlesList in widgetBlogRecentArticlesList %}
-            <li><a href="{{ ArticlesList.full_url }}" title="{{ ArticlesList.title }}">{{ ArticlesList.title }}</a></li>
+          {% for post in widgetBlogRecentArticlesList %}
+            <li>
+              <a href="{{ post.full_url }}" title="{{ post.title }}">
+                {{ post.title }}
+              </a>
+            </li>
           {% endfor %}
         </ul>
       </div>
-      <footer class="ft">
-        <p>
-          <a href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|ucfirst }}</a>
-          <a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|ucfirst }}</a>
+    {% endblock %}
+
+    {% block widget_footer %}
+      <footer class="widget-footer">
+        <p class="btn-group">
+          <a class="btn btn-default" href="{{ geturlforblock('Blog') }}">
+            {{ 'lbl.BlogArchive'|trans|ucfirst }}
+          </a>
+          <a class="btn btn-default" href="{{ widgetBlogRecentArticlesFullRssLink }}">
+            {{ 'lbl.SubscribeToTheRSSFeed'|trans|ucfirst }}
+          </a>
         </p>
       </footer>
-    </div>
-  </section>
+    {% endblock %}
+  </aside>
 {% endif %}

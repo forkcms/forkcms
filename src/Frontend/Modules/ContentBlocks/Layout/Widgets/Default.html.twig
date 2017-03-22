@@ -2,5 +2,8 @@
   variables that are available:
   - {{ widgetContentBlocks }}:
 #}
-
-{{ widgetContentBlocks.text|raw }}
+{% if widgetContentBlocks.text %}
+  <div class="module-content-blocks widget-content-blocks-default contentBlock{{ widgetContentBlocks.id }}">
+    {{ widgetContentBlocks.text|raw }}
+  </div>
+{% endif %}

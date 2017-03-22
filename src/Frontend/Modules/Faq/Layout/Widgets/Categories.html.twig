@@ -4,14 +4,25 @@
 #}
 
 {% if widgetFaqCategories %}
-  <section id="faqCategoriesWidget" class="mod">
-    <h3>{{ 'lbl.AllCategories'|trans|ucfirst }}</h3>
-    <ul>
-      {% for widgetFaqCategories in widgetFaqCategories %}
-        <li>
-          <a href="{{ widgetFaqCategories.full_url }}" title="{{ widgetFaqCategories.title }}">{{ widgetFaqCategories.title }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  </section>
+  <aside class="module-faq widget-faq-categories">
+    {% block widget_heading %}
+      <header class="widget-heading">
+        <h3>{{ 'lbl.AllCategories'|trans|ucfirst }}</h3>
+      </header>
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
+        <ul>
+          {% for widgetFaqCategories in widgetFaqCategories %}
+            <li>
+              <a href="{{ widgetFaqCategories.full_url }}" title="{{ widgetFaqCategories.title }}">
+                {{ widgetFaqCategories.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endblock %}
+  </aside>
 {% endif %}

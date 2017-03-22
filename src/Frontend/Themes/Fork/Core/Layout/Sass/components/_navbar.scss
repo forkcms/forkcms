@@ -1,0 +1,28 @@
+.navbar-default {
+  border: 0;
+  margin-bottom: 0;
+
+  .navbar-nav {
+
+    li {
+
+      a {
+        font-size: $font-size-small;
+        font-weight: 500;
+        -webkit-font-smoothing: antialiased;
+      }
+    }
+  }
+}
+
+.navbar-brand {
+  font-family: 'Courgette', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.navbar-toggle {
+
+  &:hover .icon-bar,
+  &:focus .icon-bar {
+    background: $navbar-default-bg;
+  }
+}
