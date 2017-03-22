@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -193,6 +194,16 @@ class MediaGroup
     public function getConnectedItems(): Collection
     {
         return $this->connectedItems;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getConnectedMediaItems(): Collection
+    {
+        return $this->connectedItems->map(function(MediaGroupMediaItem $connectedItem): MediaItem {
+            return $connectedItem->getItem();
+        });
     }
 
     /**

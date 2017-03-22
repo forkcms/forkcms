@@ -6,15 +6,14 @@ use Symfony\Component\Filesystem\Filesystem;
 use Common\ModulesSettings;
 use Common\Uri;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\MediaLibrary\Component\ImageSettings;
 
 class FileManager
 {
-    /** @var ModulesSettings */
-    private $settings;
-
     /** @var Filesystem */
     private $filesystem;
+
+    /** @var ModulesSettings */
+    private $settings;
 
     /**
      * FileManager constructor.
@@ -71,61 +70,6 @@ class FileManager
     public function exists(string $path): bool
     {
         return $this->filesystem->exists($path);
-    }
-
-    /**
-     * Generate thumbnail
-     *
-     * @param string $fileName
-     * @param string $sourcePath
-     * @param string $destinationPath
-     * @param ImageSettings $imageSettings
-     * @throws \Exception
-     */
-    public function generateThumbnail(
-        string $fileName,
-        string $sourcePath,
-        string $destinationPath,
-        ImageSettings $imageSettings
-    ) {
-        try {
-            // Destination folder should exist
-            if (!is_dir($destinationPath)) {
-                $this->filesystem->mkdir($destinationPath);
-            }
-
-            // Define thumbnail
-            $thumbnail = new \SpoonThumbnail(
-                $sourcePath . '/' . $fileName,
-                ($imageSettings->getWidth() !== 0) ? $imageSettings->getWidth() : null,
-                ($imageSettings->getHeight() !== 0) ? $imageSettings->getHeight() : null,
-                false
-            );
-
-            // Set allow enlargement
-            $thumbnail->setAllowEnlargement(true);
-
-            // if the width & height are specified we should ignore the aspect ratio
-            if ($imageSettings->getWidth() !== 0 && $imageSettings->getHeight() !== 0) {
-                $thumbnail->setForceOriginalAspectRatio(
-                    !$imageSettings->getTransformationMethod()->isCrop()
-                );
-            }
-
-            // Set crop position
-            $thumbnail->setCropPosition(
-                $imageSettings->getTransformationMethod()->getHorizontalCropPosition(),
-                $imageSettings->getTransformationMethod()->getVerticalCropPosition()
-            );
-
-            // Parse thumbnail
-            $thumbnail->parseToFile(
-                $destinationPath . '/' . $fileName,
-                $imageSettings->getQuality()
-            );
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
     }
 
     /**

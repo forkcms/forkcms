@@ -44,12 +44,6 @@ class OneImage extends FrontendMediaWidget
         $this->header->addOpenGraphImage($firstConnectedItem->getItem()->getAbsoluteWebPath());
 
         // Assign item (and their source and other custom resolutions)
-        $this->tpl->assign(
-            'item',
-            $this->get('media_library.helper.frontend')->createFrontendMediaItem(
-                $firstConnectedItem->getItem(),
-                $this->getResolutions()
-            )
-        );
+        $this->tpl->assign('mediaItem', $firstConnectedItem->getItem());
     }
 }

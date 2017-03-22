@@ -11,11 +11,6 @@ use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 class FrontendMediaWidget extends FrontendBaseWidget
 {
     /**
-     * @var array
-     */
-    protected $resolutions = array();
-
-    /**
      * @var MediaGroup
      */
     protected $mediaGroup;
@@ -59,13 +54,7 @@ class FrontendMediaWidget extends FrontendBaseWidget
         );
 
         // Assign items (and their source and other custom resolutions)
-        $this->tpl->assign(
-            'items',
-            $this->get('media_library.helper.frontend')->createFrontendMediaItems(
-                $this->mediaGroup,
-                $this->getResolutions()
-            )
-        );
+        $this->tpl->assign('mediaItems', $this->mediaGroup->getConnectedMediaItems());
 
         if (isset($this->data['title'])) {
             $this->tpl->assign(
@@ -73,25 +62,5 @@ class FrontendMediaWidget extends FrontendBaseWidget
                 $this->data['title']
             );
         }
-    }
-
-    /**
-     * Get resolutions
-     *
-     * @return array
-     */
-    public function getResolutions(): array
-    {
-        return $this->resolutions;
-    }
-
-    /**
-     * Set resolutions
-     *
-     * @param array $resolutions
-     */
-    public function setResolutions(array $resolutions)
-    {
-        $this->resolutions = $resolutions;
     }
 }

@@ -5,16 +5,17 @@
   - {{ title }}: A custom optional title that you can give when parsing from Custom module.
 #}
 
-{% if items %}
+{% if mediaItems %}
 <section class="widgetMediaLightbox" itemscope itemtype="http://schema.org/ImageGallery">
   {# Lightbox items #}
   <div class="bd content">
-    {% for item in items %}
+    {% for mediaItem in mediaItems %}
     <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-      <a href="{{ item.source }}" itemprop="contentUrl" data-size="{{ item.mediaItem.width }}x{{ item.mediaItem.height }}">
-        <img src="{{ item.small_source }}" itemprop="thumbnail" alt="{{ item.mediaItem.title }}" />
+      {% set img = mediaItem.webpath()%}
+      <a href="{{ (mediaItem.getWebPath()) | imagine_filter('lightbox_large') }}" itemprop="contentUrl" data-size="{{ mediaItem.width }}x{{ mediaItem.height }}">
+        <img src="{{ (mediaItem.getWebPath()) | imagine_filter('lightbox_small') }}" itemprop="thumbnail" alt="{{ mediaItem.title }}" />
       </a>
-      <figcaption itemprop="caption description">{% if title %}{{ title }}{% endif %}{% if not title %}{{ item.mediaItem.title }}{% endif %}</figcaption>
+      <figcaption itemprop="caption description">{% if title %}{{ title }}{% endif %}{% if not title %}{{ mediaItem.title }}{% endif %}</figcaption>
     </figure>
     {% endfor %}
   </div>

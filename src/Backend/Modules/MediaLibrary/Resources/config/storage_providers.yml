@@ -5,6 +5,7 @@ services:
             - "src/Frontend/Files/MediaLibrary"
             - "%site.protocol%://%site.domain%"
             - "%site.path_www%"
+            - "@liip_imagine.cache.manager"
     media_library.storage.youtube:
         class: Backend\Modules\MediaLibrary\Component\StorageProvider\YoutubeStorageProvider
         arguments:

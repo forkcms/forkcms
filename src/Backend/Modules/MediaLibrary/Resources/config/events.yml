@@ -48,27 +48,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: media_library.event.media_item_created, method: onMediaItemCreated }
         arguments:
-            - "@media_library.storage.local"
             - "@media_library.manager.file"
-            - "@fork.settings"
-            - "@event_dispatcher"
+            - "@liip_imagine.cache.manager"
     media_library.listener.media_item_delete_backend_thumbnail:
         class: Backend\Modules\MediaLibrary\EventListener\MediaItemListener
         tags:
             - { name: kernel.event_listener, event: media_library.event.media_item_deleted, method: onMediaItemDeleted }
         arguments:
-            - "@media_library.storage.local"
             - "@media_library.manager.file"
-            - "@fork.settings"
-            - "@event_dispatcher"
-
-    # Frontend Event Listeners
-    media_library.listener.media_item_frontend_resolution_missing:
-        class: Backend\Modules\MediaLibrary\EventListener\MediaItemListener
-        tags:
-            - { name: kernel.event_listener, event: media_item.frontend_resolution_missing, method: onMediaItemRequestedMissingFrontendResolution }
-        arguments:
-            - "@media_library.storage.local"
-            - "@media_library.manager.file"
-            - "@fork.settings"
-            - "@event_dispatcher"
+            - "@liip_imagine.cache.manager"

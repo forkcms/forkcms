@@ -1,13 +1,13 @@
 {#
   Media Slider with BxSlider
   Variables that are available:
-  - {{ item }}: Contains full urls to MediaItem item, f.e.: {{ item.large }} or {{ item.large_resolution }}
+  - {{ mediaItem }}: Contains the MediaItem
 #}
 
-{% if item %}
+{% if mediaItem %}
   <section class="widgetMediaOneRandomImage" itemscope itemtype="http://schema.org/ImageGallery">
     <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-      <img src="{{ item.large_source }}" itemprop="thumbnail" alt="{{ item.mediaItem.title }}" />
+      <img src="{{ (mediaItem.getWebPath()) | imagine_filter('one_image_large') }}" itemprop="thumbnail" alt="{{ mediaItem.title }}" />
     </figure>
   </section>
 {% endif %}

@@ -16,16 +16,6 @@ class OneRandomImage extends FrontendMediaWidget
 
         // We need to have a MediaGroup to show this widget
         if ($this->mediaGroup) {
-            // We define the resolutions
-            $this->setResolutions([
-                $this->get('media_library.factory.frontend.resolution')->create(
-                    'large',
-                    'resize',
-                    1600,
-                    null
-                ),
-            ]);
-
             parent::execute();
             $this->loadTemplate();
             $this->parse();
@@ -48,12 +38,6 @@ class OneRandomImage extends FrontendMediaWidget
         $this->header->addOpenGraphImage($randomConnectedItem->getItem()->getAbsoluteWebPath());
 
         // Assign item (and their source and other custom resolutions)
-        $this->tpl->assign(
-            'item',
-            $this->get('media_library.helper.frontend')->createFrontendMediaItem(
-                $randomConnectedItem->getItem(),
-                $this->getResolutions()
-            )
-        );
+        $this->tpl->assign('mediaItem', $randomConnectedItem->getItem());
     }
 }

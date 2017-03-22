@@ -101,14 +101,15 @@ class MediaItemDataGrid extends DataGridDB
             $this->setColumnFunction(
                 array(new BackendDataGridFunctions(), 'showImage'),
                 array(
-                    Model::get('media_library.storage.local')->getWebDir('backend') . '/[shardingFolderName]',
+                    Model::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
                     '[url]',
                     '[url]',
                     Model::createURLForAction('MediaItemEdit')
                     . '&id=[id]'
                     . '&folder=' . $folderId,
                     Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_width'),
-                    Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_height')
+                    Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_height'),
+                    'backend_thumbnail'
                 ),
                 'url',
                 true

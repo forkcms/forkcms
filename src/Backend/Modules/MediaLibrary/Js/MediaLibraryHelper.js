@@ -926,6 +926,13 @@ jsBackend.mediaLibraryHelper.upload =
             validation: {
                 allowedExtensions: ['jpeg', 'jpg', 'gif', 'png', 'csv', 'doc', 'docx', 'pdf', 'rtf', 'txt', 'xls', 'xlsx', 'aiff', 'mp3', 'wav']
             },
+            scaling: {
+                includeExif: true,
+                sendOriginal: false,
+                sizes: [
+                    {name: "", maxSize: 3000}
+                ]
+            },
             callbacks: {
                 onUpload:  function() {
                     // redefine media folder id

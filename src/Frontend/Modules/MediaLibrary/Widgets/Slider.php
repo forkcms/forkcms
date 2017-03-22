@@ -27,17 +27,6 @@ class Slider extends FrontendMediaWidget
             // Add JS
             $this->addJS('/node_modules/bxslider/dist/jquery.bxslider.min.js', true);
 
-            // We define the resolutions
-            $this->setResolutions([
-                $this->get('media_library.factory.frontend.resolution')->create(
-                    'square', // Give a custom name for your image size which will create "square" + "square_source" variables in frontend
-                    'crop', // Use "resize" or "crop"
-                    1600, // Optional: width
-                    350, // Optional: height
-                    100 // Optional: this is the quality, value between 0 - 100
-                ),
-            ]);
-
             parent::execute();
             $this->loadTemplate();
             $this->parse();

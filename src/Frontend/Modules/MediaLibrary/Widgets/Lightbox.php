@@ -45,16 +45,6 @@ class Lightbox extends FrontendMediaWidget
              *     - FAQ: http://photoswipe.com/documentation/faq.html#image-size
              *     - GitHub Issue: https://github.com/dimsemenov/PhotoSwipe/issues/741
              */
-            // We define the resolutions
-            $this->setResolutions([
-                $this->get('media_library.factory.frontend.resolution')->create(
-                    'small', // Give a custom name for your image size which will create "small" + "small_source" variables in frontend
-                    'resize', // Use "resize" or "crop"
-                    800, // Optional: width
-                    null, // Optional: height
-                    100 // Optional: this is the quality, value between 0 - 100
-                ),
-            ]);
 
             parent::execute();
             $this->loadTemplate();

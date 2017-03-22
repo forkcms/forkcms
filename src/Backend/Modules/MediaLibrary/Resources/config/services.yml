@@ -3,7 +3,6 @@ imports:
   - { resource: commands.yml }
   - { resource: cache_builder.yml }
   - { resource: events.yml }
-  - { resource: factories.yml }
   - { resource: storage_providers.yml }
   - { resource: managers.yml }
   - { resource: helpers.yml }

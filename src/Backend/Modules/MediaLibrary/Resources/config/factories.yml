@@ -1,3 +1,0 @@
-services:
-    media_library.factory.frontend.resolution:
-        class: Frontend\Modules\MediaLibrary\Factory\FrontendResolutionFactory

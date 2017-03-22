@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Component\StorageProvider;
 
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 
 class LocalStorageProvider implements StorageProviderInterface
 {
@@ -11,6 +12,9 @@ class LocalStorageProvider implements StorageProviderInterface
 
     /** @var string */
     protected $baseUrl;
+
+    /** @var CacheManager */
+    protected $cacheManager;
 
     /** @var string */
     protected $folderPath;
@@ -21,15 +25,18 @@ class LocalStorageProvider implements StorageProviderInterface
      * @param string $folderPath
      * @param string $baseUrl
      * @param string $basePath
+     * @param CacheManager $cacheManager
      */
     public function __construct(
         string $folderPath,
         string $baseUrl,
-        string $basePath
+        string $basePath,
+        CacheManager $cacheManager
     ) {
         $this->folderPath = trim($folderPath, '/\\');
         $this->baseUrl = $baseUrl;
         $this->basePath = $basePath;
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -75,63 +82,34 @@ class LocalStorageProvider implements StorageProviderInterface
     }
 
     /**
-     * @param string|null $subDirectory
      * @return string
      */
-    protected static function getSubdirectory(string $subDirectory = null): string
+    public function getUploadRootDir(): string
     {
-        if ($subDirectory === null || $subDirectory === 'source') {
-            return 'Source';
-        } elseif (strtolower($subDirectory) === 'backend') {
-            return 'Backend';
-        } elseif (strtolower($subDirectory) === 'frontend') {
-            return 'Frontend';
-        } else {
-            return 'Frontend/' . $subDirectory;
-        }
+        return $this->basePath . '/' . $this->folderPath . '/Source';
     }
 
-    /**
-     * @param string|null $subDirectory
-     * @return string
-     */
-    public function getUploadRootDir(string $subDirectory = null): string
+    public function getWebDir(): string
     {
-        $subDirectory = $this->getSubdirectory($subDirectory);
-        $parentUploadRootDir = $this->basePath . '/' . $this->folderPath;
-
-        // the absolute directory path where uploaded
-        // documents should be saved
-        if ($subDirectory !== null) {
-            return $parentUploadRootDir . '/' . $subDirectory;
-        }
-
-        return $parentUploadRootDir;
-    }
-
-    /**
-     * @param string|null $subDirectory
-     * @return string
-     */
-    public function getWebDir(string $subDirectory = null): string
-    {
-        $subDirectory = $this->getSubdirectory($subDirectory);
-
-        $webPath = '/' . $this->folderPath;
-        if ($subDirectory !== null) {
-            $webPath .=  '/' . $subDirectory;
-        }
-
-        return $webPath;
+        return '/' . $this->folderPath . '/Source';
     }
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
+     * @param string|null $filter The LiipImagineBundle filter name you want to use.
      * @return string|null
      */
-    public function getWebPath(MediaItem $mediaItem, string $subDirectory = null)
+    public function getWebPath(MediaItem $mediaItem, string $filter = null)
     {
-        return $this->getWebDir($subDirectory) . '/' . $mediaItem->getFullUrl();
+        if ($filter === 'backend') {
+            $filter = 'backend_thumbnail';
+        }
+
+        // Return image with filter
+        if ($filter !== null && $mediaItem->getType()->isImage()) {
+            return $this->cacheManager->getBrowserPath($mediaItem->getWebPath(), $filter);
+        }
+
+        return $this->getWebDir() . '/' . $mediaItem->getFullUrl();
     }
 }

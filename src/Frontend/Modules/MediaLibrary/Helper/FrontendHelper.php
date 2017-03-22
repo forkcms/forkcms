@@ -6,8 +6,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
-use Frontend\Modules\MediaLibrary\Component\FrontendMediaItem;
-use Frontend\Modules\MediaLibrary\Manager\FrontendMediaItemManager;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository;
@@ -19,11 +17,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemR
 class FrontendHelper
 {
     /**
-     * @var FrontendMediaItemManager
-     */
-    protected $frontendMediaItemManager;
-
-    /**
      * @var MediaGroupMediaItemRepository
      */
     protected $mediaGroupMediaItemRepository;
@@ -31,14 +24,11 @@ class FrontendHelper
     /**
      * Construct
      *
-     * @param FrontendMediaItemManager $frontendMediaItemManager
      * @param MediaGroupMediaItemRepository $mediaGroupMediaItemRepository
      */
     public function __construct(
-        FrontendMediaItemManager $frontendMediaItemManager,
         MediaGroupMediaItemRepository $mediaGroupMediaItemRepository
     ) {
-        $this->frontendMediaItemManager = $frontendMediaItemManager;
         $this->mediaGroupMediaItemRepository = $mediaGroupMediaItemRepository;
     }
 
@@ -49,15 +39,13 @@ class FrontendHelper
      * @param array $entities
      * @param string $methodForMediaGroup F.e.: "getImagesMediaGroup"
      * @param string $newVariableName F.e.: "image", this variable will be assigned in your entity
-     * @param array $resolutions F.e.: array(new FrontendResolution())
      * @param bool $onlyGetTheFirstMediaItem True = only get the first item, false = get all items
      * @throws \Exception
      */
-    public function addFrontendMediaItems(
+    public function addMediaItemsToEntities(
         array $entities,
         string $methodForMediaGroup,
         string $newVariableName,
-        array $resolutions,
         bool $onlyGetTheFirstMediaItem = true
     ) {
         // Init variables
@@ -96,21 +84,18 @@ class FrontendHelper
         /** @var MediaGroupMediaItem $mediaGroupMediaItem */
         foreach ($mediaGroupMediaItems as $mediaGroupMediaItem) {
             // Define variables
-            $entityId = $mediaGroupIds[$mediaGroupMediaItem->getGroup()->getId()];
+            $entityId = $mediaGroupIds[(string) $mediaGroupMediaItem->getGroup()->getId()];
             $entityKey = $entityKeys[$entityId];
 
             // Define frontend media item
-            $frontendMediaItem = $this->createFrontendMediaItem(
-                $mediaGroupMediaItem->getItem(),
-                $resolutions
-            );
+            $mediaItem = $mediaGroupMediaItem->getItem();
 
             if ($onlyGetTheFirstMediaItem) {
                 // Define frontend media item
-                $entities[$entityKey]->{$newVariableName} = $frontendMediaItem;
+                $entities[$entityKey]->{$newVariableName} = $mediaItem;
             } else {
                 // Define frontend media item
-                $entities[$entityKey]->{$newVariableName}[] = $frontendMediaItem;
+                $entities[$entityKey]->{$newVariableName}[] = $mediaItem;
             }
         }
     }
@@ -173,65 +158,6 @@ class FrontendHelper
         }
 
         return false;
-    }
-
-    /**
-     * Create frontend media items - which will generate their resolutions also
-     *
-     * @param MediaGroup $mediaGroup
-     * @param array $customResolutions
-     * @return array
-     */
-    public function createFrontendMediaItems(
-        MediaGroup $mediaGroup,
-        array $customResolutions
-    ) : array {
-        $frontendMediaItems = array();
-
-        // Loop connected items from MediaGroup
-        foreach ($mediaGroup->getConnectedItems() as $key => $mediaGroupMediaItem) {
-            /** @var FrontendMediaItem $frontendMediaItem */
-            $frontendMediaItems[] = $this->createFrontendMediaItem(
-                $mediaGroupMediaItem->getItem(),
-                $customResolutions
-            );
-        }
-
-        return $frontendMediaItems;
-    }
-
-    /**
-     * Create frontend media item - which will generate their resolutions also
-     *
-     * @var MediaItem $mediaItem
-     * @param array $customResolutions
-     * @return FrontendMediaItem
-     */
-    public function createFrontendMediaItem(
-        MediaItem $mediaItem,
-        array $customResolutions
-    ) : FrontendMediaItem {
-        // Define FrontendMediaItem
-        $frontendMediaItem = new FrontendMediaItem(
-            $mediaItem
-        );
-
-        // Loop custom resolutions
-        foreach ($customResolutions as $resolution) {
-            // Add url to resolution file
-            $frontendMediaItem->addUrl(
-                $resolution->getCustomKey(),
-                $resolution->getImageSettings()->toString()
-            );
-
-            // Generate thumbnail if not exists
-            $this->frontendMediaItemManager->generateThumbnailIfNotExists(
-                $mediaItem,
-                $resolution
-            );
-        }
-
-        return $frontendMediaItem;
     }
 
     /**

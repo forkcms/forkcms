@@ -546,12 +546,12 @@ class MediaItem
     }
 
     /**
-     * @param string|null $subDirectory
+     * @param string|null $filter The LiipImagineBundle filter name you want to use.
      * @return string|null
      */
-    public function getWebPath(string $subDirectory = null)
+    public function getWebPath(string $filter = null)
     {
-        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getWebPath($this, $subDirectory);
+        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getWebPath($this, $filter);
     }
 
     /**
