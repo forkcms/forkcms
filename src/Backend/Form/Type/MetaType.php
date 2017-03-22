@@ -260,7 +260,7 @@ class MetaType extends AbstractType
     private function getMetaReverseTransformFunction()
     {
         return function ($metaData) {
-            $metaId = null ? null : (int) $metaData['id'];
+            $metaId = $metaData['id'] === null ? null : (int) $metaData['id'];
 
             if ($metaId === null || !$this->meta[$metaId] instanceof Meta) {
                 return new Meta(

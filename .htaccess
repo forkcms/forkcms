@@ -4,10 +4,38 @@
 Options +FollowSymlinks -Indexes
 DirectorySlash Off
 
+# Make sure the htaccessfile is protected
+<Files .htaccess>
+	order allow,deny
+	deny from all
+</Files>
+
 # file etags (used when comparing local cached file to server file)
 FileETag MTime Size
 
+########## Begin - Common hacking tools and bandwidth hoggers block
+## By SigSiu.net and @nikosdion.
+# This line also disables Akeeba Remote Control 2.5 and earlier
+SetEnvIf user-agent "Indy Library" stayout=1
+
+# The following rules are for bandwidth-hogging download tools
+SetEnvIf user-agent "libwww-perl" stayout=1
+SetEnvIf user-agent "Download Demon" stayout=1
+SetEnvIf user-agent "GetRight" stayout=1
+SetEnvIf user-agent "GetWeb!" stayout=1
+SetEnvIf user-agent "Go!Zilla" stayout=1
+SetEnvIf user-agent "Go-Ahead-Got-It" stayout=1
+SetEnvIf user-agent "GrabNet" stayout=1
+SetEnvIf user-agent "TurnitinBot" stayout=1
+# This line denies access to all of the above tools
+deny from env=stayout
+########## End - Common hacking tools and bandwidth hoggers block
+
 <IfModule mod_rewrite.c>
+	# Protect against cross site tracing https://www.owasp.org/index.php/Cross_Site_Tracing
+	RewriteCond %{REQUEST_METHOD} ^TRACE
+	RewriteRule .* - [F]
+
 	# nice urls
 	RewriteEngine On
 	RewriteBase /
@@ -15,6 +43,7 @@ FileETag MTime Size
 	# forbidden folders
 	RewriteRule \.git - [F]
 	RewriteRule vendor/.* - [F]
+	RewriteRule bin/.* - [F]
 	RewriteRule src/Console/.* - [F]
 	RewriteRule .*\.gitignore - [F]
 	RewriteRule \.editorconfig - [F]
