@@ -96,6 +96,8 @@ class Comments extends BackendBaseActionIndex
             'created_on',
             true
         );
+        $this->dgPublished->setColumnFunction('htmlspecialchars', ['[text]'], 'text');
+        $this->dgPublished->setColumnFunction('htmlspecialchars', ['[author]'], 'author');
         $this->dgPublished->setColumnFunction(
             array(new BackendDataGridFunctions(), 'cleanupPlaintext'),
             '[text]',
@@ -189,6 +191,8 @@ class Comments extends BackendBaseActionIndex
             'created_on',
             true
         );
+        $this->dgModeration->setColumnFunction('htmlspecialchars', ['[text]'], 'text');
+        $this->dgModeration->setColumnFunction('htmlspecialchars', ['[author]'], 'author');
         $this->dgModeration->setColumnFunction(
             array(new BackendDataGridFunctions(), 'cleanupPlaintext'),
             '[text]',
@@ -280,6 +284,8 @@ class Comments extends BackendBaseActionIndex
             'created_on',
             true
         );
+        $this->dgSpam->setColumnFunction('htmlspecialchars', ['[text]'], 'text');
+        $this->dgSpam->setColumnFunction('htmlspecialchars', ['[author]'], 'author');
         $this->dgSpam->setColumnFunction(
             array(new BackendDataGridFunctions(), 'cleanupPlaintext'),
             '[text]',
