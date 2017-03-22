@@ -201,7 +201,7 @@ class MediaGroup
      */
     public function getConnectedMediaItems(): Collection
     {
-        return $this->connectedItems->map(function(MediaGroupMediaItem $connectedItem): MediaItem {
+        return $this->connectedItems->map(function (MediaGroupMediaItem $connectedItem): MediaItem {
             return $connectedItem->getItem();
         });
     }
