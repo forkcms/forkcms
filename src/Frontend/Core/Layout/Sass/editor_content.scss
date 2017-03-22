@@ -1,0 +1,49 @@
+body {
+  background: #fff;
+  box-sizing: border-box;
+  color: #000;
+  cursor: text;
+  height: 100%;
+  height: expression((window) && ((document.documentElement.clientHeight - 6) + "px"));
+  height: auto;
+  margin: 0;
+  padding: 6px;
+  width: auto;
+}
+
+html {
+  height: auto;
+  width: auto;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px dotted #999;
+}
+
+// Editor defaults edited
+acronym {
+  border-bottom: 1px dotted #ccc;
+  cursor: help;
+}
+
+abbr {
+  border-bottom: 1px dashed #ccc;
+  cursor: help;
+}
+
+img:-moz-broken {
+  -moz-force-broken-image-icon: 1;
+  height: 24px;
+  width: 24px;
+}

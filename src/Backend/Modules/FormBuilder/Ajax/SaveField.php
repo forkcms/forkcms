@@ -51,8 +51,15 @@ class SaveField extends BackendBaseAJAXAction
         $validationParameter = trim(\SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
         $errorMessage = trim(\SpoonFilter::getPostValue('error_message', null, '', 'string'));
 
-        // special field for textbox: reply to
+        // special field for textbox
         $replyTo = \SpoonFilter::getPostValue('reply_to', array('Y', 'N'), 'N', 'string');
+        $sendConfirmationMailTo = \SpoonFilter::getPostValue(
+            'send_confirmation_mail_to',
+            array('Y', 'N'),
+            'N',
+            'string'
+        );
+        $confirmationMailSubject = trim(\SpoonFilter::getPostValue('confirmation_mail_subject', null, '', 'string'));
 
         // special fields for datetime
         $inputType = \SpoonFilter::getPostValue('input_type', array('date', 'time'), 'date', 'string');
@@ -94,6 +101,16 @@ class SaveField extends BackendBaseAJAXAction
                         }
                         if ($replyTo == 'Y' && $validation != 'email') {
                             $errors['reply_to_error_message'] = BL::getError('EmailValidationIsRequired');
+                        }
+                        if ($sendConfirmationMailTo == 'Y' && $validation != 'email') {
+                            $errors['send_confirmation_mail_to_error_message'] = BL::getError(
+                                'ActivateEmailValidationToUseThisOption'
+                            );
+                        }
+                        if ($sendConfirmationMailTo == 'Y' && empty($confirmationMailSubject)) {
+                            $errors['confirmation_mail_subject_error_message'] = BL::getError(
+                                'ConfirmationSubjectIsEmpty'
+                            );
                         }
                     } elseif ($type == 'textarea') {
                         // validate textarea
@@ -219,7 +236,9 @@ class SaveField extends BackendBaseAJAXAction
 
                         // reply-to, only for textboxes
                         if ($type == 'textbox') {
-                            $settings['reply_to'] = ($replyTo == 'Y');
+                            $settings['reply_to'] = ($replyTo === 'Y');
+                            $settings['send_confirmation_mail_to'] = ($sendConfirmationMailTo === 'Y');
+                            $settings['confirmation_mail_subject'] = $confirmationMailSubject;
                         }
 
                         // only for datetime input

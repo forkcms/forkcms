@@ -7,6 +7,7 @@ use Swift_Mailer;
 use Common\ModulesSettings;
 use Frontend\Core\Language\Language;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
+use Swift_Mime_SimpleMessage;
 
 /**
  * A Formbuilder submitted event subscriber that will send an email if needed
@@ -41,42 +42,79 @@ final class FormBuilderSubmittedMailSubscriber
     public function onFormSubmitted(FormBuilderSubmittedEvent $event)
     {
         $form = $event->getForm();
+        $fieldData = $this->getEmailFields($event->getData());
 
         // need to send mail
-        if ($form['method'] == 'database_email') {
-            // build our message
-            $from = $this->modulesSettings->get('Core', 'mailer_from');
-            $fieldData = $this->getEmailFields($event->getData());
-            $message = Message::newInstance(sprintf(Language::getMessage('FormBuilderSubject'), $form['name']))
-                ->parseHtml(
-                    '/FormBuilder/Layout/Templates/Mails/Form.html.twig',
-                    array(
-                        'sentOn' => time(),
-                        'name' => $form['name'],
-                        'fields' => $fieldData,
-                    ),
-                    true
-                )
-                ->setTo($form['email'])
-                ->setFrom(array($from['email'] => $from['name']))
-            ;
-
-            // check if we have a replyTo email set
-            foreach ($form['fields'] as $field) {
-                if (array_key_exists('reply_to', $field['settings']) &&
-                    $field['settings']['reply_to'] === true
-                ) {
-                    $email = $fieldData[$field['id']]['value'];
-                    $message->setReplyTo(array($email => $email));
-                }
-            }
-            if ($message->getReplyTo() === null) {
-                $replyTo = $this->modulesSettings->get('Core', 'mailer_reply_to');
-                $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
-            }
-
-            $this->mailer->send($message);
+        if ($form['method'] === 'database_email' || $form['method'] === 'email') {
+            $this->mailer->send($this->getMessage($form, $fieldData, $form['email_subject']));
         }
+
+        // check if we need to send confirmation mails
+        foreach ($form['fields'] as $field) {
+            if (array_key_exists('send_confirmation_mail_to', $field['settings']) &&
+                $field['settings']['send_confirmation_mail_to'] === true
+            ) {
+                $email = $fieldData[$field['id']]['value'];
+                $this->mailer->send(
+                    $this->getMessage($form, $fieldData, $field['settings']['confirmation_mail_subject'], $email, true)
+                );
+            }
+        }
+    }
+
+    /**
+     * @param array $form
+     * @param array $fieldData
+     * @param string $subject
+     * @param string|null $to
+     * @param bool $isConfirmationMail
+     *
+     * @return Swift_Mime_SimpleMessage
+     */
+    private function getMessage(
+        array $form,
+        array $fieldData,
+        $subject = null,
+        $to = null,
+        $isConfirmationMail = false
+    ) {
+        if ($subject === null) {
+            $subject = Language::getMessage('FormBuilderSubject');
+        }
+
+        $from = $this->modulesSettings->get('Core', 'mailer_from');
+
+        $message = Message::newInstance(sprintf($subject, $form['name']))
+            ->parseHtml(
+                '/FormBuilder/Layout/Templates/Mails/' . $form['email_template'],
+                array(
+                    'subject' => $subject,
+                    'sentOn' => time(),
+                    'name' => $form['name'],
+                    'fields' => $fieldData,
+                    'is_confirmation_mail' => $isConfirmationMail,
+                ),
+                true
+            )
+            ->setTo(($to === null) ? $form['email'] : $to)
+            ->setFrom(array($from['email'] => $from['name']))
+        ;
+
+        // check if we have a replyTo email set
+        foreach ($form['fields'] as $field) {
+            if (array_key_exists('reply_to', $field['settings']) &&
+                $field['settings']['reply_to'] === true
+            ) {
+                $email = $fieldData[$field['id']]['value'];
+                $message->setReplyTo(array($email => $email));
+            }
+        }
+        if ($message->getReplyTo() === null) {
+            $replyTo = $this->modulesSettings->get('Core', 'mailer_reply_to');
+            $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
+        }
+
+        return $message;
     }
 
     /**

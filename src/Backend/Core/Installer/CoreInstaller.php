@@ -59,7 +59,6 @@ class CoreInstaller extends ModuleInstaller
     private function setRights()
     {
         $this->setModuleRights(1, 'Dashboard');
-
         $this->setActionRights(1, 'Dashboard', 'Index');
     }
 
@@ -173,7 +172,7 @@ class CoreInstaller extends ModuleInstaller
             array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email'))
         );
 
-        // stmp settings
+        // smtp settings
         $this->setSetting('Core', 'smtp_server', $this->getVariable('smtp_server'));
         $this->setSetting('Core', 'smtp_port', $this->getVariable('smtp_port'));
         $this->setSetting('Core', 'smtp_username', $this->getVariable('smtp_username'));

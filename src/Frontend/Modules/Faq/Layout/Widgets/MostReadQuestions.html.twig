@@ -2,22 +2,26 @@
   variables that are available:
   - {{ widgetFaqMostRead }}: contains an array with all posts, each element contains data about the post
 #}
-
 {% if widgetFaqMostRead %}
-  <section id="faqMostReadWidget" class="mod">
-    <div class="inner">
-      <header class="hd">
+  <aside class="module-faq widget-faq-most-read-questions">
+    {% block widget_heading %}
+      <header class="widget-heading">
         <h3>{{ 'lbl.MostReadQuestions'|trans|ucfirst }}</h3>
       </header>
-      <div class="bd content">
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
         <ul>
           {% for widgetFaqMostRead in widgetFaqMostRead %}
             <li>
-              <a href="{{ widgetFaqMostRead.full_url }}" title="{{ widgetFaqMostRead.question }}">{{ widgetFaqMostRead.question }}</a>
+              <a href="{{ widgetFaqMostRead.full_url }}" title="{{ widgetFaqMostRead.question }}">
+                {{ widgetFaqMostRead.question }}
+              </a>
             </li>
           {% endfor %}
         </ul>
       </div>
-    </div>
-  </section>
+    {% endblock %}
+  </aside>
 {% endif %}

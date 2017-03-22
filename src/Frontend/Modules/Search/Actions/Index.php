@@ -237,13 +237,14 @@ class Index extends FrontendBaseBlock
         }
 
         // create elements
-        $this->frm->addText(
-            'q',
-            null,
-            255,
-            'inputText liveSuggest autoComplete',
-            'inputTextError liveSuggest autoComplete'
-        );
+        $this->frm->addText('q')
+            ->setAttributes(
+                array(
+                    'data-role' => 'fork-search-field',
+                    'data-autocomplete' => 'enabled',
+                    'data-live-suggest' => 'enabled',
+                )
+            );
 
         // since we know the term just here we should set the canonical url here
         $canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('Search');
@@ -258,7 +259,7 @@ class Index extends FrontendBaseBlock
      */
     private function parse()
     {
-        $this->addJS('typeahead.bundle.min.js');
+        $this->addJS('/js/vendors/typeahead.bundle.min.js', true, false);
         $this->addCSS('Search.css');
 
         // parse the form

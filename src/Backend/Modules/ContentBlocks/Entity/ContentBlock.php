@@ -284,14 +284,6 @@ class ContentBlock
     }
 
     /**
-     * @ORM\PreUpdate
-     */
-    public function preUpdate()
-    {
-        $this->editedOn = new DateTime();
-    }
-
-    /**
      * Update the widget so it shows the correct title and has the correct template
      */
     private function updateWidget()
@@ -321,16 +313,17 @@ class ContentBlock
      * @param string $text
      * @param bool $isHidden
      * @param string $template
+     * @param int $userId
      *
      * @return ContentBlock
      */
-    public function update($title, $text, $isHidden, $template)
+    public function update($title, $text, $isHidden, $template, $userId)
     {
         $this->status = ContentBlockStatus::archived();
 
         return self::create(
             $this->id,
-            $this->userId,
+            $userId,
             $this->extraId,
             $this->locale,
             $title,

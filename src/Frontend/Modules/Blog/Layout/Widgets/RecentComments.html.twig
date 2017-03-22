@@ -2,27 +2,30 @@
   variables that are available:
   - {{ widgetBlogRecentComments }}: contains an array with the recent comments. Each element contains data about the comment.
 #}
-
 {% if widgetBlogRecentComments %}
-  <section id="blogRecentCommentsWidget" class="mod">
-    <div class="inner">
-      <header class="hd">
+  <aside class="module-blog widget-blog-recent-comments">
+    {% block widget_heading %}
+      <header role="banner" class="widget-heading">
         <h3>{{ 'lbl.RecentComments'|trans|ucfirst }}</h3>
       </header>
-      <div class="bd content">
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
         <ul>
           {% for comment in widgetBlogRecentComments %}
             <li>
-              {% if comment.website %}
-                <a href="{{ comment.website }}" rel="nofollow">{{ comment.author }}</a>
-              {% else %}
+              {% if comment.website %}<a href="{{ comment.website }}" rel="nofollow">{% endif %}
                 {{ comment.author }}
-              {% endif %}
+              {% if comment.website %}</a>{% endif %}
               {{ 'lbl.CommentedOn'|trans }} <a href="{{ comment.full_url }}">{{ comment.post_title }}</a>
+              <time class="muted" itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH,i,s') }}">
+                {{ comment.created_on|timeago|raw }}
+              </time>
             </li>
           {% endfor %}
         </ul>
       </div>
-    </div>
-  </section>
+    {% endblock %}
+  </aside>
 {% endif %}

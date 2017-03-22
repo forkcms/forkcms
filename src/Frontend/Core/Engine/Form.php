@@ -70,7 +70,7 @@ class Form extends \Common\Core\Form
         $name = (string) $name;
         $value = (string) $value;
         $type = (string) $type;
-        $class = ($class !== null) ? (string) $class : 'inputText inputButton';
+        $class = ($class !== null) ? (string) $class : 'btn inputButton';
 
         // do a check, only enable this if we use forms that are submitted with javascript
         if ($type == 'submit' && $name == 'submit') {
@@ -114,7 +114,7 @@ class Form extends \Common\Core\Form
         $type = \SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
-        $class = ($class !== null) ? (string) $class : 'inputText inputDate';
+        $class = ($class !== null) ? (string) $class : 'form-control inputDate';
         $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputDateError';
 
         // validate
@@ -148,21 +148,21 @@ class Form extends \Common\Core\Form
         switch ($type) {
             // start date
             case 'from':
-                $class .= ' inputDatefieldFrom inputText';
+                $class .= ' inputDatefieldFrom form-control';
                 $classError .= ' inputDatefieldFrom';
                 $attributes['data-startdate'] = date('Y-m-d', $date);
                 break;
 
             // end date
             case 'till':
-                $class .= ' inputDatefieldTill inputText';
+                $class .= ' inputDatefieldTill form-control';
                 $classError .= ' inputDatefieldTill';
                 $attributes['data-enddate'] = date('Y-m-d', $date);
                 break;
 
             // date range
             case 'range':
-                $class .= ' inputDatefieldRange inputText';
+                $class .= ' inputDatefieldRange form-control';
                 $classError .= ' inputDatefieldRange';
                 $attributes['data-startdate'] = date('Y-m-d', $date);
                 $attributes['data-enddate'] = date('Y-m-d', $date2);
@@ -170,7 +170,7 @@ class Form extends \Common\Core\Form
 
             // normal date field
             default:
-                $class .= ' inputDatefieldNormal inputText';
+                $class .= ' inputDatefieldNormal form-control';
                 $classError .= ' inputDatefieldNormal';
                 break;
         }
@@ -182,6 +182,44 @@ class Form extends \Common\Core\Form
         parent::getField($name)->setAttributes($attributes);
 
         // return date field
+        return parent::getField($name);
+    }
+
+    /**
+     * Adds a single dropdown.
+     *
+     * @param string $name              Name of the element.
+     * @param array  $values            Values for the dropdown.
+     * @param string $selected          The selected elements.
+     * @param bool   $multipleSelection Is it possible to select multiple items?
+     * @param string $class             Class(es) that will be applied on the element.
+     * @param string $classError        Class(es) that will be applied on the element when an error occurs.
+     * @return \SpoonFormDropdown
+     */
+    public function addDropdown(
+        $name,
+        array $values = null,
+        $selected = null,
+        $multipleSelection = false,
+        $class = null,
+        $classError = null
+    ) {
+        $name = (string) $name;
+        $values = (array) $values;
+        $selected = ($selected !== null) ? $selected : null;
+        $multipleSelection = (bool) $multipleSelection;
+        $class = ($class !== null) ? (string) $class : 'form-control';
+        $classError = ($classError !== null) ? (string) $classError : 'selectError';
+
+        // special classes for multiple
+        if ($multipleSelection) {
+            $class .= ' selectMultiple';
+            $classError .= ' selectMultipleError';
+        }
+
+        // create and return a dropdown
+        parent::addDropdown($name, $values, $selected, $multipleSelection, $class, $classError);
+
         return parent::getField($name);
     }
 
@@ -223,6 +261,124 @@ class Form extends \Common\Core\Form
         $this->add(new FormImage($name, $class, $classError));
 
         return $this->getField($name);
+    }
+
+    /**
+     * Adds a single password field.
+     *
+     * @param string $name       The name of the field.
+     * @param string $value      The value for the field.
+     * @param int    $maxLength  The maximum length for the field.
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     * @param bool   $HTML       Will the field contain HTML?
+     * @return \SpoonFormPassword
+     */
+    public function addPassword(
+        $name,
+        $value = null,
+        $maxLength = null,
+        $class = null,
+        $classError = null,
+        $HTML = false
+    ) {
+        $name = (string) $name;
+        $value = ($value !== null) ? (string) $value : null;
+        $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
+        $class = ($class !== null) ? (string) $class : 'form-control inputPassword';
+        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputPasswordError';
+        $HTML = (bool) $HTML;
+
+        // create and return a password field
+        return parent::addPassword($name, $value, $maxLength, $class, $classError, $HTML);
+    }
+
+    /**
+     * Adds a single radio button.
+     *
+     * @param string $name       The name of the element.
+     * @param array  $values     The possible values for the radio button.
+     * @param string $checked    Should the element be checked?
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     * @return \SpoonFormRadiobutton
+     */
+    public function addRadiobutton($name, array $values, $checked = null, $class = null, $classError = null)
+    {
+        $name = (string) $name;
+        $values = (array) $values;
+        $checked = ($checked !== null) ? (string) $checked : null;
+        $class = ($class !== null) ? (string) $class : 'inputRadio';
+        $classError = ($classError !== null) ? (string) $classError : 'inputRadioError';
+
+        // create and return a radio button
+        return parent::addRadiobutton($name, $values, $checked, $class, $classError);
+    }
+
+    /**
+     * Adds a single textfield.
+     *
+     * @param string $name       The name of the element.
+     * @param string $value      The value inside the element.
+     * @param int    $maxLength  The maximum length for the value.
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     * @param bool   $HTML       Will this element contain HTML?
+     * @return \SpoonFormText
+     */
+    public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
+    {
+        $name = (string) $name;
+        $value = ($value !== null) ? (string) $value : null;
+        $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
+        $class = ($class !== null) ? (string) $class : 'form-control';
+        $classError = ($classError !== null) ? (string) $classError : 'inputTextError';
+        $HTML = (bool) $HTML;
+
+        // create and return a textfield
+        return parent::addText($name, $value, $maxLength, $class, $classError, $HTML);
+    }
+
+    /**
+     * Adds a single textarea.
+     *
+     * @param string $name       The name of the element.
+     * @param string $value      The value inside the element.
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     * @param bool   $HTML       Will the element contain HTML?
+     * @return \SpoonFormTextarea
+     */
+    public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
+    {
+        $name = (string) $name;
+        $value = ($value !== null) ? (string) $value : null;
+        $class = ($class !== null) ? (string) $class : 'form-control';
+        $classError = ($classError !== null) ? (string) $classError : 'textareaError';
+        $HTML = (bool) $HTML;
+
+        // create and return a textarea
+        return parent::addTextarea($name, $value, $class, $classError, $HTML);
+    }
+
+    /**
+     * Adds a single time field.
+     *
+     * @param string $name       The name of the element.
+     * @param string $value      The value inside the element.
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     * @return \SpoonFormTime
+     */
+    public function addTime($name, $value = null, $class = null, $classError = null)
+    {
+        $name = (string) $name;
+        $value = ($value !== null) ? (string) $value : null;
+        $class = ($class !== null) ? (string) $class : 'form-control inputTime';
+        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputTimeError';
+
+        // create and return a time field
+        return parent::addTime($name, $value, $class, $classError);
     }
 
     /**

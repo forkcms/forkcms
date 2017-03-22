@@ -40,15 +40,14 @@ class Form extends FrontendBaseWidget
     private function loadForm()
     {
         $this->frm = new FrontendForm('search', FrontendNavigation::getURLForBlock('Search'), 'get', null, false);
-        $widgetField = $this->frm->addText(
-            'q_widget',
-            null,
-            255,
-            'inputText autoSuggest',
-            'inputTextError autoSuggest'
-        );
+        $widgetField = $this->frm->addText('q_widget');
 
-        $widgetField->setAttribute('itemprop', 'query-input');
+        $widgetField->setAttributes(
+            array(
+                'itemprop' => 'query-input',
+                'data-role' => 'fork-widget-search-field',
+            )
+        );
     }
 
     /**
@@ -56,7 +55,7 @@ class Form extends FrontendBaseWidget
      */
     private function parse()
     {
-        $this->addJS('typeahead.bundle.min.js');
+        $this->addJS('/js/vendors/typeahead.bundle.min.js', 'Core', false, true);
         $this->addCSS('Search.css');
         $this->frm->parse($this->tpl);
     }

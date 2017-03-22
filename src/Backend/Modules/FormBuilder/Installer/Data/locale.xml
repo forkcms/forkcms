@@ -295,6 +295,16 @@
         <translation language="sv"><![CDATA[spara i databas och skicka e-post]]></translation>
         <translation language="el"><![CDATA[Αποθήκευση στη Βάση δεδομένων και αποστολή email]]></translation>
       </item>
+      <item type="label" name="MethodEmail">
+        <translation language="nl"><![CDATA[email verzenden]]></translation>
+        <translation language="en"><![CDATA[send email]]></translation>
+        <translation language="it"><![CDATA[invia mail]]></translation>
+        <translation language="fr"><![CDATA[envoyer par e-mail]]></translation>
+        <translation language="hu"><![CDATA[email-ben küldés]]></translation>
+        <translation language="de"><![CDATA[E-Mail versenden]]></translation>
+        <translation language="es"><![CDATA[enviar un email]]></translation>
+        <translation language="sv"><![CDATA[skicka e-post]]></translation>
+      </item>
       <item type="label" name="MinutesAgo">
         <translation language="nl"><![CDATA[%1$s minuten geleden]]></translation>
         <translation language="en"><![CDATA[%1$s minutes ago]]></translation>
@@ -1058,6 +1068,22 @@
       <item type="error" name="EmailValidationIsRequired">
         <translation language="en"><![CDATA[Email validation is required when using this field as 'reply to' emailaddress.]]></translation>
       </item>
+      <item type="error" name="ActivateEmailValidationToUseThisOption">
+        <translation language="nl"><![CDATA[Activeer email validatie om deze optie te kunnen gebruiken.]]></translation>
+        <translation language="en"><![CDATA[Activate email validation to use this option.]]></translation>
+      </item>
+      <item type="label" name="SendConfirmationMailTo">
+        <translation language="nl"><![CDATA[verstuur bevestigingsmail naar]]></translation>
+        <translation language="en"><![CDATA[send confirmation mail to]]></translation>
+      </item>
+      <item type="label" name="EmailSubject">
+        <translation language="nl"><![CDATA[onderwerp email]]></translation>
+        <translation language="en"><![CDATA[email subject]]></translation>
+      </item>
+      <item type="label" name="ConfirmationMailSubject">
+        <translation language="nl"><![CDATA[onderwerp bevestigingsmail]]></translation>
+        <translation language="en"><![CDATA[subject confirmation mail]]></translation>
+      </item>
     </FormBuilder>
   </Backend>
   <Frontend>
@@ -1075,6 +1101,10 @@
         <translation language="uk"><![CDATA[Вкажіть значення]]></translation>
         <translation language="sv"><![CDATA[невірний час]]></translation>
         <translation language="el"><![CDATA[Μη έγκυρη ώρα]]></translation>
+      </item>
+      <item type="message" name="YouJustSentTheFollowingMessage">
+        <translation language="nl"><![CDATA[U verstuurde net het onderstaande bericht.]]></translation>
+        <translation language="en"><![CDATA[You just sent the following message.]]></translation>
       </item>
     </Core>
   </Frontend>

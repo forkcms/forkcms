@@ -52,14 +52,14 @@ class Index extends BackendBaseActionIndex
             'email'
         );
         $this->dataGrid->setColumnFunction(
+            array(__CLASS__, 'parseNumForms'),
+            array('[id]', '[sent_forms]', '[method]'),
+            'sent_forms'
+        );
+        $this->dataGrid->setColumnFunction(
             array(new BackendFormBuilderModel(), 'getLocale'),
             array('Method_[method]'),
             'method'
-        );
-        $this->dataGrid->setColumnFunction(
-            array(__CLASS__, 'parseNumForms'),
-            array('[id]', '[sent_forms]'),
-            'sent_forms'
         );
 
         // check if edit action is allowed
@@ -94,11 +94,16 @@ class Index extends BackendBaseActionIndex
      *
      * @param int $formId Id of the form.
      * @param int $sentForms Amount of sent forms.
+     * @param string $method The way the data is handled.
      *
      * @return string
      */
-    public static function parseNumForms($formId, $sentForms)
+    public static function parseNumForms($formId, $sentForms, $method)
     {
+        if ($method === 'email') {
+            return '';
+        }
+
         // redefine
         $formId = (int) $formId;
         $sentForms = (int) $sentForms;

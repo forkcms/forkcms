@@ -1,9 +1,9 @@
 {% if navigation %}
-  <ul>
+  <ul class="nav navbar-nav" role="navigation">
     {% for nav in navigation %}
-      <li{% if nav.selected %} class="selected"{% endif %}>
+      <li{% if nav.selected %} class="active"{% endif %}>
         <a href="{{ nav.link }}" title="{{ nav.navigation_title }}"{% if nav.nofollow %} rel="nofollow"{% endif %}>{{ nav.navigation_title|raw }}</a>
-        {% if nav.selected %}{{ nav.children|raw }}{% endif %}
+        {% if nav.selected %}{{ nav.children }}{% endif %}
       </li>
     {% endfor %}
   </ul>

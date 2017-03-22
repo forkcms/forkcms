@@ -74,9 +74,9 @@ jsFrontend.cookieBar =
     init: function()
     {
         // if there is no cookiebar we shouldn't do anything
-        if($('#cookieBar').length === 0) return;
+        if($('#cookie-bar').length === 0) return;
 
-        $cookieBar = $('#cookieBar');
+        $cookieBar = $('#cookie-bar');
 
         // @remark: as you can see we use PHP-serialized values so we can use them in PHP too.
         // hide the cookieBar if needed
@@ -84,16 +84,17 @@ jsFrontend.cookieBar =
             $cookieBar.hide();
         }
 
-        $cookieBar.on('click', '#cookieBarAgree', function(e) {
+        $cookieBar.on('click', '[data-role="cookie-bar-button"]', function(e) {
             e.preventDefault();
-            utils.cookies.setCookie('cookie_bar_agree', 'b:1;');
-            utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
-            $cookieBar.hide();
-        });
-        $cookieBar.on('click', '#cookieBarDisagree', function(e) {
-            e.preventDefault();
-            utils.cookies.setCookie('cookie_bar_agree', 'b:0;');
-            utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+
+            if ($(e.currentTarget).data('action') == 'agree') {
+                utils.cookies.setCookie('cookie_bar_agree', 'b:1;');
+                utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+            }
+            else {
+                utils.cookies.setCookie('cookie_bar_agree', 'b:0;');
+                utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+            }
             $cookieBar.hide();
         });
     }

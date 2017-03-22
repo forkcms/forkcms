@@ -35,7 +35,8 @@
         "mailmotor/mailmotor-bundle": "^2.0",
         "ramsey/uuid": "^3.5",
         "ramsey/uuid-doctrine": "^1.2",
-        "liip/imagine-bundle": "^1.7"
+        "liip/imagine-bundle": "^1.7",
+        "swiftmailer/swiftmailer": "^5.4.6"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
