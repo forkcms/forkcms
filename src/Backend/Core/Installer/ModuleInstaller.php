@@ -315,7 +315,7 @@ class ModuleInstaller
 
         // if the theme is still null we should fallback to the core
         if ($theme === null) {
-            $theme = 'core';
+            $theme = 'Core';
         }
 
         // return best matching template id
