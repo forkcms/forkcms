@@ -1000,7 +1000,10 @@ class ModuleInstaller
         }
     }
 
-    private function getAndCopyRandomImage()
+    /**
+     * @return string
+     */
+    private function getAndCopyRandomImage(): string
     {
         $finder = new Finder();
         $finder
