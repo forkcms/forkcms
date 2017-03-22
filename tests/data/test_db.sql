@@ -2347,8 +2347,8 @@ LOCK TABLES `themes_templates` WRITE;
 
 INSERT INTO `themes_templates` (`id`, `theme`, `label`, `path`, `active`, `data`)
 VALUES
-  (1,'core','Default','Core/Layout/Templates/Default.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
-  (2,'core','Home','Core/Layout/Templates/Home.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
+  (1,'Core','Default','Core/Layout/Templates/Default.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
+  (2,'Core','Home','Core/Layout/Templates/Home.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
   (3,'Fork','Default','Core/Layout/Templates/Default.html.twig','Y','a:3:{s:6:\"format\";s:91:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]\";s:5:\"names\";a:4:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:3:\"top\";i:3;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}'),
   (4,'Fork','Home','Core/Layout/Templates/Home.html.twig','Y','a:3:{s:6:\"format\";s:115:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]\";s:5:\"names\";a:5:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:5:\"right\";i:3;s:3:\"top\";i:4;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}');
 
