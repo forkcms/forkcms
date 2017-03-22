@@ -1006,8 +1006,6 @@ class ModuleInstaller
      */
     private function getAndCopyRandomImage(): string
     {
-        return 'test.jpg';
-
         $finder = new Finder();
         $finder
             ->files()
@@ -1017,6 +1015,8 @@ class ModuleInstaller
         $finder = iterator_to_array($finder);
         $randomImage = $finder[array_rand($finder)];
         $randomName = time() . '.jpg';
+
+        return $randomName;
 
         copy(
             $randomImage->getRealPath(),
