@@ -39,6 +39,7 @@ class AppKernel extends Kernel
             new \MailMotor\Bundle\MailMotorBundle\MailMotorMailMotorBundle(),
             new \MailMotor\Bundle\MailChimpBundle\MailMotorMailChimpBundle(),
             new \MailMotor\Bundle\CampaignMonitorBundle\MailMotorCampaignMonitorBundle(),
+            new \Liip\ImagineBundle\LiipImagineBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

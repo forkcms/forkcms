@@ -34,7 +34,8 @@
         "mailmotor/campaignmonitor-bundle": "^1.0",
         "mailmotor/mailmotor-bundle": "^2.0",
         "ramsey/uuid": "^3.5",
-        "ramsey/uuid-doctrine": "^1.2"
+        "ramsey/uuid-doctrine": "^1.2",
+        "liip/imagine-bundle": "^1.7"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
