@@ -734,7 +734,6 @@ class ModuleInstaller
         }
 
         if ($this->installExample() && !isset($revision['data']['image'])) {
-            // test if this is the culprit
             $revision['data']['image'] = $this->getAndCopyRandomImage();
         }
 
