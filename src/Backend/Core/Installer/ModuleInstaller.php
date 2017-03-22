@@ -1016,9 +1016,8 @@ class ModuleInstaller
         $randomImage = $finder[array_rand($finder)];
         $randomName = time() . '.jpg';
 
-        return $randomName;
-
-        copy(
+        $fileSystem = new Filesystem();
+        $fileSystem->copy(
             $randomImage->getRealPath(),
             __DIR__ . '/../../../Frontend/Files/pages/images/source/' . $randomName
         );
