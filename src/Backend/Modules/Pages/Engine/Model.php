@@ -1523,19 +1523,18 @@ class Model
                 foreach ($defaultBlocks as $position => $blocks) {
                     // loop blocks
                     foreach ($blocks as $extraId) {
-                        // build block
-                        $block = array();
-                        $block['revision_id'] = $page['revision_id'];
-                        $block['position'] = $position;
-                        $block['extra_id'] = $extraId;
-                        $block['html'] = '';
-                        $block['created_on'] = BackendModel::getUTCDate();
-                        $block['edited_on'] = $block['created_on'];
-                        $block['visible'] = 'Y';
-                        $block['sequence'] = count($defaultBlocks[$position]) - 1;
-
                         // add to the list
-                        $blocksContent[] = $block;
+                        $blocksContent[] = [
+                            'revision_id' => $page['revision_id'],
+                            'position' => $position,
+                            'extra_id' => $extraId,
+                            'extra_type' => 'rich_text',
+                            'html' => '',
+                            'created_on' => BackendModel::getUTCDate(),
+                            'edited_on' => BackendModel::getUTCDate(),
+                            'visible' => 'Y',
+                            'sequence' => count($defaultBlocks[$position]) - 1,
+                        ];
                     }
                 }
             } else {
