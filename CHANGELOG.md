@@ -1,3 +1,40 @@
+4.5.2 (2017-03-22)
+------------------
+Security:
+
+* Core: XSS and direct access to certain php files fixed [#2013](https://github.com/forkcms/forkcms/pull/2013)
+
+Bugfixes:
+
+* Extensions: Install after uploading a doctrine module has been fixed [#2014](https://github.com/forkcms/forkcms/pull/2014)
+* ContentBlocks: Fix content block revision issue with time and user [#2012](https://github.com/forkcms/forkcms/pull/2012)
+
+
+4.5.1 (2017-03-17)
+------------------
+Security:
+
+* Core: updated swiftmailer to include security patch [#2011](https://github.com/forkcms/forkcms/pull/2011)
+
+Bugfixes:
+
+* Core: Fix redirect exception not working inside parsewidget template modifier [#1996](https://github.com/forkcms/forkcms/pull/1996)
+* Core: Remove action pages from children navigation [#2009](https://github.com/forkcms/forkcms/pull/2009)
+* Core: Fix meta id comparison with null [#2010](https://github.com/forkcms/forkcms/pull/2010)
+* Core: Move the raw conversion to the macro itself [#2006](https://github.com/forkcms/forkcms/pull/2006)
+* Core: Fixes for travis [#2003](https://github.com/forkcms/forkcms/pull/2003) and [#2002](https://github.com/forkcms/forkcms/pull/2002)
+* Core: Fix image/file prefix for certain characters [#1995](https://github.com/forkcms/forkcms/pull/1995)
+* Core: Replace http with https in schema.org url [#1998](https://github.com/forkcms/forkcms/pull/1998)
+* Core: frontend.js is now also minified [#1990](https://github.com/forkcms/forkcms/pull/1990)
+* Core: Fixed icon button layout issues [#1991](https://github.com/forkcms/forkcms/pull/1991)
+* Core: Removed usages of the deprecated Language class [#1983](https://github.com/forkcms/forkcms/pull/1983)
+* MailMotor: Add fixes from mailmotor/campaignmonitor-bundle [#1982](https://github.com/forkcms/forkcms/pull/1982)
+
+Improvements:
+
+* Installer: Nicer installer requirements page [#1992](https://github.com/forkcms/forkcms/pull/1992)
+
+
 4.5.0 (2017-01-20)
 ------------------
 

@@ -59,6 +59,7 @@ class Statistics extends BackendBaseActionIndex
             'time',
             true
         );
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[term]'], 'term');
 
         // sorting columns
         $this->dataGrid->setSortingColumns(array('time', 'term'), 'time');
@@ -85,10 +86,13 @@ class Statistics extends BackendBaseActionIndex
      */
     public static function setReferrer($data)
     {
-        // unserialize
         $data = unserialize($data);
+        if (!isset($data['server']['HTTP_REFERER'])) {
+            return '';
+        }
 
-        // return correct data
-        return (isset($data['server']['HTTP_REFERER'])) ? '<a href="' . $data['server']['HTTP_REFERER'] . '">' . $data['server']['HTTP_REFERER'] . '</a>' : '';
+        $referrer = htmlspecialchars($data['server']['HTTP_REFERER']);
+
+        return '<a href="' . $referrer . '">' . $referrer . '</a>';
     }
 }

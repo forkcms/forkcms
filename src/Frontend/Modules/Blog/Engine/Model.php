@@ -193,9 +193,9 @@ class Model implements FrontendTagsInterface
      */
     public static function getAllComments($limit = 10, $offset = 0)
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecords(
+        $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
-             p.id AS post_id, p.title AS post_title, m.url AS post_url
+             p.id AS post_id, p.title AS post_title, m.url AS post_url, i.email
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
              INNER JOIN meta AS m ON p.meta_id = m.id
@@ -205,6 +205,15 @@ class Model implements FrontendTagsInterface
              LIMIT ?, ?',
             array('published', LANGUAGE, (int) $offset, (int) $limit)
         );
+
+        // loop comments and create gravatar id
+        foreach ($comments as &$row) {
+            $row['author'] = htmlspecialchars($row['author']);
+            $row['text'] = htmlspecialchars($row['text']);
+            $row['gravatar_id'] = md5($row['email']);
+        }
+
+        return $comments;
     }
 
     /**
@@ -559,6 +568,8 @@ class Model implements FrontendTagsInterface
 
         // loop comments and create gravatar id
         foreach ($comments as &$row) {
+            $row['author'] = htmlspecialchars($row['author']);
+            $row['text'] = htmlspecialchars($row['text']);
             $row['gravatar_id'] = md5($row['email']);
         }
 

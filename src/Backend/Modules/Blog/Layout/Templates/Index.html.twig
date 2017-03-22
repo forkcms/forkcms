@@ -47,7 +47,7 @@
       <div class="content-title">
         <p>{{ 'lbl.RecentlyEdited'|trans|ucfirst }}</p>
       </div>
-      {{ macro.dataGrid(dgRecent, 'msg.NoItems'|trans|format(geturl('add'))|raw) }}
+      {{ macro.dataGrid(dgRecent, 'msg.NoItems'|trans|format(geturl('add'))) }}
     </div>
   {% endif %}
 
@@ -56,7 +56,7 @@
     <div class="content-title">
       <p>{{ 'lbl.Drafts'|trans|ucfirst }}</p>
     </div>
-    {{ macro.dataGrid(dgDrafts, 'msg.NoItems'|trans|format(geturl('add'))|raw) }}
+    {{ macro.dataGrid(dgDrafts, 'msg.NoItems'|trans|format(geturl('add'))) }}
   </div>
   {% endif %}
 
@@ -65,9 +65,9 @@
       <p>{{ 'lbl.PublishedArticles'|trans|ucfirst }}</p>
     </div>
     {% if filterCategory %}
-      {{ macro.dataGrid(dgPosts, 'msg.NoItems'|trans|format(geturl('add', null, '&category=#{filterCategory.id}'))|raw) }}
+      {{ macro.dataGrid(dgPosts, 'msg.NoItems'|trans|format(geturl('add', null, '&category=#{filterCategory.id}'))) }}
     {% else %}
-      {{ macro.dataGrid(dgPosts, 'msg.NoItems'|trans|format(geturl('add'))|raw) }}
+      {{ macro.dataGrid(dgPosts, 'msg.NoItems'|trans|format(geturl('add'))) }}
     {% endif %}
   </div>
 {% endblock %}
