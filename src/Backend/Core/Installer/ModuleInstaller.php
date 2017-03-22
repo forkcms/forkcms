@@ -735,7 +735,7 @@ class ModuleInstaller
 
         if ($this->installExample() && !isset($revision['data']['image'])) {
             // test if this is the culprit
-            //$revision['data']['image'] = $this->getAndCopyRandomImage();
+            $revision['data']['image'] = $this->getAndCopyRandomImage();
         }
 
         if ($revision['data'] !== null) {
@@ -1006,6 +1006,8 @@ class ModuleInstaller
      */
     private function getAndCopyRandomImage(): string
     {
+        return 'test.jpg';
+
         $finder = new Finder();
         $finder
             ->files()
