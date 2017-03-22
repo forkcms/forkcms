@@ -66,7 +66,7 @@ class Installer extends ModuleInstaller
          * General theme settings
          */
         // set default template
-        $this->setSetting('Pages', 'default_template', $this->getTemplateId('default'));
+        $this->setSetting('Pages', 'default_template', $this->getTemplateId('Default'));
 
         // disable meta navigation
         $this->setSetting('Pages', 'meta_navigation', false);
@@ -205,6 +205,6 @@ class Installer extends ModuleInstaller
         $this->setSetting('Core', 'theme', 'Fork', true);
 
         // set default template
-        $this->setSetting('Pages', 'default_template', $this->getTemplateId('default'));
+        $this->setSetting('Pages', 'default_template', $this->getTemplateId('Default'));
     }
 }

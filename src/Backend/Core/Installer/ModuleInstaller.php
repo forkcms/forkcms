@@ -633,7 +633,7 @@ class ModuleInstaller
             $revision['user_id'] = $this->getDefaultUserID();
         }
         if (!isset($revision['template_id'])) {
-            $revision['template_id'] = $this->getTemplateId('default');
+            $revision['template_id'] = $this->getTemplateId('Default');
         }
         if (!isset($revision['type'])) {
             $revision['type'] = 'page';
@@ -1000,7 +1000,10 @@ class ModuleInstaller
         }
     }
 
-    private function getAndCopyRandomImage()
+    /**
+     * @return string
+     */
+    private function getAndCopyRandomImage(): string
     {
         $finder = new Finder();
         $finder
@@ -1012,7 +1015,8 @@ class ModuleInstaller
         $randomImage = $finder[array_rand($finder)];
         $randomName = time() . '.jpg';
 
-        copy(
+        $fileSystem = new Filesystem();
+        $fileSystem->copy(
             $randomImage->getRealPath(),
             __DIR__ . '/../../../Frontend/Files/pages/images/source/' . $randomName
         );
