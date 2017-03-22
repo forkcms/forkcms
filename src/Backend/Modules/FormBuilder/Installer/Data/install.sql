@@ -3,10 +3,12 @@ CREATE TABLE IF NOT EXISTS `forms` (
   `language` varchar(5) NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
-  `method` enum('database','database_email') NOT NULL default 'database_email',
+  `method` enum('database','database_email','email') NOT NULL default 'database_email',
   `email` text,
   `success_message` text,
   `identifier` varchar(255) NOT NULL,
+  `email_template` VARCHAR(255) DEFAULT "Form.html.twig",
+  `email_subject` VARCHAR(255) NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY  (`id`)

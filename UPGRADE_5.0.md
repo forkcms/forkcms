@@ -128,7 +128,9 @@ You can use the Twig templating service instead.
 
 You should use `Common\Uri::getUrl()` instead.
 
-## Formbuilder validation type enum value numeric changed to number
+## FormBuilder
+
+### validation type enum value numeric changed to number
 
 number is the correct name for input fields so we should mimic that
 
@@ -136,6 +138,16 @@ run the following queries to update your database
 
     ALTER TABLE forms_fields_validation CHANGE `type` `type` enum('required','email','number','time') COLLATE utf8mb4_unicode_ci NOT NULL;
     UPDATE `forms_fields_validation` SET `type` = "number" WHERE `type` = "";
+
+### set subject and template for formbuilder
+
+You can now set the subject and the template for the form with formbuilder.
+
+You do need to run the following queries for that.
+
+    ALTER TABLE forms ADD email_template VARCHAR(255) DEFAULT "Form.html.twig";
+    ALTER TABLE forms ADD email_subject VARCHAR(255) NULL;
+    ALTER TABLE forms MODIFY `method` enum('database','database_email','email') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email';
 
 ## Removed constants
 

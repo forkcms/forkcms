@@ -23,11 +23,19 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 class Add extends BackendBaseActionAdd
 {
     /**
+     * The available templates
+     *
+     * @var	array
+     */
+    private $templates = array();
+
+    /**
      * Execute the action
      */
     public function execute()
     {
         parent::execute();
+        $this->templates = BackendFormBuilderModel::getTemplates();
         $this->loadForm();
         $this->validateForm();
         $this->parse();
@@ -46,12 +54,19 @@ class Add extends BackendBaseActionAdd
             array(
                 'database' => BL::getLabel('MethodDatabase'),
                 'database_email' => BL::getLabel('MethodDatabaseEmail'),
+                'email' => BL::getLabel('MethodEmail'),
             ),
             'database_email'
         );
         $this->frm->addText('email');
+        $this->frm->addText('email_subject');
         $this->frm->addText('identifier', BackendFormBuilderModel::createIdentifier());
         $this->frm->addEditor('success_message');
+
+        // if we have multiple templates, add a dropdown to select them
+        if (count($this->templates) > 1) {
+            $this->frm->addDropdown('template', array_combine($this->templates, $this->templates));
+        }
     }
 
     /**
@@ -65,6 +80,7 @@ class Add extends BackendBaseActionAdd
             // shorten the fields
             $txtName = $this->frm->getField('name');
             $txtEmail = $this->frm->getField('email');
+            $txtEmailSubject = $this->frm->getField('email_subject');
             $ddmMethod = $this->frm->getField('method');
             $txtSuccessMessage = $this->frm->getField('success_message');
             $txtIdentifier = $this->frm->getField('identifier');
@@ -110,7 +126,11 @@ class Add extends BackendBaseActionAdd
                 $values['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $values['name'] = $txtName->getValue();
                 $values['method'] = $ddmMethod->getValue();
-                $values['email'] = ($ddmMethod->getValue() == 'database_email') ? serialize($emailAddresses) : null;
+                $values['email'] = ($ddmMethod->getValue() === 'database_email' || $ddmMethod->getValue() === 'email')
+                    ? serialize($emailAddresses) : null;
+                $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
+                $values['email_template'] = count($this->templates) > 1
+                    ? $this->frm->getField('template')->getValue() : $this->templates[0];
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :

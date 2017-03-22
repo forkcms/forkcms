@@ -58,6 +58,18 @@
                       {% form_field method %} {% form_field_error method %}
                     </div>
                     <div class="form-group">
+                      <label for="EmailSubject" class="control-label">
+                        {{ 'lbl.EmailSubject'|trans|ucfirst }}
+                      </label>
+                      {% form_field email_subject %} {% form_field_error email_subject %}
+                    </div>
+                    {% if ddmTemplate %}
+                      <div class="form-group">
+                        <label for="template" class="control-label">{{ 'lbl.Template'|trans|ucfirst }}</label>
+                        {% form_field template %} {% form_field_error template %}
+                      </div>
+                    {% endif %}
+                    <div class="form-group">
                       <label for="email" class="control-label">
                         {{ 'lbl.Recipient'|trans|ucfirst }}
                         {{ macro.required }}
@@ -283,6 +295,22 @@
                       </li>
                     </ul>
                   </div>
+                  <div class="form-group">
+                    <ul class="list-unstyled">
+                      <li class="checkbox">
+                        <label for="textboxSendConfirmationMailTo" class="control-label">
+                          {% form_field textbox_send_confirmation_mail_to %} {{ 'lbl.SendConfirmationMailTo'|trans|ucfirst }}
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="form-group">
+                    <label for="textboxConfirmationMailSubject" class="control-label">
+                      {{ 'lbl.ConfirmationMailSubject'|trans|ucfirst }}
+                    </label>
+                    {% form_field textbox_confirmation_mail_subject %}
+                    <p id="textboxConfirmationMailSubjectErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                  </div>
                   <div class="jsValidation">
                     <ul class="list-unstyled">
                       <li class="checkbox">
@@ -305,7 +333,8 @@
                       <label for="textboxValidation" class="control-label">{{ 'lbl.Validation'|trans|ucfirst }}</label>
                       {% form_field textbox_validation %}
                     </div>
-                    <p id="textboxReplyToErrorMessageError" class="text-danger" style="display: none;"></p>
+                    <p id="textboxReplyToErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                    <p id="textboxSendConfirmationMailToErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                     <div class="form-group jsValidationParameter" style="display: none;">
                       <label for="textboxValidationParameter" class="control-label">
                         {{ 'lbl.Parameter'|trans|ucfirst }}
