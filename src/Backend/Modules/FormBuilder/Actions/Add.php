@@ -25,7 +25,7 @@ class Add extends BackendBaseActionAdd
     /**
      * The available templates
      *
-     * @var	array
+     * @var array
      */
     private $templates = array();
 
