@@ -98,6 +98,13 @@ class Header extends FrontendBaseObject
     private $pageTitle;
 
     /**
+     * Header title
+     *
+     * @var string
+     */
+    private $contentTitle;
+
+    /**
      * @param KernelInterface $kernel
      */
     public function __construct(KernelInterface $kernel)
@@ -117,7 +124,7 @@ class Header extends FrontendBaseObject
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/utils.js', true, null, self::PRIORITY_GROUP_GLOBAL);
-        $this->addJS('/src/Frontend/Core/Js/frontend.js', false, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/frontend.js', true, null, self::PRIORITY_GROUP_GLOBAL);
     }
 
     /**
@@ -635,6 +642,7 @@ class Header extends FrontendBaseObject
         $this->parseCustomHeaderHTMLAndGoogleAnalytics();
 
         $this->tpl->addGlobal('pageTitle', (string) $this->getPageTitle());
+        $this->tpl->addGlobal('contentTitle', $this->getContentTitle());
         $this->tpl->addGlobal(
             'siteTitle',
             (string) $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE)
@@ -967,6 +975,22 @@ class Header extends FrontendBaseObject
     }
 
     /**
+     * @param string $contentTitle
+     */
+    public function setContentTitle(string $contentTitle)
+    {
+        $this->contentTitle = $contentTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentTitle(): string
+    {
+        return $this->contentTitle;
+    }
+
+    /**
      * Set the page title
      *
      * @param string $value     The page title to be set or to be prepended.
@@ -974,6 +998,8 @@ class Header extends FrontendBaseObject
      */
     public function setPageTitle($value, $overwrite = false)
     {
+        $this->setContentTitle($value);
+
         $value = trim((string) $value);
         $overwrite = (bool) $overwrite;
 

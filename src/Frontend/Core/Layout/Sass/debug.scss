@@ -1,0 +1,6 @@
+// This file will not be included when debug-mode is off
+
+// display broken image indicator in Firefox
+img {
+  -moz-force-broken-image-icon: 1;
+}

@@ -1,8 +1,8 @@
 {% if languages %}
-  <ul>
-    {% for lng in languages %}
-      <li{% if lng.current %} class="selected"{% endif %}>
-        <a href="{{ lng.url }}">{{ lng.label|uppercase }}</a>
+  <ul class="nav navbar-nav">
+    {% for language in languages %}
+      <li{% if language.current %} class="active"{% endif %}>
+        <a href="{{ language.url }}">{{ language.label|uppercase }}</a>
       </li>
     {% endfor %}
   </ul>

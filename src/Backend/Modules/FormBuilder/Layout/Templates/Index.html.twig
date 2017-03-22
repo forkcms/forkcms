@@ -11,17 +11,6 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      {% if dataGrid %}
-        <div class="table-responsive">
-          {{ dataGrid|raw }}
-        </div>
-      {% endif %}
-      {% if not dataGrid %}
-        <p>{{ 'msg.NoItems'|trans }}</p>
-      {% endif %}
-    </div>
-  </div>
+  {{ macro.dataGrid(dataGrid) }}
 {% endblock %}
 

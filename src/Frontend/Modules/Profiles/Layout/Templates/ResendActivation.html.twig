@@ -1,29 +1,32 @@
-{# Success #}
-{% if resendActivationSuccess %}
-  <div class="message success"><p>{{ 'msg.ResendActivationIsSuccess'|trans }}</p></div>
-{% endif %}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-{# Error #}
-{% if resendActivationHasError %}
-  <div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
-{% endif %}
+<section class="module-profiles block-profiles-resend-activation">
+  {% block block_alerts %}
+    <div class="block-alerts">
+      {% if resendActivationSuccess %}
+        {{ alerts.alert('success', 'msg.ResendActivationIsSuccess'|trans) }}
+      {% endif %}
+      {% if resendActivationHasError %}
+        {{ alerts.alert('danger', 'err.FormError'|trans) }}
+      {% endif %}
+    </div>
+  {% endblock %}
 
-{% if not resendActivationHideForm %}
-  <section id="resendActivationForm" class="mod">
-    <div class="inner">
-      <div class="bd">
+  {% block block_body %}
+    {% if not resendActivationHideForm %}
+      <div class="block-body">
         {% form resendActivation %}
-        <fieldset>
-          <p {% if txtEmailError %} class="errorArea"{% endif %}>
-            <label for="email">{{ 'lbl.Email'|trans|ucfirst }} <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field email %} {% form_field_error email %}
-          </p>
-          <p>
-            <input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
-          </p>
-        </fieldset>
+        <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
+          <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+        <div class="input-group {% if txtEmailError %} has-error{% endif %}">
+          {% form_field email %}
+          <span class="input-group-btn">
+            <input class="btn btn-primary" type="submit" value="{{ 'lbl.Send'|trans|ucfirst }}" />
+          </span>
+        </div>
+        {% form_field_error email %}
         {% endform %}
       </div>
-    </div>
-  </section>
-{% endif %}
+    {% endif %}
+  {% endblock %}
+</section>

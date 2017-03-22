@@ -1,0 +1,13 @@
+.btn {
+  border-radius: 0;
+
+  &.btn-default {
+
+    &:hover,
+    &:focus {
+      background: $btn-default-border;
+      border-color: $btn-default-border;
+      color: $btn-default-bg;
+    }
+  }
+}

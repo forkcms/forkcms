@@ -44,6 +44,7 @@ class Installer extends ModuleInstaller
         $navigationAdvancedId = $this->setNavigation($navigationSettingsId, 'Advanced', null, null, 2);
         $this->setNavigation($navigationAdvancedId, 'Email', 'settings/email');
         $this->setNavigation($navigationAdvancedId, 'SEO', 'settings/seo');
+        $this->setNavigation($navigationAdvancedId, 'Tools', 'settings/tools');
 
         // modules settings navigation
         $this->setNavigation($navigationSettingsId, 'Modules', null, null, 6);

@@ -120,12 +120,30 @@ class Detail extends FrontendBaseBlock
     {
         $this->frm = new FrontendForm('feedback');
         $this->frm->addHidden('question_id', $this->record['id']);
-        $this->frm->addTextarea('message');
+        $this->frm->addTextarea('message')->setAttributes(
+            array(
+                'data-role' => 'fork-feedback-improve-message',
+            )
+        );
         $this->frm->addRadiobutton(
             'useful',
             array(
-                 array('label' => FL::lbl('Yes'), 'value' => 'Y'),
-                 array('label' => FL::lbl('No'), 'value' => 'N'),
+                 array(
+                     'label' => FL::lbl('Yes'),
+                     'value' => 'Y',
+                     'attributes' => array(
+                         'data-role' => 'fork-feedback-useful',
+                         'data-response' => 'yes'
+                     )
+                 ),
+                 array(
+                     'label' => FL::lbl('No'),
+                     'value' => 'N',
+                     'attributes' => array(
+                         'data-role' => 'fork-feedback-useful',
+                         'data-response' => 'no',
+                     )
+                 ),
             )
         );
     }

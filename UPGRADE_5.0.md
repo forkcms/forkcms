@@ -183,3 +183,52 @@ PATH_WWW is removed. From now on you need to get the path to the web directory b
 Twig has trouble with traversing directories, so in that or similar cases you can wrap it with the `realpath` function.
 
     $this->getContainer()->getParameter('site.path_www')
+
+### PATH_LIBRARY
+
+PATH_LIBRARY is removed.
+
+### site.path_library
+
+site.path_library is removed.
+    
+## meta table is now using InnoDB
+
+In order to use constraints in mysql 5.5 we need to use InnoDB
+Execute the following queries to migrate
+
+    RENAME TABLE meta TO old_meta;
+    CREATE TABLE `meta` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `keywords` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `keywords_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
+      `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `description_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
+      `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `title_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
+      `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+      `url_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
+      `custom` longtext COLLATE utf8mb4_unicode_ci,
+      `data` longtext COLLATE utf8mb4_unicode_ci,
+      PRIMARY KEY (`id`),
+      KEY `idx_url` (`url`(191))
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    INSERT INTO meta SELECT * FROM old_meta;
+    DROP TABLE old_meta;
+
+## PSR-4
+
+We are now using PSR-4
+
+As part of this transition the classes in the app directory are now also autoloaded and can be accessed via the ForkCMS\App namespace
+
+routing.php has been renamed to ForkController because we need the classname to match the filename
+
+| Old classname         | New classname                     |
+|-----------------------|-----------------------------------|
+| \KernelLoader         | \ForkCMS\App\KernelLoader         |
+| \Kernel               | \ForkCMS\App\Kernel               |
+| \ApplicationRouting   | \ForkCMS\App\ForkController       |
+| \BaseModel            | \ForkCMS\App\BaseModel            |
+| \ApplicationInterface | \ForkCMS\App\ApplicationInterface |
+| \AppKernel            | \ForkCMS\App\AppKernel            |

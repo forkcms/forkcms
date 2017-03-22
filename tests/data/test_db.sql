@@ -1835,18 +1835,18 @@ DROP TABLE IF EXISTS `meta`;
 CREATE TABLE `meta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `keywords` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `keywords_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `keywords_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `description_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `title_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
   `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url_overwrite` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
-  `custom` text CHARACTER SET utf8 COMMENT 'used for custom meta-information',
-  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'used for extra meta-information',
+  `url_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
+  `custom` longtext COLLATE utf8mb4_unicode_ci,
+  `data` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
-  KEY `idx_url` (`url`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Meta-information';
+  KEY `idx_url` (`url`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `meta` WRITE;
 /*!40000 ALTER TABLE `meta` DISABLE KEYS */;
@@ -1994,7 +1994,7 @@ VALUES
   ('Core','default_language','s:2:\"en\";'),
   ('Core','interface_languages','a:1:{i:0;s:2:\"en\";}'),
   ('Core','default_interface_language','s:2:\"en\";'),
-  ('Core','theme','s:6:\"triton\";'),
+  ('Core','theme','s:4:\"Fork\";'),
   ('Core','akismet_key','s:0:\"\";'),
   ('Core','google_maps_key','s:0:\"\";'),
   ('Core','max_num_revisions','i:20;'),
@@ -2349,10 +2349,10 @@ LOCK TABLES `themes_templates` WRITE;
 
 INSERT INTO `themes_templates` (`id`, `theme`, `label`, `path`, `active`, `data`)
 VALUES
-  (1,'core','Default','Core/Layout/Templates/Default.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
-  (2,'core','Home','Core/Layout/Templates/Home.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
-  (3,'triton','Default','Core/Layout/Templates/Default.html.twig','Y','a:3:{s:6:\"format\";s:91:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]\";s:5:\"names\";a:4:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:3:\"top\";i:3;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}'),
-  (4,'triton','Home','Core/Layout/Templates/Home.html.twig','Y','a:3:{s:6:\"format\";s:115:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]\";s:5:\"names\";a:5:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:5:\"right\";i:3;s:3:\"top\";i:4;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}');
+  (1,'Core','Default','Core/Layout/Templates/Default.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
+  (2,'Core','Home','Core/Layout/Templates/Home.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
+  (3,'Fork','Default','Core/Layout/Templates/Default.html.twig','Y','a:3:{s:6:\"format\";s:91:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]\";s:5:\"names\";a:4:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:3:\"top\";i:3;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}'),
+  (4,'Fork','Home','Core/Layout/Templates/Home.html.twig','Y','a:3:{s:6:\"format\";s:115:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]\";s:5:\"names\";a:5:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:5:\"right\";i:3;s:3:\"top\";i:4;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}');
 
 /*!40000 ALTER TABLE `themes_templates` ENABLE KEYS */;
 UNLOCK TABLES;

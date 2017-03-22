@@ -59,7 +59,6 @@ class CoreInstaller extends ModuleInstaller
     private function setRights()
     {
         $this->setModuleRights(1, 'Dashboard');
-
         $this->setActionRights(1, 'Dashboard', 'Index');
     }
 
@@ -173,7 +172,7 @@ class CoreInstaller extends ModuleInstaller
             array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email'))
         );
 
-        // stmp settings
+        // smtp settings
         $this->setSetting('Core', 'smtp_server', $this->getVariable('smtp_server'));
         $this->setSetting('Core', 'smtp_port', $this->getVariable('smtp_port'));
         $this->setSetting('Core', 'smtp_username', $this->getVariable('smtp_username'));
@@ -215,5 +214,12 @@ class CoreInstaller extends ModuleInstaller
         // ckfinder
         $this->setSetting('Core', 'ckfinder_license_name', 'Fork CMS');
         $this->setSetting('Core', 'ckfinder_license_key', 'VNA6-BP17-T7D3-CP1B-EMJF-X7Q3-5THF');
+
+        // Enable the cookie bar by default when the timezone is in europe
+        $this->setSetting(
+            'Core',
+            'show_cookie_bar',
+            date_default_timezone_get() && strpos(mb_strtolower(date_default_timezone_get()), 'europe') === 0
+        );
     }
 }

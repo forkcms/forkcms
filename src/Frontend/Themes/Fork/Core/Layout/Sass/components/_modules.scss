@@ -1,0 +1,33 @@
+.block-heading,
+.block-article-heading {
+  border-bottom: 0;
+  color: $brand-primary;
+  font-size: $font-size-small;
+  padding: 0 0 15px;
+  margin: 0;
+
+  h1 {
+    font-size: $font-size-h2;
+  }
+
+  h2,
+  h3 {
+
+    a {
+      border-bottom: 2px solid $link-color;
+
+      &:hover,
+      &:focus {
+        border-color: $link-hover-color;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.block-body {
+
+  img {
+    margin-bottom: 15px;
+  }
+}

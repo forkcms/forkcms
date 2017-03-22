@@ -1,4 +1,5 @@
 imports:
+    - { resource: console.yml }
     - { resource: parameters.yml }
     - { resource: doctrine.yml }
 
@@ -31,6 +32,8 @@ assetic:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    paths:
+      '%site.path_www%/src/Frontend/Modules/': ForkFrontendModules
 
 monolog:
     handlers:

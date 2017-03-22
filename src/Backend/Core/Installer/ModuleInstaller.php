@@ -313,6 +313,11 @@ class ModuleInstaller
             $theme = $this->getSetting('Core', 'theme');
         }
 
+        // if the theme is still null we should fallback to the core
+        if ($theme === null) {
+            $theme = 'Core';
+        }
+
         // return best matching template id
         return (int) $this->getDB()->getVar(
             'SELECT id FROM themes_templates
@@ -628,7 +633,7 @@ class ModuleInstaller
             $revision['user_id'] = $this->getDefaultUserID();
         }
         if (!isset($revision['template_id'])) {
-            $revision['template_id'] = $this->getTemplateId('default');
+            $revision['template_id'] = $this->getTemplateId('Default');
         }
         if (!isset($revision['type'])) {
             $revision['type'] = 'page';
@@ -726,6 +731,14 @@ class ModuleInstaller
                 $meta['custom'],
                 $meta['data']
             );
+        }
+
+        if ($this->installExample() && !isset($revision['data']['image'])) {
+            $revision['data']['image'] = $this->getAndCopyRandomImage();
+        }
+
+        if ($revision['data'] !== null) {
+            $revision['data'] = serialize($revision['data']);
         }
 
         // insert page
@@ -985,5 +998,29 @@ class ModuleInstaller
                 $this->getDB()->insert('modules_settings', $item);
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function getAndCopyRandomImage(): string
+    {
+        $finder = new Finder();
+        $finder
+            ->files()
+            ->name('*.jpg')
+            ->in(__DIR__ . '/Data/images');
+
+        $finder = iterator_to_array($finder);
+        $randomImage = $finder[array_rand($finder)];
+        $randomName = time() . '.jpg';
+
+        $fileSystem = new Filesystem();
+        $fileSystem->copy(
+            $randomImage->getRealPath(),
+            __DIR__ . '/../../../Frontend/Files/pages/images/source/' . $randomName
+        );
+
+        return $randomName;
     }
 }

@@ -24,6 +24,16 @@ jsBackend.pages =
             $('form').submit();
         });
 
+        // show / hide the remove from search index checkbox on change
+        $('#authRequired').on('change', function(e)
+        {
+            if($(this).is(':checked')){
+              $('[data-role="remove-from-search-index"]').removeClass('hidden');
+            } else {
+              $('[data-role="remove-from-search-index"]').addClass('hidden');
+            }
+        }).trigger('change');
+
         // do meta
         if($('#title').length > 0) $('#title').doMeta();
     }
@@ -135,9 +145,9 @@ jsBackend.pages.extras =
                             '<span class="templateTitle">' + title + '</span>' +
                             '<span class="templateDescription">' + description + '</span>' +
                             '<div class="btn-group buttonHolder">' +
-                                '<a href="#" class="btn btn-default btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
-                                '<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'btn btn-primary btn-xs' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
-                                '<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="fa fa-trash-o"></span></a>' +
+                                '<a href="#" class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
+                                '<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'btn btn-primary btn-icon-only btn-xs' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
+                                '<a href="#" class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o"></span></a>' +
                             '</div>' +
                         '</div>';
 

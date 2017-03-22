@@ -9,6 +9,7 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\ApplicationInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Base\Object;
@@ -19,7 +20,7 @@ use Backend\Core\Language\Language as BackendLanguage;
 /**
  * This class will handle cronjob related stuff
  */
-class Cronjob extends Object implements \ApplicationInterface
+class Cronjob extends Object implements ApplicationInterface
 {
     /**
      * @var Base\Cronjob

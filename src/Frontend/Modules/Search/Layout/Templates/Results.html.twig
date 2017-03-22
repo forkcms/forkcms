@@ -3,36 +3,37 @@
   - {{ searchResults }}: contains an array with all items, each element contains data about the item
   - {{ searchTerm }}: the term that has been searched for
 #}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
 {% if searchTerm %}
-  <section id="searchResults" class="mod">
-    <div class="inner">
-      {% if not searchResults %}
-        <div class="bd content">
-          <p>{{ 'msg.SearchNoItems'|trans }}</p>
-        </div>
-      {% else %}
-        {% for result in searchResults %}
-          <div class="bd">
-            <section class="mod">
-              <div class="inner">
-                <header class="hd">
-                  <h3>
-                    <a href="{{ result.full_url }}" title="{{ result.title }}">
-                      {{ result.title }}
-                    </a>
-                  </h3>
-                </header>
-                <div class="bd content">
-                  {% if not result.introduction %}{{ result.text|truncate(200) }}{% endif %}
-                  {% if result.introduction %}{{ result.introduction|raw }}{% endif %}
-                </div>
-              </div>
+  <section class="module-search block-search-index-results" itemscope itemtype="http://schema.org/SearchResultsPage">
+    {% if not searchResults %}
+      <div class="block-alerts">
+        {{ alerts.alert('info', 'msg.SearchNoItems'|trans) }}
+      </div>
+    {% else %}
+      <div class="block-body">
+        <div class="media">
+          {% for result in searchResults %}
+            <section class="media-body">
+              <header role="banner">
+                <h3 class="media-heading" itemprop="name">
+                  <a href="{{ result.full_url }}" itemprop="url">
+                    {{ result.title }}
+                  </a>
+                </h3>
+              </header>
+              {% if not result.introduction %}
+                <div itemprop="description">{{ result.text|truncate(200)|cleanupplaintext|raw }}</div>
+              {% else %}
+                <div itemprop="description">{{ result.introduction|raw }}</div>
+              {% endif %}
             </section>
-          </div>
-        {% endfor %}
-      {% endif %}
-    </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
   </section>
+
   {% include "Core/Layout/Templates/Pagination.html.twig" %}
 {% endif %}

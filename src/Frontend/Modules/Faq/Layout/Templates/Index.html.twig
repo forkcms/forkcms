@@ -2,54 +2,51 @@
   variables that are available:
   - {{ faqCategories }}: contains all categories, along with all questions inside a category
 #}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
+<section class="module-faq block-faq-index">
+  {% if not faqCategories %}
+    {% block block_no_items %}
+      {{ alerts.alert('info', 'msg.FaqNoItems'|trans) }}
+    {% endblock %}
+  {% endif %}
 
-{% if not faqCategories %}
-  <div id="faqIndex">
-    <section class="mod">
-      <div class="inner">
-        <div class="bd content">
-          <p>{{ 'msg.FaqNoItems'|trans }}</p>
-        </div>
-      </div>
-    </section>
-  </div>
-{% endif %}
-
-{% if faqCategories %}
-  <section id="faqIndex" class="mod">
-    <div class="inner">
-      {% if allowMultipleCategories %}
-        <div class="hd">
+  {% if faqCategories %}
+    {% if allowMultipleCategories %}
+      {% block block_allow_multiple_categories %}
+        <nav class="block-list-categories">
           <ul>
             {% for category in faqCategories %}
               <li><a href="#{{ category.url }}" title="{{ category.title }}">{{ category.title }}</a></li>
             {% endfor %}
           </ul>
-        </div>
-      {% endif %}
-      <div class="bd">
-        {% for category in faqCategories %}
-          <section class="mod">
-            <div class="inner">
-              {% if allowMultipleCategories %}
-                <header class="hd">
-                  <h3 id="{{ category.url }}">
-                    <a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h3>
-                </header>
-              {% endif %}
+        </nav>
+      {% endblock %}
+    {% endif %}
 
-              <div class="bd content">
-                <ul>
-                  {% for question in category.questions %}
-                    <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
+    {% block block_body %}
+      <div class="block-body">
+        {% for category in faqCategories %}
+          <section class="faq-category">
+            {% if allowMultipleCategories %}
+              <header class="faq-category-heading">
+                {# do not remove the id as can be used as an achor #}
+                <h3 id="{{ category.url }}">
+                  <a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a>
+                </h3>
+              </header>
+            {% endif %}
+
+            <div class="faq-category-body">
+              <ul>
+                {% for question in category.questions %}
+                  <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
+                {% endfor %}
+              </ul>
             </div>
           </section>
         {% endfor %}
       </div>
-    </div>
-  </section>
-{% endif %}
+    {% endblock %}
+  {% endif %}
+</section>

@@ -106,18 +106,23 @@ class MetaType extends AbstractType
         return [
             'expanded' => true,
             'multiple' => false,
-            'choices' => array_combine(
-                SEOIndex::getPossibleValues(),
+            'choices' => array_map(
+                function ($SEOIndex) {
+                    return SEOIndex::fromString($SEOIndex);
+                },
                 SEOIndex::getPossibleValues()
             ),
+            'choices_as_values' => true,
+            'choice_value' => function (SEOIndex $SEOIndex = null) {
+                return (string) $SEOIndex;
+            },
             'choice_label' => function ($SEOIndex) {
-                if ($SEOIndex === SEOIndex::NONE) {
+                if ($SEOIndex->isNone()) {
                     return 'lbl.' . ucfirst($SEOIndex);
                 }
 
                 return $SEOIndex;
             },
-            'data' => SEOIndex::NONE,
             'choice_translation_domain' => true,
             'required' => false,
             'placeholder' => false,
@@ -133,18 +138,23 @@ class MetaType extends AbstractType
         return [
             'expanded' => true,
             'multiple' => false,
-            'choices' => array_combine(
-                SEOFollow::getPossibleValues(),
+            'choices' => array_map(
+                function ($SEOFollow) {
+                    return SEOFollow::fromString($SEOFollow);
+                },
                 SEOFollow::getPossibleValues()
             ),
+            'choices_as_values' => true,
+            'choice_value' => function (SEOFollow $SEOFollow = null) {
+                return (string) $SEOFollow;
+            },
             'choice_label' => function ($SEOFollow) {
-                if ($SEOFollow === SEOFollow::NONE) {
+                if ($SEOFollow->isNone()) {
                     return 'lbl.' . ucfirst($SEOFollow);
                 }
 
                 return $SEOFollow;
             },
-            'data' => SEOFollow::NONE,
             'choice_translation_domain' => true,
             'required' => false,
             'placeholder' => false,
@@ -219,7 +229,10 @@ class MetaType extends AbstractType
     {
         return function ($meta) {
             if (!$meta instanceof Meta) {
-                return;
+                return [
+                    'SEOIndex' =>  SEOIndex::none(),
+                    'SEOFollow' => SEOFollow::none(),
+                ];
             }
 
             $this->meta[$meta->getId()] = $meta;
@@ -235,8 +248,8 @@ class MetaType extends AbstractType
                 'custom' => $meta->getCustom(),
                 'url' => $meta->getUrl(),
                 'urlOverwrite' => $meta->isUrlOverwrite(),
-                'SEOIndex' => $meta->getSEOIndex(),
-                'SEOFollow' => $meta->getSEOFollow(),
+                'SEOIndex' => $meta->getSEOIndex() === null ? SEOIndex::none() : $meta->getSEOIndex(),
+                'SEOFollow' => $meta->getSEOFollow() === null ? SEOFollow::none() : $meta->getSEOFollow(),
             ];
         };
     }
@@ -247,7 +260,7 @@ class MetaType extends AbstractType
     private function getMetaReverseTransformFunction()
     {
         return function ($metaData) {
-            $metaId = null ? null : (int) $metaData['id'];
+            $metaId = $metaData['id'] === null ? null : (int) $metaData['id'];
 
             if ($metaId === null || !$this->meta[$metaId] instanceof Meta) {
                 return new Meta(
@@ -338,6 +351,7 @@ class MetaType extends AbstractType
         $view->vars['custom_meta_tags'] = $options['custom_meta_tags'];
         $view->vars['generate_url_callback_class'] = $options['generate_url_callback_class'];
         $view->vars['generate_url_callback_method'] = $options['generate_url_callback_method'];
+        $view->vars['generated_url_selector'] = $options['generated_url_selector'];
         $view->vars['generate_url_callback_parameters'] = serialize($options['generate_url_callback_parameters']);
     }
 }

@@ -1,5 +1,9 @@
 {% extends 'Core/Layout/Templates/Mails/Default.html.twig' %}
 
+{% block title %}
+  <title>{{ SITE_TITLE }} - {{ 'msg.FormBuilderSubject'|trans|format(name) }}</title>
+{% endblock %}
+
 {% block main %}
   <h2>{{ SITE_TITLE }}: {{ subject|format(name) }}</h2>
   <hr />

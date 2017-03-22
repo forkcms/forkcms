@@ -1,0 +1,55 @@
+@mixin sticky-footer($footer-height, $root-selector: unquote("#root"), $root-footer-selector: unquote("#root-footer"), $footer-selector: unquote("#footer")) {
+
+  html, body {
+    height: 100%;
+  }
+
+  #{$root-selector} {
+    clear: both;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin-bottom: -$footer-height;
+    #{$root-footer-selector} {
+      height: $footer-height;
+    }
+  }
+
+  #{$footer-selector} {
+    clear: both;
+    position: relative;
+    height: $footer-height;
+  }
+}
+
+#footer {
+  background: $brand-primary-dark;
+  text-align: center;
+
+  .nav-pills {
+    display: inline-block;
+    margin-bottom: -6px;
+
+    li {
+
+      a {
+        color: $white;
+        font-size: $font-size-small;
+        -webkit-font-smoothing: antialiased;
+        padding: 15px;
+
+        &:hover,
+        &:focus {
+          background: $white;
+          color: $brand-primary-dark;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: $screen-md) {
+
+  // add footer height between brackets to make the sticky footer work
+  @include sticky-footer(52px);
+}
