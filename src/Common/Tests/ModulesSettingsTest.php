@@ -5,12 +5,12 @@ namespace Common\Tests;
 use Common\ModulesSettings;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for our module settings
  */
-class ModulesSettingsTest extends PHPUnit_Framework_TestCase
+class ModulesSettingsTest extends TestCase
 {
     public function testFetchingSettingsCallsTheDatabaseOnce()
     {
@@ -19,7 +19,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
             new Pool(new MemoryStore())
         );
 
-        $modulesSettings->get('Core', 'theme', 'triton');
+        $modulesSettings->get('Core', 'theme', 'Fork');
         $modulesSettings->get('Core', 'time_format', 'H:i');
         $modulesSettings->get('Blog', 'spam_filter', false);
     }
@@ -32,11 +32,11 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
         );
 
         self::assertEquals(
-            'triton',
+            'Fork',
             $modulesSettings->get('Core', 'theme')
         );
         self::assertEquals(
-            'triton',
+            'Fork',
             $modulesSettings->get('Core', 'theme', 'test')
         );
     }
@@ -63,7 +63,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
 
         self::assertEquals(
             array(
-                'theme' => 'triton',
+                'theme' => 'Fork',
             ),
             $modulesSettings->getForModule('Core')
         );
@@ -87,7 +87,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
                 array(
                     'module' => 'Core',
                     'name' => 'theme',
-                    'value' => serialize('triton'),
+                    'value' => serialize('Fork'),
                 ),
             ))
         ;

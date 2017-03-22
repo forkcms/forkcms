@@ -137,6 +137,12 @@ class ForkController extends Controller
             return $application->display();
         } catch (RedirectException $ex) {
             return $ex->getResponse();
+        } catch (Twig_Error $twigError) {
+            if ($twigError->getPrevious() instanceof RedirectException) {
+                return $twigError->getPrevious()->getResponse();
+            }
+
+            throw $twigError;
         }
     }
 

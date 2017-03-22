@@ -3,12 +3,12 @@
 namespace Common\Tests\Mailer;
 
 use Common\Mailer\Configurator;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for our module settings
  */
-class ConfiguratorTest extends PHPUnit_Framework_TestCase
+class ConfiguratorTest extends TestCase
 {
     public function testConfiguratorSetsMailTransportByDefault()
     {

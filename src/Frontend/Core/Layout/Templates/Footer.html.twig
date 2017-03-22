@@ -1,11 +1,15 @@
-<ul>
-  <li>&copy; {{ now|date('Y') }} {{ siteTitle }}</li>
-  {% for footerLinks in footerLinks %}
-    <li{% if footerLinks.selected %} class="selected"{% endif %}>
-      <a href="{{ footerLinks.url }}" title="{{ footerLinks.title }}"{% if footerLinks.rel %} rel="{{ footerLinks.rel }}"{% endif %}>
-        {{ footerLinks.navigation_title }}
-      </a>
-    </li>
-  {% endfor %}
-  <li><a href="http://www.fork-cms.be" title="Fork CMS">Fork CMS</a></li>
-</ul>
+<footer>
+  <hr />
+  <nav>
+    <ul class="nav nav-pills" role="navigation">
+      <li class="disabled"><a>© <span itemprop="copyrightYear">{{ now|date('Y') }}</span> {{ siteTitle }}</a></li>
+      {% for footerLink in footerLinks %}
+        <li>
+          <a href="{{ footerLink.url }}" title="{{ footerLink.title }}"{% if footerLink.rel %} rel="{{ footerLink.rel }}"{% endif %}>
+            {{ footerLink.navigation_title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</footer>

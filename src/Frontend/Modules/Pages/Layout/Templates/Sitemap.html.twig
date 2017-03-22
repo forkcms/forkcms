@@ -1,10 +1,12 @@
-{% if navigation %}
-  <ul>
-    {% for navigation in navigation %}
-      <li>
-        <a href="{{ navigation.link }}" title="{{ navigation.navigation_title }}"{% if navigation.nofollow %} rel="nofollow"{% endif %}>{{ navigation.navigation_title }}</a>
-        {{ navigation.children|raw }}
-      </li>
-    {% endfor %}
-  </ul>
-{% endif %}
+{% block block_body %}
+  {% if navigation %}
+    <ul>
+      {% for navigation in navigation %}
+        <li>
+          <a href="{{ navigation.link }}" title="{{ navigation.navigation_title }}"{% if navigation.nofollow %} rel="nofollow"{% endif %}>{{ navigation.navigation_title }}</a>
+          {{ navigation.children|raw }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

@@ -5,16 +5,34 @@
 #}
 
 {% if locationItems %}
-  {# @remark: do not remove the parseMap-class, it is used by JS #}
-  <div id="map" class="parseMap" style="height: {{ locationSettings.height }}px; width: {{ locationSettings.width }}px;"></div>
+  <section class="module-location block-location-index">
+    {% block block_map %}
+      <div class="block-map">
+        <div data-role="fork-map-container" data-map-id="general" style="height: {{ locationSettings.height }}px;">
+          <span class="hidden">{{ 'lbl.Loading'|trans|ucfirst }}</span>
+        </div>
+      </div>
+    {% endblock %}
 
-  {# Store item text in a div because JS goes bananas with multi line HTML #}
-  {% for locationItems in locationItems %}
-    <div id="markerText{{ locationItems.id }}" style="display: none;">
-      <address>
-        {{ locationItems.street }} {{ locationItems.number }}<br />
-        {{ locationItems.zip }} {{ locationItems.city }}
-      </address>
-    </div>
-  {% endfor %}
+    {% block block_marker_texts %}
+      <div class="block-marker-texts">
+        {% for locationItem in locationItems %}
+          <div data-role="fork-marker-text-container" data-map-id="{{ locationItem.id }}" class="hidden" itemscope itemtype="http://schema.org/Place">
+            <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+              <meta itemprop="latitude" content="{{ locationItem.lat }}" />
+              <meta itemprop="longitude" content="{{ locationItem.lng }}" />
+            </div>
+
+            <div itemprop="name" class="hidden"><strong>{{ locationItem.title }}</strong></div>
+            <address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+              <span itemprop="streetAddress">{{ locationItem.street }} {{ locationItem.number }}</span><br>
+              <span itemprop="postalCode">{{ locationItem.zip }}</span>
+              <span itemprop="addressLocality">{{ locationItem.city }}</span><br>
+              <span itemprop="addressCountry">{{ locationItem.country }}</span>
+            </address>
+          </div>
+        {% endfor %}
+      </div>
+    {% endblock %}
+  </section>
 {% endif %}

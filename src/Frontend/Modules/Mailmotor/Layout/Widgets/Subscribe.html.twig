@@ -1,22 +1,25 @@
-<section id="mailmotorSubscribeFormWidget" class="mod">
-  <div class="inner">
-    <div class="hd">
-      <h3 class="title">{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
-    </div>
-    <div class="bd">
-      {{ form_start(form) }}
-        <p>
-          {{ form_row(form.email) }}
-        </p>
+<aside class="module-mailmotor widget-mailmotor-subscribe">
+  {% block widget_heading %}
+    <header class="widget-heading">
+      <h3>{{ 'lbl.SubscribeToNewsletter'|trans|ucfirst }}</h3>
+    </header>
+  {% endblock %}
 
-        {% if form.interests %}
-          {{ form_row(form.interests) }}
-        {% endif %}
-
-        <p>
-          {{ form_widget(form.subscribe) }}
-        </p>
-      {{ form_end(form) }}
+  {% block widget_body %}
+    <div class="widget-body">
+      <form action="{{ geturlforblock('Mailmotor', 'Subscribe' ) }}" method="post" class="form-horizontal">
+        <input type="hidden" name="form_token" id="formToken" value="{{ formToken }}" />
+        <input type="hidden" name="form" value="subscribe" />
+        <label class="control-label" for="email">
+          {{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+        </label>
+        <div class="input-group">
+          <input type="email" value="" id="email" name="email" class="form-control" placeholder="{{ 'lbl.YourEmail'|trans|ucfirst }}" />
+          <span class="input-group-btn">
+            <input id="send" class="btn btn-default" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans }}" />
+          </span>
+        </div>
+      </form>
     </div>
-  </div>
-</section>
+  {% endblock %}
+</aside>

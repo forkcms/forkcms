@@ -1,47 +1,58 @@
-{# Error #}
-{% if formError %}
-  <div class="message error">
-    {% if loginError %}
-      <p>{{ loginError|raw }}</p>
-    {% endif %}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-    {% if not loginError %}
-      <p>{{ 'err.FormError'|trans }}</p>
-    {% endif %}
-  </div>
-{% endif %}
-
-<section id="loginForm" class="mod">
-  <div class="inner">
-    <div class="bd">
-      {% form login %}
-      <fieldset>
-        <p{% if txtEmailError %} class="errorArea"{% endif %}>
-          <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
-            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
-          </label>
-          {% form_field email %} {% form_field_error email %}
-        </p>
-        <p{% if txtPasswordError %} class="errorArea"{% endif %}>
-          <label for="password">{{ 'lbl.Password'|trans|ucfirst }}
-            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
-          </label>
-          {% form_field password %} {% form_field_error password %}
-        </p>
-        <p>
-          <label for="remember">{% form_field remember %} {{ 'lbl.RememberMe'|trans|ucfirst }}</label>
-          {% form_field_error remember %}
-        </p>
-        <p>
-          <input class="inputSubmit" type="submit" value="{{ 'lbl.Login'|trans|ucfirst }}" />
-        </p>
-      </fieldset>
-      {% endform %}
+<section class="module-profiles block-profiles-login">
+  {% block block_alerts %}
+    <div class="block-alerts">
+      {% if formError %}
+        {% if loginError %}
+          {% set error = loginError %}
+        {% else %}
+          {% set error = 'err.FormError'|trans %}
+        {% endif %}
+        {{ alerts.alert('danger', error) }}
+      {% endif %}
     </div>
-    <footer class="ft">
-      <p>
-        <a href="{{ geturlforblock('Profiles', 'ForgotPassword') }}" title="{{ 'msg.ForgotPassword'|trans }}">{{ 'msg.ForgotPassword'|trans }}</a>
-      </p>
-    </footer>
-  </div>
+  {% endblock %}
+
+  {% block block_body %}
+    {% form login %}
+    <fieldset class="form-horizontal">
+      <div class="form-group{% if txtEmailError %} has-error{% endif %}">
+        <label class="control-label col-sm-2" for="email">
+          {{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+        </label>
+        <div class="col-sm-6">
+          {% form_field email %}
+          {% form_field_error email %}
+        </div>
+      </div>
+      <div class="form-group{% if txtPasswordError %} has-error{% endif %}">
+        <label class="control-label col-sm-2" for="password">
+          {{ 'lbl.Password'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+        </label>
+        <div class="col-sm-6">
+          {% form_field_error password %}{% form_field password %}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-6">
+          <div class="checkbox">
+            <label for="remember">
+              {% form_field remember %} {{ 'lbl.RememberMe'|trans|ucfirst }}
+            </label>
+            {% form_field_error remember %}
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-6">
+          <input class="btn btn-primary" type="submit" value="{{ 'lbl.Login'|trans|ucfirst }}" />
+          <small>
+            <a href="{{ geturlforblock('Profiles','ForgotPassword') }}" title="{{ 'msg.ForgotPassword'|trans }}">{{ 'msg.ForgotPassword'|trans }}</a>
+          </small>
+        </div>
+      </div>
+    </fieldset>
+    {% endform %}
+  {% endblock %}
 </section>

@@ -21,6 +21,9 @@ class IndexTest extends WebTestCase
         Authentication::tearDown();
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testPrivateRedirectsToAuthentication()
     {
         $client = static::createClient();
@@ -34,6 +37,9 @@ class IndexTest extends WebTestCase
         );
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testAuthenticationIndexWorks()
     {
         $client = static::createClient();
@@ -45,6 +51,9 @@ class IndexTest extends WebTestCase
         );
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testPrivateContainsRobotsTag()
     {
         $client = static::createClient();
@@ -56,6 +65,9 @@ class IndexTest extends WebTestCase
         );
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testAuthenticationWithWrongCredentials()
     {
         $client = static::createClient();
@@ -80,6 +92,9 @@ class IndexTest extends WebTestCase
         );
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testAuthenticationWithCorrectCredentials()
     {
         $client = static::createClient();
@@ -116,6 +131,8 @@ class IndexTest extends WebTestCase
     /**
      * Login as a pages user.
      * This user has the rights to access only the pages module.
+     *
+     * @runInSeparateProcess
      */
     public function testPagesUserWithCorrectCredentials()
     {
@@ -150,6 +167,8 @@ class IndexTest extends WebTestCase
      * Login as a users user.
      * This user only has the rights to access the users edit action.
      * It should enable the user to edit his own user-account.
+     *
+     * @runInSeparateProcess
      */
     public function testUsersUserWithCorrectCredentials()
     {

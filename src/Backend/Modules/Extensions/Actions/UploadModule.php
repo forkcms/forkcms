@@ -54,7 +54,7 @@ class UploadModule extends BackendBaseActionAdd
      *
      * @return string
      */
-    private function installModule()
+    private function uploadModuleFromZip()
     {
         // list of validated files (these files will actually be unpacked)
         $files = array();
@@ -82,7 +82,6 @@ class UploadModule extends BackendBaseActionAdd
         $allowedDirectories = array(
             'src/Backend/Modules/',
             'src/Frontend/Modules/',
-            'library/external/',
         );
 
         // name of the module we are trying to upload
@@ -105,14 +104,6 @@ class UploadModule extends BackendBaseActionAdd
             foreach ($allowedDirectories as $directory) {
                 // yay, in a valid directory
                 if (mb_stripos($fileName, $prefix . $directory) === 0) {
-                    // we have a library file
-                    if ($directory == $prefix . 'library/external/') {
-                        if (!is_file($this->getContainer()->getParameter('site.path_www') . '/' . $fileName)) {
-                            $files[] = $fileName;
-                        }
-                        break;
-                    }
-
                     // extract the module name from the url
                     $tmpName = trim(str_ireplace($prefix . $directory, '', $fileName), '/');
                     if ($tmpName == '') {
@@ -189,9 +180,6 @@ class UploadModule extends BackendBaseActionAdd
             $filesystem->remove($this->getContainer()->getParameter('site.path_www') . '/' . $prefix);
         }
 
-        // run installer
-        BackendExtensionsModel::installModule($moduleName);
-
         // return the files
         return $moduleName;
     }
@@ -210,7 +198,7 @@ class UploadModule extends BackendBaseActionAdd
         $prefix = array();
 
         foreach ($name as $element) {
-            if ($element == 'src' || $element == 'library') {
+            if ($element == 'src') {
                 return implode(PATH_SEPARATOR, $prefix);
             } else {
                 $prefix[] = $element;
@@ -260,15 +248,14 @@ class UploadModule extends BackendBaseActionAdd
 
             // validate the file
             if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
-                $moduleName = $this->installModule();
+                $moduleName = $this->uploadModuleFromZip();
             }
 
             // passed all validation
             if ($this->frm->isCorrect()) {
-                // by now, the module has already been installed in processZipFile()
-
-                // redirect with fireworks
-                $this->redirect(BackendModel::createURLForAction('Modules') . '&report=module-installed&var=' . $moduleName . '&highlight=row-module_' . $moduleName);
+                // redirect to the install url, this is needed for doctrine modules because the container needs to
+                // load this module as an allowed module to get the entities working
+                $this->redirect(BackendModel::createURLForAction('InstallModule') . '&module=' . $moduleName);
             }
         }
     }

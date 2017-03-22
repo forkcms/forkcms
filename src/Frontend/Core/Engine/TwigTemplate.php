@@ -35,39 +35,44 @@ class TwigTemplate extends BaseTwigTemplate
     public function __construct()
     {
         parent::__construct(func_get_arg(0), func_get_arg(1), func_get_arg(2));
+
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
 
         $this->forkSettings = Model::get('fork.settings');
         // fork has been installed
-        if ($this->forkSettings) {
-            $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
-            $loader = $this->environment->getLoader();
-            $loader = new \Twig_Loader_Chain(
-                array(
-                    $loader,
-                    new \Twig_Loader_Filesystem($this->getLoadingFolders()),
-                )
-            );
-            $this->environment->setLoader($loader);
+        try {
+            if ($this->forkSettings) {
+                $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
+                $loader = $this->environment->getLoader();
+                $loader = new \Twig_Loader_Chain(
+                    array(
+                        $loader,
+                        new \Twig_Loader_Filesystem($this->getLoadingFolders()),
+                    )
+                );
+                $this->environment->setLoader($loader);
 
-            // connect symphony forms
-            $formEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'));
-            $formEngine->setEnvironment($this->environment);
-            $this->environment->addExtension(
-                new SymfonyFormExtension(
-                    new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
-                )
-            );
+                // connect symphony forms
+                $formEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'));
+                $formEngine->setEnvironment($this->environment);
+                $this->environment->addExtension(
+                    new SymfonyFormExtension(
+                        new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
+                    )
+                );
+            }
+
+            $this->environment->disableStrictVariables();
+
+            // init Form extension
+            new FormExtension($this->environment);
+
+            // start the filters / globals
+            TwigFilters::getFilters($this->environment, 'Frontend');
+            $this->startGlobals($this->environment);
+        } catch (\PDOException $exception) {
+            // fork is not installed apparently so we need to catch this error
         }
-
-        $this->environment->disableStrictVariables();
-
-        // init Form extension
-        new FormExtension($this->environment);
-
-        // start the filters / globals
-        TwigFilters::getFilters($this->environment, 'Frontend');
-        $this->startGlobals($this->environment);
     }
 
     /**

@@ -3,11 +3,20 @@
   - {{ isLoggedIn }}
   - {{ profile }}: only available when logged in
 #}
+<div class="module-profiles widget-profiles-login-link">
+  <div class="block-body">
+    {% if isLoggedIn %}
+      {% block block_is_logged_in %}
+        {{ 'msg.ProfilesLoggedInAs'|trans|format(profile.display_name, profile.url.dashboard)|raw }}
+      {% endblock %}
+    {% endif %}
 
-{% if isLoggedIn %}
-  {{ 'msg.ProfilesLoggedInAs'|trans|format(profile.display_name, profile.url.dashboard)|raw }}
-{% endif %}
-
-{% if not isLoggedIn %}
-  <a href="{{ geturlforblock('Profiles', 'Login') }}?queryString={{ geturlforblock('Profiles') }}">{{ 'lbl.Login'|trans|ucfirst }}</a>
-{% endif %}
+    {% if not isLoggedIn %}
+      {% block block_is_not_logged_in %}
+        <a href="{{ geturlforblock('Profiles', 'Login') }}?queryString={{ geturlforblock('Profiles') }}">
+          {{ 'lbl.Login'|trans|ucfirst }}
+        </a>
+      {% endblock %}
+    {% endif %}
+  </div>
+</div>

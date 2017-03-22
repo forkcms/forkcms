@@ -4,9 +4,9 @@ namespace Frontend\Core\Tests;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\TemplateModifiers;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class TemplateModifiersTest extends PHPUnit_Framework_TestCase
+class TemplateModifiersTest extends TestCase
 {
     public function testFormatFloat()
     {

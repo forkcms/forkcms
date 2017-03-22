@@ -866,7 +866,11 @@ class Model
              INNER JOIN meta AS m ON i.meta_id = m.id
              LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id
              LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
-             LEFT OUTER JOIN pages AS p ON p.parent_id = i.id AND p.status = "active" AND p.hidden = "N"
+             LEFT OUTER JOIN pages AS p
+                ON p.parent_id = i.id
+                AND p.status = "active"
+                AND p.hidden = "N"
+                AND p.data NOT LIKE "%s:9:\"is_action\";b:1;%"
              AND p.language = i.language
              WHERE i.parent_id IN (' . implode(', ', $ids) . ')
                  AND i.status = ? AND i.language = ?

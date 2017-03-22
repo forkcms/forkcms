@@ -224,10 +224,12 @@ CREATE TABLE `forms` (
   `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `method` enum('database','database_email') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email',
+  `method` enum('database','database_email','email') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email',
   `email` text COLLATE utf8mb4_unicode_ci,
   `success_message` text COLLATE utf8mb4_unicode_ci,
   `identifier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_template` VARCHAR(255) DEFAULT "Form.html.twig",
+  `email_subject` VARCHAR(255) NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -1992,7 +1994,7 @@ VALUES
   ('Core','default_language','s:2:\"en\";'),
   ('Core','interface_languages','a:1:{i:0;s:2:\"en\";}'),
   ('Core','default_interface_language','s:2:\"en\";'),
-  ('Core','theme','s:6:\"triton\";'),
+  ('Core','theme','s:4:\"Fork\";'),
   ('Core','akismet_key','s:0:\"\";'),
   ('Core','google_maps_key','s:0:\"\";'),
   ('Core','max_num_revisions','i:20;'),
@@ -2347,10 +2349,10 @@ LOCK TABLES `themes_templates` WRITE;
 
 INSERT INTO `themes_templates` (`id`, `theme`, `label`, `path`, `active`, `data`)
 VALUES
-  (1,'core','Default','Core/Layout/Templates/Default.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
-  (2,'core','Home','Core/Layout/Templates/Home.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
-  (3,'triton','Default','Core/Layout/Templates/Default.html.twig','Y','a:3:{s:6:\"format\";s:91:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]\";s:5:\"names\";a:4:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:3:\"top\";i:3;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}'),
-  (4,'triton','Home','Core/Layout/Templates/Home.html.twig','Y','a:3:{s:6:\"format\";s:115:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]\";s:5:\"names\";a:5:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:5:\"right\";i:3;s:3:\"top\";i:4;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}');
+  (1,'Core','Default','Core/Layout/Templates/Default.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
+  (2,'Core','Home','Core/Layout/Templates/Home.html.twig','Y','a:2:{s:6:\"format\";s:6:\"[main]\";s:5:\"names\";a:1:{i:0;s:4:\"main\";}}'),
+  (3,'Fork','Default','Core/Layout/Templates/Default.html.twig','Y','a:3:{s:6:\"format\";s:91:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]\";s:5:\"names\";a:4:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:3:\"top\";i:3;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}'),
+  (4,'Fork','Home','Core/Layout/Templates/Home.html.twig','Y','a:3:{s:6:\"format\";s:115:\"[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]\";s:5:\"names\";a:5:{i:0;s:4:\"main\";i:1;s:4:\"left\";i:2;s:5:\"right\";i:3;s:3:\"top\";i:4;s:13:\"advertisement\";}s:14:\"default_extras\";a:1:{s:3:\"top\";a:1:{i:0;i:1;}}}');
 
 /*!40000 ALTER TABLE `themes_templates` ENABLE KEYS */;
 UNLOCK TABLES;

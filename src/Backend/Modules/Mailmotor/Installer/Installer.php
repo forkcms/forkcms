@@ -120,6 +120,7 @@ class Installer extends ModuleInstaller
         $this->setSetting($this->getModule(), 'mail_engine', null);
         $this->setSetting($this->getModule(), 'api_key', null);
         $this->setSetting($this->getModule(), 'list_id', null);
+        $this->setSetting($this->getModule(), 'double_opt_in', true);
         $this->setSetting($this->getModule(), 'overwrite_interests', false);
         $this->setSetting($this->getModule(), 'automatically_subscribe_from_form_builder_submitted_form', false);
     }

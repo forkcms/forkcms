@@ -2,14 +2,16 @@
   variables that are available:
   - {{ widgetTagsRelated }}: contains an array with all related items
 #}
-
 {% if widgetTagsRelated %}
-  <section id="tagRelatedWidget" class="mod">
-    <div class="inner">
-      <header class="hd">
+  <aside class="module-tags widget-tags-related">
+    {% block widget_heading %}
+      <header class="widget-heading" role="banner">
         <h3>{{ 'lbl.Related'|trans|ucfirst }}</h3>
       </header>
-      <div class="bd content">
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
         <ul>
           {% for widgetTagsRelated in widgetTagsRelated %}
             <li>
@@ -20,6 +22,6 @@
           {% endfor %}
         </ul>
       </div>
-    </div>
-  </section>
+    {% endblock %}
+  </aside>
 {% endif %}

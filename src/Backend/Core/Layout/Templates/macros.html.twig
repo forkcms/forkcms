@@ -19,7 +19,7 @@
       {% else %}
         <p>
           {% if noItemsMessage %}
-            {{ noItemsMessage }}
+            {{ noItemsMessage|raw }}
           {% else %}
             {{ 'msg.NoItems'|trans|raw }}
           {% endif %}

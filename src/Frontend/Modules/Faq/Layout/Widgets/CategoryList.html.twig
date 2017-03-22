@@ -2,22 +2,26 @@
   variables that are available:
   - {{ widgetFaqCategoryList }}: contains an array with all posts for the category, each element contains data about the post
 #}
-
 {% if widgetFaqCategoryList %}
-  <section id="faqCategoryListWidget" class="mod">
-    <div class="inner">
-      <header class="hd">
+  <aside class="module-faq widget-faq-category-list">
+    {% block widget_heading %}
+      <header class="widget-heading">
         <h3>{{ 'lbl.Faq'|trans }}: {{ widgetFaqCategory.title }}</h3>
       </header>
-      <div class="bd content">
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
         <ul>
           {% for widgetFaqCategoryList in widgetFaqCategoryList %}
             <li>
-              <a href="{{ widgetFaqCategoryList.full_url }}" title="{{ widgetFaqCategoryList.question }}">{{ widgetFaqCategoryList.question }}</a>
+              <a href="{{ widgetFaqCategoryList.full_url }}" title="{{ widgetFaqCategoryList.question }}">
+                {{ widgetFaqCategoryList.question }}
+              </a>
             </li>
           {% endfor %}
         </ul>
       </div>
-    </div>
-  </section>
+    {% endblock %}
+  </aside>
 {% endif %}

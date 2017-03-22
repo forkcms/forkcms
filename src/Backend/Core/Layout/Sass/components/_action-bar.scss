@@ -8,10 +8,10 @@
 
   .btn {
     padding: 2px 6px 3px;
+  }
 
-    .fa {
-      padding: 0 4px;
-    }
+  .btn-group .dropdown-toggle {
+    padding: 9px 6px 10px;
   }
 }
 
@@ -27,10 +27,6 @@
 
     .btn {
       padding: 9px 12px 10px;
-
-      .fa {
-        padding: 0 4px 0 0;
-      }
     }
   }
 }

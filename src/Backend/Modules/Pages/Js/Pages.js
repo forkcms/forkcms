@@ -1,7 +1,8 @@
 /**
  * Interaction for the pages module
  */
-jsBackend.pages = {
+jsBackend.pages =
+{
     // init, something like a constructor
     init: function()
     {
@@ -9,7 +10,8 @@ jsBackend.pages = {
         jsBackend.pages.tree.init();
 
         // are we adding or editing?
-        if (typeof templates != 'undefined') {
+        if(typeof templates != 'undefined')
+        {
             // load stuff for the page
             jsBackend.pages.extras.init();
             jsBackend.pages.template.init();
@@ -25,16 +27,15 @@ jsBackend.pages = {
         // show / hide the remove from search index checkbox on change
         $('#authRequired').on('change', function(e)
         {
-            if ($(this).is(':checked')) {
-                $('[data-role="remove-from-search-index"]').removeClass('hidden');
-            }
-            else {
-                $('[data-role="remove-from-search-index"]').addClass('hidden');
+            if($(this).is(':checked')){
+              $('[data-role="remove-from-search-index"]').removeClass('hidden');
+            } else {
+              $('[data-role="remove-from-search-index"]').addClass('hidden');
             }
         }).trigger('change');
 
         // do meta
-        if ($('#title').length > 0) $('#title').doMeta();
+        if($('#title').length > 0) $('#title').doMeta();
     }
 };
 
@@ -189,9 +190,9 @@ jsBackend.pages.extras = {
             '<span class="templateTitle">' + title + '</span>' +
             '<span class="templateDescription">' + description + '</span>' +
             '<div class="btn-group buttonHolder">' +
-            '<a href="#" class="btn btn-default btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
-            '<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'btn btn-primary btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
-            '<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="fa fa-trash-o"></span></a>' +
+            '<a href="#" class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
+            '<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
+            '<a href="#" class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o"></span></a>' +
             '</div>' +
             '</div>';
 
