@@ -46,7 +46,7 @@ final class MediaItemListener
         // We have an image, so we have thumbnails to delete
         if ($mediaItem->getType()->isImage()) {
             // Generate Backend thumbnail
-            $this->cacheManager->getBrowserPath($mediaItem->getWebPath(), 'backend_thumbnail');
+            $this->cacheManager->getBrowserPath($mediaItem->getWebPath(), 'media_library_backend_thumbnail');
         }
     }
 

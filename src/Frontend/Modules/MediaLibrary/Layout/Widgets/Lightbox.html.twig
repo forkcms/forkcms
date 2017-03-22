@@ -12,8 +12,8 @@
     {% for mediaItem in mediaItems %}
     <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
       {% set img = mediaItem.webpath()%}
-      <a href="{{ (mediaItem.getWebPath()) | imagine_filter('lightbox_large') }}" itemprop="contentUrl" data-size="{{ mediaItem.width }}x{{ mediaItem.height }}">
-        <img src="{{ (mediaItem.getWebPath()) | imagine_filter('lightbox_small') }}" itemprop="thumbnail" alt="{{ mediaItem.title }}" />
+      <a href="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_lightbox_large') }}" itemprop="contentUrl" data-size="{{ mediaItem.width }}x{{ mediaItem.height }}">
+        <img src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_lightbox_small') }}" itemprop="thumbnail" alt="{{ mediaItem.title }}" />
       </a>
       <figcaption itemprop="caption description">{% if title %}{{ title }}{% endif %}{% if not title %}{{ mediaItem.title }}{% endif %}</figcaption>
     </figure>

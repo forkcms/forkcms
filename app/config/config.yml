@@ -52,21 +52,21 @@ swiftmailer:
 
 liip_imagine:
     resolvers:
-       media_library:
+       default:
           web_path:
             web_root: %kernel.root_dir%/../
-            cache_prefix: src/Frontend/Files/MediaLibrary/cache
+            cache_prefix: src/Frontend/Files/Cache
     loaders:
-        media_library:
+        default:
             filesystem:
                 data_root: %kernel.root_dir%/../
-    cache: media_library
-    data_loader: media_library
+    cache: default
+    data_loader: default
 
     # your filter sets are defined here
     filter_sets:
         # the name of the "filter set"
-        backend_thumbnail:
+        media_library_backend_thumbnail:
             # adjust the image quality to 95%
             quality: 95
             # list of transformations to apply (the "filters")
@@ -74,16 +74,16 @@ liip_imagine:
                 # create a thumbnail: set size to 120x90 and use the "outbound" mode
                 # to crop the image when the size ratio of the input differs
                 thumbnail: { size : [140, 90], mode : outbound }
-        lightbox_small:
+        media_library_lightbox_small:
             filters:
                 thumbnail: { size : [800, 800], mode : outbound }
-        lightbox_large:
+        media_library_lightbox_large:
             filters:
                 thumbnail: { size : [1600, 800], mode : inbound }
-        slider_pano:
+        media_library_slider_pano:
             filters:
                 thumbnail: { size : [1600, 350], mode : outbound }
-        one_image_large:
+        media_library_one_image_large:
             filters:
                 thumbnail: { size : [1600, 500], mode : inbound }
 

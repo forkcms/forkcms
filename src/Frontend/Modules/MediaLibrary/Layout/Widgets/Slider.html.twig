@@ -10,7 +10,7 @@
   <ul>
     {% for mediaItem in mediaItems %}
     <li itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-      <img src="{{ (mediaItem.getWebPath()) | imagine_filter('slider_pano') }}" itemprop="thumbnail" alt="{{ mediaItem.title }}" />
+      <img src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_slider_pano') }}" itemprop="thumbnail" alt="{{ mediaItem.title }}" />
     </li>
     {% endfor %}
   </ul>

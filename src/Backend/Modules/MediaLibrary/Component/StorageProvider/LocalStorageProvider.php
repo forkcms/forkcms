@@ -86,12 +86,12 @@ class LocalStorageProvider implements StorageProviderInterface
      */
     public function getUploadRootDir(): string
     {
-        return $this->basePath . '/' . $this->folderPath . '/Source';
+        return $this->basePath . '/' . $this->folderPath;
     }
 
     public function getWebDir(): string
     {
-        return '/' . $this->folderPath . '/Source';
+        return '/' . $this->folderPath;
     }
 
     /**
@@ -102,7 +102,7 @@ class LocalStorageProvider implements StorageProviderInterface
     public function getWebPath(MediaItem $mediaItem, string $filter = null)
     {
         if ($filter === 'backend') {
-            $filter = 'backend_thumbnail';
+            $filter = 'media_library_backend_thumbnail';
         }
 
         // Return image with filter

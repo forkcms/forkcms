@@ -7,7 +7,7 @@
 {% if mediaItem %}
   <section class="widgetMediaOneRandomImage" itemscope itemtype="http://schema.org/ImageGallery">
     <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-      <img src="{{ (mediaItem.getWebPath()) | imagine_filter('one_image_large') }}" itemprop="thumbnail" alt="{{ mediaItem.title }}" />
+      <img src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_one_image_large') }}" itemprop="thumbnail" alt="{{ mediaItem.title }}" />
     </figure>
   </section>
 {% endif %}

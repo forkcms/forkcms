@@ -109,7 +109,7 @@ class MediaItemDataGrid extends DataGridDB
                     . '&folder=' . $folderId,
                     Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_width'),
                     Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_height'),
-                    'backend_thumbnail'
+                    'media_library_backend_thumbnail'
                 ),
                 'url',
                 true
