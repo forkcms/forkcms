@@ -205,7 +205,7 @@ jsBackend.mediaLibraryHelper.group =
             jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
 
             // select first tab
-            $('#addMediaDialog').find('.nav-tabs a').first().tab('show');
+            $('#addMediaDialog').find('.ui-tabs a').first().tab('show');
 
             // open dialog
             $addMediaDialog.modal('show');
@@ -722,13 +722,13 @@ jsBackend.mediaLibraryHelper.group =
     {
         if (mediaFolderId == 0) {
             // hide library tabs on open
-            $('#tabLibrary').find('.tabs').hide();
+            $('#tabLibrary').find('.ui-tabs').hide();
 
             // stop here
             return false;
         } else {
             // show library tabs on open
-            $('#tabLibrary').find('.tabs').show();
+            $('#tabLibrary').find('.ui-tabs').show();
         }
 
         // init variables
@@ -834,33 +834,33 @@ jsBackend.mediaLibraryHelper.group =
         $('#mediaTableAudio').html((htmlAudio) ? htmlAudio : rowNoItems);
 
         // init $tabs
-        var $tabs = $('#tabLibrary').find('.tabs');
+        var $tabs = $('#tabLibrary').find('.ui-tabs').first();
 
         // remove selected
         $tabs.find('.ui-tabs-selected').removeClass('ui-tabs-selected');
 
         // not in connect-to-group modus (just uploading)
-        if (typeof mediaGroups[currentMediaGroupId] == 'undefined') {
+        if (typeof mediaGroups[currentMediaGroupId] === 'undefined') {
             return false;
         }
 
         // we have an image group
-        if (mediaGroups[currentMediaGroupId].type == 'image') {
+        if (mediaGroups[currentMediaGroupId].type === 'image') {
             $tabs.tabs({disabled: [1, 2, 3]});
             $tabs.tabs('select', 0);
-        } else if (mediaGroups[currentMediaGroupId].type == 'file') {
+        } else if (mediaGroups[currentMediaGroupId].type === 'file') {
             $tabs.tabs({disabled: [0, 2, 3]});
             $tabs.tabs('select', 1);
-        } else if (mediaGroups[currentMediaGroupId].type == 'movie') {
+        } else if (mediaGroups[currentMediaGroupId].type === 'movie') {
             $tabs.tabs({disabled: [0, 1, 3]});
             $tabs.tabs('select', 2);
-        } else if (mediaGroups[currentMediaGroupId].type == 'audio') {
+        } else if (mediaGroups[currentMediaGroupId].type === 'audio') {
             $tabs.tabs({disabled: [0, 1, 2]});
             $tabs.tabs('select', 3);
-        } else if (mediaGroups[currentMediaGroupId].type == 'image-file') {
+        } else if (mediaGroups[currentMediaGroupId].type === 'image-file') {
             $tabs.tabs({disabled: [2, 3]});
             $tabs.tabs('select', 0);
-        } else if (mediaGroups[currentMediaGroupId].type == 'image-movie') {
+        } else if (mediaGroups[currentMediaGroupId].type === 'image-movie') {
             $tabs.tabs({disabled: [1, 3]});
             $tabs.tabs('select', 0);
         } else {
