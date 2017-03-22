@@ -54,7 +54,7 @@ class UploadModule extends BackendBaseActionAdd
      *
      * @return string
      */
-    private function uploadModule()
+    private function uploadModuleFromZip()
     {
         // list of validated files (these files will actually be unpacked)
         $files = array();
@@ -257,7 +257,7 @@ class UploadModule extends BackendBaseActionAdd
 
             // validate the file
             if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
-                $moduleName = $this->uploadModule();
+                $moduleName = $this->uploadModuleFromZip();
             }
 
             // passed all validation
