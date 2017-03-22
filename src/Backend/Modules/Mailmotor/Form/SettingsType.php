@@ -74,14 +74,20 @@ class SettingsType extends AbstractType
             ]
         );
 
-        $doubleOptIn = [
-            'label' => 'msg.DoubleOptIn',
-            'required' => false,
-        ];
         $overwriteInterests = [
             'label' => 'msg.OverwriteInterests',
             'required' => false,
         ];
+
+        if (!array_key_exists('data', $options)) {
+            $overwriteInterests['attr']['checked'] = 'checked';
+        }
+
+        $builder->add(
+            'overwriteInterests',
+            CheckboxType::class,
+            $overwriteInterests
+        );
 
         $automaticallySubscribeFromFormBuilderSubmittedForm = [
             'label' => 'msg.AutomaticallySubscribeFromFormBuilderSubmittedForm',
@@ -89,22 +95,8 @@ class SettingsType extends AbstractType
         ];
 
         if (!array_key_exists('data', $options)) {
-            $overwriteInterests['attr']['checked'] = 'checked';
-            $doubleOptIn['attr']['checked'] = 'checked';
             $automaticallySubscribeFromFormBuilderSubmittedForm['attr']['checked'] = 'checked';
         }
-
-        $builder->add(
-            'doubleOptIn',
-            CheckboxType::class,
-            $doubleOptIn
-        );
-
-        $builder->add(
-            'overwriteInterests',
-            CheckboxType::class,
-            $overwriteInterests
-        );
 
         $builder->add(
             'automaticallySubscribeFromFormBuilderSubmittedForm',

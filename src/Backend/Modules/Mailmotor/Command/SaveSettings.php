@@ -36,11 +36,6 @@ final class SaveSettings
     public $mailEngine;
 
     /**
-     * @var bool
-     */
-    public $doubleOptIn;
-
-    /**
      * @var boolean
      */
     public $overwriteInterests;
@@ -73,9 +68,6 @@ final class SaveSettings
         // Define overwrite interests
         $this->overwriteInterests = array_key_exists('overwrite_interests', $settings)
             ? (bool) $settings['overwrite_interests'] : null;
-
-        // Define double opt-in
-        $this->doubleOptIn = (bool) $settings['double_opt_in'] ?? false;
 
         // Define automatically subscribe from form builder submitted form
         $this->automaticallySubscribeFromFormBuilderSubmittedForm = array_key_exists('automatically_subscribe_from_form_builder_submitted_form', $settings)
