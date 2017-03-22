@@ -39,6 +39,11 @@ final class UpdateContentBlock
     public $contentBlock;
 
     /**
+     * @var int
+     */
+    public $userId;
+
+    /**
      * @param ContentBlock $contentBlock
      */
     public function __construct(ContentBlock $contentBlock)
@@ -49,5 +54,6 @@ final class UpdateContentBlock
         $this->title = $contentBlock->getTitle();
         $this->text = $contentBlock->getText();
         $this->template = $contentBlock->getTemplate();
+        $this->userId = $contentBlock->getUserId();
     }
 }
