@@ -723,7 +723,8 @@ jsBackend.pages.extras = {
         html += '<img class="img-responsive"' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" />';
         html += '<div class="caption" id="ajax-upload-' + key + '">';
         html += '<label>' + label + '</label>';
-        html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
+        // this will be replaced by the ajax uploader
+        html += '<input data-ft-label="' + label + '" type="file" accept="image/*" />';
         html += '</div>';
         html += '</div>';
 
@@ -760,7 +761,8 @@ jsBackend.pages.extras = {
         html += '<img class="img-responsive"' + ' src="' + src + '" />';
         html += '<div class="caption" id="ajax-upload-' + key + '">';
         html += '<label>' + label + '</label>';
-        html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
+        // this will be replaced by the ajax uploader
+        html += '<input data-ft-label="' + label + '" type="file" accept="image/*" />';
         html += '</div>';
         html += '</div>';
 
@@ -821,6 +823,7 @@ jsBackend.pages.extras = {
                 button: 'ajax-upload-' + key,
                 url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
                 name: 'file',
+                accept: 'image/*',
                 responseType: 'json',
                 onComplete: function(filename, response) {
                     if (!response) {
@@ -872,6 +875,7 @@ jsBackend.pages.extras = {
                 button: 'ajax-upload-' + key,
                 url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
                 name: 'file',
+                accept: 'image/*',
                 responseType: 'json',
                 onComplete: function(filename, response) {
                     if (!response) {
