@@ -633,7 +633,7 @@ class ModuleInstaller
             $revision['user_id'] = $this->getDefaultUserID();
         }
         if (!isset($revision['template_id'])) {
-            $revision['template_id'] = $this->getTemplateId('default');
+            $revision['template_id'] = $this->getTemplateId('Default');
         }
         if (!isset($revision['type'])) {
             $revision['type'] = 'page';
