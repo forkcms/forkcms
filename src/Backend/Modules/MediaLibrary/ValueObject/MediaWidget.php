@@ -57,7 +57,7 @@ final class MediaWidget
     public static function getPossibleValues(): array
     {
         // Define actions
-        $actions = array();
+        $actions = [];
 
         $finder = new Finder();
         $finder->files()->in(

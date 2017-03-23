@@ -39,9 +39,9 @@ class TreeManager
         // has folders?
         if (count($foldersTree) > 0) {
             // init var
-            $sequences = array();
-            $keys = array();
-            $return = array(0 => '');
+            $sequences = [];
+            $keys = [];
+            $return = [0 => ''];
 
             // loop folders tree
             foreach ($foldersTree as $folders) {
@@ -110,9 +110,9 @@ class TreeManager
                     'MediaItemIndex',
                     null,
                     null,
-                    array(
+                    [
                         'folder' => $folder['id'],
-                    )
+                    ]
                 )
                 . '"><ins>&#160;</ins>'
                 . $folder['name']

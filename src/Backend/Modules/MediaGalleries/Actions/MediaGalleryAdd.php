@@ -27,7 +27,7 @@ class MediaGalleryAdd extends ActionAdd
         $mediaGroupType = $this->getType();
 
         $form = $this->createForm(
-            new MediaGalleryType(),
+            MediaGalleryType::class,
             new CreateMediaGallery(
                 Authentication::getUser()->getUserId(),
                 $mediaGroupType
@@ -69,7 +69,7 @@ class MediaGalleryAdd extends ActionAdd
     /**
      * @return Type
      */
-    private function getType()
+    private function getType(): Type
     {
         try {
             $type = $this->getParameter('type');
@@ -90,7 +90,7 @@ class MediaGalleryAdd extends ActionAdd
      * @param array $parameters
      * @return string
      */
-    private function getBackLink(array $parameters = [])
+    private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(
             'MediaGalleryIndex',

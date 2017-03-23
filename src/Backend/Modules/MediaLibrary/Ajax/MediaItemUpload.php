@@ -56,7 +56,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
         // Include the upload handler class
         $uploader = new UploadHandler();
         // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
-        $uploader->allowedExtensions = array(); // all files types allowed by default
+        $uploader->allowedExtensions = []; // all files types allowed by default
         // Specify max file size in bytes.
         $uploader->sizeLimit = null;
         // Specify the input name set in the javascript.
@@ -184,7 +184,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
 
     private function parseRequestHeaders()
     {
-        $headers = array();
+        $headers = [];
         foreach ($_SERVER as $key => $value) {
             if (substr($key, 0, 5) <> 'HTTP_') {
                 continue;

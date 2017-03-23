@@ -61,10 +61,10 @@ class Installer extends ModuleInstaller
             null,
             'MediaLibrary',
             'media_library/media_item_index',
-            array(
+            [
                 'media_library/media_item_upload',
                 'media_library/media_item_edit',
-            )
+            ]
         );
     }
 
@@ -129,13 +129,13 @@ class Installer extends ModuleInstaller
     {
         Model::get('database')->insert(
             'MediaFolder',
-            array(
+            [
                 'userId' => 1,
                 'name' => 'default',
                 'createdOn' => new \DateTime(),
                 'editedOn' => new \DateTime(),
                 'parentMediaFolderId' => null,
-            )
+            ]
         );
 
         // Delete cache

@@ -24,18 +24,18 @@ class MediaGalleryDataGrid extends DataGridDB
         );
 
         // Setting header labels
-        $this->setHeaderLabels(array(
+        $this->setHeaderLabels([
             'title' => ucfirst(Language::lbl('Title'))
-        ));
+        ]);
 
         // Sorting columns
         $this->setSortingColumns(
-            array(
+            [
                 'title',
                 'action',
                 'publishOn',
                 'editedOn'
-            ),
+            ],
             'title'
         );
 
@@ -44,14 +44,14 @@ class MediaGalleryDataGrid extends DataGridDB
 
         // Set column functions
         $this->setColumnFunction(
-            array(new DataGridFunctions(), 'getLongDate'),
-            array('[publishOn]'),
+            [new DataGridFunctions(), 'getLongDate'],
+            ['[publishOn]'],
             'publishOn',
             true
         );
         $this->setColumnFunction(
-            array(new DataGridFunctions(), 'getLongDate'),
-            array('[editedOn]'),
+            [new DataGridFunctions(), 'getLongDate'],
+            ['[editedOn]'],
             'editedOn',
             true
         );
@@ -69,8 +69,6 @@ class MediaGalleryDataGrid extends DataGridDB
      */
     public static function getHtml(): string
     {
-        $dataGrid = new self();
-
-        return (string) $dataGrid->getContent();
+        return (string) (new self())->getContent();
     }
 }

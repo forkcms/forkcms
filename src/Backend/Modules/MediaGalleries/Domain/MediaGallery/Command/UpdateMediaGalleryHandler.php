@@ -11,10 +11,7 @@ final class UpdateMediaGalleryHandler
      */
     public function handle(UpdateMediaGallery $updateMediaGallery)
     {
-        /** @var MediaGallery $mediaGallery */
-        $mediaGallery = MediaGallery::fromDataTransferObject($updateMediaGallery);
-
         // We redefine the mediaGallery, so we can use it in an action
-        $updateMediaGallery->setMediaGalleryEntity($mediaGallery);
+        $updateMediaGallery->setMediaGalleryEntity(MediaGallery::fromDataTransferObject($updateMediaGallery));
     }
 }

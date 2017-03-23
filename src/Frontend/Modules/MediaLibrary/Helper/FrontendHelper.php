@@ -49,8 +49,8 @@ class FrontendHelper
         bool $onlyGetTheFirstMediaItem = true
     ) {
         // Init variables
-        $mediaGroupIds = array();
-        $entityKeys = array();
+        $mediaGroupIds = [];
+        $entityKeys = [];
         $counter = 1;
 
         // Loop entities to get mediaGroup id
@@ -138,7 +138,7 @@ class FrontendHelper
     /**
      * @param MediaItem $mediaItem
      * @param Header $header @todo: when we have a header in our services, use that one instead and remove this method variable
-     * @return boolean
+     * @return bool
      */
     public function addOpenGraphImageForMediaItem(
         MediaItem $mediaItem,
@@ -188,10 +188,10 @@ class FrontendHelper
         string $title = null,
         string $module = 'MediaLibrary'
     ) {
-        $data = serialize(array(
+        $data = serialize([
             'group_id' => $mediaGroupId,
             'title' => (string) $title,
-        ));
+        ]);
 
         // Create new widget instance and return parsed content
         $extra = new FrontendBlockWidget(

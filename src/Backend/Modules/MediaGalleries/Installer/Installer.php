@@ -17,7 +17,7 @@ class Installer extends ModuleInstaller
     public function install()
     {
         $this->addModule('MediaGalleries');
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->createEntityTables();
         $this->configureModuleRights();
         $this->configureBackendNavigation();
@@ -34,10 +34,10 @@ class Installer extends ModuleInstaller
             $navigationModulesId,
             'MediaGalleries',
             'media_galleries/media_gallery_index',
-            array(
+            [
                 'media_galleries/media_gallery_add',
                 'media_galleries/media_gallery_edit',
-            )
+            ]
         );
     }
 

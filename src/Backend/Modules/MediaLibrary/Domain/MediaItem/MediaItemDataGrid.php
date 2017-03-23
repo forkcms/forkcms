@@ -59,13 +59,13 @@ class MediaItemDataGrid extends DataGridDB
 
         // sorting columns
         $this->setSortingColumns(
-            array(
+            [
                 'createdOn',
                 'url',
                 'title',
                 'num_connected',
                 'mime'
-            ),
+            ],
             'title'
         );
         $this->setSortParameter('asc');
@@ -99,8 +99,8 @@ class MediaItemDataGrid extends DataGridDB
         if ($type->isImage()) {
             // Add image url
             $this->setColumnFunction(
-                array(new BackendDataGridFunctions(), 'showImage'),
-                array(
+                [new BackendDataGridFunctions(), 'showImage'],
+                [
                     Model::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
                     '[url]',
                     '[url]',
@@ -110,7 +110,7 @@ class MediaItemDataGrid extends DataGridDB
                     Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_width'),
                     Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_height'),
                     'media_library_backend_thumbnail'
-                ),
+                ],
                 'url',
                 true
             );
@@ -118,8 +118,8 @@ class MediaItemDataGrid extends DataGridDB
 
         // set column functions
         $this->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[createdOn]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[createdOn]'],
             'createdOn',
             true
         );
@@ -136,7 +136,7 @@ class MediaItemDataGrid extends DataGridDB
         );
 
         // our JS needs to know an id, so we can highlight it
-        $this->setRowAttributes(array('id' => 'row-[id]'));
+        $this->setRowAttributes(['id' => 'row-[id]']);
 
         // add checkboxes
         $this->setMassActionCheckboxes('check', '[id]');
@@ -144,10 +144,10 @@ class MediaItemDataGrid extends DataGridDB
         // add mass action dropdown
         $ddmMediaItemMassAction = new \SpoonFormDropdown(
             'action',
-            array(
+            [
                 'move' => Language::lbl('MoveMedia'),
                 'delete' => Language::lbl('MediaItemDeletes')
-            ),
+            ],
             'move',
             false,
             'form-control',
@@ -159,15 +159,15 @@ class MediaItemDataGrid extends DataGridDB
         );
         $ddmMediaItemMassAction->setOptionAttributes(
             'move',
-            array(
+            [
                 'data-target' => '#confirmMassActionMediaItemMove',
-            )
+            ]
         );
         $ddmMediaItemMassAction->setOptionAttributes(
             'delete',
-            array(
+            [
                 'data-target' => '#confirmMassActionMediaItemDelete',
-            )
+            ]
         );
         $this->setMassAction($ddmMediaItemMassAction);
     }

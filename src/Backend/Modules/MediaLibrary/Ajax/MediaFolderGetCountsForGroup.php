@@ -23,7 +23,7 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
 
         /** @var array $counts */
         $counts = ($mediaGroup instanceof MediaGroup)
-            ? $this->get('media_library.repository.folder')->getCountsForMediaGroup($mediaGroup) : array();
+            ? $this->get('media_library.repository.folder')->getCountsForMediaGroup($mediaGroup) : [];
 
         // Output success message
         $this->output(

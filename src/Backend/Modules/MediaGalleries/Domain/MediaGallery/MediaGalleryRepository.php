@@ -11,8 +11,6 @@ use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNot
 final class MediaGalleryRepository extends EntityRepository
 {
     /**
-     * Add a MediaGallery
-     *
      * @param MediaGallery $mediaGallery
      *
      * We don't flush here, see http://disq.us/p/okjc6b
@@ -27,15 +25,14 @@ final class MediaGalleryRepository extends EntityRepository
      *
      * @param string $title
      * @param int $ignoreMediaGalleryId
-     * @return boolean
+     * @return bool
      */
     public function existsByTitle(string $title, int $ignoreMediaGalleryId = 0): bool
     {
         /** @var MediaGallery $mediaGallery */
         $mediaGallery = $this->findOneByTitle($title);
 
-        return ($mediaGallery)
-            ? ($mediaGallery->getId() != $ignoreMediaGalleryId) : false;
+        return ($mediaGallery instanceof MediaGallery) ? ($mediaGallery->getId() !== $ignoreMediaGalleryId) : false;
     }
 
     /**
@@ -43,7 +40,7 @@ final class MediaGalleryRepository extends EntityRepository
      * @return MediaGallery
      * @throws \Exception
      */
-    public function getOneById(string $id): MediaGallery
+    public function getOneById(string $id = null): MediaGallery
     {
         if ($id === null) {
             throw MediaGalleryNotFound::forEmptyId();
@@ -60,8 +57,6 @@ final class MediaGalleryRepository extends EntityRepository
     }
 
     /**
-     * Remove a MediaGallery
-     *
      * @param MediaGallery $mediaGallery
      *
      * We don't flush here, see http://disq.us/p/okjc6b

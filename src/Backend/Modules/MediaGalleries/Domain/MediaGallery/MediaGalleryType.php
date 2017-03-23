@@ -17,19 +17,6 @@ use Backend\Modules\MediaLibrary\ValueObject\MediaWidget;
 
 class MediaGalleryType extends AbstractType
 {
-    /** @var string */
-    private $dataClass;
-
-    /**
-     * MediaGalleryType constructor.
-     *
-     * @param string $dataClass
-     */
-    public function __construct(string $dataClass = CreateMediaGallery::class)
-    {
-        $this->dataClass = $dataClass;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -54,7 +41,7 @@ class MediaGalleryType extends AbstractType
             );
 
         // You can only choose the "widget action" on "Add", or always if you got "EditWidgetAction" rights or if you created the MediaGallery.
-        if ($this->dataClass === CreateMediaGallery::class || Authentication::isAllowedAction('MediaGalleryEditWidgetAction') || $builder->getData()->userId === Authentication::getUser()->getUserId()) {
+        if ($this->showFieldForWidgetAction($builder, $options)) {
             $builder->add(
                 'action',
                 ChoiceType::class,
@@ -76,7 +63,7 @@ class MediaGalleryType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'lbl.Status',
-                    'choices' => Status::getPossibleValues(),
+                    'choices' => Status::POSSIBLE_VALUES,
                     'choices_as_values' => true,
                     'choice_label' => function ($status) {
                         return TemplateModifiers::toLabel($status);
@@ -101,11 +88,28 @@ class MediaGalleryType extends AbstractType
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return bool
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function showFieldForWidgetAction(FormBuilderInterface $builder, array $options)
     {
-        $resolver->setDefaults(['data_class' => $this->dataClass]);
+        // You can always see the widgetAction field in the "CreateMediaGallery" command
+        if ($options['data_class'] === CreateMediaGallery::class) {
+            return true;
+        }
+
+        // When it is your gallery, you can see the widgetAction field
+        if ($builder->getData()->userId === Authentication::getUser()->getUserId()) {
+            return true;
+        }
+
+        // Otherwise, when you have the rights, you can edit the widgetAction
+        if (Authentication::isAllowedAction('MediaGalleryEditWidgetAction')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

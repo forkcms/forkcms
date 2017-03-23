@@ -45,7 +45,7 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
                 $mediaGroup = $mediaItemMediaGroup->getGroup();
 
                 // Define new media ids
-                $newMediaIds = array();
+                $newMediaIds = [];
 
                 /**
                  * @var int $index

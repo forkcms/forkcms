@@ -11,13 +11,13 @@ class LoadMediaLibraryMediaFolders
     {
         $database->insert(
             'MediaFolder',
-            array(
+            [
                 'userId' => 1,
                 'name' => 'cars',
                 'createdOn' => new \DateTime(),
                 'editedOn' => new \DateTime(),
                 'parentMediaFolderId' => null,
-            )
+            ]
         );
 
         $parentId = $database->getVar(
@@ -29,24 +29,24 @@ class LoadMediaLibraryMediaFolders
 
         $database->insert(
             'MediaFolder',
-            array(
+            [
                 'userId' => 1,
                 'name' => 'audi',
                 'createdOn' => new \DateTime(),
                 'editedOn' => new \DateTime(),
                 'parentMediaFolderId' => $parentId,
-            )
+            ]
         );
 
         $database->insert(
             'MediaFolder',
-            array(
+            [
                 'userId' => 1,
                 'name' => 'bmw',
                 'createdOn' => new \DateTime(),
                 'editedOn' => new \DateTime(),
                 'parentMediaFolderId' => $parentId,
-            )
+            ]
         );
     }
 }

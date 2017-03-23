@@ -26,12 +26,13 @@ class MediaGalleryEdit extends BackendBaseActionEdit
         $mediaGallery = $this->getMediaGallery();
 
         $form = $this->createForm(
-            new MediaGalleryType(
-                UpdateMediaGallery::class
-            ),
+            MediaGalleryType::class,
             new UpdateMediaGallery(
                 $mediaGallery
-            )
+            ),
+            [
+                'data_class' => UpdateMediaGallery::class
+            ]
         );
 
         $form->handleRequest($this->get('request'));
@@ -70,7 +71,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
     /**
      * @return MediaGallery
      */
-    private function getMediaGallery()
+    private function getMediaGallery(): MediaGallery
     {
         try {
             $id = $this->getParameter('id');
@@ -90,10 +91,9 @@ class MediaGalleryEdit extends BackendBaseActionEdit
 
     /**
      * @param array $parameters
-     *
      * @return string
      */
-    private function getBackLink(array $parameters = [])
+    private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(
             'MediaGalleryIndex',

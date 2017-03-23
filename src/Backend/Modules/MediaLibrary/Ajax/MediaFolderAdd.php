@@ -48,9 +48,9 @@ class MediaFolderAdd extends BackendBaseAJAXAction
             $createMediaFolder->getMediaFolderEntity()->__toArray(),
             vsprintf(
                 Language::msg('AddedFolder'),
-                array(
+                [
                     $createMediaFolder->getMediaFolderEntity()->getId()
-                )
+                ]
             )
         );
     }

@@ -46,7 +46,7 @@ class MediaItemMassAction extends BackendBaseAction
         $action = $this->getSelectedAction();
 
         // Init parameters
-        $parameters = array();
+        $parameters = [];
 
         // We have a current MediaFolder
         if ($mediaFolder !== null) {

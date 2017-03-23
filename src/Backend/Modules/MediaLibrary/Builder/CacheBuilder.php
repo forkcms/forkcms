@@ -131,11 +131,11 @@ class CacheBuilder
         $levels = $this->getFoldersTree(null, null, 1);
 
         // init var
-        $names = array();
-        $sequences = array();
-        $keys = array();
-        $counts = array();
-        $return = array();
+        $names = [];
+        $sequences = [];
+        $keys = [];
+        $counts = [];
+        $return = [];
 
         // loop levels
         foreach ($levels as $level => $folders) {
@@ -182,11 +182,11 @@ class CacheBuilder
                     }
 
                     if ($includeKeys) {
-                        $return[$id] = array(
+                        $return[$id] = [
                             'id' => $id,
                             'name' => $name,
                             'numMedia' => $counts[$id],
-                        );
+                        ];
                     } else {
                         $return[$id] = $name;
                     }

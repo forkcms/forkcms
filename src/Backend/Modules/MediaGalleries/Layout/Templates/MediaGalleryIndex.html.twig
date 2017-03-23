@@ -14,14 +14,15 @@
 
 {% block content %}
   {% if warnings %}
-      <div class="generalMessage infoMessage content">
-          <p><strong>{$msgConfigurationError}</strong></p>
-          <ul class="pb0">
-              {iteration:warnings}
-                  <li>{$warnings.message}</li>
-              {/iteration:warnings}
-          </ul>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <ul>
+          {% for warning in warnings %}
+            <li>{{ warning.message | raw }}</li>
+          {% endfor %}
+        </ul>
       </div>
+    </div>
   {% endif %}
 
   {% if not warnings %}

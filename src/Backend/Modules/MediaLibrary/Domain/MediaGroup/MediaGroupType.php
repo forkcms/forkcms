@@ -145,7 +145,7 @@ class MediaGroupType extends AbstractType
 
             /** @var array $mediaItemIds */
             $mediaItemIds = ($mediaGroupData['mediaIds'] !== null)
-                ? explode(',', trim($mediaGroupData['mediaIds'])) : array();
+                ? explode(',', trim($mediaGroupData['mediaIds'])) : [];
 
             try {
                 /** @var MediaGroup $mediaGroup */

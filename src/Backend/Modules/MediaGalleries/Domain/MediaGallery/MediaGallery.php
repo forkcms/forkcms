@@ -56,7 +56,7 @@ class MediaGallery
     protected $title;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", nullable=true)
      */
@@ -136,28 +136,6 @@ class MediaGallery
     }
 
     /**
-     * To array
-     *
-     * @return array
-     */
-    public function __toArray(): array
-    {
-        return [
-            'id' => $this->id,
-            'userId' => $this->userId,
-            'moduleExtraId' => $this->moduleExtraId,
-            'action' => $this->action,
-            'title' => $this->title,
-            'text' => $this->text,
-            'createdOn' => $this->createdOn->getTimestamp(),
-            'editedOn' => $this->editedOn->getTimestamp(),
-            'publishOn' => $this->publishOn->getTimestamp(),
-            'status' => (string) $this->status,
-            'mediaGroup' => $this->mediaGroup->__toArray(),
-        ];
-    }
-
-    /**
      * Gets the value of id.
      *
      * @return string
@@ -170,7 +148,7 @@ class MediaGallery
     /**
      * Gets the value of userId.
      *
-     * @return integer
+     * @return int
      */
     public function getUserId(): int
     {
@@ -180,7 +158,7 @@ class MediaGallery
     /**
      * Gets the value of moduleExtraId.
      *
-     * @return integer
+     * @return int
      */
     public function getModuleExtraId(): int
     {
@@ -277,7 +255,7 @@ class MediaGallery
             'MediaGalleries',
             'Gallery',
             'Gallery',
-            array(),
+            [],
             false
         );
     }
@@ -324,9 +302,7 @@ class MediaGallery
      */
     protected function getExtraLabel(): string
     {
-        return '"' . $this->title . '"'
-            . ' - '
-            . ucfirst($this->action);
+        return '"' . $this->title . '"' . ' - ' . ucfirst($this->action);
     }
 
     /**
@@ -338,13 +314,13 @@ class MediaGallery
         Model::updateExtra(
             $this->getModuleExtraId(),
             'data',
-            array(
+            [
                 'gallery_id' => $this->id,
                 'extra_label' => $this->getExtraLabel(),
                 'edit_url' =>
                     Model::createURLForAction('MediaGalleryEdit', 'MediaGalleries')
                     . '&id=' . $this->id,
-            )
+            ]
         );
 
         // Update hidden

@@ -19,7 +19,7 @@ final class SaveMediaGroup extends MediaGroupDataTransferObject
      */
     public function __construct(
         MediaGroup $mediaGroup,
-        array $mediaItemIdsToConnect = array()
+        array $mediaItemIdsToConnect = []
     ) {
         parent::__construct($mediaGroup);
 

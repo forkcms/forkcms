@@ -24,7 +24,7 @@ final class MediaItemRepository extends EntityRepository
      * Exists one MediaItem by url
      *
      * @param string $url
-     * @return boolean
+     * @return bool
      */
     public function existsOneByUrl(string $url): bool
     {
@@ -42,9 +42,9 @@ final class MediaItemRepository extends EntityRepository
      */
     public function getAllByFolder(MediaFolder $mediaFolder): array
     {
-        return $this->findBy(array(
+        return $this->findBy([
             'folder' => $mediaFolder
-        ));
+        ]);
     }
 
     /**

@@ -207,7 +207,7 @@ class MediaGroup
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function hasConnectedItems(): bool
     {
@@ -283,7 +283,7 @@ class MediaGroup
      */
     public function getIdsForConnectedItems(): array
     {
-        $ids = array();
+        $ids = [];
 
         foreach ($this->connectedItems as $connectedItem) {
             $ids[] = $connectedItem->getItem()->getId();

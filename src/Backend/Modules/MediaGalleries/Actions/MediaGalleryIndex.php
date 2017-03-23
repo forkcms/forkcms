@@ -21,10 +21,9 @@ class MediaGalleryIndex extends BackendBaseActionIndex
      */
     public function execute()
     {
-        // Call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        $this->tpl->assign('warnings', BackendMediaGalleriesModel::checkSettings());
+        $this->tpl->assign('warnings', $this->getWarnings());
         $this->tpl->assign('dataGrid', MediaGalleryDataGrid::getHtml());
         $this->tpl->assign('mediaGroupTypes', $this->getTypes());
 
@@ -37,19 +36,36 @@ class MediaGalleryIndex extends BackendBaseActionIndex
      */
     private function getTypes(): array
     {
-        $types = Type::getPossibleValues();
-
-        // Specially for SpoonTemplate
-        $mediaGroupTypes = array();
-        foreach ($types as $type) {
-            $mediaGroupTypes[] = [
+        return array_map(function ($type) {
+            return [
                 'key' => $type,
                 'value' => BackendModel::createURLForAction('MediaGalleryAdd') . '&type=' . $type,
                 'label' => Language::lbl('MediaLibraryGroupType' . \SpoonFilter::toCamelCase($type, '-'), 'Core'),
                 'selected' => ($type === 'image'),
             ];
+        }, Type::getPossibleValues());
+    }
+
+    /**
+     * Get the warnings
+     *
+     * @return array
+     */
+    public static function getWarnings(): array
+    {
+        // MediaLibrary "Index" action should be allowed
+        if (!BackendModel::isModuleInstalled('MediaLibrary')) {
+            return [];
         }
 
-        return $mediaGroupTypes;
+        // Add warning
+        return [
+            [
+                'message' => sprintf(
+                    Language::err('MediaLibraryModuleRequired', 'MediaGalleries'),
+                    BackendModel::createURLForAction('Modules', 'Extensions')
+                )
+            ],
+        ];
     }
 }

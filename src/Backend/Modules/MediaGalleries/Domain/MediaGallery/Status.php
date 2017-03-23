@@ -6,6 +6,10 @@ final class Status
 {
     const ACTIVE = 'active';
     const HIDDEN = 'hidden';
+    const POSSIBLE_VALUES = [
+        self::ACTIVE,
+        self::HIDDEN,
+    ];
 
     /** @var string */
     private $mediaGalleryStatus;
@@ -15,7 +19,7 @@ final class Status
      */
     private function __construct(string $mediaGalleryStatus)
     {
-        if (!in_array($mediaGalleryStatus, self::getPossibleValues(), true)) {
+        if (!in_array($mediaGalleryStatus, self::POSSIBLE_VALUES, true)) {
             throw new \InvalidArgumentException('Invalid value');
         }
 
@@ -24,9 +28,9 @@ final class Status
 
     /**
      * @param string $mediaGalleryStatus
-     * @return Status
+     * @return self
      */
-    public static function fromString(string $mediaGalleryStatus): \Backend\Modules\MediaGalleries\Domain\MediaGallery\Status
+    public static function fromString(string $mediaGalleryStatus): self
     {
         return new self($mediaGalleryStatus);
     }
@@ -41,12 +45,11 @@ final class Status
 
     /**
      * @param Status $mediaGalleryStatus
-     *
      * @return bool
      */
     public function equals(Status $mediaGalleryStatus): bool
     {
-        if (!($mediaGalleryStatus instanceof $this)) {
+        if (!$mediaGalleryStatus instanceof $this) {
             return false;
         }
 
@@ -54,20 +57,9 @@ final class Status
     }
 
     /**
-     * @return array
+     * @return self
      */
-    public static function getPossibleValues(): array
-    {
-        return [
-            self::ACTIVE,
-            self::HIDDEN,
-        ];
-    }
-
-    /**
-     * @return Status
-     */
-    public static function active(): \Backend\Modules\MediaGalleries\Domain\MediaGallery\Status
+    public static function active(): self
     {
         return new self(self::ACTIVE);
     }
@@ -81,9 +73,9 @@ final class Status
     }
 
     /**
-     * @return Status
+     * @return self
      */
-    public static function hidden(): \Backend\Modules\MediaGalleries\Domain\MediaGallery\Status
+    public static function hidden(): self
     {
         return new self(self::HIDDEN);
     }

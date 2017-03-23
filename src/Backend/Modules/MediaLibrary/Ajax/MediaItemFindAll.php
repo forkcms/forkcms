@@ -42,7 +42,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         }
 
         // Init media items
-        $mediaItemsToArray = array();
+        $mediaItemsToArray = [];
 
         // Get media for the given folder
         if ($mediaFolder !== null) {
@@ -50,7 +50,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
             $mediaItems = $this->get('media_library.repository.item')->getAllByFolder($mediaFolder);
 
             // Init media items array
-            $mediaItemsToArray = array();
+            $mediaItemsToArray = [];
             foreach ($mediaItems as $mediaItem) {
                 $mediaItemsToArray[] = $mediaItem->__toArray();
             }
@@ -62,11 +62,11 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         // Output success message with variables
         $this->output(
             self::OK,
-            array(
+            [
                 'media' => $mediaItemsToArray,
                 'folder' => $mediaFolderId,
                 'tab' => $this->selectedTab
-            )
+            ]
         );
     }
 

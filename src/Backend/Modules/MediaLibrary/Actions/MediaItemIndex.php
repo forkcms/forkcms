@@ -57,7 +57,7 @@ class MediaItemIndex extends BackendBaseActionIndex
      */
     private function getDataGrids(MediaFolder $mediaFolder = null, $possibleTypes): array
     {
-        $dataGrids = array();
+        $dataGrids = [];
 
         /** @var string $type */
         foreach ($possibleTypes as $type) {
@@ -110,15 +110,15 @@ class MediaItemIndex extends BackendBaseActionIndex
         }
 
         // define parent folders
-        $foldersForDropdown = array(0 => '');
+        $foldersForDropdown = [0 => ''];
 
         // loop all folders
         foreach ($folders as $value => $label) {
             // add to parent folders
-            $foldersForDropdown[$value] = array(
+            $foldersForDropdown[$value] = [
                 'value' => $value,
                 'label' => $label,
-            );
+            ];
         }
 
         return $foldersForDropdown;

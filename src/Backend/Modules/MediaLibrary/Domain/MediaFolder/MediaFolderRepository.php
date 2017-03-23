@@ -26,7 +26,7 @@ final class MediaFolderRepository extends EntityRepository
      *
      * @param string $name The requested folder name to check if exists.
      * @param MediaFolder|null $parent The parent MediaFolder where this folder should be in.
-     * @return boolean
+     * @return bool
      */
     public function existsByName(string $name, MediaFolder $parent = null): bool
     {
@@ -68,7 +68,7 @@ final class MediaFolderRepository extends EntityRepository
     public function getCountsForMediaGroup(MediaGroup $mediaGroup): array
     {
         // Init counts
-        $counts = array();
+        $counts = [];
 
         // Loop all connected items
         foreach ($mediaGroup->getConnectedItems() as $connectedItem) {
