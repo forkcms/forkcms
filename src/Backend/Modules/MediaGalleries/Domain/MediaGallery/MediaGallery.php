@@ -216,6 +216,16 @@ class MediaGallery
     }
 
     /**
+     * Get extra label
+     *
+     * @return string The gallery extra_label.
+     */
+    protected function getExtraLabel(): string
+    {
+        return '"' . $this->title . '"' . ' - ' . ucfirst($this->action);
+    }
+
+    /**
      * Gets the value of publishOn.
      *
      * @return \DateTime
@@ -269,22 +279,6 @@ class MediaGallery
     }
 
     /**
-     * @ORM\PostPersist
-     */
-    public function onPostPersist()
-    {
-        $this->updateModuleExtraData();
-    }
-
-    /**
-     * @ORM\PostUpdate
-     */
-    public function onPostUpdate()
-    {
-        $this->updateModuleExtraData();
-    }
-
-    /**
      * @ORM\PostRemove
      */
     public function onPostRemove()
@@ -296,19 +290,12 @@ class MediaGallery
     }
 
     /**
-     * Get extra label
-     *
-     * @return string The gallery extra_label.
-     */
-    protected function getExtraLabel(): string
-    {
-        return '"' . $this->title . '"' . ' - ' . ucfirst($this->action);
-    }
-
-    /**
      * Update module extra data
+     *
+     * @ORM\PostPersist
+     * @ORM\PostUpdate
      */
-    protected function updateModuleExtraData()
+    public function updateModuleExtraData()
     {
         // Update ModuleExtra data
         Model::updateExtra(
