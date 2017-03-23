@@ -262,7 +262,7 @@ class DataGridFunctions
      *
      * @return string
      */
-    public static function showImage($path, $image, $title = '', $url = null, $width = null, $height = null, $filter = null)
+    public static function showImage(string $path, string $image, string $title = '', string $url = null, int $width = null, int $height = null, string $filter = null): string
     {
         $path = (string) $path;
         $image = (string) $image;
