@@ -704,19 +704,6 @@ jsBackend.mediaLibraryHelper.group =
      */
     updateMedia : function()
     {
-        var $libraryTab = $('#tabLibrary');
-
-        if (mediaFolderId == 0) {
-            // hide library tabs on open
-            $libraryTab.find('.ui-tabs').hide();
-
-            // stop here
-            return false;
-        } else {
-            // show library tabs on open
-            $libraryTab.find('.ui-tabs').show();
-        }
-
         // init variables
         var rowNoItems = jsBackend.mediaLibraryHelper.templates.getHTMLForEmptyTableRow();
         var htmlImages = '';
@@ -766,7 +753,7 @@ jsBackend.mediaLibraryHelper.group =
         $('#mediaTableAudio').html((htmlAudio) ? htmlAudio : rowNoItems);
 
         // init $tabs
-        var $tabs = $libraryTab.find('.nav-tabs');
+        var $tabs = $('#tabLibrary').find('.nav-tabs');
 
         // remove selected
         $tabs.find('.active').removeClass('active');
