@@ -48,6 +48,7 @@ gulp.task("build:backend:assets:copy-js-vendors", function() {
     "./node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
     "./node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
     "./node_modules/fine-uploader/jquery.fine-uploader/jquery.fine-uploader.min.js",
+    "./node_modules/simple-ajax-uploader/SimpleAjaxUploader.min.js",
   ])
       .pipe(gulp.dest("js/vendors"));
 });

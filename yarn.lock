@@ -2024,6 +2024,10 @@ signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
+simple-ajax-uploader@^2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/simple-ajax-uploader/-/simple-ajax-uploader-2.5.5.tgz#a91402fdfbc678b1fa73b5d4fd5d8c21c0d9a922"
+
 sntp@1.x.x:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/sntp/-/sntp-1.0.9.tgz#6541184cc90aeea6c6e7b35e2659082443c66198"
