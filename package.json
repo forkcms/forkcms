@@ -9,6 +9,8 @@
   "devDependencies": {
     "bootstrap-sass": "~3.3",
     "bootstrap-tagsinput": "~0.7",
+    "bxslider": "^4.2.10",
+    "fine-uploader": "^5.14.1",
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
@@ -18,11 +20,7 @@
     "gulp-sourcemaps": "^1.9.1",
     "jquery": "~2.2",
     "jquery-migrate": "~1.4",
-    "jquery-ui-dist": "~1.12"
-  },
-  "dependencies": {
-    "bxslider": "^4.2.10",
-    "fine-uploader": "^5.14.1",
+    "jquery-ui-dist": "~1.12",
     "photoswipe": "^4.1.1"
   }
 }
