@@ -2137,6 +2137,7 @@ CREATE TABLE `pages_blocks` (
   `revision_id` int(11) NOT NULL COMMENT 'The ID of the page that contains this block.',
   `position` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_id` int(11) DEFAULT NULL COMMENT 'The linked extra.',
+  `extra_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'rich_text',
   `html` text COLLATE utf8mb4_unicode_ci COMMENT 'if this block is HTML this field should contain the real HTML.',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
