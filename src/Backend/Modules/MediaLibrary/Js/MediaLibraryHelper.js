@@ -232,7 +232,7 @@ jsBackend.mediaLibraryHelper.group =
     /**
      * Disconnect media fast from this group
      *
-     * @param int groupId The group id we want to disconnect from.
+     * @param {int} groupId The group id we want to disconnect from.
      */
     disconnectMediaFromGroup : function(groupId)
     {
@@ -303,6 +303,10 @@ jsBackend.mediaLibraryHelper.group =
         }
     },
 
+    /**
+     * @param {int} groupId
+     * @returns {*|jQuery|HTMLElement}
+     */
     get : function(groupId)
     {
         return $('#group-' + groupId);
@@ -437,7 +441,7 @@ jsBackend.mediaLibraryHelper.group =
 
                             $(json.data.items).each(function(index, item) {
                                 // add HTML for MediaItem to connect to holder
-                                $holder.append(jsBackend.mediaLibraryHelper.group.getHTMLForMediaItemToConnect(item));
+                                $holder.append(jsBackend.mediaLibraryHelper.templates.getHTMLForMediaItemToConnect(item));
                             });
                         }
                     }
@@ -447,33 +451,9 @@ jsBackend.mediaLibraryHelper.group =
     },
 
     /**
-     * Get HTML for MediaItem to connect
-     *
-     * @param Array mediaItem
-     * @returns {string}
-     */
-    getHTMLForMediaItemToConnect: function(mediaItem)
-    {
-        var html = '<li id="media-' + mediaItem.id + '" data-folder-id="' + mediaItem.folder_id + '" class="ui-state-default">';
-        html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">';
-
-        if (mediaItem.type == 'image') {
-            html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>';
-        } else {
-            html += '<div class="icon"></div>';
-            html += '<div class="url">' + mediaItem.url + '</div>';
-        }
-
-        html += '</div>';
-        html += '</li>';
-
-        return html;
-    },
-
-    /**
      * Get media items in a group
      *
-     * @param int groupId [optional]
+     * @param {int} groupId [optional]
      */
     getItems : function(groupId)
     {
@@ -534,6 +514,10 @@ jsBackend.mediaLibraryHelper.group =
         }
     },
 
+    /**
+     * @param {int} groupId
+     * @returns {*|jQuery|HTMLElement}
+     */
     getSelectedItems : function(groupId)
     {
         return jsBackend.mediaLibraryHelper.group.get(groupId).find('.mediaConnectedItems li.selected');
@@ -548,7 +532,7 @@ jsBackend.mediaLibraryHelper.group =
     /**
      * Enable/disable the disconnect button
      *
-     * @param groupId
+     * @param {int} groupId
      */
     updateDisconnectButton : function(groupId)
     {
@@ -563,9 +547,9 @@ jsBackend.mediaLibraryHelper.group =
     /**
      * Update the folder count
      *
-     * @param int folderId          The folderId where you want the count to change.
-     * @param string updateCount    Allowed: '+' or '-'
-     * @param int updateWithValue   The value you want to add or substract.
+     * @param {int} folderId - The folderId where you want the count to change.
+     * @param {string} updateCount - Allowed: '+' or '-'
+     * @param {int} updateWithValue - The value you want to add or substract.
      */
     updateFolderCount : function(folderId, updateCount, updateWithValue)
     {
@@ -611,7 +595,7 @@ jsBackend.mediaLibraryHelper.group =
     /**
      * Update folder counts for items
      *
-     * @param array $items The media items
+     * @param {array} $items - The media items
      */
     updateFolderCountsForItemsToDisconnect : function($items)
     {
@@ -679,7 +663,7 @@ jsBackend.mediaLibraryHelper.group =
                         // item found
                         if (id == item.id) {
                             // Add HTML for MediaItem to Connect
-                            $currentItems.append(jsBackend.mediaLibraryHelper.group.getHTMLForMediaItemToConnect(item));
+                            $currentItems.append(jsBackend.mediaLibraryHelper.templates.getHTMLForMediaItemToConnect(item));
                         }
                     });
                 });
@@ -734,7 +718,7 @@ jsBackend.mediaLibraryHelper.group =
         }
 
         // init variables
-        var rowNoItems = '<tr><td>' + jsBackend.locale.msg('MediaNoItemsInFolder') + '</td></tr>';
+        var rowNoItems = jsBackend.mediaLibraryHelper.templates.getHTMLForEmptyTableRow();
         var htmlImages = '';
         var htmlFiles = '';
         var htmlMovies = '';
@@ -748,77 +732,23 @@ jsBackend.mediaLibraryHelper.group =
         $.each(media[mediaFolderId], function(i, item) {
             // check if media is connected or not
             var connected = (typeof mediaGroups[currentMediaGroupId] == 'undefined') ? false : utils.array.inArray(item.id, mediaGroups[currentMediaGroupId].media);
+            var html = jsBackend.mediaLibraryHelper.templates.getHTMLForMediaItemTableRow(item, connected);
 
             // item is an image
             if (item.type == 'image') {
-                // add to html
-                htmlImages += '<tr id="media-' + item.id + '" class="rowImage">';
-                htmlImages += '  <td class="check">';
-                htmlImages += '     <input type="checkbox" class="toggleConnectedCheckbox"';
-                if (connected) {
-                    htmlImages += ' checked="checked"';
-                }
-                htmlImages += ' />';
-                htmlImages += '  </td>';
-                htmlImages += '  <td class="fullUrl">';
-                htmlImages += '     <img src="' + item.preview_source + '" alt="' + item.title + '" height="50" />';
-                htmlImages += '  </td>';
-                htmlImages += '  <td class="url">' + item.url + '</td>';
-                htmlImages += '  <td class="title">' + item.title + '</td>';
-                htmlImages += '</tr>';
-
-                // add +1 to image counter
+                htmlImages += html;
                 numImages += 1;
             // item is a file
             } else if (item.type == 'file') {
-                // add to html
-                htmlFiles += '<tr id="media-' + item.id + '" class="rowFile">';
-                htmlFiles += '  <td class="check">';
-                htmlFiles += '     <input type="checkbox" class="toggleConnectedCheckbox"';
-                if (connected) {
-                    htmlFiles += ' checked="checked"';
-                }
-                htmlFiles += ' />';
-                htmlFiles += '  </td>';
-                htmlFiles += '  <td class="url">' + item.url + '</td>';
-                htmlFiles += '  <td class="title">' + item.title + '</td>';
-                htmlFiles += '</tr>';
-
-                // add +1 to file counter
+                htmlFiles += html;
                 numFiles += 1;
             // item is a movie
             } else if (item.type == 'movie') {
-                // add to html
-                htmlMovies += '<tr id="media-' + item.id + '" class="rowMovie">';
-                htmlMovies += '  <td class="check">';
-                htmlMovies += '    <input type="checkbox" class="toggleConnectedCheckbox"';
-                if (connected) {
-                    htmlMovies += ' checked="checked"';
-                }
-                htmlMovies += ' />';
-                htmlMovies += '  </td>';
-                htmlMovies += '  <td class="url">' + item.url + '</td>';
-                htmlMovies += '  <td class="title">' + item.title + '</td>';
-                htmlMovies += '</tr>';
-
-                // add +1 to movies counter
+                htmlMovies += html;
                 numMovies += 1;
             // item is an audio file
             } else if (item.type == 'audio') {
-                // add to html
-                htmlAudio += '<tr id="media-' + item.id + '" class="rowAudio">';
-                htmlAudio += '  <td class="check">';
-                htmlAudio += '    <input type="checkbox" class="toggleConnectedCheckbox"';
-                if (connected) {
-                    htmlAudio += ' checked="checked"';
-                }
-                htmlAudio += ' />';
-                htmlAudio += '  </td>';
-                htmlAudio += '  <td class="url">' + item.url + '</td>';
-                htmlAudio += '  <td class="title">' + item.title + '</td>';
-                htmlAudio += '</tr>';
-
-                // add +1 to audio counter
+                htmlAudio += html;
                 numAudio += 1;
             }
         });
@@ -839,7 +769,6 @@ jsBackend.mediaLibraryHelper.group =
         var $tabs = $libraryTab.find('.nav-tabs');
 
         // remove selected
-        $tabs.find('.ui-tabs-selected').removeClass('ui-tabs-selected');
         $tabs.find('.active').removeClass('active');
 
         // not in connect-to-group modus (just uploading)
@@ -951,7 +880,7 @@ jsBackend.mediaLibraryHelper.upload =
                 },
                 onComplete: function(id, name, responseJSON) {
                     // add file to uploaded box
-                    jsBackend.mediaLibraryHelper.upload.addUploadedFile(responseJSON);
+                    $('#uploadedMedia').append(jsBackend.mediaLibraryHelper.templates.getHTMLForUploadedMediaItem(responseJSON));
 
                     // update counter
                     jsBackend.mediaLibraryHelper.upload.uploadedCount += 1;
@@ -979,40 +908,6 @@ jsBackend.mediaLibraryHelper.upload =
                 }
             }
         });
-    },
-
-    /**
-     * Add the uploaded file to the box
-     *
-     * @param item This is the media-item that ajax returned for us.
-     */
-    addUploadedFile : function(item)
-    {
-        // init html
-        var html = '';
-
-        // create element
-        html += '<li id="media-' + item.id + '" data-folder-id="' + item.folder.id + '" class="ui-state-default">';
-        html += '    <div class="mediaHolder mediaHolder' + utils.string.ucfirst(item.type) + '">';
-
-        // is image
-        if (item.type == 'image') {
-            html += '        <img src="' + item.preview_source + '" alt="' + item.title + '" title="' + item.title + '"/>';
-        // is file, movie or audio
-        } else {
-            html += '        <div class="icon"></div>';
-            html += '        <div class="url">' + item.url + '</div>';
-        }
-
-        html += '    </div>';
-        html += '    <a href="#/" class="deleteMediaItem btn btn-default" ';
-        html += 'title="' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '">';
-        html += '        <span>' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '</span>';
-        html += '    </a>';
-        html += '</li>';
-
-        // add element to box
-        $('#uploadedMedia').append(html);
     },
 
     /**
@@ -1062,7 +957,7 @@ jsBackend.mediaLibraryHelper.upload =
     /**
      * Insert movie
      *
-     * @param Event e
+     * @param {Event} e
      */
     insertMovie : function(e)
     {
@@ -1097,7 +992,7 @@ jsBackend.mediaLibraryHelper.upload =
                     }
                 } else {
                     // add uploaded movie
-                    jsBackend.mediaLibraryHelper.upload.addUploadedFile(json.data);
+                    $('#uploadedMedia').append(jsBackend.mediaLibraryHelper.templates.getHTMLForUploadedMediaItem(json.data));
 
                     // update counter
                     jsBackend.mediaLibraryHelper.upload.uploadedCount += 1;
@@ -1191,6 +1086,116 @@ jsBackend.mediaLibraryHelper.upload =
      * @param int
      */
     uploadedCount : 0
+};
+
+/**
+ * Templates
+ *
+ * global: jsBackend
+ * global: utils
+ */
+jsBackend.mediaLibraryHelper.templates =
+{
+    /**
+     * Get HTML for empty table row
+     *
+     * @returns {string}
+     */
+    getHTMLForEmptyTableRow : function()
+    {
+        return '<tr><td>' + jsBackend.locale.msg('MediaNoItemsInFolder') + '</td></tr>';
+    },
+
+    /**
+     * Get HTML for MediaItem to connect
+     *
+     * @param {array} mediaItem The mediaItem entity array.
+     * @returns {string}
+     */
+    getHTMLForMediaItemToConnect : function(mediaItem)
+    {
+        var html = '<li id="media-' + mediaItem.id + '" data-folder-id="' + mediaItem.folder_id + '" class="ui-state-default">';
+        html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">';
+
+        if (mediaItem.type == 'image') {
+            html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>';
+        } else {
+            html += '<div class="icon"></div>';
+            html += '<div class="url">' + mediaItem.url + '</div>';
+        }
+
+        html += '</div>';
+        html += '</li>';
+
+        return html;
+    },
+
+    /**
+     * Get HTML for MediaItem table row
+     *
+     * @param {array} mediaItem The mediaItem entity array.
+     * @param {bool} connected
+     * @returns {string}
+     */
+    getHTMLForMediaItemTableRow : function(mediaItem, connected)
+    {
+        var html = '<tr id="media-' + mediaItem.id + '" class="row' + utils.string.ucfirst(mediaItem.type) + '">';
+        html += '  <td class="check">';
+        html += '     <input type="checkbox" class="toggleConnectedCheckbox"';
+
+        if (connected) {
+            html += ' checked="checked"';
+        }
+
+        html += ' />';
+        html += '  </td>';
+
+        if (mediaItem.type === 'image') {
+            html += '  <td class="fullUrl">';
+            html += '     <img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" height="50" />';
+            html += '  </td>';
+        }
+
+        html += '  <td class="url">' + mediaItem.url + '</td>';
+        html += '  <td class="title">' + mediaItem.title + '</td>';
+        html += '</tr>';
+
+        return html;
+    },
+
+    /**
+     * Get HTML for uploaded MediaItem
+     *
+     * @param {array} mediaItem - This is the media-item that ajax returned for us.
+     * @return {string}
+     */
+    getHTMLForUploadedMediaItem : function(mediaItem)
+    {
+        // init html
+        var html = '';
+
+        // create element
+        html += '<li id="media-' + mediaItem.id + '" data-folder-id="' + mediaItem.folder.id + '" class="ui-state-default">';
+        html += '    <div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">';
+
+        // is image
+        if (mediaItem.type == 'image') {
+            html += '        <img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>';
+        // is file, movie or audio
+        } else {
+            html += '        <div class="icon"></div>';
+            html += '        <div class="url">' + mediaItem.url + '</div>';
+        }
+
+        html += '    </div>';
+        html += '    <a href="#/" class="deleteMediaItem btn btn-default" ';
+        html += 'title="' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '">';
+        html += '        <span>' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '</span>';
+        html += '    </a>';
+        html += '</li>';
+
+        return html;
+    }
 };
 
 function json2array(json){
