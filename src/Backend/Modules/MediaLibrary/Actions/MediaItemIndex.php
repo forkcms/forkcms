@@ -31,7 +31,7 @@ class MediaItemIndex extends BackendBaseActionIndex
         $mediaFolder = $this->getMediaFolder();
 
         /** @var array $possibleTypes */
-        $possibleTypes = Type::getPossibleValues();
+        $possibleTypes = Type::POSSIBLE_VALUES;
 
         /** @var array $dataGrids */
         $dataGrids = $this->getDataGrids(

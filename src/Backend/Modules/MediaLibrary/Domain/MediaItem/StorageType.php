@@ -9,6 +9,16 @@ final class StorageType
     const LOCAL = 'local';
     const YOUTUBE = 'youtube';
     const VIMEO = 'vimeo';
+    const POSSIBLE_VALUES = [
+        self::EXTERNAL,
+        self::LOCAL,
+        self::YOUTUBE,
+        self::VIMEO,
+    ];
+    const POSSIBLE_VALUES_FOR_MOVIE = [
+        self::YOUTUBE,
+        self::VIMEO,
+    ];
 
     /** @var string */
     private $mediaItemStorageType;
@@ -18,7 +28,7 @@ final class StorageType
      */
     private function __construct(string $mediaItemStorageType)
     {
-        if (!in_array($mediaItemStorageType, self::getPossibleValues(), true)) {
+        if (!in_array($mediaItemStorageType, self::POSSIBLE_VALUES, true)) {
             throw new \InvalidArgumentException('Invalid value');
         }
 
@@ -54,30 +64,6 @@ final class StorageType
         }
 
         return $mediaItemStorageType == $this;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getPossibleValues(): array
-    {
-        return [
-            self::EXTERNAL,
-            self::LOCAL,
-            self::YOUTUBE,
-            self::VIMEO,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function getPossibleMovieStorageTypeValues(): array
-    {
-        return [
-            self::YOUTUBE,
-            self::VIMEO,
-        ];
     }
 
     /**

@@ -43,7 +43,7 @@ class MediaGalleryIndex extends BackendBaseActionIndex
                 'label' => Language::lbl('MediaLibraryGroupType' . \SpoonFilter::toCamelCase($type, '-'), 'Core'),
                 'selected' => ($type === 'image'),
             ];
-        }, Type::getPossibleValues());
+        }, Type::POSSIBLE_VALUES);
     }
 
     /**
@@ -54,7 +54,7 @@ class MediaGalleryIndex extends BackendBaseActionIndex
     public static function getWarnings(): array
     {
         // MediaLibrary "Index" action should be allowed
-        if (!BackendModel::isModuleInstalled('MediaLibrary')) {
+        if (BackendModel::isModuleInstalled('MediaLibrary')) {
             return [];
         }
 

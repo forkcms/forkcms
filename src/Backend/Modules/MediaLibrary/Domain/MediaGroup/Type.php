@@ -12,6 +12,15 @@ final class Type
     const IMAGE_FILE = 'image-file';
     const IMAGE_MOVIE = 'image-movie';
     const MOVIE = 'movie';
+    const POSSIBLE_VALUES = [
+        self::ALL,
+        self::AUDIO,
+        self::FILE,
+        self::IMAGE,
+        self::IMAGE_FILE,
+        self::IMAGE_MOVIE,
+        self::MOVIE,
+    ];
 
     /** @var string */
     private $mediaGroupType;
@@ -21,7 +30,7 @@ final class Type
      */
     private function __construct(string $mediaGroupType)
     {
-        if (!in_array($mediaGroupType, self::getPossibleValues(), true)) {
+        if (!in_array($mediaGroupType, self::POSSIBLE_VALUES, true)) {
             throw new \InvalidArgumentException('Invalid value');
         }
 
@@ -57,22 +66,6 @@ final class Type
         }
 
         return $mediaGroupType == $this;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getPossibleValues(): array
-    {
-        return [
-            self::ALL,
-            self::AUDIO,
-            self::FILE,
-            self::IMAGE,
-            self::IMAGE_FILE,
-            self::IMAGE_MOVIE,
-            self::MOVIE,
-        ];
     }
 
     /**

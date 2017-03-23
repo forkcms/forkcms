@@ -104,7 +104,7 @@ class MediaGroupType extends AbstractType
         $header->addCSS('MediaLibrary.css', 'MediaLibrary', false, true);
         $header->addJS('MediaLibraryAddFolder.js', 'MediaLibrary', true);
         $header->addJS('MediaLibraryHelper.js', 'MediaLibrary', true);
-        $header->addJsData('MediaLibrary', 'mediaAllowedMovieSource', StorageType::getPossibleMovieStorageTypeValues());
+        $header->addJsData('MediaLibrary', 'mediaAllowedMovieSource', StorageType::POSSIBLE_VALUES_FOR_MOVIE);
     }
 
     /**

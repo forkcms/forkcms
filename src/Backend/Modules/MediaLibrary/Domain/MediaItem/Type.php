@@ -9,6 +9,12 @@ final class Type
     const FILE = 'file';
     const IMAGE = 'image';
     const MOVIE = 'movie';
+    const POSSIBLE_VALUES = [
+        self::IMAGE,
+        self::FILE,
+        self::MOVIE,
+        self::AUDIO,
+    ];
 
     /** @var string */
     private $mediaItemType;
@@ -18,7 +24,7 @@ final class Type
      */
     private function __construct(string $mediaItemType)
     {
-        if (!in_array($mediaItemType, self::getPossibleValues(), true)) {
+        if (!in_array($mediaItemType, self::POSSIBLE_VALUES, true)) {
             throw new \InvalidArgumentException('Invalid value');
         }
 
@@ -90,19 +96,6 @@ final class Type
         }
 
         return $mediaItemType == $this;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getPossibleValues(): array
-    {
-        return [
-            self::IMAGE,
-            self::FILE,
-            self::MOVIE,
-            self::AUDIO,
-        ];
     }
 
     /**
