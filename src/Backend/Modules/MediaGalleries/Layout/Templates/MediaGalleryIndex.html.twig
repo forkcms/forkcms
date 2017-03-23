@@ -26,53 +26,53 @@
   {% endif %}
 
   {% if not warnings %}
-      <div class="row">
-        <div class="col-md-12">
-          {% if dataGrid %}
-          <div class="content-block content-block-pb">
-            <div class="content-title">
-              <p>{{ 'lbl.Galleries'|trans|capitalize }}</p>
-            </div>
-            <div class="table-responsive">
-              {{ dataGrid|raw }}
-            </div>
+    <div class="row">
+      <div class="col-md-12">
+        {% if dataGrid %}
+        <div class="content-block content-block-pb">
+          <div class="content-title">
+            <p>{{ 'lbl.Galleries'|trans|capitalize }}</p>
           </div>
-          {% endif %}
-          {% if not dataGrid %}
-            <p>{{ 'msg.NoItems'|trans }}</p>
-          {% endif %}
+          <div class="table-responsive">
+            {{ dataGrid|raw }}
+          </div>
         </div>
+        {% endif %}
+        {% if not dataGrid %}
+          <p>{{ 'msg.NoItems'|trans }}</p>
+        {% endif %}
       </div>
+    </div>
 
-      <div class="modal fade" id="addMediaGroupTypeDialog" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <span class="modal-title h4">{{ 'lbl.MediaGalleryAdd'|trans|capitalize }}</span>
+    <div class="modal fade" id="addMediaGroupTypeDialog" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.MediaGalleryAdd'|trans|capitalize }}</span>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="type">{{ 'msg.ChooseTypeForNewGallery'|trans }}</label><br/>
+              {% if mediaGroupTypes %}
+                <select id="addMediaGroupTypeSelect" title="{{ 'msg.ChooseTypeForNewGallery'|trans }}">
+                {% for mediaGroupType in mediaGroupTypes %}
+                  <option value="{{ mediaGroupType.value }}"{% if mediaGroupType.selected %} selected="selected"{% endif %}>{{ mediaGroupType.label }}</option>
+                {% endfor %}
+                </select>
+              {% endif %}
             </div>
-            <div class="modal-body">
-              <div class="form-group">
-                  <label for="type">{{ 'msg.ChooseTypeForNewGallery'|trans }}</label><br/>
-                  {% if mediaGroupTypes %}
-                    <select id="addMediaGroupTypeSelect" title="{{ 'msg.ChooseTypeForNewGallery'|trans }}">
-                    {% for mediaGroupType in mediaGroupTypes %}
-                      <option value="{{ mediaGroupType.value }}"{% if mediaGroupType.selected %} selected="selected"{% endif %}>{{ mediaGroupType.label }}</option>
-                    {% endfor %}
-                    </select>
-                  {% endif %}
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">
-                <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
-              </button>
-              <button id="addMediaGroupTypeSubmit" type="button" class="btn btn-primary">
-                <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
-              </button>
-            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+            </button>
+            <button id="addMediaGroupTypeSubmit" type="button" class="btn btn-primary">
+              <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
+            </button>
           </div>
         </div>
       </div>
+    </div>
   {% endif %}
 
 {% endblock %}
