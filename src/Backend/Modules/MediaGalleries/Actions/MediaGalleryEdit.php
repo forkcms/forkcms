@@ -59,7 +59,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
         $this->redirect(
             $this->getBackLink(
                 [
-                    'report' => 'edited-media-gallery',
+                    'report' => 'media-gallery-edited',
                     'var' => $updateMediaGallery->title,
                     'highlight' => 'row-' . $updateMediaGallery->getMediaGalleryEntity()->getId(),
                     'id' => $updateMediaGallery->getMediaGalleryEntity()->getId(),

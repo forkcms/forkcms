@@ -31,7 +31,7 @@ class MediaGalleryDelete extends BackendBaseActionDelete
         return $this->redirect(
             $this->getBackLink(
                 [
-                    'report' => 'deleted-media-gallery',
+                    'report' => 'media-gallery-deleted',
                     'var' => $deleteMediaGallery->mediaGallery->getTitle(),
                 ]
             )

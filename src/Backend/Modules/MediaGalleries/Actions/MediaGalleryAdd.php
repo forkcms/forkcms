@@ -57,7 +57,7 @@ class MediaGalleryAdd extends ActionAdd
         $this->redirect(
             $this->getBackLink(
                 [
-                    'report' => 'added-media-gallery',
+                    'report' => 'media-gallery-added',
                     'var' => $createMediaGallery->title,
                     'highlight' => 'row-' . $createMediaGallery->getMediaGalleryEntity()->getId(),
                     'id' => $createMediaGallery->getMediaGalleryEntity()->getId(),
