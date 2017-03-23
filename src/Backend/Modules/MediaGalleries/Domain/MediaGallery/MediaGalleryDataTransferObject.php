@@ -14,7 +14,7 @@ class MediaGalleryDataTransferObject
     private $mediaGalleryEntity;
 
     /**
-     * @var string
+     * @var Status
      */
     public $status;
 
@@ -66,7 +66,7 @@ class MediaGalleryDataTransferObject
         }
 
         $this->userId = $mediaGallery->getUserId();
-        $this->status = (string) $mediaGallery->getStatus();
+        $this->status = $mediaGallery->getStatus();
         $this->title = $mediaGallery->getTitle();
         $this->text = $mediaGallery->getText();
         $this->action = $mediaGallery->getAction();

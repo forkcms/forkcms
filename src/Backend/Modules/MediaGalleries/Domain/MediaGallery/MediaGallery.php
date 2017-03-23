@@ -136,6 +136,40 @@ class MediaGallery
     }
 
     /**
+     * @param MediaGalleryDataTransferObject $mediaGalleryDataTransferObject
+     * @return MediaGallery
+     */
+    public static function fromDataTransferObject(MediaGalleryDataTransferObject $mediaGalleryDataTransferObject): MediaGallery
+    {
+        if ($mediaGalleryDataTransferObject->hasExistingMediaGallery()) {
+            /** @var MediaGallery $mediaGallery */
+            $mediaGallery = $mediaGalleryDataTransferObject->getMediaGalleryEntity();
+
+            $mediaGallery->action = $mediaGalleryDataTransferObject->action;
+            $mediaGallery->title = $mediaGalleryDataTransferObject->title;
+            $mediaGallery->text = $mediaGalleryDataTransferObject->text;
+            $mediaGallery->publishOn = $mediaGalleryDataTransferObject->publishOn;
+            $mediaGallery->mediaGroup = $mediaGalleryDataTransferObject->mediaGroup;
+            $mediaGallery->status = $mediaGalleryDataTransferObject->status;
+
+            return $mediaGallery;
+        }
+
+        /** @var MediaGallery $mediaGallery */
+        $mediaGallery = new self(
+            $mediaGalleryDataTransferObject->title,
+            $mediaGalleryDataTransferObject->action,
+            $mediaGalleryDataTransferObject->userId,
+            $mediaGalleryDataTransferObject->publishOn,
+            $mediaGalleryDataTransferObject->mediaGroup,
+            $mediaGalleryDataTransferObject->status,
+            $mediaGalleryDataTransferObject->text
+        );
+
+        return $mediaGallery;
+    }
+
+    /**
      * Gets the value of id.
      *
      * @return string
@@ -328,39 +362,5 @@ class MediaGallery
         $now = new \DateTime();
 
         return ($this->status->isActive() && $this->publishOn->getTimestamp() < $now->getTimestamp());
-    }
-
-    /**
-     * @param MediaGalleryDataTransferObject $mediaGalleryDataTransferObject
-     * @return MediaGallery
-     */
-    public static function fromDataTransferObject(MediaGalleryDataTransferObject $mediaGalleryDataTransferObject): MediaGallery
-    {
-        if ($mediaGalleryDataTransferObject->hasExistingMediaGallery()) {
-            /** @var MediaGallery $mediaGallery */
-            $mediaGallery = $mediaGalleryDataTransferObject->getMediaGalleryEntity();
-
-            $mediaGallery->action = $mediaGalleryDataTransferObject->action;
-            $mediaGallery->title = $mediaGalleryDataTransferObject->title;
-            $mediaGallery->text = $mediaGalleryDataTransferObject->text;
-            $mediaGallery->publishOn = $mediaGalleryDataTransferObject->publishOn;
-            $mediaGallery->mediaGroup = $mediaGalleryDataTransferObject->mediaGroup;
-            $mediaGallery->status = Status::fromString($mediaGalleryDataTransferObject->status);
-
-            return $mediaGallery;
-        }
-
-        /** @var MediaGallery $mediaGallery */
-        $mediaGallery = new self(
-            $mediaGalleryDataTransferObject->title,
-            $mediaGalleryDataTransferObject->action,
-            $mediaGalleryDataTransferObject->userId,
-            $mediaGalleryDataTransferObject->publishOn,
-            $mediaGalleryDataTransferObject->mediaGroup,
-            Status::fromString($mediaGalleryDataTransferObject->status),
-            $mediaGalleryDataTransferObject->text
-        );
-
-        return $mediaGallery;
     }
 }
