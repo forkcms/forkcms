@@ -720,15 +720,17 @@ jsBackend.mediaLibraryHelper.group =
      */
     updateMedia : function()
     {
+        var $libraryTab = $('#tabLibrary');
+
         if (mediaFolderId == 0) {
             // hide library tabs on open
-            $('#tabLibrary').find('.ui-tabs').hide();
+            $libraryTab.find('.ui-tabs').hide();
 
             // stop here
             return false;
         } else {
             // show library tabs on open
-            $('#tabLibrary').find('.ui-tabs').show();
+            $libraryTab.find('.ui-tabs').show();
         }
 
         // init variables
@@ -834,39 +836,45 @@ jsBackend.mediaLibraryHelper.group =
         $('#mediaTableAudio').html((htmlAudio) ? htmlAudio : rowNoItems);
 
         // init $tabs
-        var $tabs = $('#tabLibrary').find('.ui-tabs').first();
+        var $tabs = $libraryTab.find('.nav-tabs');
 
         // remove selected
         $tabs.find('.ui-tabs-selected').removeClass('ui-tabs-selected');
+        $tabs.find('.active').removeClass('active');
 
         // not in connect-to-group modus (just uploading)
         if (typeof mediaGroups[currentMediaGroupId] === 'undefined') {
             return false;
         }
 
+        // Enable all because we can switch between different groups on the same page
+        $tabs.children('li').removeClass('disabled, active').children('a').attr('data-toggle', 'tab');
+
+        var disabled = '';
+        var enabled = 'li:eq(0)';
+
         // we have an image group
         if (mediaGroups[currentMediaGroupId].type === 'image') {
-            $tabs.tabs({disabled: [1, 2, 3]});
-            $tabs.tabs('select', 0);
+            disabled = 'li:gt(0)';
         } else if (mediaGroups[currentMediaGroupId].type === 'file') {
-            $tabs.tabs({disabled: [0, 2, 3]});
-            $tabs.tabs('select', 1);
+            disabled = 'li:eq(0), li:eq(2), li:eq(3)';
+            enabled = 'li:eq(1)';
         } else if (mediaGroups[currentMediaGroupId].type === 'movie') {
-            $tabs.tabs({disabled: [0, 1, 3]});
-            $tabs.tabs('select', 2);
+            disabled = 'li:eq(0), li:eq(1), li:eq(3)';
+            enabled = 'li:eq(2)';
         } else if (mediaGroups[currentMediaGroupId].type === 'audio') {
-            $tabs.tabs({disabled: [0, 1, 2]});
-            $tabs.tabs('select', 3);
+            disabled = 'li:lt(3)';
+            enabled = 'li:eq(3)';
         } else if (mediaGroups[currentMediaGroupId].type === 'image-file') {
-            $tabs.tabs({disabled: [2, 3]});
-            $tabs.tabs('select', 0);
+            disabled = 'li:eq(2), li:eq(3)';
         } else if (mediaGroups[currentMediaGroupId].type === 'image-movie') {
-            $tabs.tabs({disabled: [1, 3]});
-            $tabs.tabs('select', 0);
-        } else {
-            //$tabs.tabs('select', 3);
-            $tabs.tabs({disabled: []});
+            disabled = 'li:eq(1), li:eq(3)';
         }
+
+        if (disabled !== '') {
+            $tabs.children(disabled).addClass('disabled').children('a').removeAttr("data-toggle");
+        }
+        $tabs.children(enabled).addClass('active').children('a').attr('data-toggle', 'tab');
 
         // get table
         var $tables = $('.mediaTable');
