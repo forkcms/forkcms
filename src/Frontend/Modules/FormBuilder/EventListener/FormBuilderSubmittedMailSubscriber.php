@@ -91,7 +91,14 @@ final class FormBuilderSubmittedMailSubscriber
                     'subject' => $subject,
                     'sentOn' => time(),
                     'name' => $form['name'],
-                    'fields' => $fieldData,
+                    'fields' => array_map(
+                        function (array $field) {
+                            $field['value'] = html_entity_decode($field['value']);
+
+                            return $field;
+                        },
+                        $fieldData
+                    ),
                     'is_confirmation_mail' => $isConfirmationMail,
                 ),
                 true
