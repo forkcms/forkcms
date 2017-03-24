@@ -38,7 +38,7 @@ class Model implements FrontendTagsInterface
              i.allow_comments,
              m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
              m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-             m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+             m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.custom AS meta_custom,
              m.url,
              m.data AS meta_data
              FROM blog_posts AS i
@@ -814,7 +814,7 @@ class Model implements FrontendTagsInterface
              i.allow_comments,
              m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
              m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-             m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+             m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.custom AS meta_custom,
              m.url,
              m.data AS meta_data
              FROM blog_posts AS i
