@@ -11,8 +11,6 @@ final class CreateMediaItemFromLocalStorageTypeHandler
     protected $mediaItemRepository;
 
     /**
-     * CreateMediaItemHandler constructor.
-     *
      * @param MediaItemRepository $mediaItemRepository
      */
     public function __construct(MediaItemRepository $mediaItemRepository)

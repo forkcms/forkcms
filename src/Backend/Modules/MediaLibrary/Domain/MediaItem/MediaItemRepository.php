@@ -29,7 +29,7 @@ final class MediaItemRepository extends EntityRepository
         /** @var MediaItem|null $mediaItem */
         $mediaItem = $this->findOneByUrl((string) $url);
 
-        return ($mediaItem !== null);
+        return $mediaItem !== null;
     }
 
     /**
@@ -50,19 +50,6 @@ final class MediaItemRepository extends EntityRepository
         }
 
         return $mediaItem;
-    }
-
-    /**
-     * Get all MediaItem items by MediaFolder
-     *
-     * @param MediaFolder $mediaFolder
-     * @return array
-     */
-    public function getAllByFolder(MediaFolder $mediaFolder): array
-    {
-        return $this->findBy([
-            'folder' => $mediaFolder
-        ]);
     }
 
     /**

@@ -26,14 +26,14 @@ class MediaGallery
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     protected $userId;
 
     /**
-     * @var integer
+     * @var int
      *
      * ToDo: when Fork CMS has ModuleExtra entity in core, use its Entity as type
      *

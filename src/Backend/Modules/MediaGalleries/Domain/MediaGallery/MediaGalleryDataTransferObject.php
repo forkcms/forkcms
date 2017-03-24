@@ -19,7 +19,7 @@ class MediaGalleryDataTransferObject
     public $status;
 
     /**
-     * @var integer
+     * @var int
      */
     public $userId;
 

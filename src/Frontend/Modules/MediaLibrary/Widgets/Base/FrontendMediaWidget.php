@@ -35,11 +35,13 @@ class FrontendMediaWidget extends FrontendBaseWidget
             $this->mediaGroup = $this->get('media_library.repository.group')->findOneById(
                 $this->data['group_id']
             );
-        } else {
-            throw new \Exception(
-                'You must define data array with at least a "group_id".'
-            );
+
+            return;
         }
+
+        throw new \Exception(
+            'You must define data array with at least a "group_id".'
+        );
     }
 
     /**

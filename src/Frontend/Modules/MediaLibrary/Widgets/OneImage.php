@@ -15,21 +15,13 @@ class OneImage extends FrontendMediaWidget
         $this->loadData();
 
         // We need to have a MediaGroup to show this widget
-        if ($this->mediaGroup) {
-            // We define the resolutions
-            $this->setResolutions([
-                $this->get('media_library.factory.frontend.resolution')->create(
-                    'large',
-                    'resize',
-                    1600,
-                    null
-                ),
-            ]);
-
-            parent::execute();
-            $this->loadTemplate();
-            $this->parse();
+        if (!$this->mediaGroup) {
+            return;
         }
+
+        parent::execute();
+        $this->loadTemplate();
+        $this->parse();
     }
 
     /**

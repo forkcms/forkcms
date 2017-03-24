@@ -20,8 +20,6 @@ final class CreateMediaItemFromLocalStorageType
     private $mediaItem;
 
     /**
-     * CreateMediaItemFromStorageType constructor.
-     *
      * @param string $path
      * @param MediaFolder $mediaFolder
      * @param int $userId

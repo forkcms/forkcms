@@ -35,7 +35,7 @@ final class MediaWidget
      */
     public function __toString(): string
     {
-        return (string) $this->mediaWidget;
+        return $this->mediaWidget;
     }
 
     /**
@@ -44,11 +44,7 @@ final class MediaWidget
      */
     public function equals(MediaWidget $mediaWidget): bool
     {
-        if (!($mediaWidget instanceof $this)) {
-            return false;
-        }
-
-        return $mediaWidget == $this;
+        return $mediaWidget->mediaWidget == $this->mediaWidget;
     }
 
     /**
@@ -60,9 +56,7 @@ final class MediaWidget
         $actions = [];
 
         $finder = new Finder();
-        $finder->files()->in(
-            FRONTEND_MODULES_PATH . '/MediaLibrary/Widgets'
-        )->exclude('Base');
+        $finder->files()->in(FRONTEND_MODULES_PATH . '/MediaLibrary/Widgets')->exclude('Base');
 
         foreach ($finder as $file) {
             $actions[] = $file->getBasename('.' . $file->getExtension());

@@ -4,22 +4,22 @@
 
 /* Default bugfixes */
 .widgetMediaSlider .bx-viewport {
-	left: 0;
-	border: none;
-	box-shadow: none;
+  left: 0;
+  border: none;
+  box-shadow: none;
 }
 
 /* Show controls */
 .widgetMediaSlider ul {
-	padding: 0;
+  padding: 0;
 }
 .widgetMediaSlider li {
-	list-style: none;
-	list-style-image: none;
-	margin: 0;
-	padding: 0;
+  list-style: none;
+  list-style-image: none;
+  margin: 0;
+  padding: 0;
 }
 
 .widgetMediaSlider .bx-wrapper .bx-controls-direction a {
-	border: none;
+  border: none;
 }

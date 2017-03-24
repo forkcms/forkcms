@@ -17,19 +17,21 @@ class Slider extends FrontendMediaWidget
         $this->loadData();
 
         // We need to have a MediaGroup to show this widget
-        if ($this->mediaGroup) {
-            // Add CSS
-            $this->addCSS('/node_modules/bxslider/dist/jquery.bxslider.css', true);
-
-            // Add custom CSS
-            $this->addCSS('slider.css');
-
-            // Add JS
-            $this->addJS('/node_modules/bxslider/dist/jquery.bxslider.min.js', true);
-
-            parent::execute();
-            $this->loadTemplate();
-            $this->parse();
+        if (!$this->mediaGroup) {
+            return;
         }
+
+        // Add CSS
+        $this->addCSS('/node_modules/bxslider/dist/jquery.bxslider.css', true);
+
+        // Add custom CSS
+        $this->addCSS('slider.css');
+
+        // Add JS
+        $this->addJS('/node_modules/bxslider/dist/jquery.bxslider.min.js', true);
+
+        parent::execute();
+        $this->loadTemplate();
+        $this->parse();
     }
 }

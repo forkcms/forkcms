@@ -27,8 +27,6 @@ final class CreateMediaItemFromMovieUrl
     public $source;
 
     /**
-     * CreateMediaItemFromMovieUrl constructor.
-     *
      * @param StorageType $source
      * @param string $movieId
      * @param string $movieTitle

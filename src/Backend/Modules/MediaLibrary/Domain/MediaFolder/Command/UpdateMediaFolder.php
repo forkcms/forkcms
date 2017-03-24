@@ -12,9 +12,8 @@ final class UpdateMediaFolder extends MediaFolderDataTransferObject
      *
      * @param MediaFolder $mediaFolder
      */
-    public function __construct(
-        MediaFolder $mediaFolder
-    ) {
+    public function __construct(MediaFolder $mediaFolder)
+    {
         parent::__construct($mediaFolder);
     }
 }

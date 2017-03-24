@@ -9,8 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class UpdateMediaItem extends MediaItemDataTransferObject
 {
     /**
-     * UpdateMediaItem constructor.
-     *
      * @param MediaItem $mediaItem
      */
     public function __construct(MediaItem $mediaItem)

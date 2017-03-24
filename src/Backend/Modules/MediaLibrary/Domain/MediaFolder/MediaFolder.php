@@ -24,7 +24,7 @@ class MediaFolder
     private $id;
 
     /**
-     * @var MediaFolder
+     * @var MediaFolder|null
      *
      * @ORM\ManyToOne(
      *      targetEntity="Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",
@@ -40,7 +40,7 @@ class MediaFolder
     protected $parent;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -92,8 +92,6 @@ class MediaFolder
     protected $children;
 
     /**
-     * Construct
-     *
      * @param string $name The name of this folder.
      * @param MediaFolder|null $parent The parent of this folder, can be NULL.
      * @param int $userId The id of the user who created this MediaFolder.
@@ -125,6 +123,49 @@ class MediaFolder
             $name,
             $parent,
             $userId
+        );
+    }
+
+    /**
+     * @param string $name
+     * @param MediaFolder|null $parent
+     */
+    public function update(string $name, MediaFolder $parent = null)
+    {
+        $this->name = $name;
+
+        if ($parent instanceof MediaFolder) {
+            $this->setParent($parent);
+
+            return;
+        }
+
+        $this->removeParent();
+    }
+
+    /**
+     * @param MediaFolderDataTransferObject $mediaFolderDataTransferObject
+     * @return MediaFolder
+     */
+    public static function fromDataTransferObject(MediaFolderDataTransferObject $mediaFolderDataTransferObject): MediaFolder
+    {
+        if ($mediaFolderDataTransferObject->hasExistingMediaFolder()) {
+            /** @var MediaFolder $mediaFolder */
+            $mediaFolder = $mediaFolderDataTransferObject->getMediaFolderEntity();
+
+            $mediaFolder->update(
+                $mediaFolderDataTransferObject->name,
+                $mediaFolderDataTransferObject->parent
+            );
+
+            return $mediaFolder;
+        }
+
+        /** @var MediaFolder $mediaFolder */
+        return self::create(
+            $mediaFolderDataTransferObject->name,
+            $mediaFolderDataTransferObject->parent,
+            $mediaFolderDataTransferObject->userId
         );
     }
 
@@ -169,7 +210,7 @@ class MediaFolder
     /**
      * Gets the value of parent.
      *
-     * @return mixed
+     * @return MediaFolder|null
      */
     public function getParent()
     {
@@ -271,49 +312,5 @@ class MediaFolder
     public function onPreUpdate()
     {
         $this->editedOn = new \Datetime();
-    }
-
-    /**
-     * @param string $name
-     * @param MediaFolder|null $parent
-     */
-    public function update(
-        string $name,
-        MediaFolder $parent = null
-    ) {
-        $this->name = $name;
-
-        if ($parent instanceof MediaFolder) {
-            $this->setParent($parent);
-        } else {
-            $this->removeParent();
-        }
-    }
-
-    /**
-     * @param MediaFolderDataTransferObject $mediaFolderDataTransferObject
-     * @return MediaFolder
-     */
-    public static function fromDataTransferObject(MediaFolderDataTransferObject $mediaFolderDataTransferObject): MediaFolder
-    {
-        if ($mediaFolderDataTransferObject->hasExistingMediaFolder()) {
-            /** @var MediaFolder $mediaFolder */
-            $mediaFolder = $mediaFolderDataTransferObject->getMediaFolderEntity();
-
-            $mediaFolder->update(
-                $mediaFolderDataTransferObject->name,
-                $mediaFolderDataTransferObject->parent
-            );
-
-            return $mediaFolder;
-        }
-
-        /** @var MediaFolder $mediaFolder */
-        $mediaFolder = self::create(
-            $mediaFolderDataTransferObject->name,
-            $mediaFolderDataTransferObject->parent,
-            $mediaFolderDataTransferObject->userId
-        );
-        return $mediaFolder;
     }
 }

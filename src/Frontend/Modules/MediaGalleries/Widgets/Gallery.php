@@ -63,6 +63,6 @@ class Gallery extends BackendBaseWidget
         }
 
         // Only return MediaGallery if the gallery should be visible
-        return ($mediaGallery->isVisible()) ? $mediaGallery : null;
+        return $mediaGallery->isVisible() ? $mediaGallery : null;
     }
 }

@@ -49,21 +49,16 @@ final class StorageType
      */
     public function __toString(): string
     {
-        return (string) $this->mediaItemStorageType;
+        return $this->mediaItemStorageType;
     }
 
     /**
      * @param StorageType $mediaItemStorageType
-     *
      * @return bool
      */
     public function equals(StorageType $mediaItemStorageType): bool
     {
-        if (!($mediaItemStorageType instanceof $this)) {
-            return false;
-        }
-
-        return $mediaItemStorageType == $this;
+        return $mediaItemStorageType->mediaItemStorageType === $this->mediaItemStorageType;
     }
 
     /**

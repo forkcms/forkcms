@@ -11,10 +11,7 @@ final class UpdateMediaFolderHandler
      */
     public function handle(UpdateMediaFolder $updateMediaFolder)
     {
-        /** @var MediaFolder $mediaFolder */
-        $mediaFolder = MediaFolder::fromDataTransferObject($updateMediaFolder);
-
         // We redefine the MediaFolder, so we can use it in an action
-        $updateMediaFolder->setMediaFolderEntity($mediaFolder);
+        $updateMediaFolder->setMediaFolderEntity(MediaFolder::fromDataTransferObject($updateMediaFolder));
     }
 }

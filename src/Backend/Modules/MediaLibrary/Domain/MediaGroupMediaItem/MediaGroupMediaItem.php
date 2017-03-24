@@ -71,7 +71,7 @@ class MediaGroupMediaItem
     protected $publishOn;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */

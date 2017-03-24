@@ -30,11 +30,11 @@ final class MediaFolderRepository extends EntityRepository
     {
         /** @var MediaFolder $mediaFolder */
         $mediaFolder = $this->findOneBy([
-            'name' => (string) $name,
+            'name' => $name,
             'parent' => $parent,
         ]);
 
-        return ($mediaFolder !== null);
+        return $mediaFolder instanceof MediaFolder;
     }
 
     /**

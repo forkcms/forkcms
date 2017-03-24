@@ -18,8 +18,6 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
     protected $commandBus;
 
     /**
-     * MediaItemDeletedReSequenceMediaGroupMediaItemListener constructor.
-     *
      * @param MessageBus $commandBus
      */
     public function __construct(MessageBus $commandBus)
@@ -28,8 +26,6 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
     }
 
     /**
-     * On MediaItem deleted
-     *
      * @param MediaItemDeleted $event
      */
     public function onMediaItemDeleted(MediaItemDeleted $event)
@@ -37,32 +33,33 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
         /** @var ArrayCollection $mediaItemMediaGroups */
         $mediaItemMediaGroups = $event->getMediaItem()->getGroups();
 
-        // This MediaItem has MediaGroups where it is connected to
-        if ($mediaItemMediaGroups->count() > 0) {
-            // Loop all MediaGroup items
-            foreach ($mediaItemMediaGroups as $mediaItemMediaGroup) {
-                /** @var MediaGroup $mediaGroup */
-                $mediaGroup = $mediaItemMediaGroup->getGroup();
+        if ($mediaItemMediaGroups->count() == 0) {
+            return;
+        }
 
-                // Define new media ids
-                $newMediaIds = [];
+        // Loop all MediaGroup items
+        foreach ($mediaItemMediaGroups as $mediaItemMediaGroup) {
+            /** @var MediaGroup $mediaGroup */
+            $mediaGroup = $mediaItemMediaGroup->getGroup();
 
-                /**
-                 * @var int $index
-                 * @var MediaGroupMediaItem $connectedItem
-                 */
-                foreach ($mediaGroup->getConnectedItems()->toArray() as $index => $connectedItem) {
-                    // Add to new media ids
-                    $newMediaIds[$index] = $connectedItem->getItem()->getId();
-                }
+            // Define new media ids
+            $newMediaIds = [];
 
-                $updateMediaGroup = new SaveMediaGroup(
-                    $mediaGroup,
-                    $newMediaIds
-                );
-
-                $this->commandBus->handle($updateMediaGroup);
+            /**
+             * @var int $index
+             * @var MediaGroupMediaItem $connectedItem
+             */
+            foreach ($mediaGroup->getConnectedItems()->toArray() as $index => $connectedItem) {
+                // Add to new media ids
+                $newMediaIds[$index] = $connectedItem->getItem()->getId();
             }
+
+            $updateMediaGroup = new SaveMediaGroup(
+                $mediaGroup,
+                $newMediaIds
+            );
+
+            $this->commandBus->handle($updateMediaGroup);
         }
     }
 }

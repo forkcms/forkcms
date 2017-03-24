@@ -18,10 +18,8 @@ class VimeoStorageProvider implements StorageProviderInterface
      * @param string $linkURL
      * @param string $includeURL
      */
-    public function __construct(
-        string $linkURL,
-        string $includeURL
-    ) {
+    public function __construct(string $linkURL, string $includeURL)
+    {
         $this->linkURL = $linkURL;
         $this->includeURL = $includeURL;
     }

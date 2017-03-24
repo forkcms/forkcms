@@ -21,7 +21,7 @@ class Installer extends ModuleInstaller
     public function install()
     {
         $this->addModule('MediaLibrary');
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->createEntityTables();
         $this->configureModuleRights();
         $this->configureSettings();

@@ -81,21 +81,16 @@ final class Type
      */
     public function __toString(): string
     {
-        return (string) $this->mediaItemType;
+        return $this->mediaItemType;
     }
 
     /**
      * @param Type $mediaItemType
-     *
      * @return bool
      */
     public function equals(Type $mediaItemType): bool
     {
-        if (!($mediaItemType instanceof $this)) {
-            return false;
-        }
-
-        return $mediaItemType == $this;
+        return $mediaItemType->mediaItemType === $this->mediaItemType;
     }
 
     /**

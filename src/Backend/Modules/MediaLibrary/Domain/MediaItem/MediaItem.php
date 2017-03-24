@@ -45,7 +45,7 @@ class MediaItem
     protected $folder;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -94,21 +94,21 @@ class MediaItem
     protected $title;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $size;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $width;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -281,8 +281,6 @@ class MediaItem
     }
 
     /**
-     * To array
-     *
      * @return array
      */
     public function __toArray(): array
@@ -310,8 +308,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of id.
-     *
      * @return string
      */
     public function getId(): string
@@ -320,8 +316,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of folder.
-     *
      * @return MediaFolder
      */
     public function getFolder(): MediaFolder
@@ -330,8 +324,6 @@ class MediaItem
     }
 
     /**
-     * Sets the value of folder.
-     *
      * @param MediaFolder $folder the folder
      * @return self
      */
@@ -342,8 +334,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of userId.
-     *
      * @return integer
      */
     public function getUserId(): int
@@ -368,8 +358,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of type.
-     *
      * @return Type
      */
     public function getType(): Type
@@ -378,8 +366,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of mime.
-     *
      * @return string
      */
     public function getMime(): string
@@ -388,8 +374,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of shardingFolderName.
-     *
      * @return string|null
      */
     public function getScardingFolderName()
@@ -398,8 +382,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of url.
-     *
      * @return string
      */
     public function getUrl(): string
@@ -408,8 +390,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of title.
-     *
      * @return string
      */
     public function getTitle(): string
@@ -418,8 +398,6 @@ class MediaItem
     }
 
     /**
-     * Set the value of title.
-     *
      * @param string $title
      */
     public function setTitle(string $title)
@@ -428,8 +406,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of url.
-     *
      * @return string
      */
     public function getFullUrl(): string
@@ -438,8 +414,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of size.
-     *
      * @return integer
      */
     public function getSize(): int
@@ -448,8 +422,6 @@ class MediaItem
     }
 
     /**
-     * Set resolution
-     *
      * @param int $width
      * @param int $height
      * @return self
@@ -462,8 +434,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of width.
-     *
      * @return int|null
      */
     public function getWidth()
@@ -472,8 +442,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of height.
-     *
      * @return int|null
      */
     public function getHeight()
@@ -482,8 +450,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of createdOn.
-     *
      * @return \DateTime
      */
     public function getCreatedOn(): \DateTime
@@ -492,8 +458,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of editedOn.
-     *
      * @return \DateTime
      */
     public function getEditedOn(): \DateTime
@@ -502,8 +466,6 @@ class MediaItem
     }
 
     /**
-     * Gets the value of groups.
-     *
      * @return Collection
      */
     public function getGroups(): Collection

@@ -33,9 +33,7 @@ class MediaItemDataGrid extends DataGridDB
             'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName, COUNT(gi.mediaItemId) as num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
              FROM MediaItem AS i
              LEFT OUTER JOIN MediaGroupMediaItem as gi ON gi.mediaItemId = i.id
-             WHERE i.type = ?'
-                . $andWhere
-                . ' GROUP BY i.id',
+             WHERE i.type = ?' . $andWhere . ' GROUP BY i.id',
             $parameters
         );
 
@@ -129,9 +127,7 @@ class MediaItemDataGrid extends DataGridDB
             'edit',
             null,
             Language::lbl('Edit'),
-            $editActionUrl
-            . '&id=[id]'
-            . '&folder=' . $folderId,
+            $editActionUrl . '&id=[id]' . '&folder=' . $folderId,
             Language::lbl('Edit')
         );
 
@@ -216,9 +212,7 @@ class MediaItemDataGrid extends DataGridDB
      */
     public static function getDataGrid(Type $type, int $folderId = null): DataGridDB
     {
-        $dataGrid = new self($type, $folderId);
-
-        return $dataGrid;
+        return new self($type, $folderId);
     }
 
     /**
@@ -228,8 +222,6 @@ class MediaItemDataGrid extends DataGridDB
      */
     public static function getHtml(Type $type, int $folderId = null): string
     {
-        $dataGrid = new self($type, $folderId);
-
-        return (string) $dataGrid->getContent();
+        return (string) (new self($type, $folderId))->getContent();
     }
 }

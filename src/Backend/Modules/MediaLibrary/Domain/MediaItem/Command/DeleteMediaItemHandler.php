@@ -11,8 +11,6 @@ final class DeleteMediaItemHandler
     private $mediaItemRepository;
 
     /**
-     * DeleteMediaItemHandler constructor.
-     *
      * @param MediaItemRepository $mediaItemRepository
      */
     public function __construct(

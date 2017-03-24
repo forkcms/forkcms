@@ -33,8 +33,6 @@ class MediaGroupType extends AbstractType
     private $mediaGroupRepository;
 
     /**
-     * MediaGroupType constructor.
-     *
      * @param MediaGroupRepository $mediaGroupRepository
      * @param $commandBus
      */
@@ -57,27 +55,21 @@ class MediaGroupType extends AbstractType
                 'id',
                 HiddenType::class,
                 [
-                    'attr' => [
-                        'class' => 'mediaGroupId',
-                    ],
+                    'attr' => ['class' => 'mediaGroupId'],
                 ]
             )
             ->add(
                 'mediaIds',
                 HiddenType::class,
                 [
-                    'attr' => [
-                        'class' => 'mediaIds',
-                    ],
+                    'attr' => ['class' => 'mediaIds'],
                 ]
             )
             ->add(
                 'type',
                 HiddenType::class,
                 [
-                    'attr' => [
-                        'class' => 'type',
-                    ],
+                    'attr' => ['class' => 'type'],
                 ]
             )
             ->addModelTransformer(
@@ -112,11 +104,7 @@ class MediaGroupType extends AbstractType
      */
     private function getMediaGroupTransformFunction()
     {
-        return function ($mediaGroup) {
-            if (!$mediaGroup instanceof MediaGroup) {
-                return true;
-            }
-
+        return function (MediaGroup $mediaGroup) {
             $this->mediaGroups[(string) $mediaGroup->getId()] = $mediaGroup;
 
             return [
@@ -144,12 +132,12 @@ class MediaGroupType extends AbstractType
             $mediaGroupType = Type::fromString($mediaGroupData['type']);
 
             /** @var array $mediaItemIds */
-            $mediaItemIds = ($mediaGroupData['mediaIds'] !== null)
+            $mediaItemIds = $mediaGroupData['mediaIds'] !== null
                 ? explode(',', trim($mediaGroupData['mediaIds'])) : [];
 
             try {
                 /** @var MediaGroup $mediaGroup */
-                $mediaGroup = $this->mediaGroupRepository->getOneById($mediaGroupId);
+                $mediaGroup = $this->mediaGroupRepository->findOneById($mediaGroupId);
             } catch (\Exception $e) {
                 $mediaGroup = MediaGroup::createFromId(
                     Uuid::fromString($mediaGroupId),

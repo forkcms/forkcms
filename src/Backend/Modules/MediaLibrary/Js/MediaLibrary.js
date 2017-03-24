@@ -85,16 +85,18 @@ jsBackend.mediaLibrary.library =
 
                         // show message
                         jsBackend.messages.error('success', textStatus);
-                    } else {
-                        // show message
-                        jsBackend.messages.add('success', json.message);
 
-                        // close dialog
-                        $('#editFolderDialog').modal('close');
-
-                        // reload document
-                        window.location.reload(true);
+                        return;
                     }
+
+                    // show message
+                    jsBackend.messages.add('success', json.message);
+
+                    // close dialog
+                    $('#editFolderDialog').modal('close');
+
+                    // reload document
+                    window.location.reload(true);
                 }
             });
         });
@@ -231,10 +233,12 @@ jsBackend.mediaLibrary.tree =
                         alert(textStatus);
                     }
                     result = false;
-                } else {
-                    if (json.data.allow_move == 'Y') {
-                        result = true;
-                    }
+
+                    return;
+                }
+
+                if (json.data.allow_move == 'Y') {
+                    result = true;
                 }
             }
         });
@@ -283,20 +287,22 @@ jsBackend.mediaLibrary.tree =
                 tree: tree
             },
             success: function(json, textStatus) {
-                if (json.code != 200) {
-                    if (jsBackend.debug) {
-                        alert(textStatus);
-                    }
-
-                    // show message
-                    jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'));
-
-                    // rollback
-                    $.tree.rollback(rollback);
-                } else {
+                if (json.code == 200) {
                     // show message
                     jsBackend.messages.add('success', json.message);
+
+                    return;
                 }
+
+                if (jsBackend.debug) {
+                    alert(textStatus);
+                }
+
+                // show message
+                jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'));
+
+                // rollback
+                $.tree.rollback(rollback);
             }
         });
     }

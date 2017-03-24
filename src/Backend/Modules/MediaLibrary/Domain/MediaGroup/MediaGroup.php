@@ -54,7 +54,7 @@ class MediaGroup
     protected $connectedItems;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
      */
@@ -211,7 +211,7 @@ class MediaGroup
      */
     public function hasConnectedItems(): bool
     {
-        return ($this->numberOfConnectedItems > 0);
+        return $this->numberOfConnectedItems > 0;
     }
 
     /**
@@ -226,9 +226,8 @@ class MediaGroup
      * @param string $mediaItemId
      * @return MediaGroupMediaItem
      */
-    public function getConnectedItemByMediaItemId(
-        string $mediaItemId
-    ) : MediaGroupMediaItem {
+    public function getConnectedItemByMediaItemId(string $mediaItemId): MediaGroupMediaItem
+    {
         /** @var MediaGroupMediaItem $mediaGroupMediaItem */
         foreach ($this->connectedItems->toArray() as $mediaGroupMediaItem) {
             if ($mediaGroupMediaItem->getItem()->getId() === $mediaItemId) {
@@ -238,14 +237,11 @@ class MediaGroup
     }
 
     /**
-     * Add connected item
-     *
      * @param MediaGroupMediaItem $connectedItem
      * @return MediaGroup
      */
-    public function addConnectedItem(
-        MediaGroupMediaItem $connectedItem
-    ) : MediaGroup {
+    public function addConnectedItem(MediaGroupMediaItem $connectedItem): MediaGroup
+    {
         $this->connectedItems->add($connectedItem);
 
         // This is required, otherwise, doctrine thinks the entity hasn't been changed
@@ -255,14 +251,11 @@ class MediaGroup
     }
 
     /**
-     * Remove connected item
-     *
      * @param MediaGroupMediaItem $connectedItem
      * @return MediaGroup
      */
-    public function removeConnectedItem(
-        MediaGroupMediaItem $connectedItem
-    ) : MediaGroup {
+    public function removeConnectedItem(MediaGroupMediaItem $connectedItem): MediaGroup
+    {
         $this->connectedItems->removeElement($connectedItem);
 
         // This is required, otherwise, doctrine thinks the entity hasn't been changed

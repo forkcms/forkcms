@@ -17,10 +17,12 @@ class Listing extends FrontendMediaWidget
         $this->loadData();
 
         // We need to have a MediaGroup to show this widget
-        if ($this->mediaGroup) {
-            parent::execute();
-            $this->loadTemplate();
-            $this->parse();
+        if (!$this->mediaGroup) {
+            return;
         }
+
+        parent::execute();
+        $this->loadTemplate();
+        $this->parse();
     }
 }

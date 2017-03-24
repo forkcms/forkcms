@@ -47,7 +47,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         // Get media for the given folder
         if ($mediaFolder !== null) {
             /** @var MediaItem[] $mediaItems */
-            $mediaItems = $this->get('media_library.repository.item')->getAllByFolder($mediaFolder);
+            $mediaItems = $this->get('media_library.repository.item')->findByFolder($mediaFolder);
 
             // Init media items array
             $mediaItemsToArray = [];

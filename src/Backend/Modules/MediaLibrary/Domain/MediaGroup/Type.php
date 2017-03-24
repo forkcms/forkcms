@@ -43,7 +43,7 @@ final class Type
      */
     public static function fromString(string $mediaGroupType): Type
     {
-        return new self((string) $mediaGroupType);
+        return new self($mediaGroupType);
     }
 
     /**
@@ -51,7 +51,7 @@ final class Type
      */
     public function __toString(): string
     {
-        return (string) $this->mediaGroupType;
+        return $this->mediaGroupType;
     }
 
     /**

@@ -19,7 +19,7 @@ class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
      * The MediaGroupMediaItem connections are always deleted,
      * but should we delete the source MediaItem items as well?
      *
-     * @var boolean
+     * @var bool
      */
     protected $deleteMediaItems = false;
 

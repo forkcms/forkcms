@@ -12,8 +12,6 @@ final class DeleteMediaItem
     public $mediaItem;
 
     /**
-     * MediaItemDelete constructor.
-     *
      * @param $mediaItem
      */
     public function __construct(MediaItem $mediaItem)
