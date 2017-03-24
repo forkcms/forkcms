@@ -110,11 +110,10 @@ class FrontendHelper
     public function addOpenGraphImagesForMediaGroup(
         MediaGroup $mediaGroup,
         Header $header,
-        int $maximumItems = null
+        int $maximumItems = 0
     ) {
         // Define variables
         $counter = 0;
-        $maximumItems = (int) $maximumItems;
 
         // Loop all connected items
         foreach ($mediaGroup->getConnectedItems() as $connectedItem) {
@@ -150,8 +149,8 @@ class FrontendHelper
             $header->addOpenGraphImage(
                 $mediaItem->getAbsoluteWebPath(),
                 false,
-                (int) $mediaItem->getWidth(),
-                (int) $mediaItem->getHeight()
+                $mediaItem->getWidth(),
+                $mediaItem->getHeight()
             );
 
             return true;
@@ -190,7 +189,7 @@ class FrontendHelper
     ) {
         $data = serialize([
             'group_id' => $mediaGroupId,
-            'title' => (string) $title,
+            'title' => $title,
         ]);
 
         // Create new widget instance and return parsed content

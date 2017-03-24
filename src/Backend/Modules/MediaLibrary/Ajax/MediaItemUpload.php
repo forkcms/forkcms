@@ -203,15 +203,15 @@ class MediaItemUpload extends BackendBaseAJAXAction
     private function getMediaFolder(): MediaFolder
     {
         // Define id
-        $id = $this->get('request')->query->get('folder_id');
+        $id = $this->get('request')->query->getInt('folder_id');
 
-        if ($id === null) {
+        if ($id === 0) {
             $this->throwOutputError('MediaFolderIsRequired');
         }
 
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById((int) $id);
+            return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
             $this->throwOutputError('NotExistingMediaFolder');
         }

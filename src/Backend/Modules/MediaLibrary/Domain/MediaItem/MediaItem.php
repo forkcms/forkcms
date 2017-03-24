@@ -159,11 +159,11 @@ class MediaItem
         int $userId
     ) {
         $this->folder = $folder;
-        $this->userId = (int) $userId;
+        $this->userId = $userId;
         $this->type = $type;
         $this->storageType = $storageType;
-        $this->url = (string) $url;
-        $this->title = (string) $title;
+        $this->url = $url;
+        $this->title = $title;
         $this->createdOn = new \DateTime();
         $this->editedOn = new \DateTime();
         $this->groups = new ArrayCollection();
@@ -402,7 +402,7 @@ class MediaItem
      */
     public function setTitle(string $title)
     {
-        $this->title = (string) $title;
+        $this->title = $title;
     }
 
     /**
@@ -428,8 +428,8 @@ class MediaItem
      */
     public function setResolution(int $width, int $height): self
     {
-        $this->width = (int) $width;
-        $this->height = (int) $height;
+        $this->width = $width;
+        $this->height = $height;
         return $this;
     }
 

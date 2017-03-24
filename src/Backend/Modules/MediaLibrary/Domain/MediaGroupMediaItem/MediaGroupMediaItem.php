@@ -93,7 +93,7 @@ class MediaGroupMediaItem
         $this->item = $item;
         $this->createdOn = new \DateTime();
         $this->publishOn = new \DateTime();
-        $this->sequence = (int) $sequence;
+        $this->sequence = $sequence;
     }
 
     /**

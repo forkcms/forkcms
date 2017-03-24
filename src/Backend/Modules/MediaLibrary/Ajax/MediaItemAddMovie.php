@@ -75,16 +75,15 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
      */
     protected function getMediaFolder(): MediaFolder
     {
-        // Define id
-        $id = $this->get('request')->request->get('folder_id');
+        $id = $this->get('request')->request->getInt('folder_id');
 
-        if ($id === null) {
+        if ($id === 0) {
             $this->throwOutputError('MediaFolderIsRequired');
         }
 
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById((int) $id);
+            return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
             $this->throwOutputError('ParentNotExists');
         }

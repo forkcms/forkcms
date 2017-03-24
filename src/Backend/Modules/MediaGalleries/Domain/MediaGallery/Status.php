@@ -40,7 +40,7 @@ final class Status
      */
     public function __toString(): string
     {
-        return (string) $this->mediaGalleryStatus;
+        return $this->mediaGalleryStatus;
     }
 
     /**

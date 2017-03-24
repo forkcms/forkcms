@@ -84,7 +84,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
 
         try {
             /** @var MediaGroup */
-            return $this->get('media_library.repository.group')->findOneById((string) $id);
+            return $this->get('media_library.repository.group')->findOneById($id);
         } catch (\Exception $e) {
             // Throw output error
             $this->output(

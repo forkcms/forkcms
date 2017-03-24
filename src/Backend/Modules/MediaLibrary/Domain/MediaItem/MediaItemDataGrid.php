@@ -26,7 +26,7 @@ class MediaItemDataGrid extends DataGridDB
 
         if ($folderId !== null) {
             $andWhere .= ' AND i.mediaFolderId = ?';
-            $parameters[] = (int) $folderId;
+            $parameters[] = $folderId;
         }
 
         parent::__construct(

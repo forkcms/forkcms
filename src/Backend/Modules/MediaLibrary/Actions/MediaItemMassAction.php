@@ -118,11 +118,11 @@ class MediaItemMassAction extends BackendBaseAction
     private function getMediaFolder()
     {
         // Define current folder
-        $id = $this->get('request')->query->get('current_folder_id');
+        $id = $this->get('request')->query->getInt('current_folder_id');
 
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById((int) $id);
+            return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
             return null;
         }
@@ -135,7 +135,7 @@ class MediaItemMassAction extends BackendBaseAction
     private function getMediaFolderToMoveTo(Type $selectedType): MediaFolder
     {
         // Define folder id
-        $id = (int) $this->get('request')->query->get('move_to_folder_id', 0);
+        $id = $this->get('request')->query->getInt('move_to_folder_id', 0);
 
         if ($id === 0) {
             $this->redirect(

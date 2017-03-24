@@ -224,7 +224,7 @@ class CacheBuilder
         int $level = 1
     ) : array {
         // redefine
-        $level = (int) $level;
+        $level = $level;
 
         // get data
         $queryBuilder = $this->mediaFolderRepository->createQueryBuilder('i');
