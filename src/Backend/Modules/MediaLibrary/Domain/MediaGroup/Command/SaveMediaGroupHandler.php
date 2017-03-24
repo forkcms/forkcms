@@ -41,7 +41,7 @@ final class SaveMediaGroupHandler
                 $newSequence = $sequence + 1;
 
                 /** @var MediaItem $mediaItem */
-                $mediaItem = $this->mediaItemRepository->getOneById(Uuid::fromString($mediaItemId));
+                $mediaItem = $this->mediaItemRepository->findOneById(Uuid::fromString($mediaItemId));
 
                 /** @var MediaGroupMediaItem $mediaGroupMediaItem */
                 $mediaGroupMediaItem = MediaGroupMediaItem::create(

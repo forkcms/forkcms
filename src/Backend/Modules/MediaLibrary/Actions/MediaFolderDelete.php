@@ -9,14 +9,8 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder as
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Event\MediaFolderDeleted;
 use Common\Exception\RedirectException;
 
-/**
- * This action will delete a MediaFolder
- */
 class MediaFolderDelete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
     public function execute()
     {
         /** @var MediaFolder $mediaFolder */
@@ -32,7 +26,6 @@ class MediaFolderDelete extends BackendBaseActionDelete
             );
         }
 
-        // Call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
         /** @var DeleteMediaFolderCommand $deleteMediaFolder */
@@ -66,7 +59,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
             $id = $this->getParameter('id', 'int');
 
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->getOneById($id);
+            return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
             $this->redirect(
                 $this->getBackLink(

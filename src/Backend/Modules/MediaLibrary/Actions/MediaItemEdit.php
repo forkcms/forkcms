@@ -9,9 +9,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemUpdated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
 
-/**
- * This action to Edit a MediaItem
- */
 class MediaItemEdit extends BackendBaseActionEdit
 {
     /** @var int */
@@ -24,14 +21,8 @@ class MediaItemEdit extends BackendBaseActionEdit
      */
     protected $mediaItem;
 
-    /**
-     * Execute the action
-     *
-     * @return void
-     */
     public function execute()
     {
-        // Call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
         // Parse JS files
@@ -101,7 +92,7 @@ class MediaItemEdit extends BackendBaseActionEdit
     {
         try {
             // Define MediaItem from repository
-            return $this->get('media_library.repository.item')->getOneById(
+            return $this->get('media_library.repository.item')->findOneById(
                 $this->getParameter('id', 'string')
             );
         } catch (\Exception $e) {

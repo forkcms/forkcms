@@ -6,5 +6,5 @@ imports:
   - { resource: storage_providers.yml }
   - { resource: managers.yml }
   - { resource: helpers.yml }
-  - { resource: console_commands.yml }
+  - { resource: console.yml }
   - { resource: form.yml }

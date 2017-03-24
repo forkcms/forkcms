@@ -43,11 +43,7 @@ jsBackend.mediaGalleries.addGallery =
 
         // When clicked in dialog
         $addMediaGroupTypeSubmit.on('click', function(e){
-            // prevent default
-            e.preventDefault();
-
-            // submit the form
-            window.location.href = $('#addMediaGroupTypeSelect').val();
+            $addMediaGroupTypeDialog.find('form').submit();
 
             // close the dialog
             $addMediaGroupTypeDialog.modal('hide');

@@ -46,9 +46,7 @@ class MediaItemGetAllById extends BackendBaseAJAXAction
         }
 
         $mediaItems = [];
-        $mediaItemEntities = $this->get('media_library.repository.item')->findBy([
-            'id' => $ids,
-        ]);
+        $mediaItemEntities = $this->get('media_library.repository.item')->findById($ids);
 
         /** @var MediaItem $mediaItem */
         foreach ($mediaItemEntities as $mediaItem) {

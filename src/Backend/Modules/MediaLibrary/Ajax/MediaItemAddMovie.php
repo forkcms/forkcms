@@ -84,7 +84,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->getOneById((int) $id);
+            return $this->get('media_library.repository.folder')->findOneById((int) $id);
         } catch (\Exception $e) {
             $this->throwOutputError('ParentNotExists');
         }

@@ -59,7 +59,7 @@ class Installer extends ModuleInstaller
         // Navigation for "modules"
         $this->setNavigation(
             null,
-            'MediaLibrary',
+            $this->getModule(),
             'media_library/media_item_index',
             [
                 'media_library/media_item_upload',
@@ -74,26 +74,26 @@ class Installer extends ModuleInstaller
     protected function configureModuleRights()
     {
         // Set module rights
-        $this->setModuleRights(1, 'MediaLibrary');
+        $this->setModuleRights(1, $this->getModule());
 
         // Media index
-        $this->setActionRights(1, 'MediaLibrary', 'MediaItemIndex');
-        $this->setActionRights(1, 'MediaLibrary', 'MediaItemMassAction');
-        $this->setActionRights(1, 'MediaLibrary', 'MediaItemUpload'); // Action and AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'MediaItemDelete');
-        $this->setActionRights(1, 'MediaLibrary', 'MediaItemEdit');
-        $this->setActionRights(1, 'MediaLibrary', 'MediaItemFindAll'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'MediaItemGetAllById'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'MediaItemAddMovie'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaItemIndex');
+        $this->setActionRights(1, $this->getModule(), 'MediaItemMassAction');
+        $this->setActionRights(1, $this->getModule(), 'MediaItemUpload'); // Action and AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaItemDelete');
+        $this->setActionRights(1, $this->getModule(), 'MediaItemEdit');
+        $this->setActionRights(1, $this->getModule(), 'MediaItemFindAll'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaItemGetAllById'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaItemAddMovie'); // AJAX
 
         // MediaFolder
-        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderAdd'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderDelete');
-        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderEdit'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderGetCountsForGroup'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderInfo'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'MediaFolderFindAll'); // AJAX
-        $this->setActionRights(1, 'MediaLibrary', 'MovieMediaFolder'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderAdd'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderDelete');
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderEdit'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderGetCountsForGroup'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderInfo'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderFindAll'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MovieMediaFolder'); // AJAX
     }
 
     /**
@@ -101,10 +101,10 @@ class Installer extends ModuleInstaller
      */
     protected function configureSettings()
     {
-        $this->setSetting('MediaLibrary', 'backend_thumbnail_height', 90);
-        $this->setSetting('MediaLibrary', 'backend_thumbnail_width', 140);
-        $this->setSetting('MediaLibrary', 'backend_thumbnail_quality', 95);
-        $this->setSetting('MediaLibrary', 'upload_number_of_sharding_folders', 15);
+        $this->setSetting($this->getModule(), 'backend_thumbnail_height', 90);
+        $this->setSetting($this->getModule(), 'backend_thumbnail_width', 140);
+        $this->setSetting($this->getModule(), 'backend_thumbnail_quality', 95);
+        $this->setSetting($this->getModule(), 'upload_number_of_sharding_folders', 15);
     }
 
     /**

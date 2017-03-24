@@ -9,8 +9,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 final class MediaItemRepository extends EntityRepository
 {
     /**
-     * Add a MediaItem
-     *
      * @param MediaItem $mediaItem
      *
      * We don't flush here, see http://disq.us/p/okjc6b
@@ -35,6 +33,26 @@ final class MediaItemRepository extends EntityRepository
     }
 
     /**
+     * @param string|null $id
+     * @return MediaItem
+     * @throws \Exception
+     */
+    public function findOneById(string $id = null): MediaItem
+    {
+        if ($id === null) {
+            throw MediaItemNotFound::forEmptyId();
+        }
+
+        $mediaItem = parent::findOneById($id);
+
+        if ($mediaItem === null) {
+            throw MediaItemNotFound::forId($id);
+        }
+
+        return $mediaItem;
+    }
+
+    /**
      * Get all MediaItem items by MediaFolder
      *
      * @param MediaFolder $mediaFolder
@@ -48,30 +66,6 @@ final class MediaItemRepository extends EntityRepository
     }
 
     /**
-     * Get one by id
-     *
-     * @param string|null $id
-     * @return MediaItem
-     * @throws \Exception
-     */
-    public function getOneById(string $id): MediaItem
-    {
-        if ($id === null) {
-            throw MediaItemNotFound::forEmptyId();
-        }
-
-        $mediaItem = $this->findOneById($id);
-
-        if ($mediaItem === null) {
-            throw MediaItemNotFound::forId($id);
-        }
-
-        return $mediaItem;
-    }
-
-    /**
-     * Remove a MediaItem
-     *
      * @param MediaItem $mediaItem
      *
      * We don't flush here, see http://disq.us/p/okjc6b

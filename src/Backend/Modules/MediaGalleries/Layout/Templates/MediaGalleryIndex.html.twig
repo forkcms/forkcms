@@ -45,22 +45,16 @@
     </div>
 
     <div class="modal fade" id="addMediaGroupTypeDialog" tabindex="-1" role="dialog" aria-hidden="true">
+      {{ form_start(form) }}
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <span class="modal-title h4">{{ 'lbl.MediaGalleryAdd'|trans|capitalize }}</span>
           </div>
           <div class="modal-body">
-            <div class="form-group">
-              <label for="type">{{ 'msg.ChooseTypeForNewGallery'|trans }}</label><br/>
-              {% if mediaGroupTypes %}
-                <select id="addMediaGroupTypeSelect" title="{{ 'msg.ChooseTypeForNewGallery'|trans }}">
-                {% for mediaGroupType in mediaGroupTypes %}
-                  <option value="{{ mediaGroupType.value }}"{% if mediaGroupType.selected %} selected="selected"{% endif %}>{{ mediaGroupType.label }}</option>
-                {% endfor %}
-                </select>
-              {% endif %}
-            </div>
+            {{ form_label(form.type) }}
+            {{ form_widget(form.type) }}
+            {{ form_errors(form.type) }}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -72,6 +66,7 @@
           </div>
         </div>
       </div>
+      {{ form_end(form) }}
     </div>
   {% endif %}
 

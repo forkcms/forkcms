@@ -55,7 +55,7 @@ class Gallery extends BackendBaseWidget
 
         try {
             /** @var MediaGallery $mediaGallery */
-            $mediaGallery = $this->get('media_galleries.repository.gallery')->getOneById(
+            $mediaGallery = $this->get('media_galleries.repository.gallery')->findOneById(
                 $this->data['gallery_id']
             );
         } catch (\Exception $e) {

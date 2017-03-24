@@ -8,8 +8,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 final class MediaGroupRepository extends EntityRepository
 {
     /**
-     * Add a MediaGroup
-     *
      * @param MediaGroup $mediaGroup
      *
      * We don't flush here, see http://disq.us/p/okjc6b
@@ -20,18 +18,18 @@ final class MediaGroupRepository extends EntityRepository
     }
 
     /**
-     * @param string $id
+     * @param string|null $id
      * @return MediaGroup
      * @throws \Exception
      */
-    public function getOneById(string $id): MediaGroup
+    public function findOneById(string $id = null): MediaGroup
     {
         if ($id === null) {
             throw MediaGroupNotFound::forEmptyId();
         }
 
         /** @var MediaGroup $mediaGroup */
-        $mediaGroup = $this->findOneById($id);
+        $mediaGroup = parent::findOneById($id);
 
         if ($mediaGroup === null) {
             throw MediaGroupNotFound::forId($id);

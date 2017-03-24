@@ -54,7 +54,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
      */
     protected function getMediaFolder(): MediaFolder
     {
-        $id = $this->get('request')->request->get('folder_id');
+        $id = $this->get('request')->request->getInt('folder_id');
 
         // validate values
         if ($id === null) {
@@ -63,13 +63,15 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
         try {
             /** @var MediaFolder $mediaFolder */
-            return $this->get('media_library.repository.folder')->getOneById((int) $id);
+            return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
             $this->output(
                 self::BAD_REQUEST,
                 null,
                 Language::err('MediaFolderDoesNotExists')
             );
+
+            return null;
         }
     }
 
@@ -78,14 +80,12 @@ class MediaFolderEdit extends BackendBaseAJAXAction
      */
     protected function getFolderName(): string
     {
-        // Define name
         $name = $this->get('request')->request->get('name');
 
         if ($name === null) {
             $this->output(self::BAD_REQUEST, null, Language::err('TitleIsRequired'));
         }
 
-        $name = Uri::getUrl($name);
-        return $name;
+        return Uri::getUrl($name);
     }
 }

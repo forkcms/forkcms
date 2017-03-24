@@ -6,59 +6,39 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
+use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 
-/**
- * This is the class to Upload MediaItem items
- */
 class MediaItemUpload extends BackendBaseActionAdd
 {
-    /**
-     * The id of the folder where is filtered on
-     *
-     * @var int
-     */
-    protected $folderId;
+    /** @var MediaFolder */
+    protected $mediaFolder;
 
-    /**
-     * Execute the action
-     *
-     * @return void
-     */
     public function execute()
     {
-        // Call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
+
+        /** @var MediaFolder|null $mediaFolder */
+        $this->mediaFolder = $this->getMediaFolder();
 
         // Parse JS files
         $this->parseFiles();
-        $this->getData();
         $this->parse();
         $this->display();
     }
 
     /**
-     * Get data
+     * @return MediaFolder|null
      */
-    protected function getData()
+    protected function getMediaFolder()
     {
-        // Define folder id
-        $this->folderId = $this->getParameter('folder', 'int', 0);
+        /** @var int $id */
+        $id = $this->get('request')->query->get('folder');
 
-        // We need to select a folder
-        if ($this->folderId !== 0) {
-            /** @var MediaFolder $mediaFolder */
-            $mediaFolder = $this->get('media_library.repository.folder')->getOneById(
-                $this->folderId
-            );
-
-            // MediaFolder not found
-            if ($mediaFolder === null) {
-                $this->redirect(
-                    BackendModel::createURLForAction('MediaItemIndex')
-                    . '&error=non-existing-media-folder'
-                );
-            }
+        try {
+            return $this->get('media_library.repository.folder')->findOneById($id);
+        } catch (\Exception $e) {
+            return null;
         }
     }
 
@@ -70,10 +50,12 @@ class MediaItemUpload extends BackendBaseActionAdd
         // Parse files necessary for the media upload helper
         MediaGroupType::parseFiles();
 
-        // Parse allowed movie sources
-        $this->tpl->assign('folderId', $this->folderId);
+        /** @var int|null $mediaFolderId */
+        $mediaFolderId = ($this->mediaFolder instanceof MediaFolder) ? $this->mediaFolder->getId() : null;
+
+        $this->tpl->assign('folderId', $mediaFolderId);
         $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
-        $this->header->addJsData('MediaLibrary', 'openedFolderId', ($this->folderId !== null) ? $this->folderId : null);
+        $this->header->addJsData('MediaLibrary', 'openedFolderId', $mediaFolderId);
     }
 
     /**
@@ -81,8 +63,8 @@ class MediaItemUpload extends BackendBaseActionAdd
      */
     private function parseFiles()
     {
-        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/jquery.tree.js', null, false, true);
-        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/lib/jquery.cookie.js', null, false, true);
-        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/plugins/jquery.tree.cookie.js', null, false, true);
+        $this->header->addJS('jstree/jquery.tree.js', 'Pages');
+        $this->header->addJS('jstree/lib/jquery.cookie.js', 'Pages');
+        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', 'Pages');
     }
 }

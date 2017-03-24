@@ -5,9 +5,8 @@ namespace Backend\Modules\MediaGalleries\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Language\Language;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\MediaGalleries\Engine\Model as BackendMediaGalleriesModel;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDataGrid;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\TypeType;
 
 /**
  * This is the class to Show all MediaGallery Entities
@@ -23,27 +22,17 @@ class MediaGalleryIndex extends BackendBaseActionIndex
     {
         parent::execute();
 
+        $form = $this->createForm(TypeType::class, null, [
+            'action' => BackendModel::createURLForAction('MediaGalleryAdd'),
+            'method' => 'GET',
+        ]);
+
         $this->tpl->assign('warnings', $this->getWarnings());
         $this->tpl->assign('dataGrid', MediaGalleryDataGrid::getHtml());
-        $this->tpl->assign('mediaGroupTypes', $this->getTypes());
+        $this->tpl->assign('form', $form->createView());
 
         $this->parse();
         $this->display();
-    }
-
-    /**
-     * @return array
-     */
-    private function getTypes(): array
-    {
-        return array_map(function ($type) {
-            return [
-                'key' => $type,
-                'value' => BackendModel::createURLForAction('MediaGalleryAdd') . '&type=' . $type,
-                'label' => Language::lbl('MediaLibraryGroupType' . \SpoonFilter::toCamelCase($type, '-'), 'Core'),
-                'selected' => ($type === 'image'),
-            ];
-        }, Type::POSSIBLE_VALUES);
     }
 
     /**

@@ -40,14 +40,14 @@ final class MediaGalleryRepository extends EntityRepository
      * @return MediaGallery
      * @throws \Exception
      */
-    public function getOneById(string $id = null): MediaGallery
+    public function findOneById(string $id = null): MediaGallery
     {
         if ($id === null) {
             throw MediaGalleryNotFound::forEmptyId();
         }
 
         /** @var MediaGallery|null $mediaGallery */
-        $mediaGallery = $this->findOneById($id);
+        $mediaGallery = parent::findOneById($id);
 
         if ($mediaGallery === null) {
             throw MediaGalleryNotFound::forId($id);

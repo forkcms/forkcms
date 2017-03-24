@@ -72,7 +72,7 @@ class MediaGalleryAdd extends ActionAdd
     private function getType(): Type
     {
         try {
-            $type = $this->getParameter('type');
+            $type = $this->get('request')->query->get('media_group_type')['type'];
 
             return Type::fromString($type);
         } catch (\InvalidArgumentException $e) {

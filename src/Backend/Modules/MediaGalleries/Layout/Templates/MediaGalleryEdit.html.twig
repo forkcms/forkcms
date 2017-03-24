@@ -46,16 +46,7 @@
                 {% include "MediaLibrary/Resources/views/BackendMediaGroupsHelper.html.twig" %}
                 {{ form_widget(form.mediaGroup, {'mediaGroup': mediaGroup}) }}
 
-                <div class="panel panel-default panel-editor">
-                  <div class="panel-heading">
-                    <p>{{ 'lbl.Description'|trans|ucfirst }}</p>
-                  </div>
-                  <div class="panel-body">
-                    <div class="form-group last">
-                      {{ form_widget(form.text) }}
-                    </div>
-                  </div>
-                </div>
+                {{ form_row(form.text) }}
               </div>
               <div class="col-md-4">
                 <div class="panel panel-default">

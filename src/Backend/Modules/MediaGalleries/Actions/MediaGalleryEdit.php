@@ -77,7 +77,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
             $id = $this->getParameter('id');
 
             /** @var MediaGallery|null $mediaGallery */
-            return $this->get('media_galleries.repository.gallery')->getOneById($id);
+            return $this->get('media_galleries.repository.gallery')->findOneById($id);
         } catch (\Exception $e) {
             $this->redirect(
                 $this->getBackLink(

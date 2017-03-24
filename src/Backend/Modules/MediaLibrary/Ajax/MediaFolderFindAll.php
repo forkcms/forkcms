@@ -28,16 +28,13 @@ class MediaFolderFindAll extends BackendBaseAJAXAction
             $this->showCount = true;
         }
 
-        // Get folders
-        $folders = $this->get('media_library.cache_builder')->getFoldersForDropdown(
-            $this->showCount,
-            true
-        );
-
         // Output success message with MediaFolder items
         $this->output(
             self::OK,
-            $folders
+            $this->get('media_library.cache_builder')->getFoldersForDropdown(
+                $this->showCount,
+                true
+            )
         );
     }
 }

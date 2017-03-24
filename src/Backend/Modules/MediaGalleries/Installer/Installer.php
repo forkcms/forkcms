@@ -32,7 +32,7 @@ class Installer extends ModuleInstaller
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation(
             $navigationModulesId,
-            'MediaGalleries',
+            $this->getModule(),
             'media_galleries/media_gallery_index',
             [
                 'media_galleries/media_gallery_add',
@@ -47,14 +47,14 @@ class Installer extends ModuleInstaller
     protected function configureModuleRights()
     {
         // Set module rights
-        $this->setModuleRights(1, 'MediaGalleries');
+        $this->setModuleRights(1, $this->getModule());
 
         // Media galleries
-        $this->setActionRights(1, 'MediaGalleries', 'MediaGalleryIndex');
-        $this->setActionRights(1, 'MediaGalleries', 'MediaGalleryAdd');
-        $this->setActionRights(1, 'MediaGalleries', 'MediaGalleryDelete');
-        $this->setActionRights(1, 'MediaGalleries', 'MediaGalleryEdit');
-        $this->setActionRights(1, 'MediaGalleries', 'MediaGalleryEditWidgetAction');
+        $this->setActionRights(1, $this->getModule(), 'MediaGalleryIndex');
+        $this->setActionRights(1, $this->getModule(), 'MediaGalleryAdd');
+        $this->setActionRights(1, $this->getModule(), 'MediaGalleryDelete');
+        $this->setActionRights(1, $this->getModule(), 'MediaGalleryEdit');
+        $this->setActionRights(1, $this->getModule(), 'MediaGalleryEditWidgetAction');
     }
 
     /**

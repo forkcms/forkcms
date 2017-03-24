@@ -9,16 +9,8 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDataGrid;
 
-/**
- * This is the index-action, it will display the overview of MediaItem items.
- */
 class MediaItemIndex extends BackendBaseActionIndex
 {
-    /**
-     * Execute the action
-     *
-     * @return void
-     */
     public function execute()
     {
         // call parent, this will probably add some general CSS/JS or other required files
@@ -30,14 +22,8 @@ class MediaItemIndex extends BackendBaseActionIndex
         /** @var MediaFolder|null $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
 
-        /** @var array $possibleTypes */
-        $possibleTypes = Type::POSSIBLE_VALUES;
-
         /** @var array $dataGrids */
-        $dataGrids = $this->getDataGrids(
-            $mediaFolder,
-            $possibleTypes
-        );
+        $dataGrids = $this->getDataGrids($mediaFolder);
 
         // Assign variables
         $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
@@ -52,15 +38,14 @@ class MediaItemIndex extends BackendBaseActionIndex
 
     /**
      * @param MediaFolder|null $mediaFolder
-     * @param $possibleTypes
      * @return array
      */
-    private function getDataGrids(MediaFolder $mediaFolder = null, $possibleTypes): array
+    private function getDataGrids(MediaFolder $mediaFolder = null): array
     {
         $dataGrids = [];
 
         /** @var string $type */
-        foreach ($possibleTypes as $type) {
+        foreach (Type::POSSIBLE_VALUES as $type) {
             /** @var DataGridDB $dataGrid */
             $dataGrid = MediaItemDataGrid::getDataGrid(
                 Type::fromString($type),
@@ -90,7 +75,7 @@ class MediaItemIndex extends BackendBaseActionIndex
 
         try {
             /** @var MediaFolder mediaFolder */
-            return $this->get('media_library.repository.folder')->getOneById($id);
+            return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
             return null;
         }
@@ -145,9 +130,9 @@ class MediaItemIndex extends BackendBaseActionIndex
      */
     private function parseFiles()
     {
-        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/jquery.tree.js', null, false, true);
-        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/lib/jquery.cookie.js', null, false, true);
-        $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/plugins/jquery.tree.cookie.js', null, false, true);
+        $this->header->addJS('jstree/jquery.tree.js', 'Pages');
+        $this->header->addJS('jstree/lib/jquery.cookie.js', 'Pages');
+        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', 'Pages');
         $this->header->addJS('MediaLibraryAddFolder.js', 'MediaLibrary', true);
     }
 }

@@ -18,30 +18,15 @@ class MediaFolderInfo extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $type = $this->get('request')->request->get('type');
-        $id = (int) $this->get('request')->request->get('id', 0);
+        $id = $this->get('request')->request->getInt('id', 0);
 
-        // validate
-        if ($type === null) {
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                'no type provided'
-            );
-        }
-        if ((string) $type !== 'folder') {
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                'wrong type provided'
-            );
-        }
         if ($id === 0) {
             $this->output(
                 self::BAD_REQUEST,
                 null,
                 'no id provided'
             );
+            return;
         }
 
         // Currently always allow to be moved

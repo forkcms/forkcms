@@ -8,17 +8,10 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem as DeleteMediaItemCommand;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
 
-/**
- * This action will delete a MediaItem
- */
 class MediaItemDelete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
     public function execute()
     {
-        // Call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
         /** @var MediaItem $mediaItem */
@@ -55,7 +48,7 @@ class MediaItemDelete extends BackendBaseActionDelete
     {
         try {
             // Define MediaItem from repository
-            return $this->get('media_library.repository.item')->getOneById(
+            return $this->get('media_library.repository.item')->findOneById(
                 $this->getParameter('id', 'string')
             );
         } catch (\Exception $e) {

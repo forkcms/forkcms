@@ -35,7 +35,7 @@ class MediaGalleryType extends AbstractType
                 'text',
                 EditorType::class,
                 [
-                    'label' => 'lbl.Text',
+                    'label' => 'lbl.Description',
                     'required' => false,
                 ]
             );

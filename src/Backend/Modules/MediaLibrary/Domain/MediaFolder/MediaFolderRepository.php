@@ -10,8 +10,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFoun
 final class MediaFolderRepository extends EntityRepository
 {
     /**
-     * Add a MediaFolder
-     *
      * @param MediaFolder $mediaFolder
      *
      * We don't flush here, see http://disq.us/p/okjc6b
@@ -44,13 +42,13 @@ final class MediaFolderRepository extends EntityRepository
      * @return MediaFolder
      * @throws \Exception
      */
-    public function getOneById(int $id): MediaFolder
+    public function findOneById(int $id = null): MediaFolder
     {
         if ($id === null) {
             throw MediaFolderNotFound::forEmptyId();
         }
 
-        $mediaFolder = $this->findOneById((int) $id);
+        $mediaFolder = parent::findOneById((int) $id);
 
         if ($mediaFolder === null) {
             throw MediaFolderNotFound::forId($id);

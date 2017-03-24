@@ -89,7 +89,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
 
             // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
             // For example: /myserver/handlers/endpoint.php?done
-            if (isset($_GET["done"])) {
+            if ($this->get('request')->query->get('done') !== null) {
                 $result = $uploader->combineChunks("files");
             // Handles upload requests
             } else {
@@ -211,7 +211,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
 
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->getOneById((int) $id);
+            return $this->get('media_library.repository.folder')->findOneById((int) $id);
         } catch (\Exception $e) {
             $this->throwOutputError('NotExistingMediaFolder');
         }

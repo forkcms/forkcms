@@ -56,8 +56,6 @@ class MediaFolderAdd extends BackendBaseAJAXAction
     }
 
     /**
-     * Get name
-     *
      * @param MediaFolder|null $parent
      * @return string
      */
@@ -77,6 +75,8 @@ class MediaFolderAdd extends BackendBaseAJAXAction
                 null,
                 Language::err('NameIsRequired')
             );
+
+            return null;
         }
 
         // Folder name already exists
@@ -87,36 +87,34 @@ class MediaFolderAdd extends BackendBaseAJAXAction
                 null,
                 Language::err('MediaFolderExists')
             );
+
+            return null;
         }
 
         return $name;
     }
 
     /**
-     * Get parent
-     *
      * @return MediaFolder|null
      */
     protected function getParent()
     {
         // Get parameters
-        $parentId = (int) $this->get('request')->request->get('parent_id');
+        $parentId = $this->get('request')->request->getInt('parent_id');
 
-        // We have a parent
-        if ($parentId !== null) {
-            try {
-                /** @var MediaFolder */
-                return $this->get('media_library.repository.folder')->getOneById($parentId);
-            } catch (\Exception $e) {
-                // Throw output error
-                $this->output(
-                    self::BAD_REQUEST,
-                    null,
-                    Language::err('ParentNotExists')
-                );
-            }
+        if ($parentId === null) {
+            return null;
         }
 
-        return null;
+        try {
+            return $this->get('media_library.repository.folder')->findOneById($parentId);
+        } catch (\Exception $e) {
+            // Throw output error
+            $this->output(
+                self::BAD_REQUEST,
+                null,
+                Language::err('ParentNotExists')
+            );
+        }
     }
 }

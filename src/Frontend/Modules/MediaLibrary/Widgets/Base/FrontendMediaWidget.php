@@ -32,7 +32,7 @@ class FrontendMediaWidget extends FrontendBaseWidget
         // We are loading in the MediaGroup for a custom module
         if (isset($this->data['group_id'])) {
             /** @var MediaGroup $mediaGroup */
-            $this->mediaGroup = $this->get('media_library.repository.group')->getOneById(
+            $this->mediaGroup = $this->get('media_library.repository.group')->findOneById(
                 $this->data['group_id']
             );
         } else {

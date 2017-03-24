@@ -23,14 +23,8 @@ class MediaItemMassAction extends BackendBaseAction
     /** @var MediaFolder */
     protected $moveToMediaFolder;
 
-    /**
-     * Execute the action
-     *
-     * @return void
-     */
     public function execute()
     {
-        // Call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
         /** @var array $mediaItemIds */
@@ -57,7 +51,7 @@ class MediaItemMassAction extends BackendBaseAction
         foreach ($ids as $mediaItemId) {
             try {
                 /** @var MediaItem $mediaItem */
-                $mediaItem = $this->get('media_library.repository.item')->getOneById($mediaItemId);
+                $mediaItem = $this->get('media_library.repository.item')->findOneById($mediaItemId);
 
                 switch ($action) {
                     case self::MOVE:
@@ -98,13 +92,9 @@ class MediaItemMassAction extends BackendBaseAction
             }
         }
 
-        $parameters['report'] = 'media-';
-        $parameters['report'] .= ($action === self::MOVE) ? 'moved' : 'deleted';
+        $parameters['report'] = 'media-' . ($action === self::MOVE ? 'moved' : 'deleted');
 
-        $this->redirect(
-            $this->getBackLink($parameters)
-            . '#tab' . ucfirst($selectedType)
-        );
+        $this->redirect($this->getBackLink($parameters) . '#tab' . ucfirst($selectedType));
     }
 
     /**
@@ -132,7 +122,7 @@ class MediaItemMassAction extends BackendBaseAction
 
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->getOneById((int) $id);
+            return $this->get('media_library.repository.folder')->findOneById((int) $id);
         } catch (\Exception $e) {
             return null;
         }
@@ -160,7 +150,7 @@ class MediaItemMassAction extends BackendBaseAction
 
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->getOneById($id);
+            return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
             $this->redirect(
                 $this->getBackLink(
@@ -193,7 +183,7 @@ class MediaItemMassAction extends BackendBaseAction
      */
     private function getSelectedMediaItemIds(): array
     {
-        $ids = (array) $_GET['id'];
+        $ids = $this->get('request')->query->get('id');
 
         if (empty($ids)) {
             $this->redirect(

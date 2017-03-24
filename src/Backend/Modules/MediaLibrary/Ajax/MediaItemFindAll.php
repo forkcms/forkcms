@@ -57,7 +57,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         }
 
         /** @var int|null $mediaFolderId */
-        $mediaFolderId = ($mediaFolder !== null) ? $mediaFolder->getId() : null;
+        $mediaFolderId = $mediaFolder !== null ? $mediaFolder->getId() : null;
 
         // Output success message with variables
         $this->output(
@@ -71,54 +71,56 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     }
 
     /**
-     * @return MediaGroup|null
+     * @return MediaGroup|null|void
      */
     protected function getMediaGroup()
     {
         /** @var string $id */
         $id = $this->get('request')->request->get('group_id');
 
-        // We have an id
-        if ($id !== null) {
-            try {
-                /** @var MediaGroup */
-                return $this->get('media_library.repository.group')->getOneById((string) $id);
-            } catch (\Exception $e) {
-                // Throw output error
-                $this->output(
-                    self::BAD_REQUEST,
-                    null,
-                    Language::err('MediaGroupNotExists')
-                );
-            }
+        if ($id === null) {
+            return null;
         }
 
-        return null;
+        try {
+            /** @var MediaGroup */
+            return $this->get('media_library.repository.group')->findOneById((string) $id);
+        } catch (\Exception $e) {
+            // Throw output error
+            $this->output(
+                self::BAD_REQUEST,
+                null,
+                Language::err('MediaGroupNotExists')
+            );
+
+            return;
+        }
     }
 
     /**
-     * @return MediaFolder|null
+     * @return MediaFolder|null|void
      */
     protected function getMediaFolder()
     {
         /** @var int $id */
-        $id = (int) $this->get('request')->request->get('folder_id', 0);
+        $id = $this->get('request')->request->getInt('folder_id', 0);
 
-        // We have an id
-        if ($id !== 0) {
-            try {
-                /** @var MediaFolder */
-                return $this->get('media_library.repository.folder')->getOneById($id);
-            } catch (\Exception $e) {
-                // Throw output error
-                $this->output(
-                    self::BAD_REQUEST,
-                    null,
-                    Language::err('MediaFolderNotExists')
-                );
-            }
+        if ($id === 0) {
+            return null;
         }
 
-        return null;
+        try {
+            /** @var MediaFolder */
+            return $this->get('media_library.repository.folder')->findOneById($id);
+        } catch (\Exception $e) {
+            // Throw output error
+            $this->output(
+                self::BAD_REQUEST,
+                null,
+                Language::err('MediaFolderNotExists')
+            );
+
+            return;
+        }
     }
 }
