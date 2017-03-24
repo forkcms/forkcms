@@ -190,7 +190,7 @@ class MediaFolder
     /**
      * Gets the value of id.
      *
-     * @return integer
+     * @return int
      */
     public function getId(): int
     {
@@ -241,7 +241,7 @@ class MediaFolder
     /**
      * Gets the value of userId.
      *
-     * @return integer
+     * @return int
      */
     public function getUserId(): int
     {

@@ -334,7 +334,7 @@ class MediaItem
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getUserId(): int
     {
@@ -414,7 +414,7 @@ class MediaItem
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getSize(): int
     {

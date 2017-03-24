@@ -133,7 +133,7 @@ class MediaGroupMediaItem
     /**
      * Gets the value of id.
      *
-     * @return integer
+     * @return int
      */
     public function getId(): int
     {
@@ -183,7 +183,7 @@ class MediaGroupMediaItem
     /**
      * Gets the value of sequence.
      *
-     * @return integer
+     * @return int
      */
     public function getSequence(): int
     {
