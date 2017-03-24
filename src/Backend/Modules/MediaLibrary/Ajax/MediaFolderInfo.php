@@ -26,7 +26,8 @@ class MediaFolderInfo extends BackendBaseAJAXAction
                 null,
                 'no id provided'
             );
-            return;
+
+            return null;
         }
 
         // Currently always allow to be moved

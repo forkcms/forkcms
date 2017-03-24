@@ -43,7 +43,7 @@ class MediaFolderMove extends BackendBaseAJAXAction
     }
 
     /**
-     * @return MediaFolder
+     * @return MediaFolder|null
      */
     private function getMediaFolder(): MediaFolder
     {
@@ -55,6 +55,8 @@ class MediaFolderMove extends BackendBaseAJAXAction
                 null,
                 'no id provided'
             );
+
+            return null;
         }
 
         try {
@@ -112,7 +114,8 @@ class MediaFolderMove extends BackendBaseAJAXAction
                 null,
                 'no type provided'
             );
-            return;
+
+            return null;
         }
 
         if (!in_array($typeOfDrop, ['before', 'after', 'inside'])) {
@@ -121,7 +124,8 @@ class MediaFolderMove extends BackendBaseAJAXAction
                 null,
                 'wrong type provided'
             );
-            return;
+
+            return null;
         }
 
         return $typeOfDrop;

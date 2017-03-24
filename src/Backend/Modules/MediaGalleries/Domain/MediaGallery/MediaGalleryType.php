@@ -46,7 +46,7 @@ class MediaGalleryType extends AbstractType
                 'action',
                 ChoiceType::class,
                 [
-                    'label' => 'lbl.Action',
+                    'label' => 'lbl.WidgetView',
                     'choices' => MediaWidget::getPossibleValues(),
                     'choices_as_values' => true,
                     'choice_label' => function ($possibleWidget) {

@@ -23,7 +23,7 @@
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
               <div class="col-md-8">
-                <div id="publishOptions" class="panel panel-default">
+                <div id="publishOptions" class="panel form-group panel-default">
                   <div class="panel-heading">
                     <p>
                       {{ 'lbl.WidgetView'|trans|ucfirst }}{{ macro.required }}
@@ -32,10 +32,8 @@
                   </div>
                   <div class="panel-body">
                     <div class="form-group last">
-                      <p class="p0">
-                        {{ form_widget(form.action) }}
-                        {{ form_errors(form.action) }}
-                      </p>
+                      {{ form_widget(form.action) }}
+                      {{ form_errors(form.action) }}
                     </div>
                   </div>
                 </div>

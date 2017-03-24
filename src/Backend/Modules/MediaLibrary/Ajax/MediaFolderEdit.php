@@ -76,7 +76,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     protected function getFolderName(): string
     {
@@ -84,6 +84,8 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
         if ($name === null) {
             $this->output(self::BAD_REQUEST, null, Language::err('TitleIsRequired'));
+
+            return null;
         }
 
         return Uri::getUrl($name);

@@ -44,6 +44,8 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
                 null,
                 Language::err('GroupIdIsRequired')
             );
+
+            return null;
         }
 
         try {

@@ -71,7 +71,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     }
 
     /**
-     * @return MediaGroup|null|void
+     * @return MediaGroup|null
      */
     protected function getMediaGroup()
     {
@@ -92,8 +92,6 @@ class MediaItemFindAll extends BackendBaseAJAXAction
                 null,
                 Language::err('MediaGroupNotExists')
             );
-
-            return;
         }
     }
 

@@ -30,7 +30,7 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->tpl->assign('mediaFolder', $mediaFolder);
         $this->tpl->assign('mediaFolders', $this->getMediaFoldersForDropdown($mediaFolder));
         $this->tpl->assign('dataGrids', $dataGrids);
-        $this->tpl->assign('hasResults', ($this->getTotalFolderCount($dataGrids)) > 0);
+        $this->tpl->assign('hasResults', $this->hasResults($dataGrids));
         $this->header->addJsData('MediaLibrary', 'openedFolderId', ($mediaFolder !== null) ? $mediaFolder->getId() : null);
 
         $this->display();
@@ -111,18 +111,13 @@ class MediaItemIndex extends BackendBaseActionIndex
 
     /**
      * @param array $dataGrids
-     * @return int
+     * @return bool
      */
-    private function getTotalFolderCount(array $dataGrids): int
+    private function hasResults(array $dataGrids): bool
     {
-        $count = 0;
-
-        /** @var array $dataGrid */
-        foreach ($dataGrids as $dataGrid) {
-            $count += $dataGrid['numberOfResults'];
-        }
-
-        return $count;
+        return array_sum(array_map(function ($dataGrid){
+            return $dataGrid['numberOfResults'];
+        }, $dataGrids)) > 0;
     }
 
     /**

@@ -158,10 +158,10 @@
           <div class="modal-body">
             <p>
               {% if hasResults %}
-              {{ 'msg.ConfirmMediaFolderDeleteAndFiles'|trans|format(mediaFolder.name) }}
+                {{ 'msg.ConfirmMediaFolderDeleteAndFiles'|trans|format(mediaFolder.name) }}
               {% endif %}
               {% if not hasResults %}
-              {{ 'msg.ConfirmMediaFolderDelete'|trans|format(mediaFolder.name) }}
+                {{ 'msg.ConfirmMediaFolderDelete'|trans|format(mediaFolder.name) }}
               {% endif %}
             </p>
             {% if dgFiles %}
