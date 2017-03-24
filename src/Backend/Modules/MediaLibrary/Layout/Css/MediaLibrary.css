@@ -3,161 +3,161 @@
  */
 
 #mediaTree .tree-fork li[rel="folder"] a {
-	width : auto!important;
-	position: relative
+  width : auto!important;
+  position: relative
 }
 
 #mediaTree .tree-fork li[rel="folder"] a:before {
-	content: "\f114";
+  content: "\f114";
 }
 #mediaTree .tree-fork li[rel="folder"] a:before {
-	color: #999;
-	font-family: FontAwesome;
-	font-size: 12px;
-	position: absolute;
-	left: 4px
+  color: #999;
+  font-family: FontAwesome;
+  font-size: 12px;
+  position: absolute;
+  left: 4px
 }
 
 /**
  * Media library Helper
  *
  * Structure:
- * 	#mediaConnectedItems
- *		.mediaConnectedBox
- *			.mediaConnectedItems
+ *   #mediaConnectedItems
+ *    .mediaConnectedBox
+ *      .mediaConnectedItems
  */
-	.mediaGroup {
-		background-color: #f9f9f9!important;
-	}
-	.optionsOnlyOneGroup .mediaGroup {
-		margin-bottom: 0;
-	}
-		.mediaGroup .panel-body {
-			padding: 0;
-			border: none;
-		}
-		.mediaGroup .panel-body .helpTxt {
-			padding: 20px 25px 25px;
-		}
-		.mediaGroup .mediaConnectedBox {
-			background-color: #fff;
-		}
-	#addGalleriesBox a {
-		float: right;
-	}
-	.mediaConnectedItems {
-		float: left;
-		width: 100%;
-	}
-		.helpTxt {
-			padding: 10px;
-		}
-		.mediaConnectedItems {
-			padding: 5px 2px 2px 5px;
-		}
-		.mediaEditBox {
-			background: #eee;
-		}
-			.mediaEditBox ul {
-				padding: 10px;
-			}
-			.mediaEditBox li {
-				display: inline;
-				float: left;
-				padding-right: 10px;
-			}
-				.mediaSettingsGroup
-				{
-					position: absolute;
-					right: 10px;
-				}
+  .mediaGroup {
+    background-color: #f9f9f9!important;
+  }
+  .optionsOnlyOneGroup .mediaGroup {
+    margin-bottom: 0;
+  }
+    .mediaGroup .panel-body {
+      padding: 0;
+      border: none;
+    }
+    .mediaGroup .panel-body .helpTxt {
+      padding: 20px 25px 25px;
+    }
+    .mediaGroup .mediaConnectedBox {
+      background-color: #fff;
+    }
+  #addGalleriesBox a {
+    float: right;
+  }
+  .mediaConnectedItems {
+    float: left;
+    width: 100%;
+  }
+    .helpTxt {
+      padding: 10px;
+    }
+    .mediaConnectedItems {
+      padding: 5px 2px 2px 5px;
+    }
+    .mediaEditBox {
+      background: #eee;
+    }
+      .mediaEditBox ul {
+        padding: 10px;
+      }
+      .mediaEditBox li {
+        display: inline;
+        float: left;
+        padding-right: 10px;
+      }
+        .mediaSettingsGroup
+        {
+          position: absolute;
+          right: 10px;
+        }
 
-	.optionsOnlyOneGroup {
-		padding: 0!important;
-	}
-		.optionsOnlyOneGroup .panel {
-			border: none;
-			width: 100%;
-		}
-		.optionsOnlyOneGroup .mediaSettingsGroup {
-			right: 0;
-		}
+  .optionsOnlyOneGroup {
+    padding: 0!important;
+  }
+    .optionsOnlyOneGroup .panel {
+      border: none;
+      width: 100%;
+    }
+    .optionsOnlyOneGroup .mediaSettingsGroup {
+      right: 0;
+    }
 
 .mediaConnectedItems .ui-state-default {
-	display: inline-block;
-	overflow: hidden;
-	margin: 0 3px 3px 0;
-	background: #eee;
-	width: 140px;
-	height: 90px;
-	vertical-align: top;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0 3px 3px 0;
+  background: #eee;
+  width: 140px;
+  height: 90px;
+  vertical-align: top;
 }
 .ie9 .mediaConnectedItems .ui-state-default,
 .ie8 .mediaConnectedItems .ui-state-default,
 .ie7 .mediaConnectedItems .ui-state-default,
 .ie6 .mediaConnectedItems .ui-state-default {
-	display: inline;
+  display: inline;
 }
-	.mediaHolder {
-		float: left;
-		cursor: pointer;
-		width: 140px;
-		height: 90px;
-		display: block;
-	}
-		.mediaHolderFile .icon,
-		.mediaHolderMovie .icon,
-		.mediaHolderAudio .icon {
-			background: url(../../../../Core/Layout/images/sprites/fork_icons.png) no-repeat;
-			width: 16px;
-			height: 20px;
-			display: block;
-			text-align: center;
-			margin: 20px auto 2px;
-		}
-			.mediaHolderAudio .icon {
-				background-position: 0 -468px;
-			}
-			.mediaHolderFile .icon {
-				background-position: 0 -443px;
-			}
-			.mediaHolderMovie .icon {
-				background-position: 0 -468px;
-			}
-		.mediaHolderFile .url,
-		.mediaHolderMovie .url,
-		.mediaHolderAudio .url {
-			font-size: 0.8em;
-			color: #666;
-			text-align: center;
-			width: 100%;
-			word-wrap: break-word;
-		}
-		.mediaHolderImage img {
-			width: 140px;
-			height: 90px;
-		}
-	.mediaConnectedItems li.selected {
-		border: 1px solid #000;
-	}
-	.mediaConnectedItems li.selected .mediaHolder {
-		opacity: 0.4;
-		filter: alpha(opacity=40); /* For IE8 and earlier */
-	}
+  .mediaHolder {
+    float: left;
+    cursor: pointer;
+    width: 140px;
+    height: 90px;
+    display: block;
+  }
+    .mediaHolderFile .icon,
+    .mediaHolderMovie .icon,
+    .mediaHolderAudio .icon {
+      background: url(../../../../Core/Layout/images/sprites/fork_icons.png) no-repeat;
+      width: 16px;
+      height: 20px;
+      display: block;
+      text-align: center;
+      margin: 20px auto 2px;
+    }
+      .mediaHolderAudio .icon {
+        background-position: 0 -468px;
+      }
+      .mediaHolderFile .icon {
+        background-position: 0 -443px;
+      }
+      .mediaHolderMovie .icon {
+        background-position: 0 -468px;
+      }
+    .mediaHolderFile .url,
+    .mediaHolderMovie .url,
+    .mediaHolderAudio .url {
+      font-size: 0.8em;
+      color: #666;
+      text-align: center;
+      width: 100%;
+      word-wrap: break-word;
+    }
+    .mediaHolderImage img {
+      width: 140px;
+      height: 90px;
+    }
+  .mediaConnectedItems li.selected {
+    border: 1px solid #000;
+  }
+  .mediaConnectedItems li.selected .mediaHolder {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+  }
 
-	.editMediaItem,
-	.deleteMediaItem {
-		margin-top: 2px;
-		margin-left: -26px;
-		display: none;
-	}
-		.mediaConnectedItems .ui-state-default.hover .editMediaItem,
-		.mediaConnectedItems .ui-state-default.hover .deleteMediaItem {
-			display: block;
-		}
+  .editMediaItem,
+  .deleteMediaItem {
+    margin-top: 2px;
+    margin-left: -26px;
+    display: none;
+  }
+    .mediaConnectedItems .ui-state-default.hover .editMediaItem,
+    .mediaConnectedItems .ui-state-default.hover .deleteMediaItem {
+      display: block;
+    }
 
 p.helpTxt.mediaNoItems {
-	padding: 10px;
+  padding: 10px;
 }
 
 
@@ -165,39 +165,39 @@ p.helpTxt.mediaNoItems {
  * Media Dialog
  */
 #addMediaDialog #tabLibrary .options{
-	margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 #addMediaDialog #tabLibrary .tab-content {
-	padding: 0;
-	border: none;
+  padding: 0;
+  border: none;
 }
 #addMediaDialog #tabLibrary .tab-content .table-striped {
-	border-top: 0;
-	padding: .5em 0 0;
+  border-top: 0;
+  padding: .5em 0 0;
 }
 #addMediaDialog #tabLibrary .table-responsive {
-	max-height: 400px;
-	overflow: auto;
+  max-height: 400px;
+  overflow: auto;
 }
-	.mediaTable .check {
-		width: 30px;
-	}
-	.mediaTable .fullUrl {
-	    width: 90px;
-	}
-	.mediaTable .url {
-	    max-width: 156px;
-	}
-	.mediaTable .title {
-	    max-width: 140px;
+  .mediaTable .check {
+    width: 30px;
+  }
+  .mediaTable .fullUrl {
+      width: 90px;
+  }
+  .mediaTable .url {
+      max-width: 156px;
+  }
+  .mediaTable .title {
+      max-width: 140px;
         color: #000;
-	}
-	.mediaTable .actions {
+  }
+  .mediaTable .actions {
         max-width: 100px;
-	}
-	.mediaTable .actions a {
+  }
+  .mediaTable .actions a {
         float: right;
-	}
+  }
 
 .inputList.noPadding,
 .inputList.noPadding li {
@@ -213,7 +213,7 @@ p.helpTxt.mediaNoItems {
  * Uploaded media box
  */
 #uploadedMediaBox .mediaConnectedItems {
-	float: none;
+  float: none;
 }
 
 
@@ -221,5 +221,5 @@ p.helpTxt.mediaNoItems {
  * Fine uploader
  */
 .qq-uploader {
-	border-radius: 0;
+  border-radius: 0;
 }

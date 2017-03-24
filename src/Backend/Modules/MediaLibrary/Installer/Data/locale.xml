@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <Backend>
-  	<Core>
+    <Core>
       <item type="message" name="FolderIsAdded">
         <translation language="en"><![CDATA[The new folder is added.]]></translation>
         <translation language="nl"><![CDATA[De nieuwe map is toegevoegd.]]></translation>
@@ -220,7 +220,7 @@
         <translation language="en"><![CDATA[vimeo]]></translation>
         <translation language="nl"><![CDATA[vimeo]]></translation>
       </item>
-  	</Core>
+    </Core>
     <MediaLibrary>
       <item type="label" name="Action">
         <translation language="en"><![CDATA[action class]]></translation>
@@ -334,7 +334,7 @@
         <translation language="nl"><![CDATA[mappen]]></translation>
         <translation language="en"><![CDATA[folders]]></translation>
       </item>
-	    <item type="label" name="Image">
+      <item type="label" name="Image">
         <translation language="en"><![CDATA[image]]></translation>
         <translation language="nl"><![CDATA[afbeelding]]></translation>
       </item>
