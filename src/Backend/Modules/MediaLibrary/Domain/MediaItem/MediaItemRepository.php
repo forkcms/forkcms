@@ -27,7 +27,7 @@ final class MediaItemRepository extends EntityRepository
     public function existsOneByUrl(string $url): bool
     {
         /** @var MediaItem|null $mediaItem */
-        $mediaItem = $this->findOneByUrl((string) $url);
+        $mediaItem = $this->findOneByUrl($url);
 
         return $mediaItem !== null;
     }

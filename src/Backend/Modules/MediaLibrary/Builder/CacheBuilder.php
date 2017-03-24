@@ -158,7 +158,7 @@ class CacheBuilder
                 $counts[$folderID] = $folder->getItems()->count();
 
                 // add to sequences
-                $sequences[(string) trim($URL . '/' . $folder->getName(), '/')] = $folderID;
+                $sequences[trim($URL . '/' . $folder->getName(), '/')] = $folderID;
 
                 // get URL for parent
                 $name = (isset($names[$parentID])) ? $names[$parentID] : '';
