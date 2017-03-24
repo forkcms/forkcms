@@ -18,11 +18,7 @@ final class MediaGroupMediaItemRepository extends EntityRepository
         bool $onlyGetFirstMediaItem
     ) : array {
         $queryBuilder = $this->createQueryBuilder('i')
-            ->select([
-                'i',
-                'mi',
-                'g'
-            ])
+            ->select('i, mi, g')
             ->join('i.item', 'mi')
             ->join('i.group', 'g')
             ->where('i.group = g

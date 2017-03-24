@@ -276,13 +276,9 @@ class MediaGroup
      */
     public function getIdsForConnectedItems(): array
     {
-        $ids = [];
-
-        foreach ($this->connectedItems as $connectedItem) {
-            $ids[] = $connectedItem->getItem()->getId();
-        }
-
-        return $ids;
+        return array_map(function($connectedItem){
+            return (int) $connectedItem->getItem()->getId();
+        }, $this->connectedItems->toArray());
     }
 
     /**
