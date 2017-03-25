@@ -8,12 +8,12 @@ namespace Frontend\Core\Engine;
 class FormEndNode extends \Twig_Node
 {
     /**
-     * @param int $lineno Line number in the template source file.
+     * @param int $lineNumber Line number in the template source file.
      * @param string $tag
      */
-    public function __construct(int $lineno, string $tag)
+    public function __construct(int $lineNumber, string $tag)
     {
-        parent::__construct(array(), array(), $lineno, $tag);
+        parent::__construct(array(), array(), $lineNumber, $tag);
     }
 
     /**
