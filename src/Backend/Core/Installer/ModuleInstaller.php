@@ -496,7 +496,7 @@ class ModuleInstaller
      * @param ModuleExtraType $type The type, possible values are: homepage, widget, block.
      * @param string $label The label for the extra.
      * @param string $action The action.
-     * @param string $data |null data, will be passed in the extra.
+     * @param string $data|null data, will be passed in the extra.
      * @param bool $hidden Is this extra hidden?
      * @param int $sequence The sequence for the extra.
      *

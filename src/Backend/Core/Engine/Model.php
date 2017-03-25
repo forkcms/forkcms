@@ -730,16 +730,19 @@ class Model extends \Common\Core\Model
     private static function getNextModuleExtraSequenceForModule(string $module): int
     {
         $database = self::get('database');
-        $sequence = $database->getVar(
-            'SELECT MAX(i.sequence) + 1
-             FROM modules_extras AS i
-             WHERE i.module = ?',
-            array($module)
+        // set next sequence number for this module
+        $sequence = (int) $database->getVar(
+            'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
+            [$module]
         );
 
-        return $sequence ?? $database->getVar(
-            'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
-             FROM modules_extras AS i'
+        // this is the first extra for this module: generate new 1000-series
+        if ($sequence > 0) {
+            return $sequence;
+        }
+
+        return (int) $database->getVar(
+            'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
         );
     }
 
