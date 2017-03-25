@@ -43,7 +43,7 @@ class User
     private $email;
 
     /**
-     * @param int $userId If you provide a userId, the object will be loaded with the data for this user.
+     * @param int|null $userId If you provide a userId, the object will be loaded with the data for this user.
      */
     public function __construct(int $userId = null)
     {

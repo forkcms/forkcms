@@ -178,13 +178,13 @@ class DataGrid extends \SpoonDataGrid
      * Adds a new column with a custom action button
      *
      * @param string $name The name for the new column.
-     * @param string $label The label for the column.
-     * @param string $value The value for the column.
-     * @param string $url The URL for the link inside the column.
-     * @param string $title The title for the link inside the column.
-     * @param array $anchorAttributes The attributes for the anchor inside the column.
-     * @param string $image An URL to the image inside the column.
-     * @param int $sequence The sequence for the column.
+     * @param string|null $label The label for the column.
+     * @param string|null $value The value for the column.
+     * @param string|null $url The URL for the link inside the column.
+     * @param string|null $title The title for the link inside the column.
+     * @param array|null $anchorAttributes The attributes for the anchor inside the column.
+     * @param string|null $image An URL to the image inside the column.
+     * @param int|null $sequence The sequence for the column.
      */
     public function addColumnAction(
         string $name,

@@ -80,8 +80,8 @@ class User
     private $email;
 
     /**
-     * @param int $userId The id of the user.
-     * @param string $email The e-mail address of the user.
+     * @param int|null $userId The id of the user.
+     * @param string|null $email The e-mail address of the user.
      */
     public function __construct(int $userId = null, string $email = null)
     {
