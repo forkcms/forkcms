@@ -379,16 +379,9 @@ class Page extends FrontendBaseObject
             return $parsedBlock;
         }
 
-        // run the code of the extra
         $block['extra']->execute();
-
-        // fetch extra-specific variables
         $extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
-
-        // assign all main variables
         $block['extra']->getTemplate()->assignArray($mainVariables);
-
-        // overwrite with all specific variables
         $block['extra']->getTemplate()->assignArray($extraVariables);
 
         return [
