@@ -129,8 +129,13 @@ class Breadcrumb extends FrontendBaseObject
         // remove specific key
         unset($this->items[$key]);
 
+        if (empty($this->items)) {
+            return;
+        }
+
         // resort, to avoid problems when parsing
-        $this->items = \SpoonFilter::arraySortKeys($this->items);
+        ksort($this->items);
+        $this->items = array_values($this->items);
     }
 
     /**
