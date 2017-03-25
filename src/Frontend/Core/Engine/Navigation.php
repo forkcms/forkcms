@@ -575,7 +575,7 @@ class Navigation extends FrontendBaseObject
                     // loop extras
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ((int)$extra['id'] === $id) {
+                        if ((int) $extra['id'] === $id) {
                             // exact page was found, so return
                             return self::getURL($properties['page_id'], $language);
                         }
