@@ -263,9 +263,19 @@ class DataGrid extends \SpoonDataGrid
     {
         // add drag and drop-class
         $this->setAttributes(
-            array(
-                'class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop',
-            )
+            [
+                'class' => implode(
+                    ' ',
+                    [
+                        'table',
+                        'table-hover',
+                        'table-striped',
+                        'fork-data-grid',
+                        'jsDataGrid',
+                        'sequenceByDragAndDrop',
+                    ]
+                )
+            ]
         );
 
         // disable paging
