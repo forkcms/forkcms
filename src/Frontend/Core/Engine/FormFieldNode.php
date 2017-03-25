@@ -7,7 +7,14 @@ namespace Frontend\Core\Engine;
  */
 class FormFieldNode extends \Twig_Node
 {
+    /**
+     * @var string
+     */
     private $form;
+
+    /**
+     * @var string
+     */
     private $field;
 
     /**

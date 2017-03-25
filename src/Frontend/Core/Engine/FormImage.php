@@ -24,7 +24,7 @@ class FormImage extends \SpoonFormImage
      * @param string $class The CSS-class to be used.
      * @param string $classError The CSS-class to be used when there is an error.
      *
-     * @see      SpoonFormFile::__construct()
+     * @see SpoonFormFile::__construct()
      */
     public function __construct(
         string $name,
