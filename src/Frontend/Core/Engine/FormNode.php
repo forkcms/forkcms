@@ -48,7 +48,6 @@ class FormNode extends \Twig_Node
             ->write('echo \'<form')
             ->raw($frmAttrMethod)
             ->raw($frmAttrAction)
-            //->raw($htmlAcceptCharset)
             ->raw("', ")
             ->raw(' ' . $frmParamsHtml)
             ->raw(', \'')
