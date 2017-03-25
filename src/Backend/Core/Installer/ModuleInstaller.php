@@ -394,23 +394,14 @@ class ModuleInstaller
     protected function importSQL(string $filename)
     {
         // load the file content and execute it
-        $content = trim(file_get_contents($filename));
+        $queries = trim(file_get_contents($filename));
 
         // file actually has content
-        if (empty($content)) {
+        if (empty($queries)) {
             return;
         }
 
-        /**
-         * Some versions of PHP can't handle multiple statements at once, so split them
-         * We know this isn't the best solution, but we couldn't find a beter way.
-         */
-        $queries = preg_split("/;(\r)?\n/", $content);
-
-        // loop queries and execute them
-        foreach ($queries as $query) {
-            $this->getDB()->execute($query);
-        }
+        $this->getDB()->execute($queries);
     }
 
     /**
