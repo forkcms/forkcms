@@ -11,7 +11,7 @@ namespace Frontend\Core\Engine\Base;
 
 use Common\Core\Header\Priority;
 use Common\Exception\RedirectException;
-use Frontend\Core\Engine\Header;
+use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;

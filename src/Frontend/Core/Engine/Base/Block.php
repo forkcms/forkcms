@@ -14,10 +14,9 @@ use Common\Doctrine\Entity\Meta;
 use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
-use Frontend\Core\Engine\Header;
+use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 
