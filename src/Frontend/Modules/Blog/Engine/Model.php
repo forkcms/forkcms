@@ -928,8 +928,7 @@ class Model implements FrontendTagsInterface
 
         // notify on all comments
         if ($notifyByMailOnComment) {
-            // init var
-            $variables = null;
+            $variables = [];
 
             // comment to moderate
             if ($comment['status'] == 'moderation') {
