@@ -436,7 +436,7 @@ class DataGrid extends \SpoonDataGrid
     /**
      * Sets the column function to be executed for every row
      *
-     * @param mixed $function The function to execute.
+     * @param callable $function The function to execute.
      * @param mixed|null $arguments The arguments to pass to the function.
      * @param string[]|string $columns The column wherein the result will be printed.
      * @param bool $overwrite Should the original value be overwritten.
