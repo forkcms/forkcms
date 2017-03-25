@@ -53,7 +53,6 @@ class Breadcrumb extends FrontendBaseObject
         // reverse so everything is in place
         krsort($breadcrumbs);
 
-        // add the breadcrumbs
         array_map(
             function (array $breadcrumb) {
                 $this->addElement($breadcrumb['title'], $breadcrumb['url']);
