@@ -144,12 +144,10 @@ class Installer extends ModuleInstaller
                 ModuleExtraType::widget(),
                 'FormBuilder',
                 'Form',
-                serialize(
-                    array(
-                        'language' => $form['language'],
-                        'extra_label' => $form['name'],
-                        'id' => $formId,
-                    )
+                array(
+                    'language' => $form['language'],
+                    'extra_label' => $form['name'],
+                    'id' => $formId,
                 ),
                 'N',
                 '400' . $formId

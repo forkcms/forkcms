@@ -232,3 +232,7 @@ routing.php has been renamed to ForkController because we need the classname to 
 | \BaseModel            | \ForkCMS\App\BaseModel            |
 | \ApplicationInterface | \ForkCMS\App\ApplicationInterface |
 | \AppKernel            | \ForkCMS\App\AppKernel            |
+
+## ModuleInstaller::insertExtra now needs the data as an array instead of a string
+
+you shouldn't pass the data serialised anymore

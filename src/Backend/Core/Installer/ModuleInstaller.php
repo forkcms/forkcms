@@ -497,7 +497,7 @@ class ModuleInstaller
      * @param ModuleExtraType $type The type, possible values are: homepage, widget, block.
      * @param string $label The label for the extra.
      * @param string|null $action The action.
-     * @param string|null $data data, will be passed in the extra.
+     * @param array|null $data data, will be passed in the extra.
      * @param bool $hidden Is this extra hidden?
      * @param int|null $sequence The sequence for the extra.
      *
@@ -508,7 +508,7 @@ class ModuleInstaller
         ModuleExtraType $type,
         string $label,
         string $action = null,
-        string $data = null,
+        array $data = null,
         bool $hidden = false,
         int $sequence = null
     ): int {
@@ -532,11 +532,11 @@ class ModuleInstaller
      * @param string $module
      * @param ModuleExtraType $type
      * @param string $label
-     * @param string|null $data
+     * @param array|null $data
      *
      * @return int
      */
-    private function findModuleExtraId(string $module, ModuleExtraType $type, string $label, string $data = null): int
+    private function findModuleExtraId(string $module, ModuleExtraType $type, string $label, array $data = null): int
     {
         // build query
         $query = 'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND label = ?';
@@ -549,7 +549,7 @@ class ModuleInstaller
         }
 
         $query .= ' AND data = ?';
-        $parameters[] = $data;
+        $parameters[] = serialize($data);
 
         // get id (if it already exists)
         return (int) $this->getDB()->getVar($query, $parameters);
