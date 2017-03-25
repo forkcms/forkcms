@@ -208,7 +208,7 @@ class Detail extends FrontendBaseBlock
             $this->record['meta_keywords'],
             ($this->record['meta_keywords_overwrite'] == 'Y')
         );
-		$this->header->setMetaCustom($this->record['meta_custom']);
+        $this->header->setMetaCustom($this->record['meta_custom']);
 
         // advanced SEO-attributes
         if (isset($this->record['meta_data']['seo_index'])) {
