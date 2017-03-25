@@ -120,7 +120,7 @@ class Block extends Object
         }
 
         // add css to the header
-        $this->header->addCSS($file, $minify, $addTimestamp);
+        $this->header->addCSS($file, $minify, $addTimestamp, Priority::module());
     }
 
     /**
@@ -139,7 +139,7 @@ class Block extends Object
         }
 
         // add js to the header
-        $this->header->addJS($file, $minify, $addTimestamp);
+        $this->header->addJS($file, $minify, $addTimestamp, Priority::module());
     }
 
     /**

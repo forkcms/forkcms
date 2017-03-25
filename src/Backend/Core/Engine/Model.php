@@ -9,6 +9,7 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\ModuleExtraType;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -23,13 +24,6 @@ use Backend\Core\Language\Language as BackendLanguage;
  */
 class Model extends \Common\Core\Model
 {
-    /**
-     * Allowed module extras types
-     *
-     * @var string[]
-     */
-    private static $allowedExtras = array('homepage', 'block', 'widget');
-
     /**
      * Checks the settings and optionally returns an array with warnings
      *
@@ -705,7 +699,7 @@ class Model extends \Common\Core\Model
      * @return int The new extra id
      */
     public static function insertExtra(
-        string $type,
+        ModuleExtraType $type,
         string $module,
         string $action = null,
         string $label = null,
@@ -713,11 +707,6 @@ class Model extends \Common\Core\Model
         bool $hidden = false,
         int $sequence = null
     ): int {
-        // check if type is allowed
-        if (!in_array($type, self::$allowedExtras)) {
-            throw new Exception('Type is not allowed, choose from "' . implode(', ', self::$allowedExtras) . '".');
-        }
-
         // return id for inserted extra
         return self::get('database')->insert(
             'modules_extras',

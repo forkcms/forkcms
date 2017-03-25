@@ -88,15 +88,13 @@ class Widget extends Object
      * @param bool $minify Should the CSS be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addCSS(string $file, bool $overwritePath = false, bool $minify = true, bool $addTimestamp = null)
+    public function addCSS(string $file, bool $overwritePath = false, bool $minify = true, bool $addTimestamp = false)
     {
-        // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/' . $file;
         }
 
-        // add css to the header
-        $this->header->addCSS($file, $minify, $addTimestamp);
+        $this->header->addCSS($file, $minify, $addTimestamp, Priority::widget());
     }
 
     /**
@@ -105,16 +103,15 @@ class Widget extends Object
      * @param string $file The path to the javascript-file that should be loaded.
      * @param bool $overwritePath Whether or not to add the module to this path. Module path is added by default.
      * @param bool $minify Should the file be minified?
+     * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addJS(string $file, bool $overwritePath = false, bool $minify = true)
+    public function addJS(string $file, bool $overwritePath = false, bool $minify = true, bool $addTimestamp = false)
     {
-        // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Js/' . $file;
         }
 
-        // add js to the header
-        $this->header->addJS($file, $minify);
+        $this->header->addJS($file, $minify, $addTimestamp, Priority::widget());
     }
 
     /**
