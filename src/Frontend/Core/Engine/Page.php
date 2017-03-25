@@ -279,7 +279,10 @@ class Page extends FrontendBaseObject
             // loop blocks in position
             foreach ($blocks as $block) {
                 // It isn't empty if HTML is provided, a decent extra is provided or a widget is provided
-                if ($block['html'] !== '' || $block['extra_type'] === 'block' || $block['extra_type'] === 'widget') {
+                if ($block['extra_type'] === 'block'
+                    || $block['extra_type'] === 'widget'
+                    || trim($block['html']) !== ''
+                ) {
                     return false;
                 }
             }
