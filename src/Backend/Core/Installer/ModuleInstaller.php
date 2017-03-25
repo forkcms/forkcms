@@ -9,6 +9,7 @@ namespace Backend\Core\Installer;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -511,31 +512,19 @@ class ModuleInstaller
         bool $hidden = false,
         int $sequence = null
     ): int {
-        // no sequence set
-        if ($sequence === null) {
-            $sequence = $this->getNextSequenceForModule($module);
-        }
-
-        // get id (if it already exists)
         $extraId = $this->findModuleExtraId($module, $type, $label, $data);
-
-        // extra already exists
         if ($extraId !== 0) {
             return $extraId;
         }
 
-        // insert extra and return id
-        return (int) $this->getDB()->insert(
-            'modules_extras',
-            [
-                'module' => $module,
-                'type' => $type,
-                'label' => $label,
-                'action' => $action,
-                'data' => $data,
-                'hidden' => $hidden ? 'Y' : 'N',
-                'sequence' => $sequence,
-            ]
+        return Model::insertExtra(
+            $type,
+            $module,
+            $action,
+            $label,
+            $data,
+            $hidden,
+            $sequence ?? $this->getNextSequenceForModule($module)
         );
     }
 

@@ -715,8 +715,8 @@ class Model extends \Common\Core\Model
                 'type' => $type,
                 'label' => $label ?? $module, // if label is empty, fallback to module
                 'action' => $action ?? $module, // if action is empty, fallback to module
-                'data' => serialize((array) $data),
-                'hidden' => $hidden ? 'Y' : 'N',
+                'data' => serialize($data),
+                'hidden' => $hidden,
                 'sequence' => $sequence ?? self::getNextModuleExtraSequenceForModule($module),
             ]
         );
