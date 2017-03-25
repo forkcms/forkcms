@@ -70,11 +70,7 @@ class Language
     {
         // validate the cache
         if (empty(self::$activeLanguages)) {
-            // grab from settings
-            $activeLanguages = (array) Model::get('fork.settings')->get('Core', 'active_languages');
-
-            // store in cache
-            self::$activeLanguages = $activeLanguages;
+            self::$activeLanguages = (array) Model::get('fork.settings')->get('Core', 'active_languages');
         }
 
         // return from cache
@@ -166,7 +162,7 @@ class Language
      */
     public static function getErrors(): array
     {
-        return (array) self::$err;
+        return self::$err;
     }
 
     /**
@@ -239,7 +235,7 @@ class Language
      */
     public static function getLabels(): array
     {
-        return (array) self::$lbl;
+        return self::$lbl;
     }
 
     /**
