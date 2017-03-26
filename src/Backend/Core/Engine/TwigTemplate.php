@@ -35,12 +35,19 @@ class TwigTemplate extends BaseTwigTemplate
      */
     public function __construct(bool $addToReference = true)
     {
+        $container = Model::getContainer();
+        parent::__construct(
+            $this->buildTwigEnvironmentForTheBackend(),
+            $container->get('templating.name_parser'),
+            $container->get('templating.locator')
+        );
+
         if ($addToReference) {
-            Model::getContainer()->set('template', $this);
+            $container->set('template', $this);
         }
 
-        $this->forkSettings = Model::get('fork.settings');
-        $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
+        $this->forkSettings = $container->get('fork.settings');
+        $this->debugMode = $container->getParameter('kernel.debug');
         $this->language = BL::getWorkingLanguage();
     }
 
@@ -51,18 +58,34 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @return string The actual parsed content after executing this template.
      */
-    public function getContent($template): string
+    public function getContent(string $template): string
     {
         $this->parseConstants();
         $this->parseAuthentication();
         $this->parseAuthenticatedUser();
         $this->parseDebug();
-        $this->parseLabels();
-        $this->parseLocale();
+        $this->parseTranslations();
         $this->parseVars();
+        $this->connectSymfonyForms();
+        $this->connectSymfonyTranslator();
+        $this->connectSpoonForm();
+        TwigFilters::addFilters($this->environment, 'Backend');
+        $this->startGlobals($this->environment);
 
-        $template = str_replace(BACKEND_MODULES_PATH, '', $template);
+        if (count($this->forms) > 0) {
+            foreach ($this->forms as $form) {
+                $this->environment->addGlobal('form_' . $form->getName(), $form);
+            }
+        }
 
+        return $this->render(str_replace(BACKEND_MODULES_PATH, '', $template), $this->variables);
+    }
+
+    /**
+     * @return Twig_Environment
+     */
+    private function buildTwigEnvironmentForTheBackend(): Twig_Environment
+    {
         // path to TwigBridge library so we can locate the form theme files.
         $appVariableReflection = new ReflectionClass(AppVariable::class);
         $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
@@ -76,45 +99,35 @@ class TwigTemplate extends BaseTwigTemplate
             )
         );
 
-        $twig = new Twig_Environment(
+        return new Twig_Environment(
             $loader,
             array(
                 'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
                 'debug' => $this->debugMode,
             )
         );
+    }
 
-        // connect symphony forms
+    private function connectSymfonyForms()
+    {
         $formEngine = new TwigRendererEngine(array('Layout/Templates/FormLayout.html.twig'));
-        $formEngine->setEnvironment($twig);
-        $twig->addExtension(
+        $formEngine->setEnvironment($this->environment);
+        $this->environment->addExtension(
             new SymfonyFormExtension(
                 new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
             )
         );
+    }
 
+    private function connectSymfonyTranslator()
+    {
         $twigTranslationExtensionClass = Model::getContainer()->getParameter('twig.extension.trans.class');
-        $twig->addExtension(new $twigTranslationExtensionClass(Model::get('translator')));
+        $this->environment->addExtension(new $twigTranslationExtensionClass(Model::get('translator')));
+    }
 
-        // debug options
-        if ($this->debugMode === true) {
-            $twig->addExtension(new Twig_Extension_Debug());
-        }
-
-        if (count($this->forms) > 0) {
-            foreach ($this->forms as $form) {
-                $twig->addGlobal('form_' . $form->getName(), $form);
-            }
-        }
-
-        // should always be included, makes it possible to parse SpoonForm in twig
-        new FormExtension($twig);
-
-        // start the filters / globals
-        TwigFilters::addFilters($twig, 'Backend');
-        $this->startGlobals($twig);
-
-        return $twig->render($template, $this->variables);
+    private function connectSpoonForm()
+    {
+        new FormExtension($this->environment);
     }
 
     /**
@@ -253,124 +266,69 @@ class TwigTemplate extends BaseTwigTemplate
     private function parseDebug()
     {
         $this->assign('debug', Model::getContainer()->getParameter('kernel.debug'));
+
+        if ($this->debugMode === true) {
+            $this->environment->addExtension(new Twig_Extension_Debug());
+        }
     }
 
     /**
-     * Assign the labels
+     * @param array $labels
+     * @param string $module
+     * @param string $key
      */
-    private function parseLabels()
+    private function parseLabels(array $labels, string $module, string $key)
     {
-        // grab the current module
-        $currentModule = BL::getCurrentModule();
+        $realLabels = $this->prefixArrayKeys('Core', $labels['Core']);
 
-        $errors = BL::getErrors();
-        $labels = BL::getLabels();
-        $messages = BL::getMessages();
-
-        // set the begin state
-        $realErrors = $errors['Core'];
-        $realLabels = $labels['Core'];
-        $realMessages = $messages['Core'];
-
-        // loop all errors, label, messages and add them again, but prefixed with Core. So we can decide in the
-        // template to use the Core-value instead of the one set by the module
-        foreach ($errors['Core'] as $key => $value) {
-            $realErrors['Core' . $key] = $value;
-        }
-        foreach ($labels['Core'] as $key => $value) {
-            $realLabels['Core' . $key] = $value;
-        }
-        foreach ($messages['Core'] as $key => $value) {
-            $realMessages['Core' . $key] = $value;
+        if (array_key_exists($module, $labels)) {
+            $realLabels = array_merge($realLabels, $labels[$module]);
         }
 
-        // are there errors for the current module?
-        if (isset($errors[$currentModule])) {
-            // loop the module-specific errors and reset them in the array with values we will use
-            foreach ($errors[$currentModule] as $key => $value) {
-                $realErrors[$key] = $value;
-            }
-        }
-
-        // are there labels for the current module?
-        if (isset($labels[$currentModule])) {
-            // loop the module-specific labels and reset them in the array with values we will use
-            foreach ($labels[$currentModule] as $key => $value) {
-                $realLabels[$key] = $value;
-            }
-        }
-
-        // are there messages for the current module?
-        if (isset($messages[$currentModule])) {
-            // loop the module-specific errors and reset them in the array with values we will use
-            foreach ($messages[$currentModule] as $key => $value) {
-                $realMessages[$key] = $value;
-            }
-        }
-
-        // execute addslashes on the values for the locale, will be used in JS
         if ($this->addSlashes) {
-            foreach ($realErrors as &$value) {
-                $value = addslashes($value);
-            }
-            unset($value);
-            foreach ($realLabels as &$value) {
-                $value = addslashes($value);
-            }
-            unset($value);
-            foreach ($realMessages as &$value) {
-                $value = addslashes($value);
-            }
-            unset($value);
+            $realLabels = array_map('addslashes', $realLabels);
         }
 
-        // sort the arrays (just to make it look beautiful)
-        ksort($realErrors);
+        // just so the dump is nicely sorted
         ksort($realLabels);
-        ksort($realMessages);
 
-        // assign errors
-        $this->assignArray($realErrors, 'err');
-
-        // assign labels
-        $this->assignArray($realLabels, 'lbl');
-
-        // assign messages
-        $this->assignArray($realMessages, 'msg');
+        $this->assignArray($realLabels, $key);
     }
 
     /**
-     * Parse the locale (things like months, days, ...)
+     * @param string $prefix
+     * @param array $array
+     *
+     * @return array
      */
-    private function parseLocale()
+    private function prefixArrayKeys(string $prefix, array $array): array
     {
-        // init vars
-        $localeToAssign = array();
+        return array_combine(
+            array_map(
+                function ($key) use ($prefix) {
+                    return $prefix . \SpoonFilter::ucfirst($key);
+                },
+                array_keys($array)
+            ),
+            $array
+        );
+    }
 
-        // get months
-        $monthsLong = \SpoonLocale::getMonths(BL::getInterfaceLanguage(), false);
-        $monthsShort = \SpoonLocale::getMonths(BL::getInterfaceLanguage(), true);
+    /**
+     * Make the translations available in the template
+     */
+    private function parseTranslations()
+    {
+        $currentModule = BL::getCurrentModule();
+        $this->parseLabels(BL::getErrors(), $currentModule, 'err');
+        $this->parseLabels(BL::getLabels(), $currentModule, 'lbl');
+        $this->parseLabels(BL::getMessages(), $currentModule, 'msg');
 
-        // get days
-        $daysLong = \SpoonLocale::getWeekDays(BL::getInterfaceLanguage(), false, 'sunday');
-        $daysShort = \SpoonLocale::getWeekDays(BL::getInterfaceLanguage(), true, 'sunday');
-
-        // build labels
-        foreach ($monthsLong as $key => $value) {
-            $localeToAssign['locMonthLong' . \SpoonFilter::ucfirst($key)] = $value;
-        }
-        foreach ($monthsShort as $key => $value) {
-            $localeToAssign['locMonthShort' . \SpoonFilter::ucfirst($key)] = $value;
-        }
-        foreach ($daysLong as $key => $value) {
-            $localeToAssign['locDayLong' . \SpoonFilter::ucfirst($key)] = $value;
-        }
-        foreach ($daysShort as $key => $value) {
-            $localeToAssign['locDayShort' . \SpoonFilter::ucfirst($key)] = $value;
-        }
-
-        // assign
-        $this->assignArray($localeToAssign);
+        $interfaceLanguage = BL::getInterfaceLanguage();
+        $this->assignArray($this->prefixArrayKeys('locMonthLong', \SpoonLocale::getMonths($interfaceLanguage, false)));
+        $this->assignArray($this->prefixArrayKeys('locMonthShort', \SpoonLocale::getMonths($interfaceLanguage, true)));
+        $this->assignArray($this->prefixArrayKeys('locDayLong', \SpoonLocale::getWeekDays($interfaceLanguage, false)));
+        $this->assignArray($this->prefixArrayKeys('locDayShort', \SpoonLocale::getWeekDays($interfaceLanguage, true)));
     }
 
     /**
@@ -378,39 +336,10 @@ class TwigTemplate extends BaseTwigTemplate
      */
     private function parseVars()
     {
-        // assign a placeholder var
         $this->assign('var', '');
-
-        // assign current timestamp
         $this->assign('timestamp', time());
-
-        // check on url object
-        if (Model::getContainer()->has('url')) {
-            $url = Model::get('url');
-
-            if ($url instanceof Url) {
-                $this->assign('bodyID', \SpoonFilter::toCamelCase($url->getModule(), '_', true));
-
-                // build classes
-                $bodyClass = \SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true);
-
-                // special occasions
-                if ($url->getAction() === 'add' || $url->getAction() === 'edit'
-                ) {
-                    $bodyClass = $url->getModule() . 'AddEdit';
-                }
-
-                // assign
-                $this->assign('bodyClass', $bodyClass);
-            }
-        }
-
-        if (Model::has('navigation')) {
-            $navigation = Model::get('navigation');
-            if ($navigation instanceof Navigation) {
-                $navigation->parse($this);
-            }
-        }
+        $this->addBodyClassAndId();
+        $this->parseNavigation();
 
         foreach ($this->forms as $form) {
             if ($form->isSubmitted() && !$form->isCorrect()) {
@@ -419,9 +348,38 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        $this->assign(
-            'cookies',
-            Model::get('request')->cookies->all()
-        );
+        $this->assign('cookies', Model::get('request')->cookies->all());
+    }
+
+    private function parseNavigation()
+    {
+        if (!Model::has('navigation')) {
+            return;
+        }
+
+        $navigation = Model::get('navigation');
+        if ($navigation instanceof Navigation) {
+            $navigation->parse($this);
+        }
+    }
+
+    private function addBodyClassAndId()
+    {
+        if (!Model::getContainer()->has('url')) {
+            return;
+        }
+
+        $url = Model::get('url');
+
+        if (!$url instanceof Url) {
+            return;
+        }
+
+        $this->assign('bodyID', \SpoonFilter::toCamelCase($url->getModule(), '_', true));
+        $bodyClass = \SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true);
+        if (in_array(mb_strtolower($url->getAction()), ['add', 'edit'], true)) {
+            $bodyClass = $url->getModule() . 'AddEdit';
+        }
+        $this->assign('bodyClass', $bodyClass);
     }
 }

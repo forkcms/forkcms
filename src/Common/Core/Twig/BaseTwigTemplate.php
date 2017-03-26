@@ -2,6 +2,7 @@
 
 namespace Common\Core\Twig;
 
+use Common\Core\Form;
 use Common\ModulesSettings;
 use SpoonForm;
 use Symfony\Bundle\TwigBundle\TwigEngine;
@@ -42,7 +43,7 @@ abstract class BaseTwigTemplate extends TwigEngine
     /**
      * List of form objects.
      *
-     * @var array
+     * @var Form[]
      */
     protected $forms = array();
 
