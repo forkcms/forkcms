@@ -248,3 +248,7 @@ use symfony console commands instead
 ## ModuleInstaller::insertExtra now needs the data as an array instead of a string
 
 you shouldn't pass the data serialised anymore and boolean values should be passed as booleans and not 'Y' or 'N'
+
+## new dependency injection parameters
+
+- `fork.is_installed` used to check if fork is installed 

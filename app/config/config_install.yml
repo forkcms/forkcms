@@ -34,6 +34,7 @@ monolog:
 
 parameters:
     doctrine.dbal.connection_factory.class: ForkCMS\Bundle\InstallerBundle\Service\InstallerConnectionFactory
+    fork.is_installed: false
 
 services:
     # dummy service during the installation

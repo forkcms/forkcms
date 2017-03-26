@@ -4,6 +4,7 @@ imports:
     - { resource: doctrine.yml }
 
 parameters:
+    fork.is_installed: true
     translator.identity.class: Common\Language
 
 framework:
