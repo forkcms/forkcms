@@ -66,7 +66,7 @@ class Index extends BackendBaseActionIndex
             $extension = pathinfo($chunks[0], PATHINFO_EXTENSION);
 
             // if the file has an extension it is a non-existing-file
-            if ($extension != '' && $extension != $chunks[0]) {
+            if ($extension !== '' && $extension !== $chunks[0]) {
                 // give a nice error, so we can detect which file is missing
                 throw new ExitException(
                     'File not found',
@@ -83,7 +83,7 @@ class Index extends BackendBaseActionIndex
     /**
      * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
         return new Response(
             $this->content,

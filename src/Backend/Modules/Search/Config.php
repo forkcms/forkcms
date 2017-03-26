@@ -22,11 +22,4 @@ class Config extends BackendBaseConfig
      * @var string
      */
     protected $defaultAction = 'Statistics';
-
-    /**
-     * The disabled actions
-     *
-     * @var array
-     */
-    protected $disabledActions = array();
 }
