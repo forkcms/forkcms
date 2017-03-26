@@ -103,10 +103,10 @@ class Header extends Base\Object
     private function buildPathForModule(string $fileName, string $module, string $subDirectory): string
     {
         if ($module === 'Core') {
-            return '/src/Backend/Core/Layout/' . $subDirectory . '/' . $fileName;
+            return '/src/Backend/Core/' . $subDirectory . '/' . $fileName;
         }
 
-        return '/src/Backend/Modules/' . $module . '/Layout/' . $subDirectory . '/' . $fileName;
+        return '/src/Backend/Modules/' . $module . '/' . $subDirectory . '/' . $fileName;
     }
 
     /**
@@ -133,9 +133,10 @@ class Header extends Base\Object
         bool $minify = true,
         bool $addTimestamp = false
     ) {
+        $module = $module ?? $this->url->getModule();
         $this->cssFiles->add(
             new Asset(
-                $overwritePath ? $file : $this->buildPathForModule($file, $module ?? $this->url->getModule(), 'Css'),
+                $overwritePath ? $file : $this->buildPathForModule($file, $module, 'Layout/Css'),
                 $addTimestamp,
                 $overwritePath ? Priority::standard() : Priority::module()
             ),
