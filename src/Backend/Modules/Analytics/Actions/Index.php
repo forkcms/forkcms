@@ -80,9 +80,6 @@ final class Index extends ActionIndex
         $dataGrid = new DataGridArray(
             $analytics->getMostVisitedPagesData($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
         );
-        $this->tpl->assign(
-            'dataGridMostViewedPages',
-            (string) $dataGrid->getContent()
-        );
+        $this->tpl->assign('dataGridMostViewedPages', $dataGrid->getContent());
     }
 }
