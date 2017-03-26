@@ -26,11 +26,13 @@ use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 class Index extends BackendBaseActionIndex
 {
     /**
-     * Form instances
-     *
      * @var BackendForm
      */
     private $frm;
+
+    /**
+     * @var BackendForm
+     */
     private $frmForgotPassword;
 
     /**
@@ -257,7 +259,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /*
+    /**
      * Find out which module and action are allowed
      * and send the user on his way.
      */
@@ -282,11 +284,11 @@ class Index extends BackendBaseActionIndex
     /**
      * Run through the action of a certain module and find us an action(name) this user is allowed to access.
      *
-     * @param $module
+     * @param string $module
      *
      * @return bool|string
      */
-    private function getAllowedAction($module)
+    private function getAllowedAction(string $module)
     {
         if (BackendAuthentication::isAllowedAction('Index', $module)) {
             return 'Index';

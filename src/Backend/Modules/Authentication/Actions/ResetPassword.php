@@ -25,21 +25,21 @@ class ResetPassword extends BackendBaseActionAdd
     /**
      * User email
      *
-     * @var $email
+     * @var string $email
      */
     private $email;
 
     /**
      * Reset password key
      *
-     * @var $key
+     * @var string $key
      */
     private $key;
 
     /**
      * User record
      *
-     * @return array
+     * @var array
      */
     private $user;
 
@@ -66,7 +66,7 @@ class ResetPassword extends BackendBaseActionAdd
      *
      * @return bool
      */
-    private function isUserAllowed()
+    private function isUserAllowed(): bool
     {
         // catch the key and e-mail address from GET
         $this->email = urldecode(\SpoonFilter::getGetValue('email', null, ''));
@@ -148,7 +148,9 @@ class ResetPassword extends BackendBaseActionAdd
                 }
 
                 // redirect to the login form
-                $this->redirect(BackendModel::createURLForAction('Index', 'Dashboard', null, array('password_reset' => 'success')));
+                $this->redirect(
+                    BackendModel::createURLForAction('Index', 'Dashboard', null, array('password_reset' => 'success'))
+                );
             }
         }
     }
