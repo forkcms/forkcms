@@ -20,8 +20,11 @@ final class SettingsType
      * @param ModulesSettings $settings
      * @param Google_Service_Analytics $googleServiceAnalytics
      */
-    public function __construct($name, ModulesSettings $settings, Google_Service_Analytics $googleServiceAnalytics)
-    {
+    public function __construct(
+        string $name,
+        ModulesSettings $settings,
+        Google_Service_Analytics $googleServiceAnalytics
+    ) {
         // we don't even have a auth config file yet, let the user upload it
         if ($settings->get('Analytics', 'certificate') === null) {
             $this->form = new SettingsStepAuthConfigFileType($name, $settings);
@@ -64,7 +67,7 @@ final class SettingsType
     /**
      * @return bool
      */
-    public function handle()
+    public function handle(): bool
     {
         if ($this->form instanceof Form) {
             return false;

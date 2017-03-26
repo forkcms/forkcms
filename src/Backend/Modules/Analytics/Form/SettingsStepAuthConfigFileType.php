@@ -22,7 +22,7 @@ final class SettingsStepAuthConfigFileType implements SettingsStepType
      * @param string $name
      * @param ModulesSettings $settings
      */
-    public function __construct($name, ModulesSettings $settings)
+    public function __construct(string $name, ModulesSettings $settings)
     {
         $this->form = new Form($name);
         $this->settings = $settings;
@@ -41,7 +41,7 @@ final class SettingsStepAuthConfigFileType implements SettingsStepType
     /**
      * @return bool
      */
-    public function handle()
+    public function handle(): bool
     {
         $this->form->cleanupFields();
 
@@ -77,16 +77,13 @@ final class SettingsStepAuthConfigFileType implements SettingsStepType
     /**
      * @return bool
      */
-    private function isValid()
+    private function isValid(): bool
     {
         $fileField = $this->form->getField('certificate');
         $emailField = $this->form->getField('email');
 
         if ($fileField->isFilled(Language::err('FieldIsRequired'))) {
-            $fileField->isAllowedExtension(
-                ['p12'],
-                Language::err('P12Only')
-            );
+            $fileField->isAllowedExtension(['p12'], Language::err('P12Only'));
         }
         $emailField->isFilled(Language::err('FieldIsRequired'));
         $emailField->isEmail(Language::err('EmailIsInvalid'));

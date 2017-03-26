@@ -31,8 +31,11 @@ final class SettingsStepAccountType implements SettingsStepType
      * @param ModulesSettings $settings
      * @param Google_Service_Analytics $googleServiceAnalytics
      */
-    public function __construct($name, ModulesSettings $settings, Google_Service_Analytics $googleServiceAnalytics)
-    {
+    public function __construct(
+        string $name,
+        ModulesSettings $settings,
+        Google_Service_Analytics $googleServiceAnalytics
+    ) {
         $this->form = new Form($name);
         $this->settings = $settings;
         $this->googleServiceAnalytics = $googleServiceAnalytics;
@@ -56,7 +59,7 @@ final class SettingsStepAccountType implements SettingsStepType
     /**
      * @return bool
      */
-    public function handle()
+    public function handle(): bool
     {
         $this->form->cleanupFields();
 
@@ -98,7 +101,7 @@ final class SettingsStepAccountType implements SettingsStepType
     /**
      * @return bool
      */
-    private function isValid()
+    private function isValid(): bool
     {
         $this->form->getField('account')->isFilled(Language::err('FieldIsRequired'));
 

@@ -17,5 +17,5 @@ interface SettingsStepType
     /**
      * @return bool
      */
-    public function handle();
+    public function handle(): bool;
 }

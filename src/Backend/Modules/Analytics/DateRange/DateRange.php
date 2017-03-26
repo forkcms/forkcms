@@ -33,7 +33,7 @@ final class DateRange
      * @param int $startDate
      * @param int $endDate
      */
-    public function update($startDate, $endDate)
+    public function update(int $startDate, int $endDate)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
@@ -42,7 +42,7 @@ final class DateRange
     /**
      * @return int
      */
-    public function getStartDate()
+    public function getStartDate(): int
     {
         return $this->startDate;
     }
@@ -50,7 +50,7 @@ final class DateRange
     /**
      * @return int
      */
-    public function getEndDate()
+    public function getEndDate(): int
     {
         return $this->endDate;
     }

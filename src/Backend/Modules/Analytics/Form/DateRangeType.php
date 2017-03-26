@@ -23,7 +23,7 @@ final class DateRangeType
      * @param string $name
      * @param DateRange $dateRange
      */
-    public function __construct($name, DateRange $dateRange)
+    public function __construct(string $name, DateRange $dateRange)
     {
         $this->form = new Form($name);
         $this->dateRange = $dateRange;
@@ -44,7 +44,7 @@ final class DateRangeType
     /**
      * @return bool
      */
-    public function handle()
+    public function handle(): bool
     {
         $this->form->cleanupFields();
 
@@ -86,7 +86,7 @@ final class DateRangeType
     /**
      * @return bool
      */
-    private function isValid()
+    private function isValid(): bool
     {
         $fields = $this->form->getFields();
 
@@ -126,7 +126,7 @@ final class DateRangeType
     /**
      * @return DateRange
      */
-    public function getDateRange()
+    public function getDateRange(): DateRange
     {
         return $this->dateRange;
     }
