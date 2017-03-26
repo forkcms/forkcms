@@ -67,33 +67,36 @@ class ImportWordpress extends BackendBaseActionEdit
     private function validateForm()
     {
         // Is the form submitted?
-        if ($this->frm->isSubmitted()) {
-            // Cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
-
-            // XML provided?
-            if ($this->frm->getField('wordpress')->isFilled()) {
-                $this->frm->getField('wordpress')->isAllowedExtension(array('xml'), BL::err('XMLFilesOnly'));
-            } else {
-                // No file
-                $this->frm->getField('wordpress')->addError(BL::err('FieldIsRequired'));
-            }
-
-            // No errors?
-            if ($this->frm->isCorrect()) {
-                // Move the file
-                $this->frm->getField('wordpress')->moveFile(FRONTEND_FILES_PATH . '/wordpress.xml');
-
-                // Process the XML
-                $this->processXML();
-
-                // Remove the file
-                $this->filesystem->remove(FRONTEND_FILES_PATH . '/wordpress.xml');
-
-                // Everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
-            }
+        if (!$this->frm->isSubmitted()) {
+            return;
         }
+
+        // Cleanup the submitted fields, ignore fields that were added by hackers
+        $this->frm->cleanupFields();
+
+        // XML provided?
+        if ($this->frm->getField('wordpress')->isFilled()) {
+            $this->frm->getField('wordpress')->isAllowedExtension(array('xml'), BL::err('XMLFilesOnly'));
+        } else {
+            // No file
+            $this->frm->getField('wordpress')->addError(BL::err('FieldIsRequired'));
+        }
+
+        if (!$this->frm->isCorrect()) {
+            return;
+        }
+
+        // Move the file
+        $this->frm->getField('wordpress')->moveFile(FRONTEND_FILES_PATH . '/wordpress.xml');
+
+        // Process the XML
+        $this->processXML();
+
+        // Remove the file
+        $this->filesystem->remove(FRONTEND_FILES_PATH . '/wordpress.xml');
+
+        // Everything is saved, so redirect to the overview
+        $this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
     }
 
     /**
@@ -107,12 +110,12 @@ class ImportWordpress extends BackendBaseActionEdit
         // Loop through the document
         while ($reader->read()) {
             // Start tag for item?
-            if ($reader->name != 'item' && $reader->name != 'wp:author') {
+            if ($reader->name !== 'item' && $reader->name !== 'wp:author') {
                 continue;
             }
 
             // End tag?
-            if ($reader->nodeType == \XMLReader::END_ELEMENT) {
+            if ($reader->nodeType === \XMLReader::END_ELEMENT) {
                 continue;
             }
 
@@ -129,7 +132,7 @@ class ImportWordpress extends BackendBaseActionEdit
             }
 
             // Is it really an item?
-            if (mb_substr($xmlString, 0, 5) == '<item') {
+            if (mb_substr($xmlString, 0, 5) === '<item') {
                 // What type of content are we dealing with?
                 switch ($xml->children('wp', true)->post_type) {
                     case 'post':
@@ -146,7 +149,7 @@ class ImportWordpress extends BackendBaseActionEdit
                         // Don't do anything
                         break;
                 }
-            } elseif (mb_substr($xmlString, 0, 10) == '<wp:author') {
+            } elseif (mb_substr($xmlString, 0, 10) === '<wp:author') {
                 // Process the authors
                 $this->authors[(string) $xml->children('wp', true)->author_login] = array(
                     'id' => (string) $xml->children('wp', true)->author_id,
@@ -175,7 +178,7 @@ class ImportWordpress extends BackendBaseActionEdit
      *
      * @return bool
      */
-    private function processPost($xml)
+    private function processPost(\SimpleXMLElement $xml): bool
     {
         // Are we really working with a post?
         if ($xml->children('wp', true)->post_type != 'post') {
@@ -183,7 +186,7 @@ class ImportWordpress extends BackendBaseActionEdit
         }
 
         // This is a deleted post, don't import
-        if ($xml->children('wp', true)->status == 'trash') {
+        if ($xml->children('wp', true)->status === 'trash') {
             return false;
         }
 
@@ -215,9 +218,9 @@ class ImportWordpress extends BackendBaseActionEdit
         $item['allow_comments'] = $commentStatusses[(string) $xml->children('wp', true)->comment_status];
 
         // Some status corrections
-        if ($item['status'] == 'draft') {
+        if ($item['status'] === 'draft') {
             $item['hidden'] = 'Y';
-        } elseif ($item['status'] == 'private') {
+        } elseif ($item['status'] === 'private') {
             $item['status'] = 'publish';
             $item['hidden'] = 'Y';
         }
@@ -275,10 +278,10 @@ class ImportWordpress extends BackendBaseActionEdit
      *
      * @return bool
      */
-    private function processAttachment($xml)
+    private function processAttachment(\SimpleXMLElement $xml): bool
     {
         // Are we really working with a post?
-        if ($xml->children('wp', true)->post_type != 'attachment') {
+        if ($xml->children('wp', true)->post_type !== 'attachment') {
             return false;
         }
 
@@ -325,7 +328,7 @@ class ImportWordpress extends BackendBaseActionEdit
      *
      * @return int
      */
-    private function handleUser($username = '')
+    private function handleUser(string $username = ''): int
     {
         // Does someone with this username exist?
         /* @var \SpoonDatabase $db */
@@ -355,7 +358,7 @@ class ImportWordpress extends BackendBaseActionEdit
      *
      * @return string
      */
-    private function handleUrls($text, $filter = '')
+    private function handleUrls(string $text, string $filter = ''): string
     {
         // Check for images and download them, replace urls
         preg_match_all('/<img.*src="(.*)".*\/>/Ui', $text, $matchesImages);
@@ -411,7 +414,7 @@ class ImportWordpress extends BackendBaseActionEdit
      *
      * @return int
      */
-    private function handleCategory($category = '')
+    private function handleCategory(string $category = ''): int
     {
         // Does a category with this name exist?
         /* @var \SpoonDatabase $db */
@@ -427,7 +430,7 @@ class ImportWordpress extends BackendBaseActionEdit
         }
 
         // Return default if we got an empty string
-        if (trim($category) == '') {
+        if (trim($category) === '') {
             return 2;
         }
 

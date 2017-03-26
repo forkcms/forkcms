@@ -28,17 +28,17 @@ class Installer extends ModuleInstaller
      * Add a category for a language
      *
      * @param string $language The language to use.
-     * @param string $title    The title of the category.
-     * @param string $url      The URL for the category.
+     * @param string $title The title of the category.
+     * @param string $url The URL for the category.
      *
      * @return int
      */
-    private function addCategory($language, $title, $url)
+    private function addCategory(string $language, string $title, string $url): int
     {
         $item = array();
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['language'] = (string) $language;
-        $item['title'] = (string) $title;
+        $item['language'] = $language;
+        $item['title'] = $title;
 
         return (int) $this->getDB()->insert('blog_categories', $item);
     }
@@ -50,11 +50,11 @@ class Installer extends ModuleInstaller
      *
      * @return int
      */
-    private function getCategory($language)
+    private function getCategory(string $language): int
     {
         return (int) $this->getDB()->getVar(
             'SELECT id FROM blog_categories WHERE language = ?',
-            array((string) $language)
+            array($language)
         );
     }
 
@@ -81,35 +81,35 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
-        $this->setSetting('Blog', 'allow_comments', true);
-        $this->setSetting('Blog', 'requires_akismet', true);
-        $this->setSetting('Blog', 'spamfilter', false);
-        $this->setSetting('Blog', 'moderation', true);
-        $this->setSetting('Blog', 'overview_num_items', 10);
-        $this->setSetting('Blog', 'recent_articles_full_num_items', 3);
-        $this->setSetting('Blog', 'recent_articles_list_num_items', 5);
-        $this->setSetting('Blog', 'max_num_revisions', 20);
+        $this->setSetting($this->getModule(), 'allow_comments', true);
+        $this->setSetting($this->getModule(), 'requires_akismet', true);
+        $this->setSetting($this->getModule(), 'spamfilter', false);
+        $this->setSetting($this->getModule(), 'moderation', true);
+        $this->setSetting($this->getModule(), 'overview_num_items', 10);
+        $this->setSetting($this->getModule(), 'recent_articles_full_num_items', 3);
+        $this->setSetting($this->getModule(), 'recent_articles_list_num_items', 5);
+        $this->setSetting($this->getModule(), 'max_num_revisions', 20);
 
-        $this->makeSearchable('Blog');
+        $this->makeSearchable($this->getModule());
 
         // module rights
-        $this->setModuleRights(1, 'Blog');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'Blog', 'AddCategory');
-        $this->setActionRights(1, 'Blog', 'Add');
-        $this->setActionRights(1, 'Blog', 'Categories');
-        $this->setActionRights(1, 'Blog', 'Comments');
-        $this->setActionRights(1, 'Blog', 'DeleteCategory');
-        $this->setActionRights(1, 'Blog', 'DeleteSpam');
-        $this->setActionRights(1, 'Blog', 'Delete');
-        $this->setActionRights(1, 'Blog', 'EditCategory');
-        $this->setActionRights(1, 'Blog', 'EditComment');
-        $this->setActionRights(1, 'Blog', 'Edit');
-        $this->setActionRights(1, 'Blog', 'ImportWordpress');
-        $this->setActionRights(1, 'Blog', 'Index');
-        $this->setActionRights(1, 'Blog', 'MassCommentAction');
-        $this->setActionRights(1, 'Blog', 'Settings');
+        $this->setActionRights(1, $this->getModule(), 'AddCategory');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Categories');
+        $this->setActionRights(1, $this->getModule(), 'Comments');
+        $this->setActionRights(1, $this->getModule(), 'DeleteCategory');
+        $this->setActionRights(1, $this->getModule(), 'DeleteSpam');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'EditCategory');
+        $this->setActionRights(1, $this->getModule(), 'EditComment');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'ImportWordpress');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'MassCommentAction');
+        $this->setActionRights(1, $this->getModule(), 'Settings');
 
         // insert dashboard widget
         $this->insertWidget();
@@ -137,12 +137,44 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Blog', 'blog/settings');
 
         // add extra's
-        $blogId = $this->insertExtra('Blog', ModuleExtraType::block(), 'Blog', null, null, 'N', 1000);
-        $this->insertExtra('Blog', ModuleExtraType::widget(), 'RecentComments', 'RecentComments', null, 'N', 1001);
-        $this->insertExtra('Blog', ModuleExtraType::widget(), 'Categories', 'Categories', null, 'N', 1002);
-        $this->insertExtra('Blog', ModuleExtraType::widget(), 'Archive', 'Archive', null, 'N', 1003);
-        $this->insertExtra('Blog', ModuleExtraType::widget(), 'RecentArticlesFull', 'RecentArticlesFull', null, 'N', 1004);
-        $this->insertExtra('Blog', ModuleExtraType::widget(), 'RecentArticlesList', 'RecentArticlesList', null, 'N', 1005);
+        $blogId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Blog', null, null, false, 1000);
+        $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::widget(),
+            'RecentComments',
+            'RecentComments',
+            null,
+            false,
+            1001
+        );
+        $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::widget(),
+            'Categories',
+            'Categories',
+            null,
+            false,
+            1002
+        );
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Archive', 'Archive', null, false, 1003);
+        $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::widget(),
+            'RecentArticlesFull',
+            'RecentArticlesFull',
+            null,
+            false,
+            1004
+        );
+        $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::widget(),
+            'RecentArticlesList',
+            'RecentArticlesList',
+            null,
+            false,
+            1005
+        );
 
         // get search extra id
         $searchId = (int) $this->getDB()->getVar(
@@ -157,15 +189,15 @@ class Installer extends ModuleInstaller
             $this->defaultCategoryId = $this->getCategory($language);
 
             // no category exists
-            if ($this->defaultCategoryId == 0) {
+            if ($this->defaultCategoryId === 0) {
                 // add category
                 $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
             }
 
             // RSS settings
-            $this->setSetting('Blog', 'rss_meta_' . $language, true);
-            $this->setSetting('Blog', 'rss_title_' . $language, 'RSS');
-            $this->setSetting('Blog', 'rss_description_' . $language, '');
+            $this->setSetting($this->getModule(), 'rss_meta_' . $language, true);
+            $this->setSetting($this->getModule(), 'rss_title_' . $language, 'RSS');
+            $this->setSetting($this->getModule(), 'rss_description_' . $language, '');
 
             // check if a page for blog already exists in this language
             if (!(bool) $this->getDB()->getVar(
@@ -196,7 +228,7 @@ class Installer extends ModuleInstaller
      *
      * @param string $language The language to use.
      */
-    private function installExampleData($language)
+    private function installExampleData(string $language)
     {
         // get db instance
         $db = $this->getDB();
@@ -243,7 +275,7 @@ class Installer extends ModuleInstaller
 
             // add Search index blogpost 1
             $this->addSearchIndex(
-                'Blog',
+                $this->getModule(),
                 1,
                 array(
                     'title' => 'Nunc sediam est',
@@ -282,7 +314,7 @@ class Installer extends ModuleInstaller
 
             // add Search index blogpost 2
             $this->addSearchIndex(
-                'Blog',
+                $this->getModule(),
                 2,
                 array(
                     'title' => 'Lorem ipsum',

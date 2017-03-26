@@ -29,7 +29,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function get($url)
+    public static function get(string $url): array
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
@@ -76,7 +76,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getAll($limit = 10, $offset = 0)
+    public static function getAll(int $limit = 10, int $offset = 0): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
@@ -160,7 +160,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getAllCategories()
+    public static function getAllCategories(): array
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data
@@ -191,7 +191,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getAllComments($limit = 10, $offset = 0)
+    public static function getAllComments(int $limit = 10, int $offset = 0): array
     {
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
@@ -221,7 +221,7 @@ class Model implements FrontendTagsInterface
      *
      * @return int
      */
-    public static function getAllCount()
+    public static function getAllCount(): int
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT COUNT(i.id) AS count
@@ -240,7 +240,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getAllForCategory($categoryURL, $limit = 10, $offset = 0)
+    public static function getAllForCategory(string $categoryURL, int $limit = 10, int $offset = 0): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
@@ -326,7 +326,7 @@ class Model implements FrontendTagsInterface
      *
      * @return int
      */
-    public static function getAllForCategoryCount($url)
+    public static function getAllForCategoryCount(string $url): int
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT COUNT(i.id) AS count
@@ -348,7 +348,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getAllForDateRange($start, $end, $limit = 10, $offset = 0)
+    public static function getAllForDateRange(int $start, int $end, int $limit = 10, int $offset = 0): array
     {
         $start = (int) $start;
         $end = (int) $end;
@@ -439,7 +439,7 @@ class Model implements FrontendTagsInterface
      *
      * @return int
      */
-    public static function getAllForDateRangeCount($start, $end)
+    public static function getAllForDateRangeCount(int $start, int $end): int
     {
         $start = (int) $start;
         $end = (int) $end;
@@ -464,7 +464,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getArchiveNumbers()
+    public static function getArchiveNumbers(): array
     {
         // grab stats
         $numbers = FrontendModel::getContainer()->get('database')->getPairs(
@@ -554,7 +554,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getComments($id)
+    public static function getComments(int $id): array
     {
         // get the comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -584,7 +584,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getForTags(array $ids)
+    public static function getForTags(array $ids): array
     {
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -628,7 +628,7 @@ class Model implements FrontendTagsInterface
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $url)
+    public static function getIdForTags(FrontendURL $url): int
     {
         // select the proper part of the full URL
         $itemURL = (string) $url->getParameter(1);
@@ -644,7 +644,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getNavigation($id)
+    public static function getNavigation(int $id): array
     {
         // redefine
         $id = (int) $id;
@@ -712,7 +712,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getRecentComments($limit = 5)
+    public static function getRecentComments(int $limit = 5): array
     {
         $limit = (int) $limit;
 
@@ -760,7 +760,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getRelated($id, $limit = 5)
+    public static function getRelated(int $id, int $limit = 5): array
     {
         $id = (int) $id;
         $limit = (int) $limit;
@@ -805,7 +805,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getRevision($url, $revision)
+    public static function getRevision(string $url, int $revision): array
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.image,
@@ -851,7 +851,7 @@ class Model implements FrontendTagsInterface
      *
      * @return int
      */
-    public static function insertComment(array $comment)
+    public static function insertComment(array $comment): int
     {
         // get db
         $db = FrontendModel::getContainer()->get('database');
@@ -886,7 +886,7 @@ class Model implements FrontendTagsInterface
      *
      * @return bool
      */
-    public static function isModerated($author, $email)
+    public static function isModerated(string $author, string $email): bool
     {
         return (bool) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -995,7 +995,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function search(array $ids)
+    public static function search(array $ids): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.title, i.introduction, i.text, m.url

@@ -102,7 +102,7 @@ class Model
      *
      * @return array
      */
-    public static function checkSettings()
+    public static function checkSettings(): array
     {
         $warnings = array();
 
@@ -201,7 +201,7 @@ class Model
      *
      * @param int $id The id of the category to delete.
      */
-    public static function deleteCategory($id)
+    public static function deleteCategory(int $id)
     {
         $id = (int) $id;
         $db = BackendModel::getContainer()->get('database');
@@ -228,7 +228,7 @@ class Model
      *
      * @return bool
      */
-    public static function deleteCategoryAllowed($id)
+    public static function deleteCategoryAllowed(int $id): bool
     {
         return !(bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -244,7 +244,7 @@ class Model
      *
      * @param array $ids The id(s) of the items(s) to delete.
      */
-    public static function deleteComments($ids)
+    public static function deleteComments(array $ids)
     {
         // make sure $ids is an array
         $ids = (array) $ids;
@@ -308,7 +308,7 @@ class Model
      *
      * @return bool
      */
-    public static function exists($id)
+    public static function exists(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.id
@@ -325,7 +325,7 @@ class Model
      *
      * @return int
      */
-    public static function existsCategory($id)
+    public static function existsCategory(int $id): int
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -343,7 +343,7 @@ class Model
      *
      * @return int
      */
-    public static function existsComment($id)
+    public static function existsComment(int $id): int
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -361,7 +361,7 @@ class Model
      *
      * @return array
      */
-    public static function get($id)
+    public static function get(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on, m.url
@@ -382,7 +382,7 @@ class Model
      *
      * @return array
      */
-    public static function getAllCommentsForStatus($status, $limit = 30, $offset = 0)
+    public static function getAllCommentsForStatus(string $status, int $limit = 30, int $offset = 0): array
     {
         if ($status !== null) {
             $status = (string) $status;
@@ -425,7 +425,7 @@ class Model
      *
      * @return array
      */
-    public static function getByTag($tagId)
+    public static function getByTag(int $tagId): array
     {
         $items = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id AS url, i.title AS name, mt.module
@@ -451,7 +451,7 @@ class Model
      *
      * @return array
      */
-    public static function getCategories($includeCount = false)
+    public static function getCategories(bool $includeCount = false): array
     {
         $db = BackendModel::getContainer()->get('database');
 
@@ -481,7 +481,7 @@ class Model
      *
      * @return array
      */
-    public static function getCategory($id)
+    public static function getCategory($id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*
@@ -499,7 +499,7 @@ class Model
      *
      * @return int
      */
-    public static function getCategoryId($title, $language = null)
+    public static function getCategoryId(string $title, string $language = null): int
     {
         $title = (string) $title;
         $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
@@ -519,7 +519,7 @@ class Model
      *
      * @return array
      */
-    public static function getComment($id)
+    public static function getComment($id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
@@ -540,7 +540,7 @@ class Model
      *
      * @return array
      */
-    public static function getComments(array $ids)
+    public static function getComments(array $ids): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT *
@@ -555,7 +555,7 @@ class Model
      *
      * @return array
      */
-    public static function getCommentStatusCount()
+    public static function getCommentStatusCount(): array
     {
         return (array) BackendModel::getContainer()->get('database')->getPairs(
             'SELECT i.status, COUNT(i.id)
@@ -574,7 +574,7 @@ class Model
      *
      * @return array
      */
-    public static function getLatestComments($status, $limit = 10)
+    public static function getLatestComments(string $status, int $limit = 10): array
     {
         // get the comments (order by id, this is faster then on date, the higher the id, the more recent
         $comments = (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -604,7 +604,7 @@ class Model
      *
      * @return int
      */
-    public static function getMaximumId()
+    public static function getMaximumId(): int
     {
         return (int) BackendModel::getContainer()->get('database')->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1');
     }
@@ -617,7 +617,7 @@ class Model
      *
      * @return array
      */
-    public static function getRevision($id, $revisionId)
+    public static function getRevision(int $id, int $revisionId): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on, m.url
@@ -636,7 +636,7 @@ class Model
      *
      * @return string
      */
-    public static function getURL($url, $id = null)
+    public static function getURL(string $url, int $id = null): string
     {
         $url = (string) $url;
 
@@ -687,7 +687,7 @@ class Model
      *
      * @return string
      */
-    public static function getURLForCategory($url, $id = null)
+    public static function getURLForCategory($url, int $id = null): string
     {
         // redefine URL
         $url = (string) $url;
@@ -738,7 +738,7 @@ class Model
      *
      * @return int
      */
-    public static function insert(array $item)
+    public static function insert(array $item): int
     {
         // insert and return the new revision id
         $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
@@ -768,7 +768,7 @@ class Model
      * @return int
      * @throws Exception
      */
-    public static function insertCompletePost($item, $meta = array(), $tags = array(), $comments = array())
+    public static function insertCompletePost(array $item, array $meta = array(), $tags = array(), $comments = array()): int
     {
         // Build item
         if (!isset($item['id'])) {
@@ -900,7 +900,7 @@ class Model
      *
      * @return int
      */
-    public static function insertCategory(array $item, $meta = null)
+    public static function insertCategory(array $item, array $meta = null): int
     {
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -924,7 +924,7 @@ class Model
      *
      * @return int
      */
-    public static function insertComment(array $comment)
+    public static function insertComment(array $comment): int
     {
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -958,7 +958,7 @@ class Model
      *
      * @return bool
      */
-    public static function reCalculateCommentCount(array $ids)
+    public static function reCalculateCommentCount(array $ids): bool
     {
         // validate
         if (empty($ids)) {
@@ -1004,7 +1004,7 @@ class Model
      *
      * @return int
      */
-    public static function update(array $item)
+    public static function update(array $item): int
     {
         $db = BackendModel::getContainer()->get('database');
         // check if new version is active
@@ -1113,7 +1113,7 @@ class Model
      *
      * @return int
      */
-    public static function updateCategory(array $item, $meta = null)
+    public static function updateCategory(array $item, array $meta = null): int
     {
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -1140,7 +1140,7 @@ class Model
      *
      * @return int
      */
-    public static function updateComment(array $item)
+    public static function updateComment(array $item): int
     {
         // update category
         return BackendModel::getContainer()->get('database')->update(
@@ -1157,7 +1157,7 @@ class Model
      * @param array  $ids    The id(s) of the comment(s) to change the status for.
      * @param string $status The new status.
      */
-    public static function updateCommentStatuses($ids, $status)
+    public static function updateCommentStatuses(array $ids, string $status)
     {
         // make sure $ids is an array
         $ids = (array) $ids;

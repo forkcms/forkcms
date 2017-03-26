@@ -23,12 +23,18 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 class Comments extends BackendBaseActionIndex
 {
     /**
-     * DataGrids
-     *
      * @var BackendDataGridDB
      */
     private $dgPublished;
+
+    /**
+     * @var BackendDataGridDB
+     */
     private $dgModeration;
+
+    /**
+     * @var BackendDataGridDB
+     */
     private $dgSpam;
 
     /**
@@ -41,7 +47,7 @@ class Comments extends BackendBaseActionIndex
      *
      * @return string
      */
-    public static function addPostData($text, $title, $url, $id)
+    public static function addPostData(string $text, string $title, string $url, int $id): string
     {
         // reset URL
         $url = BackendModel::getURLForBlock('Blog', 'Detail') . '/' . $url . '#comment-' . $id;
@@ -116,7 +122,7 @@ class Comments extends BackendBaseActionIndex
         $this->dgPublished->setSortParameter('desc');
 
         // hide columns
-        $this->dgPublished->setColumnsHidden('post_id', 'post_title', 'post_url');
+        $this->dgPublished->setColumnsHidden(['post_id', 'post_title', 'post_url']);
 
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(
@@ -211,7 +217,7 @@ class Comments extends BackendBaseActionIndex
         $this->dgModeration->setSortParameter('desc');
 
         // hide columns
-        $this->dgModeration->setColumnsHidden('post_id', 'post_title', 'post_url');
+        $this->dgModeration->setColumnsHidden(['post_id', 'post_title', 'post_url']);
 
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(
@@ -304,7 +310,7 @@ class Comments extends BackendBaseActionIndex
         $this->dgSpam->setSortParameter('desc');
 
         // hide columns
-        $this->dgSpam->setColumnsHidden('post_id', 'post_title', 'post_url');
+        $this->dgSpam->setColumnsHidden(['post_id', 'post_title', 'post_url']);
 
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(

@@ -91,7 +91,7 @@ class Categories extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
+        $this->tpl->assign('dataGrid', $this->dataGrid->getContent());
     }
 
     /**
@@ -102,18 +102,16 @@ class Categories extends BackendBaseActionIndex
      *
      * @return string
      */
-    public static function setClickableCount($count, $link)
+    public static function setClickableCount(int $count, string $link): string
     {
-        $count = (int) $count;
-        $link = (string) $link;
-        $return = '';
-
         if ($count > 1) {
-            $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Articles') . '</a>';
-        } elseif ($count == 1) {
-            $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Article') . '</a>';
+            return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Articles') . '</a>';
         }
 
-        return $return;
+        if ($count === 1) {
+            return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Article') . '</a>';
+        }
+
+        return '';
     }
 }
