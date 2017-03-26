@@ -27,7 +27,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function get($url)
+    public static function get(string $url): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, m.url, c.title AS category_title, m2.url AS category_url
@@ -46,18 +46,16 @@ class Model implements FrontendTagsInterface
      *
      * @param int   $categoryId
      * @param int   $limit
-     * @param mixed $excludeIds
+     * @param int|int[] $excludeIds
      *
      * @return array
      */
-    public static function getAllForCategory($categoryId, $limit = null, $excludeIds = null)
+    public static function getAllForCategory(int $categoryId, int $limit = null, $excludeIds = null): array
     {
-        $categoryId = (int) $categoryId;
-        $limit = (int) $limit;
-        $excludeIds = (empty($excludeIds) ? array(0) : (array) $excludeIds);
+        $excludeIds = empty($excludeIds) ? array(0) : (array) $excludeIds;
 
         // get items
-        if ($limit != null) {
+        if ($limit !== null) {
             $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
                 'SELECT i.*, m.url
                  FROM faq_questions AS i
@@ -66,7 +64,7 @@ class Model implements FrontendTagsInterface
                  AND i.id NOT IN (' . implode(',', $excludeIds) . ')
              ORDER BY i.sequence
              LIMIT ?',
-                array((int) $categoryId, LANGUAGE, 'N', (int) $limit)
+                array($categoryId, LANGUAGE, 'N', $limit)
             );
         } else {
             $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -76,7 +74,7 @@ class Model implements FrontendTagsInterface
                  WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
                  AND i.id NOT IN (' . implode(',', $excludeIds) . ')
              ORDER BY i.sequence',
-                array((int) $categoryId, LANGUAGE, 'N')
+                array($categoryId, LANGUAGE, 'N')
             );
         }
 
@@ -96,7 +94,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getCategories()
+    public static function getCategories(): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.*, m.url
@@ -125,7 +123,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getCategory($url)
+    public static function getCategory(string $url): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, m.url
@@ -133,7 +131,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE m.url = ? AND i.language = ?
              ORDER BY i.sequence',
-            array((string) $url, LANGUAGE)
+            array($url, LANGUAGE)
         );
     }
 
@@ -144,7 +142,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getCategoryById($id)
+    public static function getCategoryById(int $id): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, m.url
@@ -152,7 +150,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.id = ? AND i.language = ?
              ORDER BY i.sequence',
-            array((int) $id, LANGUAGE)
+            array($id, LANGUAGE)
         );
     }
 
@@ -163,7 +161,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getForTags(array $ids)
+    public static function getForTags(array $ids): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.question AS title, m.url
@@ -194,11 +192,11 @@ class Model implements FrontendTagsInterface
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $url)
+    public static function getIdForTags(FrontendURL $url): int
     {
         $itemURL = (string) $url->getParameter(1);
 
-        return self::get($itemURL);
+        return self::get($itemURL)['id'];
     }
 
     /**
@@ -208,7 +206,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getMostRead($limit)
+    public static function getMostRead(int $limit): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.*, m.url
@@ -217,7 +215,7 @@ class Model implements FrontendTagsInterface
              WHERE i.num_views > 0 AND i.language = ? AND i.hidden = ?
              ORDER BY (i.num_usefull_yes + i.num_usefull_no) DESC
              LIMIT ?',
-            array(LANGUAGE, 'N', (int) $limit)
+            array(LANGUAGE, 'N', $limit)
         );
 
         $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
@@ -235,7 +233,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getFaqsForCategory($id)
+    public static function getFaqsForCategory(int $id): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence, m.url
@@ -243,7 +241,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.language = ? AND i.category_id = ?
              ORDER BY i.sequence ASC',
-            array(LANGUAGE, (int) $id)
+            array(LANGUAGE, $id)
         );
 
         $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
@@ -263,7 +261,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getRelated($id, $limit = 5)
+    public static function getRelated(int $id, int $limit = 5): array
     {
         $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags((int) $id, 'Faq', 'Faq');
 
@@ -280,7 +278,7 @@ class Model implements FrontendTagsInterface
              WHERE i.language = ? AND i.hidden = ? AND i.id IN(' . implode(',', $relatedIDs) . ')
              ORDER BY i.question
              LIMIT ?',
-            array(LANGUAGE, 'N', (int) $limit),
+            array(LANGUAGE, 'N', $limit),
             'id'
         );
 
@@ -298,7 +296,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function increaseViewCount($id)
+    public static function increaseViewCount(int $id): array
     {
         FrontendModel::getContainer()->get('database')->execute(
             'UPDATE faq_questions SET num_views = num_views + 1 WHERE id = ?',
@@ -331,7 +329,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function search(array $ids)
+    public static function search(array $ids): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.question AS title, i.answer AS text, m.url,
@@ -359,11 +357,11 @@ class Model implements FrontendTagsInterface
      *
      * @param int        $id
      * @param bool       $useful
-     * @param mixed $previousFeedback
+     * @param bool|null $previousFeedback
      *
      * @return array
      */
-    public static function updateFeedback($id, $useful, $previousFeedback = null)
+    public static function updateFeedback(int $id, bool $useful, bool $previousFeedback = null): array
     {
         // feedback hasn't changed so don't update the counters
         if ($previousFeedback !== null && $useful == $previousFeedback) {

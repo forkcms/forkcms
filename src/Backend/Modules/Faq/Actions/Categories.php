@@ -107,16 +107,14 @@ class Categories extends BackendBaseActionIndex
      *
      * @return string
      */
-    public static function setClickableCount($count, $link)
+    public static function setClickableCount(int $count, string $link): string
     {
-        // redefine
-        $count = (int) $count;
-        $link = (string) $link;
-
         // return link in case of more than one item, one item, other
         if ($count > 1) {
             return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Questions') . '</a>';
-        } elseif ($count == 1) {
+        }
+
+        if ($count === 1) {
             return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Question') . '</a>';
         }
 
