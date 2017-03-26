@@ -10,6 +10,7 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific AJAX action
@@ -20,6 +21,20 @@ class AjaxAction extends Object
     const BAD_REQUEST = 400;
     const FORBIDDEN = 403;
     const ERROR = 500;
+
+    /**
+     * @param KernelInterface $kernel
+     * @param string|null $action The action to use.
+     * @param string|null $module The module to use.
+     */
+    public function __construct(KernelInterface $kernel, string $action = null, string $module = null)
+    {
+        parent::__construct($kernel);
+
+        if ($action !== null) {
+            $this->setAction($action, $module);
+        }
+    }
 
     /**
      * Execute the action
@@ -40,11 +55,9 @@ class AjaxAction extends Object
      */
     public function getContent(): Response
     {
-        $statusCode = $this->content['code'] ?? self::OK;
-
         return new Response(
             json_encode($this->content),
-            $statusCode,
+            $this->content['code'] ?? self::OK,
             array('content-type' => 'application/json')
         );
     }
@@ -60,7 +73,6 @@ class AjaxAction extends Object
      */
     public function output(int $statusCode, $data = null, string $message = null)
     {
-        $response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
-        $this->content = $response;
+        $this->content = array('code' => $statusCode, 'data' => $data, 'message' => $message);
     }
 }

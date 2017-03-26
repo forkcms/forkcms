@@ -9,7 +9,10 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Config;
+use Backend\Core\Engine\Base\AjaxAction as BaseAjaxAction;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...
@@ -24,20 +27,44 @@ class AjaxAction extends Base\Object
     private $config;
 
     /**
-     * Execute the action
-     * We will build the classname, require the class and call the execute method.
-     *
-     * @throws Exception
-     *
+     * @var BaseAjaxAction
+     */
+    private $ajaxAction;
+
+    /**
      * @return Response
      */
-    public function execute()
+    public function display(): Response
+    {
+        $this->execute();
+
+        return $this->ajaxAction->getContent();
+    }
+
+    /**
+     * @param KernelInterface $kernel
+     * @param string $action The action to use.
+     * @param string $module The module to use.
+     */
+    public function __construct(KernelInterface $kernel, string $action, string $module)
+    {
+        parent::__construct($kernel);
+
+        // store the current module and action (we grab them from the URL)
+        $this->setModule($module);
+        $this->setAction($action);
+    }
+
+    /**
+     * Execute the action
+     * We will build the classname, require the class and call the execute method.
+     */
+    private function execute()
     {
         $this->loadConfig();
 
-        // build action-class-name
         $actionClass = 'Backend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $this->getAction();
-        if ($this->getModule() == 'Core') {
+        if ($this->getModule() === 'Core') {
             $actionClass = 'Backend\\Core\\Ajax\\' . $this->getAction();
         }
 
@@ -46,11 +73,9 @@ class AjaxAction extends Base\Object
         }
 
         // create action-object
-        $object = new $actionClass($this->getKernel(), $this->getAction(), $this->getModule());
-        $object->setAction($this->getAction(), $this->getModule());
-        $object->execute();
-
-        return $object->getContent();
+        $this->ajaxAction = new $actionClass($this->getKernel());
+        $this->ajaxAction->setAction($this->getAction(), $this->getModule());
+        $this->ajaxAction->execute();
     }
 
     /**
@@ -59,12 +84,12 @@ class AjaxAction extends Base\Object
      * will read the folder and set possible actions
      * Other configurations will be stored in it also.
      */
-    public function loadConfig()
+    private function loadConfig()
     {
         // check if we can load the config file
         $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
-        if ($this->getModule() == 'Core') {
-            $configClass = 'Backend\\Core\\Config';
+        if ($this->getModule() === 'Core') {
+            $configClass = Config::class;
         }
 
         // validate if class exists (aka has correct name)
