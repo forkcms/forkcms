@@ -115,7 +115,7 @@ class MediaItemIndex extends BackendBaseActionIndex
      */
     private function hasResults(array $dataGrids): bool
     {
-        return array_sum(array_map(function ($dataGrid){
+        return array_sum(array_map(function ($dataGrid) {
             return $dataGrid['numberOfResults'];
         }, $dataGrids)) > 0;
     }

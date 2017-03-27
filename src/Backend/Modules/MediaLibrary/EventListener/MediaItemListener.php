@@ -43,7 +43,7 @@ final class MediaItemListener
         /** @var MediaItem $mediaItem */
         $mediaItem = $event->getMediaItem();
 
-        // We have an image, so we have thumbnails to delete
+        // We have an image, so we have a backend thumbnail to generate
         if ($mediaItem->getType()->isImage()) {
             // Generate Backend thumbnail
             $this->cacheManager->getBrowserPath($mediaItem->getWebPath(), 'media_library_backend_thumbnail');

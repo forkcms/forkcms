@@ -276,7 +276,7 @@ class MediaGroup
      */
     public function getIdsForConnectedItems(): array
     {
-        return array_map(function($connectedItem){
+        return array_map(function($connectedItem) {
             return (int) $connectedItem->getItem()->getId();
         }, $this->connectedItems->toArray());
     }
