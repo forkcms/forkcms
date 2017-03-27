@@ -7,15 +7,13 @@ jsBackend.mediaLibraryHelper =
 {
     init: function()
     {
-        // controls the editing of a group
+        jsBackend.mediaLibraryHelper.buildMovieStorageTypeDropdown();
         jsBackend.mediaLibraryHelper.group.init();
+        jsBackend.mediaLibraryHelper.upload.preInit();
+    },
 
-        // bind upload events
-        jsBackend.mediaLibraryHelper.upload.bindEvents();
-
-        // initialize uploader
-        jsBackend.mediaLibraryHelper.upload.init();
-
+    buildMovieStorageTypeDropdown: function()
+    {
         // Add movie storage type in MediaLibraryHelper
         var $movieStorageTypeDropdown = $('#mediaMovieStorageType');
         $(jsBackend.data.get('MediaLibrary.mediaAllowedMovieSource')).each(function(index, value){
@@ -167,9 +165,7 @@ jsBackend.mediaLibraryHelper.group =
         });
 
         // on show
-        $addMediaDialog.on('show.bs.modal', function () {
-            jsBackend.mediaLibraryHelper.upload.init();
-        });
+        $addMediaDialog.on('show.bs.modal', jsBackend.mediaLibraryHelper.upload.init);
 
         // bind click when opening "add media dialog"
         $('.addMediaButton').on('click', function(e) {
@@ -466,52 +462,47 @@ jsBackend.mediaLibraryHelper.group =
      */
     getMedia : function()
     {
-        /**
-         * Not in cache - get media using ajax
-         */
-        if (mediaFolderId != null && !media[mediaFolderId]) {
-            // init groupId
-            var groupId = (mediaGroups[currentMediaGroupId]) ? mediaGroups[currentMediaGroupId].id : 0;
-
-            // load media
-            $.ajax( {
-                data: {
-                    fork: {
-                        module: 'MediaLibrary',
-                        action: 'MediaItemFindAll'
-                    },
-                    group_id: groupId,
-                    folder_id: mediaFolderId
-                },
-                success: function(json, textStatus) {
-                    if (json.code != 200) {
-                        // show error if needed
-                        if (jsBackend.debug) {
-                            alert(textStatus);
-                        }
-                    } else {
-                        // only do this when current folder is different
-                        if (json.data.folder != 0) {
-                            // redefine folder id
-                            mediaFolderId = json.data.folder;
-
-                            // cache media
-                            media[mediaFolderId] = json.data.media;
-                        // redefine current folder as none
-                        } else {
-                            mediaFolderId = 0;
-                        }
-
-                        // update media
-                        jsBackend.mediaLibraryHelper.group.updateMedia();
-                    }
-                }
-            });
-        // Media already in cache, calling the update.
-        } else {
-            // update media
+        // Load media from cache
+        if (mediaFolderId === null || !media[mediaFolderId]) {
             jsBackend.mediaLibraryHelper.group.updateMedia();
         }
+
+        // Load media using ajax
+        $.ajax( {
+            data: {
+                fork: {
+                    module: 'MediaLibrary',
+                    action: 'MediaItemFindAll'
+                },
+                group_id: (mediaGroups[currentMediaGroupId]) ? mediaGroups[currentMediaGroupId].id : 0,
+                folder_id: mediaFolderId
+            },
+            success: function(json, textStatus) {
+                if (json.code != 200) {
+                    // show error if needed
+                    if (jsBackend.debug) {
+                        alert(textStatus);
+                    }
+
+                    return;
+                }
+
+                // only do this when current folder is different
+                if (json.data.folder != 0) {
+                    // redefine folder id
+                    mediaFolderId = json.data.folder;
+
+                    // cache media
+                    media[mediaFolderId] = json.data.media;
+                // redefine current folder as none
+                } else {
+                    mediaFolderId = 0;
+                }
+
+                // update media
+                jsBackend.mediaLibraryHelper.group.updateMedia();
+            }
+        });
     },
 
     /**
@@ -835,8 +826,29 @@ jsBackend.mediaLibraryHelper.group =
  */
 jsBackend.mediaLibraryHelper.upload =
 {
+    preInit: function()
+    {
+        // bind change to upload_type
+        $('#uploadMediaTypeBox').on('change', 'input[name=uploading_type]', jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes);
+
+        // bind click to add movie
+        $('#addMediaMovie').on('click', jsBackend.mediaLibraryHelper.upload.insertMovie);
+
+        // bind change to upload folder
+        $('#uploadMediaFolderId').on('change', function() {
+            // update upload button
+            jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
+        }).trigger('change');
+
+        // bind delete actions
+        $('#uploadedMedia').on('click', '.deleteMediaItem', function() {
+            $(this).parent().remove();
+        });
+    },
+
     init: function()
     {
+        // redefine media folder id
         mediaFolderId = $('#uploadMediaFolderId').val();
 
         $('#fine-uploader-gallery').fineUploader({
@@ -916,29 +928,6 @@ jsBackend.mediaLibraryHelper.upload =
 
         // clear all elements
         $('#uploadedMedia').html('');
-    },
-
-    /**
-     * Bind events
-     */
-    bindEvents: function()
-    {
-        // bind change to upload_type
-        $('#uploadMediaTypeBox').on('change', 'input[name=uploading_type]', jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes);
-
-        // bind click to add movie
-        $('#addMediaMovie').on('click', jsBackend.mediaLibraryHelper.upload.insertMovie);
-
-        // bind change to upload folder
-        $('#uploadMediaFolderId').on('change', function() {
-            // update upload button
-            jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
-        }).trigger('change');
-
-        // bind delete actions
-        $('#uploadedMedia').on('click', '.deleteMediaItem', function() {
-            $(this).parent().remove();
-        });
     },
 
     /**
@@ -1127,24 +1116,24 @@ jsBackend.mediaLibraryHelper.templates =
     getHTMLForMediaItemTableRow : function(mediaItem, connected)
     {
         var html = '<tr id="media-' + mediaItem.id + '" class="row' + utils.string.ucfirst(mediaItem.type) + '">';
-        html += '  <td class="check">';
-        html += '     <input type="checkbox" class="toggleConnectedCheckbox"';
+        html += '<td class="check">';
+        html += '<input type="checkbox" class="toggleConnectedCheckbox"';
 
         if (connected) {
             html += ' checked="checked"';
         }
 
-        html += ' />';
-        html += '  </td>';
+        html += '/>';
+        html += '</td>';
 
         if (mediaItem.type === 'image') {
-            html += '  <td class="fullUrl">';
-            html += '     <img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" height="50" />';
-            html += '  </td>';
+            html += '<td class="fullUrl">';
+            html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" height="50" />';
+            html += '</td>';
         }
 
-        html += '  <td class="url">' + mediaItem.url + '</td>';
-        html += '  <td class="title">' + mediaItem.title + '</td>';
+        html += '<td class="url">' + mediaItem.url + '</td>';
+        html += '<td class="title">' + mediaItem.title + '</td>';
         html += '</tr>';
 
         return html;
@@ -1163,22 +1152,22 @@ jsBackend.mediaLibraryHelper.templates =
 
         // create element
         html += '<li id="media-' + mediaItem.id + '" data-folder-id="' + mediaItem.folder.id + '" class="ui-state-default">';
-        html += '    <div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">';
+        html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">';
 
         // is image
         if (mediaItem.type == 'image') {
-            html += '        <img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>';
+            html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>';
         // is file, movie or audio
         } else {
-            html += '        <div class="icon"></div>';
-            html += '        <div class="url">' + mediaItem.url + '</div>';
+            html += '<div class="icon"></div>';
+            html += '<div class="url">' + mediaItem.url + '</div>';
         }
 
-        html += '    </div>';
-        html += '    <a href="#/" class="deleteMediaItem btn btn-default" ';
+        html += '</div>';
+        html += '<a href="#/" class="deleteMediaItem btn btn-default" ';
         html += 'title="' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '">';
-        html += '        <span>' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '</span>';
-        html += '    </a>';
+        html += '<span>' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '</span>';
+        html += '</a>';
         html += '</li>';
 
         return html;
