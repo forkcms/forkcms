@@ -32,7 +32,7 @@ class MediaItemDelete extends BackendBaseActionDelete
         return $this->redirect(
             $this->getBackLink(
                 [
-                    'report' => 'deleted',
+                    'report' => 'media-item-deleted',
                     'var' => urlencode($mediaItem->getTitle()),
                 ]
             )

@@ -41,7 +41,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
         $this->redirect(
             $this->getBackLink(
                 [
-                    'report' => 'deleted',
+                    'report' => 'media-folder-deleted',
                     'var' => urlencode($mediaFolder->getName()),
                 ]
             )

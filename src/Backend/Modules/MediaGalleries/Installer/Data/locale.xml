@@ -12,10 +12,6 @@
         <translation language="en"><![CDATA[view]]></translation>
         <translation language="nl"><![CDATA[weergave]]></translation>
       </item>
-      <item type="message" name="ChooseTypeForNewGallery">
-        <translation language="en"><![CDATA[Create a gallery with the following type:]]></translation>
-        <translation language="nl"><![CDATA[Maak een galerij aan van het volgende type:]]></translation>
-      </item>
       <item type="label" name="Connected">
         <translation language="en"><![CDATA[connected]]></translation>
         <translation language="nl"><![CDATA[gekoppeld]]></translation>

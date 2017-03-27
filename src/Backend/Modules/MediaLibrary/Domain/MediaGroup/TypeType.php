@@ -20,7 +20,7 @@ class TypeType extends AbstractType
                 'type',
                 ChoiceType::class,
                 [
-                    'label' => 'msg.ChooseTypeForNewGallery',
+                    'label' => 'msg.ChooseTypeForNewGroup',
                     'choices' => array_map(
                         function ($type) {
                             return Type::fromString($type);
