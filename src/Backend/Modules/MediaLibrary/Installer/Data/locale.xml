@@ -15,10 +15,10 @@
         <translation language="nl"><![CDATA[video toevoegen]]></translation>
       </item>
       <item type="label" name="MediaAudio">
-        <translation language="en"><![CDATA[audio]]></translation>
-        <translation language="nl"><![CDATA[audio]]></translation>
-        <translation language="fr"><![CDATA[audio]]></translation>
         <translation language="de"><![CDATA[audio]]></translation>
+        <translation language="en"><![CDATA[audio]]></translation>
+        <translation language="fr"><![CDATA[audio]]></translation>
+        <translation language="nl"><![CDATA[audio]]></translation>
       </item>
       <item type="message" name="MediaChoseToUpload">
         <translation language="en"><![CDATA[Choose the media to upload.]]></translation>
@@ -37,10 +37,10 @@
         <translation language="nl"><![CDATA[ontkoppelen]]></translation>
       </item>
       <item type="label" name="MediaFiles">
-        <translation language="en"><![CDATA[files]]></translation>
-        <translation language="nl"><![CDATA[bestanden]]></translation>
-        <translation language="fr"><![CDATA[fichiers]]></translation>
         <translation language="de"><![CDATA[Dateien]]></translation>
+        <translation language="en"><![CDATA[files]]></translation>
+        <translation language="fr"><![CDATA[fichiers]]></translation>
+        <translation language="nl"><![CDATA[bestanden]]></translation>
       </item>
       <item type="label" name="MediaFolder">
         <translation language="en"><![CDATA[folder]]></translation>
@@ -51,20 +51,26 @@
         <translation language="nl"><![CDATA[Correct gewijzigd!<br/><strong>Opgelet</strong>: nog opslaan om te bevestigen.]]></translation>
       </item>
       <item type="label" name="MediaImages">
-        <translation language="en"><![CDATA[images]]></translation>
-        <translation language="nl"><![CDATA[afbeeldingen]]></translation>
-        <translation language="fr"><![CDATA[photos]]></translation>
         <translation language="de"><![CDATA[Bilder]]></translation>
+        <translation language="en"><![CDATA[images]]></translation>
+        <translation language="fr"><![CDATA[photos]]></translation>
+        <translation language="nl"><![CDATA[afbeeldingen]]></translation>
       </item>
       <item type="label" name="MediaInTheFolder">
         <translation language="en"><![CDATA[in the folder]]></translation>
         <translation language="nl"><![CDATA[in de map]]></translation>
       </item>
       <item type="label" name="MediaLibrary">
+        <translation language="de"><![CDATA[Medienbibliothek]]></translation>
         <translation language="en"><![CDATA[media]]></translation>
-        <translation language="nl"><![CDATA[media]]></translation>
         <translation language="fr"><![CDATA[média]]></translation>
+        <translation language="nl"><![CDATA[media]]></translation>
+      </item>
+      <item type="label" name="MediaLibraryTab">
         <translation language="de"><![CDATA[Medien]]></translation>
+        <translation language="en"><![CDATA[media library]]></translation>
+        <translation language="fr"><![CDATA[médiathèque]]></translation>
+        <translation language="nl"><![CDATA[media bibliotheek]]></translation>
       </item>
       <item type="label" name="MediaLibraryGroupTypeAll">
         <translation language="en"><![CDATA[all file types]]></translation>
@@ -94,15 +100,11 @@
         <translation language="en"><![CDATA[only movies (.avi, .mov, .mp4)]]></translation>
         <translation language="nl"><![CDATA[enkel video's (.avi, .mov, .mp4)]]></translation>
       </item>
-      <item type="label" name="MediaLibrary">
-        <translation language="en"><![CDATA[media]]></translation>
-        <translation language="nl"><![CDATA[media]]></translation>
-      </item>
       <item type="label" name="MediaMovies">
-        <translation language="en"><![CDATA[movies]]></translation>
-        <translation language="nl"><![CDATA[video's]]></translation>
-        <translation language="fr"><![CDATA[vidéos]]></translation>
         <translation language="de"><![CDATA[Videos]]></translation>
+        <translation language="en"><![CDATA[movies]]></translation>
+        <translation language="fr"><![CDATA[vidéos]]></translation>
+        <translation language="nl"><![CDATA[video's]]></translation>
       </item>
       <item type="label" name="MediaMovieId">
         <translation language="en"><![CDATA[movie ID]]></translation>
