@@ -98,7 +98,10 @@ jsBackend.mediaLibraryAddFolder =
         // get folders using ajax
         $.ajax({
             data: {
-                fork: { module: 'MediaLibrary', action: 'MediaFolderFindAll' }
+                fork: {
+                    module: 'MediaLibrary',
+                    action: 'MediaFolderFindAll'
+                }
             },
             success: function(json, textStatus) {
                 if (json.code != 200) {
@@ -108,7 +111,7 @@ jsBackend.mediaLibraryAddFolder =
                     }
 
                     // show message
-                    $('#descriptionTitleError').show();
+                    $('#addFolderTitle').show();
 
                     return;
                 }
@@ -120,44 +123,20 @@ jsBackend.mediaLibraryAddFolder =
                 var folders = json2array(json.data).sort(sortByProperty('name'));
 
                 // add folders to html
-                $.each(folders, function(i, item)
-                {
+                $.each(folders, function(i, item) {
                     html += '<option value="' + item.id + '">' + item.name + '</option>';
                 });
 
                 // update folders in media module
                 if (!dialog) {
-                    // add folders to dropdown of upload media folders
-                    $('#mediaFolders').html(html);
-
-                    // add folders to dropdown of upload media folders
-                    $('#uploadMediaFolderId').html(html);
+                    // add folders to dropdowns
+                    $('#mediaFolders, #uploadMediaFolderId').html(html);
 
                     // select the new folder
                     if (selectFolderId) {
                         $('#uploadMediaFolderId').val(selectFolderId);
                     } else {
                         $('#uploadMediaFolderId option:eq(0)').attr("selected", "selected");
-                    }
-
-                    // update folders in library
-                    if ($('.folderSelect').length > 0) {
-                        // add folders to dropdown
-                        $('.folderSelect').each(function()
-                        {
-                            $(this).html(html);
-                        });
-
-                        // select the new folder
-                        if (selectFolderId) {
-                            $('.folderSelect').val(selectFolderId);
-                        }
-
-                        // trigger changes
-                        $('#galleryAudioId, #folderAudioId').trigger('change');
-                        $('#galleryFilesId, #folderFilesId').trigger('change');
-                        $('#galleryImagesId, #folderImagesId').trigger('change');
-                        $('#galleryMoviesId, #folderMoviesId').trigger('change');
                     }
 
                     // update boxes
