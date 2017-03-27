@@ -10,6 +10,7 @@ jsBackend.mediaLibraryHelper =
         jsBackend.mediaLibraryHelper.buildMovieStorageTypeDropdown();
         jsBackend.mediaLibraryHelper.group.init();
         jsBackend.mediaLibraryHelper.upload.preInit();
+        jsBackend.mediaLibraryHelper.upload.init();
     },
 
     buildMovieStorageTypeDropdown: function()
