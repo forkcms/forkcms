@@ -2,12 +2,13 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
+use Backend\Modules\MediaLibrary\Component\StorageProvider\LiipImagineBundleStorageProviderInterface;
+use Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Core\Engine\Model;
 
@@ -474,27 +475,25 @@ class MediaItem
     }
 
     /**
-     * @param string|null $subDirectory
      * @return string|null
      */
-    public function getAbsolutePath(string $subDirectory = null)
+    public function getAbsolutePath(): string
     {
-        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getAbsolutePath($this, $subDirectory);
+        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getAbsolutePath($this);
     }
 
     /**
-     * @param string|null $subDirectory
      * @return string
      */
-    public function getAbsoluteWebPath(string $subDirectory = null): string
+    public function getAbsoluteWebPath(): string
     {
-        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getAbsoluteWebPath($this, $subDirectory);
+        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getAbsoluteWebPath($this);
     }
 
     /**
      * @return string|null
      */
-    public function getLinkHTML()
+    public function getLinkHTML(): string
     {
         return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getLinkHTML($this);
     }
@@ -502,7 +501,7 @@ class MediaItem
     /**
      * @return string|null
      */
-    public function getIncludeHTML()
+    public function getIncludeHTML(): string
     {
         return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getIncludeHTML($this);
     }
@@ -511,9 +510,16 @@ class MediaItem
      * @param string|null $filter The LiipImagineBundle filter name you want to use.
      * @return string|null
      */
-    public function getWebPath(string $filter = null)
+    public function getWebPath(string $filter = null): string
     {
-        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getWebPath($this, $filter);
+        /** @var StorageProviderInterface $storage */
+        $storage = Model::get('media_library.manager.storage')->getStorage($this->getStorageType());
+
+        if (!$storage instanceof LiipImagineBundleStorageProviderInterface || $filter === null) {
+            return $storage->getWebPath($this);
+        }
+
+        return $storage->getWebPathWithFilter($this, $filter);
     }
 
     /**

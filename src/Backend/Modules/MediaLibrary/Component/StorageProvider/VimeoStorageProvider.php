@@ -26,37 +26,34 @@ class VimeoStorageProvider implements StorageProviderInterface
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
-     * @return string|null
+     * @return string
      */
-    public function getAbsolutePath(MediaItem $mediaItem, string $subDirectory = null): string
+    public function getAbsolutePath(MediaItem $mediaItem): string
     {
-        return $this->getAbsoluteWebPath($mediaItem, $subDirectory);
+        return $this->getAbsoluteWebPath($mediaItem);
     }
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
      * @return string
      */
-    public function getAbsoluteWebPath(MediaItem $mediaItem, string $subDirectory = null): string
+    public function getAbsoluteWebPath(MediaItem $mediaItem): string
     {
-        return $this->getWebPath($mediaItem, $subDirectory);
+        return $this->getWebPath($mediaItem);
     }
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
      * @return string
      */
-    public function getIncludeHTML(MediaItem $mediaItem, string $subDirectory = null): string
+    public function getIncludeHTML(MediaItem $mediaItem): string
     {
         return '<iframe src="' . $this->includeURL . $mediaItem->getUrl() . '?color=ffffff&title=0&byline=0&portrait=0&badge=0" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
     }
 
     /**
      * @param MediaItem $mediaItem
-     * @return string|null
+     * @return string
      */
     public function getLinkHTML(MediaItem $mediaItem): string
     {
@@ -65,9 +62,9 @@ class VimeoStorageProvider implements StorageProviderInterface
 
     /**
      * @param MediaItem $mediaItem
-     * @return string|null
+     * @return string
      */
-    public function getWebPath(MediaItem $mediaItem, string $subDirectory = null): string
+    public function getWebPath(MediaItem $mediaItem): string
     {
         return $this->linkURL . $mediaItem->getUrl();
     }

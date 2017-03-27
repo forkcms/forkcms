@@ -26,36 +26,34 @@ class YoutubeStorageProvider implements StorageProviderInterface
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
-     * @return string|null
+     * @return string
      */
-    public function getAbsolutePath(MediaItem $mediaItem, string $subDirectory = null): string
+    public function getAbsolutePath(MediaItem $mediaItem): string
     {
-        return $this->getAbsoluteWebPath($mediaItem, $subDirectory);
+        return $this->getAbsoluteWebPath($mediaItem);
     }
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
      * @return string
      */
-    public function getAbsoluteWebPath(MediaItem $mediaItem, string $subDirectory = null): string
+    public function getAbsoluteWebPath(MediaItem $mediaItem): string
     {
         return $this->getWebPath($mediaItem);
     }
 
     /**
      * @param MediaItem $mediaItem
-     * @return string|null
+     * @return string
      */
-    public function getIncludeHTML(MediaItem $mediaItem, string $subDirectory = null): string
+    public function getIncludeHTML(MediaItem $mediaItem): string
     {
         return '<iframe width="560" height="315" src="' . $this->includeURL . $mediaItem->getUrl() . '" frameborder="0" allowfullscreen></iframe>';
     }
 
     /**
      * @param MediaItem $mediaItem
-     * @return string|null
+     * @return string
      */
     public function getLinkHTML(MediaItem $mediaItem): string
     {
@@ -64,10 +62,9 @@ class YoutubeStorageProvider implements StorageProviderInterface
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
-     * @return string|null
+     * @return string
      */
-    public function getWebPath(MediaItem $mediaItem, string $subDirectory = null): string
+    public function getWebPath(MediaItem $mediaItem): string
     {
         return $this->linkURL . $mediaItem->getUrl();
     }

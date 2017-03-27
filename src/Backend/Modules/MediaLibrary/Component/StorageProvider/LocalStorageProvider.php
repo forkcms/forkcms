@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Component\StorageProvider;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 
-class LocalStorageProvider implements StorageProviderInterface
+class LocalStorageProvider implements StorageProviderInterface, LiipImagineBundleStorageProviderInterface
 {
     /** @var string */
     protected $basePath;
@@ -41,22 +41,20 @@ class LocalStorageProvider implements StorageProviderInterface
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
      * @return string|null
      */
-    public function getAbsolutePath(MediaItem $mediaItem, string $subDirectory = null): string
+    public function getAbsolutePath(MediaItem $mediaItem): string
     {
-        return $mediaItem->getFullUrl() === null ? null : $this->getUploadRootDir($subDirectory) . '/' . $mediaItem->getFullUrl();
+        return $mediaItem->getFullUrl() === null ? null : $this->getUploadRootDir() . '/' . $mediaItem->getFullUrl();
     }
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
      * @return string
      */
-    public function getAbsoluteWebPath(MediaItem $mediaItem, string $subDirectory = null): string
+    public function getAbsoluteWebPath(MediaItem $mediaItem): string
     {
-        return $this->baseUrl . $mediaItem->getWebPath($subDirectory);
+        return $this->baseUrl . $mediaItem->getWebPath();
     }
 
     /**
@@ -89,6 +87,9 @@ class LocalStorageProvider implements StorageProviderInterface
         return $this->basePath . '/' . $this->folderPath;
     }
 
+    /**
+     * @return string
+     */
     public function getWebDir(): string
     {
         return '/' . $this->folderPath;
@@ -96,20 +97,30 @@ class LocalStorageProvider implements StorageProviderInterface
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $filter The LiipImagineBundle filter name you want to use.
-     * @return string|null
+     * @return string
      */
-    public function getWebPath(MediaItem $mediaItem, string $filter = null)
+    public function getWebPath(MediaItem $mediaItem): string
     {
+        return $this->getWebDir() . '/' . $mediaItem->getFullUrl();
+    }
+
+    /**
+     * @param MediaItem $mediaItem
+     * @param string|null $filter The LiipImagineBundle filter name you want to use.
+     * @return string
+     */
+    public function getWebPathWithFilter(MediaItem $mediaItem, string $filter): string
+    {
+        $webPath = $this->getWebPath($mediaItem);
+
+        if (!$mediaItem->getType()->isImage()) {
+            return $webPath;
+        }
+
         if ($filter === 'backend') {
             $filter = 'media_library_backend_thumbnail';
         }
 
-        // Return image with filter
-        if ($filter !== null && $mediaItem->getType()->isImage()) {
-            return $this->cacheManager->getBrowserPath($mediaItem->getWebPath(), $filter);
-        }
-
-        return $this->getWebDir() . '/' . $mediaItem->getFullUrl();
+        return $this->cacheManager->getBrowserPath($webPath, $filter);
     }
 }

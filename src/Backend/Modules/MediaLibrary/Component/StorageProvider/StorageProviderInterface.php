@@ -8,34 +8,31 @@ interface StorageProviderInterface
 {
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
-     * @return string|null
-     */
-    public function getAbsolutePath(MediaItem $mediaItem, string $subDirectory = null): string;
-
-    /**
-     * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
      * @return string
      */
-    public function getAbsoluteWebPath(MediaItem $mediaItem, string $subDirectory = null): string;
+    public function getAbsolutePath(MediaItem $mediaItem): string;
 
     /**
      * @param MediaItem $mediaItem
-     * @return string|null
+     * @return string
+     */
+    public function getAbsoluteWebPath(MediaItem $mediaItem): string;
+
+    /**
+     * @param MediaItem $mediaItem
+     * @return string
      */
     public function getIncludeHTML(MediaItem $mediaItem): string;
 
     /**
      * @param MediaItem $mediaItem
-     * @return string|null
+     * @return string
      */
     public function getLinkHTML(MediaItem $mediaItem): string;
 
     /**
      * @param MediaItem $mediaItem
-     * @param string|null $subDirectory
-     * @return string|null
+     * @return string
      */
-    public function getWebPath(MediaItem $mediaItem, string $subDirectory = null);
+    public function getWebPath(MediaItem $mediaItem): string;
 }
