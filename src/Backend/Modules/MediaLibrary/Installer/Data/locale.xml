@@ -380,6 +380,14 @@
         <translation language="en"><![CDATA[Folder does not exist.]]></translation>
         <translation language="nl"><![CDATA[Map bestaat niet.]]></translation>
       </item>
+      <item type="label" name="NumConnected">
+        <translation language="en"><![CDATA[# connections]]></translation>
+        <translation language="nl"><![CDATA[# koppelingen]]></translation>
+      </item>
+      <item type="error" name="PleaseSelectAFolder">
+        <translation language="en"><![CDATA[Please select a folder when trying to move items.]]></translation>
+        <translation language="nl"><![CDATA[Selecteer aub. een folder bij het verplaatsen.]]></translation>
+      </item>
       <item type="label" name="SaveAndEdit">
         <translation language="en"><![CDATA[save and edit]]></translation>
         <translation language="nl"><![CDATA[opslaan en blijven bewerken]]></translation>
