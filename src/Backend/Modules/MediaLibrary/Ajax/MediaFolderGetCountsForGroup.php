@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Common\Exception\AjaxExitException;
 
 /**
  * This AJAX-action will get the counts for every folder in a group.
@@ -31,6 +32,7 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
 
     /**
      * @return MediaGroup|null
+     * @throws AjaxExitException
      */
     private function getMediaGroup()
     {
@@ -38,14 +40,7 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
 
         // GroupId not valid
         if ($id === null) {
-            // Throw error output
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                Language::err('GroupIdIsRequired')
-            );
-
-            return null;
+            throw new AjaxExitException(Language::err('GroupIdIsRequired'));
         }
 
         try {

@@ -7,6 +7,7 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Common\Exception\AjaxExitException;
 
 /**
  * This AJAX-action will get all media items in a certain folder and from a gallery.
@@ -72,6 +73,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
 
     /**
      * @return MediaGroup|null
+     * @throws AjaxExitException
      */
     protected function getMediaGroup()
     {
@@ -86,17 +88,13 @@ class MediaItemFindAll extends BackendBaseAJAXAction
             /** @var MediaGroup */
             return $this->get('media_library.repository.group')->findOneById($id);
         } catch (\Exception $e) {
-            // Throw output error
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                Language::err('MediaGroupNotExists')
-            );
+            throw new AjaxExitException(Language::err('MediaGroupNotExists'));
         }
     }
 
     /**
-     * @return MediaFolder|null|void
+     * @return MediaFolder|null
+     * @throws AjaxExitException
      */
     protected function getMediaFolder()
     {
@@ -111,14 +109,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
-            // Throw output error
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                Language::err('MediaFolderNotExists')
-            );
-
-            return;
+            throw new AjaxExitException(Language::err('MediaFolderNotExists'));
         }
     }
 }

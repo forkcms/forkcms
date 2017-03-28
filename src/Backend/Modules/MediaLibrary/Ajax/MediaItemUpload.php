@@ -9,6 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLoc
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Component\UploadHandler;
+use Common\Exception\AjaxExitException;
 
 /**
  * This AJAX-action is being used to upload new MediaItem items and save them into to the database.
@@ -196,24 +197,23 @@ class MediaItemUpload extends BackendBaseAJAXAction
     }
 
     /**
-     * Get MediaFolder
-     *
-     * @return MediaFolder
+     * @return MediaFolder|null
+     * @throws AjaxExitException
      */
-    private function getMediaFolder(): MediaFolder
+    private function getMediaFolder()
     {
         // Define id
         $id = $this->get('request')->query->getInt('folder_id');
 
         if ($id === 0) {
-            $this->throwOutputError('MediaFolderIsRequired');
+            throw new AjaxExitException(Language::err('MediaFolderIsRequired'));
         }
 
         try {
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
-            $this->throwOutputError('NotExistingMediaFolder');
+            throw new AjaxExitException(Language::err('NotExistingMediaFolder'));
         }
     }
 
@@ -231,18 +231,5 @@ class MediaItemUpload extends BackendBaseAJAXAction
         header("Access-Control-Allow-Methods: POST, DELETE");
         header("Access-Control-Allow-Credentials: true");
         header("Access-Control-Allow-Headers: Content-Type, X-Requested-With, Cache-Control");
-    }
-
-    /**
-     * @param $error
-     */
-    private function throwOutputError(string $error)
-    {
-        // Throw output error
-        $this->output(
-            self::BAD_REQUEST,
-            null,
-            Language::err($error)
-        );
     }
 }

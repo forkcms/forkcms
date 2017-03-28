@@ -9,6 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMov
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
+use Common\Exception\AjaxExitException;
 
 /**
  * This AJAX-action will add a new MediaItem movie.
@@ -34,13 +35,13 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
         // Movie id not null
         if ($movieId === null) {
-            $this->throwOutputError('MediaMovieIdIsRequired');
+            throw new AjaxExitException(Language::err('MediaMovieIdIsRequired'));
         // Title not valid
         } elseif ($movieTitle === null) {
-            $this->throwOutputError('MediaMovieTitleIsRequired');
+            throw new AjaxExitException(Language::err('MediaMovieTitleIsRequired'));
         // Movie url (= externalVideoId) already exists in our repository
         } elseif ($this->get('media_library.repository.item')->existsOneByUrl((string) $movieId)) {
-            $this->throwOutputError('MediaMovieIdAlreadyExists');
+            throw new AjaxExitException(Language::err('MediaMovieIdAlreadyExists'));
         // Not already exists
         } else {
             /** @var CreateMediaItemFromMovieUrl $createMediaItem */
@@ -69,54 +70,41 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
     }
 
     /**
-     * Get MediaFolder
-     *
      * @return MediaFolder
+     * @throws AjaxExitException
      */
     protected function getMediaFolder(): MediaFolder
     {
         $id = $this->get('request')->request->getInt('folder_id');
 
         if ($id === 0) {
-            $this->throwOutputError('MediaFolderIsRequired');
+            throw new AjaxExitException(Language::err('MediaFolderIsRequired'));
         }
 
         try {
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
-            $this->throwOutputError('ParentNotExists');
+            throw new AjaxExitException(Language::err('ParentNotExists'));
         }
     }
 
     /**
      * @return StorageType
+     * @throws AjaxExitException
      */
     protected function getMovieStorageType(): StorageType
     {
         $movieStorageType = $this->get('request')->request->get('storageType');
 
         if ($movieStorageType === null || !in_array((string) $movieStorageType, StorageType::POSSIBLE_VALUES_FOR_MOVIE)) {
-            $this->throwOutputError('MovieStorageTypeNotExists');
+            throw new AjaxExitException(Language::err('MovieStorageTypeNotExists'));
         }
 
         try {
             return StorageType::fromString($movieStorageType);
         } catch (\Exception $e) {
-            $this->throwOutputError('MovieStorageTypeNotExists');
+            throw new AjaxExitException(Language::err('MovieStorageTypeNotExists'));
         }
-    }
-
-    /**
-     * @param $error
-     */
-    private function throwOutputError(string $error)
-    {
-        // Throw output error
-        $this->output(
-            self::BAD_REQUEST,
-            null,
-            Language::err($error)
-        );
     }
 }

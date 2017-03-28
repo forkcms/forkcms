@@ -7,6 +7,7 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Event\MediaFolderUpdated;
+use Common\Exception\AjaxExitException;
 use Common\Uri;
 
 /**
@@ -51,6 +52,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
     /**
      * @return MediaFolder
+     * @throws AjaxExitException
      */
     protected function getMediaFolder(): MediaFolder
     {
@@ -58,34 +60,27 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
         // validate values
         if ($id === null) {
-            $this->output(self::BAD_REQUEST, null, Language::err('FolderIdIsRequired'));
+            throw new AjaxExitException(Language::err('FolderIdIsRequired'));
         }
 
         try {
             /** @var MediaFolder $mediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                Language::err('MediaFolderDoesNotExists')
-            );
-
-            return null;
+            throw new AjaxExitException(Language::err('MediaFolderDoesNotExists'));
         }
     }
 
     /**
-     * @return string|null
+     * @return string
+     * @throws AjaxExitException
      */
     protected function getFolderName(): string
     {
         $name = $this->get('request')->request->get('name');
 
         if ($name === null) {
-            $this->output(self::BAD_REQUEST, null, Language::err('TitleIsRequired'));
-
-            return null;
+            throw new AjaxExitException(Language::err('TitleIsRequired'));
         }
 
         return Uri::getUrl($name);

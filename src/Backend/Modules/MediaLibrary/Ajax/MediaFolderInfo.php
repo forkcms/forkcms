@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Common\Exception\AjaxExitException;
 
 /**
  * This edit-action will get the item info using Ajax
@@ -21,19 +22,10 @@ class MediaFolderInfo extends BackendBaseAJAXAction
         $id = $this->get('request')->request->getInt('id', 0);
 
         if ($id === 0) {
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                'no id provided'
-            );
-
-            return null;
+            throw new AjaxExitException('no id provided');
         }
 
         // Currently always allow to be moved
-        $this->output(
-            self::OK,
-            ['allow_move' => 'Y']
-        );
+        $this->output(self::OK, ['allow_move' => 'Y']);
     }
 }

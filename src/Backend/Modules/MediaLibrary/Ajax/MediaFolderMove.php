@@ -7,6 +7,7 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Event\MediaFolderUpdated;
+use Common\Exception\AjaxExitException;
 
 /**
  * This edit-action will reorder moved pages using Ajax
@@ -44,36 +45,28 @@ class MediaFolderMove extends BackendBaseAJAXAction
 
     /**
      * @return MediaFolder|null
+     * @throws AjaxExitException
      */
     private function getMediaFolder(): MediaFolder
     {
         $id = $this->get('request')->request->getInt('id', 0);
 
         if ($id === 0) {
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                'no id provided'
-            );
-
-            return null;
+            throw new AjaxExitException('no id provided');
         }
 
         try {
             /** @var MediaFolder $mediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                'Folder does not exist'
-            );
+            throw new AjaxExitException('Folder does not exist');
         }
     }
 
     /**
      * @param string $typeOfDrop
      * @return MediaFolder|null
+     * @throws AjaxExitException
      */
     private function getMediaFolderWhereDroppedOn(string $typeOfDrop)
     {
@@ -93,39 +86,24 @@ class MediaFolderMove extends BackendBaseAJAXAction
 
             return $mediaFolder->getParent();
         } catch (\Exception $e) {
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                'Folder does not exist'
-            );
+            throw new AjaxExitException('Folder does not exist');
         }
     }
 
     /**
      * @return string
+     * @throws AjaxExitException
      */
     private function getTypeOfDrop(): string
     {
         $typeOfDrop = $this->get('request')->request->get('type');
 
         if ($typeOfDrop === null) {
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                'no type provided'
-            );
-
-            return null;
+            throw new AjaxExitException('no type provided');
         }
 
         if (!in_array($typeOfDrop, ['before', 'after', 'inside'])) {
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                'wrong type provided'
-            );
-
-            return null;
+            throw new AjaxExitException('wrong type provide');
         }
 
         return $typeOfDrop;

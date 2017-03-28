@@ -8,6 +8,7 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Event\MediaFolderCreated;
+use Common\Exception\AjaxExitException;
 use Common\Uri;
 
 /**
@@ -57,6 +58,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
 
     /**
      * @param MediaFolder|null $parent
+     * @throws AjaxExitException
      * @return string
      */
     protected function getFolderName(MediaFolder $parent = null): string
@@ -69,26 +71,12 @@ class MediaFolderAdd extends BackendBaseAJAXAction
 
         // We don't have a name
         if ($name === '') {
-            // Throw output error
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                Language::err('NameIsRequired')
-            );
-
-            return null;
+            throw new AjaxExitException(Language::err('NameIsRequired'));
         }
 
         // Folder name already exists
         if ($this->get('media_library.repository.folder')->existsByName($name, $parent)) {
-            // Throw output error
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                Language::err('MediaFolderExists')
-            );
-
-            return null;
+            throw new AjaxExitException(Language::err('MediaFolderExists'));
         }
 
         return $name;
@@ -96,6 +84,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
 
     /**
      * @return MediaFolder|null
+     * @throws AjaxExitException
      */
     protected function getParent()
     {
@@ -109,12 +98,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
         try {
             return $this->get('media_library.repository.folder')->findOneById($parentId);
         } catch (\Exception $e) {
-            // Throw output error
-            $this->output(
-                self::BAD_REQUEST,
-                null,
-                Language::err('ParentNotExists')
-            );
+            throw new AjaxExitException(Language::err('ParentNotExists'));
         }
     }
 }
