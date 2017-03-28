@@ -19,7 +19,7 @@ class ReinstallCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName('forkcms:reinstall')
-            ->setDescription('Clear the cache');
+            ->setDescription('Revert Fork CMS to an uninstalled state, prompting the install wizard.');
     }
 
     /**
