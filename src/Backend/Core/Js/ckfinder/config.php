@@ -1,4 +1,54 @@
 <?php
+require_once '../../../../../../../../autoload.php';
+require_once '../../../../../../../../app/AppKernel.php';
+require_once '../../../../../../../../app/KernelLoader.php';
+
+// after registring autoloaders, let's add use statements for our needed classes
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+
+$env = getenv('FORK_ENV') ? : 'prod';
+$debug = getenv('FORK_DEBUG') === '1';
+
+$kernel = new AppKernel($env, $debug);
+$loader = new KernelLoader($kernel);
+$loader->passContainerToModels();
+
+
+/*
+ * To make it easy to configure CKFinder, the $baseUrl and $baseDir can be used.
+ * Those are helper variables used later in this config file.
+ */
+
+/*
+ * $baseUrl : the base path used to build the final URL for the resources handled
+ * in CKFinder. If empty, the default value (/userfiles/) is used.
+ * Examples:
+ *   $baseUrl = 'http://example.com/ckfinder/files/';
+ *   $baseUrl = '/userfiles/';
+ * ATTENTION: The trailing slash is required.
+ */
+$baseUrl = '/src/Frontend/Files/userfiles/';
+
+/*
+ * $baseDir : the path to the local directory (in the server) which points to the
+ * above $baseUrl URL. This is the path used by CKFinder to handle the files in
+ * the server. Full write permissions must be granted to this directory.
+ *
+ * Examples:
+ *   // You may point it to a directory directly:
+ *   $baseDir = '/home/login/public_html/ckfinder/files/';
+ *   $baseDir = 'C:/SiteDir/CKFinder/userfiles/';
+ *
+ *   // Or you may let CKFinder discover the path, based on $baseUrl.
+ *   // WARNING: resolveUrl() *will not work* if $baseUrl does not start with a slash ("/"),
+ *   // for example if $baseDir is set to  http://example.com/ckfinder/files/
+ *   $baseDir = resolveUrl($baseUrl);
+ *
+ * ATTENTION: The trailing slash is required.
+ */
+$baseDir = $kernel->getContainer()->getParameter('site.path_www') . $baseUrl;
+
 /*
  * CKFinder Configuration File
  *
@@ -8,13 +58,20 @@
 /*============================ PHP Error Reporting ====================================*/
 // http://docs.cksource.com/ckfinder3-php/debugging.html
 
-// Production
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
-ini_set('display_errors', 0);
+/*
+ * Create a Kernel and load the DI container to be able to access the Backend Model methods and
+ * the configuration. This should be refactored in time.
+ */
 
-// Development
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
+if ($env == 'prod' || $debug == false) {
+    // Production
+    error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+    ini_set('display_errors', 0);
+} else {
+    // Development
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+}
 
 /*============================ General Settings =======================================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html
@@ -25,14 +82,14 @@ $config = array();
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_authentication
 
 $config['authentication'] = function () {
-    return false;
+    return BackendAuthentication::isLoggedIn();
 };
 
 /*============================ License Key ============================================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_licenseKey
 
-$config['licenseName'] = '';
-$config['licenseKey']  = '';
+$config['licenseName'] = BackendModel::get('fork.settings')->get('Core', 'ckfinder_license_name');
+$config['licenseKey']  = BackendModel::get('fork.settings')->get('Core', 'ckfinder_license_key');
 
 /*============================ CKFinder Internal Directory ============================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_privateDir
@@ -49,9 +106,9 @@ $config['privateDir'] = array(
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_images
 
 $config['images'] = array(
-    'maxWidth'  => 1600,
-    'maxHeight' => 1200,
-    'quality'   => 80,
+    'maxWidth'  => BackendModel::get('fork.settings')->get('Core', 'ckfinder_image_max_width'),
+    'maxHeight' => BackendModel::get('fork.settings')->get('Core', 'ckfinder_image_max_height'),
+    'quality'   => 100,
     'sizes' => array(
         'small'  => array('width' => 480, 'height' => 320, 'quality' => 80),
         'medium' => array('width' => 600, 'height' => 480, 'quality' => 80),
@@ -65,8 +122,8 @@ $config['images'] = array(
 $config['backends'][] = array(
     'name'         => 'default',
     'adapter'      => 'local',
-    'baseUrl'      => '/ckfinder/userfiles/',
-//  'root'         => '', // Can be used to explicitly set the CKFinder user files directory.
+    'baseUrl'      => $baseUrl,
+    'root'         => $baseDir, // Can be used to explicitly set the CKFinder user files directory.
     'chmodFiles'   => 0777,
     'chmodFolders' => 0755,
     'filesystemEncoding' => 'UTF-8',
@@ -79,18 +136,18 @@ $config['defaultResourceTypes'] = '';
 
 $config['resourceTypes'][] = array(
     'name'              => 'Files', // Single quotes not allowed.
-    'directory'         => 'files',
+    'directory'         => $baseDir . 'files',
     'maxSize'           => 0,
-    'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip',
+    'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,eps,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,svg,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,webp,wma,wmv,xls,xlsx,zip',
     'deniedExtensions'  => '',
     'backend'           => 'default'
 );
 
 $config['resourceTypes'][] = array(
     'name'              => 'Images',
-    'directory'         => 'images',
+    'directory'         => $baseDir . 'images',
     'maxSize'           => 0,
-    'allowedExtensions' => 'bmp,gif,jpeg,jpg,png',
+    'allowedExtensions' => 'gif,jpeg,jpg,png,svg,webp',
     'deniedExtensions'  => '',
     'backend'           => 'default'
 );
