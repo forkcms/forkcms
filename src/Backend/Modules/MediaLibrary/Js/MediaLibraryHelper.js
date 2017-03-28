@@ -348,31 +348,33 @@ jsBackend.mediaLibraryHelper.group =
      */
     getFolders : function()
     {
-        if (!mediaFolders) {
-            // load folders using ajax
-            $.ajax({
-                data: {
-                    fork: {
-                        module: 'MediaLibrary',
-                        action: 'MediaFolderFindAll'
-                    }
-                },
-                success: function(json, textStatus) {
-                    if (json.code != 200) {
-                        // show error if needed
-                        if (jsBackend.debug) {
-                            alert(textStatus);
-                        }
-                    } else {
-                        // cache folders
-                        mediaFolders = json2array(json.data).sort(sortByProperty('name'));
-
-                        // update folders
-                        jsBackend.mediaLibraryHelper.group.updateFolders();
-                    }
-                }
-            });
+        if (mediaFolders) {
+            return;
         }
+
+        // load folders using ajax
+        $.ajax({
+            data: {
+                fork: {
+                    module: 'MediaLibrary',
+                    action: 'MediaFolderFindAll'
+                }
+            },
+            success: function(json, textStatus) {
+                if (json.code != 200) {
+                    // show error if needed
+                    if (jsBackend.debug) {
+                        alert(textStatus);
+                    }
+                } else {
+                    // cache folders
+                    mediaFolders = json2array(json.data).sort(sortByProperty('name'));
+
+                    // update folders
+                    jsBackend.mediaLibraryHelper.group.updateFolders();
+                }
+            }
+        });
     },
 
     /**
