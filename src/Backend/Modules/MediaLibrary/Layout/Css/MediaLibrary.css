@@ -164,6 +164,11 @@ p.helpTxt.mediaNoItems {
 /**
  * Media Dialog
  */
+#addMediaDialog .modal-body {
+  padding: 0;
+  background: none;
+  border: none;
+}
 #addMediaDialog #tabLibrary .options{
   margin-bottom: 1em;
 }
@@ -212,14 +217,22 @@ p.helpTxt.mediaNoItems {
 /**
  * Uploaded media box
  */
-#uploadedMediaBox .mediaConnectedItems {
-  float: none;
+#uploadedMediaBox .panel-body {
+  padding: 20px;
 }
 
+#uploadedMediaBox .mediaConnectedItems {
+  float: none;
+  padding: 0;
+  margin: 0;
+}
 
 /**
  * Fine uploader
  */
 .qq-uploader {
   border-radius: 0;
+}
+.qq-upload-list {
+  margin-top: 1.5em;
 }

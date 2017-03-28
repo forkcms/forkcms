@@ -2,9 +2,17 @@
 <locale>
   <Backend>
     <Core>
+      <item type="label" name="AddMediaItems">
+        <translation language="en"><![CDATA[add media]]></translation>
+        <translation language="nl"><![CDATA[bestanden toevoegen]]></translation>
+      </item>
       <item type="message" name="ChooseTypeForNewGroup">
         <translation language="en"><![CDATA[with the following type:]]></translation>
         <translation language="nl"><![CDATA[van het volgende type:]]></translation>
+      </item>
+      <item type="label" name="DropFilesHere">
+        <translation language="en"><![CDATA[drop files here]]></translation>
+        <translation language="nl"><![CDATA[sleep hier je bestanden]]></translation>
       </item>
       <item type="message" name="FolderIsAdded">
         <translation language="en"><![CDATA[The new folder is added.]]></translation>
@@ -215,8 +223,8 @@
         <translation language="nl"><![CDATA[Welke video wil je toevoegen?]]></translation>
       </item>
       <item type="message" name="MediaWillBeConnected">
-        <translation language="en"><![CDATA[The following media will be connected to the gallery:]]></translation>
-        <translation language="nl"><![CDATA[Volgende media wordt gekoppeld aan de galerij:]]></translation>
+        <translation language="en"><![CDATA[The following media will be connected when pressing "OK":]]></translation>
+        <translation language="nl"><![CDATA[Volgende media wordt gekoppeld als je op "OK" drukt:]]></translation>
       </item>
     </Core>
     <MediaLibrary>
