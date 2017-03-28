@@ -1,11 +1,11 @@
 <?php
 require_once '../../../../../../../../autoload.php';
-require_once '../../../../../../../../app/AppKernel.php';
-require_once '../../../../../../../../app/KernelLoader.php';
 
 // after registring autoloaders, let's add use statements for our needed classes
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\App\AppKernel;
+use ForkCMS\App\KernelLoader;
 
 $env = getenv('FORK_ENV') ? : 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
