@@ -1,0 +1,33 @@
+{
+    "errorUnknown": "Ezin izan da eskaera burutu. (Errorea {number})",
+    "errors": {
+        "10": "Komando baliogabea.",
+        "11": "Ez da baliabide mota zehaztu eskaeran.",
+        "12": "Eskatutako baliabide mota baliogabea da.",
+        "13": "Konektorearen konfigurazio-fitxategia baliogabea da.",
+        "14": "Konektorearen plugin baliogabea: {pluginName}.",
+        "102": "Fitxategi edo karpetaren izen baliogabea.",
+        "103": "Ezin izan da eskaera burutu autorizazio murrizketen ondorioz.",
+        "104": "Ezin izan da eskaera burutu fitxategi-sistemako baimen murrizketen ondorioz.",
+        "105": "Fitxategi-luzapen baliogabea.",
+        "109": "Eskaera baliogabea.",
+        "110": "Errore ezezaguna.",
+        "111": "Ezin izan da eskaera burutu lortzen den fitxategiaren tamainaren ondorioz.",
+        "115": "Izen bereko fitxategi edo karpeta bat existitzen da dagoeneko.",
+        "116": "Ez da karpeta aurkitu. Mesedez freskatu eta saiatu berriz.",
+        "117": "Ez da fitxategia aurkitu. Mesedez freskatu fitxategi-zerrenda eta saiatu berriz.",
+        "118": "Iturburu eta helburuko bideak berdinak dira.",
+        "201": "Izen bereko fitxategi bat existitzen da dagoeneko. Kargatutako fitxategia honela berrizendatu da: \"{name}\".",
+        "202": "Fitxategi baliogabea.",
+        "203": "Fitxategi baliogabea. Fitxategi-tamaina handiegia da.",
+        "204": "Kargatutako fitxategia hondatuta dago.",
+        "205": "Zerbitzarian ez dago fitxategiak kargatzeko aldi baterako karpetarik erabilgarri.",
+        "206": "Segurtasun-arrazoiak direla eta, karga bertan behera geratu da. Fitxategiak HTML bezalako datuak dauzka.",
+        "207": "Kargatutako fitxategia honela berrizendatu da: \"{name}\".",
+        "300": "Fitxategia(k) lekuz aldatzeak huts egin du.",
+        "301": "Fitxategia(k) kopiatzeak huts egin du.",
+        "302": "Fitxategia(k) ezabatzeak huts egin du.",
+        "500": "Segurtasun-arrazoiak direla eta, fitxategi-arakatzailea desgaituta dago. Jarri sistemaren administratzailearekin harremanetan eta egiaztatu CKFinder konfigurazio-fitxategia.",
+        "501": "Koadro txikien euskarria desgaituta dago."
+    }
+}
