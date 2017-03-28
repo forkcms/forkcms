@@ -1,0 +1,4 @@
+<Files connector.php>
+    Order Deny,Allow
+    allow from all
+</Files>
