@@ -2,11 +2,8 @@
 
 namespace Backend\Modules\MediaLibrary\Component;
 
-/**
- * Do not use or reference this directly from your client-side code.
- * Instead, this should be required via the endpoint.php or endpoint-cors.php
- * file(s).
- */
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 
 class UploadHandler
 {
@@ -20,18 +17,32 @@ class UploadHandler
 
     protected $uploadName;
 
+    /** @var Request */
+    protected $request;
+
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
     /**
      * Get the original filename
      * @return string
      */
     public function getName(): string
     {
-        if (isset($_REQUEST['qqfilename'])) {
-            return $_REQUEST['qqfilename'];
+        $fileName = $this->request->request->get('qqfilename');
+        if ($fileName !== null) {
+            return $fileName;
         }
 
-        if (isset($_FILES[$this->inputName])) {
-            return $_FILES[$this->inputName]['name'];
+        /** @var UploadedFile|null $file */
+        $file = $this->request->files->get($this->inputName);
+        if ($file instanceof UploadedFile) {
+            return $file->getClientOriginalName();
         }
     }
 
@@ -68,12 +79,12 @@ class UploadHandler
      */
     public function combineChunks($uploadDirectory, $name = null): array
     {
-        $uuid = $_POST['qquuid'];
+        $uuid = $this->request->request->get('qquuid');
         if ($name === null) {
             $name = $this->getName();
         }
         $targetFolder = $this->chunksFolder . DIRECTORY_SEPARATOR . $uuid;
-        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int) $_REQUEST['qqtotalparts'] : 1;
+        $totalParts = $this->request->request->getInt('qqtotalparts', 1);
 
         $targetPath = join(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $name]);
         $this->uploadName = $name;
@@ -133,31 +144,25 @@ class UploadHandler
             return ['error' => "Server error. Uploads directory isn't writable"];
         }
 
-        $type = $_SERVER['CONTENT_TYPE'];
-        if (isset($_SERVER['HTTP_CONTENT_TYPE'])) {
-            $type = $_SERVER['HTTP_CONTENT_TYPE'];
-        }
-
-        if (!isset($type)) {
+        $type = $this->request->server->get('HTTP_CONTENT_TYPE', $this->request->server->get('CONTENT_TYPE'));
+        if ($type === null) {
             return ['error' => "No files were uploaded."];
         } elseif (strpos(strtolower($type), 'multipart/') !== 0) {
             return ['error' => "Server error. Not a multipart request. Please set forceMultipart to default value (true)."];
         }
 
-        // Get size and name
-        $file = $_FILES[$this->inputName];
-        $size = $file['size'];
-        if (isset($_REQUEST['qqtotalfilesize'])) {
-            $size = $_REQUEST['qqtotalfilesize'];
+        /** @var UploadedFile|null $file */
+        $file = $this->request->files->get($this->inputName);
+
+        // check file error
+        if (!$file instanceof UploadedFile) {
+            return ['error' => 'Upload Error #UNKNOWN'];
         }
+
+        $size = $this->request->request->get('qqtotalfilesize', $file->getClientSize());
 
         if ($name === null) {
             $name = $this->getName();
-        }
-
-        // check file error
-        if ($file['error']) {
-            return ['error' => 'Upload Error #' . $file['error']];
         }
 
         // Validate name
@@ -184,14 +189,14 @@ class UploadHandler
         }
 
         // Save a chunk
-        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int) $_REQUEST['qqtotalparts'] : 1;
+        $totalParts = $this->request->request->getInt('qqtotalparts', 1);
 
-        $uuid = $_REQUEST['qquuid'];
+        $uuid = $this->request->request->get('qquuid');
         if ($totalParts > 1) {
             # chunked upload
 
             $chunksFolder = $this->chunksFolder;
-            $partIndex = (int) $_REQUEST['qqpartindex'];
+            $partIndex = $this->request->request->getInt('qqpartindex');
 
             if (!is_writable($chunksFolder) && !is_executable($uploadDirectory)) {
                 return ['error' => "Server error. Chunks directory isn't writable or executable."];
@@ -204,7 +209,7 @@ class UploadHandler
             }
 
             $target = $targetFolder . '/' . $partIndex;
-            $success = move_uploaded_file($_FILES[$this->inputName]['tmp_name'], $target);
+            $success = move_uploaded_file($file->getRealPath(), $target);
 
             return ["success" => $success, "uuid" => $uuid];
         } else {
@@ -217,7 +222,7 @@ class UploadHandler
                 if (!is_dir(dirname($target))) {
                     mkdir(dirname($target), 0777, true);
                 }
-                if (move_uploaded_file($file['tmp_name'], $target)) {
+                if (move_uploaded_file($file->getRealPath(), $target)) {
                     return ['success'=> true, "uuid" => $uuid];
                 }
             }

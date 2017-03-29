@@ -55,7 +55,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
          *    but is now required in all cases if you are making use of this PHP example.
          */
         // Include the upload handler class
-        $uploader = new UploadHandler();
+        $uploader = new UploadHandler($this->get('request'));
         // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
         $uploader->allowedExtensions = []; // all files types allowed by default
         // Specify max file size in bytes.
@@ -64,27 +64,24 @@ class MediaItemUpload extends BackendBaseAJAXAction
         $uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
         // If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
         $uploader->chunksFolder = "chunks";
-        //$method = $_SERVER["REQUEST_METHOD"];
-        $method = $this->getRequestMethod();
 
-        // Determine whether we are dealing with a regular ol' XMLHttpRequest, or
-        // an XDomainRequest
-        $_HEADERS = $this->parseRequestHeaders();
+        $method = $this->getRequestMethod();
         $iframeRequest = false;
 
-        if (!isset($_HEADERS['X-Requested-With']) || $_HEADERS['X-Requested-With'] != "XMLHttpRequest") {
+        // Determine whether we are dealing with a regular ol' XMLHttpRequest, or an XDomainRequest
+        if ($this->get('request')->headers->get('x-requested-with') !== 'XMLHttpRequest') {
             $iframeRequest = true;
         }
 
         /*
          * handle the preflighted OPTIONS request. Needed for CORS operation.
          */
-        if ($method == "OPTIONS") {
+        if ($method === "OPTIONS") {
             $this->handlePreflight();
         /*
          * handle a POST
          */
-        } elseif ($method == "POST") {
+        } elseif ($method === "POST") {
             $this->handleCorsRequest();
             header("Content-Type: text/plain");
 
@@ -168,39 +165,18 @@ class MediaItemUpload extends BackendBaseAJAXAction
     // DELETE, in a "_method" parameter.
     private function getRequestMethod()
     {
-        global $HTTP_RAW_POST_DATA;
-        // This should only evaluate to true if the Content-Type is undefined
-        // or unrecognized, such as when XDomainRequest has been used to
-        // send the request.
-        if (isset($HTTP_RAW_POST_DATA)) {
-            parse_str($HTTP_RAW_POST_DATA, $_POST);
+        if ($this->get('request')->request->get('method') !== null && $this->get('request')->request->get('_method') !== null) {
+            return $this->get('request')->request->get('_method');
         }
 
-        if (isset($_POST["_method"]) && $_POST["_method"] != null) {
-            return $_POST["_method"];
-        }
-
-        return $_SERVER["REQUEST_METHOD"];
-    }
-
-    private function parseRequestHeaders()
-    {
-        $headers = [];
-        foreach ($_SERVER as $key => $value) {
-            if (substr($key, 0, 5) <> 'HTTP_') {
-                continue;
-            }
-            $header = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
-            $headers[$header] = $value;
-        }
-        return $headers;
+        return $this->get('request')->server->get('REQUEST_METHOD');
     }
 
     /**
-     * @return MediaFolder|null
+     * @return MediaFolder
      * @throws AjaxExitException
      */
-    private function getMediaFolder()
+    private function getMediaFolder(): MediaFolder
     {
         // Define id
         $id = $this->get('request')->query->getInt('folder_id');
