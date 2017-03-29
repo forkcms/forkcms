@@ -260,6 +260,10 @@
         <translation language="en"><![CDATA[Are you sure you want to delete this media item "%1$s" and all it connections?]]></translation>
         <translation language="nl"><![CDATA[Bent u zeker dat u dit bestand "%1$s" en alle koppelingen wil verwijderen?]]></translation>
       </item>
+      <item type="label" name="Delete">
+        <translation language="en"><![CDATA[delete]]></translation>
+        <translation language="nl"><![CDATA[verwijderen]]></translation>
+      </item>
       <item type="message" name="DeletedMediaItem">
         <translation language="en"><![CDATA[The media item "%1$s" and all its connections are deleted.]]></translation>
         <translation language="nl"><![CDATA[Het media item "%1$s" en al z'n koppelingen zijn verwijderd.]]></translation>
@@ -356,10 +360,6 @@
         <translation language="en"><![CDATA[Media item "%1$s" deleted.]]></translation>
         <translation language="nl"><![CDATA[Media item "%1$s" verwijderd.]]></translation>
       </item>
-      <item type="label" name="MediaItemDeletes">
-        <translation language="en"><![CDATA[delete media]]></translation>
-        <translation language="nl"><![CDATA[media verwijderen]]></translation>
-      </item>
       <item type="label" name="MediaItemEdit">
         <translation language="en"><![CDATA[edit item]]></translation>
         <translation language="nl"><![CDATA[item aanpassen]]></translation>
@@ -376,7 +376,7 @@
         <translation language="en"><![CDATA[filetype]]></translation>
         <translation language="nl"><![CDATA[bestandstype]]></translation>
       </item>
-      <item type="label" name="MoveMedia">
+      <item type="label" name="Move">
         <translation language="en"><![CDATA[move]]></translation>
         <translation language="nl"><![CDATA[verplaatsen]]></translation>
       </item>

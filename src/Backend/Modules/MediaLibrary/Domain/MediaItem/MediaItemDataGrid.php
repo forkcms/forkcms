@@ -141,8 +141,8 @@ class MediaItemDataGrid extends DataGridDB
         $ddmMediaItemMassAction = new \SpoonFormDropdown(
             'action',
             [
-                'move' => Language::lbl('MoveMedia'),
-                'delete' => Language::lbl('MediaItemDeletes')
+                'move' => Language::lbl('Move'),
+                'delete' => Language::lbl('Delete')
             ],
             'move',
             false,
