@@ -74,7 +74,7 @@
       </item>
       <item type="message" name="WidgetViewsHelp">
         <translation language="en"><![CDATA[As a developer, you can add your own custom widgets by adding them in the folder /src/Frontend/Modules/MediaLibrary/Widgets/. Each widget that you add gets added in this dropdown automatically and can have its own image sizes in the Frontend.]]></translation>
-        <translation language="nl"><![CDATA[U kan zelf als developer eenvoudig widgets aanmaken in /src/Frontend/Modules/MediaLibrary/Widgets/. Elke widget die u toevoegt komt hier automatisch in deze keuzelijst te staan en kan in de Frontend elk z'n eigen afbeeldingsformaten hebben.]]></translation>
+        <translation language="nl"><![CDATA[Als developer kan u zelf eenvoudig widgets aanmaken in /src/Frontend/Modules/MediaLibrary/Widgets/. Elke widget die u toevoegt komt hier automatisch in deze keuzelijst te staan en kan in de Frontend elk z'n eigen afbeeldingsformaten hebben.]]></translation>
       </item>
     </MediaGalleries>
   </Backend>
