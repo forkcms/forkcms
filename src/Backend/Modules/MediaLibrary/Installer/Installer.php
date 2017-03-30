@@ -65,7 +65,8 @@ class Installer extends ModuleInstaller
             [
                 'media_library/media_item_upload',
                 'media_library/media_item_edit',
-            ]
+            ],
+            3
         );
     }
 
