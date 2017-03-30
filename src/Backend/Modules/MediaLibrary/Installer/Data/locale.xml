@@ -68,6 +68,12 @@
         <translation language="fr"><![CDATA[photos]]></translation>
         <translation language="nl"><![CDATA[afbeeldingen]]></translation>
       </item>
+      <item type="label" name="MediaItemIndex">
+        <translation language="de"><![CDATA[Übersicht]]></translation>
+        <translation language="en"><![CDATA[overview]]></translation>
+        <translation language="fr"><![CDATA[vue d'ensemble]]></translation>
+        <translation language="nl"><![CDATA[overzicht]]></translation>
+      </item>
       <item type="label" name="MediaInTheFolder">
         <translation language="en"><![CDATA[in the folder]]></translation>
         <translation language="nl"><![CDATA[in de map]]></translation>
