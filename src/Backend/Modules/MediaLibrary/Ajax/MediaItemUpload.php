@@ -10,6 +10,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Component\UploadHandler;
 use Common\Exception\AjaxExitException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action is being used to upload new MediaItem items and save them into to the database.
@@ -18,6 +19,9 @@ class MediaItemUpload extends BackendBaseAJAXAction
 {
     // override existing media
     const OVERRIDE_EXISTING = false;
+
+    /** @var Response */
+    protected $response;
 
     /**
      * Execute the action
@@ -66,6 +70,8 @@ class MediaItemUpload extends BackendBaseAJAXAction
         // If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
         $uploader->chunksFolder = "chunks";
 
+        $this->response = new Response();
+
         $method = $this->getRequestMethod();
         $iframeRequest = false;
 
@@ -84,7 +90,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
          */
         } elseif ($method === "POST") {
             $this->handleCorsRequest();
-            header("Content-Type: text/plain");
+            $this->response->headers->set('Content-Type', 'text/plain');
 
             // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
             // For example: /myserver/handlers/endpoint.php?done
@@ -147,14 +153,17 @@ class MediaItemUpload extends BackendBaseAJAXAction
                 // that will parse the JSON and pass it along to Fine Uploader via
                 // window.postMessage
                 if ($iframeRequest === true) {
-                    header("Content-Type: text/html");
+                    $this->response->headers->set('Content-Type', 'text/html');
                     $resultData .= "<script src='http://{{SERVER_URL}}/{{FINE_UPLOADER_FOLDER}}/iframe.xss.response.js'></script>";
                 }
-                echo $resultData;
+                $this->response->setContent($resultData);
+                $this->response->send();
                 exit();
             }
         } else {
-            header("HTTP/1.0 405 Method Not Allowed");
+            $this->response->setStatusCode(Response::HTTP_METHOD_NOT_ALLOWED);
+            $this->response->send();
+            exit();
         }
     }
 
@@ -196,7 +205,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
 
     private function handleCorsRequest()
     {
-        header("Access-Control-Allow-Origin: *");
+        $this->response->headers->set('Access-Control-Allow-Origin', '*');
     }
 
     /*
@@ -205,8 +214,8 @@ class MediaItemUpload extends BackendBaseAJAXAction
     private function handlePreflight()
     {
         $this->handleCorsRequest();
-        header("Access-Control-Allow-Methods: POST, DELETE");
-        header("Access-Control-Allow-Credentials: true");
-        header("Access-Control-Allow-Headers: Content-Type, X-Requested-With, Cache-Control");
+        $this->response->headers->set('Access-Control-Allow-Methods', 'POST, DELETE');
+        $this->response->headers->set('Access-Control-Allow-Credentials', 'true');
+        $this->response->headers->set('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Cache-Control');
     }
 }
