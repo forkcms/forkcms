@@ -45,21 +45,6 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         /** @var int|null $mediaFolderId */
         $mediaFolderId = $mediaFolder !== null ? $mediaFolder->getId() : null;
 
-        // No media group, stop here
-        if ($mediaGroup === null) {
-            // Output success message with variables
-            $this->output(
-                self::OK,
-                [
-                    'media' => null,
-                    'folder' => $mediaFolderId,
-                    'tab' => $this->selectedTab
-                ]
-            );
-
-            return;
-        }
-
         // Init media items
         $mediaItemsToArray = [];
 
@@ -103,7 +88,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
             /** @var MediaGroup */
             return $this->get('media_library.repository.group')->findOneById($id);
         } catch (\Exception $e) {
-            throw new AjaxExitException(Language::err('MediaGroupNotExists'));
+            return null;
         }
     }
 

@@ -22,13 +22,13 @@ class Slider extends FrontendMediaWidget
         }
 
         // Add CSS
-        $this->addCSS('/node_modules/bxslider/dist/jquery.bxslider.css', true);
+        $this->addCSS('/css/vendors/bxslider/jquery.bxslider.css', true);
 
         // Add custom CSS
         $this->addCSS('slider.css');
 
         // Add JS
-        $this->addJS('/node_modules/bxslider/dist/jquery.bxslider.min.js', true);
+        $this->addJS('/js/vendors/jquery.bxslider.min.js', true);
 
         parent::execute();
         $this->loadTemplate();

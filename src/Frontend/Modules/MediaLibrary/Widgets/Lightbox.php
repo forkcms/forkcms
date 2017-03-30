@@ -29,15 +29,15 @@ class Lightbox extends FrontendMediaWidget
          * <![endif]-->
          */
         // Add CSS
-        $this->addCSS('/node_modules/photoswipe/dist/photoswipe.css', true);
-        $this->addCSS('/node_modules/photoswipe/dist/default-skin/default-skin.css', true);
+        $this->addCSS('/css/vendors/photoswipe/photoswipe.css', true);
+        $this->addCSS('/css/vendors/photoswipe/default-skin.css', true);
 
         // Add custom CSS
         $this->addCSS('lightbox.css');
 
         // Add JS
-        $this->addJS('/node_modules/photoswipe/dist/photoswipe.min.js', true);
-        $this->addJS('/node_modules/photoswipe/dist/photoswipe-ui-default.min.js', true);
+        $this->addJS('/js/vendors/photoswipe.min.js', true);
+        $this->addJS('/js/vendors/photoswipe-ui-default.min.js', true);
 
         /**
          * Attention:
