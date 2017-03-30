@@ -863,7 +863,7 @@ jsBackend.mediaLibraryHelper.upload =
                 }
             },
             validation: {
-                allowedExtensions: ['jpeg', 'jpg', 'gif', 'png', 'csv', 'doc', 'docx', 'pdf', 'rtf', 'txt', 'xls', 'xlsx', 'aiff', 'mp3', 'wav']
+                allowedExtensions: jsBackend.data.get('MediaLibrary.mediaAllowedExtensions')
             },
             scaling: {
                 includeExif: true,
@@ -873,7 +873,7 @@ jsBackend.mediaLibraryHelper.upload =
                 ]
             },
             callbacks: {
-                onUpload:  function() {
+                onUpload: function() {
                     // redefine media folder id
                     mediaFolderId = $('#uploadMediaFolderId').val();
 

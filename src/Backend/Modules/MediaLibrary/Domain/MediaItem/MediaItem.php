@@ -194,7 +194,7 @@ class MediaItem
             }
 
             /** @var Type $mediaItemType */
-            $mediaItemType = Type::fromExtension($file->getExtension());
+            $mediaItemType = Type::fromMimeType($file->getMimeType());
 
             // Define sharding folder (getPath gets the path without the trailing slash)
             /** @var string $shardingFolderName */

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 class UploadHandler
 {
     public $allowedExtensions = [];
+    public $allowedMimeTypes = [];
     public $sizeLimit = null;
     public $inputName = 'qqfile';
     public $chunksFolder = 'chunks';
@@ -183,9 +184,16 @@ class UploadHandler
         $pathinfo = pathinfo($name);
         $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
 
+        // Check file extension
         if ($this->allowedExtensions && !in_array(strtolower($ext), array_map("strtolower", $this->allowedExtensions))) {
             $these = implode(', ', $this->allowedExtensions);
             return ['error' => 'File has an invalid extension, it should be one of ' . $these . '.'];
+        }
+
+        // Check file mime type
+        if ($this->allowedMimeTypes && !in_array(strtolower($file->getMimeType()), array_map("strtolower", $this->allowedMimeTypes))) {
+            $these = implode(', ', $this->allowedMimeTypes);
+            return ['error' => 'File has an invalid mime type, it should be one of ' . $these . '.'];
         }
 
         // Save a chunk

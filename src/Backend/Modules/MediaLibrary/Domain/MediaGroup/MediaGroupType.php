@@ -6,8 +6,10 @@ use Backend\Core\Engine\Header;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
+use Backend\Modules\MediaLibrary\Manager\ExtensionManager;
 use Ramsey\Uuid\Uuid;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\LogicException;
@@ -34,7 +36,7 @@ class MediaGroupType extends AbstractType
 
     /**
      * @param MediaGroupRepository $mediaGroupRepository
-     * @param $commandBus
+     * @param MessageBusSupportingMiddleware $commandBus
      */
     public function __construct(
         MediaGroupRepository $mediaGroupRepository,
@@ -97,6 +99,7 @@ class MediaGroupType extends AbstractType
         $header->addJS('MediaLibraryAddFolder.js', 'MediaLibrary', true);
         $header->addJS('MediaLibraryHelper.js', 'MediaLibrary', true);
         $header->addJsData('MediaLibrary', 'mediaAllowedMovieSource', StorageType::POSSIBLE_VALUES_FOR_MOVIE);
+        $header->addJsData('MediaLibrary', 'mediaAllowedExtensions', Model::get('media_library.manager.extension')->getAll());
     }
 
     /**

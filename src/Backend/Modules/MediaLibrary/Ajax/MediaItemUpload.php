@@ -57,7 +57,8 @@ class MediaItemUpload extends BackendBaseAJAXAction
         // Include the upload handler class
         $uploader = new UploadHandler($this->get('request'));
         // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
-        $uploader->allowedExtensions = []; // all files types allowed by default
+        $uploader->allowedExtensions = $this->get('media_library.manager.extension')->getAll();
+        $uploader->allowedMimeTypes = $this->get('media_library.manager.mime_type')->getAll();
         // Specify max file size in bytes.
         $uploader->sizeLimit = null;
         // Specify the input name set in the javascript.

@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
+use Backend\Core\Engine\Model;
+
 final class Type
 {
     // Possible MediaItem types
@@ -41,35 +43,31 @@ final class Type
     }
 
     /**
-     * @param string $extension
+     * @param string $mimeType
      * @return Type
+     * @throws \Exception
      */
-    public static function fromExtension(string $extension): Type
+    public static function fromMimeType(string $mimeType): Type
     {
-        $extension = strtolower($extension);
+        $mimeType = strtolower($mimeType);
+
+        // Extension not exists, throw exception
+        if (!in_array($mimeType, Model::get('media_library.manager.mime_type')->getAll())) {
+            throw new \Exception('MimeType is not one of the allowed ones: ' . implode(', ', Model::get('media_library.manager.mime_type')->getAll()));
+        }
 
         // Looking for image files
-        if (in_array($extension, [
-            'jpg',
-            'jpeg',
-            'gif',
-            'png',
-        ])) {
+        if (in_array($mimeType, Model::get('media_library.manager.mime_type')->getImageMimeTypes())) {
             return self::image();
         }
 
         // Looking for audio files
-        if (in_array($extension, [
-            'mp3',
-            'aiff',
-            'wav',
-        ])) {
+        if (in_array($mimeType, Model::get('media_library.manager.mime_type')->getAudioMimeTypes())) {
             return self::audio();
-        } elseif (in_array($extension, [
-            'avi',
-            'mov',
-            'mp4',
-        ])) {
+        }
+
+        // Looking for movie files
+        if (in_array($mimeType, Model::get('media_library.manager.mime_type')->getMovieMimeTypes())) {
             return self::movie();
         }
 
