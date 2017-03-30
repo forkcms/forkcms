@@ -68,15 +68,27 @@
         <translation language="fr"><![CDATA[photos]]></translation>
         <translation language="nl"><![CDATA[afbeeldingen]]></translation>
       </item>
+      <item type="label" name="MediaInTheFolder">
+        <translation language="en"><![CDATA[in the folder]]></translation>
+        <translation language="nl"><![CDATA[in de map]]></translation>
+      </item>
+      <item type="label" name="MediaItemDelete">
+        <translation language="de"><![CDATA[Entfernen von Medien]]></translation>
+        <translation language="en"><![CDATA[charging media]]></translation>
+        <translation language="fr"><![CDATA[médias de charge]]></translation>
+        <translation language="nl"><![CDATA[media verwijderen]]></translation>
+      </item>
       <item type="label" name="MediaItemIndex">
         <translation language="de"><![CDATA[Übersicht]]></translation>
         <translation language="en"><![CDATA[overview]]></translation>
         <translation language="fr"><![CDATA[vue d'ensemble]]></translation>
         <translation language="nl"><![CDATA[overzicht]]></translation>
       </item>
-      <item type="label" name="MediaInTheFolder">
-        <translation language="en"><![CDATA[in the folder]]></translation>
-        <translation language="nl"><![CDATA[in de map]]></translation>
+      <item type="label" name="MediaItemUpload">
+        <translation language="de"><![CDATA[Entfernen von Medien]]></translation>
+        <translation language="en"><![CDATA[removing media]]></translation>
+        <translation language="fr"><![CDATA[supression de media]]></translation>
+        <translation language="nl"><![CDATA[media opladen]]></translation>
       </item>
       <item type="label" name="MediaLibrary">
         <translation language="de"><![CDATA[Medienbibliothek]]></translation>
@@ -385,6 +397,10 @@
       <item type="label" name="Move">
         <translation language="en"><![CDATA[move]]></translation>
         <translation language="nl"><![CDATA[verplaatsen]]></translation>
+      </item>
+      <item type="label" name="MoveMedia">
+        <translation language="en"><![CDATA[move media]]></translation>
+        <translation language="nl"><![CDATA[media verplaatsen]]></translation>
       </item>
       <item type="message" name="MoveMediaToFolder">
         <translation language="en"><![CDATA[Move media to this folder:]]></translation>
