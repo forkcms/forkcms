@@ -55,11 +55,8 @@ class MediaFolderDelete extends BackendBaseActionDelete
     protected function getMediaFolder(): MediaFolder
     {
         try {
-            // Get id to delete
-            $id = $this->getParameter('id', 'int');
-
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById($id);
+            return $this->get('media_library.repository.folder')->findOneById($this->get('request')->query->getInt('id'));
         } catch (\Exception $e) {
             $this->redirect(
                 $this->getBackLink(
