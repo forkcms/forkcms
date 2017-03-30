@@ -2,41 +2,29 @@
 
 namespace Backend\Modules\MediaLibrary\Manager;
 
-use Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider;
 use Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
-use Backend\Modules\MediaLibrary\Component\StorageProvider\VimeoStorageProvider;
-use Backend\Modules\MediaLibrary\Component\StorageProvider\YoutubeStorageProvider;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 
 class StorageManager
 {
-    /** @var StorageProviderInterface */
-    protected $externalStorageProvider;
-
-    /** @var StorageProviderInterface */
-    protected $localStorageProvider;
-
-    /** @var StorageProviderInterface */
-    protected $youtubeStorageProvider;
-
-    /** @var StorageProviderInterface */
-    protected $vimeoStorageProvider;
+    /** @var array */
+    protected $providers = [];
 
     /**
-     * StorageManager constructor.
-     *
-     * @param LocalStorageProvider $localStorageProvider
-     * @param YoutubeStorageProvider $youtubeStorageProvider
-     * @param VimeoStorageProvider $vimeoStorageProvider
+     * @param StorageProviderInterface $storageProvider
+     * @param string $storageType
+     * @throws \Exception
      */
-    public function __construct(
-        LocalStorageProvider $localStorageProvider,
-        YoutubeStorageProvider $youtubeStorageProvider,
-        VimeoStorageProvider $vimeoStorageProvider
-    ) {
-        $this->localStorageProvider = $localStorageProvider;
-        $this->youtubeStorageProvider = $youtubeStorageProvider;
-        $this->vimeoStorageProvider = $vimeoStorageProvider;
+    public function addStorageProvider(StorageProviderInterface $storageProvider, string $storageType)
+    {
+        try {
+            $storageType = StorageType::fromString($storageType);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+
+        // Add the storage provider
+        $this->providers[$storageType->getStorageType()] = $storageProvider;
     }
 
     /**
@@ -44,40 +32,12 @@ class StorageManager
      * @return StorageProviderInterface
      * @throws \Exception
      */
-    public function getStorage(StorageType $storageType): StorageProviderInterface
+    public function getStorageProvider(StorageType $storageType): StorageProviderInterface
     {
-        switch ($storageType) {
-            case StorageType::external():
-                if (!$this->hasExternalStorageProvider()) {
-                    throw new \Exception('You must define an external storage provider before you can call it.');
-                }
-                return $this->externalStorageProvider;
-                break;
-            case StorageType::vimeo():
-                return $this->vimeoStorageProvider;
-                break;
-            case StorageType::youtube():
-                return $this->youtubeStorageProvider;
-                break;
-            default:
-                return $this->localStorageProvider;
-                break;
+        if (!array_key_exists($storageType->getStorageType(), $this->providers)) {
+            throw new \Exception('MediaLibrary can\'t find any defined StorageProvider for the given storage type: "' . $storageType->getStorageType() . '".');
         }
-    }
 
-    /**
-     * @return bool
-     */
-    public function hasExternalStorageProvider(): bool
-    {
-        return $this->externalStorageProvider instanceof StorageProviderInterface;
-    }
-
-    /**
-     * @param StorageProviderInterface $externalStorageProvider
-     */
-    public function setExternalStorageProvider(StorageProviderInterface $externalStorageProvider)
-    {
-        $this->externalStorageProvider = $externalStorageProvider;
+        return $this->providers[$storageType->getStorageType()];
     }
 }

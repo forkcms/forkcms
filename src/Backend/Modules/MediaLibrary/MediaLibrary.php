@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\MediaLibrary;
 
+use Backend\Modules\MediaLibrary\DependencyInjection\Compiler\StorageProviderPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -9,4 +11,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class MediaLibrary extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new StorageProviderPass());
+    }
 }

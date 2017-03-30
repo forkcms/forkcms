@@ -479,7 +479,7 @@ class MediaItem
      */
     public function getAbsolutePath(): string
     {
-        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getAbsolutePath($this);
+        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getAbsolutePath($this);
     }
 
     /**
@@ -487,7 +487,7 @@ class MediaItem
      */
     public function getAbsoluteWebPath(): string
     {
-        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getAbsoluteWebPath($this);
+        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getAbsoluteWebPath($this);
     }
 
     /**
@@ -495,7 +495,7 @@ class MediaItem
      */
     public function getLinkHTML(): string
     {
-        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getLinkHTML($this);
+        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getLinkHTML($this);
     }
 
     /**
@@ -503,7 +503,7 @@ class MediaItem
      */
     public function getIncludeHTML(): string
     {
-        return Model::get('media_library.manager.storage')->getStorage($this->getStorageType())->getIncludeHTML($this);
+        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getIncludeHTML($this);
     }
 
     /**
@@ -513,7 +513,7 @@ class MediaItem
     public function getWebPath(string $filter = null): string
     {
         /** @var StorageProviderInterface $storage */
-        $storage = Model::get('media_library.manager.storage')->getStorage($this->getStorageType());
+        $storage = Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType());
 
         if (!$storage instanceof LiipImagineBundleStorageProviderInterface || $filter === null) {
             return $storage->getWebPath($this);
