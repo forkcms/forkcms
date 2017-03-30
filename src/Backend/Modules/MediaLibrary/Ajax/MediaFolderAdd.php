@@ -32,8 +32,8 @@ class MediaFolderAdd extends BackendBaseAJAXAction
         /** @var CreateMediaFolder $createMediaFolder */
         $createMediaFolder = new CreateMediaFolder(
             $name,
-            $parent,
-            BackendAuthentication::getUser()->getUserId()
+            BackendAuthentication::getUser()->getUserId(),
+            $parent
         );
 
         // Handle the MediaFolder create

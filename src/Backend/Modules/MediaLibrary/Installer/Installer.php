@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Installer;
 
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
@@ -127,16 +128,8 @@ class Installer extends ModuleInstaller
      */
     protected function loadMediaFolders()
     {
-        Model::get('database')->insert(
-            'MediaFolder',
-            [
-                'userId' => 1,
-                'name' => 'default',
-                'createdOn' => new \DateTime(),
-                'editedOn' => new \DateTime(),
-                'parentMediaFolderId' => null,
-            ]
-        );
+        // Handle the create MediaFolder
+        Model::get('command_bus')->handle(new CreateMediaFolder('Default', 1));
 
         // Delete cache
         Model::get('media_library.cache_builder')->deleteCache();
