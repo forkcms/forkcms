@@ -270,12 +270,7 @@ jsBackend.mediaLibrary.tree =
         var currentPageID = $(node).prop('id').replace('folder-', '');
 
         // get pageID wheron the page has been dropped
-        var droppedOnPageID;
-        if (typeof refNode == 'undefined') {
-            droppedOnPageID = 0;
-        } else {
-            droppedOnPageID = $(refNode).prop('id').replace('folder-', '');
-        }
+        var droppedOnPageID = jsBackend.mediaLibrary.tree.getDroppedOnPageID(refNode);
 
         // make the call
         $.ajax({
@@ -305,6 +300,15 @@ jsBackend.mediaLibrary.tree =
                 $.tree.rollback(rollback);
             }
         });
+    },
+
+    getDroppedOnPageID: function(refNode)
+    {
+        if (typeof refNode === 'undefined') {
+            return 0;
+        }
+
+        return $(refNode).prop('id').replace('folder-', '');
     }
 };
 
