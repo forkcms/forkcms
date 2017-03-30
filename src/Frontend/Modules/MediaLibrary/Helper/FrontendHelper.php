@@ -37,9 +37,9 @@ class FrontendHelper
      * where you only want to get the first media item for your entities.
      *
      * @param array $entities
-     * @param string $methodForMediaGroup F.e.: "getImagesMediaGroup"
-     * @param string $newVariableName F.e.: "image", this variable will be assigned in your entity
-     * @param bool $onlyGetTheFirstMediaItem True = only get the first item, false = get all items
+     * @param string $methodForMediaGroup - F.e.: "getImagesMediaGroup"
+     * @param string $newVariableName - F.e.: "image", this variable will be assigned in your entity
+     * @param bool $onlyGetTheFirstMediaItem - true = only get the first item, false = get all items
      * @throws \Exception
      */
     public function addMediaItemsToEntities(
