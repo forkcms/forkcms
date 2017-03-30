@@ -477,7 +477,7 @@ jsBackend.mediaLibraryHelper.group =
                     module: 'MediaLibrary',
                     action: 'MediaItemFindAll'
                 },
-                group_id: (mediaGroups[currentMediaGroupId]) ? mediaGroups[currentMediaGroupId].id : 0,
+                group_id: (mediaGroups[currentMediaGroupId]) ? mediaGroups[currentMediaGroupId].id : null,
                 folder_id: mediaFolderId
             },
             success: function(json, textStatus) {

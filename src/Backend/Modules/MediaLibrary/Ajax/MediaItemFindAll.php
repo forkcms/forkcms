@@ -42,6 +42,24 @@ class MediaItemFindAll extends BackendBaseAJAXAction
             $this->selectedTab = (string) $mediaItem->getType();
         }
 
+        /** @var int|null $mediaFolderId */
+        $mediaFolderId = $mediaFolder !== null ? $mediaFolder->getId() : null;
+
+        // No media group, stop here
+        if ($mediaGroup === null) {
+            // Output success message with variables
+            $this->output(
+                self::OK,
+                [
+                    'media' => null,
+                    'folder' => $mediaFolderId,
+                    'tab' => $this->selectedTab
+                ]
+            );
+
+            return;
+        }
+
         // Init media items
         $mediaItemsToArray = [];
 
@@ -56,9 +74,6 @@ class MediaItemFindAll extends BackendBaseAJAXAction
                 $mediaItemsToArray[] = $mediaItem->__toArray();
             }
         }
-
-        /** @var int|null $mediaFolderId */
-        $mediaFolderId = $mediaFolder !== null ? $mediaFolder->getId() : null;
 
         // Output success message with variables
         $this->output(
@@ -78,9 +93,9 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     protected function getMediaGroup()
     {
         /** @var string $id */
-        $id = $this->get('request')->request->get('group_id');
+        $id = $this->get('request')->request->get('group_id', '');
 
-        if ($id === null) {
+        if ($id === '') {
             return null;
         }
 
