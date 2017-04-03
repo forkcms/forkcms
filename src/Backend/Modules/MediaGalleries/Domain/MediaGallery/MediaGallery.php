@@ -155,8 +155,7 @@ class MediaGallery
             return $mediaGallery;
         }
 
-        /** @var MediaGallery $mediaGallery */
-        $mediaGallery = new self(
+        return new self(
             $mediaGalleryDataTransferObject->title,
             $mediaGalleryDataTransferObject->action,
             $mediaGalleryDataTransferObject->userId,
@@ -165,8 +164,6 @@ class MediaGallery
             $mediaGalleryDataTransferObject->status,
             $mediaGalleryDataTransferObject->text
         );
-
-        return $mediaGallery;
     }
 
     /**
