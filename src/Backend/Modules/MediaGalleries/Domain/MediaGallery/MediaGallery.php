@@ -144,13 +144,14 @@ class MediaGallery
         if ($mediaGalleryDataTransferObject->hasExistingMediaGallery()) {
             /** @var MediaGallery $mediaGallery */
             $mediaGallery = $mediaGalleryDataTransferObject->getMediaGalleryEntity();
-
-            $mediaGallery->action = $mediaGalleryDataTransferObject->action;
-            $mediaGallery->title = $mediaGalleryDataTransferObject->title;
-            $mediaGallery->text = $mediaGalleryDataTransferObject->text;
-            $mediaGallery->publishOn = $mediaGalleryDataTransferObject->publishOn;
-            $mediaGallery->mediaGroup = $mediaGalleryDataTransferObject->mediaGroup;
-            $mediaGallery->status = $mediaGalleryDataTransferObject->status;
+            $mediaGallery->update(
+                $mediaGalleryDataTransferObject->title,
+                $mediaGalleryDataTransferObject->action,
+                $mediaGalleryDataTransferObject->publishOn,
+                $mediaGalleryDataTransferObject->mediaGroup,
+                $mediaGalleryDataTransferObject->status,
+                $mediaGalleryDataTransferObject->text
+            );
 
             return $mediaGallery;
         }
@@ -164,6 +165,30 @@ class MediaGallery
             $mediaGalleryDataTransferObject->status,
             $mediaGalleryDataTransferObject->text
         );
+    }
+
+    /**
+     * @param string $title
+     * @param string $action
+     * @param \DateTime $publishOn
+     * @param MediaGroup $mediaGroup
+     * @param Status $status
+     * @param string|null $text
+     */
+    private function update(
+        string $title,
+        string $action,
+        \DateTime $publishOn,
+        MediaGroup $mediaGroup,
+        Status $status,
+        string $text = null
+    ) {
+        $this->title = $title;
+        $this->action = $action;
+        $this->publishOn = $publishOn;
+        $this->mediaGroup = $mediaGroup;
+        $this->status = $status;
+        $this->text = $text;
     }
 
     /**
