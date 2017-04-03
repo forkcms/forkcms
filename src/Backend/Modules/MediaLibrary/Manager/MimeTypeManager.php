@@ -2,36 +2,36 @@
 
 namespace Backend\Modules\MediaLibrary\Manager;
 
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
+
 class MimeTypeManager
 {
     /** @var array */
-    protected $audioMimeTypes;
-
-    /** @var array */
-    protected $fileMimeTypes;
-
-    /** @var array */
-    protected $imageMimeTypes;
-
-    /** @var array */
-    protected $movieMimeTypes;
+    protected $mimeTypes = [];
 
     /**
-     * @param array $imageMimeTypes
-     * @param array $fileMimeTypes
-     * @param array $movieMimeTypes
-     * @param array $audioMimeTypes
+     * @param string $mediaItemType
+     * @param array $mimeTypes
+     * @throws \Exception
      */
-    public function __construct(
-        array $imageMimeTypes,
-        array $fileMimeTypes,
-        array $movieMimeTypes,
-        array $audioMimeTypes
-    ) {
-        $this->imageMimeTypes = $imageMimeTypes;
-        $this->fileMimeTypes = $fileMimeTypes;
-        $this->movieMimeTypes = $movieMimeTypes;
-        $this->audioMimeTypes = $audioMimeTypes;
+    public function add(string $mediaItemType, array $mimeTypes)
+    {
+        try {
+            $type = Type::fromString($mediaItemType);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+
+        $this->mimeTypes[$type->getType()] = $mimeTypes;
+    }
+
+    /**
+     * @param Type $mediaItemType
+     * @return array
+     */
+    public function get(Type $mediaItemType): array
+    {
+        return $this->mimeTypes[(string) $mediaItemType];
     }
 
     /**
@@ -39,43 +39,10 @@ class MimeTypeManager
      */
     public function getAll(): array
     {
-        return array_merge(
-            $this->imageMimeTypes,
-            $this->fileMimeTypes,
-            $this->movieMimeTypes,
-            $this->audioMimeTypes
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function getAudioMimeTypes(): array
-    {
-        return $this->audioMimeTypes;
-    }
-
-    /**
-     * @return array
-     */
-    public function getFileMimeTypes(): array
-    {
-        return $this->fileMimeTypes;
-    }
-
-    /**
-     * @return array
-     */
-    public function getImageMimeTypes(): array
-    {
-        return $this->imageMimeTypes;
-    }
-
-    /**
-     * @return array
-     */
-    public function getMovieMimeTypes(): array
-    {
-        return $this->movieMimeTypes;
+        $mimeTypes = [];
+        foreach ($this->mimeTypes as $key => $values) {
+            $mimeTypes = array_merge($mimeTypes, $values);
+        }
+        return $mimeTypes;
     }
 }

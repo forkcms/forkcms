@@ -25,57 +25,70 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         parent::execute();
 
         /** @var MediaFolder|null $mediaFolder */
-        $mediaFolder = $this->getMediaFolder();
-
-        /** @var MediaGroup|null $mediaGroup */
-        $mediaGroup = $this->getMediaGroup();
-
-        // We didn't get a folder, so we must get the folder from the first connected MediaGroupMediaItem entity
-        if ($mediaFolder === null && $mediaGroup !== null && $mediaGroup->getConnectedItems()->count() > 0) {
-            /** @var MediaItem $mediaItem The first item of the gallery MediaGroup */
-            $mediaItem = $mediaGroup->getConnectedItems()->first()->getItem();
-
-            // Redefine folder
-            $mediaFolder = $mediaItem->getFolder();
-
-            // Redefine tab
-            $this->selectedTab = (string) $mediaItem->getType();
-        }
-
-        /** @var int|null $mediaFolderId */
-        $mediaFolderId = $mediaFolder !== null ? $mediaFolder->getId() : null;
-
-        // Init media items
-        $mediaItemsToArray = [];
-
-        // Get media for the given folder
-        if ($mediaFolder !== null) {
-            /** @var MediaItem[] $mediaItems */
-            $mediaItems = $this->get('media_library.repository.item')->findByFolder($mediaFolder);
-
-            // Init media items array
-            $mediaItemsToArray = [];
-            foreach ($mediaItems as $mediaItem) {
-                $mediaItemsToArray[] = $mediaItem->__toArray();
-            }
-        }
+        $mediaFolder = $this->getMediaFolderBasedOnMediaGroup();
 
         // Output success message with variables
         $this->output(
             self::OK,
             [
-                'media' => $mediaItemsToArray,
-                'folder' => $mediaFolderId,
+                'media' => $this->loadMediaItems($mediaFolder),
+                'folder' => $mediaFolder !== null ? $mediaFolder->getId() : null,
                 'tab' => $this->selectedTab
             ]
         );
     }
 
     /**
+     * @return MediaFolder|null
+     * @throws AjaxExitException
+     */
+    private function getMediaFolder()
+    {
+        /** @var int $id */
+        $id = $this->get('request')->request->getInt('folder_id', 0);
+
+        if ($id === 0) {
+            return null;
+        }
+
+        try {
+            /** @var MediaFolder */
+            return $this->get('media_library.repository.folder')->findOneById($id);
+        } catch (\Exception $e) {
+            throw new AjaxExitException(Language::err('MediaFolderNotExists'));
+        }
+    }
+
+    /**
+     * @return MediaFolder|null
+     */
+    private function getMediaFolderBasedOnMediaGroup()
+    {
+        /** @var MediaGroup|null $mediaGroup */
+        $mediaGroup = $this->getMediaGroup();
+
+        /** @var MediaFolder|null $mediaFolder */
+        $mediaFolder = $this->getMediaFolder();
+
+        if ($mediaFolder !== null || $mediaGroup === null || $mediaGroup->getConnectedItems()->count() == 0) {
+            return $mediaFolder;
+        }
+
+        /** @var MediaItem $mediaItem The first item of the gallery MediaGroup */
+        $mediaItem = $mediaGroup->getConnectedItems()->first()->getItem();
+
+        // Redefine tab
+        $this->selectedTab = (string) $mediaItem->getType();
+
+        // Redefine folder
+        return $mediaItem->getFolder();
+    }
+
+    /**
      * @return MediaGroup|null
      * @throws AjaxExitException
      */
-    protected function getMediaGroup()
+    private function getMediaGroup()
     {
         /** @var string $id */
         $id = $this->get('request')->request->get('group_id', '');
@@ -93,23 +106,20 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     }
 
     /**
-     * @return MediaFolder|null
-     * @throws AjaxExitException
+     * @param MediaFolder|null $mediaFolder
+     * @return array
      */
-    protected function getMediaFolder()
+    private function loadMediaItems(MediaFolder $mediaFolder = null): array
     {
-        /** @var int $id */
-        $id = $this->get('request')->request->getInt('folder_id', 0);
-
-        if ($id === 0) {
-            return null;
+        if ($mediaFolder === null) {
+            return [];
         }
 
-        try {
-            /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById($id);
-        } catch (\Exception $e) {
-            throw new AjaxExitException(Language::err('MediaFolderNotExists'));
-        }
+        return array_map(
+            function (MediaItem $mediaItem) {
+                return $mediaItem->__toArray();
+            },
+            $this->get('media_library.repository.item')->findByFolder($mediaFolder)
+        );
     }
 }

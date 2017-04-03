@@ -55,36 +55,10 @@ class MediaItemMassAction extends BackendBaseAction
 
                 switch ($action) {
                     case self::MOVE:
-                        // If not yet set
-                        if ($this->moveToMediaFolder === null) {
-                            /** @var MediaFolder $moveToMediaFolder */
-                            $this->moveToMediaFolder = $this->getMediaFolderToMoveTo($selectedType);
-                        }
-
-                        $mediaItem->setFolder($this->moveToMediaFolder);
-
-                        /** @var UpdateMediaItem $updateMediaItem */
-                        $updateMediaItem = new UpdateMediaItem($mediaItem);
-
-                        // Handle the MediaItem update
-                        $this->get('command_bus')->handle($updateMediaItem);
-                        $this->get('event_dispatcher')->dispatch(
-                            MediaItemUpdated::EVENT_NAME,
-                            new MediaItemUpdated($updateMediaItem->getMediaItemEntity())
-                        );
-
+                        $this->move($mediaItem, $selectedType);
                         break;
                     case self::DELETE:
-                        /** @var DeleteMediaItemCommand $deleteMediaItem */
-                        $deleteMediaItem = new DeleteMediaItemCommand($mediaItem);
-
-                        // Handle the MediaItem delete
-                        $this->get('command_bus')->handle($deleteMediaItem);
-                        $this->get('event_dispatcher')->dispatch(
-                            MediaItemDeleted::EVENT_NAME,
-                            new MediaItemDeleted($deleteMediaItem->mediaItem)
-                        );
-
+                        $this->delete($mediaItem);
                         break;
                 }
             } catch (\Exception $e) {
@@ -95,6 +69,23 @@ class MediaItemMassAction extends BackendBaseAction
         $parameters['report'] = 'media-' . ($action === self::MOVE ? 'moved' : 'deleted');
 
         $this->redirect($this->getBackLink($parameters) . '#tab' . ucfirst($selectedType));
+    }
+
+    /**
+     * @param MediaItem $mediaItem
+     */
+    private function delete(MediaItem $mediaItem)
+    {
+        /** @var DeleteMediaItemCommand $deleteMediaItem */
+        $deleteMediaItem = new DeleteMediaItemCommand($mediaItem);
+
+        // Handle the MediaItem delete
+        $this->get('command_bus')->handle($deleteMediaItem);
+        $this->get('event_dispatcher')->dispatch(
+            MediaItemDeleted::EVENT_NAME,
+            new MediaItemDeleted($deleteMediaItem->mediaItem)
+        );
+
     }
 
     /**
@@ -204,5 +195,29 @@ class MediaItemMassAction extends BackendBaseAction
     private function getSelectedType(): Type
     {
         return Type::fromString($this->get('request')->query->get('from', 'image'));
+    }
+
+    /**
+     * @param MediaItem $mediaItem
+     * @param Type $selectedType
+     */
+    private function move(MediaItem $mediaItem, Type $selectedType)
+    {
+        if ($this->moveToMediaFolder === null) {
+            /** @var MediaFolder $moveToMediaFolder */
+            $this->moveToMediaFolder = $this->getMediaFolderToMoveTo($selectedType);
+        }
+
+        $mediaItem->setFolder($this->moveToMediaFolder);
+
+        /** @var UpdateMediaItem $updateMediaItem */
+        $updateMediaItem = new UpdateMediaItem($mediaItem);
+
+        // Handle the MediaItem update
+        $this->get('command_bus')->handle($updateMediaItem);
+        $this->get('event_dispatcher')->dispatch(
+            MediaItemUpdated::EVENT_NAME,
+            new MediaItemUpdated($updateMediaItem->getMediaItemEntity())
+        );
     }
 }

@@ -136,7 +136,8 @@ class UploadHandler
         // Check that the max upload size specified in class configuration does not
         // exceed size allowed by server config
         if ($this->toBytes(ini_get('post_max_size')) < $this->sizeLimit ||
-            $this->toBytes(ini_get('upload_max_filesize')) < $this->sizeLimit) {
+            $this->toBytes(ini_get('upload_max_filesize')) < $this->sizeLimit
+        ) {
             $neededRequestSize = max(1, $this->sizeLimit / 1024 / 1024) . 'M';
             return ['error'=>"Server error. Increase post_max_size and upload_max_filesize to " . $neededRequestSize];
         }

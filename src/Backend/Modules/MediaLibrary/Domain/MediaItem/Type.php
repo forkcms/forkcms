@@ -56,22 +56,11 @@ final class Type
             throw new \Exception('MimeType is not one of the allowed ones: ' . implode(', ', Model::get('media_library.manager.mime_type')->getAll()));
         }
 
-        // Looking for image files
-        if (in_array($mimeType, Model::get('media_library.manager.mime_type')->getImageMimeTypes())) {
-            return self::image();
+        foreach (self::POSSIBLE_VALUES as $mediaItemType) {
+            if (in_array($mimeType, Model::get('media_library.manager.mime_type')->get(self::fromString($mediaItemType)))) {
+                return self::fromString($mediaItemType);
+            }
         }
-
-        // Looking for audio files
-        if (in_array($mimeType, Model::get('media_library.manager.mime_type')->getAudioMimeTypes())) {
-            return self::audio();
-        }
-
-        // Looking for movie files
-        if (in_array($mimeType, Model::get('media_library.manager.mime_type')->getMovieMimeTypes())) {
-            return self::movie();
-        }
-
-        return self::file();
     }
 
     /**

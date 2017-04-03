@@ -105,8 +105,8 @@ class MediaItemDataGrid extends DataGridDB
                     Model::createURLForAction('MediaItemEdit')
                     . '&id=[id]'
                     . '&folder=' . $folderId,
-                    Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_width'),
-                    Model::get('fork.settings')->get('MediaLibrary', 'backend_thumbnail_height'),
+                    0,
+                    0,
                     'media_library_backend_thumbnail'
                 ],
                 'url',
@@ -134,6 +134,14 @@ class MediaItemDataGrid extends DataGridDB
         // our JS needs to know an id, so we can highlight it
         $this->setRowAttributes(['id' => 'row-[id]']);
 
+        $this->addMassActions($type);
+    }
+
+    /**
+     * @param Type $type
+     */
+    private function addMassActions(Type $type)
+    {
         // add checkboxes
         $this->setMassActionCheckboxes('check', '[id]');
 

@@ -103,9 +103,6 @@ class Installer extends ModuleInstaller
      */
     protected function configureSettings()
     {
-        $this->setSetting($this->getModule(), 'backend_thumbnail_height', 90);
-        $this->setSetting($this->getModule(), 'backend_thumbnail_width', 140);
-        $this->setSetting($this->getModule(), 'backend_thumbnail_quality', 95);
         $this->setSetting($this->getModule(), 'upload_number_of_sharding_folders', 15);
     }
 
