@@ -49,18 +49,33 @@ class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Write output
-        $output->writeln(
-            '<info>-Started deleting media galleries.</info>'
-        );
+        $output->writeln('<info>-Started deleting media galleries.</info>');
 
+        $this->checkOptions($input);
+        $this->deleteMediaGalleries();
+
+        $output->writeln('<info>-Finished deleting media galleries.</info>');
+    }
+
+    /**
+     * @param InputInterface $input
+     */
+    private function checkOptions(InputInterface $input)
+    {
         // If set overwrite "deleteMediaItems"
         if ($input->getOption('delete-media-items')) {
             $this->deleteMediaItems = true;
         }
+    }
 
+    private function deleteMediaGalleries()
+    {
         /** @var array $mediaGalleries */
         $mediaGalleries = $this->getContainer()->get('media_galleries.repository.gallery')->findAll();
+
+        if (empty($mediaGalleries)) {
+            return;
+        }
 
         // Loop all media galleries
         foreach ($mediaGalleries as $mediaGallery) {
@@ -73,12 +88,5 @@ class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
                 $this->deleteMediaItems
             );
         }
-
-        // Write output
-        $output->writeln(
-            '<info>-Finished deleting media galleries.</info>'
-        );
-
-        return;
     }
 }
