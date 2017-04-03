@@ -79,12 +79,8 @@ class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
 
         // Loop all media galleries
         foreach ($mediaGalleries as $mediaGallery) {
-            /** @var DeleteMediaGallery $deleteMediaGallery */
-            $deleteMediaGallery = new DeleteMediaGallery($mediaGallery);
-
-            // Handle the MediaGallery delete
             $this->getContainer()->get('command_bus')->handle(
-                $deleteMediaGallery,
+                new DeleteMediaGallery($mediaGallery),
                 $this->deleteMediaItems
             );
         }
