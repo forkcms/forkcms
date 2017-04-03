@@ -17,31 +17,25 @@ class Gallery extends BackendBaseWidget
     public function execute()
     {
         parent::execute();
+        $this->loadTemplate();
 
         /** @var MediaGallery|null $mediaGallery */
         $mediaGallery = $this->getMediaGallery();
 
-        /** @var MediaGroup|null $mediaGroup */
-        $mediaGroup = ($mediaGallery !== null) ? $mediaGallery->getMediaGroup() : null;
-
-        // We need to have a MediaGroup to show this widget
-        if ($mediaGroup !== null) {
-            // Assign widget
-            // Note: we must assign this first before assigning variables
-            $this->tpl->assign(
-                'widget',
-                // We can create widget for the MediaGroup id
-                $this->get('media_library.helper.frontend')->parseWidget(
-                    $mediaGallery->getAction(),
-                    (string) $mediaGroup->getId()
-                )
-            );
-
-            // Assign MediaGallery
-            $this->tpl->assign('mediaGallery', $mediaGallery);
+        if (!$mediaGallery instanceof MediaGallery) {
+            return;
         }
 
-        $this->loadTemplate();
+        // Note: we must assign the "widget" first, before assigning variables
+        $this->tpl->assign(
+            'widget',
+            $this->get('media_library.helper.frontend')->parseWidget(
+                $mediaGallery->getAction(),
+                $mediaGallery->getMediaGroup()->getId()
+            )
+        );
+
+        $this->tpl->assign('mediaGallery', $mediaGallery);
     }
 
     /**
