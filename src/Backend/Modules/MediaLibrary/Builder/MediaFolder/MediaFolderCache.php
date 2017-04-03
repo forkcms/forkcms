@@ -35,7 +35,9 @@ final class MediaFolderCache
 
     public function delete()
     {
-        $this->cache->deleteItem(self::CACHE_KEY);
+        if ($this->cache instanceof CacheItemPoolInterface) {
+            $this->cache->deleteItem(self::CACHE_KEY);
+        }
     }
 
     /**
