@@ -64,13 +64,10 @@ class MediaFolderAdd extends BackendBaseAJAXAction
     protected function getFolderName(MediaFolder $parent = null): string
     {
         // Define name
-        $name = trim($this->get('request')->request->get('name'));
-
-        // Urlise name
-        $name = Uri::getUrl($name);
+        $name = $this->get('request')->request->get('name');
 
         // We don't have a name
-        if ($name === '') {
+        if ($name === null) {
             throw new AjaxExitException(Language::err('NameIsRequired'));
         }
 

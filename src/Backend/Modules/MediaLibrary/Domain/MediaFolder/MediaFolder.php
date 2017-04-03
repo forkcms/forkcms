@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaFolder;
 
+use Common\Uri;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -101,7 +102,7 @@ class MediaFolder
         MediaFolder $parent = null,
         int $userId
     ) {
-        $this->name = $name;
+        $this->setName($name);
         $this->parent = $parent;
         $this->userId = $userId;
         $this->items = new ArrayCollection();
@@ -132,7 +133,7 @@ class MediaFolder
      */
     public function update(string $name, MediaFolder $parent = null)
     {
-        $this->name = $name;
+        $this->setName($name);
 
         if ($parent instanceof MediaFolder) {
             $this->setParent($parent);
@@ -256,6 +257,14 @@ class MediaFolder
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    private function setName(string $name)
+    {
+        $this->name = Uri::getUrl($name);
     }
 
     /**
