@@ -3,15 +3,11 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 use Backend\Core\Engine\Header;
-use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
-use Backend\Modules\MediaLibrary\Manager\ExtensionManager;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Type as MediaItemPossibleType;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupPossibleType;
 use Ramsey\Uuid\Uuid;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
-use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\LogicException;
@@ -22,7 +18,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\CreateMediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
 
 class MediaGroupType extends AbstractType
@@ -100,7 +95,7 @@ class MediaGroupType extends AbstractType
         $header->addCSS('MediaLibrary.css', 'MediaLibrary', false, true);
         $header->addJS('MediaLibraryFolders.js', 'MediaLibrary', true);
         $header->addJS('MediaLibraryHelper.js', 'MediaLibrary', true);
-        $header->addJsData('MediaLibrary', 'mediaItemTypes', Type::POSSIBLE_VALUES);
+        $header->addJsData('MediaLibrary', 'mediaItemTypes', MediaItemPossibleType::POSSIBLE_VALUES);
         $header->addJsData('MediaLibrary', 'mediaAllowedMovieSource', StorageType::POSSIBLE_VALUES_FOR_MOVIE);
         $header->addJsData('MediaLibrary', 'mediaAllowedExtensions', Model::get('media_library.manager.extension')->getAll());
     }
@@ -134,8 +129,8 @@ class MediaGroupType extends AbstractType
             /** @var string $mediaGroupId */
             $mediaGroupId = $mediaGroupData['id'];
 
-            /** @var Type $mediaGroupType */
-            $mediaGroupType = Type::fromString($mediaGroupData['type']);
+            /** @var MediaGroupPossibleType $mediaGroupType */
+            $mediaGroupType = MediaGroupPossibleType::fromString($mediaGroupData['type']);
 
             /** @var array $mediaItemIds */
             $mediaItemIds = $mediaGroupData['mediaIds'] !== null
