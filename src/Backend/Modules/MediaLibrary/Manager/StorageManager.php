@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Manager;
 use Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 
-class StorageManager
+final class StorageManager
 {
     /** @var array */
     protected $providers = [];

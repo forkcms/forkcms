@@ -7,7 +7,7 @@ use Common\ModulesSettings;
 use Common\Uri;
 use Backend\Core\Engine\Model as BackendModel;
 
-class FileManager
+final class FileManager
 {
     /** @var Filesystem */
     private $filesystem;
