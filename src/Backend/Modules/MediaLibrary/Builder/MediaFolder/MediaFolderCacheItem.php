@@ -21,14 +21,8 @@ class MediaFolderCacheItem
     {
         $this->id = $mediaFolder->getId();
         $this->name = $mediaFolder->getName();
+        $this->slug = ($parentSlug !== null) ? $parentSlug . '/' . $this->name : $this->name;
         $this->numberOfMediaItems = $mediaFolder->getItems()->count();
-
-        if ($parentSlug !== null) {
-            $this->slug = $parentSlug . '/' . $this->name;
-            return;
-        }
-
-        $this->slug = $this->name;
     }
 
     /**
