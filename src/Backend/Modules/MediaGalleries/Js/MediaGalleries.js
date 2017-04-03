@@ -42,7 +42,7 @@ jsBackend.mediaGalleries.addGallery =
         });
 
         // When clicked in dialog
-        $addMediaGroupTypeSubmit.on('click', function(e){
+        $addMediaGroupTypeSubmit.on('click', function(){
             $addMediaGroupTypeDialog.find('form').submit();
 
             // close the dialog
