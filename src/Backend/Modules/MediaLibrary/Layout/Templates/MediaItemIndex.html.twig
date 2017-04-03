@@ -128,7 +128,7 @@
             <label for="folderImagesId">{{ 'msg.MoveMediaToFolder'|trans }}</label><br/>
             <select id="moveToFolderId" name="move_to_folder_id">
               {% for mediaFolder in mediaFolders %}
-                <option value="{{ mediaFolder.value }}">{{ mediaFolder.label }}</option>
+                <option value="{{ mediaFolder.id }}">{{ mediaFolder.slug }}</option>
               {% endfor %}
             </select>
           </p>

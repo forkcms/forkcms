@@ -299,6 +299,14 @@ class MediaFolder
     }
 
     /**
+     * @return bool
+     */
+    public function hasChildren(): bool
+    {
+        return $this->children->count() > 0;
+    }
+
+    /**
      * @ORM\PrePersist
      */
     public function onPrePersist()

@@ -133,6 +133,6 @@ class Installer extends ModuleInstaller
         Model::get('command_bus')->handle(new CreateMediaFolder('Default', 1));
 
         // Delete cache
-        Model::get('media_library.cache_builder')->deleteCache();
+        Model::get('media_library.cache.media_folder')->delete();
     }
 }

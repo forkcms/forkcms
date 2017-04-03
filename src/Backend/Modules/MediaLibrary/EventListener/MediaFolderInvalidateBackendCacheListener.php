@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\EventListener;
 
-use Backend\Modules\MediaLibrary\Builder\CacheBuilder;
+use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Event\MediaFolderEvent;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemEvent;
 
@@ -12,17 +12,16 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemEvent;
 final class MediaFolderInvalidateBackendCacheListener
 {
     /**
-     * @var CacheBuilder
+     * @var MediaFolderCache
      */
-    protected $cacheBuilder;
+    protected $mediaFolderCache;
 
     /**
-     * @param CacheBuilder $cacheBuilder
+     * @param MediaFolderCache $mediaFolderCache
      */
-    public function __construct(
-        CacheBuilder $cacheBuilder
-    ) {
-        $this->cacheBuilder = $cacheBuilder;
+    public function __construct(MediaFolderCache $mediaFolderCache)
+    {
+        $this->mediaFolderCache = $mediaFolderCache;
     }
 
     /**
@@ -50,7 +49,6 @@ final class MediaFolderInvalidateBackendCacheListener
      */
     protected function invalidateBackendMediaFolderCache()
     {
-        $this->cacheBuilder->deleteCache();
-        $this->cacheBuilder->createCache();
+        $this->mediaFolderCache->delete();
     }
 }

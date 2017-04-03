@@ -10,37 +10,37 @@ services:
     media_library.listener.invalidate_backend_media_folder_cache_for_added_media_folder:
         class: Backend\Modules\MediaLibrary\EventListener\MediaFolderInvalidateBackendCacheListener
         arguments:
-            - "@media_library.cache_builder"
+            - "@media_library.cache.media_folder"
         tags:
             - { name: kernel.event_listener, event: media_library.event.media_folder_created, method: onMediaFolderEvent }
     media_library.listener.invalidate_backend_media_folder_cache_for_deleted_media_folder:
         class: Backend\Modules\MediaLibrary\EventListener\MediaFolderInvalidateBackendCacheListener
         arguments:
-            - "@media_library.cache_builder"
+            - "@media_library.cache.media_folder"
         tags:
             - { name: kernel.event_listener, event: media_library.event.media_folder_deleted, method: onMediaFolderEvent }
     media_library.listener.invalidate_backend_media_folder_cache_for_updated_media_folder:
         class: Backend\Modules\MediaLibrary\EventListener\MediaFolderInvalidateBackendCacheListener
         arguments:
-            - "@media_library.cache_builder"
+            - "@media_library.cache.media_folder"
         tags:
             - { name: kernel.event_listener, event: media_library.event.media_folder_updated, method: onMediaFolderEvent }
     media_library.listener.invalidate_backend_media_folder_cache_for_added_media_item:
         class: Backend\Modules\MediaLibrary\EventListener\MediaFolderInvalidateBackendCacheListener
         arguments:
-            - "@media_library.cache_builder"
+            - "@media_library.cache.media_folder"
         tags:
             - { name: kernel.event_listener, event: media_library.event.media_item_created, method: onMediaItemEvent }
     media_library.listener.invalidate_backend_media_folder_cache_for_deleted_media_item:
         class: Backend\Modules\MediaLibrary\EventListener\MediaFolderInvalidateBackendCacheListener
         arguments:
-            - "@media_library.cache_builder"
+            - "@media_library.cache.media_folder"
         tags:
             - { name: kernel.event_listener, event: media_library.event.media_item_deleted, method: onMediaItemEvent }
     media_library.listener.invalidate_backend_media_folder_cache_for_updated_media_item:
         class: Backend\Modules\MediaLibrary\EventListener\MediaFolderInvalidateBackendCacheListener
         arguments:
-            - "@media_library.cache_builder"
+            - "@media_library.cache.media_folder"
         tags:
             - { name: kernel.event_listener, event: media_library.event.media_item_updated, method: onMediaItemEvent }
     media_library.listener.media_item_generate_backend_thumbnail:

@@ -91,7 +91,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
         // Get parameters
         $parentId = $this->get('request')->request->getInt('parent_id');
 
-        if ($parentId === null) {
+        if ($parentId === 0) {
             return null;
         }
 

@@ -22,4 +22,4 @@ services:
     media_library.manager.tree:
         class: Backend\Modules\MediaLibrary\Manager\TreeManager
         arguments:
-            - "@media_library.cache_builder"
+            - "@media_library.cache.media_folder"

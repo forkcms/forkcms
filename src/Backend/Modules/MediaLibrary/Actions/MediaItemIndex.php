@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Language\Language;
+use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
@@ -26,10 +27,18 @@ class MediaItemIndex extends BackendBaseActionIndex
         /** @var array $dataGrids */
         $dataGrids = $this->getDataGrids($mediaFolder);
 
+        /** @var array $mediaFolders */
+        $mediaFolders = $this->getMediaFoldersForDropdown($this->get('media_library.cache.media_folder')->get());
+
+        // Unset mediaFolder
+        if ($mediaFolder !== null) {
+            unset($mediaFolders[$mediaFolder->getId()]);
+        }
+
         // Assign variables
         $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
         $this->tpl->assign('mediaFolder', $mediaFolder);
-        $this->tpl->assign('mediaFolders', $this->getMediaFoldersForDropdown($mediaFolder));
+        $this->tpl->assign('mediaFolders', $mediaFolders);
         $this->tpl->assign('dataGrids', $dataGrids);
         $this->tpl->assign('hasResults', $this->hasResults($dataGrids));
         $this->header->addJsData('MediaLibrary', 'openedFolderId', ($mediaFolder !== null) ? $mediaFolder->getId() : null);
@@ -83,31 +92,22 @@ class MediaItemIndex extends BackendBaseActionIndex
     }
 
     /**
-     * @param MediaFolder|null $currentMediaFolder
+     * @param array $navigationItems
+     * @param array $dropdownItems
      * @return array
      */
-    private function getMediaFoldersForDropdown(MediaFolder $currentMediaFolder = null): array
+    private function getMediaFoldersForDropdown(array $navigationItems, array &$dropdownItems = []): array
     {
-        // get folders
-        $folders = $this->get('media_library.cache_builder')->getFoldersForDropdown();
+        /** @var MediaFolderCacheItem $cacheItem */
+        foreach ($navigationItems as $cacheItem) {
+            $dropdownItems[$cacheItem->id] = $cacheItem;
 
-        if ($currentMediaFolder !== null && isset($folders[$currentMediaFolder->getId()])) {
-            unset($folders[$currentMediaFolder->getId()]);
+            if ($cacheItem->numberOfChildren > 0) {
+                $dropdownItems = $this->getMediaFoldersForDropdown($cacheItem->children, $dropdownItems);
+            }
         }
 
-        // define parent folders
-        $foldersForDropdown = [0 => ''];
-
-        // loop all folders
-        foreach ($folders as $value => $label) {
-            // add to parent folders
-            $foldersForDropdown[$value] = [
-                'value' => $value,
-                'label' => $label,
-            ];
-        }
-
-        return $foldersForDropdown;
+        return $dropdownItems;
     }
 
     /**
@@ -129,6 +129,6 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->header->addJS('jstree/jquery.tree.js', 'Pages');
         $this->header->addJS('jstree/lib/jquery.cookie.js', 'Pages');
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', 'Pages');
-        $this->header->addJS('MediaLibraryAddFolder.js', 'MediaLibrary', true);
+        $this->header->addJS('MediaLibraryFolders.js', 'MediaLibrary', true);
     }
 }

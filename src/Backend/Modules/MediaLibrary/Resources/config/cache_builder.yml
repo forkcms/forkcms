@@ -1,7 +1,6 @@
 services:
-    media_library.cache_builder:
-        class: Backend\Modules\MediaLibrary\Builder\CacheBuilder
+    media_library.cache.media_folder:
+        class: Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache
         arguments:
             - "@cache.pool"
             - "@media_library.repository.folder"
-            - "@media_library.repository.group"

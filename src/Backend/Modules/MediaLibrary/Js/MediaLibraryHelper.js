@@ -368,7 +368,7 @@ jsBackend.mediaLibraryHelper.group =
                     }
                 } else {
                     // cache folders
-                    mediaFolders = json2array(json.data).sort(sortByProperty('name'));
+                    mediaFolders = json.data;
 
                     // update folders
                     jsBackend.mediaLibraryHelper.group.updateFolders();
@@ -605,27 +605,8 @@ jsBackend.mediaLibraryHelper.group =
 
     updateFolders : function()
     {
-        // add empty element to html
-        var html = '';
-
-        // add folders to html
-        $.each(mediaFolders, function(i, item) {
-            // define count
-            var count = 0;
-
-            // redefine count
-            if (mediaGroups[currentMediaGroupId].count && mediaGroups[currentMediaGroupId].count[item.id]) {
-                count = mediaGroups[currentMediaGroupId].count[item.id];
-            }
-
-            // add to html
-            html += '<option value="' + item.id + '">';
-            html += '   ' + item.name + ' (' + count + '/' + item.numMedia + ')';
-            html += '</option>';
-        });
-
         // add folders to dropdown
-        $('#mediaFolders').html(html);
+        $('#mediaFolders').html(jsBackend.mediaLibraryHelper.templates.getHTMLForMediaFolders(mediaFolders));
 
         // select the correct folder
         jsBackend.mediaLibraryHelper.group.updateFolderSelected();
@@ -1086,6 +1067,51 @@ jsBackend.mediaLibraryHelper.templates =
     },
 
     /**
+     * Get HTML for MediaFolders to show in dropdown
+     *
+     * @param {array} mediaFolders The mediaFolderCacheItem entity array.
+     * @returns {string}
+     */
+    getHTMLForMediaFolders: function(mediaFolders)
+    {
+        var html = '';
+
+        $(mediaFolders).each(function(i, mediaFolder){
+            html += jsBackend.mediaLibraryHelper.templates.getHTMLForMediaFolder(mediaFolder);
+        });
+
+        return html;
+    },
+
+    /**
+     * Get HTML for MediaFolder to show in dropdown
+     *
+     * @param {array} mediaFolder The mediaFolderCacheItem entity array.
+     * @returns {string}
+     */
+    getHTMLForMediaFolder: function(mediaFolder)
+    {
+        var html = '';
+        var count = 0;
+
+        // redefine count
+        if (mediaGroups[currentMediaGroupId].count && mediaGroups[currentMediaGroupId].count[mediaFolder.id]) {
+            count = mediaGroups[currentMediaGroupId].count[mediaFolder.id];
+        }
+
+        // add to html
+        html += '<option value="' + mediaFolder.id + '">';
+        html += '   ' + mediaFolder.slug + ' (' + count + '/' + mediaFolder.numberOfMediaItems + ')';
+        html += '</option>';
+
+        if (mediaFolder.numberOfChildren > 0) {
+            html += jsBackend.mediaLibraryHelper.templates.getHTMLForMediaFolders(mediaFolder.children);
+        }
+
+        return html;
+    },
+
+    /**
      * Get HTML for MediaItem to connect
      *
      * @param {array} mediaItem The mediaItem entity array.
@@ -1176,29 +1202,6 @@ jsBackend.mediaLibraryHelper.templates =
         return html;
     }
 };
-
-function json2array(json){
-    var result = [];
-    var keys = Object.keys(json);
-    keys.forEach(function(key){
-        result.push(json[key]);
-    });
-    return result;
-}
-
-function sortByProperty(property) {
-    'use strict';
-    return function (a, b) {
-        var sortStatus = 0;
-        if (a[property] < b[property]) {
-            sortStatus = -1;
-        } else if (a[property] > b[property]) {
-            sortStatus = 1;
-        }
-
-        return sortStatus;
-    };
-}
 
 /** global: jsBackend */
 $(jsBackend.mediaLibraryHelper.init);

@@ -2,141 +2,91 @@
 
 namespace Backend\Modules\MediaLibrary\Manager;
 
-use Backend\Modules\MediaLibrary\Builder\CacheBuilder;
+use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
 use Backend\Core\Language\Language;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
 
 /**
  * In this file we store all generic functions that we will be using in the MediaLibrary module
  */
-class TreeManager
+final class TreeManager
 {
-    /** @var CacheBuilder */
-    protected $cacheBuilder;
+    /** @var MediaFolderCache */
+    protected $mediaFolderCache;
 
     /**
      * TreeManager constructor.
      *
-     * @param CacheBuilder $cacheBuilder
+     * @param MediaFolderCache $mediaFolderCache
      */
-    public function __construct(CacheBuilder $cacheBuilder)
+    public function __construct(MediaFolderCache $mediaFolderCache)
     {
-        $this->cacheBuilder = $cacheBuilder;
+        $this->mediaFolderCache = $mediaFolderCache;
     }
 
     /**
-     * Get HTML from tree
+     * @return string
      */
-    public function getHTML()
+    public function getHTML(): string
     {
-        // init html
-        $html = '';
+        $navigationItems = $this->mediaFolderCache->get();
 
-        // get tree
-        $foldersTree = $this->cacheBuilder->getFoldersTree(null, null, 1);
-
-        // has folders?
-        if (count($foldersTree) > 0) {
-            // init var
-            $sequences = [];
-            $keys = [];
-            $return = [0 => ''];
-
-            // loop folders tree
-            foreach ($foldersTree as $folders) {
-                // loop all items on this level
-                /** @var MediaFolder $folder */
-                foreach ($folders as $folder) {
-                    // init var
-                    $parentID = ($folder->hasParent()) ? $folder->getParent()->getId() : 0;
-                    $folderID = $folder->getId();
-
-                    // get URL for parent
-                    $URL = (int) (isset($keys[$parentID])) ? $keys[$parentID] : 0;
-
-                    // add it
-                    $keys[$folderID] = $folderID;
-
-                    // add to sequences
-                    $sequences[$URL]['children'][] = $folderID;
-
-                    // albums
-                    $return[$folderID] = $folder->__toArray();
-                }
-            }
-
-            // start
-            $html .= '<h4>' . ucfirst(Language::lbl('Folders')) . '</h4>' . "\n";
-            $html .= '<div class="clearfix">' . "\n";
-            $html .= '  <ul>' . "\n";
-
-            // add album subchildren
-            $html .= $this->getSubtreeForFolder(0, $sequences, $return);
-
-            // end
-            $html .= '  </ul>' . "\n";
-            $html .= '</div>' . "\n";
-        }
-
-        // return
+        $html = '<h4>' . ucfirst(Language::lbl('Folders')) . '</h4>' . "\n";
+        $html .= $this->buildNavigationTree($navigationItems);
         return $html;
     }
 
     /**
-     * Get subtree for folder
-     *
-     * @param int $folderId
-     * @param array $sequences
-     * @param array $folders
+     * @param array $navigationItems
      * @return string
      */
-    private function getSubtreeForFolder(int $folderId, array $sequences, array $folders): string
+    private function buildNavigationTree(array $navigationItems): string
     {
-        // init html
-        $html = '';
+        // start
+        $html = '<div class="clearfix">' . "\n";
+        $html .= '  <ul>' . "\n";
 
-        // loop children
-        foreach ($sequences[$folderId]['children'] as $folderId) {
-            // set album
-            $folder = $folders[$folderId];
-
-            // start
-            $html .= '<li id="folder-' . $folder['id'] . '" rel="folder">' . "\n";
-
-            // insert link
-            $html .= '  <a href="'
-                . BackendModel::createURLForAction(
-                    'MediaItemIndex',
-                    null,
-                    null,
-                    [
-                        'folder' => $folder['id'],
-                    ]
-                )
-                . '"><ins>&#160;</ins>'
-                . $folder['name']
-                . ' (' . $folder['numberOfItems'] . ')</a>' . "\n";
-
-            // find children albums or galleries
-            if (isset($sequences[$folder['id']])) {
-                // start
-                $html .= '<ul>' . "\n";
-
-                // add child albums
-                $html .= $this->getSubtreeForFolder(
-                    $folder['id'],
-                    $sequences,
-                    $folders
-                );
-
-                // end
-                $html .= '</ul>' . "\n";
-            }
-
-            // end
-            $html .= '</li>' . "\n";
+        /** @var MediaFolderCacheItem $cacheItem */
+        foreach ($navigationItems as $cacheItem) {
+            $html .= $this->buildNavigationItem($cacheItem);
         }
+
+        // end
+        $html .= '  </ul>' . "\n";
+        $html .= '</div>' . "\n";
+
+        return $html;
+    }
+
+    /**
+     * @param MediaFolderCacheItem $cacheItem
+     * @return string
+     */
+    private function buildNavigationItem(MediaFolderCacheItem $cacheItem): string
+    {
+        // define url
+        $url = BackendModel::createURLForAction(
+            'MediaItemIndex',
+            null,
+            null,
+            [
+                'folder' => $cacheItem->id,
+            ]
+        );
+
+        // start
+        $html = '<li id="folder-' . $cacheItem->id . '" rel="folder">' . "\n";
+
+        // insert link
+        $html .= '<a href="' . $url . '"><ins>&#160;</ins>' . $cacheItem->name . ' (' . $cacheItem->numberOfMediaItems . ')</a>' . "\n";
+
+        if ($cacheItem->numberOfChildren > 0) {
+            $html .= $this->buildNavigationTree($cacheItem->children);
+        }
+
+        // end
+        $html .= '</li>' . "\n";
 
         return $html;
     }
