@@ -45,7 +45,7 @@ class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
      *
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -62,7 +62,6 @@ class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
      */
     private function checkOptions(InputInterface $input)
     {
-        // If set overwrite "deleteMediaItems"
         if ($input->getOption('delete-media-items')) {
             $this->deleteMediaItems = true;
         }
