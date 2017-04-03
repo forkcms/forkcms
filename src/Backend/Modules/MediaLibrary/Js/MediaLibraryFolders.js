@@ -87,7 +87,7 @@ jsBackend.mediaLibraryFolders =
     /**
      * Get and update the folders using ajax
      *
-     * @param int selectFolderId [optional]     Selects this folder
+     * @param {int} selectFolderId [optional] - Selects this folder
      */
     updateFolders : function(selectFolderId, dialog)
     {
@@ -116,7 +116,7 @@ jsBackend.mediaLibraryFolders =
                     return;
                 }
 
-                html = jsBackend.mediaLibraryFolders.templates.getHTMLForMediaFolders(json.data);
+                var html = jsBackend.mediaLibraryFolders.templates.getHTMLForMediaFolders(json.data);
 
                 // update folders in media module
                 if (!dialog) {
@@ -138,7 +138,9 @@ jsBackend.mediaLibraryFolders =
                 $('#addFolderParentId').html('<option value="0" />' + html);
 
                 // select the new folder
-                if (selectFolderId) $('#addFolderParentId').val(selectFolderId);
+                if (selectFolderId) {
+                    $('#addFolderParentId').val(selectFolderId);
+                }
             }
         });
     }

@@ -5,7 +5,9 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 use Backend\Core\Engine\Header;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 use Backend\Modules\MediaLibrary\Manager\ExtensionManager;
 use Ramsey\Uuid\Uuid;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
@@ -98,6 +100,7 @@ class MediaGroupType extends AbstractType
         $header->addCSS('MediaLibrary.css', 'MediaLibrary', false, true);
         $header->addJS('MediaLibraryFolders.js', 'MediaLibrary', true);
         $header->addJS('MediaLibraryHelper.js', 'MediaLibrary', true);
+        $header->addJsData('MediaLibrary', 'mediaItemTypes', Type::POSSIBLE_VALUES);
         $header->addJsData('MediaLibrary', 'mediaAllowedMovieSource', StorageType::POSSIBLE_VALUES_FOR_MOVIE);
         $header->addJsData('MediaLibrary', 'mediaAllowedExtensions', Model::get('media_library.manager.extension')->getAll());
     }

@@ -74,11 +74,11 @@ class UploadHandler
     }
 
     /**
-     * @param $uploadDirectory
+     * @param string $uploadDirectory
      * @param null $name
      * @return array
      */
-    public function combineChunks($uploadDirectory, $name = null): array
+    public function combineChunks(string $uploadDirectory, string $name = null): array
     {
         $uuid = $this->request->request->get('qquuid');
         if ($name === null) {
@@ -95,7 +95,7 @@ class UploadHandler
         }
         $target = fopen($targetPath, 'wb');
 
-        for ($i=0; $i < $totalParts; $i++) {
+        for ($i = 0; $i < $totalParts; $i++) {
             $chunk = fopen($targetFolder . DIRECTORY_SEPARATOR . $i, "rb");
             stream_copy_to_stream($chunk, $target);
             fclose($chunk);
@@ -104,7 +104,7 @@ class UploadHandler
         // Success
         fclose($target);
 
-        for ($i=0; $i < $totalParts; $i++) {
+        for ($i = 0; $i < $totalParts; $i++) {
             unlink($targetFolder . DIRECTORY_SEPARATOR . $i);
         }
 
@@ -185,13 +185,13 @@ class UploadHandler
         $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
 
         // Check file extension
-        if ($this->allowedExtensions && !in_array(strtolower($ext), array_map("strtolower", $this->allowedExtensions))) {
+        if (!in_array(strtolower($ext), array_map("strtolower", $this->allowedExtensions))) {
             $these = implode(', ', $this->allowedExtensions);
             return ['error' => 'File has an invalid extension, it should be one of ' . $these . '.'];
         }
 
         // Check file mime type
-        if ($this->allowedMimeTypes && !in_array(strtolower($file->getMimeType()), array_map("strtolower", $this->allowedMimeTypes))) {
+        if (!in_array(strtolower($file->getMimeType()), array_map("strtolower", $this->allowedMimeTypes))) {
             $these = implode(', ', $this->allowedMimeTypes);
             return ['error' => 'File has an invalid mime type, it should be one of ' . $these . '.'];
         }
@@ -202,7 +202,6 @@ class UploadHandler
         $uuid = $this->request->request->get('qquuid');
         if ($totalParts > 1) {
             # chunked upload
-
             $chunksFolder = $this->chunksFolder;
             $partIndex = $this->request->request->getInt('qqpartindex');
 

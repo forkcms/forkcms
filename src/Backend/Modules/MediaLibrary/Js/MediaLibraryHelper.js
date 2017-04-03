@@ -680,52 +680,30 @@ jsBackend.mediaLibraryHelper.group =
     updateMedia : function()
     {
         // init variables
+        var mediaItemTypes = jsBackend.data.get('MediaLibrary.mediaItemTypes');
+        var html = {};
+        var counts = {};
         var rowNoItems = jsBackend.mediaLibraryHelper.templates.getHTMLForEmptyTableRow();
-        var htmlImages = '';
-        var htmlFiles = '';
-        var htmlMovies = '';
-        var htmlAudio = '';
-        var numImages = 0;
-        var numFiles = 0;
-        var numMovies = 0;
-        var numAudio = 0;
+
+        $(mediaItemTypes).each(function(index, type){
+            html[type] = '';
+            counts[type] = 0;
+        });
 
         // loop media
         $.each(media[mediaFolderId], function(i, item) {
             // check if media is connected or not
             var connected = (typeof mediaGroups[currentMediaGroupId] == 'undefined') ? false : utils.array.inArray(item.id, mediaGroups[currentMediaGroupId].media);
-            var html = jsBackend.mediaLibraryHelper.templates.getHTMLForMediaItemTableRow(item, connected);
 
-            // item is an image
-            if (item.type == 'image') {
-                htmlImages += html;
-                numImages += 1;
-            // item is a file
-            } else if (item.type == 'file') {
-                htmlFiles += html;
-                numFiles += 1;
-            // item is a movie
-            } else if (item.type == 'movie') {
-                htmlMovies += html;
-                numMovies += 1;
-            // item is an audio file
-            } else if (item.type == 'audio') {
-                htmlAudio += html;
-                numAudio += 1;
-            }
+            // Redefine
+            html[item.type] += jsBackend.mediaLibraryHelper.templates.getHTMLForMediaItemTableRow(item, connected);
+            counts[item.type] += 1;
         });
 
-        // update counter values
-        $('#mediaCountImages').text('(' + numImages + ')');
-        $('#mediaCountFiles').text('(' + numFiles + ')');
-        $('#mediaCountMovies').text('(' + numMovies + ')');
-        $('#mediaCountAudio').text('(' + numAudio + ')');
-
-        // add html to correct items
-        $('#mediaTableImages').html((htmlImages) ? htmlImages : rowNoItems);
-        $('#mediaTableFiles').html((htmlFiles) ? htmlFiles : rowNoItems);
-        $('#mediaTableMovies').html((htmlMovies) ? htmlMovies : rowNoItems);
-        $('#mediaTableAudio').html((htmlAudio) ? htmlAudio : rowNoItems);
+        $(mediaItemTypes).each(function(index, type) {
+            $('#mediaTable' + utils.string.ucfirst(type)).html((html[type]) ? $(html[type]) : rowNoItems);
+            $('#mediaCount' + utils.string.ucfirst(type)).text('(' + counts[type] + ')');
+        });
 
         // init $tabs
         var $tabs = $('#tabLibrary').find('.nav-tabs');

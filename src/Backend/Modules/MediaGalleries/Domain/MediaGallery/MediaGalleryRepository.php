@@ -24,10 +24,10 @@ final class MediaGalleryRepository extends EntityRepository
      * Exists MediaGallery by title
      *
      * @param string $title
-     * @param int $ignoreMediaGalleryId
+     * @param string|null $ignoreMediaGalleryId
      * @return bool
      */
-    public function existsByTitle(string $title, int $ignoreMediaGalleryId = 0): bool
+    public function existsByTitle(string $title, string $ignoreMediaGalleryId = null): bool
     {
         /** @var MediaGallery $mediaGallery */
         $mediaGallery = $this->findOneByTitle($title);

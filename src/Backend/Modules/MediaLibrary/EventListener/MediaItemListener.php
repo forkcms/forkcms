@@ -61,7 +61,7 @@ final class MediaItemListener
         $mediaItem = $event->getMediaItem();
 
         // Delete Source file
-        $this->fileManager->deleteFile($mediaItem->getAbsolutePath('source'));
+        $this->fileManager->deleteFile($mediaItem->getAbsolutePath());
 
         // We have an image, so we have thumbnails to delete
         if ($mediaItem->getType()->isImage()) {
