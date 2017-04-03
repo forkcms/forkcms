@@ -95,7 +95,9 @@ class MediaItemUpload extends BackendBaseAJAXAction
             // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
             // For example: /myserver/handlers/endpoint.php?done
             if ($this->get('request')->query->get('done') !== null) {
-                $result = $uploader->combineChunks("files");
+                $this->response->setContent($uploader->combineChunks("files"));
+                $this->response->send();
+                exit();
             // Handles upload requests
             } else {
                 // Define upload dir
