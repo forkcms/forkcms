@@ -36,37 +36,40 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
         // Movie id not null
         if ($movieId === null) {
             throw new AjaxExitException(Language::err('MediaMovieIdIsRequired'));
-        // Title not valid
-        } elseif ($movieTitle === null) {
-            throw new AjaxExitException(Language::err('MediaMovieTitleIsRequired'));
-        // Movie url (= externalVideoId) already exists in our repository
-        } elseif ($this->get('media_library.repository.item')->existsOneByUrl((string) $movieId)) {
-            throw new AjaxExitException(Language::err('MediaMovieIdAlreadyExists'));
-        // Not already exists
-        } else {
-            /** @var CreateMediaItemFromMovieUrl $createMediaItem */
-            $createMediaItemFromMovieUrl = new CreateMediaItemFromMovieUrl(
-                $movieStorageType,
-                (string) $movieId,
-                (string) $movieTitle,
-                $mediaFolder,
-                BackendAuthentication::getUser()->getUserId()
-            );
-
-            // Handle the MediaItem create
-            $this->get('command_bus')->handle($createMediaItemFromMovieUrl);
-            $this->get('event_dispatcher')->dispatch(
-                MediaItemCreated::EVENT_NAME,
-                new MediaItemCreated($createMediaItemFromMovieUrl->getMediaItem())
-            );
-
-            // Output success message
-            $this->output(
-                self::OK,
-                $createMediaItemFromMovieUrl->getMediaItem()->__toArray(),
-                Language::msg('MediaUploadedSuccessful')
-            );
         }
+
+        // Title not valid
+        if ($movieTitle === null) {
+            throw new AjaxExitException(Language::err('MediaMovieTitleIsRequired'));
+        }
+
+        // Movie url (= externalVideoId) already exists in our repository
+        if ($this->get('media_library.repository.item')->existsOneByUrl((string) $movieId)) {
+            throw new AjaxExitException(Language::err('MediaMovieIdAlreadyExists'));
+        }
+
+        /** @var CreateMediaItemFromMovieUrl $createMediaItem */
+        $createMediaItemFromMovieUrl = new CreateMediaItemFromMovieUrl(
+            $movieStorageType,
+            (string) $movieId,
+            (string) $movieTitle,
+            $mediaFolder,
+            BackendAuthentication::getUser()->getUserId()
+        );
+
+        // Handle the MediaItem create
+        $this->get('command_bus')->handle($createMediaItemFromMovieUrl);
+        $this->get('event_dispatcher')->dispatch(
+            MediaItemCreated::EVENT_NAME,
+            new MediaItemCreated($createMediaItemFromMovieUrl->getMediaItem())
+        );
+
+        // Output success message
+        $this->output(
+            self::OK,
+            $createMediaItemFromMovieUrl->getMediaItem()->__toArray(),
+            Language::msg('MediaUploadedSuccessful')
+        );
     }
 
     /**
