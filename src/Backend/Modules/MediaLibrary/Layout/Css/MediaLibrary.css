@@ -233,6 +233,9 @@ p.helpTxt.mediaNoItems {
 .qq-uploader {
   border-radius: 0;
 }
+.qq-upload-button-selector {
+  margin-bottom: 1.5em;
+}
 .qq-upload-list {
   margin-top: 1.5em;
 }

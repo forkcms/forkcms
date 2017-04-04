@@ -1,15 +1,15 @@
 {#
   Media Listing
   Variables that are available:
-  - {{ items }}: Contains full urls to MediaItem items, f.e.: {{ items.source }}
+  - {{ mediaItems }}: Contains full urls to MediaItem items, f.e.: {{ items.source }}
   - {{ title }}: A custom optional title that you can give when parsing from Custom module.
 #}
 
-{% if items %}
+{% if mediaItems %}
 <section class="widgetMediaListing">
   <ul>
-    {% for item in items %}
-    <li>{{ item.mediaItem.getLinkHTML|raw }}</li>
+    {% for mediaItem in mediaItems %}
+    <li>{{ mediaItem.getLinkHTML|raw }}</li>
     {% endfor %}
   </ul>
 </section>

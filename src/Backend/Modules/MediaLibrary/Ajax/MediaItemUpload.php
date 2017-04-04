@@ -85,88 +85,88 @@ class MediaItemUpload extends BackendBaseAJAXAction
          */
         if ($method === "OPTIONS") {
             $this->handlePreflight();
-        /*
-         * handle a POST
-         */
-        } elseif ($method === "POST") {
-            $this->handleCorsRequest();
-            $this->response->headers->set('Content-Type', 'text/plain');
+            $this->response->send();
+            exit();
+        }
 
-            // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
-            // For example: /myserver/handlers/endpoint.php?done
-            if ($this->get('request')->query->get('done') !== null) {
-                $this->response->setContent($uploader->combineChunks("files"));
-                $this->response->send();
-                exit();
-            // Handles upload requests
-            } else {
-                // Define upload dir
-                $uploadDir = $this->get('media_library.storage.local')->getUploadRootDir() . '/' . $this->get('media_library.manager.file')->getNextShardingFolder();
-
-                // Generate folder if not exists
-                $this->get('media_library.manager.file')->createFolder($uploadDir);
-
-                // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
-                $result = $uploader->handleUpload($uploadDir);
-
-                // To return a name used for uploaded file you can use the following line.
-                $result["uploadName"] = $uploader->getUploadName();
-
-                // Generate filename which doesn't exist yet in our media library
-                $newName = $this->get('media_library.manager.file')->getUniqueFileName(
-                    $uploadDir,
-                    $result['uploadName']
-                );
-
-                if ($this->get('media_library.manager.file')->exists($uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'])) {
-                    // Move file to correct folder
-                    $this->get('media_library.manager.file')->rename(
-                        $uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'],
-                        $uploadDir . '/' . $newName
-                    );
-
-                    // Remove the old folder
-                    $this->get('media_library.manager.file')->deleteFolder($uploadDir . '/' . $result['uuid']);
-                }
-
-                /** @var CreateMediaItemFromLocalStorageType $createMediaItem */
-                $createMediaItemFromLocalSource = new CreateMediaItemFromLocalStorageType(
-                    $uploadDir . '/' . $newName,
-                    $this->getMediaFolder(),
-                    BackendAuthentication::getUser()->getUserId()
-                );
-
-                // Handle the MediaItem create
-                $this->get('command_bus')->handle($createMediaItemFromLocalSource);
-                $this->get('event_dispatcher')->dispatch(
-                    MediaItemCreated::EVENT_NAME,
-                    new MediaItemCreated($createMediaItemFromLocalSource->getMediaItem())
-                );
-
-                $resultData = json_encode(
-                    array_merge(
-                        $result,
-                        $createMediaItemFromLocalSource->getMediaItem()->__toArray()
-                    )
-                );
-
-                // iframe uploads require the content-type to be 'text/html' and
-                // return some JSON along with self-executing javascript (iframe.ss.response)
-                // that will parse the JSON and pass it along to Fine Uploader via
-                // window.postMessage
-                if ($iframeRequest === true) {
-                    $this->response->headers->set('Content-Type', 'text/html');
-                    $resultData .= "<script src='http://{{SERVER_URL}}/{{FINE_UPLOADER_FOLDER}}/iframe.xss.response.js'></script>";
-                }
-                $this->response->setContent($resultData);
-                $this->response->send();
-                exit();
-            }
-        } else {
+        if ($method !== "POST") {
             $this->response->setStatusCode(Response::HTTP_METHOD_NOT_ALLOWED);
             $this->response->send();
             exit();
         }
+
+        $this->handleCorsRequest();
+        $this->response->headers->set('Content-Type', 'text/plain');
+
+        // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
+        // For example: /myserver/handlers/endpoint.php?done
+        if ($this->get('request')->query->get('done') !== null) {
+            $this->response->setContent($uploader->combineChunks("files"));
+            $this->response->send();
+            exit();
+        }
+
+        // Define upload dir
+        $uploadDir = $this->get('media_library.storage.local')->getUploadRootDir() . '/' . $this->get('media_library.manager.file')->getNextShardingFolder();
+
+        // Generate folder if not exists
+        $this->get('media_library.manager.file')->createFolder($uploadDir);
+
+        // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
+        $result = $uploader->handleUpload($uploadDir);
+
+        // To return a name used for uploaded file you can use the following line.
+        $result["uploadName"] = $uploader->getUploadName();
+
+        // Generate filename which doesn't exist yet in our media library
+        $newName = $this->get('media_library.manager.file')->getUniqueFileName(
+            $uploadDir,
+            $result['uploadName']
+        );
+
+        if ($this->get('media_library.manager.file')->exists($uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'])) {
+            // Move file to correct folder
+            $this->get('media_library.manager.file')->rename(
+                $uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'],
+                $uploadDir . '/' . $newName
+            );
+
+            // Remove the old folder
+            $this->get('media_library.manager.file')->deleteFolder($uploadDir . '/' . $result['uuid']);
+        }
+
+        /** @var CreateMediaItemFromLocalStorageType $createMediaItem */
+        $createMediaItemFromLocalSource = new CreateMediaItemFromLocalStorageType(
+            $uploadDir . '/' . $newName,
+            $this->getMediaFolder(),
+            BackendAuthentication::getUser()->getUserId()
+        );
+
+        // Handle the MediaItem create
+        $this->get('command_bus')->handle($createMediaItemFromLocalSource);
+        $this->get('event_dispatcher')->dispatch(
+            MediaItemCreated::EVENT_NAME,
+            new MediaItemCreated($createMediaItemFromLocalSource->getMediaItem())
+        );
+
+        $resultData = json_encode(
+            array_merge(
+                $result,
+                $createMediaItemFromLocalSource->getMediaItem()->__toArray()
+            )
+        );
+
+        // iframe uploads require the content-type to be 'text/html' and
+        // return some JSON along with self-executing javascript (iframe.ss.response)
+        // that will parse the JSON and pass it along to Fine Uploader via
+        // window.postMessage
+        if ($iframeRequest === true) {
+            $this->response->headers->set('Content-Type', 'text/html');
+            $resultData .= "<script src='http://{{SERVER_URL}}/{{FINE_UPLOADER_FOLDER}}/iframe.xss.response.js'></script>";
+        }
+        $this->response->setContent($resultData);
+        $this->response->send();
+        exit();
     }
 
     // This will retrieve the "intended" request method.  Normally, this is the
