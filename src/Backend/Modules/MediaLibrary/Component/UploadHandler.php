@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Component;
 
+use Backend\Modules\MediaLibrary\Manager\FileManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,17 +17,23 @@ class UploadHandler
     public $chunksCleanupProbability = 0.001; // Once in 1000 requests on avg
     public $chunksExpireIn = 604800; // One week
 
+    /** @var string */
     protected $uploadName;
 
     /** @var Request */
     protected $request;
 
+    /** @var FileManager */
+    protected $fileManager;
+
     /**
      * @param Request $request
+     * @param FileManager $fileManager
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, FileManager $fileManager)
     {
         $this->request = $request;
+        $this->fileManager = $fileManager;
     }
 
     /**
@@ -68,14 +75,14 @@ class UploadHandler
     /**
      * Get the name of the uploaded file
      */
-    public function getUploadName()
+    public function getUploadName(): string
     {
         return $this->uploadName;
     }
 
     /**
      * @param string $uploadDirectory
-     * @param null $name
+     * @param string|null $name
      * @return array
      */
     public function combineChunks(string $uploadDirectory, string $name = null): array
@@ -128,10 +135,7 @@ class UploadHandler
      */
     public function handleUpload($uploadDirectory, $name = null)
     {
-        if (is_writable($this->chunksFolder) && 1 == mt_rand(1, 1 / $this->chunksCleanupProbability)) {
-            // Run garbage collection
-            $this->cleanupChunks();
-        }
+        $this->cleanupChunksIfNecessary();
 
         try {
             $this->checkMaximumSize();
@@ -196,8 +200,7 @@ class UploadHandler
      */
     private function checkMaximumSize()
     {
-        // Check that the max upload size specified in class configuration does not
-        // exceed size allowed by server config
+        // Check that the max upload size specified in class configuration does not exceed size allowed by server config
         if ($this->toBytes(ini_get('post_max_size')) < $this->sizeLimit ||
             $this->toBytes(ini_get('upload_max_filesize')) < $this->sizeLimit
         ) {
@@ -269,6 +272,33 @@ class UploadHandler
         if (!in_array(strtolower($file->getMimeType()), array_map("strtolower", $this->allowedMimeTypes))) {
             $these = implode(', ', $this->allowedMimeTypes);
             throw new \Exception('File has an invalid mime type, it should be one of ' . $these . '.');
+        }
+    }
+
+    /**
+     * Deletes all file parts in the chunks folder for files uploaded
+     * more than chunksExpireIn seconds ago
+     */
+    private function cleanupChunksIfNecessary()
+    {
+        if (!is_writable($this->chunksFolder) || 1 !== mt_rand(1, 1 / $this->chunksCleanupProbability)) {
+            return;
+        }
+
+        foreach (scandir($this->chunksFolder) as $item) {
+            if ($item == "." || $item == "..") {
+                continue;
+            }
+
+            $path = $this->chunksFolder . DIRECTORY_SEPARATOR . $item;
+
+            if (!is_dir($path)) {
+                continue;
+            }
+
+            if (time() - filemtime($path) > $this->chunksExpireIn) {
+                $this->fileManager->deleteFolder($path);
+            }
         }
     }
 
@@ -374,46 +404,13 @@ class UploadHandler
     }
 
     /**
-     * Deletes all file parts in the chunks folder for files uploaded
-     * more than chunksExpireIn seconds ago
+     * Determines is the OS is Windows or not
+     *
+     * @return bool
      */
-    protected function cleanupChunks()
+    protected function isWindows(): bool
     {
-        foreach (scandir($this->chunksFolder) as $item) {
-            if ($item == "." || $item == "..") {
-                continue;
-            }
-
-            $path = $this->chunksFolder . DIRECTORY_SEPARATOR . $item;
-
-            if (!is_dir($path)) {
-                continue;
-            }
-
-            if (time() - filemtime($path) > $this->chunksExpireIn) {
-                $this->removeDir($path);
-            }
-        }
-    }
-
-    /**
-     * Removes a directory and all files contained inside
-     * @param string $dir
-     */
-    protected function removeDir($dir)
-    {
-        foreach (scandir($dir) as $item) {
-            if ($item == "." || $item == "..") {
-                continue;
-            }
-
-            if (is_dir($item)) {
-                $this->removeDir($item);
-            } else {
-                unlink(join(DIRECTORY_SEPARATOR, [$dir, $item]));
-            }
-        }
-        rmdir($dir);
+        return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
     }
 
     /**
@@ -422,41 +419,29 @@ class UploadHandler
      * @param string $str
      * @return int
      */
-    protected function toBytes($str): int
+    protected function toBytes(string $str): int
     {
         $str = trim($str);
         $last = strtolower($str[strlen($str) - 1]);
+        $val = (int) substr($str, 0, -1);
 
         if (is_numeric($last)) {
             $val = (int) $str;
-        } else {
-            $val = (int) substr($str, 0, -1);
         }
 
         $last = strtoupper($last);
         if ($last === 'G') {
-            $val *= 1073741824;
+            return $val * 1073741824;
         }
 
         if ($last === 'M') {
-            $val *= 1048576;
+            return $val * 1048576;
         }
 
         if ($last === 'K') {
-            $val *= 1024;
+            return $val * 1024;
         }
 
         return $val;
-    }
-
-    /**
-     * Determines is the OS is Windows or not
-     *
-     * @return bool
-     */
-    protected function isWindows(): bool
-    {
-        $isWin = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
-        return $isWin;
     }
 }

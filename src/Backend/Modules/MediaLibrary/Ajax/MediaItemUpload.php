@@ -59,7 +59,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
          *    but is now required in all cases if you are making use of this PHP example.
          */
         // Include the upload handler class
-        $uploader = new UploadHandler($this->get('request'));
+        $uploader = new UploadHandler($this->get('request'), $this->get('media_library.manager.file'));
         // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
         $uploader->allowedExtensions = $this->get('media_library.manager.extension')->getAll();
         $uploader->allowedMimeTypes = $this->get('media_library.manager.mime_type')->getAll();
