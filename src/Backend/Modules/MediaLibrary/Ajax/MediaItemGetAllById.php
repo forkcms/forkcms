@@ -20,14 +20,11 @@ class MediaItemGetAllById extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        /** @var array $mediaItems */
-        $mediaItems = $this->getMediaItems();
-
         // Output success message with variables
         $this->output(
             self::OK,
             [
-                'items' => $mediaItems,
+                'items' => $this->getMediaItems(),
             ]
         );
     }
@@ -35,7 +32,7 @@ class MediaItemGetAllById extends BackendBaseAJAXAction
     /**
      * @return array
      */
-    protected function getMediaItems()
+    protected function getMediaItems(): array
     {
         /** @var array $ids */
         $ids = explode(',', $this->get('request')->request->get('media_ids'));
@@ -45,14 +42,11 @@ class MediaItemGetAllById extends BackendBaseAJAXAction
             return [];
         }
 
-        $mediaItems = [];
-        $mediaItemEntities = $this->get('media_library.repository.item')->findById($ids);
-
-        /** @var MediaItem $mediaItem */
-        foreach ($mediaItemEntities as $mediaItem) {
-            $mediaItems[] = $mediaItem->__toArray();
-        }
-
-        return $mediaItems;
+        return array_map(
+            function (MediaItem $mediaItem): array {
+                return $mediaItem->__toArray();
+            },
+            $this->get('media_library.repository.item')->findById($ids)
+        );
     }
 }
