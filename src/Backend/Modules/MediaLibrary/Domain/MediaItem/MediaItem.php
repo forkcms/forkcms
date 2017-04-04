@@ -272,10 +272,9 @@ class MediaItem
             $mediaItem = $mediaItemDataTransferObject->getMediaItemEntity();
 
             $mediaItem->title = $mediaItemDataTransferObject->title;
-
-            if ($mediaItem->getType()->isMovie()) {
-                $mediaItem->url = $mediaItemDataTransferObject->url;
-            }
+            $mediaItem->folder = $mediaItemDataTransferObject->folder;
+            $mediaItem->userId = $mediaItemDataTransferObject->userId;
+            $mediaItem->url = $mediaItemDataTransferObject->url;
 
             return $mediaItem;
         }

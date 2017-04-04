@@ -27,28 +27,14 @@ class MediaItemMassAction extends BackendBaseAction
     {
         parent::execute();
 
-        /** @var array $mediaItemIds */
-        $ids = $this->getSelectedMediaItemIds();
-
         /** @var Type $selectedType */
         $selectedType = $this->getSelectedType();
-
-        /** @var MediaFolder|null $mediaFolder */
-        $mediaFolder = $this->getMediaFolder();
 
         /** @var string $action */
         $action = $this->getSelectedAction();
 
-        // Init parameters
-        $parameters = [];
-
-        // We have a current MediaFolder
-        if ($mediaFolder !== null) {
-            $parameters['folder'] = $mediaFolder->getId();
-        }
-
         // Loop ids
-        foreach ($ids as $mediaItemId) {
+        foreach ($this->getSelectedMediaItemIds() as $mediaItemId) {
             try {
                 /** @var MediaItem $mediaItem */
                 $mediaItem = $this->get('media_library.repository.item')->findOneById($mediaItemId);
@@ -66,9 +52,14 @@ class MediaItemMassAction extends BackendBaseAction
             }
         }
 
-        $parameters['report'] = 'media-' . ($action === self::MOVE ? 'moved' : 'deleted');
-
-        $this->redirect($this->getBackLink($parameters) . '#tab' . ucfirst($selectedType));
+        $this->redirect(
+            $this->getBackLink(
+                $this->getMediaFolder(),
+                [
+                    'report' => 'media-' . ($action === self::MOVE ? 'moved' : 'deleted')
+                ]
+            ) . '#tab' . ucfirst($selectedType)
+        );
     }
 
     /**
@@ -85,16 +76,19 @@ class MediaItemMassAction extends BackendBaseAction
             MediaItemDeleted::EVENT_NAME,
             new MediaItemDeleted($deleteMediaItem->mediaItem)
         );
-
     }
 
     /**
+     * @param MediaFolder $mediaFolder
      * @param array $parameters
-     *
      * @return string
      */
-    private function getBackLink(array $parameters = []): string
+    private function getBackLink(MediaFolder $mediaFolder = null, array $parameters = []): string
     {
+        if ($mediaFolder instanceof MediaFolder) {
+            $parameters['folder'] = $mediaFolder->getId();
+        }
+
         return Model::createURLForAction(
             'MediaItemIndex',
             null,
@@ -131,6 +125,7 @@ class MediaItemMassAction extends BackendBaseAction
         if ($id === 0) {
             $this->redirect(
                 $this->getBackLink(
+                    null,
                     [
                         'error' => 'please-select-a-folder',
                     ]
@@ -145,6 +140,7 @@ class MediaItemMassAction extends BackendBaseAction
         } catch (\Exception $e) {
             $this->redirect(
                 $this->getBackLink(
+                    null,
                     [
                         'error' => 'folder-does-not-exists',
                     ]
@@ -179,6 +175,7 @@ class MediaItemMassAction extends BackendBaseAction
         if (empty($ids)) {
             $this->redirect(
                 $this->getBackLink(
+                    null,
                     [
                         'error' => 'no-files-selected'
                     ]
@@ -208,10 +205,9 @@ class MediaItemMassAction extends BackendBaseAction
             $this->moveToMediaFolder = $this->getMediaFolderToMoveTo($selectedType);
         }
 
-        $mediaItem->setFolder($this->moveToMediaFolder);
-
         /** @var UpdateMediaItem $updateMediaItem */
         $updateMediaItem = new UpdateMediaItem($mediaItem);
+        $updateMediaItem->folder = $this->moveToMediaFolder;
 
         // Handle the MediaItem update
         $this->get('command_bus')->handle($updateMediaItem);

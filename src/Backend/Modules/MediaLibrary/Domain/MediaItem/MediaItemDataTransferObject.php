@@ -37,6 +37,7 @@ class MediaItemDataTransferObject
         $this->folder = $mediaItem->getFolder();
         $this->url = $mediaItem->getUrl();
         $this->title = $mediaItem->getTitle();
+        $this->userId = $mediaItem->getUserId();
     }
 
     /**
