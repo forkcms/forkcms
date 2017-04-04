@@ -12,23 +12,18 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemR
 
 /**
  * Frontend Helper
- * With this helper you can use the Media Module easier then ever.
+ * With this helper you can use the MediaLibrary Module easier then ever.
  */
 class FrontendHelper
 {
-    /**
-     * @var MediaGroupMediaItemRepository
-     */
+    /** @var MediaGroupMediaItemRepository */
     protected $mediaGroupMediaItemRepository;
 
     /**
-     * Construct
-     *
      * @param MediaGroupMediaItemRepository $mediaGroupMediaItemRepository
      */
-    public function __construct(
-        MediaGroupMediaItemRepository $mediaGroupMediaItemRepository
-    ) {
+    public function __construct(MediaGroupMediaItemRepository $mediaGroupMediaItemRepository)
+    {
         $this->mediaGroupMediaItemRepository = $mediaGroupMediaItemRepository;
     }
 
@@ -107,29 +102,19 @@ class FrontendHelper
      * @param Header $header @todo: when we have a header in our services, use that one instead and remove this method variable
      * @param int $maximumItems Default is null, which means infinite images will be added to header
      */
-    public function addOpenGraphImagesForMediaGroup(
-        MediaGroup $mediaGroup,
-        Header $header,
-        int $maximumItems = 0
-    ) {
+    public function addOpenGraphImagesForMediaGroup(MediaGroup $mediaGroup, Header $header, int $maximumItems = 0)
+    {
         // Define variables
         $counter = 0;
 
         // Loop all connected items
         foreach ($mediaGroup->getConnectedItems() as $connectedItem) {
-            /** @var MediaItem $mediaItem */
-            $mediaItem = $connectedItem->getItem();
+            if ($maximumItems !== 0 && $counter >= $maximumItems) {
+                break;
+            }
 
-            if ($this->addOpenGraphImageForMediaItem($mediaItem, $header)) {
-                if ($maximumItems > 0) {
-                    // Bump counter
-                    $counter++;
-
-                    // Stop here
-                    if ($maximumItems <= $counter) {
-                        break;
-                    }
-                }
+            if ($this->addOpenGraphImageForMediaItem($connectedItem->getItem(), $header)) {
+                $counter++;
             }
         }
     }
@@ -139,24 +124,21 @@ class FrontendHelper
      * @param Header $header @todo: when we have a header in our services, use that one instead and remove this method variable
      * @return bool
      */
-    public function addOpenGraphImageForMediaItem(
-        MediaItem $mediaItem,
-        Header $header
-    ) : bool {
+    public function addOpenGraphImageForMediaItem(MediaItem $mediaItem, Header $header): bool
+    {
         // Only image allowed
-        if ($mediaItem->getType()->isImage()) {
-            // Add OpenGraph image
-            $header->addOpenGraphImage(
-                $mediaItem->getAbsoluteWebPath(),
-                false,
-                $mediaItem->getWidth(),
-                $mediaItem->getHeight()
-            );
-
-            return true;
+        if (!$mediaItem->getType()->isImage()) {
+            return false;
         }
 
-        return false;
+        $header->addOpenGraphImage(
+            $mediaItem->getAbsoluteWebPath(),
+            false,
+            $mediaItem->getWidth(),
+            $mediaItem->getHeight()
+        );
+
+        return true;
     }
 
     /**
