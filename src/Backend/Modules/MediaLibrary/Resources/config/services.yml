@@ -21,3 +21,12 @@ imports:
   - { resource: helpers.yml }
   - { resource: console.yml }
   - { resource: form.yml }
+
+services:
+    media_library.twig_extension:
+        class: Frontend\Modules\MediaLibrary\Twig\WidgetExtension
+        public: false
+        arguments:
+            - "@media_library.helper.frontend"
+        tags:
+            - { name: twig.extension }
