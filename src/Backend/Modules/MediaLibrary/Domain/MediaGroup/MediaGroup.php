@@ -207,6 +207,16 @@ class MediaGroup
     }
 
     /**
+     * @return MediaItem|null
+     */
+    public function getFirstConnectedMediaItem()
+    {
+        $connectedMediaItems = $this->getConnectedMediaItems();
+
+        return ($connectedMediaItems instanceof Collection) ? $this->getConnectedMediaItems()->first() : null;
+    }
+
+    /**
      * @return bool
      */
     public function hasConnectedItems(): bool
