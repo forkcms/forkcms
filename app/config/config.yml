@@ -79,10 +79,10 @@ liip_imagine:
                 thumbnail: { size : [140, 90], mode : outbound }
         media_library_lightbox_small:
             filters:
-                thumbnail: { size : [800, 800], mode : outbound }
+                scale: { dim : [800, 600] }
         media_library_lightbox_large:
             filters:
-                thumbnail: { size : [1600, 800], mode : inbound }
+                scale: { dim : [1600, 800] }
         media_library_slider_pano:
             filters:
                 thumbnail: { size : [1600, 350], mode : outbound }
