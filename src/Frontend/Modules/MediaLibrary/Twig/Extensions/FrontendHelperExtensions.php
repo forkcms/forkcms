@@ -1,10 +1,10 @@
 <?php
 
-namespace Frontend\Modules\MediaLibrary\Twig;
+namespace Frontend\Modules\MediaLibrary\Twig\Extensions;
 
 use Frontend\Modules\MediaLibrary\Helper\FrontendHelper;
 
-class WidgetExtension extends \Twig_Extension
+class FrontendHelperExtensions extends \Twig_Extension
 {
     /**
      * @var FrontendHelper
@@ -25,7 +25,11 @@ class WidgetExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('media_library_widget', array($this, 'parseWidget')),
+            new \Twig_SimpleFunction(
+                'media_library_widget',
+                array($this, 'parseWidget'),
+                array('is_safe' => array('html'))
+            ),
         );
     }
 

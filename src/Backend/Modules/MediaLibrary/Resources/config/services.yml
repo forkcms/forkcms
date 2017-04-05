@@ -24,7 +24,7 @@ imports:
 
 services:
     media_library.twig_extension:
-        class: Frontend\Modules\MediaLibrary\Twig\WidgetExtension
+        class: Frontend\Modules\MediaLibrary\Twig\Extensions\FrontendHelperExtensions
         public: false
         arguments:
             - "@media_library.helper.frontend"
