@@ -33,14 +33,15 @@
     margin-bottom: 0;
   }
     .mediaGroup .panel-body {
-    padding: 0;
-    border: none;
+      padding: 0;
+      border: none;
     }
     .mediaGroup .panel-body .helpTxt {
-    padding: 20px 25px 25px;
+      padding: 20px 25px 25px;
+      margin-bottom: 0;
     }
     .mediaGroup .mediaConnectedBox {
-    background-color: #fff;
+      background-color: #fff;
     }
   #addGalleriesBox a {
     float: right;
@@ -48,26 +49,26 @@
   .mediaConnectedItems {
     float: left;
     width: 100%;
+    margin-bottom: 0;
   }
     .helpTxt {
-    padding: 10px;
+      padding: 10px;
     }
     .mediaConnectedItems {
-    padding: 5px 2px 2px 5px;
+      padding: 5px 2px 2px 5px;
     }
     .mediaEditBox {
-    background: #eee;
+      background: #eee;
     }
     .mediaEditBox ul {
-    padding: 10px;
+      padding: 10px;
     }
     .mediaEditBox li {
-    display: inline;
-    float: left;
-    padding-right: 10px;
+      display: inline;
+      float: left;
+      padding-right: 10px;
     }
-    .mediaSettingsGroup
-    {
+    .mediaSettingsGroup {
       position: absolute;
       right: 10px;
     }
@@ -76,11 +77,11 @@
     padding: 0!important;
   }
     .optionsOnlyOneGroup .panel {
-    border: none;
-    width: 100%;
+      border: none;
+      width: 100%;
     }
     .optionsOnlyOneGroup .mediaSettingsGroup {
-    right: 0;
+      right: 0;
     }
 
 .mediaConnectedItems .ui-state-default {
@@ -108,34 +109,34 @@
     .mediaHolderFile .icon,
     .mediaHolderMovie .icon,
     .mediaHolderAudio .icon {
-    background: url(../../../../Core/Layout/images/sprites/fork_icons.png) no-repeat;
-    width: 16px;
-    height: 20px;
-    display: block;
-    text-align: center;
-    margin: 20px auto 2px;
+      background: url(../../../../Core/Layout/images/sprites/fork_icons.png) no-repeat;
+      width: 16px;
+      height: 20px;
+      display: block;
+      text-align: center;
+      margin: 20px auto 2px;
     }
     .mediaHolderAudio .icon {
-    background-position: 0 -468px;
+      background-position: 0 -468px;
     }
     .mediaHolderFile .icon {
-    background-position: 0 -443px;
+      background-position: 0 -443px;
     }
     .mediaHolderMovie .icon {
-    background-position: 0 -468px;
+      background-position: 0 -468px;
     }
     .mediaHolderFile .url,
     .mediaHolderMovie .url,
     .mediaHolderAudio .url {
-    font-size: 0.8em;
-    color: #666;
-    text-align: center;
-    width: 100%;
-    word-wrap: break-word;
+      font-size: 0.8em;
+      color: #666;
+      text-align: center;
+      width: 100%;
+      word-wrap: break-word;
     }
     .mediaHolderImage img {
-    width: 140px;
-    height: 90px;
+      width: 140px;
+      height: 90px;
     }
   .mediaConnectedItems li.selected {
     border: 1px solid #000;
@@ -153,12 +154,8 @@
   }
     .mediaConnectedItems .ui-state-default.hover .editMediaItem,
     .mediaConnectedItems .ui-state-default.hover .deleteMediaItem {
-    display: block;
+      display: block;
     }
-
-p.helpTxt.mediaNoItems {
-  padding: 10px;
-}
 
 
 /**
