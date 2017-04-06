@@ -3,8 +3,3 @@ services:
         class: Backend\Modules\MediaLibrary\Console\MediaItemDeleteAllCommand
         tags:
             -  { name: console.command }
-
-    media_library.console.delete_generated_folder:
-        class: Backend\Modules\MediaLibrary\Console\MediaItemDeleteAllFrontendThumbnailsCommand
-        tags:
-            -  { name: console.command }

@@ -17,17 +17,8 @@ class MediaItemDelete extends BackendBaseActionDelete
         /** @var MediaItem $mediaItem */
         $mediaItem = $this->getMediaItem();
 
-        /** @var DeleteMediaItemCommand $deleteMediaItem */
-        $deleteMediaItem = new DeleteMediaItemCommand($mediaItem);
-
         // Handle the MediaItem delete
-        $this->get('command_bus')->handle($deleteMediaItem);
-        $this->get('event_dispatcher')->dispatch(
-            MediaItemDeleted::EVENT_NAME,
-            new MediaItemDeleted(
-                $mediaItem
-            )
-        );
+        $this->get('media_library.manager.item')->delete($mediaItem);
 
         return $this->redirect(
             $this->getBackLink(

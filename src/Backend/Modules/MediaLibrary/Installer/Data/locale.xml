@@ -262,9 +262,13 @@
         <translation language="en"><![CDATA[all media]]></translation>
         <translation language="nl"><![CDATA[alle media]]></translation>
       </item>
-      <item type="message" name="ConfirmMassDeleteMedia">
-        <translation language="en"><![CDATA[Are you sure you want to delete this media?]]></translation>
-        <translation language="nl"><![CDATA[Bent u zeker dat u deze media wil verwijderen?]]></translation>
+      <item type="message" name="CleanedUpMediaItems">
+        <translation language="en"><![CDATA[Removed %1$s media items.]]></translation>
+        <translation language="nl"><![CDATA[%1$s media items verwijderd]]></translation>
+      </item>
+      <item type="message" name="ConfirmMediaItemCleanup">
+        <translation language="en"><![CDATA[Are you sure you want to delete non-connected media?]]></translation>
+        <translation language="nl"><![CDATA[Bent u zeker dat u niet-gekoppelde media wil verwijderen?]]></translation>
       </item>
       <item type="message" name="ConfirmMediaFolderDelete">
         <translation language="en"><![CDATA[Are you sure you want to delete the folder "%1$s"?]]></translation>
@@ -373,6 +377,10 @@
       <item type="message" name="MediaFolderMoved">
         <translation language="en"><![CDATA[Media folder "%1$s" moved.]]></translation>
         <translation language="nl"><![CDATA[Map "%1$s" verplaatst.]]></translation>
+      </item>
+      <item type="label" name="MediaItemCleanup">
+        <translation language="en"><![CDATA[remove obsolete media]]></translation>
+        <translation language="nl"><![CDATA[verwijder ongebruikte media]]></translation>
       </item>
       <item type="message" name="MediaItemDeleted">
         <translation language="en"><![CDATA[Media item "%1$s" deleted.]]></translation>

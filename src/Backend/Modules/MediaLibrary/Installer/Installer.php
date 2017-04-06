@@ -37,18 +37,14 @@ class Installer extends ModuleInstaller
     protected function addGitIgnoreFile()
     {
         $fs = new Filesystem();
-
-        // Save Dropdowns
         $fs->dumpFile(
             FRONTEND_FILES_PATH . '/MediaLibrary/.gitignore',
             '# Uploaded files - Do not delete anything in this directory
-            /Source/*
-            
-            # Generated images needed for backend - Do not delete anything in this directory
-            /Backend/*
-            
-            # Automagically generated images needed for frontend - All directories and images in this directory can safely be removed.
-            /Frontend/*'
+            *'
+        );
+        $fs->dumpFile(
+            FRONTEND_FILES_PATH . '/Cache/.gitignore',
+            '*'
         );
     }
 
@@ -78,24 +74,25 @@ class Installer extends ModuleInstaller
         // Set module rights
         $this->setModuleRights(1, $this->getModule());
 
-        // Media index
-        $this->setActionRights(1, $this->getModule(), 'MediaItemIndex');
-        $this->setActionRights(1, $this->getModule(), 'MediaItemMassAction');
-        $this->setActionRights(1, $this->getModule(), 'MediaItemUpload'); // Action and AJAX
+        // MediaItem
+        $this->setActionRights(1, $this->getModule(), 'MediaItemAddMovie'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaItemCleanup');
         $this->setActionRights(1, $this->getModule(), 'MediaItemDelete');
         $this->setActionRights(1, $this->getModule(), 'MediaItemEdit');
         $this->setActionRights(1, $this->getModule(), 'MediaItemFindAll'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaItemGetAllById'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaItemAddMovie'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaItemIndex');
+        $this->setActionRights(1, $this->getModule(), 'MediaItemMassAction');
+        $this->setActionRights(1, $this->getModule(), 'MediaItemUpload'); // Action and AJAX
 
         // MediaFolder
         $this->setActionRights(1, $this->getModule(), 'MediaFolderAdd'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderDelete');
         $this->setActionRights(1, $this->getModule(), 'MediaFolderEdit'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderFindAll'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderGetCountsForGroup'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderInfo'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderFindAll'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MovieMediaFolder'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderMovie'); // AJAX
     }
 
     /**

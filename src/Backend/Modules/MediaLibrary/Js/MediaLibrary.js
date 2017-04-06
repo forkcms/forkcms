@@ -31,6 +31,13 @@ jsBackend.mediaLibrary.controls =
         {
             $('form').append('<input type="hidden" name="after_save" value="MediaItemEdit" />').submit();
         });
+
+        // Bind dialog to "mediaItemCleanup" button
+        $('a[data-action=media-item-cleanup]').on('click', function(e){
+            e.preventDefault();
+
+            $($(this).data('target')).modal('show');
+        });
     }
 };
 
@@ -119,7 +126,7 @@ jsBackend.mediaLibrary.library =
         });
 
         // Submit form
-        $('#confirmMassActionMediaItemMove, #confirmMassActionMediaItemDelete').find('button[type=submit]').on('click', function(){
+        $('#confirmMassActionMediaItemMove').find('button[type=submit]').on('click', function(){
             $('#move-to-folder-id-for-type-' + jsBackend.mediaLibrary.library.currentType).val($('#moveToFolderId').val());
             $('#form-for-' + jsBackend.mediaLibrary.library.currentType).submit();
         });

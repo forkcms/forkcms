@@ -13,12 +13,11 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemUpdated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 
 /**
- * This action is used to update one or more media items (status, delete, ...)
+ * This action is used to update one or more media items (move, ...)
  */
 class MediaItemMassAction extends BackendBaseAction
 {
     const MOVE = 'move';
-    const DELETE = 'delete';
 
     /** @var MediaFolder */
     protected $moveToMediaFolder;
@@ -43,9 +42,6 @@ class MediaItemMassAction extends BackendBaseAction
                     case self::MOVE:
                         $this->move($mediaItem, $selectedType);
                         break;
-                    case self::DELETE:
-                        $this->delete($mediaItem);
-                        break;
                 }
             } catch (\Exception $e) {
                 // Do nothing
@@ -59,22 +55,6 @@ class MediaItemMassAction extends BackendBaseAction
                     'report' => 'media-' . ($action === self::MOVE ? 'moved' : 'deleted')
                 ]
             ) . '#tab' . ucfirst($selectedType)
-        );
-    }
-
-    /**
-     * @param MediaItem $mediaItem
-     */
-    private function delete(MediaItem $mediaItem)
-    {
-        /** @var DeleteMediaItemCommand $deleteMediaItem */
-        $deleteMediaItem = new DeleteMediaItemCommand($mediaItem);
-
-        // Handle the MediaItem delete
-        $this->get('command_bus')->handle($deleteMediaItem);
-        $this->get('event_dispatcher')->dispatch(
-            MediaItemDeleted::EVENT_NAME,
-            new MediaItemDeleted($deleteMediaItem->mediaItem)
         );
     }
 
@@ -158,7 +138,7 @@ class MediaItemMassAction extends BackendBaseAction
     {
         $action = $this->get('request')->query->get('action', self::MOVE);
 
-        if (!in_array($action, [self::MOVE, self::DELETE])) {
+        if (!in_array($action, [self::MOVE])) {
             throw new \Exception('Action not exists');
         }
 

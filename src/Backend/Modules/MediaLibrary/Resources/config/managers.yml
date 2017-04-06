@@ -10,6 +10,12 @@ services:
         class: Backend\Modules\MediaLibrary\Manager\FileManager
         arguments:
             - "@fork.settings"
+    media_library.manager.item:
+        class: Backend\Modules\MediaLibrary\Manager\MediaItemManager
+        arguments:
+            - "@media_library.repository.item"
+            - "@command_bus"
+            - "@event_dispatcher"
     media_library.manager.mime_type:
         class: Backend\Modules\MediaLibrary\Manager\MimeTypeManager
         calls:

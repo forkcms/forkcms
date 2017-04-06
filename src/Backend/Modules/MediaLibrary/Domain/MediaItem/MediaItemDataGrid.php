@@ -150,7 +150,6 @@ class MediaItemDataGrid extends DataGridDB
             'action',
             [
                 'move' => Language::lbl('Move'),
-                'delete' => Language::lbl('Delete')
             ],
             'move',
             false,
@@ -165,12 +164,6 @@ class MediaItemDataGrid extends DataGridDB
             'move',
             [
                 'data-target' => '#confirmMassActionMediaItemMove',
-            ]
-        );
-        $ddmMediaItemMassAction->setOptionAttributes(
-            'delete',
-            [
-                'data-target' => '#confirmMassActionMediaItemDelete',
             ]
         );
         $this->setMassAction($ddmMediaItemMassAction);
