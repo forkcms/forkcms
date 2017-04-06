@@ -229,7 +229,7 @@
  * Fine uploader
  */
 .qq-uploader {
-  border-radius: 0;
+  border-radius: 0!important;
 }
 .qq-upload-button-selector {
   margin-bottom: 1.5em;

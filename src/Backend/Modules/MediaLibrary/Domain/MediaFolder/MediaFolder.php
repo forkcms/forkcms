@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaFolder;
 
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Common\Uri;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -189,8 +190,6 @@ class MediaFolder
     }
 
     /**
-     * Gets the value of id.
-     *
      * @return int
      */
     public function getId(): int
@@ -199,23 +198,19 @@ class MediaFolder
     }
 
     /**
-     * Has a parent
-     *
-     * @return bool
-     */
-    public function hasParent(): bool
-    {
-        return $this->parent instanceof MediaFolder;
-    }
-
-    /**
-     * Gets the value of parent.
-     *
      * @return MediaFolder|null
      */
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasParent(): bool
+    {
+        return $this->parent instanceof MediaFolder;
     }
 
     /**
@@ -240,8 +235,6 @@ class MediaFolder
     }
 
     /**
-     * Gets the value of userId.
-     *
      * @return int
      */
     public function getUserId(): int
@@ -250,8 +243,6 @@ class MediaFolder
     }
 
     /**
-     * Gets the value of name.
-     *
      * @return string
      */
     public function getName(): string
@@ -268,8 +259,6 @@ class MediaFolder
     }
 
     /**
-     * Gets the value of createdOn.
-     *
      * @return \DateTime
      */
     public function getCreatedOn(): \DateTime
@@ -278,8 +267,6 @@ class MediaFolder
     }
 
     /**
-     * Gets the value of editedOn.
-     *
      * @return \DateTime
      */
     public function getEditedOn(): \DateTime
@@ -288,8 +275,6 @@ class MediaFolder
     }
 
     /**
-     * Gets the value of items.
-     *
      * @return Collection
      */
     public function getItems(): Collection
@@ -298,8 +283,29 @@ class MediaFolder
     }
 
     /**
-     * Gets the value of children.
-     *
+     * @return bool
+     */
+    public function hasItems(): bool
+    {
+        return $this->items->count() > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasConnectedItems(): bool
+    {
+        /** @var MediaItem $mediaItem */
+        foreach ($this->items as $mediaItem) {
+            if ($mediaItem->getGroups()->count() > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return Collection
      */
     public function getChildren(): Collection
@@ -313,6 +319,24 @@ class MediaFolder
     public function hasChildren(): bool
     {
         return $this->children->count() > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasChildrenWithConnectedItems(): bool
+    {
+        /** @var MediaFolder $mediaFolder */
+        foreach ($this->children as $mediaFolder) {
+            /** @var MediaItem $mediaItem */
+            foreach ($mediaFolder->getItems() as $mediaItem) {
+                if ($mediaItem->getGroups()->count() > 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

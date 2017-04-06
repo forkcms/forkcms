@@ -21,10 +21,10 @@
     <div class="btn-group" role="group">
       {% if showMediaLibraryMediaItemIndex %}
         {% if folderId %}
-          {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'bars', 'lbl.Overview'|trans|capitalize) }}
+          {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'bars', 'lbl.BackToOverview'|trans|capitalize) }}
         {% endif %}
         {% if not folderId %}
-          {{ macro.buttonIcon( geturl('MediaItemIndex'), 'bars', 'lbl.Overview'|trans|capitalize) }}
+          {{ macro.buttonIcon( geturl('MediaItemIndex'), 'bars', 'lbl.BackToOverview'|trans|capitalize) }}
         {% endif %}
       {% endif %}
     </div>

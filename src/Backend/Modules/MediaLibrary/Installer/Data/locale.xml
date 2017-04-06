@@ -262,6 +262,10 @@
         <translation language="en"><![CDATA[all media]]></translation>
         <translation language="nl"><![CDATA[alle media]]></translation>
       </item>
+      <item type="label" name="BackToOverview">
+        <translation language="en"><![CDATA[back to overview]]></translation>
+        <translation language="nl"><![CDATA[terug naar overzicht]]></translation>
+      </item>
       <item type="message" name="CleanedUpMediaItems">
         <translation language="en"><![CDATA[Removed %1$s media items.]]></translation>
         <translation language="nl"><![CDATA[%1$s media items verwijderd]]></translation>
@@ -358,6 +362,10 @@
         <translation language="en"><![CDATA[Delete folder not possible because it's the last folder.]]></translation>
         <translation language="nl"><![CDATA[Map verwijderen niet mogelijk omdat dit de laatste map is.]]></translation>
       </item>
+      <item type="error" name="MediaFolderDeleteNotPossibleBecauseOfConnectedMediaItems">
+        <translation language="en"><![CDATA[Delete folder not possible because it contains media that is connected somewhere.]]></translation>
+        <translation language="nl"><![CDATA[Map verwijderen niet mogelijk omdat er media in zit die ergens gekoppeld is.]]></translation>
+      </item>
       <item type="message" name="MediaDisconnected">
         <translation language="en"><![CDATA[File disconnected from gallery "%1$s".]]></translation>
         <translation language="nl"><![CDATA[Bestand ontkoppeld uit de galerij "%1$s".]]></translation>
@@ -379,8 +387,8 @@
         <translation language="nl"><![CDATA[Map "%1$s" verplaatst.]]></translation>
       </item>
       <item type="label" name="MediaItemCleanup">
-        <translation language="en"><![CDATA[remove obsolete media]]></translation>
-        <translation language="nl"><![CDATA[verwijder ongebruikte media]]></translation>
+        <translation language="en"><![CDATA[remove all obsolete media]]></translation>
+        <translation language="nl"><![CDATA[verwijder alle ongebruikte media]]></translation>
       </item>
       <item type="message" name="MediaItemDeleted">
         <translation language="en"><![CDATA[Media item "%1$s" deleted.]]></translation>

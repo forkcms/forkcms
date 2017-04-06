@@ -76,10 +76,12 @@
             {% if mediaFolder %}
               <div class="btn-group pull-left" role="group">
                 {% if showMediaLibraryMediaFolderDelete %}
-                  <button type="button" class="btn btn-danger" id="media-folder-delete" data-toggle="modal" data-target="#confirmMediaFolderDelete">
-                    <span class="fa fa-trash-o"></span>
-                    {{ 'lbl.MediaFolderDelete'|trans|ucfirst }}
-                  </button>
+                  {% if not mediaFolder.hasConnectedItems and not mediaFolder.hasChildrenWithConnectedItems %}
+                    <button type="button" class="btn btn-danger" id="media-folder-delete" data-toggle="modal" data-target="#confirmMediaFolderDelete">
+                      <span class="fa fa-trash-o"></span>
+                      {{ 'lbl.MediaFolderDelete'|trans|ucfirst }}
+                    </button>
+                  {% endif %}
                 {% endif %}
                 {% if showMediaLibraryMediaFolderEdit %}
                   <button type="button" class="btn" id="media-folder-edit" data-toggle="modal" data-target="#editMediaFolderDialog">

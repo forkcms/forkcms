@@ -26,6 +26,16 @@ class MediaFolderDelete extends BackendBaseActionDelete
             );
         }
 
+        if ($mediaFolder->hasConnectedItems() && $mediaFolder->hasChildrenWithConnectedItems()) {
+            $this->redirect(
+                $this->getBackLink(
+                    [
+                        'error' => 'media-folder-delete-not-possible-because-of-connected-media-items',
+                    ]
+                )
+            );
+        }
+
         parent::execute();
 
         /** @var DeleteMediaFolderCommand $deleteMediaFolder */
@@ -52,7 +62,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
      * @return MediaFolder
      * @throws RedirectException
      */
-    protected function getMediaFolder(): MediaFolder
+    private function getMediaFolder(): MediaFolder
     {
         try {
             /** @var MediaFolder */
