@@ -19,7 +19,7 @@ class MediaGalleryDataGrid extends DataGridDB
     public function __construct()
     {
         parent::__construct(
-            'SELECT i.id, i.title, i.action, UNIX_TIMESTAMP(i.publishOn) AS publishOn, UNIX_TIMESTAMP(i.editedOn) AS editedOn
+            'SELECT i.id, i.title, i.action, UNIX_TIMESTAMP(i.editedOn) AS editedOn
              FROM MediaGallery AS i'
         );
 
@@ -33,7 +33,6 @@ class MediaGalleryDataGrid extends DataGridDB
             [
                 'title',
                 'action',
-                'publishOn',
                 'editedOn'
             ],
             'title'
@@ -43,12 +42,6 @@ class MediaGalleryDataGrid extends DataGridDB
         $this->setSortParameter('asc');
 
         // Set column functions
-        $this->setColumnFunction(
-            [new DataGridFunctions(), 'getLongDate'],
-            ['[publishOn]'],
-            'publishOn',
-            true
-        );
         $this->setColumnFunction(
             [new DataGridFunctions(), 'getLongDate'],
             ['[editedOn]'],

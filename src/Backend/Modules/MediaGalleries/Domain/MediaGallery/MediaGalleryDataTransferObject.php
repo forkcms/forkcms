@@ -41,11 +41,6 @@ class MediaGalleryDataTransferObject
     public $action;
 
     /**
-     * @var \DateTime
-     */
-    public $publishOn;
-
-    /**
      * @var MediaGroup
      */
     public $mediaGroup;
@@ -60,8 +55,6 @@ class MediaGalleryDataTransferObject
         $this->mediaGalleryEntity = $mediaGallery;
 
         if (!$this->hasExistingMediaGallery()) {
-            $this->publishOn = new \DateTime();
-
             return;
         }
 
@@ -70,7 +63,6 @@ class MediaGalleryDataTransferObject
         $this->title = $mediaGallery->getTitle();
         $this->text = $mediaGallery->getText();
         $this->action = $mediaGallery->getAction();
-        $this->publishOn = $mediaGallery->getPublishOn();
         $this->mediaGroup = $mediaGallery->getMediaGroup();
     }
 

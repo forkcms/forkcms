@@ -81,13 +81,6 @@ class MediaGalleryType extends AbstractType
                 ]
             )
             ->add(
-                'publishOn',
-                DateTimeType::class,
-                [
-                    'label' => 'lbl.PublishOn',
-                ]
-            )
-            ->add(
                 'mediaGroup',
                 MediaGroupType::class,
                 [

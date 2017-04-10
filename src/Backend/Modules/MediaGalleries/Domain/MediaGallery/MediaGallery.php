@@ -77,13 +77,6 @@ class MediaGallery
     protected $editedOn;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime")
-     */
-    protected $publishOn;
-
-    /**
      * @var Status
      *
      * @ORM\Column(type="media_gallery_status")
@@ -112,7 +105,6 @@ class MediaGallery
      * @param string $title
      * @param string $action
      * @param int $userId
-     * @param \DateTime $publishOn
      * @param MediaGroup $mediaGroup
      * @param Status $status
      * @param string|null $text
@@ -121,7 +113,6 @@ class MediaGallery
         string $title,
         string $action,
         int $userId,
-        \DateTime $publishOn,
         MediaGroup $mediaGroup,
         Status $status,
         string $text = null
@@ -129,7 +120,6 @@ class MediaGallery
         $this->userId = $userId;
         $this->action = $action;
         $this->title = $title;
-        $this->publishOn = $publishOn;
         $this->mediaGroup = $mediaGroup;
         $this->status = $status;
         $this->text = $text;
@@ -147,7 +137,6 @@ class MediaGallery
             $mediaGallery->update(
                 $mediaGalleryDataTransferObject->title,
                 $mediaGalleryDataTransferObject->action,
-                $mediaGalleryDataTransferObject->publishOn,
                 $mediaGalleryDataTransferObject->mediaGroup,
                 $mediaGalleryDataTransferObject->status,
                 $mediaGalleryDataTransferObject->text
@@ -160,7 +149,6 @@ class MediaGallery
             $mediaGalleryDataTransferObject->title,
             $mediaGalleryDataTransferObject->action,
             $mediaGalleryDataTransferObject->userId,
-            $mediaGalleryDataTransferObject->publishOn,
             $mediaGalleryDataTransferObject->mediaGroup,
             $mediaGalleryDataTransferObject->status,
             $mediaGalleryDataTransferObject->text
@@ -170,7 +158,6 @@ class MediaGallery
     /**
      * @param string $title
      * @param string $action
-     * @param \DateTime $publishOn
      * @param MediaGroup $mediaGroup
      * @param Status $status
      * @param string|null $text
@@ -178,14 +165,12 @@ class MediaGallery
     private function update(
         string $title,
         string $action,
-        \DateTime $publishOn,
         MediaGroup $mediaGroup,
         Status $status,
         string $text = null
     ) {
         $this->title = $title;
         $this->action = $action;
-        $this->publishOn = $publishOn;
         $this->mediaGroup = $mediaGroup;
         $this->status = $status;
         $this->text = $text;
@@ -282,16 +267,6 @@ class MediaGallery
     }
 
     /**
-     * Gets the value of publishOn.
-     *
-     * @return \DateTime
-     */
-    public function getPublishOn(): \DateTime
-    {
-        return $this->publishOn;
-    }
-
-    /**
      * @return Status
      */
     public function getStatus(): Status
@@ -375,14 +350,12 @@ class MediaGallery
     }
 
     /**
-     * Is visible only returns true if the "status" is "active" and the "publishOn" is in the past.
+     * Is visible only returns true if the "status" is "active"
      *
      * @return bool
      */
     public function isVisible(): bool
     {
-        $now = new \DateTime();
-
-        return ($this->status->isActive() && $this->publishOn->getTimestamp() < $now->getTimestamp());
+        return $this->status->isActive();
     }
 }
