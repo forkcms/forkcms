@@ -438,6 +438,10 @@
         <translation language="en"><![CDATA[save and edit]]></translation>
         <translation language="nl"><![CDATA[opslaan en blijven bewerken]]></translation>
       </item>
+      <item type="error" name="YouAreRequiredToConnectMedia">
+        <translation language="en"><![CDATA[You are required to connect media.]]></translation>
+        <translation language="nl"><![CDATA[Je bent verplicht om media te koppelen.]]></translation>
+      </item>
     </MediaLibrary>
   </Backend>
 </locale>

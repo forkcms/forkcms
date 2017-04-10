@@ -4,21 +4,14 @@
 #}
 
 {% block media_group_widget %}
-  <div class="row fork-module-content">
+  <div class="row fork-module-content media-library-media-group-helper">
     <div class="col-md-12">
-      <div class="panel panel-default">
+      <div class="panel form-group panel-default{% if not form.vars.valid %} panel-danger{% endif %}">
         <div class="panel-heading">
-          <p>{{ form_label(form) }}</p>
+          <label{% if required %} class="required"{% endif %}>{{ form_label(form) }}</label>
         </div>
-        <div class="panel-body optionsOnlyOneGroup">
-
+        <div class="panel-body">
           <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" class="panel panel-default mediaGroup">
-            {% if mediaGroup.showBackendTitle %}
-              <div class="panel-heading">
-                <p>{{ mediaGroup.backendTitle }} - {{ mediaGroup.mediaGroupTypeLabel|ucfirst }}</p>
-              </div>
-            {% endif %}
-
             <!--[if lt IE 7 ]><div class="panel-body mediaConnectedBox ie6"><![endif]-->
             <!--[if IE 7 ]><div class="panel-body mediaConnectedBox ie7"><![endif]-->
             <!--[if IE 8 ]><div class="panel-body mediaConnectedBox ie8"><![endif]-->
@@ -59,6 +52,11 @@
 
               {% if not mediaGroup.connectedItems.count %}
                 <p class="mediaNoItems helpTxt">{{ 'msg.MediaNoItemsConnected'|trans }}</p>
+              {% endif %}
+              {% if not form.vars.valid %}
+                <div class="media-group-type-errors">
+                  {{ form_errors(form.mediaIds) }}
+                </div>
               {% endif %}
             </div>
             <div class="panel-footer mediaEditBox">

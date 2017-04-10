@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
@@ -24,9 +25,6 @@ class MediaGroupType extends AbstractType
 {
     /** @var MessageBusSupportingMiddleware */
     private $commandBus;
-
-    /** @var MediaGroup[] */
-    private $mediaGroups;
 
     /** @var MediaGroupRepository */
     private $mediaGroupRepository;
@@ -62,6 +60,8 @@ class MediaGroupType extends AbstractType
                 HiddenType::class,
                 [
                     'attr' => ['class' => 'mediaIds'],
+                    'error_bubbling' => false,
+                    'constraints' => $this->getConstraints($options),
                 ]
             )
             ->add(
@@ -79,6 +79,23 @@ class MediaGroupType extends AbstractType
             );
 
         self::parseFiles();
+    }
+
+    /**
+     * @param $options
+     * @return array
+     */
+    private function getConstraints($options): array
+    {
+        if (!array_key_exists('required', $options) || !$options['required']) {
+            return [];
+        }
+
+        return [
+            new Constraints\NotBlank([
+                'message' => Language::err('YouAreRequiredToConnectMedia', 'MediaLibrary'),
+            ]),
+        ];
     }
 
     public static function parseFiles()
@@ -106,10 +123,8 @@ class MediaGroupType extends AbstractType
     private function getMediaGroupTransformFunction()
     {
         return function (MediaGroup $mediaGroup) {
-            $this->mediaGroups[(string) $mediaGroup->getId()] = $mediaGroup;
-
             return [
-                'id' => (string) $mediaGroup->getId(),
+                'id' => $mediaGroup->getId(),
                 'type' => $mediaGroup->getType(),
                 'mediaIds' => implode(',', $mediaGroup->getIdsForConnectedItems()),
             ];
@@ -122,10 +137,10 @@ class MediaGroupType extends AbstractType
     private function getMediaGroupReverseTransformFunction()
     {
         /**
-         * @param $mediaGroupData
-         * @return MediaGroup|null
+         * @param array $mediaGroupData
+         * @return MediaGroup
          */
-        return function ($mediaGroupData) {
+        return function (array $mediaGroupData): MediaGroup {
             /** @var string $mediaGroupId */
             $mediaGroupId = $mediaGroupData['id'];
 

@@ -665,6 +665,7 @@ jsBackend.mediaLibraryHelper.group =
         // delete empty media paragraph
         } else {
             $('#group-' + currentMediaGroupId).find('.mediaNoItems').remove();
+            $('#group-' + currentMediaGroupId).find('.media-group-type-errors').remove();
         }
 
         // update the hidden group field for media

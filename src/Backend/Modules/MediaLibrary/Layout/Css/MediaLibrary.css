@@ -26,10 +26,7 @@
  *    .mediaConnectedBox
  *    .mediaConnectedItems
  */
-  .mediaGroup {
-    background-color: #f9f9f9!important;
-  }
-  .optionsOnlyOneGroup .mediaGroup {
+  .media-library-media-library-media-group-helper-helper .mediaGroup {
     margin-bottom: 0;
   }
     .mediaGroup .panel-body {
@@ -42,6 +39,12 @@
     }
     .mediaGroup .mediaConnectedBox {
       background-color: #fff;
+    }
+    .mediaGroup .media-library-media-group-helper-type-errors {
+      padding: 0px 25px 5px;
+    }
+    .panel-danger .mediaConnectedBox .mediaNoItems {
+      padding-bottom: 0;
     }
   #addGalleriesBox a {
     float: right;
@@ -73,14 +76,14 @@
       right: 10px;
     }
 
-  .optionsOnlyOneGroup {
+  .media-library-media-group-helper .panel-body {
     padding: 0!important;
   }
-    .optionsOnlyOneGroup .panel {
+    .media-library-media-group-helper .panel-body .panel {
       border: none;
       width: 100%;
     }
-    .optionsOnlyOneGroup .mediaSettingsGroup {
+    .media-library-media-group-helper .panel-body .mediaSettingsGroup {
       right: 0;
     }
 
