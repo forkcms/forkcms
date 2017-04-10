@@ -6,8 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**

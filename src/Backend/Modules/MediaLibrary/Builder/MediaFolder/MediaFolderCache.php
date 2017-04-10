@@ -6,6 +6,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use stdClass;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class MediaFolderCache
 {
@@ -23,14 +24,14 @@ final class MediaFolderCache
 
     /**
      * @param CacheItemPoolInterface|stdClass $cache
-     * @param MediaFolderRepository $mediaFolderRepository
+     * @param ContainerInterface $container - We must inject the container, because otherwise we get a "circular reference exception"
      */
     public function __construct(
         $cache,
-        MediaFolderRepository $mediaFolderRepository
+        ContainerInterface $container
     ) {
         $this->cache = $cache;
-        $this->mediaFolderRepository = $mediaFolderRepository;
+        $this->container = $container;
     }
 
     public function delete()
@@ -104,6 +105,9 @@ final class MediaFolderCache
      */
     private function getMediaFoldersForParent(MediaFolder $parent = null): array
     {
-        return (array) $this->mediaFolderRepository->findBy(['parent' => $parent], ['name' => 'ASC']);
+        return (array) $this->container->get('media_library.repository.folder')->findBy(
+            ['parent' => $parent],
+            ['name' => 'ASC']
+        );
     }
 }

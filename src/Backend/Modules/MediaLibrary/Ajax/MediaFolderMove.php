@@ -6,7 +6,6 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Event\MediaFolderUpdated;
 use Common\Exception\AjaxExitException;
 
 /**
@@ -31,10 +30,6 @@ class MediaFolderMove extends BackendBaseAJAXAction
 
         // Handle the MediaFolder update
         $this->get('command_bus')->handle($updateMediaFolder);
-        $this->get('event_dispatcher')->dispatch(
-            MediaFolderUpdated::EVENT_NAME,
-            new MediaFolderUpdated($updateMediaFolder->getMediaFolderEntity())
-        );
 
         $this->output(
             self::OK,

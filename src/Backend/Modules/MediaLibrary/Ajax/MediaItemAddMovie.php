@@ -7,7 +7,6 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrl;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Common\Exception\AjaxExitException;
 
@@ -59,10 +58,6 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
         // Handle the MediaItem create
         $this->get('command_bus')->handle($createMediaItemFromMovieUrl);
-        $this->get('event_dispatcher')->dispatch(
-            MediaItemCreated::EVENT_NAME,
-            new MediaItemCreated($createMediaItemFromMovieUrl->getMediaItem())
-        );
 
         // Output success message
         $this->output(

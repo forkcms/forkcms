@@ -5,11 +5,8 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem as DeleteMediaItemCommand;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemUpdated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 
 /**
@@ -191,9 +188,5 @@ class MediaItemMassAction extends BackendBaseAction
 
         // Handle the MediaItem update
         $this->get('command_bus')->handle($updateMediaItem);
-        $this->get('event_dispatcher')->dispatch(
-            MediaItemUpdated::EVENT_NAME,
-            new MediaItemUpdated($updateMediaItem->getMediaItemEntity())
-        );
     }
 }

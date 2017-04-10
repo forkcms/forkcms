@@ -7,7 +7,6 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Event\MediaFolderCreated;
 use Common\Exception\AjaxExitException;
 use Common\Uri;
 
@@ -38,10 +37,6 @@ class MediaFolderAdd extends BackendBaseAJAXAction
 
         // Handle the MediaFolder create
         $this->get('command_bus')->handle($createMediaFolder);
-        $this->get('event_dispatcher')->dispatch(
-            MediaFolderCreated::EVENT_NAME,
-            new MediaFolderCreated($createMediaFolder->getMediaFolderEntity())
-        );
 
         // Success message
         $this->output(

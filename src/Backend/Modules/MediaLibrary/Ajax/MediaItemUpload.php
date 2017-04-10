@@ -7,7 +7,6 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageType;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemCreated;
 use Backend\Modules\MediaLibrary\Component\UploadHandler;
 use Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
@@ -144,10 +143,6 @@ class MediaItemUpload extends BackendBaseAJAXAction
 
         // Handle the MediaItem create
         $this->get('command_bus')->handle($createMediaItemFromLocalSource);
-        $this->get('event_dispatcher')->dispatch(
-            MediaItemCreated::EVENT_NAME,
-            new MediaItemCreated($createMediaItemFromLocalSource->getMediaItem())
-        );
 
         $resultData = json_encode(
             array_merge(

@@ -6,7 +6,6 @@ use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder as DeleteMediaFolderCommand;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Event\MediaFolderDeleted;
 use Common\Exception\RedirectException;
 
 class MediaFolderDelete extends BackendBaseActionDelete
@@ -38,15 +37,8 @@ class MediaFolderDelete extends BackendBaseActionDelete
 
         parent::execute();
 
-        /** @var DeleteMediaFolderCommand $deleteMediaFolder */
-        $deleteMediaFolder = new DeleteMediaFolderCommand($mediaFolder);
-
         // Handle the MediaFolder delete
-        $this->get('command_bus')->handle($deleteMediaFolder);
-        $this->get('event_dispatcher')->dispatch(
-            MediaFolderDeleted::EVENT_NAME,
-            new MediaFolderDeleted($deleteMediaFolder->mediaFolder)
-        );
+        $this->get('command_bus')->handle(new DeleteMediaFolderCommand($mediaFolder));
 
         $this->redirect(
             $this->getBackLink(

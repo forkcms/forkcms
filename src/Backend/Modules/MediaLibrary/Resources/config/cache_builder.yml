@@ -3,4 +3,4 @@ services:
         class: Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache
         arguments:
             - "@cache.pool"
-            - "@media_library.repository.folder"
+            - "@service_container"

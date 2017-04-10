@@ -2,12 +2,13 @@
 
 namespace Backend\Modules\MediaLibrary\EventListener;
 
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use SimpleBus\Message\Bus\MessageBus;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
 
 /**
  * When MediaItem is deleted, re-sequence the MediaGroupMediaItem entities.
@@ -26,12 +27,17 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
     }
 
     /**
-     * @param MediaItemDeleted $event
+     * @param LifecycleEventArgs $eventArgs
      */
-    public function onMediaItemDeleted(MediaItemDeleted $event)
+    public function postRemove(LifecycleEventArgs $eventArgs)
     {
+        $entity = $eventArgs->getObject();
+        if (!$entity instanceof MediaItem) {
+            return;
+        }
+
         /** @var ArrayCollection $mediaItemMediaGroups */
-        $mediaItemMediaGroups = $event->getMediaItem()->getGroups();
+        $mediaItemMediaGroups = $entity->getGroups();
 
         if ($mediaItemMediaGroups->count() == 0) {
             return;

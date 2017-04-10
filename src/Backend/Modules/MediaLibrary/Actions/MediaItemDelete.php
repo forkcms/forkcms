@@ -5,8 +5,6 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem as DeleteMediaItemCommand;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
 
 class MediaItemDelete extends BackendBaseActionDelete
 {

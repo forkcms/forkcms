@@ -6,7 +6,6 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemUpdated;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
 
 class MediaItemEdit extends BackendBaseActionEdit
@@ -63,12 +62,6 @@ class MediaItemEdit extends BackendBaseActionEdit
 
         // Handle the MediaItem update
         $this->get('command_bus')->handle($updateMediaItem);
-        $this->get('event_dispatcher')->dispatch(
-            MediaItemUpdated::EVENT_NAME,
-            new MediaItemUpdated(
-                $updateMediaItem->getMediaItemEntity()
-            )
-        );
 
         $this->redirect(
             $this->getBackLink(

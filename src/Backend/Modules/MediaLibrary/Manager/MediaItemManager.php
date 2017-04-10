@@ -3,7 +3,6 @@
 namespace Backend\Modules\MediaLibrary\Manager;
 
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Event\MediaItemDeleted;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
@@ -46,10 +45,6 @@ class MediaItemManager
 
         // Handle the MediaItem delete
         $this->commandBus->handle($deleteMediaItem);
-        $this->eventDispatcher->dispatch(
-            MediaItemDeleted::EVENT_NAME,
-            new MediaItemDeleted($deleteMediaItem->mediaItem)
-        );
 
         return $deleteMediaItem;
     }
