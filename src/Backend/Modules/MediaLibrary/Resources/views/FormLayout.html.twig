@@ -8,7 +8,7 @@
     <div class="col-md-12">
       <div class="panel form-group panel-default{% if not form.vars.valid %} panel-danger{% endif %}">
         <div class="panel-heading">
-          <p>{{ form_label(form) }}</p>
+          {{ form_label(form) }}
         </div>
         <div class="panel-body">
           <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" class="panel panel-default mediaGroup">
