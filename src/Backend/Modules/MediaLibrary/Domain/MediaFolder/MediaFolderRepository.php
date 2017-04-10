@@ -38,6 +38,14 @@ final class MediaFolderRepository extends EntityRepository
     }
 
     /**
+     * @return MediaFolder
+     */
+    public function findDefault(): MediaFolder
+    {
+        return $this->findBy([], ['name' => 'ASC'], 1)[0];
+    }
+
+    /**
      * @param int|null $id
      * @return MediaFolder
      * @throws \Exception

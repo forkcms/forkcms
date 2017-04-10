@@ -70,7 +70,11 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         /** @var MediaFolder|null $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
 
-        if ($mediaFolder !== null || $mediaGroup === null || $mediaGroup->getConnectedItems()->count() == 0) {
+        if ($mediaGroup === null || $mediaGroup->getConnectedItems()->count() == 0) {
+            if ($mediaFolder === null) {
+                return $this->get('media_library.repository.folder')->findDefault();
+            }
+
             return $mediaFolder;
         }
 
