@@ -12,17 +12,16 @@ final class FileManager
     /** @var Filesystem */
     private $filesystem;
 
-    /** @var ModulesSettings */
+    /** @var ModulesSettings|\stdClass */
     private $settings;
 
     /**
      * FileManager constructor.
      *
-     * @param ModulesSettings $settings
+     * @param ModulesSettings|\stdClass $settings
      */
-    public function __construct(
-        ModulesSettings $settings
-    ) {
+    public function __construct($settings)
+    {
         $this->settings = $settings;
         $this->filesystem = new Filesystem();
     }
@@ -106,15 +105,12 @@ final class FileManager
     public function getNextShardingFolder(): string
     {
         // define number of sharding folders
-        $numberOfShardingFolders = $this->settings->get(
-            'MediaLibrary',
-            'upload_number_of_sharding_folders',
-            15
-        );
+        $numberOfShardingFolders = ($this->settings instanceof ModulesSettings)
+            ? $this->settings->get('MediaLibrary', 'upload_number_of_sharding_folders', 15) : 15;
 
         $id = rand(0, $numberOfShardingFolders);
 
-        // define image sharding folder
+        // Image sharding folder should look like "01", "02", "10", ...
         return str_pad(($id % $numberOfShardingFolders), 2, '0', STR_PAD_LEFT);
     }
 
