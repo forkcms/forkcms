@@ -62,15 +62,6 @@ class MediaGroupMediaItem
     protected $createdOn;
 
     /**
-     * With $publishOn you can choose when this MediaItem will become visible.
-     *
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime")
-     */
-    protected $publishOn;
-
-    /**
      * @var int
      *
      * @ORM\Column(type="integer")
@@ -78,8 +69,6 @@ class MediaGroupMediaItem
     protected $sequence;
 
     /**
-     * Construct
-     *
      * @param MediaGroup $group
      * @param MediaItem $item
      * @param int $sequence
@@ -92,7 +81,6 @@ class MediaGroupMediaItem
         $this->group = $group;
         $this->item = $item;
         $this->createdOn = new \DateTime();
-        $this->publishOn = new \DateTime();
         $this->sequence = $sequence;
     }
 
@@ -115,8 +103,6 @@ class MediaGroupMediaItem
     }
 
     /**
-     * To array
-     *
      * @return array
      */
     public function __toArray(): array
@@ -125,14 +111,11 @@ class MediaGroupMediaItem
             'id' => $this->id,
             'item' => $this->item->__toArray(),
             'createdOn' => $this->createdOn->getTimestamp(),
-            'publishOn' => $this->publishOn->getTimestamp(),
             'sequence' => $this->sequence,
         ];
     }
 
     /**
-     * Gets the value of id.
-     *
      * @return int
      */
     public function getId(): int
@@ -141,8 +124,6 @@ class MediaGroupMediaItem
     }
 
     /**
-     * Gets the value of group.
-     *
      * @return MediaGroup
      */
     public function getGroup(): MediaGroup
@@ -151,8 +132,6 @@ class MediaGroupMediaItem
     }
 
     /**
-     * Gets the value of item.
-     *
      * @return MediaItem
      */
     public function getItem(): MediaItem
@@ -161,8 +140,6 @@ class MediaGroupMediaItem
     }
 
     /**
-     * Gets the value of createdOn.
-     *
      * @return \DateTime
      */
     public function getCreatedOn(): \DateTime
@@ -171,18 +148,6 @@ class MediaGroupMediaItem
     }
 
     /**
-     * Gets the With $publishOn you can choose when this image will be visible.
-     *
-     * @return \DateTime
-     */
-    public function getPublishOn(): \DateTime
-    {
-        return $this->publishOn;
-    }
-
-    /**
-     * Gets the value of sequence.
-     *
      * @return int
      */
     public function getSequence(): int
@@ -191,8 +156,6 @@ class MediaGroupMediaItem
     }
 
     /**
-     * Sets the value of sequence.
-     *
      * @param int $sequence the sequence
      * @return self
      */
