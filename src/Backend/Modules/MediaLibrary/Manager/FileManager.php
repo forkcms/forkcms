@@ -82,13 +82,10 @@ final class FileManager
         string $name,
         string $extension
     ) : string {
-        // define some variables
         $count = 1;
 
         // find unique filename
-        while ($this->filesystem->exists(
-            $targetDir . '/' . $name . '_' . $count . '.' . $extension
-        )) {
+        while ($this->filesystem->exists($targetDir . '/' . $name . '_' . $count . '.' . $extension)) {
             $count++;
         }
 
@@ -104,7 +101,6 @@ final class FileManager
      */
     public function getNextShardingFolder(): string
     {
-        // define number of sharding folders
         $numberOfShardingFolders = ($this->settings instanceof ModulesSettings)
             ? $this->settings->get('MediaLibrary', 'upload_number_of_sharding_folders', 15) : 15;
 
@@ -132,7 +128,7 @@ final class FileManager
 
         // filename must not be empty
         if (empty($name)) {
-            // define random stringname
+            // redefine name with random string
             $name = BackendModel::generateRandomString(15, true, true, false, false);
         }
 
