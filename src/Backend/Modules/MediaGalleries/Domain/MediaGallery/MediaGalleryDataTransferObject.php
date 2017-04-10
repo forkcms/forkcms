@@ -3,7 +3,6 @@
 namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class MediaGalleryDataTransferObject
