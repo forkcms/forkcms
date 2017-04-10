@@ -295,14 +295,7 @@ class MediaFolder
      */
     public function hasConnectedItems(): bool
     {
-        /** @var MediaItem $mediaItem */
-        foreach ($this->items as $mediaItem) {
-            if ($mediaItem->getGroups()->count() > 0) {
-                return true;
-            }
-        }
-
-        return false;
+        return self::hasConnectedMediaItems($this->items);
     }
 
     /**
@@ -328,11 +321,44 @@ class MediaFolder
     {
         /** @var MediaFolder $mediaFolder */
         foreach ($this->children as $mediaFolder) {
-            /** @var MediaItem $mediaItem */
-            foreach ($mediaFolder->getItems() as $mediaItem) {
-                if ($mediaItem->getGroups()->count() > 0) {
-                    return true;
-                }
+            if (self::hasFolderChildrenWithConnectedItems($mediaFolder)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param MediaFolder $mediaFolder
+     * @return bool
+     */
+    private static function hasFolderChildrenWithConnectedItems(MediaFolder $mediaFolder): bool
+    {
+        /** @var MediaItem $mediaItem */
+        if (self::hasConnectedMediaItems($mediaFolder->getItems())) {
+            return true;
+        }
+
+        if ($mediaFolder->hasChildren()) {
+            foreach ($mediaFolder->getChildren() as $childFolder) {
+                return self::hasFolderChildrenWithConnectedItems($childFolder);
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Collection $mediaItems
+     * @return bool
+     */
+    private static function hasConnectedMediaItems(Collection $mediaItems): bool
+    {
+        /** @var MediaItem $mediaItem */
+        foreach ($mediaItems as $mediaItem) {
+            if ($mediaItem->hasGroups()) {
+                return true;
             }
         }
 

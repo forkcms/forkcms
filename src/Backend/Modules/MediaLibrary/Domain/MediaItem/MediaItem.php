@@ -474,6 +474,14 @@ class MediaItem
     }
 
     /**
+     * @return bool
+     */
+    public function hasGroups(): bool
+    {
+        return $this->groups->count() > 0;
+    }
+
+    /**
      * @return string|null
      */
     public function getAbsolutePath(): string
