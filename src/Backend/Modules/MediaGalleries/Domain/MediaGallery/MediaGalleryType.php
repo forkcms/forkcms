@@ -14,6 +14,7 @@ use Backend\Form\Type\EditorType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
 use Backend\Modules\MediaLibrary\ValueObject\MediaWidget;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class MediaGalleryType extends AbstractType
 {
@@ -91,6 +92,8 @@ class MediaGalleryType extends AbstractType
                 MediaGroupType::class,
                 [
                     'label' => 'lbl.MediaConnected',
+                    'constraints' => [new Valid()],
+                    'required' => false,
                 ]
             );
     }
