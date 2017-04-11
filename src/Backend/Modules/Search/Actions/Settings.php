@@ -131,7 +131,7 @@ class Settings extends BackendBaseActionEdit
         $this->frm->parse($this->tpl);
 
         // assign iteration
-        $this->tpl->assign(array('modules' => $this->modules));
+        $this->tpl->assign('modules', $this->modules);
     }
 
     /**
@@ -184,8 +184,7 @@ class Settings extends BackendBaseActionEdit
                     $searchable = $this->frm->getField('search_' . $module['module'])->getChecked() ? 'Y' : 'N';
                     $weight = $this->frm->getField('search_' . $module['module'] . '_weight')->getValue();
 
-                    // insert, or update
-                    BackendSearchModel::insertModuleSettings($module, $searchable, $weight);
+                    BackendSearchModel::insertModuleSettings($module['module'], $searchable, $weight);
                 }
 
                 // redirect to the settings page
