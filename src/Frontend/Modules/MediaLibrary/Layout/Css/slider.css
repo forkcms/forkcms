@@ -1,25 +1,25 @@
 /**
- * Additional CSS voor widgetMediaSlider.
+ * Additional CSS for widget-media-library-slider.
  */
 
-/* Default bugfixes */
-.widgetMediaSlider .bx-viewport {
-  left: 0;
-  border: none;
-  box-shadow: none;
-}
-
-/* Show controls */
-.widgetMediaSlider ul {
+/* Resets */
+.widget-media-library-slider ul {
   padding: 0;
 }
-.widgetMediaSlider li {
+.widget-media-library-slider li {
   list-style: none;
-  list-style-image: none;
   margin: 0;
   padding: 0;
 }
 
-.widgetMediaSlider .bx-wrapper .bx-controls-direction a {
+/* Controls */
+.widget-media-library-slider .bx-wrapper .bx-controls-direction a {
   border: none;
+}
+
+/* Bugfix */
+.widget-media-library-slider .bx-viewport {
+  left: 0;
+  border: none;
+  box-shadow: none;
 }

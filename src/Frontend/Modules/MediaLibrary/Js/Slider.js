@@ -6,7 +6,7 @@
     /**
      * Create responsive media slider, which uses bxSlider
      */
-    $.fn.mediaSlider = function()
+    $.fn.mediaLibrarySlider = function()
     {
         // loop for all sliders
         return this.each(function()
@@ -45,13 +45,13 @@
 })(jQuery);
 
 /**
- * Media slider
+ * MediaLibrary slider
  */
-jsFrontend.mediaSlider =
+jsFrontend.mediaLibrarySlider =
 {
     init: function()
     {
-        var $sliders = $('.widgetMediaSlider');
+        var $sliders = $('.widget-media-library-slider');
 
         // when no items for slider found, stop here
         if ($sliders.length === 0) {
@@ -59,8 +59,8 @@ jsFrontend.mediaSlider =
         }
 
         // init sliders
-        $sliders.mediaSlider();
+        $sliders.mediaLibrarySlider();
     }
 };
 
-$(jsFrontend.mediaSlider.init);
+$(jsFrontend.mediaLibrarySlider.init);

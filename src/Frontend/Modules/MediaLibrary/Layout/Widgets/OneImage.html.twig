@@ -5,7 +5,7 @@
 #}
 
 {% if mediaItem %}
-  <section class="widgetMediaOneImage" itemscope itemtype="http://schema.org/ImageGallery">
+  <section class="module-media-library widget-media-library-one-image" itemscope itemtype="http://schema.org/ImageGallery">
     <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
       <img src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_one_image_large') }}" itemprop="thumbnail" alt="{{ mediaItem.title }}" />
     </figure>

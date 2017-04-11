@@ -213,20 +213,20 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 };
 
 /**
- * Media lightbox
+ * MediaLibrary lightbox
  */
-jsFrontend.mediaLightbox =
+jsFrontend.mediaLibraryLightbox =
 {
     init: function()
     {
         // when no items for lightbox found, stop here
-        if($('.widgetMediaLightbox').length == 0) {
+        if($('.widget-media-library-lightbox').length == 0) {
             return false;
         }
 
         // init lightboxes
-        initPhotoSwipeFromDOM('.widgetMediaLightbox');
+        initPhotoSwipeFromDOM('.widget-media-library-lightbox');
     }
 };
 
-$(jsFrontend.mediaLightbox.init);
+$(jsFrontend.mediaLibraryLightbox.init);
