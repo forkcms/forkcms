@@ -11,6 +11,9 @@
   margin: 0;
   padding: 0;
 }
+.widget-media-library-slider .bx-wrapper {
+  border: none;
+}
 
 /* Controls */
 .widget-media-library-slider .bx-wrapper .bx-controls-direction a {

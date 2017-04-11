@@ -7,10 +7,22 @@
 
 {% if mediaItems %}
 <section class="module-media-library widget-media-library-listing">
-  <ul>
-    {% for mediaItem in mediaItems %}
-    <li>{{ mediaItem.getLinkHTML|raw }}</li>
-    {% endfor %}
-  </ul>
+  {% block widget_heading %}
+    {% if title %}
+      <header class="widget-heading">
+        <h3>{{ title|ucfirst }}</h3>
+      </header>
+    {% endif %}
+  {% endblock %}
+
+  {% block widget_body %}
+    <div class="widget-body">
+      <ul>
+        {% for mediaItem in mediaItems %}
+          <li>{{ mediaItem.getLinkHTML|raw }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endblock %}
 </section>
 {% endif %}

@@ -7,12 +7,24 @@
 
 {% if mediaItems %}
 <section class="module-media-library widget-media-library-slider" data-show-controls="true" data-show-pager="true" itemscope itemtype="http://schema.org/ImageGallery">
-  <ul>
-    {% for mediaItem in mediaItems %}
-    <li itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-      <img src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_slider_pano') }}" itemprop="thumbnail" alt="{{ mediaItem.title }}" />
-    </li>
-    {% endfor %}
-  </ul>
+  {% block widget_heading %}
+    {% if title %}
+      <header class="widget-heading">
+        <h3>{{ title|ucfirst }}</h3>
+      </header>
+    {% endif %}
+  {% endblock %}
+
+  {% block widget_body %}
+    <div class="widget-body">
+      <ul>
+        {% for mediaItem in mediaItems %}
+        <li itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+          <img itemprop="thumbnail" class="img-polaroid img-responsive" src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_slider_pano') }}" alt="{{ mediaItem.title }}" />
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endblock %}
 </section>
 {% endif %}

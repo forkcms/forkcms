@@ -85,7 +85,7 @@ liip_imagine:
                 scale: { dim : [1600, 800] }
         media_library_slider_pano:
             filters:
-                thumbnail: { size : [1600, 350], mode : outbound }
+                scale: { dim : [1600, 600] }
         media_library_one_image_large:
             filters:
                 thumbnail: { size : [1600, 500], mode : inbound }

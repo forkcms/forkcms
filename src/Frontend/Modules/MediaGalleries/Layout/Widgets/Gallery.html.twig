@@ -5,21 +5,24 @@
 #}
 
 {% if widget or mediaGallery.text %}
-<section class="widget">
-  <div class="inner">
-    {% if mediaGallery %}
-    <header class="hd">
-      <h3 class="title">{{ mediaGallery.title }}</h3>
+<section class="module-media-galleries widget-media-galleries-gallery">
+  {% if mediaGallery %}
+    {% block widget_heading %}
+    <header class="widget-heading">
+      <h3>{{ mediaGallery.title }}</h3>
       {% if mediaGallery.text %}
       <div class="text">
         {{ mediaGallery.text|raw }}
       </div>
       {% endif %}
     </header>
-    {% endif %}
-    <div class="bd content">
+    {% endblock %}
+  {% endif %}
+
+  {% block widget_body %}
+    <div class="widget-body">
       {{ widget|raw }}
     </div>
-  </div>
+  {% endblock %}
 </section>
 {% endif %}
