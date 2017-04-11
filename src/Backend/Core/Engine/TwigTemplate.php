@@ -49,6 +49,10 @@ class TwigTemplate extends BaseTwigTemplate
         $this->forkSettings = $container->get('fork.settings');
         $this->debugMode = $container->getParameter('kernel.debug');
         $this->language = BL::getWorkingLanguage();
+        $this->connectSymfonyForms();
+        $this->connectSymfonyTranslator();
+        $this->connectSpoonForm();
+        TwigFilters::addFilters($this->environment, 'Backend');
     }
 
     /**
@@ -66,10 +70,6 @@ class TwigTemplate extends BaseTwigTemplate
         $this->parseDebug();
         $this->parseTranslations();
         $this->parseVars();
-        $this->connectSymfonyForms();
-        $this->connectSymfonyTranslator();
-        $this->connectSpoonForm();
-        TwigFilters::addFilters($this->environment, 'Backend');
         $this->startGlobals($this->environment);
 
         if (count($this->forms) > 0) {
@@ -267,7 +267,7 @@ class TwigTemplate extends BaseTwigTemplate
     {
         $this->assign('debug', Model::getContainer()->getParameter('kernel.debug'));
 
-        if ($this->debugMode === true) {
+        if ($this->debugMode === true && !$this->environment->hasExtension(Twig_Extension_Debug::class)) {
             $this->environment->addExtension(new Twig_Extension_Debug());
         }
     }
