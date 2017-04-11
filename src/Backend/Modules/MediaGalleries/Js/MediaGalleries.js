@@ -6,10 +6,7 @@ jsBackend.mediaGalleries =
 {
     init: function()
     {
-        // controls the adding of a gallery
         jsBackend.mediaGalleries.addGallery.init();
-
-        // add some extra controls
         jsBackend.mediaGalleries.controls.init();
     }
 };
@@ -22,30 +19,25 @@ jsBackend.mediaGalleries.addGallery =
 {
     init: function()
     {
-        var $addMediaGroupType = $('#addMediaGroupType');
         var $addMediaGroupTypeDialog = $('#addMediaGroupTypeDialog');
-        var $addMediaGroupTypeSubmit = $('#addMediaGroupTypeSubmit');
 
-        // start or not
+        // Element not found, stop here
         if ($addMediaGroupTypeDialog.length == 0) {
             return false;
         }
 
-        // Bind click to open the dialog
-        $addMediaGroupType.on('click', function(e)
-        {
-            // prevent default
-            e.preventDefault();
+        var $addMediaGroupType = $('#addMediaGroupType');
+        var $addMediaGroupTypeSubmit = $('#addMediaGroupTypeSubmit');
 
-            // open dialog
+        // Bind click to open the dialog
+        $addMediaGroupType.on('click', function(e) {
+            e.preventDefault();
             $addMediaGroupTypeDialog.modal('show');
         });
 
-        // When clicked in dialog
-        $addMediaGroupTypeSubmit.on('click', function(){
+        // When clicked in dialog, close it
+        $addMediaGroupTypeSubmit.on('click', function() {
             $addMediaGroupTypeDialog.find('form').submit();
-
-            // close the dialog
             $addMediaGroupTypeDialog.modal('hide');
         });
     }
@@ -59,9 +51,7 @@ jsBackend.mediaGalleries.controls =
 {
     init: function()
     {
-        // save and edit
-        $('#saveAndEdit').on('click', function()
-        {
+        $('#saveAndEdit').on('click', function() {
             $('form').append('<input type="hidden" name="after_save" value="Edit" />').submit();
         });
     }

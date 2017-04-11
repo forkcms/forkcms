@@ -23,14 +23,11 @@ class MediaGalleryAdd extends ActionAdd
     {
         parent::execute();
 
-        /** @var Type $mediaGroupType */
-        $mediaGroupType = $this->getType();
-
         $form = $this->createForm(
             MediaGalleryType::class,
             new CreateMediaGallery(
                 Authentication::getUser()->getUserId(),
-                $mediaGroupType
+                $this->getMediaGroupType()
             )
         );
 
@@ -67,26 +64,6 @@ class MediaGalleryAdd extends ActionAdd
     }
 
     /**
-     * @return Type
-     */
-    private function getType(): Type
-    {
-        try {
-            $type = $this->get('request')->query->get('media_group_type')['type'];
-
-            return Type::fromString($type);
-        } catch (\InvalidArgumentException $e) {
-            $this->redirect(
-                $this->getBackLink(
-                    [
-                        'error' => 'group-type-not-existing'
-                    ]
-                )
-            );
-        }
-    }
-
-    /**
      * @param array $parameters
      * @return string
      */
@@ -98,5 +75,23 @@ class MediaGalleryAdd extends ActionAdd
             null,
             $parameters
         );
+    }
+
+    /**
+     * @return Type
+     */
+    private function getMediaGroupType(): Type
+    {
+        try {
+            return Type::fromString($this->get('request')->query->get('media_group_type')['type']);
+        } catch (\InvalidArgumentException $e) {
+            $this->redirect(
+                $this->getBackLink(
+                    [
+                        'error' => 'group-type-not-existing'
+                    ]
+                )
+            );
+        }
     }
 }

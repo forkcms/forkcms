@@ -23,12 +23,20 @@ class MediaGalleryDataGrid extends DataGridDB
              FROM MediaGallery AS i'
         );
 
-        // Setting header labels
-        $this->setHeaderLabels([
-            'title' => ucfirst(Language::lbl('Title'))
-        ]);
+        $this->setExtras();
+    }
 
-        // Sorting columns
+    /**
+     * @return string
+     */
+    public static function getHtml(): string
+    {
+        return (string) (new self())->getContent();
+    }
+
+    private function setExtras()
+    {
+        $this->setHeaderLabels(['title' => ucfirst(Language::lbl('Title'))]);
         $this->setSortingColumns(
             [
                 'title',
@@ -37,11 +45,7 @@ class MediaGalleryDataGrid extends DataGridDB
             ],
             'title'
         );
-
-        // Set sorting parameter
         $this->setSortParameter('asc');
-
-        // Set column functions
         $this->setColumnFunction(
             [new DataGridFunctions(), 'getLongDate'],
             ['[editedOn]'],
@@ -55,13 +59,5 @@ class MediaGalleryDataGrid extends DataGridDB
             $this->setColumnURL('title', $editUrl);
             $this->addColumn('edit', null, Language::lbl('Edit'), $editUrl, Language::lbl('MediaGalleryEdit'));
         }
-    }
-
-    /**
-     * @return string
-     */
-    public static function getHtml(): string
-    {
-        return (string) (new self())->getContent();
     }
 }

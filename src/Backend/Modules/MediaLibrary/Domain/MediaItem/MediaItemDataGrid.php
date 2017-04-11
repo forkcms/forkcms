@@ -30,7 +30,8 @@ class MediaItemDataGrid extends DataGridDB
         }
 
         parent::__construct(
-            'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName, COUNT(gi.mediaItemId) as num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
+            'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName,
+                COUNT(gi.mediaItemId) as num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
              FROM MediaItem AS i
              LEFT OUTER JOIN MediaGroupMediaItem as gi ON gi.mediaItemId = i.id
              WHERE i.type = ?' . $andWhere . ' GROUP BY i.id',
@@ -39,101 +40,10 @@ class MediaItemDataGrid extends DataGridDB
 
         // filter on folder?
         if ($folderId !== null) {
-            // set the URL
             $this->setURL('&folder=' . $folderId, true);
         }
 
-        // define editActionUrl
-        $editActionUrl = Model::createURLForAction('MediaItemEdit');
-
-        // set headers
-        $this->setHeaderLabels($this->getColumnHeaderLabels($type));
-
-        // active tab
-        $this->setActiveTab('tab' . ucfirst((string) $type));
-
-        // hide columns
-        $this->setColumnsHidden($this->getColumnsThatNeedToBeHidden($type));
-
-        // sorting columns
-        $this->setSortingColumns(
-            [
-                'createdOn',
-                'url',
-                'title',
-                'num_connected',
-                'mime'
-            ],
-            'title'
-        );
-        $this->setSortParameter('asc');
-
-        // set column URLs
-        $this->setColumnURL(
-            'title',
-            $editActionUrl
-            . '&id=[id]'
-            . (($folderId) ? '&folder=' . $folderId : '')
-        );
-
-        if ($type->isMovie()) {
-            // set column URLs
-            $this->setColumnURL(
-                'url',
-                $editActionUrl
-                . '&id=[id]'
-                . (($folderId) ? '&folder=' . $folderId : '')
-            );
-        }
-
-        $this->setColumnURL(
-            'num_connected',
-            $editActionUrl
-            . '&id=[id]'
-            . (($folderId) ? '&folder=' . $folderId : '')
-        );
-
-        // If we have an image, show the image
-        if ($type->isImage()) {
-            // Add image url
-            $this->setColumnFunction(
-                [new BackendDataGridFunctions(), 'showImage'],
-                [
-                    Model::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
-                    '[url]',
-                    '[url]',
-                    Model::createURLForAction('MediaItemEdit')
-                    . '&id=[id]'
-                    . '&folder=' . $folderId,
-                    0,
-                    0,
-                    'media_library_backend_thumbnail'
-                ],
-                'url',
-                true
-            );
-        }
-
-        // set column functions
-        $this->setColumnFunction(
-            [new BackendDataGridFunctions(), 'getLongDate'],
-            ['[createdOn]'],
-            'createdOn',
-            true
-        );
-
-        // add edit column
-        $this->addColumn(
-            'edit',
-            null,
-            Language::lbl('Edit'),
-            $editActionUrl . '&id=[id]' . '&folder=' . $folderId,
-            Language::lbl('Edit')
-        );
-
-        // our JS needs to know an id, so we can highlight it
-        $this->setRowAttributes(['id' => 'row-[id]']);
-
+        $this->setExtras($type);
         $this->addMassActions($type);
     }
 
@@ -224,5 +134,89 @@ class MediaItemDataGrid extends DataGridDB
     public static function getHtml(Type $type, int $folderId = null): string
     {
         return (string) (new self($type, $folderId))->getContent();
+    }
+
+    /**
+     * @param Type $type
+     * @param int|null $folderId
+     */
+    private function setExtras(Type $type, int $folderId = null)
+    {
+        $editActionUrl = Model::createURLForAction('MediaItemEdit');
+        $this->setHeaderLabels($this->getColumnHeaderLabels($type));
+        $this->setActiveTab('tab' . ucfirst((string) $type));
+        $this->setColumnsHidden($this->getColumnsThatNeedToBeHidden($type));
+        $this->setSortingColumns(
+            [
+                'createdOn',
+                'url',
+                'title',
+                'num_connected',
+                'mime'
+            ],
+            'title'
+        );
+        $this->setSortParameter('asc');
+        $this->setColumnURL(
+            'title',
+            $editActionUrl
+            . '&id=[id]'
+            . (($folderId) ? '&folder=' . $folderId : '')
+        );
+
+        if ($type->isMovie()) {
+            $this->setColumnURL(
+                'url',
+                $editActionUrl
+                . '&id=[id]'
+                . (($folderId) ? '&folder=' . $folderId : '')
+            );
+        }
+
+        $this->setColumnURL(
+            'num_connected',
+            $editActionUrl
+            . '&id=[id]'
+            . (($folderId) ? '&folder=' . $folderId : '')
+        );
+
+        // If we have an image, show the image
+        if ($type->isImage()) {
+            // Add image url
+            $this->setColumnFunction(
+                [new BackendDataGridFunctions(), 'showImage'],
+                [
+                    Model::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
+                    '[url]',
+                    '[url]',
+                    Model::createURLForAction('MediaItemEdit') . '&id=[id]' . '&folder=' . $folderId,
+                    0,
+                    0,
+                    'media_library_backend_thumbnail'
+                ],
+                'url',
+                true
+            );
+        }
+
+        // set column functions
+        $this->setColumnFunction(
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[createdOn]'],
+            'createdOn',
+            true
+        );
+
+        // add edit column
+        $this->addColumn(
+            'edit',
+            null,
+            Language::lbl('Edit'),
+            $editActionUrl . '&id=[id]' . '&folder=' . $folderId,
+            Language::lbl('Edit')
+        );
+
+        // our JS needs to know an id, so we can highlight it
+        $this->setRowAttributes(['id' => 'row-[id]']);
     }
 }

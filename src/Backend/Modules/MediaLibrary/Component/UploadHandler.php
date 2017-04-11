@@ -54,24 +54,6 @@ class UploadHandler
         }
     }
 
-    public function getInitialFiles()
-    {
-        $initialFiles = [];
-
-        for ($i = 0; $i < 5000; $i++) {
-            array_push(
-                $initialFiles,
-                [
-                    "name" => "name" . $i,
-                    "uuid" => "uuid" . $i,
-                    "thumbnailUrl" => "/test/dev/handlers/vendor/fineuploader/php-traditional-server/fu.png"
-                ]
-            );
-        }
-
-        return $initialFiles;
-    }
-
     /**
      * Get the name of the uploaded file
      */
