@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\MediaLibrary\DependencyInjection;
 
-use Backend\Modules\MediaLibrary\DependencyInjection\Compiler\StorageProviderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;

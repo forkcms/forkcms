@@ -3,7 +3,6 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Doctrine\ORM\EntityRepository;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 
 final class MediaItemRepository extends EntityRepository

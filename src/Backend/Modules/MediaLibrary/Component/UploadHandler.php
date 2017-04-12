@@ -79,7 +79,7 @@ class UploadHandler
         $targetPath = join(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $name]);
         $this->uploadName = $name;
 
-        if (!file_exists($targetPath)) {
+        if (!$this->fileManager->exists($targetPath)) {
             mkdir(dirname($targetPath), 0777, true);
         }
         $target = fopen($targetPath, 'wb');
@@ -364,8 +364,7 @@ class UploadHandler
         $suffix = 0;
 
         // Get unique file name for the file, by appending random suffix.
-
-        while (file_exists($uploadDirectory . DIRECTORY_SEPARATOR . $unique . $ext)) {
+        while ($this->fileManager->exists($uploadDirectory . DIRECTORY_SEPARATOR . $unique . $ext)) {
             $suffix += rand(1, 999);
             $unique = $base . '-' . $suffix;
         }

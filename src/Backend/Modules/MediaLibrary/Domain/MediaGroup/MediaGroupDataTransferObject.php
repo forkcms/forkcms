@@ -8,9 +8,7 @@ use Ramsey\Uuid\Uuid;
 
 class MediaGroupDataTransferObject
 {
-    /**
-     * @var MediaGroup
-     */
+    /** @var MediaGroup */
     private $mediaGroupEntity;
 
     /**
@@ -20,29 +18,20 @@ class MediaGroupDataTransferObject
      */
     public $id;
 
-    /**
-     * @var Type
-     */
+    /** @var Type */
     public $type;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     public $mediaItemIdsToConnect;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     public $removeAllPreviousConnectedMediaItems = true;
 
     /**
-     * CreateMediaGroup constructor.
-     *
      * @param MediaGroup|null $mediaGroup
      */
-    public function __construct(
-        MediaGroup $mediaGroup = null
-    ) {
+    public function __construct(MediaGroup $mediaGroup = null)
+    {
         $this->mediaGroupEntity = $mediaGroup;
 
         if ($this->hasExistingMediaGroup()) {

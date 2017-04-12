@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Component\StorageProvider;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 
-class LocalStorageProvider implements StorageProviderInterface, LiipImagineBundleStorageProviderInterface
+class LocalStorageProvider implements LocalStorageProviderInterface
 {
     /** @var string */
     protected $basePath;

@@ -24,18 +24,18 @@ final class SaveMediaGroupHandler
     }
 
     /**
-     * @param SaveMediaGroup $updateMediaGroup
+     * @param SaveMediaGroup $saveMediaGroup
      */
-    public function handle(SaveMediaGroup $updateMediaGroup)
+    public function handle(SaveMediaGroup $saveMediaGroup)
     {
         /** @var MediaGroup $mediaGroup */
-        $mediaGroup = MediaGroup::fromDataTransferObject($updateMediaGroup);
+        $mediaGroup = MediaGroup::fromDataTransferObject($saveMediaGroup);
 
         /**
          * @var int $sequence
          * @var string $mediaItemId
          */
-        foreach ($updateMediaGroup->mediaItemIdsToConnect as $sequence => $mediaItemId) {
+        foreach ($saveMediaGroup->mediaItemIdsToConnect as $sequence => $mediaItemId) {
             try {
                 /** @var int $newSequence */
                 $newSequence = $sequence + 1;
@@ -57,6 +57,6 @@ final class SaveMediaGroupHandler
         }
 
         // We redefine the MediaGroup, so we can use it in an action
-        $updateMediaGroup->setMediaGroup($mediaGroup);
+        $saveMediaGroup->setMediaGroup($mediaGroup);
     }
 }

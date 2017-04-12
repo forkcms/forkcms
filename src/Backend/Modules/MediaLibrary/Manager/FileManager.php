@@ -97,6 +97,14 @@ final class FileManager
     }
 
     /**
+     * @return Filesystem
+     */
+    public function getFilesystem(): Filesystem
+    {
+        return $this->filesystem;
+    }
+
+    /**
      * @return string
      */
     public function getNextShardingFolder(): string

@@ -66,7 +66,7 @@ class MediaGalleryDataTransferObject
     }
 
     /**
-     * @return \Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery
+     * @return MediaGallery
      */
     public function getMediaGalleryEntity(): MediaGallery
     {

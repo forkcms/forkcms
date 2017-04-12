@@ -15,11 +15,8 @@ class MediaItemIndex extends BackendBaseActionIndex
 {
     public function execute()
     {
-        // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
-
-        // Parse JS files
-        $this->parseFiles();
+        $this->parseJSFiles();
 
         /** @var MediaFolder|null $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
@@ -121,10 +118,7 @@ class MediaItemIndex extends BackendBaseActionIndex
         }, $dataGrids)) > 0;
     }
 
-    /**
-     * Parse JS files
-     */
-    private function parseFiles()
+    private function parseJSFiles()
     {
         $this->header->addJS('jstree/jquery.tree.js', 'Pages');
         $this->header->addJS('jstree/lib/jquery.cookie.js', 'Pages');
