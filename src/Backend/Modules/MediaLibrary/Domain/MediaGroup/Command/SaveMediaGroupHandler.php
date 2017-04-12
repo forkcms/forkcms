@@ -37,9 +37,6 @@ final class SaveMediaGroupHandler
          */
         foreach ($saveMediaGroup->mediaItemIdsToConnect as $sequence => $mediaItemId) {
             try {
-                /** @var int $newSequence */
-                $newSequence = $sequence + 1;
-
                 /** @var MediaItem $mediaItem */
                 $mediaItem = $this->mediaItemRepository->findOneById(Uuid::fromString($mediaItemId));
 
@@ -47,7 +44,7 @@ final class SaveMediaGroupHandler
                 $mediaGroupMediaItem = MediaGroupMediaItem::create(
                     $mediaGroup,
                     $mediaItem,
-                    $newSequence
+                    $sequence
                 );
 
                 $mediaGroup->addConnectedItem($mediaGroupMediaItem);
