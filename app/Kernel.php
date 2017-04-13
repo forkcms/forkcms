@@ -52,8 +52,6 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         // boot if it hasn't booted yet
         $this->boot();
 
-        $this->fixSymfonySessions();
-
         return $this->getHttpKernel()->handle($request, $type, $catch);
     }
 
@@ -70,21 +68,6 @@ abstract class Kernel extends BaseKernel implements KernelInterface
 
         // define Fork constants
         $this->defineForkConstants();
-    }
-
-    /**
-     * We need to manually initialize SpoonSession for the Symfony sessions to work properly
-     */
-    private function fixSymfonySessions()
-    {
-        SpoonSession::start();
-
-        /** @var \Symfony\Component\HttpFoundation\Session\Session $session */
-        $session = $this->getContainer()->get('session');
-
-        if (!$session->isStarted()) {
-            $session->start();
-        }
     }
 
     /**
