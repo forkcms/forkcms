@@ -4,6 +4,7 @@ imports:
 
 parameters:
     translator.identity.class: Common\Language
+    session.storage.php_bridge.class: Common\Core\Session\Storage\PhpBridgeSessionStorage
 
 framework:
     secret:          %kernel.secret%
