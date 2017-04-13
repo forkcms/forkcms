@@ -32,6 +32,9 @@ deny from env=stayout
 ########## End - Common hacking tools and bandwidth hoggers block
 
 <IfModule mod_rewrite.c>
+	# set environment variable to let PHP know that urls are being rewritten
+	RewriteRule .* - [E=MOD_REWRITE:1]
+
 	# Protect against cross site tracing https://www.owasp.org/index.php/Cross_Site_Tracing
 	RewriteCond %{REQUEST_METHOD} ^TRACE
 	RewriteRule .* - [F]
@@ -83,9 +86,6 @@ deny from env=stayout
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule . index.php [NC,L]
-
-	# set environment variable to let PHP know that urls are being rewritten
-	RewriteRule .* - [E=MOD_REWRITE:1]
 </IfModule>
 
 # file caching in browser
