@@ -216,7 +216,7 @@ class MediaFolder
     /**
      * Remove parent
      *
-     * @return self
+     * @return MediaFolder
      */
     public function removeParent(): self
     {

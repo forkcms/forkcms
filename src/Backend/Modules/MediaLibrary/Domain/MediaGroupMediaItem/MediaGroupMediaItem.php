@@ -157,7 +157,7 @@ class MediaGroupMediaItem
 
     /**
      * @param int $sequence the sequence
-     * @return self
+     * @return MediaGroupMediaItem
      */
     public function setSequence(int $sequence): self
     {
