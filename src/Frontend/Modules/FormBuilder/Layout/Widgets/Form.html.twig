@@ -28,7 +28,7 @@
             {% if field.simple %}
               <p{% if field.error %} class="errorArea"{% endif %}>
                 <label for="{{ field.name }}">
-                  {{ field.label }}{% if field.required %}
+                  {{ field.label|raw }}{% if field.required %}
                     <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>{% endif %}
                 </label>
                 {{ field.html|raw }}
@@ -40,7 +40,7 @@
             {% if field.multiple %}
               <div class="inputList{% if field.error %} errorArea{% endif %}">
                 <p class="label">
-                  {{ field.label }}{% if field.required %}
+                  {{ field.label|raw }}{% if field.required %}
                     <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>{% endif %}
                 </p>
                 <ul>
@@ -54,7 +54,7 @@
           {% endfor %}
 
           <p>
-            <input type="submit" value="{{ submitValue }}" name="submit" class="inputSubmit" />
+            <input type="submit" value="{{ submitValue|raw }}" name="submit" class="inputSubmit" />
           </p>
         </form>
       {% endif %}
