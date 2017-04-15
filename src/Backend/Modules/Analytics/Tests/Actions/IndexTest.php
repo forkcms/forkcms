@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Blog\Tests\Action;
+namespace Backend\Modules\Analytics\Tests\Action;
 
 use Common\WebTestCase;
 
