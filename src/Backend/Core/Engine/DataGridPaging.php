@@ -77,7 +77,7 @@ final class DataGridPaging implements \iSpoonDatagridPaging
     /**
      * @param string $baseUrl
      * @param int $offset
-     * @param string $orderByColumn The name of the column to sort on.
+     * @param string|null $orderByColumn The name of the column to sort on.
      * @param string $sortingDirection The sorting method, possible values are: asc, desc.
      * @param int $totalNumberOfResults
      * @param int $resultsPerPage The items per page.
@@ -85,7 +85,7 @@ final class DataGridPaging implements \iSpoonDatagridPaging
     private function __construct(
         string $baseUrl,
         int $offset,
-        string $orderByColumn,
+        $orderByColumn,
         string $sortingDirection,
         int $totalNumberOfResults,
         int $resultsPerPage
