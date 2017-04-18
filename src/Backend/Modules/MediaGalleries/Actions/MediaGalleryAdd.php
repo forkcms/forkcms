@@ -8,6 +8,7 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery;
+use Symfony\Component\Form\Form;
 
 /**
  * This is the class to Add a MediaGallery
@@ -23,24 +24,11 @@ class MediaGalleryAdd extends ActionAdd
     {
         parent::execute();
 
-        $form = $this->createForm(
-            MediaGalleryType::class,
-            new CreateMediaGallery(
-                Authentication::getUser()->getUserId(),
-                $this->getMediaGroupType()
-            )
-        );
-
-        $form->handleRequest($this->get('request'));
+        /** @var Form $form */
+        $form = $this->getForm();
 
         if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
-            $this->tpl->assign('backLink', $this->getBackLink());
-            $this->tpl->assign('mediaGroup', $form->getData()->mediaGroup);
-
-            // Call parent
-            $this->parse();
-            $this->display();
+            $this->parseForm($form);
 
             return;
         }
@@ -78,6 +66,24 @@ class MediaGalleryAdd extends ActionAdd
     }
 
     /**
+     * @return Form
+     */
+    private function getForm(): Form
+    {
+        $form = $this->createForm(
+            MediaGalleryType::class,
+            new CreateMediaGallery(
+                Authentication::getUser()->getUserId(),
+                $this->getMediaGroupType()
+            )
+        );
+
+        $form->handleRequest($this->get('request'));
+
+        return $form;
+    }
+
+    /**
      * @return Type
      */
     private function getMediaGroupType(): Type
@@ -93,5 +99,19 @@ class MediaGalleryAdd extends ActionAdd
                 )
             );
         }
+    }
+
+    /**
+     * @param Form $form
+     */
+    private function parseForm(Form $form)
+    {
+        $this->tpl->assign('form', $form->createView());
+        $this->tpl->assign('backLink', $this->getBackLink());
+        $this->tpl->assign('mediaGroup', $form->getData()->mediaGroup);
+
+        // Call parent
+        $this->parse();
+        $this->display();
     }
 }

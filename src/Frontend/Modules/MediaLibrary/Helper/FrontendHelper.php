@@ -83,11 +83,7 @@ class FrontendHelper
 
         /** @var MediaGroupMediaItem $mediaGroupMediaItem */
         foreach ($mediaGroupMediaItems as $mediaGroupMediaItem) {
-            // Define variables
-            $entityId = $mediaGroupIds[(string) $mediaGroupMediaItem->getGroup()->getId()];
-            $entityKey = $entityKeys[$entityId];
-
-            // Define frontend media item
+            $entityKey = $entityKeys[$mediaGroupIds[(string) $mediaGroupMediaItem->getGroup()->getId()]];
             $mediaItem = $mediaGroupMediaItem->getItem();
 
             if ($onlyGetTheFirstMediaItem) {

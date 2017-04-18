@@ -132,17 +132,9 @@ class MediaGallery
     public static function fromDataTransferObject(MediaGalleryDataTransferObject $mediaGalleryDataTransferObject): MediaGallery
     {
         if ($mediaGalleryDataTransferObject->hasExistingMediaGallery()) {
-            /** @var MediaGallery $mediaGallery */
-            $mediaGallery = $mediaGalleryDataTransferObject->getMediaGalleryEntity();
-            $mediaGallery->update(
-                $mediaGalleryDataTransferObject->title,
-                $mediaGalleryDataTransferObject->action,
-                $mediaGalleryDataTransferObject->mediaGroup,
-                $mediaGalleryDataTransferObject->status,
-                $mediaGalleryDataTransferObject->text
-            );
-
-            return $mediaGallery;
+            return $mediaGalleryDataTransferObject
+                ->getMediaGalleryEntity()
+                ->updateFromDataTransferObject($mediaGalleryDataTransferObject);
         }
 
         return new self(
@@ -156,24 +148,19 @@ class MediaGallery
     }
 
     /**
-     * @param string $title
-     * @param string $action
-     * @param MediaGroup $mediaGroup
-     * @param Status $status
-     * @param string|null $text
+     * @param MediaGalleryDataTransferObject $mediaGalleryDataTransferObject
+     * @return MediaGallery
      */
-    private function update(
-        string $title,
-        string $action,
-        MediaGroup $mediaGroup,
-        Status $status,
-        string $text = null
-    ) {
-        $this->title = $title;
-        $this->action = $action;
-        $this->mediaGroup = $mediaGroup;
-        $this->status = $status;
-        $this->text = $text;
+    private function updateFromDataTransferObject(
+        MediaGalleryDataTransferObject $mediaGalleryDataTransferObject
+    ) : MediaGallery {
+        $this->title = $mediaGalleryDataTransferObject->title;
+        $this->action = $mediaGalleryDataTransferObject->action;
+        $this->mediaGroup = $mediaGalleryDataTransferObject->mediaGroup;
+        $this->status = $mediaGalleryDataTransferObject->status;
+        $this->text = $mediaGalleryDataTransferObject->text;
+
+        return $this;
     }
 
     /**
