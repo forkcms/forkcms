@@ -61,6 +61,23 @@ class MediaItemIndex extends BackendBaseActionIndex
     }
 
     /**
+     * @param MediaFolder $mediaFolder
+     * @return array
+     */
+    private function getMediaFolders(MediaFolder $mediaFolder)
+    {
+        /** @var array $mediaFolders */
+        $mediaFolders = $this->getMediaFoldersForDropdown($this->get('media_library.cache.media_folder')->get());
+
+        // Unset mediaFolder
+        if ($mediaFolder !== null) {
+            unset($mediaFolders[$mediaFolder->getId()]);
+        }
+
+        return $mediaFolders;
+    }
+
+    /**
      * @param array $navigationItems
      * @param array $dropdownItems
      * @return array
@@ -97,25 +114,23 @@ class MediaItemIndex extends BackendBaseActionIndex
         /** @var MediaFolder|null $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
 
+        // Assign variables
+        $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
+
+        $this->parseDataGrids($mediaFolder);
+        $this->parseMediaFolders($mediaFolder);
+    }
+
+    /**
+     * @param MediaFolder $mediaFolder
+     */
+    private function parseDataGrids(MediaFolder $mediaFolder)
+    {
         /** @var array $dataGrids */
         $dataGrids = $this->getDataGrids($mediaFolder);
 
-        /** @var array $mediaFolders */
-        $mediaFolders = $this->getMediaFoldersForDropdown($this->get('media_library.cache.media_folder')->get());
-
-        // Unset mediaFolder
-        if ($mediaFolder !== null) {
-            unset($mediaFolders[$mediaFolder->getId()]);
-        }
-
-        // Assign variables
-        $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
-        $this->tpl->assign('mediaFolder', $mediaFolder);
-        $this->tpl->assign('mediaFolders', $mediaFolders);
         $this->tpl->assign('dataGrids', $dataGrids);
         $this->tpl->assign('hasResults', $this->hasResults($dataGrids));
-        $this->header->addJsData('MediaLibrary', 'openedFolderId', ($mediaFolder !== null) ? $mediaFolder->getId() : null);
-
     }
 
     private function parseJSFiles()
@@ -124,5 +139,12 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->header->addJS('jstree/lib/jquery.cookie.js', 'Pages');
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', 'Pages');
         $this->header->addJS('MediaLibraryFolders.js', 'MediaLibrary', true);
+    }
+
+    private function parseMediaFolders(MediaFolder $mediaFolder)
+    {
+        $this->tpl->assign('mediaFolder', $mediaFolder);
+        $this->tpl->assign('mediaFolders', $this->getMediaFolders($mediaFolder));
+        $this->header->addJsData('MediaLibrary', 'openedFolderId', ($mediaFolder !== null) ? $mediaFolder->getId() : null);
     }
 }

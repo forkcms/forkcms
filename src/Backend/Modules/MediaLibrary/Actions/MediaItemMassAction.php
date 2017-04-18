@@ -47,7 +47,7 @@ class MediaItemMassAction extends BackendBaseAction
 
         $this->redirect(
             $this->getBackLink(
-                $this->getMediaFolder(),
+                $this->getCurrentMediaFolder(),
                 [
                     'report' => 'media-' . ($action === self::MOVE ? 'moved' : 'deleted')
                 ],
@@ -85,7 +85,7 @@ class MediaItemMassAction extends BackendBaseAction
     /**
      * @return MediaFolder|null
      */
-    private function getMediaFolder()
+    private function getCurrentMediaFolder()
     {
         // Define current folder
         $id = $this->get('request')->query->getInt('current_folder_id');
@@ -95,6 +95,29 @@ class MediaItemMassAction extends BackendBaseAction
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (\Exception $e) {
             return null;
+        }
+    }
+
+    /**
+     * @param int $mediaFolderId
+     * @param Type $selectedType
+     * @return MediaFolder
+     */
+    private function getMediaFolder(int $mediaFolderId, Type $selectedType): MediaFolder
+    {
+        try {
+            /** @var MediaFolder */
+            return $this->get('media_library.repository.folder')->findOneById($mediaFolderId);
+        } catch (\Exception $e) {
+            $this->redirect(
+                $this->getBackLink(
+                    null,
+                    [
+                        'error' => 'folder-does-not-exists',
+                    ],
+                    $selectedType
+                )
+            );
         }
     }
 
@@ -119,20 +142,7 @@ class MediaItemMassAction extends BackendBaseAction
             );
         }
 
-        try {
-            /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById($id);
-        } catch (\Exception $e) {
-            $this->redirect(
-                $this->getBackLink(
-                    null,
-                    [
-                        'error' => 'folder-does-not-exists',
-                    ],
-                    $selectedType
-                )
-            );
-        }
+        return $this->getMediaFolder($id, $selectedType);
     }
 
     /**
