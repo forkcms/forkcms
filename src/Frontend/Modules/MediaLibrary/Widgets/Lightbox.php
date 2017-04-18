@@ -21,40 +21,23 @@ class Lightbox extends FrontendMediaWidget
             return;
         }
 
-        $this->addCSSAndJS();
+        $this->addLightboxCSS();
+        $this->addLightboxJS();
         parent::execute();
         $this->loadTemplate();
         $this->parse();
     }
 
-    private function addCSSAndJS()
+    protected function addLightboxCSS()
     {
-        /**
-         * Note: if you also want to support <figure> and <figcaption> in older browsers (< IE9),
-         * you should add the following html to your <head>.
-         * <!--[if lt IE 9]>
-         *  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
-         * <![endif]-->
-         */
-        // Add CSS
         $this->addCSS('/css/vendors/photoswipe/photoswipe.css', true);
         $this->addCSS('/css/vendors/photoswipe/default-skin.css', true);
-
-        // Add custom CSS
         $this->addCSS('lightbox.css');
+    }
 
-        // Add JS
+    private function addLightboxJS()
+    {
         $this->addJS('/js/vendors/photoswipe.min.js', true);
         $this->addJS('/js/vendors/photoswipe-ui-default.min.js', true);
-
-        /**
-         * Attention:
-         * PhotoSwipe only works properly when you define the image data-size="widthxheight" to the large image
-         * because it requires this to show transition/zoom/... properly.
-         *
-         * More info about this:
-         *     - FAQ: http://photoswipe.com/documentation/faq.html#image-size
-         *     - GitHub Issue: https://github.com/dimsemenov/PhotoSwipe/issues/741
-         */
     }
 }

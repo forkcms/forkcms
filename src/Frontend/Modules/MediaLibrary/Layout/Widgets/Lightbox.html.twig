@@ -3,6 +3,19 @@
   Variables that are available:
   - {{ items }}: Contains full urls to MediaItem items, f.e.: {{ items.small_source }} or {{ items.small_resolution }}
   - {{ title }}: A custom optional title that you can give when parsing from Custom module.
+
+  Attention:
+  PhotoSwipe only works properly when you define the image data-size="widthxheight" to the large image
+  because it requires this to show transition/zoom/... properly.
+
+  More info about this:
+    - FAQ: http://photoswipe.com/documentation/faq.html#image-size
+    - GitHub Issue: https://github.com/dimsemenov/PhotoSwipe/issues/741
+
+  Note:
+  If you also want to support <figure> and <figcaption> in older browsers (< IE9),
+  you should add the following html to your <head>.
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script><![endif]-->
 #}
 
 {% if mediaItems %}

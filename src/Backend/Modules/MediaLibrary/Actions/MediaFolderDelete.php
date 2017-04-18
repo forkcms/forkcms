@@ -14,6 +14,8 @@ class MediaFolderDelete extends BackendBaseActionDelete
     {
         parent::execute();
 
+        $this->abortWhenLastFolder();
+
         /** @var DeleteMediaFolder $deleteMediaFolder */
         $deleteMediaFolder = $this->deleteMediaFolder();
 
@@ -27,28 +29,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
         );
     }
 
-    /**
-     * @return DeleteMediaFolder
-     */
-    private function deleteMediaFolder(): DeleteMediaFolder
-    {
-        /** @var MediaFolder $mediaFolder */
-        $mediaFolder = $this->getMediaFolder();
-        $this->checkIfDeleteIsAllowed($mediaFolder);
-
-        /** @var DeleteMediaFolder $deleteMediaFolder */
-        $deleteMediaFolder = new DeleteMediaFolder($mediaFolder);
-
-        // Handle the MediaFolder delete
-        $this->get('command_bus')->handle($deleteMediaFolder);
-
-        return $deleteMediaFolder;
-    }
-
-    /**
-     * @param MediaFolder $mediaFolder
-     */
-    private function checkIfDeleteIsAllowed(MediaFolder $mediaFolder)
+    private function abortWhenLastFolder()
     {
         // If this is the last folder, delete is not possible
         if (count($this->get('media_library.repository.folder')->findAll()) === 1) {
@@ -60,7 +41,13 @@ class MediaFolderDelete extends BackendBaseActionDelete
                 )
             );
         }
+    }
 
+    /**
+     * @param MediaFolder $mediaFolder
+     */
+    private function checkIfDeleteIsAllowed(MediaFolder $mediaFolder)
+    {
         // If folder has children/items, delete is not possible
         if ($mediaFolder->hasConnectedItems() && $mediaFolder->hasChildrenWithConnectedItems()) {
             $this->redirect(
@@ -71,6 +58,25 @@ class MediaFolderDelete extends BackendBaseActionDelete
                 )
             );
         }
+    }
+
+    /**
+     * @return DeleteMediaFolder
+     */
+    private function deleteMediaFolder(): DeleteMediaFolder
+    {
+        /** @var MediaFolder $mediaFolder */
+        $mediaFolder = $this->getMediaFolder();
+
+        $this->checkIfDeleteIsAllowed($mediaFolder);
+
+        /** @var DeleteMediaFolder $deleteMediaFolder */
+        $deleteMediaFolder = new DeleteMediaFolder($mediaFolder);
+
+        // Handle the MediaFolder delete
+        $this->get('command_bus')->handle($deleteMediaFolder);
+
+        return $deleteMediaFolder;
     }
 
     /**
