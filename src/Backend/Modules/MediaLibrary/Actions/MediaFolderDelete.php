@@ -4,17 +4,53 @@ namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder as DeleteMediaFolderCommand;
 use Common\Exception\RedirectException;
 
 class MediaFolderDelete extends BackendBaseActionDelete
 {
     public function execute()
     {
+        parent::execute();
+
+        /** @var DeleteMediaFolder $deleteMediaFolder */
+        $deleteMediaFolder = $this->deleteMediaFolder();
+
+        $this->redirect(
+            $this->getBackLink(
+                [
+                    'report' => 'media-folder-deleted',
+                    'var' => urlencode($deleteMediaFolder->mediaFolder->getName()),
+                ]
+            )
+        );
+    }
+
+    /**
+     * @return DeleteMediaFolder
+     */
+    private function deleteMediaFolder(): DeleteMediaFolder
+    {
         /** @var MediaFolder $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
+        $this->checkIfDeleteIsAllowed($mediaFolder);
 
+        /** @var DeleteMediaFolder $deleteMediaFolder */
+        $deleteMediaFolder = new DeleteMediaFolder($mediaFolder);
+
+        // Handle the MediaFolder delete
+        $this->get('command_bus')->handle($deleteMediaFolder);
+
+        return $deleteMediaFolder;
+    }
+
+    /**
+     * @param MediaFolder $mediaFolder
+     */
+    private function checkIfDeleteIsAllowed(MediaFolder $mediaFolder)
+    {
+        // If this is the last folder, delete is not possible
         if (count($this->get('media_library.repository.folder')->findAll()) === 1) {
             $this->redirect(
                 $this->getBackLink(
@@ -25,6 +61,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
             );
         }
 
+        // If folder has children/items, delete is not possible
         if ($mediaFolder->hasConnectedItems() && $mediaFolder->hasChildrenWithConnectedItems()) {
             $this->redirect(
                 $this->getBackLink(
@@ -34,20 +71,6 @@ class MediaFolderDelete extends BackendBaseActionDelete
                 )
             );
         }
-
-        parent::execute();
-
-        // Handle the MediaFolder delete
-        $this->get('command_bus')->handle(new DeleteMediaFolderCommand($mediaFolder));
-
-        $this->redirect(
-            $this->getBackLink(
-                [
-                    'report' => 'media-folder-deleted',
-                    'var' => urlencode($mediaFolder->getName()),
-                ]
-            )
-        );
     }
 
     /**

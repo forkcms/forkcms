@@ -50,28 +50,36 @@ class MediaItemMassAction extends BackendBaseAction
                 $this->getMediaFolder(),
                 [
                     'report' => 'media-' . ($action === self::MOVE ? 'moved' : 'deleted')
-                ]
-            ) . '#tab' . ucfirst($selectedType)
+                ],
+                $selectedType
+            )
         );
     }
 
     /**
      * @param MediaFolder $mediaFolder
      * @param array $parameters
+     * @param Type|null $selectedType
      * @return string
      */
-    private function getBackLink(MediaFolder $mediaFolder = null, array $parameters = []): string
+    private function getBackLink(MediaFolder $mediaFolder = null, array $parameters = [], Type $selectedType = null): string
     {
         if ($mediaFolder instanceof MediaFolder) {
             $parameters['folder'] = $mediaFolder->getId();
         }
 
-        return Model::createURLForAction(
+        $URL = Model::createURLForAction(
             'MediaItemIndex',
             null,
             null,
             $parameters
         );
+
+        if ($selectedType instanceof Type) {
+            $URL .= '#tab' . ucfirst((string) $selectedType);
+        }
+
+        return $URL;
     }
 
     /**
@@ -105,9 +113,9 @@ class MediaItemMassAction extends BackendBaseAction
                     null,
                     [
                         'error' => 'please-select-a-folder',
-                    ]
+                    ],
+                    $selectedType
                 )
-                . '#tab' . ucfirst((string) $selectedType)
             );
         }
 
@@ -120,9 +128,9 @@ class MediaItemMassAction extends BackendBaseAction
                     null,
                     [
                         'error' => 'folder-does-not-exists',
-                    ]
+                    ],
+                    $selectedType
                 )
-                . '#tab' . ucfirst((string) $selectedType)
             );
         }
     }

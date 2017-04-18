@@ -325,7 +325,7 @@ class MediaItem
 
     /**
      * @param MediaFolder $folder the folder
-     * @return MediaItem
+     * @return self
      */
     public function setFolder(MediaFolder $folder): self
     {
@@ -424,7 +424,7 @@ class MediaItem
     /**
      * @param int $width
      * @param int $height
-     * @return MediaItem
+     * @return self
      */
     public function setResolution(int $width, int $height): self
     {

@@ -173,17 +173,15 @@ class FrontendHelper
             $module = 'MediaLibrary';
         }
 
-        $data = serialize([
-            'group_id' => $mediaGroupId,
-            'title' => $title,
-        ]);
-
         // Create new widget instance and return parsed content
         $extra = new FrontendBlockWidget(
             FrontendModel::get('kernel'),
             $module,
             $mediaWidgetAction,
-            $data
+            serialize([
+                'group_id' => $mediaGroupId,
+                'title' => $title,
+            ])
         );
 
         try {

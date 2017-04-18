@@ -22,30 +22,34 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
     {
         parent::execute();
 
+        /** @var CreateMediaItemFromMovieUrl $createMediaItemFromMovieUrl */
+        $createMediaItemFromMovieUrl = $this->createMovieMediaItem();
+
+        // Output success message
+        $this->output(
+            self::OK,
+            $createMediaItemFromMovieUrl->getMediaItem()->__toArray(),
+            Language::msg('MediaUploadedSuccessful')
+        );
+    }
+
+    /**
+     * @return CreateMediaItemFromMovieUrl
+     * @throws AjaxExitException
+     */
+    private function createMovieMediaItem(): CreateMediaItemFromMovieUrl
+    {
         /** @var MediaFolder $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
 
         /** @var StorageType $movieStorageType */
         $movieStorageType = $this->getMovieStorageType();
 
-        // Define parameters
-        $movieId = trim($this->get('request')->request->get('id'));
-        $movieTitle = trim($this->get('request')->request->get('title'));
+        /** @var string $movieId */
+        $movieId = $this->getMovieId();
 
-        // Movie id not null
-        if ($movieId === null) {
-            throw new AjaxExitException(Language::err('MediaMovieIdIsRequired'));
-        }
-
-        // Title not valid
-        if ($movieTitle === null) {
-            throw new AjaxExitException(Language::err('MediaMovieTitleIsRequired'));
-        }
-
-        // Movie url (= externalVideoId) already exists in our repository
-        if ($this->get('media_library.repository.item')->existsOneByUrl((string) $movieId)) {
-            throw new AjaxExitException(Language::err('MediaMovieIdAlreadyExists'));
-        }
+        /** @var string $movieTitle */
+        $movieTitle = $this->getMovieTitle();
 
         /** @var CreateMediaItemFromMovieUrl $createMediaItem */
         $createMediaItemFromMovieUrl = new CreateMediaItemFromMovieUrl(
@@ -59,12 +63,44 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
         // Handle the MediaItem create
         $this->get('command_bus')->handle($createMediaItemFromMovieUrl);
 
-        // Output success message
-        $this->output(
-            self::OK,
-            $createMediaItemFromMovieUrl->getMediaItem()->__toArray(),
-            Language::msg('MediaUploadedSuccessful')
-        );
+        return $createMediaItemFromMovieUrl;
+    }
+
+    /**
+     * @return string
+     * @throws AjaxExitException
+     */
+    protected function getMovieId(): string
+    {
+        $movieId = trim($this->get('request')->request->get('id'));
+
+        // Movie id not null
+        if ($movieId === null) {
+            throw new AjaxExitException(Language::err('MediaMovieIdIsRequired'));
+        }
+
+        // Movie url (= externalVideoId) already exists in our repository
+        if ($this->get('media_library.repository.item')->existsOneByUrl((string) $movieId)) {
+            throw new AjaxExitException(Language::err('MediaMovieIdAlreadyExists'));
+        }
+
+        return $movieId;
+    }
+
+    /**
+     * @return string
+     * @throws AjaxExitException
+     */
+    protected function getMovieTitle(): string
+    {
+        $movieTitle = trim($this->get('request')->request->get('title'));
+
+        // Title not valid
+        if ($movieTitle === null) {
+            throw new AjaxExitException(Language::err('MediaMovieTitleIsRequired'));
+        }
+
+        return $movieTitle;
     }
 
     /**

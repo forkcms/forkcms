@@ -52,31 +52,8 @@ class MediaItemDataGrid extends DataGridDB
      */
     private function addMassActions(Type $type)
     {
-        // add checkboxes
         $this->setMassActionCheckboxes('check', '[id]');
-
-        // add mass action dropdown
-        $ddmMediaItemMassAction = new \SpoonFormDropdown(
-            'action',
-            [
-                'move' => Language::lbl('Move'),
-            ],
-            'move',
-            false,
-            'form-control',
-            'form-control danger'
-        );
-        $ddmMediaItemMassAction->setAttribute(
-            'id',
-            'mass-action-' . (string) $type
-        );
-        $ddmMediaItemMassAction->setOptionAttributes(
-            'move',
-            [
-                'data-target' => '#confirmMassActionMediaItemMove',
-            ]
-        );
-        $this->setMassAction($ddmMediaItemMassAction);
+        $this->setMassAction($this->getMassActionDropdown($type));
     }
 
     /**
@@ -134,6 +111,37 @@ class MediaItemDataGrid extends DataGridDB
     public static function getHtml(Type $type, int $folderId = null): string
     {
         return (string) (new self($type, $folderId))->getContent();
+    }
+
+    /**
+     * @param Type $type
+     * @return \SpoonFormDropdown
+     */
+    private function getMassActionDropdown(Type $type)
+    {
+        // add mass action dropdown
+        $ddmMediaItemMassAction = new \SpoonFormDropdown(
+            'action',
+            [
+                'move' => Language::lbl('Move'),
+            ],
+            'move',
+            false,
+            'form-control',
+            'form-control danger'
+        );
+        $ddmMediaItemMassAction->setAttribute(
+            'id',
+            'mass-action-' . (string) $type
+        );
+        $ddmMediaItemMassAction->setOptionAttributes(
+            'move',
+            [
+                'data-target' => '#confirmMassActionMediaItemMove',
+            ]
+        );
+
+        return $ddmMediaItemMassAction;
     }
 
     /**

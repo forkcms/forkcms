@@ -21,18 +21,8 @@ class MediaFolderEdit extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        /** @var MediaFolder $mediaFolder */
-        $mediaFolder = $this->getMediaFolder();
-
-        /** @var string $name */
-        $name = $this->getFolderName();
-
         /** @var UpdateMediaFolder $updateMediaFolder */
-        $updateMediaFolder = new UpdateMediaFolder($mediaFolder);
-        $updateMediaFolder->name = htmlspecialchars($name, ENT_QUOTES);
-
-        // Handle the MediaFolder update
-        $this->get('command_bus')->handle($updateMediaFolder);
+        $updateMediaFolder = $this->updateMediaFolder();
 
         // Output
         $this->output(
@@ -79,5 +69,26 @@ class MediaFolderEdit extends BackendBaseAJAXAction
         }
 
         return Uri::getUrl($name);
+    }
+
+    /**
+     * @return UpdateMediaFolder
+     */
+    private function updateMediaFolder()
+    {
+        /** @var MediaFolder $mediaFolder */
+        $mediaFolder = $this->getMediaFolder();
+
+        /** @var string $name */
+        $name = $this->getFolderName();
+
+        /** @var UpdateMediaFolder $updateMediaFolder */
+        $updateMediaFolder = new UpdateMediaFolder($mediaFolder);
+        $updateMediaFolder->name = htmlspecialchars($name, ENT_QUOTES);
+
+        // Handle the MediaFolder update
+        $this->get('command_bus')->handle($updateMediaFolder);
+
+        return $updateMediaFolder;
     }
 }

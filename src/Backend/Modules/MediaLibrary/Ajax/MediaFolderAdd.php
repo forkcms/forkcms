@@ -22,6 +22,27 @@ class MediaFolderAdd extends BackendBaseAJAXAction
     {
         parent::execute();
 
+        /** @var CreateMediaFolder $createMediaFolder */
+        $createMediaFolder = $this->createMediaFolder();
+
+        // Success message
+        $this->output(
+            self::OK,
+            $createMediaFolder->getMediaFolderEntity()->__toArray(),
+            vsprintf(
+                Language::msg('AddedFolder'),
+                [
+                    $createMediaFolder->getMediaFolderEntity()->getId()
+                ]
+            )
+        );
+    }
+
+    /**
+     * @return CreateMediaFolder
+     */
+    private function createMediaFolder()
+    {
         /** @var MediaFolder|null $parent */
         $parent = $this->getParent();
 
@@ -38,17 +59,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
         // Handle the MediaFolder create
         $this->get('command_bus')->handle($createMediaFolder);
 
-        // Success message
-        $this->output(
-            self::OK,
-            $createMediaFolder->getMediaFolderEntity()->__toArray(),
-            vsprintf(
-                Language::msg('AddedFolder'),
-                [
-                    $createMediaFolder->getMediaFolderEntity()->getId()
-                ]
-            )
-        );
+        return $createMediaFolder;
     }
 
     /**

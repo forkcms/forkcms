@@ -73,8 +73,12 @@ class Installer extends ModuleInstaller
     {
         // Set module rights
         $this->setModuleRights(1, $this->getModule());
+        $this->configureModuleRightsForMediaItem();
+        $this->configureModuleRightsForMediaFolder();
+    }
 
-        // MediaItem
+    protected function configureModuleRightsForMediaItem()
+    {
         $this->setActionRights(1, $this->getModule(), 'MediaItemAddMovie'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaItemCleanup');
         $this->setActionRights(1, $this->getModule(), 'MediaItemDelete');
@@ -84,8 +88,10 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaItemIndex');
         $this->setActionRights(1, $this->getModule(), 'MediaItemMassAction');
         $this->setActionRights(1, $this->getModule(), 'MediaItemUpload'); // Action and AJAX
+    }
 
-        // MediaFolder
+    protected function configureModuleRightsForMediaFolder()
+    {
         $this->setActionRights(1, $this->getModule(), 'MediaFolderAdd'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderDelete');
         $this->setActionRights(1, $this->getModule(), 'MediaFolderEdit'); // AJAX

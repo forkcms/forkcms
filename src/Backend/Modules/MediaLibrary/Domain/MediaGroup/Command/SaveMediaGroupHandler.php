@@ -40,14 +40,11 @@ final class SaveMediaGroupHandler
                 /** @var MediaItem $mediaItem */
                 $mediaItem = $this->mediaItemRepository->findOneById(Uuid::fromString($mediaItemId));
 
-                /** @var MediaGroupMediaItem $mediaGroupMediaItem */
-                $mediaGroupMediaItem = MediaGroupMediaItem::create(
+                $mediaGroup->addConnectedItem(MediaGroupMediaItem::create(
                     $mediaGroup,
                     $mediaItem,
                     $sequence
-                );
-
-                $mediaGroup->addConnectedItem($mediaGroupMediaItem);
+                ));
             } catch (\Exception $e) {
                 // Do nothing
             }

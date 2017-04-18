@@ -14,25 +14,29 @@ class MediaItemType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $titleLabel = 'lbl.Title';
+        $label = 'lbl.Title';
 
         if ($builder->getData()->getMediaItemEntity()->getType()->isMovie()) {
-            $titleLabel = 'lbl.MediaMovieTitle';
-            $builder
-                ->add(
-                    'url',
-                    TextType::class,
-                    [
-                        'label' => 'lbl.MediaMovieId',
-                    ]
-                );
+            $label = 'lbl.MediaMovieTitle';
+            $this->addField($builder, 'url', 'lbl.MediaMovieId');
         }
+
+        $this->addField($builder, 'title', $label);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param $name
+     * @param $label
+     */
+    private function addField(FormBuilderInterface $builder, $name, $label)
+    {
         $builder
             ->add(
-                'title',
+                $name,
                 TextType::class,
                 [
-                    'label' => $titleLabel,
+                    'label' => $label,
                 ]
             );
     }

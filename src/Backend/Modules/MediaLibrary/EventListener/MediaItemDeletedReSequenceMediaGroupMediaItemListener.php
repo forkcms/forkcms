@@ -45,27 +45,32 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
 
         // Loop all MediaGroup items
         foreach ($mediaItemMediaGroups as $mediaItemMediaGroup) {
-            /** @var MediaGroup $mediaGroup */
-            $mediaGroup = $mediaItemMediaGroup->getGroup();
-
-            // Define new media ids
-            $newMediaIds = [];
-
-            /**
-             * @var int $index
-             * @var MediaGroupMediaItem $connectedItem
-             */
-            foreach ($mediaGroup->getConnectedItems()->toArray() as $index => $connectedItem) {
-                // Add to new media ids
-                $newMediaIds[$index] = $connectedItem->getItem()->getId();
-            }
-
-            $updateMediaGroup = new SaveMediaGroup(
-                $mediaGroup,
-                $newMediaIds
-            );
-
-            $this->commandBus->handle($updateMediaGroup);
+            $this->updateMediaGroupSequence($mediaItemMediaGroup->getGroup());
         }
+    }
+
+    /**
+     * @param MediaGroup $mediaGroup
+     */
+    private function updateMediaGroupSequence(MediaGroup $mediaGroup)
+    {
+        // Define new media ids
+        $newMediaIds = [];
+
+        /**
+         * @var int $index
+         * @var MediaGroupMediaItem $connectedItem
+         */
+        foreach ($mediaGroup->getConnectedItems()->toArray() as $index => $connectedItem) {
+            // Add to new media ids
+            $newMediaIds[$index] = $connectedItem->getItem()->getId();
+        }
+
+        $updateMediaGroup = new SaveMediaGroup(
+            $mediaGroup,
+            $newMediaIds
+        );
+
+        $this->commandBus->handle($updateMediaGroup);
     }
 }

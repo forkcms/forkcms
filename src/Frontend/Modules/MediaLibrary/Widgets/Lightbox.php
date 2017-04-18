@@ -21,6 +21,14 @@ class Lightbox extends FrontendMediaWidget
             return;
         }
 
+        $this->addCSSAndJS();
+        parent::execute();
+        $this->loadTemplate();
+        $this->parse();
+    }
+
+    private function addCSSAndJS()
+    {
         /**
          * Note: if you also want to support <figure> and <figcaption> in older browsers (< IE9),
          * you should add the following html to your <head>.
@@ -48,9 +56,5 @@ class Lightbox extends FrontendMediaWidget
          *     - FAQ: http://photoswipe.com/documentation/faq.html#image-size
          *     - GitHub Issue: https://github.com/dimsemenov/PhotoSwipe/issues/741
          */
-
-        parent::execute();
-        $this->loadTemplate();
-        $this->parse();
     }
 }

@@ -66,14 +66,7 @@ final class TreeManager
     private function buildNavigationItem(MediaFolderCacheItem $cacheItem): string
     {
         // define url
-        $url = BackendModel::createURLForAction(
-            'MediaItemIndex',
-            null,
-            null,
-            [
-                'folder' => $cacheItem->id,
-            ]
-        );
+        $url = $this->getLink(['folder' => $cacheItem->id]);
 
         // start
         $html = '<li id="folder-' . $cacheItem->id . '" rel="folder">' . "\n";
@@ -85,9 +78,20 @@ final class TreeManager
             $html .= $this->buildNavigationTree($cacheItem->children);
         }
 
-        // end
-        $html .= '</li>' . "\n";
+        return $html . '</li>' . "\n";
+    }
 
-        return $html;
+    /**
+     * @param array $parameters
+     * @return string
+     */
+    private function getLink($parameters = [])
+    {
+        return BackendModel::createURLForAction(
+            'MediaItemIndex',
+            null,
+            null,
+            $parameters
+        );
     }
 }

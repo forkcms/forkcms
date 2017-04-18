@@ -78,11 +78,8 @@ final class MediaFolderRepository extends EntityRepository
 
         // Loop all connected items
         foreach ($mediaGroup->getConnectedItems() as $connectedItem) {
-            /** @var MediaItem $mediaItem */
-            $mediaItem = $connectedItem->getItem();
-
             /** @var int $folderId */
-            $folderId = $mediaItem->getFolder()->getId();
+            $folderId = $connectedItem->getItem()->getFolder()->getId();
 
             // Counts for folder doesn't exist
             if (!array_key_exists($folderId, $counts)) {

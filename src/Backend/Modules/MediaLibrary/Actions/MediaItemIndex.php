@@ -16,30 +16,8 @@ class MediaItemIndex extends BackendBaseActionIndex
     public function execute()
     {
         parent::execute();
+        $this->parse();
         $this->parseJSFiles();
-
-        /** @var MediaFolder|null $mediaFolder */
-        $mediaFolder = $this->getMediaFolder();
-
-        /** @var array $dataGrids */
-        $dataGrids = $this->getDataGrids($mediaFolder);
-
-        /** @var array $mediaFolders */
-        $mediaFolders = $this->getMediaFoldersForDropdown($this->get('media_library.cache.media_folder')->get());
-
-        // Unset mediaFolder
-        if ($mediaFolder !== null) {
-            unset($mediaFolders[$mediaFolder->getId()]);
-        }
-
-        // Assign variables
-        $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
-        $this->tpl->assign('mediaFolder', $mediaFolder);
-        $this->tpl->assign('mediaFolders', $mediaFolders);
-        $this->tpl->assign('dataGrids', $dataGrids);
-        $this->tpl->assign('hasResults', $this->hasResults($dataGrids));
-        $this->header->addJsData('MediaLibrary', 'openedFolderId', ($mediaFolder !== null) ? $mediaFolder->getId() : null);
-
         $this->display();
     }
 
@@ -49,27 +27,21 @@ class MediaItemIndex extends BackendBaseActionIndex
      */
     private function getDataGrids(MediaFolder $mediaFolder = null): array
     {
-        $dataGrids = [];
-
-        /** @var string $type */
-        foreach (Type::POSSIBLE_VALUES as $type) {
+        return array_map(function ($type) use ($mediaFolder) {
             /** @var DataGridDB $dataGrid */
             $dataGrid = MediaItemDataGrid::getDataGrid(
                 Type::fromString($type),
                 ($mediaFolder !== null) ? $mediaFolder->getId() : null
             );
 
-            // create datagrid
-            $dataGrids[$type] = [
+            return [
                 'label' => Language::lbl('MediaMultiple' . ucfirst($type)),
                 'tabName' => 'tab' . ucfirst($type),
                 'mediaType' => $type,
                 'html' => $dataGrid->getContent(),
                 'numberOfResults' => $dataGrid->getNumResults(),
             ];
-        }
-
-        return $dataGrids;
+        }, Type::POSSIBLE_VALUES);
     }
 
     /**
@@ -116,6 +88,34 @@ class MediaItemIndex extends BackendBaseActionIndex
         return array_sum(array_map(function ($dataGrid) {
             return $dataGrid['numberOfResults'];
         }, $dataGrids)) > 0;
+    }
+
+    protected function parse()
+    {
+        parent::parse();
+
+        /** @var MediaFolder|null $mediaFolder */
+        $mediaFolder = $this->getMediaFolder();
+
+        /** @var array $dataGrids */
+        $dataGrids = $this->getDataGrids($mediaFolder);
+
+        /** @var array $mediaFolders */
+        $mediaFolders = $this->getMediaFoldersForDropdown($this->get('media_library.cache.media_folder')->get());
+
+        // Unset mediaFolder
+        if ($mediaFolder !== null) {
+            unset($mediaFolders[$mediaFolder->getId()]);
+        }
+
+        // Assign variables
+        $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
+        $this->tpl->assign('mediaFolder', $mediaFolder);
+        $this->tpl->assign('mediaFolders', $mediaFolders);
+        $this->tpl->assign('dataGrids', $dataGrids);
+        $this->tpl->assign('hasResults', $this->hasResults($dataGrids));
+        $this->header->addJsData('MediaLibrary', 'openedFolderId', ($mediaFolder !== null) ? $mediaFolder->getId() : null);
+
     }
 
     private function parseJSFiles()
