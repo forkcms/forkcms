@@ -201,7 +201,7 @@ class MediaItem
             $shardingFolderName = basename($file->getPath());
 
             // Define title
-            /** @var string $shardingFolderName */
+            /** @var string $title */
             $title = str_replace('.' . $file->getExtension(), '', $file->getFilename());
 
             /** @var MediaItem $mediaItem */

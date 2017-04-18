@@ -29,14 +29,14 @@ class MediaFolder
      * @var MediaFolder|null
      *
      * @ORM\ManyToOne(
-     *      targetEntity="Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",
-     *      inversedBy="children",
-     *      cascade="persist"
+     *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",
+     *     inversedBy="children",
+     *     cascade="persist"
      * )
      * @ORM\JoinColumn(
-     *      name="parentMediaFolderId",
-     *      referencedColumnName="id",
-     *      onDelete="cascade"
+     *     name="parentMediaFolderId",
+     *     referencedColumnName="id",
+     *     onDelete="cascade"
      * )
      */
     protected $parent;

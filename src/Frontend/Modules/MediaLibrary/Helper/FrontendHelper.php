@@ -50,6 +50,11 @@ class FrontendHelper
 
         // Loop entities to get mediaGroup id
         foreach ($entities as $entityKey => $entity) {
+            if ($entity === null) {
+                unset($entities[$entityKey]);
+                continue;
+            }
+
             // Check if variable already exists or not
             if ($counter == 1) {
                 if (property_exists($entities[$entityKey], $newVariableName)) {
@@ -64,7 +69,7 @@ class FrontendHelper
             }
 
             // Define keys for later use
-            $mediaGroupIds[$entity->{$methodForMediaGroup}()->getId()] = $entity->getId();
+            $mediaGroupIds[(string) $entity->{$methodForMediaGroup}()->getId()] = $entity->getId();
             $entityKeys[$entity->getId()] = $entityKey;
 
             $counter++;

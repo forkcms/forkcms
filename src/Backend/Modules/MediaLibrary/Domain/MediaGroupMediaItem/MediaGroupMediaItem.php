@@ -26,14 +26,14 @@ class MediaGroupMediaItem
      * @var MediaGroup
      *
      * @ORM\ManyToOne(
-     *      targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup",
-     *      inversedBy="connectedItems",
-     *      cascade="persist"
+     *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup",
+     *     inversedBy="connectedItems",
+     *     cascade="persist"
      * )
      * @ORM\JoinColumn(
-     *      name="mediaGroupId",
-     *      referencedColumnName="id",
-     *      onDelete="cascade"
+     *     name="mediaGroupId",
+     *     referencedColumnName="id",
+     *     onDelete="cascade"
      * )
      */
     protected $group;
@@ -42,14 +42,15 @@ class MediaGroupMediaItem
      * @var MediaItem
      *
      * @ORM\ManyToOne(
-     *      targetEntity="Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem",
-     *      inversedBy="groups",
-     *      cascade="persist"
+     *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem",
+     *     inversedBy="groups",
+     *     cascade="persist",
+     *     fetch="EAGER"
      * )
      * @ORM\JoinColumn(
-     *      name="mediaItemId",
-     *      referencedColumnName="id",
-     *      onDelete="cascade"
+     *     name="mediaItemId",
+     *     referencedColumnName="id",
+     *     onDelete="cascade"
      * )
      */
     protected $item;

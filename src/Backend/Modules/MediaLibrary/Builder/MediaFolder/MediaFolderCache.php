@@ -18,9 +18,9 @@ final class MediaFolderCache
     protected $cache;
 
     /**
-     * @var MediaFolderRepository
+     * @var ContainerInterface
      */
-    protected $mediaFolderRepository;
+    protected $container;
 
     /**
      * @param CacheItemPoolInterface|stdClass $cache
