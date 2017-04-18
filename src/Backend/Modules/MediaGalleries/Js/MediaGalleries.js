@@ -6,16 +6,16 @@ jsBackend.mediaGalleries =
 {
     init: function()
     {
-        jsBackend.mediaGalleries.addGallery.init();
+        jsBackend.mediaGalleries.dialogs.init();
         jsBackend.mediaGalleries.controls.init();
     }
 };
 
 /**
- * Controls the adding of a gallery
+ * Checks for dialogs
  * global: jsBackend
  */
-jsBackend.mediaGalleries.addGallery =
+jsBackend.mediaGalleries.dialogs =
 {
     init: function()
     {
@@ -26,19 +26,24 @@ jsBackend.mediaGalleries.addGallery =
             return false;
         }
 
-        var $addMediaGroupType = $('#addMediaGroupType');
-        var $addMediaGroupTypeSubmit = $('#addMediaGroupTypeSubmit');
+        jsBackend.mediaGalleries.dialogs.addMediaGroupTypeDialog($addMediaGroupTypeDialog);
+    },
 
+    /**
+     * @param {jQuery} $dialog
+     */
+    addMediaGroupTypeDialog: function($dialog)
+    {
         // Bind click to open the dialog
-        $addMediaGroupType.on('click', function(e) {
+        $('#addMediaGroupType').on('click', function(e) {
             e.preventDefault();
-            $addMediaGroupTypeDialog.modal('show');
+            $dialog.modal('show');
         });
 
         // When clicked in dialog, close it
-        $addMediaGroupTypeSubmit.on('click', function() {
-            $addMediaGroupTypeDialog.find('form').submit();
-            $addMediaGroupTypeDialog.modal('hide');
+        $('#addMediaGroupTypeSubmit').on('click', function() {
+            $dialog.find('form').submit();
+            $dialog.modal('hide');
         });
     }
 };

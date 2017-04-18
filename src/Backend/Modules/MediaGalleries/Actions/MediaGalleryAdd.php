@@ -34,21 +34,28 @@ class MediaGalleryAdd extends ActionAdd
         }
 
         /** @var CreateMediaGallery $createMediaGallery */
+        $createMediaGallery = $this->createMediaGallery($form);
+
+        $this->redirect(
+            $this->getBackLink(
+                $this->getParametersForCreateMediaGallery($createMediaGallery)
+            )
+        );
+    }
+
+    /**
+     * @param Form $form
+     * @return CreateMediaGallery
+     */
+    private function createMediaGallery(Form $form): CreateMediaGallery
+    {
+        /** @var CreateMediaGallery $createMediaGallery */
         $createMediaGallery = $form->getData();
 
         // Handle the MediaGallery create
         $this->get('command_bus')->handle($createMediaGallery);
 
-        $this->redirect(
-            $this->getBackLink(
-                [
-                    'report' => 'media-gallery-added',
-                    'var' => $createMediaGallery->title,
-                    'highlight' => 'row-' . $createMediaGallery->getMediaGalleryEntity()->getId(),
-                    'id' => $createMediaGallery->getMediaGalleryEntity()->getId(),
-                ]
-            )
-        );
+        return $createMediaGallery;
     }
 
     /**
@@ -99,6 +106,20 @@ class MediaGalleryAdd extends ActionAdd
                 )
             );
         }
+    }
+
+    /**
+     * @param CreateMediaGallery $createMediaGallery
+     * @return array
+     */
+    private function getParametersForCreateMediaGallery(CreateMediaGallery $createMediaGallery): array
+    {
+        return [
+            'report' => 'media-gallery-added',
+            'var' => $createMediaGallery->title,
+            'highlight' => 'row-' . $createMediaGallery->getMediaGalleryEntity()->getId(),
+            'id' => $createMediaGallery->getMediaGalleryEntity()->getId(),
+        ];
     }
 
     /**
