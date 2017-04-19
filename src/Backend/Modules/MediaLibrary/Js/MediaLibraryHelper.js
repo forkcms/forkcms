@@ -273,19 +273,21 @@ jsBackend.mediaLibraryHelper.group =
                         if (jsBackend.debug) {
                             alert(textStatus);
                         }
-                    } else {
-                        // cache folder counts
-                        mediaGroups[currentMediaGroupId].count = json.data;
 
-                        // update group media
-                        jsBackend.mediaLibraryHelper.group.updateGroupMedia();
-
-                        // update folder counts for items
-                        jsBackend.mediaLibraryHelper.group.updateFolderCountsForItemsToDisconnect($items);
-
-                        // update disconnect button
-                        jsBackend.mediaLibraryHelper.group.updateDisconnectButton(groupId);
+                        return;
                     }
+
+                    // cache folder counts
+                    mediaGroups[currentMediaGroupId].count = json.data;
+
+                    // update group media
+                    jsBackend.mediaLibraryHelper.group.updateGroupMedia();
+
+                    // update folder counts for items
+                    jsBackend.mediaLibraryHelper.group.updateFolderCountsForItemsToDisconnect($items);
+
+                    // update disconnect button
+                    jsBackend.mediaLibraryHelper.group.updateDisconnectButton(groupId);
                 }
             });
         } else {
@@ -366,13 +368,15 @@ jsBackend.mediaLibraryHelper.group =
                     if (jsBackend.debug) {
                         alert(textStatus);
                     }
-                } else {
-                    // cache folders
-                    mediaFolders = json.data;
 
-                    // update folders
-                    jsBackend.mediaLibraryHelper.group.updateFolders();
+                    return;
                 }
+
+                // cache folders
+                mediaFolders = json.data;
+
+                // update folders
+                jsBackend.mediaLibraryHelper.group.updateFolders();
             }
         });
     },
@@ -1143,8 +1147,7 @@ jsBackend.mediaLibraryHelper.templates =
             html += ' checked="checked"';
         }
 
-        html += '/>';
-        html += '</td>';
+        html += '/></td>';
 
         if (mediaItem.type === 'image') {
             html += '<td class="fullUrl">';

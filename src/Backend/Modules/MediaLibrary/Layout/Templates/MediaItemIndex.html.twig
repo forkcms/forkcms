@@ -20,7 +20,7 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {% if showMediaLibraryMediaItemCleanup %}
-        {{ macro.buttonIcon( geturl('MediaItemCleanup'), 'trash-o', 'lbl.MediaItemCleanup'|trans|capitalize, null, 'data-action=media-item-cleanup data-target=#confirmMediaItemCleanup') }}
+        {{ macro.buttonIcon( geturl('MediaItemCleanup'), 'trash-o', 'lbl.MediaItemCleanup'|trans|capitalize, null, 'data-role=media-item-cleanup data-target=#confirmMediaItemCleanup') }}
       {% endif %}
       {% if showMediaLibraryMediaItemUpload %}
         {% if mediaFolder %}

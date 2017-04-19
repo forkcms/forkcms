@@ -27,25 +27,7 @@ class Installer extends ModuleInstaller
         $this->configureModuleRights();
         $this->configureSettings();
         $this->configureBackendNavigation();
-        $this->addGitIgnoreFile();
         $this->loadMediaFolders();
-    }
-
-    /**
-     * Add git ignore file
-     */
-    protected function addGitIgnoreFile()
-    {
-        $fs = new Filesystem();
-        $fs->dumpFile(
-            FRONTEND_FILES_PATH . '/MediaLibrary/.gitignore',
-            '# Uploaded files - Do not delete anything in this directory
-            *'
-        );
-        $fs->dumpFile(
-            FRONTEND_FILES_PATH . '/Cache/.gitignore',
-            '*'
-        );
     }
 
     /**

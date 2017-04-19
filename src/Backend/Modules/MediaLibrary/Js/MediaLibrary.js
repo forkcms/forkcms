@@ -33,7 +33,7 @@ jsBackend.mediaLibrary.controls =
         });
 
         // Bind dialog to "mediaItemCleanup" button
-        $('a[data-action=media-item-cleanup]').on('click', function(e){
+        $('a[data-role=media-item-cleanup]').on('click', function(e){
             e.preventDefault();
 
             $($(this).data('target')).modal('show');

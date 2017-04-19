@@ -39,24 +39,12 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
      */
     private function createMovieMediaItem(): CreateMediaItemFromMovieUrl
     {
-        /** @var MediaFolder $mediaFolder */
-        $mediaFolder = $this->getMediaFolder();
-
-        /** @var StorageType $movieStorageType */
-        $movieStorageType = $this->getMovieStorageType();
-
-        /** @var string $movieId */
-        $movieId = $this->getMovieId();
-
-        /** @var string $movieTitle */
-        $movieTitle = $this->getMovieTitle();
-
         /** @var CreateMediaItemFromMovieUrl $createMediaItem */
         $createMediaItemFromMovieUrl = new CreateMediaItemFromMovieUrl(
-            $movieStorageType,
-            (string) $movieId,
-            (string) $movieTitle,
-            $mediaFolder,
+            $this->getMovieStorageType(),
+            $this->getMovieId(),
+            $this->getMovieTitle(),
+            $this->getMediaFolder(),
             BackendAuthentication::getUser()->getUserId()
         );
 

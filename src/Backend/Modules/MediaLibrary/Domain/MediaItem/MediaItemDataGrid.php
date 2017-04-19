@@ -21,21 +21,13 @@ class MediaItemDataGrid extends DataGridDB
      */
     public function __construct(Type $type, int $folderId = null)
     {
-        $andWhere = '';
-        $parameters = [(string) $type];
-
-        if ($folderId !== null) {
-            $andWhere .= ' AND i.mediaFolderId = ?';
-            $parameters[] = $folderId;
-        }
-
         parent::__construct(
             'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName,
                 COUNT(gi.mediaItemId) as num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
              FROM MediaItem AS i
              LEFT OUTER JOIN MediaGroupMediaItem as gi ON gi.mediaItemId = i.id
-             WHERE i.type = ?' . $andWhere . ' GROUP BY i.id',
-            $parameters
+             WHERE i.type = ?' . $this->getWhere($folderId) . ' GROUP BY i.id',
+            $this->getParameters($type, $folderId)
         );
 
         // filter on folder?
@@ -119,29 +111,43 @@ class MediaItemDataGrid extends DataGridDB
      */
     private function getMassActionDropdown(Type $type)
     {
-        // add mass action dropdown
         $ddmMediaItemMassAction = new \SpoonFormDropdown(
             'action',
-            [
-                'move' => Language::lbl('Move'),
-            ],
+            ['move' => Language::lbl('Move')],
             'move',
             false,
             'form-control',
             'form-control danger'
         );
-        $ddmMediaItemMassAction->setAttribute(
-            'id',
-            'mass-action-' . (string) $type
-        );
-        $ddmMediaItemMassAction->setOptionAttributes(
-            'move',
-            [
-                'data-target' => '#confirmMassActionMediaItemMove',
-            ]
-        );
+        $ddmMediaItemMassAction->setAttribute('id', 'mass-action-' . (string) $type);
+        $ddmMediaItemMassAction->setOptionAttributes('move', ['data-target' => '#confirmMassActionMediaItemMove']);
 
         return $ddmMediaItemMassAction;
+    }
+
+    /**
+     * @param Type $type
+     * @param int|null $folderId
+     * @return array
+     */
+    private function getParameters(Type $type, int $folderId = null): array
+    {
+        $parameters = [(string) $type];
+
+        if ($folderId !== null) {
+            $parameters[] = $folderId;
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * @param int|null $folderId
+     * @return string
+     */
+    private function getWhere(int $folderId = null): string
+    {
+        return ($folderId !== null) ? ' AND i.mediaFolderId = ?' : '';
     }
 
     /**

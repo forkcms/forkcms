@@ -46,10 +46,10 @@ final class MediaItemSubscriber implements EventSubscriber
      */
     public function getSubscribedEvents(): array
     {
-        return array(
+        return [
             Events::postPersist,
             Events::postRemove,
-        );
+        ];
     }
 
     /**

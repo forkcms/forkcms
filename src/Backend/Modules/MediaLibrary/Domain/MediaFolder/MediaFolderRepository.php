@@ -20,6 +20,24 @@ final class MediaFolderRepository extends EntityRepository
     }
 
     /**
+     * @param int $folderId
+     * @param array &$counts
+     */
+    private function bumpFolderCount(int $folderId, array &$counts)
+    {
+        // Counts for folder doesn't exist
+        if (!array_key_exists($folderId, $counts)) {
+            // Init counts
+            $counts[$folderId] = 1;
+
+            return;
+        }
+
+        // Bump counts
+        $counts[$folderId] += 1;
+    }
+
+    /**
      * Does a folder exists by name?
      *
      * @param string $name The requested folder name to check if exists.
@@ -78,19 +96,7 @@ final class MediaFolderRepository extends EntityRepository
 
         // Loop all connected items
         foreach ($mediaGroup->getConnectedItems() as $connectedItem) {
-            /** @var int $folderId */
-            $folderId = $connectedItem->getItem()->getFolder()->getId();
-
-            // Counts for folder doesn't exist
-            if (!array_key_exists($folderId, $counts)) {
-                // Init counts
-                $counts[$folderId] = 1;
-
-                continue;
-            }
-
-            // Bump counts
-            $counts[$folderId] += 1;
+            $this->bumpFolderCount($connectedItem->getItem()->getFolder()->getId(), $counts);
         }
 
         return $counts;

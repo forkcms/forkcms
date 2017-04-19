@@ -175,7 +175,7 @@ class FrontendHelper
         }
 
         // Create new widget instance and return parsed content
-        $extra = new FrontendBlockWidget(
+        $widget = new FrontendBlockWidget(
             FrontendModel::get('kernel'),
             $module,
             $mediaWidgetAction,
@@ -185,9 +185,19 @@ class FrontendHelper
             ])
         );
 
+        return $this->parseWidgetContent($widget);
+    }
+
+    /**
+     * @param FrontendBlockWidget $widget
+     * @return string
+     * @throws \Exception
+     */
+    private function parseWidgetContent(FrontendBlockWidget $widget): string
+    {
         try {
-            $extra->execute();
-            $content = $extra->getContent();
+            $widget->execute();
+            $content = $widget->getContent();
 
             return $content;
         } catch (\Exception $e) {

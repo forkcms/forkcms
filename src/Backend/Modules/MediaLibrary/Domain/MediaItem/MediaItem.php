@@ -182,58 +182,51 @@ class MediaItem
         MediaFolder $folder,
         int $userId
     ) : MediaItem {
-        try {
-            // Define file from path
-            $file = new File($path);
+        /** @var File $file */
+        $file = self::getFileFromPath($path);
 
-            // We don't have a file
-            if (!$file->isFile()) {
-                throw new \Exception(
-                    'The given source is not a file.'
-                );
+        /** @var MediaItem $mediaItem */
+        $mediaItem = new self(
+            self::getTitleFromFile($file),
+            $file->getFilename(),
+            self::getTypeFromFile($file),
+            StorageType::local(),
+            $folder,
+            $userId
+        );
+
+        $mediaItem->setForFile($file);
+        $mediaItem->setResolutionFromPath($path);
+
+        return $mediaItem;
+    }
+
+    /**
+     * @param File $file
+     */
+    private function setForFile(File $file)
+    {
+        $this->mime = $file->getMimeType();
+        $this->size = $file->getSize();
+
+        // Define sharding folder (getPath gets the path without the trailing slash)
+        $this->shardingFolderName = basename($file->getPath());
+    }
+
+    /**
+     * @param string $path
+     * @throws \Exception
+     */
+    private function setResolutionFromPath(string $path)
+    {
+        if ($this->getType()->isImage()) {
+            try {
+                list($width, $height) = getimagesize($path);
+            } catch (\Exception $e) {
+                throw new \Exception('Error happened when creating MediaItem from path "' . $path . '". The error = ' . $e->getMessage());
             }
 
-            /** @var Type $mediaItemType */
-            $mediaItemType = Type::fromMimeType($file->getMimeType());
-
-            // Define sharding folder (getPath gets the path without the trailing slash)
-            /** @var string $shardingFolderName */
-            $shardingFolderName = basename($file->getPath());
-
-            // Define title
-            /** @var string $title */
-            $title = str_replace('.' . $file->getExtension(), '', $file->getFilename());
-
-            /** @var MediaItem $mediaItem */
-            $mediaItem = new self(
-                $title,
-                $file->getFilename(),
-                $mediaItemType,
-                StorageType::local(),
-                $folder,
-                $userId
-            );
-
-            $mediaItem->mime = $file->getMimeType();
-            $mediaItem->shardingFolderName = $shardingFolderName;
-            $mediaItem->size = $file->getSize();
-
-            // Image
-            if ($mediaItemType->isImage()) {
-                try {
-                    list($width, $height) = getimagesize($path);
-                } catch (\Exception $e) {
-                    throw new \Exception('Error happened when creating MediaItem from path "' . $path . '". The error = ' . $e->getMessage());
-                }
-
-                $mediaItem->setResolution($width, $height);
-            }
-
-            return $mediaItem;
-        } catch (FileNotFoundException $e) {
-            throw new \Exception(
-                'This is not a valid file: "' . $path . '".'
-            );
+            $this->setResolution($width, $height);
         }
     }
 
@@ -252,7 +245,7 @@ class MediaItem
         MediaFolder $folder,
         int $userId
     ) : MediaItem {
-        return new MediaItem(
+        return new self(
             $movieTitle,
             $movieId,
             Type::movie(),
@@ -305,6 +298,50 @@ class MediaItem
             'preview_source' => $this->getWebPath('backend'),
             $this->type->getType() => true,
         ];
+    }
+
+    /**
+     * @param string $path
+     * @return File
+     * @throws \Exception
+     */
+    private static function getFileFromPath(string $path): File
+    {
+        try {
+            // Define file from path
+            $file = new File($path);
+        } catch (FileNotFoundException $e) {
+            throw new \Exception(
+                'This is not a valid file: "' . $path . '".'
+            );
+        }
+
+        // We don't have a file
+        if (!$file->isFile()) {
+            throw new \Exception(
+                'The given source is not a file.'
+            );
+        }
+
+        return $file;
+    }
+
+    /**
+     * @param File $file
+     * @return string
+     */
+    private function getTitleFromFile(File $file): string
+    {
+        return str_replace('.' . $file->getExtension(), '', $file->getFilename());
+    }
+
+    /**
+     * @param File $file
+     * @return Type
+     */
+    private function getTypeFromFile(File $file): Type
+    {
+        return Type::fromMimeType($file->getMimeType());
     }
 
     /**

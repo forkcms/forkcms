@@ -403,26 +403,21 @@ class UploadHandler
     protected function toBytes(string $str): int
     {
         $str = trim($str);
-        $last = strtolower($str[strlen($str) - 1]);
+        $unit = strtolower($str[strlen($str) - 1]);
+        if (is_numeric($unit)) {
+            return (int) $str;
+        }
+
         $val = (int) substr($str, 0, -1);
-
-        if (is_numeric($last)) {
-            $val = (int) $str;
+        switch (strtoupper($unit)) {
+            case 'G':
+                return $val * 1073741824;
+            case 'M':
+                return $val * 1048576;
+            case 'K':
+                return $val * 1024;
+            default:
+                return $val;
         }
-
-        $last = strtoupper($last);
-        if ($last === 'G') {
-            return $val * 1073741824;
-        }
-
-        if ($last === 'M') {
-            return $val * 1048576;
-        }
-
-        if ($last === 'K') {
-            return $val * 1024;
-        }
-
-        return $val;
     }
 }

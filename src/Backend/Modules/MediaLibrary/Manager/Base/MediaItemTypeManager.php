@@ -16,12 +16,10 @@ class MediaItemTypeManager
      */
     public function add(string $mediaItemType, array $values)
     {
-        try {
-            $type = Type::fromString($mediaItemType);
-        } catch (\Exception $e) {
-            throw $e;
-        }
+        /** @var Type $type */
+        $type = Type::fromString($mediaItemType);
 
+        // Add the value
         $this->values[$type->getType()] = $values;
     }
 

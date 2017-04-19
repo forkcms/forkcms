@@ -21,12 +21,7 @@ class TypeType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => 'msg.ChooseTypeForNewGroup',
-                    'choices' => array_map(
-                        function ($type) {
-                            return Type::fromString($type);
-                        },
-                        Type::POSSIBLE_VALUES
-                    ),
+                    'choices' => $this->getTypeChoices(),
                     'choices_as_values' => true,
                     'choice_label' => function (Type $type) {
                         return Language::lbl('MediaLibraryGroupType' . \SpoonFilter::toCamelCase($type, '-'), 'Core');
@@ -46,5 +41,18 @@ class TypeType extends AbstractType
     public function getBlockPrefix()
     {
         return 'media_group_type';
+    }
+
+    /**
+     * @return array
+     */
+    private function getTypeChoices(): array
+    {
+        return array_map(
+            function ($type) {
+                return Type::fromString($type);
+            },
+            Type::POSSIBLE_VALUES
+        );
     }
 }

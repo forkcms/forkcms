@@ -32,11 +32,11 @@ final class MediaFolderInvalidateBackendCacheSubscriber implements EventSubscrib
      */
     public function getSubscribedEvents(): array
     {
-        return array(
+        return [
             Events::postPersist,
             Events::postUpdate,
             Events::postRemove,
-        );
+        ];
     }
 
     /**

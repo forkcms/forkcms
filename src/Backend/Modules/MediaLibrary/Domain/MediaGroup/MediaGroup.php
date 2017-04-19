@@ -114,15 +114,9 @@ class MediaGroup
     public static function fromDataTransferObject(MediaGroupDataTransferObject $mediaGroupDataTransferObject): MediaGroup
     {
         if ($mediaGroupDataTransferObject->hasExistingMediaGroup()) {
-            /** @var MediaGroup $mediaGroup */
-            $mediaGroup = $mediaGroupDataTransferObject->getMediaGroupEntity();
-
-            // Remove all previous connected items
-            if ($mediaGroupDataTransferObject->removeAllPreviousConnectedMediaItems) {
-                $mediaGroup->getConnectedItems()->clear();
-            }
-
-            return $mediaGroup;
+            return $mediaGroupDataTransferObject
+                ->getMediaGroupEntity()
+                ->updateFromDataTransferObject($mediaGroupDataTransferObject);
         }
 
         if ($mediaGroupDataTransferObject->id === null) {
@@ -135,6 +129,20 @@ class MediaGroup
             $mediaGroupDataTransferObject->id,
             $mediaGroupDataTransferObject->type
         );
+    }
+
+    /**
+     * @param MediaGroupDataTransferObject $mediaGroupDataTransferObject
+     * @return MediaGroup
+     */
+    private function updateFromDataTransferObject(MediaGroupDataTransferObject $mediaGroupDataTransferObject)
+    {
+        // Remove all previous connected items
+        if ($mediaGroupDataTransferObject->removeAllPreviousConnectedMediaItems) {
+            $this->getConnectedItems()->clear();
+        }
+
+        return $this;
     }
 
     /**

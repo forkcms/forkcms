@@ -30,27 +30,32 @@ final class SaveMediaGroupHandler
     {
         /** @var MediaGroup $mediaGroup */
         $mediaGroup = MediaGroup::fromDataTransferObject($saveMediaGroup);
+        $this->updateConnectedItems($mediaGroup, $saveMediaGroup->mediaItemIdsToConnect);
 
+        // We redefine the MediaGroup, so we can use it in an action
+        $saveMediaGroup->setMediaGroup($mediaGroup);
+    }
+
+    /**
+     * @param MediaGroup $mediaGroup
+     * @param array $mediaItemIdsToConnect
+     */
+    private function updateConnectedItems(MediaGroup $mediaGroup, array $mediaItemIdsToConnect)
+    {
         /**
          * @var int $sequence
          * @var string $mediaItemId
          */
-        foreach ($saveMediaGroup->mediaItemIdsToConnect as $sequence => $mediaItemId) {
+        foreach ($mediaItemIdsToConnect as $sequence => $mediaItemId) {
             try {
-                /** @var MediaItem $mediaItem */
-                $mediaItem = $this->mediaItemRepository->findOneById(Uuid::fromString($mediaItemId));
-
                 $mediaGroup->addConnectedItem(MediaGroupMediaItem::create(
                     $mediaGroup,
-                    $mediaItem,
+                    $this->mediaItemRepository->findOneById(Uuid::fromString($mediaItemId)),
                     $sequence
                 ));
             } catch (\Exception $e) {
                 // Do nothing
             }
         }
-
-        // We redefine the MediaGroup, so we can use it in an action
-        $saveMediaGroup->setMediaGroup($mediaGroup);
     }
 }

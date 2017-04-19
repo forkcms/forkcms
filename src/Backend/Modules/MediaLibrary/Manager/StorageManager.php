@@ -17,11 +17,8 @@ final class StorageManager
      */
     public function addStorageProvider(StorageProviderInterface $storageProvider, string $storageType)
     {
-        try {
-            $storageType = StorageType::fromString($storageType);
-        } catch (\Exception $e) {
-            throw $e;
-        }
+        /** @var StorageType $storageType */
+        $storageType = StorageType::fromString($storageType);
 
         // Add the storage provider
         $this->providers[$storageType->getStorageType()] = $storageProvider;

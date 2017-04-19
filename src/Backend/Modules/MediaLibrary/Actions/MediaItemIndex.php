@@ -61,10 +61,10 @@ class MediaItemIndex extends BackendBaseActionIndex
     }
 
     /**
-     * @param MediaFolder $mediaFolder
+     * @param MediaFolder|null $mediaFolder
      * @return array
      */
-    private function getMediaFolders(MediaFolder $mediaFolder)
+    private function getMediaFolders(MediaFolder $mediaFolder = null)
     {
         /** @var array $mediaFolders */
         $mediaFolders = $this->getMediaFoldersForDropdown($this->get('media_library.cache.media_folder')->get());
@@ -122,9 +122,9 @@ class MediaItemIndex extends BackendBaseActionIndex
     }
 
     /**
-     * @param MediaFolder $mediaFolder
+     * @param MediaFolder|null $mediaFolder
      */
-    private function parseDataGrids(MediaFolder $mediaFolder)
+    private function parseDataGrids(MediaFolder $mediaFolder = null)
     {
         /** @var array $dataGrids */
         $dataGrids = $this->getDataGrids($mediaFolder);
@@ -141,7 +141,10 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->header->addJS('MediaLibraryFolders.js', 'MediaLibrary', true);
     }
 
-    private function parseMediaFolders(MediaFolder $mediaFolder)
+    /**
+     * @param MediaFolder|null $mediaFolder
+     */
+    private function parseMediaFolders(MediaFolder $mediaFolder = null)
     {
         $this->tpl->assign('mediaFolder', $mediaFolder);
         $this->tpl->assign('mediaFolders', $this->getMediaFolders($mediaFolder));
