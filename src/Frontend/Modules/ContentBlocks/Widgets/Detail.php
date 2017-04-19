@@ -23,11 +23,19 @@ class Detail extends FrontendBaseWidget
             Locale::frontendLanguage()
         );
 
+        // Init template
+        $template = "Default.html.twig";
+
         // if the content block is not found or if it is hidden, just return an array with empty text
         // @deprecated fix this for version 5, we just shouldn't assign this instead of this hack, but we need it for BC
         if (!$contentBlock instanceof ContentBlock || $contentBlock->isHidden()) {
             $contentBlock = ['text' => ''];
+        } else {
+            $template = $contentBlock->getTemplate();
         }
+
+        // Load template
+        $this->loadTemplate('ContentBlocks/Layout/Widgets/' . $template);
 
         $this->tpl->assign('widgetContentBlocks', $contentBlock);
         // That's all folks!
