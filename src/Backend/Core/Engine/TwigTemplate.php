@@ -247,15 +247,17 @@ class TwigTemplate extends BaseTwigTemplate
         // loop actions and assign to template
         foreach (Authentication::getAllowedActions() as $module => $allowedActions) {
             foreach ($allowedActions as $action => $level) {
-                if ($level === '7') {
-                    $this->assign(
-                        'show' . \SpoonFilter::toCamelCase($module, '_') . \SpoonFilter::toCamelCase(
-                            $action,
-                            '_'
-                        ),
-                        true
-                    );
+                if ($level !== 7) {
+                    continue;
                 }
+
+                $this->assign(
+                    'show' . \SpoonFilter::toCamelCase($module, '_') . \SpoonFilter::toCamelCase(
+                        $action,
+                        '_'
+                    ),
+                    true
+                );
             }
         }
     }
