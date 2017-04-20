@@ -149,7 +149,7 @@ class Installer extends ModuleInstaller
                     'extra_label' => $form['name'],
                     'id' => $formId,
                 ),
-                'N',
+                false,
                 '400' . $formId
             );
 

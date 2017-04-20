@@ -16,7 +16,7 @@ class Installer extends ModuleInstaller
     private function insertExtras()
     {
         // insert extra ids
-        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
+        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, false, 2001);
     }
 
     /**
@@ -60,7 +60,7 @@ class Installer extends ModuleInstaller
         $this->getDB()->insert('themes_templates', $templates['core']['home']);
 
         // search will be installed by default; already link it to this template
-        $extras['search_form'] = $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, 'N', 2001);
+        $extras['search_form'] = $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, false, 2001);
 
         /*
          * General theme settings
