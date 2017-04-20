@@ -54,7 +54,7 @@ class Data extends BackendBaseActionIndex
      *
      * @return array An array with two arguments containing the query and its parameters.
      */
-    private function buildQuery()
+    private function buildQuery(): array
     {
         $parameters = array($this->id);
 

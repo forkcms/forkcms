@@ -29,7 +29,7 @@ class Helper
      *
      * @return string
      */
-    public static function parseField(array $field)
+    public static function parseField(array $field): string
     {
         if (!empty($field)) {
             // init

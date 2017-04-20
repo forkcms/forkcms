@@ -32,21 +32,21 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // module rights
-        $this->setModuleRights(1, 'FormBuilder');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'FormBuilder', 'Add');
-        $this->setActionRights(1, 'FormBuilder', 'Edit');
-        $this->setActionRights(1, 'FormBuilder', 'Delete');
-        $this->setActionRights(1, 'FormBuilder', 'Index');
-        $this->setActionRights(1, 'FormBuilder', 'Data');
-        $this->setActionRights(1, 'FormBuilder', 'DataDetails');
-        $this->setActionRights(1, 'FormBuilder', 'MassDataAction');
-        $this->setActionRights(1, 'FormBuilder', 'GetField');
-        $this->setActionRights(1, 'FormBuilder', 'DeleteField');
-        $this->setActionRights(1, 'FormBuilder', 'SaveField');
-        $this->setActionRights(1, 'FormBuilder', 'Sequence');
-        $this->setActionRights(1, 'FormBuilder', 'ExportData');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Data');
+        $this->setActionRights(1, $this->getModule(), 'DataDetails');
+        $this->setActionRights(1, $this->getModule(), 'MassDataAction');
+        $this->setActionRights(1, $this->getModule(), 'GetField');
+        $this->setActionRights(1, $this->getModule(), 'DeleteField');
+        $this->setActionRights(1, $this->getModule(), 'SaveField');
+        $this->setActionRights(1, $this->getModule(), 'Sequence');
+        $this->setActionRights(1, $this->getModule(), 'ExportData');
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');

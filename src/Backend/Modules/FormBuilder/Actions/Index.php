@@ -98,18 +98,14 @@ class Index extends BackendBaseActionIndex
      *
      * @return string
      */
-    public static function parseNumForms($formId, $sentForms, $method)
+    public static function parseNumForms(int $formId, int $sentForms, string $method): string
     {
         if ($method === 'email') {
             return '';
         }
 
-        // redefine
-        $formId = (int) $formId;
-        $sentForms = (int) $sentForms;
-
         // one form sent
-        if ($sentForms == 1) {
+        if ($sentForms === 1) {
             $output = BL::getMessage('OneSentForm');
         } elseif ($sentForms > 1) {
             // multiple forms sent
