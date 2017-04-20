@@ -32,9 +32,8 @@ final class SettingsSavedEvent extends Event
      *
      * @param SaveSettings $settings
      */
-    public function __construct(
-        SaveSettings $settings
-    ) {
+    public function __construct(SaveSettings $settings)
+    {
         $this->settings = $settings;
     }
 
@@ -43,7 +42,7 @@ final class SettingsSavedEvent extends Event
      *
      * @return SaveSettings
      */
-    public function getSettings()
+    public function getSettings(): SaveSettings
     {
         return $this->settings;
     }

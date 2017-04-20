@@ -27,9 +27,8 @@ final class SettingsSavedListener
      *
      * @param string $cacheDirectory
      */
-    public function __construct(
-        $cacheDirectory
-    ) {
+    public function __construct(string $cacheDirectory)
+    {
         $this->cacheDirectory = $cacheDirectory;
     }
 

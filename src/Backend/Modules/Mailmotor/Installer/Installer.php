@@ -10,6 +10,7 @@ namespace Backend\Modules\Mailmotor\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the Mailmotor module
@@ -21,13 +22,13 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        $this->addModule('Mailmotor', 'The module that allows you to insert/delete subscribers to/from your mailinglist.');
+        $this->addModule('Mailmotor');
 
         // install settings
         $this->installSettings();
 
         // install locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // install the mailmotor module
         $this->installModule();
@@ -68,9 +69,33 @@ class Installer extends ModuleInstaller
     private function installPages()
     {
         // add extra's
-        $subscribeId = $this->insertExtra($this->getModule(), 'block', 'SubscribeForm', 'Subscribe', null, 'N', 3001);
-        $unsubscribeId = $this->insertExtra($this->getModule(), 'block', 'UnsubscribeForm', 'Unsubscribe', null, 'N', 3002);
-        $this->insertExtra($this->getModule(), 'widget', 'SubscribeForm', 'Subscribe', null, 'N', 3003);
+        $subscribeId = $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::block(),
+            'SubscribeForm',
+            'Subscribe',
+            null,
+            false,
+            3001
+        );
+        $unsubscribeId = $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::block(),
+            'UnsubscribeForm',
+            'Unsubscribe',
+            null,
+            false,
+            3002
+        );
+        $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::widget(),
+            'SubscribeForm',
+            'Subscribe',
+            null,
+            false,
+            3003
+        );
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
@@ -86,7 +111,8 @@ class Installer extends ModuleInstaller
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
                 array($subscribeId, $language)
-            )) {
+            )
+            ) {
                 $this->insertPage(
                     array('parent_id' => $pageId, 'title' => 'Subscribe', 'language' => $language),
                     null,
@@ -102,7 +128,8 @@ class Installer extends ModuleInstaller
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
                 array($unsubscribeId, $language)
-            )) {
+            )
+            ) {
                 $this->insertPage(
                     array('parent_id' => $pageId, 'title' => 'Unsubscribe', 'language' => $language),
                     null,
