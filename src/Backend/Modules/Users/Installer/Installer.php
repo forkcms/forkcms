@@ -109,7 +109,7 @@ class Installer extends ModuleInstaller
      *
      * @return string
      */
-    public function checkPassword()
+    public function checkPassword(): string
     {
         // init vars
         $password = $this->getVariable('password');
@@ -187,19 +187,19 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
-        $this->setSetting('Users', 'default_group', 1);
-        $this->setSetting('Users', 'date_formats', array('j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y'));
-        $this->setSetting('Users', 'time_formats', array('H:i', 'H:i:s', 'g:i a', 'g:i A'));
+        $this->setSetting($this->getModule(), 'default_group', 1);
+        $this->setSetting($this->getModule(), 'date_formats', array('j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y'));
+        $this->setSetting($this->getModule(), 'time_formats', array('H:i', 'H:i:s', 'g:i a', 'g:i A'));
 
         // module rights
-        $this->setModuleRights(1, 'Users');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'Users', 'Add');
-        $this->setActionRights(1, 'Users', 'Delete');
-        $this->setActionRights(1, 'Users', 'Edit');
-        $this->setActionRights(1, 'Users', 'Index');
-        $this->setActionRights(1, 'Users', 'UndoDelete');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'UndoDelete');
 
         // set navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
