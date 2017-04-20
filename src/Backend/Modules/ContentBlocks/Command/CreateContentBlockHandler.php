@@ -22,8 +22,6 @@ final class CreateContentBlockHandler
 
     /**
      * @param CreateContentBlock $createContentBlock
-     *
-     * @return ContentBlock
      */
     public function handle(CreateContentBlock $createContentBlock)
     {
@@ -44,7 +42,7 @@ final class CreateContentBlockHandler
     /**
      * @return int
      */
-    private function getNewExtraId()
+    private function getNewExtraId(): int
     {
         return Model::insertExtra(
             ModuleExtraType::widget(),

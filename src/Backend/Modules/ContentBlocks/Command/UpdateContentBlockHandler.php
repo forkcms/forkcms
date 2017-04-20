@@ -20,8 +20,6 @@ final class UpdateContentBlockHandler
 
     /**
      * @param UpdateContentBlock $updateContentBlock
-     *
-     * @return ContentBlock
      */
     public function handle(UpdateContentBlock $updateContentBlock)
     {

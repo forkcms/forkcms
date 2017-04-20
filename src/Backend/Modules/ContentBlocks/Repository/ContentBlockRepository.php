@@ -34,7 +34,7 @@ class ContentBlockRepository extends EntityRepository
      *
      * @return int
      */
-    public function getNextIdForLanguage(Locale $locale)
+    public function getNextIdForLanguage(Locale $locale): int
     {
         return (int) $this->getEntityManager()
             ->createQueryBuilder()

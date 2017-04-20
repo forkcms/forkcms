@@ -15,7 +15,7 @@ final class ContentBlockStatus
     /**
      * @param string $status
      */
-    private function __construct($status)
+    private function __construct(string $status)
     {
         $this->setStatus($status);
     }
@@ -23,7 +23,7 @@ final class ContentBlockStatus
     /**
      * @return array
      */
-    public static function getPossibleStatuses()
+    public static function getPossibleStatuses(): array
     {
         return [
             self::STATUS_ARCHIVED,
@@ -36,7 +36,7 @@ final class ContentBlockStatus
      *
      * @return self
      */
-    public static function fromString($status)
+    public static function fromString($status): self
     {
         return new self($status);
     }
@@ -46,11 +46,11 @@ final class ContentBlockStatus
      *
      * @throws InvalidArgumentException
      *
-     * @return $this
+     * @return self
      */
-    private function setStatus($status)
+    private function setStatus(string $status): self
     {
-        if (!in_array($status, self::getPossibleStatuses())) {
+        if (!in_array($status, self::getPossibleStatuses(), true)) {
             throw new InvalidArgumentException('Invalid status');
         }
 
@@ -70,7 +70,7 @@ final class ContentBlockStatus
     /**
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->status === self::STATUS_ACTIVE;
     }
@@ -78,7 +78,7 @@ final class ContentBlockStatus
     /**
      * @return bool
      */
-    public function isArchived()
+    public function isArchived(): bool
     {
         return $this->status === self::STATUS_ARCHIVED;
     }
@@ -86,7 +86,7 @@ final class ContentBlockStatus
     /**
      * @return self
      */
-    public static function active()
+    public static function active(): self
     {
         return new self(self::STATUS_ACTIVE);
     }
@@ -94,7 +94,7 @@ final class ContentBlockStatus
     /**
      * @return self
      */
-    public static function archived()
+    public static function archived(): self
     {
         return new self(self::STATUS_ARCHIVED);
     }

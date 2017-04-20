@@ -21,7 +21,7 @@ abstract class ContentBlockEvent extends Event
     /**
      * @return ContentBlock
      */
-    public function getContentBlock()
+    public function getContentBlock(): ContentBlock
     {
         return $this->contentBlock;
     }

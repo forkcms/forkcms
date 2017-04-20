@@ -45,8 +45,12 @@ class Edit extends BackendBaseActionEdit
         }
 
         $form = $this->createForm(
-            new ContentBlockType($this->get('fork.settings')->get('Core', 'theme', 'core'), UpdateContentBlock::class),
-            new UpdateContentBlock($this->contentBlock)
+            ContentBlockType::class,
+            new UpdateContentBlock($this->contentBlock),
+            [
+                'theme' => $this->get('fork.settings')->get('Core', 'theme', 'Core'),
+                'data_class' => UpdateContentBlock::class,
+            ]
         );
 
         $form->handleRequest($this->get('request'));

@@ -23,8 +23,6 @@ final class CopyContentBlocksToOtherLocaleHandler
 
     /**
      * @param CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale
-     *
-     * @return ContentBlock
      */
     public function handle(CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale)
     {
@@ -57,7 +55,7 @@ final class CopyContentBlocksToOtherLocaleHandler
     /**
      * @return int
      */
-    private function getNewExtraId()
+    private function getNewExtraId(): int
     {
         return Model::insertExtra(
             ModuleExtraType::widget(),

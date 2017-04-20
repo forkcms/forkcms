@@ -21,8 +21,6 @@ final class DeleteContentBlockHandler
 
     /**
      * @param DeleteContentBlock $deleteContentBlock
-     *
-     * @return ContentBlock
      */
     public function handle(DeleteContentBlock $deleteContentBlock)
     {

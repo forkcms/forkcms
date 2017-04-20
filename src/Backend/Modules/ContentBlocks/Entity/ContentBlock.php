@@ -3,8 +3,8 @@
 namespace Backend\Modules\ContentBlocks\Entity;
 
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
+use Common\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -108,21 +108,21 @@ class ContentBlock
      * @param int $userId
      * @param int $extraId
      * @param string $template
-     * @param string $locale
+     * @param Locale $locale
      * @param string $title
      * @param string $text
      * @param bool $isHidden
      * @param ContentBlockStatus $status
      */
     private function __construct(
-        $id,
-        $userId,
-        $extraId,
-        $template,
-        $locale,
-        $title,
-        $text,
-        $isHidden,
+        int $id,
+        int $userId,
+        int $extraId,
+        string $template,
+        Locale $locale,
+        string $title,
+        string $text,
+        bool $isHidden,
         ContentBlockStatus $status
     ) {
         $this->id = $id;
@@ -140,7 +140,7 @@ class ContentBlock
      * @param int $id
      * @param int $userId
      * @param int $extraId The id of the module extra
-     * @param string $locale
+     * @param Locale $locale
      * @param string $title
      * @param string $text
      * @param bool $isHidden
@@ -149,15 +149,15 @@ class ContentBlock
      * @return self
      */
     public static function create(
-        $id,
-        $userId,
-        $extraId,
-        $locale,
-        $title,
-        $text,
-        $isHidden,
-        $template = self::DEFAULT_TEMPLATE
-    ) {
+        int $id,
+        int $userId,
+        int $extraId,
+        Locale $locale,
+        string $title,
+        string $text,
+        bool $isHidden,
+        string $template = self::DEFAULT_TEMPLATE
+    ) : self {
         return new self(
             $id,
             $userId,
@@ -174,7 +174,7 @@ class ContentBlock
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -182,7 +182,7 @@ class ContentBlock
     /**
      * @return int
      */
-    public function getRevisionId()
+    public function getRevisionId(): int
     {
         return $this->revisionId;
     }
@@ -190,7 +190,7 @@ class ContentBlock
     /**
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -198,7 +198,7 @@ class ContentBlock
     /**
      * @return int
      */
-    public function getExtraId()
+    public function getExtraId(): int
     {
         return $this->extraId;
     }
@@ -206,7 +206,7 @@ class ContentBlock
     /**
      * @return string
      */
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->template;
     }
@@ -214,7 +214,7 @@ class ContentBlock
     /**
      * @return Locale
      */
-    public function getLocale()
+    public function getLocale(): Locale
     {
         return $this->locale;
     }
@@ -222,7 +222,7 @@ class ContentBlock
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -230,7 +230,7 @@ class ContentBlock
     /**
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -238,7 +238,7 @@ class ContentBlock
     /**
      * @return bool
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->isHidden;
     }
@@ -246,7 +246,7 @@ class ContentBlock
     /**
      * @return ContentBlockStatus
      */
-    public function getStatus()
+    public function getStatus(): ContentBlockStatus
     {
         return $this->status;
     }
@@ -254,7 +254,7 @@ class ContentBlock
     /**
      * @return DateTime
      */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
     }
@@ -262,7 +262,7 @@ class ContentBlock
     /**
      * @return DateTime
      */
-    public function getEditedOn()
+    public function getEditedOn(): DateTime
     {
         return $this->editedOn;
     }
@@ -317,7 +317,7 @@ class ContentBlock
      *
      * @return ContentBlock
      */
-    public function update($title, $text, $isHidden, $template, $userId)
+    public function update(string $title, string $text, bool $isHidden, string $template, int $userId): ContentBlock
     {
         $this->status = ContentBlockStatus::archived();
 
