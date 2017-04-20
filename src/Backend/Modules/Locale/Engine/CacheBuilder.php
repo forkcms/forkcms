@@ -39,7 +39,7 @@ class CacheBuilder
      * @param string $language
      * @param string $application Backend or Frontend
      */
-    public function buildCache($language, $application)
+    public function buildCache(string $language, string $application)
     {
         // get types
         $this->types = $this->database->getEnumValues('locale', 'type');
@@ -55,7 +55,7 @@ class CacheBuilder
      *
      * @return array
      */
-    protected function getLocale($language, $application)
+    protected function getLocale(string $language, string $application): array
     {
         return (array) $this->database->getRecords(
             'SELECT type, module, name, value
@@ -74,7 +74,7 @@ class CacheBuilder
      *
      * @return array
      */
-    protected function buildJsonCache($language, $application)
+    protected function buildJsonCache(string $language, string $application): array
     {
         // init var
         $json = array();
@@ -103,7 +103,7 @@ class CacheBuilder
      * @param array  $json
      * @param string $language
      */
-    protected function addSpoonLocale(&$json, $language)
+    protected function addSpoonLocale(array &$json, string $language)
     {
         // get months
         $monthsLong = \SpoonLocale::getMonths($language, false);
@@ -134,7 +134,7 @@ class CacheBuilder
      * @param string $language
      * @param string $application
      */
-    protected function dumpJsonCache($language, $application)
+    protected function dumpJsonCache(string $language, string $application)
     {
         $filesystem = new Filesystem();
         $filesystem->dumpFile(

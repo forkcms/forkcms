@@ -50,7 +50,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         }
 
         // in case this is a 'act' type, there are special rules concerning possible values
-        if ($type == 'act' && !isset($error)) {
+        if ($type === 'act' && !isset($error)) {
             if (rawurlencode($value) != CommonUri::getUrl($value)) {
                 $error = BL::err('InvalidActionValue', $this->getModule());
             }

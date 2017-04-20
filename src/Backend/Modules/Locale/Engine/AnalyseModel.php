@@ -26,7 +26,7 @@ class AnalyseModel extends Model
      *
      * @return mixed return string or false
      */
-    private static function getInbetweenStrings($start, $end, $str)
+    private static function getInbetweenStrings(string $start, string $end, string $str)
     {
         $matches = array();
         preg_match_all("@$start([a-zA-Z0-9_]*)$end@", $str, $matches);
@@ -41,7 +41,7 @@ class AnalyseModel extends Model
      *
      * @return array
      */
-    public static function getNonExistingBackendLocale($language)
+    public static function getNonExistingBackendLocale(string $language): array
     {
         $locale = array();
         $backendModuleFiles = array();
@@ -114,7 +114,7 @@ class AnalyseModel extends Model
      *
      * @return array
      */
-    public static function getNonExistingFrontendLocale($language)
+    public static function getNonExistingFrontendLocale(string $language): array
     {
         $locale = array();
         $frontendModuleFiles = array();
@@ -182,7 +182,7 @@ class AnalyseModel extends Model
      *
      * @return array
      */
-    public static function getSortLocaleFrom($application, $language)
+    public static function getSortLocaleFrom(string $application, string $language): array
     {
         $oldLocale = array();
         $type = array('lbl', 'act', 'err', 'msg');
@@ -203,7 +203,7 @@ class AnalyseModel extends Model
      *
      * @return array found Locale Files
      */
-    private static function findLocaleInFiles(array $module)
+    private static function findLocaleInFiles(array $module): array
     {
         $locale = array();
         foreach ($module as $filename => $file) {

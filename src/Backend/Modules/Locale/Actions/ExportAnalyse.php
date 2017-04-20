@@ -34,8 +34,10 @@ class ExportAnalyse extends BackendBaseActionIndex
 
     /**
      * Create the XML based on the locale items.
+     *
+     * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
 

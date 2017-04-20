@@ -25,7 +25,7 @@ class Model
      * @param string $language    The language to build the locale-file for.
      * @param string $application The application to build the locale-file for.
      */
-    public static function buildCache($language, $application)
+    public static function buildCache(string $language, string $application)
     {
         $cacheBuilder = new CacheBuilder(BackendModel::get('database'));
         $cacheBuilder->buildCache($language, $application);
@@ -38,7 +38,7 @@ class Model
      *
      * @return string
      */
-    public static function buildURLQueryByFilter($filter)
+    public static function buildURLQueryByFilter(array $filter): string
     {
         $query = http_build_query($filter, null, '&', PHP_QUERY_RFC3986);
         if ($query != '') {
@@ -55,7 +55,7 @@ class Model
      *
      * @return string
      */
-    public static function createXMLForExport(array $items)
+    public static function createXMLForExport(array $items): string
     {
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
         $xml = new \DOMDocument('1.0', $charset);
@@ -146,7 +146,7 @@ class Model
      *
      * @return bool
      */
-    public static function exists($id)
+    public static function exists(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -169,7 +169,7 @@ class Model
      *
      * @return bool
      */
-    public static function existsByName($name, $type, $module, $language, $application, $id = null)
+    public static function existsByName(string $name, string $type, string $module, string $language, string $application, int $id = null): bool
     {
         $name = (string) $name;
         $type = (string) $type;
@@ -208,7 +208,7 @@ class Model
      *
      * @return array
      */
-    public static function get($id)
+    public static function get($id): array
     {
         // fetch record from db
         $record = (array) BackendModel::getContainer()->get('database')->getRecord(
@@ -235,7 +235,7 @@ class Model
      *
      * @return bool
      */
-    public static function getByName($name, $type, $module, $language, $application)
+    public static function getByName(string $name, string $type, string $module, string $language, string $application): bool
     {
         $name = (string) $name;
         $type = (string) $type;
@@ -258,7 +258,7 @@ class Model
      *
      * @return array
      */
-    public static function getLanguagesForMultiCheckbox($includeInterfaceLanguages = false)
+    public static function getLanguagesForMultiCheckbox(bool $includeInterfaceLanguages = false): array
     {
         // get working languages
         $aLanguages = BL::getWorkingLanguages();
@@ -293,7 +293,7 @@ class Model
      *
      * @return array
      */
-    public static function getTranslations($application, $module, $types, $languages, $name, $value)
+    public static function getTranslations($application, string $module, array $types, array $languages, string $name, string $value): array
     {
         $languages = (array) $languages;
 
@@ -429,7 +429,7 @@ class Model
      *
      * @return string
      */
-    public static function getTypeName($type)
+    public static function getTypeName(string $type): string
     {
         // get full type name
         switch ($type) {
@@ -455,7 +455,7 @@ class Model
      *
      * @return array
      */
-    public static function getTypesForDropDown()
+    public static function getTypesForDropDown(): array
     {
         // fetch types
         $types = BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type');
@@ -477,7 +477,7 @@ class Model
      *
      * @return array
      */
-    public static function getTypesForMultiCheckbox()
+    public static function getTypesForMultiCheckbox(): array
     {
         // fetch types
         $aTypes = BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type');
@@ -521,12 +521,12 @@ class Model
      */
     public static function importXML(
         \SimpleXMLElement $xml,
-        $overwriteConflicts = false,
+        bool $overwriteConflicts = false,
         $frontendLanguages = null,
         $backendLanguages = null,
         $userId = null,
         $date = null
-    ) {
+    ) : array{
         $overwriteConflicts = (bool) $overwriteConflicts;
         $statistics = array(
             'total' => 0,
@@ -682,7 +682,7 @@ class Model
      *
      * @return int
      */
-    public static function insert(array $item)
+    public static function insert(array $item): int
     {
         // actions should be urlized
         if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {

@@ -38,7 +38,7 @@ class Export extends BackendBaseActionIndex
      *
      * @return array An array with two arguments containing the query and its parameters.
      */
-    private function buildQuery()
+    private function buildQuery(): array
     {
         $parameters = array();
 
@@ -113,8 +113,10 @@ class Export extends BackendBaseActionIndex
 
     /**
      * Create the XML based on the locale items.
+     *
+     * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
 

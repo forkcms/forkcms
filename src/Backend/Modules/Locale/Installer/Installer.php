@@ -31,24 +31,24 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // import core locale
-        $this->importLocale(dirname(dirname(dirname(__DIR__))) . '/Core/Installer/Data/locale.xml');
+        $this->importLocale(dirname(__DIR__, 3) . '/Core/Installer/Data/locale.xml');
 
         // import dashboard locale
-        $this->importLocale(dirname(dirname(__DIR__)) . '/Dashboard/Installer/Data/locale.xml');
+        $this->importLocale(dirname(__DIR__, 2) . '/Dashboard/Installer/Data/locale.xml');
 
         // module rights
-        $this->setModuleRights(1, 'Locale');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'Locale', 'Add');
-        $this->setActionRights(1, 'Locale', 'Analyse');
-        $this->setActionRights(1, 'Locale', 'Edit');
-        $this->setActionRights(1, 'Locale', 'ExportAnalyse');
-        $this->setActionRights(1, 'Locale', 'Index');
-        $this->setActionRights(1, 'Locale', 'SaveTranslation');
-        $this->setActionRights(1, 'Locale', 'Export');
-        $this->setActionRights(1, 'Locale', 'Import');
-        $this->setActionRights(1, 'Locale', 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Analyse');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'ExportAnalyse');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'SaveTranslation');
+        $this->setActionRights(1, $this->getModule(), 'Export');
+        $this->setActionRights(1, $this->getModule(), 'Import');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
 
         // set navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings', null, null, 999);
