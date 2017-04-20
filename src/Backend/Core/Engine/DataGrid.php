@@ -319,14 +319,9 @@ class DataGrid extends \SpoonDataGrid
     public function getContent(): string
     {
         // mass action was set
-        if ($this->tpl->getAssignedValue('massAction') !== null) {
+        if ($this->tpl->getAssignedValue('massAction') !== null
+            ||($this->getPaging() && $this->getNumResults() > $this->getPagingLimit())) {
             $this->tpl->assign('footer', true);
-        } elseif ($this->getPaging() && $this->getNumResults() > $this->getPagingLimit()) {
-            // has paging & more than 1 page
-            $this->tpl->assign(
-                'footer',
-                true
-            );
         }
 
         // set the odd and even classes
