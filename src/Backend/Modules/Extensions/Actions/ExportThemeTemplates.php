@@ -58,7 +58,7 @@ class ExportThemeTemplates extends ActionEdit
     /**
      * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
         $filename = 'templates_' . BackendModel::getUTCDate('d-m-Y') . '.xml';
 

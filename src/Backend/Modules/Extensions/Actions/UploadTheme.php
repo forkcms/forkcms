@@ -73,7 +73,7 @@ class UploadTheme extends BackendBaseActionAdd
      *
      * @return bool
      */
-    private function isWritable()
+    private function isWritable(): bool
     {
         return BackendExtensionsModel::isWritable(FRONTEND_PATH . '/Themes');
     }
@@ -184,7 +184,9 @@ class UploadTheme extends BackendBaseActionAdd
             BackendExtensionsModel::installTheme($this->themeName);
 
             // Redirect with fireworks
-            $this->redirect(BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $this->themeName);
+            $this->redirect(
+                BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $this->themeName
+            );
         }
     }
 
@@ -192,7 +194,8 @@ class UploadTheme extends BackendBaseActionAdd
      * Two ideal situations possible: we have a zip with files including info.xml, or we have a zip with the theme-folder.
      *
      * @param ZipArchive $zip
-     * @return string
+     *
+     * @return string|null
      */
     private function findInfoFileInZip(ZipArchive $zip)
     {
@@ -221,9 +224,10 @@ class UploadTheme extends BackendBaseActionAdd
      * prepend them with the theme folder.
      *
      * @param ZipArchive $zip
+     *
      * @return String[]
      */
-    private function getValidatedFilesList($zip)
+    private function getValidatedFilesList(ZipArchive $zip): array
     {
         $this->parentFolderName = $this->extractFolderNameBasedOnInfoFile($this->infoFilePath);
 
@@ -249,9 +253,10 @@ class UploadTheme extends BackendBaseActionAdd
 
     /**
      * @param string $infoFilePath
-     * @return string
+     *
+     * @return string|null
      */
-    private function extractFolderNameBasedOnInfoFile($infoFilePath)
+    private function extractFolderNameBasedOnInfoFile(string $infoFilePath)
     {
         $pathParts = explode('/', $infoFilePath);
 
@@ -264,9 +269,10 @@ class UploadTheme extends BackendBaseActionAdd
 
     /**
      * @param string $path
+     *
      * @return bool Path contains a to-be-ignored word.
      */
-    private function checkIfPathContainsIgnoredWord($path)
+    private function checkIfPathContainsIgnoredWord(string $path)
     {
         foreach ($this->ignoreList as $ignoreItem) {
             if (mb_stripos($path, $ignoreItem) !== false) {

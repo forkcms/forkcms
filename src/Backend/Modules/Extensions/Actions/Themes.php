@@ -161,7 +161,7 @@ class Themes extends BackendBaseActionIndex
                     // loop new templates
                     foreach ($newTemplates as $newTemplateId => $newTemplate) {
                         // check if a a similar default template exists
-                        if ($newTemplate['path'] == $oldDefaultTemplatePath) {
+                        if ($newTemplate['path'] === $oldDefaultTemplatePath) {
                             // set new default id
                             $newDefaultTemplateId = (int) $newTemplateId;
                             break;

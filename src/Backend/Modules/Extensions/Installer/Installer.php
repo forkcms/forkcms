@@ -93,7 +93,7 @@ class Installer extends ModuleInstaller
         $this->insertTemplates();
 
         // module rights
-        $this->setModuleRights(1, 'Extensions');
+        $this->setModuleRights(1, $this->getModule());
 
         // set rights
         $this->setRights();
@@ -143,22 +143,22 @@ class Installer extends ModuleInstaller
     private function setRights()
     {
         // modules
-        $this->setActionRights(1, 'Extensions', 'Modules');
-        $this->setActionRights(1, 'Extensions', 'DetailModule');
-        $this->setActionRights(1, 'Extensions', 'InstallModule');
-        $this->setActionRights(1, 'Extensions', 'UploadModule');
+        $this->setActionRights(1, $this->getModule(), 'Modules');
+        $this->setActionRights(1, $this->getModule(), 'DetailModule');
+        $this->setActionRights(1, $this->getModule(), 'InstallModule');
+        $this->setActionRights(1, $this->getModule(), 'UploadModule');
 
         // themes
-        $this->setActionRights(1, 'Extensions', 'Themes');
-        $this->setActionRights(1, 'Extensions', 'DetailTheme');
-        $this->setActionRights(1, 'Extensions', 'InstallTheme');
-        $this->setActionRights(1, 'Extensions', 'UploadTheme');
+        $this->setActionRights(1, $this->getModule(), 'Themes');
+        $this->setActionRights(1, $this->getModule(), 'DetailTheme');
+        $this->setActionRights(1, $this->getModule(), 'InstallTheme');
+        $this->setActionRights(1, $this->getModule(), 'UploadTheme');
 
         // templates
-        $this->setActionRights(1, 'Extensions', 'ThemeTemplates');
-        $this->setActionRights(1, 'Extensions', 'AddThemeTemplate');
-        $this->setActionRights(1, 'Extensions', 'EditThemeTemplate');
-        $this->setActionRights(1, 'Extensions', 'DeleteThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'ThemeTemplates');
+        $this->setActionRights(1, $this->getModule(), 'AddThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'EditThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'DeleteThemeTemplate');
     }
 
     private function installForkTheme()

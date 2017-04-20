@@ -54,7 +54,7 @@ class UploadModule extends BackendBaseActionAdd
      *
      * @return string
      */
-    private function uploadModuleFromZip()
+    private function uploadModuleFromZip(): string
     {
         // list of validated files (these files will actually be unpacked)
         $files = array();
@@ -188,11 +188,11 @@ class UploadModule extends BackendBaseActionAdd
      * Try to extract a prefix if a module has been zipped with unexpected
      * paths.
      *
-     * @param $file
+     * @param string $file
      *
      * @return string
      */
-    private function extractPrefix($file)
+    private function extractPrefix(string $file): string
     {
         $name = explode(PATH_SEPARATOR, $file['name']);
         $prefix = array();
@@ -200,9 +200,9 @@ class UploadModule extends BackendBaseActionAdd
         foreach ($name as $element) {
             if ($element == 'src') {
                 return implode(PATH_SEPARATOR, $prefix);
-            } else {
-                $prefix[] = $element;
             }
+
+            $prefix[] = $element;
         }
 
         // If the zip has a top-level single directory, eg
@@ -215,7 +215,7 @@ class UploadModule extends BackendBaseActionAdd
      *
      * @return bool
      */
-    private function isWritable()
+    private function isWritable(): bool
     {
         if (!BackendExtensionsModel::isWritable(FRONTEND_MODULES_PATH)) {
             return false;

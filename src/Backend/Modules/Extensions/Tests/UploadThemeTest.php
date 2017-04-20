@@ -136,7 +136,7 @@ class UploadThemeTest extends WebTestCase
      * @param string $themeName
      * @return string
      */
-    private function getSampleInfoXmlContents($themeName)
+    private function getSampleInfoXmlContents(string $themeName): string
     {
         return '<?xml version="1.0" encoding="UTF-8"?><theme><name>' . $themeName . '</name><version>1.0.0</version><requirements><minimum_version>4.0.0</minimum_version></requirements><thumbnail>thumbnail.png</thumbnail><description><![CDATA[Fork CMS Test]]></description><authors><author><name>Fork CMS</name><url>http://www.fork-cms.com</url></author></authors><metanavigation supported="false" /><templates></templates></theme>';
     }

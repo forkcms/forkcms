@@ -68,7 +68,11 @@ class ThemeTemplates extends BackendBaseActionEdit
         }
 
         // determine selected theme, based upon submitted form or default theme
-        $this->selectedTheme = \SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), $this->get('fork.settings')->get('Core', 'theme', 'core'));
+        $this->selectedTheme = \SpoonFilter::getValue(
+            $this->selectedTheme,
+            array_keys($this->availableThemes),
+            $this->get('fork.settings')->get('Core', 'theme', 'core')
+        );
     }
 
     /**
@@ -77,15 +81,27 @@ class ThemeTemplates extends BackendBaseActionEdit
     private function loadDataGrid()
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(BackendExtensionsModel::QRY_BROWSE_TEMPLATES, array($this->selectedTheme));
+        $this->dataGrid = new BackendDataGridDB(
+            BackendExtensionsModel::QRY_BROWSE_TEMPLATES,
+            array($this->selectedTheme)
+        );
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('EditThemeTemplate')) {
             // set colum URLs
-            $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]');
+            $this->dataGrid->setColumnURL(
+                'title',
+                BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]'
+            );
 
             // add edit column
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->addColumn(
+                'edit',
+                null,
+                BL::lbl('Edit'),
+                BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
         }
     }
 
@@ -98,7 +114,14 @@ class ThemeTemplates extends BackendBaseActionEdit
         $this->frm = new BackendForm('themes');
 
         // create elements
-        $this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme, false, 'form-control dontCheckBeforeUnload', 'form-control dontCheckBeforeUnload');
+        $this->frm->addDropdown(
+            'theme',
+            $this->availableThemes,
+            $this->selectedTheme,
+            false,
+            'form-control dontCheckBeforeUnload',
+            'form-control dontCheckBeforeUnload'
+        );
     }
 
     /**
@@ -109,7 +132,7 @@ class ThemeTemplates extends BackendBaseActionEdit
         parent::parse();
 
         // assign datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', $this->dataGrid->getContent());
 
         // assign the selected theme, so we can propagate it to the add/edit actions.
         $this->tpl->assign('selectedTheme', rawurlencode($this->selectedTheme));
