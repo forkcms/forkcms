@@ -177,7 +177,7 @@ class Installer extends ModuleInstaller
     private function installExampleData()
     {
         // insert/get extra ids
-        $extras['blog_block'] = $this->insertExtra('Blog', ModuleExtraType::block(), 'Blog', null, null, 'N', 1000);
+        $extras['blog_block'] = $this->insertExtra('Blog', ModuleExtraType::block(), 'Blog', null, null, false, 1000);
         $extras['blog_widget_recent_comments'] = $this->insertExtra(
             'Blog',
             ModuleExtraType::widget(),
@@ -202,7 +202,7 @@ class Installer extends ModuleInstaller
             'Archive',
             'Archive',
             null,
-            'N',
+            false,
             1003
         );
         $extras['blog_widget_recent_articles_full'] = $this->insertExtra(
