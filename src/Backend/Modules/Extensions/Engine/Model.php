@@ -196,7 +196,7 @@ class Model
         ) {
             $filesystem->remove($file->getRealPath());
         }
-        $filesystem->remove(Navigation::getCacheDirectory() . 'navigation.php');
+        BackendModel::getContainer()->get('cache.backend_navigation')->delete();
     }
 
     /**
