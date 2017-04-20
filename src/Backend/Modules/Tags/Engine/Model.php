@@ -50,13 +50,13 @@ class Model
      *
      * @return bool
      */
-    public static function exists($id)
+    public static function exists(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.id
              FROM tags AS i
              WHERE i.id = ?',
-            array((int) $id)
+            array($id)
         );
     }
 
@@ -67,12 +67,12 @@ class Model
      *
      * @return bool
      */
-    public static function existsTag($tag)
+    public static function existsTag(string $tag): bool
     {
         return (BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.tag FROM tags AS i  WHERE i.tag = ?',
-            array((string) $tag)
-        ) != '');
+                'SELECT i.tag FROM tags AS i  WHERE i.tag = ?',
+                array($tag)
+            ) != '');
     }
 
     /**
@@ -82,13 +82,13 @@ class Model
      *
      * @return array
      */
-    public static function get($id)
+    public static function get(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.tag AS name
              FROM tags AS i
              WHERE i.id = ?',
-            array((int) $id)
+            array($id)
         );
     }
 
@@ -99,60 +99,49 @@ class Model
      *
      * @return array
      */
-    public static function getAll($language = null)
+    public static function getAll(string $language = null): array
     {
-        $language = ($language != null)
-            ? (string) $language
-            : BL::getWorkingLanguage();
-
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.tag AS name
              FROM tags AS i
              WHERE i.language = ?',
-            array($language)
+            array($language ?? BL::getWorkingLanguage())
         );
     }
 
     /**
      * Get tags that start with the given string
      *
-     * @param string $term            The searchstring.
-     * @param string $language        The language to use, if not provided
+     * @param string $term The searchstring.
+     * @param string $language The language to use, if not provided
      *                                use the working language.
      *
      * @return array
      */
-    public static function getStartsWith($term, $language = null)
+    public static function getStartsWith(string $term, string $language = null): array
     {
-        $language = ($language != null)
-            ? (string) $language
-            : BL::getWorkingLanguage();
-
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.tag AS name, i.tag AS value
              FROM tags AS i
              WHERE i.language = ? AND i.tag LIKE ?
              ORDER BY i.tag ASC',
-            array($language, (string) $term . '%')
+            array($language ?? BL::getWorkingLanguage(), $term . '%')
         );
     }
 
     /**
      * Get tags for an item
      *
-     * @param string $module   The module wherein will be searched.
-     * @param int    $otherId  The id of the record.
-     * @param string $type     The type of the returnvalue, possible values are: array, string (tags will be joined by ,).
+     * @param string $module The module wherein will be searched.
+     * @param int $otherId The id of the record.
+     * @param string $type The type of the returnvalue, possible values are: array, string (tags will be joined by ,).
      * @param string $language The language to use, if not provided the working language will be used.
      *
      * @return mixed
      */
-    public static function getTags($module, $otherId, $type = 'string', $language = null)
+    public static function getTags(string $module, int $otherId, string $type = 'string', string $language = null)
     {
-        $module = (string) $module;
-        $otherId = (int) $otherId;
         $type = (string) \SpoonFilter::getValue($type, array('string', 'array'), 'string');
-        $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
 
         // fetch tags
         $tags = (array) BackendModel::getContainer()->get('database')->getColumn(
@@ -161,7 +150,7 @@ class Model
              INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
              WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?
              ORDER BY i.tag ASC',
-            array($module, $otherId, $language)
+            array($module, $otherId, $language ?? BL::getWorkingLanguage())
         );
 
         // return as an imploded string
@@ -177,13 +166,13 @@ class Model
      * Get a unique URL for a tag
      *
      * @param string $url The URL to use as a base.
-     * @param int    $id  The ID to ignore.
+     * @param int|null $id The ID to ignore.
      *
      * @return string
      */
-    public static function getURL($url, $id = null)
+    public static function getURL(string $url, int $id = null): string
     {
-        $url = CommonUri::getUrl((string) $url);
+        $url = CommonUri::getUrl($url);
         $language = BL::getWorkingLanguage();
 
         // get db
@@ -235,41 +224,37 @@ class Model
     /**
      * Insert a new tag
      *
-     * @param string $tag      The data for the tag.
+     * @param string $tag The data for the tag.
      * @param string $language The language wherein the tag will be inserted,
      *                         if not provided the workinglanguage will be used.
      *
      * @return int
      */
-    public static function insert($tag, $language = null)
+    public static function insert(string $tag, string $language = null): int
     {
-        $tag = (string) $tag;
-        $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
-
-        // build record
-        $item['language'] = $language;
-        $item['tag'] = $tag;
-        $item['number'] = 0;
-        $item['url'] = self::getURL($tag);
-
-        // insert and return id
-        return (int) BackendModel::getContainer()->get('database')->insert('tags', $item);
+        return (int) BackendModel::getContainer()->get('database')->insert(
+            'tags',
+            [
+                'language' => $language ?? BL::getWorkingLanguage(),
+                'tag' => $tag,
+                'number' => 0,
+                'url' => self::getURL($tag),
+            ]
+        );
     }
 
     /**
      * Save the tags
      *
-     * @param int    $otherId  The id of the item to tag.
-     * @param mixed  $tags     The tags for the item.
-     * @param string $module   The module wherein the item is located.
-     * @param string $language The language wherein the tags will be inserted,
+     * @param int $otherId The id of the item to tag.
+     * @param mixed $tags The tags for the item.
+     * @param string $module The module wherein the item is located.
+     * @param string|null $language The language wherein the tags will be inserted,
      *                         if not provided the workinglanguage will be used.
      */
-    public static function saveTags($otherId, $tags, $module, $language = null)
+    public static function saveTags(int $otherId, $tags, string $module, string $language = null)
     {
-        $otherId = (int) $otherId;
-        $module = (string) $module;
-        $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
+        $language = $language ?? BL::getWorkingLanguage();
 
         // redefine the tags as an array
         if (!is_array($tags)) {
@@ -382,10 +367,10 @@ class Model
      * Update a tag
      * Remark: $tag['id'] should be available.
      *
-     * @param array $item The new data for the tag.
+     * @param array $tag The new data for the tag.
      */
-    public static function update($item)
+    public static function update(array $tag)
     {
-        return BackendModel::getContainer()->get('database')->update('tags', $item, 'id = ?', $item['id']);
+        return BackendModel::getContainer()->get('database')->update('tags', $tag, 'id = ?', $tag['id']);
     }
 }

@@ -93,6 +93,6 @@ class Index extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
+        $this->tpl->assign('dataGrid', $this->dataGrid->getContent());
     }
 }

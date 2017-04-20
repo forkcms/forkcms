@@ -127,7 +127,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('name', $this->record['name']);
 
         // assign usage-datagrid
-        $this->tpl->assign('usage', (string) $this->dgUsage->getContent());
+        $this->tpl->assign('usage', $this->dgUsage->getContent());
     }
 
     /**
