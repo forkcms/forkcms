@@ -47,7 +47,7 @@ class Index extends BackendBaseActionIndex
      *
      * @return array        An array with two arguments containing the query and its parameters.
      */
-    private function buildQuery()
+    private function buildQuery(): array
     {
         // init var
         $parameters = array();

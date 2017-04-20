@@ -47,7 +47,7 @@ class Groups extends BackendBaseActionIndex
      *
      * @return array An array with two arguments containing the query and its parameters.
      */
-    private function buildQuery()
+    private function buildQuery(): array
     {
         $parameters = array();
 
@@ -185,7 +185,7 @@ class Groups extends BackendBaseActionIndex
      *
      * @return string
      */
-    public static function parseNumProfiles($groupId, $numProfiles)
+    public static function parseNumProfiles(int $groupId, int $numProfiles): string
     {
         // 1 item
         if ($numProfiles == 1) {
