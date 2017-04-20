@@ -54,7 +54,7 @@ class Model extends \Common\Core\Model
      * @param string $module The module to build the URL for.
      * @param string $language The language to use, if not provided we will use the working language.
      * @param array $parameters GET-parameters to use.
-     * @param bool $urlencode Should the parameters be urlencoded?
+     * @param bool $encodeSquareBrackets Should the square brackets be allowed so we can use them in de datagrid?
      *
      * @throws \Exception If $action, $module or both are not set
      *
@@ -65,7 +65,7 @@ class Model extends \Common\Core\Model
         string $module = null,
         string $language = null,
         array $parameters = null,
-        bool $urlencode = true
+        bool $encodeSquareBrackets = true
     ): string {
         $language = $language ?? BackendLanguage::getWorkingLanguage();
 
@@ -96,16 +96,12 @@ class Model extends \Common\Core\Model
             $parameters['sort'] = $queryParameterBag->get('sort');
         }
 
-        if ($urlencode) {
-            array_walk(
-                $parameters,
-                function (string $parameter) {
-                    return rawurlencode($parameter);
-                }
-            );
-        }
-
         $queryString = '?' . http_build_query($parameters, null, '&amp;');
+
+        if (!$encodeSquareBrackets) {
+            // we use things like [id] to parse database column data in so we need to unescape those
+            $queryString = str_replace([urlencode('['), urlencode(']')], ['[', ']'], $queryString);
+        }
 
         return self::get('router')->generate(
             'backend',
