@@ -654,7 +654,7 @@ class Model
             try {
                 $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
                 $information = self::processThemeXml($infoXml);
-                if (!$information) {
+                if (empty($information)) {
                     throw new Exception('Invalid info.xml');
                 }
             } catch (Exception $e) {
@@ -787,7 +787,7 @@ class Model
         $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
         $information = self::processThemeXml($infoXml);
-        if (!$information) {
+        if (empty($information)) {
             throw new Exception('Invalid info.xml');
         }
 
