@@ -28,13 +28,13 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // module rights
-        $this->setModuleRights(1, 'Settings');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'Settings', 'Index');
-        $this->setActionRights(1, 'Settings', 'Email');
-        $this->setActionRights(1, 'Settings', 'Seo');
-        $this->setActionRights(1, 'Settings', 'TestEmailConnection');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Email');
+        $this->setActionRights(1, $this->getModule(), 'Seo');
+        $this->setActionRights(1, $this->getModule(), 'TestEmailConnection');
 
         // set navigation (settings should be last tab)
         $navigationSettingsId = $this->setNavigation(null, 'Settings', null, null, 999);

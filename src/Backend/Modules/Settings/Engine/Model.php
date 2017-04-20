@@ -21,7 +21,7 @@ class Model
      *
      * @return array
      */
-    public static function getWarnings()
+    public static function getWarnings(): array
     {
         // init vars
         $warnings = array();
