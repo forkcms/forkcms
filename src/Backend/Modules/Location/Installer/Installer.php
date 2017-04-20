@@ -32,26 +32,26 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
-        $this->setSetting('Location', 'zoom_level', 'auto');
-        $this->setSetting('Location', 'width', 400);
-        $this->setSetting('Location', 'height', 300);
-        $this->setSetting('Location', 'map_type', 'ROADMAP');
-        $this->setSetting('Location', 'zoom_level_widget', 13);
-        $this->setSetting('Location', 'width_widget', 400);
-        $this->setSetting('Location', 'height_widget', 300);
-        $this->setSetting('Location', 'map_type_widget', 'ROADMAP');
-        $this->setSetting('Location', 'requires_google_maps', true);
+        $this->setSetting($this->getModule(), 'zoom_level', 'auto');
+        $this->setSetting($this->getModule(), 'width', 400);
+        $this->setSetting($this->getModule(), 'height', 300);
+        $this->setSetting($this->getModule(), 'map_type', 'ROADMAP');
+        $this->setSetting($this->getModule(), 'zoom_level_widget', 13);
+        $this->setSetting($this->getModule(), 'width_widget', 400);
+        $this->setSetting($this->getModule(), 'height_widget', 300);
+        $this->setSetting($this->getModule(), 'map_type_widget', 'ROADMAP');
+        $this->setSetting($this->getModule(), 'requires_google_maps', true);
 
         // module rights
-        $this->setModuleRights(1, 'Location');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'Location', 'Index');
-        $this->setActionRights(1, 'Location', 'Add');
-        $this->setActionRights(1, 'Location', 'Edit');
-        $this->setActionRights(1, 'Location', 'Delete');
-        $this->setActionRights(1, 'Location', 'SaveLiveLocation');
-        $this->setActionRights(1, 'Location', 'UpdateMarker');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'SaveLiveLocation');
+        $this->setActionRights(1, $this->getModule(), 'UpdateMarker');
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
@@ -64,12 +64,12 @@ class Installer extends ModuleInstaller
 
         // add extra's
         $this->insertExtra(
-            'Location',
+            $this->getModule(),
             ModuleExtraType::block(),
             'Location',
             null,
             ['url' => '/private/location/index?token=true'],
-            'N'
+            false
         );
     }
 }
