@@ -49,12 +49,12 @@ class Model
     /**
      * Build HTML for a template (visual representation)
      *
-     * @param array $format The template format.
-     * @param bool  $large  Will the HTML be used in a large version?
+     * @param string $format The template format.
+     * @param bool $large Will the HTML be used in a large version?
      *
      * @return string
      */
-    public static function buildTemplateHTML($format, $large = false)
+    public static function buildTemplateHTML(string $format, bool $large = false): string
     {
         // cleanup
         $table = self::templateSyntaxToArray($format);
@@ -138,7 +138,7 @@ class Model
      *
      * @return array
      */
-    public static function checkSettings()
+    public static function checkSettings(): array
     {
         $warnings = array();
         $akismetModules = self::getModulesThatRequireAkismet();
@@ -158,7 +158,12 @@ class Model
             }
 
             // check if the google maps key is available if there are modules that require it
-            if (!empty($googleMapsModules) && BackendModel::get('fork.settings')->get('Core', 'google_maps_key', null) == '') {
+            if (!empty($googleMapsModules) && BackendModel::get('fork.settings')->get(
+                    'Core',
+                    'google_maps_key',
+                    null
+                ) == ''
+            ) {
                 // add warning
                 $warnings[] = array(
                     'message' => sprintf(
@@ -166,24 +171,6 @@ class Model
                         BackendModel::createURLForAction('Index', 'Settings')
                     ),
                 );
-            }
-        }
-
-        // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('Modules', 'Extensions')) {
-            // check if there are cronjobs that are not yet set
-            $modules = self::getModules();
-            foreach ($modules as $module) {
-                if (isset($module['cronjobs_active']) && !$module['cronjobs_active']) {
-                    // add warning
-                    $warnings[] = array(
-                        'message' => sprintf(
-                            BL::err('CronjobsNotSet', 'Extensions'),
-                            BackendModel::createURLForAction('Modules', 'Extensions')
-                        ),
-                    );
-                    break;
-                }
             }
         }
 
@@ -199,12 +186,14 @@ class Model
     {
         $finder = new Finder();
         $filesystem = new Filesystem();
-        foreach ($finder->files()
-                     ->name('*.php')
-                     ->name('*.js')
-                     ->in(BACKEND_CACHE_PATH . '/Locale')
-                     ->in(FRONTEND_CACHE_PATH . '/Navigation')
-                     ->in(FRONTEND_CACHE_PATH . '/Locale') as $file) {
+        foreach (
+            $finder->files()
+                ->name('*.php')
+                ->name('*.js')
+                ->in(BACKEND_CACHE_PATH . '/Locale')
+                ->in(FRONTEND_CACHE_PATH . '/Navigation')
+                ->in(FRONTEND_CACHE_PATH . '/Locale') as $file
+        ) {
             $filesystem->remove($file->getRealPath());
         }
         $filesystem->remove(Navigation::getCacheDirectory() . 'navigation.php');
@@ -217,7 +206,7 @@ class Model
      *
      * @return bool
      */
-    public static function deleteTemplate($id)
+    public static function deleteTemplate($id): bool
     {
         $id = (int) $id;
         $templates = self::getTemplates();
@@ -266,7 +255,7 @@ class Model
      *
      * @return bool
      */
-    public static function existsModule($module)
+    public static function existsModule(string $module): bool
     {
         return is_dir(BACKEND_MODULES_PATH . '/' . (string) $module);
     }
@@ -278,7 +267,7 @@ class Model
      *
      * @return bool
      */
-    public static function existsTemplate($id)
+    public static function existsTemplate(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.id FROM themes_templates AS i WHERE i.id = ?',
@@ -294,7 +283,7 @@ class Model
      *
      * @return bool
      */
-    public static function existsTheme($theme)
+    public static function existsTheme(string $theme): bool
     {
         return is_dir(FRONTEND_PATH . '/Themes/' . (string) $theme) || (string) $theme == 'Core';
     }
@@ -304,7 +293,7 @@ class Model
      *
      * @return array
      */
-    public static function getExtras()
+    public static function getExtras(): array
     {
         $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.module, i.type, i.label, i.data
@@ -339,11 +328,11 @@ class Model
             // add human readable name
             $module = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module'])));
             $row['human_name'] = \SpoonFilter::ucfirst(
-                BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
-            ) . ': ' . $name;
+                    BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
+                ) . ': ' . $name;
             $row['path'] = \SpoonFilter::ucfirst(
-                BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
-            ) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
+                    BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
+                ) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
         }
 
         // any items to remove?
@@ -361,7 +350,7 @@ class Model
      *
      * @return array
      */
-    public static function getExtrasData()
+    public static function getExtrasData(): array
     {
         $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.module, i.type, i.label, i.data
@@ -419,7 +408,7 @@ class Model
      *
      * @return array
      */
-    public static function getModuleInformation($module)
+    public static function getModuleInformation(string $module): array
     {
         $pathInfoXml = BACKEND_MODULES_PATH . '/' . $module . '/info.xml';
         $information = array('data' => array(), 'warnings' => array());
@@ -466,7 +455,7 @@ class Model
      *
      * @return array
      */
-    public static function getModules()
+    public static function getModules(): array
     {
         $installedModules = (array) BackendModel::getContainer()
             ->getParameter('installed_modules');
@@ -486,7 +475,6 @@ class Model
             $module['description'] = '';
             $module['version'] = '';
             $module['installed'] = false;
-            $module['cronjobs_active'] = true;
 
             if (in_array($moduleName, $installedModules)) {
                 $module['installed'] = true;
@@ -508,16 +496,6 @@ class Model
                 if (isset($info['version'])) {
                     $module['version'] = $info['version'];
                 }
-
-                // check if cronjobs are set
-                if (isset($info['cronjobs'])) {
-                    foreach ($info['cronjobs'] as $cronjob) {
-                        if (!$cronjob['active']) {
-                            $module['cronjobs_active'] = false;
-                            break;
-                        }
-                    }
-                }
             } catch (\Exception $e) {
                 // don't act upon error, we simply won't possess some info
             }
@@ -533,7 +511,7 @@ class Model
      *
      * @return array
      */
-    public static function getModulesThatRequireAkismet()
+    public static function getModulesThatRequireAkismet(): array
     {
         $modules = array();
         $installedModules = BackendModel::getModules();
@@ -553,7 +531,7 @@ class Model
      *
      * @return array
      */
-    public static function getModulesThatRequireGoogleMaps()
+    public static function getModulesThatRequireGoogleMaps(): array
     {
         $modules = array();
         $installedModules = BackendModel::getModules();
@@ -575,7 +553,7 @@ class Model
      *
      * @return array
      */
-    public static function getTemplate($id)
+    public static function getTemplate(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.* FROM themes_templates AS i WHERE i.id = ?',
@@ -591,10 +569,14 @@ class Model
      * @return array
      * @throws Exception
      */
-    public static function getTemplates($theme = null)
+    public static function getTemplates(string $theme = null): array
     {
         $db = BackendModel::getContainer()->get('database');
-        $theme = \SpoonFilter::getValue((string) $theme, null, BackendModel::get('fork.settings')->get('Core', 'theme', 'Core'));
+        $theme = \SpoonFilter::getValue(
+            (string) $theme,
+            null,
+            BackendModel::get('fork.settings')->get('Core', 'theme', 'Core')
+        );
 
         $templates = (array) $db->getRecords(
             'SELECT i.id, i.label, i.path, i.data
@@ -651,7 +633,7 @@ class Model
      *
      * @return array
      */
-    public static function getThemes()
+    public static function getThemes(): array
     {
         $records = array();
         $records['Core'] = array(
@@ -699,7 +681,7 @@ class Model
      *
      * @return string
      */
-    public static function createTemplateXmlForExport($theme)
+    public static function createTemplateXmlForExport($theme): string
     {
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
 
@@ -748,7 +730,7 @@ class Model
      *
      * @return string
      */
-    public static function hasModuleWarnings($module)
+    public static function hasModuleWarnings(string $module): string
     {
         $moduleInformation = self::getModuleInformation($module);
 
@@ -762,7 +744,7 @@ class Model
      *
      * @return int
      */
-    public static function insertTemplate(array $template)
+    public static function insertTemplate(array $template): int
     {
         return (int) BackendModel::getContainer()->get('database')->insert('themes_templates', $template);
     }
@@ -770,9 +752,9 @@ class Model
     /**
      * Install a module.
      *
-     * @param string $module   The name of the module to be installed.
+     * @param string $module The name of the module to be installed.
      */
-    public static function installModule($module)
+    public static function installModule(string $module)
     {
         $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
         $variables = array();
@@ -799,7 +781,7 @@ class Model
      *
      * @throws Exception
      */
-    public static function installTheme($theme)
+    public static function installTheme(string $theme)
     {
         $pathInfoXml = FRONTEND_PATH . '/Themes/' . $theme . '/info.xml';
         $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
@@ -859,7 +841,7 @@ class Model
      *
      * @return bool
      */
-    public static function isModuleInstalled($module)
+    public static function isModuleInstalled(string $module): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -877,7 +859,7 @@ class Model
      *
      * @return bool
      */
-    public static function isTemplateInUse($templateId)
+    public static function isTemplateInUse(int $templateId): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -895,7 +877,7 @@ class Model
      *
      * @return bool
      */
-    public static function isThemeInstalled($theme)
+    public static function isThemeInstalled(string $theme): bool
     {
         return (bool) BackendModeL::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -914,7 +896,7 @@ class Model
      *
      * @return bool
      */
-    public static function isWritable($path)
+    public static function isWritable(string $path): bool
     {
         $path = rtrim((string) $path, '/');
         $file = uniqid('', true) . '.tmp';
@@ -934,7 +916,7 @@ class Model
      *
      * @return array
      */
-    public static function processModuleXml(\SimpleXMLElement $xml)
+    public static function processModuleXml(\SimpleXMLElement $xml): array
     {
         $information = array();
 
@@ -1002,7 +984,7 @@ class Model
      *
      * @return array
      */
-    public static function processThemeXml(\SimpleXMLElement $xml)
+    public static function processThemeXml(\SimpleXMLElement $xml): array
     {
         $information = array();
 
@@ -1082,7 +1064,7 @@ class Model
      *
      * @return array
      */
-    public static function templateSyntaxToArray($syntax)
+    public static function templateSyntaxToArray(string $syntax): array
     {
         $syntax = (string) $syntax;
         $syntax = trim(str_replace(array("\n", "\r", ' '), '', $syntax));
@@ -1133,7 +1115,7 @@ class Model
      *
      * @return array
      */
-    public static function validateThemeInformation($information)
+    public static function validateThemeInformation(array $information): array
     {
         // set default thumbnail if not sets
         if (!$information['thumbnail']) {
@@ -1182,13 +1164,13 @@ class Model
 
                 // check if there still are valid positions
                 if (!isset($information['templates'][$i]['positions']) || !$information['templates'][$i]['positions']) {
-                    return;
+                    return [];
                 }
             }
 
             // check if there still are valid templates
             if (!isset($information['templates']) || !$information['templates']) {
-                return;
+                return [];
             }
         }
 
