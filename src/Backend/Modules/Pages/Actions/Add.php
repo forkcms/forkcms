@@ -546,7 +546,7 @@ class Add extends BackendBaseActionAdd
      * @param bool $allowImage
      * @return string|null
      */
-    private function getImage($allowImage)
+    private function getImage(bool $allowImage)
     {
         if (!$allowImage || !$this->frm->getField('image')->isFilled()) {
             return null;
@@ -564,7 +564,7 @@ class Add extends BackendBaseActionAdd
      *
      * @return bool
      */
-    private function showTags()
+    private function showTags(): bool
     {
         return Authentication::isAllowedAction('Edit', 'Tags') && Authentication::isAllowedAction('GetAllTags', 'Tags');
     }

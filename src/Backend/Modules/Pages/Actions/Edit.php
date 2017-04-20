@@ -826,7 +826,7 @@ class Edit extends BackendBaseActionEdit
      * @param bool $allowImage
      * @return string|null
      */
-    private function getImage($allowImage)
+    private function getImage(bool $allowImage)
     {
         $imageFilename = array_key_exists('image', (array) $this->record['data']) ? $this->record['data']['image'] : null;
 
@@ -856,7 +856,7 @@ class Edit extends BackendBaseActionEdit
      *
      * @return bool
      */
-    private function showTags()
+    private function showTags(): bool
     {
         return Authentication::isAllowedAction('Edit', 'Tags') && Authentication::isAllowedAction('GetAllTags', 'Tags');
     }

@@ -37,18 +37,34 @@ class Installer extends ModuleInstaller
     private function insertPages()
     {
         // get extra ids
-        $extras['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, 'N', 2000);
-        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
-        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', ModuleExtraType::widget(), 'Sitemap', 'Sitemap', null, 'N', 1);
-        $this->insertExtra('Pages', ModuleExtraType::widget(), 'Navigation', 'PreviousNextNavigation');
+        $extras['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, false, 2000);
+        $extras['search_form'] = $this->insertExtra(
+            'Search',
+            ModuleExtraType::widget(),
+            'SearchForm',
+            'Form',
+            null,
+            false,
+            2001
+        );
+        $extras['sitemap_widget_sitemap'] = $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::widget(),
+            'Sitemap',
+            'Sitemap',
+            null,
+            false,
+            1
+        );
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Navigation', 'PreviousNextNavigation');
 
         $extras['subpages_widget'] = $this->insertExtra(
-            'Pages',
+            $this->getModule(),
             ModuleExtraType::widget(),
             'Subpages',
             'Subpages',
             array('template' => 'SubpagesDefault.html.twig'),
-            'N',
+            false,
             2
         );
 
@@ -59,13 +75,13 @@ class Installer extends ModuleInstaller
                 // insert homepage
                 $this->insertPage(
                     array(
-                         'id' => 1,
-                         'parent_id' => 0,
-                         'template_id' => $this->getTemplateId('home'),
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
-                         'language' => $language,
-                         'allow_move' => 'N',
-                         'allow_delete' => 'N',
+                        'id' => 1,
+                        'parent_id' => 0,
+                        'template_id' => $this->getTemplateId('home'),
+                        'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
+                        'language' => $language,
+                        'allow_move' => 'N',
+                        'allow_delete' => 'N',
                     ),
                     null,
                     array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
@@ -75,10 +91,12 @@ class Installer extends ModuleInstaller
                 // insert sitemap
                 $this->insertPage(
                     array(
-                         'id' => 2,
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Sitemap', 'Core', $language, 'lbl', 'Frontend')),
-                         'type' => 'footer',
-                         'language' => $language,
+                        'id' => 2,
+                        'title' => \SpoonFilter::ucfirst(
+                            $this->getLocale('Sitemap', 'Core', $language, 'lbl', 'Frontend')
+                        ),
+                        'type' => 'footer',
+                        'language' => $language,
                     ),
                     null,
                     array('html' => __DIR__ . '/Data/' . $language . '/sitemap.txt'),
@@ -89,15 +107,17 @@ class Installer extends ModuleInstaller
                 // insert disclaimer
                 $this->insertPage(
                     array(
-                         'id' => 3,
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Disclaimer', 'Core', $language, 'lbl', 'Frontend')),
-                         'type' => 'footer',
-                         'language' => $language,
+                        'id' => 3,
+                        'title' => \SpoonFilter::ucfirst(
+                            $this->getLocale('Disclaimer', 'Core', $language, 'lbl', 'Frontend')
+                        ),
+                        'type' => 'footer',
+                        'language' => $language,
                     ),
                     array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
                     array(
-                         'html' => __DIR__ . '/Data/' . $language .
-                                   '/disclaimer.txt',
+                        'html' => __DIR__ . '/Data/' . $language .
+                                  '/disclaimer.txt',
                     ),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
@@ -105,13 +125,13 @@ class Installer extends ModuleInstaller
                 // insert 404
                 $this->insertPage(
                     array(
-                         'id' => 404,
-                         'title' => '404',
-                         'template_id' => $this->getTemplateId('error'),
-                         'type' => 'root',
-                         'language' => $language,
-                         'allow_move' => 'N',
-                         'allow_delete' => 'N',
+                        'id' => 404,
+                        'title' => '404',
+                        'template_id' => $this->getTemplateId('error'),
+                        'type' => 'root',
+                        'language' => $language,
+                        'allow_move' => 'N',
+                        'allow_delete' => 'N',
                     ),
                     null,
                     array('html' => __DIR__ . '/Data/' . $language . '/404.txt'),
@@ -164,7 +184,7 @@ class Installer extends ModuleInstaller
             'RecentComments',
             'RecentComments',
             null,
-            'N',
+            false,
             1001
         );
         $extras['blog_widget_categories'] = $this->insertExtra(
@@ -173,17 +193,25 @@ class Installer extends ModuleInstaller
             'Categories',
             'Categories',
             null,
-            'N',
+            false,
             1002
         );
-        $extras['blog_widget_archive'] = $this->insertExtra('Blog', ModuleExtraType::widget(), 'Archive', 'Archive', null, 'N', 1003);
+        $extras['blog_widget_archive'] = $this->insertExtra(
+            'Blog',
+            ModuleExtraType::widget(),
+            'Archive',
+            'Archive',
+            null,
+            'N',
+            1003
+        );
         $extras['blog_widget_recent_articles_full'] = $this->insertExtra(
             'Blog',
             ModuleExtraType::widget(),
             'RecentArticlesFull',
             'RecentArticlesFull',
             null,
-            'N',
+            false,
             1004
         );
         $extras['blog_widget_recent_articles_list'] = $this->insertExtra(
@@ -192,19 +220,35 @@ class Installer extends ModuleInstaller
             'RecentArticlesList',
             'RecentArticlesList',
             null,
-            'N',
+            false,
             1005
         );
-        $extras['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, 'N', 2000);
-        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
-        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', ModuleExtraType::widget(), 'Sitemap', 'Sitemap', null, 'N', 1);
+        $extras['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, false, 2000);
+        $extras['search_form'] = $this->insertExtra(
+            'Search',
+            ModuleExtraType::widget(),
+            'SearchForm',
+            'Form',
+            null,
+            false,
+            2001
+        );
+        $extras['sitemap_widget_sitemap'] = $this->insertExtra(
+            'Pages',
+            ModuleExtraType::widget(),
+            'Sitemap',
+            'Sitemap',
+            null,
+            false,
+            1
+        );
         $extras['subpages_widget'] = $this->insertExtra(
             'Pages',
             ModuleExtraType::widget(),
             'Subpages',
             'Subpages',
             array('template' => 'SubpagesDefault.html.twig'),
-            'N',
+            false,
             2
         );
 
@@ -219,13 +263,13 @@ class Installer extends ModuleInstaller
                 // re-insert homepage
                 $this->insertPage(
                     array(
-                         'id' => 1,
-                         'parent_id' => 0,
-                         'template_id' => $this->getTemplateId('home'),
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
-                         'language' => $language,
-                         'allow_move' => 'N',
-                         'allow_delete' => 'N',
+                        'id' => 1,
+                        'parent_id' => 0,
+                        'template_id' => $this->getTemplateId('home'),
+                        'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
+                        'language' => $language,
+                        'allow_move' => 'N',
+                        'allow_delete' => 'N',
                     ),
                     null,
                     array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
@@ -237,8 +281,10 @@ class Installer extends ModuleInstaller
                 // blog
                 $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Blog', 'Core', $language, 'lbl', 'Frontend')),
-                         'language' => $language,
+                        'title' => \SpoonFilter::ucfirst(
+                            $this->getLocale('Blog', 'Core', $language, 'lbl', 'Frontend')
+                        ),
+                        'language' => $language,
                     ),
                     null,
                     array('extra_id' => $extras['blog_block']),
@@ -252,9 +298,11 @@ class Installer extends ModuleInstaller
                 // about us parent
                 $aboutUsId = $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')),
-                         'parent_id' => 1,
-                         'language' => $language,
+                        'title' => \SpoonFilter::ucfirst(
+                            $this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')
+                        ),
+                        'parent_id' => 1,
+                        'language' => $language,
                     ),
                     null,
                     array('extra_id' => $extras['subpages_widget']),
@@ -264,9 +312,11 @@ class Installer extends ModuleInstaller
                 // location
                 $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Location', 'Core', $language, 'lbl', 'Frontend')),
-                         'parent_id' => $aboutUsId,
-                         'language' => $language,
+                        'title' => \SpoonFilter::ucfirst(
+                            $this->getLocale('Location', 'Core', $language, 'lbl', 'Frontend')
+                        ),
+                        'parent_id' => $aboutUsId,
+                        'language' => $language,
                     ),
                     null,
                     array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
@@ -277,9 +327,11 @@ class Installer extends ModuleInstaller
                 // about us child
                 $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')),
-                         'parent_id' => $aboutUsId,
-                         'language' => $language,
+                        'title' => \SpoonFilter::ucfirst(
+                            $this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')
+                        ),
+                        'parent_id' => $aboutUsId,
+                        'language' => $language,
                     ),
                     null,
                     array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
@@ -290,9 +342,11 @@ class Installer extends ModuleInstaller
                 // history
                 $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('History', 'Core', $language, 'lbl', 'Frontend')),
-                         'parent_id' => 1,
-                         'language' => $language,
+                        'title' => \SpoonFilter::ucfirst(
+                            $this->getLocale('History', 'Core', $language, 'lbl', 'Frontend')
+                        ),
+                        'parent_id' => 1,
+                        'language' => $language,
                     ),
                     null,
                     array('html' => __DIR__ . '/Data/' . $language . '/sample1.txt'),
@@ -303,14 +357,14 @@ class Installer extends ModuleInstaller
                 // insert lorem ipsum test page
                 $this->insertPage(
                     array(
-                         'title' => 'Lorem ipsum',
-                         'type' => 'root',
-                         'language' => $language,
-                         'hidden' => 'Y',
+                        'title' => 'Lorem ipsum',
+                        'type' => 'root',
+                        'language' => $language,
+                        'hidden' => 'Y',
                     ),
                     array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
                     array(
-                         'html' => __DIR__ . '/Data/' . $language . '/lorem_ipsum.txt',
+                        'html' => __DIR__ . '/Data/' . $language . '/lorem_ipsum.txt',
                     ),
                     array('extra_id' => $extras['search_form'], 'position' => 'top')
                 );
@@ -324,19 +378,19 @@ class Installer extends ModuleInstaller
     private function setRights()
     {
         // module rights
-        $this->setModuleRights(1, 'Pages');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'Pages', 'GetInfo');
-        $this->setActionRights(1, 'Pages', 'Move');
+        $this->setActionRights(1, $this->getModule(), 'GetInfo');
+        $this->setActionRights(1, $this->getModule(), 'Move');
 
-        $this->setActionRights(1, 'Pages', 'Index');
-        $this->setActionRights(1, 'Pages', 'Add');
-        $this->setActionRights(1, 'Pages', 'Delete');
-        $this->setActionRights(1, 'Pages', 'Edit');
-        $this->setActionRights(1, 'Pages', 'UploadFile');
-        $this->setActionRights(1, 'Pages', 'RemoveUploadedFile');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'UploadFile');
+        $this->setActionRights(1, $this->getModule(), 'RemoveUploadedFile');
 
-        $this->setActionRights(1, 'Pages', 'Settings');
+        $this->setActionRights(1, $this->getModule(), 'Settings');
     }
 }

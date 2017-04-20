@@ -39,7 +39,7 @@ class UploadFile extends AjaxAction
      * @return string The content of the uploaded file
      * @throws Exception When no file could be extracted
      */
-    private function getFileContentFromRequest(Request $request)
+    private function getFileContentFromRequest(Request $request): string
     {
         // ajax uploaders fallback to submitting a form with the file in the fields.
         $uploadedFiles = $request->files->all();
@@ -60,7 +60,7 @@ class UploadFile extends AjaxAction
      * @return string The content of the uploaded file
      * @throws Exception When no file could be extracted
      */
-    private function getFileNameFromRequest(Request $request)
+    private function getFileNameFromRequest(Request $request): string
     {
         // ajax uploaders fallback to submitting a form with the file in the fields.
         $uploadedFiles = $request->files->all();
@@ -81,7 +81,7 @@ class UploadFile extends AjaxAction
      * @param  string $destinationFolder
      * @return string The filename of the written file.
      */
-    private function writeFile($content, $fileName, $destinationFolder)
+    private function writeFile(string $content, string $fileName, string $destinationFolder): string
     {
         $path = FRONTEND_FILES_PATH . '/' . $destinationFolder;
 

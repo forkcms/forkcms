@@ -32,7 +32,7 @@ class CacheBuilder
     protected $sitemapId;
 
     /**
-     * @param \SpoonDatabase         $database
+     * @param \SpoonDatabase $database
      * @param CacheItemPoolInterface $cache
      */
     public function __construct(\SpoonDatabase $database, CacheItemPoolInterface $cache)
@@ -46,7 +46,7 @@ class CacheBuilder
      *
      * @param string $language The language to build the cache for.
      */
-    public function buildCache($language)
+    public function buildCache(string $language)
     {
         // kill existing caches so they can be re-generated
         $this->cache->deleteItems(array('keys_' . $language, 'navigation_' . $language));
@@ -67,7 +67,7 @@ class CacheBuilder
      *
      * @return array
      */
-    public function getKeys($language)
+    public function getKeys(string $language): array
     {
         $item = $this->cache->getItem('keys_' . $language);
         if ($item->isHit()) {
@@ -86,7 +86,7 @@ class CacheBuilder
      *
      * @return array
      */
-    public function getNavigation($language)
+    public function getNavigation(string $language): array
     {
         $item = $this->cache->getItem('navigation_' . $language);
         if ($item->isHit()) {
@@ -107,7 +107,7 @@ class CacheBuilder
      *
      * @return array tupple containing keys and navigation
      */
-    protected function getData($language)
+    protected function getData(string $language): array
     {
         // get tree
         $levels = Model::getTree(array(0), null, 1, $language);
@@ -136,13 +136,13 @@ class CacheBuilder
      * Fetches the pagedata for a certain page array
      * It also adds the page data to the keys array
      *
-     * @param  array  &$keys
-     * @param  array  $page
+     * @param  array &$keys
+     * @param  array $page
      * @param  string $language
      *
      * @return array  An array containing more data for the page
      */
-    protected function getPageData(&$keys, $page, $language)
+    protected function getPageData(array &$keys, array $page, string $language): array
     {
         $parentID = (int) $page['parent_id'];
 
@@ -188,11 +188,11 @@ class CacheBuilder
     }
 
     /**
-     * @param $page array
-     * @param $pageData array
+     * @param array $page
+     * @param array $pageData
      * @return string
      */
-    protected function getPageTreeType($page, &$pageData)
+    protected function getPageTreeType(array $page, array &$pageData): string
     {
         // calculate tree-type
         $treeType = 'page';
@@ -254,25 +254,27 @@ class CacheBuilder
      * @param $page array
      * @return array
      */
-    protected function getPageExtraBlocks($page)
+    protected function getPageExtraBlocks($page): array
     {
-        // add extras to the page array
-        if ($page['extra_ids'] !== null) {
-            $blocks = $this->getBlocks();
-            $ids = (array) explode(',', $page['extra_ids']);
-            $pageBlocks = array();
+        $pageBlocks = array();
 
-            foreach ($ids as $id) {
-                $id = (int) $id;
-
-                // available in extras, so add it to the pageData-array
-                if (isset($blocks[$id])) {
-                    $pageBlocks[$id] = $blocks[$id];
-                }
-            }
-
+        if ($page['extra_ids'] === null) {
             return $pageBlocks;
         }
+
+        $blocks = $this->getBlocks();
+        $ids = (array) explode(',', $page['extra_ids']);
+
+        foreach ($ids as $id) {
+            $id = (int) $id;
+
+            // available in extras, so add it to the pageData-array
+            if (isset($blocks[$id])) {
+                $pageBlocks[$id] = $blocks[$id];
+            }
+        }
+
+        return $pageBlocks;
     }
 
     /**
@@ -280,7 +282,7 @@ class CacheBuilder
      *
      * @return array
      */
-    protected function getBlocks()
+    protected function getBlocks(): array
     {
         if (empty($this->blocks)) {
             $this->blocks = (array) $this->database->getRecords(
@@ -313,7 +315,7 @@ class CacheBuilder
      *
      * @return string
      */
-    protected function getSitemapId()
+    protected function getSitemapId(): string
     {
         if (empty($this->sitemapId)) {
             $widgets = (array) $this->database->getRecords(
@@ -339,15 +341,19 @@ class CacheBuilder
     /**
      * Get the order
      *
-     * @param  array  $navigation The navigation array.
-     * @param  string $type       The type of navigation.
-     * @param  int    $parentId   The Id to start from.
-     * @param  array  $order      The array to hold the order.
+     * @param  array $navigation The navigation array.
+     * @param  string $type The type of navigation.
+     * @param  int $parentId The Id to start from.
+     * @param  array $order The array to hold the order.
      *
      * @return array
      */
-    protected function getOrder($navigation, $type = 'page', $parentId = 0, $order = array())
-    {
+    protected function getOrder(
+        array $navigation,
+        string $type = 'page',
+        int $parentId = 0,
+        array $order = array()
+    ): array {
         // loop alle items for the type and parent
         foreach ($navigation[$type][$parentId] as $id => $page) {
             // add to array
@@ -370,13 +376,13 @@ class CacheBuilder
     /**
      * Save the link list
      *
-     * @param  array  $navigation The full navigation array
-     * @param  array  $keys       The page keys
-     * @param  string $language   The language to save the file for
+     * @param  array $navigation The full navigation array
+     * @param  array $keys The page keys
+     * @param  string $language The language to save the file for
      *
      * @return string             The full content for the cache file
      */
-    protected function dumpEditorLinkList($navigation, $keys, $language)
+    protected function dumpEditorLinkList(array $navigation, array $keys, string $language): string
     {
         // get the order
         foreach (array_keys($navigation) as $type) {
@@ -462,7 +468,7 @@ class CacheBuilder
      *
      * @return string A comment to be used in the cache file
      */
-    protected function getCacheHeader($itContainsMessage)
+    protected function getCacheHeader(string $itContainsMessage): string
     {
         $cacheHeader = '/**' . "\n";
         $cacheHeader .= ' * This file is generated by Fork CMS, it contains' . "\n";
