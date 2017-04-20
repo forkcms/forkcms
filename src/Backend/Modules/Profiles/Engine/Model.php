@@ -250,7 +250,7 @@ class Model
         $avatar = self::getSetting($id, 'avatar');
 
         // if no email is given
-        if (!$email) {
+        if ($email === null) {
             // get user
             $user = self::get($id);
 
@@ -697,7 +697,7 @@ class Model
             self::update($id, $values);
 
             // we have a group id
-            if ($groupId) {
+            if ($groupId !== null) {
                 // init values
                 $values = array();
 
