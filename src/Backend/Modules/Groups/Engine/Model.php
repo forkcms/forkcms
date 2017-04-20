@@ -34,7 +34,7 @@ class Model
      *
      * @param array $actionPermissions
      */
-    public static function addActionPermissions($actionPermissions)
+    public static function addActionPermissions(array $actionPermissions)
     {
         foreach ((array) $actionPermissions as $permission) {
             if (!self::existsActionPermission($permission)) {
@@ -48,7 +48,7 @@ class Model
      *
      * @param array $modulePermissions
      */
-    public static function addModulePermissions($modulePermissions)
+    public static function addModulePermissions(array $modulePermissions)
     {
         foreach ((array) $modulePermissions as $permission) {
             if (!self::existsModulePermission($permission)) {
@@ -64,13 +64,13 @@ class Model
      *
      * @return bool
      */
-    public static function alreadyExists($name)
+    public static function alreadyExists(string $name): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.*
              FROM groups AS i
              WHERE i.name = ?',
-            array((string) $name)
+            array($name)
         );
     }
 
@@ -79,9 +79,9 @@ class Model
      *
      * @param int $id The id of the group to delete.
      */
-    public static function delete($id)
+    public static function delete(int $id)
     {
-        BackendModel::getContainer()->get('database')->delete('groups', 'id = ?', array((int) $id));
+        BackendModel::getContainer()->get('database')->delete('groups', 'id = ?', array($id));
     }
 
     /**
@@ -89,7 +89,7 @@ class Model
      *
      * @param array $actionPermissions The action permissions to delete.
      */
-    public static function deleteActionPermissions($actionPermissions)
+    public static function deleteActionPermissions(array $actionPermissions)
     {
         foreach ((array) $actionPermissions as $permission) {
             if (self::existsActionPermission($permission)) {
@@ -107,7 +107,7 @@ class Model
      *
      * @param array $modulePermissions The module permissions to delete.
      */
-    public static function deleteModulePermissions($modulePermissions)
+    public static function deleteModulePermissions(array $modulePermissions)
     {
         foreach ((array) $modulePermissions as $permission) {
             if (self::existsModulePermission($permission)) {
@@ -125,7 +125,7 @@ class Model
      *
      * @param int $userId The id of the user.
      */
-    public static function deleteMultipleGroups($userId)
+    public static function deleteMultipleGroups(int $userId)
     {
         BackendModel::getContainer()->get('database')->delete('users_groups', 'user_id = ?', array($userId));
     }
@@ -137,13 +137,13 @@ class Model
      *
      * @return bool
      */
-    public static function exists($id)
+    public static function exists(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.*
              FROM groups AS i
              WHERE i.id = ?',
-            array((int) $id)
+            array($id)
         );
     }
 
@@ -154,7 +154,7 @@ class Model
      *
      * @return bool
      */
-    public static function existsActionPermission($permission)
+    public static function existsActionPermission(array $permission): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.*
@@ -171,7 +171,7 @@ class Model
      *
      * @return bool
      */
-    public static function existsModulePermission($permission)
+    public static function existsModulePermission(array $permission): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.*
@@ -188,13 +188,13 @@ class Model
      *
      * @return array
      */
-    public static function get($id)
+    public static function get(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*
              FROM groups AS i
              WHERE i.id = ?',
-            array((int) $id)
+            array($id)
         );
     }
 
@@ -205,13 +205,13 @@ class Model
      *
      * @return array
      */
-    public static function getActionPermissions($id)
+    public static function getActionPermissions(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.module, i.action
              FROM groups_rights_actions AS i
              WHERE i.group_id = ?',
-            array((int) $id)
+            array($id)
         );
     }
 
@@ -220,7 +220,7 @@ class Model
      *
      * @return array
      */
-    public static function getAll()
+    public static function getAll(): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id AS value, i.name AS label FROM groups AS i'
@@ -234,14 +234,14 @@ class Model
      *
      * @return array
      */
-    public static function getGroupsByUser($id)
+    public static function getGroupsByUser(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.name
              FROM groups AS i
              INNER JOIN users_groups AS ug ON i.id = ug.group_id
              WHERE ug.user_id = ?',
-            array((int) $id)
+            array($id)
         );
     }
 
@@ -253,20 +253,17 @@ class Model
      *
      * @return bool
      */
-    public static function isUserInGroup($userId, $groupId)
+    public static function isUserInGroup(int $userId, int $groupId): bool
     {
         $groupsByUser = static::getGroupsByUser($userId);
 
-        $userInGroup = false;
-
         foreach ($groupsByUser as $group) {
-            if ((int) $group['id'] === (int) $groupId) {
-                $userInGroup = true;
-                break;
+            if ($group['id'] === $groupId) {
+                return true;
             }
         }
 
-        return $userInGroup;
+        return false;
     }
 
     /**
@@ -276,13 +273,13 @@ class Model
      *
      * @return array
      */
-    public static function getModulePermissions($id)
+    public static function getModulePermissions(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.*
              FROM groups_rights_modules AS i
              WHERE i.group_id = ?',
-            array((int) $id)
+            array($id)
         );
     }
 
@@ -294,13 +291,13 @@ class Model
      *
      * @return array
      */
-    public static function getSetting($groupId, $name)
+    public static function getSetting(int $groupId, string $name): array
     {
         $setting = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.value
              FROM groups_settings AS i
              WHERE i.group_id = ? AND i.name = ?',
-            array((int) $groupId, (string) $name)
+            array($groupId, $name)
         );
 
         if (!$setting) {
@@ -319,14 +316,14 @@ class Model
      *
      * @return array
      */
-    public static function getUsers($groupId)
+    public static function getUsers(int $groupId): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.*
              FROM users AS i
              INNER JOIN users_groups AS ug ON i.id = ug.user_id
              WHERE ug.group_id = ? AND i.deleted = ? AND i.active = ?',
-            array((int) $groupId, 'N', 'Y')
+            array($groupId, 'N', 'Y')
         );
     }
 
@@ -336,7 +333,7 @@ class Model
      * @param array $group The group to insert.
      * @param array $setting The setting to insert.
      */
-    public static function insert($group, $setting)
+    public static function insert(array $group, array $setting)
     {
         // insert group
         $id = BackendModel::getContainer()->get('database')->insert('groups', $group);
@@ -357,11 +354,8 @@ class Model
      * @param int $userId The id of the user.
      * @param array $groups The groups.
      */
-    public static function insertMultipleGroups($userId, array $groups)
+    public static function insertMultipleGroups(int $userId, array $groups)
     {
-        $userId = (int) $userId;
-        $groups = (array) $groups;
-
         // delete all previous user groups
         self::deleteMultipleGroups($userId);
 
@@ -383,7 +377,7 @@ class Model
      *
      * @return int
      */
-    public static function insertSetting($setting)
+    public static function insertSetting(array $setting): int
     {
         return BackendModel::getContainer()->get('database')->insert('groups_settings', $setting);
     }
@@ -394,7 +388,7 @@ class Model
      * @param array $group The group to update.
      * @param array $setting The setting to update.
      */
-    public static function update($group, $setting)
+    public static function update(array $group, array $setting)
     {
         // update group
         BackendModel::getContainer()->get('database')->update('groups', array('name' => $group['name']), 'id = ?', array($group['id']));
@@ -408,7 +402,7 @@ class Model
      *
      * @param array $setting The setting to update.
      */
-    public static function updateSetting($setting)
+    public static function updateSetting(array $setting)
     {
         BackendModel::getContainer()->get('database')->update('groups_settings', array('value' => $setting['value']), 'group_id = ? AND name = ?', array($setting['group_id'], $setting['name']));
     }

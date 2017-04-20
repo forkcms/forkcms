@@ -59,13 +59,13 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // module rights
-        $this->setModuleRights(1, 'Groups');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'Groups', 'Index');
-        $this->setActionRights(1, 'Groups', 'Add');
-        $this->setActionRights(1, 'Groups', 'Edit');
-        $this->setActionRights(1, 'Groups', 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
 
         // set navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');

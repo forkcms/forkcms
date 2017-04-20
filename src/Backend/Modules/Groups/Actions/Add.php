@@ -267,7 +267,7 @@ class Add extends BackendBaseActionAdd
      * @param \SpoonFormElement[] $actionPermissions The action permissions.
      * @param array $bundledActionPermissions The bundled action permissions.
      */
-    private function insertPermissions($actionPermissions, $bundledActionPermissions)
+    private function insertPermissions(array $actionPermissions, array $bundledActionPermissions)
     {
         // init vars
         $modulesDenied = array();
@@ -368,7 +368,7 @@ class Add extends BackendBaseActionAdd
      *
      * @return mixed
      */
-    private function insertWidgets($widgetPresets)
+    private function insertWidgets(array $widgetPresets)
     {
         // empty dashboard sequence
         $this->hiddenOnDashboard = array();

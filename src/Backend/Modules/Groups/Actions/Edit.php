@@ -427,7 +427,7 @@ class Edit extends BackendBaseActionEdit
      * @param \SpoonFormElement[] $actionPermissions The action permissions.
      * @param array $bundledActionPermissions The bundled action permissions.
      */
-    private function updatePermissions($actionPermissions, $bundledActionPermissions)
+    private function updatePermissions(array $actionPermissions, array $bundledActionPermissions)
     {
         $modulesDenied = array();
         $modulesGranted = array();
@@ -527,7 +527,7 @@ class Edit extends BackendBaseActionEdit
      *
      * @return array
      */
-    private function updateWidgets($widgetPresets)
+    private function updateWidgets(array $widgetPresets): array
     {
         // empty dashboard sequence
         $this->hiddenOnDashboard = array();
