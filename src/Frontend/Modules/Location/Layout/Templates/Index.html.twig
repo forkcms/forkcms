@@ -12,7 +12,7 @@
   {% for locationItems in locationItems %}
     <div id="markerText{{ locationItems.id }}" style="display: none;">
       <address>
-        {{ locationItems.street }} {{ locationItems.number }}<br />
+        {{ locationItems.number }} {{ locationItems.street }}<br />
         {{ locationItems.zip }} {{ locationItems.city }}
       </address>
     </div>
