@@ -9,10 +9,11 @@ namespace Frontend\Modules\Tags\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Locale;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Language\Locale;
+use Frontend\Core\Language\Locale as FrontendLocale;
 
 /**
  * In this file we store all generic functions that we will be using in the tags module
@@ -22,50 +23,46 @@ class Model
     /**
      * Calls a method that has to be implemented though the tags interface
      *
-     * @param string       $module    The module wherein to search.
-     * @param string       $class     The class that should contain the method.
-     * @param string       $method    The method to call.
+     * @param string $module The module wherein to search.
+     * @param string $class The class that should contain the method.
+     * @param string $method The method to call.
      * @param mixed $parameter The parameters to pass.
      *
      * @throws FrontendException When FrontendTagsInterface is not correctly implemented to the module model
      *
      * @return mixed
      */
-    public static function callFromInterface($module, $class, $method, $parameter = null)
+    public static function callFromInterface(string $module, string $class, string $method, $parameter = null)
     {
         // check to see if the interface is implemented
         if (in_array('Frontend\\Modules\\Tags\\Engine\\TagsInterface', class_implements($class))) {
             // return result
             return call_user_func(array($class, $method), $parameter);
-        } else {
-            throw new FrontendException(
-                'To use the tags module you need
-                to implement the FrontendTagsInterface
-                in the model of your module
-                (' . $module . ').'
-            );
         }
+
+        throw new FrontendException(
+            'To use the tags module you need
+            to implement the FrontendTagsInterface
+            in the model of your module
+            (' . $module . ').'
+        );
     }
 
     /**
      * Get the tag for a given URL
      *
-     * @param string        $url The URL to get the tag for.
-     * @param string $language
+     * @param string $url The URL to get the tag for.
+     * @param Locale $locale
      *
      * @return array
      */
-    public static function get($url, $language = null)
+    public static function get(string $url, Locale $locale = null): array
     {
-        // redefine language
-        $language = ($language !== null) ? (string) $language : LANGUAGE;
-
-        // exists
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT id, language, tag AS name, number, url
              FROM tags
              WHERE url = ? AND language = ?',
-            array((string) $url, $language)
+            array($url, $locale ?? FrontendLocale::frontendLanguage())
         );
     }
 
@@ -74,34 +71,28 @@ class Model
      *
      * @return array
      */
-    public static function getAll()
+    public static function getAll(): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT t.tag AS name, t.url, t.number
              FROM tags AS t
              WHERE t.language = ? AND t.number > 0
              ORDER BY t.tag',
-            array(LANGUAGE)
+            array(FrontendLocale::frontendLanguage())
         );
     }
 
     /**
      * Get tags for an item
      *
-     * @param string $module  The module wherein the otherId occurs.
-     * @param int    $otherId The id of the item.
+     * @param string $module The module wherein the otherId occurs.
+     * @param int $otherId The id of the item.
+     * @param Locale|null $locale
      *
      * @return array
      */
-    public static function getForItem($module, $otherId, $language = null)
+    public static function getForItem(string $module, int $otherId, Locale $locale = null): array
     {
-        $module = (string) $module;
-        $otherId = (int) $otherId;
-
-        // redefine language
-        $language = ($language !== null) ? (string) $language : Locale::frontendLanguage();
-
-        // init var
         $return = array();
 
         // get tags
@@ -110,7 +101,7 @@ class Model
              FROM modules_tags AS mt
              INNER JOIN tags AS t ON mt.tag_id = t.id
              WHERE mt.module = ? AND mt.other_id = ? AND t.language = ?',
-            array($module, $otherId, $language)
+            array($module, $otherId, $locale ?? FrontendLocale::frontendLanguage())
         );
 
         // return
@@ -137,19 +128,14 @@ class Model
     /**
      * Get tags for multiple items.
      *
-     * @param string $module   The module wherefore you want to retrieve the tags.
-     * @param array  $otherIds The ids for the items.
+     * @param string $module The module wherefore you want to retrieve the tags.
+     * @param array $otherIds The ids for the items.
+     * @param Locale|null $locale
      *
      * @return array
      */
-    public static function getForMultipleItems($module, array $otherIds, $language = null)
+    public static function getForMultipleItems(string $module, array $otherIds, Locale $locale = null): array
     {
-        $module = (string) $module;
-
-        // redefine language
-        $language = ($language !== null) ? (string) $language : Locale::frontendLanguage();
-
-        // get db
         $db = FrontendModel::getContainer()->get('database');
 
         // init var
@@ -161,7 +147,7 @@ class Model
              FROM modules_tags AS mt
              INNER JOIN tags AS t ON mt.tag_id = t.id
              WHERE mt.module = ? AND t.language = ? AND mt.other_id IN (' . implode(', ', $otherIds) . ')',
-            array($module, $language)
+            array($module, $locale ?? FrontendLocale::frontendLanguage())
         );
 
         // return
@@ -191,13 +177,13 @@ class Model
      *
      * @return int
      */
-    public static function getIdByURL($url)
+    public static function getIdByURL(string $url): int
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT id
              FROM tags
              WHERE url = ?',
-            array((string) $url)
+            array($url)
         );
     }
 
@@ -208,7 +194,7 @@ class Model
      *
      * @return array
      */
-    public static function getModulesForTag($id)
+    public static function getModulesForTag(int $id): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getColumn(
             'SELECT module
@@ -216,7 +202,7 @@ class Model
              WHERE tag_id = ?
              GROUP BY module
              ORDER BY module ASC',
-            array((int) $id)
+            array($id)
         );
     }
 
@@ -227,27 +213,27 @@ class Model
      *
      * @return string
      */
-    public static function getName($id)
+    public static function getName(int $id): string
     {
         return FrontendModel::getContainer()->get('database')->getVar(
             'SELECT tag
              FROM tags
              WHERE id = ?',
-            array((int) $id)
+            array($id)
         );
     }
 
     /**
      * Get all related items
      *
-     * @param int     $id          The id of the item in the source-module.
-     * @param int     $module      The source module.
-     * @param int     $otherModule The module wherein the related items should appear.
-     * @param int $limit       The maximum of related items to grab.
+     * @param int $id The id of the item in the source-module.
+     * @param string $module The source module.
+     * @param string $otherModule The module wherein the related items should appear.
+     * @param int $limit The maximum of related items to grab.
      *
      * @return array
      */
-    public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
+    public static function getRelatedItemsByTags(int $id, string $module, string $otherModule, int $limit = 5): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getColumn(
             'SELECT t2.other_id
@@ -258,7 +244,7 @@ class Model
              GROUP BY t2.other_id
              ORDER BY COUNT(t2.tag_id) DESC
              LIMIT ?',
-            array((int) $id, (string) $module, (string) $otherModule, (int) $limit)
+            array($id, $module, $otherModule, $limit)
         );
     }
 }

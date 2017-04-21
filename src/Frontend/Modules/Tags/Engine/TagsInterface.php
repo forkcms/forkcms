@@ -24,7 +24,7 @@ interface TagsInterface
      *
      * @return array Records with at least the keys 'title' and 'full_url'.
      */
-    public static function getForTags(array $ids);
+    public static function getForTags(array $ids): array;
 
     /**
      * Get the id of an item by the full URL of the current page.
@@ -34,5 +34,5 @@ interface TagsInterface
      *
      * @return int The id that corresponds with the given full URL.
      */
-    public static function getIdForTags(FrontendURL $url);
+    public static function getIdForTags(FrontendURL $url): int;
 }
