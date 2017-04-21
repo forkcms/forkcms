@@ -76,16 +76,13 @@ class Authentication
     /**
      * Get the login/profile status for the given e-mail and password.
      *
-     * @param  string $email    Profile email address.
+     * @param  string $email Profile email address.
      * @param  string $password Profile password.
      *
      * @return string One of the FrontendProfilesAuthentication::LOGIN_* constants.
      */
-    public static function getLoginStatus($email, $password)
+    public static function getLoginStatus(string $email, string $password): string
     {
-        $email = (string) $email;
-        $password = (string) $password;
-
         // get profile id
         $profileId = FrontendProfilesModel::getIdByEmail($email);
 
@@ -111,7 +108,7 @@ class Authentication
      *
      * @return FrontendProfilesProfile
      */
-    public static function getProfile()
+    public static function getProfile(): FrontendProfilesProfile
     {
         return self::$profile;
     }
@@ -121,7 +118,7 @@ class Authentication
      *
      * @return bool
      */
-    public static function isLoggedIn()
+    public static function isLoggedIn(): bool
     {
         // profile object exist? (this means the session/cookie checks have
         // already happened in the current request and we cached the profile)
@@ -223,16 +220,13 @@ class Authentication
     /**
      * Login a profile.
      *
-     * @param  int  $profileId Login the profile with this id in.
-     * @param  bool $remember  Should we set a cookie for later?
+     * @param  int $profileId Login the profile with this id in.
+     * @param  bool $remember Should we set a cookie for later?
      *
      * @return bool
      */
-    public static function login($profileId, $remember = false)
+    public static function login(int $profileId, bool $remember = false): bool
     {
-        // redefine vars
-        $profileId = (int) $profileId;
-        $remember = (bool) $remember;
         $secretKey = null;
 
         // cleanup old sessions
@@ -300,14 +294,11 @@ class Authentication
     /**
      * Update profile password and salt.
      *
-     * @param int    $profileId Profile id for which we are changing the password.
-     * @param string $password  New password.
+     * @param int $profileId Profile id for which we are changing the password.
+     * @param string $password New password.
      */
-    public static function updatePassword($profileId, $password)
+    public static function updatePassword(int $profileId, string $password)
     {
-        $profileId = (int) $profileId;
-        $password = (string) $password;
-
         // get new salt
         $salt = FrontendProfilesModel::getRandomString();
 

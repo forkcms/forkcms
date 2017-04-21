@@ -32,84 +32,81 @@ class Model
     /**
      * Delete a setting.
      *
-     * @param  int    $id   Profile id.
-     * @param  string $name Setting name.
+     * @param int $id Profile id.
+     * @param string $name Setting name.
      *
      * @return int
      */
-    public static function deleteSetting($id, $name)
+    public static function deleteSetting(int $id, string $name): int
     {
         return (int) FrontendModel::getContainer()->get('database')->delete(
             'profiles_settings',
             'profile_id = ? AND name = ?',
-            array((int) $id, (string) $name)
+            array($id, $name)
         );
     }
 
     /**
      * Check if a profile exists by email address.
      *
-     * @param  string $email    Email to check for existence.
-     * @param  int    $ignoreId Profile id to ignore.
+     * @param string $email Email to check for existence.
+     * @param int $ignoreId Profile id to ignore.
      *
      * @return bool
      */
-    public static function existsByEmail($email, $ignoreId = null)
+    public static function existsByEmail(string $email, int $ignoreId = null): bool
     {
         return (bool) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles AS p
              WHERE p.email = ? AND p.id != ?
              LIMIT 1',
-            array((string) $email, (int) $ignoreId)
+            array($email, (int) $ignoreId)
         );
     }
 
     /**
      * Check if a display name exists.
      *
-     * @param  string $displayName Display name to check for existence.
-     * @param  int    $id          Profile id to ignore.
+     * @param string $displayName Display name to check for existence.
+     * @param int $id Profile id to ignore.
      *
      * @return bool
      */
-    public static function existsDisplayName($displayName, $id = null)
+    public static function existsDisplayName($displayName, int $id = null): bool
     {
         return (bool) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles AS p
              WHERE p.id != ? AND p.display_name = ?
              LIMIT 1',
-            array((int) $id, (string) $displayName)
+            array((int) $id, $displayName)
         );
     }
 
     /**
      * Get profile by its id.
      *
-     * @param  int                     $profileId Id of the wanted profile.
+     * @param int $profileId Id of the wanted profile.
      *
      * @return FrontendProfilesProfile
      */
-    public static function get($profileId)
+    public static function get(int $profileId): FrontendProfilesProfile
     {
-        return new FrontendProfilesProfile((int) $profileId);
+        return new FrontendProfilesProfile($profileId);
     }
 
     /**
      * Get avatar
      *
-     * @param  int    $id    The id for the profile we want to get the avatar from.
-     * @param  string $email The email from the user we can use for gravatar.
-     * @param  string $size  The resolution you want to use. Default: 240x240 pixels.
+     * @param int $id The id for the profile we want to get the avatar from.
+     * @param string $email The email from the user we can use for gravatar.
+     * @param string $size The resolution you want to use. Default: 240x240 pixels.
      *
      * @return string $avatar            The absolute path to the avatar.
      */
-    public static function getAvatar($id, $email = null, $size = '240x240')
+    public static function getAvatar(int $id, string $email = null, string $size = '240x240'): string
     {
-        // redefine id
-        $id = (int) $id;
-
         // return avatar from cache
         if (isset(self::$avatars[$id])) {
             return self::$avatars[$id];
@@ -158,67 +155,67 @@ class Model
     /**
      * Get an encrypted string.
      *
-     * @param  string $string String to encrypt.
-     * @param  string $salt   Salt to add to the string.
+     * @param string $string String to encrypt.
+     * @param string $salt Salt to add to the string.
      *
      * @return string
      */
-    public static function getEncryptedString($string, $salt)
+    public static function getEncryptedString(string $string, string $salt): string
     {
-        return md5(sha1(md5((string) $string)) . sha1(md5((string) $salt)));
+        return md5(sha1(md5($string)) . sha1(md5($salt)));
     }
 
     /**
      * Get profile id by email.
      *
-     * @param  string $email Email address.
+     * @param string $email Email address.
      *
      * @return int
      */
-    public static function getIdByEmail($email)
+    public static function getIdByEmail(string $email): int
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT p.id FROM profiles AS p WHERE p.email = ?',
-            (string) $email
+            $email
         );
     }
 
     /**
      * Get profile id by setting.
      *
-     * @param  string $name  Setting name.
-     * @param  string $value Value of the setting.
+     * @param string $name Setting name.
+     * @param mixed $value Value of the setting.
      *
      * @return int
      */
-    public static function getIdBySetting($name, $value)
+    public static function getIdBySetting(string $name, $value): int
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT ps.profile_id
              FROM profiles_settings AS ps
              WHERE ps.name = ? AND ps.value = ?',
-            array((string) $name, serialize((string) $value))
+            array((string) $name, serialize($value))
         );
     }
 
     /**
      * Generate a random string.
      *
-     * @param  int    $length    Length of random string.
-     * @param  bool   $numeric   Use numeric characters.
-     * @param  bool   $lowercase Use alphanumeric lowercase characters.
-     * @param  bool   $uppercase Use alphanumeric uppercase characters.
-     * @param  bool   $special   Use special characters.
+     * @param int $length Length of random string.
+     * @param bool $numeric Use numeric characters.
+     * @param bool $lowercase Use alphanumeric lowercase characters.
+     * @param bool $uppercase Use alphanumeric uppercase characters.
+     * @param bool $special Use special characters.
      *
      * @return string
      */
     public static function getRandomString(
-        $length = 15,
-        $numeric = true,
-        $lowercase = true,
-        $uppercase = true,
-        $special = true
-    ) {
+        int $length = 15,
+        bool $numeric = true,
+        bool $lowercase = true,
+        bool $uppercase = true,
+        bool $special = true
+    ): string {
         // init
         $characters = '';
         $string = '';
@@ -253,19 +250,19 @@ class Model
     /**
      * Get a setting for a profile.
      *
-     * @param  int    $id   Profile id.
-     * @param  string $name Setting name.
+     * @param int $id Profile id.
+     * @param string $name Setting name.
      *
-     * @return string
+     * @return mixed
      */
-    public static function getSetting($id, $name)
+    public static function getSetting($id, string $name)
     {
         return unserialize(
             (string) FrontendModel::getContainer()->get('database')->getVar(
                 'SELECT ps.value
                  FROM profiles_settings AS ps
                  WHERE ps.profile_id = ? AND ps.name = ?',
-                array((int) $id, (string) $name)
+                array($id, $name)
             )
         );
     }
@@ -273,18 +270,18 @@ class Model
     /**
      * Get all settings for a profile.
      *
-     * @param  int   $id Profile id.
+     * @param int $id Profile id.
      *
      * @return array
      */
-    public static function getSettings($id)
+    public static function getSettings(int $id): array
     {
         // get settings
         $settings = (array) FrontendModel::getContainer()->get('database')->getPairs(
             'SELECT ps.name, ps.value
              FROM profiles_settings AS ps
              WHERE ps.profile_id = ?',
-            (int) $id
+            $id
         );
 
         // unserialize values
@@ -299,15 +296,15 @@ class Model
     /**
      * Retrieve a unique URL for a profile based on the display name.
      *
-     * @param  string $displayName The display name to base on.
-     * @param  int    $id          The id of the profile to ignore.
+     * @param string $displayName The display name to base on.
+     * @param int $id The id of the profile to ignore.
      *
      * @return string
      */
-    public static function getUrl($displayName, $id = null)
+    public static function getUrl(string $displayName, int $id = null): string
     {
         // decode special chars
-        $displayName = \SpoonFilter::htmlspecialcharsDecode((string) $displayName);
+        $displayName = \SpoonFilter::htmlspecialcharsDecode($displayName);
 
         // urlise
         $url = (string) CommonUri::getUrl($displayName);
@@ -361,11 +358,11 @@ class Model
     /**
      * Insert a new profile.
      *
-     * @param  array $values Profile data.
+     * @param array $values Profile data.
      *
      * @return int
      */
-    public static function insert(array $values)
+    public static function insert(array $values): int
     {
         return (int) FrontendModel::getContainer()->get('database')->insert('profiles', $values);
     }
@@ -426,28 +423,28 @@ class Model
     /**
      * Insert or update a single profile setting.
      *
-     * @param int    $id    Profile id.
-     * @param string $name  Setting name.
-     * @param string  $value New setting value.
+     * @param int $id Profile id.
+     * @param string $name Setting name.
+     * @param mixed $value New setting value.
      */
-    public static function setSetting($id, $name, $value)
+    public static function setSetting(int $id, string $name, $value)
     {
         // insert or update
         FrontendModel::getContainer()->get('database')->execute(
             'INSERT INTO profiles_settings(profile_id, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array((int) $id, $name, serialize($value), serialize($value))
+            array($id, $name, serialize($value), serialize($value))
         );
     }
 
     /**
      * Insert or update multiple profile settings.
      *
-     * @param int   $id     Profile id.
+     * @param int $id Profile id.
      * @param array $values Settings in key=>value form.
      */
-    public static function setSettings($id, array $values)
+    public static function setSettings(int $id, array $values)
     {
         // build parameters
         $parameters = array();
@@ -469,13 +466,13 @@ class Model
     /**
      * Update a profile.
      *
-     * @param  int   $id     The profile id.
-     * @param  array $values The values to update.
+     * @param int $id The profile id.
+     * @param array $values The values to update.
      *
      * @return int
      */
-    public static function update($id, array $values)
+    public static function update(int $id, array $values): int
     {
-        return (int) FrontendModel::getContainer()->get('database')->update('profiles', $values, 'id = ?', (int) $id);
+        return (int) FrontendModel::getContainer()->get('database')->update('profiles', $values, 'id = ?', $id);
     }
 }

@@ -79,10 +79,10 @@ class Profile
      *
      * @param int $profileId The profile id to load data from.
      */
-    public function __construct($profileId = null)
+    public function __construct(int $profileId = null)
     {
         if ($profileId !== null) {
-            $this->loadProfile((int) $profileId);
+            $this->loadProfile($profileId);
         }
     }
 
@@ -91,7 +91,7 @@ class Profile
      *
      * @return string
      */
-    public function getDisplayName()
+    public function getDisplayName(): string
     {
         return $this->displayName;
     }
@@ -101,7 +101,7 @@ class Profile
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -109,7 +109,7 @@ class Profile
     /**
      * Get profile id.
      *
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -121,7 +121,7 @@ class Profile
      *
      * @return int
      */
-    public function getRegisteredOn()
+    public function getRegisteredOn(): int
     {
         return $this->registeredOn;
     }
@@ -129,12 +129,12 @@ class Profile
     /**
      * Get a profile setting by name.
      *
-     * @param  string $name         Setting name.
-     * @param  string $defaultValue Default value is used when the setting does not exist.
+     * @param string $name Setting name.
+     * @param string $defaultValue Default value is used when the setting does not exist.
      *
      * @return mixed
      */
-    public function getSetting($name, $defaultValue = null)
+    public function getSetting(string $name, string $defaultValue = null)
     {
         // if settings array does not exist then get it first
         if (empty($this->settings)) {
@@ -144,10 +144,10 @@ class Profile
         // when setting exists return it
         if (array_key_exists($name, $this->settings)) {
             return $this->settings[$name];
-        } else {
-            // if not return default value
-            return $defaultValue;
         }
+
+        // if not return default value
+        return $defaultValue;
     }
 
     /**
@@ -155,7 +155,7 @@ class Profile
      *
      * @return array
      */
-    public function getSettings()
+    public function getSettings(): array
     {
         // if settings array does not exist then get it first
         if (empty($this->settings)) {
@@ -171,7 +171,7 @@ class Profile
      *
      * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -181,7 +181,7 @@ class Profile
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -189,11 +189,11 @@ class Profile
     /**
      * Does this user belong to the group with the given ID?
      *
-     * @param  int $groupId Group id.
+     * @param int $groupId Group id.
      *
      * @return bool
      */
-    public function isInGroup($groupId)
+    public function isInGroup(int $groupId): bool
     {
         return isset($this->groups[$groupId]);
     }
@@ -203,14 +203,14 @@ class Profile
      *
      * @param int $id Profile id to load.
      */
-    private function loadProfile($id)
+    private function loadProfile(int $id)
     {
         // get profile data
         $profileData = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.email, p.status, p.display_name, p.url, UNIX_TIMESTAMP(p.registered_on) AS registered_on
              FROM profiles AS p
              WHERE p.id = ?',
-            (int) $id
+            $id
         );
 
         // set properties
@@ -236,14 +236,14 @@ class Profile
      *
      * @param string $url
      */
-    public function loadProfileByUrl($url)
+    public function loadProfileByUrl(string $url)
     {
         // get profile data
         $profileData = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.email, p.status, p.display_name, UNIX_TIMESTAMP(p.registered_on) AS registered_on
              FROM profiles AS p
              WHERE p.url = ?',
-            (string) $url
+            $url
         );
 
         // set properties
@@ -279,9 +279,9 @@ class Profile
      *
      * @param string $value Display name value.
      */
-    public function setDisplayName($value)
+    public function setDisplayName(string $value)
     {
-        $this->displayName = (string) $value;
+        $this->displayName = $value;
     }
 
     /**
@@ -289,9 +289,9 @@ class Profile
      *
      * @param string $value Email address.
      */
-    public function setEmail($value)
+    public function setEmail(string $value)
     {
-        $this->email = (string) $value;
+        $this->email = $value;
     }
 
     /**
@@ -299,9 +299,9 @@ class Profile
      *
      * @param int $value Id of the profile.
      */
-    private function setId($value)
+    private function setId(int $value)
     {
-        $this->id = (int) $value;
+        $this->id = $value;
     }
 
     /**
@@ -309,24 +309,24 @@ class Profile
      *
      * @param int $value Register date timestamp.
      */
-    public function setRegisteredOn($value)
+    public function setRegisteredOn(int $value)
     {
-        $this->registeredOn = (int) $value;
+        $this->registeredOn = $value;
     }
 
     /**
      * Set a profile setting.
      *
-     * @param string $name  Setting name.
-     * @param string $value New setting value.
+     * @param string $name Setting name.
+     * @param mixed $value New setting value.
      */
-    public function setSetting($name, $value)
+    public function setSetting(string $name, $value)
     {
         // make sure we have the current settings in cache
         $this->getSettings();
 
         // set setting
-        FrontendProfilesModel::setSetting($this->getId(), (string) $name, $value);
+        FrontendProfilesModel::setSetting($this->getId(), $name, $value);
 
         // add setting to cache
         $this->settings[$name] = $value;
@@ -356,9 +356,9 @@ class Profile
      *
      * @param string $value Status.
      */
-    public function setStatus($value)
+    public function setStatus(string $value)
     {
-        $this->status = (string) $value;
+        $this->status = $value;
     }
 
     /**
@@ -366,9 +366,9 @@ class Profile
      *
      * @param string $value Url.
      */
-    public function setUrl($value)
+    public function setUrl(string $value)
     {
-        $this->url = (string) $value;
+        $this->url = $value;
     }
 
     /**
@@ -376,7 +376,7 @@ class Profile
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         // basis info
         $return['display_name'] = $this->getDisplayName();
