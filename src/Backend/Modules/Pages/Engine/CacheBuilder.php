@@ -313,9 +313,9 @@ class CacheBuilder
     /**
      * Returns an array containing all widgets
      *
-     * @return string
+     * @return int
      */
-    protected function getSitemapId(): string
+    protected function getSitemapId(): int
     {
         if (empty($this->sitemapId)) {
             $widgets = (array) $this->database->getRecords(
@@ -335,7 +335,7 @@ class CacheBuilder
             }
         }
 
-        return $this->sitemapId;
+        return (int) $this->sitemapId;
     }
 
     /**
