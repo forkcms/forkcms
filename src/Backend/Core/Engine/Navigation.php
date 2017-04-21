@@ -80,7 +80,9 @@ final class Navigation extends Base\Object
      */
     private function getNavigationItemForCurrentlyAuthenticatedUser(array $navigationItem): array
     {
-        if (!isset($navigationItem['url'], $navigationItem['label'])) {
+        if (!isset($navigationItem['url'], $navigationItem['label'])
+            || empty($navigationItem['url'])
+            || empty($navigationItem['label'])) {
             return [];
         }
 
