@@ -37,7 +37,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE m.url = ? AND i.language = ? AND i.hidden = ?
              ORDER BY i.sequence',
-            array((string) $url, LANGUAGE, 'N')
+            array($url, LANGUAGE, 'N')
         );
     }
 
@@ -300,7 +300,7 @@ class Model implements FrontendTagsInterface
     {
         FrontendModel::getContainer()->get('database')->execute(
             'UPDATE faq_questions SET num_views = num_views + 1 WHERE id = ?',
-            array((int) $id)
+            array($id)
         );
     }
 
@@ -376,14 +376,14 @@ class Model implements FrontendTagsInterface
                 'UPDATE faq_questions
                  SET num_usefull_yes = num_usefull_yes + 1
                  WHERE id = ?',
-                array((int) $id)
+                array($id)
             );
         } else {
             $db->execute(
                 'UPDATE faq_questions
                  SET num_usefull_no = num_usefull_no + 1
                  WHERE id = ?',
-                array((int) $id)
+                array($id)
             );
         }
 
@@ -393,14 +393,14 @@ class Model implements FrontendTagsInterface
                 'UPDATE faq_questions
                  SET num_usefull_yes = num_usefull_yes - 1
                  WHERE id = ?',
-                array((int) $id)
+                array($id)
             );
         } elseif ($previousFeedback !== null) {
             $db->execute(
                 'UPDATE faq_questions
                  SET num_usefull_no = num_usefull_no - 1
                  WHERE id = ?',
-                array((int) $id)
+                array($id)
             );
         }
     }
