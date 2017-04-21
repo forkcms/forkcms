@@ -7,7 +7,7 @@
       {% block widget_alerts %}
         <div class="widget-alerts">
           {% if successMessage %}
-            {{ alerts.alert('success', successMessage, false, formName) }}
+            {{ alerts.alert('success', successMessage|raw, false, formName) }}
           {% endif %}
           {% if formBuilderError %}
             {{ alerts.alert('danger', formBuilderError, false, formName) }}
@@ -40,7 +40,7 @@
                       {% if field.simple %}
                         <div class="form-group{% if field.error %} has-error{% endif %}">
                           <label class="control-label" for="{{ field.name }}">
-                            {{ field.label }}{% if field.required %}
+                            {{ field.label|raw }}{% if field.required %}
                             <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>{% endif %}
                           </label>
                           {{ field.html|raw }}
@@ -52,13 +52,13 @@
                       {% if field.multiple %}
                         <div class="form-group{% if field.error %} has-error{% endif %}">
                           <p class="control-label">
-                            {{ field.label }}{% if field.required %}
+                            {{ field.label|raw }}{% if field.required %}
                             <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>{% endif %}
                           </p>
                           {% for checkbox in field.html %}
                             <div class="checkbox">
-                              <label for="{{ checkbox.id }}">
-                                {{ checkbox.field|raw }} {{ checkbox.label }}
+                              <label for="{{ checkbox.id|raw }}">
+                                {{ checkbox.field|raw }} {{ checkbox.label|raw }}
                               </label>
                             </div>
                           {% endfor %}

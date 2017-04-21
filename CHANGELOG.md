@@ -1,3 +1,14 @@
+4.5.3 (2017-04-13)
+------------------
+
+Bugfixes:
+
+* Core: Fix the htaccess so ckfinder works again [#2025](https://github.com/forkcms/forkcms/pull/2025)
+* Core: Make sure SpoonSession is initialised before starting symfony session [#2023](https://github.com/forkcms/forkcms/pull/2023)
+* Blog: Fix unpublished posts showing up in the pager of blog detail [#2024](https://github.com/forkcms/forkcms/pull/2024)
+* FormBuilder: Fix formbuilder problem with label and checkbox [#2026](https://github.com/forkcms/forkcms/pull/2026)
+
+
 4.5.2 (2017-03-22)
 ------------------
 Security:
