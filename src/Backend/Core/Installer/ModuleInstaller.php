@@ -41,7 +41,7 @@ class ModuleInstaller
      *
      * @var array
      */
-    private $defaultExtras;
+    private $defaultExtras = [];
 
     /**
      * The frontend language(s)
@@ -803,7 +803,7 @@ class ModuleInstaller
                 $block['extra_id'] = $block['extra_id'] ?? null;
                 $block['visible'] = $block['visible'] ?? 'Y';
                 $block['sequence'] = $block['sequence'] ?? count($positions[$block['position']]) - 1;
-                $block['html'] = $block['html'] ?? $block['html'];
+                $block['html'] = $block['html'] ?? '';
 
                 // get the html from the template file if it is defined
                 if (!empty($block['html'])) {
@@ -926,21 +926,24 @@ class ModuleInstaller
     /**
      * Set a new navigation item.
      *
-     * @param int $parentId Id of the navigation item under we should add this.
+     * @param int|null $parentId Id of the navigation item under we should add this.
      * @param string $label Label for the item.
-     * @param string $url Url for the item. If omitted the first child is used.
+     * @param string|null $url Url for the item. If omitted the first child is used.
      * @param array $selectedFor Set selected when these actions are active.
      * @param int $sequence Sequence to use for this item.
      *
      * @return int
      */
     protected function setNavigation(
-        int $parentId,
+        $parentId,
         string $label,
-        string $url = '',
+        string $url = null,
         array $selectedFor = null,
         int $sequence = null
     ): int {
+        // if it is null we should cast it to int so we get a 0
+        $parentId = (int) $parentId;
+
         $sequence = $sequence ?? $this->getNextBackendNavigationSequence($parentId);
 
         // get the id for this url
