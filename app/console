@@ -42,6 +42,7 @@ $backend->initialize('Console');
 
 $application = new Application($kernel);
 $application->add(new \Console\Locale\ImportLocaleCommand());
+$application->add(new \Console\Thumbnails\GenerateThumbnailsCommand());
 if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
     $application->add(
         new \Console\Locale\EnableLocaleCommand(

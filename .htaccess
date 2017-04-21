@@ -32,6 +32,9 @@ deny from env=stayout
 ########## End - Common hacking tools and bandwidth hoggers block
 
 <IfModule mod_rewrite.c>
+	# set environment variable to let PHP know that urls are being rewritten
+	RewriteRule .* - [E=MOD_REWRITE:1]
+
 	# Protect against cross site tracing https://www.owasp.org/index.php/Cross_Site_Tracing
 	RewriteCond %{REQUEST_METHOD} ^TRACE
 	RewriteRule .* - [F]
@@ -40,7 +43,12 @@ deny from env=stayout
 	RewriteEngine On
 	RewriteBase /
 
+    # allow the ck connector
+    RewriteRule ^index\.php$ - [L]
+    RewriteRule src/Backend/Core/Js/ckfinder/core/connector/php/connector\.php - [L]
+
 	# forbidden folders
+    RewriteRule .*\.php - [F]
 	RewriteRule \.git - [F]
 	RewriteRule vendor/.* - [F]
 	RewriteRule bin/.* - [F]
@@ -48,7 +56,6 @@ deny from env=stayout
 	RewriteRule .*\.gitignore - [F]
 	RewriteRule \.editorconfig - [F]
 	RewriteRule \.travis.yml - [F]
-	RewriteRule autoload\.php - [F]
 	RewriteRule bower\.json - [F]
 	RewriteRule composer\.json - [F]
 	RewriteRule composer\.lock - [F]
@@ -57,11 +64,8 @@ deny from env=stayout
 	RewriteRule app/logs - [F]
 	RewriteRule app/config - [F]
 	RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
-	RewriteRule src/Frontend/Cache/Locale/.*\.php - [F]
-	RewriteRule src/Frontend/Cache/Navigation/.*\.php - [F]
 	RewriteRule src/Frontend/Cache/Search - [F]
 	RewriteRule src/Backend/Cache/CompiledTemplates - [F]
-	RewriteRule src/Backend/Cache/Locale/.*\.php - [F]
 
 	# redirect all trafic to https
 	# Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
@@ -83,9 +87,6 @@ deny from env=stayout
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule . index.php [NC,L]
-
-	# set environment variable to let PHP know that urls are being rewritten
-	RewriteRule .* - [E=MOD_REWRITE:1]
 </IfModule>
 
 # file caching in browser
