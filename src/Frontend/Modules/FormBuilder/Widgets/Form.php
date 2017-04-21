@@ -57,7 +57,7 @@ class Form extends FrontendBaseWidget
      *
      * @return string
      */
-    private function createAction()
+    private function createAction(): string
     {
         // pages
         $action = implode('/', $this->URL->getPages());

@@ -66,7 +66,7 @@ final class FormBuilderSubmittedMailSubscriber
      * @param array $form
      * @param array $fieldData
      * @param string $subject
-     * @param string|null $to
+     * @param string|array|null $to
      * @param bool $isConfirmationMail
      *
      * @return Swift_Mime_SimpleMessage
@@ -74,10 +74,10 @@ final class FormBuilderSubmittedMailSubscriber
     private function getMessage(
         array $form,
         array $fieldData,
-        $subject = null,
+        string $subject = null,
         $to = null,
-        $isConfirmationMail = false
-    ) {
+        bool $isConfirmationMail = false
+    ) : Swift_Mime_SimpleMessage {
         if ($subject === null) {
             $subject = Language::getMessage('FormBuilderSubject');
         }
@@ -92,7 +92,7 @@ final class FormBuilderSubmittedMailSubscriber
                     'sentOn' => time(),
                     'name' => $form['name'],
                     'fields' => array_map(
-                        function (array $field) {
+                        function (array $field) : \Swift_Mime_SimpleMessage{
                             $field['value'] = html_entity_decode($field['value']);
 
                             return $field;
@@ -131,10 +131,10 @@ final class FormBuilderSubmittedMailSubscriber
      *
      * @return array
      */
-    protected function getEmailFields($data)
+    protected function getEmailFields(array $data): array
     {
         return array_map(
-            function ($item) {
+            function ($item) : array{
                 $value = unserialize($item['value']);
 
                 return array(

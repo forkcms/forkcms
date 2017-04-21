@@ -16,10 +16,8 @@ class Model
      *
      * @return array
      */
-    public static function get($id)
+    public static function get(string $id): array
     {
-        $id = (int) $id;
-
         // get form
         $form = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.id, i.email_subject, i.email_template, i.language, i.method, i.name, i.email,
@@ -47,7 +45,7 @@ class Model
      *
      * @return array
      */
-    public static function getFields($id)
+    public static function getFields(int $id): array
     {
         // get fields
         $fields = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -55,7 +53,7 @@ class Model
              FROM forms_fields AS i
              WHERE i.form_id = ?
              ORDER BY i.sequence ASC',
-            (int) $id,
+            $id,
             'id'
         );
 
@@ -101,7 +99,7 @@ class Model
      *
      * @return int
      */
-    public static function insertData(array $data)
+    public static function insertData(array $data): int
     {
         return FrontendModel::getContainer()->get('database')->insert('forms_data', $data);
     }
@@ -113,7 +111,7 @@ class Model
      *
      * @return int
      */
-    public static function insertDataField(array $data)
+    public static function insertDataField(array $data): int
     {
         return FrontendModel::getContainer()->get('database')->insert('forms_data_fields', $data);
     }
@@ -125,9 +123,9 @@ class Model
      *
      * @return string The jQuery date format
      */
-    public static function convertPHPDateToJquery($php_format)
+    public static function convertPHPDateToJquery(string $phpFormat): string
     {
-        $SYMBOLS_MATCHING = array(
+        $symbolsMatching = array(
             // Day
             'd' => 'dd',
             'D' => 'D',
@@ -162,33 +160,33 @@ class Model
             's' => '',
             'u' => '',
         );
-        $jqueryui_format = '';
+        $jqueryuiFormat = '';
         $escaping = false;
-        for ($i = 0; $i < mb_strlen($php_format); ++$i) {
-            $char = $php_format[$i];
+        for ($i = 0; $i < mb_strlen($phpFormat); ++$i) {
+            $char = $phpFormat[$i];
             if ($char === '\\') {
                 // PHP date format escaping character
 
                 ++$i;
                 if ($escaping) {
-                    $jqueryui_format .= $php_format[$i];
+                    $jqueryuiFormat .= $phpFormat[$i];
                 } else {
-                    $jqueryui_format .= '\'' . $php_format[$i];
+                    $jqueryuiFormat .= '\'' . $phpFormat[$i];
                 }
                 $escaping = true;
             } else {
                 if ($escaping) {
-                    $jqueryui_format .= "'";
+                    $jqueryuiFormat .= "'";
                     $escaping = false;
                 }
-                if (isset($SYMBOLS_MATCHING[$char])) {
-                    $jqueryui_format .= $SYMBOLS_MATCHING[$char];
+                if (isset($symbolsMatching[$char])) {
+                    $jqueryuiFormat .= $symbolsMatching[$char];
                 } else {
-                    $jqueryui_format .= $char;
+                    $jqueryuiFormat .= $char;
                 }
             }
         }
 
-        return $jqueryui_format;
+        return $jqueryuiFormat;
     }
 }
