@@ -88,7 +88,7 @@ class AjaxAction extends KernelLoader
         return new Response(
             json_encode($this->content),
             $this->content['code'] ?? self::OK,
-            array('content-type' => 'application/json')
+            ['content-type' => 'application/json']
         );
     }
 
@@ -112,7 +112,7 @@ class AjaxAction extends KernelLoader
      */
     public function output(int $statusCode, $data = null, string $message = null)
     {
-        $this->content = array('code' => $statusCode, 'data' => $data, 'message' => $message);
+        $this->content = ['code' => $statusCode, 'data' => $data, 'message' => $message];
     }
 
     /**

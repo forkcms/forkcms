@@ -65,7 +65,7 @@ class ModulesSettings
             'INSERT INTO modules_settings(module, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array($module, $key, $valueToStore, $valueToStore)
+            [$module, $key, $valueToStore, $valueToStore]
         );
 
         /*
@@ -79,7 +79,7 @@ class ModulesSettings
          * & cache being regenerated while the other is being saved, it will
          * be cleared again after saving the new setting!
          */
-        $this->cache->deleteItems(array('settings'));
+        $this->cache->deleteItems(['settings']);
     }
 
     /**
@@ -93,10 +93,10 @@ class ModulesSettings
         $this->database->delete(
             'modules_settings',
             'module = :module and name = :name',
-            array(
+            [
                 'module' => $module,
                 'name' => $key,
-            )
+            ]
         );
 
         /*
@@ -110,7 +110,7 @@ class ModulesSettings
          * & cache being regenerated while the other is being saved, it will
          * be cleared again after saving the new setting!
          */
-        $this->cache->deleteItems(array('settings'));
+        $this->cache->deleteItems(['settings']);
     }
 
     /**
@@ -137,7 +137,7 @@ class ModulesSettings
             return $settings[$module];
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -174,7 +174,7 @@ class ModulesSettings
         );
 
         // loop settings & unserialize the values
-        $groupedSettings = array();
+        $groupedSettings = [];
         foreach ($settings as $row) {
             $groupedSettings[$row['module']][$row['name']] = unserialize(
                 $row['value']

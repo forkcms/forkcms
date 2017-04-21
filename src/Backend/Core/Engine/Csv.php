@@ -25,6 +25,7 @@ class Csv extends \SpoonFileCSV
      * @param array $array The array to convert.
      * @param array $columns The column names you want to use.
      * @param array $excludeColumns The columns you want to exclude.
+     *
      * @throws RedirectException
      */
     public static function outputCSV(

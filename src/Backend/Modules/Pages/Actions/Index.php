@@ -60,34 +60,34 @@ class Index extends BackendBaseActionIndex
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
             BackendPagesModel::QRY_DATAGRID_BROWSE_DRAFTS,
-            array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage())
+            ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
         );
 
         // hide columns
-        $this->dgDrafts->setColumnsHidden(array('revision_id'));
+        $this->dgDrafts->setColumnsHidden(['revision_id']);
 
         // disable paging
         $this->dgDrafts->setPaging(false);
 
         // set column functions
         $this->dgDrafts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
+            [new BackendDataGridFunctions(), 'getUser'],
+            ['[user_id]'],
             'user_id',
             true
         );
         $this->dgDrafts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[edited_on]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[edited_on]'],
             'edited_on'
         );
 
         // set headers
         $this->dgDrafts->setHeaderLabels(
-            array(
+            [
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
                  'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
-            )
+            ]
         );
 
         // check if allowed to edit
@@ -117,33 +117,33 @@ class Index extends BackendBaseActionIndex
         // create dgRecentlyEdited
         $this->dgRecentlyEdited = new BackendDataGridDB(
             BackendPagesModel::QRY_BROWSE_RECENT,
-            array('active', BL::getWorkingLanguage(), 7)
+            ['active', BL::getWorkingLanguage(), 7]
         );
 
         // disable paging
         $this->dgRecentlyEdited->setPaging(false);
 
         // hide columns
-        $this->dgRecentlyEdited->setColumnsHidden(array('id'));
+        $this->dgRecentlyEdited->setColumnsHidden(['id']);
 
         // set functions
         $this->dgRecentlyEdited->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
+            [new BackendDataGridFunctions(), 'getUser'],
+            ['[user_id]'],
             'user_id'
         );
         $this->dgRecentlyEdited->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'),
+            [new BackendDataGridFunctions(), 'getTimeAgo'],
+            ['[edited_on]'],
             'edited_on'
         );
 
         // set headers
         $this->dgRecentlyEdited->setHeaderLabels(
-            array(
+            [
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
                  'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
-            )
+            ]
         );
 
         // check if allowed to edit

@@ -21,7 +21,7 @@ class User
      *
      * @var array
      */
-    private $groups = array();
+    private $groups = [];
 
     /**
      * Is the user-object a valid one? As in: is the user authenticated
@@ -63,7 +63,7 @@ class User
      *
      * @var array
      */
-    private $settings = array();
+    private $settings = [];
 
     /**
      * The users id
@@ -211,7 +211,7 @@ class User
              LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
              WHERE u.id = ?
              LIMIT 1',
-            array(\SpoonSession::getSessionId(), $userId)
+            [\SpoonSession::getSessionId(), $userId]
         );
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation
@@ -235,7 +235,7 @@ class User
             'SELECT us.name, us.value
              FROM users_settings AS us
              WHERE us.user_id = ?',
-            array($userId)
+            [$userId]
         );
 
         // loop settings and store them in the object
@@ -255,7 +255,7 @@ class User
             'SELECT group_id
              FROM users_groups
              WHERE user_id = ?',
-            array($this->userId)
+            [$this->userId]
         );
     }
 
@@ -284,7 +284,7 @@ class User
              LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
              WHERE u.email = ?
              LIMIT 1',
-            array(\SpoonSession::getSessionId(), $email)
+            [\SpoonSession::getSessionId(), $email]
         );
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation
@@ -313,7 +313,7 @@ class User
             'INSERT INTO users_settings(user_id, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array($this->getUserId(), $key, $valueToStore, $valueToStore)
+            [$this->getUserId(), $key, $valueToStore, $valueToStore]
         );
 
         // cache setting

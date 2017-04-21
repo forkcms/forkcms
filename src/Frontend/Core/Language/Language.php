@@ -22,49 +22,49 @@ class Language
     /**
      * @var array
      */
-    private static $act = array();
+    private static $act = [];
 
     /**
      * @var array
      */
-    private static $err = array();
+    private static $err = [];
 
     /**
      * @var array
      */
-    private static $lbl = array();
+    private static $lbl = [];
 
     /**
      * @var array
      */
-    private static $msg = array();
+    private static $msg = [];
 
     /**
      * @var array
      */
-    private static $fallbackAct = array();
+    private static $fallbackAct = [];
 
     /**
      * @var array
      */
-    private static $fallbackErr = array();
+    private static $fallbackErr = [];
 
     /**
      * @var array
      */
-    private static $fallbackLbl = array();
+    private static $fallbackLbl = [];
 
     /**
      * @var array
      */
-    private static $fallbackMsg = array();
+    private static $fallbackMsg = [];
 
     /**
      * The possible languages
      *
      * @var array
      */
-    private static $languages = array('active' => array(), 'possible_redirect' => array());
+    private static $languages = ['active' => [], 'possible_redirect' => []];
 
     /**
      * Build the language files
@@ -160,7 +160,7 @@ class Language
 
         // preferred languages
         $acceptedLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-        $browserLanguages = array();
+        $browserLanguages = [];
 
         foreach ($acceptedLanguages as $language) {
             $qPos = mb_strpos($language, 'q=');

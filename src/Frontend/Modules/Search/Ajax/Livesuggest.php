@@ -55,13 +55,13 @@ class Livesuggest extends FrontendBaseAJAXAction
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 20,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
     /**
      * The requested page
@@ -336,7 +336,7 @@ class Livesuggest extends FrontendBaseAJAXAction
                 }
 
                 // add
-                $pagination['first'][] = array('url' => $url, 'label' => $i);
+                $pagination['first'][] = ['url' => $url, 'label' => $i];
             }
         }
 
@@ -353,7 +353,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             }
 
             // add
-            $pagination['pages'][] = array('url' => $url, 'label' => $i, 'current' => $current);
+            $pagination['pages'][] = ['url' => $url, 'label' => $i, 'current' => $current];
         }
 
         // show last pages?
@@ -372,7 +372,7 @@ class Livesuggest extends FrontendBaseAJAXAction
                 }
 
                 // add
-                $pagination['last'][] = array('url' => $url, 'label' => $i);
+                $pagination['last'][] = ['url' => $url, 'label' => $i];
             }
         }
 

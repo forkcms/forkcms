@@ -97,7 +97,7 @@ class Authentication
             'SELECT p.status
              FROM profiles AS p
              WHERE p.email = ? AND p.password = ?',
-            array($email, $encryptedPassword)
+            [$email, $encryptedPassword]
         );
 
         return empty($loginStatus) ? self::LOGIN_INVALID : $loginStatus;
@@ -144,7 +144,7 @@ class Authentication
                 // update session date
                 FrontendModel::getContainer()->get('database')->update(
                     'profiles_sessions',
-                    array('date' => FrontendModel::getUTCDate()),
+                    ['date' => FrontendModel::getUTCDate()],
                     'session_id = ?',
                     $sessionId
                 );
@@ -184,11 +184,11 @@ class Authentication
                 // update session record
                 FrontendModel::getContainer()->get('database')->update(
                     'profiles_sessions',
-                    array(
+                    [
                         'session_id' => \SpoonSession::getSessionId(),
                         'secret_key' => $profileSecret,
                         'date' => FrontendModel::getUTCDate(),
-                    ),
+                    ],
                     'secret_key = ?',
                     $secret
                 );
@@ -200,7 +200,7 @@ class Authentication
                 \SpoonSession::set('frontend_profile_logged_in', true);
 
                 // update last login
-                FrontendProfilesModel::update($profileId, array('last_login' => FrontendModel::getUTCDate()));
+                FrontendProfilesModel::update($profileId, ['last_login' => FrontendModel::getUTCDate()]);
 
                 // new user object
                 self::$profile = new FrontendProfilesProfile($profileId);
@@ -257,16 +257,16 @@ class Authentication
         // insert new session record
         FrontendModel::getContainer()->get('database')->insert(
             'profiles_sessions',
-            array(
+            [
                 'profile_id' => $profileId,
                 'session_id' => \SpoonSession::getSessionId(),
                 'secret_key' => $secretKey,
                 'date' => FrontendModel::getUTCDate(),
-            )
+            ]
         );
 
         // update last login
-        FrontendProfilesModel::update($profileId, array('last_login' => FrontendModel::getUTCDate()));
+        FrontendProfilesModel::update($profileId, ['last_login' => FrontendModel::getUTCDate()]);
 
         // load the profile object
         self::$profile = new FrontendProfilesProfile($profileId);
@@ -281,7 +281,7 @@ class Authentication
         FrontendModel::getContainer()->get('database')->delete(
             'profiles_sessions',
             'session_id = ?',
-            array(\SpoonSession::getSessionId())
+            [\SpoonSession::getSessionId()]
         );
 
         // set is_logged_in to false
@@ -309,6 +309,6 @@ class Authentication
         FrontendProfilesModel::setSetting($profileId, 'salt', $salt);
 
         // update password
-        FrontendProfilesModel::update($profileId, array('password' => $encryptedPassword));
+        FrontendProfilesModel::update($profileId, ['password' => $encryptedPassword]);
     }
 }

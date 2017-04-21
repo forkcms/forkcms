@@ -55,7 +55,7 @@ class Installer extends ModuleInstaller
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $this->setNavigation($navigationModulesId, 'Location', 'location/index', array('location/add', 'location/edit'));
+        $this->setNavigation($navigationModulesId, 'Location', 'location/index', ['location/add', 'location/edit']);
 
         // settings navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');

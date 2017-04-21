@@ -77,9 +77,9 @@ class ReinstallCommand extends ContainerAwareCommand
         $command = $this->getApplication()->find('forkcms:cache:clear');
         $command->run(
             new ArrayInput(
-                array(
-                    'forkcms:cache:clear'
-                )
+                [
+                    'forkcms:cache:clear',
+                ]
             ),
             $output
         );

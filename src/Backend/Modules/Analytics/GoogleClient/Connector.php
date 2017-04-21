@@ -194,12 +194,12 @@ final class Connector
             return $item->get();
         }
 
-        $data = array(
+        $data = [
             'metrics' => $this->getMetrics($startDate, $endDate),
             'visitGraphData' => $this->collectVisitGraphData($startDate, $endDate),
             'pageViews' => $this->collectMostVisitedPagesData($startDate, $endDate),
             'sourceGraphData' => $this->collectSourceGraphData($startDate, $endDate),
-        );
+        ];
 
         $item->set($data);
         $this->cache->save($item);
@@ -240,16 +240,16 @@ final class Connector
             $startDate,
             $endDate,
             'ga:pageviews,ga:users',
-            array(
+            [
                 'dimensions' => 'ga:date',
                 'sort' => 'ga:date',
-            )
+            ]
         );
 
         // make sure our column headers are the metric names, not just numbers
-        $namedRows = array();
+        $namedRows = [];
         foreach ((array) $visitGraphData['rows'] as $dataRow) {
-            $namedRow = array();
+            $namedRow = [];
             foreach ($dataRow as $key => $value) {
                 $headerName = $visitGraphData['columnHeaders'][$key]['name'];
 
@@ -279,16 +279,16 @@ final class Connector
             $startDate,
             $endDate,
             'ga:pageviews',
-            array(
+            [
                 'dimensions' => 'ga:medium',
                 'sort' => '-ga:pageviews',
-            )
+            ]
         );
 
         // make sure our column headers are the metric names, not just numbers
-        $namedRows = array();
+        $namedRows = [];
         foreach ((array) $sourceGraphData['rows'] as $dataRow) {
-            $namedRow = array();
+            $namedRow = [];
             foreach ($dataRow as $key => $value) {
                 $headerName = $sourceGraphData['columnHeaders'][$key]['name'];
                 $namedRow[str_replace(':', '_', $headerName)] = $value;
@@ -313,17 +313,17 @@ final class Connector
             $startDate,
             $endDate,
             'ga:pageviews',
-            array(
+            [
                 'dimensions' => 'ga:pagePath',
                 'sort' => '-ga:pageviews',
                 'max-results' => 20,
-            )
+            ]
         );
 
         // make sure our column headers are the metric names, not just numbers
-        $namedRows = array();
+        $namedRows = [];
         foreach ((array) $sourceGraphData['rows'] as $dataRow) {
-            $namedRow = array();
+            $namedRow = [];
             foreach ($dataRow as $key => $value) {
                 $headerName = $sourceGraphData['columnHeaders'][$key]['name'];
                 $namedRow[str_replace(':', '_', $headerName)] = $value;
@@ -348,7 +348,7 @@ final class Connector
         int $startDate,
         int $endDate,
         string $metrics,
-        array $optParams = array()
+        array $optParams = []
     ): Google_Service_Analytics_GaData {
         return $this->analytics->data_ga->get(
             'ga:' . $this->settings->get('Analytics', 'profile'),

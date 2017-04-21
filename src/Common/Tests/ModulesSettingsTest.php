@@ -62,13 +62,13 @@ class ModulesSettingsTest extends TestCase
         );
 
         self::assertEquals(
-            array(
+            [
                 'theme' => 'Fork',
-            ),
+            ],
             $modulesSettings->getForModule('Core')
         );
         self::assertEquals(
-            array(),
+            [],
             $modulesSettings->getForModule('Fake')
         );
     }
@@ -83,13 +83,13 @@ class ModulesSettingsTest extends TestCase
         $databaseMock
             ->expects(self::atLeastOnce())
             ->method('getRecords')
-            ->willReturn(array(
-                array(
+            ->willReturn([
+                [
                     'module' => 'Core',
                     'name' => 'theme',
                     'value' => serialize('Fork'),
-                ),
-            ))
+                ],
+            ])
         ;
 
         return $databaseMock;

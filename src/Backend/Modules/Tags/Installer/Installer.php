@@ -42,7 +42,7 @@ class Installer extends ModuleInstaller
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $this->setNavigation($navigationModulesId, 'Tags', 'tags/index', array('tags/edit'));
+        $this->setNavigation($navigationModulesId, 'Tags', 'tags/index', ['tags/edit']);
 
         // add extra
         $tagsID = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Tags', null, null, false, 30);
@@ -52,7 +52,7 @@ class Installer extends ModuleInstaller
         // get search extra id
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
-            array('Search', ModuleExtraType::WIDGET, 'Form')
+            ['Search', ModuleExtraType::WIDGET, 'Form']
         );
 
         // loop languages
@@ -65,19 +65,19 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($tagsID, $language)
+                [$tagsID, $language]
             )
             ) {
                 // insert contact page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => 'Tags',
                         'type' => 'root',
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $tagsID, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $tagsID, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
             }
         }

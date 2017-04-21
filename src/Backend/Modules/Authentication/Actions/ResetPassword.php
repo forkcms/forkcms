@@ -85,7 +85,7 @@ class ResetPassword extends BackendBaseActionAdd
                 BackendUsersModel::deleteResetPasswordSettings($userId);
 
                 // redirect to the login form, with a timeout error
-                $this->redirect(BackendModel::createURLForAction('Index', null, null, array('reset' => 'timeout')));
+                $this->redirect(BackendModel::createURLForAction('Index', null, null, ['reset' => 'timeout']));
             }
 
             // check if the provided key matches the one in the user record
@@ -107,8 +107,8 @@ class ResetPassword extends BackendBaseActionAdd
         $this->frm->addPassword('backend_new_password');
         $this->frm->addPassword('backend_new_password_repeated');
 
-        $this->frm->getField('backend_new_password')->setAttributes(array('autocomplete' => 'off'));
-        $this->frm->getField('backend_new_password_repeated')->setAttributes(array('autocomplete' => 'off'));
+        $this->frm->getField('backend_new_password')->setAttributes(['autocomplete' => 'off']);
+        $this->frm->getField('backend_new_password_repeated')->setAttributes(['autocomplete' => 'off']);
     }
 
     /**
@@ -144,12 +144,12 @@ class ResetPassword extends BackendBaseActionAdd
                 // attempt to login the user
                 if (!BackendAuthentication::loginUser($this->user->getEmail(), $newPassword->getValue())) {
                     // redirect to the login form with an error
-                    $this->redirect(BackendModel::createURLForAction('Index', null, null, array('login' => 'failed')));
+                    $this->redirect(BackendModel::createURLForAction('Index', null, null, ['login' => 'failed']));
                 }
 
                 // redirect to the login form
                 $this->redirect(
-                    BackendModel::createURLForAction('Index', 'Dashboard', null, array('password_reset' => 'success'))
+                    BackendModel::createURLForAction('Index', 'Dashboard', null, ['password_reset' => 'success'])
                 );
             }
         }

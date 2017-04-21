@@ -16,6 +16,7 @@ if (!is_dir(__DIR__ . '/vendor')) {
          installed you should run: <code>composer install</code>. If you
          don\'t have composer installed you really should, see
          http://getcomposer.org for more information';
+
     return;
 }
 
@@ -43,10 +44,12 @@ if (!file_exists($parametersFile)) {
                  <a href="http://www.fork-cms.com/community/documentation/detail/installation/webservers">webservers</a>
                  for further information. <a href="?skiphtaccess">Skip .htaccess
                  check</a>';
+
             return;
         }
 
         header('Location: /install');
+
         return;
     }
 }

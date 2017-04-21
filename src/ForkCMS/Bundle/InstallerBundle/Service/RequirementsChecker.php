@@ -129,7 +129,7 @@ class RequirementsChecker
     protected function checkPhpExtensions()
     {
         $pcreVersion = defined('PCRE_VERSION') ? (float) PCRE_VERSION : null;
-        $extensionsArray = array(
+        $extensionsArray = [
             'extensionCURL' => extension_loaded('curl'),
             'extensionLibXML' => extension_loaded('libxml'),
             'extensionDOM' => extension_loaded('dom'),
@@ -143,7 +143,7 @@ class RequirementsChecker
             'extensionJSON' => extension_loaded('json'),
             'extensionPCRE' => (extension_loaded('pcre') && (null !== $pcreVersion && $pcreVersion > 8.0)),
             'extensionIntl' => extension_loaded('intl'),
-        );
+        ];
 
         // not installed extensions give an error
         foreach ($extensionsArray as $errorName => $requirement) {

@@ -125,18 +125,18 @@ class ConnectorTest extends TestCase
         );
 
         self::assertEquals(
-            array(
-                array(
+            [
+                [
                     'ga_date' => '1431295200',
                     'ga_pageviews' => '0',
                     'ga_users' => '0',
-                ),
-                array(
+                ],
+                [
                     'ga_date' => '1431381600',
                     'ga_pageviews' => '1',
                     'ga_users' => '1',
-                ),
-            ),
+                ],
+            ],
             $connector->getVisitorsGraphData(
                 strtotime('-1 day', mktime(0, 0, 0)),
                 mktime(0, 0, 0)
@@ -153,16 +153,16 @@ class ConnectorTest extends TestCase
         );
 
         self::assertEquals(
-            array(
-                array(
+            [
+                [
                     'ga_medium' => '(none)',
                     'ga_pageviews' => '8',
-                ),
-                array(
+                ],
+                [
                     'ga_medium' => 'organic',
                     'ga_pageviews' => '6',
-                ),
-            ),
+                ],
+            ],
             $connector->getSourceGraphData(
                 strtotime('-1 day', mktime(0, 0, 0)),
                 mktime(0, 0, 0)
@@ -179,16 +179,16 @@ class ConnectorTest extends TestCase
         );
 
         self::assertEquals(
-            array(
-                array(
+            [
+                [
                     'ga_pagePath' => '/en',
                     'ga_pageviews' => '15',
-                ),
-                array(
+                ],
+                [
                     'ga_pagePath' => '/en/blog',
                     'ga_pageviews' => '8',
-                ),
-            ),
+                ],
+            ],
             $connector->getMostVisitedPagesData(
                 strtotime('-1 day', mktime(0, 0, 0)),
                 mktime(0, 0, 0)
@@ -213,50 +213,50 @@ class ConnectorTest extends TestCase
             ->getMock()
         ;
 
-        $metricsReturnMock = array(
-            'totalsForAllResults' => array(
+        $metricsReturnMock = [
+            'totalsForAllResults' => [
                 'ga:pageviews' => 1,
                 'ga:users' => 2,
                 'ga:pageviewsPerSession' => 3.14,
                 'ga:avgSessionDuration' => 1.02,
                 'ga:percentNewSessions' => 78.23,
                 'ga:bounceRate' => 23.25,
-            ),
-        );
+            ],
+        ];
 
-        $visitGraphDataMock = array(
-            'rows' => array(
-                array('20150511', '0', '0'),
-                array('20150512', '1', '1'),
-            ),
-            'columnHeaders' => array(
-                array('name' => 'ga:date'),
-                array('name' => 'ga:pageviews'),
-                array('name' => 'ga:users'),
-            ),
-        );
+        $visitGraphDataMock = [
+            'rows' => [
+                ['20150511', '0', '0'],
+                ['20150512', '1', '1'],
+            ],
+            'columnHeaders' => [
+                ['name' => 'ga:date'],
+                ['name' => 'ga:pageviews'],
+                ['name' => 'ga:users'],
+            ],
+        ];
 
-        $sourceGraphDataMock = array(
-            'rows' => array(
-                array('(none)', '8'),
-                array('organic', '6'),
-            ),
-            'columnHeaders' => array(
-                array('name' => 'ga:medium'),
-                array('name' => 'ga:pageviews'),
-            ),
-        );
+        $sourceGraphDataMock = [
+            'rows' => [
+                ['(none)', '8'],
+                ['organic', '6'],
+            ],
+            'columnHeaders' => [
+                ['name' => 'ga:medium'],
+                ['name' => 'ga:pageviews'],
+            ],
+        ];
 
-        $pageViewsDataMock = array(
-            'rows' => array(
-                array('/en', '15'),
-                array('/en/blog', '8'),
-            ),
-            'columnHeaders' => array(
-                array('name' => 'ga:pagePath'),
-                array('name' => 'ga:pageviews'),
-            ),
-        );
+        $pageViewsDataMock = [
+            'rows' => [
+                ['/en', '15'],
+                ['/en/blog', '8'],
+            ],
+            'columnHeaders' => [
+                ['name' => 'ga:pagePath'],
+                ['name' => 'ga:pageviews'],
+            ],
+        ];
 
         $dataGateway->method('get')
             ->will(self::onConsecutiveCalls(

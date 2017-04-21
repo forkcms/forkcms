@@ -35,19 +35,19 @@ class Statistics extends Action
         );
         $dataGrid->setColumnsHidden(['data']);
         $dataGrid->addColumn('referrer', BL::lbl('Referrer'));
-        $dataGrid->setHeaderLabels(array('time' => \SpoonFilter::ucfirst(BL::lbl('SearchedOn'))));
+        $dataGrid->setHeaderLabels(['time' => \SpoonFilter::ucfirst(BL::lbl('SearchedOn'))]);
 
         // set column function
-        $dataGrid->setColumnFunction(array(__CLASS__, 'setReferrer'), '[data]', 'referrer');
+        $dataGrid->setColumnFunction([__CLASS__, 'setReferrer'], '[data]', 'referrer');
         $dataGrid->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[time]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[time]'],
             'time',
             true
         );
         $dataGrid->setColumnFunction('htmlspecialchars', ['[term]'], 'term');
 
-        $dataGrid->setSortingColumns(array('time', 'term'), 'time');
+        $dataGrid->setSortingColumns(['time', 'term'], 'time');
         $dataGrid->setSortParameter('desc');
 
         $this->tpl->assign('dataGrid', $dataGrid->getContent());

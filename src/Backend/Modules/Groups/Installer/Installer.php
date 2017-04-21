@@ -26,12 +26,12 @@ class Installer extends ModuleInstaller
         // build groupsetting
         $groupSetting['group_id'] = 1;
         $groupSetting['name'] = 'dashboard_sequence';
-        $groupSetting['value'] = serialize(array());
+        $groupSetting['value'] = serialize([]);
 
         // build usersetting
         $userSetting['user_id'] = 1;
         $userSetting['name'] = 'dashboard_sequence';
-        $userSetting['value'] = serialize(array());
+        $userSetting['value'] = serialize([]);
 
         // insert settings
         $db->insert('groups_settings', $groupSetting);
@@ -69,10 +69,10 @@ class Installer extends ModuleInstaller
 
         // set navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
-        $this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', array(
+        $this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', [
             'groups/add',
             'groups/edit',
-        ), 5);
+        ], 5);
 
         // insert admins dashboard sequence
         $this->insertDashboardSequence();

@@ -30,10 +30,10 @@ class Move extends BackendBaseAJAXAction
         $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
         $droppedOn = \SpoonFilter::getPostValue('dropped_on', null, -1, 'int');
         $typeOfDrop = \SpoonFilter::getPostValue('type', null, '');
-        $tree = \SpoonFilter::getPostValue('tree', array('main', 'meta', 'footer', 'root'), '');
+        $tree = \SpoonFilter::getPostValue('tree', ['main', 'meta', 'footer', 'root'], '');
 
         // init validation
-        $errors = array();
+        $errors = [];
 
         // validate
         if ($id === 0) {
@@ -51,7 +51,7 @@ class Move extends BackendBaseAJAXAction
 
         // got errors
         if (!empty($errors)) {
-            $this->output(self::BAD_REQUEST, array('errors' => $errors), 'not all fields were filled');
+            $this->output(self::BAD_REQUEST, ['errors' => $errors], 'not all fields were filled');
         } else {
             // get page
             $success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop, $tree);

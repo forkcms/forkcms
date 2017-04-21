@@ -76,7 +76,7 @@ class Email extends BackendBaseActionIndex
 
         if ($this->isGod) {
             $mailerType = $this->get('fork.settings')->get('Core', 'mailer_type', 'mail');
-            $this->frm->addDropdown('mailer_type', array('mail' => 'PHP\'s mail', 'smtp' => 'SMTP'), $mailerType);
+            $this->frm->addDropdown('mailer_type', ['mail' => 'PHP\'s mail', 'smtp' => 'SMTP'], $mailerType);
 
             // smtp settings
             $this->frm->addText('smtp_server', $this->get('fork.settings')->get('Core', 'smtp_server', ''));
@@ -85,7 +85,7 @@ class Email extends BackendBaseActionIndex
             $this->frm->addPassword('smtp_password', $this->get('fork.settings')->get('Core', 'smtp_password', ''));
             $this->frm->addDropdown(
                 'smtp_secure_layer',
-                array('no' => ucfirst(BL::lbl('None')), 'ssl' => 'SSL', 'tls' => 'TLS'),
+                ['no' => ucfirst(BL::lbl('None')), 'ssl' => 'SSL', 'tls' => 'TLS'],
                 $this->get('fork.settings')->get('Core', 'smtp_secure_layer', 'no')
             );
         }
@@ -134,26 +134,26 @@ class Email extends BackendBaseActionIndex
                 $this->get('fork.settings')->set(
                     'Core',
                     'mailer_from',
-                    array(
+                    [
                          'name' => $this->frm->getField('mailer_from_name')->getValue(),
                          'email' => $this->frm->getField('mailer_from_email')->getValue(),
-                    )
+                    ]
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'mailer_to',
-                    array(
+                    [
                          'name' => $this->frm->getField('mailer_to_name')->getValue(),
                          'email' => $this->frm->getField('mailer_to_email')->getValue(),
-                    )
+                    ]
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'mailer_reply_to',
-                    array(
+                    [
                          'name' => $this->frm->getField('mailer_reply_to_name')->getValue(),
                          'email' => $this->frm->getField('mailer_reply_to_email')->getValue(),
-                    )
+                    ]
                 );
 
                 if ($this->isGod) {

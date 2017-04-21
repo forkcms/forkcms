@@ -60,9 +60,9 @@ class AskOwnQuestion extends FrontendBaseWidget
     {
         // create form
         $this->frm = new FrontendForm('own_question', '#' . FL::getAction('OwnQuestion'));
-        $this->frm->addText('name')->setAttributes(array('required' => null));
-        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
-        $this->frm->addTextarea('message')->setAttributes(array('required' => null));
+        $this->frm->addText('name')->setAttributes(['required' => null]);
+        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->frm->addTextarea('message')->setAttributes(['required' => null]);
     }
 
     /**
@@ -120,9 +120,9 @@ class AskOwnQuestion extends FrontendBaseWidget
                 $to = $this->get('fork.settings')->get('Core', 'mailer_to');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message = Message::newInstance(sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']))
-                    ->setFrom(array($from['email'] => $from['name']))
-                    ->setTo(array($to['email'] => $to['name']))
-                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->setFrom([$from['email'] => $from['name']])
+                    ->setTo([$to['email'] => $to['name']])
+                    ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                     ->parseHtml(
                         '/Faq/Layout/Templates/Mails/OwnQuestion.html.twig',
                         $variables,

@@ -28,7 +28,7 @@ class DataGrid extends \SpoonDataGrid
      *
      * @var array
      */
-    private static $mapIcons = array(
+    private static $mapIcons = [
         'add' => 'fa-plus',
         'copy' => 'fa-copy',
         'edit' => 'fa-pencil',
@@ -43,7 +43,7 @@ class DataGrid extends \SpoonDataGrid
         'use_revision' => 'fa-file-o',
         'use_draft' => 'fa-file-o',
         'custom_fields' => 'fa-tasks',
-    );
+    ];
 
     /**
      * @param \SpoonDatagridSource $source
@@ -67,7 +67,7 @@ class DataGrid extends \SpoonDataGrid
             $this->setColumnsHidden(['id']);
 
             // our JS needs to know an id, so we can highlight it
-            $this->setRowAttributes(array('id' => 'row-[id]'));
+            $this->setRowAttributes(['id' => 'row-[id]']);
         }
 
         // set default sorting options
@@ -76,11 +76,11 @@ class DataGrid extends \SpoonDataGrid
         // add classes on headers
         foreach ($this->getColumns() as $column) {
             // set class
-            $this->setColumnHeaderAttributes($column, array('class' => $column));
+            $this->setColumnHeaderAttributes($column, ['class' => $column]);
 
             // set default label
             $this->setHeaderLabels(
-                array($column => \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($column))))
+                [$column => \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($column)))]
             );
         }
 
@@ -119,7 +119,7 @@ class DataGrid extends \SpoonDataGrid
         // known actions that should have a button
         if (in_array(
             $lowercasedName,
-            array('add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install')
+            ['add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install']
         )) {
             // rebuild value, it should have special markup
             $value =
@@ -132,7 +132,7 @@ class DataGrid extends \SpoonDataGrid
             $url = null;
         }
 
-        if (in_array($lowercasedName, array('use_revision', 'use_draft'))) {
+        if (in_array($lowercasedName, ['use_revision', 'use_draft'])) {
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $url . '" class="btn btn-default btn-xs">' .
@@ -150,7 +150,7 @@ class DataGrid extends \SpoonDataGrid
         // known actions
         if (in_array(
             $lowercasedName,
-            array(
+            [
                 'add',
                 'edit',
                 'delete',
@@ -161,17 +161,17 @@ class DataGrid extends \SpoonDataGrid
                 'install',
                 'use_revision',
                 'use_draft',
-            )
+            ]
         )) {
             // add special attributes for actions we know
             $this->setColumnAttributes(
                 $name,
-                array('class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name))
+                ['class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name)]
             );
         }
 
         // set header attributes
-        $this->setColumnHeaderAttributes($name, array('class' => $name));
+        $this->setColumnHeaderAttributes($name, ['class' => $name]);
     }
 
     /**
@@ -224,14 +224,14 @@ class DataGrid extends \SpoonDataGrid
         // set column attributes
         $this->setColumnAttributes(
             $name,
-            array(
+            [
                 'class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name),
                 'style' => 'width: 10%;',
-            )
+            ]
         );
 
         // set header attributes
-        $this->setColumnHeaderAttributes($name, array('class' => $name));
+        $this->setColumnHeaderAttributes($name, ['class' => $name]);
     }
 
     /**
@@ -240,7 +240,7 @@ class DataGrid extends \SpoonDataGrid
      */
     public function enableGreyingOut()
     {
-        $allowedColumns = array('status', 'hidden', 'visible', 'active', 'published');
+        $allowedColumns = ['status', 'hidden', 'visible', 'active', 'published'];
         $allColumns = $this->getColumns();
 
         foreach ($allowedColumns as $column) {
@@ -248,9 +248,9 @@ class DataGrid extends \SpoonDataGrid
             if (in_array($column, $allColumns)) {
                 $this->setColumnHidden($column);
                 $this->setRowFunction(
-                    array(DataGridFunctions::class, 'greyOut'),
-                    array($column, '[' . $column . ']'),
-                    array($column)
+                    [DataGridFunctions::class, 'greyOut'],
+                    [$column, '[' . $column . ']'],
+                    [$column]
                 );
             }
         }
@@ -274,7 +274,7 @@ class DataGrid extends \SpoonDataGrid
                         'jsDataGrid',
                         'sequenceByDragAndDrop',
                     ]
-                )
+                ),
             ]
         );
 
@@ -296,7 +296,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnAttributes('dragAndDropHandle', ['class' => 'dragAndDropHandle fork-data-grid-sortable']);
 
         // our JS needs to know an id, so we can send the new order
-        $this->setRowAttributes(array('data-id' => '[id]'));
+        $this->setRowAttributes(['data-id' => '[id]']);
     }
 
     /**
@@ -320,13 +320,13 @@ class DataGrid extends \SpoonDataGrid
     {
         // mass action was set
         if ($this->tpl->getAssignedValue('massAction') !== null
-            ||($this->getPaging() && $this->getNumResults() > $this->getPagingLimit())) {
+            || ($this->getPaging() && $this->getNumResults() > $this->getPagingLimit())) {
             $this->tpl->assign('footer', true);
         }
 
         // set the odd and even classes
-        $this->setOddRowAttributes(array('class' => 'odd'));
-        $this->setEvenRowAttributes(array('class' => 'even'));
+        $this->setOddRowAttributes(['class' => 'odd']);
+        $this->setEvenRowAttributes(['class' => 'even']);
 
         // enable greying out
         $this->enableGreyingOut();
@@ -448,9 +448,9 @@ class DataGrid extends \SpoonDataGrid
         // based on the function we should prepopulate the attributes array
         switch ($function) {
             // timeAgo
-            case array('DataGridFunctions', 'getTimeAgo'):
-                $attributes = array('class' => 'date');
-                $headerAttributes = array('class' => 'date');
+            case ['DataGridFunctions', 'getTimeAgo']:
+                $attributes = ['class' => 'date'];
+                $headerAttributes = ['class' => 'date'];
                 break;
         }
 
@@ -523,7 +523,7 @@ class DataGrid extends \SpoonDataGrid
 
             // set if needed
             if (!isset($attributes['id'])) {
-                $this->setAttributes(array('id' => 'table_' . time()));
+                $this->setAttributes(['id' => 'table_' . time()]);
             }
 
             // fetch the datagrid attributes
@@ -544,7 +544,7 @@ class DataGrid extends \SpoonDataGrid
 
             // set if needed
             if (!isset($attributes['id'])) {
-                $this->setAttributes(array('id' => 'table_' . time()));
+                $this->setAttributes(['id' => 'table_' . time()]);
             }
 
             // fetch the datagrid attributes
@@ -571,7 +571,7 @@ class DataGrid extends \SpoonDataGrid
                     null,
                     null,
                     null,
-                    array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'),
+                    ['offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'],
                     false
                 )
             );
@@ -636,7 +636,7 @@ class DataGrid extends \SpoonDataGrid
         $name = mb_strtolower($name);
 
         if (!isset(self::$mapIcons[$name])) {
-            return null;
+            return;
         }
 
         return self::$mapIcons[$name];

@@ -85,10 +85,10 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         // gender dropdown values
-        $genderValues = array(
+        $genderValues = [
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
             'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
-        );
+        ];
 
         // birthdate dropdown values
         $days = range(1, 31);
@@ -147,19 +147,19 @@ class Edit extends BackendBaseActionEdit
         // create the data grid
         $this->dgGroups = new BackendDataGridDB(
             BackendProfilesModel::QRY_DATAGRID_BROWSE_PROFILE_GROUPS,
-            array($this->profile['id'])
+            [$this->profile['id']]
         );
 
         // sorting columns
-        $this->dgGroups->setSortingColumns(array('group_name'), 'group_name');
+        $this->dgGroups->setSortingColumns(['group_name'], 'group_name');
 
         // disable paging
         $this->dgGroups->setPaging(false);
 
         // set column function
         $this->dgGroups->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[expires_on]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[expires_on]'],
             'expires_on',
             true
         );
@@ -359,12 +359,12 @@ class Edit extends BackendBaseActionEdit
                     // notify values
                     $notifyValues = array_merge(
                         $values,
-                        array(
+                        [
                             'id' => $this->id,
                             'first_name' => $txtFirstName->getValue(),
                             'last_name' => $txtLastName->getValue(),
                             'unencrypted_password' => $password,
-                        )
+                        ]
                     );
 
                     if (!isset($notifyValues['display_name'])) {

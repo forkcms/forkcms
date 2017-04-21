@@ -10,7 +10,6 @@ namespace Backend\Modules\Extensions\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
@@ -27,14 +26,14 @@ class EditThemeTemplate extends BackendBaseActionEdit
      *
      * @var array
      */
-    private $extras = array();
+    private $extras = [];
 
     /**
      * The position's names.
      *
      * @var array
      */
-    private $names = array();
+    private $names = [];
 
     /**
      * Execute the action
@@ -112,7 +111,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $defaultId = $this->get('fork.settings')->get('Pages', 'default_template');
 
         // build available themes
-        $themes = array();
+        $themes = [];
         foreach (BackendExtensionsModel::getThemes() as $theme) {
             $themes[$theme['value']] = $theme['label'];
         }
@@ -129,19 +128,19 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
         // if this is the default template we can't alter the active/default state
         if (($this->record['id'] == $defaultId)) {
-            $this->frm->getField('active')->setAttributes(array('disabled' => 'disabled'));
-            $this->frm->getField('default')->setAttributes(array('disabled' => 'disabled'));
+            $this->frm->getField('active')->setAttributes(['disabled' => 'disabled']);
+            $this->frm->getField('default')->setAttributes(['disabled' => 'disabled']);
         }
 
         // if the template is in use we cant alter the active state
         if (BackendExtensionsModel::isTemplateInUse($this->id)) {
-            $this->frm->getField('active')->setAttributes(array('disabled' => 'disabled'));
+            $this->frm->getField('active')->setAttributes(['disabled' => 'disabled']);
         }
 
         // init vars
-        $positions = array();
-        $blocks = array();
-        $widgets = array();
+        $positions = [];
+        $blocks = [];
+        $widgets = [];
         $extras = BackendExtensionsModel::getExtras();
 
         // loop extras to populate the default extras
@@ -164,13 +163,13 @@ class EditThemeTemplate extends BackendBaseActionEdit
         asort($widgets, SORT_STRING);
 
         // create array
-        $defaultExtras = array(
-            '' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
+        $defaultExtras = [
+            '' => [0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))],
             \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
-        );
+        ];
 
         // create default position field
-        $position = array();
+        $position = [];
         $position['i'] = 0;
         $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'form-control positionName', 'form-control danger positionName');
         $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'form-control positionBlock', 'form-control positionBlockError');
@@ -179,16 +178,16 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // content has been submitted: re-create submitted content rather than the db-fetched content
         if (isset($_POST['position_0'])) {
             // init vars
-            $this->names = array();
-            $this->extras = array();
+            $this->names = [];
+            $this->extras = [];
             $i = 1;
-            $errors = array();
+            $errors = [];
 
             // loop submitted positions
             while (isset($_POST['position_' . $i])) {
                 // init vars
                 $j = 0;
-                $extras = array();
+                $extras = [];
 
                 // gather position names
                 $name = $_POST['position_' . $i];
@@ -234,7 +233,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // build blocks array
         foreach ($this->names as $i => $name) {
             // create default position field
-            $position = array();
+            $position = [];
             $position['i'] = $i + 1;
             $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'form-control positionName', 'form-control danger positionName');
 
@@ -289,7 +288,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
             }
 
             // validate syntax
-            $syntax = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
+            $syntax = trim(str_replace(["\n", "\r", ' '], '', $this->frm->getField('format')->getValue()));
 
             // init var
             $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
@@ -301,7 +300,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);
                 $cellCount = 0;
                 $first = true;
-                $errors = array();
+                $errors = [];
 
                 // loop rows
                 foreach ($table as $row) {
@@ -354,7 +353,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
                 // copy data from previous version, otherwise default_extras from other languages are overwritten
                 $item['data'] = $this->record['data'];
-                $item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
+                $item['data']['format'] = trim(str_replace(["\n", "\r", ' '], '', $this->frm->getField('format')->getValue()));
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
                 $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;

@@ -109,7 +109,7 @@ class Helper
             } elseif ($field['type'] == 'checkbox') {
                 // rebuild values
                 foreach ($values as $value) {
-                    $newValues[] = array('label' => $value, 'value' => $value);
+                    $newValues[] = ['label' => $value, 'value' => $value];
                 }
 
                 // create element

@@ -16,6 +16,7 @@ final class NotImplementedUnsubscribedEvent extends Event
 
     /**
      * NotImplementedSubscriptionEvent constructor.
+     *
      * @param Unsubscription $unsubscription
      */
     public function __construct(

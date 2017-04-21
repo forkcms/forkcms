@@ -74,22 +74,22 @@ class Installer extends ModuleInstaller
             $navigationProfilesId,
             'Overview',
             'profiles/index',
-            array(
+            [
                 'profiles/add',
                 'profiles/edit',
                 'profiles/add_profile_group',
                 'profiles/edit_profile_group',
                 'profiles/import',
-            )
+            ]
         );
         $this->setNavigation(
             $navigationProfilesId,
             'Groups',
             'profiles/groups',
-            array(
+            [
                 'profiles/add_group',
                 'profiles/edit_group',
-            )
+            ]
         );
 
         // settings navigation
@@ -213,7 +213,7 @@ class Installer extends ModuleInstaller
         // get search widget id
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND action = ?',
-            array('search', 'form')
+            ['search', 'form']
         );
 
         $originalLocale = Language::getInterfaceLanguage();
@@ -229,7 +229,7 @@ class Installer extends ModuleInstaller
                  INNER JOIN modules_extras AS e ON e.id = b.extra_id
                  WHERE e.module = ? AND p.language = ?
                  LIMIT 1',
-                array($this->getModule(), $language)
+                [$this->getModule(), $language]
             )
             ) {
                 // We must define the locale we want to insert the page into
@@ -237,134 +237,134 @@ class Installer extends ModuleInstaller
 
                 // activate page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('Activate')),
                         'type' => 'root',
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $activateId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $activateId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
 
                 // forgot password page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('ForgotPassword')),
                         'type' => 'root',
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $forgotPasswordId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $forgotPasswordId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
 
                 // reset password page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('ResetPassword')),
                         'type' => 'root',
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $resetPasswordId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $resetPasswordId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
 
                 // resend activation email page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('ResendActivation')),
                         'type' => 'root',
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $resendActivationId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $resendActivationId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
 
                 // login page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('Login')),
                         'type' => 'root',
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $loginId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $loginId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
 
                 // register page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('Register')),
                         'type' => 'root',
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $registerId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $registerId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
 
                 // logout page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('Logout')),
                         'type' => 'root',
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $logoutId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $logoutId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
 
                 // index page
                 $indexPageId = $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('Profile')),
                         'type' => 'root',
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $indexId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $indexId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
 
                 // settings page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('ProfileSettings')),
                         'parent_id' => $indexPageId,
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $settingsId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $settingsId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
 
                 // change email page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('ChangeEmail')),
                         'parent_id' => $indexPageId,
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $changeEmailId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $changeEmailId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
 
                 // change password page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => ucfirst(Language::lbl('ChangePassword')),
                         'parent_id' => $indexPageId,
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $changePasswordId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $changePasswordId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
             }
         }

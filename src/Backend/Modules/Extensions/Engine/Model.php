@@ -38,13 +38,13 @@ class Model
      *
      * @var array
      */
-    private static $ignoredModules = array(
+    private static $ignoredModules = [
         'Authentication',
         'Dashboard',
         'Error',
         'Extensions',
         'Settings',
-    );
+    ];
 
     /**
      * Build HTML for a template (visual representation)
@@ -63,11 +63,11 @@ class Model
         $rows = count($table);
         $cells = count($table[0]);
 
-        $htmlContent = array();
+        $htmlContent = [];
 
         // loop rows
         for ($y = 0; $y < $rows; ++$y) {
-            $htmlContent[$y] = array();
+            $htmlContent[$y] = [];
 
             // loop cells
             for ($x = 0; $x < $cells; ++$x) {
@@ -115,14 +115,14 @@ class Model
                     }
                 }
 
-                $htmlContent[$y][$x] = array(
+                $htmlContent[$y][$x] = [
                     'title' => \SpoonFilter::ucfirst($value),
                     'value' => $value,
                     'exists' => $value != '/',
                     'rowspan' => $rowspan,
                     'colspan' => $colspan,
                     'large' => $large,
-                );
+                ];
             }
         }
 
@@ -140,7 +140,7 @@ class Model
      */
     public static function checkSettings(): array
     {
-        $warnings = array();
+        $warnings = [];
         $akismetModules = self::getModulesThatRequireAkismet();
         $googleMapsModules = self::getModulesThatRequireGoogleMaps();
 
@@ -149,12 +149,12 @@ class Model
             // check if the akismet key is available if there are modules that require it
             if (!empty($akismetModules) && BackendModel::get('fork.settings')->get('Core', 'akismet_key', null) == '') {
                 // add warning
-                $warnings[] = array(
+                $warnings[] = [
                     'message' => sprintf(
                         BL::err('AkismetKey'),
                         BackendModel::createURLForAction('Index', 'Settings')
                     ),
-                );
+                ];
             }
 
             // check if the google maps key is available if there are modules that require it
@@ -165,12 +165,12 @@ class Model
                 ) == ''
             ) {
                 // add warning
-                $warnings[] = array(
+                $warnings[] = [
                     'message' => sprintf(
                         BL::err('GoogleMapsKey'),
                         BackendModel::createURLForAction('Index', 'Settings')
                     ),
-                );
+                ];
             }
         }
 
@@ -235,7 +235,7 @@ class Model
             'SELECT i.revision_id
              FROM pages AS i
              WHERE i.template_id = ? AND i.status != ?',
-            array($id, 'active')
+            [$id, 'active']
         );
 
         if (!empty($ids)) {
@@ -271,7 +271,7 @@ class Model
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.id FROM themes_templates AS i WHERE i.id = ?',
-            array((int) $id)
+            [(int) $id]
         );
     }
 
@@ -301,10 +301,10 @@ class Model
              INNER JOIN modules AS m ON i.module = m.name
              WHERE i.hidden = ?
              ORDER BY i.module, i.sequence',
-            array('N'),
+            ['N'],
             'id'
         );
-        $itemsToRemove = array();
+        $itemsToRemove = [];
 
         foreach ($extras as $id => &$row) {
             $row['data'] = @unserialize($row['data']);
@@ -358,9 +358,9 @@ class Model
              INNER JOIN modules AS m ON i.module = m.name
              WHERE i.hidden = ?
              ORDER BY i.module, i.sequence',
-            array('N')
+            ['N']
         );
-        $values = array();
+        $values = [];
 
         foreach ($extras as $row) {
             $row['data'] = @unserialize($row['data']);
@@ -388,14 +388,14 @@ class Model
             $moduleName = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module'])));
 
             if (!isset($values[$row['module']])) {
-                $values[$row['module']] = array(
+                $values[$row['module']] = [
                     'value' => $row['module'],
                     'name' => $moduleName,
-                    'items' => array(),
-                );
+                    'items' => [],
+                ];
             }
 
-            $values[$row['module']]['items'][$row['type']][$name] = array('id' => $row['id'], 'label' => $name);
+            $values[$row['module']]['items'][$row['type']][$name] = ['id' => $row['id'], 'label' => $name];
         }
 
         return $values;
@@ -411,38 +411,38 @@ class Model
     public static function getModuleInformation(string $module): array
     {
         $pathInfoXml = BACKEND_MODULES_PATH . '/' . $module . '/info.xml';
-        $information = array('data' => array(), 'warnings' => array());
+        $information = ['data' => [], 'warnings' => []];
 
         if (is_file($pathInfoXml)) {
             try {
                 $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
                 $information['data'] = self::processModuleXml($infoXml);
                 if (empty($information['data'])) {
-                    $information['warnings'][] = array(
+                    $information['warnings'][] = [
                         'message' => BL::getMessage('InformationFileIsEmpty'),
-                    );
+                    ];
                 }
 
                 // check if cronjobs are installed already
                 if (isset($information['data']['cronjobs'])) {
                     foreach ($information['data']['cronjobs'] as $cronjob) {
                         if (!$cronjob['active']) {
-                            $information['warnings'][] = array(
+                            $information['warnings'][] = [
                                 'message' => BL::getError('CronjobsNotSet'),
-                            );
+                            ];
                         }
                         break;
                     }
                 }
             } catch (Exception $e) {
-                $information['warnings'][] = array(
+                $information['warnings'][] = [
                     'message' => BL::getMessage('InformationFileCouldNotBeLoaded'),
-                );
+                ];
             }
         } else {
-            $information['warnings'][] = array(
+            $information['warnings'][] = [
                 'message' => BL::getMessage('InformationFileIsMissing'),
-            );
+            ];
         }
 
         return $information;
@@ -460,7 +460,7 @@ class Model
         $installedModules = (array) BackendModel::getContainer()
             ->getParameter('installed_modules');
         $modules = BackendModel::getModulesOnFilesystem(false);
-        $manageableModules = array();
+        $manageableModules = [];
 
         // get more information for each module
         foreach ($modules as $moduleName) {
@@ -468,7 +468,7 @@ class Model
                 continue;
             }
 
-            $module = array();
+            $module = [];
             $module['id'] = 'module_' . $moduleName;
             $module['raw_name'] = $moduleName;
             $module['name'] = \SpoonFilter::ucfirst(BL::getLabel(\SpoonFilter::toCamelCase($moduleName)));
@@ -513,7 +513,7 @@ class Model
      */
     public static function getModulesThatRequireAkismet(): array
     {
-        $modules = array();
+        $modules = [];
         $installedModules = BackendModel::getModules();
 
         foreach ($installedModules as $module) {
@@ -533,7 +533,7 @@ class Model
      */
     public static function getModulesThatRequireGoogleMaps(): array
     {
-        $modules = array();
+        $modules = [];
         $installedModules = BackendModel::getModules();
 
         foreach ($installedModules as $module) {
@@ -557,7 +557,7 @@ class Model
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.* FROM themes_templates AS i WHERE i.id = ?',
-            array((int) $id)
+            [(int) $id]
         );
     }
 
@@ -566,8 +566,9 @@ class Model
      *
      * @param string $theme The theme we want to fetch the templates from.
      *
-     * @return array
      * @throws Exception
+     *
+     * @return array
      */
     public static function getTemplates(string $theme = null): array
     {
@@ -583,7 +584,7 @@ class Model
             FROM themes_templates AS i
             WHERE i.theme = ? AND i.active = ?
             ORDER BY i.label ASC',
-            array($theme, 'Y'),
+            [$theme, 'Y'],
             'id'
         );
 
@@ -635,14 +636,14 @@ class Model
      */
     public static function getThemes(): array
     {
-        $records = array();
-        $records['Core'] = array(
+        $records = [];
+        $records['Core'] = [
             'value' => 'Core',
             'label' => BL::lbl('NoTheme'),
             'thumbnail' => '/src/Frontend/Core/Layout/images/thumbnail.png',
             'installed' => self::isThemeInstalled('Core'),
             'installable' => false,
-        );
+        ];
 
         $finder = new Finder();
         foreach ($finder->directories()->in(FRONTEND_PATH . '/Themes')->depth(0) as $directory) {
@@ -661,7 +662,7 @@ class Model
                 $information['thumbnail'] = 'thumbnail.png';
             }
 
-            $item = array();
+            $item = [];
             $item['value'] = $directory->getBasename();
             $item['label'] = $directory->getBasename();
             $item['thumbnail'] = '/src/Frontend/Themes/' . $item['value'] . '/' . $information['thumbnail'];
@@ -695,7 +696,7 @@ class Model
 
         $db = BackendModel::getContainer()->get('database');
 
-        $records = $db->getRecords(self::QRY_BROWSE_TEMPLATES, array($theme));
+        $records = $db->getRecords(self::QRY_BROWSE_TEMPLATES, [$theme]);
 
         foreach ($records as $row) {
             $template = self::getTemplate($row['id']);
@@ -757,7 +758,7 @@ class Model
     public static function installModule(string $module)
     {
         $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
-        $variables = array();
+        $variables = [];
 
         // run installer
         $installer = new $class(
@@ -792,7 +793,7 @@ class Model
         }
 
         foreach ($information['templates'] as $template) {
-            $item = array();
+            $item = [];
             $item['theme'] = $information['name'];
             $item['label'] = $template['label'];
             $item['path'] = $template['path'];
@@ -801,11 +802,11 @@ class Model
             $item['data']['image'] = $template['image'];
 
             // build positions
-            $item['data']['names'] = array();
-            $item['data']['default_extras'] = array();
+            $item['data']['names'] = [];
+            $item['data']['default_extras'] = [];
             foreach ($template['positions'] as $position) {
                 $item['data']['names'][] = $position['name'];
-                $item['data']['default_extras'][$position['name']] = array();
+                $item['data']['default_extras'][$position['name']] = [];
 
                 // add default widgets
                 foreach ($position['widgets'] as $widget) {
@@ -814,7 +815,7 @@ class Model
                         'SELECT i.id
                          FROM modules_extras AS i
                          WHERE type = ? AND module = ? AND action = ? AND data IS NULL AND hidden = ?',
-                        array('widget', $widget['module'], $widget['action'], 'N')
+                        ['widget', $widget['module'], $widget['action'], 'N']
                     );
 
                     // add extra to defaults
@@ -866,7 +867,7 @@ class Model
              FROM pages AS i
              WHERE i.template_id = ? AND i.status = ?
              LIMIT 1',
-            array((int) $templateId, 'active')
+            [(int) $templateId, 'active']
         );
     }
 
@@ -884,7 +885,7 @@ class Model
              FROM themes_templates
              WHERE theme = ?
              LIMIT 1',
-            array($theme)
+            [$theme]
         );
     }
 
@@ -918,7 +919,7 @@ class Model
      */
     public static function processModuleXml(\SimpleXMLElement $xml): array
     {
-        $information = array();
+        $information = [];
 
         // fetch theme node
         $module = $xml->xpath('/module');
@@ -931,7 +932,7 @@ class Model
         $information['version'] = (string) $module->version;
         $information['requirements'] = (array) $module->requirements;
         $information['description'] = (string) $module->description;
-        $information['cronjobs'] = array();
+        $information['cronjobs'] = [];
 
         // authors
         foreach ($xml->xpath('/module/authors/author') as $author) {
@@ -946,7 +947,7 @@ class Model
             }
 
             // build cronjob information
-            $item = array();
+            $item = [];
             $item['minute'] = (isset($attributes['minute'])) ? $attributes['minute'] : '*';
             $item['hour'] = (isset($attributes['hour'])) ? $attributes['hour'] : '*';
             $item['day-of-month'] = (isset($attributes['day-of-month'])) ? $attributes['day-of-month'] : '*';
@@ -967,11 +968,11 @@ class Model
             $attributes = $event->attributes();
 
             // build event information and add it to the list
-            $information['events'][] = array(
+            $information['events'][] = [
                 'application' => (isset($attributes['application'])) ? $attributes['application'] : '',
                 'name' => (isset($attributes['name'])) ? $attributes['name'] : '',
                 'description' => $event[0],
-            );
+            ];
         }
 
         return $information;
@@ -986,7 +987,7 @@ class Model
      */
     public static function processThemeXml(\SimpleXMLElement $xml): array
     {
-        $information = array();
+        $information = [];
 
         $theme = $xml->xpath('/theme');
         if (isset($theme[0])) {
@@ -1012,36 +1013,36 @@ class Model
         }
 
         // templates
-        $information['templates'] = array();
+        $information['templates'] = [];
         foreach ($xml->xpath('/theme/templates/template') as $templateXML) {
-            $template = array();
+            $template = [];
 
             // template data
             $template['label'] = (string) $templateXML['label'];
             $template['path'] = (string) $templateXML['path'];
             $template['image'] = isset($templateXML['image'])
                 ? (string) $templateXML['image'] && (string) $templateXML['image'] !== 'false' : false;
-            $template['format'] = trim(str_replace(array("\n", "\r", ' '), '', (string) $templateXML->format));
+            $template['format'] = trim(str_replace(["\n", "\r", ' '], '', (string) $templateXML->format));
 
             // loop positions
             foreach ($templateXML->positions->position as $positionXML) {
-                $position = array();
+                $position = [];
 
                 $position['name'] = (string) $positionXML['name'];
 
                 // widgets
-                $position['widgets'] = array();
+                $position['widgets'] = [];
                 if ($positionXML->defaults->widget) {
                     foreach ($positionXML->defaults->widget as $widget) {
-                        $position['widgets'][] = array(
+                        $position['widgets'][] = [
                             'module' => (string) $widget['module'],
                             'action' => (string) $widget['action'],
-                        );
+                        ];
                     }
                 }
 
                 // editor
-                $position['editors'] = array();
+                $position['editors'] = [];
                 if ($positionXML->defaults->editor) {
                     foreach ($positionXML->defaults->editor as $editor) {
                         $position['editors'][] = (string) trim($editor);
@@ -1067,14 +1068,14 @@ class Model
     public static function templateSyntaxToArray(string $syntax): array
     {
         $syntax = (string) $syntax;
-        $syntax = trim(str_replace(array("\n", "\r", ' '), '', $syntax));
-        $table = array();
+        $syntax = trim(str_replace(["\n", "\r", ' '], '', $syntax));
+        $table = [];
 
         // split into rows
         $rows = explode('],[', $syntax);
 
         foreach ($rows as $i => $row) {
-            $row = trim(str_replace(array('[', ']'), '', $row));
+            $row = trim(str_replace(['[', ']'], '', $row));
             $table[$i] = (array) explode(',', $row);
         }
 
@@ -1104,7 +1105,7 @@ class Model
             'themes_templates',
             $item,
             'id = ?',
-            array((int) $item['id'])
+            [(int) $item['id']]
         );
     }
 
@@ -1144,12 +1145,12 @@ class Model
 
                     // ensure widgets are well-formed
                     if (!isset($position['widgets']) || !$position['widgets']) {
-                        $information['templates'][$i]['positions'][$j]['widgets'] = array();
+                        $information['templates'][$i]['positions'][$j]['widgets'] = [];
                     }
 
                     // ensure editors are well-formed
                     if (!isset($position['editors']) || !$position['editors']) {
-                        $information['templates'][$i]['positions'][$j]['editors'] = array();
+                        $information['templates'][$i]['positions'][$j]['editors'] = [];
                     }
 
                     // loop widgets

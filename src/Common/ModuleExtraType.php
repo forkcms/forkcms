@@ -15,6 +15,7 @@ final class ModuleExtraType
 
     /**
      * @param string $type
+     *
      * @throws InvalidModuleExtraType
      */
     public function __construct(string $type)

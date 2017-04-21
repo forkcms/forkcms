@@ -26,7 +26,7 @@ class MassAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', array('delete'), 'delete');
+        $action = \SpoonFilter::getGetValue('action', ['delete'], 'delete');
 
         // no id's provided
         if (!isset($_GET['id'])) {

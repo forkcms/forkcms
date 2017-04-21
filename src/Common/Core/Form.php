@@ -233,13 +233,13 @@ class Form extends \SpoonForm
     }
 
     /**
-     * @return string|null
+     * @return string|void
      */
     public static function getUploadMaxFileSize()
     {
         $uploadMaxFileSize = ini_get('upload_max_filesize');
         if ($uploadMaxFileSize === false) {
-            return null;
+            return;
         }
 
         // reformat if defined as an integer

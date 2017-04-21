@@ -15,10 +15,10 @@ class DeleteTest extends WebTestCase
         $client = static::createClient();
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
                 'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
-            )
+            ]
         );
 
         $client->setMaxRedirects(1);

@@ -29,31 +29,31 @@ class Installer extends ModuleInstaller
          */
 
         // build templates
-        $templates['core']['default'] = array(
+        $templates['core']['default'] = [
             'theme' => 'Core',
             'label' => 'Default',
             'path' => 'Core/Layout/Templates/Default.html.twig',
             'active' => 'Y',
             'data' => serialize(
-                array(
+                [
                     'format' => '[main]',
-                    'names' => array('main'),
-                )
+                    'names' => ['main'],
+                ]
             ),
-        );
+        ];
 
-        $templates['core']['home'] = array(
+        $templates['core']['home'] = [
             'theme' => 'Core',
             'label' => 'Home',
             'path' => 'Core/Layout/Templates/Home.html.twig',
             'active' => 'Y',
             'data' => serialize(
-                array(
+                [
                     'format' => '[main]',
-                    'names' => array('main'),
-                )
+                    'names' => ['main'],
+                ]
             ),
-        );
+        ];
 
         // insert templates
         $this->getDB()->insert('themes_templates', $templates['core']['default']);
@@ -105,10 +105,10 @@ class Installer extends ModuleInstaller
             $navigationModulesId,
             'Overview',
             'extensions/modules',
-            array(
+            [
                 'extensions/detail_module',
                 'extensions/upload_module',
-            )
+            ]
         );
 
         // theme navigation
@@ -117,19 +117,19 @@ class Installer extends ModuleInstaller
             $navigationThemesId,
             'ThemesSelection',
             'extensions/themes',
-            array(
+            [
                 'extensions/upload_theme',
                 'extensions/detail_theme',
-            )
+            ]
         );
         $this->setNavigation(
             $navigationThemesId,
             'Templates',
             'extensions/theme_templates',
-            array(
+            [
                 'extensions/add_theme_template',
                 'extensions/edit_theme_template',
-            )
+            ]
         );
 
         if ($this->installExample()) {
@@ -179,7 +179,7 @@ class Installer extends ModuleInstaller
                     'image' => true,
                     'names' => ['main'],
                 ]
-            )
+            ),
         ];
 
         $templates['core']['home'] = [
@@ -191,11 +191,10 @@ class Installer extends ModuleInstaller
                 [
                     'format' => '[main]',
                     'image' => true,
-                    'names' => array('main'),
+                    'names' => ['main'],
                 ]
             ),
         ];
-
 
         // insert templates
         $this->getDB()->insert('themes_templates', $templates['core']['default']);

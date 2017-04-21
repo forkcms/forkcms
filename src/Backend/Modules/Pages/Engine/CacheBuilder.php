@@ -49,7 +49,7 @@ class CacheBuilder
     public function buildCache(string $language)
     {
         // kill existing caches so they can be re-generated
-        $this->cache->deleteItems(array('keys_' . $language, 'navigation_' . $language));
+        $this->cache->deleteItems(['keys_' . $language, 'navigation_' . $language]);
         $keys = $this->getKeys($language);
         $navigation = $this->getNavigation($language);
 
@@ -110,10 +110,10 @@ class CacheBuilder
     protected function getData(string $language): array
     {
         // get tree
-        $levels = Model::getTree(array(0), null, 1, $language);
+        $levels = Model::getTree([0], null, 1, $language);
 
-        $keys = array();
-        $navigation = array();
+        $keys = [];
+        $navigation = [];
 
         // loop levels
         foreach ($levels as $pages) {
@@ -129,7 +129,7 @@ class CacheBuilder
         // order by URL
         asort($keys);
 
-        return array($keys, $navigation);
+        return [$keys, $navigation];
     }
 
     /**
@@ -168,7 +168,7 @@ class CacheBuilder
         }
 
         // build navigation array
-        $pageData = array(
+        $pageData = [
             'page_id' => (int) $page['id'],
             'url' => $page['url'],
             'full_url' => $languageURL . $keys[$page['id']],
@@ -179,7 +179,7 @@ class CacheBuilder
             'hidden' => (bool) ($page['hidden'] == 'Y'),
             'extra_blocks' => null,
             'has_children' => (bool) ($page['has_children'] == 'Y'),
-        );
+        ];
 
         $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);
         $pageData['tree_type'] = $this->getPageTreeType($page, $pageData);
@@ -190,6 +190,7 @@ class CacheBuilder
     /**
      * @param array $page
      * @param array $pageData
+     *
      * @return string
      */
     protected function getPageTreeType(array $page, array &$pageData): string
@@ -252,11 +253,12 @@ class CacheBuilder
 
     /**
      * @param $page array
+     *
      * @return array
      */
     protected function getPageExtraBlocks($page): array
     {
-        $pageBlocks = array();
+        $pageBlocks = [];
 
         if ($page['extra_ids'] === null) {
             return $pageBlocks;
@@ -289,7 +291,7 @@ class CacheBuilder
                 'SELECT i.id, i.module, i.action, i.data
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
-                array('block', 'N'),
+                ['block', 'N'],
                 'id'
             );
 
@@ -322,7 +324,7 @@ class CacheBuilder
                 'SELECT i.id, i.module, i.action
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
-                array('widget', 'N'),
+                ['widget', 'N'],
                 'id'
             );
 
@@ -352,7 +354,7 @@ class CacheBuilder
         array $navigation,
         string $type = 'page',
         int $parentId = 0,
-        array $order = array()
+        array $order = []
     ): array {
         // loop alle items for the type and parent
         foreach ($navigation[$type][$parentId] as $id => $page) {
@@ -395,7 +397,7 @@ class CacheBuilder
         );
 
         // init var
-        $links = array();
+        $links = [];
 
         // init var
         $cachedTitles = (array) $this->database->getPairs(
@@ -403,11 +405,11 @@ class CacheBuilder
              FROM pages AS i
              WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
              AND i.language = ? AND i.status = ?',
-            array($language, 'active')
+            [$language, 'active']
         );
 
         // loop the types in the order we want them to appear
-        foreach (array('page', 'meta', 'footer', 'root') as $type) {
+        foreach (['page', 'meta', 'footer', 'root'] as $type) {
             // any pages?
             if (isset($order[$type])) {
                 // loop pages
@@ -450,7 +452,7 @@ class CacheBuilder
                     }
 
                     // add
-                    $links[] = array($title, $url);
+                    $links[] = [$title, $url];
                 }
             }
         }

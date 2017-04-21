@@ -50,7 +50,7 @@ class Edit extends BackendBaseAJAXAction
                     );
 
                     BackendTagsModel::update($item);
-                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
+                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), [$item['tag']]));
                 }
             }
         }

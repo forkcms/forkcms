@@ -26,7 +26,7 @@ class InstallerConnectionFactory extends ConnectionFactory
         array $params,
         Configuration $config = null,
         EventManager $eventManager = null,
-        array $mappingTypes = array()
+        array $mappingTypes = []
     ) {
         try {
             // there is no other way since we don't have access to the container, but it works yeey, but I'm still sorry

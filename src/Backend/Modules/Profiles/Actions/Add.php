@@ -73,10 +73,10 @@ class Add extends BackendBaseActionAdd
     private function loadForm()
     {
         // gender dropdown values
-        $genderValues = array(
+        $genderValues = [
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
             'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
-        );
+        ];
 
         // birthdate dropdown values
         $days = range(1, 31);
@@ -175,14 +175,14 @@ class Add extends BackendBaseActionAdd
                     $txtPassword->getValue() : BackendModel::generatePassword(8);
 
                 // build item
-                $values = array(
+                $values = [
                     'email' => $txtEmail->getValue(),
                     'registered_on' => BackendModel::getUTCDate(),
                     'display_name' => $txtDisplayName->getValue(),
                     'url' => BackendProfilesModel::getUrl($txtDisplayName->getValue()),
                     'last_login' => BackendModel::getUTCDate(null, 0),
                     'password' => BackendProfilesModel::getEncryptedString($password, $salt),
-                );
+                ];
 
                 $this->id = BackendProfilesModel::insert($values);
 
@@ -211,12 +211,12 @@ class Add extends BackendBaseActionAdd
                 // notify values
                 $notifyValues = array_merge(
                     $values,
-                    array(
+                    [
                         'id' => $this->id,
                         'first_name' => $txtFirstName->getValue(),
                         'last_name' => $txtLastName->getValue(),
                         'unencrypted_password' => $password,
-                    )
+                    ]
                 );
 
                 $redirectUrl = BackendModel::createURLForAction('Edit') .

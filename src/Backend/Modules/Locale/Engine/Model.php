@@ -153,7 +153,7 @@ class Model
              FROM locale
              WHERE id = ?
              LIMIT 1',
-            array((int) $id)
+            [(int) $id]
         );
     }
 
@@ -188,7 +188,7 @@ class Model
                  FROM locale
                  WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?
                  LIMIT 1',
-                array($name, $type, $module, $language, $application, $id)
+                [$name, $type, $module, $language, $application, $id]
             );
         }
 
@@ -197,7 +197,7 @@ class Model
              FROM locale
              WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?
              LIMIT 1',
-            array($name, $type, $module, $language, $application)
+            [$name, $type, $module, $language, $application]
         );
     }
 
@@ -213,7 +213,7 @@ class Model
         // fetch record from db
         $record = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT * FROM locale WHERE id = ?',
-            array((int) $id)
+            [(int) $id]
         );
 
         // actions are urlencoded
@@ -247,7 +247,7 @@ class Model
             'SELECT l.id
              FROM locale AS l
              WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?',
-            array($name, $type, $module, $language, $application)
+            [$name, $type, $module, $language, $application]
         );
     }
 
@@ -269,7 +269,7 @@ class Model
         }
 
         // create a new array to redefine the languages for the multicheckbox
-        $languages = array();
+        $languages = [];
 
         // loop the languages
         foreach ($aLanguages as $key => $lang) {
@@ -298,7 +298,7 @@ class Model
         $languages = (array) $languages;
 
         // create an array for the languages, surrounded by quotes (example: 'en')
-        $aLanguages = array();
+        $aLanguages = [];
         foreach ($languages as $key => $val) {
             $aLanguages[$key] = '\'' . $val . '\'';
         }
@@ -322,7 +322,7 @@ class Model
                  l.type IN (' . implode(',', $types) . ')';
 
         // add the parameters
-        $parameters = array('%' . $name . '%', '%' . $value . '%');
+        $parameters = ['%' . $name . '%', '%' . $value . '%'];
 
         // add module to the query if needed
         if ($module) {
@@ -340,21 +340,21 @@ class Model
         $translations = (array) $db->getRecords($query, $parameters);
 
         // create an array for the sorted translations
-        $sortedTranslations = array();
+        $sortedTranslations = [];
 
         // loop translations
         foreach ($translations as $translation) {
             // add to the sorted array
-            $sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = array(
+            $sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = [
                 'id' => $translation['id'],
                 'value' => $translation['value'],
                 'edited_on' => $translation['edited_on'],
                 'application' => $translation['application'],
-            );
+            ];
         }
 
         // create an array to use in the datagrid
-        $dataGridTranslations = array();
+        $dataGridTranslations = [];
 
         // an id that is used for in the datagrid, this is not the id of the translation!
         $id = 0;
@@ -365,19 +365,19 @@ class Model
         // loop the sorted translations
         foreach ($sortedTranslations as $type => $references) {
             // create array for each type
-            $dataGridTranslations[$type] = array();
+            $dataGridTranslations[$type] = [];
 
             foreach ($references as $reference => $translation) {
                 // loop modules
                 foreach ($translation as $module => $t) {
                     // create translation (and increase id)
                     // we init the application here so it appears in front of the datagrid
-                    $trans = array(
+                    $trans = [
                         'application' => '',
                         'module' => $module,
                         'name' => $reference,
                         'id' => $id++,
-                    );
+                    ];
 
                     // reset this var for every language
                     $edited_on = '';
@@ -494,7 +494,7 @@ class Model
         $aTypes = array_combine($aTypes, $labels);
 
         // create a new array to redefine the types for the multicheckbox
-        $types = array();
+        $types = [];
 
         // loop the languages
         foreach ($aTypes as $key => $type) {
@@ -526,12 +526,12 @@ class Model
         $backendLanguages = null,
         $userId = null,
         $date = null
-    ) : array{
+    ) : array {
         $overwriteConflicts = (bool) $overwriteConflicts;
-        $statistics = array(
+        $statistics = [
             'total' => 0,
             'imported' => 0,
-        );
+        ];
 
         // set defaults if necessary
         // we can't simply use these right away, because this function is also calls by the installer,
@@ -553,7 +553,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // possible values
-        $possibleApplications = array('Frontend', 'Backend');
+        $possibleApplications = ['Frontend', 'Backend'];
         $possibleModules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
 
         // types
@@ -563,10 +563,10 @@ class Model
         }
 
         // install English translations anyhow, they're fallback
-        $possibleLanguages = array(
-            'Frontend' => array_unique(array_merge(array('en'), $frontendLanguages)),
-            'Backend' => array_unique(array_merge(array('en'), $backendLanguages)),
-        );
+        $possibleLanguages = [
+            'Frontend' => array_unique(array_merge(['en'], $frontendLanguages)),
+            'Backend' => array_unique(array_merge(['en'], $backendLanguages)),
+        ];
 
         // current locale items (used to check for conflicts)
         $currentLocale = (array) $db->getColumn(
@@ -642,7 +642,7 @@ class Model
                                 'INSERT INTO locale (user_id, language, application, module, type, name, value, edited_on)
                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                                  ON DUPLICATE KEY UPDATE user_id = ?, value = ?, edited_on = ?',
-                                array(
+                                [
                                     $locale['user_id'],
                                     $locale['language'],
                                     $locale['application'],
@@ -654,7 +654,7 @@ class Model
                                     $locale['user_id'],
                                     $locale['value'],
                                     $locale['edited_on'],
-                                )
+                                ]
                             );
 
                             // statistics
@@ -716,7 +716,7 @@ class Model
         }
 
         // update category
-        $updated = BackendModel::getContainer()->get('database')->update('locale', $item, 'id = ?', array($item['id']));
+        $updated = BackendModel::getContainer()->get('database')->update('locale', $item, 'id = ?', [$item['id']]);
 
         // rebuild the cache
         self::buildCache($item['language'], $item['application']);

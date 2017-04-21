@@ -172,6 +172,7 @@ class Widget extends Object
      * Get parsed template content
      *
      * @param string $template
+     *
      * @return string
      */
     public function getContent(string $template = null): string
@@ -296,7 +297,7 @@ class Widget extends Object
      *
      * @return Form
      */
-    public function createForm($type, $data = null, array $options = array()): Form
+    public function createForm($type, $data = null, array $options = []): Form
     {
         return $this->get('form.factory')->create($type, $data, $options);
     }

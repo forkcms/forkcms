@@ -23,14 +23,14 @@ class Authentication
      *
      * @var array
      */
-    private static $allowedActions = array();
+    private static $allowedActions = [];
 
     /**
      * All allowed modules
      *
      * @var array
      */
-    private static $allowedModules = array();
+    private static $allowedModules = [];
 
     /**
      * A user object for the current authenticated user
@@ -130,7 +130,7 @@ class Authentication
             INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
             WHERE us.session_id = ? AND us.secret_key = ?
             GROUP BY gra.module, gra.action',
-            array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
+            [SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')]
         );
 
         // add all actions and their level
@@ -195,11 +195,11 @@ class Authentication
      */
     private static function getAlwaysAllowed(): array
     {
-        return array(
-            'Core' => array('GenerateUrl' => 7, 'ContentCss' => 7, 'Templates' => 7),
-            'Error' => array('Index' => 7),
-            'Authentication' => array('Index' => 7, 'ResetPassword' => 7, 'Logout' => 7),
-        );
+        return [
+            'Core' => ['GenerateUrl' => 7, 'ContentCss' => 7, 'Templates' => 7],
+            'Error' => ['Index' => 7],
+            'Authentication' => ['Index' => 7, 'ResetPassword' => 7, 'Logout' => 7],
+        ];
     }
 
     /**
@@ -242,7 +242,7 @@ class Authentication
                  INNER JOIN users_groups AS ug ON u.id = ug.user_id
                  INNER JOIN groups_rights_modules AS grm ON ug.group_id = grm.group_id
                  WHERE us.session_id = ? AND us.secret_key = ?',
-                array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
+                [SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')]
             );
 
             foreach ($allowedModules as $row) {
@@ -279,7 +279,7 @@ class Authentication
              FROM users_sessions AS us
              WHERE us.session_id = ? AND us.secret_key = ?
              LIMIT 1',
-            array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
+            [SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')]
         );
 
         // if we found a matching row, we know the user is logged in, so we update his session
@@ -287,7 +287,7 @@ class Authentication
             // update the session in the table
             $db->update(
                 'users_sessions',
-                array('date' => BackendModel::getUTCDate()),
+                ['date' => BackendModel::getUTCDate()],
                 'id = ?',
                 (int) $sessionData['id']
             );
@@ -328,7 +328,7 @@ class Authentication
              FROM users AS u
              WHERE u.email = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
              LIMIT 1',
-            array($login, $passwordEncrypted, 'Y', 'N')
+            [$login, $passwordEncrypted, 'Y', 'N']
         );
 
         if ($userId === 0) {
@@ -387,8 +387,8 @@ class Authentication
      */
     public static function tearDown()
     {
-        self::$allowedActions = array();
-        self::$allowedModules = array();
+        self::$allowedActions = [];
+        self::$allowedModules = [];
         self::$user = null;
     }
 }

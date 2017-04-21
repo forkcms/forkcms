@@ -28,7 +28,7 @@ class Url extends KernelLoader
      *
      * @var array
      */
-    private $pages = array();
+    private $pages = [];
 
     /**
      * The Symfony request object
@@ -42,7 +42,7 @@ class Url extends KernelLoader
      *
      * @var array
      */
-    private $parameters = array();
+    private $parameters = [];
 
     /**
      * @param KernelInterface $kernel
@@ -378,7 +378,7 @@ class Url extends KernelLoader
      *
      * @param array $pages An array of all the pages to set.
      */
-    private function setPages(array $pages = array())
+    private function setPages(array $pages = [])
     {
         $this->pages = $pages;
     }
@@ -388,7 +388,7 @@ class Url extends KernelLoader
      *
      * @param array $parameters An array of all the parameters to set.
      */
-    private function setParameters(array $parameters = array())
+    private function setParameters(array $parameters = [])
     {
         foreach ($parameters as $key => $value) {
             $this->parameters[$key] = $value;

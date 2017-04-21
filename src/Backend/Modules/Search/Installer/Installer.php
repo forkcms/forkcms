@@ -10,7 +10,6 @@ namespace Backend\Modules\Search\Installer;
  */
 
 use Common\ModuleExtraType;
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
 
 /**
@@ -130,7 +129,7 @@ class Installer extends ModuleInstaller
             'SELECT id, revision_id, language, title
              FROM pages
              WHERE status = ?',
-            array('active')
+            ['active']
         );
     }
 

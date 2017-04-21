@@ -45,7 +45,7 @@ class LanguagesHandler
         $data->setLanguages(
             ($data->getLanguageType() === 'multiple')
                 ? $data->getLanguages()
-                : array($data->getDefaultLanguage())
+                : [$data->getDefaultLanguage()]
         );
 
         // take same_interface_language field into account

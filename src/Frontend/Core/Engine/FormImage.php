@@ -74,8 +74,8 @@ class FormImage extends \SpoonFormImage
     {
         // do an image validation
         if ($this->isFilled()) {
-            $this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), FL::err('JPGGIFAndPNGOnly'));
-            $this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), FL::err('JPGGIFAndPNGOnly'));
+            $this->isAllowedExtension(['jpg', 'jpeg', 'gif', 'png'], FL::err('JPGGIFAndPNGOnly'));
+            $this->isAllowedMimeType(['image/jpeg', 'image/gif', 'image/png'], FL::err('JPGGIFAndPNGOnly'));
         }
 
         return $this->errors;

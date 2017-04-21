@@ -107,7 +107,7 @@ class UploadTheme extends BackendBaseActionAdd
 
         // Validate the file. Check if the file field is filled and if it's a zip.
         if ($fileFile->isFilled(BL::err('FieldIsRequired')) &&
-            $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))
+            $fileFile->isAllowedExtension(['zip'], sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))
         ) {
             // Create ziparchive instance
             $zip = new ZipArchive();
@@ -199,7 +199,7 @@ class UploadTheme extends BackendBaseActionAdd
      */
     private function findInfoFileInZip(ZipArchive $zip)
     {
-        for ($i = 0; $i < $zip->numFiles; $i++) {
+        for ($i = 0; $i < $zip->numFiles; ++$i) {
             if (mb_stripos($zip->getNameIndex($i), self::INFO_FILE) !== false) {
                 $infoFile = $zip->statIndex($i);
 
@@ -225,14 +225,14 @@ class UploadTheme extends BackendBaseActionAdd
      *
      * @param ZipArchive $zip
      *
-     * @return String[]
+     * @return string[]
      */
     private function getValidatedFilesList(ZipArchive $zip): array
     {
         $this->parentFolderName = $this->extractFolderNameBasedOnInfoFile($this->infoFilePath);
 
         // Check every file in the zip
-        $files = array();
+        $files = [];
         for ($i = 0; $i < $zip->numFiles; ++$i) {
             // Get the file name
             $file = $zip->statIndex($i);
@@ -263,8 +263,6 @@ class UploadTheme extends BackendBaseActionAdd
         if (count($pathParts) > 1) {
             return $pathParts[0];
         }
-
-        return null;
     }
 
     /**

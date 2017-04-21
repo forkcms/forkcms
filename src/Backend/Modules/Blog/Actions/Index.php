@@ -86,7 +86,7 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgPosts = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_FOR_CATEGORY,
-                array($this->categoryId, 'active', BL::getWorkingLanguage())
+                [$this->categoryId, 'active', BL::getWorkingLanguage()]
             );
 
             // set the URL
@@ -95,41 +95,41 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgPosts = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE,
-                array('active', BL::getWorkingLanguage())
+                ['active', BL::getWorkingLanguage()]
             );
         }
 
         // set headers
         $this->dgPosts->setHeaderLabels(
-            array(
+            [
                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('Author')),
                 'publish_on' => \SpoonFilter::ucfirst(BL::lbl('PublishedOn')),
-            )
+            ]
         );
 
         // hide columns
-        $this->dgPosts->setColumnsHidden(array('revision_id'));
+        $this->dgPosts->setColumnsHidden(['revision_id']);
 
         // sorting columns
-        $this->dgPosts->setSortingColumns(array('publish_on', 'title', 'user_id', 'comments'), 'publish_on');
+        $this->dgPosts->setSortingColumns(['publish_on', 'title', 'user_id', 'comments'], 'publish_on');
         $this->dgPosts->setSortParameter('desc');
 
         // set column functions
         $this->dgPosts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[publish_on]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[publish_on]'],
             'publish_on',
             true
         );
         $this->dgPosts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
+            [new BackendDataGridFunctions(), 'getUser'],
+            ['[user_id]'],
             'user_id',
             true
         );
 
         // our JS needs to know an id, so we can highlight it
-        $this->dgPosts->setRowAttributes(array('id' => 'row-[revision_id]'));
+        $this->dgPosts->setRowAttributes(['id' => 'row-[revision_id]']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -162,12 +162,12 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgDrafts = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY,
-                array(
+                [
                     $this->categoryId,
                     'draft',
                     BackendAuthentication::getUser()->getUserId(),
                     BL::getWorkingLanguage(),
-                )
+                ]
             );
 
             // set the URL
@@ -176,36 +176,36 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgDrafts = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS,
-                array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage())
+                ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
             );
         }
 
         // set headers
-        $this->dgDrafts->setHeaderLabels(array('user_id' => \SpoonFilter::ucfirst(BL::lbl('Author'))));
+        $this->dgDrafts->setHeaderLabels(['user_id' => \SpoonFilter::ucfirst(BL::lbl('Author'))]);
 
         // hide columns
-        $this->dgDrafts->setColumnsHidden(array('revision_id'));
+        $this->dgDrafts->setColumnsHidden(['revision_id']);
 
         // sorting columns
-        $this->dgDrafts->setSortingColumns(array('edited_on', 'title', 'user_id', 'comments'), 'edited_on');
+        $this->dgDrafts->setSortingColumns(['edited_on', 'title', 'user_id', 'comments'], 'edited_on');
         $this->dgDrafts->setSortParameter('desc');
 
         // set column functions
         $this->dgDrafts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[edited_on]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[edited_on]'],
             'edited_on',
             true
         );
         $this->dgDrafts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
+            [new BackendDataGridFunctions(), 'getUser'],
+            ['[user_id]'],
             'user_id',
             true
         );
 
         // our JS needs to know an id, so we can highlight it
-        $this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
+        $this->dgDrafts->setRowAttributes(['id' => 'row-[revision_id]']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -240,7 +240,7 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgRecent = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY,
-                array($this->categoryId, 'active', BL::getWorkingLanguage(), 4)
+                [$this->categoryId, 'active', BL::getWorkingLanguage(), 4]
             );
 
             // set the URL
@@ -249,35 +249,35 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgRecent = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT,
-                array('active', BL::getWorkingLanguage(), 4)
+                ['active', BL::getWorkingLanguage(), 4]
             );
         }
 
         // set headers
-        $this->dgRecent->setHeaderLabels(array('user_id' => \SpoonFilter::ucfirst(BL::lbl('Author'))));
+        $this->dgRecent->setHeaderLabels(['user_id' => \SpoonFilter::ucfirst(BL::lbl('Author'))]);
 
         // hide columns
-        $this->dgRecent->setColumnsHidden(array('revision_id'));
+        $this->dgRecent->setColumnsHidden(['revision_id']);
 
         // set paging
         $this->dgRecent->setPaging(false);
 
         // set column functions
         $this->dgRecent->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[edited_on]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[edited_on]'],
             'edited_on',
             true
         );
         $this->dgRecent->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
+            [new BackendDataGridFunctions(), 'getUser'],
+            ['[user_id]'],
             'user_id',
             true
         );
 
         // our JS needs to know an id, so we can highlight it
-        $this->dgRecent->setRowAttributes(array('id' => 'row-[revision_id]'));
+        $this->dgRecent->setRowAttributes(['id' => 'row-[revision_id]']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {

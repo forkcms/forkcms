@@ -14,10 +14,10 @@ class DetailTest extends WebTestCase
         $client = static::createClient();
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Faq\DataFixtures\LoadFaqCategories',
                 'Backend\Modules\Faq\DataFixtures\LoadFaqQuestions',
-            )
+            ]
         );
 
         $crawler = $client->request('GET', '/en/faq');

@@ -71,11 +71,11 @@ class Model
         // advanced search
         if (is_array($term)) {
             // init vars
-            $where = array();
-            $order = array();
-            $join = array();
-            $params1 = array();
-            $params2 = array();
+            $where = [];
+            $order = [];
+            $join = [];
+            $params1 = [];
+            $params2 = [];
 
             // loop all searches
             foreach ($term as $field => $value) {
@@ -115,7 +115,7 @@ class Model
                 $params2 = array_merge(
                     $params2,
                     $terms,
-                    array((string) $field, LANGUAGE, 'Y', 'Y')
+                    [(string) $field, LANGUAGE, 'Y', 'Y']
                 );
             }
 
@@ -127,7 +127,7 @@ class Model
                  ORDER BY score DESC
                  LIMIT ?, ?';
 
-            $params = array_merge($params1, $params2, array($offset, $limit));
+            $params = array_merge($params1, $params2, [$offset, $limit]);
         } else {
             // simple search
             // get all terms to search for (including synonyms)
@@ -165,7 +165,7 @@ class Model
             $params = array_merge(
                 $terms,
                 $terms,
-                array(LANGUAGE, 'Y', 'Y', $offset, $limit)
+                [LANGUAGE, 'Y', 'Y', $offset, $limit]
             );
         }
 
@@ -221,13 +221,13 @@ class Model
             'SELECT synonym
              FROM search_synonyms
              WHERE term = ?',
-            array($term)
+            [$term]
         );
         if (!$synonyms) {
             $synonyms = (array) FrontendModel::getContainer()->get('database')->getColumn(
                 'SELECT term FROM search_synonyms
                  WHERE synonym LIKE ? OR synonym LIKE ? OR synonym LIKE ? OR synonym = ?',
-                array("$term,%", "%,$term", "%,$term,%", $term)
+                ["$term,%", "%,$term", "%,$term,%", $term]
             );
         } else {
             $synonyms = explode(',', $synonyms);
@@ -236,12 +236,12 @@ class Model
         // found any? merge with original term
         if ($synonyms) {
             return array_unique(
-                array_merge(array($term), $synonyms)
+                array_merge([$term], $synonyms)
             );
         }
 
         // only original term
-        return array($term);
+        return [$term];
     }
 
     /**
@@ -273,9 +273,9 @@ class Model
         // advanced search
         if (is_array($term)) {
             // init vars
-            $where = array();
-            $join = array();
-            $params = array();
+            $where = [];
+            $join = [];
+            $params = [];
 
             // loop all searches
             foreach ($term as $field => $value) {
@@ -305,7 +305,7 @@ class Model
                 $params = array_merge(
                     $params,
                     $terms,
-                    array((string) $field, LANGUAGE, 'Y', 'Y')
+                    [(string) $field, LANGUAGE, 'Y', 'Y']
                 );
             }
 
@@ -347,7 +347,7 @@ class Model
                 GROUP BY i.module, i.other_id
             ) AS results';
 
-            $params = array_merge($terms, array(LANGUAGE, 'Y', 'Y'));
+            $params = array_merge($terms, [LANGUAGE, 'Y', 'Y']);
         }
 
         // get the search results
@@ -413,11 +413,11 @@ class Model
 
         // none found? return empty :(
         if (!$searchResults) {
-            return array();
+            return [];
         }
 
         // prepare to send to modules
-        $moduleResults = array();
+        $moduleResults = [];
 
         // loop the result set
         foreach ($searchResults as $searchResult) {
@@ -428,10 +428,10 @@ class Model
         foreach ($moduleResults as $module => $otherIds) {
             // check if this module actually is prepared to handle searches
             $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
-            if (is_callable(array($class, 'search'))) {
+            if (is_callable([$class, 'search'])) {
                 // get the required info from our module
                 $moduleResults[$module] = call_user_func(
-                    array($class, 'search'),
+                    [$class, 'search'],
                     $otherIds
                 );
             } else {
@@ -447,7 +447,7 @@ class Model
                 // that's the one..
                 if ($otherId == $result['other_id']) {
                     $searchResults[$i] = array_merge(
-                        array('module' => $result['module']),
+                        ['module' => $result['module']],
                         $moduleResult
                     );
                     continue 2;
@@ -485,9 +485,9 @@ class Model
         if (!empty($otherIds)) {
             FrontendModel::getContainer()->get('database')->update(
                 'search_index',
-                array('active' => $active),
+                ['active' => $active],
                 'module = ? AND other_id IN (' . implode(',', $otherIds) . ')',
-                array($module)
+                [$module]
             );
         }
     }
@@ -509,7 +509,7 @@ class Model
                 WHERE language = ? AND active = ?
                 GROUP BY module, other_id
                 LIMIT ?, ?',
-                array(LANGUAGE, 'N', $offset, $limit)
+                [LANGUAGE, 'N', $offset, $limit]
             );
 
             // none found? good news!
@@ -518,7 +518,7 @@ class Model
             }
 
             // prepare to send to modules
-            $moduleResults = array();
+            $moduleResults = [];
 
             // loop the result set
             foreach ($searchResults as $searchResult) {
@@ -529,9 +529,9 @@ class Model
             foreach ($moduleResults as $module => $otherIds) {
                 // check if this module actually is prepared to handle searches
                 $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
-                if (is_callable(array($class, 'search'))) {
+                if (is_callable([$class, 'search'])) {
                     $moduleResults[$module] = call_user_func(
-                        array($class, 'search'),
+                        [$class, 'search'],
                         $otherIds
                     );
 

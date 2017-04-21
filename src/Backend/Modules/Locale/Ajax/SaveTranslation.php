@@ -41,7 +41,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         $module = \SpoonFilter::getPostValue('module', BackendModel::getModules(), null, 'string');
         $name = \SpoonFilter::getPostValue('name', null, null, 'string');
         $type = \SpoonFilter::getPostValue('type', BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type'), null, 'string');
-        $application = \SpoonFilter::getPostValue('application', array('Backend', 'Frontend'), null, 'string');
+        $application = \SpoonFilter::getPostValue('application', ['Backend', 'Frontend'], null, 'string');
         $value = \SpoonFilter::getPostValue('value', null, null, 'string');
 
         // validate values

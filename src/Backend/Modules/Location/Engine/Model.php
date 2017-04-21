@@ -40,8 +40,8 @@ class Model
         BackendModel::deleteExtraById($item['extra_id']);
 
         // delete location and its settings
-        $db->delete('location', 'id = ? AND language = ?', array($id, BL::getWorkingLanguage()));
-        $db->delete('location_settings', 'map_id = ?', array($id));
+        $db->delete('location', 'id = ? AND language = ?', [$id, BL::getWorkingLanguage()]);
+        $db->delete('location_settings', 'map_id = ?', [$id]);
     }
 
     /**
@@ -58,7 +58,7 @@ class Model
              FROM location AS i
              WHERE i.id = ? AND i.language = ?
              LIMIT 1',
-            array($id, BL::getWorkingLanguage())
+            [$id, BL::getWorkingLanguage()]
         );
     }
 
@@ -75,7 +75,7 @@ class Model
             'SELECT i.*
              FROM location AS i
              WHERE i.id = ? AND i.language = ?',
-            array($id, BL::getWorkingLanguage())
+            [$id, BL::getWorkingLanguage()]
         );
     }
 
@@ -90,7 +90,7 @@ class Model
             'SELECT i.*
              FROM location AS i
              WHERE i.language = ? AND i.show_overview = ?',
-            array(BL::getWorkingLanguage(), 'Y')
+            [BL::getWorkingLanguage(), 'Y']
         );
     }
 
@@ -113,7 +113,7 @@ class Model
         string $country = null
     ): array {
         // init item
-        $item = array();
+        $item = [];
 
         // building item
         if (!empty($street)) {
@@ -144,7 +144,7 @@ class Model
         $geocodes = json_decode(file_get_contents($url), true);
 
         // return coordinates latitude/longitude
-        return array(
+        return [
             'latitude' => array_key_exists(
                 0,
                 $geocodes['results']
@@ -153,7 +153,7 @@ class Model
                 0,
                 $geocodes['results']
             ) ? $geocodes['results'][0]['geometry']['location']['lng'] : null,
-        );
+        ];
     }
 
     /**
@@ -170,7 +170,7 @@ class Model
             'SELECT s.value
              FROM location_settings AS s
              WHERE s.map_id = ? AND s.name = ?',
-            array($mapId, $name)
+            [$mapId, $name]
         );
 
         if ($serializedData !== null) {
@@ -193,7 +193,7 @@ class Model
             'SELECT s.name, s.value
              FROM location_settings AS s
              WHERE s.map_id = ?',
-            array($mapId)
+            [$mapId]
         );
 
         foreach ($mapSettings as $key => $value) {
@@ -228,12 +228,12 @@ class Model
         BackendModel::updateExtra(
             $item['extra_id'],
             'data',
-            array(
+            [
                 'id' => $item['id'],
                 'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
                 'language' => $item['language'],
                 'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
-            )
+            ]
         );
 
         return $item['id'];
@@ -254,7 +254,7 @@ class Model
             'INSERT INTO location_settings(map_id, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array($mapId, $key, $value, $value)
+            [$mapId, $key, $value, $value]
         );
     }
 
@@ -276,12 +276,12 @@ class Model
             BackendModel::updateExtra(
                 $item['extra_id'],
                 'data',
-                array(
+                [
                     'id' => $item['id'],
                     'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
                     'language' => $item['language'],
                     'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
-                )
+                ]
             );
         }
 
@@ -290,7 +290,7 @@ class Model
             'location',
             $item,
             'id = ? AND language = ?',
-            array($item['id'], $item['language'])
+            [$item['id'], $item['language']]
         );
     }
 }

@@ -13,7 +13,7 @@ class RemoveUploadedFile extends AjaxAction
     public function execute()
     {
         $request = $this->get('request');
-        if (!$request->request->has('file') || ! $request->request->has('type')) {
+        if (!$request->request->has('file') || !$request->request->has('type')) {
             return $this->output(self::BAD_REQUEST, 'Missing data');
         }
 

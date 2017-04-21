@@ -11,8 +11,6 @@ use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use SpoonFormAttributes;
-use SpoonFormMultiCheckbox;
-use SpoonFormRadiobutton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -64,8 +62,8 @@ class Form extends FrontendBaseWidget
 
         // init parameters
         $parameters = $this->URL->getParameters();
-        $moduleParameters = array();
-        $getParameters = array();
+        $moduleParameters = [];
+        $getParameters = [];
 
         // sort by key (important for action order)
         ksort($parameters);
@@ -202,11 +200,11 @@ class Form extends FrontendBaseWidget
                     $item['html'] = $rbt->parse();
                 } elseif ($field['type'] == 'checkbox') {
                     // reset
-                    $newValues = array();
+                    $newValues = [];
 
                     // rebuild values
                     foreach ($values as $value) {
-                        $newValues[] = array('label' => $value, 'value' => $value);
+                        $newValues[] = ['label' => $value, 'value' => $value];
                     }
 
                     // create element
@@ -263,15 +261,15 @@ class Form extends FrontendBaseWidget
                         $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery($this->get('fork.settings')->get('Core', 'date_format_short'));
 
                         $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield ' . $item['classname'])->setAttributes(
-                            array(
+                            [
                                 'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
                                 'type' => 'date',
                                 'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : ''),
-                            )
+                            ]
                         );
                     } else {
-                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname'])->setAttributes(array('type' => 'time'));
+                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname'])->setAttributes(['type' => 'time']);
                     }
 
                     // add required attribute
@@ -466,7 +464,7 @@ class Form extends FrontendBaseWidget
                 $data['form_id'] = $this->item['id'];
                 $data['session_id'] = \SpoonSession::getSessionId();
                 $data['sent_on'] = FrontendModel::getUTCDate();
-                $data['data'] = serialize(array('server' => $_SERVER));
+                $data['data'] = serialize(['server' => $_SERVER]);
 
                 $dataId = null;
                 // insert data
@@ -475,7 +473,7 @@ class Form extends FrontendBaseWidget
                 }
 
                 // init fields array
-                $fields = array();
+                $fields = [];
 
                 // loop all fields
                 foreach ($this->item['fields'] as $field) {
@@ -490,7 +488,7 @@ class Form extends FrontendBaseWidget
                     $fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();
 
                     if ($field['type'] == 'radiobutton') {
-                        $values = array();
+                        $values = [];
 
                         foreach ($field['settings']['values'] as $value) {
                             $values[$value['value']] = $value['label'];

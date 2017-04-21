@@ -37,7 +37,7 @@ class Delete extends BackendBaseActionDelete
             // already deleted? Prolly want to undo then
             if ($profile['status'] === 'deleted') {
                 // set profile status to active
-                BackendProfilesModel::update($this->id, array('status' => 'active'));
+                BackendProfilesModel::update($this->id, ['status' => 'active']);
 
                 // redirect
                 $this->redirect(

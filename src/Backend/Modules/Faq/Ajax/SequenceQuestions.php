@@ -41,7 +41,7 @@ class SequenceQuestions extends BackendBaseAJAXAction
 
                 // loop id's and set new sequence
                 foreach ($toCategorySequence as $i => $id) {
-                    $item = array();
+                    $item = [];
                     $item['id'] = (int) $id;
                     $item['sequence'] = $i + 1;
 

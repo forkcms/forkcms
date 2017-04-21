@@ -27,7 +27,7 @@ class Model
      *
      * @var array
      */
-    private static $avatars = array();
+    private static $avatars = [];
 
     /**
      * Delete a setting.
@@ -42,7 +42,7 @@ class Model
         return (int) FrontendModel::getContainer()->get('database')->delete(
             'profiles_settings',
             'profile_id = ? AND name = ?',
-            array($id, $name)
+            [$id, $name]
         );
     }
 
@@ -61,7 +61,7 @@ class Model
              FROM profiles AS p
              WHERE p.email = ? AND p.id != ?
              LIMIT 1',
-            array($email, (int) $ignoreId)
+            [$email, (int) $ignoreId]
         );
     }
 
@@ -80,7 +80,7 @@ class Model
              FROM profiles AS p
              WHERE p.id != ? AND p.display_name = ?
              LIMIT 1',
-            array((int) $id, $displayName)
+            [(int) $id, $displayName]
         );
     }
 
@@ -194,7 +194,7 @@ class Model
             'SELECT ps.profile_id
              FROM profiles_settings AS ps
              WHERE ps.name = ? AND ps.value = ?',
-            array((string) $name, serialize($value))
+            [(string) $name, serialize($value)]
         );
     }
 
@@ -262,7 +262,7 @@ class Model
                 'SELECT ps.value
                  FROM profiles_settings AS ps
                  WHERE ps.profile_id = ? AND ps.name = ?',
-                array($id, $name)
+                [$id, $name]
             )
         );
     }
@@ -339,7 +339,7 @@ class Model
                  FROM profiles AS p
                  WHERE p.url = ? AND p.id != ?
                  LIMIT 1',
-                array((string) $url, (int) $id)
+                [(string) $url, (int) $id]
             );
 
             // already exists
@@ -393,11 +393,11 @@ class Model
         }
 
         // ignore these urls in the query string
-        $ignoreUrls = array(
+        $ignoreUrls = [
             FrontendNavigation::getURLForBlock('Profiles', 'Login'),
             FrontendNavigation::getURLForBlock('Profiles', 'Register'),
             FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword'),
-        );
+        ];
 
         // query string
         $queryString = (isset($_GET['queryString'])) ? SITE_URL . '/' . urldecode($_GET['queryString']) : SELF;
@@ -434,7 +434,7 @@ class Model
             'INSERT INTO profiles_settings(profile_id, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array($id, $name, serialize($value), serialize($value))
+            [$id, $name, serialize($value), serialize($value)]
         );
     }
 
@@ -447,7 +447,7 @@ class Model
     public static function setSettings(int $id, array $values)
     {
         // build parameters
-        $parameters = array();
+        $parameters = [];
         foreach ($values as $key => $value) {
             $parameters[] = $id;
             $parameters[] = $key;

@@ -34,14 +34,14 @@ class DetailModule extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $information = array();
+    private $information = [];
 
     /**
      * List of warnings.
      *
      * @var array
      */
-    private $warnings = array();
+    private $warnings = [];
 
     /**
      * Execute the action.
@@ -82,7 +82,7 @@ class DetailModule extends BackendBaseActionIndex
     {
         // inform that the module is not installed yet
         if (!BackendModel::isModuleInstalled($this->currentModule)) {
-            $this->warnings[] = array('message' => BL::getMessage('InformationModuleIsNotInstalled'));
+            $this->warnings[] = ['message' => BL::getMessage('InformationModuleIsNotInstalled')];
         }
 
         // fetch the module information
@@ -105,7 +105,7 @@ class DetailModule extends BackendBaseActionIndex
         $this->dataGridCronjobs = new BackendDataGridArray($this->information['cronjobs']);
 
         // hide columns
-        $this->dataGridCronjobs->setColumnsHidden(array('minute', 'hour', 'day-of-month', 'month', 'day-of-week', 'action', 'description', 'active'));
+        $this->dataGridCronjobs->setColumnsHidden(['minute', 'hour', 'day-of-month', 'month', 'day-of-week', 'action', 'description', 'active']);
 
         // add cronjob data column
         $this->dataGridCronjobs->addColumn(

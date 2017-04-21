@@ -136,7 +136,7 @@ class Model
             'INSERT INTO search_modules (module, searchable, weight)
              VALUES (?, ?, ?)
              ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
-            array($module, $searchable, $weight, $searchable, $weight)
+            [$module, $searchable, $weight, $searchable, $weight]
         );
 
         // invalidate the cache for search
@@ -196,7 +196,7 @@ class Model
         BackendModel::getContainer()->get('database')->delete(
             'search_index',
             'module = ? AND other_id = ? AND language = ?',
-            array($module, $otherId, $language ?? BL::getWorkingLanguage())
+            [$module, $otherId, $language ?? BL::getWorkingLanguage()]
         );
 
         // invalidate the cache for search
@@ -237,7 +237,7 @@ class Model
                 'INSERT INTO search_index (module, other_id, language, field, value, active)
                  VALUES (?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                array($module, $otherId, $language, (string) $field, $value, 'Y', $value, 'Y')
+                [$module, $otherId, $language, (string) $field, $value, 'Y', $value, 'Y']
             );
         }
 

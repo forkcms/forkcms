@@ -56,7 +56,7 @@ class Model
             'SELECT i.id
              FROM tags AS i
              WHERE i.id = ?',
-            array($id)
+            [$id]
         );
     }
 
@@ -71,7 +71,7 @@ class Model
     {
         return (BackendModel::getContainer()->get('database')->getVar(
                 'SELECT i.tag FROM tags AS i  WHERE i.tag = ?',
-                array($tag)
+                [$tag]
             ) != '');
     }
 
@@ -88,7 +88,7 @@ class Model
             'SELECT i.tag AS name
              FROM tags AS i
              WHERE i.id = ?',
-            array($id)
+            [$id]
         );
     }
 
@@ -105,7 +105,7 @@ class Model
             'SELECT i.tag AS name
              FROM tags AS i
              WHERE i.language = ?',
-            array($language ?? BL::getWorkingLanguage())
+            [$language ?? BL::getWorkingLanguage()]
         );
     }
 
@@ -125,7 +125,7 @@ class Model
              FROM tags AS i
              WHERE i.language = ? AND i.tag LIKE ?
              ORDER BY i.tag ASC',
-            array($language ?? BL::getWorkingLanguage(), $term . '%')
+            [$language ?? BL::getWorkingLanguage(), $term . '%']
         );
     }
 
@@ -141,7 +141,7 @@ class Model
      */
     public static function getTags(string $module, int $otherId, string $type = 'string', string $language = null)
     {
-        $type = (string) \SpoonFilter::getValue($type, array('string', 'array'), 'string');
+        $type = (string) \SpoonFilter::getValue($type, ['string', 'array'], 'string');
 
         // fetch tags
         $tags = (array) BackendModel::getContainer()->get('database')->getColumn(
@@ -150,7 +150,7 @@ class Model
              INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
              WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?
              ORDER BY i.tag ASC',
-            array($module, $otherId, $language ?? BL::getWorkingLanguage())
+            [$module, $otherId, $language ?? BL::getWorkingLanguage()]
         );
 
         // return as an imploded string
@@ -186,7 +186,7 @@ class Model
                  FROM tags AS i
                  WHERE i.url = ? AND i.language = ?
                  LIMIT 1',
-                array($url, $language)
+                [$url, $language]
             );
 
             // there are items so, call this method again.
@@ -205,7 +205,7 @@ class Model
                  FROM tags AS i
                  WHERE i.url = ? AND i.language = ? AND i.id != ?
                  LIMIT 1',
-                array($url, $language, $id)
+                [$url, $language, $id]
             );
 
             // there are items so, call this method again.
@@ -273,7 +273,7 @@ class Model
              FROM tags AS i
              INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
              WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?',
-            array($module, $otherId, $language)
+            [$module, $otherId, $language]
         );
 
         // remove old links
@@ -281,7 +281,7 @@ class Model
             $db->delete(
                 'modules_tags',
                 'tag_id IN (' . implode(', ', array_values($currentTags)) . ') AND other_id = ? AND module = ?',
-                array($otherId, $module)
+                [$otherId, $module]
             );
         }
 
@@ -307,7 +307,7 @@ class Model
                 'SELECT i.tag, i.id
                  FROM tags AS i
                  WHERE i.tag IN (' . implode(',', $placeholders) . ') AND i.language = ?',
-                array_merge($tags, array($language))
+                array_merge($tags, [$language])
             );
 
             // loop again and create tags that don't already exist
@@ -320,7 +320,7 @@ class Model
             }
 
             // init items to insert
-            $rowsToInsert = array();
+            $rowsToInsert = [];
 
             // loop again
             foreach ($tags as $tag) {
@@ -336,7 +336,7 @@ class Model
                 }
 
                 // add to insert array
-                $rowsToInsert[] = array('module' => $module, 'tag_id' => $tagId, 'other_id' => $otherId);
+                $rowsToInsert[] = ['module' => $module, 'tag_id' => $tagId, 'other_id' => $otherId];
             }
 
             // insert the rows at once if there are items to insert
@@ -346,7 +346,7 @@ class Model
         }
 
         // add to search index
-        BackendSearchModel::saveIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)), $language);
+        BackendSearchModel::saveIndex($module, $otherId, ['tags' => implode(' ', (array) $tags)], $language);
 
         // decrement number
         foreach ($currentTags as $tag => $tagId) {

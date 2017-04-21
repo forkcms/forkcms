@@ -235,9 +235,9 @@ class Index extends BackendBaseActionIndex
                 $message = Message::newInstance(
                     \SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject'))
                 )
-                    ->setFrom(array($from['email'] => $from['name']))
-                    ->setTo(array($email))
-                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->setFrom([$from['email'] => $from['name']])
+                    ->setTo([$email])
+                    ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                     ->parseHtml(
                         '/Authentication/Layout/Templates/Mails/ResetPassword.html.twig',
                         $variables
@@ -321,7 +321,7 @@ class Index extends BackendBaseActionIndex
     private function getAllowedModule()
     {
         // create filter with modules which may not be displayed
-        $filter = array('Authentication', 'Error', 'Core');
+        $filter = ['Authentication', 'Error', 'Core'];
 
         // get all modules
         $modules = array_diff(BackendModel::getModules(), $filter);

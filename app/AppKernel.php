@@ -24,7 +24,7 @@ class AppKernel extends Kernel
      */
     public function registerBundles(): array
     {
-        $bundles = array(
+        $bundles = [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
@@ -35,13 +35,13 @@ class AppKernel extends Kernel
             new \SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
             new \SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle(),
             new \SimpleBus\SymfonyBridge\SimpleBusEventBusBundle(),
-            new \Backend\Modules\Mailmotor\Mailmotor,
+            new \Backend\Modules\Mailmotor\Mailmotor(),
             new \MailMotor\Bundle\MailMotorBundle\MailMotorMailMotorBundle(),
             new \MailMotor\Bundle\MailChimpBundle\MailMotorMailChimpBundle(),
             new \MailMotor\Bundle\CampaignMonitorBundle\MailMotorCampaignMonitorBundle(),
-        );
+        ];
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+        if (in_array($this->getEnvironment(), ['dev', 'test'])) {
             $bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new \Symfony\Bundle\DebugBundle\DebugBundle();
         }

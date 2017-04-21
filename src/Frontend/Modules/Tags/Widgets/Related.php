@@ -23,21 +23,21 @@ class Related extends FrontendBaseWidget
      *
      * @var     array
      */
-    private $exclude = array();
+    private $exclude = [];
 
     /**
      * Tags on this page
      *
      * @var     array
      */
-    private $tags = array();
+    private $tags = [];
 
     /**
      * Related records
      *
      * @var     array
      */
-    private $related = array();
+    private $related = [];
 
     /**
      * Execute the extra
@@ -64,7 +64,7 @@ class Related extends FrontendBaseWidget
                  FROM modules_tags AS mt
                  INNER JOIN tags AS t ON t.id = mt.tag_id
                  WHERE t.language = ? AND t.tag = ?',
-                array(LANGUAGE, $tag)
+                [LANGUAGE, $tag]
             );
 
             // loop items
@@ -101,7 +101,7 @@ class Related extends FrontendBaseWidget
                 $entry['module'],
                 $class,
                 'getForTags',
-                (array) array($entry['other_id'])
+                (array) [$entry['other_id']]
             );
             if ($this->related[$id]) {
                 $this->related[$id] = array_pop($this->related[$id]);
@@ -126,7 +126,7 @@ class Related extends FrontendBaseWidget
         $pageId = $this->getContainer()->get('page')->getId();
 
         // array of excluded records
-        $this->exclude[] = array('module' => 'Pages', 'other_id' => $pageId);
+        $this->exclude[] = ['module' => 'Pages', 'other_id' => $pageId];
 
         // get tags for page
         $tags = (array) FrontendTagsModel::getForItem('pages', $pageId);
@@ -142,7 +142,7 @@ class Related extends FrontendBaseWidget
             // set module class
             $class = 'Frontend\\Modules\\' . $block['module'] . '\\Engine\\Model';
 
-            if (is_callable(array($class, 'getIdForTags'))) {
+            if (is_callable([$class, 'getIdForTags'])) {
                 // get record for module
                 $record = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->URL);
 
@@ -152,7 +152,7 @@ class Related extends FrontendBaseWidget
                 }
 
                 // add to excluded records
-                $this->exclude[] = array('module' => $block['module'], 'other_id' => $record['id']);
+                $this->exclude[] = ['module' => $block['module'], 'other_id' => $record['id']];
 
                 // get record's tags
                 $tags = (array) FrontendTagsModel::getForItem($block['module'], $record['id']);

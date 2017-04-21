@@ -32,7 +32,7 @@ class FormDate extends \SpoonFormDate
         }
 
         // define long mask
-        $longMask = str_replace(array('d', 'm', 'y', 'Y'), array('dd', 'mm', 'yy', 'yyyy'), $this->mask);
+        $longMask = str_replace(['d', 'm', 'y', 'Y'], ['dd', 'mm', 'yy', 'yyyy'], $this->mask);
 
         // post/get data
         $data = $this->getMethod(true);

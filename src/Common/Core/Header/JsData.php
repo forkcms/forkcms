@@ -2,7 +2,6 @@
 
 namespace Common\Core\Header;
 
-use Common\Locale;
 use InvalidArgumentException;
 
 final class JsData

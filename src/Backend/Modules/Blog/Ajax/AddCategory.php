@@ -49,7 +49,7 @@ class AddCategory extends BackendBaseAJAXAction
             $item['id'] = BackendBlogModel::insertCategory($item, $meta);
 
             // output
-            $this->output(self::OK, $item, vsprintf(BL::msg('AddedCategory'), array($item['title'])));
+            $this->output(self::OK, $item, vsprintf(BL::msg('AddedCategory'), [$item['title']]));
         }
     }
 }

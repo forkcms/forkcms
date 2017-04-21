@@ -50,7 +50,7 @@ class Delete extends BackendBaseActionDelete
             $this->record = (array) BackendLocaleModel::get($this->id);
 
             // delete item
-            BackendLocaleModel::delete(array($this->id));
+            BackendLocaleModel::delete([$this->id]);
 
             // build redirect URL
             $redirectUrl = BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['name'] . ' (' . mb_strtoupper($this->record['language']) . ')') . $this->filterQuery;

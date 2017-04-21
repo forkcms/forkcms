@@ -22,7 +22,7 @@ class Init extends \Common\Core\Init
      */
     public function __construct(KernelInterface $kernel)
     {
-        $this->allowedTypes = array('Backend', 'BackendAjax', 'Console');
+        $this->allowedTypes = ['Backend', 'BackendAjax', 'Console'];
 
         parent::__construct($kernel);
     }

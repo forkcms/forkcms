@@ -49,7 +49,7 @@ class Groups extends BackendBaseActionIndex
      */
     private function buildQuery(): array
     {
-        $parameters = array();
+        $parameters = [];
 
         /*
          * Start query, as you can see this query is build in the wrong place, because of the
@@ -70,7 +70,7 @@ class Groups extends BackendBaseActionIndex
         }
 
         // query
-        return array($query, $parameters);
+        return [$query, $parameters];
     }
 
     /**
@@ -103,23 +103,23 @@ class Groups extends BackendBaseActionIndex
                 null,
                 null,
                 null,
-                array(
+                [
                      'offset' => '[offset]',
                      'order' => '[order]',
                      'sort' => '[sort]',
                      'name' => $this->filter['name'],
-                ),
+                ],
                 false
             )
         );
 
         // sorting columns
-        $this->dgGroups->setSortingColumns(array('name', 'members_count'), 'name');
+        $this->dgGroups->setSortingColumns(['name', 'members_count'], 'name');
 
         // set the amount of profiles
         $this->dgGroups->setColumnFunction(
-            array(__CLASS__, 'parseNumProfiles'),
-            array('[id]', '[members_count]'),
+            [__CLASS__, 'parseNumProfiles'],
+            ['[id]', '[members_count]'],
             'members_count'
         );
 

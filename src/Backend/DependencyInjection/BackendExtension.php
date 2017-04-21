@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class BackendExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -18,7 +18,7 @@ class BackendExtension extends Extension implements PrependExtensionInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function prepend(ContainerBuilder $container)
     {
@@ -40,18 +40,18 @@ class BackendExtension extends Extension implements PrependExtensionInterface
              */
             $container->prependExtensionConfig(
                 'doctrine',
-                array(
-                    'orm' => array(
-                        'mappings' => array(
-                            $module => array(
+                [
+                    'orm' => [
+                        'mappings' => [
+                            $module => [
                                 'type' => 'annotation',
                                 'is_bundle' => false,
                                 'dir' => $dir,
                                 'prefix' => 'Backend\\Modules\\' . $module . '\\Entity',
-                            ),
-                        ),
-                    ),
-                )
+                            ],
+                        ],
+                    ],
+                ]
             );
         }
     }

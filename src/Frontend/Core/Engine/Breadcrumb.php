@@ -22,7 +22,7 @@ class Breadcrumb extends FrontendBaseObject
      *
      * @var array
      */
-    private $items = array();
+    private $items = [];
 
     /**
      * @param KernelInterface $kernel
@@ -68,7 +68,7 @@ class Breadcrumb extends FrontendBaseObject
      */
     private function getBreadcrumbsForPages(array $pages): array
     {
-        $breadcrumbs = array();
+        $breadcrumbs = [];
         $errorURL = Navigation::getURL(404);
 
         // loop pages
@@ -107,7 +107,7 @@ class Breadcrumb extends FrontendBaseObject
      */
     public function addElement(string $title, string $url = null)
     {
-        $this->items[] = array('title' => $title, 'url' => $url);
+        $this->items[] = ['title' => $title, 'url' => $url];
     }
 
     /**

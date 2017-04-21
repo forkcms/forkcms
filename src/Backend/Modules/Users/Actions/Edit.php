@@ -129,7 +129,7 @@ class Edit extends BackendBaseActionEdit
             ->setAttribute('type', 'email')
         ;
         if ($this->user->isGod()) {
-            $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
+            $this->frm->getField('email')->setAttributes(['disabled' => 'disabled']);
         }
         $this->frm->addText('name', $this->record['settings']['name'], 255);
         $this->frm->addText('surname', $this->record['settings']['surname'], 255);
@@ -144,8 +144,8 @@ class Edit extends BackendBaseActionEdit
             $this->frm->addPassword('confirm_password', null, 75);
 
             // disable autocomplete
-            $this->frm->getField('new_password')->setAttributes(array('autocomplete' => 'off'));
-            $this->frm->getField('confirm_password')->setAttributes(array('autocomplete' => 'off'));
+            $this->frm->getField('new_password')->setAttributes(['autocomplete' => 'off']);
+            $this->frm->getField('confirm_password')->setAttributes(['autocomplete' => 'off']);
         }
 
         // settings
@@ -257,7 +257,7 @@ class Edit extends BackendBaseActionEdit
                                         'UndoDelete',
                                         null,
                                         null,
-                                        array('email' => $fields['email']->getValue())
+                                        ['email' => $fields['email']->getValue()]
                                     )
                                 )
                             );
@@ -313,9 +313,9 @@ class Edit extends BackendBaseActionEdit
                     BackendModel::get('database')->delete(
                         'users_sessions',
                         'user_id = ?',
-                        array(
+                        [
                             $this->user->getUserId(),
-                        )
+                        ]
                     );
                 }
 

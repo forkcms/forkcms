@@ -83,15 +83,15 @@ class Action extends Base\Object
     {
         // get working languages
         $languages = BackendLanguage::getWorkingLanguages();
-        $workingLanguages = array();
+        $workingLanguages = [];
 
         // loop languages and build an array that we can assign
         foreach ($languages as $abbreviation => $label) {
-            $workingLanguages[] = array(
+            $workingLanguages[] = [
                 'abbr' => $abbreviation,
                 'label' => $label,
                 'selected' => $abbreviation === BackendLanguage::getWorkingLanguage(),
-            );
+            ];
         }
 
         // assign the languages

@@ -39,7 +39,7 @@ class Page extends FrontendBaseObject
      *
      * @var array
      */
-    protected $extras = array();
+    protected $extras = [];
 
     /**
      * Footer instance
@@ -67,7 +67,7 @@ class Page extends FrontendBaseObject
      *
      * @var array
      */
-    protected $record = array();
+    protected $record = [];
 
     /**
      * The path of the template to show
@@ -232,7 +232,7 @@ class Page extends FrontendBaseObject
         }
 
         // add no-index to meta-custom, so the draft won't get accidentally indexed
-        $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+        $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, nofollow'], true);
 
         return Model::getPageRevision($this->URL->getParameter('page_revision', 'int'));
     }
@@ -251,7 +251,7 @@ class Page extends FrontendBaseObject
         $record = $this->getPageRecord($pageId);
 
         if (empty($record)) {
-            return array();
+            return [];
         }
 
         // redirect to the first child if the page is empty
@@ -343,7 +343,7 @@ class Page extends FrontendBaseObject
     protected function parsePositions()
     {
         // init array to store parsed positions data
-        $positions = array();
+        $positions = [];
 
         // fetch variables from main template
         $mainVariables = $this->tpl->getAssignedVariables();
@@ -406,7 +406,7 @@ class Page extends FrontendBaseObject
         $extra->setKernel($this->getKernel());
 
         // overwrite the template
-        if (is_callable(array($extra, 'getOverwrite')) && $extra->getOverwrite()) {
+        if (is_callable([$extra, 'getOverwrite']) && $extra->getOverwrite()) {
             $this->templatePath = $extra->getTemplatePath();
         }
     }
@@ -506,13 +506,13 @@ class Page extends FrontendBaseObject
                 $blocks,
                 function (array $block) {
                     if ($block['extra_id'] === null) {
-                        return array(
+                        return [
                             'blockIsEditor' => true,
                             'blockContent' => $block['html'],
-                        );
+                        ];
                     }
 
-                    $block = array('extra' => $this->getExtraForBlock($block));
+                    $block = ['extra' => $this->getExtraForBlock($block)];
 
                     // add to list of extras to parse
                     $this->extras[] = $block['extra'];

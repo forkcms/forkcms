@@ -24,7 +24,7 @@ class Rss extends \SpoonFeedRSS
      * @param string $description The description of the feed.
      * @param array $items An array with SpoonRSSItems.
      */
-    public function __construct(string $title, string $link, string $description, array $items = array())
+    public function __construct(string $title, string $link, string $description, array $items = [])
     {
         // decode
         $title = \SpoonFilter::htmlspecialcharsDecode($title);
@@ -35,7 +35,7 @@ class Rss extends \SpoonFeedRSS
             $title,
             Model::addURLParameters(
                 $link,
-                array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title))
+                ['utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title)]
             ),
             $description,
             $items
@@ -85,11 +85,11 @@ class Rss extends \SpoonFeedRSS
         // add UTM-parameters
         $link = Model::addURLParameters(
             $link,
-            array(
+            [
                 'utm_source' => 'feed',
                 'utm_medium' => 'rss',
                 'utm_campaign' => CommonUri::getUrl($this->getTitle()),
-            )
+            ]
         );
 
         // call the parent

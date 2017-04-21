@@ -73,8 +73,9 @@ class Form extends \Common\Core\Form
      * @param string $type  The type of the button (submit is default).
      * @param string $class Class(es) that will be applied on the button.
      *
-     * @return \SpoonFormButton
      * @throws Exception
+     *
+     * @return \SpoonFormButton
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
     {
@@ -122,7 +123,7 @@ class Form extends \Common\Core\Form
     ) {
         $name = (string) $name;
         $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
-        $type = \SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
+        $type = \SpoonFilter::getValue($type, ['from', 'till', 'range'], 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-date inputDate';
@@ -145,8 +146,8 @@ class Form extends \Common\Core\Form
 
         // build attributes
         $attributes['data-mask'] = str_replace(
-            array('d', 'm', 'Y', 'j', 'n'),
-            array('dd', 'mm', 'yy', 'd', 'm'),
+            ['d', 'm', 'Y', 'j', 'n'],
+            ['dd', 'mm', 'yy', 'd', 'm'],
             $mask
         );
         $attributes['data-firstday'] = $firstday;
@@ -284,7 +285,7 @@ class Form extends \Common\Core\Form
      *
      * @return array
      */
-    public function getValues($excluded = array('form', 'save', 'form_token', '_utf8'))
+    public function getValues($excluded = ['form', 'save', 'form_token', '_utf8'])
     {
         return parent::getValues($excluded);
     }

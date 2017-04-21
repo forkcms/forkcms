@@ -38,8 +38,9 @@ class FormFile extends \SpoonFormFile
      *
      * @param TwigTemplate $template The template to parse the element in.
      *
-     * @return string
      * @throws \SpoonFormException
+     *
+     * @return string
      */
     public function parse($template = null)
     {
@@ -53,10 +54,10 @@ class FormFile extends \SpoonFormFile
 
         // add attributes
         $output .= $this->getAttributesHTML(
-            array(
+            [
                 '[id]' => $this->attributes['id'],
                 '[name]' => $this->attributes['name'],
-            )
+            ]
         ) . ' />';
 
         // add help txt if needed

@@ -13,7 +13,7 @@ class FormEndNode extends \Twig_Node
      */
     public function __construct(int $lineNumber, string $tag)
     {
-        parent::__construct(array(), array(), $lineNumber, $tag);
+        parent::__construct([], [], $lineNumber, $tag);
     }
 
     /**

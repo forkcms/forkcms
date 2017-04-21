@@ -230,7 +230,7 @@ class MetaType extends AbstractType
         return function ($meta) {
             if (!$meta instanceof Meta) {
                 return [
-                    'SEOIndex' =>  SEOIndex::none(),
+                    'SEOIndex' => SEOIndex::none(),
                     'SEOFollow' => SEOFollow::none(),
                 ];
             }

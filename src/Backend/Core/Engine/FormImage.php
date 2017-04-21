@@ -77,8 +77,8 @@ class FormImage extends \SpoonFormImage
     {
         // do an image validation
         if ($this->isFilled()) {
-            $this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BackendLanguage::err('JPGGIFAndPNGOnly'));
-            $this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), BackendLanguage::err('JPGGIFAndPNGOnly'));
+            $this->isAllowedExtension(['jpg', 'jpeg', 'gif', 'png'], BackendLanguage::err('JPGGIFAndPNGOnly'));
+            $this->isAllowedMimeType(['image/jpeg', 'image/gif', 'image/png'], BackendLanguage::err('JPGGIFAndPNGOnly'));
         }
 
         // if the image is bigger then the allowed configuration it won't show up as filled but it is submitted
@@ -126,10 +126,10 @@ class FormImage extends \SpoonFormImage
 
         // add attributes
         $output .= $this->getAttributesHTML(
-            array(
+            [
                 '[id]' => $this->attributes['id'],
                 '[name]' => $this->attributes['name'],
-            )
+            ]
         ) . ' />';
 
         // add help txt if needed

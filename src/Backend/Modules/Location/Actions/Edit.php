@@ -26,7 +26,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * The settings form
@@ -129,23 +129,23 @@ class Edit extends BackendBaseActionEdit
      */
     protected function loadSettingsForm()
     {
-        $mapTypes = array(
+        $mapTypes = [
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
             'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
-        );
-        $mapStyles = array(
+        ];
+        $mapStyles = [
             'standard' => BL::lbl('Default', $this->getModule()),
             'custom' => BL::lbl('Custom', $this->getModule()),
             'gray' => BL::lbl('Gray', $this->getModule()),
             'blue' => BL::lbl('Blue', $this->getModule()),
-        );
+        ];
 
         $zoomLevels = array_combine(
-            array_merge(array('auto'), range(1, 18)),
-            array_merge(array(BL::lbl('Auto', $this->getModule())), range(1, 18))
+            array_merge(['auto'], range(1, 18)),
+            array_merge([BL::lbl('Auto', $this->getModule())], range(1, 18))
         );
 
         $this->settingsForm = new BackendForm('settings');

@@ -66,7 +66,7 @@ class Model extends \Common\Core\Model
     public static function convertToPlainText(string $text, bool $includeAHrefs = true, $includeImgAlts = true): string
     {
         // remove tabs, line feeds and carriage returns
-        $text = str_replace(array("\t", "\n", "\r"), '', $text);
+        $text = str_replace(["\t", "\n", "\r"], '', $text);
 
         // remove the head-, style- and script-tags and all their contents
         $text = preg_replace('|\<head[^>]*\>(.*\n*)\</head\>|isU', '', $text);
@@ -137,12 +137,12 @@ class Model extends \Common\Core\Model
              FROM pages AS p
              WHERE p.id = ? AND p.status = ? AND p.language = ?
              LIMIT 1',
-            array($pageId, 'active', LANGUAGE)
+            [$pageId, 'active', LANGUAGE]
         );
 
         // No page found
         if ($revisionId === 0) {
-            return array();
+            return [];
         }
 
         return self::getPageRevision($revisionId, false);
@@ -173,11 +173,11 @@ class Model extends \Common\Core\Model
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.revision_id = ? AND p.language = ?
              LIMIT 1',
-            array($revisionId, LANGUAGE)
+            [$revisionId, LANGUAGE]
         );
 
         if (empty($pageRevision)) {
-            return array();
+            return [];
         }
 
         if (!$allowHidden && (int) $pageRevision['id'] !== 404 && $pageRevision['hidden'] === 'Y') {
@@ -264,9 +264,10 @@ class Model extends \Common\Core\Model
      * @param string $url       Commenter's URL.
      * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
      *
+     * @throws \Exception
+     *
      * @return bool|string Will return a boolean, except when we can't decide the status
      *                          (unknown will be returned in that case)
-     * @throws \Exception
      */
     public static function isSpam(
         string $content,

@@ -70,7 +70,7 @@ class Model
             'SELECT i.*
              FROM groups AS i
              WHERE i.name = ?',
-            array($name)
+            [$name]
         );
     }
 
@@ -81,7 +81,7 @@ class Model
      */
     public static function delete(int $id)
     {
-        BackendModel::getContainer()->get('database')->delete('groups', 'id = ?', array($id));
+        BackendModel::getContainer()->get('database')->delete('groups', 'id = ?', [$id]);
     }
 
     /**
@@ -96,7 +96,7 @@ class Model
                 BackendModel::getContainer()->get('database')->delete(
                     'groups_rights_actions',
                     'group_id = ? AND module = ? AND action = ?',
-                    array($permission['group_id'], $permission['module'], $permission['action'])
+                    [$permission['group_id'], $permission['module'], $permission['action']]
                 );
             }
         }
@@ -114,7 +114,7 @@ class Model
                 BackendModel::getContainer()->get('database')->delete(
                     'groups_rights_modules',
                     'group_id = ? AND module = ?',
-                    array($permission['group_id'], $permission['module'])
+                    [$permission['group_id'], $permission['module']]
                 );
             }
         }
@@ -127,7 +127,7 @@ class Model
      */
     public static function deleteMultipleGroups(int $userId)
     {
-        BackendModel::getContainer()->get('database')->delete('users_groups', 'user_id = ?', array($userId));
+        BackendModel::getContainer()->get('database')->delete('users_groups', 'user_id = ?', [$userId]);
     }
 
     /**
@@ -143,7 +143,7 @@ class Model
             'SELECT i.*
              FROM groups AS i
              WHERE i.id = ?',
-            array($id)
+            [$id]
         );
     }
 
@@ -160,7 +160,7 @@ class Model
             'SELECT i.*
              FROM groups_rights_actions AS i
              WHERE i.module = ? AND i.group_id = ? AND i.action = ?',
-            array($permission['module'], $permission['group_id'], $permission['action'])
+            [$permission['module'], $permission['group_id'], $permission['action']]
         );
     }
 
@@ -177,7 +177,7 @@ class Model
             'SELECT i.*
              FROM groups_rights_modules AS i
              WHERE i.module = ? AND i.group_id = ?',
-            array($permission['module'], $permission['group_id'])
+            [$permission['module'], $permission['group_id']]
         );
     }
 
@@ -194,7 +194,7 @@ class Model
             'SELECT i.*
              FROM groups AS i
              WHERE i.id = ?',
-            array($id)
+            [$id]
         );
     }
 
@@ -211,7 +211,7 @@ class Model
             'SELECT i.module, i.action
              FROM groups_rights_actions AS i
              WHERE i.group_id = ?',
-            array($id)
+            [$id]
         );
     }
 
@@ -241,7 +241,7 @@ class Model
              FROM groups AS i
              INNER JOIN users_groups AS ug ON i.id = ug.group_id
              WHERE ug.user_id = ?',
-            array($id)
+            [$id]
         );
     }
 
@@ -279,7 +279,7 @@ class Model
             'SELECT i.*
              FROM groups_rights_modules AS i
              WHERE i.group_id = ?',
-            array($id)
+            [$id]
         );
     }
 
@@ -297,11 +297,11 @@ class Model
             'SELECT i.value
              FROM groups_settings AS i
              WHERE i.group_id = ? AND i.name = ?',
-            array($groupId, $name)
+            [$groupId, $name]
         );
 
         if (!$setting) {
-            return array();
+            return [];
         }
 
         if (isset($setting['value'])) {
@@ -323,7 +323,7 @@ class Model
              FROM users AS i
              INNER JOIN users_groups AS ug ON i.id = ug.user_id
              WHERE ug.group_id = ? AND i.deleted = ? AND i.active = ?',
-            array($groupId, 'N', 'Y')
+            [$groupId, 'N', 'Y']
         );
     }
 
@@ -391,7 +391,7 @@ class Model
     public static function update(array $group, array $setting)
     {
         // update group
-        BackendModel::getContainer()->get('database')->update('groups', array('name' => $group['name']), 'id = ?', array($group['id']));
+        BackendModel::getContainer()->get('database')->update('groups', ['name' => $group['name']], 'id = ?', [$group['id']]);
 
         // update setting
         self::updateSetting($setting);
@@ -404,6 +404,6 @@ class Model
      */
     public static function updateSetting(array $setting)
     {
-        BackendModel::getContainer()->get('database')->update('groups_settings', array('value' => $setting['value']), 'group_id = ? AND name = ?', array($setting['group_id'], $setting['name']));
+        BackendModel::getContainer()->get('database')->update('groups_settings', ['value' => $setting['value']], 'group_id = ? AND name = ?', [$setting['group_id'], $setting['name']]);
     }
 }

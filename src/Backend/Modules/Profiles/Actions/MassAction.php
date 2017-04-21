@@ -27,8 +27,8 @@ class MassAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', array('addToGroup', 'delete'), '');
-        $ids = (isset($_GET['id'])) ? (array) $_GET['id'] : array();
+        $action = \SpoonFilter::getGetValue('action', ['addToGroup', 'delete'], '');
+        $ids = (isset($_GET['id'])) ? (array) $_GET['id'] : [];
         $newGroupId = \SpoonFilter::getGetValue('newGroup', array_keys(BackendProfilesModel::getGroups()), '');
 
         // no ids provided
@@ -63,11 +63,11 @@ class MassAction extends BackendBaseAction
 
                     // OK, it's safe to add the user to this group
                     BackendProfilesModel::insertProfileGroup(
-                        array(
+                        [
                              'profile_id' => $id,
                              'group_id' => $newGroupId,
                              'starts_on' => BackendModel::getUTCDate(),
-                        )
+                        ]
                     );
                 }
             }
@@ -88,14 +88,14 @@ class MassAction extends BackendBaseAction
                 'Index',
                 null,
                 null,
-                array(
+                [
                      'offset' => \SpoonFilter::getGetValue('offset', null, ''),
                      'order' => \SpoonFilter::getGetValue('order', null, ''),
                      'sort' => \SpoonFilter::getGetValue('sort', null, ''),
                      'email' => \SpoonFilter::getGetValue('email', null, ''),
                      'status' => \SpoonFilter::getGetValue('status', null, ''),
                      'group' => \SpoonFilter::getGetValue('group', null, ''),
-                )
+                ]
             ) . '&report=' . $report
         );
     }

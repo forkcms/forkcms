@@ -20,12 +20,12 @@ class Index extends FrontendBaseBlock
     /**
      * @var array
      */
-    protected $items = array();
+    protected $items = [];
 
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * Execute the extra

@@ -37,7 +37,7 @@ class Model
         // check to see if the interface is implemented
         if (in_array('Frontend\\Modules\\Tags\\Engine\\TagsInterface', class_implements($class))) {
             // return result
-            return call_user_func(array($class, $method), $parameter);
+            return call_user_func([$class, $method], $parameter);
         }
 
         throw new FrontendException(
@@ -62,7 +62,7 @@ class Model
             'SELECT id, language, tag AS name, number, url
              FROM tags
              WHERE url = ? AND language = ?',
-            array($url, $locale ?? FrontendLocale::frontendLanguage())
+            [$url, $locale ?? FrontendLocale::frontendLanguage()]
         );
     }
 
@@ -78,7 +78,7 @@ class Model
              FROM tags AS t
              WHERE t.language = ? AND t.number > 0
              ORDER BY t.tag',
-            array(FrontendLocale::frontendLanguage())
+            [FrontendLocale::frontendLanguage()]
         );
     }
 
@@ -93,7 +93,7 @@ class Model
      */
     public static function getForItem(string $module, int $otherId, Locale $locale = null): array
     {
-        $return = array();
+        $return = [];
 
         // get tags
         $linkedTags = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -101,7 +101,7 @@ class Model
              FROM modules_tags AS mt
              INNER JOIN tags AS t ON mt.tag_id = t.id
              WHERE mt.module = ? AND mt.other_id = ? AND t.language = ?',
-            array($module, $otherId, $locale ?? FrontendLocale::frontendLanguage())
+            [$module, $otherId, $locale ?? FrontendLocale::frontendLanguage()]
         );
 
         // return
@@ -139,7 +139,7 @@ class Model
         $db = FrontendModel::getContainer()->get('database');
 
         // init var
-        $return = array();
+        $return = [];
 
         // get tags
         $linkedTags = (array) $db->getRecords(
@@ -147,7 +147,7 @@ class Model
              FROM modules_tags AS mt
              INNER JOIN tags AS t ON mt.tag_id = t.id
              WHERE mt.module = ? AND t.language = ? AND mt.other_id IN (' . implode(', ', $otherIds) . ')',
-            array($module, $locale ?? FrontendLocale::frontendLanguage())
+            [$module, $locale ?? FrontendLocale::frontendLanguage()]
         );
 
         // return
@@ -183,7 +183,7 @@ class Model
             'SELECT id
              FROM tags
              WHERE url = ?',
-            array($url)
+            [$url]
         );
     }
 
@@ -202,7 +202,7 @@ class Model
              WHERE tag_id = ?
              GROUP BY module
              ORDER BY module ASC',
-            array($id)
+            [$id]
         );
     }
 
@@ -219,7 +219,7 @@ class Model
             'SELECT tag
              FROM tags
              WHERE id = ?',
-            array($id)
+            [$id]
         );
     }
 
@@ -244,7 +244,7 @@ class Model
              GROUP BY t2.other_id
              ORDER BY COUNT(t2.tag_id) DESC
              LIMIT ?',
-            array($id, $module, $otherModule, $limit)
+            [$id, $module, $otherModule, $limit]
         );
     }
 }

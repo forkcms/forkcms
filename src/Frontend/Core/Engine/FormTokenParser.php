@@ -10,8 +10,9 @@ class FormTokenParser extends \Twig_TokenParser
     /**
      * @param \Twig_Token $token
      *
-     * @return \Twig_Node
      * @throws \Twig_Error_Syntax
+     *
+     * @return \Twig_Node
      */
     public function parse(\Twig_Token $token): \Twig_Node
     {

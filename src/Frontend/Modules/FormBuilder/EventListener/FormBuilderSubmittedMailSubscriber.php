@@ -87,12 +87,12 @@ final class FormBuilderSubmittedMailSubscriber
         $message = Message::newInstance(sprintf($subject, $form['name']))
             ->parseHtml(
                 '/FormBuilder/Layout/Templates/Mails/' . $form['email_template'],
-                array(
+                [
                     'subject' => $subject,
                     'sentOn' => time(),
                     'name' => $form['name'],
                     'fields' => array_map(
-                        function (array $field) : \Swift_Mime_SimpleMessage{
+                        function (array $field) : \Swift_Mime_SimpleMessage {
                             $field['value'] = html_entity_decode($field['value']);
 
                             return $field;
@@ -100,11 +100,11 @@ final class FormBuilderSubmittedMailSubscriber
                         $fieldData
                     ),
                     'is_confirmation_mail' => $isConfirmationMail,
-                ),
+                ],
                 true
             )
             ->setTo(($to === null) ? $form['email'] : $to)
-            ->setFrom(array($from['email'] => $from['name']))
+            ->setFrom([$from['email'] => $from['name']])
         ;
 
         // check if we have a replyTo email set
@@ -113,12 +113,12 @@ final class FormBuilderSubmittedMailSubscriber
                 $field['settings']['reply_to'] === true
             ) {
                 $email = $fieldData[$field['id']]['value'];
-                $message->setReplyTo(array($email => $email));
+                $message->setReplyTo([$email => $email]);
             }
         }
         if ($message->getReplyTo() === null) {
             $replyTo = $this->modulesSettings->get('Core', 'mailer_reply_to');
-            $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
+            $message->setReplyTo([$replyTo['email'] => $replyTo['name']]);
         }
 
         return $message;
@@ -134,16 +134,16 @@ final class FormBuilderSubmittedMailSubscriber
     protected function getEmailFields(array $data): array
     {
         return array_map(
-            function ($item) : array{
+            function ($item) : array {
                 $value = unserialize($item['value']);
 
-                return array(
+                return [
                     'label' => $item['label'],
                     'value' => (is_array($value)
                         ? implode(',', $value)
                         : nl2br($value)
                     ),
-                );
+                ];
             },
             $data
         );

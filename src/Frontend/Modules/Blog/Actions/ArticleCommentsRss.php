@@ -73,7 +73,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
     private function parse()
     {
         // get vars
-        $title = vsprintf(FL::msg('CommentsOn'), array($this->record['title']));
+        $title = vsprintf(FL::msg('CommentsOn'), [$this->record['title']]);
         $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
                 '/' . $this->record['url'];
         $detailLink = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail');

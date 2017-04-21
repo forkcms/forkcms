@@ -42,14 +42,14 @@ class ClientFactory
     public function createClient(): Google_Client
     {
         $config = new Google_Config();
-        $config->setClassConfig(Google_Cache_File::class, array('directory' => $this->cacheDir));
+        $config->setClassConfig(Google_Cache_File::class, ['directory' => $this->cacheDir]);
         $client = new Google_Client($config);
 
         // set assertion credentials
         $client->setAssertionCredentials(
             new Google_Auth_AssertionCredentials(
                 $this->settings->get('Analytics', 'email'),
-                array('https://www.googleapis.com/auth/analytics.readonly'),
+                ['https://www.googleapis.com/auth/analytics.readonly'],
                 base64_decode($this->settings->get('Analytics', 'certificate'))
             )
         );

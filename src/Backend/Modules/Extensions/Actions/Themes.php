@@ -40,8 +40,8 @@ class Themes extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $installableThemes = array();
-    private $installedThemes = array();
+    private $installableThemes = [];
+    private $installedThemes = [];
 
     /**
      * Execute the action.

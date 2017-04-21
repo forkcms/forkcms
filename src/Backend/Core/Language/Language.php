@@ -24,21 +24,21 @@ class Language
      *
      * @var array
      */
-    protected static $err = array();
+    protected static $err = [];
 
     /**
      * The labels
      *
      * @var array
      */
-    protected static $lbl = array();
+    protected static $lbl = [];
 
     /**
      * The messages
      *
      * @var array
      */
-    protected static $msg = array();
+    protected static $msg = [];
 
     /**
      * The active languages
@@ -85,19 +85,19 @@ class Language
     public static function getCheckboxValues(): array
     {
         $languages = self::getActiveLanguages();
-        $results = array();
+        $results = [];
 
         // stop here if no languages are present
         if (empty($languages)) {
-            return array();
+            return [];
         }
 
         // addRadioButton requires an array with keys 'value' and 'label'
         foreach ($languages as $abbreviation) {
-            $results[] = array(
+            $results[] = [
                 'value' => $abbreviation,
                 'label' => self::lbl(mb_strtoupper($abbreviation)),
-            );
+            ];
         }
 
         return $results;
@@ -186,10 +186,10 @@ class Language
      */
     public static function getInterfaceLanguages(): array
     {
-        $languages = array();
+        $languages = [];
 
         // grab the languages from the settings & loop language to reset the label
-        foreach ((array) Model::get('fork.settings')->get('Core', 'interface_languages', array('en')) as $key) {
+        foreach ((array) Model::get('fork.settings')->get('Core', 'interface_languages', ['en']) as $key) {
             // fetch language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
@@ -310,10 +310,10 @@ class Language
      */
     public static function getWorkingLanguages(): array
     {
-        $languages = array();
+        $languages = [];
 
         // grab the languages from the settings & loop language to reset the label
-        foreach ((array) Model::get('fork.settings')->get('Core', 'languages', array('en')) as $key) {
+        foreach ((array) Model::get('fork.settings')->get('Core', 'languages', ['en']) as $key) {
             // fetch the language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
@@ -376,19 +376,19 @@ class Language
         $msg = (array) $translations['msg'];
         foreach ($err as $module => $translations) {
             if (!isset(self::$err[$module])) {
-                self::$err[$module] = array();
+                self::$err[$module] = [];
             }
             self::$err[$module] = array_merge(self::$err[$module], $translations);
         }
         foreach ($lbl as $module => $translations) {
             if (!isset(self::$lbl[$module])) {
-                self::$lbl[$module] = array();
+                self::$lbl[$module] = [];
             }
             self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
         }
         foreach ($msg as $module => $translations) {
             if (!isset(self::$msg[$module])) {
-                self::$msg[$module] = array();
+                self::$msg[$module] = [];
             }
             self::$msg[$module] = array_merge(self::$msg[$module], $translations);
         }

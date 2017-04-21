@@ -97,7 +97,7 @@ class EditCategory extends BackendBaseActionEdit
             $this->meta->setURLCallback(
                 'Backend\Modules\Faq\Engine\Model',
                 'getURLForCategory',
-                array($this->record['id'])
+                [$this->record['id']]
             );
 
             $this->frm->cleanupFields();

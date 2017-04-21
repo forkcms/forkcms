@@ -58,7 +58,7 @@ class Profile
      *
      * @var array
      */
-    private $settings = array();
+    private $settings = [];
 
     /**
      * The profile status.
@@ -227,7 +227,7 @@ class Profile
              FROM profiles_groups AS pg
              INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
              WHERE pgr.profile_id = :id AND (pgr.expires_on IS NULL OR pgr.expires_on >= NOW())',
-            array(':id' => (int) $id)
+            [':id' => (int) $id]
         );
     }
 
@@ -259,7 +259,7 @@ class Profile
              FROM profiles_groups AS pg
              INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
              WHERE pgr.profile_id = :id AND (pgr.expires_on IS NULL OR pgr.expires_on >= NOW())',
-            array(':id' => (int) $this->getId())
+            [':id' => (int) $this->getId()]
         );
 
         $this->settings = (array) FrontendModel::getContainer()->get('database')->getPairs(

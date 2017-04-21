@@ -68,8 +68,8 @@ class Edit extends BackendBaseActionEdit
      */
     private function loadForm()
     {
-        $this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('id' => $this->id)) . $this->filterQuery);
-        $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->record['application']);
+        $this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, ['id' => $this->id]) . $this->filterQuery);
+        $this->frm->addDropdown('application', ['Backend' => 'Backend', 'Frontend' => 'Frontend'], $this->record['application']);
         $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(), $this->record['module']);
         $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
         $this->frm->addText('name', $this->record['name']);

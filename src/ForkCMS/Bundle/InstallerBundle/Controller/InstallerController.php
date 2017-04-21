@@ -34,10 +34,10 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step1.html.twig',
-            array(
+            [
                 'checker' => $requirementsChecker,
                 'rootDir' => realpath($this->container->getParameter('site.path_www')),
-            )
+            ]
         );
     }
 
@@ -65,9 +65,9 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step2.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -91,9 +91,9 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step3.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -115,9 +115,9 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step4.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -139,9 +139,9 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step5.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
@@ -159,11 +159,11 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step6.html.twig',
-            array(
+            [
                 'installStatus' => $status,
                 'installer' => $forkInstaller,
                 'data' => $this->getInstallationData($request),
-            )
+            ]
         );
     }
 

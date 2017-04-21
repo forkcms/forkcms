@@ -23,8 +23,6 @@ class Subscribe extends FrontendBaseBlock
 {
     /**
      * Execute the extra
-     *
-     * @return void
      */
     public function execute()
     {
@@ -108,8 +106,6 @@ class Subscribe extends FrontendBaseBlock
 
     /**
      * Parse the data into the template
-     *
-     * @return void
      */
     private function parse()
     {

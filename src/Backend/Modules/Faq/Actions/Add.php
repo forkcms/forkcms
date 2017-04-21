@@ -47,8 +47,8 @@ class Add extends BackendBaseActionAdd
         $this->frm = new BackendForm('add');
 
         // set hidden values
-        $rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
-        $rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
+        $rbtHiddenValues[] = ['label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y'];
+        $rbtHiddenValues[] = ['label' => BL::lbl('Published'), 'value' => 'N'];
 
         // get categories
         $categories = BackendFaqModel::getCategories();
@@ -121,10 +121,10 @@ class Add extends BackendBaseActionAdd
                 BackendSearchModel::saveIndex(
                     $this->getModule(),
                     $item['id'],
-                    array(
+                    [
                         'title' => $item['question'],
                         'text' => $item['answer'],
-                    )
+                    ]
                 );
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=added&var=' .

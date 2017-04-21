@@ -19,14 +19,14 @@ class User
      *
      * @var array
      */
-    private static $cache = array();
+    private static $cache = [];
 
     /**
      * All settings
      *
      * @var array
      */
-    private $settings = array();
+    private $settings = [];
 
     /**
      * The users id
@@ -136,7 +136,7 @@ class User
              FROM users AS u
              WHERE u.id = ?
              LIMIT 1',
-            array($userId)
+            [$userId]
         );
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation
@@ -153,7 +153,7 @@ class User
             'SELECT us.name, us.value
              FROM users_settings AS us
              WHERE us.user_id = ?',
-            array($userId)
+            [$userId]
         );
 
         // loop settings and store them in the object

@@ -25,21 +25,21 @@ class AddThemeTemplate extends BackendBaseActionAdd
      *
      * @var array
      */
-    private $availableThemes = array();
+    private $availableThemes = [];
 
     /**
      * The position's default extras.
      *
      * @var array
      */
-    private $extras = array();
+    private $extras = [];
 
     /**
      * The position's names.
      *
      * @var array
      */
-    private $names = array();
+    private $names = [];
 
     /**
      * The theme we are adding a template for.
@@ -101,9 +101,9 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->frm->addCheckbox('image');
 
         // init vars
-        $positions = array();
-        $blocks = array();
-        $widgets = array();
+        $positions = [];
+        $blocks = [];
+        $widgets = [];
         $extras = BackendExtensionsModel::getExtras();
 
         // loop extras to populate the default extras
@@ -126,13 +126,13 @@ class AddThemeTemplate extends BackendBaseActionAdd
         asort($widgets, SORT_STRING);
 
         // create array
-        $defaultExtras = array(
-            '' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
+        $defaultExtras = [
+            '' => [0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))],
             \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
-        );
+        ];
 
         // create default position field
-        $position = array();
+        $position = [];
         $position['i'] = 0;
         $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'form-control positionName', 'form-control danger positionName');
         $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'form-control positionBlock', 'form-control danger positionBlockError');
@@ -141,16 +141,16 @@ class AddThemeTemplate extends BackendBaseActionAdd
         // content has been submitted: re-create submitted content rather than the db-fetched content
         if (isset($_POST['position_0'])) {
             // init vars
-            $this->names = array();
-            $this->extras = array();
+            $this->names = [];
+            $this->extras = [];
             $i = 1;
-            $errors = array();
+            $errors = [];
 
             // loop submitted positions
             while (isset($_POST['position_' . $i])) {
                 // init vars
                 $j = 0;
-                $extras = array();
+                $extras = [];
 
                 // gather position names
                 $name = $_POST['position_' . $i];
@@ -196,7 +196,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         // build blocks array
         foreach ($this->names as $i => $name) {
             // create default position field
-            $position = array();
+            $position = [];
             $position['i'] = $i + 1;
             $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'form-control positionName', 'form-control danger positionName');
             foreach ($this->extras[$name] as $extra) {
@@ -247,7 +247,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
             }
 
             // validate syntax
-            $syntax = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
+            $syntax = trim(str_replace(["\n", "\r", ' '], '', $this->frm->getField('format')->getValue()));
 
             // init var
             $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
@@ -259,7 +259,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);
                 $cellCount = 0;
                 $first = true;
-                $errors = array();
+                $errors = [];
 
                 // loop rows
                 foreach ($table as $row) {
@@ -308,7 +308,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $item['label'] = $this->frm->getField('label')->getValue();
                 $item['path'] = 'Core/Layout/Templates/' . $this->frm->getField('file')->getValue();
                 $item['active'] = $this->frm->getField('active')->getActualValue();
-                $item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
+                $item['data']['format'] = trim(str_replace(["\n", "\r", ' '], '', $this->frm->getField('format')->getValue()));
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
                 $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;

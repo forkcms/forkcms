@@ -20,12 +20,12 @@ class Location extends FrontendBaseWidget
     /**
      * @var array
      */
-    protected $items = array();
+    protected $items = [];
 
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * @var array
@@ -80,7 +80,7 @@ class Location extends FrontendBaseWidget
             $this->settings['center']['lng'] = $this->item['lng'];
         }
 
-        $this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, array($this->item));
+        $this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, [$this->item]);
     }
 
     /**
@@ -89,7 +89,7 @@ class Location extends FrontendBaseWidget
     private function parse()
     {
         $this->addJSData('settings_' . $this->item['id'], $this->settings);
-        $this->addJSData('items_' . $this->item['id'], array($this->item));
+        $this->addJSData('items_' . $this->item['id'], [$this->item]);
 
         $this->tpl->assign('widgetLocationItem', $this->item);
         $this->tpl->assign('widgetLocationSettings', $this->settings);

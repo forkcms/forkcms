@@ -64,13 +64,13 @@ class Import extends BackendBaseActionAdd
             // get fields
             $ddmGroup = $this->frm->getField('group');
             $fileFile = $this->frm->getField('file');
-            $csv = array();
+            $csv = [];
 
             // validate input
             $ddmGroup->isFilled(BL::getError('FieldIsRequired'));
             if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
                 if ($fileFile->isAllowedExtension(
-                    array('csv'),
+                    ['csv'],
                     sprintf(BL::getError('ExtensionNotAllowed'), 'csv')
                 )
                 ) {

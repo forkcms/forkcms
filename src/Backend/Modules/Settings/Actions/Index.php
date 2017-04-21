@@ -64,7 +64,7 @@ class Index extends BackendBaseActionIndex
     private function loadForm()
     {
         // list of default domains
-        $defaultDomains = array(str_replace(array('http://', 'www.', 'https://'), '', SITE_URL));
+        $defaultDomains = [str_replace(['http://', 'www.', 'https://'], '', SITE_URL)];
 
         // create form
         $this->frm = new BackendForm('settingsIndex');
@@ -159,14 +159,14 @@ class Index extends BackendBaseActionIndex
         );
 
         // create a list of the languages
-        foreach ($this->get('fork.settings')->get('Core', 'languages', array('en')) as $abbreviation) {
+        foreach ($this->get('fork.settings')->get('Core', 'languages', ['en']) as $abbreviation) {
             // is this the default language
             $defaultLanguage = ($abbreviation == SITE_DEFAULT_LANGUAGE) ? true : false;
 
             // attributes
-            $activeAttributes = array();
+            $activeAttributes = [];
             $activeAttributes['id'] = 'active_language_' . $abbreviation;
-            $redirectAttributes = array();
+            $redirectAttributes = [];
             $redirectAttributes['id'] = 'redirect_language_' . $abbreviation;
 
             // fetch label
@@ -180,7 +180,7 @@ class Index extends BackendBaseActionIndex
 
                 // overrule in $_POST
                 if (!isset($_POST['active_languages']) || !is_array($_POST['active_languages'])) {
-                    $_POST['active_languages'] = array(SITE_DEFAULT_LANGUAGE);
+                    $_POST['active_languages'] = [SITE_DEFAULT_LANGUAGE];
                 } elseif (!in_array(
                     $abbreviation,
                     $_POST['active_languages']
@@ -189,7 +189,7 @@ class Index extends BackendBaseActionIndex
                     $_POST['active_languages'][] = $abbreviation;
                 }
                 if (!isset($_POST['redirect_languages']) || !is_array($_POST['redirect_languages'])) {
-                    $_POST['redirect_languages'] = array(SITE_DEFAULT_LANGUAGE);
+                    $_POST['redirect_languages'] = [SITE_DEFAULT_LANGUAGE];
                 } elseif (!in_array(
                     $abbreviation,
                     $_POST['redirect_languages']
@@ -200,18 +200,18 @@ class Index extends BackendBaseActionIndex
             }
 
             // add to the list
-            $activeLanguages[] = array(
+            $activeLanguages[] = [
                 'label' => $label,
                 'value' => $abbreviation,
                 'attributes' => $activeAttributes,
-                'variables' => array('default' => $defaultLanguage),
-            );
-            $redirectLanguages[] = array(
+                'variables' => ['default' => $defaultLanguage],
+            ];
+            $redirectLanguages[] = [
                 'label' => $label,
                 'value' => $abbreviation,
                 'attributes' => $redirectAttributes,
-                'variables' => array('default' => $defaultLanguage),
-            );
+                'variables' => ['default' => $defaultLanguage],
+            ];
         }
 
         $hasMultipleLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
@@ -220,12 +220,12 @@ class Index extends BackendBaseActionIndex
         $this->frm->addMultiCheckbox(
             'active_languages',
             $activeLanguages,
-            $this->get('fork.settings')->get('Core', 'active_languages', array($hasMultipleLanguages))
+            $this->get('fork.settings')->get('Core', 'active_languages', [$hasMultipleLanguages])
         );
         $this->frm->addMultiCheckbox(
             'redirect_languages',
             $redirectLanguages,
-            $this->get('fork.settings')->get('Core', 'redirect_languages', array($hasMultipleLanguages))
+            $this->get('fork.settings')->get('Core', 'redirect_languages', [$hasMultipleLanguages])
         );
 
         // api keys are not required for every module
@@ -320,7 +320,7 @@ class Index extends BackendBaseActionIndex
                 // loop domains
                 foreach ($domains as $domain) {
                     // strip funky stuff
-                    $domain = trim(str_replace(array('www.', 'http://', 'https://'), '', $domain));
+                    $domain = trim(str_replace(['www.', 'http://', 'https://'], '', $domain));
 
                     // invalid URL
                     if (!\SpoonFilter::isURL('http://' . $domain)) {
@@ -469,7 +469,7 @@ class Index extends BackendBaseActionIndex
                 );
 
                 // before we save the languages, we need to ensure that each language actually exists and may be chosen.
-                $languages = array(SITE_DEFAULT_LANGUAGE);
+                $languages = [SITE_DEFAULT_LANGUAGE];
                 $activeLanguages = array_unique(
                     array_merge($languages, $this->frm->getField('active_languages')->getValue())
                 );
@@ -485,7 +485,7 @@ class Index extends BackendBaseActionIndex
                 $this->get('fork.settings')->set('Core', 'redirect_languages', $redirectLanguages);
 
                 // domains may not contain www, http or https. Therefor we must loop and create the list of domains.
-                $siteDomains = array();
+                $siteDomains = [];
 
                 // domains filled in
                 if ($this->frm->getField('site_domains')->isFilled()) {
@@ -495,7 +495,7 @@ class Index extends BackendBaseActionIndex
                     // loop domains
                     foreach ($domains as $domain) {
                         // strip funky stuff
-                        $siteDomains[] = trim(str_replace(array('www.', 'http://', 'https://'), '', $domain));
+                        $siteDomains[] = trim(str_replace(['www.', 'http://', 'https://'], '', $domain));
                     }
                 }
 

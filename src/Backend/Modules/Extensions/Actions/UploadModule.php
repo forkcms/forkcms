@@ -57,7 +57,7 @@ class UploadModule extends BackendBaseActionAdd
     private function uploadModuleFromZip(): string
     {
         // list of validated files (these files will actually be unpacked)
-        $files = array();
+        $files = [];
 
         // shorten field variables
         /** @var $fileFile \SpoonFormFile */
@@ -79,10 +79,10 @@ class UploadModule extends BackendBaseActionAdd
         }
 
         // directories we are allowed to upload to
-        $allowedDirectories = array(
+        $allowedDirectories = [
             'src/Backend/Modules/',
             'src/Frontend/Modules/',
-        );
+        ];
 
         // name of the module we are trying to upload
         $moduleName = null;
@@ -195,7 +195,7 @@ class UploadModule extends BackendBaseActionAdd
     private function extractPrefix(string $file): string
     {
         $name = explode(PATH_SEPARATOR, $file['name']);
-        $prefix = array();
+        $prefix = [];
 
         foreach ($name as $element) {
             if ($element == 'src') {
@@ -247,7 +247,7 @@ class UploadModule extends BackendBaseActionAdd
             $fileFile = $this->frm->getField('file');
 
             // validate the file
-            if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
+            if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(['zip'], sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
                 $moduleName = $this->uploadModuleFromZip();
             }
 

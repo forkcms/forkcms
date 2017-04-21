@@ -62,7 +62,7 @@ class Model
             $db->delete('profiles_sessions', 'profile_id = ?', $id);
 
             // set profile status to deleted
-            self::update($id, array('status' => 'deleted'));
+            self::update($id, ['status' => 'deleted']);
         }
     }
 
@@ -133,7 +133,7 @@ class Model
              FROM profiles AS p
              WHERE p.email = ? AND p.id != ?
              LIMIT 1',
-            array($email, $id)
+            [$email, $id]
         );
     }
 
@@ -152,7 +152,7 @@ class Model
              FROM profiles AS p
              WHERE p.display_name = ? AND p.id != ?
              LIMIT 1',
-            array($displayName, $id)
+            [$displayName, $id]
         );
     }
 
@@ -189,7 +189,7 @@ class Model
              FROM profiles_groups AS pg
              WHERE pg.name = ? AND pg.id != ?
              LIMIT 1',
-            array($groupName, $id)
+            [$groupName, $id]
         );
     }
 
@@ -361,7 +361,7 @@ class Model
                 'SELECT group_id
                  FROM profiles_groups_rights
                  WHERE profile_id = ? AND id != ?',
-                array($profileId, $includeId)
+                [$profileId, $includeId]
             );
         } else {
             $groupIds = (array) $db->getColumn(
@@ -481,7 +481,7 @@ class Model
                 'SELECT ps.value
                  FROM profiles_settings AS ps
                  WHERE ps.profile_id = ? AND ps.name = ?',
-                array($id, $name)
+                [$id, $name]
             )
         );
     }
@@ -553,7 +553,7 @@ class Model
                  FROM profiles AS p
                  WHERE p.url = ? AND p.id != ?
                  LIMIT 1',
-                array($url, $id)
+                [$url, $id]
             );
 
             // already exists
@@ -625,15 +625,17 @@ class Model
      * @param array $data The array from the .csv file
      * @param int|null $groupId $groupId Adding these profiles to a group
      * @param bool $overwriteExisting $overwriteExisting
-     * @return array array('count' => array('exists' => 0, 'inserted' => 0));
      *
      * @throws BackendException
+     *
+     * @return array array('count' => array('exists' => 0, 'inserted' => 0));
+     *
      * @internal param $bool [optional] $overwriteExisting If set to true, this will overwrite existing profiles
      */
     public static function importCsv(array $data, int $groupId = null, bool $overwriteExisting = false): array
     {
         // init statistics
-        $statistics = array('count' => array('exists' => 0, 'inserted' => 0));
+        $statistics = ['count' => ['exists' => 0, 'inserted' => 0]];
 
         // loop data
         foreach ($data as $item) {
@@ -657,12 +659,12 @@ class Model
             }
 
             // build item
-            $values = array(
+            $values = [
                 'email' => $item['email'],
                 'registered_on' => BackendModel::getUTCDate(),
                 'display_name' => $item['display_name'],
                 'url' => self::getUrl($item['display_name']),
-            );
+            ];
 
             // does not exist
             if (!$exists) {
@@ -699,7 +701,7 @@ class Model
             // we have a group id
             if ($groupId !== null) {
                 // init values
-                $values = array();
+                $values = [];
 
                 // build item
                 $values['profile_id'] = $id;
@@ -772,19 +774,19 @@ class Model
         // set variables
         $variables['message'] = vsprintf(
             BL::msg('NotificationNewProfileToAdmin', 'Profiles'),
-            array(
+            [
                 $values['display_name'],
                 $values['email'],
                 $backendURL,
-            )
+            ]
         );
 
         // define subject
         $subject = vsprintf(
             BL::lbl('NotificationNewProfileToAdmin', 'Profiles'),
-            array(
+            [
                 $values['email'],
-            )
+            ]
         );
 
         self::sendMail(
@@ -810,11 +812,11 @@ class Model
         // set variables
         $variables['message'] = vsprintf(
             BL::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
-            array(
+            [
                 $values['email'],
                 $values['unencrypted_password'],
                 SITE_URL,
-            )
+            ]
         );
 
         // define subject
@@ -856,9 +858,9 @@ class Model
 
         // create a message object and set all the needed properties
         $message = Message::newInstance($subject)
-            ->setFrom(array($from['email'] => $from['name']))
-            ->setTo(array($toEmail => $toDisplayName))
-            ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+            ->setFrom([$from['email'] => $from['name']])
+            ->setTo([$toEmail => $toDisplayName])
+            ->setReplyTo([$replyTo['email'] => $replyTo['name']])
             ->parseHtml($templatePath, $variables, true);
 
         // send it through the mailer service
@@ -878,7 +880,7 @@ class Model
             'INSERT INTO profiles_settings(profile_id, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array($id, $name, serialize($value), serialize($value))
+            [$id, $name, serialize($value), serialize($value)]
         );
     }
 

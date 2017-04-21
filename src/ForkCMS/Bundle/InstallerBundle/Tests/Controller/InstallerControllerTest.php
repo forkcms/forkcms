@@ -62,10 +62,10 @@ class InstallerControllerTest extends WebTestCase
         $form['install_languages[languages][2]']->tick();
         $client->submit(
             $form,
-            array(
+            [
                 'install_languages[language_type]' => 'multiple',
                 'install_languages[default_language]' => 'en',
-            )
+            ]
         );
 
         $crawler = $client->followRedirect();
@@ -92,7 +92,7 @@ class InstallerControllerTest extends WebTestCase
     private function runTroughStep3($crawler, $client)
     {
         $form = $crawler->selectButton('Next')->form();
-        $client->submit($form, array());
+        $client->submit($form, []);
         $crawler = $client->followRedirect();
 
         // we should be redirected to step 4
@@ -118,7 +118,7 @@ class InstallerControllerTest extends WebTestCase
     {
         // first submit with incorrect data
         $form = $crawler->selectButton('Next')->form();
-        $crawler = $client->submit($form, array());
+        $crawler = $client->submit($form, []);
         self::assertGreaterThan(
             0,
             $crawler->filter('div.errorMessage:contains("Problem with database credentials")')->count()
@@ -129,13 +129,13 @@ class InstallerControllerTest extends WebTestCase
         $container = $client->getContainer();
         $client->submit(
             $form,
-            array(
+            [
                 'install_database[dbHostname]' => $container->getParameter('database.host'),
                 'install_database[dbPort]' => $container->getParameter('database.port'),
                 'install_database[dbDatabase]' => $container->getParameter('database.name') . '_test',
                 'install_database[dbUsername]' => $container->getParameter('database.user'),
                 'install_database[dbPassword]' => $container->getParameter('database.password'),
-            )
+            ]
         );
         $crawler = $client->followRedirect();
 
@@ -163,11 +163,11 @@ class InstallerControllerTest extends WebTestCase
         $form = $crawler->selectButton('Finish installation')->form();
         $client->submit(
             $form,
-            array(
+            [
                 'install_login[email]' => 'test@test.com',
                 'install_login[password][first]' => 'password',
                 'install_login[password][second]' => 'password',
-            )
+            ]
         );
         $crawler = $client->followRedirect();
 

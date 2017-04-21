@@ -82,7 +82,7 @@ class DataDetails extends BackendBaseActionIndex
         $this->tpl->assign('sentOn', $this->data['sent_on']);
 
         // init
-        $data = array();
+        $data = [];
 
         // prepare data
         foreach ($this->data['fields'] as $field) {

@@ -80,7 +80,7 @@ class Model
             }
 
             // init validations
-            $field['validations'] = array();
+            $field['validations'] = [];
         }
 
         // we need to loop because one field can have multiple 'type' validations
@@ -125,7 +125,7 @@ class Model
      */
     public static function convertPHPDateToJquery(string $phpFormat): string
     {
-        $symbolsMatching = array(
+        $symbolsMatching = [
             // Day
             'd' => 'dd',
             'D' => 'D',
@@ -159,7 +159,7 @@ class Model
             'i' => '',
             's' => '',
             'u' => '',
-        );
+        ];
         $jqueryuiFormat = '';
         $escaping = false;
         for ($i = 0; $i < mb_strlen($phpFormat); ++$i) {

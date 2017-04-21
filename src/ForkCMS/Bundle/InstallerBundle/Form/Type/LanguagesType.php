@@ -20,54 +20,54 @@ class LanguagesType extends AbstractType
             ->add(
                 'language_type',
                 'choice',
-                array(
+                [
                     'expanded' => true,
                     'multiple' => false,
-                    'choices' => array(
+                    'choices' => [
                         'single' => 'Just one language',
                         'multiple' => 'Multiple languages',
-                    ),
-                )
+                    ],
+                ]
             )
             ->add(
                 'languages',
                 'choice',
-                array(
+                [
                     'choices' => $this->getInstallableLanguages(),
                     'expanded' => true,
                     'multiple' => true,
-                )
+                ]
             )
             ->add(
                 'default_language',
                 'choice',
-                array(
+                [
                     'choices' => $this->getInstallableLanguages(),
-                )
+                ]
             )
             ->add(
                 'same_interface_language',
                 'checkbox',
-                array(
+                [
                     'label' => 'Use the same language(s) for the CMS interface.',
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'default_interface_language',
                 'choice',
-                array(
+                [
                     'choices' => $this->getInstallableLanguages(),
-                )
+                ]
             )
             ->add(
                 'interface_languages',
                 'choice',
-                array(
+                [
                     'choices' => $this->getInstallableLanguages(),
                     'multiple' => true,
                     'expanded' => true,
-                )
+                ]
             )
         ;
     }
@@ -77,9 +77,9 @@ class LanguagesType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
-        ));
+        ]);
     }
 
     /**
@@ -95,7 +95,7 @@ class LanguagesType extends AbstractType
      */
     protected function getInstallableLanguages()
     {
-        return array(
+        return [
             'en' => 'English',
             'zh' => 'Chinese',
             'nl' => 'Dutch',
@@ -109,6 +109,6 @@ class LanguagesType extends AbstractType
             'es' => 'Spanish',
             'sv' => 'Swedish',
             'uk' => 'Ukrainian',
-        );
+        ];
     }
 }

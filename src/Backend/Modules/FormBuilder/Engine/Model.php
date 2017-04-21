@@ -138,7 +138,7 @@ class Model
         }
 
         // delete extra
-        BackendModel::deleteExtra('FormBuilder', 'widget', array('id' => $id));
+        BackendModel::deleteExtra('FormBuilder', 'widget', ['id' => $id]);
 
         // delete form
         $db->delete('forms', 'id = ?', $id);
@@ -244,7 +244,7 @@ class Model
              FROM forms_fields AS ff
              WHERE ff.id = ? AND ff.form_id = ?
              LIMIT 1',
-            array($id, $formId)
+            [$id, $formId]
         );
     }
 
@@ -275,7 +275,7 @@ class Model
              FROM forms AS f
              WHERE f.identifier = ? AND f.id != ?
              LIMIT 1',
-            array($identifier, $ignoreId)
+            [$identifier, $ignoreId]
         );
     }
 
@@ -369,11 +369,11 @@ class Model
         }
 
         // all errors
-        $return = array();
+        $return = [];
 
         // loop errors
         foreach ($errors as $key => $error) {
-            $return[] = array('type' => $key, 'message' => $error);
+            $return[] = ['type' => $key, 'message' => $error];
         }
 
         return $return;
@@ -465,7 +465,7 @@ class Model
         $function = 'get' . \SpoonFilter::ucfirst($type);
 
         // execute and return value
-        return \SpoonFilter::ucfirst(call_user_func_array(array($class, $function), array($name)));
+        return \SpoonFilter::ucfirst(call_user_func_array([$class, $function], [$name]));
     }
 
     /**
@@ -503,12 +503,12 @@ class Model
             'FormBuilder',
             'Form',
             'FormBuilder',
-            array(
+            [
                 'id' => $formId,
                 'extra_label' => $values['name'],
                 'language' => $values['language'],
                 'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $formId,
-            ),
+            ],
             false,
             '400' . $formId
         );
@@ -557,12 +557,12 @@ class Model
 
         // build array
         $extra['data'] = serialize(
-            array(
+            [
                 'language' => BL::getWorkingLanguage(),
                 'extra_label' => $values['name'],
                 'id' => $id,
                 'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $id,
-            )
+            ]
         );
 
         // update extra
@@ -570,7 +570,7 @@ class Model
             'modules_extras',
             $extra,
             'module = ? AND type = ? AND sequence = ?',
-            array('FormBuilder', 'widget', '400' . $id)
+            ['FormBuilder', 'widget', '400' . $id]
         );
 
         return $id;
@@ -598,7 +598,7 @@ class Model
      */
     public static function getTemplates(): array
     {
-        $templates = array();
+        $templates = [];
         $finder = new Finder();
         $finder->name('*.html.twig');
         $finder->in(FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails');

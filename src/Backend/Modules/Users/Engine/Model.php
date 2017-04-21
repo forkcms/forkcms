@@ -32,9 +32,9 @@ class Model
     {
         BackendModel::getContainer()->get('database')->update(
             'users',
-            array('active' => 'N', 'deleted' => 'Y'),
+            ['active' => 'N', 'deleted' => 'Y'],
             'id = ?',
-            array($id)
+            [$id]
         );
     }
 
@@ -48,7 +48,7 @@ class Model
         BackendModel::getContainer()->get('database')->delete(
             'users_settings',
             '(name = \'reset_password_key\' OR name = \'reset_password_timestamp\') AND user_id = ?',
-            array($id)
+            [$id]
         );
     }
 
@@ -67,7 +67,7 @@ class Model
              FROM users AS i
              WHERE i.email = ? AND i.deleted = ?
              LIMIT 1',
-            array($email, 'Y')
+            [$email, 'Y']
         );
     }
 
@@ -91,7 +91,7 @@ class Model
                  FROM users AS i
                  WHERE i.id = ? AND i.deleted = ?
                  LIMIT 1',
-                array($id, 'N')
+                [$id, 'N']
             );
         }
 
@@ -101,7 +101,7 @@ class Model
              FROM users AS i
              WHERE i.id = ?
              LIMIT 1',
-            array($id)
+            [$id]
         );
     }
 
@@ -126,7 +126,7 @@ class Model
                  FROM users AS i
                  WHERE i.id != ? AND i.email = ?
                  LIMIT 1',
-                array($id, $email)
+                [$id, $email]
             );
         }
 
@@ -136,7 +136,7 @@ class Model
              FROM users AS i
              WHERE i.email = ?
              LIMIT 1',
-            array($email)
+            [$email]
         );
     }
 
@@ -157,12 +157,12 @@ class Model
             'SELECT i.id, i.email, i.password, i.active
              FROM users AS i
              WHERE i.id = ?',
-            array($id)
+            [$id]
         );
 
         // Don't add a settings element, just return an empty array here if no user is found.
         if (empty($user)) {
-            return array();
+            return [];
         }
 
         // get user-settings
@@ -170,7 +170,7 @@ class Model
             'SELECT s.name, s.value
              FROM users_settings AS s
              WHERE s.user_id = ?',
-            array($id)
+            [$id]
         );
 
         // loop settings and unserialize them
@@ -189,10 +189,10 @@ class Model
      */
     public static function getCSVLineEndings(): array
     {
-        return array(
+        return [
             '\n' => '\n',
             '\r\n' => '\r\n',
-        );
+        ];
     }
 
     /**
@@ -202,10 +202,10 @@ class Model
      */
     public static function getCSVSplitCharacters(): array
     {
-        return array(
+        return [
             ';' => ';',
             ',' => ',',
-        );
+        ];
     }
 
     /**
@@ -216,7 +216,7 @@ class Model
     public static function getDateFormats(): array
     {
         // init var
-        $possibleFormats = array();
+        $possibleFormats = [];
 
         // loop available formats
         foreach ((array) BackendModel::get('fork.settings')->get('Users', 'date_formats') as $format) {
@@ -280,7 +280,7 @@ class Model
             'SELECT i.id
              FROM users AS i
              WHERE i.email = ?',
-            array($email)
+            [$email]
         );
 
         if ($userId === 0) {
@@ -298,7 +298,7 @@ class Model
     public static function getNumberFormats(): array
     {
         // init var
-        $possibleFormats = array();
+        $possibleFormats = [];
 
         // loop available formats
         foreach ((array) BackendModel::get('fork.settings')->get('Core', 'number_formats') as $format => $example) {
@@ -324,7 +324,7 @@ class Model
                 'SELECT value
                  FROM users_settings
                  WHERE user_id = ? AND name = ?',
-                array($userId, $setting)
+                [$userId, $setting]
             )
         );
     }
@@ -337,7 +337,7 @@ class Model
     public static function getTimeFormats(): array
     {
         // init var
-        $possibleFormats = array();
+        $possibleFormats = [];
 
         // loop available formats
         foreach (BackendModel::get('fork.settings')->get('Users', 'time_formats') as $format) {
@@ -365,7 +365,7 @@ class Model
              FROM users AS i
              INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
              WHERE i.active = ? AND i.deleted = ?',
-            array('nickname', 'Y', 'N')
+            ['nickname', 'Y', 'N']
         );
 
         // loop users & unserialize
@@ -392,15 +392,15 @@ class Model
 
         // update user
         $userId = (int) $db->insert('users', $user);
-        $userSettings = array();
+        $userSettings = [];
 
         // loop settings
         foreach ($settings as $key => $value) {
-            $userSettings[] = array(
+            $userSettings[] = [
                 'user_id' => $userId,
                 'name' => $key,
                 'value' => serialize($value),
-            );
+            ];
         }
 
         // insert all settings at once
@@ -426,7 +426,7 @@ class Model
             'INSERT INTO users_settings(user_id, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array($userId, $setting, serialize($value), serialize($value))
+            [$userId, $setting, serialize($value), serialize($value)]
         );
     }
 
@@ -450,7 +450,7 @@ class Model
              FROM users AS i
              INNER JOIN users_settings AS s ON i.id = s.user_id
              WHERE i.email = ? AND i.deleted = ?',
-            array($email, 'Y')
+            [$email, 'Y']
         );
 
         // no valid users
@@ -458,7 +458,7 @@ class Model
             return false;
         } else {
             // restore
-            $db->update('users', array('active' => 'Y', 'deleted' => 'N'), 'id = ?', (int) $id);
+            $db->update('users', ['active' => 'Y', 'deleted' => 'N'], 'id = ?', (int) $id);
 
             // return
             return true;
@@ -478,7 +478,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // update user
-        $updated = $db->update('users', $user, 'id = ?', array($user['id']));
+        $updated = $db->update('users', $user, 'id = ?', [$user['id']]);
 
         // loop settings
         foreach ($settings as $key => $value) {
@@ -487,7 +487,7 @@ class Model
                 'INSERT INTO users_settings(user_id, name, value)
                  VALUES(?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?',
-                array($user['id'], $key, serialize($value), serialize($value))
+                [$user['id'], $key, serialize($value), serialize($value)]
             );
         }
 
@@ -509,7 +509,7 @@ class Model
         // update user
         BackendModel::getContainer()->get('database')->update(
             'users',
-            array('password' => BackendAuthentication::getEncryptedString((string) $password, $key)),
+            ['password' => BackendAuthentication::getEncryptedString((string) $password, $key)],
             'id = ?',
             $userId
         );

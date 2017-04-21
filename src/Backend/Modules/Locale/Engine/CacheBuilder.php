@@ -62,7 +62,7 @@ class CacheBuilder
              FROM locale
              WHERE language = ? AND application = ?
              ORDER BY type ASC, name ASC, module ASC',
-            array($language, $application)
+            [$language, $application]
         );
     }
 
@@ -77,7 +77,7 @@ class CacheBuilder
     protected function buildJsonCache(string $language, string $application): array
     {
         // init var
-        $json = array();
+        $json = [];
         foreach ($this->types as $type) {
             // loop locale
             foreach ($this->locale as $i => $item) {

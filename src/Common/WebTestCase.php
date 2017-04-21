@@ -41,7 +41,7 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @return Client A Client instance
      */
-    protected static function createClient(array $options = array(), array $server = array()): Client
+    protected static function createClient(array $options = [], array $server = []): Client
     {
         if (null !== static::$kernel) {
             static::$kernel->shutdown();
@@ -82,7 +82,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Client $client
      * @param array $fixtureClasses
      */
-    protected function loadFixtures(Client $client, array $fixtureClasses = array())
+    protected function loadFixtures(Client $client, array $fixtureClasses = [])
     {
         $database = $client->getContainer()->get('database');
 
@@ -165,7 +165,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Form $form
      * @param array $data
      */
-    protected function submitForm(Client $client, Form $form, array $data = array())
+    protected function submitForm(Client $client, Form $form, array $data = [])
     {
         // Get parameters should be set manually. Symfony uses the request object,
         // but spoon still checks the $_GET and $_POST parameters
@@ -189,9 +189,9 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Form $form
      * @param array $data
      */
-    protected function submitEditForm(Client $client, Form $form, array $data = array())
+    protected function submitEditForm(Client $client, Form $form, array $data = [])
     {
-        $originalData = array();
+        $originalData = [];
         foreach ($form->all() as $fieldName => $formField) {
             $originalData[$fieldName] = $formField->getValue();
         }
@@ -213,7 +213,7 @@ abstract class WebTestCase extends BaseWebTestCase
     protected function requestWithGetParameters(
         Client $client,
         string $url,
-        array $data = array()
+        array $data = []
     ): Crawler {
         $this->setGetParameters($data);
         $request = $client->request('GET', $url, $data);
@@ -227,7 +227,7 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @param array $data
      */
-    protected function setGetParameters(array $data = array())
+    protected function setGetParameters(array $data = [])
     {
         foreach ((array) $data as $key => $value) {
             $_GET[$key] = $value;
@@ -239,10 +239,10 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @param array $data
      */
-    protected function unsetGetParameters(array $data = array())
+    protected function unsetGetParameters(array $data = [])
     {
         if (empty($data)) {
-            $_GET = array();
+            $_GET = [];
 
             return;
         }

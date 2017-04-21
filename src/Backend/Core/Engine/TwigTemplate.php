@@ -92,25 +92,25 @@ class TwigTemplate extends BaseTwigTemplate
 
         // render the compiled File
         $loader = new Twig_Loader_Filesystem(
-            array(
+            [
                 BACKEND_MODULES_PATH,
                 BACKEND_CORE_PATH,
                 $vendorTwigBridgeDir . '/Resources/views/Form',
-            )
+            ]
         );
 
         return new Twig_Environment(
             $loader,
-            array(
+            [
                 'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
                 'debug' => $this->debugMode,
-            )
+            ]
         );
     }
 
     private function connectSymfonyForms()
     {
-        $formEngine = new TwigRendererEngine(array('Layout/Templates/FormLayout.html.twig'));
+        $formEngine = new TwigRendererEngine(['Layout/Templates/FormLayout.html.twig']);
         $formEngine->setEnvironment($this->environment);
         $this->environment->addExtension(
             new SymfonyFormExtension(
@@ -136,13 +136,13 @@ class TwigTemplate extends BaseTwigTemplate
     private function parseConstants()
     {
         // constants that should be protected from usage in the template
-        $notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD');
+        $notPublicConstants = ['DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD'];
 
         // get all defined constants
         $constants = get_defined_constants(true);
 
         // init var
-        $realConstants = array();
+        $realConstants = [];
 
         // remove protected constants aka constants that should not be used in the template
         foreach ($constants['user'] as $key => $value) {
@@ -232,7 +232,7 @@ class TwigTemplate extends BaseTwigTemplate
                         'Edit',
                         'Users',
                         null,
-                        array('id' => Authentication::getUser()->getUserId())
+                        ['id' => Authentication::getUser()->getUserId()]
                     )
                 );
             }

@@ -117,18 +117,18 @@ class Message extends \Swift_Message
     private function addUTM(string $html, string $subject): string
     {
         // match links
-        $matches = array();
+        $matches = [];
         preg_match_all('/href="(http:\/\/(.*))"/iU', $html, $matches);
 
         // any links?
-        $utm = array(
+        $utm = [
             'utm_source' => 'mail',
             'utm_medium' => 'email',
             'utm_campaign' => Uri::getUrl($subject),
-        );
+        ];
         if (isset($matches[0]) && !empty($matches[0])) {
-            $searchLinks = array();
-            $replaceLinks = array();
+            $searchLinks = [];
+            $replaceLinks = [];
 
             // loop old links
             foreach ($matches[1] as $i => $link) {
@@ -198,8 +198,8 @@ class Message extends \Swift_Message
     private function relativeToAbsolute(string $html): string
     {
         // replace internal links/images
-        $search = array('href="/', 'src="/');
-        $replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
+        $search = ['href="/', 'src="/'];
+        $replace = ['href="' . SITE_URL . '/', 'src="' . SITE_URL . '/'];
 
         return str_replace($search, $replace, $html);
     }

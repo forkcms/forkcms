@@ -32,14 +32,14 @@ class Config extends KernelLoader
      *
      * @var array
      */
-    protected $disabledActions = array();
+    protected $disabledActions = [];
 
     /**
      * The disabled AJAX-actions
      *
      * @var array
      */
-    protected $disabledAJAXActions = array();
+    protected $disabledAJAXActions = [];
 
     /**
      * The current loaded module
@@ -53,14 +53,14 @@ class Config extends KernelLoader
      *
      * @var array
      */
-    protected $possibleActions = array();
+    protected $possibleActions = [];
 
     /**
      * All the possible AJAX actions
      *
      * @var array
      */
-    protected $possibleAJAXActions = array();
+    protected $possibleAJAXActions = [];
 
     /**
      * @param KernelInterface $kernel

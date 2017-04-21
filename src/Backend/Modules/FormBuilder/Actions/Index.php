@@ -41,24 +41,24 @@ class Index extends BackendBaseActionIndex
             BackendFormBuilderModel::QRY_BROWSE,
             BL::getWorkingLanguage()
         );
-        $this->dataGrid->setHeaderLabels(array(
+        $this->dataGrid->setHeaderLabels([
             'email' => \SpoonFilter::ucfirst(BL::getLabel('Recipient')),
             'sent_forms' => '',
-        ));
-        $this->dataGrid->setSortingColumns(array('name', 'email', 'method', 'sent_forms'), 'name');
+        ]);
+        $this->dataGrid->setSortingColumns(['name', 'email', 'method', 'sent_forms'], 'name');
         $this->dataGrid->setColumnFunction(
-            array(new BackendFormBuilderModel(), 'formatRecipients'),
-            array('[email]'),
+            [new BackendFormBuilderModel(), 'formatRecipients'],
+            ['[email]'],
             'email'
         );
         $this->dataGrid->setColumnFunction(
-            array(__CLASS__, 'parseNumForms'),
-            array('[id]', '[sent_forms]', '[method]'),
+            [__CLASS__, 'parseNumForms'],
+            ['[id]', '[sent_forms]', '[method]'],
             'sent_forms'
         );
         $this->dataGrid->setColumnFunction(
-            array(new BackendFormBuilderModel(), 'getLocale'),
-            array('Method_[method]'),
+            [new BackendFormBuilderModel(), 'getLocale'],
+            ['Method_[method]'],
             'method'
         );
 

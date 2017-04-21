@@ -23,7 +23,7 @@ class Feedback extends BackendBaseWidget
      *
      * @var array
      */
-    private $feedback = array();
+    private $feedback = [];
 
     /**
      * Execute the widget

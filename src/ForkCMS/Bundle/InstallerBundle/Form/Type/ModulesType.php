@@ -26,34 +26,34 @@ class ModulesType extends AbstractType
             ->add(
                 'modules',
                 'choice',
-                array(
+                [
                     'choices' => $this->getInstallableModules(),
                     'expanded' => true,
                     'multiple' => true,
-                )
+                ]
             )
             ->add(
                 'example_data',
                 'checkbox',
-                array(
+                [
                     'label' => 'Install example data',
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'different_debug_email',
                 'checkbox',
-                array(
+                [
                     'label' => 'Use a specific debug email address',
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'debug_email',
                 'email',
-                array(
+                [
                     'required' => false,
-                )
+                ]
             )
         ;
 
@@ -65,7 +65,7 @@ class ModulesType extends AbstractType
 
                 // add the modules array if it doesn't exit
                 if (!isset($data['modules'])) {
-                    $data['modules'] = array();
+                    $data['modules'] = [];
                 }
 
                 $data['modules'] = array_merge(
@@ -83,9 +83,9 @@ class ModulesType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
-        ));
+        ]);
     }
 
     /**

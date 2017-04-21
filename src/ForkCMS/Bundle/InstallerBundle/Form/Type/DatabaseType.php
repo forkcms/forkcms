@@ -25,30 +25,30 @@ class DatabaseType extends AbstractType
             ->add(
                 'dbHostname',
                 'text',
-                array(
+                [
                     'required' => true,
-                )
+                ]
             )
             ->add(
                 'dbPort',
                 'text',
-                array(
+                [
                     'required' => true,
-                )
+                ]
             )
             ->add(
                 'dbDatabase',
                 'text',
-                array(
+                [
                     'required' => true,
-                )
+                ]
             )
             ->add(
                 'dbUsername',
                 'text',
-                array(
+                [
                     'required' => true,
-                )
+                ]
             )
             ->add(
                 'dbPassword',
@@ -97,18 +97,18 @@ class DatabaseType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'constraints' => array(
+        $resolver->setDefaults([
+            'constraints' => [
                 new Callback(
-                    array(
-                        'methods' => array(
-                            array($this, 'checkDatabaseConnection'),
-                        ),
-                    )
+                    [
+                        'methods' => [
+                            [$this, 'checkDatabaseConnection'],
+                        ],
+                    ]
                 ),
-            ),
+            ],
             'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
-        ));
+        ]);
     }
 
     /**

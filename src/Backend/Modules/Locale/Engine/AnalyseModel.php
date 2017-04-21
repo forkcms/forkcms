@@ -28,7 +28,7 @@ class AnalyseModel extends Model
      */
     private static function getInbetweenStrings(string $start, string $end, string $str)
     {
-        $matches = array();
+        $matches = [];
         preg_match_all("@$start([a-zA-Z0-9_]*)$end@", $str, $matches);
 
         return (isset($matches[1])) ? current($matches[1]) : '';
@@ -43,8 +43,8 @@ class AnalyseModel extends Model
      */
     public static function getNonExistingBackendLocale(string $language): array
     {
-        $locale = array();
-        $backendModuleFiles = array();
+        $locale = [];
+        $backendModuleFiles = [];
         $installedModules = BackendModel::getModules();
 
         // pickup the Backend module files
@@ -73,7 +73,7 @@ class AnalyseModel extends Model
         $oldLocale = self::getSortLocaleFrom('Backend', $language);
 
         // filter the Foundlocale
-        $nonExisting = array();
+        $nonExisting = [];
         foreach ($locale as $moduleName => &$module) {
             foreach ($module as $filename => &$file) {
                 if (isset($oldLocale[$moduleName])) {
@@ -90,14 +90,14 @@ class AnalyseModel extends Model
                 foreach ($file['locale'] as $localeName => $localeType) {
                     $key = $localeName;
                     $type = $localeType;
-                    $nonExisting['Backend' . $key . $type . $moduleName] = array(
+                    $nonExisting['Backend' . $key . $type . $moduleName] = [
                         'language' => $language,
                         'application' => 'Backend',
                         'module' => $moduleName,
                         'type' => $type,
                         'name' => $key,
                         'used_in' => serialize($file['file']),
-                    );
+                    ];
                 }
             }
         }
@@ -116,8 +116,8 @@ class AnalyseModel extends Model
      */
     public static function getNonExistingFrontendLocale(string $language): array
     {
-        $locale = array();
-        $frontendModuleFiles = array();
+        $locale = [];
+        $frontendModuleFiles = [];
         $installedModules = BackendModel::getModules();
 
         // pickup the Frontend module files
@@ -147,7 +147,7 @@ class AnalyseModel extends Model
         $oldLocale = self::getSortLocaleFrom('Frontend', $language);
 
         // filter the Foundlocale
-        $nonExisting = array();
+        $nonExisting = [];
         foreach ($locale as $moduleName => &$module) {
             foreach ($module as $filename => &$file) {
                 // extra filter for Core
@@ -157,14 +157,14 @@ class AnalyseModel extends Model
                 foreach ($file['locale'] as $localeName => $localeType) {
                     $key = $localeName;
                     $type = $localeType;
-                    $nonExisting['Frontend' . $key . $type . $moduleName] = array(
+                    $nonExisting['Frontend' . $key . $type . $moduleName] = [
                         'language' => $language,
                         'application' => 'Frontend',
                         'module' => $moduleName,
                         'type' => $type,
                         'name' => $key,
                         'used_in' => serialize($file['file']),
-                    );
+                    ];
                 }
             }
         }
@@ -184,9 +184,9 @@ class AnalyseModel extends Model
      */
     public static function getSortLocaleFrom(string $application, string $language): array
     {
-        $oldLocale = array();
-        $type = array('lbl', 'act', 'err', 'msg');
-        $allBackendDBLocale = self::getTranslations($application, '', $type, array($language), '', '');
+        $oldLocale = [];
+        $type = ['lbl', 'act', 'err', 'msg'];
+        $allBackendDBLocale = self::getTranslations($application, '', $type, [$language], '', '');
         foreach ($allBackendDBLocale as $localeRecord) {
             foreach ($localeRecord as $record) {
                 $oldLocale[$record['module']][$record['name']] = $record['name'];
@@ -205,9 +205,9 @@ class AnalyseModel extends Model
      */
     private static function findLocaleInFiles(array $module): array
     {
-        $locale = array();
+        $locale = [];
         foreach ($module as $filename => $file) {
-            $matches = array();
+            $matches = [];
             $extension = $file->getExtension();
             $fileContent = $file->getContents();
 

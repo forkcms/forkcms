@@ -64,7 +64,7 @@ class Edit extends BackendBaseActionEdit
     private function loadDataGrid()
     {
         // init var
-        $items = array();
+        $items = [];
 
         // get modules
         $modules = BackendModel::getModules();
@@ -78,20 +78,20 @@ class Edit extends BackendBaseActionEdit
             }
 
             // check if the getByTag-method is available
-            if (is_callable(array($className, 'getByTag'))) {
+            if (is_callable([$className, 'getByTag'])) {
                 // make the call and get the item
-                $moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);
+                $moduleItems = (array) call_user_func([$className, 'getByTag'], $this->id);
 
                 // loop items
                 foreach ($moduleItems as $row) {
                     // check if needed fields are available
                     if (isset($row['url'], $row['name'], $row['module'])) {
                         // add
-                        $items[] = array(
+                        $items[] = [
                             'module' => \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module']))),
                             'name' => $row['name'],
                             'url' => $row['url'],
-                        );
+                        ];
                     }
                 }
             }
@@ -100,8 +100,8 @@ class Edit extends BackendBaseActionEdit
         // create datagrid
         $this->dgUsage = new BackendDataGridArray($items);
         $this->dgUsage->setPaging(false);
-        $this->dgUsage->setColumnsHidden(array('url'));
-        $this->dgUsage->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => ''));
+        $this->dgUsage->setColumnsHidden(['url']);
+        $this->dgUsage->setHeaderLabels(['name' => \SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => '']);
         $this->dgUsage->setColumnURL('name', '[url]', \SpoonFilter::ucfirst(BL::lbl('Edit')));
         $this->dgUsage->addColumn('edit', null, \SpoonFilter::ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
     }

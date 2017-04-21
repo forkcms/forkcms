@@ -16,6 +16,7 @@ class DatabaseDataCollector extends DataCollector
 
     /**
      * DatabaseDataCollector constructor.
+     *
      * @param SpoonDatabase $database
      */
     public function __construct(SpoonDatabase $database)
@@ -28,7 +29,7 @@ class DatabaseDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        $this->data = array(
+        $this->data = [
             'queries' => array_map(
                 function (array $query) {
                     $query['query_formatted'] = \SqlFormatter::format($query['query']);
@@ -38,7 +39,7 @@ class DatabaseDataCollector extends DataCollector
                 (array) $this->database->getQueries()
             ),
             'queryCount' => count($this->database->getQueries()),
-        );
+        ];
     }
 
     /**

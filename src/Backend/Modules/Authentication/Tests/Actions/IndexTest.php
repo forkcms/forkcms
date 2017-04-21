@@ -79,11 +79,11 @@ class IndexTest extends WebTestCase
         );
 
         $form = $crawler->selectButton('login')->form();
-        $this->submitForm($client, $form, array(
+        $this->submitForm($client, $form, [
             'form' => 'authenticationIndex',
             'backend_email' => 'test@test.com',
             'backend_password' => 'wrong_password',
-        ));
+        ]);
 
         // result should not yet be found
         self::assertContains(
@@ -107,12 +107,12 @@ class IndexTest extends WebTestCase
         );
 
         $form = $crawler->selectButton('login')->form();
-        $this->submitForm($client, $form, array(
+        $this->submitForm($client, $form, [
             'form' => 'authenticationIndex',
             'backend_email' => 'noreply@fork-cms.com',
             'backend_password' => 'fork',
             'form_token' => $form['form_token']->getValue(),
-        ));
+        ]);
 
         self::assertContains(
             'Dashboard',
@@ -146,12 +146,12 @@ class IndexTest extends WebTestCase
         );
 
         $form = $crawler->selectButton('login')->form();
-        $this->submitForm($client, $form, array(
+        $this->submitForm($client, $form, [
             'form' => 'authenticationIndex',
             'backend_email' => 'pages-user@fork-cms.com',
             'backend_password' => 'fork',
             'form_token' => $form['form_token']->getValue(),
-        ));
+        ]);
 
         self::assertContains(
             'Now editing',
@@ -182,12 +182,12 @@ class IndexTest extends WebTestCase
         );
 
         $form = $crawler->selectButton('Log in')->form();
-        $this->submitForm($client, $form, array(
+        $this->submitForm($client, $form, [
             'form' => 'authenticationIndex',
             'backend_email' => 'users-edit-user@fork-cms.com',
             'backend_password' => 'fork',
             'form_token' => $form['form_token']->getValue(),
-        ));
+        ]);
 
         self::assertContains(
             'Edit profile',

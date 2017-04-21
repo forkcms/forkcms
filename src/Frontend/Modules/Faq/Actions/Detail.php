@@ -121,30 +121,30 @@ class Detail extends FrontendBaseBlock
         $this->frm = new FrontendForm('feedback');
         $this->frm->addHidden('question_id', $this->record['id']);
         $this->frm->addTextarea('message')->setAttributes(
-            array(
+            [
                 'data-role' => 'fork-feedback-improve-message',
-            )
+            ]
         );
         $this->frm->addRadiobutton(
             'useful',
-            array(
-                 array(
+            [
+                 [
                      'label' => FL::lbl('Yes'),
                      'value' => 'Y',
-                     'attributes' => array(
+                     'attributes' => [
                          'data-role' => 'fork-feedback-useful',
-                         'data-response' => 'yes'
-                     )
-                 ),
-                 array(
+                         'data-response' => 'yes',
+                     ],
+                 ],
+                 [
                      'label' => FL::lbl('No'),
                      'value' => 'N',
-                     'attributes' => array(
+                     'attributes' => [
                          'data-role' => 'fork-feedback-useful',
                          'data-response' => 'no',
-                     )
-                 ),
-            )
+                     ],
+                 ],
+            ]
         );
     }
 
@@ -289,9 +289,9 @@ class Detail extends FrontendBaseBlock
                         $message = Message::newInstance(
                             sprintf(FL::getMessage('FaqFeedbackSubject'), $this->record['question'])
                         )
-                            ->setFrom(array($from['email'] => $from['name']))
-                            ->setTo(array($to['email'] => $to['name']))
-                            ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                            ->setFrom([$from['email'] => $from['name']])
+                            ->setTo([$to['email'] => $to['name']])
+                            ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                             ->parseHtml(
                                 '/Faq/Layout/Templates/Mails/Feedback.html.twig',
                                 $variables,

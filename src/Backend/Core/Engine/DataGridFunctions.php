@@ -17,7 +17,7 @@ use Backend\Core\Language\Language as BackendLanguage;
  */
 class DataGridFunctions
 {
-    protected static $dataGridUsers = array();
+    protected static $dataGridUsers = [];
 
     /**
      * Formats plain text as HTML, links will be detected, paragraphs will be inserted
@@ -203,7 +203,7 @@ class DataGridFunctions
      *
      * @return array
      */
-    public static function greyOut(string $type, string $value, array $attributes = array()): array
+    public static function greyOut(string $type, string $value, array $attributes = []): array
     {
         $grayedOutClass = 'fork-data-grid-grayed-out grayedOut';
         $greyOut = false;

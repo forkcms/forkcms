@@ -55,8 +55,8 @@ class Add extends BackendBaseActionAdd
         $this->frm = new BackendForm('add');
 
         // set hidden values
-        $rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
-        $rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
+        $rbtHiddenValues[] = ['label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y'];
+        $rbtHiddenValues[] = ['label' => BL::lbl('Published'), 'value' => 'N'];
 
         // get categories
         $categories = BackendBlogModel::getCategories();
@@ -110,7 +110,7 @@ class Add extends BackendBaseActionAdd
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+            $status = \SpoonFilter::getPostValue('status', ['active', 'draft'], 'active');
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
@@ -155,7 +155,7 @@ class Add extends BackendBaseActionAdd
 
                     // create folders if needed
                     $filesystem = new Filesystem();
-                    $filesystem->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
+                    $filesystem->mkdir([$imagePath . '/source', $imagePath . '/128x128']);
 
                     // image provided?
                     if ($this->frm->getField('image')->isFilled()) {
@@ -169,7 +169,7 @@ class Add extends BackendBaseActionAdd
                         $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
 
                         // add the image to the database without changing the revision id
-                        BackendBlogModel::updateRevision($item['revision_id'], array('image' => $item['image']));
+                        BackendBlogModel::updateRevision($item['revision_id'], ['image' => $item['image']]);
                     }
                 }
 
@@ -179,7 +179,7 @@ class Add extends BackendBaseActionAdd
                 // active
                 if ($item['status'] == 'active') {
                     // add search index
-                    BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
+                    BackendSearchModel::saveIndex($this->getModule(), $item['id'], ['title' => $item['title'], 'text' => $item['text']]);
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['revision_id']);

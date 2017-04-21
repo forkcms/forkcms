@@ -31,13 +31,13 @@ class Index extends FrontendBaseBlock
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 10,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
     /**
      * Execute the extra
@@ -94,12 +94,12 @@ class Index extends FrontendBaseBlock
 
         // add RSS-feed
         $this->header->addLink(
-            array(
+            [
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
                  'title' => $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE),
                  'href' => $rssLink,
-            ),
+            ],
             true
         );
 

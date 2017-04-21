@@ -68,14 +68,14 @@ final class NewNotImplementedMailingListSubscription
 
         // define message
         $message = Message::newInstance($title)
-            ->setFrom(array($from['email'] => $from['name']))
-            ->setTo(array($to['email'] => $to['name']))
-            ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+            ->setFrom([$from['email'] => $from['name']])
+            ->setTo([$to['email'] => $to['name']])
+            ->setReplyTo([$replyTo['email'] => $replyTo['name']])
             ->parseHtml(
                 FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.html.twig',
-                array(
-                    'message' => $title
-                ),
+                [
+                    'message' => $title,
+                ],
                 true
             )
         ;

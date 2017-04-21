@@ -40,21 +40,21 @@ class Categories extends BackendBaseActionIndex
         // create datagrid
         $this->dataGrid = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES,
-            array('active', BL::getWorkingLanguage())
+            ['active', BL::getWorkingLanguage()]
         );
 
         // set headers
-        $this->dataGrid->setHeaderLabels(array(
+        $this->dataGrid->setHeaderLabels([
             'num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount')),
-        ));
+        ]);
 
         // sorting columns
-        $this->dataGrid->setSortingColumns(array('title', 'num_items'), 'title');
+        $this->dataGrid->setSortingColumns(['title', 'num_items'], 'title');
 
         // convert the count into a readable and clickable one
         $this->dataGrid->setColumnFunction(
-            array(__CLASS__, 'setClickableCount'),
-            array('[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'),
+            [__CLASS__, 'setClickableCount'],
+            ['[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'],
             'num_items',
             true
         );
@@ -63,7 +63,7 @@ class Categories extends BackendBaseActionIndex
         $this->dataGrid->setPaging(false);
 
         // add attributes, so the inline editing has all the needed data
-        $this->dataGrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
+        $this->dataGrid->setColumnAttributes('title', ['data-id' => '{id:[id]}']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('EditCategory')) {

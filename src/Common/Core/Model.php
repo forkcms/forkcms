@@ -25,7 +25,7 @@ class Model extends BaseModel
      *
      * @var array
      */
-    protected static $modules = array();
+    protected static $modules = [];
 
     /**
      * Add a number to the string
@@ -73,10 +73,10 @@ class Model extends BaseModel
         bool $lowercaseAllowed = true
     ): string {
         // list of allowed vowels and vowel sounds
-        $vowels = array('a', 'e', 'i', 'u', 'ae', 'ea');
+        $vowels = ['a', 'e', 'i', 'u', 'ae', 'ea'];
 
         // list of allowed consonants and consonant sounds
-        $consonants = array(
+        $consonants = [
             'b',
             'c',
             'd',
@@ -103,7 +103,7 @@ class Model extends BaseModel
             'ch',
             'ph',
             'st',
-        );
+        ];
 
         // init vars
         $consonantsCount = count($consonants);
@@ -185,7 +185,7 @@ class Model extends BaseModel
      */
     public static function getThumbnailFolders(string $path, bool $includeSource = false): array
     {
-        $return = array();
+        $return = [];
         $filesystem = new Filesystem();
         if (!$filesystem->exists($path)) {
             return $return;
@@ -202,7 +202,7 @@ class Model extends BaseModel
                 continue;
             }
 
-            $item = array();
+            $item = [];
             $item['dirname'] = $directory->getBasename();
             $item['path'] = $directory->getRealPath();
             if (mb_substr($path, 0, mb_strlen(PATH_WWW)) === PATH_WWW) {

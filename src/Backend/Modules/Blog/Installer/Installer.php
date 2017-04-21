@@ -35,7 +35,7 @@ class Installer extends ModuleInstaller
      */
     private function addCategory(string $language, string $title, string $url): int
     {
-        $item = array();
+        $item = [];
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
         $item['language'] = $language;
         $item['title'] = $title;
@@ -54,7 +54,7 @@ class Installer extends ModuleInstaller
     {
         return (int) $this->getDB()->getVar(
             'SELECT id FROM blog_categories WHERE language = ?',
-            array($language)
+            [$language]
         );
     }
 
@@ -121,14 +121,14 @@ class Installer extends ModuleInstaller
             $navigationBlogId,
             'Articles',
             'blog/index',
-            array('blog/add', 'blog/edit', 'blog/import_wordpress')
+            ['blog/add', 'blog/edit', 'blog/import_wordpress']
         );
-        $this->setNavigation($navigationBlogId, 'Comments', 'blog/comments', array('blog/edit_comment'));
+        $this->setNavigation($navigationBlogId, 'Comments', 'blog/comments', ['blog/edit_comment']);
         $this->setNavigation(
             $navigationBlogId,
             'Categories',
             'blog/categories',
-            array('blog/add_category', 'blog/edit_category')
+            ['blog/add_category', 'blog/edit_category']
         );
 
         // settings navigation
@@ -180,7 +180,7 @@ class Installer extends ModuleInstaller
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
-            array('Search', ModuleExtraType::WIDGET, 'Form')
+            ['Search', ModuleExtraType::WIDGET, 'Form']
         );
 
         // loop languages
@@ -206,14 +206,14 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($blogId, $language)
+                [$blogId, $language]
             )
             ) {
                 $this->insertPage(
-                    array('title' => 'Blog', 'language' => $language),
+                    ['title' => 'Blog', 'language' => $language],
                     null,
-                    array('extra_id' => $blogId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $blogId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
             }
 
@@ -239,13 +239,13 @@ class Installer extends ModuleInstaller
              FROM blog_posts
              WHERE language = ?
              LIMIT 1',
-            array($language)
+            [$language]
         )
         ) {
             // insert sample blogpost 1
             $db->insert(
                 'blog_posts',
-                array(
+                [
                     'id' => 1,
                     'category_id' => $this->defaultCategoryId,
                     'user_id' => $this->getDefaultUserID(),
@@ -270,26 +270,26 @@ class Installer extends ModuleInstaller
                     'hidden' => 'N',
                     'allow_comments' => 'Y',
                     'num_comments' => '2',
-                )
+                ]
             );
 
             // add Search index blogpost 1
             $this->addSearchIndex(
                 $this->getModule(),
                 1,
-                array(
+                [
                     'title' => 'Nunc sediam est',
                     'text' => file_get_contents(
                         __DIR__ . '/Data/' . $language . '/sample1.txt'
                     ),
-                ),
+                ],
                 $language
             );
 
             // insert sample blogpost 2
             $db->insert(
                 'blog_posts',
-                array(
+                [
                     'id' => 2,
                     'category_id' => $this->defaultCategoryId,
                     'user_id' => $this->getDefaultUserID(),
@@ -309,26 +309,26 @@ class Installer extends ModuleInstaller
                     'hidden' => 'N',
                     'allow_comments' => 'Y',
                     'num_comments' => '0',
-                )
+                ]
             );
 
             // add Search index blogpost 2
             $this->addSearchIndex(
                 $this->getModule(),
                 2,
-                array(
+                [
                     'title' => 'Lorem ipsum',
                     'text' => file_get_contents(
                         __DIR__ . '/Data/' . $language . '/sample1.txt'
                     ),
-                ),
+                ],
                 $language
             );
 
             // insert example comment 1
             $db->insert(
                 'blog_comments',
-                array(
+                [
                     'post_id' => 1,
                     'language' => $language,
                     'created_on' => gmdate('Y-m-d H:i:00'),
@@ -339,13 +339,13 @@ class Installer extends ModuleInstaller
                     'type' => 'comment',
                     'status' => 'published',
                     'data' => null,
-                )
+                ]
             );
 
             // insert example comment 2
             $db->insert(
                 'blog_comments',
-                array(
+                [
                     'post_id' => 1,
                     'language' => $language,
                     'created_on' => gmdate('Y-m-d H:i:00'),
@@ -356,7 +356,7 @@ class Installer extends ModuleInstaller
                     'type' => 'comment',
                     'status' => 'published',
                     'data' => null,
-                )
+                ]
             );
         }
     }

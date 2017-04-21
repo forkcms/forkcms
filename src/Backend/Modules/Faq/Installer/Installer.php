@@ -41,7 +41,7 @@ class Installer extends ModuleInstaller
             'SELECT MAX(i.sequence) + 1
              FROM modules_extras AS i
              WHERE i.module = ?',
-            array('faq')
+            ['faq']
         );
 
         // build array
@@ -64,12 +64,12 @@ class Installer extends ModuleInstaller
 
         // build data for widget
         $extra['data'] = serialize(
-            array(
+            [
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
                 'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
-            )
+            ]
         );
 
         // update widget
@@ -77,7 +77,7 @@ class Installer extends ModuleInstaller
             'modules_extras',
             $extra,
             'id = ? AND module = ? AND type = ? AND action = ?',
-            array($item['extra_id'], $this->getModule(), ModuleExtraType::WIDGET, 'category_list')
+            [$item['extra_id'], $this->getModule(), ModuleExtraType::WIDGET, 'category_list']
         );
 
         return $item['id'];
@@ -96,7 +96,7 @@ class Installer extends ModuleInstaller
             'SELECT id
              FROM faq_categories
              WHERE language = ?',
-            array($language)
+            [$language]
         );
     }
 
@@ -167,18 +167,18 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($faqId, $language)
+                [$faqId, $language]
             );
 
             if (!$faqPageExists) {
                 // insert page
                 $this->insertPage(
-                    array(
+                    [
                         'title' => 'FAQ',
                         'language' => $language,
-                    ),
+                    ],
                     null,
-                    array('extra_id' => $faqId)
+                    ['extra_id' => $faqId]
                 );
             }
         }
@@ -192,13 +192,13 @@ class Installer extends ModuleInstaller
             $navigationFaqId,
             'Questions',
             'faq/index',
-            array('faq/add', 'faq/edit')
+            ['faq/add', 'faq/edit']
         );
         $this->setNavigation(
             $navigationFaqId,
             'Categories',
             'faq/categories',
-            array('faq/add_category', 'faq/edit_category')
+            ['faq/add_category', 'faq/edit_category']
         );
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');

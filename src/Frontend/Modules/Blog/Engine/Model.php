@@ -47,7 +47,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
              LIMIT 1',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $url)
+            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $url]
         );
 
         // unserialize
@@ -90,20 +90,20 @@ class Model implements FrontendTagsInterface
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT ?, ?',
-            array(
+            [
                 'active',
                 LANGUAGE,
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i'),
                 $offset,
                 $limit,
-            ),
+            ],
             'id'
         );
 
         // no results?
         if (empty($items)) {
-            return array();
+            return [];
         }
 
         // init var
@@ -169,7 +169,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY c.id',
-            array(LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i')),
+            [LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i')],
             'id'
         );
 
@@ -203,7 +203,7 @@ class Model implements FrontendTagsInterface
              GROUP BY i.id
              ORDER BY i.created_on DESC
              LIMIT ?, ?',
-            array('published', LANGUAGE, $offset, $limit)
+            ['published', LANGUAGE, $offset, $limit]
         );
 
         // loop comments and create gravatar id
@@ -227,7 +227,7 @@ class Model implements FrontendTagsInterface
             'SELECT COUNT(i.id) AS count
              FROM blog_posts AS i
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'))
+            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i')]
         );
     }
 
@@ -254,7 +254,7 @@ class Model implements FrontendTagsInterface
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m2.url = ?
              ORDER BY i.publish_on DESC
              LIMIT ?, ?',
-            array(
+            [
                 'active',
                 LANGUAGE,
                 'N',
@@ -262,13 +262,13 @@ class Model implements FrontendTagsInterface
                 $categoryURL,
                 $offset,
                 $limit,
-            ),
+            ],
             'id'
         );
 
         // no results?
         if (empty($items)) {
-            return array();
+            return [];
         }
 
         // init var
@@ -334,7 +334,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $url)
+            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $url]
         );
     }
 
@@ -363,7 +363,7 @@ class Model implements FrontendTagsInterface
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?
              ORDER BY i.publish_on DESC
              LIMIT ?, ?',
-            array(
+            [
                 'active',
                 LANGUAGE,
                 'N',
@@ -371,13 +371,13 @@ class Model implements FrontendTagsInterface
                 FrontendModel::getUTCDate('Y-m-d H:i', $end),
                 $offset,
                 $limit,
-            ),
+            ],
             'id'
         );
 
         // no results?
         if (empty($items)) {
-            return array();
+            return [];
         }
 
         // init var
@@ -441,13 +441,13 @@ class Model implements FrontendTagsInterface
             'SELECT COUNT(i.id)
              FROM blog_posts AS i
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?',
-            array(
+            [
                 'active',
                 LANGUAGE,
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i:s', $start),
                 FrontendModel::getUTCDate('Y-m-d H:i:s', $end),
-            )
+            ]
         );
     }
 
@@ -465,11 +465,11 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY month',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'))
+            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i')]
         );
 
         // init vars
-        $stats = array();
+        $stats = [];
         $link = FrontendNavigation::getURLForBlock('Blog', 'Archive');
         $firstYear = (int) date('Y');
         $lastYear = 0;
@@ -493,28 +493,28 @@ class Model implements FrontendTagsInterface
 
             // initialize if needed
             if (!isset($stats[$year])) {
-                $stats[$year] = array(
+                $stats[$year] = [
                     'url' => $link . '/' . $year,
                     'label' => $year,
                     'total' => 0,
                     'months' => null,
-                );
+                ];
             }
 
             // increment the total
             $stats[$year]['total'] += (int) $count;
-            $stats[$year]['months'][$key] = array(
+            $stats[$year]['months'][$key] = [
                 'url' => $link . '/' . $year . '/' . $month,
                 'label' => $timestamp,
                 'total' => $count,
-            );
+            ];
         }
 
         // loop years
         for ($i = $firstYear; $i <= $lastYear; ++$i) {
             // year missing
             if (!isset($stats[$i])) {
-                $stats[$i] = array('url' => null, 'label' => $i, 'total' => 0, 'months' => null);
+                $stats[$i] = ['url' => null, 'label' => $i, 'total' => 0, 'months' => null];
             }
         }
 
@@ -555,7 +555,7 @@ class Model implements FrontendTagsInterface
              FROM blog_comments AS c
              WHERE c.post_id = ? AND c.status = ? AND c.language = ?
              ORDER BY c.id ASC',
-            array($id, 'published', LANGUAGE)
+            [$id, 'published', LANGUAGE]
         );
 
         // loop comments and create gravatar id
@@ -585,7 +585,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $ids) . ') AND i.publish_on <= ?
              ORDER BY i.publish_on DESC',
-            array('active', 'N', FrontendModel::getUTCDate('Y-m-d H:i'))
+            ['active', 'N', FrontendModel::getUTCDate('Y-m-d H:i')]
         );
 
         // has items
@@ -646,16 +646,16 @@ class Model implements FrontendTagsInterface
             'SELECT i.publish_on
              FROM blog_posts AS i
              WHERE i.id = ? AND i.status = ?',
-            array($id, 'active')
+            [$id, 'active']
         );
 
         // validate
         if ($date == '') {
-            return array();
+            return [];
         }
 
         // init var
-        $navigation = array();
+        $navigation = [];
         $detailLink = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/';
 
         // get previous post
@@ -667,7 +667,7 @@ class Model implements FrontendTagsInterface
                 ((i.publish_on = ? AND i.id < ?) OR i.publish_on < ?)
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT 1',
-            array($detailLink, $id, 'active', 'N', LANGUAGE, $date, $id, $date)
+            [$detailLink, $id, 'active', 'N', LANGUAGE, $date, $id, $date]
         );
 
         // get next post
@@ -679,7 +679,7 @@ class Model implements FrontendTagsInterface
                 ((i.publish_on = ? AND i.id > ?) OR i.publish_on > ?)
              ORDER BY i.publish_on ASC, i.id ASC
              LIMIT 1',
-            array($detailLink, $id, 'active', 'N', LANGUAGE, $date, $id, $date)
+            [$detailLink, $id, 'active', 'N', LANGUAGE, $date, $id, $date]
         );
 
         // if empty, unset it
@@ -704,7 +704,7 @@ class Model implements FrontendTagsInterface
     public static function getRecentComments(int $limit = 5): array
     {
         // init var
-        $return = array();
+        $return = [];
 
         // get comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -717,7 +717,7 @@ class Model implements FrontendTagsInterface
              WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC
              LIMIT ?',
-            array('published', 'active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit)
+            ['published', 'active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit]
         );
 
         // validate
@@ -754,7 +754,7 @@ class Model implements FrontendTagsInterface
 
         // no items
         if (empty($relatedIDs)) {
-            return array();
+            return [];
         }
 
         // get link
@@ -769,7 +769,7 @@ class Model implements FrontendTagsInterface
             implode(',', $relatedIDs) . ')
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT ?',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit),
+            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit],
             'id'
         );
 
@@ -807,7 +807,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
              LIMIT 1',
-            array(LANGUAGE, $revision, $url)
+            [LANGUAGE, $revision, $url]
         );
 
         // unserialize
@@ -852,11 +852,11 @@ class Model implements FrontendTagsInterface
                  INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
                  WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
                  GROUP BY i.post_id',
-                array('published', $comment['post_id'], LANGUAGE, 'active')
+                ['published', $comment['post_id'], LANGUAGE, 'active']
             );
 
             // update num comments
-            $db->update('blog_posts', array('num_comments' => $numComments), 'id = ?', $comment['post_id']);
+            $db->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
         }
 
         return $comment['id'];
@@ -877,7 +877,7 @@ class Model implements FrontendTagsInterface
              FROM blog_comments AS c
              WHERE c.status = ? AND c.author = ? AND c.email = ?
              LIMIT 1',
-            array('published', $author, $email)
+            ['published', $author, $email]
         );
     }
 
@@ -918,13 +918,13 @@ class Model implements FrontendTagsInterface
             if ($comment['status'] == 'moderation') {
                 $variables['message'] = vsprintf(
                     FL::msg('BlogEmailNotificationsNewCommentToModerate'),
-                    array($comment['author'], $url, $comment['post_title'], $backendURL)
+                    [$comment['author'], $url, $comment['post_title'], $backendURL]
                 );
             } elseif ($comment['status'] == 'published') {
                 // comment was published
                 $variables['message'] = vsprintf(
                     FL::msg('BlogEmailNotificationsNewComment'),
-                    array($comment['author'], $url, $comment['post_title'])
+                    [$comment['author'], $url, $comment['post_title']]
                 );
             }
 
@@ -932,9 +932,9 @@ class Model implements FrontendTagsInterface
             $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
             $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
             $message = Message::newInstance(FL::msg('NotificationSubject'))
-                ->setFrom(array($from['email'] => $from['name']))
-                ->setTo(array($to['email'] => $to['name']))
-                ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                ->setFrom([$from['email'] => $from['name']])
+                ->setTo([$to['email'] => $to['name']])
+                ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                 ->parseHtml(
                     '/Core/Layout/Templates/Mails/Notification.html.twig',
                     $variables,
@@ -947,16 +947,16 @@ class Model implements FrontendTagsInterface
             // set variables
             $variables['message'] = vsprintf(
                 FL::msg('BlogEmailNotificationsNewCommentToModerate'),
-                array($comment['author'], $url, $comment['post_title'], $backendURL)
+                [$comment['author'], $url, $comment['post_title'], $backendURL]
             );
 
             $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
             $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
             $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
             $message = Message::newInstance(FL::msg('NotificationSubject'))
-                ->setFrom(array($from['email'] => $from['name']))
-                ->setTo(array($to['email'] => $to['name']))
-                ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                ->setFrom([$from['email'] => $from['name']])
+                ->setTo([$to['email'] => $to['name']])
+                ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                 ->parseHtml(
                     '/Core/Layout/Templates/Mails/Notification.html.twig',
                     $variables,
@@ -987,7 +987,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')',
-            array('active', 'N', LANGUAGE, date('Y-m-d H:i')),
+            ['active', 'N', LANGUAGE, date('Y-m-d H:i')],
             'id'
         );
 

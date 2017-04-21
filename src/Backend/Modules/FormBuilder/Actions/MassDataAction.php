@@ -26,7 +26,7 @@ class MassDataAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', array('delete'), '');
+        $action = \SpoonFilter::getGetValue('action', ['delete'], '');
 
         // form id
         $formId = \SpoonFilter::getGetValue('form_id', null, '', 'int');

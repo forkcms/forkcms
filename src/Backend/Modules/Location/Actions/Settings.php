@@ -40,18 +40,18 @@ class Settings extends BackendBaseActionEdit
         $this->frm = new BackendForm('settings');
 
         // add map info (widgets)
-        $this->frm->addDropdown('zoom_level_widget', array_combine(array_merge(array('auto'), range(3, 18)), array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))), $this->get('fork.settings')->get($this->URL->getModule(), 'zoom_level_widget', 13));
+        $this->frm->addDropdown('zoom_level_widget', array_combine(array_merge(['auto'], range(3, 18)), array_merge([BL::lbl('Auto', $this->getModule())], range(3, 18))), $this->get('fork.settings')->get($this->URL->getModule(), 'zoom_level_widget', 13));
         $this->frm->addText('width_widget', $this->get('fork.settings')->get($this->URL->getModule(), 'width_widget'));
         $this->frm->addText('height_widget', $this->get('fork.settings')->get($this->URL->getModule(), 'height_widget'));
         $this->frm->addDropdown(
             'map_type_widget',
-            array(
+            [
                 'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
                 'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
                 'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
                 'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
                 'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
-            ),
+            ],
             $this->get('fork.settings')->get(
                 $this->URL->getModule(),
                 'map_type_widget',

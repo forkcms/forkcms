@@ -29,7 +29,7 @@ class Installer extends ModuleInstaller
              FROM users
              WHERE is_god = ? AND deleted = ? AND active = ?
              LIMIT 1',
-            array('Y', 'N', 'Y')
+            ['Y', 'N', 'Y']
         )
         ) {
             // secret files
@@ -98,7 +98,7 @@ class Installer extends ModuleInstaller
                 // insert user settings
                 $this->getDB()->insert(
                     'users_settings',
-                    array('user_id' => $user['id'], 'name' => $name, 'value' => $value)
+                    ['user_id' => $user['id'], 'name' => $name, 'value' => $value]
                 );
             }
         }
@@ -114,7 +114,7 @@ class Installer extends ModuleInstaller
         // init vars
         $password = $this->getVariable('password');
         $score = 0;
-        $uniqueChars = array();
+        $uniqueChars = [];
 
         // less then 4 chars is just a weak password
         if (mb_strlen($password) <= 4) {
@@ -188,8 +188,8 @@ class Installer extends ModuleInstaller
 
         // general settings
         $this->setSetting($this->getModule(), 'default_group', 1);
-        $this->setSetting($this->getModule(), 'date_formats', array('j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y'));
-        $this->setSetting($this->getModule(), 'time_formats', array('H:i', 'H:i:s', 'g:i a', 'g:i A'));
+        $this->setSetting($this->getModule(), 'date_formats', ['j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y']);
+        $this->setSetting($this->getModule(), 'time_formats', ['H:i', 'H:i:s', 'g:i a', 'g:i A']);
 
         // module rights
         $this->setModuleRights(1, $this->getModule());
@@ -207,10 +207,10 @@ class Installer extends ModuleInstaller
             $navigationSettingsId,
             'Users',
             'users/index',
-            array(
+            [
                  'users/add',
                  'users/edit',
-            ),
+            ],
             4
         );
 

@@ -39,13 +39,13 @@ class Category extends FrontendBaseBlock
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 10,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
     /**
      * Execute the extra
@@ -65,7 +65,7 @@ class Category extends FrontendBaseBlock
     {
         // get categories
         $categories = FrontendBlogModel::getAllCategories();
-        $possibleCategories = array();
+        $possibleCategories = [];
         foreach ($categories as $category) {
             $possibleCategories[$category['url']] = $category['id'];
         }
@@ -136,12 +136,12 @@ class Category extends FrontendBaseBlock
         // advanced SEO-attributes
         if (isset($this->category['meta_data']['seo_index'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->category['meta_data']['seo_index'])
+                ['name' => 'robots', 'content' => $this->category['meta_data']['seo_index']]
             );
         }
         if (isset($this->category['meta_data']['seo_follow'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->category['meta_data']['seo_follow'])
+                ['name' => 'robots', 'content' => $this->category['meta_data']['seo_follow']]
             );
         }
 

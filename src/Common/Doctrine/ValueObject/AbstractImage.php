@@ -3,7 +3,6 @@
 namespace Common\Doctrine\ValueObject;
 
 use Backend\Core\Engine\Model;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**

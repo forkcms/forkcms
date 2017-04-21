@@ -46,13 +46,13 @@ class Archive extends FrontendBaseBlock
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 10,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
     /**
      * The requested year
@@ -193,12 +193,12 @@ class Archive extends FrontendBaseBlock
         // assign category
         $this->tpl->assign(
             'archive',
-            array(
+            [
                  'start_date' => $this->startDate,
                  'end_date' => $this->endDate,
                  'year' => $this->year,
                  'month' => $this->month,
-            )
+            ]
         );
 
         // assign items

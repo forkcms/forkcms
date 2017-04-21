@@ -100,7 +100,7 @@ class Installer extends ModuleInstaller
         // loop languages
         foreach ($this->getLanguages() as $language) {
             $pageId = $this->insertPage(
-                array('title' => 'Newsletters', 'language' => $language)
+                ['title' => 'Newsletters', 'language' => $language]
             );
 
             // check if a page for mailmotor subscribe already exists in this language
@@ -110,13 +110,13 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($subscribeId, $language)
+                [$subscribeId, $language]
             )
             ) {
                 $this->insertPage(
-                    array('parent_id' => $pageId, 'title' => 'Subscribe', 'language' => $language),
+                    ['parent_id' => $pageId, 'title' => 'Subscribe', 'language' => $language],
                     null,
-                    array('extra_id' => $subscribeId, 'position' => 'main')
+                    ['extra_id' => $subscribeId, 'position' => 'main']
                 );
             }
 
@@ -127,13 +127,13 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($unsubscribeId, $language)
+                [$unsubscribeId, $language]
             )
             ) {
                 $this->insertPage(
-                    array('parent_id' => $pageId, 'title' => 'Unsubscribe', 'language' => $language),
+                    ['parent_id' => $pageId, 'title' => 'Unsubscribe', 'language' => $language],
                     null,
-                    array('extra_id' => $unsubscribeId, 'position' => 'main')
+                    ['extra_id' => $unsubscribeId, 'position' => 'main']
                 );
             }
         }

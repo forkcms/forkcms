@@ -16,6 +16,7 @@ final class NotImplementedSubscribedEvent extends Event
 
     /**
      * NotImplementedSubscriptionEvent constructor.
+     *
      * @param Subscription $subscription
      */
     public function __construct(

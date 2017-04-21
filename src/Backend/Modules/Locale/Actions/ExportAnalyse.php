@@ -77,7 +77,7 @@ class ExportAnalyse extends BackendBaseActionIndex
      */
     private function setItems()
     {
-        $this->locale = array();
+        $this->locale = [];
 
         // get items
         $frontend = BackendLocaleModel::getNonExistingFrontendLocale($this->filter['language']);

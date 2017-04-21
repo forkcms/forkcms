@@ -42,6 +42,7 @@ class SubscribeType extends AbstractType
 
     /**
      * SubscribeType constructor.
+     *
      * @param Subscriber $subscriber
      */
     public function __construct(
@@ -100,7 +101,7 @@ class SubscribeType extends AbstractType
      */
     public function getInterests()
     {
-        $interests = array();
+        $interests = [];
 
         try {
             $mailMotorInterests = $this->subscriber->getInterests();
@@ -135,9 +136,9 @@ class SubscribeType extends AbstractType
                 // Define overwrite interests
                 $overwriteInterests = $this->modulesSettings->get('Mailmotor', 'overwrite_interests', true);
                 if (!empty($this->interests) && $overwriteInterests) {
-                    return array('Default', 'has_interests');
+                    return ['Default', 'has_interests'];
                 } else {
-                    return array('Default');
+                    return ['Default'];
                 }
             },
         ]);

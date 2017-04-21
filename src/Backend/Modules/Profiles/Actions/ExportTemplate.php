@@ -25,16 +25,16 @@ class ExportTemplate extends BackendBaseActionAdd
         $path = BACKEND_CACHE_PATH . '/Profiles/import_template.csv';
 
         // define required fields
-        $fields = array(
+        $fields = [
             'email',
             'display_name',
             'password',
-        );
+        ];
 
         // define file
         $file = new \SpoonFileCSV();
 
         // download the file
-        $file->arrayToFile($path, array(), $fields, null, ',', '"', true);
+        $file->arrayToFile($path, [], $fields, null, ',', '"', true);
     }
 }

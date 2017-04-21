@@ -26,7 +26,7 @@ class FormFieldNode extends \Twig_Node
      */
     public function __construct(string $form, string $field, int $lineNumber, string $tag)
     {
-        parent::__construct(array(), array(), $lineNumber, $tag);
+        parent::__construct([], [], $lineNumber, $tag);
         $this->form = $form;
         $this->field = $field;
     }

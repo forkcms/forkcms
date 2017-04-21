@@ -78,7 +78,7 @@ class BaseTwigModifiers
                 $string = str_replace($match, highlight_string($match, true), $string);
 
                 // replace highlighted code tags in match
-                $string = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $string);
+                $string = str_replace(['&lt;code&gt;', '&lt;/code&gt;'], '', $string);
             }
         }
 
@@ -109,7 +109,7 @@ class BaseTwigModifiers
      */
     public static function stripNewlines(string $string): string
     {
-        return str_replace(array("\r\n", "\n", "\r"), ' ', $string);
+        return str_replace(["\r\n", "\n", "\r"], ' ', $string);
     }
 
     /**

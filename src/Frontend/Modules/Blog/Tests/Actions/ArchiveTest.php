@@ -15,10 +15,10 @@ class ArchiveTest extends WebTestCase
 
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
                 'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
-            )
+            ]
         );
 
         $client->request('GET', '/en/blog/archive/2015/02');
@@ -68,7 +68,7 @@ class ArchiveTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog/archive/2015/02', array('page' => 34));
+        $client->request('GET', '/en/blog/archive/2015/02', ['page' => 34]);
         $this->assertIs404($client);
     }
 }

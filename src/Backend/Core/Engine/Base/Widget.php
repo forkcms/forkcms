@@ -48,7 +48,7 @@ class Widget extends KernelLoader
      *
      * @var array
      */
-    protected $rights = array();
+    protected $rights = [];
 
     /**
      * The template to use
@@ -149,7 +149,7 @@ class Widget extends KernelLoader
      */
     protected function setColumn(string $column)
     {
-        $allowedColumns = array('left', 'middle', 'right');
+        $allowedColumns = ['left', 'middle', 'right'];
         $this->column = \SpoonFilter::getValue($column, $allowedColumns, 'left');
     }
 

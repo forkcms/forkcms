@@ -91,7 +91,7 @@ class InstallationData
      *
      * @var array
      */
-    protected $modules = array();
+    protected $modules = [];
 
     /**
      * do we install exampleData?

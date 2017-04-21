@@ -25,14 +25,14 @@ class Settings extends BackendBaseActionEdit
      *
      * @var array
      */
-    private $modules = array();
+    private $modules = [];
 
     /**
      * Settings per module
      *
      * @var array
      */
-    private $settings = array();
+    private $settings = [];
 
     /**
      * Execute the action
@@ -81,7 +81,7 @@ class Settings extends BackendBaseActionEdit
         );
 
         // modules that, no matter what, can not be searched
-        $disallowedModules = array('Search');
+        $disallowedModules = ['Search'];
 
         // loop modules
         foreach (BackendModel::getModulesForDropDown() as $module => $label) {
@@ -108,14 +108,14 @@ class Settings extends BackendBaseActionEdit
                 }
 
                 // add to list of modules
-                $this->modules[] = array(
+                $this->modules[] = [
                     'module' => $module,
                     'id' => $this->frm->getField('search_' . $module)->getAttribute('id'),
                     'label' => $label,
                     'chk' => $this->frm->getField('search_' . $module)->parse(),
                     'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(),
                     'txtError' => '',
-                );
+                ];
             }
         }
     }

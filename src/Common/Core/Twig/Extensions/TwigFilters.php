@@ -58,17 +58,17 @@ class TwigFilters
         $twig->addFunction(new Twig_SimpleFunction(
             'getnavigation',
             $app.'::getNavigation',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'getsubnavigation',
             $app.'::getSubNavigation',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'parsewidget',
             $app.'::parseWidget',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
 
         // Function URL
@@ -91,7 +91,7 @@ class TwigFilters
         $twig->addFunction(new Twig_SimpleFunction(
             'showbool',
             $app.'::showBool',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
 
         // @Deprecated We should look for replacements because they run on spoon library

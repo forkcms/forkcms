@@ -11,8 +11,6 @@ namespace Backend\Modules\Mailmotor\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex;
 use Backend\Core\Engine\Model;
-use Backend\Modules\Mailmotor\Command\SaveSettings;
-use Backend\Modules\Mailmotor\Event\SettingsSavedEvent;
 
 /**
  * This redirects to settings

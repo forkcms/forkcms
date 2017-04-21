@@ -9,9 +9,6 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
-use Frontend\Core\Language\Language as FL;
-
 /**
  * This is our extended version of SpoonForm.
  */
@@ -66,9 +63,9 @@ class Form extends \Common\Core\Form
      * @param string $type  The type of the button (submit is default).
      * @param string $class Class(es) that will be applied on the button.
      *
-     * @return \SpoonFormButton
-     *
      * @throws Exception
+     *
+     * @return \SpoonFormButton
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
     {
@@ -101,9 +98,9 @@ class Form extends \Common\Core\Form
      * @param string $class      Class(es) that have to be applied on the element.
      * @param string $classError Class(es) that have to be applied when an error occurs on the element.
      *
-     * @return FormDate
-     *
      * @throws Exception
+     *
+     * @return FormDate
      */
     public function addDate(
         $name,
@@ -116,7 +113,7 @@ class Form extends \Common\Core\Form
     ) {
         $name = (string) $name;
         $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
-        $type = \SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
+        $type = \SpoonFilter::getValue($type, ['from', 'till', 'range'], 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
         $class = ($class !== null) ? (string) $class : 'form-control inputDate';
@@ -139,8 +136,8 @@ class Form extends \Common\Core\Form
 
         // build attributes
         $attributes['data-mask'] = str_replace(
-            array('d', 'm', 'Y', 'j', 'n'),
-            array('dd', 'mm', 'yy', 'd', 'm'),
+            ['d', 'm', 'Y', 'j', 'n'],
+            ['dd', 'mm', 'yy', 'd', 'm'],
             $mask
         );
         $attributes['data-firstday'] = $firstDay;
@@ -199,6 +196,7 @@ class Form extends \Common\Core\Form
      * @param bool   $multipleSelection Is it possible to select multiple items?
      * @param string $class             Class(es) that will be applied on the element.
      * @param string $classError        Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormDropdown
      */
     public function addDropdown(
@@ -277,6 +275,7 @@ class Form extends \Common\Core\Form
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the field contain HTML?
+     *
      * @return \SpoonFormPassword
      */
     public function addPassword(
@@ -306,6 +305,7 @@ class Form extends \Common\Core\Form
      * @param string $checked    Should the element be checked?
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormRadiobutton
      */
     public function addRadiobutton($name, array $values, $checked = null, $class = null, $classError = null)
@@ -329,6 +329,7 @@ class Form extends \Common\Core\Form
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will this element contain HTML?
+     *
      * @return \SpoonFormText
      */
     public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
@@ -352,6 +353,7 @@ class Form extends \Common\Core\Form
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the element contain HTML?
+     *
      * @return \SpoonFormTextarea
      */
     public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
@@ -373,6 +375,7 @@ class Form extends \Common\Core\Form
      * @param string $value      The value inside the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     *
      * @return \SpoonFormTime
      */
     public function addTime($name, $value = null, $class = null, $classError = null)
@@ -549,7 +552,7 @@ class Form extends \Common\Core\Form
      *
      * @return array
      */
-    public function getValues($excluded = array('form', 'save', '_utf8')): array
+    public function getValues($excluded = ['form', 'save', '_utf8']): array
     {
         return parent::getValues($excluded);
     }

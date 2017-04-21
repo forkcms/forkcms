@@ -27,13 +27,13 @@ class LoginType extends AbstractType
             ->add(
                 'password',
                 'repeated',
-                array(
+                [
                     'type' => 'password',
                     'invalid_message' => 'The passwords do not match.',
                     'required' => true,
-                    'first_options' => array('label' => 'Password'),
-                    'second_options' => array('label' => 'Confirm'),
-                )
+                    'first_options' => ['label' => 'Password'],
+                    'second_options' => ['label' => 'Confirm'],
+                ]
             )
         ;
 
@@ -57,10 +57,10 @@ class LoginType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => InstallationData::class,
             'validation_groups' => 'login',
-        ));
+        ]);
     }
 
     /**

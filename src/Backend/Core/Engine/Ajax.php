@@ -18,7 +18,6 @@ use Backend\Core\Language\Language as BackendLanguage;
 /**
  * This class will handle AJAX-related stuff
  */
-
 class Ajax extends Base\Object implements ApplicationInterface
 {
     /**

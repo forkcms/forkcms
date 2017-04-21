@@ -20,7 +20,7 @@ class Index extends FrontendBaseBlock
     /**
      * @var array
      */
-    private $items = array();
+    private $items = [];
 
     /**
      * Execute the extra

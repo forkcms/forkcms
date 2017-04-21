@@ -16,7 +16,7 @@ use Frontend\Core\Language\Language;
 use Frontend\Core\Language\Locale;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
-use \SpoonDate;
+use SpoonDate;
 
 /**
  * Contains all Frontend-related custom modifiers
@@ -100,7 +100,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
         // get separators
         $separators = explode('_', $format);
-        $separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
+        $separatorSymbols = ['comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => ''];
         $decimalSeparator = isset($separators[0], $separatorSymbols[$separators[0]])
             ? $separatorSymbols[$separators[0]] : null;
         $thousandsSeparator = isset($separators[1], $separatorSymbols[$separators[1]])
@@ -426,7 +426,7 @@ class TemplateModifiers extends BaseTwigModifiers
         $profile = $profile->toArray();
 
         // @remark I know this is dirty, but I couldn't find a better way.
-        if (in_array($name, array('display_name', 'registered_on', 'full_url')) && isset($profile[$name])) {
+        if (in_array($name, ['display_name', 'registered_on', 'full_url']) && isset($profile[$name])) {
             return $profile[$name];
         }
         if (isset($profile['settings'][$name])) {
@@ -444,8 +444,9 @@ class TemplateModifiers extends BaseTwigModifiers
      * @param string $setting The name of the setting you want.
      * @param int $userId  The userId, if not set by $string.
      *
-     * @return string
      * @throws Exception
+     *
+     * @return string
      */
     public static function userSetting($string, string $setting, int $userId = null)
     {

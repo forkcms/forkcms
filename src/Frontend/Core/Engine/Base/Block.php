@@ -375,10 +375,10 @@ class Block extends Object
 
             // flip ahead
             $this->header->addLink(
-                array(
+                [
                     'rel' => 'prev',
                     'href' => SITE_URL . $url . $anchor,
-                )
+                ]
             );
         }
 
@@ -398,7 +398,7 @@ class Block extends Object
                 }
 
                 // add
-                $pagination['first'][] = array('url' => $url . $anchor, 'label' => $i);
+                $pagination['first'][] = ['url' => $url . $anchor, 'label' => $i];
             }
         }
 
@@ -415,7 +415,7 @@ class Block extends Object
             }
 
             // add
-            $pagination['pages'][] = array('url' => $url . $anchor, 'label' => $i, 'current' => $current);
+            $pagination['pages'][] = ['url' => $url . $anchor, 'label' => $i, 'current' => $current];
         }
 
         // show last pages?
@@ -434,7 +434,7 @@ class Block extends Object
                 }
 
                 // add
-                $pagination['last'][] = array('url' => $url . $anchor, 'label' => $i);
+                $pagination['last'][] = ['url' => $url . $anchor, 'label' => $i];
             }
         }
 
@@ -453,10 +453,10 @@ class Block extends Object
 
             // flip ahead
             $this->header->addLink(
-                array(
+                [
                     'rel' => 'next',
                     'href' => SITE_URL . $url . $anchor,
-                )
+                ]
             );
         }
 
@@ -573,7 +573,7 @@ class Block extends Object
      *
      * @return Form
      */
-    public function createForm(string $type, $data = null, array $options = array()): Form
+    public function createForm(string $type, $data = null, array $options = []): Form
     {
         return $this->get('form.factory')->create($type, $data, $options);
     }

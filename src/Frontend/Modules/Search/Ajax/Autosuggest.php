@@ -55,13 +55,13 @@ class Autosuggest extends FrontendBaseAJAXAction
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 20,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
     /**
      * The requested page
@@ -220,11 +220,11 @@ class Autosuggest extends FrontendBaseAJAXAction
             array_pop($this->items);
 
             // add reference to full search results page
-            $this->items[] = array(
+            $this->items[] = [
                 'title' => FL::lbl('More'),
                 'text' => FL::msg('MoreResults'),
                 'full_url' => FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term,
-            );
+            ];
         }
 
         $charset = $this->getContainer()->getParameter('kernel.charset');

@@ -12,7 +12,7 @@ namespace Backend\Core\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
 use Backend\Core\Language\Language as BackendLanguage;
-use \SpoonDate;
+use SpoonDate;
 
 /**
  * This is our class with custom modifiers.
@@ -77,7 +77,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
         // get separators
         $separators = explode('_', $format);
-        $separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
+        $separatorSymbols = ['comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => ''];
         $decimalSeparator = isset($separators[0], $separatorSymbols[$separators[0]])
             ? $separatorSymbols[$separators[0]] : null;
         $thousandsSeparator = isset($separators[1], $separatorSymbols[$separators[1]])
@@ -108,7 +108,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
         // get separators
         $separators = explode('_', $format);
-        $separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
+        $separatorSymbols = ['comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => ''];
         $decimalSeparator = isset($separators[0], $separatorSymbols[$separators[0]])
             ? $separatorSymbols[$separators[0]] : null;
         $thousandsSeparator = isset($separators[1], $separatorSymbols[$separators[1]])

@@ -26,10 +26,10 @@ class MassCommentAction extends BackendBaseAction
         parent::execute();
 
         // current status
-        $from = \SpoonFilter::getGetValue('from', array('published', 'moderation', 'spam'), 'published');
+        $from = \SpoonFilter::getGetValue('from', ['published', 'moderation', 'spam'], 'published');
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
+        $action = \SpoonFilter::getGetValue('action', ['published', 'moderation', 'spam', 'delete'], 'spam');
 
         // no id's provided
         if (!isset($_GET['id'])) {

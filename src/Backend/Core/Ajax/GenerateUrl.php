@@ -10,8 +10,6 @@ namespace Backend\Core\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Meta as BackendMeta;
 
 /**
  * This action will generate a valid url based upon the submitted url.

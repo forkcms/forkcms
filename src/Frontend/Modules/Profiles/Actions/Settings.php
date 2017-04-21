@@ -12,7 +12,6 @@ namespace Frontend\Modules\Profiles\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -78,10 +77,10 @@ class Settings extends FrontendBaseBlock
     private function loadForm()
     {
         // gender dropdown values
-        $genderValues = array(
+        $genderValues = [
             'male' => \SpoonFilter::ucfirst(FL::getLabel('Male')),
             'female' => \SpoonFilter::ucfirst(FL::getLabel('Female')),
-        );
+        ];
 
         // birthdate dropdown values
         $days = range(1, 31);
@@ -225,8 +224,8 @@ class Settings extends FrontendBaseBlock
             // no errors
             if ($this->frm->isCorrect()) {
                 // init
-                $values = array();
-                $settings = array();
+                $values = [];
+                $settings = [];
 
                 // has there been a valid display name change request?
                 if ($this->profile->getDisplayName() !== $txtDisplayName->getValue() &&

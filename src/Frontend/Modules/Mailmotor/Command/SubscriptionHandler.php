@@ -47,8 +47,8 @@ final class SubscriptionHandler
     public function handle(Subscription $subscription)
     {
         // Init variables
-        $mergeFields = array();
-        $interests = array();
+        $mergeFields = [];
+        $interests = [];
 
         try {
             // We must overwrite existing interests

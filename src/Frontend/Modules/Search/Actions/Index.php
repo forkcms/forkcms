@@ -63,13 +63,13 @@ class Index extends FrontendBaseBlock
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 20,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
     /**
      * The requested page
@@ -233,11 +233,11 @@ class Index extends FrontendBaseBlock
 
         // create elements
         $this->form->addText('q')->setAttributes(
-            array(
+            [
                 'data-role' => 'fork-search-field',
                 'data-autocomplete' => 'enabled',
                 'data-live-suggest' => 'enabled',
-            )
+            ]
         );
 
         // since we know the term just here we should set the canonical url here

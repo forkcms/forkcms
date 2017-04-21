@@ -19,7 +19,7 @@ class SeoFormNode extends \Twig_Node
      */
     public function __construct(string $form, int $lineNumber, string $tag)
     {
-        parent::__construct(array(), array(), $lineNumber, $tag);
+        parent::__construct([], [], $lineNumber, $tag);
         $this->form = $form;
     }
 

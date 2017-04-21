@@ -83,7 +83,7 @@ class Detail extends FrontendBaseBlock
             );
 
             // add no-index, so the draft won't get accidentally indexed
-            $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+            $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, nofollow'], true);
         } else {
             // get by URL
             $this->record = FrontendBlogModel::get($this->URL->getParameter(1));
@@ -131,10 +131,10 @@ class Detail extends FrontendBaseBlock
         $website = (CommonCookie::exists('comment_website') && \SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
 
         // create elements
-        $this->frm->addText('author', $author)->setAttributes(array('required' => null));
-        $this->frm->addText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
+        $this->frm->addText('author', $author)->setAttributes(['required' => null]);
+        $this->frm->addText('email', $email)->setAttributes(['required' => null, 'type' => 'email']);
         $this->frm->addText('website', $website, null);
-        $this->frm->addTextarea('message')->setAttributes(array('required' => null));
+        $this->frm->addTextarea('message')->setAttributes(['required' => null]);
     }
 
     /**
@@ -150,7 +150,7 @@ class Detail extends FrontendBaseBlock
         $this->header->addRssLink($rssTitle, $rssLink);
 
         // get RSS-link for the comments
-        $rssCommentTitle = vsprintf(FL::msg('CommentsOn'), array($this->record['title']));
+        $rssCommentTitle = vsprintf(FL::msg('CommentsOn'), [$this->record['title']]);
         $rssCommentsLink = FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
                            '/' . $this->record['url'];
 
@@ -213,12 +213,12 @@ class Detail extends FrontendBaseBlock
         // advanced SEO-attributes
         if (isset($this->record['meta_data']['seo_index'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index'])
+                ['name' => 'robots', 'content' => $this->record['meta_data']['seo_index']]
             );
         }
         if (isset($this->record['meta_data']['seo_follow'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow'])
+                ['name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']]
             );
         }
 
@@ -264,18 +264,18 @@ class Detail extends FrontendBaseBlock
         // set previous and next link for usage with Flip ahead
         if (!empty($navigation['previous'])) {
             $this->header->addLink(
-                array(
+                [
                      'rel' => 'prev',
                      'href' => SITE_URL . $navigation['previous']['url'],
-                )
+                ]
             );
         }
         if (!empty($navigation['next'])) {
             $this->header->addLink(
-                array(
+                [
                      'rel' => 'next',
                      'href' => SITE_URL . $navigation['next']['url'],
-                )
+                ]
             );
         }
 
@@ -347,7 +347,7 @@ class Detail extends FrontendBaseBlock
                 $comment['website'] = $website;
                 $comment['text'] = $text;
                 $comment['status'] = 'published';
-                $comment['data'] = serialize(array('server' => $_SERVER));
+                $comment['data'] = serialize(['server' => $_SERVER]);
 
                 // get URL for article
                 $permaLink = $this->record['full_url'];

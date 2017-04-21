@@ -36,7 +36,7 @@ class Model implements FrontendTagsInterface
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')
              ORDER BY i.title ASC',
-            array('active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            ['active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00']
         );
 
         // has items
@@ -81,7 +81,7 @@ class Model implements FrontendTagsInterface
              WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
              AND i.language = ? AND i.publish_on <= ?
              ORDER BY i.sequence ASC',
-            array($id, 'active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            [$id, 'active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00']
         );
 
         // has items
@@ -118,7 +118,7 @@ class Model implements FrontendTagsInterface
         $db = FrontendModel::getContainer()->get('database');
 
         // define ids to ignore
-        $ignore = array(404);
+        $ignore = [404];
 
         // get items
         $items = (array) $db->getRecords(
@@ -128,7 +128,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.id IN (' . implode(', ', $ids) . ') AND p.id NOT IN (' .
             implode(', ', $ignore) . ') AND p.status = ? AND p.hidden = ? AND p.language = ?',
-            array('active', 'N', LANGUAGE),
+            ['active', 'N', LANGUAGE],
             'id'
         );
 
@@ -140,7 +140,7 @@ class Model implements FrontendTagsInterface
                     'SELECT pb.html
                      FROM pages_blocks AS pb
                      WHERE pb.revision_id = ?',
-                    array($item['text'])
+                    [$item['text']]
                 )
             );
 

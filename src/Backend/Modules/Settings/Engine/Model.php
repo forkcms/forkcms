@@ -24,7 +24,7 @@ class Model
     public static function getWarnings(): array
     {
         // init vars
-        $warnings = array();
+        $warnings = [];
         $installedModules = BackendModel::getModules();
 
         // loop modules
@@ -36,9 +36,9 @@ class Model
             }
 
             // method exists
-            if (is_callable(array($class, 'checkSettings'))) {
+            if (is_callable([$class, 'checkSettings'])) {
                 // add possible warnings
-                $warnings = array_merge($warnings, call_user_func(array($class, 'checkSettings')));
+                $warnings = array_merge($warnings, call_user_func([$class, 'checkSettings']));
             }
         }
 

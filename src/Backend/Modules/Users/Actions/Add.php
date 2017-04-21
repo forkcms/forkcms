@@ -60,8 +60,8 @@ class Add extends BackendBaseActionAdd
             75,
             'form-control passwordGenerator',
             'form-control danger passwordGenerator'
-        )->setAttributes(array('autocomplete' => 'off'));
-        $this->frm->addPassword('confirm_password', null, 75)->setAttributes(array('autocomplete' => 'off'));
+        )->setAttributes(['autocomplete' => 'off']);
+        $this->frm->addPassword('confirm_password', null, 75)->setAttributes(['autocomplete' => 'off']);
         $this->frm->addText('name', null, 255);
         $this->frm->addText('surname', null, 255);
         $this->frm->addText('nickname', null, 24);
@@ -122,7 +122,7 @@ class Add extends BackendBaseActionAdd
                                     'UndoDelete',
                                     null,
                                     null,
-                                    array('email' => $this->frm->getField('email')->getValue())
+                                    ['email' => $this->frm->getField('email')->getValue()]
                                 )
                             )
                         );

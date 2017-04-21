@@ -31,28 +31,28 @@ class Config extends Object
      *
      * @var array
      */
-    protected $disabledActions = array();
+    protected $disabledActions = [];
 
     /**
      * The disabled AJAX-actions
      *
      * @var array
      */
-    protected $disabledAJAXActions = array();
+    protected $disabledAJAXActions = [];
 
     /**
      * All the possible actions
      *
      * @var array
      */
-    protected $possibleActions = array();
+    protected $possibleActions = [];
 
     /**
      * All the possible AJAX actions
      *
      * @var array
      */
-    protected $possibleAJAXActions = array();
+    protected $possibleAJAXActions = [];
 
     /**
      * @param KernelInterface $kernel
@@ -106,10 +106,10 @@ class Config extends Object
      */
     public function getPossibleActionTypes(): array
     {
-        return array(
+        return [
             'actions',
             'ajax',
-        );
+        ];
     }
 
     /**

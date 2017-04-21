@@ -13,7 +13,6 @@ use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -54,7 +53,7 @@ class ForgotPassword extends FrontendBaseBlock
     private function loadForm()
     {
         $this->frm = new FrontendForm('forgotPassword', null, null, 'forgotPasswordForm');
-        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
     }
 
     /**
@@ -120,9 +119,9 @@ class ForgotPassword extends FrontendBaseBlock
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message = Message::newInstance(FL::getMessage('ForgotPasswordSubject'))
-                    ->setFrom(array($from['email'] => $from['name']))
-                    ->setTo(array($txtEmail->getValue() => ''))
-                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->setFrom([$from['email'] => $from['name']])
+                    ->setTo([$txtEmail->getValue() => ''])
+                    ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                     ->parseHtml(
                         '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
                         $mailValues,

@@ -27,7 +27,7 @@ class Action extends Object
      *
      * @var array
      */
-    protected $parameters = array();
+    protected $parameters = [];
 
     /**
      * The header object
@@ -93,9 +93,9 @@ class Action extends Object
                 'Index',
                 null,
                 null,
-                array(
+                [
                     'error' => 'csrf',
-                )
+                ]
             )
         );
     }
@@ -174,7 +174,7 @@ class Action extends Object
         }
 
         // store var so we don't have to call this function twice
-        $var = array_map('strip_tags', $this->getParameter('var', 'array', array()));
+        $var = array_map('strip_tags', $this->getParameter('var', 'array', []));
 
         // is there a report to show?
         if ($this->getParameter('report') !== null) {
@@ -254,7 +254,7 @@ class Action extends Object
      *
      * @return Form
      */
-    public function createForm(string $type, $data = null, array $options = array()): Form
+    public function createForm(string $type, $data = null, array $options = []): Form
     {
         return $this->get('form.factory')->create($type, $data, $options);
     }

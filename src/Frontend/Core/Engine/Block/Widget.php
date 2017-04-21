@@ -102,7 +102,7 @@ class Widget extends FrontendBaseObject
         $this->object = new $actionClass($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData());
 
         // validate if the execute-method is callable
-        if (!is_callable(array($this->object, 'execute'))) {
+        if (!is_callable([$this->object, 'execute'])) {
             throw new FrontendException('The action file should contain a callable method "execute".');
         }
 

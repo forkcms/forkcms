@@ -12,10 +12,8 @@ namespace Frontend\Core\Engine;
 use ForkCMS\App\ApplicationInterface;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
-use InvalidArgumentException;
 
 /**
  * FrontendAJAX

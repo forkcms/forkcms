@@ -20,7 +20,7 @@ final class Priority
         self::DEBUG,
     ];
 
-    /** @var integer */
+    /** @var int */
     private $priority;
 
     /**

@@ -24,15 +24,15 @@ class DataGridDB extends DataGrid
      */
     public function __construct(
         string $query,
-        array $parameters = array(),
+        array $parameters = [],
         string $resultsQuery = null,
-        array $resultsParameters = array()
+        array $resultsParameters = []
     ) {
         parent::__construct(
             new \SpoonDatagridSourceDB(
                 BackendModel::get('database'),
-                array($query, $parameters),
-                $resultsQuery === null ? null : array($resultsQuery, $resultsParameters)
+                [$query, $parameters],
+                $resultsQuery === null ? null : [$resultsQuery, $resultsParameters]
             )
         );
     }

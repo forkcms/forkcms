@@ -77,7 +77,7 @@ class Comments extends BackendBaseActionIndex
          */
         $this->dgPublished = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
-            array('published', BL::getWorkingLanguage(), 'active')
+            ['published', BL::getWorkingLanguage(), 'active']
         );
 
         // active tab
@@ -87,17 +87,17 @@ class Comments extends BackendBaseActionIndex
         $this->dgPublished->setPagingLimit(30);
 
         // header labels
-        $this->dgPublished->setHeaderLabels(array(
+        $this->dgPublished->setHeaderLabels([
             'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
             'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
-        ));
+        ]);
 
         // add the multicheckbox column
         $this->dgPublished->setMassActionCheckboxes('check', '[id]');
 
         // assign column functions
         $this->dgPublished->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getTimeAgo'),
+            [new BackendDataGridFunctions(), 'getTimeAgo'],
             '[created_on]',
             'created_on',
             true
@@ -105,20 +105,20 @@ class Comments extends BackendBaseActionIndex
         $this->dgPublished->setColumnFunction('htmlspecialchars', ['[text]'], 'text');
         $this->dgPublished->setColumnFunction('htmlspecialchars', ['[author]'], 'author');
         $this->dgPublished->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'cleanupPlaintext'),
+            [new BackendDataGridFunctions(), 'cleanupPlaintext'],
             '[text]',
             'text',
             true
         );
         $this->dgPublished->setColumnFunction(
-            array(__CLASS__, 'addPostData'),
-            array('[text]', '[post_title]', '[post_url]', '[id]'),
+            [__CLASS__, 'addPostData'],
+            ['[text]', '[post_title]', '[post_url]', '[id]'],
             'text',
             true
         );
 
         // sorting
-        $this->dgPublished->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
+        $this->dgPublished->setSortingColumns(['created_on', 'text', 'author'], 'created_on');
         $this->dgPublished->setSortParameter('desc');
 
         // hide columns
@@ -127,19 +127,19 @@ class Comments extends BackendBaseActionIndex
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
-            array(
+            [
                 'moderation' => BL::lbl('MoveToModeration'),
                 'spam' => BL::lbl('MoveToSpam'),
                 'delete' => BL::lbl('Delete'),
-            ),
+            ],
             'spam',
             false,
             'form-control',
             'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'actionPublished');
-        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeletePublished'));
-        $ddmMassAction->setOptionAttributes('spam', array('data-target' => '#confirmPublishedToSpam'));
+        $ddmMassAction->setOptionAttributes('delete', ['data-target' => '#confirmDeletePublished']);
+        $ddmMassAction->setOptionAttributes('spam', ['data-target' => '#confirmPublishedToSpam']);
         $this->dgPublished->setMassAction($ddmMassAction);
 
         // check if this action is allowed
@@ -172,7 +172,7 @@ class Comments extends BackendBaseActionIndex
         // datagrid for the comments that are awaiting moderation
         $this->dgModeration = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
-            array('moderation', BL::getWorkingLanguage(), 'active')
+            ['moderation', BL::getWorkingLanguage(), 'active']
         );
 
         // active tab
@@ -182,17 +182,17 @@ class Comments extends BackendBaseActionIndex
         $this->dgModeration->setPagingLimit(30);
 
         // header labels
-        $this->dgModeration->setHeaderLabels(array(
+        $this->dgModeration->setHeaderLabels([
             'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
             'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
-        ));
+        ]);
 
         // add the multicheckbox column
         $this->dgModeration->setMassActionCheckboxes('check', '[id]');
 
         // assign column functions
         $this->dgModeration->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getTimeAgo'),
+            [new BackendDataGridFunctions(), 'getTimeAgo'],
             '[created_on]',
             'created_on',
             true
@@ -200,20 +200,20 @@ class Comments extends BackendBaseActionIndex
         $this->dgModeration->setColumnFunction('htmlspecialchars', ['[text]'], 'text');
         $this->dgModeration->setColumnFunction('htmlspecialchars', ['[author]'], 'author');
         $this->dgModeration->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'cleanupPlaintext'),
+            [new BackendDataGridFunctions(), 'cleanupPlaintext'],
             '[text]',
             'text',
             true
         );
         $this->dgModeration->setColumnFunction(
-            array(__CLASS__, 'addPostData'),
-            array('[text]', '[post_title]', '[post_url]', '[id]'),
+            [__CLASS__, 'addPostData'],
+            ['[text]', '[post_title]', '[post_url]', '[id]'],
             'text',
             true
         );
 
         // sorting
-        $this->dgModeration->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
+        $this->dgModeration->setSortingColumns(['created_on', 'text', 'author'], 'created_on');
         $this->dgModeration->setSortParameter('desc');
 
         // hide columns
@@ -222,19 +222,19 @@ class Comments extends BackendBaseActionIndex
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
-            array(
+            [
                 'published' => BL::lbl('MoveToPublished'),
                 'spam' => BL::lbl('MoveToSpam'),
                 'delete' => BL::lbl('Delete'),
-            ),
+            ],
             'published',
             false,
             'form-control',
             'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'actionModeration');
-        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeleteModeration'));
-        $ddmMassAction->setOptionAttributes('spam', array('data-target' => '#confirmModerationToSpam'));
+        $ddmMassAction->setOptionAttributes('delete', ['data-target' => '#confirmDeleteModeration']);
+        $ddmMassAction->setOptionAttributes('spam', ['data-target' => '#confirmModerationToSpam']);
         $this->dgModeration->setMassAction($ddmMassAction);
 
         // check if this action is allowed
@@ -265,7 +265,7 @@ class Comments extends BackendBaseActionIndex
          */
         $this->dgSpam = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
-            array('spam', BL::getWorkingLanguage(), 'active')
+            ['spam', BL::getWorkingLanguage(), 'active']
         );
 
         // active tab
@@ -275,17 +275,17 @@ class Comments extends BackendBaseActionIndex
         $this->dgSpam->setPagingLimit(30);
 
         // header labels
-        $this->dgSpam->setHeaderLabels(array(
+        $this->dgSpam->setHeaderLabels([
             'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
             'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
-        ));
+        ]);
 
         // add the multicheckbox column
         $this->dgSpam->setMassActionCheckboxes('check', '[id]');
 
         // assign column functions
         $this->dgSpam->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getTimeAgo'),
+            [new BackendDataGridFunctions(), 'getTimeAgo'],
             '[created_on]',
             'created_on',
             true
@@ -293,20 +293,20 @@ class Comments extends BackendBaseActionIndex
         $this->dgSpam->setColumnFunction('htmlspecialchars', ['[text]'], 'text');
         $this->dgSpam->setColumnFunction('htmlspecialchars', ['[author]'], 'author');
         $this->dgSpam->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'cleanupPlaintext'),
+            [new BackendDataGridFunctions(), 'cleanupPlaintext'],
             '[text]',
             'text',
             true
         );
         $this->dgSpam->setColumnFunction(
-            array(__CLASS__, 'addPostData'),
-            array('[text]', '[post_title]', '[post_url]', '[id]'),
+            [__CLASS__, 'addPostData'],
+            ['[text]', '[post_title]', '[post_url]', '[id]'],
             'text',
             true
         );
 
         // sorting
-        $this->dgSpam->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
+        $this->dgSpam->setSortingColumns(['created_on', 'text', 'author'], 'created_on');
         $this->dgSpam->setSortParameter('desc');
 
         // hide columns
@@ -315,18 +315,18 @@ class Comments extends BackendBaseActionIndex
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
-            array(
+            [
                 'published' => BL::lbl('MoveToPublished'),
                 'moderation' => BL::lbl('MoveToModeration'),
                 'delete' => BL::lbl('Delete'),
-            ),
+            ],
             'published',
             false,
             'form-control',
             'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'actionSpam');
-        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeleteSpam'));
+        $ddmMassAction->setOptionAttributes('delete', ['data-target' => '#confirmDeleteSpam']);
         $this->dgSpam->setMassAction($ddmMassAction);
 
         // check if this action is allowed

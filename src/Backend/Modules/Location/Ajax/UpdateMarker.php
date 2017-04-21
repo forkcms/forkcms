@@ -35,12 +35,12 @@ class UpdateMarker extends BackendBaseAJAXAction
             $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
         } else {
             //update
-            $updateData = array(
+            $updateData = [
                 'id' => $itemId,
                 'lat' => $lat,
                 'lng' => $lng,
                 'language' => BL::getWorkingLanguage(),
-            );
+            ];
 
             BackendLocationModel::update($updateData);
 

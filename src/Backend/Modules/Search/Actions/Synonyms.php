@@ -31,8 +31,8 @@ class Synonyms extends Action
     private function showDataGrid()
     {
         $dataGrid = new BackendDataGridDB(BackendSearchModel::QRY_DATAGRID_BROWSE_SYNONYMS, [BL::getWorkingLanguage()]);
-        $dataGrid->setSortingColumns(array('term'), 'term');
-        $dataGrid->setColumnFunction('str_replace', array(',', ', ', '[synonym]'), 'synonym', true);
+        $dataGrid->setSortingColumns(['term'], 'term');
+        $dataGrid->setColumnFunction('str_replace', [',', ', ', '[synonym]'], 'synonym', true);
 
         if (BackendAuthentication::isAllowedAction('EditSynonym')) {
             $editUrl = BackendModel::createURLForAction('EditSynonym') . '&amp;id=[id]';

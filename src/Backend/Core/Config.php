@@ -28,5 +28,5 @@ class Config extends BackendBaseConfig
      *
      * @var array
      */
-    protected $disabledActions = array();
+    protected $disabledActions = [];
 }

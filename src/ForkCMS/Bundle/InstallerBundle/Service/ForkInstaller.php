@@ -33,7 +33,7 @@ class ForkInstaller
     /**
      * @var array
      */
-    private $defaultExtras = array();
+    private $defaultExtras = [];
 
     /**
      * @todo: - make sure the Container doesn't have to be injected
@@ -89,7 +89,7 @@ class ForkInstaller
      */
     public static function getRequiredModules()
     {
-        return array(
+        return [
             'Locale',
             'Settings',
             'Users',
@@ -99,7 +99,7 @@ class ForkInstaller
             'Search',
             'ContentBlocks',
             'Tags',
-        );
+        ];
     }
 
     /**
@@ -109,11 +109,11 @@ class ForkInstaller
      */
     public static function getHiddenModules()
     {
-        return array(
+        return [
             'Authentication',
             'Dashboard',
             'Error',
-        );
+        ];
     }
 
     /**
@@ -161,7 +161,7 @@ class ForkInstaller
         );
         $database->execute(
             'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
-            array('charset' => 'utf8mb4')
+            ['charset' => 'utf8mb4']
         );
         $this->container->set('database', $database);
     }
@@ -234,20 +234,20 @@ class ForkInstaller
                      WHERE b.extra_id = ?
                     GROUP BY b.revision_id
                  )',
-                array($extra['id'])
+                [$extra['id']]
             );
 
             // build insert array for this extra
-            $insertExtras = array();
+            $insertExtras = [];
             foreach ($revisionIds as $revisionId) {
-                $insertExtras[] = array(
+                $insertExtras[] = [
                     'revision_id' => $revisionId,
                     'position' => $extra['position'],
                     'extra_id' => $extra['id'],
                     'created_on' => gmdate('Y-m-d H:i:s'),
                     'edited_on' => gmdate('Y-m-d H:i:s'),
                     'visible' => 'Y',
-                );
+                ];
             }
 
             // insert block
@@ -274,7 +274,7 @@ class ForkInstaller
                 'SELECT DISTINCT application
                  FROM locale
                  WHERE language = ?',
-                array((string) $language)
+                [(string) $language]
             );
 
             // loop applications
@@ -296,9 +296,9 @@ class ForkInstaller
         $variables = $this->getConfigurationVariables($data);
 
         // map the config templates to their destination filename
-        $yamlFiles = array(
+        $yamlFiles = [
             PATH_WWW . '/app/config/parameters.yml.dist' => PATH_WWW . '/app/config/parameters.yml',
-        );
+        ];
 
         foreach ($yamlFiles as $sourceFilename => $destinationFilename) {
             $yamlContent = file_get_contents($sourceFilename);
@@ -321,11 +321,10 @@ class ForkInstaller
      */
     protected function getConfigurationVariables(InstallationData $data)
     {
-        return array(
+        return [
             '<debug-email>' => $data->hasDifferentDebugEmail() ?
                 $data->getDebugEmail() :
-                $data->getEmail()
-            ,
+                $data->getEmail(),
             '<database-name>' => $data->getDbDatabase(),
             '<database-host>' => addslashes($data->getDbHostname()),
             '<database-user>' => addslashes($data->getDbUsername()),
@@ -333,8 +332,7 @@ class ForkInstaller
             '<database-port>' => $data->getDbPort(),
             '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
                 (mb_strpos(mb_strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
-                'http'
-            ,
+                'http',
             '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
             '<site-default-title>' => 'Fork CMS',
             '<site-multilanguage>' => $data->getLanguageType() === 'multiple' ? 'true' : 'false',
@@ -343,7 +341,7 @@ class ForkInstaller
             '<action-group-tag>' => '\@actiongroup',
             '<action-rights-level>' => 7,
             '<secret>' => Model::generateRandomString(32, true, true, true, false),
-        );
+        ];
     }
 
     /**
@@ -353,7 +351,7 @@ class ForkInstaller
      */
     protected function getInstallerData(InstallationData $data)
     {
-        return array(
+        return [
             'default_language' => $data->getDefaultLanguage(),
             'default_interface_language' => $data->getDefaultInterfaceLanguage(),
             'spoon_debug_email' => $data->getEmail(),
@@ -367,6 +365,6 @@ class ForkInstaller
             'smtp_password' => '',
             'email' => $data->getEmail(),
             'password' => $data->getPassword(),
-        );
+        ];
     }
 }

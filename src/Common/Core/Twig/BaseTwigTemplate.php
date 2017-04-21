@@ -45,14 +45,14 @@ abstract class BaseTwigTemplate extends TwigEngine
      *
      * @var Form[]
      */
-    protected $forms = array();
+    protected $forms = [];
 
     /**
      * List of assigned variables.
      *
      * @var array
      */
-    protected $variables = array();
+    protected $variables = [];
 
     /**
      * @var ModulesSettings
@@ -140,7 +140,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         $twig->addGlobal('timestamp', time());
 
         // constants that should be protected from usage in the template
-        $notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
+        $notPublicConstants = ['DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD'];
 
         // get all defined constants
         $constants = get_defined_constants(true);

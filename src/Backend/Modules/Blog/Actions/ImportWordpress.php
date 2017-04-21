@@ -25,12 +25,12 @@ class ImportWordpress extends BackendBaseActionEdit
     /**
      * @var array
      */
-    private $authors = array();
+    private $authors = [];
 
     /**
      * @var array
      */
-    private $attachments = array();
+    private $attachments = [];
 
     /**
      * @var Filesystem
@@ -76,7 +76,7 @@ class ImportWordpress extends BackendBaseActionEdit
 
         // XML provided?
         if ($this->frm->getField('wordpress')->isFilled()) {
-            $this->frm->getField('wordpress')->isAllowedExtension(array('xml'), BL::err('XMLFilesOnly'));
+            $this->frm->getField('wordpress')->isAllowedExtension(['xml'], BL::err('XMLFilesOnly'));
         } else {
             // No file
             $this->frm->getField('wordpress')->addError(BL::err('FieldIsRequired'));
@@ -151,14 +151,14 @@ class ImportWordpress extends BackendBaseActionEdit
                 }
             } elseif (mb_substr($xmlString, 0, 10) === '<wp:author') {
                 // Process the authors
-                $this->authors[(string) $xml->children('wp', true)->author_login] = array(
+                $this->authors[(string) $xml->children('wp', true)->author_login] = [
                     'id' => (string) $xml->children('wp', true)->author_id,
                     'login' => (string) $xml->children('wp', true)->author_login,
                     'email' => (string) $xml->children('wp', true)->author_email,
                     'display_name' => (string) $xml->children('wp', true)->author_display_name,
                     'first_name' => (string) $xml->children('wp', true)->author_first_name,
                     'last_name' => (string) $xml->children('wp', true)->author_last_name,
-                );
+                ];
             }
 
             // End
@@ -191,20 +191,20 @@ class ImportWordpress extends BackendBaseActionEdit
         }
 
         // Mapping for wordpress status => fork status
-        $statusses = array(
+        $statusses = [
             'draft' => 'draft',
             'pending' => 'draft',
             'private' => 'private',
             'publish' => 'active',
             'future' => 'publish',
-        );
-        $commentStatusses = array(
+        ];
+        $commentStatusses = [
             'open' => 'Y',
             'closed' => 'N',
-        );
+        ];
 
         // Prepare item
-        $item = array();
+        $item = [];
         $item['user_id'] = $this->handleUser((string) $xml->children('dc', true)->creator);
         $item['title'] = (string) $xml->title;
         $item['text'] = $this->handleUrls(
@@ -226,11 +226,11 @@ class ImportWordpress extends BackendBaseActionEdit
         }
 
         // Prepare meta
-        $meta = array();
+        $meta = [];
         $meta['url'] = (string) $xml->children('wp', true)->post_name;
 
         // Prepare tags
-        $tags = array();
+        $tags = [];
 
         // Walk through wp categories
         foreach ($xml->category as $category) {
@@ -251,18 +251,18 @@ class ImportWordpress extends BackendBaseActionEdit
         }
 
         // Prepare comments
-        $comments = array();
+        $comments = [];
 
         // Walk through wp comments
         foreach ($xml->children('wp', true)->comment as $comment) {
             /* @var \SimpleXMLElement $comment */
-            $comments[] = array(
+            $comments[] = [
                 'author' => (string) $comment->children('wp', true)->comment_author,
                 'email' => (string) $comment->children('wp', true)->comment_author_email,
                 'text' => filter_var((string) $comment->children('wp', true)->comment_content, FILTER_SANITIZE_STRING),
                 'created_on' => (string) $comment->children('wp', true)->comment_date,
                 'status' => ((string) $comment->children('wp', true)->comment_approved == '1') ? 'published' : 'moderation',
-            );
+            ];
         }
 
         // Make the call
@@ -335,7 +335,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $db = BackendModel::getContainer()->get('database');
         $id = (int) $db->getVar(
             'SELECT id FROM users WHERE email=? AND active=? AND deleted=?',
-            array(mb_strtolower($this->authors[(string) $username]['email']), 'Y', 'N')
+            [mb_strtolower($this->authors[(string) $username]['email']), 'Y', 'N']
         );
 
         // We found an id!
@@ -421,7 +421,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $db = BackendModel::getContainer()->get('database');
         $id = (int) $db->getVar(
             'SELECT id FROM blog_categories WHERE title=? AND language=?',
-            array($category, BL::getWorkingLanguage())
+            [$category, BL::getWorkingLanguage()]
         );
 
         // We found an id!
@@ -435,10 +435,10 @@ class ImportWordpress extends BackendBaseActionEdit
         }
 
         // We should create a new category
-        $cat = array();
+        $cat = [];
         $cat['language'] = BL::getWorkingLanguage();
         $cat['title'] = $category;
-        $meta = array();
+        $meta = [];
         $meta['keywords'] = $category;
         $meta['description'] = $category;
         $meta['title'] = $category;

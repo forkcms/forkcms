@@ -31,7 +31,7 @@ class Add extends BackendBaseActionAdd
      *
      * @var array
      */
-    private $blocksContent = array();
+    private $blocksContent = [];
 
     /**
      * Is the current user a god user?
@@ -45,21 +45,21 @@ class Add extends BackendBaseActionAdd
      *
      * @var array
      */
-    private $positions = array();
+    private $positions = [];
 
     /**
      * The extras
      *
      * @var array
      */
-    private $extras = array();
+    private $extras = [];
 
     /**
      * The template data
      *
      * @var array
      */
-    private $templates = array();
+    private $templates = [];
 
     /**
      * Execute the action
@@ -123,10 +123,10 @@ class Add extends BackendBaseActionAdd
         $this->frm->addHidden('template_id', $defaultTemplateId);
         $this->frm->addRadiobutton(
             'hidden',
-            array(
-                array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                array('label' => BL::lbl('Published'), 'value' => 'N'),
-            ),
+            [
+                ['label' => BL::lbl('Hidden'), 'value' => 'Y'],
+                ['label' => BL::lbl('Published'), 'value' => 'N'],
+            ],
             'N'
         );
 
@@ -136,17 +136,17 @@ class Add extends BackendBaseActionAdd
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
             // init some vars
-            $items = array(
+            $items = [
                 'move' => true,
                 'children' => true,
                 'edit' => true,
                 'delete' => true,
-            );
-            $checked = array();
-            $values = array();
+            ];
+            $checked = [];
+            $values = [];
 
             foreach ($items as $value => $itemIsChecked) {
-                $values[] = array('label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
+                $values[] = ['label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value];
 
                 if ($itemIsChecked) {
                     $checked[] = $value;
@@ -172,14 +172,14 @@ class Add extends BackendBaseActionAdd
         // content has been submitted: re-create submitted content rather than the db-fetched content
         if (isset($_POST['block_html_0'])) {
             // init vars
-            $this->blocksContent = array();
+            $this->blocksContent = [];
             $hasBlock = false;
             $i = 1;
 
             // loop submitted blocks
             while (isset($_POST['block_position_' . $i])) {
                 // init var
-                $block = array();
+                $block = [];
 
                 // save block position
                 $block['position'] = $_POST['block_position_' . $i];
@@ -263,19 +263,19 @@ class Add extends BackendBaseActionAdd
         }
 
         // redirect
-        $redirectValues = array(
-            array('value' => 'none', 'label' => \SpoonFilter::ucfirst(BL::lbl('None'))),
-            array(
+        $redirectValues = [
+            ['value' => 'none', 'label' => \SpoonFilter::ucfirst(BL::lbl('None'))],
+            [
                 'value' => 'internal',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
-                'variables' => array('isInternal' => true),
-            ),
-            array(
+                'variables' => ['isInternal' => true],
+            ],
+            [
                 'value' => 'external',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
-                'variables' => array('isExternal' => true),
-            ),
-        );
+                'variables' => ['isExternal' => true],
+            ],
+        ];
         $this->frm->addRadiobutton('redirect', $redirectValues, 'none');
         $this->frm->addDropdown('internal_redirect', BackendPagesModel::getPagesForDropdown());
         $this->frm->addText('external_redirect', null, null, null, null, true);
@@ -303,7 +303,7 @@ class Add extends BackendBaseActionAdd
         $this->meta->setURLCallback(
             'Backend\Modules\Pages\Engine\Model',
             'getURL',
-            array(0, $this->getParameter('parent', 'int', null), false)
+            [0, $this->getParameter('parent', 'int', null), false]
         );
     }
 
@@ -354,7 +354,7 @@ class Add extends BackendBaseActionAdd
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+            $status = \SpoonFilter::getPostValue('status', ['active', 'draft'], 'active');
 
             // validate redirect
             $redirectValue = $this->frm->getField('redirect')->getValue();
@@ -371,7 +371,7 @@ class Add extends BackendBaseActionAdd
             $this->meta->setURLCallback(
                 'Backend\Modules\Pages\Engine\Model',
                 'getURL',
-                array(0, $this->getParameter('parent', 'int', null), $this->frm->getField('is_action')->getChecked())
+                [0, $this->getParameter('parent', 'int', null), $this->frm->getField('is_action')->getChecked()]
             );
 
             // cleanup the submitted fields, ignore fields that were added by hackers
@@ -401,18 +401,18 @@ class Add extends BackendBaseActionAdd
                     $data['is_action'] = true;
                 }
                 if ($redirectValue == 'internal') {
-                    $data['internal_redirect'] = array(
+                    $data['internal_redirect'] = [
                         'page_id' => $this->frm->getField('internal_redirect')->getValue(),
                         'code' => '301',
-                    );
+                    ];
                 }
                 if ($redirectValue == 'external') {
-                    $data['external_redirect'] = array(
+                    $data['external_redirect'] = [
                         'url' => BackendPagesModel::getEncodedRedirectURL(
                             $this->frm->getField('external_redirect')->getValue()
                         ),
                         'code' => '301',
-                    );
+                    ];
                 }
                 if (array_key_exists('image', $this->templates[$templateId]['data'])) {
                     $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
@@ -517,7 +517,7 @@ class Add extends BackendBaseActionAdd
                     BackendSearchModel::saveIndex(
                         $this->getModule(),
                         $page['id'],
-                        array('title' => $page['title'], 'text' => $text)
+                        ['title' => $page['title'], 'text' => $text]
                     );
 
                     // everything is saved, so redirect to the overview
@@ -544,12 +544,13 @@ class Add extends BackendBaseActionAdd
 
     /**
      * @param bool $allowImage
+     *
      * @return string|null
      */
     private function getImage(bool $allowImage)
     {
         if (!$allowImage || !$this->frm->getField('image')->isFilled()) {
-            return null;
+            return;
         }
 
         $imagePath = FRONTEND_FILES_PATH . '/pages/images';

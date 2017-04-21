@@ -21,7 +21,7 @@ class RssItem extends \SpoonFeedRSSItem
      *
      * @var array
      */
-    private $utm = array('utm_source' => 'feed', 'utm_medium' => 'rss');
+    private $utm = ['utm_source' => 'feed', 'utm_medium' => 'rss'];
 
     /**
      * @param string $title The title for the item.
@@ -54,14 +54,14 @@ class RssItem extends \SpoonFeedRSSItem
     public function processLinks(string $content): string
     {
         // replace URLs and images
-        $search = array('href="/', 'src="/');
-        $replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
+        $search = ['href="/', 'src="/'];
+        $replace = ['href="' . SITE_URL . '/', 'src="' . SITE_URL . '/'];
 
         // replace links to files
         $content = str_replace($search, $replace, $content);
 
         // init var
-        $matches = array();
+        $matches = [];
 
         // match links
         preg_match_all('/href="(http:\/\/(.*))"/iU', $content, $matches);
@@ -72,8 +72,8 @@ class RssItem extends \SpoonFeedRSSItem
         }
 
         // init vars
-        $searchLinks = array();
-        $replaceLinks = array();
+        $searchLinks = [];
+        $replaceLinks = [];
 
         // loop old links
         foreach ((array) $matches[1] as $i => $link) {

@@ -36,8 +36,10 @@ class UploadFile extends AjaxAction
      * uploads and form uploads (with files in the $_FILES global)
      *
      * @param  Request $request
-     * @return string The content of the uploaded file
+     *
      * @throws Exception When no file could be extracted
+     *
+     * @return string The content of the uploaded file
      */
     private function getFileContentFromRequest(Request $request): string
     {
@@ -57,8 +59,10 @@ class UploadFile extends AjaxAction
      * uploads and form uploads (with files in the $_FILES global)
      *
      * @param  Request $request
-     * @return string The content of the uploaded file
+     *
      * @throws Exception When no file could be extracted
+     *
+     * @return string The content of the uploaded file
      */
     private function getFileNameFromRequest(Request $request): string
     {
@@ -79,6 +83,7 @@ class UploadFile extends AjaxAction
      * @param  string $content
      * @param  string $fileName
      * @param  string $destinationFolder
+     *
      * @return string The filename of the written file.
      */
     private function writeFile(string $content, string $fileName, string $destinationFolder): string

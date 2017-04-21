@@ -28,14 +28,14 @@ class Add extends BackendBaseActionAdd
      *
      * @var array
      */
-    private $actionGroups = array();
+    private $actionGroups = [];
 
     /**
      * The actions
      *
      * @var array
      */
-    private $actions = array();
+    private $actions = [];
 
     /**
      * The id of the new group
@@ -137,9 +137,9 @@ class Add extends BackendBaseActionAdd
      */
     private function getActions()
     {
-        $this->actions = array();
-        $filter = array('Authentication', 'Error', 'Core');
-        $modules = array();
+        $this->actions = [];
+        $filter = ['Authentication', 'Error', 'Core'];
+        $modules = [];
 
         $finder = new Finder();
         $finder->name('*.php')
@@ -177,20 +177,20 @@ class Add extends BackendBaseActionAdd
                     $description = '';
                 }
 
-                $this->actions[$module][] = array(
+                $this->actions[$module][] = [
                     'label' => \SpoonFilter::toCamelCase($actionName),
                     'value' => $actionName,
                     'description' => $description,
-                );
+                ];
             }
         }
 
         $modules = array_unique($modules);
         foreach ($modules as $module) {
-            $this->modules[] = array(
+            $this->modules[] = [
                 'label' => \SpoonFilter::toCamelCase($module),
                 'value' => $module,
-            );
+            ];
         }
     }
 
@@ -209,8 +209,8 @@ class Add extends BackendBaseActionAdd
      */
     private function getWidgets()
     {
-        $this->widgets = array();
-        $this->widgetInstances = array();
+        $this->widgets = [];
+        $this->widgetInstances = [];
 
         $finder = new Finder();
         $finder->name('*.php')->in(BACKEND_MODULES_PATH . '/*/Widgets');
@@ -223,11 +223,11 @@ class Add extends BackendBaseActionAdd
 
                 if (class_exists($class)) {
                     // add to array
-                    $this->widgetInstances[] = array(
+                    $this->widgetInstances[] = [
                         'module' => $module,
                         'widget' => $widgetName,
                         'className' => $class,
-                    );
+                    ];
 
                     // create reflection class
                     $reflection = new \ReflectionClass($class);
@@ -249,13 +249,13 @@ class Add extends BackendBaseActionAdd
                     }
 
                     // add to array
-                    $this->widgets[] = array(
+                    $this->widgets[] = [
                         'module_name' => $module,
                         'checkbox_name' => \SpoonFilter::toCamelCase($module) . \SpoonFilter::toCamelCase($widgetName),
                         'label' => \SpoonFilter::toCamelCase($widgetName),
                         'value' => $widgetName,
                         'description' => $description,
-                    );
+                    ];
                 }
             }
         }
@@ -270,12 +270,12 @@ class Add extends BackendBaseActionAdd
     private function insertPermissions(array $actionPermissions, array $bundledActionPermissions)
     {
         // init vars
-        $modulesDenied = array();
-        $modulesGranted = array();
-        $actionsDenied = array();
-        $actionsGranted = array();
-        $checkedModules = array();
-        $uncheckedModules = array();
+        $modulesDenied = [];
+        $modulesGranted = [];
+        $actionsDenied = [];
+        $actionsGranted = [];
+        $checkedModules = [];
+        $uncheckedModules = [];
 
         // loop through action permissions
         foreach ($actionPermissions as $permission) {
@@ -289,7 +289,7 @@ class Add extends BackendBaseActionAdd
             // permission checked?
             if ($permission->getChecked()) {
                 // add to granted
-                $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
+                $actionsGranted[] = ['group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL];
 
                 // if not yet present, add to checked modules
                 if (!in_array($module, $checkedModules)) {
@@ -297,7 +297,7 @@ class Add extends BackendBaseActionAdd
                 }
             } else {
                 // add to denied
-                $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
+                $actionsDenied[] = ['group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL];
 
                 // if not yet present add to unchecked modules
                 if (!in_array($module, $uncheckedModules)) {
@@ -321,7 +321,7 @@ class Add extends BackendBaseActionAdd
                 if ($permission->getChecked()) {
                     // add to granted if in the right group
                     if (in_array($group, $moduleAction)) {
-                        $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+                        $actionsGranted[] = ['group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL];
                     }
 
                     // if not yet present, add to checked modules
@@ -331,7 +331,7 @@ class Add extends BackendBaseActionAdd
                 } else {
                     // add to denied
                     if (in_array($group, $moduleAction)) {
-                        $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+                        $actionsDenied[] = ['group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL];
                     }
 
                     // if not yet present add to unchecked modules
@@ -344,12 +344,12 @@ class Add extends BackendBaseActionAdd
 
         // loop through granted modules and add to array
         foreach ($checkedModules as $module) {
-            $modulesGranted[] = array('group_id' => $this->id, 'module' => $module);
+            $modulesGranted[] = ['group_id' => $this->id, 'module' => $module];
         }
 
         // loop through denied modules and add to array
         foreach (array_diff($uncheckedModules, $checkedModules) as $module) {
-            $modulesDenied[] = array('group_id' => $this->id, 'module' => $module);
+            $modulesDenied[] = ['group_id' => $this->id, 'module' => $module];
         }
 
         // add granted permissions
@@ -371,7 +371,7 @@ class Add extends BackendBaseActionAdd
     private function insertWidgets(array $widgetPresets)
     {
         // empty dashboard sequence
-        $this->hiddenOnDashboard = array();
+        $this->hiddenOnDashboard = [];
 
         // loop through all widgets
         foreach ($this->widgetInstances as $widget) {
@@ -386,7 +386,7 @@ class Add extends BackendBaseActionAdd
 
                 if (!$preset->getChecked()) {
                     if (!isset($this->hiddenOnDashboard[$widget['module']])) {
-                        $this->hiddenOnDashboard[$widget['module']] = array();
+                        $this->hiddenOnDashboard[$widget['module']] = [];
                     }
                     $this->hiddenOnDashboard[$widget['module']][] = $widget['widget'];
                 }
@@ -432,7 +432,7 @@ class Add extends BackendBaseActionAdd
             $permissionBoxes[$key]['label'] = $module['label'];
 
             // init var
-            $addedBundles = array();
+            $addedBundles = [];
 
             // loop through actions
             foreach ($this->actions[$module['value']] as $i => $action) {
@@ -460,7 +460,7 @@ class Add extends BackendBaseActionAdd
             if (isset($widgetBoxes)) {
                 // create datagrid
                 $widgetGrid = new BackendDataGridArray($widgetBoxes);
-                $widgetGrid->setHeaderLabels(array('check' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /><span class="visuallyHidden"></span>'));
+                $widgetGrid->setHeaderLabels(['check' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /><span class="visuallyHidden"></span>']);
 
                 // get content
                 $widgets = $widgetGrid->getContent();
@@ -468,7 +468,7 @@ class Add extends BackendBaseActionAdd
 
             // create datagrid
             $actionGrid = new BackendDataGridArray($actionBoxes[$key]['actions']);
-            $actionGrid->setHeaderLabels(array('check' => ''));
+            $actionGrid->setHeaderLabels(['check' => '']);
 
             // disable paging
             $actionGrid->setPaging(false);
@@ -481,8 +481,8 @@ class Add extends BackendBaseActionAdd
 
         // create elements
         $this->frm->addText('name');
-        $this->frm->addDropdown('manage_users', array('Deny', 'Allow'));
-        $this->frm->addDropdown('manage_groups', array('Deny', 'Allow'));
+        $this->frm->addDropdown('manage_users', ['Deny', 'Allow']);
+        $this->frm->addDropdown('manage_groups', ['Deny', 'Allow']);
         $this->tpl->assign('permissions', $permissionBoxes);
         $this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
     }
@@ -493,7 +493,7 @@ class Add extends BackendBaseActionAdd
     private function validateForm()
     {
         if ($this->frm->isSubmitted()) {
-            $bundledActionPermissions = array();
+            $bundledActionPermissions = [];
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
@@ -524,7 +524,7 @@ class Add extends BackendBaseActionAdd
             }
 
             // loop through widgets and collect presets
-            $widgetPresets = array();
+            $widgetPresets = [];
             foreach ($this->widgets as $widget) {
                 $widgetPresets[] = $this->frm->getField('widgets_' . $widget['checkbox_name']);
             }

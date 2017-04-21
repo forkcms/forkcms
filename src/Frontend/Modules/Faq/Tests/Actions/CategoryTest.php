@@ -14,10 +14,10 @@ class CategoryTest extends WebTestCase
         $client = static::createClient();
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Faq\DataFixtures\LoadFaqCategories',
                 'Backend\Modules\Faq\DataFixtures\LoadFaqQuestions',
-            )
+            ]
         );
 
         $crawler = $client->request('GET', '/en/faq/category/faqcategory-for-tests');
@@ -75,7 +75,7 @@ class CategoryTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog/category/blogcategory-for-tests', array('page' => 34));
+        $client->request('GET', '/en/blog/category/blogcategory-for-tests', ['page' => 34]);
         $this->assertIs404($client);
     }
 }

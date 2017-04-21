@@ -59,7 +59,7 @@ class PreviousNextNavigation extends FrontendBaseWidget
         $navigation = FrontendNavigation::getNavigation();
         $pageInfo = FrontendNavigation::getPageInfo($pageId);
 
-        $this->navigation = array();
+        $this->navigation = [];
 
         if (isset($navigation['page'][$pageInfo['parent_id']])) {
             $pages = $navigation['page'][$pageInfo['parent_id']];

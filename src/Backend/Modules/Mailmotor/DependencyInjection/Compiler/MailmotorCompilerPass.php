@@ -8,13 +8,13 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class MailmotorCompilerPass implements CompilerPassInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
         try {
             // We have the service fork.settings and it's not empty
-            if ($container->has('fork.settings')&& !is_a($container->get('fork.settings'), 'stdClass')) {
+            if ($container->has('fork.settings') && !is_a($container->get('fork.settings'), 'stdClass')) {
                 // we must set these parameters to be usable
                 $container->setParameter(
                     'mailmotor.mail_engine',

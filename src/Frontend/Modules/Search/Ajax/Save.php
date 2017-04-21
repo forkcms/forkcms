@@ -48,11 +48,11 @@ class Save extends FrontendBaseAJAXAction
             // save this term?
             if ($previousTerm != $term) {
                 // format data
-                $this->statistics = array();
+                $this->statistics = [];
                 $this->statistics['term'] = $term;
                 $this->statistics['language'] = LANGUAGE;
                 $this->statistics['time'] = FrontendModel::getUTCDate();
-                $this->statistics['data'] = serialize(array('server' => $_SERVER));
+                $this->statistics['data'] = serialize(['server' => $_SERVER]);
                 $this->statistics['num_results'] = FrontendSearchModel::getTotal($term);
 
                 // save data

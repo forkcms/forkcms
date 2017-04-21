@@ -38,7 +38,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // create datagrid with an overview of all active and undeleted users
-        $this->dataGrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
+        $this->dataGrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, ['N']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -64,8 +64,8 @@ class Index extends BackendBaseActionIndex
 
         // show the user's nickname
         $this->dataGrid->setColumnFunction(
-            array('Backend\\Modules\\Users\\Engine\\Model', 'getSetting'),
-            array('[id]', 'nickname'),
+            ['Backend\\Modules\\Users\\Engine\\Model', 'getSetting'],
+            ['[id]', 'nickname'],
             'nickname',
             false
         );

@@ -26,14 +26,14 @@ class Navigation extends FrontendBaseObject
      *
      * @var array
      */
-    private static $excludedPageIds = array();
+    private static $excludedPageIds = [];
 
     /**
      * The selected pageIds
      *
      * @var array
      */
-    private static $selectedPageIds = array();
+    private static $selectedPageIds = [];
 
     /**
      * @param KernelInterface $kernel
@@ -124,7 +124,7 @@ class Navigation extends FrontendBaseObject
     {
         // get the navigation
         $navigation = self::getNavigation();
-        $footerLinks = array();
+        $footerLinks = [];
 
         // validate
         if (!isset($navigation['footer'][0])) {
@@ -198,14 +198,15 @@ class Navigation extends FrontendBaseObject
      * @param string $template     The template that will be used.
      * @param int    $depthCounter A counter that will hold the current depth.
      *
-     * @return string
      * @throws Exception
+     *
+     * @return string
      */
     public static function getNavigationHTML(
         string $type = 'page',
         int $parentId = 0,
         int $depth = null,
-        array $excludeIds = array(),
+        array $excludeIds = [],
         string $template = '/Core/Layout/Templates/Navigation.html.twig',
         int $depthCounter = 1
     ) : string {
@@ -241,12 +242,12 @@ class Navigation extends FrontendBaseObject
                     // extra checks otherwise exceptions will wbe triggered.
                     if (!isset($navigation[$type][$parentId])
                         || !is_array($navigation[$type][$parentId])) {
-                        $navigation[$type][$parentId] = array();
+                        $navigation[$type][$parentId] = [];
                     }
                     if (!isset($navigation[$type][$page['page_id']])
                         || !is_array($navigation[$type][$page['page_id']])
                     ) {
-                        $navigation[$type][$page['page_id']] = array();
+                        $navigation[$type][$page['page_id']] = [];
                     }
 
                     // add children
@@ -355,7 +356,7 @@ class Navigation extends FrontendBaseObject
         // return parsed content
         return Model::get('templating')->render(
             $template,
-            array('navigation' => $navigation[$type][$parentId])
+            ['navigation' => $navigation[$type][$parentId]]
         );
     }
 

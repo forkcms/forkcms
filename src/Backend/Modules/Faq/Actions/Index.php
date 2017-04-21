@@ -60,12 +60,12 @@ class Index extends BackendBaseActionIndex
         foreach ($categories as $categoryId => $categoryTitle) {
             $dataGrid = new BackendDataGridDB(
                 BackendFaqModel::QRY_DATAGRID_BROWSE,
-                array(BL::getWorkingLanguage(), $categoryId)
+                [BL::getWorkingLanguage(), $categoryId]
             );
             $dataGrid->enableSequenceByDragAndDrop();
-            $dataGrid->setColumnsHidden(array('category_id', 'sequence'));
-            $dataGrid->setColumnAttributes('question', array('class' => 'title'));
-            $dataGrid->setRowAttributes(array('id' => '[id]'));
+            $dataGrid->setColumnsHidden(['category_id', 'sequence']);
+            $dataGrid->setColumnAttributes('question', ['class' => 'title']);
+            $dataGrid->setRowAttributes(['id' => '[id]']);
 
             // check if this action is allowed
             if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -80,23 +80,23 @@ class Index extends BackendBaseActionIndex
             }
 
             // add dataGrid to list
-            $this->dataGrids[] = array(
+            $this->dataGrids[] = [
                 'id' => $categoryId,
                 'title' => $categoryTitle,
                 'content' => $dataGrid->getContent(),
-            );
+            ];
         }
 
         // set empty datagrid
         $this->emptyDatagrid = new BackendDataGridArray(
-            array(array(
+            [[
                 'dragAndDropHandle' => '',
                 'question' => BL::msg('NoQuestionInCategory'),
                 'edit' => '',
-            ))
+            ]]
         );
-        $this->emptyDatagrid->setAttributes(array('class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop emptyGrid'));
-        $this->emptyDatagrid->setHeaderLabels(array('edit' => null, 'dragAndDropHandle' => null));
+        $this->emptyDatagrid->setAttributes(['class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop emptyGrid']);
+        $this->emptyDatagrid->setHeaderLabels(['edit' => null, 'dragAndDropHandle' => null]);
     }
 
     /**

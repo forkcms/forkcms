@@ -33,7 +33,7 @@ class Meta
      *
      * @var array
      */
-    protected $callback = array();
+    protected $callback = [];
 
     /**
      * Do we need meta custom
@@ -303,7 +303,7 @@ class Meta
             $_POST['seo_index'] = $this->data['data']['seo_index'] ?? 'none';
         }
         if (!isset($_POST['seo_follow'])) {
-            $_POST['seo_follow'] = $this->data['data']['seo_follow'] ??'none';
+            $_POST['seo_follow'] = $this->data['data']['seo_follow'] ?? 'none';
         }
     }
 
@@ -349,21 +349,21 @@ class Meta
         $this->form->addText('url', isset($this->data['url']) ? urldecode($this->data['url']) : null);
 
         // advanced SEO
-        $indexValues = array(
-            array('value' => 'none', 'label' => BackendLanguage::getLabel('None')),
-            array('value' => 'index', 'label' => 'index'),
-            array('value' => 'noindex', 'label' => 'noindex'),
-        );
+        $indexValues = [
+            ['value' => 'none', 'label' => BackendLanguage::getLabel('None')],
+            ['value' => 'index', 'label' => 'index'],
+            ['value' => 'noindex', 'label' => 'noindex'],
+        ];
         $this->form->addRadiobutton(
             'seo_index',
             $indexValues,
             $this->data['data']['seo_index'] ?? 'none'
         );
-        $followValues = array(
-            array('value' => 'none', 'label' => BackendLanguage::getLabel('None')),
-            array('value' => 'follow', 'label' => 'follow'),
-            array('value' => 'nofollow', 'label' => 'nofollow'),
-        );
+        $followValues = [
+            ['value' => 'none', 'label' => BackendLanguage::getLabel('None')],
+            ['value' => 'follow', 'label' => 'follow'],
+            ['value' => 'nofollow', 'label' => 'nofollow'],
+        ];
         $this->form->addRadiobutton(
             'seo_follow',
             $followValues,
@@ -399,7 +399,7 @@ class Meta
             'SELECT *
              FROM meta AS m
              WHERE m.id = ?',
-            array($this->id)
+            [$this->id]
         );
 
         // validate meta-record
@@ -438,7 +438,7 @@ class Meta
         $db = BackendModel::getContainer()->get('database');
 
         if ($this->id !== null && $update === true) {
-            $db->update('meta', $this->data, 'id = ?', array($this->id));
+            $db->update('meta', $this->data, 'id = ?', [$this->id]);
 
             return $this->id;
         }
@@ -457,10 +457,10 @@ class Meta
      * @param string $methodName Name of the method to use.
      * @param array $parameters Parameters to parse, they will be passed after ours.
      */
-    public function setURLCallback(string $className, string $methodName, array $parameters = array())
+    public function setURLCallback(string $className, string $methodName, array $parameters = [])
     {
         // store in property
-        $this->callback = array('class' => $className, 'method' => $methodName, 'parameters' => $parameters);
+        $this->callback = ['class' => $className, 'method' => $methodName, 'parameters' => $parameters];
 
         // re-load the form
         $this->loadForm();

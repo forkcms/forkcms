@@ -122,7 +122,7 @@ class TwigTemplate extends BaseTwigTemplate
             $this->variables
         );
 
-        $this->variables = array();
+        $this->variables = [];
 
         return $content;
     }
@@ -133,7 +133,7 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @return string
      */
-    public function render($template, array $variables = array())
+    public function render($template, array $variables = [])
     {
         if (!empty($this->forms)) {
             foreach ($this->forms as $form) {

@@ -27,8 +27,9 @@ class Theme
      *
      * @param string $filePath Path to the file.
      *
-     * @return string Path to the (theme) file.
      * @throws Exception
+     *
+     * @return string Path to the (theme) file.
      */
     public static function getPath(string $filePath): string
     {

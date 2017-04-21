@@ -28,5 +28,5 @@ final class Config extends FrontendBaseConfig
      *
      * @var array
      */
-    protected $disabledActions = array();
+    protected $disabledActions = [];
 }

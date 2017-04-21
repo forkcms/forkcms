@@ -54,20 +54,20 @@ class Categories extends BackendBaseActionIndex
             BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES,
             BL::getWorkingLanguage()
         );
-        $this->dataGrid->setHeaderLabels(array('num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))));
+        $this->dataGrid->setHeaderLabels(['num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))]);
         if ($this->multipleCategoriesAllowed) {
             $this->dataGrid->enableSequenceByDragAndDrop();
         } else {
-            $this->dataGrid->setColumnsHidden(array('sequence'));
+            $this->dataGrid->setColumnsHidden(['sequence']);
         }
-        $this->dataGrid->setRowAttributes(array('id' => '[id]'));
+        $this->dataGrid->setRowAttributes(['id' => '[id]']);
         $this->dataGrid->setPaging(false);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Index')) {
             $this->dataGrid->setColumnFunction(
-                array(__CLASS__, 'setClickableCount'),
-                array('[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'),
+                [__CLASS__, 'setClickableCount'],
+                ['[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'],
                 'num_items',
                 true
             );

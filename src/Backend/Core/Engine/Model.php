@@ -31,11 +31,11 @@ class Model extends \Common\Core\Model
      */
     public static function checkSettings(): array
     {
-        $warnings = array();
+        $warnings = [];
 
         // check if debug-mode is active
         if (BackendModel::getContainer()->getParameter('kernel.debug')) {
-            $warnings[] = array('message' => BackendLanguage::err('DebugModeIsActive'));
+            $warnings[] = ['message' => BackendLanguage::err('DebugModeIsActive')];
         }
 
         // check for extensions warnings
@@ -136,7 +136,7 @@ class Model extends \Common\Core\Model
     {
         // init
         $query = 'SELECT i.id, i.data FROM modules_extras AS i WHERE 1';
-        $parameters = array();
+        $parameters = [];
 
         // module
         if ($module !== null) {
@@ -295,7 +295,7 @@ class Model extends \Common\Core\Model
      */
     public static function getDateFormatsLong(): array
     {
-        $possibleFormats = array();
+        $possibleFormats = [];
 
         // loop available formats
         foreach ((array) self::get('fork.settings')->get('Core', 'date_formats_long') as $format) {
@@ -317,7 +317,7 @@ class Model extends \Common\Core\Model
      */
     public static function getDateFormatsShort(): array
     {
-        $possibleFormats = array();
+        $possibleFormats = [];
 
         // loop available formats
         foreach ((array) self::get('fork.settings')->get('Core', 'date_formats_short') as $format) {
@@ -373,7 +373,7 @@ class Model extends \Common\Core\Model
         $query = 'SELECT i.id, i.data
                  FROM modules_extras AS i
                  WHERE i.module = ? AND i.data != ?';
-        $parameters = array($module, 'NULL');
+        $parameters = [$module, 'NULL'];
 
         // Filter on the action if it is given.
         if ($action !== null) {
@@ -425,7 +425,7 @@ class Model extends \Common\Core\Model
      */
     public static function getModulesOnFilesystem(bool $includeCore = true): array
     {
-        $modules = $includeCore ? array('Core') : array();
+        $modules = $includeCore ? ['Core'] : [];
         $finder = new Finder();
         $directories = $finder->directories()->in(__DIR__ . '/../../Modules')->depth('==0');
         foreach ($directories as $directory) {
@@ -442,7 +442,7 @@ class Model extends \Common\Core\Model
      */
     public static function getModulesForDropDown(): array
     {
-        $dropDown = array('Core' => 'Core');
+        $dropDown = ['Core' => 'Core'];
 
         // fetch modules
         $modules = self::getModules();
@@ -490,7 +490,7 @@ class Model extends \Common\Core\Model
      */
     public static function getTimeFormats(): array
     {
-        $possibleFormats = array();
+        $possibleFormats = [];
         $interfaceLanguage = Authentication::getUser()->getSetting('interface_language');
 
         foreach (self::get('fork.settings')->get('Core', 'time_formats') as $format) {
@@ -769,8 +769,9 @@ class Model extends \Common\Core\Model
      * @param string $referrer The content of the HTTP_REFERER header should be sent here.
      * @param array $others Other data (the variables from $_SERVER).
      *
-     * @return bool If everything went fine, true will be returned, otherwise an exception will be triggered.
      * @throws Exception
+     *
+     * @return bool If everything went fine, true will be returned, otherwise an exception will be triggered.
      */
     public static function submitHam(
         string $userIp,
@@ -828,8 +829,9 @@ class Model extends \Common\Core\Model
      * @param string $referrer The content of the HTTP_REFERER header should be sent here.
      * @param array $others Other data (the variables from $_SERVER).
      *
-     * @return bool If everything went fine true will be returned, otherwise an exception will be triggered.
      * @throws Exception
+     *
+     * @return bool If everything went fine true will be returned, otherwise an exception will be triggered.
      */
     public static function submitSpam(
         string $userIp,
@@ -885,7 +887,7 @@ class Model extends \Common\Core\Model
     public static function updateExtra(int $id, string $key, $value)
     {
         // define allowed keys
-        $allowedKeys = array('label', 'action', 'data', 'hidden', 'sequence');
+        $allowedKeys = ['label', 'action', 'data', 'hidden', 'sequence'];
 
         // key is not allowed
         if (!in_array($key, $allowedKeys)) {
@@ -898,7 +900,7 @@ class Model extends \Common\Core\Model
             $value = serialize($value);
         }
 
-        self::getContainer()->get('database')->update('modules_extras', [$key => $value], 'id = ?', array($id));
+        self::getContainer()->get('database')->update('modules_extras', [$key => $value], 'id = ?', [$id]);
     }
 
     /**
@@ -916,11 +918,11 @@ class Model extends \Common\Core\Model
             'SELECT i.data
              FROM modules_extras AS i
              WHERE i.id = ?',
-            array($id)
+            [$id]
         );
 
         $data = unserialize($data);
         $data[$key] = $value;
-        $db->update('modules_extras', array('data' => serialize($data)), 'id = ?', array($id));
+        $db->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
     }
 }

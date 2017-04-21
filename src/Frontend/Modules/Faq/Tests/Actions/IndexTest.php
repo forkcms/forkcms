@@ -15,10 +15,10 @@ class IndexTest extends WebTestCase
 
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Faq\DataFixtures\LoadFaqCategories',
                 'Backend\Modules\Faq\DataFixtures\LoadFaqQuestions',
-            )
+            ]
         );
 
         $client->request('GET', '/en/faq');

@@ -20,7 +20,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class AddProfileGroup extends BackendBaseActionAdd
 {
-
     /**
      * The id of the profile
      *

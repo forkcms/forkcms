@@ -25,7 +25,7 @@ class ExportData extends BackendBaseAction
      *
      * @var array
      */
-    private $columnHeaders = array();
+    private $columnHeaders = [];
 
     /**
      * The filter.
@@ -46,7 +46,7 @@ class ExportData extends BackendBaseAction
      *
      * @var array
      */
-    private $rows = array();
+    private $rows = [];
 
     /**
      * Builds the query for this datagrid.
@@ -56,7 +56,7 @@ class ExportData extends BackendBaseAction
     private function buildQuery(): array
     {
         // init var
-        $parameters = array($this->id);
+        $parameters = [$this->id];
 
         /*
          * Start query, as you can see this query is build in the wrong place, because of the filter
@@ -88,7 +88,7 @@ class ExportData extends BackendBaseAction
             $parameters[] = BackendModel::getUTCDate(null, gmmktime(23, 59, 59, $chunks[1], $chunks[0], $chunks[2]));
         }
 
-        return array($query, $parameters);
+        return [$query, $parameters];
     }
 
     /**
@@ -164,14 +164,14 @@ class ExportData extends BackendBaseAction
         // init header labels
         $lblSessionId = \SpoonFilter::ucfirst(BL::lbl('SessionId'));
         $lblSentOn = \SpoonFilter::ucfirst(BL::lbl('SentOn'));
-        $this->columnHeaders = array($lblSessionId, $lblSentOn);
+        $this->columnHeaders = [$lblSessionId, $lblSentOn];
 
         // fetch query and parameters
         list($query, $parameters) = $this->buildQuery();
 
         // get the data
         $records = (array) $this->get('database')->getRecords($query, $parameters);
-        $data = array();
+        $data = [];
 
         // reformat data
         foreach ($records as $row) {

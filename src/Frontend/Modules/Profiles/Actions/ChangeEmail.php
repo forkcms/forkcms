@@ -12,7 +12,6 @@ namespace Frontend\Modules\Profiles\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -77,9 +76,9 @@ class ChangeEmail extends FrontendBaseBlock
     private function loadForm()
     {
         $this->frm = new FrontendForm('updateEmail', null, null, 'updateEmailForm');
-        $this->frm->addPassword('password')->setAttributes(array('required' => null));
+        $this->frm->addPassword('password')->setAttributes(['required' => null]);
         $this->frm->addText('email', $this->profile->getEmail())->setAttributes(
-            array('required' => null, 'type' => 'email')
+            ['required' => null, 'type' => 'email']
         );
     }
 
@@ -133,7 +132,7 @@ class ChangeEmail extends FrontendBaseBlock
             // no errors
             if ($this->frm->isCorrect()) {
                 // update email
-                FrontendProfilesModel::update($this->profile->getId(), array('email' => $txtEmail->getValue()));
+                FrontendProfilesModel::update($this->profile->getId(), ['email' => $txtEmail->getValue()]);
 
                 // redirect
                 $this->redirect(

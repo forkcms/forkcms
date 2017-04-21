@@ -104,28 +104,28 @@ class Model
      */
     public static function checkSettings(): array
     {
-        $warnings = array();
+        $warnings = [];
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Settings', 'Blog')) {
             // rss title
             if (BackendModel::get('fork.settings')->get('Blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '') {
-                $warnings[] = array(
+                $warnings[] = [
                     'message' => sprintf(
                         BL::err('RSSTitle', 'Blog'),
                         BackendModel::createURLForAction('Settings', 'Blog')
                     ),
-                );
+                ];
             }
 
             // rss description
             if (BackendModel::get('fork.settings')->get('Blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '') {
-                $warnings[] = array(
+                $warnings[] = [
                     'message' => sprintf(
                         BL::err('RSSDescription', 'Blog'),
                         BackendModel::createURLForAction('Settings', 'Blog')
                     ),
-                );
+                ];
             }
         }
 
@@ -163,7 +163,7 @@ class Model
             'SELECT meta_id
              FROM blog_posts AS p
              WHERE id IN (' . $idPlaceHolders . ') AND language = ?',
-            array_merge($ids, array(BL::getWorkingLanguage()))
+            array_merge($ids, [BL::getWorkingLanguage()])
         );
 
         // delete meta
@@ -182,12 +182,12 @@ class Model
         $db->delete(
             'blog_posts',
             'id IN (' . $idPlaceHolders . ') AND language = ?',
-            array_merge($ids, array(BL::getWorkingLanguage()))
+            array_merge($ids, [BL::getWorkingLanguage()])
         );
         $db->delete(
             'blog_comments',
             'post_id IN (' . $idPlaceHolders . ') AND language = ?',
-            array_merge($ids, array(BL::getWorkingLanguage()))
+            array_merge($ids, [BL::getWorkingLanguage()])
         );
 
         // delete tags
@@ -211,13 +211,13 @@ class Model
 
         if (!empty($item)) {
             // delete meta
-            $db->delete('meta', 'id = ?', array($item['meta_id']));
+            $db->delete('meta', 'id = ?', [$item['meta_id']]);
 
             // delete category
-            $db->delete('blog_categories', 'id = ?', array($id));
+            $db->delete('blog_categories', 'id = ?', [$id]);
 
             // update category for the posts that might be in this category
-            $db->update('blog_posts', array('category_id' => null), 'category_id = ?', array($id));
+            $db->update('blog_posts', ['category_id' => null], 'category_id = ?', [$id]);
         }
     }
 
@@ -235,7 +235,7 @@ class Model
              FROM blog_posts AS i
              WHERE i.category_id = ? AND i.language = ? AND i.status = ?
              LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage(), 'active')
+            [(int) $id, BL::getWorkingLanguage(), 'active']
         );
     }
 
@@ -289,11 +289,11 @@ class Model
             'SELECT i.post_id
              FROM blog_comments AS i
              WHERE status = ? AND i.language = ?',
-            array('spam', BL::getWorkingLanguage())
+            ['spam', BL::getWorkingLanguage()]
         );
 
         // update record
-        $db->delete('blog_comments', 'status = ? AND language = ?', array('spam', BL::getWorkingLanguage()));
+        $db->delete('blog_comments', 'status = ? AND language = ?', ['spam', BL::getWorkingLanguage()]);
 
         // recalculate the comment count
         if (!empty($itemIds)) {
@@ -314,7 +314,7 @@ class Model
             'SELECT i.id
              FROM blog_posts AS i
              WHERE i.id = ? AND i.language = ?',
-            array((int) $id, BL::getWorkingLanguage())
+            [(int) $id, BL::getWorkingLanguage()]
         );
     }
 
@@ -332,7 +332,7 @@ class Model
              FROM blog_categories AS i
              WHERE i.id = ? AND i.language = ?
              LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
+            [(int) $id, BL::getWorkingLanguage()]
         );
     }
 
@@ -350,7 +350,7 @@ class Model
              FROM blog_comments AS i
              WHERE i.id = ? AND i.language = ?
              LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
+            [(int) $id, BL::getWorkingLanguage()]
         );
     }
 
@@ -369,7 +369,7 @@ class Model
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?
              ORDER BY i.revision_id DESC',
-            array((int) $id, 'active', 'draft', BL::getWorkingLanguage())
+            [(int) $id, 'active', 'draft', BL::getWorkingLanguage()]
         );
     }
 
@@ -401,7 +401,7 @@ class Model
                  WHERE i.language = ?
                  GROUP BY i.id
                  LIMIT ?, ?',
-                array(BL::getWorkingLanguage(), $offset, $limit)
+                [BL::getWorkingLanguage(), $offset, $limit]
             );
         }
 
@@ -414,7 +414,7 @@ class Model
              WHERE i.status = ? AND i.language = ?
              GROUP BY i.id
              LIMIT ?, ?',
-            array($status, BL::getWorkingLanguage(), $offset, $limit)
+            [$status, BL::getWorkingLanguage(), $offset, $limit]
         );
     }
 
@@ -433,12 +433,12 @@ class Model
              INNER JOIN tags AS t ON mt.tag_id = t.id
              INNER JOIN blog_posts AS i ON mt.other_id = i.id
              WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ? AND i.language = ?',
-            array('Blog', (int) $tagId, 'active', BL::getWorkingLanguage())
+            ['Blog', (int) $tagId, 'active', BL::getWorkingLanguage()]
         );
 
         // overwrite the url
         foreach ($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction('Edit', 'Blog', null, array('id' => $row['url']));
+            $row['url'] = BackendModel::createURLForAction('Edit', 'Blog', null, ['id' => $row['url']]);
         }
 
         return $items;
@@ -462,7 +462,7 @@ class Model
                  LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND i.language = p.language AND p.status = ?
                  WHERE i.language = ?
                  GROUP BY i.id',
-                array('active', BL::getWorkingLanguage())
+                ['active', BL::getWorkingLanguage()]
             );
         }
 
@@ -470,7 +470,7 @@ class Model
             'SELECT i.id, i.title
              FROM blog_categories AS i
              WHERE i.language = ?',
-            array(BL::getWorkingLanguage())
+            [BL::getWorkingLanguage()]
         );
     }
 
@@ -487,7 +487,7 @@ class Model
             'SELECT i.*
              FROM blog_categories AS i
              WHERE i.id = ? AND i.language = ?',
-            array((int) $id, BL::getWorkingLanguage())
+            [(int) $id, BL::getWorkingLanguage()]
         );
     }
 
@@ -508,7 +508,7 @@ class Model
             'SELECT i.id
              FROM blog_categories AS i
              WHERE i.title = ? AND i.language = ?',
-            array($title, $language)
+            [$title, $language]
         );
     }
 
@@ -529,7 +529,7 @@ class Model
              INNER JOIN meta AS m ON p.meta_id = m.id
              WHERE i.id = ? AND p.status = ?
              LIMIT 1',
-            array((int) $id, 'active')
+            [(int) $id, 'active']
         );
     }
 
@@ -562,7 +562,7 @@ class Model
              FROM blog_comments AS i
              WHERE i.language = ?
              GROUP BY i.status',
-            array(BL::getWorkingLanguage())
+            [BL::getWorkingLanguage()]
         );
     }
 
@@ -586,7 +586,7 @@ class Model
              WHERE i.status = ? AND p.status = ? AND i.language = ?
              ORDER BY i.created_on DESC
              LIMIT ?',
-            array((string) $status, 'active', BL::getWorkingLanguage(), (int) $limit)
+            [(string) $status, 'active', BL::getWorkingLanguage(), (int) $limit]
         );
 
         // overwrite url
@@ -624,7 +624,7 @@ class Model
              FROM blog_posts AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.id = ? AND i.revision_id = ?',
-            array((int) $id, (int) $revisionId)
+            [(int) $id, (int) $revisionId]
         );
     }
 
@@ -652,7 +652,7 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $url)
+                [BL::getWorkingLanguage(), $url]
             )
             ) {
                 $url = BackendModel::addNumber($url);
@@ -667,7 +667,7 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $url, $id)
+                [BL::getWorkingLanguage(), $url, $id]
             )
             ) {
                 $url = BackendModel::addNumber($url);
@@ -704,7 +704,7 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $url)
+                [BL::getWorkingLanguage(), $url]
             )
             ) {
                 $url = BackendModel::addNumber($url);
@@ -719,7 +719,7 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $url, $id)
+                [BL::getWorkingLanguage(), $url, $id]
             )
             ) {
                 $url = BackendModel::addNumber($url);
@@ -765,10 +765,11 @@ class Model
      * @param array $tags     The tags to connect to this post.
      * @param array $comments The comments attached to this post.
      *
-     * @return int
      * @throws Exception
+     *
+     * @return int
      */
-    public static function insertCompletePost(array $item, array $meta = array(), $tags = array(), $comments = array()): int
+    public static function insertCompletePost(array $item, array $meta = [], $tags = [], $comments = []): int
     {
         // Build item
         if (!isset($item['id'])) {
@@ -816,7 +817,7 @@ class Model
 
         // Build meta
         if (!is_array($meta)) {
-            $meta = array();
+            $meta = [];
         }
         if (!isset($meta['keywords'])) {
             $meta['keywords'] = $item['title'];
@@ -843,7 +844,7 @@ class Model
             $meta['url_overwrite'] = 'N';
         }
         if (!isset($meta['data'])) {
-            $meta['data'] = serialize(array('seo_index' => 'index', 'seo_follow' => 'follow'));
+            $meta['data'] = serialize(['seo_index' => 'index', 'seo_follow' => 'follow']);
         }
 
         // Write meta to db
@@ -875,14 +876,14 @@ class Model
                 $comment['status'] = 'published';
             }
             if (!isset($comment['data'])) {
-                $comment['data'] = serialize(array('server' => $_SERVER));
+                $comment['data'] = serialize(['server' => $_SERVER]);
             }
             if (!isset($comment['website'])) {
                 $comment['website'] = '';
             }
 
             $comment['post_id'] = $item['id'];
-            $comment['data'] = serialize(array('server' => $_SERVER));
+            $comment['data'] = serialize(['server' => $_SERVER]);
 
             // Insert the comment
             self::insertComment($comment);
@@ -941,11 +942,11 @@ class Model
                  INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
                  WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
                  GROUP BY i.post_id',
-                array('published', $comment['post_id'], BL::getWorkingLanguage(), 'active')
+                ['published', $comment['post_id'], BL::getWorkingLanguage(), 'active']
             );
 
             // update num comments
-            $db->update('blog_posts', array('num_comments' => $numComments), 'id = ?', $comment['post_id']);
+            $db->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
         }
 
         return $comment['id'];
@@ -978,7 +979,7 @@ class Model
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
              WHERE i.status = ? AND i.post_id IN (' . implode(',', $ids) . ') AND i.language = ? AND p.status = ?
              GROUP BY i.post_id',
-            array('published', BL::getWorkingLanguage(), 'active')
+            ['published', BL::getWorkingLanguage(), 'active']
         );
 
         foreach ($ids as $id) {
@@ -988,9 +989,9 @@ class Model
             // update
             $db->update(
                 'blog_posts',
-                array('num_comments' => $count),
+                ['num_comments' => $count],
                 'id = ? AND language = ?',
-                array($id, BL::getWorkingLanguage())
+                [$id, BL::getWorkingLanguage()]
             );
         }
 
@@ -1012,9 +1013,9 @@ class Model
             // archive all older active versions
             $db->update(
                 'blog_posts',
-                array('status' => 'archived'),
+                ['status' => 'archived'],
                 'id = ? AND status = ?',
-                array($item['id'], $item['status'])
+                [$item['id'], $item['status']]
             );
 
             // get the record of the exact item we're editing
@@ -1029,7 +1030,7 @@ class Model
                 $db->delete(
                     'blog_posts',
                     'id = ? AND status = ?',
-                    array($item['id'], $revision['status'])
+                    [$item['id'], $revision['status']]
                 );
             }
         }
@@ -1050,7 +1051,7 @@ class Model
              WHERE i.id = ? AND i.status = ? AND i.language = ?
              ORDER BY i.edited_on DESC
              LIMIT ?',
-            array($item['id'], $archiveType, BL::getWorkingLanguage(), $rowsToKeep)
+            [$item['id'], $archiveType, BL::getWorkingLanguage(), $rowsToKeep]
         );
 
         // delete other revisions
@@ -1060,21 +1061,21 @@ class Model
                 'SELECT i.meta_id
                  FROM blog_posts AS i
                  WHERE i.id = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
-                array($item['id'])
+                [$item['id']]
             );
 
             // get all the images of the revisions that will NOT be deleted
             $imagesToKeep = $db->getColumn(
                 'SELECT image FROM blog_posts
                  WHERE id = ? AND revision_id IN (' . implode(', ', $revisionIdsToKeep) . ')',
-                array($item['id'])
+                [$item['id']]
             );
 
             // get the images of the revisions that will be deleted
             $imagesOfDeletedRevisions = $db->getColumn(
                 'SELECT image FROM blog_posts
                 WHERE id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
-                array($item['id'], $archiveType)
+                [$item['id'], $archiveType]
             );
 
             // make sure that an image that will be deleted, is not used by a revision that is not to be deleted
@@ -1087,7 +1088,7 @@ class Model
             $db->delete(
                 'blog_posts',
                 'id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
-                array($item['id'], $archiveType)
+                [$item['id'], $archiveType]
             );
 
             if (!empty($metasIdsToRemove)) {
@@ -1119,7 +1120,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // update category
-        $updated = $db->update('blog_categories', $item, 'id = ?', array((int) $item['id']));
+        $updated = $db->update('blog_categories', $item, 'id = ?', [(int) $item['id']]);
 
         // meta passed?
         if ($meta !== null) {
@@ -1127,7 +1128,7 @@ class Model
             $category = self::getCategory($item['id']);
 
             // update the meta
-            $db->update('meta', $meta, 'id = ?', array((int) $category['meta_id']));
+            $db->update('meta', $meta, 'id = ?', [(int) $category['meta_id']]);
         }
 
         return $updated;
@@ -1147,7 +1148,7 @@ class Model
             'blog_comments',
             $item,
             'id = ?',
-            array((int) $item['id'])
+            [(int) $item['id']]
         );
     }
 
@@ -1189,7 +1190,7 @@ class Model
                 'UPDATE blog_comments
                  SET status = ?
                  WHERE id IN (' . implode(', ', $idPlaceHolders) . ')',
-                array_merge(array((string) $status), $ids)
+                array_merge([(string) $status], $ids)
             );
 
             // recalculate the comment count
@@ -1210,7 +1211,7 @@ class Model
             'blog_posts',
             $item,
             'revision_id = ?',
-            array($revision_id)
+            [$revision_id]
         );
     }
 }

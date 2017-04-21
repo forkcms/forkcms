@@ -10,7 +10,6 @@ namespace Frontend\Modules\Mailmotor\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Locale;
 use Frontend\Modules\Mailmotor\Command\Unsubscription;
@@ -24,8 +23,6 @@ class Unsubscribe extends FrontendBaseBlock
 {
     /**
      * Execute the extra
-     *
-     * @return void
      */
     public function execute()
     {
@@ -102,8 +99,6 @@ class Unsubscribe extends FrontendBaseBlock
 
     /**
      * Parse the data into the template
-     *
-     * @return void
      */
     private function parse()
     {

@@ -123,9 +123,9 @@ class SettingsType extends AbstractType
             'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
                 if ($data->mailEngine != 'not_implemented') {
-                    return array('Default', 'mail_engine_selected');
+                    return ['Default', 'mail_engine_selected'];
                 } else {
-                    return array('Default');
+                    return ['Default'];
                 }
             },
         ]);
@@ -139,7 +139,6 @@ class SettingsType extends AbstractType
         return 'settings';
     }
 
-
     /**
      * Get mail engines.
      *
@@ -148,7 +147,7 @@ class SettingsType extends AbstractType
     private function getPossibleMailEngines()
     {
         // init dropdown values
-        $ddmValuesForMailEngines = array();
+        $ddmValuesForMailEngines = [];
 
         // Add empty one
         $ddmValuesForMailEngines['not_implemented'] = ucfirst(Language::lbl('None'));
@@ -157,7 +156,7 @@ class SettingsType extends AbstractType
         foreach ($this->serviceIds as $serviceId) {
             // the pattern to find mail engines
             $pattern = '/^mailmotor.(?P<mailengine>\w+).subscriber.gateway/';
-            $matches = array();
+            $matches = [];
 
             // we found a mail-engine gateway service
             if (preg_match($pattern, $serviceId, $matches)) {

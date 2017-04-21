@@ -20,8 +20,6 @@ class Subscribe extends FrontendBaseWidget
 {
     /**
      * Execute the extra
-     *
-     * @return void
      */
     public function execute()
     {
@@ -47,6 +45,7 @@ class Subscribe extends FrontendBaseWidget
             if ($form->isSubmitted()) {
                 $this->tpl->assign('mailmotorSubscribeHasFormError', true);
             }
+
             return;
         }
     }

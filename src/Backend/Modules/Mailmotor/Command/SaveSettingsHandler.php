@@ -47,6 +47,7 @@ final class SaveSettingsHandler
         if ($settings->mailEngine === 'not_implemented') {
             $this->modulesSettings->delete($module, 'api_key');
             $this->modulesSettings->delete($module, 'list_id');
+
             return;
         }
 

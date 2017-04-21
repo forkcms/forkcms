@@ -31,12 +31,12 @@ class ForkController extends Controller
      *
      * @var    array
      */
-    private static $routes = array(
+    private static $routes = [
         '' => self::DEFAULT_APPLICATION,
         'private' => 'Backend',
         'Backend' => 'Backend',
         'backend' => 'Backend',
-    );
+    ];
 
     /**
      * Get the possible routes

@@ -9,6 +9,7 @@ final class InvalidModuleExtraType extends Exception
 {
     /**
      * @param string $type
+     *
      * @return self
      */
     public static function withType(string $type): self

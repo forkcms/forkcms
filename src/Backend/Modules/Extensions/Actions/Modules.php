@@ -34,8 +34,8 @@ class Modules extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $installedModules = array();
-    private $installableModules = array();
+    private $installedModules = [];
+    private $installableModules = [];
 
     /**
      * Execute the action.
@@ -78,8 +78,8 @@ class Modules extends BackendBaseActionIndex
         // create datagrid
         $this->dataGridInstallableModules = new BackendDataGridArray($this->installableModules);
 
-        $this->dataGridInstallableModules->setSortingColumns(array('raw_name'));
-        $this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => \SpoonFilter::ucfirst(BL::getLabel('Name'))));
+        $this->dataGridInstallableModules->setSortingColumns(['raw_name']);
+        $this->dataGridInstallableModules->setHeaderLabels(['raw_name' => \SpoonFilter::ucfirst(BL::getLabel('Name'))]);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('DetailModule')) {
@@ -103,8 +103,8 @@ class Modules extends BackendBaseActionIndex
         // create datagrid
         $this->dataGridInstalledModules = new BackendDataGridArray($this->installedModules);
 
-        $this->dataGridInstalledModules->setSortingColumns(array('name'));
-        $this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name'));
+        $this->dataGridInstalledModules->setSortingColumns(['name']);
+        $this->dataGridInstalledModules->setColumnsHidden(['installed', 'raw_name']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('DetailModule')) {
@@ -114,7 +114,7 @@ class Modules extends BackendBaseActionIndex
 
         // add the greyed out option to modules that have warnings
         $this->dataGridInstalledModules->addColumn('hidden');
-        $this->dataGridInstalledModules->setColumnFunction(array(new BackendExtensionsModel(), 'hasModuleWarnings'), array('[raw_name]'), array('hidden'));
+        $this->dataGridInstalledModules->setColumnFunction([new BackendExtensionsModel(), 'hasModuleWarnings'], ['[raw_name]'], ['hidden']);
     }
 
     /**

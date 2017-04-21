@@ -77,8 +77,8 @@ final class SubscribeFromFormBuilderSubmittedForm
                     $this->subscriber->subscribe(
                         $email,
                         $language,
-                        array(),
-                        array(),
+                        [],
+                        [],
                         false // will ignore double-optin and so subscribes the user immediately
                     );
                 }

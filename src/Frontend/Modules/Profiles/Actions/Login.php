@@ -12,7 +12,6 @@ namespace Frontend\Modules\Profiles\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -58,8 +57,8 @@ class Login extends FrontendBaseBlock
     private function loadForm()
     {
         $this->frm = new FrontendForm('login', null, null, 'loginForm');
-        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
-        $this->frm->addPassword('password')->setAttributes(array('required' => null));
+        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->frm->addPassword('password')->setAttributes(['required' => null]);
         $this->frm->addCheckbox('remember', true);
     }
 

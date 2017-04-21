@@ -51,7 +51,6 @@ class ContentBlockType extends AbstractType
             );
         }
 
-
         $isVisibleOptions = [
             'label' => 'lbl.VisibleOnSite',
             'required' => false,

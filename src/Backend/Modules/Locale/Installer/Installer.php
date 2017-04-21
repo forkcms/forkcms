@@ -52,11 +52,11 @@ class Installer extends ModuleInstaller
 
         // set navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings', null, null, 999);
-        $this->setNavigation($navigationSettingsId, 'Translations', 'locale/index', array(
+        $this->setNavigation($navigationSettingsId, 'Translations', 'locale/index', [
             'locale/add',
             'locale/edit',
             'locale/import',
             'locale/analyse',
-        ), 4);
+        ], 4);
     }
 }

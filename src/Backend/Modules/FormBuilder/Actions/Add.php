@@ -27,7 +27,7 @@ class Add extends BackendBaseActionAdd
      *
      * @var array
      */
-    private $templates = array();
+    private $templates = [];
 
     /**
      * Execute the action
@@ -51,11 +51,11 @@ class Add extends BackendBaseActionAdd
         $this->frm->addText('name');
         $this->frm->addDropdown(
             'method',
-            array(
+            [
                 'database' => BL::getLabel('MethodDatabase'),
                 'database_email' => BL::getLabel('MethodDatabaseEmail'),
                 'email' => BL::getLabel('MethodEmail'),
-            ),
+            ],
             'database_email'
         );
         $this->frm->addText('email');
@@ -148,7 +148,7 @@ class Add extends BackendBaseActionAdd
                 // create submit button
                 $field['form_id'] = $id;
                 $field['type'] = 'submit';
-                $field['settings'] = serialize(array('values' => \SpoonFilter::ucfirst(FL::getLabel('Send'))));
+                $field['settings'] = serialize(['values' => \SpoonFilter::ucfirst(FL::getLabel('Send'))]);
                 BackendFormBuilderModel::insertField($field);
 
                 // everything is saved, so redirect to the editform

@@ -25,7 +25,7 @@ class Model
      *
      * @return string
      */
-    public static function buildUrl(array $settings, array $markers = array()): string
+    public static function buildUrl(array $settings, array $markers = []): string
     {
         $url = 'http://maps.google.be/?';
 
@@ -51,7 +51,7 @@ class Model
                 break;
         }
 
-        $pointers = array();
+        $pointers = [];
         // add the markers to the url
         foreach ($markers as $marker) {
             $pointers[] = rawurlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
@@ -77,7 +77,7 @@ class Model
             'SELECT *
              FROM location
              WHERE id = ? AND language = ?',
-            array($id, LANGUAGE)
+            [$id, LANGUAGE]
         );
     }
 
@@ -90,7 +90,7 @@ class Model
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT * FROM location WHERE language = ? AND show_overview = ?',
-            array(LANGUAGE, 'Y')
+            [LANGUAGE, 'Y']
         );
     }
 
@@ -108,7 +108,7 @@ class Model
             'SELECT s.value
              FROM location_settings AS s
              WHERE s.map_id = ? AND s.name = ?',
-            array($mapId, $name)
+            [$mapId, $name]
         );
 
         if ($serializedData != null) {
@@ -131,7 +131,7 @@ class Model
             'SELECT s.name, s.value
              FROM location_settings AS s
              WHERE s.map_id = ?',
-            array($mapId)
+            [$mapId]
         );
 
         foreach ($mapSettings as $key => $value) {
@@ -144,7 +144,8 @@ class Model
     /**
      * Get path to map styles
      *
-     * @param boolean $backend
+     * @param bool $backend
+     *
      * @return string
      */
     public static function getPathToMapStyles(bool $backend = true): string

@@ -29,7 +29,7 @@ class Index extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $widgets = array();
+    private $widgets = [];
 
     /**
      * Execute the action
@@ -129,12 +129,12 @@ class Index extends BackendBaseActionIndex
                     }
 
                     // build item
-                    $item = array(
+                    $item = [
                         'content' => $content,
                         'module' => $module,
                         'widget' => $widgetName,
                         'title' => $title,
-                    );
+                    ];
 
                     // add on new position if no position is set or if the position is already used
                     $this->widgets[] = $item;
