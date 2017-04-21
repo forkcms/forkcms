@@ -26,7 +26,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getForTags(array $ids)
+    public static function getForTags(array $ids): array
     {
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -59,7 +59,7 @@ class Model implements FrontendTagsInterface
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $url)
+    public static function getIdForTags(FrontendURL $url): int
     {
         return FrontendNavigation::getPageId($url->getQueryString());
     }
@@ -71,7 +71,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getSubpages($id)
+    public static function getSubpages(int $id): array
     {
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -81,7 +81,7 @@ class Model implements FrontendTagsInterface
              WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
              AND i.language = ? AND i.publish_on <= ?
              ORDER BY i.sequence ASC',
-            array((int) $id, 'active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            array($id, 'active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
         );
 
         // has items
@@ -112,7 +112,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function search(array $ids)
+    public static function search(array $ids): array
     {
         // get db
         $db = FrontendModel::getContainer()->get('database');
