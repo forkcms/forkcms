@@ -250,7 +250,7 @@ class DataGrid extends \SpoonDataGrid
                 $this->setRowFunction(
                     [DataGridFunctions::class, 'greyOut'],
                     [$column, '[' . $column . ']'],
-                    [$column]
+                    true
                 );
             }
         }
