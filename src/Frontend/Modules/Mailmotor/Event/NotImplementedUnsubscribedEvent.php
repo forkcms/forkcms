@@ -27,7 +27,7 @@ final class NotImplementedUnsubscribedEvent extends Event
     /**
      * @return Unsubscription
      */
-    public function getUnsubscription()
+    public function getUnsubscription(): Unsubscription
     {
         return $this->unsubscription;
     }

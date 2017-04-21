@@ -42,7 +42,7 @@ final class Subscription
      */
     public function __construct(
         Locale $locale,
-        $email = null
+        string $email = null
     ) {
         $this->locale = $locale;
         $this->email = $email;

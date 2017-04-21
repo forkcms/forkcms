@@ -27,7 +27,7 @@ final class NotImplementedSubscribedEvent extends Event
     /**
      * @return Subscription
      */
-    public function getSubscription()
+    public function getSubscription(): Subscription
     {
         return $this->subscription;
     }
