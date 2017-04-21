@@ -47,7 +47,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
              LIMIT 1',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), (string) $url)
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $url)
         );
 
         // unserialize
@@ -95,8 +95,8 @@ class Model implements FrontendTagsInterface
                 LANGUAGE,
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i'),
-                (int) $offset,
-                (int) $limit,
+                $offset,
+                $limit,
             ),
             'id'
         );
@@ -203,7 +203,7 @@ class Model implements FrontendTagsInterface
              GROUP BY i.id
              ORDER BY i.created_on DESC
              LIMIT ?, ?',
-            array('published', LANGUAGE, (int) $offset, (int) $limit)
+            array('published', LANGUAGE, $offset, $limit)
         );
 
         // loop comments and create gravatar id
@@ -259,9 +259,9 @@ class Model implements FrontendTagsInterface
                 LANGUAGE,
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i'),
-                (string) $categoryURL,
-                (int) $offset,
-                (int) $limit,
+                $categoryURL,
+                $offset,
+                $limit,
             ),
             'id'
         );
@@ -334,7 +334,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?',
-            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), (string) $url)
+            array('active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $url)
         );
     }
 
@@ -350,11 +350,6 @@ class Model implements FrontendTagsInterface
      */
     public static function getAllForDateRange(int $start, int $end, int $limit = 10, int $offset = 0): array
     {
-        $start = (int) $start;
-        $end = (int) $end;
-        $limit = (int) $limit;
-        $offset = (int) $offset;
-
         // get the items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
@@ -441,9 +436,6 @@ class Model implements FrontendTagsInterface
      */
     public static function getAllForDateRangeCount(int $start, int $end): int
     {
-        $start = (int) $start;
-        $end = (int) $end;
-
         // return the number of items
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT COUNT(i.id)
@@ -563,7 +555,7 @@ class Model implements FrontendTagsInterface
              FROM blog_comments AS c
              WHERE c.post_id = ? AND c.status = ? AND c.language = ?
              ORDER BY c.id ASC',
-            array((int) $id, 'published', LANGUAGE)
+            array($id, 'published', LANGUAGE)
         );
 
         // loop comments and create gravatar id
@@ -634,7 +626,7 @@ class Model implements FrontendTagsInterface
         $itemURL = (string) $url->getParameter(1);
 
         // return the item
-        return self::get($itemURL);
+        return self::get($itemURL)['id'];
     }
 
     /**
@@ -646,9 +638,6 @@ class Model implements FrontendTagsInterface
      */
     public static function getNavigation(int $id): array
     {
-        // redefine
-        $id = (int) $id;
-
         // get db
         $db = FrontendModel::getContainer()->get('database');
 
@@ -714,8 +703,6 @@ class Model implements FrontendTagsInterface
      */
     public static function getRecentComments(int $limit = 5): array
     {
-        $limit = (int) $limit;
-
         // init var
         $return = array();
 
@@ -762,9 +749,6 @@ class Model implements FrontendTagsInterface
      */
     public static function getRelated(int $id, int $limit = 5): array
     {
-        $id = (int) $id;
-        $limit = (int) $limit;
-
         // get the related IDs
         $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($id, 'Blog', 'Blog', $limit);
 
@@ -823,7 +807,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
              LIMIT 1',
-            array(LANGUAGE, (int) $revision, (string) $url)
+            array(LANGUAGE, $revision, $url)
         );
 
         // unserialize
@@ -893,7 +877,7 @@ class Model implements FrontendTagsInterface
              FROM blog_comments AS c
              WHERE c.status = ? AND c.author = ? AND c.email = ?
              LIMIT 1',
-            array('published', (string) $author, (string) $email)
+            array('published', $author, $email)
         );
     }
 
