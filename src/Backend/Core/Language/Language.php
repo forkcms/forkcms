@@ -172,6 +172,10 @@ class Language
      */
     public static function getInterfaceLanguage(): string
     {
+        if (self::$currentInterfaceLanguage === null) {
+            self::$currentInterfaceLanguage = Model::getContainer()->getParameter('site.default_language');
+        }
+
         return self::$currentInterfaceLanguage;
     }
 
@@ -292,6 +296,10 @@ class Language
      */
     public static function getWorkingLanguage(): string
     {
+        if (self::$currentWorkingLanguage === null) {
+            self::$currentWorkingLanguage = Model::getContainer()->getParameter('site.default_language');
+        }
+
         return self::$currentWorkingLanguage;
     }
 
