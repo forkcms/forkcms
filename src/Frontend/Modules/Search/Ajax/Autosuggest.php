@@ -9,6 +9,7 @@ namespace Frontend\Modules\Search\Ajax;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Exception as FrontendException;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Language\Language as FL;
@@ -121,7 +122,7 @@ class Autosuggest extends FrontendBaseAJAXAction
      *
      * @return bool
      */
-    private function getCachedData()
+    private function getCachedData(): bool
     {
         // no search term = no search
         if (!$this->term) {

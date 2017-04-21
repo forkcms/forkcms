@@ -23,7 +23,7 @@ class Model
      *
      * @return array
      */
-    public static function buildTerm($terms)
+    public static function buildTerm(array $terms): array
     {
         // loop all items
         foreach ($terms as $i => $term) {
@@ -40,8 +40,7 @@ class Model
 
             if (mb_strpos($terms[$i], ' ') !== false) {
                 // part of words encountered
-                $terms[$i] .= ' <(' .
-                              implode(' ', $split) . ' ' . trim($last) . '*)';
+                $terms[$i] .= ' <(' . implode(' ', $split) . ' ' . trim($last) . '*)';
             }
         }
 
@@ -58,20 +57,17 @@ class Model
      * Advanced search: only the given fields (keys in the array) will be
      * matched to the corresponding values (corresponding values in the array)
      *
-     * @param mixed $term   The search term (simple search) or the fields to
+     * @param string|array $term The search term (simple search) or the fields to
      *                      search for (advanced search - please note that the
      *                      field names may not be consistent throughout
      *                      several modules).
-     * @param int   $limit  The number of articles to get.
-     * @param int   $offset The offset.
+     * @param int $limit The number of articles to get.
+     * @param int $offset The offset.
      *
      * @return array
      */
-    public static function execSearch($term, $limit = 20, $offset = 0)
+    public static function execSearch($term, int $limit = 20, int $offset = 0): array
     {
-        $limit = (int) $limit;
-        $offset = (int) $offset;
-
         // advanced search
         if (is_array($term)) {
             // init vars
@@ -181,47 +177,34 @@ class Model
     /**
      * Get preview searches that start with ...
      *
-     * @param string $term     The first letters of the term we're looking for.
-     * @param string $language The language to search in.
-     * @param int    $limit    Limit result set.
+     * @param string $term The first letters of the term we're looking for.
+     * @param string|null $language The language to search in.
+     * @param int $limit Limit result set.
      *
      * @return array
      */
-    public static function getStartsWith($term, $language = '', $limit = 10)
+    public static function getStartsWith(string $term, string $language = null, int $limit = 10): array
     {
-        // language given
-        if ($language) {
-            return (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT s1.term, s1.num_results
-                 FROM search_statistics AS s1
-                 INNER JOIN
-                 (
-                     SELECT term, MAX(id) AS id, language
-                     FROM search_statistics
-                     WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
-                     GROUP BY term
-                 ) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-                 ORDER BY s1.num_results ASC
-                 LIMIT ?',
-                array((string) $term . '%', $language, $limit)
-            );
-        } else {
-            // no language given
-            return (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT s1.term, s1.num_results
-                 FROM search_statistics AS s1
-                 INNER JOIN
-                 (
-                     SELECT term, MAX(id) AS id, language
-                     FROM search_statistics
-                     WHERE term LIKE ? AND num_results IS NOT NULL
-                     GROUP BY term
-                 ) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-                 ORDER BY s1.num_results ASC
-                 LIMIT ?',
-                array((string) $term . '%', $limit)
-            );
+        $parameters = ['term' => $term . '%', 'limit' => $limit];
+        if (!empty($language)) {
+            $parameters['language'] = $language;
         }
+
+        return (array) FrontendModel::getContainer()->get('database')->getRecords(
+            'SELECT s1.term, s1.num_results
+             FROM search_statistics AS s1
+             INNER JOIN
+             (
+                 SELECT term, MAX(id) AS id, language
+                 FROM search_statistics
+                 WHERE term LIKE :term AND num_results IS NOT NULL'
+                . (empty($language) ? '' : ' AND language = :language')
+                . ' GROUP BY term
+             ) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
+             ORDER BY s1.num_results ASC
+             LIMIT :limit',
+            $parameters
+        );
     }
 
     /**
@@ -231,14 +214,14 @@ class Model
      *
      * @return array
      */
-    public static function getSynonyms($term)
+    public static function getSynonyms(string $term): array
     {
         // query db for synonyms
         $synonyms = FrontendModel::getContainer()->get('database')->getVar(
             'SELECT synonym
              FROM search_synonyms
              WHERE term = ?',
-            array((string) $term)
+            array($term)
         );
         if (!$synonyms) {
             $synonyms = (array) FrontendModel::getContainer()->get('database')->getColumn(
@@ -278,14 +261,14 @@ class Model
      * Advanced search: only the given fields (keys in the array) will be
      * matched to the corresponding values (corresponding values in the array)
      *
-     * @param string $term The search term (simple search) or the fields to
+     * @param string|array $term The search term (simple search) or the fields to
      *                    search for (advanced search - please note that the
      *                    field names may not be consistent throughout several
      *                    modules).
      *
      * @return int
      */
-    public static function getTotal($term)
+    public static function getTotal($term): int
     {
         // advanced search
         if (is_array($term)) {
@@ -379,7 +362,7 @@ class Model
      *
      * @param array $item The data to store.
      */
-    public static function save($item)
+    public static function save(array $item)
     {
         FrontendModel::getContainer()->get('database')->insert(
             'search_statistics',
@@ -404,16 +387,16 @@ class Model
      * Advanced search: only the given fields (keys in the array) will be
      * matched to the corresponding values (corresponding values in the array)
      *
-     * @param string $term   The search term (simple search) or the fields to
+     * @param string|array $term The search term (simple search) or the fields to
      *                      search for (advanced search - please note that the
      *                      field names may not be consistent throughout
      *                      several modules).
-     * @param int   $limit  The number of articles to get.
-     * @param int   $offset The offset.
+     * @param int $limit The number of articles to get.
+     * @param int $offset The offset.
      *
      * @return array
      */
-    public static function search($term, $limit = 20, $offset = 0)
+    public static function search($term, int $limit = 20, int $offset = 0): array
     {
         // revalidate searches
         if (FrontendModel::get('fork.settings')->get('Search', 'validate_search', true) == true) {
@@ -493,22 +476,18 @@ class Model
     /**
      * Deactivate an index (no longer has to be searched)
      *
-     * @param string      $module   The module we're deleting an item from.
-     * @param array       $otherIds An array of other_id's for this module.
-     * @param bool $active   Set the index to active?
+     * @param string $module The module we're deleting an item from.
+     * @param array $otherIds An array of other_id's for this module.
+     * @param bool $active Set the index to active?
      */
-    public static function statusIndex($module, array $otherIds, $active = true)
+    public static function statusIndex(string $module, array $otherIds, bool $active = true)
     {
-        // redefine
-        $active = ($active && $active !== 'N') ? 'Y' : 'N';
-
-        // deactivate!
-        if ($otherIds) {
+        if (!empty($otherIds)) {
             FrontendModel::getContainer()->get('database')->update(
                 'search_index',
                 array('active' => $active),
                 'module = ? AND other_id IN (' . implode(',', $otherIds) . ')',
-                array((string) $module)
+                array($module)
             );
         }
     }

@@ -128,7 +128,7 @@ class Livesuggest extends FrontendBaseAJAXAction
      *
      * @return bool
      */
-    private function getCachedData()
+    private function getCachedData(): bool
     {
         // no search term = no search
         if (!$this->term) {

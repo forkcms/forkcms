@@ -27,7 +27,7 @@ class Index extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    protected $frm;
+    protected $form;
 
     /**
      * Name of the cache file
@@ -86,13 +86,6 @@ class Index extends FrontendBaseBlock
     private $term = '';
 
     /**
-     * Search statistics
-     *
-     * @var array
-     */
-    private $statistics;
-
-    /**
      * Display
      */
     private function display()
@@ -133,7 +126,7 @@ class Index extends FrontendBaseBlock
      *
      * @return bool
      */
-    private function getCachedData()
+    private function getCachedData(): bool
     {
         // no search term = no search
         if (!$this->term) {
@@ -200,27 +193,29 @@ class Index extends FrontendBaseBlock
         $this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
         // num pages is always equal to at least 1
-        if ($this->pagination['num_pages'] == 0) {
+        if ($this->pagination['num_pages'] === 0) {
             $this->pagination['num_pages'] = 1;
         }
 
         // redirect if the request page doesn't exist
-        if ($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) {
+        if ($this->requestedPage < 1 || $this->requestedPage > $this->pagination['num_pages']) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // debug mode = no cache
-        if (!$this->getContainer()->getParameter('kernel.debug')) {
-            // set cache content
-            $filesystem = new Filesystem();
-            $filesystem->dumpFile(
-                $this->cacheFile,
-                "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
-                    $this->items,
-                    true
-                ) . ";\n?>"
-            );
+        if ($this->getContainer()->getParameter('kernel.debug')) {
+            return;
         }
+
+        // set cache content
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile(
+            $this->cacheFile,
+            "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
+                $this->items,
+                true
+            ) . ";\n?>"
+        );
     }
 
     /**
@@ -229,7 +224,7 @@ class Index extends FrontendBaseBlock
     private function loadForm()
     {
         // create form
-        $this->frm = new FrontendForm('search', null, 'get', null, false);
+        $this->form = new FrontendForm('search', null, 'get', null, false);
 
         // could also have been submitted by our widget
         if (!\SpoonFilter::getGetValue('q', null, '')) {
@@ -237,18 +232,17 @@ class Index extends FrontendBaseBlock
         }
 
         // create elements
-        $this->frm->addText('q')
-            ->setAttributes(
-                array(
-                    'data-role' => 'fork-search-field',
-                    'data-autocomplete' => 'enabled',
-                    'data-live-suggest' => 'enabled',
-                )
-            );
+        $this->form->addText('q')->setAttributes(
+            array(
+                'data-role' => 'fork-search-field',
+                'data-autocomplete' => 'enabled',
+                'data-live-suggest' => 'enabled',
+            )
+        );
 
         // since we know the term just here we should set the canonical url here
         $canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('Search');
-        if (isset($_GET['q']) && $_GET['q'] != '') {
+        if (isset($_GET['q']) && $_GET['q'] !== '') {
             $canonicalUrl .= '?q=' . \SpoonFilter::htmlspecialchars($_GET['q']);
         }
         $this->header->setCanonicalUrl($canonicalUrl);
@@ -263,7 +257,7 @@ class Index extends FrontendBaseBlock
         $this->addCSS('Search.css');
 
         // parse the form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
 
         // no search term = no search
         if (!$this->term) {
@@ -293,17 +287,16 @@ class Index extends FrontendBaseBlock
         \SpoonSession::set('searchTerm', '');
 
         // save this term?
-        if ($previousTerm != $this->term) {
-            // format data
-            $this->statistics = array();
-            $this->statistics['term'] = $this->term;
-            $this->statistics['language'] = LANGUAGE;
-            $this->statistics['time'] = FrontendModel::getUTCDate();
-            $this->statistics['data'] = serialize(array('server' => $_SERVER));
-            $this->statistics['num_results'] = $this->pagination['num_items'];
-
-            // save data
-            FrontendSearchModel::save($this->statistics);
+        if ($previousTerm !== $this->term) {
+            FrontendSearchModel::save(
+                [
+                    'term' => $this->term,
+                    'language' => LANGUAGE,
+                    'time' => FrontendModel::getUTCDate(),
+                    'data' => serialize(['server' => $_SERVER]),
+                    'num_results' => $this->pagination['num_items'],
+                ]
+            );
         }
 
         // save current search term in cookie
@@ -315,19 +308,20 @@ class Index extends FrontendBaseBlock
      */
     private function validateForm()
     {
-        // is the form submitted
-        if ($this->frm->isSubmitted()) {
-            // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+        if (!$this->form->isSubmitted()) {
+            return;
+        }
 
-            // validate required fields
-            $this->frm->getField('q')->isFilled(FL::err('TermIsRequired'));
+        // cleanup the submitted fields, ignore fields that were added by hackers
+        $this->form->cleanupFields();
 
-            // no errors?
-            if ($this->frm->isCorrect()) {
-                // get search term
-                $this->term = $this->frm->getField('q')->getValue();
-            }
+        // validate required fields
+        $this->form->getField('q')->isFilled(FL::err('TermIsRequired'));
+
+        // no errors?
+        if ($this->form->isCorrect()) {
+            // get search term
+            $this->term = $this->form->getField('q')->getValue();
         }
     }
 }
