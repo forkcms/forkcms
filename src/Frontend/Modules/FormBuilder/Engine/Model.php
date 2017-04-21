@@ -119,7 +119,7 @@ class Model
     /**
      * Convert a PHP Date to jquery date format
      *
-     * @param string $php_format The php date format
+     * @param string $phpFormat The php date format
      *
      * @return string The jQuery date format
      */
