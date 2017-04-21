@@ -119,7 +119,7 @@ class Model
         $user = self::get($id);
 
         // if no email is given
-        if (!$email) {
+        if (empty($email)) {
             // redefine email
             $email = $user->getEmail();
         }
