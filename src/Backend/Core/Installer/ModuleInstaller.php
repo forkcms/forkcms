@@ -950,7 +950,7 @@ class ModuleInstaller
         $id = (int) $this->getDB()->getVar(
             'SELECT id
              FROM backend_navigation
-             WHERE parent_id = ? AND label = ? AND url = ?',
+             WHERE parent_id = ? AND label = ? AND url ' . ($url === null ? 'IS' : '=') . ' ?',
             [$parentId, $label, $url]
         );
 
