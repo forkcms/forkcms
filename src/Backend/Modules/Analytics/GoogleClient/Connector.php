@@ -342,14 +342,14 @@ final class Connector
      * @param string $metrics A comma-separated list of Analytics metrics.
      * @param array $optParams Optional parameters.
      *
-     * @return Google_Service_Analytics_GaData
+     * @return array
      */
     private function getAnalyticsData(
         int $startDate,
         int $endDate,
         string $metrics,
         array $optParams = []
-    ): Google_Service_Analytics_GaData {
+    ): array {
         return $this->analytics->data_ga->get(
             'ga:' . $this->settings->get('Analytics', 'profile'),
             date('Y-m-d', $startDate),
