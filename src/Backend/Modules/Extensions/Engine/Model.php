@@ -145,33 +145,31 @@ class Model
         $googleMapsModules = self::getModulesThatRequireGoogleMaps();
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('Index', 'Settings')) {
-            // check if the akismet key is available if there are modules that require it
-            if (!empty($akismetModules) && BackendModel::get('fork.settings')->get('Core', 'akismet_key', null) == '') {
-                // add warning
-                $warnings[] = [
-                    'message' => sprintf(
-                        BL::err('AkismetKey'),
-                        BackendModel::createURLForAction('Index', 'Settings')
-                    ),
-                ];
-            }
+        if (!BackendAuthentication::isAllowedAction('Index', 'Settings')) {
+            return [];
+        }
 
-            // check if the google maps key is available if there are modules that require it
-            if (!empty($googleMapsModules) && BackendModel::get('fork.settings')->get(
-                    'Core',
-                    'google_maps_key',
-                    null
-                ) == ''
-            ) {
-                // add warning
-                $warnings[] = [
-                    'message' => sprintf(
-                        BL::err('GoogleMapsKey'),
-                        BackendModel::createURLForAction('Index', 'Settings')
-                    ),
-                ];
-            }
+        // check if the akismet key is available if there are modules that require it
+        if (!empty($akismetModules) && BackendModel::get('fork.settings')->get('Core', 'akismet_key', null) == '') {
+            // add warning
+            $warnings[] = [
+                'message' => sprintf(
+                    BL::err('AkismetKey'),
+                    BackendModel::createURLForAction('Index', 'Settings')
+                ),
+            ];
+        }
+
+        // check if the google maps key is available if there are modules that require it
+        if (!empty($googleMapsModules)
+            && BackendModel::get('fork.settings')->get('Core', 'google_maps_key', null) == '') {
+            // add warning
+            $warnings[] = [
+                'message' => sprintf(
+                    BL::err('GoogleMapsKey'),
+                    BackendModel::createURLForAction('Index', 'Settings')
+                ),
+            ];
         }
 
         return $warnings;
@@ -186,14 +184,13 @@ class Model
     {
         $finder = new Finder();
         $filesystem = new Filesystem();
-        foreach (
-            $finder->files()
-                ->name('*.php')
-                ->name('*.js')
-                ->in(BACKEND_CACHE_PATH . '/Locale')
-                ->in(FRONTEND_CACHE_PATH . '/Navigation')
-                ->in(FRONTEND_CACHE_PATH . '/Locale') as $file
-        ) {
+        $files = $finder->files()
+            ->name('*.php')
+            ->name('*.js')
+            ->in(BACKEND_CACHE_PATH . '/Locale')
+            ->in(FRONTEND_CACHE_PATH . '/Navigation')
+            ->in(FRONTEND_CACHE_PATH . '/Locale');
+        foreach ($files as $file) {
             $filesystem->remove($file->getRealPath());
         }
         BackendModel::getContainer()->get('cache.backend_navigation')->delete();
@@ -327,12 +324,9 @@ class Model
 
             // add human readable name
             $module = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module'])));
-            $row['human_name'] = \SpoonFilter::ucfirst(
-                    BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
-                ) . ': ' . $name;
-            $row['path'] = \SpoonFilter::ucfirst(
-                    BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
-                ) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
+            $extraTypeLabel = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type'])));
+            $row['human_name'] = $extraTypeLabel . ': ' . $name;
+            $row['path'] = $extraTypeLabel . ' › ' . $module . ($module !== $name ? ' › ' . $name : '');
         }
 
         // any items to remove?
