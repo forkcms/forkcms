@@ -28,13 +28,13 @@ class TransportFactoryTest extends TestCase
 
     public function testEncryptionCanBeSet()
     {
-        $transport = TransportFactory::create('smtp', null, null, null, null, 'ssl');
+        $transport = TransportFactory::create('smtp', null, 21, null, null, 'ssl');
         self::assertEquals(
             'ssl',
             $transport->getEncryption()
         );
 
-        $transport = TransportFactory::create('smtp', null, null, null, null, 'tls');
+        $transport = TransportFactory::create('smtp', null, 21, null, null, 'tls');
         self::assertEquals(
             'tls',
             $transport->getEncryption()

@@ -64,7 +64,7 @@ class TestEmailConnection extends BackendBaseAJAXAction
             $transport = TransportFactory::create(
                 \SpoonFilter::getPostValue('mailer_type', ['smtp', 'mail'], 'mail'),
                 \SpoonFilter::getPostValue('smtp_server', null, ''),
-                \SpoonFilter::getPostValue('smtp_port', null, ''),
+                \SpoonFilter::getPostValue('smtp_port', null, 25),
                 \SpoonFilter::getPostValue('smtp_username', null, ''),
                 \SpoonFilter::getPostValue('smtp_password', null, ''),
                 \SpoonFilter::getPostValue('smtp_secure_layer', null, '')
