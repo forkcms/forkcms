@@ -14,12 +14,12 @@ class TransportFactory
     /**
      * Create The right transport instance based on some settings
      *
-     * @param  string $type
-     * @param  string $server
-     * @param  int $port
-     * @param  string $user
-     * @param  string $pass
-     * @param  string $encryption
+     * @param string $type
+     * @param string $server
+     * @param int $port
+     * @param string $user
+     * @param string $pass
+     * @param string $encryption
      *
      * @return Swift_Transport
      */
@@ -41,19 +41,19 @@ class TransportFactory
     /**
      * Create a new Smtp Mailer Transport instance.
      *
-     * @param  string $server
-     * @param  string $port
-     * @param  string $user
-     * @param  string $pass
-     * @param  string $encryption
+     * @param string|null $server
+     * @param string|null $port
+     * @param string|null $user
+     * @param string|null $pass
+     * @param string|null $encryption
      *
      * @return Swift_SmtpTransport
      */
     private static function getSmtpTransport(
-        string $server,
-        string $port,
-        string $user,
-        string $pass,
+        string $server = null,
+        string $port = null,
+        string $user = null,
+        string $pass = null,
         string $encryption = null
     ): Swift_SmtpTransport {
         $transport = Swift_SmtpTransport::newInstance($server, $port)
