@@ -33,7 +33,7 @@ class MediaFolderMove extends BackendBaseAJAXAction
 
         $this->output(
             self::OK,
-            $mediaFolder->__toArray(),
+            $mediaFolder,
             sprintf(Language::msg('MediaFolderMoved'), $mediaFolder->getName())
         );
     }

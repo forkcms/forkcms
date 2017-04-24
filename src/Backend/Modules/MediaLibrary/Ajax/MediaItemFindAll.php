@@ -119,14 +119,9 @@ class MediaItemFindAll extends BackendBaseAJAXAction
             return [];
         }
 
-        return array_map(
-            function (MediaItem $mediaItem) {
-                return $mediaItem->__toArray();
-            },
-            $this->get('media_library.repository.item')->findBy(
-                ['folder' => $mediaFolder],
-                ['title' => 'ASC']
-            )
+        return $this->get('media_library.repository.item')->findBy(
+            ['folder' => $mediaFolder],
+            ['title' => 'ASC']
         );
     }
 }

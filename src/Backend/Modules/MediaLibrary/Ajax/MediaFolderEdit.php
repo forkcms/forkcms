@@ -27,7 +27,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
         // Output
         $this->output(
             self::OK,
-            $updateMediaFolder->getMediaFolderEntity()->__toArray(),
+            $updateMediaFolder->getMediaFolderEntity(),
             sprintf(
                 Language::msg('MediaFolderIsEdited'),
                 $updateMediaFolder->getMediaFolderEntity()->getName()

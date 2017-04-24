@@ -5,13 +5,14 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem;
 use Doctrine\ORM\Mapping as ORM;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use JsonSerializable;
 
 /**
  * MediaGroup MediaItem
  *
  * @ORM\Entity(repositoryClass="Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository")
  */
-class MediaGroupMediaItem
+class MediaGroupMediaItem implements JsonSerializable
 {
     /**
      * @var string
@@ -106,11 +107,11 @@ class MediaGroupMediaItem
     /**
      * @return array
      */
-    public function __toArray(): array
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
-            'item' => $this->item->__toArray(),
+            'item' => $this->item->jsonSerialize(),
             'createdOn' => $this->createdOn->getTimestamp(),
             'sequence' => $this->sequence,
         ];

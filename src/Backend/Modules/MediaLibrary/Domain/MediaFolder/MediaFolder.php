@@ -7,6 +7,7 @@ use Common\Uri;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JsonSerializable;
 
 /**
  * MediaFolder
@@ -14,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity(repositoryClass="Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class MediaFolder
+class MediaFolder implements JsonSerializable
 {
     /**
      * @var string
@@ -172,15 +173,13 @@ class MediaFolder
     }
 
     /**
-     * To array
-     *
      * @return array
      */
-    public function __toArray(): array
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
-            'parent' => ($this->parent !== null) ? $this->parent->__toArray() : null,
+            'parent' => ($this->parent !== null) ? $this->parent->jsonSerialize() : null,
             'userId' => $this->userId,
             'name' => $this->name,
             'createdOn' => $this->createdOn->getTimestamp(),

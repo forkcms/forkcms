@@ -28,7 +28,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
         // Output success message
         $this->output(
             self::OK,
-            $createMediaItemFromMovieUrl->getMediaItem()->__toArray(),
+            $createMediaItemFromMovieUrl->getMediaItem(),
             Language::msg('MediaUploadedSuccessful')
         );
     }

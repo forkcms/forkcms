@@ -7,6 +7,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JsonSerializable;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -16,7 +17,7 @@ use Ramsey\Uuid\UuidInterface;
  * @ORM\Entity(repositoryClass="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class MediaGroup
+class MediaGroup implements JsonSerializable
 {
     /**
      * @var UuidInterface
@@ -146,11 +147,9 @@ class MediaGroup
     }
 
     /**
-     * To array
-     *
      * @return array
      */
-    public function __toArray(): array
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
@@ -158,7 +157,7 @@ class MediaGroup
             'editedOn' => ($this->editedOn) ? $this->editedOn->getTimestamp() : null,
             'connectedItems' => $this->connectedItems->map(
                 function (MediaGroupMediaItem $connectedItem) {
-                    return $connectedItem->__toArray();
+                    return $connectedItem->jsonSerialize();
                 }
             ),
         ];

@@ -7,6 +7,7 @@ use Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterf
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JsonSerializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -18,7 +19,7 @@ use Backend\Core\Engine\Model;
  * @ORM\Entity(repositoryClass="Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class MediaItem
+class MediaItem implements JsonSerializable
 {
     /**
      * @var string
@@ -276,11 +277,11 @@ class MediaItem
     /**
      * @return array
      */
-    public function __toArray(): array
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
-            'folder' => $this->folder->__toArray(),
+            'folder' => $this->folder->jsonSerialize(),
             'userId' => $this->userId,
             'type' => (string) $this->type,
             'storageType' => (string) $this->storageType,

@@ -147,7 +147,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
         $resultData = json_encode(
             array_merge(
                 $result,
-                $createMediaItemFromLocalSource->getMediaItem()->__toArray()
+                $createMediaItemFromLocalSource->getMediaItem()->jsonSerialize()
             )
         );
 
