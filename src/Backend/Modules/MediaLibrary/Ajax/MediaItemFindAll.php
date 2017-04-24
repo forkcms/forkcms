@@ -64,11 +64,15 @@ class MediaItemFindAll extends BackendBaseAJAXAction
      */
     private function getMediaFolderBasedOnMediaGroup()
     {
-        /** @var MediaGroup|null $mediaGroup */
-        $mediaGroup = $this->getMediaGroup();
-
         /** @var MediaFolder|null $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
+
+        if ($mediaFolder !== null) {
+            return $mediaFolder;
+        }
+
+        /** @var MediaGroup|null $mediaGroup */
+        $mediaGroup = $this->getMediaGroup();
 
         if ($mediaGroup === null || $mediaGroup->getConnectedItems()->count() == 0) {
             if ($mediaFolder === null) {
