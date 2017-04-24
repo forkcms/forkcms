@@ -111,7 +111,7 @@ class MediaGroupMediaItem implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'item' => $this->item->jsonSerialize(),
+            'item' => $this->item,
             'createdOn' => $this->createdOn->getTimestamp(),
             'sequence' => $this->sequence,
         ];

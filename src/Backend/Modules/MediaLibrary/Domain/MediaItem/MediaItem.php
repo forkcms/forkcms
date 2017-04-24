@@ -281,7 +281,7 @@ class MediaItem implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'folder' => $this->folder->jsonSerialize(),
+            'folder' => $this->folder,
             'userId' => $this->userId,
             'type' => (string) $this->type,
             'storageType' => (string) $this->storageType,

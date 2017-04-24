@@ -155,11 +155,7 @@ class MediaGroup implements JsonSerializable
             'id' => $this->id,
             'type' => $this->type,
             'editedOn' => ($this->editedOn) ? $this->editedOn->getTimestamp() : null,
-            'connectedItems' => $this->connectedItems->map(
-                function (MediaGroupMediaItem $connectedItem) {
-                    return $connectedItem->jsonSerialize();
-                }
-            ),
+            'connectedItems' => $this->connectedItems,
         ];
     }
 
