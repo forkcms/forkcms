@@ -179,7 +179,7 @@ class MediaFolder implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'parent' => ($this->parent !== null) ? $this->parent : null,
+            'parent' => $this->parent,
             'userId' => $this->userId,
             'name' => $this->name,
             'createdOn' => $this->createdOn->getTimestamp(),
