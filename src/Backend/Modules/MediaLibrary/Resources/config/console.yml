@@ -1,0 +1,9 @@
+services:
+    media_library.console.cache_clear:
+        class: Backend\Modules\MediaLibrary\Console\CacheClearCommand
+        tags:
+            -  { name: console.command }
+    media_library.console.delete_media_items:
+        class: Backend\Modules\MediaLibrary\Console\MediaItemDeleteAllCommand
+        tags:
+            -  { name: console.command }

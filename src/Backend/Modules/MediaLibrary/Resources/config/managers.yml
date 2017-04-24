@@ -1,0 +1,31 @@
+services:
+    media_library.manager.extension:
+        class: Backend\Modules\MediaLibrary\Manager\ExtensionManager
+        calls:
+            - [add, ["image", "%media_library.image_extensions%"]]
+            - [add, ["file", "%media_library.file_extensions%"]]
+            - [add, ["movie", "%media_library.movie_extensions%"]]
+            - [add, ["audio", "%media_library.audio_extensions%"]]
+    media_library.manager.file:
+        class: Backend\Modules\MediaLibrary\Manager\FileManager
+        arguments:
+            - "@fork.settings"
+    media_library.manager.item:
+        class: Backend\Modules\MediaLibrary\Manager\MediaItemManager
+        arguments:
+            - "@media_library.repository.item"
+            - "@command_bus"
+            - "@event_dispatcher"
+    media_library.manager.mime_type:
+        class: Backend\Modules\MediaLibrary\Manager\MimeTypeManager
+        calls:
+            - [add, ["image", "%media_library.image_mime_types%"]]
+            - [add, ["file", "%media_library.file_mime_types%"]]
+            - [add, ["movie", "%media_library.movie_mime_types%"]]
+            - [add, ["audio", "%media_library.audio_mime_types%"]]
+    media_library.manager.storage:
+        class: Backend\Modules\MediaLibrary\Manager\StorageManager
+    media_library.manager.tree:
+        class: Backend\Modules\MediaLibrary\Manager\TreeManager
+        arguments:
+            - "@media_library.cache.media_folder"

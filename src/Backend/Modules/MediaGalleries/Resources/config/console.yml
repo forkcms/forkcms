@@ -1,0 +1,5 @@
+services:
+    media_galleries.console.delete_galleries:
+        class: Backend\Modules\MediaGalleries\Console\MediaGalleryDeleteAllCommand
+        tags:
+            - { name: console.command }

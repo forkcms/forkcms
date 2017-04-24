@@ -1,0 +1,6 @@
+services:
+    # Frontend helpers
+    media_library.helper.frontend:
+        class: Frontend\Modules\MediaLibrary\Helper\FrontendHelper
+        arguments:
+            - "@media_library.repository.group_item"

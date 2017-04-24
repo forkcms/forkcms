@@ -1,3 +1,5 @@
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
 backend:
     path: /private/{_locale}/{module}/{action}
     defaults:

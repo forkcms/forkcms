@@ -50,7 +50,7 @@ class CoreInstaller extends ModuleInstaller
 
         // add core navigation
         $this->setNavigation(null, 'Dashboard', 'dashboard/index', null, 1);
-        $this->setNavigation(null, 'Modules', null, null, 3);
+        $this->setNavigation(null, 'Modules', null, null, 4);
     }
 
     /**
