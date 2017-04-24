@@ -1,8 +1,0 @@
-/**
- * Additional CSS voor widget-media-library-lightbox.
- */
-
-/* Resize the image */
-.widget-media-library-lightbox img {
-  max-width: 100%
-}

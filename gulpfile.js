@@ -96,34 +96,22 @@ gulp.task("serve:backend", function() {
 });
 
 // frontend tasks
-gulp.task("build:frontend:assets:copy-photoswipe-css-and-images", function() {
-    return gulp.src([
-        "node_modules/photoswipe/dist/photoswipe.css",
-        "node_modules/photoswipe/dist/default-skin/default-skin.css",
-        "node_modules/photoswipe/dist/default-skin/default-skin.png",
-        "node_modules/photoswipe/dist/default-skin/default-skin.svg",
-        "node_modules/photoswipe/dist/default-skin/preloader.gif",
-    ])
-        .pipe(gulp.dest("./css/vendors/photoswipe"));
-});
-gulp.task("build:frontend:assets:copy-bxslider-css", function() {
-    return gulp.src([
-        "node_modules/bxslider/dist/jquery.bxslider.css",
-    ])
-        .pipe(gulp.dest("./css/vendors/bxslider"));
-});
-gulp.task("build:frontend:assets:copy-bxslider-images", function() {
-    return gulp.src([
-        "node_modules/bxslider/dist/images/bx_loader.gif",
-        "node_modules/bxslider/dist/images/controls.png",
-    ])
-        .pipe(gulp.dest("./css/vendors/bxslider/images"));
+gulp.task("build:frontend:assets:copy-images-vendors", function() {
+    var components = {
+        'photoswipe' : [
+            "node_modules/photoswipe/dist/default-skin/*.{png,svg,gif,jpg}",
+        ]
+    };
+
+    for (var key in components) {
+        return gulp.src(components[key]).pipe(gulp.dest("./images/vendors/" + key));
+    };
 });
 gulp.task("build:frontend:assets:copy-js-vendors", function() {
     return gulp.src([
         "node_modules/photoswipe/dist/photoswipe.min.js",
         "node_modules/photoswipe/dist/photoswipe-ui-default.min.js",
-        "node_modules/bxslider/dist/jquery.bxslider.min.js",
+        "node_modules/slick-carousel/slick/slick.min.js",
     ])
         .pipe(gulp.dest("js/vendors"));
 });
@@ -172,10 +160,8 @@ gulp.task("build:frontend:sass:generate-module-css", function() {
 
 gulp.task("build:frontend", function() {
   gulp.start(
+      "build:frontend:assets:copy-images-vendors",
       "build:frontend:assets:copy-js-vendors",
-      "build:frontend:assets:copy-photoswipe-css-and-images",
-      "build:frontend:assets:copy-bxslider-css",
-      "build:frontend:assets:copy-bxslider-images",
       "build:frontend:sass:generate-css",
       "build:frontend:sass:generate-module-css"
   );

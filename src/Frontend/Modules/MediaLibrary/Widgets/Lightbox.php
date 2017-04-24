@@ -21,18 +21,10 @@ class Lightbox extends FrontendMediaWidget
             return;
         }
 
-        $this->addLightboxCSS();
         $this->addLightboxJS();
         parent::execute();
         $this->loadTemplate();
         $this->parse();
-    }
-
-    protected function addLightboxCSS()
-    {
-        $this->addCSS('/css/vendors/photoswipe/photoswipe.css', true);
-        $this->addCSS('/css/vendors/photoswipe/default-skin.css', true);
-        $this->addCSS('lightbox.css');
     }
 
     private function addLightboxJS()

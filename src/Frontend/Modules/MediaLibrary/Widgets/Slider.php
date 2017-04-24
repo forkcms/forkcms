@@ -21,14 +21,7 @@ class Slider extends FrontendMediaWidget
             return;
         }
 
-        // Add CSS
-        $this->addCSS('/css/vendors/bxslider/jquery.bxslider.css', true);
-
-        // Add custom CSS
-        $this->addCSS('slider.css');
-
-        // Add JS
-        $this->addJS('/js/vendors/jquery.bxslider.min.js', true);
+        $this->addJS('/js/vendors/slick.min.js', true);
 
         parent::execute();
         $this->loadTemplate();

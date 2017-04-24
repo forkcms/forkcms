@@ -17,13 +17,11 @@
 
   {% block widget_body %}
     <div class="widget-body">
-      <ul>
-        {% for mediaItem in mediaItems %}
-        <li itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-          <img itemprop="thumbnail" class="img-polaroid img-responsive" src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_slider_pano') }}" alt="{{ mediaItem.title }}" />
-        </li>
-        {% endfor %}
-      </ul>
+      {% for mediaItem in mediaItems %}
+      <div itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+        <img itemprop="thumbnail" class="img-responsive" src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_slider_pano') }}" alt="{{ mediaItem.title }}" />
+      </div>
+      {% endfor %}
     </div>
   {% endblock %}
 </section>

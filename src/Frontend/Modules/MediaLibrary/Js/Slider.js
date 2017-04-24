@@ -4,7 +4,7 @@
 (function($)
 {
     /**
-     * Create responsive media slider, which uses bxSlider
+     * Create responsive media slider, which uses "slick" slider
      */
     $.fn.mediaLibrarySlider = function()
     {
@@ -19,7 +19,7 @@
             var showPager = $slider.data('show-pager');
 
             // we have multiple items
-            var multipleItems = ($slider.find('ul li').length > 1);
+            var multipleItems = ($slider.find('div').length > 1);
 
             // we only have one item, hide controls
             if (!multipleItems) {
@@ -27,18 +27,15 @@
                 showPager = false;
             }
 
-            // init bxslider
-            $slider.find('ul').show().bxSlider({
+            // init slick slider
+            $slider.find('.widget-body').show().slick({
+                arrows: showControls,
+                autoplay: multipleItems,
                 adaptiveHeight: true,
-                auto: multipleItems,
-                autoStart: true,
-                controls: showControls,
-                mode: 'fade',
-                pager: showPager,
-                preloadImages: 'all',
-                speed: 800,
-                swipeThreshold: 100,
-                touchEnabled: multipleItems
+                dots: showPager,
+                fade: true,
+                lazyLoad: 'ondemand',
+                mobileFirst: true
             });
         });
     };
