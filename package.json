@@ -20,7 +20,7 @@
     "jquery": "~2.2",
     "jquery-migrate": "~1.4",
     "jquery-ui-dist": "~1.12",
-    "photoswipe": "^4.1.1";
+    "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.5.5",
     "slick-carousel": "^1.6.0"
   }
