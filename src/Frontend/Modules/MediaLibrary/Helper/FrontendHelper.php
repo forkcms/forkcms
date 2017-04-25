@@ -3,7 +3,7 @@
 namespace Frontend\Modules\MediaLibrary\Helper;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Frontend\Core\Engine\Header;
+use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
