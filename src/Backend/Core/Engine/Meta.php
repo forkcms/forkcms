@@ -434,6 +434,10 @@ class Meta
             $this->data['data'] = serialize($this->data['data']);
         }
 
+        if (empty($this->data['data'])) {
+            $this->data['data'] = null;
+        }
+
         // build meta
         $db = BackendModel::getContainer()->get('database');
 
