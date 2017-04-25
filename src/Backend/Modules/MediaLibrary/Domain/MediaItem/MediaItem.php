@@ -363,9 +363,9 @@ class MediaItem implements JsonSerializable
 
     /**
      * @param MediaFolder $folder the folder
-     * @return self
+     * @return MediaItem
      */
-    public function setFolder(MediaFolder $folder): self
+    public function setFolder(MediaFolder $folder): MediaItem
     {
         $this->folder = $folder;
         return $this;
@@ -462,9 +462,9 @@ class MediaItem implements JsonSerializable
     /**
      * @param int $width
      * @param int $height
-     * @return self
+     * @return MediaItem
      */
-    public function setResolution(int $width, int $height): self
+    public function setResolution(int $width, int $height): MediaItem
     {
         $this->width = $width;
         $this->height = $height;
