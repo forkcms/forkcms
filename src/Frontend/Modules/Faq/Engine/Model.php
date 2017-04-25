@@ -293,10 +293,8 @@ class Model implements FrontendTagsInterface
      * Increase the number of views for this item
      *
      * @param int $id
-     *
-     * @return array
      */
-    public static function increaseViewCount(int $id): array
+    public static function increaseViewCount(int $id)
     {
         FrontendModel::getContainer()->get('database')->execute(
             'UPDATE faq_questions SET num_views = num_views + 1 WHERE id = ?',
