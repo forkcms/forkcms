@@ -94,6 +94,8 @@ class Breadcrumb extends FrontendBaseObject
             }
 
             $breadcrumbs[] = ['title' => $pageInfo['navigation_title'], 'url' => $pageURL];
+
+            array_pop($pages);
         }
 
         return $breadcrumbs;
