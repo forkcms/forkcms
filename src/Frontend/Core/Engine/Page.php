@@ -502,8 +502,7 @@ class Page extends FrontendBaseObject
                 continue;
             }
 
-            array_walk(
-                $blocks,
+            $blocks = array_map(
                 function (array $block) {
                     if ($block['extra_id'] === null) {
                         return [
@@ -517,8 +516,10 @@ class Page extends FrontendBaseObject
                     // add to list of extras to parse
                     $this->extras[] = $block['extra'];
 
+
                     return $block;
-                }
+                },
+                $blocks
             );
         }
     }
