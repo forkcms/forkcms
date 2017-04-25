@@ -3,12 +3,16 @@
 namespace ForkCMS\Bundle\InstallerBundle\Tests\Controller;
 
 use Common\WebTestCase;
+use Symfony\Component\Filesystem\Filesystem;
 
 class InstallerControllerTest extends WebTestCase
 {
-    public function testnoStepActionAction()
+    /**
+     * @runInSeparateProcess
+     */
+    public function testNoStepActionAction()
     {
-        $client = static::createClient();
+        $client = static::createClient(['environment' => 'test_install']);
 
         $client->request('GET', '/install');
         $client->followRedirect();
@@ -35,8 +39,9 @@ class InstallerControllerTest extends WebTestCase
         $this->emptyTestDatabase($client->getContainer()->get('database'));
 
         // recreate the client with the empty database because we need this in our installer checks
-        $client = static::createClient();
-        $this->backupParametersFile($client->getContainer()->getParameter('kernel.root_dir'));
+        $client = static::createClient(['environment' => 'test_install']);
+        $filesystem = new Filesystem();
+        $this->backupParametersFile($filesystem, $client->getContainer()->getParameter('kernel.root_dir'));
 
         $crawler = $client->request('GET', '/install/2');
         $crawler = $this->runTroughStep2($crawler, $client);
@@ -45,7 +50,7 @@ class InstallerControllerTest extends WebTestCase
         $this->runTroughStep5($crawler, $client);
 
         // put back our parameters file
-        $this->putParametersFileBack($client->getContainer()->getParameter('kernel.root_dir'));
+        $this->putParametersFileBack($filesystem, $client->getContainer()->getParameter('kernel.root_dir'));
     }
 
     /**

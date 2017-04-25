@@ -47,10 +47,9 @@ abstract class WebTestCase extends BaseWebTestCase
             static::$kernel->shutdown();
         }
 
-        static::$kernel = static::createKernel($options);
+        $client = parent::createClient($options, $server);
+        static::$kernel = $client->getKernel();
         BaseModel::setContainer(static::$kernel->getContainer());
-        $client = static::$kernel->getContainer()->get('test.client');
-        $client->setServerParameters($server);
 
         return $client;
     }
@@ -105,10 +104,10 @@ abstract class WebTestCase extends BaseWebTestCase
      * Copies the parameters.yml file to a backup version
      *
      * @param string $kernelDir
+     * @param Filesystem $filesystem
      */
-    protected function backupParametersFile(string $kernelDir)
+    protected function backupParametersFile(Filesystem $filesystem, string $kernelDir)
     {
-        $filesystem = new Filesystem();
         if ($filesystem->exists($kernelDir . '/config/parameters.yml')) {
             $filesystem->copy(
                 $kernelDir . '/config/parameters.yml',
@@ -124,10 +123,10 @@ abstract class WebTestCase extends BaseWebTestCase
      * Puts the backed up parameters.yml file back
      *
      * @param string $kernelDir
+     * @param Filesystem $filesystem
      */
-    protected function putParametersFileBack(string $kernelDir)
+    protected function putParametersFileBack(Filesystem $filesystem, string $kernelDir)
     {
-        $filesystem = new Filesystem();
         if ($filesystem->exists($kernelDir . '/config/parameters.yml~backup')) {
             $filesystem->copy(
                 $kernelDir . '/config/parameters.yml~backup',
