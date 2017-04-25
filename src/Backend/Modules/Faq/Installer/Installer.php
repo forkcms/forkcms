@@ -143,9 +143,9 @@ class Installer extends ModuleInstaller
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'AskOwnQuestion', 'AskOwnQuestion');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
 
-        $this->setSetting($this->getModule(), 'overview_num_items_per_category', 0);
-        $this->setSetting($this->getModule(), 'most_read_num_items', 0);
-        $this->setSetting($this->getModule(), 'related_num_items', 0);
+        $this->setSetting($this->getModule(), 'overview_num_items_per_category', 10);
+        $this->setSetting($this->getModule(), 'most_read_num_items', 5);
+        $this->setSetting($this->getModule(), 'related_num_items', 5);
         $this->setSetting($this->getModule(), 'spamfilter', false);
         $this->setSetting($this->getModule(), 'allow_feedback', false);
         $this->setSetting($this->getModule(), 'allow_own_question', false);
