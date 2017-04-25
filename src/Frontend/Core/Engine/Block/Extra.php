@@ -81,10 +81,10 @@ class Extra extends FrontendBaseObject
     /**
      * @param KernelInterface $kernel
      * @param string $module The module to load.
-     * @param string $action The action to load.
-     * @param mixed $data The data that was passed from the database.
+     * @param string|null $action The action to load.
+     * @param mixed|null $data The data that was passed from the database.
      */
-    public function __construct(KernelInterface $kernel, string $module, string $action, $data = null)
+    public function __construct(KernelInterface $kernel, string $module, string $action = null, $data = null)
     {
         parent::__construct($kernel);
 
