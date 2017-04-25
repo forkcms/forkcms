@@ -358,10 +358,8 @@ class Model implements FrontendTagsInterface
      * @param int        $id
      * @param bool       $useful
      * @param bool|null $previousFeedback
-     *
-     * @return array
      */
-    public static function updateFeedback(int $id, bool $useful, bool $previousFeedback = null): array
+    public static function updateFeedback(int $id, bool $useful, bool $previousFeedback = null)
     {
         // feedback hasn't changed so don't update the counters
         if ($previousFeedback !== null && $useful == $previousFeedback) {
