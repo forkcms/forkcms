@@ -61,10 +61,12 @@ class Navigation extends FrontendBaseObject
     public static function getBackendURLForBlock(
         string $action,
         string $module,
-        string $language = LANGUAGE,
+        string $language = null,
         array $parameters = null,
         bool $urlencode = true
     ): string {
+        $language = $language ?? LANGUAGE;
+
         // add at least one parameter
         if (empty($parameters)) {
             $parameters['token'] = 'true';
@@ -158,9 +160,9 @@ class Navigation extends FrontendBaseObject
      *
      * @return array
      */
-    public static function getKeys(string $language = LANGUAGE): array
+    public static function getKeys(string $language = null): array
     {
-        return BackendPagesModel::getCacheBuilder()->getKeys($language);
+        return BackendPagesModel::getCacheBuilder()->getKeys($language ?? LANGUAGE);
     }
 
     /**
@@ -171,9 +173,9 @@ class Navigation extends FrontendBaseObject
      *
      * @return array
      */
-    public static function getNavigation(string $language = LANGUAGE): array
+    public static function getNavigation(string $language = null): array
     {
-        return BackendPagesModel::getCacheBuilder()->getNavigation($language);
+        return BackendPagesModel::getCacheBuilder()->getNavigation($language ?? LANGUAGE);
     }
 
     /**
@@ -369,13 +371,13 @@ class Navigation extends FrontendBaseObject
      *
      * @return int
      */
-    public static function getPageId(string $url, string $language = LANGUAGE): int
+    public static function getPageId(string $url, string $language = null): int
     {
         // redefine
         $url = trim($url, '/');
 
         // get menu items array
-        $keys = self::getKeys($language);
+        $keys = self::getKeys($language ?? LANGUAGE);
 
         // get key
         $key = array_search($url, $keys, true);
@@ -434,8 +436,10 @@ class Navigation extends FrontendBaseObject
      *
      * @return string
      */
-    public static function getURL(int $pageId, string $language = LANGUAGE): string
+    public static function getURL(int $pageId, string $language = null): string
     {
+        $language = $language ?? LANGUAGE;
+
         // init URL
         $url = FrontendModel::getContainer()->getParameter('site.multilanguage') ? '/' . $language . '/' : '/';
 
@@ -470,9 +474,10 @@ class Navigation extends FrontendBaseObject
     public static function getURLForBlock(
         string $module,
         string $action = null,
-        string $language = LANGUAGE,
+        string $language = null,
         array $data = null
     ): string {
+        $language = $language ?? LANGUAGE;
         // init var
         $pageIdForURL = null;
 
@@ -557,8 +562,9 @@ class Navigation extends FrontendBaseObject
      *
      * @return string
      */
-    public static function getURLForExtraId(int $id, string $language = LANGUAGE): string
+    public static function getURLForExtraId(int $id, string $language = null): string
     {
+        $language = $language ?? LANGUAGE;
         // get the menuItems
         $navigation = self::getNavigation($language);
 
