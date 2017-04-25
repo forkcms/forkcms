@@ -10,6 +10,12 @@ $fa-font-path: '/fonts/vendors';
 @import 'bootstrap-variables';
 @import 'bootstrap-imports';
 
+// Plugins
+@import './node_modules/photoswipe/src/css/main.scss';
+@import './node_modules/photoswipe/src/css/default-skin/default-skin.scss';
+@import './node_modules/slick-carousel/slick/slick.scss';
+@import './node_modules/slick-carousel/slick/slick-theme.scss';
+
 // Base
 @import 'base/type';
 @import 'base/base';
@@ -22,9 +28,11 @@ $fa-font-path: '/fonts/vendors';
 @import 'components/forms';
 @import 'components/headers';
 @import 'components/labels';
+@import 'components/lightbox';
 @import 'components/modules';
 @import 'components/navbar';
 @import 'components/sections';
+@import 'components/slider';
 
 // Custom page styling
 // Insert custom page styling here. Put all page styles in the pages/ directory

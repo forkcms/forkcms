@@ -9,6 +9,7 @@
   "devDependencies": {
     "bootstrap-sass": "~3.3",
     "bootstrap-tagsinput": "~0.7",
+    "fine-uploader": "^5.14.1",
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
@@ -19,6 +20,8 @@
     "jquery": "~2.2",
     "jquery-migrate": "~1.4",
     "jquery-ui-dist": "~1.12",
-    "simple-ajax-uploader": "^2.5.5"
+    "photoswipe": "^4.1.1";
+    "simple-ajax-uploader": "^2.5.5",
+    "slick-carousel": "^1.6.0"
   }
 }

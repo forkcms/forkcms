@@ -1,0 +1,21 @@
+services:
+    media_library.repository.folder:
+        class: Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder
+    media_library.repository.group:
+        class: Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup
+    media_library.repository.group_item:
+        class: Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem
+    media_library.repository.item:
+        class: Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem

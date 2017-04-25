@@ -830,6 +830,12 @@ $carousel-indicator-border-color:             $white;
 
 $carousel-caption-color:                      $white;
 
+//** Slick slider
+$slick-font-family: "FontAwesome";
+$slick-prev-character: "\f0a8";
+$slick-next-character: "\f0a9";
+$slick-dot-character: "\f111";
+
 
 //== Close
 //
@@ -880,3 +886,9 @@ $page-header-border-color:    $gray-lighter;
 $dl-horizontal-offset:        $component-offset-horizontal;
 //** Horizontal line color.
 $hr-border:                   $gray-lighter;
+
+//== Lightbox
+//
+//##
+
+$pswp__assets-path: '/images/vendors/photoswipe/';

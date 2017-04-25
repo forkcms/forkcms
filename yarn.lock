@@ -199,9 +199,9 @@ builtin-modules@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
 
-bytes@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.2.0.tgz#fd35464a403f6f9117c2de3609ecff9cae000588"
+bxslider@^4.2.10:
+  version "4.2.10"
+  resolved "https://registry.yarnpkg.com/bxslider/-/bxslider-4.2.10.tgz#da4e530acac4b65bbc5d05e572c7b4117bbded85"
 
 bytes@2.4.0:
   version "2.4.0"
@@ -554,6 +554,10 @@ findup-sync@^0.4.2:
     is-glob "^2.0.1"
     micromatch "^2.3.7"
     resolve-dir "^0.1.0"
+
+fine-uploader@^5.14.1:
+  version "5.14.1"
+  resolved "https://registry.yarnpkg.com/fine-uploader/-/fine-uploader-5.14.1.tgz#00ced20292b1cd6a0ece60a6566944ecb9f6206d"
 
 fined@^1.0.1:
   version "1.0.2"
@@ -1767,6 +1771,10 @@ pause-stream@0.0.11:
   resolved "https://registry.yarnpkg.com/pause-stream/-/pause-stream-0.0.11.tgz#fe5a34b0cbce12b5aa6a2b403ee2e73b602f1445"
   dependencies:
     through "~2.3"
+
+photoswipe@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/photoswipe/-/photoswipe-4.1.1.tgz#41b756a2387e220c286598945503014bf622bba9"
 
 pify@^2.0.0:
   version "2.3.0"

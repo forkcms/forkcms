@@ -55,6 +55,43 @@ monolog:
 swiftmailer:
     transport: "mail"
 
+liip_imagine:
+    resolvers:
+       default:
+          web_path:
+            web_root: %kernel.root_dir%/../
+            cache_prefix: src/Frontend/Files/Cache
+    loaders:
+        default:
+            filesystem:
+                data_root: %kernel.root_dir%/../
+    cache: default
+    data_loader: default
+
+    # your filter sets are defined here
+    filter_sets:
+        # the name of the "filter set"
+        media_library_backend_thumbnail:
+            # adjust the image quality to 95%
+            quality: 95
+            # list of transformations to apply (the "filters")
+            filters:
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail: { size : [140, 90], mode : outbound }
+        media_library_lightbox_small:
+            filters:
+                scale: { dim : [800, 600] }
+        media_library_lightbox_large:
+            filters:
+                scale: { dim : [1600, 800] }
+        media_library_slider_pano:
+            filters:
+                scale: { dim : [1600, 600] }
+        media_library_one_image_large:
+            filters:
+                thumbnail: { size : [1600, 500], mode : inbound }
+
 services:
     form.type.editor:
         class: Backend\Form\Type\EditorType

@@ -339,6 +339,10 @@
   {% endspaceless %}
 {% endblock bootstrap_collection_row %}
 
+{% block media_group_widget %}
+  {% include "MediaLibrary/Resources/views/FormLayout.html.twig" %}
+{% endblock media_group_widget %}
+
 {% block form_row %}
   <div class="panel form-group panel-default{% if (not compound or force_error|default(false)) and not valid %} panel-danger{% endif %}">
     <div class="panel-heading">

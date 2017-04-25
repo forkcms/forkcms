@@ -1,0 +1,26 @@
+<div class="modal fade" id="addFolderDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title h4">{{ 'lbl.MediaAddFolder'|trans|ucfirst }}</span>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="addFolderTitle">{{ 'lbl.Title'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <input type="text" name="addFolderTitle" id="addFolderTitle" class="inputText" maxlength="255" />
+        </div>
+        <div class="form-group">
+          <label for="addFolderParentId">{{ 'lbl.MediaInTheFolder'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <select name="addFolderParentId" id="addFolderParentId"></select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+        </button>
+        <button id="addFolderSubmit" type="button" class="btn btn-primary">
+          <span class="fa fa-plus-square"></span>{{ 'lbl.MediaAddFolder'|trans|ucfirst }}</button>
+      </div>
+    </div>
+  </div>
+</div>

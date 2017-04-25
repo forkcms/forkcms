@@ -249,6 +249,7 @@ class DataGridFunctions
      * @param string $url The url
      * @param int $width The width for the <img element
      * @param int $height The height for the <img element
+     * @param string $filter The LiipImagineBundle filter
      *
      * @return string
      */
@@ -258,9 +259,16 @@ class DataGridFunctions
         string $title = '',
         string $url = null,
         int $width = null,
-        int $height = null
+        int $height = null,
+        string $filter = null
     ): string {
-        $html = '<img src="' . $path . '/' . $image . '" alt="' . $title . '"';
+        $imagePath = $path . '/' . $image;
+
+        if ($filter !== null) {
+            $imagePath = BackendModel::get('liip_imagine.cache.manager')->getBrowserPath($imagePath, $filter);
+        }
+
+        $html = '<img src="' . $imagePath . '" alt="' . $title . '"';
 
         if ($width) {
             $html .= ' width="' . $width . '"';
