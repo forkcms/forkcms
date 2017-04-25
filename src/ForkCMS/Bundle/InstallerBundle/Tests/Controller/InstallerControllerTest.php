@@ -36,9 +36,18 @@ class InstallerControllerTest extends WebTestCase
     public function testInstallationProcess()
     {
         $client = static::createClient();
+        $container = $client->getContainer();
 
         // make sure we have a clean slate and our parameters file is backed up
         $this->emptyTestDatabase($client->getContainer()->get('database'));
+
+        $installDatabaseConfig = [
+            'install_database[dbHostname]' => $container->getParameter('database.host'),
+            'install_database[dbPort]' => $container->getParameter('database.port'),
+            'install_database[dbDatabase]' => $container->getParameter('database.name') . '_test',
+            'install_database[dbUsername]' => $container->getParameter('database.user'),
+            'install_database[dbPassword]' => $container->getParameter('database.password'),
+        ];
 
         // recreate the client with the empty database because we need this in our installer checks
         $client = static::createClient(['environment' => 'test_install']);
@@ -48,7 +57,7 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/install/2');
         $crawler = $this->runTroughStep2($crawler, $client);
         $crawler = $this->runTroughStep3($crawler, $client);
-        $crawler = $this->runTroughStep4($crawler, $client);
+        $crawler = $this->runTroughStep4($crawler, $client, $installDatabaseConfig);
         $this->runTroughStep5($crawler, $client);
 
         // put back our parameters file
@@ -134,16 +143,9 @@ class InstallerControllerTest extends WebTestCase
 
         // submit with correct database credentials
         $form = $crawler->selectButton('Next')->form();
-        $container = $client->getContainer();
         $client->submit(
             $form,
-            [
-                'install_database[dbHostname]' => $container->getParameter('database.host'),
-                'install_database[dbPort]' => $container->getParameter('database.port'),
-                'install_database[dbDatabase]' => $container->getParameter('database.name') . '_test',
-                'install_database[dbUsername]' => $container->getParameter('database.user'),
-                'install_database[dbPassword]' => $container->getParameter('database.password'),
-            ]
+            $installDatabaseConfig
         );
         $crawler = $client->followRedirect();
 
