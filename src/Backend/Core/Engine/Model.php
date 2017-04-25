@@ -222,12 +222,12 @@ class Model extends \Common\Core\Model
      * Delete thumbnails based on the folders in the path
      *
      * @param string $path The path wherein the thumbnail-folders exist.
-     * @param string $thumbnail The filename to be deleted.
+     * @param string|null $thumbnail The filename to be deleted.
      */
-    public static function deleteThumbnails(string $path, string $thumbnail)
+    public static function deleteThumbnails(string $path, ?string $thumbnail)
     {
         // if there is no image provided we can't do anything
-        if ($thumbnail === '') {
+        if ($thumbnail === null || $thumbnail === '') {
             return;
         }
 
