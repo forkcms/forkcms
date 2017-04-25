@@ -199,9 +199,9 @@ builtin-modules@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
 
-bxslider@^4.2.10:
-  version "4.2.10"
-  resolved "https://registry.yarnpkg.com/bxslider/-/bxslider-4.2.10.tgz#da4e530acac4b65bbc5d05e572c7b4117bbded85"
+bytes@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.2.0.tgz#fd35464a403f6f9117c2de3609ecff9cae000588"
 
 bytes@2.4.0:
   version "2.4.0"
@@ -1169,7 +1169,7 @@ jquery-ui-dist@~1.12:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz#5c0815d3cc6f90ff5faaf5b268a6e23b4ca904fa"
 
-jquery@~2.2:
+jquery@>=1.7.2, jquery@~2.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
 
@@ -2018,6 +2018,12 @@ signal-exit@^3.0.0:
 simple-ajax-uploader@^2.5.5:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/simple-ajax-uploader/-/simple-ajax-uploader-2.5.5.tgz#a91402fdfbc678b1fa73b5d4fd5d8c21c0d9a922"
+
+slick-carousel@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/slick-carousel/-/slick-carousel-1.6.0.tgz#780f378e470f4e6f6bec1aa2bae0475f4f9eb085"
+  dependencies:
+    jquery ">=1.7.2"
 
 sntp@1.x.x:
   version "1.0.9"

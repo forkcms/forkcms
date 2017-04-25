@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f026add1bd5876a61ed8cb986dcd8e9",
+    "content-hash": "f492f43f6b07a046c4ffd65aad81acd5",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -59,7 +59,7 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2016-11-14 16:46:13"
+            "time": "2016-11-14T16:46:13+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -99,7 +99,7 @@
                 "slug",
                 "transliterator"
             ],
-            "time": "2015-09-28 16:26:35"
+            "time": "2015-09-28T16:26:35+00:00"
         },
         {
             "name": "campaignmonitor/createsend-php",
@@ -156,7 +156,7 @@
                 "campaign",
                 "monitor"
             ],
-            "time": "2016-07-19 18:49:32"
+            "time": "2016-07-19T18:49:32+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -224,7 +224,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2015-08-31 12:32:49"
+            "time": "2015-08-31T12:32:49+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -294,7 +294,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2016-10-29 11:16:17"
+            "time": "2016-10-29T11:16:17+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -360,7 +360,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2015-04-14 22:21:58"
+            "time": "2015-04-14T22:21:58+00:00"
         },
         {
             "name": "doctrine/common",
@@ -433,7 +433,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2016-11-30 16:50:46"
+            "time": "2016-11-30T16:50:46+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -504,7 +504,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-09-09 19:13:33"
+            "time": "2016-09-09T19:13:33+00:00"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -585,7 +585,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2016-08-10 15:35:22"
+            "time": "2016-08-10T15:35:22+00:00"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -673,7 +673,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2016-01-26 17:28:51"
+            "time": "2016-01-26T17:28:51+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -740,7 +740,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06 14:35:42"
+            "time": "2015-11-06T14:35:42+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -794,7 +794,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -848,7 +848,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2014-09-09 13:34:57"
+            "time": "2014-09-09T13:34:57+00:00"
         },
         {
             "name": "doctrine/orm",
@@ -924,7 +924,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2016-09-10 18:51:13"
+            "time": "2016-09-10T18:51:13+00:00"
         },
         {
             "name": "google/apiclient",
@@ -967,7 +967,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2016-06-06 21:22:48"
+            "time": "2016-06-06T21:22:48+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1029,7 +1029,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-10-08 15:01:37"
+            "time": "2016-10-08T15:01:37+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1080,7 +1080,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-11-18 17:47:58"
+            "time": "2016-11-18T17:47:58+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1138,7 +1138,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-06-24 23:00:38"
+            "time": "2016-06-24T23:00:38+00:00"
         },
         {
             "name": "illuminate/contracts",
@@ -1180,7 +1180,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "http://laravel.com",
-            "time": "2016-08-08 11:46:08"
+            "time": "2016-08-08T11:46:08+00:00"
         },
         {
             "name": "illuminate/support",
@@ -1236,7 +1236,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "http://laravel.com",
-            "time": "2016-02-22 20:29:02"
+            "time": "2016-02-22T20:29:02+00:00"
         },
         {
             "name": "imagine/imagine",
@@ -1293,7 +1293,7 @@
                 "image manipulation",
                 "image processing"
             ],
-            "time": "2015-09-19 16:54:05"
+            "time": "2015-09-19T16:54:05+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -1335,7 +1335,7 @@
                 "hashing",
                 "password"
             ],
-            "time": "2014-11-20 16:49:30"
+            "time": "2014-11-20T16:49:30+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1385,7 +1385,7 @@
                 "highlight",
                 "sql"
             ],
-            "time": "2014-01-12 16:20:24"
+            "time": "2014-01-12T16:20:24+00:00"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1462,7 +1462,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2016-11-11 18:43:20"
+            "time": "2016-11-11T18:43:20+00:00"
         },
         {
             "name": "league/flysystem",
@@ -1545,7 +1545,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2016-10-19 20:38:46"
+            "time": "2016-10-19T20:38:46+00:00"
         },
         {
             "name": "liip/imagine-bundle",
@@ -1645,7 +1645,7 @@
                 "symfony",
                 "transformation"
             ],
-            "time": "2017-03-02 20:18:55"
+            "time": "2017-03-02T20:18:55+00:00"
         },
         {
             "name": "mailmotor/campaignmonitor-bundle",
@@ -1692,7 +1692,7 @@
                 "bundle",
                 "php"
             ],
-            "time": "2016-12-05 08:25:16"
+            "time": "2016-12-05T08:25:16+00:00"
         },
         {
             "name": "mailmotor/mailchimp-bundle",
@@ -1738,7 +1738,7 @@
                 "bundle",
                 "php"
             ],
-            "time": "2016-12-01 07:57:14"
+            "time": "2016-12-01T07:57:14+00:00"
         },
         {
             "name": "mailmotor/mailmotor-bundle",
@@ -1786,7 +1786,7 @@
                 "bundle",
                 "php"
             ],
-            "time": "2016-12-01 14:26:20"
+            "time": "2016-12-01T14:26:20+00:00"
         },
         {
             "name": "matthiasmullie/minify",
@@ -1843,7 +1843,7 @@
                 "minifier",
                 "minify"
             ],
-            "time": "2016-11-23 10:16:14"
+            "time": "2016-11-23T10:16:14+00:00"
         },
         {
             "name": "matthiasmullie/path-converter",
@@ -1892,7 +1892,7 @@
                 "paths",
                 "relative"
             ],
-            "time": "2016-04-27 10:38:05"
+            "time": "2016-04-27T10:38:05+00:00"
         },
         {
             "name": "matthiasmullie/scrapbook",
@@ -1982,7 +1982,7 @@
                 "transactional",
                 "value"
             ],
-            "time": "2016-09-20 16:00:05"
+            "time": "2016-09-20T16:00:05+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2060,7 +2060,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-11-26 00:15:39"
+            "time": "2016-11-26T00:15:39+00:00"
         },
         {
             "name": "pacely/mailchimp-apiv3",
@@ -2112,7 +2112,7 @@
                 "php",
                 "v3"
             ],
-            "time": "2016-08-02 12:04:20"
+            "time": "2016-08-02T12:04:20+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2160,7 +2160,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-11-07 23:38:38"
+            "time": "2016-11-07T23:38:38+00:00"
         },
         {
             "name": "psr/cache",
@@ -2206,7 +2206,7 @@
                 "psr",
                 "psr-6"
             ],
-            "time": "2016-08-06 20:24:11"
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "psr/http-message",
@@ -2256,7 +2256,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -2303,7 +2303,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -2385,7 +2385,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2016-11-22 19:21:44"
+            "time": "2016-11-22T19:21:44+00:00"
         },
         {
             "name": "ramsey/uuid-doctrine",
@@ -2441,7 +2441,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2016-03-23 17:44:03"
+            "time": "2016-03-23T17:44:03+00:00"
         },
         {
             "name": "simple-bus/doctrine-orm-bridge",
@@ -2495,7 +2495,7 @@
                 "doctrine",
                 "event bus"
             ],
-            "time": "2015-04-29 12:27:27"
+            "time": "2015-04-29T12:27:27+00:00"
         },
         {
             "name": "simple-bus/message-bus",
@@ -2545,7 +2545,7 @@
                 "message",
                 "message bus"
             ],
-            "time": "2016-02-12 08:35:53"
+            "time": "2016-02-12T08:35:53+00:00"
         },
         {
             "name": "simple-bus/symfony-bridge",
@@ -2609,7 +2609,7 @@
                 "event bus",
                 "symfony"
             ],
-            "time": "2016-07-17 12:50:07"
+            "time": "2016-07-17T12:50:07+00:00"
         },
         {
             "name": "spoon/library",
@@ -2644,7 +2644,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2016-09-05 14:43:42"
+            "time": "2016-09-05T14:43:42+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2768,7 +2768,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2016-11-22 11:42:57"
+            "time": "2016-11-22T11:42:57+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -2828,7 +2828,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2016-11-06 18:54:50"
+            "time": "2016-11-06T18:54:50+00:00"
         },
         {
             "name": "symfony/polyfill-apcu",
@@ -2881,7 +2881,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-intl-icu",
@@ -2939,7 +2939,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2998,7 +2998,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-php54",
@@ -3056,7 +3056,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-php55",
@@ -3112,7 +3112,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-php56",
@@ -3168,7 +3168,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -3227,7 +3227,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-util",
@@ -3279,7 +3279,7 @@
                 "polyfill",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/security-acl",
@@ -3340,7 +3340,7 @@
             ],
             "description": "Symfony Security Component - ACL (Access Control List)",
             "homepage": "https://symfony.com",
-            "time": "2015-12-28 09:39:46"
+            "time": "2015-12-28T09:39:46+00:00"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -3399,7 +3399,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2016-10-27 17:59:30"
+            "time": "2016-10-27T17:59:30+00:00"
         },
         {
             "name": "symfony/symfony",
@@ -3534,7 +3534,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-11-21 02:24:51"
+            "time": "2016-11-21T02:24:51+00:00"
         },
         {
             "name": "tijsverkoyen/akismet",
@@ -3573,7 +3573,7 @@
             ],
             "description": "Akismet is a wrapper-class to communicate with the Akismet API.",
             "homepage": "https://github.com/tijsverkoyen/Akismet",
-            "time": "2016-07-19 13:50:18"
+            "time": "2016-07-19T13:50:18+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -3620,7 +3620,7 @@
             ],
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
-            "time": "2015-12-08 16:14:14"
+            "time": "2015-12-08T16:14:14+00:00"
         },
         {
             "name": "twig/twig",
@@ -3681,7 +3681,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-11-23 18:41:40"
+            "time": "2016-11-23T18:41:40+00:00"
         }
     ],
     "packages-dev": [
@@ -3761,7 +3761,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2016-09-01 23:53:02"
+            "time": "2016-09-01T23:53:02+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
@@ -3823,7 +3823,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2017-03-09 12:58:16"
+            "time": "2017-03-09T12:58:16+00:00"
         }
     ],
     "aliases": [],
