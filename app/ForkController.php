@@ -9,8 +9,9 @@ namespace ForkCMS\App;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Ajax;
+use Backend\Core\Engine\Ajax as BackendAjax;
 use Backend\Core\Engine\Backend;
+use Frontend\Core\Engine\Ajax as FrontendAjax;
 use Frontend\Core\Engine\Frontend;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Backend\Init as BackendInit;
@@ -147,7 +148,7 @@ class ForkController extends Controller
 
         switch ($app) {
             case 'BackendAjax':
-                $applicationClass = Ajax::class;
+                $applicationClass = BackendAjax::class;
                 break;
             default:
                 $applicationClass = Backend::class;
@@ -166,6 +167,6 @@ class ForkController extends Controller
         $init = new FrontendInit($this->container->get('kernel'));
         $init->initialize($app);
 
-        return ($app === 'FrontendAjax') ? Ajax::class : Frontend::class;
+        return ($app === 'FrontendAjax') ? FrontendAjax::class : Frontend::class;
     }
 }
