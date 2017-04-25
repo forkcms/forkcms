@@ -3,6 +3,8 @@
 namespace ForkCMS\Bundle\InstallerBundle\Tests\Controller;
 
 use Common\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Filesystem\Filesystem;
 
 class InstallerControllerTest extends WebTestCase
@@ -54,12 +56,12 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Component\DomCrawler\Crawler $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     * @param Crawler $crawler
+     * @param Client $client
      *
-     * @return mixed
+     * @return Crawler
      */
-    private function runTroughStep2($crawler, $client)
+    private function runTroughStep2(Crawler $crawler, Client $client): Crawler
     {
         $form = $crawler->selectButton('Next')->form();
         $form['install_languages[languages][0]']->tick();
@@ -89,12 +91,12 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Component\DomCrawler\Crawler $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     * @param Crawler $crawler
+     * @param Client $client
      *
-     * @return mixed
+     * @return Crawler
      */
-    private function runTroughStep3($crawler, $client)
+    private function runTroughStep3(Crawler $crawler, Client $client): Crawler
     {
         $form = $crawler->selectButton('Next')->form();
         $client->submit($form, []);
@@ -114,12 +116,13 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Component\DomCrawler\Crawler $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     * @param Crawler $crawler
+     * @param Client $client
+     * @param array $installDatabaseConfig
      *
-     * @return mixed
+     * @return Crawler
      */
-    private function runTroughStep4($crawler, $client)
+    private function runTroughStep4(Crawler $crawler, Client $client, array $installDatabaseConfig): Crawler
     {
         // first submit with incorrect data
         $form = $crawler->selectButton('Next')->form();
@@ -158,12 +161,12 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Component\DomCrawler\Crawler $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     * @param Crawler $crawler
+     * @param Client $client
      *
-     * @return mixed
+     * @return Crawler
      */
-    private function runTroughStep5($crawler, $client)
+    private function runTroughStep5(Crawler $crawler, Client $client): Crawler
     {
         $form = $crawler->selectButton('Finish installation')->form();
         $client->submit(
