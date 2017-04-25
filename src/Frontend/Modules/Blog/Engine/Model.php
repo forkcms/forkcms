@@ -679,7 +679,7 @@ class Model implements FrontendTagsInterface
                 ((i.publish_on = ? AND i.id > ?) OR (i.publish_on > ? AND i.publish_on <= ?))
              ORDER BY i.publish_on ASC, i.id ASC
              LIMIT 1',
-            [$detailLink, $id, 'active', 'N', LANGUAGE, $date, $id, FrontendModel::getUTCDate('Y-m-d H:i')]
+            [$detailLink, $id, 'active', 'N', LANGUAGE, $date, $id, $date, FrontendModel::getUTCDate('Y-m-d H:i')]
         );
 
         // if empty, unset it
