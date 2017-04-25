@@ -13,7 +13,7 @@
     "homepage": "http://www.fork-cms.com/",
     "license": "MIT",
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
         "tijsverkoyen/akismet": "1.1.*",
         "tijsverkoyen/css-to-inline-styles": "1.5.*",
         "matthiasmullie/minify": "~1.3",
