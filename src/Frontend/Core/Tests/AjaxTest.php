@@ -61,7 +61,7 @@ class AjaxTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
-            'Internal error',
+            'Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\ does not exist',
             $client->getResponse()->getContent()
         );
     }
@@ -76,7 +76,7 @@ class AjaxTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
-            'Internal error',
+            'Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\Test does not exist',
             $client->getResponse()->getContent()
         );
     }
