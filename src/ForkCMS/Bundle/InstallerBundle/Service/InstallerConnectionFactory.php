@@ -7,6 +7,7 @@ use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
+use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
 use ForkCMS\Bundle\InstallerBundle\DBAL\InstallerConnection;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -29,15 +30,11 @@ class InstallerConnectionFactory extends ConnectionFactory
         array $mappingTypes = []
     ) {
         try {
-            // there is no other way since we don't have access to the container, but it works yeey, but I'm still sorry
-            $session = new Session();
-
-            if (!$session->has('installation_data') || $session->get('installation_data')->getDbHostname() === null) {
+            $installationData = $this->getInstallationData();
+            if ($installationData->getDbHostname() === null) {
                 return $this->getInstallerConnection($params, $config, $eventManager);
             }
 
-            /** @var InstallationData $installationData */
-            $installationData = $session->get('installation_data');
             $params['host'] = $installationData->getDbHostname();
             $params['port'] = $installationData->getDbPort();
             $params['dbname'] = $installationData->getDbDatabase();
@@ -49,6 +46,18 @@ class InstallerConnectionFactory extends ConnectionFactory
         } catch (ConnectionException $e) {
             return $this->getInstallerConnection($params, $config, $eventManager);
         }
+    }
+
+    /**
+     * @return InstallationData
+     */
+    private function getInstallationData(): InstallationData
+    {
+        if (InstallerController::$installationData instanceof InstallationData) {
+            return InstallerController::$installationData;
+        }
+
+        return new InstallationData();
     }
 
     /**

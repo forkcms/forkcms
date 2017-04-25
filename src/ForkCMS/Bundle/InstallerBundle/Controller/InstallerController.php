@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class InstallerController extends Controller
 {
+    /** @var InstallationData */
+    public static $installationData;
+
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -177,6 +180,8 @@ class InstallerController extends Controller
         if (!$request->getSession()->has('installation_data')) {
             $request->getSession()->set('installation_data', new InstallationData());
         }
+        // static cache
+        self::$installationData = $request->getSession()->get('installation_data');
 
         return $request->getSession()->get('installation_data');
     }
