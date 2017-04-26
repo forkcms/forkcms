@@ -12,6 +12,7 @@ namespace Frontend\Modules\Mailmotor\Widgets;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Modules\Mailmotor\Command\Subscription;
 use Frontend\Core\Language\Locale;
+use Frontend\Modules\Mailmotor\Form\SubscribeType;
 
 /**
  * This is a widget with the Subscribe form
@@ -31,7 +32,7 @@ class Subscribe extends FrontendBaseWidget
 
         // Create the form
         $form = $this->createForm(
-            $this->get('mailmotor.form.subscription'),
+            SubscribeType::class,
             new Subscription(
                 Locale::frontendLanguage()
             )

@@ -34,7 +34,7 @@ class MediaItemEdit extends BackendBaseActionEdit
         $this->folderId = $this->getParameter('folder', 'int', 0);
 
         $form = $this->createForm(
-            new MediaItemType(),
+            MediaItemType::class,
             new UpdateMediaItem(
                 $mediaItem
             )

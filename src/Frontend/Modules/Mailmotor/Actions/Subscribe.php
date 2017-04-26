@@ -14,6 +14,7 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Locale;
 use Frontend\Modules\Mailmotor\Command\Subscription;
 use Frontend\Modules\Mailmotor\Event\NotImplementedSubscribedEvent;
+use Frontend\Modules\Mailmotor\Form\SubscribeType;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
@@ -33,7 +34,7 @@ class Subscribe extends FrontendBaseBlock
 
         // Create the form
         $form = $this->createForm(
-            $this->get('mailmotor.form.subscription'),
+            SubscribeType::class,
             new Subscription(
                 Locale::frontendLanguage(),
                 $email
