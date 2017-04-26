@@ -291,13 +291,13 @@ class Widget extends Object
     /**
      * Creates and returns a Form instance from the type of the form.
      *
-     * @param string|FormTypeInterface $type The built type of the form
+     * @param string $type FQCN of the form type class i.e: MyClass::class
      * @param mixed $data The initial data for the form
      * @param array $options Options for the form
      *
      * @return Form
      */
-    public function createForm($type, $data = null, array $options = []): Form
+    public function createForm(string $type, $data = null, array $options = []): Form
     {
         return $this->get('form.factory')->create($type, $data, $options);
     }
