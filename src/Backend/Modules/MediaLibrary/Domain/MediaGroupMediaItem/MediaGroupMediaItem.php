@@ -161,7 +161,7 @@ class MediaGroupMediaItem implements JsonSerializable
      * @param int $sequence the sequence
      * @return MediaGroupMediaItem
      */
-    public function setSequence(int $sequence): self
+    public function setSequence(int $sequence): MediaGroupMediaItem
     {
         $this->sequence = $sequence;
 

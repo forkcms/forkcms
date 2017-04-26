@@ -28,9 +28,9 @@ final class Status
 
     /**
      * @param string $mediaGalleryStatus
-     * @return self
+     * @return Status
      */
-    public static function fromString(string $mediaGalleryStatus): self
+    public static function fromString(string $mediaGalleryStatus): Status
     {
         return new self($mediaGalleryStatus);
     }
@@ -57,9 +57,9 @@ final class Status
     }
 
     /**
-     * @return self
+     * @return Status
      */
-    public static function active(): self
+    public static function active(): Status
     {
         return new self(self::ACTIVE);
     }
@@ -73,9 +73,9 @@ final class Status
     }
 
     /**
-     * @return self
+     * @return Status
      */
-    public static function hidden(): self
+    public static function hidden(): Status
     {
         return new self(self::HIDDEN);
     }

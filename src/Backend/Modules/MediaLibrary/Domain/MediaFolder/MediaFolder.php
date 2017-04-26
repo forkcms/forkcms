@@ -217,7 +217,7 @@ class MediaFolder implements JsonSerializable
      *
      * @return MediaFolder
      */
-    public function removeParent(): self
+    public function removeParent(): MediaFolder
     {
         $this->parent = null;
         return $this;
