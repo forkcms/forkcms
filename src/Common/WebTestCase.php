@@ -62,7 +62,9 @@ abstract class WebTestCase extends BaseWebTestCase
     protected function emptyTestDatabase(SpoonDatabase $database)
     {
         foreach ($database->getTables() as $table) {
-            $database->drop($table);
+            $database->execute(
+                'SET FOREIGN_KEY_CHECKS = 0; DROP TABLE IF EXISTS ' . $table . '; SET FOREIGN_KEY_CHECKS = 1;'
+            );
         }
     }
 
