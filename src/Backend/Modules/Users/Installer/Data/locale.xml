@@ -149,6 +149,18 @@
         <translation language="es"><![CDATA[Un usuario con esta dirección de email ha sido eliminado. <a href="%1$s">Restaurar este usuario</a>.]]></translation>
         <translation language="el"><![CDATA[Ο χρήστης με αυτό το email διεγράφη. <a href="%1$s">Επαναφορά του χρήστη</a>.]]></translation>
       </item>
+      <item type="label" name="LastLogins">
+        <translation language="nl"><![CDATA[Laatste logins]]></translation>
+        <translation language="en"><![CDATA[Last logins]]></translation>
+        <translation language="it"><![CDATA[Ultimi login]]></translation>
+        <translation language="ru"><![CDATA[Последние логины]]></translation>
+        <translation language="zh"><![CDATA[上次登录]]></translation>
+        <translation language="fr"><![CDATA[Derniers liens]]></translation>
+        <translation language="de"><![CDATA[Letzte Anmeldungen]]></translation>
+        <translation language="hu"><![CDATA[Utolsó bejelentkezés]]></translation>
+        <translation language="es"><![CDATA[Últimos logins]]></translation>
+        <translation language="el"><![CDATA[Τελευταίες συνδέσεις]]></translation>
+      </item>
       <item type="error" name="NonExisting">
         <translation language="nl"><![CDATA[Deze gebruiker bestaat niet.]]></translation>
         <translation language="en"><![CDATA[This user doesn't exist.]]></translation>
