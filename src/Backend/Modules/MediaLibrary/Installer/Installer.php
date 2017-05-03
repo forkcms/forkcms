@@ -3,7 +3,6 @@
 namespace Backend\Modules\MediaLibrary\Installer;
 
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -16,10 +15,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         $this->addModule('MediaLibrary');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
@@ -30,10 +26,7 @@ class Installer extends ModuleInstaller
         $this->loadMediaFolders();
     }
 
-    /**
-     * Configure backend navigation
-     */
-    protected function configureBackendNavigation()
+    protected function configureBackendNavigation(): void
     {
         // Navigation for "modules"
         $this->setNavigation(
@@ -48,10 +41,7 @@ class Installer extends ModuleInstaller
         );
     }
 
-    /**
-     * Configure module rights
-     */
-    protected function configureModuleRights()
+    protected function configureModuleRights(): void
     {
         // Set module rights
         $this->setModuleRights(1, $this->getModule());
@@ -59,7 +49,7 @@ class Installer extends ModuleInstaller
         $this->configureModuleRightsForMediaFolder();
     }
 
-    protected function configureModuleRightsForMediaItem()
+    protected function configureModuleRightsForMediaItem(): void
     {
         $this->setActionRights(1, $this->getModule(), 'MediaItemAddMovie'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaItemCleanup');
@@ -72,7 +62,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaItemUpload'); // Action and AJAX
     }
 
-    protected function configureModuleRightsForMediaFolder()
+    protected function configureModuleRightsForMediaFolder(): void
     {
         $this->setActionRights(1, $this->getModule(), 'MediaFolderAdd'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderDelete');
@@ -83,18 +73,12 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaFolderMovie'); // AJAX
     }
 
-    /**
-     * Configure settings
-     */
-    protected function configureSettings()
+    protected function configureSettings(): void
     {
         $this->setSetting($this->getModule(), 'upload_number_of_sharding_folders', 15);
     }
 
-    /**
-     * Create entity tables
-     */
-    private function createEntityTables()
+    private function createEntityTables(): void
     {
         Model::get('fork.entity.create_schema')->forEntityClasses(
             [
@@ -106,10 +90,7 @@ class Installer extends ModuleInstaller
         );
     }
 
-    /**
-     * Load Media Folders
-     */
-    protected function loadMediaFolders()
+    protected function loadMediaFolders(): void
     {
         // Handle the create MediaFolder
         Model::get('command_bus')->handle(new CreateMediaFolder('default', 1));

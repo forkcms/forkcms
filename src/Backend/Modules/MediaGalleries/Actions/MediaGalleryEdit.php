@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaGalleries\Actions;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery;
+use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryType;
 
@@ -13,12 +14,7 @@ use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryType;
  */
 class MediaGalleryEdit extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     *
-     * @return void
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -31,7 +27,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
                 $mediaGallery
             ),
             [
-                'data_class' => UpdateMediaGallery::class
+                'data_class' => UpdateMediaGallery::class,
             ]
         );
 
@@ -68,9 +64,6 @@ class MediaGalleryEdit extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * @return MediaGallery
-     */
     private function getMediaGallery(): MediaGallery
     {
         try {
@@ -78,21 +71,17 @@ class MediaGalleryEdit extends BackendBaseActionEdit
 
             /** @var MediaGallery|null $mediaGallery */
             return $this->get('media_galleries.repository.gallery')->findOneById($id);
-        } catch (\Exception $e) {
+        } catch (MediaGalleryNotFound $mediaGalleryNotFound) {
             $this->redirect(
                 $this->getBackLink(
                     [
-                        'error' => 'non-existing-media-gallery'
+                        'error' => 'non-existing-media-gallery',
                     ]
                 )
             );
         }
     }
 
-    /**
-     * @param array $parameters
-     * @return string
-     */
     private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(

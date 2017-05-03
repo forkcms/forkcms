@@ -17,21 +17,11 @@ final class TypeDBALType extends StringType
         return self::NAME;
     }
 
-    /**
-     * @param mixed $value
-     * @param AbstractPlatform $platform
-     * @return Type
-     */
     public function convertToPHPValue($value, AbstractPlatform $platform): Type
     {
         return Type::fromString($value);
     }
 
-    /**
-     * @param mixed $value
-     * @param AbstractPlatform $platform
-     * @return string
-     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
         return (string) $value;

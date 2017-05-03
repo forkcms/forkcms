@@ -15,12 +15,6 @@ final class DeleteMediaGalleryHandler
     /** @var MediaItemRepository */
     private $mediaItemRepository;
 
-    /**
-     * DeleteMediaGalleryHandler constructor.
-     *
-     * @param MediaGalleryRepository $mediaGalleryRepository
-     * @param MediaItemRepository $mediaItemRepository
-     */
     public function __construct(
         MediaGalleryRepository $mediaGalleryRepository,
         MediaItemRepository $mediaItemRepository
@@ -29,10 +23,7 @@ final class DeleteMediaGalleryHandler
         $this->mediaItemRepository = $mediaItemRepository;
     }
 
-    /**
-     * @param DeleteMediaGallery $deleteMediaGallery
-     */
-    public function handle(DeleteMediaGallery $deleteMediaGallery)
+    public function handle(DeleteMediaGallery $deleteMediaGallery): void
     {
         // We should delete all MediaItem entities which were connected to this MediaGallery
         if ($deleteMediaGallery->deleteAllMediaItems) {

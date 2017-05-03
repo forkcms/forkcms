@@ -6,8 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -24,10 +22,7 @@ class CacheClearCommand extends ContainerAwareCommand
      */
     protected $clearAll = false;
 
-    /**
-     * Configure
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('media_library:cache:clear')
@@ -37,33 +32,24 @@ class CacheClearCommand extends ContainerAwareCommand
                 null,
                 InputOption::VALUE_NONE,
                 'If set, the backend cached thumbnails will be cleared as well.'
-            )
-        ;
+            );
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return void
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->checkOptions($input);
         $this->deleteCachedFolders();
         $output->writeln('<info>' . $this->getMessage() . '</info>');
     }
 
-    /**
-     * @param InputInterface $input
-     */
-    private function checkOptions(InputInterface $input)
+    private function checkOptions(InputInterface $input): void
     {
         if ($input->getOption('all')) {
             $this->clearAll = true;
         }
     }
 
-    private function deleteCachedFolders()
+    private function deleteCachedFolders(): void
     {
         $foldersToDelete = $this->getFoldersToDelete();
         foreach ($foldersToDelete as $folderPath) {
@@ -71,9 +57,6 @@ class CacheClearCommand extends ContainerAwareCommand
         }
     }
 
-    /**
-     * @return string
-     */
     public function getMessage(): string
     {
         if ($this->clearAll) {
@@ -83,9 +66,6 @@ class CacheClearCommand extends ContainerAwareCommand
         return '[OK] Frontend cache cleared for "MediaLibrary".';
     }
 
-    /**
-     * @return array
-     */
     public function getFoldersToDelete(): array
     {
         $finder = new Finder();
@@ -96,8 +76,11 @@ class CacheClearCommand extends ContainerAwareCommand
             $results->exclude('media_library_backend_thumbnail');
         }
 
-        return array_map(function ($folder) {
-            return $folder->getPathname();
-        }, iterator_to_array($results));
+        return array_map(
+            function ($folder) {
+                return $folder->getPathname();
+            },
+            iterator_to_array($results)
+        );
     }
 }

@@ -8,11 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class MediaItemType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $label = 'lbl.Title';
 
@@ -24,27 +20,18 @@ class MediaItemType extends AbstractType
         $this->addField($builder, 'title', $label);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param $name
-     * @param $label
-     */
-    private function addField(FormBuilderInterface $builder, $name, $label)
+    private function addField(FormBuilderInterface $builder, string $name, string $label): void
     {
-        $builder
-            ->add(
-                $name,
-                TextType::class,
-                [
-                    'label' => $label,
-                ]
-            );
+        $builder->add(
+            $name,
+            TextType::class,
+            [
+                'label' => $label,
+            ]
+        );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'media_item';
     }

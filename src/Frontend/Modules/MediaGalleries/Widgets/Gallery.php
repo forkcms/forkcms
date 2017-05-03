@@ -3,7 +3,6 @@
 namespace Frontend\Modules\MediaGalleries\Widgets;
 
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Frontend\Core\Engine\Base\Widget as BackendBaseWidget;
 
 /**
@@ -11,10 +10,7 @@ use Frontend\Core\Engine\Base\Widget as BackendBaseWidget;
  */
 class Gallery extends BackendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
@@ -38,10 +34,7 @@ class Gallery extends BackendBaseWidget
         $this->tpl->assign('mediaGallery', $mediaGallery);
     }
 
-    /**
-     * @return MediaGallery|null
-     */
-    private function getMediaGallery()
+    private function getMediaGallery(): ?MediaGallery
     {
         if (!array_key_exists('gallery_id', $this->data)) {
             return null;

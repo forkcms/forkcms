@@ -6,19 +6,12 @@ use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
-use Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
  */
 class MediaItemDataGrid extends DataGridDB
 {
-    /**
-     * MediaItemDataGrid constructor.
-     *
-     * @param Type $type
-     * @param int|null $folderId
-     */
     public function __construct(Type $type, int $folderId = null)
     {
         parent::__construct(
@@ -39,19 +32,12 @@ class MediaItemDataGrid extends DataGridDB
         $this->addMassActions($type);
     }
 
-    /**
-     * @param Type $type
-     */
-    private function addMassActions(Type $type)
+    private function addMassActions(Type $type): void
     {
         $this->setMassActionCheckboxes('check', '[id]');
         $this->setMassAction($this->getMassActionDropdown($type));
     }
 
-    /**
-     * @param Type $type
-     * @return array
-     */
     private function getColumnHeaderLabels(Type $type): array
     {
         if ($type->isMovie()) {
@@ -68,10 +54,6 @@ class MediaItemDataGrid extends DataGridDB
         ];
     }
 
-    /**
-     * @param Type $type
-     * @return array
-     */
     private function getColumnsThatNeedToBeHidden(Type $type): array
     {
         if ($type->isImage()) {
@@ -85,31 +67,17 @@ class MediaItemDataGrid extends DataGridDB
         return ['storageType', 'shardingFolderName', 'type', 'mime', 'url'];
     }
 
-    /**
-     * @param Type $type
-     * @param int|null $folderId
-     * @return DataGridDB
-     */
     public static function getDataGrid(Type $type, int $folderId = null): DataGridDB
     {
         return new self($type, $folderId);
     }
 
-    /**
-     * @param Type $type
-     * @param int|null $folderId
-     * @return string
-     */
     public static function getHtml(Type $type, int $folderId = null): string
     {
         return (string) (new self($type, $folderId))->getContent();
     }
 
-    /**
-     * @param Type $type
-     * @return \SpoonFormDropdown
-     */
-    private function getMassActionDropdown(Type $type)
+    private function getMassActionDropdown(Type $type): \SpoonFormDropdown
     {
         $ddmMediaItemMassAction = new \SpoonFormDropdown(
             'action',
@@ -125,11 +93,6 @@ class MediaItemDataGrid extends DataGridDB
         return $ddmMediaItemMassAction;
     }
 
-    /**
-     * @param Type $type
-     * @param int|null $folderId
-     * @return array
-     */
     private function getParameters(Type $type, int $folderId = null): array
     {
         $parameters = [(string) $type];
@@ -141,20 +104,12 @@ class MediaItemDataGrid extends DataGridDB
         return $parameters;
     }
 
-    /**
-     * @param int|null $folderId
-     * @return string
-     */
     private function getWhere(int $folderId = null): string
     {
         return ($folderId !== null) ? ' AND i.mediaFolderId = ?' : '';
     }
 
-    /**
-     * @param Type $type
-     * @param int|null $folderId
-     */
-    private function setExtras(Type $type, int $folderId = null)
+    private function setExtras(Type $type, int $folderId = null): void
     {
         $editActionUrl = Model::createURLForAction('MediaItemEdit');
         $this->setHeaderLabels($this->getColumnHeaderLabels($type));
@@ -166,7 +121,7 @@ class MediaItemDataGrid extends DataGridDB
                 'url',
                 'title',
                 'num_connected',
-                'mime'
+                'mime',
             ],
             'title'
         );
@@ -175,7 +130,7 @@ class MediaItemDataGrid extends DataGridDB
             'title',
             $editActionUrl
             . '&id=[id]'
-            . (($folderId) ? '&folder=' . $folderId : '')
+            . ($folderId ? '&folder=' . $folderId : '')
         );
 
         if ($type->isMovie()) {
@@ -183,7 +138,7 @@ class MediaItemDataGrid extends DataGridDB
                 'url',
                 $editActionUrl
                 . '&id=[id]'
-                . (($folderId) ? '&folder=' . $folderId : '')
+                . ($folderId ? '&folder=' . $folderId : '')
             );
         }
 
@@ -191,7 +146,7 @@ class MediaItemDataGrid extends DataGridDB
             'num_connected',
             $editActionUrl
             . '&id=[id]'
-            . (($folderId) ? '&folder=' . $folderId : '')
+            . ($folderId ? '&folder=' . $folderId : '')
         );
 
         // If we have an image, show the image
@@ -206,7 +161,7 @@ class MediaItemDataGrid extends DataGridDB
                     Model::createURLForAction('MediaItemEdit') . '&id=[id]' . '&folder=' . $folderId,
                     0,
                     0,
-                    'media_library_backend_thumbnail'
+                    'media_library_backend_thumbnail',
                 ],
                 'url',
                 true

@@ -101,7 +101,7 @@ class MediaFolder implements JsonSerializable
      */
     protected function __construct(
         string $name,
-        MediaFolder $parent = null,
+        ?MediaFolder $parent,
         int $userId
     ) {
         $this->setName($name);
@@ -111,15 +111,9 @@ class MediaFolder implements JsonSerializable
         $this->children = new ArrayCollection();
     }
 
-    /**
-     * @param string $name
-     * @param MediaFolder|null $parent
-     * @param int $userId
-     * @return MediaFolder
-     */
     public static function create(
         string $name,
-        MediaFolder $parent = null,
+        ?MediaFolder $parent,
         int $userId
     ) : MediaFolder {
         return new self(
@@ -129,15 +123,11 @@ class MediaFolder implements JsonSerializable
         );
     }
 
-    /**
-     * @param string $name
-     * @param MediaFolder|null $parent
-     */
     public function update(string $name, MediaFolder $parent = null)
     {
         $this->setName($name);
 
-        if ($parent instanceof MediaFolder) {
+        if ($parent instanceof self) {
             $this->setParent($parent);
 
             return;
@@ -146,14 +136,10 @@ class MediaFolder implements JsonSerializable
         $this->removeParent();
     }
 
-    /**
-     * @param MediaFolderDataTransferObject $mediaFolderDataTransferObject
-     * @return MediaFolder
-     */
-    public static function fromDataTransferObject(MediaFolderDataTransferObject $mediaFolderDataTransferObject): MediaFolder
-    {
+    public static function fromDataTransferObject(
+        MediaFolderDataTransferObject $mediaFolderDataTransferObject
+    ): MediaFolder {
         if ($mediaFolderDataTransferObject->hasExistingMediaFolder()) {
-            /** @var MediaFolder $mediaFolder */
             $mediaFolder = $mediaFolderDataTransferObject->getMediaFolderEntity();
 
             $mediaFolder->update(
@@ -164,7 +150,6 @@ class MediaFolder implements JsonSerializable
             return $mediaFolder;
         }
 
-        /** @var MediaFolder $mediaFolder */
         return self::create(
             $mediaFolderDataTransferObject->name,
             $mediaFolderDataTransferObject->parent,
@@ -172,9 +157,6 @@ class MediaFolder implements JsonSerializable
         );
     }
 
-    /**
-     * @return array
-     */
     public function jsonSerialize(): array
     {
         return [
@@ -188,134 +170,87 @@ class MediaFolder implements JsonSerializable
         ];
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return MediaFolder|null
-     */
-    public function getParent()
+    public function getParent(): ?MediaFolder
     {
         return $this->parent;
     }
 
-    /**
-     * @return bool
-     */
     public function hasParent(): bool
     {
-        return $this->parent instanceof MediaFolder;
+        return $this->parent instanceof self;
     }
 
-    /**
-     * Remove parent
-     *
-     * @return MediaFolder
-     */
     public function removeParent(): self
     {
         $this->parent = null;
+
         return $this;
     }
 
-    /**
-     * @param MediaFolder $parent
-     * @return $this
-     */
-    public function setParent(MediaFolder $parent)
+    public function setParent(MediaFolder $parent): self
     {
         $this->parent = $parent;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    private function setName(string $name)
+    private function setName(string $name): self
     {
         $this->name = Uri::getUrl($name);
+
+        return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getCreatedOn(): \DateTime
     {
         return $this->createdOn;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getEditedOn(): \DateTime
     {
         return $this->editedOn;
     }
 
-    /**
-     * @return Collection
-     */
     public function getItems(): Collection
     {
         return $this->items;
     }
 
-    /**
-     * @return bool
-     */
     public function hasItems(): bool
     {
         return $this->items->count() > 0;
     }
 
-    /**
-     * @return bool
-     */
     public function hasConnectedItems(): bool
     {
         return self::hasConnectedMediaItems($this->items);
     }
 
-    /**
-     * @return Collection
-     */
     public function getChildren(): Collection
     {
         return $this->children;
     }
 
-    /**
-     * @return bool
-     */
     public function hasChildren(): bool
     {
         return $this->children->count() > 0;
     }
 
-    /**
-     * @return bool
-     */
     public function hasChildrenWithConnectedItems(): bool
     {
         /** @var MediaFolder $mediaFolder */
@@ -328,30 +263,19 @@ class MediaFolder implements JsonSerializable
         return false;
     }
 
-    /**
-     * @param MediaFolder $mediaFolder
-     * @return bool
-     */
     private static function hasFolderChildrenWithConnectedItems(MediaFolder $mediaFolder): bool
     {
-        /** @var MediaItem $mediaItem */
         if (self::hasConnectedMediaItems($mediaFolder->getItems())) {
             return true;
         }
 
         if ($mediaFolder->hasChildren()) {
-            foreach ($mediaFolder->getChildren() as $childFolder) {
-                return self::hasFolderChildrenWithConnectedItems($childFolder);
-            }
+            return self::hasFolderChildrenWithConnectedItems($mediaFolder->getChildren()->first());
         }
 
         return false;
     }
 
-    /**
-     * @param Collection $mediaItems
-     * @return bool
-     */
     private static function hasConnectedMediaItems(Collection $mediaItems): bool
     {
         /** @var MediaItem $mediaItem */

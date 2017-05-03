@@ -3,7 +3,6 @@
 namespace Backend\Modules\MediaLibrary\Builder\MediaFolder;
 
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use stdClass;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -41,9 +40,6 @@ final class MediaFolderCache
         }
     }
 
-    /**
-     * @return array
-     */
     public function get(): array
     {
         if (!$this->cache instanceof CacheItemPoolInterface) {
@@ -57,14 +53,10 @@ final class MediaFolderCache
         $navigation = $this->buildCacheTree();
         $cachedNavigation->set($navigation);
         $this->cache->save($cachedNavigation);
+
         return $navigation;
     }
 
-    /**
-     * @param MediaFolder|null $parent
-     * @param string|null $parentSlug
-     * @return array
-     */
     private function buildCacheTree(MediaFolder $parent = null, string $parentSlug = null): array
     {
         $navigationItems = $this->getMediaFoldersForParent($parent);
@@ -82,11 +74,6 @@ final class MediaFolderCache
         );
     }
 
-    /**
-     * @param MediaFolder $mediaFolder
-     * @param string|null $parentSlug
-     * @return MediaFolderCacheItem
-     */
     private function buildCacheItem(MediaFolder $mediaFolder, string $parentSlug = null): MediaFolderCacheItem
     {
         $cacheItem = new MediaFolderCacheItem($mediaFolder, $parentSlug);
@@ -99,10 +86,6 @@ final class MediaFolderCache
         return $cacheItem;
     }
 
-    /**
-     * @param MediaFolder $parent
-     * @return array
-     */
     private function getMediaFoldersForParent(MediaFolder $parent = null): array
     {
         return (array) $this->container->get('media_library.repository.folder')->findBy(

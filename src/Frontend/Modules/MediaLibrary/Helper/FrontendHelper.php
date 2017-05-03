@@ -19,9 +19,6 @@ class FrontendHelper
     /** @var MediaGroupMediaItemRepository */
     protected $mediaGroupMediaItemRepository;
 
-    /**
-     * @param MediaGroupMediaItemRepository $mediaGroupMediaItemRepository
-     */
     public function __construct(MediaGroupMediaItemRepository $mediaGroupMediaItemRepository)
     {
         $this->mediaGroupMediaItemRepository = $mediaGroupMediaItemRepository;
@@ -35,6 +32,7 @@ class FrontendHelper
      * @param string $methodForMediaGroup - F.e.: "getImagesMediaGroup"
      * @param string $newVariableName - F.e.: "image", this variable will be assigned in your entity
      * @param bool $onlyGetTheFirstMediaItem - true = only get the first item, false = get all items
+     *
      * @throws \Exception
      */
     public function addMediaItemsToEntities(
@@ -42,7 +40,7 @@ class FrontendHelper
         string $methodForMediaGroup,
         string $newVariableName,
         bool $onlyGetTheFirstMediaItem = true
-    ) {
+    ): void {
         // Init variables
         $mediaGroupIds = [];
         $entityKeys = [];
@@ -56,14 +54,16 @@ class FrontendHelper
             }
 
             // Check if variable already exists or not
-            if ($counter == 1) {
+            if ($counter === 1) {
                 if (property_exists($entities[$entityKey], $newVariableName)) {
-                    throw new \Exception('The $newVariableName "' . $newVariableName . '" already exists, choose another name.');
+                    throw new \Exception(
+                        'The $newVariableName "' . $newVariableName . '" already exists, choose another name.'
+                    );
                 }
             }
 
             // Check if media group is not null
-            if ($entity->{$methodForMediaGroup}() == null) {
+            if ($entity->{$methodForMediaGroup}() === null) {
                 // skip this item
                 continue;
             }
@@ -72,7 +72,7 @@ class FrontendHelper
             $mediaGroupIds[(string) $entity->{$methodForMediaGroup}()->getId()] = $entity->getId();
             $entityKeys[$entity->getId()] = $entityKey;
 
-            $counter++;
+            ++$counter;
         }
 
         // Define all MediaGroupMediaItem entities
@@ -89,10 +89,12 @@ class FrontendHelper
             if ($onlyGetTheFirstMediaItem) {
                 // Define frontend media item
                 $entities[$entityKey]->{$newVariableName} = $mediaItem;
-            } else {
-                // Define frontend media item
-                $entities[$entityKey]->{$newVariableName}[] = $mediaItem;
+
+                continue;
             }
+
+            // Define frontend media item
+            $entities[$entityKey]->{$newVariableName}[] = $mediaItem;
         }
     }
 
@@ -103,7 +105,7 @@ class FrontendHelper
      * @param Header $header @todo: when we have a header in our services, use that one instead and remove this method variable
      * @param int $maximumItems Default is null, which means infinite images will be added to header
      */
-    public function addOpenGraphImagesForMediaGroup(MediaGroup $mediaGroup, Header $header, int $maximumItems = 0)
+    public function addOpenGraphImagesForMediaGroup(MediaGroup $mediaGroup, Header $header, int $maximumItems = 0): void
     {
         // Define variables
         $counter = 0;
@@ -115,7 +117,7 @@ class FrontendHelper
             }
 
             if ($this->addOpenGraphImageForMediaItem($connectedItem->getItem(), $header)) {
-                $counter++;
+                ++$counter;
             }
         }
     }
@@ -123,6 +125,7 @@ class FrontendHelper
     /**
      * @param MediaItem $mediaItem
      * @param Header $header @todo: when we have a header in our services, use that one instead and remove this method variable
+     *
      * @return bool
      */
     public function addOpenGraphImageForMediaItem(MediaItem $mediaItem, Header $header): bool
@@ -161,8 +164,10 @@ class FrontendHelper
      * @param string $mediaGroupId The MediaGroup id you want to parse
      * @param string $title You can give your optional custom title.
      * @param string $module You can parse a widget from a custom module. Default is the "MediaLibrary" module.
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function parseWidget(
         string $mediaWidgetAction,
@@ -179,10 +184,12 @@ class FrontendHelper
             FrontendModel::get('kernel'),
             $module,
             $mediaWidgetAction,
-            serialize([
-                'group_id' => $mediaGroupId,
-                'title' => $title,
-            ])
+            serialize(
+                [
+                    'group_id' => $mediaGroupId,
+                    'title' => $title,
+                ]
+            )
         );
 
         return $this->parseWidgetContent($widget);
@@ -190,8 +197,10 @@ class FrontendHelper
 
     /**
      * @param FrontendBlockWidget $widget
-     * @return string
+     *
      * @throws \Exception
+     *
+     * @return string
      */
     private function parseWidgetContent(FrontendBlockWidget $widget): string
     {

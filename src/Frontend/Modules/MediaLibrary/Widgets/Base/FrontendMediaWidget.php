@@ -15,19 +15,7 @@ class FrontendMediaWidget extends FrontendBaseWidget
      */
     protected $mediaGroup;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
-    {
-        // Will probably add some CSS/JS to the header
-        parent::execute();
-    }
-
-    /**
-     * Load data
-     */
-    protected function loadData()
+    protected function loadData(): void
     {
         // We are loading in the MediaGroup for a custom module
         if (isset($this->data['group_id'])) {
@@ -44,10 +32,7 @@ class FrontendMediaWidget extends FrontendBaseWidget
         );
     }
 
-    /**
-     * Parse
-     */
-    protected function parse()
+    protected function parse(): void
     {
         // Add OpenGraph images for Facebook scraper
         $this->get('media_library.helper.frontend')->addOpenGraphImagesForMediaGroup(

@@ -9,7 +9,7 @@ parameters:
     media_library.movie_mime_types: [video/x-msvideo, video/mp4, application/mp4]
 
     media_library.audio_extensions: [mp3, mp4a, wav]
-    media_library.audio_mime_types: [audio/mpeg3, video/mpeg, video/x-mpeg, audio/x-mpeg-3, audio/mp4, audio/wav, audio/x-wav]
+    media_library.audio_mime_types: [audio/mpeg3, video/mpeg, video/x-mpeg, audio/x-mpeg-3, audio/mp4, audio/wav, audio/x-wav, audio/mpeg]
 
 imports:
   - { resource: repositories.yml }

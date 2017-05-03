@@ -6,14 +6,14 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDataGrid;
 
 class MediaItemIndex extends BackendBaseActionIndex
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->parse();
@@ -21,33 +21,29 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * @param MediaFolder|null $mediaFolder
-     * @return array
-     */
     private function getDataGrids(MediaFolder $mediaFolder = null): array
     {
-        return array_map(function ($type) use ($mediaFolder) {
-            /** @var DataGridDB $dataGrid */
-            $dataGrid = MediaItemDataGrid::getDataGrid(
-                Type::fromString($type),
-                ($mediaFolder !== null) ? $mediaFolder->getId() : null
-            );
+        return array_map(
+            function ($type) use ($mediaFolder) {
+                /** @var DataGridDB $dataGrid */
+                $dataGrid = MediaItemDataGrid::getDataGrid(
+                    Type::fromString($type),
+                    ($mediaFolder !== null) ? $mediaFolder->getId() : null
+                );
 
-            return [
-                'label' => Language::lbl('MediaMultiple' . ucfirst($type)),
-                'tabName' => 'tab' . ucfirst($type),
-                'mediaType' => $type,
-                'html' => $dataGrid->getContent(),
-                'numberOfResults' => $dataGrid->getNumResults(),
-            ];
-        }, Type::POSSIBLE_VALUES);
+                return [
+                    'label' => Language::lbl('MediaMultiple' . ucfirst($type)),
+                    'tabName' => 'tab' . ucfirst($type),
+                    'mediaType' => $type,
+                    'html' => $dataGrid->getContent(),
+                    'numberOfResults' => $dataGrid->getNumResults(),
+                ];
+            },
+            Type::POSSIBLE_VALUES
+        );
     }
 
-    /**
-     * @return MediaFolder|null
-     */
-    private function getMediaFolder()
+    private function getMediaFolder(): ?MediaFolder
     {
         // Define folder id
         $id = $this->getParameter('folder', 'int', 0);
@@ -55,16 +51,12 @@ class MediaItemIndex extends BackendBaseActionIndex
         try {
             /** @var MediaFolder mediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
-        } catch (\Exception $e) {
+        } catch (MediaFolderNotFound $mediaFolderNotFound) {
             return null;
         }
     }
 
-    /**
-     * @param MediaFolder|null $mediaFolder
-     * @return array
-     */
-    private function getMediaFolders(MediaFolder $mediaFolder = null)
+    private function getMediaFolders(MediaFolder $mediaFolder = null): array
     {
         /** @var array $mediaFolders */
         $mediaFolders = $this->getMediaFoldersForDropdown($this->get('media_library.cache.media_folder')->get());
@@ -77,12 +69,7 @@ class MediaItemIndex extends BackendBaseActionIndex
         return $mediaFolders;
     }
 
-    /**
-     * @param array $navigationItems
-     * @param array $dropdownItems
-     * @return array
-     */
-    private function getMediaFoldersForDropdown(array $navigationItems, array &$dropdownItems = []): array
+    private function getMediaFoldersForDropdown(array $navigationItems, array $dropdownItems = []): array
     {
         /** @var MediaFolderCacheItem $cacheItem */
         foreach ($navigationItems as $cacheItem) {
@@ -96,18 +83,21 @@ class MediaItemIndex extends BackendBaseActionIndex
         return $dropdownItems;
     }
 
-    /**
-     * @param array $dataGrids
-     * @return bool
-     */
     private function hasResults(array $dataGrids): bool
     {
-        return array_sum(array_map(function ($dataGrid) {
-            return $dataGrid['numberOfResults'];
-        }, $dataGrids)) > 0;
+        $totalResultCount = array_sum(
+            array_map(
+                function ($dataGrid) {
+                    return $dataGrid['numberOfResults'];
+                },
+                $dataGrids
+            )
+        );
+
+        return $totalResultCount > 0;
     }
 
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -121,10 +111,7 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->parseMediaFolders($mediaFolder);
     }
 
-    /**
-     * @param MediaFolder|null $mediaFolder
-     */
-    private function parseDataGrids(MediaFolder $mediaFolder = null)
+    private function parseDataGrids(MediaFolder $mediaFolder = null): void
     {
         /** @var array $dataGrids */
         $dataGrids = $this->getDataGrids($mediaFolder);
@@ -133,7 +120,7 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->tpl->assign('hasResults', $this->hasResults($dataGrids));
     }
 
-    private function parseJSFiles()
+    private function parseJSFiles(): void
     {
         $this->header->addJS('jstree/jquery.tree.js', 'Pages');
         $this->header->addJS('jstree/lib/jquery.cookie.js', 'Pages');
@@ -141,13 +128,14 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->header->addJS('MediaLibraryFolders.js', 'MediaLibrary', true);
     }
 
-    /**
-     * @param MediaFolder|null $mediaFolder
-     */
-    private function parseMediaFolders(MediaFolder $mediaFolder = null)
+    private function parseMediaFolders(MediaFolder $mediaFolder = null): void
     {
         $this->tpl->assign('mediaFolder', $mediaFolder);
         $this->tpl->assign('mediaFolders', $this->getMediaFolders($mediaFolder));
-        $this->header->addJsData('MediaLibrary', 'openedFolderId', ($mediaFolder !== null) ? $mediaFolder->getId() : null);
+        $this->header->addJsData(
+            'MediaLibrary',
+            'openedFolderId',
+            ($mediaFolder !== null) ? $mediaFolder->getId() : null
+        );
     }
 }

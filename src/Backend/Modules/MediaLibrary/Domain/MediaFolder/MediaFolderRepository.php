@@ -3,27 +3,18 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaFolder;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Doctrine\ORM\EntityRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 
 final class MediaFolderRepository extends EntityRepository
 {
-    /**
-     * @param MediaFolder $mediaFolder
-     *
-     * We don't flush here, see http://disq.us/p/okjc6b
-     */
-    public function add(MediaFolder $mediaFolder)
+    public function add(MediaFolder $mediaFolder): void
     {
+        // We don't flush here, see http://disq.us/p/okjc6b
         $this->getEntityManager()->persist($mediaFolder);
     }
 
-    /**
-     * @param int $folderId
-     * @param array &$counts
-     */
-    private function bumpFolderCount(int $folderId, array &$counts)
+    private function bumpFolderCount(int $folderId, array &$counts): void
     {
         // Counts for folder doesn't exist
         if (!array_key_exists($folderId, $counts)) {
@@ -34,7 +25,7 @@ final class MediaFolderRepository extends EntityRepository
         }
 
         // Bump counts
-        $counts[$folderId] += 1;
+        ++$counts[$folderId];
     }
 
     /**
@@ -42,6 +33,7 @@ final class MediaFolderRepository extends EntityRepository
      *
      * @param string $name The requested folder name to check if exists.
      * @param MediaFolder|null $parent The parent MediaFolder where this folder should be in.
+     *
      * @return bool
      */
     public function existsByName(string $name, MediaFolder $parent = null): bool
@@ -55,19 +47,11 @@ final class MediaFolderRepository extends EntityRepository
         return $mediaFolder instanceof MediaFolder;
     }
 
-    /**
-     * @return MediaFolder
-     */
     public function findDefault(): MediaFolder
     {
         return $this->findBy([], ['name' => 'ASC'], 1)[0];
     }
 
-    /**
-     * @param int|null $id
-     * @return MediaFolder
-     * @throws \Exception
-     */
     public function findOneById(int $id = null): MediaFolder
     {
         if ($id === null) {
@@ -83,12 +67,6 @@ final class MediaFolderRepository extends EntityRepository
         return $mediaFolder;
     }
 
-    /**
-     * Get counts for media group
-     *
-     * @param MediaGroup $mediaGroup
-     * @return array
-     */
     public function getCountsForMediaGroup(MediaGroup $mediaGroup): array
     {
         // Init counts
@@ -102,13 +80,9 @@ final class MediaFolderRepository extends EntityRepository
         return $counts;
     }
 
-    /**
-     * @param MediaFolder $mediaFolder
-     *
-     * We don't flush here, see http://disq.us/p/okjc6b
-     */
-    public function remove(MediaFolder $mediaFolder)
+    public function remove(MediaFolder $mediaFolder): void
     {
+        // We don't flush here, see http://disq.us/p/okjc6b
         $this->getEntityManager()->remove($mediaFolder);
     }
 }

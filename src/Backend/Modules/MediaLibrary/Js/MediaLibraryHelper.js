@@ -881,7 +881,7 @@ jsBackend.mediaLibraryHelper.upload =
                         jsBackend.messages.add('success', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedSuccess'), succeeded.length));
                     // not everything is uploaded successful, show error message
                     } else {
-                        jsBackend.messages.add('error', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedError'), (succeeded.length + '","' + failed.length)));
+                        jsBackend.messages.add('danger', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedError'), (succeeded.length + '","' + failed.length)));
                     }
                 }
             }

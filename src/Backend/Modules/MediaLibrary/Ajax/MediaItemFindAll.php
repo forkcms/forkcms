@@ -4,7 +4,9 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Common\Exception\AjaxExitException;
@@ -17,10 +19,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     /** @var string */
     protected $selectedTab = 'image';
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -33,16 +32,12 @@ class MediaItemFindAll extends BackendBaseAJAXAction
             [
                 'media' => $this->loadMediaItems($mediaFolder),
                 'folder' => $mediaFolder !== null ? $mediaFolder->getId() : null,
-                'tab' => $this->selectedTab
+                'tab' => $this->selectedTab,
             ]
         );
     }
 
-    /**
-     * @return MediaFolder|null
-     * @throws AjaxExitException
-     */
-    private function getMediaFolder()
+    private function getMediaFolder(): ?MediaFolder
     {
         /** @var int $id */
         $id = $this->get('request')->request->getInt('folder_id', 0);
@@ -54,7 +49,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         try {
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
-        } catch (\Exception $e) {
+        } catch (MediaFolderNotFound $mediaFolderNotFound) {
             throw new AjaxExitException(Language::err('MediaFolderNotExists'));
         }
     }
@@ -62,7 +57,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     /**
      * @return MediaFolder|null
      */
-    private function getMediaFolderBasedOnMediaGroup()
+    private function getMediaFolderBasedOnMediaGroup(): ?MediaFolder
     {
         /** @var MediaFolder|null $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
@@ -71,10 +66,9 @@ class MediaItemFindAll extends BackendBaseAJAXAction
             return $mediaFolder;
         }
 
-        /** @var MediaGroup|null $mediaGroup */
         $mediaGroup = $this->getMediaGroup();
 
-        if ($mediaGroup === null || $mediaGroup->getConnectedItems()->count() == 0) {
+        if ($mediaGroup === null || $mediaGroup->getConnectedItems()->count() === 0) {
             if ($mediaFolder === null) {
                 return $this->get('media_library.repository.folder')->findDefault();
             }
@@ -92,11 +86,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         return $mediaItem->getFolder();
     }
 
-    /**
-     * @return MediaGroup|null
-     * @throws AjaxExitException
-     */
-    private function getMediaGroup()
+    private function getMediaGroup(): ?MediaGroup
     {
         /** @var string $id */
         $id = $this->get('request')->request->get('group_id', '');
@@ -108,15 +98,11 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         try {
             /** @var MediaGroup */
             return $this->get('media_library.repository.group')->findOneById($id);
-        } catch (\Exception $e) {
+        } catch (MediaGroupNotFound $mediaGroupNotFound) {
             return null;
         }
     }
 
-    /**
-     * @param MediaFolder|null $mediaFolder
-     * @return array
-     */
     private function loadMediaItems(MediaFolder $mediaFolder = null): array
     {
         if ($mediaFolder === null) {

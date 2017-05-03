@@ -9,11 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class TypeType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -35,17 +31,11 @@ class TypeType extends AbstractType
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'media_group_type';
     }
 
-    /**
-     * @return array
-     */
     private function getTypeChoices(): array
     {
         return array_map(
