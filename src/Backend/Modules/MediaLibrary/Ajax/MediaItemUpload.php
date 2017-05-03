@@ -163,7 +163,8 @@ class MediaItemUpload extends BackendBaseAJAXAction
         exit();
     }
 
-    /** This will retrieve the "intended" request method.  Normally, this is the
+    /**
+     * This will retrieve the "intended" request method.  Normally, this is the
      *  actual method of the request.  Sometimes, though, the intended request method
      *  must be hidden in the parameters of the request.  For example, when attempting to
      *  send a DELETE request in a cross-origin environment in IE9 or older, it is not
