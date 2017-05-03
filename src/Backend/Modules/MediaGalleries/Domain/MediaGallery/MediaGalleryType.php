@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use Backend\Core\Engine\Authentication;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -82,6 +83,7 @@ class MediaGalleryType extends AbstractType
                     'label' => 'lbl.MediaConnected',
                     'constraints' => [new Valid()],
                     'required' => false,
+                    'aspect_ratio' => AspectRatio::fromWidthAndHeight(1, 1)
                 ]
             );
     }
