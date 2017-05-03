@@ -123,15 +123,10 @@ class MediaItemUpload extends BackendBaseAJAXAction
             $result['uploadName']
         );
 
-        if ($this->get('media_library.manager.file')->exists(
-            $uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName']
-        )
-        ) {
+        $tempUploadPath = $uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'];
+        if ($this->get('media_library.manager.file')->exists($tempUploadPath)) {
             // Move file to correct folder
-            $this->get('media_library.manager.file')->rename(
-                $uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'],
-                $uploadDir . '/' . $newName
-            );
+            $this->get('media_library.manager.file')->rename($tempUploadPath, $uploadDir . '/' . $newName);
 
             // Remove the old folder
             $this->get('media_library.manager.file')->deleteFolder($uploadDir . '/' . $result['uuid']);
