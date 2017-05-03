@@ -91,6 +91,30 @@ final class Header extends Base\Object
                 'debug' => $this->getContainer()->getParameter('kernel.debug'),
             ]
         );
+
+        $this->addCoreJs();
+        $this->addCoreCss();
+    }
+
+    private function addCoreJs(): void
+    {
+        $this->addJS('/js/vendors/jquery.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/jquery-migrate.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/jquery-ui.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/bootstrap.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/typeahead.bundle.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/bootstrap-tagsinput.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('jquery/jquery.backend.js', 'Core', true, false, true, Priority::core());
+        $this->addJS('utils.js', 'Core', true, false, true, Priority::core());
+        $this->addJS('backend.js', 'Core', true, false, true, Priority::core());
+    }
+
+    private function addCoreCss(): void
+    {
+        $this->addCSS('/css/vendors/bootstrap-tagsinput.css', 'Core', true, true, true, Priority::core());
+        $this->addCSS('/css/vendors/bootstrap-tagsinput-typeahead.css', 'Core', true, true, true, Priority::core());
+        $this->addCSS('screen.css', 'Core', false, true, true, Priority::core());
+        $this->addCSS('debug.css', 'Core', false, true, true, Priority::debug());
     }
 
     /**
