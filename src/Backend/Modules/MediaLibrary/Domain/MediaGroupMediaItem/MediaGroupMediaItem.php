@@ -85,7 +85,7 @@ class MediaGroupMediaItem implements JsonSerializable
         MediaGroup $group,
         MediaItem $item,
         int $sequence
-    ) : self {
+    ): self {
         return new self(
             $group,
             $item,
