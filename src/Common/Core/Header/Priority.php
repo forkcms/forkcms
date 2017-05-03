@@ -150,4 +150,18 @@ final class Priority
     {
         return $this->equals(self::widget());
     }
+
+    /**
+     * @param string $module
+     *
+     * @return self
+     */
+    public static function forModule(string $module): self
+    {
+        if (ucfirst($module) === 'Core') {
+            return self::core();
+        }
+
+        return self::module();
+    }
 }

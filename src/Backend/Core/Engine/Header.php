@@ -21,7 +21,7 @@ use Backend\Core\Language\Language as BL;
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  */
-class Header extends Base\Object
+final class Header extends Base\Object
 {
     /**
      * The added css-files
@@ -125,20 +125,23 @@ class Header extends Base\Object
      * @param bool $overwritePath Should we overwrite the full path?
      * @param bool $minify Should the CSS be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
+     * @param Priority $priority the files are added based on the priority
+     *                           defaults to standard for full links or core or module for core or module css
      */
     public function addCSS(
         string $file,
         string $module = null,
         bool $overwritePath = false,
         bool $minify = true,
-        bool $addTimestamp = false
+        bool $addTimestamp = false,
+        Priority $priority = null
     ) {
         $module = $module ?? $this->url->getModule();
         $this->cssFiles->add(
             new Asset(
                 $overwritePath ? $file : $this->buildPathForModule($file, $module, 'Layout/Css'),
                 $addTimestamp,
-                $overwritePath ? Priority::standard() : Priority::module()
+                $priority ?? ($overwritePath ? Priority::standard() : Priority::forModule($module))
             ),
             $minify && !$this->getContainer()->getParameter('kernel.debug')
         );
@@ -154,19 +157,24 @@ class Header extends Base\Object
      * @param bool $minify Should the module be minified?
      * @param bool $overwritePath Should we overwrite the full path?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
+     * @param Priority $priority the files are added based on the priority
+     *                           defaults to standard for full links or core or module for core or module css
      */
     public function addJS(
         string $file,
         string $module = null,
         bool $minify = true,
         bool $overwritePath = false,
-        bool $addTimestamp = false
+        bool $addTimestamp = false,
+        Priority $priority = null
     ) {
+        $module = $module ?? $this->url->getModule();
+
         $this->jsFiles->add(
             new Asset(
                 $overwritePath ? $file : $this->buildPathForModule($file, $module ?? $this->url->getModule(), 'Js'),
                 $addTimestamp,
-                $overwritePath ? Priority::standard() : Priority::module()
+                $priority ?? ($overwritePath ? Priority::standard() : Priority::forModule($module))
             ),
             $minify
         );

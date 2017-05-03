@@ -120,7 +120,12 @@ class Block extends Object
         }
 
         // add css to the header
-        $this->header->addCSS($file, $minify, $addTimestamp, Priority::module());
+        $this->header->addCSS(
+            $file,
+            $minify,
+            $addTimestamp,
+            $overwritePath ? Priority::standard() : Priority::forModule($this->getModule())
+        );
     }
 
     /**
@@ -139,7 +144,12 @@ class Block extends Object
         }
 
         // add js to the header
-        $this->header->addJS($file, $minify, $addTimestamp, Priority::module());
+        $this->header->addJS(
+            $file,
+            $minify,
+            $addTimestamp,
+            $overwritePath ? Priority::standard() : Priority::forModule($this->getModule())
+        );
     }
 
     /**
