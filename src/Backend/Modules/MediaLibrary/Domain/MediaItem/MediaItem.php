@@ -434,21 +434,16 @@ class MediaItem implements JsonSerializable
         );
     }
 
-    /**
-     * @param string|null $filter The LiipImagineBundle filter name you want to use.
-     *
-     * @return string
-     */
-    public function getWebPath(string $filter = null): string
+    public function getWebPath(string $liipImagineBundleFilter = null): string
     {
         /** @var StorageProviderInterface $storage */
         $storage = Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType());
 
-        if (!$storage instanceof LiipImagineBundleStorageProviderInterface || $filter === null) {
+        if (!$storage instanceof LiipImagineBundleStorageProviderInterface || $liipImagineBundleFilter === null) {
             return $storage->getWebPath($this);
         }
 
-        return $storage->getWebPathWithFilter($this, $filter);
+        return $storage->getWebPathWithFilter($this, $liipImagineBundleFilter);
     }
 
     /**

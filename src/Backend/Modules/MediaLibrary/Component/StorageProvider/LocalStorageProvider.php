@@ -70,24 +70,18 @@ class LocalStorageProvider implements LocalStorageProviderInterface
         return $this->getWebDir() . '/' . $mediaItem->getFullUrl();
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     * @param string|null $filter The LiipImagineBundle filter name you want to use.
-     *
-     * @return string
-     */
-    public function getWebPathWithFilter(MediaItem $mediaItem, string $filter = null): string
+    public function getWebPathWithFilter(MediaItem $mediaItem, string $liipImagineBundleFilter = null): string
     {
         $webPath = $this->getWebPath($mediaItem);
 
-        if ($filter === null && !$mediaItem->getType()->isImage()) {
+        if ($liipImagineBundleFilter === null && !$mediaItem->getType()->isImage()) {
             return $webPath;
         }
 
-        if ($filter === 'backend') {
-            $filter = 'media_library_backend_thumbnail';
+        if ($liipImagineBundleFilter === 'backend') {
+            $liipImagineBundleFilter = 'media_library_backend_thumbnail';
         }
 
-        return $this->cacheManager->getBrowserPath($webPath, $filter);
+        return $this->cacheManager->getBrowserPath($webPath, $liipImagineBundleFilter);
     }
 }
