@@ -74,7 +74,7 @@ class LocalStorageProvider implements LocalStorageProviderInterface
     {
         $webPath = $this->getWebPath($mediaItem);
 
-        if ($liipImagineBundleFilter === null && !$mediaItem->getType()->isImage()) {
+        if ($liipImagineBundleFilter === null || !$mediaItem->getType()->isImage()) {
             return $webPath;
         }
 
