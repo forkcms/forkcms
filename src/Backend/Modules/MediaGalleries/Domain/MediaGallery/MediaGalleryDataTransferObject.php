@@ -44,11 +44,6 @@ class MediaGalleryDataTransferObject
      */
     public $mediaGroup;
 
-    /**
-     * MediaGalleryDataTransferObject constructor.
-     *
-     * @param MediaGallery|null $mediaGallery
-     */
     public function __construct(MediaGallery $mediaGallery = null)
     {
         $this->mediaGalleryEntity = $mediaGallery;
@@ -65,26 +60,17 @@ class MediaGalleryDataTransferObject
         $this->mediaGroup = $mediaGallery->getMediaGroup();
     }
 
-    /**
-     * @return MediaGallery
-     */
     public function getMediaGalleryEntity(): MediaGallery
     {
         return $this->mediaGalleryEntity;
     }
 
-    /**
-     * @return bool
-     */
     public function hasExistingMediaGallery(): bool
     {
         return $this->mediaGalleryEntity instanceof MediaGallery;
     }
 
-    /**
-     * @param MediaGallery $mediaGalleryEntity
-     */
-    public function setMediaGalleryEntity(MediaGallery $mediaGalleryEntity)
+    public function setMediaGalleryEntity(MediaGallery $mediaGalleryEntity): void
     {
         $this->mediaGalleryEntity = $mediaGalleryEntity;
     }

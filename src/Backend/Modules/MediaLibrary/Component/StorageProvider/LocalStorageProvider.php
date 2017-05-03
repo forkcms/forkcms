@@ -19,14 +19,6 @@ class LocalStorageProvider implements LocalStorageProviderInterface
     /** @var string */
     protected $folderPath;
 
-    /**
-     * LocalStorageProvider constructor.
-     *
-     * @param string $folderPath
-     * @param string $baseUrl
-     * @param string $basePath
-     * @param CacheManager $cacheManager
-     */
     public function __construct(
         string $folderPath,
         string $baseUrl,
@@ -39,28 +31,16 @@ class LocalStorageProvider implements LocalStorageProviderInterface
         $this->cacheManager = $cacheManager;
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     * @return string|null
-     */
     public function getAbsolutePath(MediaItem $mediaItem): string
     {
-        return $mediaItem->getFullUrl() === null ? null : $this->getUploadRootDir() . '/' . $mediaItem->getFullUrl();
+        return $this->getUploadRootDir() . '/' . $mediaItem->getFullUrl();
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     * @return string
-     */
     public function getAbsoluteWebPath(MediaItem $mediaItem): string
     {
         return $this->baseUrl . $mediaItem->getWebPath();
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     * @return string|null
-     */
     public function getIncludeHTML(MediaItem $mediaItem): string
     {
         if ($mediaItem->getType()->isImage()) {
@@ -70,57 +50,38 @@ class LocalStorageProvider implements LocalStorageProviderInterface
         return '<a href="' . $mediaItem->getWebPath() . '" title="' . $mediaItem->getTitle() . '" target="_blank">' . $mediaItem->getTitle() . '</a>';
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     * @return string|null
-     */
     public function getLinkHTML(MediaItem $mediaItem): string
     {
         return '<a href="' . $this->getAbsoluteWebPath($mediaItem) . '" title="' . $mediaItem->getTitle() . '" target="_blank">' . $mediaItem->getTitle() . '</a>';
     }
 
-    /**
-     * @return string
-     */
     public function getUploadRootDir(): string
     {
         return $this->basePath . '/' . $this->folderPath;
     }
 
-    /**
-     * @return string
-     */
     public function getWebDir(): string
     {
         return '/' . $this->folderPath;
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     * @return string
-     */
     public function getWebPath(MediaItem $mediaItem): string
     {
         return $this->getWebDir() . '/' . $mediaItem->getFullUrl();
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     * @param string|null $filter The LiipImagineBundle filter name you want to use.
-     * @return string
-     */
-    public function getWebPathWithFilter(MediaItem $mediaItem, string $filter): string
+    public function getWebPathWithFilter(MediaItem $mediaItem, string $liipImagineBundleFilter = null): string
     {
         $webPath = $this->getWebPath($mediaItem);
 
-        if (!$mediaItem->getType()->isImage()) {
+        if ($liipImagineBundleFilter === null || !$mediaItem->getType()->isImage()) {
             return $webPath;
         }
 
-        if ($filter === 'backend') {
-            $filter = 'media_library_backend_thumbnail';
+        if ($liipImagineBundleFilter === 'backend') {
+            $liipImagineBundleFilter = 'media_library_backend_thumbnail';
         }
 
-        return $this->cacheManager->getBrowserPath($webPath, $filter);
+        return $this->cacheManager->getBrowserPath($webPath, $liipImagineBundleFilter);
     }
 }

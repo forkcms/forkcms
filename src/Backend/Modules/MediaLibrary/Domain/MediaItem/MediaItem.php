@@ -7,6 +7,7 @@ use Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterf
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 use JsonSerializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -142,16 +143,6 @@ class MediaItem implements JsonSerializable
      */
     protected $groups;
 
-    /**
-     * MediaItem constructor.
-     *
-     * @param string $title
-     * @param string $url
-     * @param Type $type
-     * @param StorageType $storageType
-     * @param MediaFolder $folder
-     * @param int $userId
-     */
     private function __construct(
         string $title,
         string $url,
@@ -171,22 +162,13 @@ class MediaItem implements JsonSerializable
         $this->groups = new ArrayCollection();
     }
 
-    /**
-     * @param string $path
-     * @param MediaFolder $folder
-     * @param int $userId
-     * @return MediaItem
-     * @throws \Exception
-     */
     public static function createFromLocalStorageType(
         string $path,
         MediaFolder $folder,
         int $userId
-    ) : MediaItem {
-        /** @var File $file */
+    ): self {
         $file = self::getFileFromPath($path);
 
-        /** @var MediaItem $mediaItem */
         $mediaItem = new self(
             self::getTitleFromFile($file),
             $file->getFilename(),
@@ -202,9 +184,6 @@ class MediaItem implements JsonSerializable
         return $mediaItem;
     }
 
-    /**
-     * @param File $file
-     */
     private function setForFile(File $file)
     {
         $this->mime = $file->getMimeType();
@@ -214,38 +193,28 @@ class MediaItem implements JsonSerializable
         $this->shardingFolderName = basename($file->getPath());
     }
 
-    /**
-     * @param string $path
-     * @throws \Exception
-     */
     private function setResolutionFromPath(string $path)
     {
         if ($this->getType()->isImage()) {
             try {
-                list($width, $height) = getimagesize($path);
-            } catch (\Exception $e) {
-                throw new \Exception('Error happened when creating MediaItem from path "' . $path . '". The error = ' . $e->getMessage());
+                [$width, $height] = getimagesize($path);
+            } catch (Exception $e) {
+                throw new Exception(
+                    'Error happened when creating MediaItem from path "' . $path . '". The error = ' . $e->getMessage()
+                );
             }
 
             $this->setResolution($width, $height);
         }
     }
 
-    /**
-     * @param StorageType $movieStorageType
-     * @param string $movieId
-     * @param string $movieTitle
-     * @param MediaFolder $folder
-     * @param int $userId
-     * @return MediaItem
-     */
     public static function createFromMovieUrl(
         StorageType $movieStorageType,
         string $movieId,
         string $movieTitle,
         MediaFolder $folder,
         int $userId
-    ) : MediaItem {
+    ): MediaItem {
         return new self(
             $movieTitle,
             $movieId,
@@ -256,27 +225,22 @@ class MediaItem implements JsonSerializable
         );
     }
 
-    /**
-     * @param MediaItemDataTransferObject $mediaItemDataTransferObject
-     * @return MediaItem
-     */
-    public static function fromDataTransferObject(MediaItemDataTransferObject $mediaItemDataTransferObject)
+    public static function fromDataTransferObject(MediaItemDataTransferObject $mediaItemDataTransferObject): ?MediaItem
     {
-        if ($mediaItemDataTransferObject->hasExistingMediaItem()) {
-            $mediaItem = $mediaItemDataTransferObject->getMediaItemEntity();
-
-            $mediaItem->title = $mediaItemDataTransferObject->title;
-            $mediaItem->folder = $mediaItemDataTransferObject->folder;
-            $mediaItem->userId = $mediaItemDataTransferObject->userId;
-            $mediaItem->url = $mediaItemDataTransferObject->url;
-
-            return $mediaItem;
+        if (!$mediaItemDataTransferObject->hasExistingMediaItem()) {
+            throw new \BadFunctionCallException('This method can not be used to create a new media item');
         }
+
+        $mediaItem = $mediaItemDataTransferObject->getMediaItemEntity();
+
+        $mediaItem->title = $mediaItemDataTransferObject->title;
+        $mediaItem->folder = $mediaItemDataTransferObject->folder;
+        $mediaItem->userId = $mediaItemDataTransferObject->userId;
+        $mediaItem->url = $mediaItemDataTransferObject->url;
+
+        return $mediaItem;
     }
 
-    /**
-     * @return array
-     */
     public function jsonSerialize(): array
     {
         return [
@@ -301,25 +265,20 @@ class MediaItem implements JsonSerializable
         ];
     }
 
-    /**
-     * @param string $path
-     * @return File
-     * @throws \Exception
-     */
     private static function getFileFromPath(string $path): File
     {
         try {
             // Define file from path
             $file = new File($path);
         } catch (FileNotFoundException $e) {
-            throw new \Exception(
+            throw new Exception(
                 'This is not a valid file: "' . $path . '".'
             );
         }
 
         // We don't have a file
         if (!$file->isFile()) {
-            throw new \Exception(
+            throw new Exception(
                 'The given source is not a file.'
             );
         }
@@ -327,244 +286,164 @@ class MediaItem implements JsonSerializable
         return $file;
     }
 
-    /**
-     * @param File $file
-     * @return string
-     */
-    private function getTitleFromFile(File $file): string
+    private static function getTitleFromFile(File $file): string
     {
         return str_replace('.' . $file->getExtension(), '', $file->getFilename());
     }
 
-    /**
-     * @param File $file
-     * @return Type
-     */
-    private function getTypeFromFile(File $file): Type
+    private static function getTypeFromFile(File $file): Type
     {
         return Type::fromMimeType($file->getMimeType());
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return MediaFolder
-     */
     public function getFolder(): MediaFolder
     {
         return $this->folder;
     }
 
-    /**
-     * @param MediaFolder $folder the folder
-     * @return self
-     */
     public function setFolder(MediaFolder $folder): self
     {
         $this->folder = $folder;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * @return StorageType
-     */
     public function getStorageType(): StorageType
     {
         return $this->storageType;
     }
 
-    /**
-     * @param StorageType $storageType
-     */
     public function setStorageType(StorageType $storageType)
     {
         $this->storageType = $storageType;
     }
 
-    /**
-     * @return Type
-     */
     public function getType(): Type
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
     public function getMime(): string
     {
         return $this->mime;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getScardingFolderName()
+    public function getScardingFolderName(): ?string
     {
         return $this->shardingFolderName;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
     public function setTitle(string $title)
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
     public function getFullUrl(): string
     {
         return $this->getScardingFolderName() . '/' . $this->getUrl();
     }
 
-    /**
-     * @return int
-     */
     public function getSize(): int
     {
         return $this->size;
     }
 
-    /**
-     * @param int $width
-     * @param int $height
-     * @return self
-     */
     public function setResolution(int $width, int $height): self
     {
         $this->width = $width;
         $this->height = $height;
+
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getWidth()
+    public function getWidth(): ?int
     {
         return $this->width;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getHeight()
+    public function getHeight(): ?int
     {
         return $this->height;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getCreatedOn(): \DateTime
     {
         return $this->createdOn;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getEditedOn(): \DateTime
     {
         return $this->editedOn;
     }
 
-    /**
-     * @return Collection
-     */
     public function getGroups(): Collection
     {
         return $this->groups;
     }
 
-    /**
-     * @return bool
-     */
     public function hasGroups(): bool
     {
         return $this->groups->count() > 0;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAbsolutePath(): string
     {
-        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getAbsolutePath($this);
+        return Model::get('media_library.manager.storage')->getStorageProvider(
+            $this->getStorageType()
+        )->getAbsolutePath($this);
     }
 
-    /**
-     * @return string
-     */
     public function getAbsoluteWebPath(): string
     {
-        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getAbsoluteWebPath($this);
+        return Model::get('media_library.manager.storage')->getStorageProvider(
+            $this->getStorageType()
+        )->getAbsoluteWebPath($this);
     }
 
-    /**
-     * @return string|null
-     */
     public function getLinkHTML(): string
     {
-        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getLinkHTML($this);
+        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getLinkHTML(
+            $this
+        );
     }
 
-    /**
-     * @return string|null
-     */
     public function getIncludeHTML(): string
     {
-        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getIncludeHTML($this);
+        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getIncludeHTML(
+            $this
+        );
     }
 
-    /**
-     * @param string|null $filter The LiipImagineBundle filter name you want to use.
-     * @return string|null
-     */
-    public function getWebPath(string $filter = null): string
+    public function getWebPath(string $liipImagineBundleFilter = null): string
     {
         /** @var StorageProviderInterface $storage */
         $storage = Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType());
 
-        if (!$storage instanceof LiipImagineBundleStorageProviderInterface || $filter === null) {
+        if (!$storage instanceof LiipImagineBundleStorageProviderInterface || $liipImagineBundleFilter === null) {
             return $storage->getWebPath($this);
         }
 
-        return $storage->getWebPathWithFilter($this, $filter);
+        return $storage->getWebPathWithFilter($this, $liipImagineBundleFilter);
     }
 
     /**

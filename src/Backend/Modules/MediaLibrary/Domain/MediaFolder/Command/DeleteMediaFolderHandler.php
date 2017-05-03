@@ -10,20 +10,12 @@ final class DeleteMediaFolderHandler
     /** @var MediaFolderRepository */
     protected $mediaFolderRepository;
 
-    /**
-     * DeleteMediaFolderHandler constructor.
-     *
-     * @param MediaFolderRepository $mediaFolderRepository
-     */
     public function __construct(MediaFolderRepository $mediaFolderRepository)
     {
         $this->mediaFolderRepository = $mediaFolderRepository;
     }
 
-    /**
-     * @param DeleteMediaFolder $deleteMediaFolder
-     */
-    public function handle(DeleteMediaFolder $deleteMediaFolder)
+    public function handle(DeleteMediaFolder $deleteMediaFolder): void
     {
         /** @var MediaFolder $mediaFolder */
         $mediaFolder = $deleteMediaFolder->mediaFolder;

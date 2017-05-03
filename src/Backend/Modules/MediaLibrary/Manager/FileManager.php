@@ -26,57 +26,32 @@ final class FileManager
         $this->filesystem = new Filesystem();
     }
 
-    /**
-     * @param string $path
-     */
-    public function createFolder(string $path)
+    public function createFolder(string $path): void
     {
         if (!$this->exists($path)) {
             $this->filesystem->mkdir($path);
         }
     }
 
-    /**
-     * Delete file
-     *
-     * @param string $path
-     */
-    public function deleteFile(string $path)
+    public function deleteFile(string $path): void
     {
         if ($this->exists($path)) {
             $this->filesystem->remove($path);
         }
     }
 
-    /**
-     * Delete folder
-     *
-     * @param string $path
-     */
-    public function deleteFolder(string $path)
+    public function deleteFolder(string $path): void
     {
         if ($this->exists($path)) {
             $this->filesystem->remove($path);
         }
     }
 
-    /**
-     * Exists
-     *
-     * @param string $path
-     * @return bool
-     */
     public function exists(string $path): bool
     {
         return $this->filesystem->exists($path);
     }
 
-    /**
-     * @param string $targetDir
-     * @param string $name
-     * @param string $extension
-     * @return string
-     */
     private function generateUniqueFileName(
         string $targetDir,
         string $name,
@@ -86,7 +61,7 @@ final class FileManager
 
         // find unique filename
         while ($this->filesystem->exists($targetDir . '/' . $name . '_' . $count . '.' . $extension)) {
-            $count++;
+            ++$count;
         }
 
         // redefine name
@@ -96,37 +71,24 @@ final class FileManager
         return $name . '.' . $extension;
     }
 
-    /**
-     * @return Filesystem
-     */
     public function getFilesystem(): Filesystem
     {
         return $this->filesystem;
     }
 
-    /**
-     * @return string
-     */
     public function getNextShardingFolder(): string
     {
         $numberOfShardingFolders = ($this->settings instanceof ModulesSettings)
             ? $this->settings->get('MediaLibrary', 'upload_number_of_sharding_folders', 15) : 15;
 
-        $id = rand(0, $numberOfShardingFolders);
+        $id = random_int(0, $numberOfShardingFolders);
 
         // Image sharding folder should look like "01", "02", "10", ...
-        return str_pad(($id % $numberOfShardingFolders), 2, '0', STR_PAD_LEFT);
+        return str_pad($id % $numberOfShardingFolders, 2, '0', STR_PAD_LEFT);
     }
 
-    /**
-     * @param $directory
-     * @param $fileName
-     * @return string
-     */
-    public function getUniqueFileName(
-        $directory,
-        $fileName
-    ) : string {
+    public function getUniqueFileName(string $directory, string $fileName) : string
+    {
         $pathInfo = pathinfo($directory . '/' . $fileName);
         $name = $pathInfo['filename'];
         $extension = $pathInfo['extension'];
@@ -147,11 +109,7 @@ final class FileManager
         return $this->generateUniqueFileName($directory, $name, $extension);
     }
 
-    /**
-     * @param string $oldName
-     * @param string $newName
-     */
-    public function rename(string $oldName, string $newName)
+    public function rename(string $oldName, string $newName): void
     {
         $this->filesystem->rename($oldName, $newName);
     }

@@ -61,12 +61,6 @@ class MediaGroup implements JsonSerializable
      */
     protected $numberOfConnectedItems;
 
-    /**
-     * MediaGroup constructor.
-     *
-     * @param UuidInterface $id
-     * @param Type $type
-     */
     private function __construct(
         UuidInterface $id,
         Type $type
@@ -76,44 +70,28 @@ class MediaGroup implements JsonSerializable
         $this->connectedItems = new ArrayCollection();
     }
 
-    /**
-     * Create
-     *
-     * @param Type $type
-     * @return MediaGroup
-     */
     public static function create(
         Type $type
-    ) : MediaGroup {
+    ): self {
         return new self(
             Uuid::uuid4(),
             $type
         );
     }
 
-    /**
-     * Create from id
-     *
-     * @param UuidInterface $id
-     * @param Type $type
-     * @return MediaGroup
-     */
     public static function createFromId(
         UuidInterface $id,
         Type $type
-    ) : MediaGroup {
+    ): self {
         return new self(
             $id,
             $type
         );
     }
 
-    /**
-     * @param MediaGroupDataTransferObject $mediaGroupDataTransferObject
-     * @return MediaGroup
-     */
-    public static function fromDataTransferObject(MediaGroupDataTransferObject $mediaGroupDataTransferObject): MediaGroup
-    {
+    public static function fromDataTransferObject(
+        MediaGroupDataTransferObject $mediaGroupDataTransferObject
+    ): self {
         if ($mediaGroupDataTransferObject->hasExistingMediaGroup()) {
             return $mediaGroupDataTransferObject
                 ->getMediaGroupEntity()
@@ -132,11 +110,7 @@ class MediaGroup implements JsonSerializable
         );
     }
 
-    /**
-     * @param MediaGroupDataTransferObject $mediaGroupDataTransferObject
-     * @return MediaGroup
-     */
-    private function updateFromDataTransferObject(MediaGroupDataTransferObject $mediaGroupDataTransferObject)
+    private function updateFromDataTransferObject(MediaGroupDataTransferObject $mediaGroupDataTransferObject): self
     {
         // Remove all previous connected items
         if ($mediaGroupDataTransferObject->removeAllPreviousConnectedMediaItems) {
@@ -146,99 +120,62 @@ class MediaGroup implements JsonSerializable
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
             'type' => $this->type,
-            'editedOn' => ($this->editedOn) ? $this->editedOn->getTimestamp() : null,
+            'editedOn' => $this->editedOn ? $this->editedOn->getTimestamp() : null,
             'connectedItems' => $this->connectedItems->toArray(),
         ];
     }
 
-    /**
-     * Gets the value of id.
-     *
-     * @return UuidInterface
-     */
     public function getId(): UuidInterface
     {
         return $this->id;
     }
 
-    /**
-     * Gets the value of type.
-     *
-     * @return Type
-     */
     public function getType(): Type
     {
         return $this->type;
     }
 
-    /**
-     * Gets the value of editedOn.
-     *
-     * @return \DateTime
-     */
     public function getEditedOn(): \DateTime
     {
         return $this->editedOn;
     }
 
-    /**
-     * Gets the value of connectedItems.
-     *
-     * @return Collection
-     */
     public function getConnectedItems(): Collection
     {
         return $this->connectedItems;
     }
 
-    /**
-     * @return Collection
-     */
     public function getConnectedMediaItems(): Collection
     {
-        return $this->connectedItems->map(function (MediaGroupMediaItem $connectedItem): MediaItem {
-            return $connectedItem->getItem();
-        });
+        return $this->connectedItems->map(
+            function (MediaGroupMediaItem $connectedItem): MediaItem {
+                return $connectedItem->getItem();
+            }
+        );
     }
 
-    /**
-     * @return MediaItem|null
-     */
-    public function getFirstConnectedMediaItem()
+    public function getFirstConnectedMediaItem(): ?MediaItem
     {
         $connectedMediaItems = $this->getConnectedMediaItems();
 
-        return ($connectedMediaItems instanceof Collection) ? $this->getConnectedMediaItems()->first() : null;
+        return $connectedMediaItems instanceof Collection ? $this->getConnectedMediaItems()->first() : null;
     }
 
-    /**
-     * @return bool
-     */
     public function hasConnectedItems(): bool
     {
         return $this->numberOfConnectedItems > 0;
     }
 
-    /**
-     * @return int
-     */
     public function getNumberOfConnectedItems(): int
     {
         return $this->numberOfConnectedItems;
     }
 
-    /**
-     * @param string $mediaItemId
-     * @return MediaGroupMediaItem
-     */
     public function getConnectedItemByMediaItemId(string $mediaItemId): MediaGroupMediaItem
     {
         /** @var MediaGroupMediaItem $mediaGroupMediaItem */
@@ -249,10 +186,6 @@ class MediaGroup implements JsonSerializable
         }
     }
 
-    /**
-     * @param MediaGroupMediaItem $connectedItem
-     * @return MediaGroup
-     */
     public function addConnectedItem(MediaGroupMediaItem $connectedItem): MediaGroup
     {
         $this->connectedItems->add($connectedItem);
@@ -263,10 +196,6 @@ class MediaGroup implements JsonSerializable
         return $this;
     }
 
-    /**
-     * @param MediaGroupMediaItem $connectedItem
-     * @return MediaGroup
-     */
     public function removeConnectedItem(MediaGroupMediaItem $connectedItem): MediaGroup
     {
         $this->connectedItems->removeElement($connectedItem);
@@ -282,16 +211,14 @@ class MediaGroup implements JsonSerializable
         $this->numberOfConnectedItems = $this->connectedItems->count();
     }
 
-    /**
-     * Gets the value of connectedItems.
-     *
-     * @return array
-     */
     public function getIdsForConnectedItems(): array
     {
-        return array_map(function ($connectedItem) {
-            return $connectedItem->getItem()->getId();
-        }, $this->connectedItems->toArray());
+        return array_map(
+            function ($connectedItem) {
+                return $connectedItem->getItem()->getId();
+            },
+            $this->connectedItems->toArray()
+        );
     }
 
     /**

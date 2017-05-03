@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Common\Exception\AjaxExitException;
 
@@ -13,10 +14,7 @@ use Common\Exception\AjaxExitException;
  */
 class MediaFolderMove extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent
         parent::execute();
@@ -38,10 +36,6 @@ class MediaFolderMove extends BackendBaseAJAXAction
         );
     }
 
-    /**
-     * @return MediaFolder|null
-     * @throws AjaxExitException
-     */
     private function getMediaFolder(): MediaFolder
     {
         $id = $this->get('request')->request->getInt('id', 0);
@@ -53,17 +47,12 @@ class MediaFolderMove extends BackendBaseAJAXAction
         try {
             /** @var MediaFolder $mediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
-        } catch (\Exception $e) {
+        } catch (MediaFolderNotFound $mediaFolderNotFound) {
             throw new AjaxExitException('Folder does not exist');
         }
     }
 
-    /**
-     * @param string $typeOfDrop
-     * @return MediaFolder|null
-     * @throws AjaxExitException
-     */
-    private function getMediaFolderWhereDroppedOn(string $typeOfDrop)
+    private function getMediaFolderWhereDroppedOn(string $typeOfDrop): ?MediaFolder
     {
         $id = $this->get('request')->request->getInt('dropped_on', -1);
 
@@ -80,15 +69,11 @@ class MediaFolderMove extends BackendBaseAJAXAction
             }
 
             return $mediaFolder->getParent();
-        } catch (\Exception $e) {
+        } catch (MediaFolderNotFound $mediaFolderNotFound) {
             throw new AjaxExitException('Folder does not exist');
         }
     }
 
-    /**
-     * @return string
-     * @throws AjaxExitException
-     */
     private function getTypeOfDrop(): string
     {
         $typeOfDrop = $this->get('request')->request->get('type');
@@ -97,7 +82,7 @@ class MediaFolderMove extends BackendBaseAJAXAction
             throw new AjaxExitException('no type provided');
         }
 
-        if (!in_array($typeOfDrop, ['before', 'after', 'inside'])) {
+        if (!in_array($typeOfDrop, ['before', 'after', 'inside'], true)) {
             throw new AjaxExitException('wrong type provide');
         }
 

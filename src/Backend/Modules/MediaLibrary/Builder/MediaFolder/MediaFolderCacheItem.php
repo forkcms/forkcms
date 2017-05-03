@@ -13,10 +13,6 @@ class MediaFolderCacheItem
     public $numberOfChildren = 0;
     public $numberOfMediaItems = 0;
 
-    /**
-     * @param MediaFolder $mediaFolder
-     * @param string|null $parentSlug
-     */
     public function __construct(MediaFolder $mediaFolder, string $parentSlug = null)
     {
         $this->id = $mediaFolder->getId();
@@ -25,9 +21,6 @@ class MediaFolderCacheItem
         $this->numberOfMediaItems = $mediaFolder->getItems()->count();
     }
 
-    /**
-     * @param array $children
-     */
     public function setChildren(array $children)
     {
         $this->children = $children;

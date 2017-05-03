@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaGroup\Command;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Ramsey\Uuid\Uuid;
 
@@ -13,20 +13,12 @@ final class SaveMediaGroupHandler
     /** @var MediaItemRepository */
     protected $mediaItemRepository;
 
-    /**
-     * CreateMediaGroupHandler constructor.
-     *
-     * @param MediaItemRepository $mediaItemRepository
-     */
     public function __construct(MediaItemRepository $mediaItemRepository)
     {
         $this->mediaItemRepository = $mediaItemRepository;
     }
 
-    /**
-     * @param SaveMediaGroup $saveMediaGroup
-     */
-    public function handle(SaveMediaGroup $saveMediaGroup)
+    public function handle(SaveMediaGroup $saveMediaGroup): void
     {
         /** @var MediaGroup $mediaGroup */
         $mediaGroup = MediaGroup::fromDataTransferObject($saveMediaGroup);
@@ -36,11 +28,7 @@ final class SaveMediaGroupHandler
         $saveMediaGroup->setMediaGroup($mediaGroup);
     }
 
-    /**
-     * @param MediaGroup $mediaGroup
-     * @param array $mediaItemIdsToConnect
-     */
-    private function updateConnectedItems(MediaGroup $mediaGroup, array $mediaItemIdsToConnect)
+    private function updateConnectedItems(MediaGroup $mediaGroup, array $mediaItemIdsToConnect): void
     {
         /**
          * @var int $sequence
@@ -53,7 +41,7 @@ final class SaveMediaGroupHandler
                     $this->mediaItemRepository->findOneById(Uuid::fromString($mediaItemId)),
                     $sequence
                 ));
-            } catch (\Exception $e) {
+            } catch (MediaItemNotFound $e) {
                 // Do nothing
             }
         }

@@ -8,6 +8,7 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery;
+use InvalidArgumentException;
 use Symfony\Component\Form\Form;
 
 /**
@@ -15,12 +16,7 @@ use Symfony\Component\Form\Form;
  */
 class MediaGalleryAdd extends ActionAdd
 {
-    /**
-     * Execute the action
-     *
-     * @return void
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -43,10 +39,6 @@ class MediaGalleryAdd extends ActionAdd
         );
     }
 
-    /**
-     * @param Form $form
-     * @return CreateMediaGallery
-     */
     private function createMediaGallery(Form $form): CreateMediaGallery
     {
         /** @var CreateMediaGallery $createMediaGallery */
@@ -58,10 +50,6 @@ class MediaGalleryAdd extends ActionAdd
         return $createMediaGallery;
     }
 
-    /**
-     * @param array $parameters
-     * @return string
-     */
     private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(
@@ -72,9 +60,6 @@ class MediaGalleryAdd extends ActionAdd
         );
     }
 
-    /**
-     * @return Form
-     */
     private function getForm(): Form
     {
         $form = $this->createForm(
@@ -90,28 +75,21 @@ class MediaGalleryAdd extends ActionAdd
         return $form;
     }
 
-    /**
-     * @return Type
-     */
     private function getMediaGroupType(): Type
     {
         try {
             return Type::fromString($this->get('request')->query->get('media_group_type')['type']);
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $this->redirect(
                 $this->getBackLink(
                     [
-                        'error' => 'group-type-not-existing'
+                        'error' => 'group-type-not-existing',
                     ]
                 )
             );
         }
     }
 
-    /**
-     * @param CreateMediaGallery $createMediaGallery
-     * @return array
-     */
     private function getParametersForCreateMediaGallery(CreateMediaGallery $createMediaGallery): array
     {
         return [
@@ -122,10 +100,7 @@ class MediaGalleryAdd extends ActionAdd
         ];
     }
 
-    /**
-     * @param Form $form
-     */
-    private function parseForm(Form $form)
+    private function parseForm(Form $form): void
     {
         $this->tpl->assign('form', $form->createView());
         $this->tpl->assign('backLink', $this->getBackLink());

@@ -9,10 +9,7 @@ use Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
  */
 class Listing extends FrontendMediaWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->loadData();
 

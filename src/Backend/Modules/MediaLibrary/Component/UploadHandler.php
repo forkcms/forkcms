@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Component;
 
 use Backend\Modules\MediaLibrary\Manager\FileManager;
+use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -26,20 +27,12 @@ class UploadHandler
     /** @var FileManager */
     protected $fileManager;
 
-    /**
-     * @param Request $request
-     * @param FileManager $fileManager
-     */
     public function __construct(Request $request, FileManager $fileManager)
     {
         $this->request = $request;
         $this->fileManager = $fileManager;
     }
 
-    /**
-     * Get the original filename
-     * @return string
-     */
     public function getName(): string
     {
         $fileName = $this->request->request->get('qqfilename');
@@ -54,19 +47,11 @@ class UploadHandler
         }
     }
 
-    /**
-     * Get the name of the uploaded file
-     */
     public function getUploadName(): string
     {
         return $this->uploadName;
     }
 
-    /**
-     * @param string $uploadDirectory
-     * @param string|null $name
-     * @return array
-     */
     public function combineChunks(string $uploadDirectory, string $name = null): array
     {
         $uuid = $this->request->request->get('qquuid');
@@ -76,7 +61,7 @@ class UploadHandler
         $targetFolder = $this->chunksFolder . DIRECTORY_SEPARATOR . $uuid;
         $totalParts = $this->request->request->getInt('qqtotalparts', 1);
 
-        $targetPath = join(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $name]);
+        $targetPath = implode(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $name]);
         $this->uploadName = $name;
 
         if (!$this->fileManager->exists($targetPath)) {
@@ -84,8 +69,8 @@ class UploadHandler
         }
         $target = fopen($targetPath, 'wb');
 
-        for ($i = 0; $i < $totalParts; $i++) {
-            $chunk = fopen($targetFolder . DIRECTORY_SEPARATOR . $i, "rb");
+        for ($i = 0; $i < $totalParts; ++$i) {
+            $chunk = fopen($targetFolder . DIRECTORY_SEPARATOR . $i, 'rb');
             stream_copy_to_stream($chunk, $target);
             fclose($chunk);
         }
@@ -93,29 +78,23 @@ class UploadHandler
         // Success
         fclose($target);
 
-        for ($i = 0; $i < $totalParts; $i++) {
+        for ($i = 0; $i < $totalParts; ++$i) {
             unlink($targetFolder . DIRECTORY_SEPARATOR . $i);
         }
 
         rmdir($targetFolder);
 
-        if (!is_null($this->sizeLimit) && filesize($targetPath) > $this->sizeLimit) {
+        if ($this->sizeLimit !== null && filesize($targetPath) > $this->sizeLimit) {
             unlink($targetPath);
             http_response_code(413);
-            return ["success" => false, "uuid" => $uuid, "preventRetry" => true];
+
+            return ['success' => false, 'uuid' => $uuid, 'preventRetry' => true];
         }
 
-        return ["success" => true, "uuid" => $uuid];
+        return ['success' => true, 'uuid' => $uuid];
     }
 
-    /**
-     * Process the upload.
-     *
-     * @param string $uploadDirectory Target directory.
-     * @param string $name Overwrites the name of the file.
-     * @return array
-     */
-    public function handleUpload($uploadDirectory, $name = null)
+    public function handleUpload(string $uploadDirectory, string $name = null): array
     {
         $this->cleanupChunksIfNecessary();
 
@@ -126,14 +105,14 @@ class UploadHandler
             $file = $this->getFile();
             $size = $this->getSize($file);
 
-            if (!is_null($this->sizeLimit) && $size > $this->sizeLimit) {
+            if ($this->sizeLimit !== null && $size > $this->sizeLimit) {
                 return ['error' => 'File is too large.', 'preventRetry' => true];
             }
 
             $name = $this->getRedefinedName($name);
             $this->checkFileExtension($name);
             $this->checkFileMimeType($file);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return ['error' => $e->getMessage()];
         }
 
@@ -157,30 +136,27 @@ class UploadHandler
             $target = $targetFolder . '/' . $partIndex;
             $success = move_uploaded_file($file->getRealPath(), $target);
 
-            return ["success" => $success, "uuid" => $uuid];
-        // Non-chunked upload
-        } else {
-            $target = join(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $name]);
-
-            if ($target) {
-                $this->uploadName = basename($target);
-
-                if (!is_dir(dirname($target))) {
-                    mkdir(dirname($target), 0777, true);
-                }
-                if (move_uploaded_file($file->getRealPath(), $target)) {
-                    return ['success'=> true, "uuid" => $uuid];
-                }
-            }
-
-            return ['error'=> 'Could not save uploaded file.' . 'The upload was cancelled, or server error encountered'];
+            return ['success' => $success, 'uuid' => $uuid];
         }
+
+        // Non-chunked upload
+        $target = implode(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $name]);
+
+        if ($target) {
+            $this->uploadName = basename($target);
+
+            if (!is_dir(dirname($target))) {
+                mkdir(dirname($target), 0777, true);
+            }
+            if (move_uploaded_file($file->getRealPath(), $target)) {
+                return ['success' => true, 'uuid' => $uuid];
+            }
+        }
+
+        return ['error' => 'Could not save uploaded file.' . 'The upload was cancelled, or server error encountered'];
     }
 
-    /**
-     * @throws \Exception
-     */
-    private function checkMaximumSize()
+    private function checkMaximumSize(): void
     {
         // Check that the max upload size specified in class configuration does not exceed size allowed by server config
         if ($this->toBytes(ini_get('post_max_size')) < $this->sizeLimit ||
@@ -188,7 +164,9 @@ class UploadHandler
         ) {
             $neededRequestSize = max(1, $this->sizeLimit / 1024 / 1024) . 'M';
 
-            throw new \Exception('Server error. Increase post_max_size and upload_max_filesize to ' . $neededRequestSize);
+            throw new Exception(
+                'Server error. Increase post_max_size and upload_max_filesize to ' . $neededRequestSize
+            );
         }
     }
 
@@ -202,58 +180,50 @@ class UploadHandler
      * otherwise, it checks additionally for executable status (like before).
      *
      * @param string $uploadDirectory
-     * @throws \Exception
+     *
+     * @throws Exception
      */
-    private function checkUploadDirectory(string $uploadDirectory)
+    private function checkUploadDirectory(string $uploadDirectory): void
     {
-        $isWin = $this->isWindows();
-        $folderInaccessible = ($isWin) ? !is_writable($uploadDirectory) : (!is_writable($uploadDirectory) && !is_executable($uploadDirectory));
-
-        if ($folderInaccessible) {
-            throw new \Exception('Server error. Uploads directory isn\'t writable');
+        if (($this->isWindows() && !is_writable($uploadDirectory))
+            || (!is_writable($uploadDirectory) && !is_executable($uploadDirectory))) {
+            throw new Exception('Server error. Uploads directory isn\'t writable');
         }
     }
 
-    /**
-     * @throws \Exception
-     */
     private function checkType()
     {
         $type = $this->request->server->get('HTTP_CONTENT_TYPE', $this->request->server->get('CONTENT_TYPE'));
         if ($type === null) {
-            throw new \Exception('No files were uploaded.');
-        } elseif (strpos(strtolower($type), 'multipart/') !== 0) {
-            throw new \Exception('Server error. Not a multipart request. Please set forceMultipart to default value (true).');
+            throw new Exception('No files were uploaded.');
+        }
+
+        if (strpos(strtolower($type), 'multipart/') !== 0) {
+            throw new Exception(
+                'Server error. Not a multipart request. Please set forceMultipart to default value (true).'
+            );
         }
     }
 
-    /**
-     * @param string $name
-     * @throws \Exception
-     */
-    private function checkFileExtension(string $name)
+    private function checkFileExtension(string $name): void
     {
         // Validate file extension
         $pathinfo = pathinfo($name);
-        $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
+        $ext = $pathinfo['extension'] ?? '';
 
         // Check file extension
-        if (!in_array(strtolower($ext), array_map("strtolower", $this->allowedExtensions))) {
+        if (!in_array(strtolower($ext), array_map('strtolower', $this->allowedExtensions), true)) {
             $these = implode(', ', $this->allowedExtensions);
-            throw new \Exception('File has an invalid extension, it should be one of ' . $these . '.');
+            throw new Exception('File has an invalid extension, it should be one of ' . $these . '.');
         }
     }
 
-    /**
-     * @param UploadedFile $file
-     * @throws \Exception
-     */
-    private function checkFileMimeType(UploadedFile $file)
+    private function checkFileMimeType(UploadedFile $file): void
     {
         // Check file mime type
-        if (!in_array(strtolower($file->getMimeType()), array_map("strtolower", $this->allowedMimeTypes))) {
+        if (!in_array(strtolower($file->getMimeType()), array_map('strtolower', $this->allowedMimeTypes), true)) {
             $these = implode(', ', $this->allowedMimeTypes);
-            throw new \Exception('File has an invalid mime type, it should be one of ' . $these . '.');
+            throw new Exception('File has an invalid mime type, it should be one of ' . $these . '.');
         }
     }
 
@@ -261,14 +231,14 @@ class UploadHandler
      * Deletes all file parts in the chunks folder for files uploaded
      * more than chunksExpireIn seconds ago
      */
-    private function cleanupChunksIfNecessary()
+    private function cleanupChunksIfNecessary(): void
     {
-        if (!is_writable($this->chunksFolder) || 1 !== mt_rand(1, 1 / $this->chunksCleanupProbability)) {
+        if (!is_writable($this->chunksFolder) || 1 !== random_int(1, 1 / $this->chunksCleanupProbability)) {
             return;
         }
 
         foreach (scandir($this->chunksFolder) as $item) {
-            if ($item == "." || $item == "..") {
+            if ($item === '.' || $item === '..') {
                 continue;
             }
 
@@ -284,10 +254,6 @@ class UploadHandler
         }
     }
 
-    /**
-     * @return UploadedFile
-     * @throws \Exception
-     */
     private function getFile(): UploadedFile
     {
         /** @var UploadedFile|null $file */
@@ -295,17 +261,12 @@ class UploadHandler
 
         // check file error
         if (!$file instanceof UploadedFile) {
-            throw new \Exception('Upload Error #UNKNOWN');
+            throw new Exception('Upload Error #UNKNOWN');
         }
 
         return $file;
     }
 
-    /**
-     * @param string|null $name
-     * @return string
-     * @throws \Exception
-     */
     private function getRedefinedName(string $name = null): string
     {
         if ($name === null) {
@@ -314,24 +275,19 @@ class UploadHandler
 
         // Validate name
         if ($name === null || $name === '') {
-            throw new \Exception('File name empty.');
+            throw new Exception('File name empty.');
         }
 
         return $name;
     }
 
-    /**
-     * @param UploadedFile $file
-     * @return string
-     * @throws \Exception
-     */
-    private function getSize(UploadedFile $file): string
+    private function getSize(UploadedFile $file): int
     {
-        $size = $this->request->request->get('qqtotalfilesize', $file->getClientSize());
+        $size = (int) $this->request->request->get('qqtotalfilesize', $file->getClientSize());
 
         // Validate file size
-        if ($size == 0) {
-            throw new \Exception('File is empty.');
+        if ($size === 0) {
+            throw new Exception('File is empty.');
         }
 
         return $size;
@@ -343,9 +299,10 @@ class UploadHandler
      *
      * @param string $uploadDirectory Target directory
      * @param string $filename The name of the file to use.
+     *
      * @return false|string
      */
-    protected function getUniqueTargetPath($uploadDirectory, $filename)
+    protected function getUniqueTargetPath(string $uploadDirectory, string $filename)
     {
         // Allow only one process at the time to get a unique file name, otherwise
         // if multiple people would upload a file with the same name at the same time
@@ -358,14 +315,14 @@ class UploadHandler
         $pathinfo = pathinfo($filename);
         $base = $pathinfo['filename'];
         $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
-        $ext = $ext == '' ? $ext : '.' . $ext;
+        $ext = $ext === '' ? $ext : '.' . $ext;
 
         $unique = $base;
         $suffix = 0;
 
         // Get unique file name for the file, by appending random suffix.
         while ($this->fileManager->exists($uploadDirectory . DIRECTORY_SEPARATOR . $unique . $ext)) {
-            $suffix += rand(1, 999);
+            $suffix += random_int(1, 999);
             $unique = $base . '-' . $suffix;
         }
 
@@ -391,13 +348,14 @@ class UploadHandler
      */
     protected function isWindows(): bool
     {
-        return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+        return 0 === stripos(PHP_OS, 'WIN');
     }
 
     /**
      * Converts a given size with units to bytes.
      *
      * @param string $str
+     *
      * @return int
      */
     protected function toBytes(string $str): int

@@ -5,10 +5,8 @@ namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 use Backend\Core\Engine\Authentication;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Backend\Core\Engine\TemplateModifiers;
 use Backend\Form\Type\EditorType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery;
@@ -18,11 +16,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class MediaGalleryType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -41,7 +35,8 @@ class MediaGalleryType extends AbstractType
                 ]
             );
 
-        // You can only choose the "widget action" on "Add", or always if you got "EditWidgetAction" rights or if you created the MediaGallery.
+        // You can only choose the "widget action" on "Add",
+        // or always if you got "EditWidgetAction" rights or if you created the MediaGallery.
         if ($this->showFieldForWidgetAction($builder, $options)) {
             $builder->add(
                 'action',
@@ -91,12 +86,7 @@ class MediaGalleryType extends AbstractType
             );
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     * @return bool
-     */
-    public function showFieldForWidgetAction(FormBuilderInterface $builder, array $options)
+    public function showFieldForWidgetAction(FormBuilderInterface $builder, array $options): bool
     {
         // You can always see the widgetAction field in the "CreateMediaGallery" command
         if ($options['data_class'] === CreateMediaGallery::class) {
@@ -116,10 +106,7 @@ class MediaGalleryType extends AbstractType
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'media_gallery';
     }

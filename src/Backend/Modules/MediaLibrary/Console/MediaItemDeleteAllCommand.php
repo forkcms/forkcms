@@ -22,10 +22,7 @@ class MediaItemDeleteAllCommand extends ContainerAwareCommand
      */
     protected $deleteAll = false;
 
-    /**
-     * Configure
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('media_library:delete:items')
@@ -35,31 +32,26 @@ class MediaItemDeleteAllCommand extends ContainerAwareCommand
                 null,
                 InputOption::VALUE_NONE,
                 'If set, all MediaItems (even the connected items) will be deleted.'
-            )
-        ;
+            );
     }
 
-    /**
-     * @param InputInterface $input
-     */
-    private function checkOptions(InputInterface $input)
+    private function checkOptions(InputInterface $input): void
     {
         if ($input->getOption('all')) {
             $this->deleteAll = true;
         }
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return void
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion('Are you sure you want do delete all media? Type "y" or "yes" to confirm: ', false);
+        $question = new ConfirmationQuestion(
+            'Are you sure you want do delete all media? Type "y" or "yes" to confirm: ',
+            false
+        );
         if (!$helper->ask($input, $output, $question)) {
             $output->writeln('<info>Action cancelled.</info>');
+
             return;
         }
 
@@ -69,9 +61,6 @@ class MediaItemDeleteAllCommand extends ContainerAwareCommand
         $output->writeln('<info>Finished deleting ' . $numberOfDeletedMediaItems . ' media items.</info>');
     }
 
-    /**
-     * @return int
-     */
     private function deleteMediaItems(): int
     {
         return $this->getContainer()->get('media_library.manager.item')->deleteAll($this->deleteAll);

@@ -10,20 +10,12 @@ final class CreateMediaItemFromMovieUrlHandler
     /** @var MediaItemRepository */
     protected $mediaItemRepository;
 
-    /**
-     * CreateMediaItemHandler constructor.
-     *
-     * @param MediaItemRepository $mediaItemRepository
-     */
     public function __construct(MediaItemRepository $mediaItemRepository)
     {
         $this->mediaItemRepository = $mediaItemRepository;
     }
 
-    /**
-     * @param CreateMediaItemFromMovieUrl $createMediaItemFromMovieUrl
-     */
-    public function handle(CreateMediaItemFromMovieUrl $createMediaItemFromMovieUrl)
+    public function handle(CreateMediaItemFromMovieUrl $createMediaItemFromMovieUrl): void
     {
         /** @var MediaItem $mediaItem */
         $mediaItem = MediaItem::createFromMovieUrl(

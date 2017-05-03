@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageType;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Component\UploadHandler;
@@ -23,40 +24,37 @@ class MediaItemUpload extends BackendBaseAJAXAction
     protected $response;
 
     /**
-     * Execute the action
+     * PHP Server-Side Example for Fine Uploader (traditional endpoint handler).
+     * Maintained by Widen Enterprises.
+     *
+     * This example:
+     *  - handles chunked and non-chunked requests
+     *  - supports the concurrent chunking feature
+     *  - assumes all upload requests are multipart encoded
+     *  - handles delete requests
+     *  - handles cross-origin environments
+     *
+     * Follow these steps to get up and running with Fine Uploader in a PHP environment:
+     *
+     * 1. Setup your client-side code, as documented on http://docs.fineuploader.com.
+     *
+     * 2. Copy this file and handler.php to your server.
+     *
+     * 3. Ensure your php.ini file contains appropriate values for
+     *    max_input_time, upload_max_filesize and post_max_size.
+     *
+     * 4. Ensure your "chunks" and "files" folders exist and are writable.
+     *    "chunks" is only needed if you have enabled the chunking feature client-side.
+     *
+     * 5. If you have chunking enabled in Fine Uploader, you MUST set a value for the `chunking.success.endpoint` option.
+     *    This will be called by Fine Uploader when all chunks for a file have been successfully uploaded, triggering the
+     *    PHP server to combine all parts into one file. This is particularly useful for the concurrent chunking feature,
+     *    but is now required in all cases if you are making use of this PHP example.
      */
     public function execute()
     {
         parent::execute();
 
-        /**
-         * PHP Server-Side Example for Fine Uploader (traditional endpoint handler).
-         * Maintained by Widen Enterprises.
-         *
-         * This example:
-         *  - handles chunked and non-chunked requests
-         *  - supports the concurrent chunking feature
-         *  - assumes all upload requests are multipart encoded
-         *  - handles delete requests
-         *  - handles cross-origin environments
-         *
-         * Follow these steps to get up and running with Fine Uploader in a PHP environment:
-         *
-         * 1. Setup your client-side code, as documented on http://docs.fineuploader.com.
-         *
-         * 2. Copy this file and handler.php to your server.
-         *
-         * 3. Ensure your php.ini file contains appropriate values for
-         *    max_input_time, upload_max_filesize and post_max_size.
-         *
-         * 4. Ensure your "chunks" and "files" folders exist and are writable.
-         *    "chunks" is only needed if you have enabled the chunking feature client-side.
-         *
-         * 5. If you have chunking enabled in Fine Uploader, you MUST set a value for the `chunking.success.endpoint` option.
-         *    This will be called by Fine Uploader when all chunks for a file have been successfully uploaded, triggering the
-         *    PHP server to combine all parts into one file. This is particularly useful for the concurrent chunking feature,
-         *    but is now required in all cases if you are making use of this PHP example.
-         */
         // Include the upload handler class
         $uploader = new UploadHandler($this->get('request'), $this->get('media_library.manager.file'));
         // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
@@ -65,9 +63,9 @@ class MediaItemUpload extends BackendBaseAJAXAction
         // Specify max file size in bytes.
         $uploader->sizeLimit = null;
         // Specify the input name set in the javascript.
-        $uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
+        $uploader->inputName = 'qqfile'; // matches Fine Uploader's default inputName value by default
         // If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
-        $uploader->chunksFolder = "chunks";
+        $uploader->chunksFolder = 'chunks';
 
         $this->response = new Response();
 
@@ -82,13 +80,13 @@ class MediaItemUpload extends BackendBaseAJAXAction
         /*
          * handle the preflighted OPTIONS request. Needed for CORS operation.
          */
-        if ($method === "OPTIONS") {
+        if ($method === 'OPTIONS') {
             $this->handlePreflight();
             $this->response->send();
             exit();
         }
 
-        if ($method !== "POST") {
+        if ($method !== 'POST') {
             $this->response->setStatusCode(Response::HTTP_METHOD_NOT_ALLOWED);
             $this->response->send();
             exit();
@@ -100,13 +98,15 @@ class MediaItemUpload extends BackendBaseAJAXAction
         // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
         // For example: /myserver/handlers/endpoint.php?done
         if ($this->get('request')->query->get('done') !== null) {
-            $this->response->setContent($uploader->combineChunks("files"));
+            $this->response->setContent($uploader->combineChunks('files'));
             $this->response->send();
             exit();
         }
 
         // Define upload dir
-        $uploadDir = $this->get('media_library.storage.local')->getUploadRootDir() . '/' . $this->get('media_library.manager.file')->getNextShardingFolder();
+        $uploadDir = $this->get('media_library.storage.local')->getUploadRootDir() . '/' . $this->get(
+            'media_library.manager.file'
+        )->getNextShardingFolder();
 
         // Generate folder if not exists
         $this->get('media_library.manager.file')->createFolder($uploadDir);
@@ -115,7 +115,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
         $result = $uploader->handleUpload($uploadDir);
 
         // To return a name used for uploaded file you can use the following line.
-        $result["uploadName"] = $uploader->getUploadName();
+        $result['uploadName'] = $uploader->getUploadName();
 
         // Generate filename which doesn't exist yet in our media library
         $newName = $this->get('media_library.manager.file')->getUniqueFileName(
@@ -123,12 +123,10 @@ class MediaItemUpload extends BackendBaseAJAXAction
             $result['uploadName']
         );
 
-        if ($this->get('media_library.manager.file')->exists($uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'])) {
+        $tempUploadPath = $uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'];
+        if ($this->get('media_library.manager.file')->exists($tempUploadPath)) {
             // Move file to correct folder
-            $this->get('media_library.manager.file')->rename(
-                $uploadDir . '/' . $result['uuid'] . '/' . $result['uploadName'],
-                $uploadDir . '/' . $newName
-            );
+            $this->get('media_library.manager.file')->rename($tempUploadPath, $uploadDir . '/' . $newName);
 
             // Remove the old folder
             $this->get('media_library.manager.file')->deleteFolder($uploadDir . '/' . $result['uuid']);
@@ -159,30 +157,31 @@ class MediaItemUpload extends BackendBaseAJAXAction
             $this->response->headers->set('Content-Type', 'text/html');
             $resultData .= "<script src='http://{{SERVER_URL}}/{{FINE_UPLOADER_FOLDER}}/iframe.xss.response.js'></script>";
         }
+
         $this->response->setContent($resultData);
         $this->response->send();
         exit();
     }
 
-    // This will retrieve the "intended" request method.  Normally, this is the
-    // actual method of the request.  Sometimes, though, the intended request method
-    // must be hidden in the parameters of the request.  For example, when attempting to
-    // send a DELETE request in a cross-origin environment in IE9 or older, it is not
-    // possible to send a DELETE request.  So, we send a POST with the intended method,
-    // DELETE, in a "_method" parameter.
-    private function getRequestMethod()
+    /**
+     * This will retrieve the "intended" request method.  Normally, this is the
+     *  actual method of the request.  Sometimes, though, the intended request method
+     *  must be hidden in the parameters of the request.  For example, when attempting to
+     *  send a DELETE request in a cross-origin environment in IE9 or older, it is not
+     *  possible to send a DELETE request.  So, we send a POST with the intended method,
+     *  DELETE, in a "_method" parameter.
+     */
+    private function getRequestMethod(): string
     {
-        if ($this->get('request')->request->get('method') !== null && $this->get('request')->request->get('_method') !== null) {
+        if ($this->get('request')->request->get('method') !== null
+            && $this->get('request')->request->get('_method') !== null
+        ) {
             return $this->get('request')->request->get('_method');
         }
 
         return $this->get('request')->server->get('REQUEST_METHOD');
     }
 
-    /**
-     * @return MediaFolder
-     * @throws AjaxExitException
-     */
     private function getMediaFolder(): MediaFolder
     {
         // Define id
@@ -195,20 +194,20 @@ class MediaItemUpload extends BackendBaseAJAXAction
         try {
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
-        } catch (\Exception $e) {
+        } catch (MediaFolderNotFound $mediaFolderNotFound) {
             throw new AjaxExitException(Language::err('NotExistingMediaFolder'));
         }
     }
 
-    private function handleCorsRequest()
+    private function handleCorsRequest(): void
     {
         $this->response->headers->set('Access-Control-Allow-Origin', '*');
     }
 
-    /*
+    /**
      * handle pre-flighted requests. Needed for CORS operation
      */
-    private function handlePreflight()
+    private function handlePreflight(): void
     {
         $this->handleCorsRequest();
         $this->response->headers->set('Access-Control-Allow-Methods', 'POST, DELETE');

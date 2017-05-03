@@ -2,8 +2,6 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type;
 use Ramsey\Uuid\Uuid;
 
 class MediaGroupDataTransferObject
@@ -27,9 +25,6 @@ class MediaGroupDataTransferObject
     /** @var bool */
     public $removeAllPreviousConnectedMediaItems = true;
 
-    /**
-     * @param MediaGroup|null $mediaGroup
-     */
     public function __construct(MediaGroup $mediaGroup = null)
     {
         $this->mediaGroupEntity = $mediaGroup;
@@ -40,17 +35,11 @@ class MediaGroupDataTransferObject
         }
     }
 
-    /**
-     * @return MediaGroup
-     */
     public function getMediaGroupEntity(): MediaGroup
     {
         return $this->mediaGroupEntity;
     }
 
-    /**
-     * @return bool
-     */
     public function hasExistingMediaGroup(): bool
     {
         return $this->mediaGroupEntity instanceof MediaGroup;

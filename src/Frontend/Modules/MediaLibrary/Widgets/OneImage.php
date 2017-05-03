@@ -7,10 +7,7 @@ use Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
 
 class OneImage extends FrontendMediaWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->loadData();
 
@@ -24,10 +21,7 @@ class OneImage extends FrontendMediaWidget
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    protected function parse()
+    protected function parse(): void
     {
         /** @var MediaGroupMediaItem $firstConnectedItem */
         $firstConnectedItem = $this->mediaGroup->getConnectedItems()->first();

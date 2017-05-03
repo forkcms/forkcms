@@ -4,11 +4,12 @@ namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 
 class MediaItemDelete extends BackendBaseActionDelete
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -18,7 +19,7 @@ class MediaItemDelete extends BackendBaseActionDelete
         // Handle the MediaItem delete
         $this->get('media_library.manager.item')->delete($mediaItem);
 
-        return $this->redirect(
+        $this->redirect(
             $this->getBackLink(
                 [
                     'report' => 'media-item-deleted',
@@ -28,11 +29,6 @@ class MediaItemDelete extends BackendBaseActionDelete
         );
     }
 
-    /**
-     * Get media item
-     *
-     * @return MediaItem
-     */
     private function getMediaItem(): MediaItem
     {
         try {
@@ -40,22 +36,17 @@ class MediaItemDelete extends BackendBaseActionDelete
             return $this->get('media_library.repository.item')->findOneById(
                 $this->getParameter('id', 'string')
             );
-        } catch (\Exception $e) {
-            return $this->redirect(
+        } catch (MediaItemNotFound $mediaItemNotFound) {
+            $this->redirect(
                 $this->getBackLink(
                     [
-                        'error' => 'media-item-not-existing'
+                        'error' => 'media-item-not-existing',
                     ]
                 )
             );
         }
     }
 
-    /**
-     * @param array $parameters
-     *
-     * @return string
-     */
     private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(

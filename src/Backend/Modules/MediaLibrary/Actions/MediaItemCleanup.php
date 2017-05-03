@@ -7,14 +7,14 @@ use Backend\Core\Engine\Model;
 
 class MediaItemCleanup extends BackendBaseActionIndex
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         /** @var int $numberOfDeletedMediaItems */
         $numberOfDeletedMediaItems = $this->get('media_library.manager.item')->deleteAll();
 
-        return $this->redirect(
+        $this->redirect(
             $this->getBackLink(
                 [
                     'report' => 'cleaned-up-media-items',
@@ -24,11 +24,6 @@ class MediaItemCleanup extends BackendBaseActionIndex
         );
     }
 
-    /**
-     * @param array $parameters
-     *
-     * @return string
-     */
     private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(

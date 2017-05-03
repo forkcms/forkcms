@@ -9,8 +9,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Common\ModuleExtraType;
 
 /**
- * MediaGallery
- *
  * @ORM\Entity(repositoryClass="Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository")
  * @ORM\HasLifecycleCallbacks
  */
@@ -99,16 +97,6 @@ class MediaGallery
      */
     protected $mediaGroup;
 
-    /**
-     * MediaGallery constructor.
-     *
-     * @param string $title
-     * @param string $action
-     * @param int $userId
-     * @param MediaGroup $mediaGroup
-     * @param Status $status
-     * @param string|null $text
-     */
     private function __construct(
         string $title,
         string $action,
@@ -125,12 +113,9 @@ class MediaGallery
         $this->text = $text;
     }
 
-    /**
-     * @param MediaGalleryDataTransferObject $mediaGalleryDataTransferObject
-     * @return MediaGallery
-     */
-    public static function fromDataTransferObject(MediaGalleryDataTransferObject $mediaGalleryDataTransferObject): MediaGallery
-    {
+    public static function fromDataTransferObject(
+        MediaGalleryDataTransferObject $mediaGalleryDataTransferObject
+    ): MediaGallery {
         if ($mediaGalleryDataTransferObject->hasExistingMediaGallery()) {
             return $mediaGalleryDataTransferObject
                 ->getMediaGalleryEntity()
@@ -147,13 +132,9 @@ class MediaGallery
         );
     }
 
-    /**
-     * @param MediaGalleryDataTransferObject $mediaGalleryDataTransferObject
-     * @return MediaGallery
-     */
     private function updateFromDataTransferObject(
         MediaGalleryDataTransferObject $mediaGalleryDataTransferObject
-    ) : MediaGallery {
+    ): MediaGallery {
         $this->title = $mediaGalleryDataTransferObject->title;
         $this->action = $mediaGalleryDataTransferObject->action;
         $this->mediaGroup = $mediaGalleryDataTransferObject->mediaGroup;
@@ -163,109 +144,56 @@ class MediaGallery
         return $this;
     }
 
-    /**
-     * Gets the value of id.
-     *
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * Gets the value of userId.
-     *
-     * @return int
-     */
     public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * Gets the value of moduleExtraId.
-     *
-     * @return int
-     */
     public function getModuleExtraId(): int
     {
         return $this->moduleExtraId;
     }
 
-    /**
-     * Gets the Action
-     *
-     * @return string
-     */
     public function getAction(): string
     {
         return $this->action;
     }
 
-    /**
-     * Gets the value of title.
-     *
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Gets the value of text.
-     *
-     * @return string|null
-     */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
 
-    /**
-     * Gets the value of createdOn.
-     *
-     * @return \DateTime
-     */
     public function getCreatedOn(): \DateTime
     {
         return $this->createdOn;
     }
 
-    /**
-     * Gets the value of editedOn.
-     *
-     * @return \DateTime
-     */
     public function getEditedOn(): \DateTime
     {
         return $this->editedOn;
     }
 
-    /**
-     * Get extra label
-     *
-     * @return string The gallery extra_label.
-     */
     protected function getExtraLabel(): string
     {
         return '"' . $this->title . '"' . ' - ' . ucfirst($this->action);
     }
 
-    /**
-     * @return Status
-     */
     public function getStatus(): Status
     {
         return $this->status;
     }
 
-    /**
-     * Gets the value of mediaGroup.
-     *
-     * @return MediaGroup
-     */
     public function getMediaGroup(): MediaGroup
     {
         return $this->mediaGroup;
@@ -322,9 +250,12 @@ class MediaGallery
             [
                 'gallery_id' => $this->id,
                 'extra_label' => $this->getExtraLabel(),
-                'edit_url' =>
-                    Model::createURLForAction('MediaGalleryEdit', 'MediaGalleries')
-                    . '&id=' . $this->id,
+                'edit_url' => Model::createURLForAction(
+                    'MediaGalleryEdit',
+                    'MediaGalleries',
+                    null,
+                    ['id' => $this->id]
+                ),
             ]
         );
 
@@ -336,11 +267,6 @@ class MediaGallery
         );
     }
 
-    /**
-     * Is visible only returns true if the "status" is "active"
-     *
-     * @return bool
-     */
     public function isVisible(): bool
     {
         return $this->status->isActive();

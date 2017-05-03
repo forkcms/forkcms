@@ -7,11 +7,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderDataTransferObjec
 
 final class UpdateMediaFolder extends MediaFolderDataTransferObject
 {
-    /**
-     * CreateMediaFolder constructor.
-     *
-     * @param MediaFolder $mediaFolder
-     */
     public function __construct(MediaFolder $mediaFolder)
     {
         parent::__construct($mediaFolder);

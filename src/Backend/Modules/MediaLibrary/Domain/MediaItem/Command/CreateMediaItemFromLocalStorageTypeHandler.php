@@ -10,19 +10,12 @@ final class CreateMediaItemFromLocalStorageTypeHandler
     /** @var MediaItemRepository */
     protected $mediaItemRepository;
 
-    /**
-     * @param MediaItemRepository $mediaItemRepository
-     */
     public function __construct(MediaItemRepository $mediaItemRepository)
     {
         $this->mediaItemRepository = $mediaItemRepository;
     }
 
-    /**
-     * @param CreateMediaItemFromLocalStorageType $createMediaItemFromLocalStorageType
-     * @throws \Exception
-     */
-    public function handle(CreateMediaItemFromLocalStorageType $createMediaItemFromLocalStorageType)
+    public function handle(CreateMediaItemFromLocalStorageType $createMediaItemFromLocalStorageType): void
     {
         /** @var MediaItem $mediaItem */
         $mediaItem = MediaItem::createFromLocalStorageType(

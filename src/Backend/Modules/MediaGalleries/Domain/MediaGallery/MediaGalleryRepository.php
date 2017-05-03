@@ -11,22 +11,13 @@ use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNot
 final class MediaGalleryRepository extends EntityRepository
 {
     /**
-     * @param MediaGallery $mediaGallery
-     *
      * We don't flush here, see http://disq.us/p/okjc6b
      */
-    public function add(MediaGallery $mediaGallery)
+    public function add(MediaGallery $mediaGallery): void
     {
         $this->getEntityManager()->persist($mediaGallery);
     }
 
-    /**
-     * Exists MediaGallery by title
-     *
-     * @param string $title
-     * @param string|null $ignoreMediaGalleryId
-     * @return bool
-     */
     public function existsByTitle(string $title, string $ignoreMediaGalleryId = null): bool
     {
         /** @var MediaGallery $mediaGallery */
@@ -35,11 +26,6 @@ final class MediaGalleryRepository extends EntityRepository
         return ($mediaGallery instanceof MediaGallery) ? ($mediaGallery->getId() !== $ignoreMediaGalleryId) : false;
     }
 
-    /**
-     * @param string|null $id
-     * @return MediaGallery
-     * @throws \Exception
-     */
     public function findOneById(string $id = null): MediaGallery
     {
         if ($id === null) {
@@ -57,11 +43,9 @@ final class MediaGalleryRepository extends EntityRepository
     }
 
     /**
-     * @param MediaGallery $mediaGallery
-     *
      * We don't flush here, see http://disq.us/p/okjc6b
      */
-    public function remove(MediaGallery $mediaGallery)
+    public function remove(MediaGallery $mediaGallery): void
     {
         $this->getEntityManager()->remove($mediaGallery);
     }

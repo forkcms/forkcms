@@ -7,10 +7,7 @@ use Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
 
 class OneRandomImage extends FrontendMediaWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->loadData();
 
@@ -24,13 +21,12 @@ class OneRandomImage extends FrontendMediaWidget
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    protected function parse()
+    protected function parse(): void
     {
         /** @var MediaGroupMediaItem $randomConnectedItem */
-        $randomConnectedItem = $this->mediaGroup->getConnectedItems()->get(array_rand($this->mediaGroup->getConnectedItems()->toArray()));
+        $randomConnectedItem = $this->mediaGroup->getConnectedItems()->get(
+            array_rand($this->mediaGroup->getConnectedItems()->toArray())
+        );
 
         if ($randomConnectedItem === null) {
             return;
