@@ -6,6 +6,7 @@ use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
+use SpoonFormDropdown;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
@@ -77,9 +78,9 @@ class MediaItemDataGrid extends DataGridDB
         return (string) (new self($type, $folderId))->getContent();
     }
 
-    private function getMassActionDropdown(Type $type): \SpoonFormDropdown
+    private function getMassActionDropdown(Type $type): SpoonFormDropdown
     {
-        $ddmMediaItemMassAction = new \SpoonFormDropdown(
+        $ddmMediaItemMassAction = new SpoonFormDropdown(
             'action',
             ['move' => Language::lbl('Move')],
             'move',
