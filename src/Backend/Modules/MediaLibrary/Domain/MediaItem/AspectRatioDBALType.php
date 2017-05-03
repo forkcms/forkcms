@@ -12,7 +12,7 @@ final class AspectRatioDBALType extends DecimalType
         return 'media_item_aspect_ratio';
     }
 
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         $fieldDeclaration['precision'] = 21;
         $fieldDeclaration['scale'] = 11;
@@ -20,14 +20,21 @@ final class AspectRatioDBALType extends DecimalType
         return parent::getSQLDeclaration($fieldDeclaration, $platform);
     }
 
-    public function convertToPHPValue($aspectRatio, AbstractPlatform $platform): AspectRatio
+    public function convertToPHPValue($aspectRatio, AbstractPlatform $platform): ?AspectRatio
     {
+        if ($aspectRatio === null) {
+            return null;
+        }
+
         return new AspectRatio($aspectRatio);
     }
 
-    public function convertToDatabaseValue($aspectRatio, AbstractPlatform $platform): float
+    public function convertToDatabaseValue($aspectRatio, AbstractPlatform $platform): ?float
     {
+        if ($aspectRatio === null) {
+            return null;
+        }
+
         return $aspectRatio->asFloat();
     }
-
 }

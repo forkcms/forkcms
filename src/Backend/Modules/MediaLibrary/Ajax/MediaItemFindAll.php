@@ -8,6 +8,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFoun
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Common\Exception\AjaxExitException;
 
@@ -23,18 +24,29 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        /** @var MediaFolder|null $mediaFolder */
         $mediaFolder = $this->getMediaFolderBasedOnMediaGroup();
+        $aspectRatio = $this->getAspectRatio();
 
         // Output success message with variables
         $this->output(
             self::OK,
             [
-                'media' => $this->loadMediaItems($mediaFolder),
+                'media' => $this->loadMediaItems($mediaFolder, $aspectRatio),
                 'folder' => $mediaFolder !== null ? $mediaFolder->getId() : null,
                 'tab' => $this->selectedTab,
             ]
         );
+    }
+
+    private function getAspectRatio(): ?AspectRatio
+    {
+        $aspectRatio = $this->get('request')->request->get('aspect_ratio');
+
+        if (empty($aspectRatio)) {
+            return null;
+        }
+
+        return new AspectRatio($aspectRatio);
     }
 
     private function getMediaFolder(): ?MediaFolder
@@ -54,9 +66,6 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         }
     }
 
-    /**
-     * @return MediaFolder|null
-     */
     private function getMediaFolderBasedOnMediaGroup(): ?MediaFolder
     {
         /** @var MediaFolder|null $mediaFolder */
@@ -103,15 +112,12 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         }
     }
 
-    private function loadMediaItems(MediaFolder $mediaFolder = null): array
+    private function loadMediaItems(?MediaFolder $mediaFolder, ?AspectRatio $aspectRatio): array
     {
         if ($mediaFolder === null) {
             return [];
         }
 
-        return $this->get('media_library.repository.item')->findBy(
-            ['folder' => $mediaFolder],
-            ['title' => 'ASC']
-        );
+        return $this->get('media_library.repository.item')->findByFolderAndAspectRatio($mediaFolder, $aspectRatio);
     }
 }
