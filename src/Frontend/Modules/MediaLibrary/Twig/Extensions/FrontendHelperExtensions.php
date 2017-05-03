@@ -11,17 +11,11 @@ class FrontendHelperExtensions extends \Twig_Extension
      */
     private $frontendHelper;
 
-    /**
-     * @param FrontendHelper $frontendHelper
-     */
     public function __construct(FrontendHelper $frontendHelper)
     {
         $this->frontendHelper = $frontendHelper;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [

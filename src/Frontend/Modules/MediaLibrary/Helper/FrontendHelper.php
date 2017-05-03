@@ -195,13 +195,6 @@ class FrontendHelper
         return $this->parseWidgetContent($widget);
     }
 
-    /**
-     * @param FrontendBlockWidget $widget
-     *
-     * @throws \Exception
-     *
-     * @return string
-     */
     private function parseWidgetContent(FrontendBlockWidget $widget): string
     {
         try {
