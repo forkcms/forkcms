@@ -2,7 +2,6 @@ language: php
 
 matrix:
   include:
-    - php: 7.0
     - php: 7.1
 
 script:
@@ -19,8 +18,8 @@ before_script:
   - mysql -e "SET GLOBAL wait_timeout = 3600" # try to avoid mysql has gone away errors
 
 after_success:
-  - if [[ "$TRAVIS_PHP_VERSION" != "7.1" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [[ "$TRAVIS_PHP_VERSION" != "7.1" ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - then php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 after_failure:
   - cat app/logs/test.log
