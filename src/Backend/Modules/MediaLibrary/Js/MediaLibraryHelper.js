@@ -40,7 +40,8 @@ var media = {};
 var mediaFolders = false;
 var mediaGroups = {};
 var currentMediaGroupId = 0;
-var mediaFolderId = 0;
+var mediaFolderId = undefined;
+var currentAspectRatio = false;
 var currentMediaItemIds = [];
 jsBackend.mediaLibraryHelper.group =
 {
@@ -174,13 +175,14 @@ jsBackend.mediaLibraryHelper.group =
             e.preventDefault();
 
             // redefine folderId when clicked on other group
-            if ($(this).data('i') != currentMediaGroupId) {
+            if ($(this).data('i') != currentMediaGroupId || $(this).data('aspectRatio') != currentAspectRatio) {
                 // clear folders cache
                 jsBackend.mediaLibraryHelper.group.clearFoldersCache();
             }
 
             // define groupId
             currentMediaGroupId = $(this).data('i');
+            currentAspectRatio = $(this).data('aspectRatio');
 
             // get current media for group
             currentMediaItemIds = ($('#group-' + currentMediaGroupId + ' .mediaIds').first().val() != '')
@@ -482,7 +484,8 @@ jsBackend.mediaLibraryHelper.group =
                     action: 'MediaItemFindAll'
                 },
                 group_id: (mediaGroups[currentMediaGroupId]) ? mediaGroups[currentMediaGroupId].id : null,
-                folder_id: mediaFolderId
+                folder_id: mediaFolderId,
+                aspect_ratio: currentAspectRatio
             },
             success: function(json, textStatus) {
                 if (json.code != 200) {
