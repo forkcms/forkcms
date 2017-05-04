@@ -83,7 +83,6 @@ class MediaGalleryType extends AbstractType
                     'label' => 'lbl.MediaConnected',
                     'constraints' => [new Valid()],
                     'required' => false,
-                    'aspect_ratio' => AspectRatio::fromWidthAndHeight(1, 1)
                 ]
             );
     }
