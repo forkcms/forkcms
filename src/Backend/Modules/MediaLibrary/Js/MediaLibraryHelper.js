@@ -203,9 +203,6 @@ jsBackend.mediaLibraryHelper.group =
             // toggle upload boxes
             jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
 
-            // select first tab
-            $('#addMediaDialog').find('.ui-tabs a').first().tab('show');
-
             // open dialog
             $addMediaDialog.modal('show');
         });
