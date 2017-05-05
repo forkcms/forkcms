@@ -1,0 +1,21 @@
+<div class="modal fade" data-role="media-library-cropper-dialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title h4">{{ 'lbl.CropImage'|trans|ucfirst }}</span>
+      </div>
+      <div class="modal-body" data-role="media-library-cropper-dialog-body">
+        <div class="img-responsive" data-role="media-library-cropper-dialog-canvas-wrapper"></div>
+        <button type="button" data-role="media-library-cropper-crop-action">TEST CROP NOW!</button>
+        <div data-role="media-library-cropper-crop-preview"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+        </button>
+        <button type="button" class="btn btn-primary" data-role="media-library-cropper-crop">
+          <span class="fa fa-plus-square"></span>{{ 'lbl.Crop'|trans|ucfirst }}</button>
+      </div>
+    </div>
+  </div>
+</div>

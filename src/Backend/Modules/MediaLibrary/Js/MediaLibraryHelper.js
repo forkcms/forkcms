@@ -802,6 +802,95 @@ jsBackend.mediaLibraryHelper.group =
     }
 };
 
+jsBackend.mediaLibraryHelper.cropper =
+{
+    showCropper: function(resizeInfo, resolve, reject) {
+        let $dialog = $('[data-role=media-library-cropper-dialog]').first();
+        jsBackend.mediaLibraryHelper.cropper.linkPromiseToModalEvents($dialog, resolve, reject, resizeInfo);
+        jsBackend.mediaLibraryHelper.cropper.initSourceAndTargetCanvas($dialog, resizeInfo.sourceCanvas, resizeInfo.targetCanvas);
+        jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo);
+        jsBackend.mediaLibraryHelper.cropper.connectCropAction($dialog, resizeInfo);
+
+        jsBackend.mediaLibraryHelper.cropper.showDialog($dialog);
+        window.cropperResizeInfo = resizeInfo;
+        window.cropperResolve = resolve;
+    },
+
+    initSourceAndTargetCanvas: function($dialog, sourceCanvas, targetCanvas) {
+        // set the initial height and width on the target canvas
+        targetCanvas.height = sourceCanvas.height;
+        targetCanvas.width = sourceCanvas.width;
+
+        $dialog.find('[data-role=media-library-cropper-dialog-canvas-wrapper]').empty().append(sourceCanvas);
+        $dialog.find('[data-role=media-library-cropper-crop-preview]').empty().append(targetCanvas);
+    },
+
+    initCropper: function($dialog, resizeInfo) {
+        let initCropperFunction = function() {
+            $(resizeInfo.sourceCanvas)
+                .addClass('img-responsive')
+                .cropper(jsBackend.mediaLibraryHelper.cropper.getCropperConfig(resizeInfo.targetCanvas));
+        };
+        $dialog.off('shown.bs.modal', initCropperFunction).on('shown.bs.modal', initCropperFunction);
+    },
+
+    getCropperConfig: function(targetCanvas) {
+        let config = {
+            autoCropArea: 1,
+        };
+
+        if (currentAspectRatio !== false) {
+            config.aspectRatio = currentAspectRatio;
+        }
+
+        return config;
+    },
+
+    showDialog: function($dialog) {
+        let openEventFunction = function() {
+            $dialog.modal('show');
+            $('#addMediaDialog').off('hidden.bs.modal', openEventFunction);
+        };
+        // make sure we don't have duplicate events
+        $('#addMediaDialog').on('hidden.bs.modal', openEventFunction).modal('hide');
+    },
+
+    linkPromiseToModalEvents: function($dialog, resolve, reject, resizeInfo) {
+        let closeEventFunction = function() {
+            reject('Cancel');
+            $('#addMediaDialog').modal('show');
+        };
+
+        // needs to be on hidden instead of hide since hide will result in a scroll bug
+        // needs to be on hidden instead of hide since hide will result in a scroll bug
+        $dialog.off('hidden.bs.modal', closeEventFunction).on('hidden.bs.modal', closeEventFunction);
+
+        let cropEventFunction = function() {
+            let context = resizeInfo.targetCanvas.getContext('2d');
+            let $cropper = $(resizeInfo.sourceCanvas);
+            let cropBoxData = $cropper.cropper('getCroppedCanvas');
+
+            // set the correct height and width on the target canvas
+            resizeInfo.targetCanvas.height = cropBoxData.height;
+            resizeInfo.targetCanvas.width = cropBoxData.width;
+
+            // make sure we start with a blank slate
+            context.clearRect(0, 0, resizeInfo.targetCanvas.width, resizeInfo.targetCanvas.height);
+
+            // add the new crop
+            context.drawImage($cropper.cropper('getCroppedCanvas'), 0, 0);
+
+            $dialog.off('hidden.bs.modal', closeEventFunction);
+            resolve('Confirm');
+            $dialog.modal('hide');
+        };
+
+        // needs to be on hidden instead of hide since hide will result in a scroll bug
+        $dialog.find('[data-role=media-library-cropper-crop]')
+            .off('click', cropEventFunction)
+            .on('click', cropEventFunction)
+    }
+};
 /**
  * All methods related to the upload
  * global: jsBackend
@@ -844,15 +933,9 @@ jsBackend.mediaLibraryHelper.upload =
             validation: {
                 allowedExtensions: jsBackend.data.get('MediaLibrary.mediaAllowedExtensions')
             },
-            scaling: {
-                includeExif: true,
-                sendOriginal: false,
-                sizes: [
-                    {name: "", maxSize: 3000}
-                ]
-            },
+            scaling: jsBackend.mediaLibraryHelper.upload.getScalingConfig(),
             callbacks: {
-                onUpload: function() {
+                onUpload: function(event) {
                     // redefine media folder id
                     mediaFolderId = $('#uploadMediaFolderId').val();
 
@@ -889,6 +972,41 @@ jsBackend.mediaLibraryHelper.upload =
                 }
             }
         });
+    },
+
+    /**
+    * If we work with an aspect ratio we trigger the cropper
+    */
+    getScalingConfig: function() {
+        // default config
+        let scalingConfig = {
+            includeExif: true,
+            sendOriginal: false,
+            sizes: [
+              {name: "", maxSize: 3000}
+            ]
+        };
+
+        if (currentAspectRatio === false) {
+          return scalingConfig;
+        }
+
+        // if we crop this will give errors
+        scalingConfig.includeExif = false;
+
+        // trigger scaling every time
+        scalingConfig.sizes = [
+            {name: "", maxSize: 1}
+        ];
+
+        // add our custom resizer
+        scalingConfig.customResizer = function(resizeInfo) {
+            return new Promise(function(resolve, reject) {
+                jsBackend.mediaLibraryHelper.cropper.showCropper(resizeInfo, resolve, reject);
+            })
+        };
+
+        return scalingConfig;
     },
 
     /**
