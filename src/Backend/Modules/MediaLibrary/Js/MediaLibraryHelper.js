@@ -878,7 +878,6 @@ jsBackend.mediaLibraryHelper.cropper =
             jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
         };
 
-        // needs to be on hidden instead of hide since hide will result in a scroll bug
         $dialog.find('[data-role=media-library-cropper-crop]')
             .off('click', cropEventFunction)
             .on('click', cropEventFunction)
