@@ -48,7 +48,7 @@ jsBackend.mediaLibraryHelper.group =
     init: function()
     {
         // start or not
-        if ($('#addMediaDialog').length == 0) {
+        if ($('[data-role=media-library-add-dialog]').length == 0) {
             return false;
         }
 
@@ -149,7 +149,7 @@ jsBackend.mediaLibraryHelper.group =
      */
     addMediaDialog : function()
     {
-        var $addMediaDialog = $('#addMediaDialog');
+        var $addMediaDialog = $('[data-role=media-library-add-dialog]');
         var $addMediaSubmit = $('#addMediaSubmit');
 
         $addMediaSubmit.on('click', function() {
@@ -802,13 +802,12 @@ jsBackend.mediaLibraryHelper.group =
 jsBackend.mediaLibraryHelper.cropper =
 {
     showCropper: function(resizeInfo, resolve, reject) {
-        let $dialog = $('[data-role=media-library-cropper-dialog]').first();
+        let $dialog = $('[data-role=media-library-add-dialog]').first();
         jsBackend.mediaLibraryHelper.cropper.linkPromiseToModalEvents($dialog, resolve, reject, resizeInfo);
         jsBackend.mediaLibraryHelper.cropper.initSourceAndTargetCanvas($dialog, resizeInfo.sourceCanvas, resizeInfo.targetCanvas);
         jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo);
-        jsBackend.mediaLibraryHelper.cropper.connectCropAction($dialog, resizeInfo);
 
-        jsBackend.mediaLibraryHelper.cropper.showDialog($dialog);
+        jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
         window.cropperResizeInfo = resizeInfo;
         window.cropperResolve = resolve;
     },
@@ -823,15 +822,12 @@ jsBackend.mediaLibraryHelper.cropper =
     },
 
     initCropper: function($dialog, resizeInfo) {
-        let initCropperFunction = function() {
-            $(resizeInfo.sourceCanvas)
-                .addClass('img-responsive')
-                .cropper(jsBackend.mediaLibraryHelper.cropper.getCropperConfig(resizeInfo.targetCanvas));
-        };
-        $dialog.off('shown.bs.modal', initCropperFunction).on('shown.bs.modal', initCropperFunction);
+        $(resizeInfo.sourceCanvas)
+            .addClass('img-responsive')
+            .cropper(jsBackend.mediaLibraryHelper.cropper.getCropperConfig());
     },
 
-    getCropperConfig: function(targetCanvas) {
+    getCropperConfig: function() {
         let config = {
             autoCropArea: 1,
         };
@@ -843,24 +839,23 @@ jsBackend.mediaLibraryHelper.cropper =
         return config;
     },
 
-    showDialog: function($dialog) {
-        let openEventFunction = function() {
-            $dialog.modal('show');
-            $('#addMediaDialog').off('hidden.bs.modal', openEventFunction);
-        };
-        // make sure we don't have duplicate events
-        $('#addMediaDialog').on('hidden.bs.modal', openEventFunction).modal('hide');
+    switchBackToSelectModal: function($dialog) {
+        $dialog.find('[data-role=media-library-select-modal]').removeClass('hidden');
+        $dialog.find('[data-role=media-library-cropper-modal]').addClass('hidden');
+    },
+
+    switchToCropperModal: function($dialog) {
+        $dialog.find('[data-role=media-library-select-modal]').addClass('hidden');
+        $dialog.find('[data-role=media-library-cropper-modal]').removeClass('hidden');
     },
 
     linkPromiseToModalEvents: function($dialog, resolve, reject, resizeInfo) {
         let closeEventFunction = function() {
             reject('Cancel');
-            $('#addMediaDialog').modal('show');
+            jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
         };
 
-        // needs to be on hidden instead of hide since hide will result in a scroll bug
-        // needs to be on hidden instead of hide since hide will result in a scroll bug
-        $dialog.off('hidden.bs.modal', closeEventFunction).on('hidden.bs.modal', closeEventFunction);
+        $dialog.find('[data-role=media-library-cropper-dismiss]').off('click', closeEventFunction).on('click', closeEventFunction);
 
         let cropEventFunction = function() {
             let context = resizeInfo.targetCanvas.getContext('2d');
@@ -879,7 +874,8 @@ jsBackend.mediaLibraryHelper.cropper =
 
             $dialog.off('hidden.bs.modal', closeEventFunction);
             resolve('Confirm');
-            $dialog.modal('hide');
+            $dialog.find('[data-role=media-library-cropper-crop]').off('click', cropEventFunction);
+            jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
         };
 
         // needs to be on hidden instead of hide since hide will result in a scroll bug
