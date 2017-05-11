@@ -16,12 +16,6 @@ final class DeleteMediaGallery
      */
     public $deleteAllMediaItems;
 
-    /**
-     * DeleteMediaGallery constructor.
-     *
-     * @param MediaGallery $mediaGallery
-     * @param bool $deleteAllMediaItems
-     */
     public function __construct(MediaGallery $mediaGallery, bool $deleteAllMediaItems = false)
     {
         $this->mediaGallery = $mediaGallery;

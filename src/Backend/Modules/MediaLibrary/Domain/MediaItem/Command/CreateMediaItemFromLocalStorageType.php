@@ -19,12 +19,6 @@ final class CreateMediaItemFromLocalStorageType
     /** @var MediaItem */
     private $mediaItem;
 
-    /**
-     * @param string $path
-     * @param MediaFolder $mediaFolder
-     * @param int $userId
-     * @throws \Exception
-     */
     public function __construct(
         string $path,
         MediaFolder $mediaFolder,
@@ -35,18 +29,12 @@ final class CreateMediaItemFromLocalStorageType
         $this->userId = $userId;
     }
 
-    /**
-     * @return MediaItem
-     */
     public function getMediaItem(): MediaItem
     {
         return $this->mediaItem;
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     */
-    public function setMediaItem(MediaItem $mediaItem)
+    public function setMediaItem(MediaItem $mediaItem): void
     {
         $this->mediaItem = $mediaItem;
     }

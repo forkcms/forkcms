@@ -7,22 +7,12 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 
 final class MediaItemRepository extends EntityRepository
 {
-    /**
-     * @param MediaItem $mediaItem
-     *
-     * We don't flush here, see http://disq.us/p/okjc6b
-     */
-    public function add(MediaItem $mediaItem)
+    public function add(MediaItem $mediaItem): void
     {
+        // We don't flush here, see http://disq.us/p/okjc6b
         $this->getEntityManager()->persist($mediaItem);
     }
 
-    /**
-     * Exists one MediaItem by url
-     *
-     * @param string $url
-     * @return bool
-     */
     public function existsOneByUrl(string $url): bool
     {
         /** @var MediaItem|null $mediaItem */
@@ -31,11 +21,6 @@ final class MediaItemRepository extends EntityRepository
         return $mediaItem !== null;
     }
 
-    /**
-     * @param string|null $id
-     * @return MediaItem
-     * @throws \Exception
-     */
     public function findOneById(string $id = null): MediaItem
     {
         if ($id === null) {
@@ -51,13 +36,9 @@ final class MediaItemRepository extends EntityRepository
         return $mediaItem;
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     *
-     * We don't flush here, see http://disq.us/p/okjc6b
-     */
-    public function remove(MediaItem $mediaItem)
+    public function remove(MediaItem $mediaItem): void
     {
+        // We don't flush here, see http://disq.us/p/okjc6b
         $this->getEntityManager()->remove($mediaItem);
     }
 }

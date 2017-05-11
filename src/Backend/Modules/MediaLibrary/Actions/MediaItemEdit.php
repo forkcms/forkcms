@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
 
@@ -13,19 +14,14 @@ class MediaItemEdit extends BackendBaseActionEdit
     /** @var int */
     protected $folderId;
 
-    /**
-     * MediaItem
-     *
-     * @var string
-     */
+    /** @var string */
     protected $mediaItem;
 
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
-        // Parse JS files
-        $this->parseFiles();
+        $this->parseJsFiles();
 
         /** @var MediaItem $mediaItem */
         $mediaItem = $this->getMediaItem();
@@ -45,7 +41,11 @@ class MediaItemEdit extends BackendBaseActionEdit
         if (!$form->isValid()) {
             $this->tpl->assign('folderId', $this->folderId);
             $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
-            $this->header->addJsData('MediaLibrary', 'openedFolderId', ($this->folderId !== null) ? $this->folderId : null);
+            $this->header->addJsData(
+                'MediaLibrary',
+                'openedFolderId',
+                $this->folderId ?? null
+            );
             $this->tpl->assign('form', $form->createView());
             $this->tpl->assign('mediaItem', $mediaItem);
             $this->tpl->assign('backLink', $this->getBackLink());
@@ -76,11 +76,6 @@ class MediaItemEdit extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Get media item
-     *
-     * @return MediaItem
-     */
     private function getMediaItem(): MediaItem
     {
         try {
@@ -88,22 +83,17 @@ class MediaItemEdit extends BackendBaseActionEdit
             return $this->get('media_library.repository.item')->findOneById(
                 $this->getParameter('id', 'string')
             );
-        } catch (\Exception $e) {
-            return $this->redirect(
+        } catch (MediaItemNotFound $mediaItemNotFound) {
+            $this->redirect(
                 $this->getBackLink(
                     [
-                        'error' => 'media-item-not-existing'
+                        'error' => 'media-item-not-existing',
                     ]
                 )
             );
         }
     }
 
-    /**
-     * @param array $parameters
-     *
-     * @return string
-     */
     private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(
@@ -114,10 +104,7 @@ class MediaItemEdit extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Parse JS files
-     */
-    private function parseFiles()
+    private function parseJsFiles(): void
     {
         $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/jquery.tree.js', null, false, true);
         $this->header->addJS('/src/Backend/Modules/Pages/Js/jstree/lib/jquery.cookie.js', null, false, true);

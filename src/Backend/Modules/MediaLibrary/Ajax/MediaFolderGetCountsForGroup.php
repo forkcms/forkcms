@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Common\Exception\AjaxExitException;
 
@@ -15,7 +16,7 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
     /**
      * Execute the action
      */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -30,11 +31,7 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
         );
     }
 
-    /**
-     * @return MediaGroup|null
-     * @throws AjaxExitException
-     */
-    private function getMediaGroup()
+    private function getMediaGroup(): ?MediaGroup
     {
         $id = $this->get('request')->request->get('group_id');
 
@@ -44,9 +41,8 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
         }
 
         try {
-            /** @var MediaGroup */
             return $this->get('media_library.repository.group')->findOneById($id);
-        } catch (\Exception $e) {
+        } catch (MediaGroupNotFound $mediaGroupNotFound) {
             return null;
         }
     }

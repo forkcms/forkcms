@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 use Backend\Core\Engine\Header;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type as MediaItemPossibleType;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupPossibleType;
@@ -29,10 +30,6 @@ class MediaGroupType extends AbstractType
     /** @var MediaGroupRepository */
     private $mediaGroupRepository;
 
-    /**
-     * @param MediaGroupRepository $mediaGroupRepository
-     * @param MessageBusSupportingMiddleware $commandBus
-     */
     public function __construct(
         MediaGroupRepository $mediaGroupRepository,
         MessageBusSupportingMiddleware $commandBus
@@ -41,11 +38,7 @@ class MediaGroupType extends AbstractType
         $this->commandBus = $commandBus;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -81,11 +74,6 @@ class MediaGroupType extends AbstractType
         self::parseFiles();
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if ($view->parent === null) {
@@ -97,9 +85,6 @@ class MediaGroupType extends AbstractType
         $view->vars['label'] = $options['label'];
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(
@@ -114,18 +99,11 @@ class MediaGroupType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'media_group';
     }
 
-    /**
-     * @param $options
-     * @return array
-     */
     private function getConstraints($options): array
     {
         if (!array_key_exists('required', $options) || !$options['required']) {
@@ -133,36 +111,24 @@ class MediaGroupType extends AbstractType
         }
 
         return [
-            new Constraints\NotBlank([
-                'message' => Language::err('YouAreRequiredToConnectMedia', 'MediaLibrary'),
-            ]),
+            new Constraints\NotBlank(
+                [
+                    'message' => Language::err('YouAreRequiredToConnectMedia', 'MediaLibrary'),
+                ]
+            ),
         ];
     }
 
-    /**
-     * @return \Closure
-     */
-    private function getMediaGroupReverseTransformFunction()
+    private function getMediaGroupReverseTransformFunction(): callable
     {
-        /**
-         * @param array $mediaGroupData
-         * @return MediaGroup
-         */
-        return function (array $mediaGroupData): MediaGroup {
-            /** @var SaveMediaGroup $updateMediaGroup */
-            $saveMediaGroup = $this->saveMediaGroup(
+        return function (array $mediaGroupData) : MediaGroup {
+            return $this->saveMediaGroup(
                 $this->getMediaGroupFromMediaGroupData($mediaGroupData),
                 $this->getMediaItemIdsFromMediaGroupData($mediaGroupData)
-            );
-
-            return $saveMediaGroup->getMediaGroup();
+            )->getMediaGroup();
         };
     }
 
-    /**
-     * @param array $mediaGroupData
-     * @return MediaGroup
-     */
     private function getMediaGroupFromMediaGroupData(array $mediaGroupData): MediaGroup
     {
         /** @var string $mediaGroupId */
@@ -171,7 +137,7 @@ class MediaGroupType extends AbstractType
         try {
             /** @var MediaGroup $mediaGroup */
             $mediaGroup = $this->mediaGroupRepository->findOneById($mediaGroupId);
-        } catch (\Exception $e) {
+        } catch (MediaGroupNotFound $mediaGroupNotFound) {
             $mediaGroup = MediaGroup::createFromId(
                 Uuid::fromString($mediaGroupId),
                 MediaGroupPossibleType::fromString($mediaGroupData['type'])
@@ -181,10 +147,7 @@ class MediaGroupType extends AbstractType
         return $mediaGroup;
     }
 
-    /**
-     * @return \Closure
-     */
-    private function getMediaGroupTransformFunction()
+    private function getMediaGroupTransformFunction(): callable
     {
         return function (MediaGroup $mediaGroup) {
             return [
@@ -195,17 +158,12 @@ class MediaGroupType extends AbstractType
         };
     }
 
-    /**
-     * @param array $mediaGroupData
-     * @return array
-     */
     private function getMediaItemIdsFromMediaGroupData(array $mediaGroupData): array
     {
-        return $mediaGroupData['mediaIds'] !== null
-            ? explode(',', trim($mediaGroupData['mediaIds'])) : [];
+        return $mediaGroupData['mediaIds'] !== null ? explode(',', trim($mediaGroupData['mediaIds'])) : [];
     }
 
-    public static function parseFiles()
+    public static function parseFiles(): void
     {
         // Currently Fork CMS can't load in the dependency "@header", since it is defined later when loading in
         // That's why we still use a static function to get the header
@@ -221,15 +179,14 @@ class MediaGroupType extends AbstractType
         $header->addJS('MediaLibraryHelper.js', 'MediaLibrary', true);
         $header->addJsData('MediaLibrary', 'mediaItemTypes', MediaItemPossibleType::POSSIBLE_VALUES);
         $header->addJsData('MediaLibrary', 'mediaAllowedMovieSource', StorageType::POSSIBLE_VALUES_FOR_MOVIE);
-        $header->addJsData('MediaLibrary', 'mediaAllowedExtensions', Model::get('media_library.manager.extension')->getAll());
+        $header->addJsData(
+            'MediaLibrary',
+            'mediaAllowedExtensions',
+            Model::get('media_library.manager.extension')->getAll()
+        );
     }
 
-    /**
-     * @param MediaGroup $mediaGroup
-     * @param array $mediaItemIds
-     * @return SaveMediaGroup
-     */
-    private function saveMediaGroup(MediaGroup $mediaGroup, array $mediaItemIds)
+    private function saveMediaGroup(MediaGroup $mediaGroup, array $mediaItemIds): SaveMediaGroup
     {
         /** @var SaveMediaGroup $saveMediaGroup */
         $saveMediaGroup = new SaveMediaGroup(

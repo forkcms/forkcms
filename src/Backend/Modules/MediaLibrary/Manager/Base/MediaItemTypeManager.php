@@ -9,12 +9,7 @@ class MediaItemTypeManager
     /** @var array */
     protected $values = [];
 
-    /**
-     * @param string $mediaItemType
-     * @param array $values
-     * @throws \Exception
-     */
-    public function add(string $mediaItemType, array $values)
+    public function add(string $mediaItemType, array $values): void
     {
         /** @var Type $type */
         $type = Type::fromString($mediaItemType);
@@ -23,10 +18,6 @@ class MediaItemTypeManager
         $this->values[$type->getType()] = $values;
     }
 
-    /**
-     * @param Type $mediaItemType
-     * @return array
-     */
     public function get(Type $mediaItemType): array
     {
         return $this->values[(string) $mediaItemType];
@@ -41,6 +32,7 @@ class MediaItemTypeManager
         foreach ($this->values as $key => $items) {
             $values = array_merge($values, $items);
         }
+
         return $values;
     }
 }

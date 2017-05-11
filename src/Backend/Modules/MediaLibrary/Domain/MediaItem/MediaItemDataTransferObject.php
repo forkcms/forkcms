@@ -21,11 +21,6 @@ class MediaItemDataTransferObject
     /** @var int */
     public $userId;
 
-    /**
-     * CreateMediaItem constructor.
-     *
-     * @param MediaItem|null $mediaItem
-     */
     public function __construct(MediaItem $mediaItem = null)
     {
         $this->mediaItemEntity = $mediaItem;
@@ -40,26 +35,17 @@ class MediaItemDataTransferObject
         $this->userId = $mediaItem->getUserId();
     }
 
-    /**
-     * @return MediaItem
-     */
     public function getMediaItemEntity(): MediaItem
     {
         return $this->mediaItemEntity;
     }
 
-    /**
-     * @return bool
-     */
     public function hasExistingMediaItem(): bool
     {
         return $this->mediaItemEntity instanceof MediaItem;
     }
 
-    /**
-     * @param MediaItem $mediaItemEntity
-     */
-    public function setMediaItemEntity(MediaItem $mediaItemEntity)
+    public function setMediaItemEntity(MediaItem $mediaItemEntity): void
     {
         $this->mediaItemEntity = $mediaItemEntity;
     }

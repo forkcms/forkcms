@@ -10,20 +10,12 @@ final class CreateMediaFolderHandler
     /** @var MediaFolderRepository */
     protected $mediaFolderRepository;
 
-    /**
-     * CreateMediaFolderHandler constructor.
-     *
-     * @param MediaFolderRepository $mediaFolderRepository
-     */
     public function __construct(MediaFolderRepository $mediaFolderRepository)
     {
         $this->mediaFolderRepository = $mediaFolderRepository;
     }
 
-    /**
-     * @param CreateMediaFolder $createMediaFolder
-     */
-    public function handle(CreateMediaFolder $createMediaFolder)
+    public function handle(CreateMediaFolder $createMediaFolder): void
     {
         /** @var MediaFolder $mediaFolder */
         $mediaFolder = MediaFolder::fromDataTransferObject($createMediaFolder);

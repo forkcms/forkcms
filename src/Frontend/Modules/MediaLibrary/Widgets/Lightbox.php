@@ -9,10 +9,7 @@ use Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
  */
 class Lightbox extends FrontendMediaWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->loadData();
 
@@ -27,7 +24,7 @@ class Lightbox extends FrontendMediaWidget
         $this->parse();
     }
 
-    private function addLightboxJS()
+    private function addLightboxJS(): void
     {
         $this->addJS('/js/vendors/photoswipe.min.js', true);
         $this->addJS('/js/vendors/photoswipe-ui-default.min.js', true);

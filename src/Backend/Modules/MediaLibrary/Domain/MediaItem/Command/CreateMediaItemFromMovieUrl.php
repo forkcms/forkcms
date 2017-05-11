@@ -26,13 +26,6 @@ final class CreateMediaItemFromMovieUrl
     /** @var StorageType */
     public $source;
 
-    /**
-     * @param StorageType $source
-     * @param string $movieId
-     * @param string $movieTitle
-     * @param MediaFolder $mediaFolder
-     * @param int $userId
-     */
     public function __construct(
         StorageType $source,
         string $movieId,
@@ -47,18 +40,12 @@ final class CreateMediaItemFromMovieUrl
         $this->userId = $userId;
     }
 
-    /**
-     * @return MediaItem
-     */
     public function getMediaItem(): MediaItem
     {
         return $this->mediaItem;
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     */
-    public function setMediaItem(MediaItem $mediaItem)
+    public function setMediaItem(MediaItem $mediaItem): void
     {
         $this->mediaItem = $mediaItem;
     }

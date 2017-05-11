@@ -15,32 +15,21 @@ final class TreeManager
     /** @var MediaFolderCache */
     protected $mediaFolderCache;
 
-    /**
-     * TreeManager constructor.
-     *
-     * @param MediaFolderCache $mediaFolderCache
-     */
     public function __construct(MediaFolderCache $mediaFolderCache)
     {
         $this->mediaFolderCache = $mediaFolderCache;
     }
 
-    /**
-     * @return string
-     */
     public function getHTML(): string
     {
         $navigationItems = $this->mediaFolderCache->get();
 
         $html = '<h4>' . ucfirst(Language::lbl('Folders')) . '</h4>' . "\n";
         $html .= $this->buildNavigationTree($navigationItems);
+
         return $html;
     }
 
-    /**
-     * @param array $navigationItems
-     * @return string
-     */
     private function buildNavigationTree(array $navigationItems): string
     {
         // start
@@ -59,10 +48,6 @@ final class TreeManager
         return $html;
     }
 
-    /**
-     * @param MediaFolderCacheItem $cacheItem
-     * @return string
-     */
     private function buildNavigationItem(MediaFolderCacheItem $cacheItem): string
     {
         // define url
@@ -81,10 +66,6 @@ final class TreeManager
         return $html . '</li>' . "\n";
     }
 
-    /**
-     * @param array $parameters
-     * @return string
-     */
     private function getLink($parameters = [])
     {
         return BackendModel::createURLForAction(

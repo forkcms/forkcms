@@ -13,9 +13,6 @@ use Backend\Core\Language\Language;
  */
 class MediaGalleryDataGrid extends DataGridDB
 {
-    /**
-     * MediaGalleryDataGrid constructor.
-     */
     public function __construct()
     {
         parent::__construct(
@@ -28,28 +25,25 @@ class MediaGalleryDataGrid extends DataGridDB
         $this->setExtraFunctions();
     }
 
-    /**
-     * @return string
-     */
     public static function getHtml(): string
     {
         return (string) (new self())->getContent();
     }
 
-    private function setSortingFunctions()
+    private function setSortingFunctions(): void
     {
         $this->setSortingColumns(
             [
                 'title',
                 'action',
-                'editedOn'
+                'editedOn',
             ],
             'title'
         );
         $this->setSortParameter('asc');
     }
 
-    private function setExtraFunctions()
+    private function setExtraFunctions(): void
     {
         $this->setColumnFunction(
             [new DataGridFunctions(), 'getLongDate'],

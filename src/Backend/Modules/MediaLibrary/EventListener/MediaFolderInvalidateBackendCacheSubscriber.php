@@ -19,17 +19,11 @@ final class MediaFolderInvalidateBackendCacheSubscriber implements EventSubscrib
      */
     protected $mediaFolderCache;
 
-    /**
-     * @param MediaFolderCache $mediaFolderCache
-     */
     public function __construct(MediaFolderCache $mediaFolderCache)
     {
         $this->mediaFolderCache = $mediaFolderCache;
     }
 
-    /**
-     * @return array
-     */
     public function getSubscribedEvents(): array
     {
         return [
@@ -39,36 +33,24 @@ final class MediaFolderInvalidateBackendCacheSubscriber implements EventSubscrib
         ];
     }
 
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
-    private function invalidateBackendCacheForMediaFolders(LifecycleEventArgs $eventArgs)
+    private function invalidateBackendCacheForMediaFolders(LifecycleEventArgs $eventArgs): void
     {
         if ($eventArgs->getObject() instanceof MediaFolder || $eventArgs->getObject() instanceof MediaItem) {
             $this->mediaFolderCache->delete();
         }
     }
 
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
-    public function postPersist(LifecycleEventArgs $eventArgs)
+    public function postPersist(LifecycleEventArgs $eventArgs): void
     {
         $this->invalidateBackendCacheForMediaFolders($eventArgs);
     }
 
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
-    public function postUpdate(LifecycleEventArgs $eventArgs)
+    public function postUpdate(LifecycleEventArgs $eventArgs): void
     {
         $this->invalidateBackendCacheForMediaFolders($eventArgs);
     }
 
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
-    public function postRemove(LifecycleEventArgs $eventArgs)
+    public function postRemove(LifecycleEventArgs $eventArgs): void
     {
         $this->invalidateBackendCacheForMediaFolders($eventArgs);
     }

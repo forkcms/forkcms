@@ -13,18 +13,18 @@ class StorageManagerTest extends TestCase
     /** @var StorageManager */
     protected $storageManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->storageManager = new StorageManager();
     }
 
-    public function testLocalStorageProvider()
+    public function testLocalStorageProvider(): void
     {
         $cacheManager = $this->createMock('Liip\ImagineBundle\Imagine\Cache\CacheManager');
         $localStorageProvider = new LocalStorageProvider(
-            "src/Frontend/Files/MediaLibrary",
-            "https://www.website.be",
-            "https://www.website.be",
+            'src/Frontend/Files/MediaLibrary',
+            'https://www.website.be',
+            'https://www.website.be',
             $cacheManager
         );
 
@@ -35,11 +35,11 @@ class StorageManagerTest extends TestCase
         );
     }
 
-    public function testYoutubeStorageProvider()
+    public function testYoutubeStorageProvider(): void
     {
         $youtubeStorageProvider = new YoutubeStorageProvider(
-            "https://www.youtube.com/watch?v=",
-            "https://www.youtube.com/embed/"
+            'https://www.youtube.com/watch?v=',
+            'https://www.youtube.com/embed/'
         );
         $this->storageManager->addStorageProvider($youtubeStorageProvider, 'youtube');
         $this->assertEquals(
@@ -48,11 +48,11 @@ class StorageManagerTest extends TestCase
         );
     }
 
-    public function testVimeoStorageProvider()
+    public function testVimeoStorageProvider(): void
     {
         $vimeoStorageProvider = new VimeoStorageProvider(
-            "https://www.vimeo.com/",
-            "https://player.vimeo.com/video/"
+            'https://www.vimeo.com/',
+            'https://player.vimeo.com/video/'
         );
         $this->storageManager->addStorageProvider($vimeoStorageProvider, 'vimeo');
         $this->assertEquals(

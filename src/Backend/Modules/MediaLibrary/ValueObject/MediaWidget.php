@@ -9,9 +9,6 @@ final class MediaWidget
     /** @var string */
     private $mediaWidget;
 
-    /**
-     * @param string $mediaWidget
-     */
     private function __construct(string $mediaWidget)
     {
         if (!in_array($mediaWidget, self::getPossibleValues(), true)) {
@@ -21,35 +18,21 @@ final class MediaWidget
         $this->mediaWidget = $mediaWidget;
     }
 
-    /**
-     * @param string $mediaWidget
-     * @return MediaWidget
-     */
     public static function fromString(string $mediaWidget): MediaWidget
     {
         return new self($mediaWidget);
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->mediaWidget;
     }
 
-    /**
-     * @param MediaWidget $mediaWidget
-     * @return bool
-     */
     public function equals(MediaWidget $mediaWidget): bool
     {
-        return $mediaWidget->mediaWidget == $this->mediaWidget;
+        return $mediaWidget->mediaWidget === $this->mediaWidget;
     }
 
-    /**
-     * @return array
-     */
     public static function getPossibleValues(): array
     {
         // Define actions
@@ -65,9 +48,6 @@ final class MediaWidget
         return $actions;
     }
 
-    /**
-     * @return string
-     */
     public function getMediaWidget(): string
     {
         return $this->mediaWidget;

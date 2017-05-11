@@ -13,19 +13,18 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroup\TypeType;
  */
 class MediaGalleryIndex extends BackendBaseActionIndex
 {
-    /**
-     * Execute the action
-     *
-     * @return void
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
-        $form = $this->createForm(TypeType::class, null, [
-            'action' => BackendModel::createURLForAction('MediaGalleryAdd'),
-            'method' => 'GET',
-        ]);
+        $form = $this->createForm(
+            TypeType::class,
+            null,
+            [
+                'action' => BackendModel::createURLForAction('MediaGalleryAdd'),
+                'method' => 'GET',
+            ]
+        );
 
         $this->tpl->assign('warnings', self::getWarnings());
         $this->tpl->assign('dataGrid', MediaGalleryDataGrid::getHtml());
@@ -35,11 +34,6 @@ class MediaGalleryIndex extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Get the warnings
-     *
-     * @return array
-     */
     public static function getWarnings(): array
     {
         // MediaLibrary "Index" action should be allowed
@@ -53,7 +47,7 @@ class MediaGalleryIndex extends BackendBaseActionIndex
                 'message' => sprintf(
                     Language::err('MediaLibraryModuleRequired', 'MediaGalleries'),
                     BackendModel::createURLForAction('Modules', 'Extensions')
-                )
+                ),
             ],
         ];
     }

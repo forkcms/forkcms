@@ -11,10 +11,7 @@ use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         $this->addModule('MediaGalleries');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
@@ -23,10 +20,7 @@ class Installer extends ModuleInstaller
         $this->configureBackendNavigation();
     }
 
-    /**
-     * Configure backend navigation
-     */
-    protected function configureBackendNavigation()
+    protected function configureBackendNavigation(): void
     {
         // Navigation for "modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
@@ -41,10 +35,7 @@ class Installer extends ModuleInstaller
         );
     }
 
-    /**
-     * Configure module rights
-     */
-    protected function configureModuleRights()
+    protected function configureModuleRights(): void
     {
         // Set module rights
         $this->setModuleRights(1, $this->getModule());
@@ -57,10 +48,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaGalleryEditWidgetAction');
     }
 
-    /**
-     * Create entity tables
-     */
-    private function createEntityTables()
+    private function createEntityTables(): void
     {
         Model::get('fork.entity.create_schema')->forEntityClasses(
             [

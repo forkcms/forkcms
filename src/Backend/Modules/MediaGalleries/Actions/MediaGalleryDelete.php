@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaGalleries\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery;
+use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
 
 /**
@@ -12,10 +13,7 @@ use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
  */
 class MediaGalleryDelete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -28,7 +26,7 @@ class MediaGalleryDelete extends BackendBaseActionDelete
         // Handle the MediaGallery delete
         $this->get('command_bus')->handle($deleteMediaGallery);
 
-        return $this->redirect(
+        $this->redirect(
             $this->getBackLink(
                 [
                     'report' => 'media-gallery-deleted',
@@ -38,9 +36,6 @@ class MediaGalleryDelete extends BackendBaseActionDelete
         );
     }
 
-    /**
-     * @return MediaGallery
-     */
     private function getMediaGallery(): MediaGallery
     {
         try {
@@ -48,22 +43,17 @@ class MediaGalleryDelete extends BackendBaseActionDelete
             return $this->get('media_galleries.repository.gallery')->findOneById(
                 $this->getParameter('id', 'integer')
             );
-        } catch (\Exception $e) {
+        } catch (MediaGalleryNotFound $mediaGalleryNotFound) {
             $this->redirect(
                 $this->getBackLink(
                     [
-                        'error' => 'non-existing-media-gallery'
+                        'error' => 'non-existing-media-gallery',
                     ]
                 )
             );
         }
     }
 
-    /**
-     * @param array $parameters
-     *
-     * @return string
-     */
     private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(

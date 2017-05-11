@@ -5,12 +5,13 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Common\Exception\RedirectException;
 
 class MediaFolderDelete extends BackendBaseActionDelete
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -29,7 +30,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
         );
     }
 
-    private function abortWhenLastFolder()
+    private function abortWhenLastFolder(): void
     {
         // If this is the last folder, delete is not possible
         if (count($this->get('media_library.repository.folder')->findAll()) === 1) {
@@ -43,10 +44,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
         }
     }
 
-    /**
-     * @param MediaFolder $mediaFolder
-     */
-    private function checkIfDeleteIsAllowed(MediaFolder $mediaFolder)
+    private function checkIfDeleteIsAllowed(MediaFolder $mediaFolder): void
     {
         // If folder has children/items, delete is not possible
         if ($mediaFolder->hasConnectedItems() && $mediaFolder->hasChildrenWithConnectedItems()) {
@@ -60,9 +58,6 @@ class MediaFolderDelete extends BackendBaseActionDelete
         }
     }
 
-    /**
-     * @return DeleteMediaFolder
-     */
     private function deleteMediaFolder(): DeleteMediaFolder
     {
         /** @var MediaFolder $mediaFolder */
@@ -79,30 +74,24 @@ class MediaFolderDelete extends BackendBaseActionDelete
         return $deleteMediaFolder;
     }
 
-    /**
-     * @return MediaFolder
-     * @throws RedirectException
-     */
     private function getMediaFolder(): MediaFolder
     {
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById($this->get('request')->query->getInt('id'));
-        } catch (\Exception $e) {
+            return $this->get('media_library.repository.folder')->findOneById(
+                $this->get('request')->query->getInt('id')
+            );
+        } catch (MediaFolderNotFound $mediaFolderNotFound) {
             $this->redirect(
                 $this->getBackLink(
                     [
-                        'error' => 'non-existing'
+                        'error' => 'non-existing',
                     ]
                 )
             );
         }
     }
 
-    /**
-     * @param array $parameters
-     * @return string
-     */
     private function getBackLink(array $parameters = []): string
     {
         return Model::createURLForAction(

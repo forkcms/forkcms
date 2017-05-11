@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Common\Exception\AjaxExitException;
 use Common\Uri;
@@ -14,10 +15,7 @@ use Common\Uri;
  */
 class MediaFolderEdit extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -35,10 +33,6 @@ class MediaFolderEdit extends BackendBaseAJAXAction
         );
     }
 
-    /**
-     * @return MediaFolder
-     * @throws AjaxExitException
-     */
     protected function getMediaFolder(): MediaFolder
     {
         $id = $this->get('request')->request->getInt('folder_id');
@@ -51,15 +45,11 @@ class MediaFolderEdit extends BackendBaseAJAXAction
         try {
             /** @var MediaFolder $mediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
-        } catch (\Exception $e) {
+        } catch (MediaFolderNotFound $mediaFolderNotFound) {
             throw new AjaxExitException(Language::err('MediaFolderDoesNotExists'));
         }
     }
 
-    /**
-     * @return string
-     * @throws AjaxExitException
-     */
     protected function getFolderName(): string
     {
         $name = $this->get('request')->request->get('name');
@@ -71,10 +61,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
         return Uri::getUrl($name);
     }
 
-    /**
-     * @return UpdateMediaFolder
-     */
-    private function updateMediaFolder()
+    private function updateMediaFolder(): UpdateMediaFolder
     {
         /** @var MediaFolder $mediaFolder */
         $mediaFolder = $this->getMediaFolder();

@@ -11,26 +11,20 @@ class FrontendHelperExtensions extends \Twig_Extension
      */
     private $frontendHelper;
 
-    /**
-     * @param FrontendHelper $frontendHelper
-     */
     public function __construct(FrontendHelper $frontendHelper)
     {
         $this->frontendHelper = $frontendHelper;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
-        return array(
+        return [
             new \Twig_SimpleFunction(
                 'media_library_widget',
-                array($this, 'parseWidget'),
-                array('is_safe' => array('html'))
+                [$this, 'parseWidget'],
+                ['is_safe' => ['html']]
             ),
-        );
+        ];
     }
 
     /**
@@ -40,6 +34,7 @@ class FrontendHelperExtensions extends \Twig_Extension
      * @param string $mediaGroupId - The MediaGroup id you want to parse
      * @param string $title - You can give your optional custom title.
      * @param string $module - You can parse a widget from a custom module. Default is the "MediaLibrary" module.
+     *
      * @return \Twig_Markup
      */
     public function parseWidget(

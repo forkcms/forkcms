@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class StorageProviderPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has('media_library.manager.storage')) {
             return;
@@ -22,7 +22,7 @@ class StorageProviderPass implements CompilerPassInterface
                 // add the StorageProvider service to the StorageManager service
                 $definition->addMethodCall('addStorageProvider', [
                     new Reference($id),
-                    $attributes["storageType"]
+                    $attributes['storageType'],
                 ]);
             }
         }

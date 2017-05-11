@@ -24,13 +24,6 @@ final class MediaItemSubscriber implements EventSubscriber
     /** @var FileManager */
     protected $fileManager;
 
-    /**
-     * Construct
-     *
-     * @param FileManager $fileManager
-     * @param CacheManager $cacheManager
-     * @param MessageBus $commandBus
-     */
     public function __construct(
         FileManager $fileManager,
         CacheManager $cacheManager,
@@ -41,9 +34,6 @@ final class MediaItemSubscriber implements EventSubscriber
         $this->commandBus = $commandBus;
     }
 
-    /**
-     * @return array
-     */
     public function getSubscribedEvents(): array
     {
         return [
@@ -52,18 +42,12 @@ final class MediaItemSubscriber implements EventSubscriber
         ];
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     */
-    private function deleteSource(MediaItem $mediaItem)
+    private function deleteSource(MediaItem $mediaItem): void
     {
         $this->fileManager->deleteFile($mediaItem->getAbsolutePath());
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     */
-    private function deleteThumbnails(MediaItem $mediaItem)
+    private function deleteThumbnails(MediaItem $mediaItem): void
     {
         // We have an image, so we have thumbnails to delete
         if ($mediaItem->getType()->isImage()) {
@@ -72,10 +56,7 @@ final class MediaItemSubscriber implements EventSubscriber
         }
     }
 
-    /**
-     * @param MediaItem $mediaItem
-     */
-    private function generateThumbnails(MediaItem $mediaItem)
+    private function generateThumbnails(MediaItem $mediaItem): void
     {
         // We have an image, so we have a backend thumbnail to generate
         if ($mediaItem->getType()->isImage()) {
@@ -84,12 +65,7 @@ final class MediaItemSubscriber implements EventSubscriber
         }
     }
 
-    /**
-     * On MediaItem added
-     *
-     * @param LifecycleEventArgs $eventArgs
-     */
-    public function postPersist(LifecycleEventArgs $eventArgs)
+    public function postPersist(LifecycleEventArgs $eventArgs): void
     {
         $entity = $eventArgs->getObject();
         if (!$entity instanceof MediaItem) {
@@ -99,12 +75,7 @@ final class MediaItemSubscriber implements EventSubscriber
         $this->generateThumbnails($entity);
     }
 
-    /**
-     * On MediaItem deleted
-     *
-     * @param LifecycleEventArgs $eventArgs
-     */
-    public function postRemove(LifecycleEventArgs $eventArgs)
+    public function postRemove(LifecycleEventArgs $eventArgs): void
     {
         $entity = $eventArgs->getObject();
         if (!$entity instanceof MediaItem) {

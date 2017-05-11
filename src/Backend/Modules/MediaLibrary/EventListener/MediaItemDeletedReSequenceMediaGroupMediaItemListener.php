@@ -18,18 +18,12 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
     /** @var MessageBus */
     protected $commandBus;
 
-    /**
-     * @param MessageBus $commandBus
-     */
     public function __construct(MessageBus $commandBus)
     {
         $this->commandBus = $commandBus;
     }
 
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
-    public function postRemove(LifecycleEventArgs $eventArgs)
+    public function postRemove(LifecycleEventArgs $eventArgs): void
     {
         $entity = $eventArgs->getObject();
         if (!$entity instanceof MediaItem) {
@@ -39,7 +33,7 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
         /** @var ArrayCollection $mediaItemMediaGroups */
         $mediaItemMediaGroups = $entity->getGroups();
 
-        if ($mediaItemMediaGroups->count() == 0) {
+        if ($mediaItemMediaGroups->count() === 0) {
             return;
         }
 
@@ -49,10 +43,7 @@ final class MediaItemDeletedReSequenceMediaGroupMediaItemListener
         }
     }
 
-    /**
-     * @param MediaGroup $mediaGroup
-     */
-    private function updateMediaGroupSequence(MediaGroup $mediaGroup)
+    private function updateMediaGroupSequence(MediaGroup $mediaGroup): void
     {
         // Define new media ids
         $newMediaIds = [];

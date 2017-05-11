@@ -23,10 +23,7 @@ class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
      */
     protected $deleteMediaItems = false;
 
-    /**
-     * Configure
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('media_galleries:delete:galleries')
@@ -36,18 +33,10 @@ class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
                 null,
                 InputOption::VALUE_NONE,
                 'If set, all connected MediaItems will be deleted as well from the library.'
-            )
-        ;
+            );
     }
 
-    /**
-     * Execute
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return void
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('<info>-Started deleting media galleries.</info>');
 
@@ -57,17 +46,14 @@ class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
         $output->writeln('<info>-Finished deleting media galleries.</info>');
     }
 
-    /**
-     * @param InputInterface $input
-     */
-    private function checkOptions(InputInterface $input)
+    private function checkOptions(InputInterface $input): void
     {
         if ($input->getOption('delete-media-items')) {
             $this->deleteMediaItems = true;
         }
     }
 
-    private function deleteMediaGalleries()
+    private function deleteMediaGalleries(): void
     {
         /** @var array $mediaGalleries */
         $mediaGalleries = $this->getContainer()->get('media_galleries.repository.gallery')->findAll();

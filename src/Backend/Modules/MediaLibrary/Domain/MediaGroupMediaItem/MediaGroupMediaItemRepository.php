@@ -6,13 +6,6 @@ use Doctrine\ORM\EntityRepository;
 
 final class MediaGroupMediaItemRepository extends EntityRepository
 {
-    /**
-     * Get all MediaGroupMediaItem and their MediaItem
-     *
-     * @param array $mediaGroupIds
-     * @param bool $onlyGetFirstMediaItem
-     * @return array
-     */
     public function getAll(
         array $mediaGroupIds,
         bool $onlyGetFirstMediaItem

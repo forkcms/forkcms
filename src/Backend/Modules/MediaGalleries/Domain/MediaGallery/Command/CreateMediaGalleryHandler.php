@@ -10,19 +10,13 @@ final class CreateMediaGalleryHandler
     /** @var MediaGalleryRepository */
     private $mediaGalleryRepository;
 
-    /**
-     * @param MediaGalleryRepository $mediaGalleryRepository
-     */
     public function __construct(
         MediaGalleryRepository $mediaGalleryRepository
     ) {
         $this->mediaGalleryRepository = $mediaGalleryRepository;
     }
 
-    /**
-     * @param CreateMediaGallery $createMediaGallery
-     */
-    public function handle(CreateMediaGallery $createMediaGallery)
+    public function handle(CreateMediaGallery $createMediaGallery): void
     {
         /** @var MediaGallery $mediaGallery */
         $mediaGallery = MediaGallery::fromDataTransferObject($createMediaGallery);

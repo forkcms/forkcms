@@ -7,11 +7,6 @@ use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDataTransferO
 
 final class UpdateMediaGallery extends MediaGalleryDataTransferObject
 {
-    /**
-     * UpdateMediaGallery constructor.
-     *
-     * @param MediaGallery $mediaGallery
-     */
     public function __construct(MediaGallery $mediaGallery)
     {
         parent::__construct($mediaGallery);

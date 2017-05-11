@@ -10,10 +10,7 @@ use Common\Exception\AjaxExitException;
  */
 class MediaFolderInfo extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent
         parent::execute();
