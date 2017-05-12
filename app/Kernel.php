@@ -131,7 +131,7 @@ abstract class Kernel extends BaseKernel
      *
      * @return ContainerBuilder The compiled service container
      */
-    protected function buildContainer(): ContainerBuilder
+    protected function buildContainer()
     {
         $container = parent::buildContainer();
 
