@@ -6,13 +6,13 @@ use InvalidArgumentException;
 
 final class Priority
 {
-    const CORE = 0;
-    const STANDARD = 1;
-    const MODULE = 2;
-    const WIDGET = 3;
-    const DEBUG = 99;
+    private const CORE = 0;
+    private const STANDARD = 1;
+    private const MODULE = 2;
+    private const WIDGET = 3;
+    private const DEBUG = 99;
 
-    const POSSIBLE_VALUES = [
+    private const POSSIBLE_VALUES = [
         self::CORE,
         self::STANDARD,
         self::MODULE,
